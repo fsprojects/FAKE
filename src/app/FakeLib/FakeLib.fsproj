@@ -40,6 +40,7 @@
     </OtherFlags>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
   </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\FSharp\1.0\FSharp.PowerPack.Targets" />
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="RegistryHelper.fs" />
@@ -69,6 +70,8 @@
     <Compile Include="MessageHelper.fs" />
     <Compile Include="HTMLHelpWorkShopHelper.fs" />
     <Compile Include="TargetHelper.fs" />
+    <Compile Include="TargetMonad.fs" />
+    <None Include="Script1.fsx" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core" />
@@ -111,7 +114,6 @@
       <AssemblyName>System.XML.dll</AssemblyName>
     </Reference>
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\FSharp\1.0\FSharp.PowerPack.Targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
 	     Other similar extension points exist, see Microsoft.Common.targets.
 	<Target Name="BeforeBuild">
