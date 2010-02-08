@@ -1,0 +1,16 @@
+#ignore thumbnails created by windows
+Thumbs.db
+#Ignore files build by Visual Studio
+docs/
+test/
+!src/test/
+obj/
+build/
+helpBuild/
+deploy/
+[Bb]in
+[Rr]elease*/
+_ReSharper*/
+[Tt]est[Rr]esult*
+*.suo
+*.user
