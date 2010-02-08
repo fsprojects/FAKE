@@ -1,0 +1,31 @@
+﻿<cruisecontrol>
+  <project>
+    <name>CalculatorExample</name>
+    <triggers>
+      <intervalTrigger name="continuous" seconds="30" initialSeconds="30"/>
+    </triggers>
+    <sourcecontrol type="svn">
+      <executable>c:\Program Files (x86)\Subversion\bin\svn.exe</executable>
+      <workingDirectory>d:\Calculator\</workingDirectory>
+      <trunkUrl>http://fake.googlecode.com/svn/trunk/Samples/Calculator/</trunkUrl>
+    </sourcecontrol>
+    <tasks>
+      <exec>
+        <executable>d:\Calculator\tools\Fake\Fake.exe</executable>
+        <baseDirectory>d:\Calculator\</baseDirectory>
+        <buildArgs>completeBuild.fsx</buildArgs>
+      </exec>
+    </tasks>
+    <publishers>
+      <merge>
+        <files>
+          <file>d:\Calculator\test\FXCopResults.xml</file>
+          <file>d:\Calculator\test\TestResults.xml</file>
+          <file>d:\Calculator\output\Results.xml</file>
+          <file>d:\Calculator\output\xUnit.Test.*.xml</file>
+        </files>
+      </merge>
+      <xmllogger />
+    </publishers>
+  </project>
+</cruisecontrol>
