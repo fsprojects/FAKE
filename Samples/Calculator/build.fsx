@@ -4,8 +4,7 @@
 open Fake 
 
 // Default target
-Target? Default <-
-    fun _ -> trace "Hello World from FAKE"
+let Default = target { trace "Hello World from FAKE" }
 
 // start build
-Run? Default
+Run Default

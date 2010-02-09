@@ -69,8 +69,8 @@
     <Compile Include="FSIHelper.fs" />
     <Compile Include="MessageHelper.fs" />
     <Compile Include="HTMLHelpWorkShopHelper.fs" />
-    <Compile Include="TargetHelper.fs" />
     <Compile Include="TargetMonad.fs" />
+    <Compile Include="TargetHelper.fs" />
     <None Include="Script1.fsx" />
   </ItemGroup>
   <ItemGroup>

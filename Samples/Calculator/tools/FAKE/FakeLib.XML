@@ -860,13 +860,7 @@
 <member name="T:Fake.TargetHelper.BuildError">
 
 </member>
-<member name="T:Fake.TargetHelper.Target">
-
-</member>
-<member name="T:Fake.TargetHelper.TargetTemplate`1">
-
-</member>
-<member name="P:Fake.TargetHelper.Run">
+<member name="M:Fake.TargetHelper.Run(Fake.TargetMonad.TargetTemplate{Microsoft.FSharp.Core.Unit})">
 <summary>
  Runs a Target and its dependencies
 </summary>
@@ -881,7 +875,7 @@
  Converts a dependency into a list
 </summary>
 </member>
-<member name="M:Fake.TargetHelper.For(System.String,Microsoft.FSharp.Collections.FSharpList{System.String})">
+<member name="M:Fake.TargetHelper.For(Fake.TargetMonad.TargetTemplate{Microsoft.FSharp.Core.Unit},Microsoft.FSharp.Collections.FSharpList{Fake.TargetMonad.TargetTemplate{Microsoft.FSharp.Core.Unit}})">
 <summary>
  Allows to use For? syntax for Dependencies
 </summary>
@@ -896,97 +890,130 @@
  Allows to use Tokens instead of strings
 </summary>
 </member>
-<member name="M:Fake.TargetHelper.ActivateFinalTarget(System.String)">
-<summary>
- Activates the FinalTarget
-</summary>
-</member>
-<member name="M:Fake.TargetHelper.FinalTarget(System.String,Microsoft.FSharp.Core.FSharpFunc`2{Microsoft.FSharp.Core.Unit,Microsoft.FSharp.Core.Unit})">
-<summary>
- Registers a final target (not activated)
-</summary>
-</member>
-<member name="M:Fake.TargetHelper.run(System.String)">
-<summary>
- Runs a Target and its dependencies        
-</summary>
-</member>
-<member name="M:Fake.TargetHelper.PrintDependencyGraph(System.Boolean,System.String)">
-
-</member>
-<member name="M:Fake.TargetHelper.runFinalTargets">
-<summary>
- runs all activated final targets (in alphabetically order)
-</summary>
-</member>
 <member name="M:Fake.TargetHelper.targetError(System.String,System.String)">
 
 </member>
 <member name="P:Fake.TargetHelper.errors">
 
 </member>
-<member name="M:Fake.TargetHelper.Target(System.String,Microsoft.FSharp.Core.FSharpFunc`2{Microsoft.FSharp.Core.Unit,Microsoft.FSharp.Core.Unit})">
-<summary>
- Creates a Target
-</summary>
-</member>
-<member name="M:Fake.TargetHelper.TargetTemplate``1(Microsoft.FSharp.Core.FSharpFunc`2{``0,Microsoft.FSharp.Core.Unit})">
-<summary>
- Creates a TargetTemplate      
-</summary>
-</member>
-<member name="M:Fake.TargetHelper.TargetTemplateWithDependecies``1(Microsoft.FSharp.Collections.FSharpList{System.String},Microsoft.FSharp.Core.FSharpFunc`2{``0,Microsoft.FSharp.Core.Unit})">
-<summary>
- Creates a TargetTemplate with dependencies
-</summary>
-</member>
-<member name="M:Fake.TargetHelper.targetFromTemplate``1(Fake.TargetHelper.TargetTemplate{``0},System.String,``0)">
-<summary>
- Creates a target from template
-</summary>
-</member>
-<member name="M:Fake.TargetHelper.op_LessEqualsEquals(System.String,Microsoft.FSharp.Collections.FSharpList{System.String})">
+<member name="M:Fake.TargetHelper.op_LessEqualsEquals(Fake.TargetMonad.TargetTemplate{Microsoft.FSharp.Core.Unit},Microsoft.FSharp.Collections.FSharpList{Fake.TargetMonad.TargetTemplate{Microsoft.FSharp.Core.Unit}})">
 <summary>
  Dependencies operator
 </summary>
 </member>
-<member name="M:Fake.TargetHelper.Dependencies(System.String)">
+<member name="M:Fake.TargetHelper.Dependencies(Fake.TargetMonad.TargetTemplate{Microsoft.FSharp.Core.Unit})">
 <summary>
  Adds the dependencies to the list of dependencies  
 </summary>
 </member>
-<member name="M:Fake.TargetHelper.dependency(System.String,System.String)">
+<member name="M:Fake.TargetHelper.dependency(Fake.TargetMonad.TargetTemplate{Microsoft.FSharp.Core.Unit},Fake.TargetMonad.TargetTemplate{Microsoft.FSharp.Core.Unit})">
 <summary>
  Adds the dependency to the list of dependencies
 </summary>
 </member>
-<member name="M:Fake.TargetHelper.DoNothing">
+<member name="P:Fake.TargetHelper.DoNothing">
 <summary>
  Do nothing -  fun () -&gt; ()   
 </summary>
 </member>
-<member name="M:Fake.TargetHelper.getTarget(System.String)">
+<member name="T:Fake.TargetHelper">
+
+</member>
+<member name="M:Fake.TargetMonad.TargetBuilder.Zero``1">
+
+</member>
+<member name="M:Fake.TargetMonad.TargetBuilder.While``1(Microsoft.FSharp.Core.FSharpFunc`2{Microsoft.FSharp.Core.Unit,System.Boolean},Fake.TargetMonad.TargetTemplate{Microsoft.FSharp.Core.Unit})">
+
+</member>
+<member name="M:Fake.TargetMonad.TargetBuilder.Using``3(``0,Microsoft.FSharp.Core.FSharpFunc`2{``0,Fake.TargetMonad.TargetTemplate{Microsoft.FSharp.Core.Unit}})">
+
+</member>
+<member name="M:Fake.TargetMonad.TargetBuilder.TryWith``2(Fake.TargetMonad.TargetTemplate{Microsoft.FSharp.Core.Unit},Microsoft.FSharp.Core.FSharpFunc`2{System.Exception,Fake.TargetMonad.TargetTemplate{Microsoft.FSharp.Core.Unit}})">
+
+</member>
+<member name="M:Fake.TargetMonad.TargetBuilder.TryFinally``2(Fake.TargetMonad.TargetTemplate{Microsoft.FSharp.Core.Unit},Microsoft.FSharp.Core.FSharpFunc`2{Microsoft.FSharp.Core.Unit,Microsoft.FSharp.Core.Unit})">
+
+</member>
+<member name="M:Fake.TargetMonad.TargetBuilder.ReturnFrom(Fake.TargetMonad.TargetTemplate{Microsoft.FSharp.Core.Unit})">
+
+</member>
+<member name="M:Fake.TargetMonad.TargetBuilder.Return``1(``0)">
+
+</member>
+<member name="M:Fake.TargetMonad.TargetBuilder.For``2(System.Collections.Generic.IEnumerable{``1},Microsoft.FSharp.Core.FSharpFunc`2{``1,Fake.TargetMonad.TargetTemplate{Microsoft.FSharp.Core.Unit}})">
+
+</member>
+<member name="M:Fake.TargetMonad.TargetBuilder.Delay``2(Microsoft.FSharp.Core.FSharpFunc`2{Microsoft.FSharp.Core.Unit,Fake.TargetMonad.TargetTemplate{Microsoft.FSharp.Core.Unit}})">
+
+</member>
+<member name="M:Fake.TargetMonad.TargetBuilder.Combine``2(Fake.TargetMonad.TargetTemplate{Microsoft.FSharp.Core.Unit},Fake.TargetMonad.TargetTemplate{Microsoft.FSharp.Core.Unit})">
+
+</member>
+<member name="M:Fake.TargetMonad.TargetBuilder.Bind(Fake.TargetMonad.TargetTemplate{Microsoft.FSharp.Core.Unit},Microsoft.FSharp.Core.FSharpFunc`2{Microsoft.FSharp.Core.Unit,Fake.TargetMonad.TargetTemplate{Microsoft.FSharp.Core.Unit}})">
+
+</member>
+<member name="M:Fake.TargetMonad.TargetBuilder..ctor">
+
+</member>
+<member name="T:Fake.TargetMonad.TargetBuilder">
+
+</member>
+<member name="T:Fake.TargetMonad.Target">
+
+</member>
+<member name="T:Fake.TargetMonad.TargetTemplate`1">
+
+</member>
+<member name="M:Fake.TargetMonad.logMsg(System.String)">
+
+</member>
+<member name="M:Fake.TargetMonad.tell(Microsoft.FSharp.Collections.FSharpList{System.String})">
+
+</member>
+<member name="P:Fake.TargetMonad.target">
+
+</member>
+<member name="M:Fake.TargetMonad.op_GreaterGreaterEquals(Fake.TargetMonad.TargetTemplate{Microsoft.FSharp.Core.Unit},Microsoft.FSharp.Core.FSharpFunc`2{Microsoft.FSharp.Core.Unit,Fake.TargetMonad.TargetTemplate{Microsoft.FSharp.Core.Unit}})">
+
+</member>
+<member name="M:Fake.TargetMonad.asTarget``1(Microsoft.FSharp.Core.FSharpFunc`2{``0,Microsoft.FSharp.Collections.FSharpList{System.String}})">
+
+</member>
+<member name="M:Fake.TargetMonad.runTarget(Fake.TargetMonad.TargetTemplate{Microsoft.FSharp.Core.Unit})">
 <summary>
- Gets a Target from the Target dictionary
+ Runs a Target and its dependencies
 </summary>
 </member>
-<member name="P:Fake.TargetHelper.ExecutedTargets">
+<member name="M:Fake.TargetMonad.runFinalTargets">
+<summary>
+ runs all activated final targets (in alphabetically order)
+</summary>
+</member>
+<member name="M:Fake.TargetMonad.PrintDependencyGraph(System.Boolean,Fake.TargetMonad.TargetTemplate{Microsoft.FSharp.Core.Unit})">
+
+</member>
+<member name="P:Fake.TargetMonad.ExecutedTargets">
 <summary>
  The executed targets
 </summary>
 </member>
-<member name="P:Fake.TargetHelper.FinalTargets">
+<member name="M:Fake.TargetMonad.getDependencies(Fake.TargetMonad.TargetTemplate{Microsoft.FSharp.Core.Unit})">
+<summary>
+ Returns the dependecies for a given target
+</summary>
+</member>
+<member name="P:Fake.TargetMonad.Dependencies">
+<summary>
+ TargetDependencies
+</summary>
+</member>
+<member name="P:Fake.TargetMonad.FinalTargets">
 <summary>
  Final Targets 
  Stores target and if it is activated
 </summary>
 </member>
-<member name="P:Fake.TargetHelper.TargetDict">
-<summary>
- TargetDictionary  
-</summary>
-</member>
-<member name="T:Fake.TargetHelper">
+<member name="T:Fake.TargetMonad">
 
 </member>
 <member name="T:Fake.TeamCityHelper.Project">
