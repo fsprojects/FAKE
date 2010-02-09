@@ -9,7 +9,6 @@ type RegistryBaseKey =
 | HKEYUsers
 | HKEYCurrentUser
 | HKEYCurrentConfig
-| HKEYDyncData
 | HKEYPerformanceData
 
 /// Maps the RegistryBaseKey to a RegistryKey
@@ -19,7 +18,6 @@ let getKey = function
 | HKEYUsers -> Registry.Users
 | HKEYCurrentUser -> Registry.CurrentUser
 | HKEYCurrentConfig -> Registry.CurrentConfig
-| HKEYDyncData -> Registry.DynData
 | HKEYPerformanceData -> Registry.PerformanceData
 
 /// gets a registy key
