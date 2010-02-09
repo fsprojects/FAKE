@@ -18,7 +18,7 @@ let lowerString s = (sprintf "%A" s).ToLower()
 ///   param password: The password to use with the request
 ///   param url: The URL to perform the GET operation  
 ///   returns: The response of the request, or null if we got 404 or nothing.
-let ExecuteGetCommand userName password (url:string) =
+let ExecuteGetCommand (userName:string) (password:string) (url:string) =
   use client = new WebClient()
   if userName <> null || password <> null then    
     client.Credentials <- new NetworkCredential(userName, password)

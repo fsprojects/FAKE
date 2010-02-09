@@ -153,11 +153,12 @@ let run targetName =
  
 /// Registers a final target (not activated)
 let FinalTarget name body = 
-  Target name body
-  FinalTargets.Add(name,false)
+    Target name body
+    FinalTargets.Add(name,false)
 
 /// Activates the FinalTarget
-let ActivateFinalTarget name = FinalTargets.[name] <- true
+let ActivateFinalTarget name = 
+    FinalTargets.[name] <- true
 
 /// Allows to use Tokens instead of strings
 let (?) f s = f s
