@@ -13,6 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <Name>FakeLib</Name>
     <TargetFrameworkProfile />
+    <FscToolPath>..\..\..\tools\FSharp\</FscToolPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
