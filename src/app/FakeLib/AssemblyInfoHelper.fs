@@ -188,7 +188,7 @@ let AssemblyInfo setParams =
   use writer = File.CreateText(param.OutputFileName)
   match param.CodeLanguage with
   | FSharp -> 
-     writer.WriteLine "module AssemblyInfo"
+     writer.WriteLine (sprintf "module %s.AssemblyInfo" (param.AssemblyTitle.Replace(" ","_")))
      writer.WriteLine "#nowarn \"49\" // uppercase argument names"
      writer.WriteLine "#nowarn \"67\" // this type test or downcast will always hold"
      writer.WriteLine "#nowarn \"66\" // tis upast is unnecessary - the types are identical"
