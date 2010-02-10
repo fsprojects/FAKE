@@ -185,10 +185,11 @@ let AssemblyInfo setParams =
      "System.Runtime.CompilerServices"; 
      "System.Runtime.InteropServices" ]
 
+  let fi = new FileInfo(param.OutputFileName)
   use writer = File.CreateText(param.OutputFileName)
   match param.CodeLanguage with
   | FSharp -> 
-     writer.WriteLine (sprintf "module %s.AssemblyInfo" (param.AssemblyTitle.Replace(" ","_").Replace("#","_")))
+     writer.WriteLine (sprintf "module %s.AssemblyInfo" fi.Directory.Name)
      writer.WriteLine "#nowarn \"49\" // uppercase argument names"
      writer.WriteLine "#nowarn \"67\" // this type test or downcast will always hold"
      writer.WriteLine "#nowarn \"66\" // tis upast is unnecessary - the types are identical"
