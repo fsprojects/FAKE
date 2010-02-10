@@ -42,11 +42,11 @@ let msBuildExe =
 let build outputPath targets properties overwrite project =
   traceStartTask "MSBuild" project
   let targetsA = sprintf "/target:%s" targets |> toParam
-  let outputDir = new System.IO.DirectoryInfo(outputPath)
-
-  let tempDir = new DirectoryInfo(outputPath)
-  
-  let output = sprintf "/p:OutputPath=\"%s\"\\" <| tempDir.FullName.Trim('\\')    
+  let output = 
+        if String.IsNullOrEmpty outputPath then "" else
+        let outputDir = new System.IO.DirectoryInfo(outputPath)
+      
+        sprintf "/p:OutputPath=\"%s\"\\" <| outputDir.FullName.Trim('\\')    
   let logger = sprintf " /logger:MSBUILDLogger,\"%s\\FakeLib.dll\"" fakePath
   let props = 
     properties

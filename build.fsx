@@ -51,6 +51,12 @@ Target? BuildApp <-
         MSBuildRelease buildDir "Build" appReferences
             |> Log "AppBuild-Output: "
 
+Target? BuildDocu <-
+    fun _ ->                                               
+        MSBuildRelease null "Build" [@".\docu\Build.proj"]
+            |> Log "DocuBuild-Output: "
+        Copy buildDir [@".\docu\artifacts\docu.exe"]
+
 
 Target? GenerateDocumentation <-
     fun _ ->
@@ -154,6 +160,7 @@ For? Test <-
 
 For? Deploy <- 
     Dependency? Test 
+      |> And? BuildDocu 
       |> And? BuildZip 
       |> And? ZipCalculatorSample
       |> And? ZipDocumentation

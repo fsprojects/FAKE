@@ -5,18 +5,6 @@
 <member name="">
 
 </member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="T:AssemblyInfo">
-
-</member>
-<member name="">
-
-</member>
 <member name="M:EnvironmentHelper.getBuildParam(System.String)">
 <summary>
  Returns the value of the buildParam if it is set and otherwise &quot;&quot; 
@@ -347,6 +335,9 @@
 </summary>
 </member>
 <member name="T:Fake.FileHelper">
+
+</member>
+<member name="">
 
 </member>
 <member name="">
@@ -1957,6 +1948,18 @@
 </summary>
 </member>
 <member name="T:Fake.ZipHelper">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FakeLib.AssemblyInfo">
 
 </member>
 <member name="">
