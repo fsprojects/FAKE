@@ -140,6 +140,29 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:Fake.DocuHelper.DocuDefaults">
+<summary>
+ Docu default params  
+</summary>
+</member>
+<member name="T:Fake.DocuHelper">
+
+</member>
+<member name="">
+
+</member>
 <member name="M:Fake.EnvironmentHelper.getBuildParam(System.String)">
 <summary>
  Returns the value of the buildParam if it is set and otherwise &quot;&quot; 
@@ -1951,7 +1974,7 @@
 <member name="">
 
 </member>
-<member name="P:Fake.XUnitHelper.xUnitDefaults">
+<member name="P:Fake.XUnitHelper.XUnitDefaults">
 <summary>
  xUnit default params  
 </summary>

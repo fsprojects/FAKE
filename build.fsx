@@ -11,10 +11,8 @@ TraceEnvironmentVariables()
 let buildDir = @".\build\"
 let testDir = @".\test\"
 let deployDir = @".\deploy\"
-let docsBuildDir = @".\docsBuild\" 
 let docsDir = @".\docs\" 
-let templatesSrcDir = @".\docu\src\Docu.Console\templates\"
-let templatesDir = docsBuildDir + @"\templates\" 
+let templatesSrcDir = @".\docu\src\Docu.Console\templates\" 
 
 let deployZip = deployDir + sprintf "%s-%s.zip" projectName buildVersion
 
@@ -27,7 +25,7 @@ let nunitPath = @".\Tools\NUnit\bin"
 
 // Targets
 Target? Clean <-
-    fun _ ->  CleanDirs [buildDir; testDir; deployDir; docsBuildDir; docsDir; templatesDir]
+    fun _ ->  CleanDirs [buildDir; testDir; deployDir; docsDir]
 
 
 Target? BuildApp <-
@@ -64,23 +62,12 @@ Target? BuildDocu <-
 
 Target? GenerateDocumentation <-
     fun _ ->
-        let assemblies = 
-          !+ (buildDir + @"\**\*.dll")
-            ++ (buildDir + @"\**\*.exe")
-            -- (@"\**\*SharpZipLib*")
-            -- (@"\**\*SharpSvn*")
-              |> Scan
-              |> Seq.map FullName
-
-        let tool = "docu.exe"
-        Copy docsBuildDir [buildDir + tool]
-        XCopy templatesSrcDir templatesDir
-
-        if not (execProcess3 (fun info ->  
-            info.FileName <- docsBuildDir + tool
-            info.Arguments <- (buildDir + "FakeLib.dll" |> FullName) + " --output=" + docsDir))
-        then
-            failwith "Documentation generation failed."
+        Docu (fun p ->
+            {p with
+               ToolPath = buildDir + "docu.exe"
+               TemplatesPath = templatesSrcDir
+               OutputPath = docsDir })
+            (buildDir + "FakeLib.dll")
 
 Target? CopyLicense <-
     fun _ -> Copy buildDir [@"License.txt"]
