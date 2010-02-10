@@ -6,7 +6,8 @@ open System.Globalization
 open System.Text
 open System.Text.RegularExpressions
 
-type FileSet = string list
+type EagerFileSet = string list
+type LazyFileSet = string seq
 
 type RegexEntry =
   { IsRecursive : bool;
@@ -362,7 +363,7 @@ let Include x =
        
 /// Lazy scan for include files
 /// Will be processed at the time when needed
-let Scan includes =
+let Scan includes : LazyFileSet =
   Files includes.BaseDirectories includes.Includes includes.Excludes
 
 /// Adds a directory as baseDirectory for fileIncludes  
@@ -376,7 +377,7 @@ let SetBaseDir dir fileInclude =
       
 /// Scans immediately for include files
 /// Files will be memoized
-let ScanImmediately includes =
+let ScanImmediately includes : EagerFileSet =
   Scan includes |> Seq.toList    
   
 /// Include prefix operator
