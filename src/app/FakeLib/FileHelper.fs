@@ -116,6 +116,9 @@ let CopyFile target file =
 /// Copies the files to the target
 let Copy target files =
   files |> Seq.iter (CopyFile target)   
+
+/// Renames the files to the target fileName
+let Rename target file = (new FileInfo(file)).MoveTo target   
   
 let SilentCopy target files =
   files |> Seq.iter (fun file ->
