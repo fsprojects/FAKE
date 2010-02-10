@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>FakeLib</RootNamespace>
     <AssemblyName>FakeLib</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Name>FakeLib</Name>
     <TargetFrameworkProfile />
@@ -84,6 +84,7 @@
     <Reference Include="Microsoft.SqlServer.Smo">
       <HintPath>..\..\..\lib\SQLServer\Microsoft.SqlServer.Smo.dll</HintPath>
     </Reference>
+    <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
