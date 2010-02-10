@@ -262,6 +262,11 @@
 <member name="">
 
 </member>
+<member name="M:Fake.FileHelper.Rename(System.String,System.String)">
+<summary>
+ Renames the files to the target fileName
+</summary>
+</member>
 <member name="M:Fake.FileHelper.Copy(System.String,System.Collections.Generic.IEnumerable{System.String})">
 <summary>
  Copies the files to the target

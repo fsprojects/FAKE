@@ -55,7 +55,8 @@ Target? BuildDocu <-
     fun _ ->                                               
         MSBuildRelease null "Build" [@".\docu\Build.proj"]
             |> Log "DocuBuild-Output: "
-        Copy buildDir [@".\docu\artifacts\docu.exe"]
+        Copy buildDir [@".\docu\artifacts\docu.exe"; @".\docu\License.txt"]
+        Rename (buildDir + @"DocuLicense.txt") (buildDir + @"License.txt")
 
 
 Target? GenerateDocumentation <-
@@ -91,8 +92,11 @@ Target? GenerateDocumentation <-
         then
             failwith "Documentation generation failed."
 
+Target? CopyLicense <-
+    fun _ -> Copy buildDir [@"License.txt"]
+
 Target? BuildZip <-
-    fun _ ->
+    fun _ ->     
       !+ (buildDir + @"\**\*.*") 
         -- "*.zip" 
         -- "**\*.pdb"
@@ -142,21 +146,11 @@ Target? Default <- DoNothing
 
 // Dependencies
 
-For? BuildApp <- 
-    Dependency? Clean
-
-For? Test <- 
-    Dependency? Clean
-
-For? BuildZip <-
-    Dependency? BuildApp
-
-For? ZipCalculatorSample <-
-    Dependency? Clean
-
-For? Test <- 
-    Dependency? BuildApp
-      |> And? BuildTest
+For? BuildApp <- Dependency? Clean
+For? Test <- Dependency? Clean
+For? BuildZip <- Dependency? BuildApp |> And? CopyLicense
+For? ZipCalculatorSample <- Dependency? Clean
+For? Test <- Dependency? BuildApp |> And? BuildTest
 
 For? Deploy <- 
     Dependency? Test 
@@ -165,14 +159,12 @@ For? Deploy <-
       |> And? ZipCalculatorSample
       |> And? ZipDocumentation
 
-For? GenerateDocumentation <-
-    Dependency? BuildApp
+For? GenerateDocumentation <- Dependency? BuildApp
 
 //For? ZipDocumentation <-
 //    Dependency? GenerateDocumentation
 
-For? Default <- 
-    Dependency? Deploy
+For? Default <- Dependency? Deploy
 
 // start build
 Run? Default
