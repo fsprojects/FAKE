@@ -170,7 +170,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
               Tailcalls="$(Tailcalls)"
               TargetType="$(OutputType)"
               ToolExe="$(FscToolExe)"
-              ToolPath="$(FscToolPath)"
+              ToolPath=""
               TreatWarningsAsErrors="$(TreatWarningsAsErrors)"
               Utf8Output="$(Utf8Output)"
               VersionFile="$(VersionFile)"
