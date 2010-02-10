@@ -11,7 +11,10 @@ TraceEnvironmentVariables()
 let buildDir = @".\build\"
 let testDir = @".\test\"
 let deployDir = @".\deploy\"
+let docsBuildDir = @".\docsBuild\" 
 let docsDir = @".\docs\" 
+let templatesSrcDir = @".\docu\src\Docu.Console\templates\"
+let templatesDir = docsBuildDir + @"\templates\" 
 
 let deployZip = deployDir + sprintf "%s-%s.zip" projectName buildVersion
 
@@ -24,7 +27,7 @@ let nunitPath = @".\Tools\NUnit\bin"
 
 // Targets
 Target? Clean <-
-    fun _ ->  CleanDirs [buildDir; testDir; deployDir; docsDir]
+    fun _ ->  CleanDirs [buildDir; testDir; deployDir; docsBuildDir; docsDir; templatesDir]
 
 
 Target? BuildApp <-
@@ -55,7 +58,7 @@ Target? BuildDocu <-
     fun _ ->                                               
         MSBuildRelease null "Build" [@".\docu\Build.proj"]
             |> Log "DocuBuild-Output: "
-        Copy buildDir [@".\docu\artifacts\docu.exe"; @".\docu\License.txt"]
+        Copy buildDir [@".\docu\artifacts\docu.exe"; @".\docu\License.txt"]        
         Rename (buildDir + @"DocuLicense.txt") (buildDir + @"License.txt")
 
 
@@ -69,26 +72,13 @@ Target? GenerateDocumentation <-
               |> Scan
               |> Seq.map FullName
 
-        let tool = 
-          findFile [
-            @"c:\Program Files (x86)\FSharp-1.9.7.8\bin\"; 
-            @"c:\Program Files\FSharp-1.9.7.8\bin\";
-            @"c:\Programme\FSharp-1.9.7.8\bin\"] "fshtmldoc.exe"
+        let tool = "docu.exe"
+        Copy docsBuildDir [buildDir + tool]
+        XCopy templatesSrcDir templatesDir
 
-        Copy docsDir [@".\HelpInput\msdn.css"]
-
-        let commandLineBuilder =
-          new System.Text.StringBuilder()
-            |> appendFileNamesIfNotNull  assemblies
-            |> append (sprintf "--outdir\" \"%s" (docsDir |> FullName |> trimSlash)) 
-            |> append "--cssfile\" \"msdn.css" 
-            |> append "--namespacefile\" \"namespaces.html" 
-         
-        trace (commandLineBuilder.ToString())
         if not (execProcess3 (fun info ->  
-            info.FileName <- tool
-            info.WorkingDirectory <- docsDir
-            info.Arguments <- commandLineBuilder.ToString()))
+            info.FileName <- docsBuildDir + tool
+            info.Arguments <- (buildDir + "FakeLib.dll" |> FullName) + " --output=" + docsDir))
         then
             failwith "Documentation generation failed."
 
@@ -160,10 +150,7 @@ For? Deploy <-
       |> And? ZipDocumentation
 
 For? GenerateDocumentation <- Dependency? BuildApp
-
-//For? ZipDocumentation <-
-//    Dependency? GenerateDocumentation
-
+For? ZipDocumentation <- Dependency? GenerateDocumentation
 For? Default <- Dependency? Deploy
 
 // start build
