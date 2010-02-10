@@ -2,16 +2,19 @@
 <doc>
 <assembly><name>FakeLib</name></assembly>
 <members>
-<member name="T:AssemblyInfo.ReturnNoneException183c26a427ae489c8fd92ec21a0c9a59">
+<member name="">
 
 </member>
-<member name="T:AssemblyInfo.ReturnException183c26a427ae489c8fd92ec21a0c9a59">
+<member name="">
+
+</member>
+<member name="">
 
 </member>
 <member name="T:AssemblyInfo">
 
 </member>
-<member name="T:EnvironmentHelper.EnvironTarget">
+<member name="">
 
 </member>
 <member name="M:EnvironmentHelper.getBuildParam(System.String)">
@@ -37,10 +40,79 @@
 <member name="T:EnvironmentHelper">
 
 </member>
-<member name="T:Fake.AssemblyInfoHelper.AssemblyInfoParams">
+<member name="">
 
 </member>
-<member name="T:Fake.AssemblyInfoHelper.CodeLanguage">
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
 
 </member>
 <member name="M:Fake.AssemblyInfoHelper.AssemblyInfo(Microsoft.FSharp.Core.FSharpFunc`2{Fake.AssemblyInfoHelper.AssemblyInfoParams,Fake.AssemblyInfoHelper.AssemblyInfoParams})">
@@ -61,7 +133,13 @@
 <member name="T:Fake.AssemblyInfoHelper">
 
 </member>
-<member name="T:Fake.BuildServerHelper.BuildServer">
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
 
 </member>
 <member name="P:Fake.BuildServerHelper.buildServer">
@@ -79,19 +157,19 @@
  Determines the current BuildVersion and if it is a local build
 </summary>
 </member>
-<member name="P:Fake.BuildServerHelper.tcBuildNumber">
+<member name="">
 
 </member>
-<member name="P:Fake.BuildServerHelper.xmlOutputFile">
+<member name="">
 
 </member>
-<member name="P:Fake.BuildServerHelper.localBuildLabel">
+<member name="">
 
 </member>
 <member name="T:Fake.BuildServerHelper">
 
 </member>
-<member name="P:Fake.CCNetHelper.ccBuildLabel">
+<member name="">
 
 </member>
 <member name="T:Fake.CCNetHelper">
@@ -102,7 +180,7 @@
  Run the buildscript with fsi
 </summary>
 </member>
-<member name="P:Fake.FSIHelper.fsiPath">
+<member name="">
 
 </member>
 <member name="T:Fake.FSIHelper">
@@ -148,7 +226,7 @@
  Checks if the two files are byte-to-byte equal
 </summary>
 </member>
-<member name="P:Fake.FileHelper.BYTES_TO_READ">
+<member name="">
 
 </member>
 <member name="M:Fake.FileHelper.AppendTextFiles(System.String,System.Collections.Generic.IEnumerable{System.String})">
@@ -193,7 +271,7 @@
  Copies the files to the target
 </summary>
 </member>
-<member name="M:Fake.FileHelper.SilentCopy(System.String,System.Collections.Generic.IEnumerable{System.String})">
+<member name="">
 
 </member>
 <member name="M:Fake.FileHelper.Copy(System.String,System.Collections.Generic.IEnumerable{System.String})">
@@ -230,7 +308,7 @@
  Active Pattern for determining file extension
 </summary>
 </member>
-<member name="M:Fake.FileHelper.|File|Directory|(System.IO.FileSystemInfo)">
+<member name="">
 
 </member>
 <member name="M:Fake.FileHelper.DeleteFile(System.String)">
@@ -271,13 +349,31 @@
 <member name="T:Fake.FileHelper">
 
 </member>
-<member name="T:Fake.FileSetHelper.FileIncludes">
+<member name="">
 
 </member>
-<member name="T:Fake.FileSetHelper.RegexEntry">
+<member name="">
 
 </member>
-<member name="T:Fake.FileSetHelper.FileSet">
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
 
 </member>
 <member name="M:Fake.FileSetHelper.op_MinusMinus(Fake.FileSetHelper.FileIncludes,System.String)">
@@ -344,16 +440,16 @@
  the search criteria.
 </summary>
 </member>
-<member name="M:Fake.FileSetHelper.isPathIncluded(System.String,System.Boolean,System.Globalization.CompareOptions,Microsoft.FSharp.Collections.FSharpList{System.String},Microsoft.FSharp.Collections.FSharpList{Fake.FileSetHelper.RegexEntry},Microsoft.FSharp.Collections.FSharpList{System.String},Microsoft.FSharp.Collections.FSharpList{Fake.FileSetHelper.RegexEntry})">
+<member name="">
 
 </member>
-<member name="M:Fake.FileSetHelper.testRegex(System.Boolean,System.String,Fake.FileSetHelper.RegexEntry)">
+<member name="">
 
 </member>
-<member name="P:Fake.FileSetHelper.cachedCaseInsensitiveRegexes">
+<member name="">
 
 </member>
-<member name="P:Fake.FileSetHelper.cachedCaseSensitiveRegexes">
+<member name="">
 
 </member>
 <member name="M:Fake.FileSetHelper.convertPatterns(System.IO.DirectoryInfo,Microsoft.FSharp.Collections.FSharpList{System.String})">
@@ -396,7 +492,7 @@
  &lt;see cref=&quot;Environment.CurrentDirectory&quot;&gt;current directory&lt;/see&gt;.
 </summary>
 </member>
-<member name="M:Fake.FileSetHelper.combinePath(System.String,System.String)">
+<member name="">
 
 </member>
 <member name="M:Fake.FileSetHelper.cleanPath(System.String)">
@@ -414,10 +510,85 @@
 <member name="T:Fake.FileSetHelper">
 
 </member>
-<member name="T:Fake.FxCopHelper.FxCopParams">
+<member name="">
 
 </member>
-<member name="T:Fake.FxCopHelper.FxCopyErrorLevel">
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
 
 </member>
 <member name="M:Fake.FxCopHelper.FxCop(Microsoft.FSharp.Core.FSharpFunc`2{Fake.FxCopHelper.FxCopParams,Fake.FxCopHelper.FxCopParams},System.Collections.Generic.IEnumerable{System.String})">
@@ -430,13 +601,13 @@
  FxCop Default params  
 </summary>
 </member>
-<member name="M:Fake.FxCopHelper.checkForErrors(System.String)">
+<member name="">
 
 </member>
 <member name="T:Fake.FxCopHelper">
 
 </member>
-<member name="M:Fake.HTMLHelpWorkShopHelper.processTemplates(System.Collections.Generic.IEnumerable{System.Tuple`2{System.String,System.String}},System.Collections.Generic.IEnumerable{System.String})">
+<member name="">
 
 </member>
 <member name="M:Fake.HTMLHelpWorkShopHelper.saveFiles``1(System.Collections.Generic.IEnumerable{System.Tuple`2{System.String,``0}})">
@@ -518,7 +689,19 @@
 <member name="T:Fake.MessageHelper">
 
 </member>
-<member name="T:Fake.NCoverHelper.NCoverParams">
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
 
 </member>
 <member name="M:Fake.NCoverHelper.NCover(Microsoft.FSharp.Core.FSharpFunc`2{Fake.NCoverHelper.NCoverParams,Fake.NCoverHelper.NCoverParams},System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String})">
@@ -538,37 +721,97 @@
 <member name="T:Fake.NCoverHelper">
 
 </member>
-<member name="P:Fake.NUnitHelper.TestSuite.TestCount">
+<member name="">
 
 </member>
-<member name="P:Fake.NUnitHelper.TestSuite.Success">
+<member name="">
 
 </member>
-<member name="P:Fake.NUnitHelper.TestSuite.Skipped">
+<member name="">
 
 </member>
-<member name="P:Fake.NUnitHelper.TestSuite.Runtime">
+<member name="">
 
 </member>
-<member name="P:Fake.NUnitHelper.TestSuite.NotRun">
+<member name="">
 
 </member>
-<member name="P:Fake.NUnitHelper.TestSuite.Ignored">
+<member name="">
 
 </member>
-<member name="P:Fake.NUnitHelper.TestSuite.Executed">
+<member name="">
 
 </member>
-<member name="P:Fake.NUnitHelper.TestSuite.Errors">
+<member name="">
 
 </member>
-<member name="T:Fake.NUnitHelper.TestSuite">
+<member name="">
 
 </member>
-<member name="T:Fake.NUnitHelper.TestCase">
+<member name="">
 
 </member>
-<member name="T:Fake.NUnitHelper.NUnitParams">
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
 
 </member>
 <member name="M:Fake.NUnitHelper.writeXMLOutput(Fake.NUnitHelper.TestSuite,System.String)">
@@ -586,7 +829,7 @@
  NUnit default params  
 </summary>
 </member>
-<member name="P:Fake.NUnitHelper.toolName">
+<member name="">
 
 </member>
 <member name="T:Fake.NUnitHelper">
@@ -637,16 +880,22 @@
  returns the exit code
 </summary>
 </member>
-<member name="P:Fake.ProcessHelper.redirectOutputToTrace">
+<member name="">
 
 </member>
 <member name="T:Fake.ProcessHelper">
 
 </member>
-<member name="T:Fake.REST.PostMethod">
+<member name="">
 
 </member>
-<member name="M:Fake.REST.ExecutePost(System.String,System.String,System.String,System.String)">
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
 
 </member>
 <member name="M:Fake.REST.GetAsXML(System.String)">
@@ -675,13 +924,19 @@
    returns: The response of the request, or null if we got 404 or nothing.
 </summary>
 </member>
-<member name="M:Fake.REST.lowerString``1(``0)">
+<member name="">
 
 </member>
 <member name="T:Fake.REST">
 
 </member>
-<member name="T:Fake.SqlServer.ServerInfo">
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
 
 </member>
 <member name="M:Fake.SqlServer.RunScriptsFromDirectory(System.String,System.String)">
@@ -842,28 +1097,40 @@
  Reads a file line by line
 </summary>
 </member>
-<member name="M:Fake.StringHelper.productName">
+<member name="">
 
 </member>
 <member name="T:Fake.StringHelper">
 
 </member>
-<member name="P:Fake.TargetHelper.BuildError.Target">
+<member name="">
 
 </member>
-<member name="M:Fake.TargetHelper.BuildError..ctor(System.String)">
+<member name="">
 
 </member>
-<member name="M:Fake.TargetHelper.BuildError..ctor(System.String,System.String)">
+<member name="">
 
 </member>
-<member name="T:Fake.TargetHelper.BuildError">
+<member name="">
 
 </member>
-<member name="T:Fake.TargetHelper.Target">
+<member name="">
 
 </member>
-<member name="T:Fake.TargetHelper.TargetTemplate`1">
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
 
 </member>
 <member name="P:Fake.TargetHelper.Run">
@@ -911,7 +1178,7 @@
  Runs a Target and its dependencies        
 </summary>
 </member>
-<member name="M:Fake.TargetHelper.PrintDependencyGraph(System.Boolean,System.String)">
+<member name="">
 
 </member>
 <member name="M:Fake.TargetHelper.runFinalTargets">
@@ -919,10 +1186,10 @@
  runs all activated final targets (in alphabetically order)
 </summary>
 </member>
-<member name="M:Fake.TargetHelper.targetError(System.String,System.String)">
+<member name="">
 
 </member>
-<member name="P:Fake.TargetHelper.errors">
+<member name="">
 
 </member>
 <member name="M:Fake.TargetHelper.Target(System.String,Microsoft.FSharp.Core.FSharpFunc`2{Microsoft.FSharp.Core.Unit,Microsoft.FSharp.Core.Unit})">
@@ -989,16 +1256,79 @@
 <member name="T:Fake.TargetHelper">
 
 </member>
-<member name="T:Fake.TeamCityHelper.Project">
+<member name="">
 
 </member>
-<member name="T:Fake.TeamCityHelper.BuildConfiguration">
+<member name="">
 
 </member>
-<member name="T:Fake.TeamCityHelper.Build">
+<member name="">
 
 </member>
-<member name="T:Fake.TeamCityHelper.VCSRoot">
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
 
 </member>
 <member name="M:Fake.TeamCityHelper.getProjects(System.String,System.String,System.String)">
@@ -1016,7 +1346,7 @@
  Gets a projects from the TeamCity server
 </summary>
 </member>
-<member name="M:Fake.TeamCityHelper.getFirstNode(System.String,System.String,System.String,System.String)">
+<member name="">
 
 </member>
 <member name="M:Fake.TeamCityHelper.getRESTVersion(System.String,System.String,System.String)">
@@ -1024,10 +1354,10 @@
  Returns the REST version of the TeamCity server
 </summary>
 </member>
-<member name="M:Fake.TeamCityHelper.prepareURL(System.String,System.String)">
+<member name="">
 
 </member>
-<member name="M:Fake.TeamCityHelper.showRecentlyFailedTests">
+<member name="">
 
 </member>
 <member name="M:Fake.TeamCityHelper.ComparisonFailure(System.String,System.String,System.String,System.String,System.String)">
@@ -1040,10 +1370,10 @@
  Tests the failed.
 </summary>
 </member>
-<member name="M:Fake.TeamCityHelper.ReportProgressFinish(System.String)">
+<member name="">
 
 </member>
-<member name="M:Fake.TeamCityHelper.ReportProgressStart(System.String)">
+<member name="">
 
 </member>
 <member name="M:Fake.TeamCityHelper.ReportProgress(System.String)">
@@ -1104,7 +1434,13 @@
 <member name="T:Fake.TeamCityHelper">
 
 </member>
-<member name="T:Fake.TraceHelper.TraceMode">
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
 
 </member>
 <member name="M:Fake.TraceHelper.traceEndTask(System.String,System.String)">
@@ -1127,13 +1463,13 @@
  Traces the begin of a target
 </summary>
 </member>
-<member name="M:Fake.TraceHelper.closeAllOpenTags">
+<member name="">
 
 </member>
-<member name="M:Fake.TraceHelper.closeTag(System.String)">
+<member name="">
 
 </member>
-<member name="M:Fake.TraceHelper.openTag(System.String)">
+<member name="">
 
 </member>
 <member name="M:Fake.TraceHelper.traceEndBuild``1(``0)">
@@ -1201,7 +1537,7 @@
  logs the specified string        
 </summary>
 </member>
-<member name="M:Fake.TraceHelper.xmlMessage(System.String)">
+<member name="">
 
 </member>
 <member name="M:Fake.TraceHelper.logMessageToConsole(System.Boolean,System.String)">
@@ -1224,19 +1560,82 @@
  Trace verbose output
 </summary>
 </member>
-<member name="P:Fake.TraceHelper.openTags">
+<member name="">
 
 </member>
-<member name="M:Fake.TraceHelper.appendXML(System.String)">
+<member name="">
 
 </member>
-<member name="P:Fake.TraceHelper.traceMode">
+<member name="">
 
 </member>
 <member name="T:Fake.TraceHelper">
 
 </member>
-<member name="T:Fake.TwitterHelper.TwitterClientInfo">
+<member name="F:Fake.TwitterHelper.TwitterClientInfo.ClientUrl">
+<summary>
+ Sets the URL of the Twitter client.
+ Must be in the XML format documented in the &quot;Request Headers&quot; section at:
+ http://twitter.pbwiki.com/API-Docs.
+ According to the Twitter Fan Wiki at http://twitter.pbwiki.com/API-Docs and supported by
+ the Twitter developers, this will be used in the future (hopefully near) to set more information
+ in Twitter about the client posting the information as well as future usage in a clients directory.    
+</summary>
+</member>
+<member name="F:Fake.TwitterHelper.TwitterClientInfo.ClientVersion">
+<summary>
+ Sets the version of the Twitter client.
+ According to the Twitter Fan Wiki at http://twitter.pbwiki.com/API-Docs and supported by
+ the Twitter developers, this will be used in the future (hopefully near) to set more information
+</summary>
+</member>
+<member name="F:Fake.TwitterHelper.TwitterClientInfo.ClientName">
+<summary>
+ Sets the name of the Twitter client.
+ According to the Twitter Fan Wiki at http://twitter.pbwiki.com/API-Docs and supported by
+ the Twitter developers, this will be used in the future (hopefully near) to set more information
+ in Twitter about the client posting the information as well as future usage in a clients directory.
+</summary>
+</member>
+<member name="F:Fake.TwitterHelper.TwitterClientInfo.Source">
+<summary>
+ Source is an additional parameters that will be used to fill the &quot;From&quot; field.
+ Currently you must talk to the developers of Twitter at:
+ http://groups.google.com/group/twitter-development-talk/
+ Otherwise, Twitter will simply ignore this parameter and set the &quot;From&quot; field to &quot;web&quot;.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
 
 </member>
 <member name="T:Fake.TwitterHelper.TwitterAction">
@@ -1246,10 +1645,34 @@
  Twitter documentation at: http://groups.google.com/group/twitter-development-talk/web/api-documentation
 </summary>
 </member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
 <member name="T:Fake.TwitterHelper.TwitterObject">
 <summary>
  The various object types supported at Twitter.
 </summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
 </member>
 <member name="T:Fake.TwitterHelper.TwitterFormat">
 <summary>
@@ -1328,7 +1751,7 @@
  Gets the users timeline
 </summary>
 </member>
-<member name="M:Fake.TwitterHelper.getUserUrl``3(``0,``1,System.String,``2,Fake.TwitterHelper.TwitterFormat)">
+<member name="">
 
 </member>
 <member name="M:Fake.TwitterHelper.GetPublicTimelineAsXML(Fake.TwitterHelper.TwitterFormat)">
@@ -1346,7 +1769,7 @@
  Tests the twitter server
 </summary>
 </member>
-<member name="M:Fake.TwitterHelper.ExecutePostCommand(Fake.TwitterHelper.TwitterClientInfo)">
+<member name="">
 
 </member>
 <member name="M:Fake.TwitterHelper.GetAsXML(Microsoft.FSharp.Core.FSharpFunc`2{Fake.TwitterHelper.TwitterFormat,System.String},Fake.TwitterHelper.TwitterFormat)">
@@ -1359,22 +1782,22 @@
  Generates a twitter url
 </summary>
 </member>
-<member name="P:Fake.TwitterHelper.ACCESS_TOKEN">
+<member name="">
 
 </member>
-<member name="P:Fake.TwitterHelper.AUTHORIZE">
+<member name="">
 
 </member>
-<member name="P:Fake.TwitterHelper.REQUEST_TOKEN">
+<member name="">
 
 </member>
 <member name="T:Fake.TwitterHelper">
 
 </member>
-<member name="M:Fake.VSSHelper.getVSSProject(System.String,System.String,System.String,System.String,System.String,System.String)">
+<member name="">
 
 </member>
-<member name="M:Fake.VSSHelper.getVSSProjectWithLabel(System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+<member name="">
 
 </member>
 <member name="T:Fake.VSSHelper">
@@ -1405,7 +1828,7 @@
  gets the sub node with the name
 </summary>
 </member>
-<member name="M:Fake.XMLHelper.getChilds``1(``0)">
+<member name="">
 
 </member>
 <member name="M:Fake.XMLHelper.getAttribute``1(System.String,``0)">
@@ -1457,13 +1880,40 @@
 <member name="T:Fake.XMLHelper">
 
 </member>
-<member name="T:Fake.XUnitHelper.XUnitParams">
+<member name="">
 
 </member>
-<member name="M:Fake.XUnitHelper.xUnit(Microsoft.FSharp.Core.FSharpFunc`2{Fake.XUnitHelper.XUnitParams,Fake.XUnitHelper.XUnitParams},System.Collections.Generic.IEnumerable{System.String})">
+<member name="">
 
 </member>
-<member name="M:Fake.XUnitHelper.ResourceStream(System.String,System.String)">
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
 
 </member>
 <member name="P:Fake.XUnitHelper.xUnitDefaults">
@@ -1509,7 +1959,25 @@
 <member name="T:Fake.ZipHelper">
 
 </member>
-<member name="T:RegistryHelper.RegistryBaseKey">
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
 
 </member>
 <member name="M:RegistryHelper.getRegistryValue(RegistryHelper.RegistryBaseKey,System.String,System.String)">
