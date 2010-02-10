@@ -161,8 +161,8 @@ For? Deploy <-
 For? GenerateDocumentation <-
     Dependency? BuildApp
 
-For? ZipDocumentation <-
-    Dependency? GenerateDocumentation
+//For? ZipDocumentation <-
+//    Dependency? GenerateDocumentation
 
 For? Default <- 
     Dependency? Deploy
