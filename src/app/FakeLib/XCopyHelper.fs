@@ -13,8 +13,8 @@ let XCopy source destination =
      info.FileName <- "CMD.exe "
      info.Arguments <- 
        "/D /c XCOPY " +
-         (source |> FullName |> toParam) +
-         (destination |> FullName |> toParam) +
+         (source.TrimEnd('\\') |> FullName |> toParam) +
+         (destination.TrimEnd('\\') |> FullName |> toParam) +
          "  /D /E /Y /I")
          
   if result <> 0 then failwith <| sprintf "Error during XCopy From: %s To: %s" source destination

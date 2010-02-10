@@ -1,5 +1,5 @@
 ﻿[<AutoOpen>]
-module EnvironmentHelper
+module Fake.EnvironmentHelper
 
 open System
 

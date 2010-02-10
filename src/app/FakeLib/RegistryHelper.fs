@@ -1,5 +1,5 @@
 ﻿[<AutoOpen>]
-module RegistryHelper
+module Fake.RegistryHelper
 
 open Microsoft.Win32
 
