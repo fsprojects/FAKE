@@ -16,8 +16,8 @@ type XUnitParams =
    Verbose:bool;
    OutputDir: string}
 
- /// xUnit default params  
-let xUnitDefaults =
+/// xUnit default params  
+let XUnitDefaults =
  { ToolPath = @".\tools\xUnit\xunit.console.exe";
    ConfigFile = null;
    HtmlOutput = false;
@@ -29,13 +29,13 @@ let xUnitDefaults =
    OutputDir = null}
    
 let ResourceStream toolPath xmlResourceName =
-  new FileStream(toolPath + xmlResourceName, FileMode.Open, FileAccess.Read);
+  new FileStream(toolPath + xmlResourceName, FileMode.Open, FileAccess.Read)
   
 
 let xUnit setParams assemblies = 
   let details = assemblies |> separated ", "
   traceStartTask "xUnit" details
-  let parameters = xUnitDefaults |> setParams
+  let parameters = XUnitDefaults |> setParams
   assemblies
     |> Seq.iter (fun assembly ->
         let commandLineBuilder =
