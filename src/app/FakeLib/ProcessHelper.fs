@@ -10,7 +10,7 @@ let mutable redirectOutputToTrace = false
 
 /// Runs the given process
 /// returns the exit code
-let execProcess3 infoAction =
+let execProcessAndReturnExitCode infoAction =
   use p = new Process()
   p.StartInfo.UseShellExecute <- false
   infoAction p.StartInfo
@@ -26,7 +26,11 @@ let execProcess3 infoAction =
   
   p.WaitForExit()
     
-  p.ExitCode = 0    
+  p.ExitCode
+
+/// Runs the given process
+/// returns if the exit code was 0
+let execProcess3 infoAction = execProcessAndReturnExitCode infoAction = 0    
 
 /// Runs the given process
 /// returns the exit code

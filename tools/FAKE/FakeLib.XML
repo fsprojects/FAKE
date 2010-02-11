@@ -896,6 +896,12 @@
 <member name="M:Fake.ProcessHelper.execProcess3(Microsoft.FSharp.Core.FSharpFunc`2{System.Diagnostics.ProcessStartInfo,Microsoft.FSharp.Core.Unit})">
 <summary>
  Runs the given process
+ returns if the exit code was 0
+</summary>
+</member>
+<member name="M:Fake.ProcessHelper.execProcessAndReturnExitCode(Microsoft.FSharp.Core.FSharpFunc`2{System.Diagnostics.ProcessStartInfo,Microsoft.FSharp.Core.Unit})">
+<summary>
+ Runs the given process
  returns the exit code
 </summary>
 </member>

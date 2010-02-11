@@ -77,15 +77,16 @@ let NUnit setParams (assemblies: string seq) =
   let tool = Path.Combine(parameters.ToolPath, toolName)
   let args = commandLineBuilder.ToString()
   trace (tool + " " + args)
-  if execProcess3 (fun info ->  
-    info.FileName <- tool
-    info.WorkingDirectory <- parameters.WorkingDir
-    info.Arguments <- args)
-  then    
-    sendTeamCityNUnitImport parameters.OutputFile
-    traceEndTask "NUnit" details
+  let result =
+    execProcessAndReturnExitCode (fun info ->  
+      info.FileName <- tool
+      info.WorkingDirectory <- parameters.WorkingDir
+      info.Arguments <- args)
+  if result = 0 then    
+      sendTeamCityNUnitImport parameters.OutputFile
+      traceEndTask "NUnit" details
   else
-    failwith "NUnit test failed."
+      failwith <| sprintf "NUnit test failed. Process finished with exit code %d." result
 
 /// writes the given TestSuite as XML file in NUnit style
 let writeXMLOutput (testSuite:TestSuite) fileName =
