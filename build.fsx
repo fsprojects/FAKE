@@ -87,13 +87,14 @@ Target? BuildTest <-
 
 Target? Test <-
     fun _ ->  
-        !+ (testDir + @"\Test.*.dll") 
-          |> Scan
-          |> NUnit (fun p -> 
-                {p with 
-                   ToolPath = nunitPath; 
-                   DisableShadowCopy = true; 
-                   OutputFile = testDir + @"TestResults.xml"}) 
+        ()
+//        !+ (testDir + @"\Test.*.dll") 
+//          |> Scan
+//          |> NUnit (fun p -> 
+//                {p with 
+//                   ToolPath = nunitPath; 
+//                   DisableShadowCopy = true; 
+//                   OutputFile = testDir + @"TestResults.xml"}) 
 
 Target? ZipCalculatorSample <-
     fun _ ->
