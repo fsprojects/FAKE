@@ -23,7 +23,7 @@ let testReferences = !+ @"src\test\**\*.csproj" |> Scan
 
 // tools
 let nunitPath = @".\Tools\NUnit\bin"
-let fxCopRoot = @".\Tools\FxCopy\FxCopCmd.exe"
+let fxCopRoot = @".\Tools\FxCop\FxCopCmd.exe"
 let version = "0.2"
 
 // Targets
