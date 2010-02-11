@@ -21,7 +21,7 @@ let appReferences  = !+ @"src\app\**\*.*proj"  |> Scan
 let testReferences = !+ @"src\test\**\*.csproj" |> Scan
 
 // tools
-let nunitPath = @".\Tools\NUnit\bin"
+let nunitPath = @".\Tools\NUnit"
 
 // Targets
 Target? Clean <-
@@ -87,14 +87,13 @@ Target? BuildTest <-
 
 Target? Test <-
     fun _ ->  
-        ()
-//        !+ (testDir + @"\Test.*.dll") 
-//          |> Scan
-//          |> NUnit (fun p -> 
-//                {p with 
-//                   ToolPath = nunitPath; 
-//                   DisableShadowCopy = true; 
-//                   OutputFile = testDir + @"TestResults.xml"}) 
+        !+ (testDir + @"\Test.*.dll") 
+          |> Scan
+          |> NUnit (fun p -> 
+                {p with 
+                   ToolPath = nunitPath; 
+                   DisableShadowCopy = true; 
+                   OutputFile = testDir + @"TestResults.xml"}) 
 
 Target? ZipCalculatorSample <-
     fun _ ->
