@@ -23,13 +23,7 @@ let testReferences = !+ @"src\test\**\*.csproj" |> Scan
 
 // tools
 let nunitPath = @".\Tools\NUnit\bin"
-let fxCopRoot =
-  let r = System.Environment.GetEnvironmentVariable("FXCOPROOT")
-  if r <> "" && r <> null then r else 
-  findFile [
-    @"c:\Programme\Microsoft FxCop 1.36\"; 
-    @"c:\Program Files\Microsoft FxCop 1.36\";
-    @"c:\Program Files (x86)\Microsoft FxCop 1.36\"] "FxCopCmd.exe"
+let fxCopRoot = @".\Tools\FxCopy\FxCopCmd.exe"
 let version = "0.2"
 
 // Targets
