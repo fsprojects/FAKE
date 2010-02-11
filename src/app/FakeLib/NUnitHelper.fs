@@ -61,8 +61,7 @@ let NUnit setParams (assemblies: string seq) =
   traceStartTask "NUnit" details
   let parameters = NUnitDefaults |> setParams
               
-  let assemblies =
-    assemblies |> Seq.toArray
+  let assemblies =  assemblies |> Seq.toArray
   let commandLineBuilder =
     new StringBuilder()
       |> append "/nologo"
@@ -76,11 +75,12 @@ let NUnit setParams (assemblies: string seq) =
       |> appendIfNotNull parameters.ErrorOutputFile "/err="
 
   let tool = Path.Combine(parameters.ToolPath, toolName)
-  
+  let args = commandLineBuilder.ToString()
+  trace (tool + " " + args)
   if execProcess3 (fun info ->  
     info.FileName <- tool
     info.WorkingDirectory <- parameters.WorkingDir
-    info.Arguments <- commandLineBuilder.ToString())
+    info.Arguments <- args)
   then    
     sendTeamCityNUnitImport parameters.OutputFile
     traceEndTask "NUnit" details
