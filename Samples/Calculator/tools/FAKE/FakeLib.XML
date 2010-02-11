@@ -11,44 +11,6 @@
 <member name="">
 
 </member>
-<member name="T:AssemblyInfo">
-
-</member>
-<member name="">
-
-</member>
-<member name="M:EnvironmentHelper.getBuildParam(System.String)">
-<summary>
- Returns the value of the buildParam if it is set and otherwise &quot;&quot; 
-</summary>
-</member>
-<member name="M:EnvironmentHelper.hasBuildParam(System.String)">
-<summary>
- Returns true if the buildParam is set and otherwise false
-</summary>
-</member>
-<member name="M:EnvironmentHelper.environVars(System.EnvironmentVariableTarget)">
-<summary>
- Retrieves the EnvironmentVariable
-</summary>
-</member>
-<member name="M:EnvironmentHelper.environVar(System.String)">
-<summary>
- Retrieves the EnvironmentVariable
-</summary>
-</member>
-<member name="T:EnvironmentHelper">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
 <member name="">
 
 </member>
@@ -175,6 +137,55 @@
 <member name="T:Fake.CCNetHelper">
 
 </member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:Fake.DocuHelper.DocuDefaults">
+<summary>
+ Docu default params  
+</summary>
+</member>
+<member name="T:Fake.DocuHelper">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.EnvironmentHelper.getBuildParam(System.String)">
+<summary>
+ Returns the value of the buildParam if it is set and otherwise &quot;&quot; 
+</summary>
+</member>
+<member name="M:Fake.EnvironmentHelper.hasBuildParam(System.String)">
+<summary>
+ Returns true if the buildParam is set and otherwise false
+</summary>
+</member>
+<member name="M:Fake.EnvironmentHelper.environVars(System.EnvironmentVariableTarget)">
+<summary>
+ Retrieves the EnvironmentVariable
+</summary>
+</member>
+<member name="M:Fake.EnvironmentHelper.environVar(System.String)">
+<summary>
+ Retrieves the EnvironmentVariable
+</summary>
+</member>
+<member name="T:Fake.EnvironmentHelper">
+
+</member>
 <member name="M:Fake.FSIHelper.runBuildScript(System.String,System.Collections.Generic.IEnumerable{System.Tuple`2{System.String,System.String}})">
 <summary>
  Run the buildscript with fsi
@@ -274,6 +285,11 @@
 <member name="">
 
 </member>
+<member name="M:Fake.FileHelper.Rename(System.String,System.String)">
+<summary>
+ Renames the files to the target fileName
+</summary>
+</member>
 <member name="M:Fake.FileHelper.Copy(System.String,System.Collections.Generic.IEnumerable{System.String})">
 <summary>
  Copies the files to the target
@@ -347,6 +363,9 @@
 </summary>
 </member>
 <member name="T:Fake.FileHelper">
+
+</member>
+<member name="">
 
 </member>
 <member name="">
@@ -877,6 +896,12 @@
 <member name="M:Fake.ProcessHelper.execProcess3(Microsoft.FSharp.Core.FSharpFunc`2{System.Diagnostics.ProcessStartInfo,Microsoft.FSharp.Core.Unit})">
 <summary>
  Runs the given process
+ returns if the exit code was 0
+</summary>
+</member>
+<member name="M:Fake.ProcessHelper.execProcessAndReturnExitCode(Microsoft.FSharp.Core.FSharpFunc`2{System.Diagnostics.ProcessStartInfo,Microsoft.FSharp.Core.Unit})">
+<summary>
+ Runs the given process
  returns the exit code
 </summary>
 </member>
@@ -928,6 +953,45 @@
 
 </member>
 <member name="T:Fake.REST">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.RegistryHelper.getRegistryValue(Fake.RegistryHelper.RegistryBaseKey,System.String,System.String)">
+<summary>
+ gets a registy value as string
+</summary>
+</member>
+<member name="M:Fake.RegistryHelper.getRegistryKey(Fake.RegistryHelper.RegistryBaseKey,System.String)">
+<summary>
+ gets a registy key
+</summary>
+</member>
+<member name="M:Fake.RegistryHelper.getKey(Fake.RegistryHelper.RegistryBaseKey)">
+<summary>
+ Maps the RegistryBaseKey to a RegistryKey
+</summary>
+</member>
+<member name="T:Fake.RegistryHelper">
 
 </member>
 <member name="">
@@ -1916,7 +1980,7 @@
 <member name="">
 
 </member>
-<member name="P:Fake.XUnitHelper.xUnitDefaults">
+<member name="P:Fake.XUnitHelper.XUnitDefaults">
 <summary>
  xUnit default params  
 </summary>
@@ -1968,34 +2032,7 @@
 <member name="">
 
 </member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="M:RegistryHelper.getRegistryValue(RegistryHelper.RegistryBaseKey,System.String,System.String)">
-<summary>
- gets a registy value as string
-</summary>
-</member>
-<member name="M:RegistryHelper.getRegistryKey(RegistryHelper.RegistryBaseKey,System.String)">
-<summary>
- gets a registy key
-</summary>
-</member>
-<member name="M:RegistryHelper.getKey(RegistryHelper.RegistryBaseKey)">
-<summary>
- Maps the RegistryBaseKey to a RegistryKey
-</summary>
-</member>
-<member name="T:RegistryHelper">
+<member name="T:FakeLib.AssemblyInfo">
 
 </member>
 </members>
