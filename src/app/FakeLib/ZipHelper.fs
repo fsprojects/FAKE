@@ -68,6 +68,7 @@ let CreateZip workingDir fileName comment level flatten files =
   trace <| sprintf "Zip successfully %s" fileName
  
 /// Creates a zip file with the given files 
+///
 /// Parameter 1: workingDir - The relative dir of the zip files. Use this parameter to influence directory structure within zip file.
 /// Parameter 2: fileName - The fileName of the resulting zip file.
 /// Parameter 3: files - A sequence with files to zip.
@@ -75,6 +76,7 @@ let Zip workingDir fileName files =
     CreateZip workingDir fileName "" DefaultZipLevel false files
   
 /// Creates a zip file with the given file 
+///
 /// Parameter 1: fileName - The fileName of the resulting zip file.
 /// Parameter 2: fileName - The file to zip.
 let ZipFile fileName file =
@@ -82,6 +84,7 @@ let ZipFile fileName file =
     CreateZip (fi.Directory.FullName) fileName "" DefaultZipLevel false [fi.FullName]
 
 /// Unzips a file with the given fileName
+///
 /// Parameter 1: target - The target directory.
 /// Parameter 2: fileName - The fileName of the zip file.
 let Unzip target fileName =  
