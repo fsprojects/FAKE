@@ -105,8 +105,8 @@ let CopyFileIntoSubFolder target file =
   fi.CopyTo(targetName,true) |> ignore    
 
 /// Copies a single file to the target
-///   param target: The targetDirectory
-///   param file: The fileName
+///   param target: The target directory.
+///   param file: The FileName
 let CopyFile target file =
   let fi = new FileInfo(file)
   let targetName = target + fi.Name
@@ -114,10 +114,14 @@ let CopyFile target file =
   fi.CopyTo(targetName,true) |> ignore    
   
 /// Copies the files to the target
+///   param target: The target directory.
+///   param files: The original FileNames as a sequence.
 let Copy target files =
   files |> Seq.iter (CopyFile target)   
 
 /// Renames the files to the target fileName
+///   param target: The target FileName.
+///   param file: The orginal FileName.
 let Rename target file = (new FileInfo(file)).MoveTo target   
   
 let SilentCopy target files =
@@ -133,7 +137,9 @@ let SilentCopy target files =
       fi.CopyTo(targetName) |> ignore)
                
 
-/// Copies the files to the target
+/// Copies the files to the target - Alias for Copy
+///   param target: The target directory.
+///   param files: The original FileNames as a sequence.
 let CopyFiles target files = Copy target files  
 
 /// Exclude SVN files (path with .svn)
@@ -144,6 +150,9 @@ let allFiles (path:string) = true
 
 /// Copies a directory recursivly
 /// If the target directory does not exist, it will be created
+///   param target: The target directory.
+///   param files: The source directory.
+///   param filterFile: A file filter.
 let CopyDir target source filterFile =
   CreateDir target
   Directory.GetFiles(source, "*.*", SearchOption.AllDirectories)
@@ -192,6 +201,8 @@ let ReadCSVFile(file:string) =
 
              
 /// Appends all given files to one file 
+///   param newFileName: The target FileName.
+///   param files: The original FileNames as a sequence.
 let AppendTextFiles newFileName files =    
   let fi = new FileInfo(newFileName)
   if fi.Exists then failwith "File %s already exists."
@@ -202,13 +213,12 @@ let AppendTextFiles newFileName files =
          logVerbose <| sprintf "Appending %s to %s" file fi.FullName
          ReadFile file |> Seq.iter(fun line -> writer.WriteLine(line)))
          
-  writer.Close()
-  
-let BYTES_TO_READ = 32768
+  writer.Close() 
 
 /// Checks if the two files are byte-to-byte equal
-let FilesAreEqual (first:FileInfo) (second:FileInfo) =
+let FilesAreEqual (first:FileInfo) (second:FileInfo) =   
     if first.Length <> second.Length then false else
+    let BYTES_TO_READ = 32768
     let iterations = System.Math.Ceiling((float first.Length) / (float BYTES_TO_READ)) |> int
 
     use fs1 = first.OpenRead()
