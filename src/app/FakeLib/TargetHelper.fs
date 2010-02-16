@@ -158,6 +158,7 @@ let FinalTarget name body =
 
 /// Activates the FinalTarget
 let ActivateFinalTarget name = 
+    let t = getTarget name // test if target is defined
     FinalTargets.[name] <- true
 
 /// Allows to use Tokens instead of strings
