@@ -33,7 +33,7 @@ try
   
   traceFAKE <| sprintf "FakePath: %s" fakePath   
   traceFAKE <| fakeVersionStr
-  if isLocalBuild then
+  if buildServer = LocalBuild then
     trace localBuildLabel
   else
     trace <| "Build-Version: " + buildVersion

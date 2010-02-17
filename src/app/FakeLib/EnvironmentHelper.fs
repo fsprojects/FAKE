@@ -19,3 +19,6 @@ let hasBuildParam name = environVar name <> null
 
 /// Returns the value of the buildParam if it is set and otherwise "" 
 let getBuildParam name = if hasBuildParam name then environVar name else String.Empty
+
+/// Returns the value of the buildParam if it is set and otherwise the default
+let getBuildParamOrDefault name defaultParam = if hasBuildParam name then getBuildParam name else defaultParam

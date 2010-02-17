@@ -3,7 +3,7 @@ module Fake.TeamCityHelper
 
 /// Send message to TeamCity
 let sendToTeamCity format message =
-  if buildServer = Some TeamCity then
+  if buildServer = TeamCity then
     message 
      |> RemoveLineBreaks 
      |> EncapsulateApostrophe
@@ -12,7 +12,7 @@ let sendToTeamCity format message =
     
 /// Send message to TeamCity
 let sendStrToTeamCity s =
-  if buildServer = Some TeamCity then
+  if buildServer = TeamCity then
     s |> RemoveLineBreaks |> printfn "%s"
   
 /// Sends an error to TeamCity

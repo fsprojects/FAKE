@@ -5,15 +5,17 @@ open System
 open System.IO
 open System.Reflection
 
+/// The trace Mode type.
 type TraceMode =
 | Console
 | Xml
 
+/// The actual trace mode.
 let mutable traceMode = 
     match buildServer with
-    | Some TeamCity -> Console
-    | Some CCNet    -> Xml
-    | None          -> Console
+    | TeamCity   -> Console
+    | CCNet      -> Xml
+    | LocalBuild -> Console
     
 let appendXML line = AppendToFile xmlOutputFile [line]
 
@@ -30,7 +32,7 @@ let fakeVersion = productName.GetType().Assembly.GetName().Version
 
 /// logs the specified string to the console
 let logMessageToConsole important s =     
-  if important && buildServer <> Some CCNet then
+  if important && buildServer <> CCNet then
     eprintfn "%s" (toRelativePath s)  
   else
     printfn "%s" (toRelativePath s)

@@ -1,21 +1,24 @@
 ﻿[<AutoOpen>]
 module Fake.BuildServerHelper
 
+/// The BuildServer type.
 type BuildServer =
 | TeamCity
 | CCNet       
-            
-let localBuildLabel = "LocalBuild"
-let mutable xmlOutputFile = 
-    if hasBuildParam "xmloutput" then
-        getBuildParam "xmloutput"
-    else
-        @".\output\Results.xml"
+| LocalBuild
 
+/// A constant for local builds            
+let localBuildLabel = "LocalBuild"
+
+/// Definces the XML output file
+/// Used for BuildServers like CruiseControl.NET
+let mutable xmlOutputFile = getBuildParamOrDefault "xmloutput" @".\output\Results.xml"
+
+/// Build number retrieved from TeamCity
 let tcBuildNumber = environVar "BUILD_NUMBER" 
 
 /// Determines the current BuildVersion and if it is a local build
-let buildVersion,isLocalBuild,buildServer =     
-  if tcBuildNumber <> "" && tcBuildNumber <> null then tcBuildNumber,false,Some TeamCity else
-  if ccBuildLabel <> "" && ccBuildLabel <> null then ccBuildLabel,false,Some CCNet else 
-  localBuildLabel,true,None
+let buildVersion,buildServer =     
+    if not (isNullOrEmpty tcBuildNumber) then tcBuildNumber,TeamCity else
+    if not (isNullOrEmpty ccBuildLabel) then ccBuildLabel,CCNet else 
+    localBuildLabel,LocalBuild
