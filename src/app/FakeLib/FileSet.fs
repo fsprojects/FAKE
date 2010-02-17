@@ -6,7 +6,12 @@ open System.Globalization
 open System.Text
 open System.Text.RegularExpressions
 
+/// The FileSet is eagerly loaded into a list of strings.
+/// The scan is only done once.
 type EagerFileSet = string list
+
+/// The FileSet is lazy loaded into a sequence of strings.
+/// Every time the FileSet is used it scans again.
 type LazyFileSet = string seq
 
 type RegexEntry =
