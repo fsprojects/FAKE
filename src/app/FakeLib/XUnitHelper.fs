@@ -44,7 +44,7 @@ let xUnit setParams assemblies =
           let name = fi.Name
 
           let dir = 
-            if String.IsNullOrEmpty parameters.OutputDir then String.Empty else
+            if isNullOrEmpty parameters.OutputDir then String.Empty else
             (new DirectoryInfo(parameters.OutputDir)).FullName
 
           new StringBuilder()
