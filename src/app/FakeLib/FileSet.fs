@@ -232,32 +232,23 @@ let convertPatterns baseDir patterns =
        ([],[])
     
 
-let cachedCaseSensitiveRegexes   = new System.Collections.Generic.Dictionary<string,Regex>()
-let cachedCaseInsensitiveRegexes = new System.Collections.Generic.Dictionary<string,Regex>()
+open System.Collections.Generic
+
+let cachedCaseSensitiveRegexes   = new Dictionary<_,_>()
+let cachedCaseInsensitiveRegexes = new Dictionary<_,_>()
 
 let testRegex caseSensitive (path:string) (entry:RegexEntry) =
-  let regexCache = 
-    if caseSensitive then cachedCaseSensitiveRegexes else cachedCaseInsensitiveRegexes
-  let r = 
-    match regexCache.TryGetValue(entry.Pattern) with
-      | true, r -> r
-      | false, _ ->      
-        let regexOptions = 
-          if caseSensitive then
-            RegexOptions.Compiled
-          else
-            RegexOptions.Compiled ||| RegexOptions.IgnoreCase
-        let r = new Regex(entry.Pattern, regexOptions)
-        regexCache.[entry.Pattern] <- r
-        r
+  let regexCache = if caseSensitive then cachedCaseSensitiveRegexes else cachedCaseInsensitiveRegexes
+  let regexOptions = if caseSensitive then RegexOptions.Compiled else RegexOptions.Compiled ||| RegexOptions.IgnoreCase
+  let r = lookup entry.Pattern (fun () -> new Regex(entry.Pattern, regexOptions)) regexCache
     
   // Check to see if the empty string matches the pattern
   if path.Length = entry.BaseDirectory.Length then r.IsMatch("") else
 
   if endsWithSlash entry.BaseDirectory then
-    r.IsMatch(path.Substring(entry.BaseDirectory.Length))
+      r.IsMatch(path.Substring(entry.BaseDirectory.Length))
   else
-    r.IsMatch(path.Substring(entry.BaseDirectory.Length + 1))
+      r.IsMatch(path.Substring(entry.BaseDirectory.Length + 1))
 
           
 let isPathIncluded path caseSensitive compareOptions includeNames includedPatterns excludeNames excludedPatterns =     
@@ -352,8 +343,7 @@ let Files baseDirs includes excludes =
       yield! scanDirectory false includeNames includePatterns excludeNames excludePatterns baseDir.FullName true}
 
 /// Logs the given files with the message  
-let Log message files =
-  files |> Seq.iter (fun file -> log <| sprintf "%s%s" message file)
+let Log message files = files |> Seq.iter (log << sprintf "%s%s" message)
 
 /// The default base directory 
 let DefaultBaseDir =
@@ -368,22 +358,17 @@ let Include x =
        
 /// Lazy scan for include files
 /// Will be processed at the time when needed
-let Scan includes : LazyFileSet =
-  Files includes.BaseDirectories includes.Includes includes.Excludes
+let Scan includes : LazyFileSet = Files includes.BaseDirectories includes.Includes includes.Excludes
 
 /// Adds a directory as baseDirectory for fileIncludes  
-let AddBaseDir dir fileInclude =
-  {fileInclude with
-    BaseDirectories = dir::fileInclude.BaseDirectories}    
+let AddBaseDir dir fileInclude = {fileInclude with BaseDirectories = dir::fileInclude.BaseDirectories}    
     
 /// Sets a directory as baseDirectory for fileIncludes  
-let SetBaseDir dir fileInclude =
-  {fileInclude with BaseDirectories = [dir]}   
+let SetBaseDir dir fileInclude = {fileInclude with BaseDirectories = [dir]}   
       
 /// Scans immediately for include files
 /// Files will be memoized
-let ScanImmediately includes : EagerFileSet =
-  Scan includes |> Seq.toList    
+let ScanImmediately includes : EagerFileSet = Scan includes |> Seq.toList    
   
 /// Include prefix operator
 let inline (!+) x = Include x
