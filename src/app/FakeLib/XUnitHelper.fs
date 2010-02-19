@@ -38,8 +38,7 @@ let xUnit setParams assemblies =
   let parameters = XUnitDefaults |> setParams
   assemblies
     |> Seq.iter (fun assembly ->
-        let commandLineBuilder =
-          
+        let commandLineBuilder =          
           let fi = new FileInfo(assembly)
           let name = fi.Name
 

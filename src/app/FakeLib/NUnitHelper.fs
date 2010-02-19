@@ -82,8 +82,9 @@ let NUnit setParams (assemblies: string seq) =
       info.FileName <- tool
       info.WorkingDirectory <- parameters.WorkingDir
       info.Arguments <- args)
-  if result = 0 then    
-      sendTeamCityNUnitImport parameters.OutputFile
+
+  sendTeamCityNUnitImport parameters.OutputFile
+  if result = 0 then          
       traceEndTask "NUnit" details
   else
       failwith <| sprintf "NUnit test failed. Process finished with exit code %d." result
