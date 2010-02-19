@@ -22,3 +22,5 @@ let buildVersion,buildServer =
     if not (isNullOrEmpty tcBuildNumber) then tcBuildNumber,TeamCity else
     if not (isNullOrEmpty ccBuildLabel) then ccBuildLabel,CCNet else 
     localBuildLabel,LocalBuild
+
+let isLocalBuild = LocalBuild = buildServer
