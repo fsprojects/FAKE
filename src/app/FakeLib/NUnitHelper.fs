@@ -87,7 +87,9 @@ let NUnit setParams (assemblies: string seq) =
   if result = 0 then          
       traceEndTask "NUnit" details
   else
-      failwith <| sprintf "NUnit test failed. Process finished with exit code %d." result
+      if result = 2 then
+          failwith "NUnit test failed."
+      failwithf "NUnit test failed. Process finished with exit code %d." result
 
 /// writes the given TestSuite as XML file in NUnit style
 let writeXMLOutput (testSuite:TestSuite) fileName =
