@@ -1,14 +1,20 @@
 ﻿[<AutoOpen>]
 module Fake.FSIHelper
 
+open System
 open System.IO
 open System.Configuration
 open System.Threading
    
 let fsiPath = 
-  let ev = environVar "FSI"
-  if ev <> null && ev <> "" then ev else
-    findFile (ConfigurationManager.AppSettings.["FSIPath"].Split(';')) "fsi.exe" 
+    let ev = environVar "FSI"
+    if not (isNullOrEmpty ev) then 
+        ev 
+    else
+        let fsiPaths = (ConfigurationManager.AppSettings.["FSIPath"].Split(';'))
+        match tryFindFile fsiPaths "fsi.exe" with
+        | Some file -> file
+        | None -> "fsi.exe"
       
 /// Run the buildscript with fsi
 let runBuildScript script args = 

@@ -2,6 +2,7 @@
 module Fake.ProcessHelper
 
 open System
+open System.ComponentModel
 open System.Diagnostics
 open System.IO
 open System.Threading
@@ -19,7 +20,10 @@ let execProcessAndReturnExitCode infoAction =
 
   p.ErrorDataReceived.Add(fun d -> if d.Data <> null then traceError d.Data)
   p.OutputDataReceived.Add(fun d -> if d.Data <> null then trace d.Data)
-  p.Start() |> ignore
+  try
+    p.Start() |> ignore
+  with
+  | :? Win32Exception -> failwithf "Could not execute %s" p.StartInfo.FileName
   
   p.BeginErrorReadLine()
   p.BeginOutputReadLine()     
@@ -40,7 +44,10 @@ let execProcess2 infoAction silent =
   infoAction p.StartInfo
   if silent then
     p.StartInfo.RedirectStandardError <- true
-  p.Start() |> ignore    
+  try
+    p.Start() |> ignore
+  with
+  | :? Win32Exception -> failwithf "Could not execute %s" p.StartInfo.FileName
   let error =
     if silent then
       p.StandardError.ReadToEnd()
@@ -77,16 +84,24 @@ let toParam x = " \"" + x + "\" "
 /// Use default Parameters
 let UseDefaults = id
 
-/// Searches the given directories for the given file
+/// Searches the given directories for all occurrences of the given file name
+let tryFindFile dirs file =
+    let files = 
+        dirs
+          |> Seq.map 
+               (fun path ->
+                   let dir = new DirectoryInfo(path)
+                   if not dir.Exists then "" else
+                   let fi = new FileInfo(Path.Combine(dir.FullName, file))
+                   if fi.Exists then fi.FullName else "")
+          |> Seq.filter ((<>) "")
+    if not (Seq.isEmpty files) then
+        Some (Seq.head files)
+    else
+        None
+
+/// Searches the given directories for the given file, failing if not found
 let findFile dirs file =
-  try
-    dirs
-      |> Seq.map (fun path ->
-          let dir = new DirectoryInfo(path)
-          if not dir.Exists then "" else
-          let fi = new FileInfo(Path.Combine(dir.FullName, file))
-          if fi.Exists then fi.FullName else "")
-      |> Seq.filter ((<>) "")
-      |> Seq.head
-  with
-  | exn -> failwith <| sprintf "%s not found in %A." file dirs
+    match tryFindFile dirs file with
+    | Some found -> found
+    | None -> failwithf "%s not found in %A." file dirs
