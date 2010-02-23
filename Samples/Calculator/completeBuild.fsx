@@ -27,7 +27,7 @@ let fxCopRoot = @".\Tools\FxCop\FxCopCmd.exe"
 let version = "0.2"  // or retrieve from CI server
 
 // Targets
-Target Clean <-
+Target? Clean <-
     fun _ -> CleanDirs [buildDir; testDir; deployDir]
 
 Target? BuildApp <-
