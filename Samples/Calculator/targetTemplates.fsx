@@ -1,4 +1,3 @@
-#light
 // include Fake libs
 #I "tools\FAKE"
 #r "FakeLib.dll"

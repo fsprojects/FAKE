@@ -1,12 +1,12 @@
-#light
 // include Fake libs
 #I "tools\FAKE"
 #r "FakeLib.dll"
 
 // include CustomTask
 #r "MyCustomTask.dll"
-open Fake 
 
+open Fake
+ 
 // open CustomNamespace
 open MyCustomTask
 
@@ -24,10 +24,10 @@ let testReferences = !+ @"src\test\**\*.csproj" |> Scan
 // tools
 let nunitPath = @".\Tools\NUnit\bin"
 let fxCopRoot = @".\Tools\FxCop\FxCopCmd.exe"
-let version = "0.2"
+let version = "0.2"  // or retrieve from CI server
 
 // Targets
-Target? Clean <-
+Target "Clean" <-
     fun _ -> CleanDirs [buildDir; testDir; deployDir]
 
 Target? BuildApp <-
@@ -79,7 +79,7 @@ Target? NUnitTest <-
           testAssemblies
 
 Target? xUnitTest <-
-    fun () ->  
+    fun _ ->  
         let testAssemblies = 
           !+ (testDir + @"\xUnit.Test.*.dll") 
             |> Scan
@@ -94,7 +94,7 @@ Target? xUnitTest <-
           testAssemblies
 
 Target? FxCop <-
-    fun () ->
+    fun _ ->
         let assemblies = 
           !+ (buildDir + @"\**\*.dll") 
             ++ (buildDir + @"\**\*.exe") 
@@ -109,7 +109,7 @@ Target? FxCop <-
           assemblies
 
 Target? Deploy <-
-    fun () ->
+    fun _ ->
         let artifacts = !+ (buildDir + "\**\*.*") -- "*.zip" |> Scan
         let zipFileName = deployDir + "Calculator.zip" 
         Zip buildDir zipFileName artifacts
@@ -118,31 +118,13 @@ Target? Default <- DoNothing
 Target? Test <- DoNothing
 
 // Dependencies
-For? BuildApp <-
-    Dependency? Clean
-    
-For? BuildTest <-
-    Dependency? Clean
-
-For? NUnitTest <-
-    Dependency? BuildApp
-      |> And? BuildTest
-      |> And? FxCop
-      
-For? xUnitTest <- 
-    Dependency? BuildApp
-      |> And? BuildTest
-      |> And? FxCop
-      
-For? Test <-
-    Dependency? xUnitTest
-      |> And? NUnitTest
-      
-For? Deploy <-
-    Dependency? Test
-      
-For? Default <- 
-    Dependency? Deploy
+For? BuildApp <- Dependency? Clean    
+For? BuildTest <- Dependency? Clean
+For? NUnitTest <- Dependency? BuildApp |> And? BuildTest |> And? FxCop      
+For? xUnitTest <- Dependency? BuildApp |> And? BuildTest |> And? FxCop      
+For? Test <- Dependency? xUnitTest |> And? NUnitTest      
+For? Deploy <- Dependency? Test      
+For? Default <- Dependency? Deploy
  
 // start build
 Run? Default
