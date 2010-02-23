@@ -35,8 +35,13 @@ let CopyRecursive dir outputDir overwrite =
 let msBuildExe =   
     let ev = environVar "MSBuild"
     if not (isNullOrEmpty ev) then ev else
-        if "true".Equals(ConfigurationManager.AppSettings.["IgnoreMSBuild"],StringComparison.OrdinalIgnoreCase) then String.Empty 
-        else findFile (ConfigurationManager.AppSettings.["MSBuildPath"].Split(';')) "MSBuild.exe" 
+        if "true".Equals(ConfigurationManager.AppSettings.["IgnoreMSBuild"],StringComparison.OrdinalIgnoreCase) then 
+            String.Empty 
+        else 
+            let msBuildPaths = ConfigurationManager.AppSettings.["MSBuildPath"].Split(';')
+            match tryFindFile msBuildPaths "MSBuild.exe" with
+            | Some file -> file
+            | None -> "MSBuild.exe"
 
 /// Runs a msbuild project
 let build outputPath targets properties overwrite project =
