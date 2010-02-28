@@ -102,8 +102,10 @@ let findFile dirs file =
     | Some found -> found
     | None -> failwithf "%s not found in %A." file dirs
 
-let appSettings (s:string) = System.Configuration.ConfigurationManager.AppSettings.[s].Split(';')
+/// Returns the AppSettings for the key - Splitted on ;
+let appSettings (key:string) = System.Configuration.ConfigurationManager.AppSettings.[key].Split(';')
 
+/// Tries to find the tool via AppSettings. If no path has the right tool we are trying the PATH system variable. 
 let findPath settingsName tool = 
     let paths = appSettings settingsName
     match tryFindFile paths tool with
