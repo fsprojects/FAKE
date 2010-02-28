@@ -47,23 +47,19 @@ let execProcess2 infoAction silent =
   try
     p.Start() |> ignore
   with
-  | :? Win32Exception -> failwithf "Could not execute %s" p.StartInfo.FileName
-  let error =
-    if silent then
-      p.StandardError.ReadToEnd()
-    else
-      String.Empty
+  | exn -> failwithf "Could not execute %s. %s" p.StartInfo.FileName exn.Message
+
+  let error = if silent then p.StandardError.ReadToEnd() else String.Empty
     
   p.WaitForExit()
   if silent && p.ExitCode <> 0 then
-    System.Diagnostics.Trace.WriteLine(error)
+    System.Diagnostics.Trace.WriteLine error
     
   p.ExitCode  
 
 /// Runs the given process
 /// returns the exit code
-let ExecProcess infoAction  =
-  execProcess2 infoAction redirectOutputToTrace
+let ExecProcess infoAction = execProcess2 infoAction redirectOutputToTrace
   
 /// sets the environment Settings for the given startInfo
 /// existing values will be overrriden
