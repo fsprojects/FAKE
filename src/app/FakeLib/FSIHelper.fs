@@ -8,13 +8,7 @@ open System.Threading
    
 let fsiPath = 
     let ev = environVar "FSI"
-    if not (isNullOrEmpty ev) then 
-        ev 
-    else
-        let fsiPaths = (ConfigurationManager.AppSettings.["FSIPath"].Split(';'))
-        match tryFindFile fsiPaths "fsi.exe" with
-        | Some file -> file
-        | None -> "fsi.exe"
+    if not (isNullOrEmpty ev) then ev else findPath "FSIPath" "fsi.exe"
       
 /// Run the buildscript with fsi
 let runBuildScript script args = 

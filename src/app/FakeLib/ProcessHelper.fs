@@ -105,3 +105,11 @@ let findFile dirs file =
     match tryFindFile dirs file with
     | Some found -> found
     | None -> failwithf "%s not found in %A." file dirs
+
+let appSettings (s:string) = System.Configuration.ConfigurationManager.AppSettings.[s].Split(';')
+
+let findPath settingsName tool = 
+    let paths = appSettings settingsName
+    match tryFindFile paths tool with
+    | Some file -> file
+    | None -> tool
