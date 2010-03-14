@@ -66,6 +66,7 @@
     <Compile Include="ZipHelper.fs" />
     <Compile Include="FileHelper.fs" />
     <Compile Include="DocuHelper.fs" />
+    <Compile Include="ILMergeHelper.fs" />
     <Compile Include="VSSHelper.fs" />
     <Compile Include="XCopyHelper.fs" />
     <Compile Include="FSIHelper.fs" />
