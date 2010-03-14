@@ -56,7 +56,7 @@ let Candle (parameters:WiXParams) wixScript =
     let fi = new System.IO.FileInfo(wixScript)
     let wixObj = sprintf @"%s\%s.wixobj" fi.Directory.FullName fi.Name
 
-    let tool = parameters.ToolDirectory + "candle.exe"
+    let tool = parameters.ToolDirectory.TrimEnd('\\') + "\\candle.exe"
     let args = 
         sprintf "-out \"%s\" \"%s\" -ext WiXNetFxExtension" 
             wixObj
@@ -77,7 +77,7 @@ let Candle (parameters:WiXParams) wixScript =
 let Light (parameters:WiXParams) outputFile wixObj = 
     traceStartTask "Light" wixObj   
 
-    let tool = parameters.ToolDirectory + "light.exe"
+    let tool = parameters.ToolDirectory.TrimEnd('\\') + "\\light.exe"
     let args = 
             sprintf "\"%s\" -spdb -dcl:high -out \"%s\" -ext WiXNetFxExtension -ext WixUIExtension.dll -ext WixUtilExtension.dll" 
                 (wixObj |> FullName)
