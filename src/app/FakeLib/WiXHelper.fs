@@ -50,21 +50,21 @@ type WiXParams =
 let WiXDefaults : WiXParams =
  { ToolDirectory = @".\tools\Wix\"; }
    
-let Candle parameters wixScript = 
+let Candle (parameters:WiXParams) wixScript = 
     traceStartTask "Candle" wixScript  
 
     let fi = new System.IO.FileInfo(wixScript)
     let wixObj = sprintf @"%s\%s.wixobj" fi.Directory.FullName fi.Name
 
-    let tool = parameters.ToolPath + "candle.exe"
+    let tool = parameters.ToolDirectory + "candle.exe"
     let args = 
         sprintf "-out \"%s\" \"%s\" -ext WiXNetFxExtension" 
             wixObj
             (wixScript |> FullName)
 
-    trace (parameters.ToolPath + " "  + args)
+    trace (parameters.ToolDirectory + " "  + args)
     if not (execProcess3 (fun info ->  
-        info.FileName <- parameters.ToolPath
+        info.FileName <- parameters.ToolDirectory
         info.WorkingDirectory <- null
         info.Arguments <- args))
     then
@@ -74,18 +74,18 @@ let Candle parameters wixScript =
     wixObj
 
 
-let Light parameters outputFile wixObj = 
+let Light (parameters:WiXParams) outputFile wixObj = 
     traceStartTask "Light" wixObj   
 
-    let tool = parameters.ToolPath + "light.exe"
+    let tool = parameters.ToolDirectory + "light.exe"
     let args = 
             sprintf "\"%s\" -spdb -dcl:high -out \"%s\" -ext WiXNetFxExtension -ext WixUIExtension.dll -ext WixUtilExtension.dll" 
                 (wixObj |> FullName)
                 (outputFile |> FullName)
 
-    trace (parameters.ToolPath + " "  + args)
+    trace (parameters.ToolDirectory + " "  + args)
     if not (execProcess3 (fun info ->  
-        info.FileName <- parameters.ToolPath
+        info.FileName <- parameters.ToolDirectory
         info.WorkingDirectory <- null
         info.Arguments <- args))
     then
