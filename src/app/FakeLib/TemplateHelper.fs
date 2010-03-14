@@ -2,25 +2,25 @@
 module Fake.TemplateHelper
 
 /// Loads all templates (lazy - line by line!)    
-let loadTemplates seq =
-  seq |> Seq.map (fun fileName -> fileName,ReadFile fileName)
+let loadTemplates seq = Seq.map (fun fileName -> fileName,ReadFile fileName) seq
 
 /// replaces a bunch of the keywords in all files (lazy - line by line!)
-let replaceKeywords m seq =
-  seq |> Seq.map (fun (fileName,file) -> 
-     fileName, 
-       file 
-         |> Seq.map (fun (line:string) -> 
-              m |> Seq.fold (fun (acc:string) (k:string,r:string) -> acc.Replace(k,r)) line))
-  
+let replaceKeywords replacements =
+    Seq.map (fun (fileName,file) -> 
+        fileName, 
+        file 
+          |> Seq.map (fun (line:string) -> 
+               let mutable sb = new System.Text.StringBuilder(line)
+               for (k:string,r:string) in replacements do 
+                 sb <- sb.Replace(k,r)
+               sb.ToString()))
+      
 /// saves all files (lazy - file by file!)
-let saveFiles seq =
-  seq |> Seq.iter (fun (fileName,file) -> WriteFile fileName (file |> Seq.toList))
-  
+let saveFiles = Seq.iter (fun (fileName,file) -> WriteFile fileName (file |> Seq.toList))
 
 /// Replaces the templates with the given replacements
 let processTemplates replacements files =
-  files
-    |> loadTemplates
-    |> replaceKeywords replacements
-    |> saveFiles
+    files
+      |> loadTemplates
+      |> replaceKeywords replacements
+      |> saveFiles
