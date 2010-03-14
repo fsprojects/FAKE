@@ -38,10 +38,7 @@ let msBuildExe =
         if "true".Equals(ConfigurationManager.AppSettings.["IgnoreMSBuild"],StringComparison.OrdinalIgnoreCase) then 
             String.Empty 
         else 
-            let msBuildPaths = ConfigurationManager.AppSettings.["MSBuildPath"].Split(';')
-            match tryFindFile msBuildPaths "MSBuild.exe" with
-            | Some file -> file
-            | None -> "MSBuild.exe"
+            findPath "MSBuildPath" "MSBuild.exe"
 
 /// Runs a msbuild project
 let build outputPath targets properties overwrite project =
