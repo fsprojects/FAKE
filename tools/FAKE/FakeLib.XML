@@ -664,24 +664,6 @@
 <member name="T:Fake.FxCopHelper">
 
 </member>
-<member name="">
-
-</member>
-<member name="M:Fake.HTMLHelpWorkShopHelper.saveFiles``1(System.Collections.Generic.IEnumerable{System.Tuple`2{System.String,``0}})">
-<summary>
- saves all files (lazy - file by file!)
-</summary>
-</member>
-<member name="M:Fake.HTMLHelpWorkShopHelper.replaceKeywords``2(System.Collections.Generic.IEnumerable{System.Tuple`2{System.String,System.String}},System.Collections.Generic.IEnumerable{System.Tuple`2{``0,``1}})">
-<summary>
- replaces a bunch of the keywords in all files (lazy - line by line!)
-</summary>
-</member>
-<member name="M:Fake.HTMLHelpWorkShopHelper.loadTemplates(System.Collections.Generic.IEnumerable{System.String})">
-<summary>
- Loads all templates (lazy - line by line!)    
-</summary>
-</member>
 <member name="M:Fake.HTMLHelpWorkShopHelper.CompileHTMLHelpProject(System.String,System.String)">
 <summary>
  Uses the HTML Help Workshop to compile a help project
@@ -691,6 +673,31 @@
 </summary>
 </member>
 <member name="T:Fake.HTMLHelpWorkShopHelper">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.ILMergeHelper.ILMerge(Microsoft.FSharp.Core.FSharpFunc`2{Fake.ILMergeHelper.ILMergeParams,Fake.ILMergeHelper.ILMergeParams},System.String,System.String)">
+<summary>
+ Use ILMerge to merge some .NET assemblies.
+</summary>
+</member>
+<member name="P:Fake.ILMergeHelper.ILMergeDefaults">
+<summary>
+ ILMerge default params  
+</summary>
+</member>
+<member name="T:Fake.ILMergeHelper">
 
 </member>
 <member name="M:Fake.MSBuildHelper.MSBuildRelease(System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
@@ -891,6 +898,16 @@
 </member>
 <member name="T:Fake.NUnitHelper">
 
+</member>
+<member name="M:Fake.ProcessHelper.findPath(System.String,System.String)">
+<summary>
+ Tries to find the tool via AppSettings. If no path has the right tool we are trying the PATH system variable. 
+</summary>
+</member>
+<member name="M:Fake.ProcessHelper.appSettings(System.String)">
+<summary>
+ Returns the AppSettings for the key - Splitted on ;
+</summary>
 </member>
 <member name="M:Fake.ProcessHelper.findFile(System.Collections.Generic.IEnumerable{System.String},System.String)">
 <summary>
@@ -1546,6 +1563,29 @@
 <member name="T:Fake.TeamCityHelper">
 
 </member>
+<member name="M:Fake.TemplateHelper.processTemplates(System.Collections.Generic.IEnumerable{System.Tuple`2{System.String,System.String}},System.Collections.Generic.IEnumerable{System.String})">
+<summary>
+ Replaces the templates with the given replacements
+</summary>
+</member>
+<member name="P:Fake.TemplateHelper.saveFiles">
+<summary>
+ saves all files (lazy - file by file!)
+</summary>
+</member>
+<member name="M:Fake.TemplateHelper.replaceKeywords``2(System.Collections.Generic.IEnumerable{System.Tuple`2{System.String,System.String}})">
+<summary>
+ replaces a bunch of the keywords in all files (lazy - line by line!)
+</summary>
+</member>
+<member name="M:Fake.TemplateHelper.loadTemplates(System.Collections.Generic.IEnumerable{System.String})">
+<summary>
+ Loads all templates (lazy - line by line!)    
+</summary>
+</member>
+<member name="T:Fake.TemplateHelper">
+
+</member>
 <member name="">
 
 </member>
@@ -1917,6 +1957,46 @@
 
 </member>
 <member name="T:Fake.VSSHelper">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.WiXHelper.WiX(Microsoft.FSharp.Core.FSharpFunc`2{Fake.WiXHelper.WiXParams,Fake.ILMergeHelper.ILMergeParams},System.String,System.String)">
+<summary>
+ Uses Candle and Light to create a msi.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:Fake.WiXHelper.WiXDefaults">
+<summary>
+ WiX default params  
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Fake.WiXHelper">
 
 </member>
 <member name="M:Fake.XCopyHelper.XCopy(System.String,System.String)">
