@@ -14,6 +14,7 @@ let ILMergeDefaults : ILMergeParams =
    Version = "";
    Libraries = []; }
    
+/// Use ILMerge to merge some .NET assemblies.
 let ILMerge setParams outputFile primaryAssembly = 
     traceStartTask "ILMerge" primaryAssembly
     let parameters = ILMergeDefaults |> setParams    

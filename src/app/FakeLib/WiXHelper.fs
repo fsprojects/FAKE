@@ -34,3 +34,62 @@ let rec wixComponentRefs (dir:DirectoryInfo) =
         |> separated ""
 
     if dir.GetFiles().Length > 0 then sprintf "%s<ComponentRef Id=\"%s\"/>" compos dir.Name else compos
+
+open System
+
+type WiXParams =
+ { ToolDirectory: string;}
+
+/// WiX default params  
+let WiXDefaults : WiXParams =
+ { ToolDirectory = @".\tools\Wix\"; }
+   
+let Candle parameters wixScript = 
+    traceStartTask "Candle" wixScript  
+
+    let fi = new System.IO.FileInfo(wixScript)
+    let wixObj = sprintf @"%s\%s.wixobj" fi.Directory.FullName fi.Name
+
+    let tool = parameters.ToolPath + "candle.exe"
+    let args = 
+        sprintf "-out \"%s\" \"%s\" -ext WiXNetFxExtension" 
+            wixObj
+            (wixScript |> FullName)
+
+    trace (parameters.ToolPath + " "  + args)
+    if not (execProcess3 (fun info ->  
+        info.FileName <- parameters.ToolPath
+        info.WorkingDirectory <- null
+        info.Arguments <- args))
+    then
+        failwith "Candle failed."
+                    
+    traceEndTask "Candle" wixScript
+    wixObj
+
+
+let Light parameters outputFile wixObj = 
+    traceStartTask "Light" wixObj   
+
+    let tool = parameters.ToolPath + "light.exe"
+    let args = 
+            sprintf "\"%s\" -spdb -dcl:high -out \"%s\" -ext WiXNetFxExtension -ext WixUIExtension.dll -ext WixUtilExtension.dll" 
+                (wixObj |> FullName)
+                (outputFile |> FullName)
+
+    trace (parameters.ToolPath + " "  + args)
+    if not (execProcess3 (fun info ->  
+        info.FileName <- parameters.ToolPath
+        info.WorkingDirectory <- null
+        info.Arguments <- args))
+    then
+        failwith "Light failed."
+                    
+    traceEndTask "Light" wixObj
+
+/// Uses Candle and Light to create a msi.
+let WiX setParams outputFile wixScript =
+    let parameters = WiXDefaults |> setParams    
+    wixScript
+      |> Candle parameters 
+      |> Light parameters outputFile 
