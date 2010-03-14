@@ -73,6 +73,7 @@
     <Compile Include="FSIHelper.fs" />
     <Compile Include="MessageHelper.fs" />
     <Compile Include="HTMLHelpWorkShopHelper.fs" />
+    <Compile Include="TemplateHelper.fs" />
     <Compile Include="TargetHelper.fs" />
   </ItemGroup>
   <ItemGroup>
