@@ -35,6 +35,12 @@ let rec wixComponentRefs (dir:DirectoryInfo) =
 
     if dir.GetFiles().Length > 0 then sprintf "%s<ComponentRef Id=\"%s\"/>" compos dir.Name else compos
 
+let getFilesAsWiXString files =
+    files
+      |> Seq.map (fun file -> new FileInfo(file))
+      |> Seq.map wixFile
+      |> separated " "
+
 open System
 
 type WiXParams =
