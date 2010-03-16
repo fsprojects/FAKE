@@ -10,14 +10,15 @@ let wixFile (fi:FileInfo) =
     sprintf "<File Id=\"fi_%d\" Name=\"%s\" Source=\"%s\" />" 
       fileCount fi.Name fi.FullName
 
-let rec wixDir (dir:System.IO.DirectoryInfo) =
+let rec wixDir fileFilter (dir:System.IO.DirectoryInfo) =
     let dirs =
       dir.GetDirectories()
-        |> Seq.map wixDir
+        |> Seq.map (wixDir fileFilter)
         |> separated ""
 
     let files =
       dir.GetFiles()
+        |> Seq.filter fileFilter
         |> Seq.map wixFile
         |> separated ""
 
@@ -43,8 +44,7 @@ let getFilesAsWiXString files =
 
 open System
 
-type WiXParams =
- { ToolDirectory: string;}
+type WiXParams = { ToolDirectory: string;}
 
 /// WiX default params  
 let WiXDefaults : WiXParams =
@@ -56,7 +56,7 @@ let Candle (parameters:WiXParams) wixScript =
     let fi = new System.IO.FileInfo(wixScript)
     let wixObj = sprintf @"%s\%s.wixobj" fi.Directory.FullName fi.Name
 
-    let tool = parameters.ToolDirectory + "candle.exe"
+    let tool = parameters.ToolDirectory.TrimEnd('\\') + "\\candle.exe"
     let args = 
         sprintf "-out \"%s\" \"%s\" -ext WiXNetFxExtension" 
             wixObj
@@ -77,7 +77,7 @@ let Candle (parameters:WiXParams) wixScript =
 let Light (parameters:WiXParams) outputFile wixObj = 
     traceStartTask "Light" wixObj   
 
-    let tool = parameters.ToolDirectory + "light.exe"
+    let tool = parameters.ToolDirectory.TrimEnd('\\') + "\\light.exe"
     let args = 
             sprintf "\"%s\" -spdb -dcl:high -out \"%s\" -ext WiXNetFxExtension -ext WixUIExtension.dll -ext WixUtilExtension.dll" 
                 (wixObj |> FullName)
