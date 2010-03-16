@@ -10,14 +10,15 @@ let wixFile (fi:FileInfo) =
     sprintf "<File Id=\"fi_%d\" Name=\"%s\" Source=\"%s\" />" 
       fileCount fi.Name fi.FullName
 
-let rec wixDir (dir:System.IO.DirectoryInfo) =
+let rec wixDir fileFilter (dir:System.IO.DirectoryInfo) =
     let dirs =
       dir.GetDirectories()
-        |> Seq.map wixDir
+        |> Seq.map (wixDir fileFilter)
         |> separated ""
 
     let files =
       dir.GetFiles()
+        |> Seq.filter fileFilter
         |> Seq.map wixFile
         |> separated ""
 
@@ -43,8 +44,7 @@ let getFilesAsWiXString files =
 
 open System
 
-type WiXParams =
- { ToolDirectory: string;}
+type WiXParams = { ToolDirectory: string;}
 
 /// WiX default params  
 let WiXDefaults : WiXParams =
