@@ -10,10 +10,10 @@ let wixFile (fi:FileInfo) =
     sprintf "<File Id=\"fi_%d\" Name=\"%s\" Source=\"%s\" />" 
       fileCount fi.Name fi.FullName
 
-let rec wixDir fileFilter (dir:System.IO.DirectoryInfo) =
+let rec wixDir fileFilter asSubDir (dir:System.IO.DirectoryInfo) =
     let dirs =
       dir.GetDirectories()
-        |> Seq.map (wixDir fileFilter)
+        |> Seq.map (wixDir fileFilter true)
         |> separated ""
 
     let files =
@@ -26,7 +26,10 @@ let rec wixDir fileFilter (dir:System.IO.DirectoryInfo) =
       if files = "" then "" else
       sprintf "<Component Id=\"%s\" Guid=\"%s\">%s</Component>" dir.Name (System.Guid.NewGuid().ToString()) files
 
-    sprintf "<Directory Id=\"%s\" Name=\"%s\">%s%s</Directory>" dir.Name dir.Name dirs compo
+    if asSubDir then
+        sprintf "<Directory Id=\"%s\" Name=\"%s\">%s%s</Directory>" dir.Name dir.Name dirs compo
+    else
+        sprintf "%s%s" dirs compo
 
 let rec wixComponentRefs (dir:DirectoryInfo) =
     let compos =
