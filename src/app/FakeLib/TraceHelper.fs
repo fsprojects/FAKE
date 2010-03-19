@@ -64,7 +64,7 @@ let logfn fmt = Printf.ksprintf log fmt
 let logf fmt = Printf.ksprintf (logMessage false false) fmt
 
 /// Logs the specified string if the verbose mode is activated.
-let logVerbose s = if verbose then log s
+let logVerbosefn fmt = Printf.ksprintf (if verbose then log else ignore) fmt
 
 /// Writes a trace to the command line (in the given color)
 let logColored important color newLine message =

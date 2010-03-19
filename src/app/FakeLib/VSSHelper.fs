@@ -11,7 +11,7 @@ let getVSSProjectWithLabel toolPath srcSafeIni username password project (localS
     if String.IsNullOrEmpty label then args' else
     args' + sprintf " -Vl%s" label 
   
-  trace <| sprintf "%s %s" toolPath args
+  tracefn "%s %s" toolPath args
   let ok = execProcess2 (fun info ->
     [("SSDIR", srcSafeIni)]
       |> setEnvironmentVariables info 

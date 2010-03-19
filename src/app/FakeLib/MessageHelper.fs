@@ -9,7 +9,7 @@ open System.Threading
 /// Waits for other applications to create a output files
 /// if the timeout is reached an exception will be raised
 let WaitForMessageFiles files timeOut =
-  trace <| sprintf "Waiting for message files %A (Timeout: %A)" files timeOut
+  tracefn "Waiting for message files %A (Timeout: %A)" files timeOut
   
   let watch = new Stopwatch()
   watch.Start()

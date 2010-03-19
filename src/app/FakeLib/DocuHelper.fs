@@ -23,7 +23,7 @@ let Docu setParams assembly =
             " --output=" + parameters.OutputPath +
             " --templates=" + parameters.TemplatesPath
 
-    trace (parameters.ToolPath + " "  + args)
+    tracefn  "%s %s" parameters.ToolPath args
     if not (execProcess3 (fun info ->  
         info.FileName <- parameters.ToolPath
         info.Arguments <- args))

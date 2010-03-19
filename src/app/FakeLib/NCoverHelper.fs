@@ -52,7 +52,7 @@ let NCover setParams (assemblies: string seq) (excludeAssemblies: string seq) =
 
     (!args).ToString()
  
-  trace <| sprintf "NCover command\n%s %s" param.ToolPath commandLineCommands
+  tracefn "NCover command\n%s %s" param.ToolPath commandLineCommands
   
   let ok =
     execProcess (fun info ->  
@@ -60,4 +60,4 @@ let NCover setParams (assemblies: string seq) (excludeAssemblies: string seq) =
       if param.WorkingDir <> String.Empty then info.WorkingDirectory <- param.WorkingDir
       info.Arguments <- commandLineCommands)
   if not ok then
-    failwith <| sprintf "NCover reported errors."
+    failwithf "NCover reported errors."

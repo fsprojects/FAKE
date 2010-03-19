@@ -41,38 +41,38 @@ let DeleteDir x =
       |> Scan
       |> (SetReadOnly false)
       
-    log <| sprintf "Deleting %s" dir.FullName
+    logfn "Deleting %s" dir.FullName
     dir.Delete true
   else
-    log <| sprintf "%s does not exist." dir.FullName
+    logfn "%s does not exist." dir.FullName
     
 /// Creates a directory if it does not exist
 let CreateDir x =   
   let dir = new DirectoryInfo(x)
   if not dir.Exists then 
-    log <| sprintf "Creating %s" dir.FullName
+    logfn "Creating %s" dir.FullName
     dir.Create()
   else
-    log <| sprintf "%s does already exist." dir.FullName
+    logfn "%s does already exist." dir.FullName
     
 /// Creates a file if it does not exist
 let CreateFile x =   
   let file = new FileInfo(x)
   if not file.Exists then 
-    log <| sprintf "Creating %s" file.FullName
+    logfn "Creating %s" file.FullName
     let newFile = file.Create()
     newFile.Close()
   else
-    log <| sprintf "%s does already exist." file.FullName
+    logfn "%s does already exist." file.FullName
     
 /// Deletes a file if it exist
 let DeleteFile x =   
   let file = new FileInfo(x)    
   if file.Exists then 
-    log <| sprintf "Deleting %s" file.FullName
+    logfn "Deleting %s" file.FullName
     file.Delete()
   else
-    log <| sprintf "%s does not exist." file.FullName                
+    logfn "%s does not exist." file.FullName                
     
 let (|File|Directory|) (fileSysInfo : FileSystemInfo) =
   match fileSysInfo with
@@ -101,7 +101,7 @@ let CopyFileIntoSubFolder target file =
   let target = new FileInfo(targetName)
   if not target.Directory.Exists then
     target.Directory.Create()
-  logVerbose <| sprintf "Copy %s to %s" file targetName
+  logVerbosefn "Copy %s to %s" file targetName
   fi.CopyTo(targetName,true) |> ignore    
 
 /// Copies a single file to the target
@@ -110,7 +110,7 @@ let CopyFileIntoSubFolder target file =
 let CopyFile target file =
   let fi = new FileInfo(file)
   let targetName = target + fi.Name
-  logVerbose <| sprintf "Copy %s to %s" file targetName
+  logVerbosefn "Copy %s to %s" file targetName
   fi.CopyTo(targetName,true) |> ignore    
   
 /// Copies the files to the target
@@ -159,7 +159,7 @@ let CopyDir target source filterFile =
   |> Seq.filter filterFile
   |> Seq.iter (fun file -> 
       let newFile = target + file.Remove(0, source.Length)
-      log <| sprintf "%s => %s" file newFile
+      logfn "%s => %s" file newFile
       Directory.CreateDirectory(Path.GetDirectoryName(newFile)) |> ignore
       File.Copy(file, newFile, true))
   
@@ -167,7 +167,7 @@ let CopyDir target source filterFile =
 let CleanDir dir =
   let di = new DirectoryInfo(dir)
   if di.Exists then
-    log <| sprintf "Deleting content of %s" dir
+    logfn "Deleting content of %s" dir
     // delete all files
     Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories)
       |> Seq.iter (fun file -> 
@@ -205,12 +205,12 @@ let ReadCSVFile(file:string) =
 ///   param files: The original FileNames as a sequence.
 let AppendTextFiles newFileName files =    
   let fi = new FileInfo(newFileName)
-  if fi.Exists then failwith "File %s already exists."
+  if fi.Exists then failwithf "File %s already exists." (fi.FullName)
   use writer = new StreamWriter(fi.FullName, false, Encoding.Default);
   
   files 
     |> Seq.iter (fun file ->       
-         logVerbose <| sprintf "Appending %s to %s" file fi.FullName
+         logVerbosefn "Appending %s to %s" file fi.FullName
          ReadFile file |> Seq.iter(fun line -> writer.WriteLine(line)))
          
   writer.Close() 
@@ -257,9 +257,9 @@ let CompareFiles delete originalFileName compareFileName =
   if delete then      
       comp.Attributes <- FileAttributes.Normal
       comp.Delete()
-      logVerbose <| sprintf "Deleting File: %s" comp.FullName
+      logVerbosefn "Deleting File: %s" comp.FullName
   else
-      logVerbose <| sprintf "Files equal: %s" comp.FullName
+      logVerbosefn "Files equal: %s" comp.FullName
   true
 
   
@@ -268,7 +268,7 @@ let TestDir dir =
   let di = new DirectoryInfo(dir)
   
   if di.Exists then true else
-  log <| sprintf "%s not found" di.FullName
+  logfn "%s not found" di.FullName
   false
 
 /// Checks the srcFiles for changes to the last release
@@ -285,7 +285,7 @@ let GeneratePatchWithFindOldFileFunction lastReleaseDir patchDir srcFiles findOl
          let oldFile = findOldFileF newFile (lastReleaseDir + newFile.TrimStart('.'))
          let fi = new FileInfo(oldFile)
          if not fi.Exists then
-            logVerbose <| sprintf "LastRelease has no file like %s" fi.FullName
+            logVerbosefn "LastRelease has no file like %s" fi.FullName
          newFile,oldFile)         
     |> Seq.filter (fun (newF,oldF) -> CompareFiles false oldF newF |> not)
     |> Seq.iter (fun (newF,oldF) -> CopyFileIntoSubFolder patchDir newF)

@@ -65,7 +65,7 @@ let Candle (parameters:WiXParams) wixScript =
             wixObj
             (wixScript |> FullName)
 
-    trace (parameters.ToolDirectory + " "  + args)
+    tracefn "%s %s" parameters.ToolDirectory args
     if not (execProcess3 (fun info ->  
         info.FileName <- tool
         info.WorkingDirectory <- null
@@ -86,7 +86,7 @@ let Light (parameters:WiXParams) outputFile wixObj =
                 (wixObj |> FullName)
                 (outputFile |> FullName)
 
-    trace (parameters.ToolDirectory + " "  + args)
+    tracefn "%s %s" parameters.ToolDirectory args
     if not (execProcess3 (fun info ->  
         info.FileName <- tool
         info.WorkingDirectory <- null

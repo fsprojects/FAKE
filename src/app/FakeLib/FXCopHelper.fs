@@ -116,7 +116,7 @@ let FxCop setParams (assemblies: string seq) =
     
     (!args).ToString()
   
-  trace <| sprintf "FxCop command\n%s %s" param.ToolPath commandLineCommands
+  tracefn "FxCop command\n%s %s" param.ToolPath commandLineCommands
   let ok = 
     execProcess3 (fun info ->  
       info.FileName <- param.ToolPath
@@ -131,12 +131,12 @@ let FxCop setParams (assemblies: string seq) =
   if param.FailOnError <> FxCopyErrorLevel.DontFailBuild && param.ReportFileName <> String.Empty then 
     let criticalErrors,errors,criticalWarnings,warnings = checkForErrors param.ReportFileName
     if criticalErrors <> 0 && param.FailOnError >= FxCopyErrorLevel.CriticalError then
-      failwith <| sprintf "FxCop found %d critical errors." criticalErrors
+      failwithf "FxCop found %d critical errors." criticalErrors
     if criticalErrors <> 0 && param.FailOnError >= FxCopyErrorLevel.Error then
-      failwith <| sprintf "FxCop found %d errors." errors      
+      failwithf "FxCop found %d errors." errors      
     if criticalWarnings <> 0 && param.FailOnError >= FxCopyErrorLevel.CriticalWarning then
-      failwith <| sprintf "FxCop found %d critical warnings." criticalWarnings
+      failwithf "FxCop found %d critical warnings." criticalWarnings
     if warnings <> 0 && param.FailOnError >= FxCopyErrorLevel.Warning then
-      failwith <| sprintf "FxCop found %d warnings." warnings       
+      failwithf "FxCop found %d warnings." warnings       
   
   traceEndTask "FxCop" ""

@@ -55,11 +55,11 @@ let build outputPath targets properties overwrite project =
       |> Seq.fold (fun acc (key,value) -> sprintf "%s /p:%s=%s " acc key value) ""
    
   let args = toParam project + targetsA + props + output  // + logger
-  log <| sprintf "Building project: %s\n  %s %s" project msBuildExe args
+  logfn "Building project: %s\n  %s %s" project msBuildExe args
   if not (execProcess3 (fun info ->  
     info.FileName <- msBuildExe
     info.Arguments <- args))
-  then failwith <| sprintf "Building %s project failed." project      
+  then failwithf "Building %s project failed." project      
   traceEndTask "MSBuild" project
 
 /// Builds the given project files and collects the output files

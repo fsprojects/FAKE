@@ -93,7 +93,7 @@ let NUnit setParams (assemblies: string seq) =
 
 /// writes the given TestSuite as XML file in NUnit style
 let writeXMLOutput (testSuite:TestSuite) fileName =
-  trace <| sprintf "Writing XML test results to %s" fileName
+  tracefn "Writing XML test results to %s" fileName
   
   use writer = XmlWriter fileName
   

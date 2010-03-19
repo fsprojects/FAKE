@@ -16,13 +16,13 @@ let CreateZip workingDir fileName comment level flatten files =
   let crc = new Crc32()
   let workingDir =
     let dir = new DirectoryInfo(workingDir)
-    if not dir.Exists then failwith <| sprintf "Directory not found: %s" dir.FullName
+    if not dir.Exists then failwithf "Directory not found: %s" dir.FullName
     dir.FullName
     
   use stream = new ZipOutputStream(File.Create(fileName))
   let zipLevel = min (max 0 level) 9
   
-  trace <| sprintf "Creating Zipfile: %s (Level: %d)" fileName zipLevel
+  tracefn "Creating Zipfile: %s (Level: %d)" fileName zipLevel
   stream.SetLevel(zipLevel)
   if not (String.IsNullOrEmpty comment) then      
     stream.SetComment comment
@@ -62,10 +62,10 @@ let CreateZip workingDir fileName comment level flatten files =
         stream.Write(buffer, 0, count)
         length := !length - (count |> int64)
       
-      log <| sprintf "File added %s" itemSpec
+      logfn "File added %s" itemSpec
       
   stream.Finish()
-  trace <| sprintf "Zip successfully %s" fileName
+  tracefn "Zip successfully %s" fileName
  
 /// Creates a zip file with the given files 
 ///

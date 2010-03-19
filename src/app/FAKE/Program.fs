@@ -27,16 +27,16 @@ try
                  (i+1,acc))
             (0,[])
     log ""
-    traceFAKE <| sprintf "FSI-Path: %s" fsiPath
-    traceFAKE <| sprintf "MSBuild-Path: %s" msBuildExe
+    traceFAKE "FSI-Path: %s" fsiPath
+    traceFAKE "MSBuild-Path: %s" msBuildExe
     args
   
-  traceFAKE <| sprintf "FakePath: %s" fakePath   
-  traceFAKE <| fakeVersionStr
+  traceFAKE "FakePath: %s" fakePath   
+  traceFAKE "%s" fakeVersionStr
   if buildServer = LocalBuild then
     trace localBuildLabel
   else
-    trace <| "Build-Version: " + buildVersion
+    tracefn "Build-Version: %s" buildVersion
         
   let args = getArguments()    
   if not (runBuildScript cmdArgs.[1] args) then
@@ -53,5 +53,3 @@ with
     Environment.ExitCode <- 1
     
 traceEndBuild()
-    
-    

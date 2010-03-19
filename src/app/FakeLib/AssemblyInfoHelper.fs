@@ -216,5 +216,5 @@ let AssemblyInfo setParams =
   | _ -> generateFile param attributes imports writer
   writer.Flush()
   writer.Close()
-  trace <| sprintf "Created AssemblyInfo file \"%s\"." param.OutputFileName
+  tracefn "Created AssemblyInfo file \"%s\"." param.OutputFileName
   traceEndTask "AssemblyInfo" param'.OutputFileName

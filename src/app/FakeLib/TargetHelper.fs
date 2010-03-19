@@ -25,7 +25,7 @@ let ExecutedTargets = new HashSet<_>()
 let getTarget x = 
   match TargetDict.TryGetValue x with
   | true, target -> target
-  | _  -> failwith <| sprintf "Target \"%s\" is not defined." x   
+  | _  -> failwithf "Target \"%s\" is not defined." x   
     
 /// Do nothing -  fun () -> ()   
 let DoNothing = (fun () -> ())
@@ -36,7 +36,7 @@ let dependency targetName dependentTargetName =
   let rec checkDependencies dependentTarget =
     dependentTarget.Dependencies |> List.iter (fun dep ->
       if dep = targetName then 
-        failwith <| sprintf "Cyclic dependency between %s and %s" targetName dependentTarget.Name
+        failwithf "Cyclic dependency between %s and %s" targetName dependentTarget.Name
       checkDependencies (getTarget dep))
       
   checkDependencies dependentTarget
@@ -95,13 +95,13 @@ let runFinalTargets() =
     |> Seq.map (fun kv -> kv.Key)
     |> Seq.iter (fun name ->
          try             
-           sprintf "Starting Finaltarget: %s" name |> trace
+           tracefn "Starting Finaltarget: %s" name
            TargetDict.[name].Function()
          with
          | exn -> targetError name exn.Message)                     
               
 let PrintDependencyGraph verbose target =
-  log <| sprintf "%sDependencyGraph for Target %s:" (if verbose then String.Empty else "Shortened ") target 
+  logfn "%sDependencyGraph for Target %s:" (if verbose then String.Empty else "Shortened ") target 
   let printed = new HashSet<_>()
   let order = new List<_>()
   let rec printDependencies indent act =
@@ -117,7 +117,7 @@ let PrintDependencyGraph verbose target =
   printDependencies 0 target
   log ""
   log "The resulting target order is:"
-  order |> Seq.iter (sprintf " - %s" >> log)     
+  order |> Seq.iter (logfn " - %s")     
 
 /// Runs a Target and its dependencies        
 let run targetName =

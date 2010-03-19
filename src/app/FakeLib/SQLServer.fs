@@ -56,20 +56,20 @@ let intitialCatalogExistsOnServer serverInfo =
 /// Drops the given InitialCatalog from the server (if it exists)
 let DropDb serverInfo = 
   if intitialCatalogExistsOnServer serverInfo then
-    log <| sprintf "Dropping database %s on server %s" (getDBName serverInfo) (getServerName serverInfo)
+    logfn "Dropping database %s on server %s" (getDBName serverInfo) (getServerName serverInfo)
     (getDatabase serverInfo).DropBackupHistory |> ignore
     getDBName serverInfo |> serverInfo.Server.KillDatabase
   serverInfo
     
 /// Drops the given InitialCatalog from the server (if it exists)
 let CreateDb serverInfo = 
-  log <| sprintf "Creating database %s on server %s" (getDBName serverInfo) (getServerName serverInfo)
+  logfn "Creating database %s on server %s" (getDBName serverInfo) (getServerName serverInfo)
   (getDatabase serverInfo).Create()  
   serverInfo
   
 /// Runs a sql script on the server
 let runScript serverInfo sqlFile =
-  log <| sprintf "Executing script %s" sqlFile
+  logfn "Executing script %s" sqlFile
   sqlFile
     |> StringHelper.ReadFileAsString
     |> (getDatabase serverInfo).ExecuteNonQuery
@@ -95,5 +95,4 @@ let RunScripts connectionString scripts =
 /// Runs all sql scripts from the given directory on the server  
 let RunScriptsFromDirectory connectionString scriptDirectory = 
   Directory.GetFiles(scriptDirectory, "*.sql")
-    |> RunScripts connectionString
-  
+    |> RunScripts connectionString  

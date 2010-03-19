@@ -25,7 +25,7 @@ let ILMerge setParams outputFile primaryAssembly =
             outputFile version primaryAssembly
               (separated " " parameters.Libraries)
 
-    trace (parameters.ToolPath + " "  + args)
+    tracefn "%s %s" parameters.ToolPath args
     if not (execProcess3 (fun info ->  
         info.FileName <- parameters.ToolPath
         info.WorkingDirectory <- null

@@ -12,7 +12,7 @@ let fsiPath =
       
 /// Run the buildscript with fsi
 let runBuildScript script args = 
-  traceFAKE <| sprintf "Running Buildscript: %s" script
+  traceFAKE "Running Buildscript: %s" script
   
   let result = execProcess (fun info ->  
     info.FileName <- fsiPath

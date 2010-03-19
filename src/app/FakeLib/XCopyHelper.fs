@@ -8,7 +8,7 @@ open System.Text
 ///  param source: The source directory (fileName)
 ///  param destination: The target directory (fileName)
 let XCopy source destination =
-  trace (sprintf "XCopy %s %s" source destination)
+  tracefn "XCopy %s %s" source destination
   let result = ExecProcess (fun info ->  
      info.FileName <- "CMD.exe "
      info.Arguments <- 
@@ -17,4 +17,4 @@ let XCopy source destination =
          (destination.TrimEnd('\\') |> FullName |> toParam) +
          "  /D /E /Y /I")
          
-  if result <> 0 then failwith <| sprintf "Error during XCopy From: %s To: %s" source destination
+  if result <> 0 then failwithf "Error during XCopy From: %s To: %s" source destination
