@@ -70,7 +70,7 @@ Target? GenerateDocumentation <-
             (buildDir + "FakeLib.dll")
 
 Target? CopyLicense <-
-    fun _ -> Copy buildDir [@"License.txt"]
+    fun _ -> Copy buildDir [@"License.txt"; @"readme.txt"]
 
 Target? BuildZip <-
     fun _ ->     
