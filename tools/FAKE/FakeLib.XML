@@ -1651,7 +1651,7 @@
  Traces an error (in red)
 </summary>
 </member>
-<member name="M:Fake.TraceHelper.traceFAKE(System.String)">
+<member name="M:Fake.TraceHelper.traceFAKE``1(Microsoft.FSharp.Core.PrintfFormat{``0,Microsoft.FSharp.Core.Unit,System.String,Microsoft.FSharp.Core.Unit})">
 <summary>
  Writes a trace to the command line (in yellow)
 </summary>
@@ -1666,19 +1666,39 @@
  Writes a trace to the command line (in green) if the verbose mode is activated.
 </summary>
 </member>
+<member name="M:Fake.TraceHelper.tracef``1(Microsoft.FSharp.Core.PrintfFormat{``0,Microsoft.FSharp.Core.Unit,System.String,Microsoft.FSharp.Core.Unit})">
+<summary>
+ Writes a message to the command line (in green) and without a line break
+</summary>
+</member>
+<member name="M:Fake.TraceHelper.tracefn``1(Microsoft.FSharp.Core.PrintfFormat{``0,Microsoft.FSharp.Core.Unit,System.String,Microsoft.FSharp.Core.Unit})">
+<summary>
+ Writes a message to the command line (in green)
+</summary>
+</member>
 <member name="M:Fake.TraceHelper.trace(System.String)">
 <summary>
  Writes a trace to the command line (in green)
 </summary>
 </member>
-<member name="M:Fake.TraceHelper.logColored(System.Boolean,System.String,System.ConsoleColor)">
+<member name="M:Fake.TraceHelper.logColored(System.Boolean,System.ConsoleColor,System.Boolean,System.String)">
 <summary>
  Writes a trace to the command line (in the given color)
 </summary>
 </member>
-<member name="M:Fake.TraceHelper.logVerbose(System.String)">
+<member name="M:Fake.TraceHelper.logVerbosefn``1(Microsoft.FSharp.Core.PrintfFormat{``0,Microsoft.FSharp.Core.Unit,System.String,Microsoft.FSharp.Core.Unit})">
 <summary>
  Logs the specified string if the verbose mode is activated.
+</summary>
+</member>
+<member name="M:Fake.TraceHelper.logf``1(Microsoft.FSharp.Core.PrintfFormat{``0,Microsoft.FSharp.Core.Unit,System.String,Microsoft.FSharp.Core.Unit})">
+<summary>
+ Logs the specified message (without line break)
+</summary>
+</member>
+<member name="M:Fake.TraceHelper.logfn``1(Microsoft.FSharp.Core.PrintfFormat{``0,Microsoft.FSharp.Core.Unit,System.String,Microsoft.FSharp.Core.Unit})">
+<summary>
+ Logs the specified message
 </summary>
 </member>
 <member name="P:Fake.TraceHelper.log">
@@ -1686,7 +1706,7 @@
  Logs the specified string        
 </summary>
 </member>
-<member name="M:Fake.TraceHelper.logMessage(System.Boolean,System.String)">
+<member name="M:Fake.TraceHelper.logMessage(System.Boolean,System.Boolean,System.String)">
 <summary>
  logs the specified string        
 </summary>
@@ -1694,7 +1714,7 @@
 <member name="">
 
 </member>
-<member name="M:Fake.TraceHelper.logMessageToConsole(System.Boolean,System.String)">
+<member name="M:Fake.TraceHelper.logMessageToConsole(System.Boolean,System.Boolean,System.String)">
 <summary>
  logs the specified string to the console
 </summary>
@@ -1965,7 +1985,7 @@
 <member name="">
 
 </member>
-<member name="M:Fake.WiXHelper.WiX(Microsoft.FSharp.Core.FSharpFunc`2{Fake.WiXHelper.WiXParams,Fake.ILMergeHelper.ILMergeParams},System.String,System.String)">
+<member name="M:Fake.WiXHelper.WiX(Microsoft.FSharp.Core.FSharpFunc`2{Fake.WiXHelper.WiXParams,Fake.WiXHelper.WiXParams},System.String,System.String)">
 <summary>
  Uses Candle and Light to create a msi.
 </summary>
