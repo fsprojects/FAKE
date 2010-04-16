@@ -12,6 +12,7 @@ type NUnitParams =
    TestInNewThread:bool;
    OutputFile:string;
    ErrorOutputFile:string;
+   Framework:string;
    WorkingDir:string; 
    XsltTransformFile:string;
    DisableShadowCopy:bool}
@@ -51,6 +52,7 @@ let NUnitDefaults =
     OutputFile = @".\TestResult.xml";
     ErrorOutputFile = null;
     WorkingDir = null;
+    Framework = null;
     XsltTransformFile = null;
     DisableShadowCopy = false}
 
@@ -68,11 +70,12 @@ let NUnit setParams (assemblies: string seq) =
       |> appendIfTrue parameters.DisableShadowCopy "/noshadow" 
       |> appendIfTrue parameters.TestInNewThread "/thread" 
       |> appendFileNamesIfNotNull assemblies
-      |> appendIfNotNull parameters.IncludeCategory "/include="
-      |> appendIfNotNull parameters.ExcludeCategory "/exclude="
-      |> appendIfNotNull parameters.XsltTransformFile "/transform="
-      |> appendIfNotNull parameters.OutputFile  "/xml="
-      |> appendIfNotNull parameters.ErrorOutputFile "/err="
+      |> appendIfNotNull parameters.IncludeCategory "/include:"
+      |> appendIfNotNull parameters.ExcludeCategory "/exclude:"
+      |> appendIfNotNull parameters.XsltTransformFile "/transform:"
+      |> appendIfNotNull parameters.OutputFile  "/xml:"
+      |> appendIfNotNull parameters.Framework  "/framework:"
+      |> appendIfNotNull parameters.ErrorOutputFile "/err:"
 
   let tool = Path.Combine(parameters.ToolPath, toolName)
   let args = commandLineBuilder.ToString()
