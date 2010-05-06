@@ -13,7 +13,7 @@ let rec copyRecursive (dir:DirectoryInfo) (outputDir:DirectoryInfo) overwrite =
       dir.GetDirectories() 
         |> Seq.fold 
              (fun acc (d:DirectoryInfo) ->
-               let newDir = new DirectoryInfo(outputDir.FullName + "\\" + d.Name)
+               let newDir = new DirectoryInfo(Path.Combine(outputDir.FullName,d.Name))
                if not newDir.Exists then
                  newDir.Create()
                copyRecursive d newDir overwrite @ acc)
@@ -22,7 +22,7 @@ let rec copyRecursive (dir:DirectoryInfo) (outputDir:DirectoryInfo) overwrite =
     dir.GetFiles()
       |> Seq.fold 
           (fun acc f ->
-             let newFileName = outputDir.FullName + "\\" + f.Name
+             let newFileName = Path.Combine(outputDir.FullName, f.Name)
              f.CopyTo(newFileName, overwrite) |> ignore
              newFileName :: acc)
           files

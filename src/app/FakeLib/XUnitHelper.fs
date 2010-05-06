@@ -44,7 +44,7 @@ let xUnit setParams assemblies =
 
               let dir = 
                 if isNullOrEmpty parameters.OutputDir then String.Empty else
-                (new DirectoryInfo(parameters.OutputDir)).FullName
+                Path.GetFullPath parameters.OutputDir
 
               new StringBuilder()
                 |> appendFileNamesIfNotNull [assembly]
