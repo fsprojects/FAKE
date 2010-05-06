@@ -18,19 +18,17 @@ try
         tracefn "Build-Version: %s" buildVersion
       
     if cmdArgs |> Array.length > 1 then traceFAKE "FAKE Arguments:"
-    let _,args = 
+    let args = 
+        let splitter = [|'='|]
         cmdArgs 
-            |> Array.fold (fun (i,acc) (a:string) -> 
-                if i > 1 then
-                    logf "%A" a
-                    if a.Contains "=" then
-                        let s = a.Split([|'='|])
-                        i+1,(s.[0],s.[1])::acc
-                    else
-                        i+1,(a,"1")::acc
-                else
-                    (i+1,acc))
-            (0,[])
+            |> Seq.skip 1
+            |> Seq.map (fun (a:string) ->
+                  logf "%A" a
+                  if a.Contains "=" then
+                      let s = a.Split splitter
+                      s.[0],s.[1]
+                  else
+                      a,"1")
 
     log ""
     traceFAKE "FSI-Path: %s" fsiPath
