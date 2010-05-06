@@ -7,8 +7,7 @@ let mutable fileCount = 0
 
 let wixFile (fi:FileInfo) =
     fileCount <- fileCount + 1
-    sprintf "<File Id=\"fi_%d\" Name=\"%s\" Source=\"%s\" />" 
-      fileCount fi.Name fi.FullName
+    sprintf "<File Id=\"fi_%d\" Name=\"%s\" Source=\"%s\" />" fileCount fi.Name fi.FullName
 
 let rec wixDir fileFilter asSubDir (dir:System.IO.DirectoryInfo) =
     let dirs =

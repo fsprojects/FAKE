@@ -27,42 +27,40 @@ type FileIncludes =
 /// Patterns can use either / \ as a directory separator.
 /// cleanPath replaces both of these characters with Path.DirectorySeparatorChar
 let cleanPathBuilder (path:string) =
-  let pathBuilder = new StringBuilder(path);
+    let pathBuilder = new StringBuilder(path);
 
-  pathBuilder
-    .Replace('/',  Path.DirectorySeparatorChar)
-    .Replace('\\', Path.DirectorySeparatorChar)
+    pathBuilder
+      .Replace('/',  Path.DirectorySeparatorChar)
+      .Replace('\\', Path.DirectorySeparatorChar)
     
 /// Patterns can use either / \ as a directory separator.
 /// cleanPath replaces both of these characters with Path.DirectorySeparatorChar
 let cleanPath path = (cleanPathBuilder path).ToString()      
     
 let combinePath baseDirectory path =
-  let combined = Path.Combine(baseDirectory, cleanPath(path))
-  (new DirectoryInfo(combined)).FullName
+    let combined = Path.Combine(baseDirectory, cleanPath(path))
+    (new DirectoryInfo(combined)).FullName
   
           
 /// The base directory to scan. The default is the 
 /// <see cref="Environment.CurrentDirectory">current directory</see>.
-let baseDirectory value =
-  new DirectoryInfo(cleanPath value)
+let baseDirectory value = new DirectoryInfo(cleanPath value)
   
 /// Determines whether the last character of the given <see cref="string" />
 /// matches the specified character.    
 let endsWithChar (value:string) c =
-  let stringLength = value.Length
-  stringLength <> 0 && value.[stringLength - 1] = c
+    let stringLength = value.Length
+    stringLength <> 0 && value.[stringLength - 1] = c
 
 /// Determines whether the last character of the given <see cref="string" />
 /// matches Path.DirectorySeparatorChar.         
-let endsWithSlash value =   
-  endsWithChar value Path.DirectorySeparatorChar   
+let endsWithSlash value = endsWithChar value Path.DirectorySeparatorChar   
   
 /// Ensures that the last character of the given <see cref="string" />
 /// matches Path.DirectorySeparatorChar.          
 let ensureEndsWithSlash value =
-  if endsWithSlash value then value else
-  value + string Path.DirectorySeparatorChar
+    if endsWithSlash value then value else
+    value + string Path.DirectorySeparatorChar
   
 /// Converts search pattern to a regular expression pattern.
 let regexPattern originalPattern =
