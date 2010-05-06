@@ -10,16 +10,39 @@ type TraceMode =
 | Console
 | Xml
 
+type Message = 
+    { Text      : string
+      Color     : ConsoleColor
+      Newline   : bool
+      Important : bool}
+
+let private defaultMessage = 
+    { Text      = ""
+      Color     = ConsoleColor.White
+      Newline   = true
+      Important = false }
+
+/// Logs the specified string to the console
+let private logMessageToConsole important newLine s =     
+    if important && buildServer <> CCNet then
+        if newLine then
+            eprintfn "%s" (toRelativePath s)
+        else 
+            eprintf "%s" (toRelativePath s)
+    else
+        if newLine then
+            printfn "%s" (toRelativePath s)
+        else 
+            printf "%s" (toRelativePath s)
+
+let private appendXML line = AppendToFile xmlOutputFile [line]
+
 /// The actual trace mode.
 let mutable traceMode = 
     match buildServer with
     | TeamCity   -> Console
     | CCNet      -> Xml
-    | LocalBuild -> Console
-    
-let appendXML line = AppendToFile xmlOutputFile [line]
-
-let mutable openTags = []
+    | LocalBuild -> Console    
 
 /// Trace verbose output
 let mutable verbose = hasBuildParam "verbose"
@@ -28,30 +51,37 @@ let mutable verbose = hasBuildParam "verbose"
 let fakePath = productName.GetType().Assembly.Location
        
 /// Gets the FAKE version no.
-let fakeVersion = productName.GetType().Assembly.GetName().Version 
+let fakeVersion = productName.GetType().Assembly.GetName().Version
 
-/// logs the specified string to the console
-let logMessageToConsole important newLine s =     
-  if important && buildServer <> CCNet then
-    if newLine then
-      eprintfn "%s" (toRelativePath s)
-    else 
-      eprintf "%s" (toRelativePath s)
-  else
-    if newLine then
-      printfn "%s" (toRelativePath s)
-    else 
-      printf "%s" (toRelativePath s)
+let private buffer = MailboxProcessor.Start (fun inbox ->
+    let rec loop () = 
+        async {
+            let! (msg:Message) = inbox.Receive()
+            match traceMode with
+            | Console ->
+                let curColor = Console.ForegroundColor
+                Console.ForegroundColor <- msg.Color
+                logMessageToConsole msg.Important msg.Newline msg.Text
+                Console.ForegroundColor <- curColor
+            | Xml     -> appendXML msg.Text
 
-let xmlMessage message =
-    message
-      |> sprintf "<message level=\"Info\"><![CDATA[%s]]></message>"
-      |> appendXML
+            return! loop ()}
+
+    loop ())
     
-/// logs the specified string        
+let mutable private openTags = []
+
+/// Writes a XML message to the bufffer.
+let xmlMessage message =
+    { defaultMessage with Text = sprintf "<message level=\"Info\"><![CDATA[%s]]></message>" message }
+      |> buffer.Post 
+    
+/// Logs the specified string (via message buffer)
 let logMessage important newLine message =
     match traceMode with
-    | Console -> logMessageToConsole important newLine message
+    | Console ->
+        { Text = message; Important = important; Newline = newLine; Color = ConsoleColor.White }
+          |> buffer.Post
     | Xml     -> xmlMessage message
 
 /// Logs the specified string        
@@ -66,11 +96,13 @@ let logf fmt = Printf.ksprintf (logMessage false false) fmt
 /// Logs the specified string if the verbose mode is activated.
 let logVerbosefn fmt = Printf.ksprintf (if verbose then log else ignore) fmt
 
-/// Writes a trace to the command line (in the given color)
+/// Writes a trace output to the message buffer (in the given color)
 let logColored important color newLine message =
-  Console.ForegroundColor <- color    
-  logMessage important newLine message
-  Console.ForegroundColor <- ConsoleColor.White     
+    { Text = message
+      Color = color
+      Important = important
+      Newline = newLine}
+        |> buffer.Post
     
 /// Writes a trace to the command line (in green)
 let trace s = logColored false ConsoleColor.Green true s
@@ -92,89 +124,89 @@ let traceFAKE fmt = Printf.ksprintf (logColored true ConsoleColor.Yellow true) f
 
 /// Traces an error (in red)
 let traceError error = 
-  match traceMode with
-  | Console -> logColored true ConsoleColor.Red true error
-  | Xml     ->  
-     appendXML "<failure><builderror>"
-     xmlMessage error
-     appendXML "</builderror></failure>"
+    match traceMode with
+    | Console -> logColored true ConsoleColor.Red true error
+    | Xml     -> 
+        { defaultMessage with 
+            Text = sprintf "<failure><builderror><message level=\"Error\"><![CDATA[%s]]></message></builderror></failure>" error }
+          |> buffer.Post
   
 
 /// Traces the EnvironmentVariables
 let TraceEnvironmentVariables() = 
-  [ EnvironTarget.Machine; 
-    EnvironTarget.Process;
-    EnvironTarget.User]
+    [ EnvironTarget.Machine; 
+      EnvironTarget.Process;
+      EnvironTarget.User]
     |> List.iter (fun mode ->    
         traceFAKE "Environment-Settings (%A):" mode
         environVars mode |> List.iter (tracefn "  %A"))        
  
 /// Gets the FAKE Version string
-let fakeVersionStr = 
-    fakeVersion.ToString()
-      |> sprintf "FAKE - F# Make - Version %s" 
+let fakeVersionStr = sprintf "FAKE - F# Make - Version %s" <| fakeVersion.ToString()
 
 /// Traces the begin of the build
 let traceStartBuild _ =
-  match traceMode with
-  | Console -> ()
-  | Xml     ->         
-      let fi = new FileInfo(xmlOutputFile)
-      if fi.Exists then
-        fi.IsReadOnly <- false
-        fi.Delete()
-      if not fi.Directory.Exists then fi.Directory.Create()
+    match traceMode with
+    | Console -> ()
+    | Xml     ->         
+        let fi = new FileInfo(xmlOutputFile)
+        if fi.Exists then
+            fi.IsReadOnly <- false
+            fi.Delete()
+        if not fi.Directory.Exists then fi.Directory.Create()
         
-      appendXML "<buildresults>"
+        buffer.Post { defaultMessage with Text = "<buildresults>" }
 
 /// Traces the end of the build
-let traceEndBuild _=
-  match traceMode with
-  | Console -> ()
-  | Xml     -> appendXML "</buildresults>"
+let traceEndBuild _ =
+    match traceMode with
+    | Console -> ()
+    | Xml     -> buffer.Post { defaultMessage with Text = "</buildresults>" }
 
 let openTag tag =  openTags <- tag :: openTags
 
 let closeTag tag =
-  match openTags with
-  | x::rest when x = tag -> openTags <- rest
-  | _ -> failwith "Invalid Tag-structure"
-  appendXML <| sprintf "</%s>" tag
+    match openTags with
+    | x::rest when x = tag -> openTags <- rest
+    | _ -> failwith "Invalid Tag-structure"
+
+    buffer.Post { defaultMessage with Text = sprintf "</%s>" tag }
   
 let closeAllOpenTags() = openTags |> Seq.iter closeTag
 
 /// Traces the begin of a target
 let traceStartTarget name dependencyString =
-  match traceMode with
-  | Console -> 
-      tracefn "Starting Target: %s %s" name dependencyString
-  | Xml     -> 
-      openTag "target"
-      appendXML <| sprintf "<target name=\"%s\">" name
-      xmlMessage dependencyString
+    match traceMode with
+    | Console -> tracefn "Starting Target: %s %s" name dependencyString
+    | Xml     -> 
+        openTag "target"
+        buffer.Post { defaultMessage with Text = sprintf "<target name=\"%s\">" name }
+        xmlMessage dependencyString
 
-  ReportProgressStart <| sprintf "Target: %s" name
+    ReportProgressStart <| sprintf "Target: %s" name
    
 /// Traces the end of a target   
 let traceEndTarget name =
-  match traceMode with
-  | Console -> tracefn "Finished Target: %s" name
-  | Xml     -> closeTag "target"
-  ReportProgressFinish <| sprintf "Target: %s" name       
-  
+    match traceMode with
+    | Console -> tracefn "Finished Target: %s" name
+    | Xml     -> closeTag "target"
+
+    ReportProgressFinish <| sprintf "Target: %s" name
   
 /// Traces the begin of a task
 let traceStartTask task description =
-  match traceMode with
-  | Console -> ()
-  | Xml     -> 
-    openTag "task"
-    appendXML <| sprintf "<task name=\"%s\">" task
-  ReportProgressStart <| sprintf "Task: %s %s" task description
+    match traceMode with
+    | Console -> ()
+    | Xml     -> 
+        openTag "task"
+        buffer.Post { defaultMessage with Text = sprintf "<task name=\"%s\">" task }
+
+    ReportProgressStart <| sprintf "Task: %s %s" task description
    
 /// Traces the end of a task
 let traceEndTask task  description =
-  match traceMode with
-  | Console -> ()
-  | Xml     -> closeTag "task" 
-  ReportProgressFinish <| sprintf "Task: %s %s" task description       
+    match traceMode with
+    | Console -> ()
+    | Xml     -> closeTag "task"
+
+    ReportProgressFinish <| sprintf "Task: %s %s" task description       
