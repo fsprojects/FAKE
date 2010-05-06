@@ -716,12 +716,12 @@
 <member name="T:Fake.ILMergeHelper">
 
 </member>
-<member name="M:Fake.MSBuildHelper.MSBuildRelease(System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+<member name="M:Fake.MSBuildHelper.MSBuildRelease(System.String,System.String)">
 <summary>
  Builds the given project files and collects the output files
 </summary>
 </member>
-<member name="M:Fake.MSBuildHelper.MSBuildDebug(System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+<member name="M:Fake.MSBuildHelper.MSBuildDebug(System.String,System.String)">
 <summary>
  Builds the given project files and collects the output files
 </summary>
@@ -741,7 +741,7 @@
  MSBuild exe fileName
 </summary>
 </member>
-<member name="M:Fake.MSBuildHelper.CopyRecursive(System.String,System.String,System.Boolean)">
+<member name="M:Fake.MSBuildHelper.CopyRecursive(System.String,System.String)">
 <summary>
  Copies the file structure recursive
 </summary>
@@ -786,10 +786,10 @@
 <member name="T:Fake.MailBoxHelper">
 
 </member>
-<member name="M:Fake.MessageHelper.WaitForMessageFile(System.String,System.TimeSpan)">
+<member name="M:Fake.MessageHelper.WaitForMessageFile(System.String)">
 <summary>
  Waits for another application to create a output file
- if the timeout is reached an exception will be raised
+   - if the timeout is reached an exception will be raised
 </summary>
 </member>
 <member name="M:Fake.MessageHelper.WaitForMessageFiles(System.Collections.Generic.IEnumerable{System.String},System.TimeSpan)">
@@ -1187,6 +1187,28 @@
 <member name="T:Fake.SqlServer">
 
 </member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.StringHelper.op_LessMultiply(System.String,System.String)">
+<summary>
+ Checks wether the given text starts with the given prefix
+</summary>
+</member>
+<member name="M:Fake.StringHelper.toLines(System.Collections.Generic.IEnumerable{System.String})">
+<summary>
+ Converts a sequence of strings into a string separated with line ends
+</summary>
+</member>
 <member name="M:Fake.StringHelper.trimSlash(System.String)">
 <summary>
  Removes the slashes from the end of the given string
@@ -1204,7 +1226,7 @@
 </member>
 <member name="M:Fake.StringHelper.appendStringIfValueIsNotNullOrEmpty(System.String)">
 <summary>
- Appends a text if the value is not null´or empty
+ Appends a text if the value is not null or empty
 </summary>
 </member>
 <member name="M:Fake.StringHelper.appendStringIfValueIsNotNull``1(``0)">
@@ -1260,6 +1282,19 @@
 <member name="M:Fake.StringHelper.WriteFile(System.String,System.Collections.Generic.IEnumerable{System.String})">
 <summary>
  Writes a file line by line
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.StringHelper.ReplaceFile(System.String,System.String)">
+<summary>
+ Replaces the file with the given string
+</summary>
+</member>
+<member name="M:Fake.StringHelper.WriteStringToFile(System.Boolean,System.String,System.String)">
+<summary>
+ Writes string to a file
 </summary>
 </member>
 <member name="M:Fake.StringHelper.WriteToFile(System.Boolean,System.String,System.Collections.Generic.IEnumerable{System.String})">
@@ -2192,7 +2227,7 @@
  Parameter 2: fileName - The file to zip.
 </summary>
 </member>
-<member name="M:Fake.ZipHelper.Zip(System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+<member name="M:Fake.ZipHelper.Zip(System.String,System.String)">
 <summary>
  Creates a zip file with the given files 
 
