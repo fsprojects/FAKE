@@ -22,7 +22,7 @@ let appReferences  = !+ @"src\app\**\*.csproj" |> Scan
 let testReferences = !+ @"src\test\**\*.csproj" |> Scan
 
 // tools
-let nunitPath = @".\Tools\NUnit\bin"
+let nunitPath = @".\Tools\NUnit"
 let fxCopRoot = @".\Tools\FxCop\FxCopCmd.exe"
 let version = "0.2"  // or retrieve from CI server
 
