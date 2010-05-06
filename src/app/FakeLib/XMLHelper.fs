@@ -90,4 +90,11 @@ let parseSubNode name f node =
     |> getSubNode name
     |> parse name f
 
+/// Replaces text in an XML file at the location specified by an XPath expression.
+let XmlPoke (fileName:string) xpath value =
+    let doc = new XmlDocument()
+    doc.Load fileName
+    let node = doc.SelectSingleNode xpath
+    node.Value <- value
+    doc.Save fileName
     
