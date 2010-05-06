@@ -5,45 +5,6 @@ open System
 open System.IO
 open System.Reflection
 
-/// The trace Mode type.
-type TraceMode =
-| Console
-| Xml
-
-type Message = 
-    { Text      : string
-      Color     : ConsoleColor
-      Newline   : bool
-      Important : bool}
-
-let private defaultMessage = 
-    { Text      = ""
-      Color     = ConsoleColor.White
-      Newline   = true
-      Important = false }
-
-/// Logs the specified string to the console
-let private logMessageToConsole important newLine s =     
-    if important && buildServer <> CCNet then
-        if newLine then
-            eprintfn "%s" (toRelativePath s)
-        else 
-            eprintf "%s" (toRelativePath s)
-    else
-        if newLine then
-            printfn "%s" (toRelativePath s)
-        else 
-            printf "%s" (toRelativePath s)
-
-let private appendXML line = AppendToFile xmlOutputFile [line]
-
-/// The actual trace mode.
-let mutable traceMode = 
-    match buildServer with
-    | TeamCity   -> Console
-    | CCNet      -> Xml
-    | LocalBuild -> Console
-
 /// Trace verbose output
 let mutable verbose = hasBuildParam "verbose"
    
@@ -52,22 +13,6 @@ let fakePath = productName.GetType().Assembly.Location
        
 /// Gets the FAKE version no.
 let fakeVersion = productName.GetType().Assembly.GetName().Version
-
-let private buffer = MailboxProcessor.Start (fun inbox ->
-    let rec loop () = 
-        async {
-            let! (msg:Message) = inbox.Receive()
-            match traceMode with
-            | Console ->
-                let curColor = Console.ForegroundColor
-                Console.ForegroundColor <- msg.Color
-                logMessageToConsole msg.Important msg.Newline msg.Text
-                Console.ForegroundColor <- curColor
-            | Xml     -> appendXML msg.Text
-
-            return! loop ()}
-
-    loop ())
     
 let mutable private openTags = []
 

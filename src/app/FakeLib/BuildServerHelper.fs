@@ -7,6 +7,11 @@ type BuildServer =
 | CCNet       
 | LocalBuild
 
+/// The trace Mode type.
+type TraceMode =
+| Console
+| Xml
+
 /// A constant for local builds            
 let localBuildLabel = "LocalBuild"
 
@@ -24,3 +29,10 @@ let buildVersion,buildServer =
     localBuildLabel,LocalBuild
 
 let isLocalBuild = LocalBuild = buildServer
+
+/// The actual trace mode.
+let mutable traceMode = 
+    match buildServer with
+    | TeamCity   -> Console
+    | CCNet      -> Xml
+    | LocalBuild -> Console
