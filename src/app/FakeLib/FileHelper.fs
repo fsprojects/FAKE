@@ -108,16 +108,15 @@ let CopyFileIntoSubFolder target file =
 ///   param target: The target directory.
 ///   param file: The FileName
 let CopyFile target file =
-  let fi = new FileInfo(file)
-  let targetName = target + fi.Name
-  logVerbosefn "Copy %s to %s" file targetName
-  fi.CopyTo(targetName,true) |> ignore    
+    let fi = new FileInfo(file)
+    let targetName = Path.Combine(target, fi.Name)
+    logVerbosefn "Copy %s to %s" file targetName
+    fi.CopyTo(targetName,true) |> ignore    
   
 /// Copies the files to the target
 ///   param target: The target directory.
 ///   param files: The original FileNames as a sequence.
-let Copy target files =
-  files |> Seq.iter (CopyFile target)   
+let Copy target = Seq.iter (CopyFile target)   
 
 /// Renames the files to the target fileName
 ///   param target: The target FileName.
@@ -125,16 +124,16 @@ let Copy target files =
 let Rename target file = (new FileInfo(file)).MoveTo target   
   
 let SilentCopy target files =
-  files |> Seq.iter (fun file ->
-    let fi = new FileInfo(file)
-    let targetName = target + fi.Name
-    let targetFI = new FileInfo(targetName)
-    if targetFI.Exists then
-      if fi.LastWriteTime > targetFI.LastWriteTime then
-        targetFI.Attributes <- FileAttributes.Normal
-        fi.CopyTo(targetName,true) |> ignore
-    else
-      fi.CopyTo(targetName) |> ignore)
+    files |> Seq.iter (fun file ->
+        let fi = new FileInfo(file)
+        let targetName = Path.Combine(target, fi.Name)
+        let targetFI = new FileInfo(targetName)
+        if targetFI.Exists then
+            if fi.LastWriteTime > targetFI.LastWriteTime then
+              targetFI.Attributes <- FileAttributes.Normal
+              fi.CopyTo(targetName,true) |> ignore
+        else
+          fi.CopyTo(targetName) |> ignore)
                
 
 /// Copies the files to the target - Alias for Copy
