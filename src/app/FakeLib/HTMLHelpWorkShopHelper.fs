@@ -9,15 +9,15 @@ open System.IO
 ///   param projectFile: the fileName of the help project 
 ///   returns: The generated files (fileNames)
 let CompileHTMLHelpProject helpCompiler projectFile =
-  traceStartTask "HTMLHelpWorkshop" projectFile
-  let fi = new FileInfo(projectFile)
-  if not fi.Exists then invalidArg "projectFile" "Projectfile doesn't exist."
-  if ExecProcess (fun info ->
-    info.FileName <- helpCompiler
-    info.Arguments <- fi.FullName |> toParam ) <> 1 
-  then failwith "Error in HTML Help Workshop"
+    traceStartTask "HTMLHelpWorkshop" projectFile
+    let fi = new FileInfo(projectFile)
+    if not fi.Exists then invalidArg "projectFile" "Projectfile doesn't exist."
+    if ExecProcess (fun info ->
+        info.FileName <- helpCompiler
+        info.Arguments <- fi.FullName |> toParam ) <> 1 
+    then failwith "Error in HTML Help Workshop"
 
-  let name = fi.Name.Split('.').[0]
-  traceEndTask "HTMLHelpWorkshop" projectFile
-  [ sprintf "%s\\%s.chm" fi.Directory.FullName name;
-    sprintf "%s\\%s.hh" fi.Directory.FullName name]         
+    let name = fi.Name.Split('.').[0]
+    traceEndTask "HTMLHelpWorkshop" projectFile
+    [ Path.Combine(fi.Directory.FullName, sprintf "%s.chm" name)
+      Path.Combine(fi.Directory.FullName, sprintf "%s.hh" name)]         

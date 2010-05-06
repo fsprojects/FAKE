@@ -27,42 +27,40 @@ type FileIncludes =
 /// Patterns can use either / \ as a directory separator.
 /// cleanPath replaces both of these characters with Path.DirectorySeparatorChar
 let cleanPathBuilder (path:string) =
-  let pathBuilder = new StringBuilder(path);
+    let pathBuilder = new StringBuilder(path);
 
-  pathBuilder
-    .Replace('/',  Path.DirectorySeparatorChar)
-    .Replace('\\', Path.DirectorySeparatorChar)
+    pathBuilder
+      .Replace('/',  Path.DirectorySeparatorChar)
+      .Replace('\\', Path.DirectorySeparatorChar)
     
 /// Patterns can use either / \ as a directory separator.
 /// cleanPath replaces both of these characters with Path.DirectorySeparatorChar
 let cleanPath path = (cleanPathBuilder path).ToString()      
     
 let combinePath baseDirectory path =
-  let combined = Path.Combine(baseDirectory, cleanPath(path))
-  (new DirectoryInfo(combined)).FullName
+    Path.Combine(baseDirectory, cleanPath(path))
+      |> Path.GetFullPath
   
           
 /// The base directory to scan. The default is the 
 /// <see cref="Environment.CurrentDirectory">current directory</see>.
-let baseDirectory value =
-  new DirectoryInfo(cleanPath value)
+let baseDirectory value = new DirectoryInfo(cleanPath value)
   
 /// Determines whether the last character of the given <see cref="string" />
 /// matches the specified character.    
 let endsWithChar (value:string) c =
-  let stringLength = value.Length
-  stringLength <> 0 && value.[stringLength - 1] = c
+    let stringLength = value.Length
+    stringLength <> 0 && value.[stringLength - 1] = c
 
 /// Determines whether the last character of the given <see cref="string" />
 /// matches Path.DirectorySeparatorChar.         
-let endsWithSlash value =   
-  endsWithChar value Path.DirectorySeparatorChar   
+let endsWithSlash value = endsWithChar value Path.DirectorySeparatorChar   
   
 /// Ensures that the last character of the given <see cref="string" />
 /// matches Path.DirectorySeparatorChar.          
 let ensureEndsWithSlash value =
-  if endsWithSlash value then value else
-  value + string Path.DirectorySeparatorChar
+    if endsWithSlash value then value else
+    value + string Path.DirectorySeparatorChar
   
 /// Converts search pattern to a regular expression pattern.
 let regexPattern originalPattern =
@@ -178,11 +176,12 @@ let parseSearchDirectoryAndPattern (baseDir:DirectoryInfo) originalPattern =
   
   // We only prepend BaseDirectory when s represents a relative path.
   let searchDirectory =
-    if Path.IsPathRooted(s) then
-      (new DirectoryInfo(s)).FullName
+    if Path.IsPathRooted s then
+        Path.GetFullPath s
     else 
       // we also (correctly) get to this branch of code when s.Length == 0
-      (new DirectoryInfo(Path.Combine(baseDir.FullName, s))).FullName
+        Path.Combine(baseDir.FullName, s)
+          |> Path.GetFullPath
   
   // remove trailing directory separator character, fixes bug #1195736
   //
@@ -346,9 +345,7 @@ let Files baseDirs includes excludes =
 let Log message files = files |> Seq.iter (log << sprintf "%s%s" message)
 
 /// The default base directory 
-let DefaultBaseDir =
-  let di = new DirectoryInfo(".")
-  di.FullName
+let DefaultBaseDir = Path.GetFullPath "."
   
 /// Include files  
 let Include x =    
