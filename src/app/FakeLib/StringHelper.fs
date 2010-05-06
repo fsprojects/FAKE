@@ -50,7 +50,10 @@ let ReadFileAsString file = File.ReadAllText(file,Encoding.Default)
 
 /// Removes linebreaks from the given string
 let RemoveLineBreaks (s:string) = 
-  (new StringBuilder(s)).Replace("\r",String.Empty).Replace("\n",String.Empty).ToString()
+    (new StringBuilder(s))
+      .Replace("\r",String.Empty)
+      .Replace("\n",String.Empty)
+      .ToString()
 
 /// Encapsulates the Apostrophe
 let EncapsulateApostrophe (s:string) = s.Replace("'","`") 
