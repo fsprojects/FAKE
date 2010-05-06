@@ -17,16 +17,11 @@ let defaultMessage =
 
 /// Logs the specified string to the console
 let private logMessageToConsole important newLine s =   
+    let r = toRelativePath s
     if important && buildServer <> CCNet then
-        if newLine then
-            eprintfn "%s" (toRelativePath s)
-        else 
-            eprintf "%s" (toRelativePath s)
+        if newLine then eprintfn "%s" r else eprintf "%s" r
     else
-        if newLine then
-            printfn "%s" (toRelativePath s)
-        else 
-            printf "%s" (toRelativePath s)
+        if newLine then printfn "%s" r else printf "%s" r
 
 let private appendXML line = AppendToFile xmlOutputFile [line]
 
