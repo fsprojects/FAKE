@@ -42,7 +42,7 @@ let mutable traceMode =
     match buildServer with
     | TeamCity   -> Console
     | CCNet      -> Xml
-    | LocalBuild -> Console    
+    | LocalBuild -> Console
 
 /// Trace verbose output
 let mutable verbose = hasBuildParam "verbose"
