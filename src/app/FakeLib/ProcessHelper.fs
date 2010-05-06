@@ -39,23 +39,26 @@ let execProcess3 infoAction = execProcessAndReturnExitCode infoAction = 0
 /// Runs the given process
 /// returns the exit code
 let execProcess2 infoAction silent =
-  use p = new Process()
-  p.StartInfo.UseShellExecute <- false
-  infoAction p.StartInfo
-  if silent then
-    p.StartInfo.RedirectStandardError <- true
-  try
-    p.Start() |> ignore
-  with
-  | exn -> failwithf "Could not execute %s. %s" p.StartInfo.FileName exn.Message
+    use p = new Process()
+    p.StartInfo.UseShellExecute <- false
+    infoAction p.StartInfo
+    if silent then
+        p.StartInfo.RedirectStandardOutput <- true
+        p.StartInfo.RedirectStandardError <- true
+    try
+        p.Start() |> ignore
+    with
+    | exn -> failwithf "Could not execute %s. %s" p.StartInfo.FileName exn.Message
+ 
+    p.WaitForExit()
 
-  let error = if silent then p.StandardError.ReadToEnd() else String.Empty
+    if silent then
+        log <| p.StandardOutput.ReadToEnd()
+
+        if p.ExitCode <> 0 then
+            traceError <| p.StandardError.ReadToEnd()
     
-  p.WaitForExit()
-  if silent && p.ExitCode <> 0 then
-    System.Diagnostics.Trace.WriteLine error
-    
-  p.ExitCode  
+    p.ExitCode  
 
 /// Runs the given process
 /// returns the exit code
