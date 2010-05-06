@@ -101,12 +101,28 @@
 <member name="">
 
 </member>
+<member name="T:Fake.BuildServerHelper.TraceMode">
+<summary>
+ The trace Mode type.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
 <member name="">
 
 </member>
 <member name="T:Fake.BuildServerHelper.BuildServer">
 <summary>
  The BuildServer type.
+</summary>
+</member>
+<member name="P:Fake.BuildServerHelper.traceMode">
+<summary>
+ The actual trace mode.
 </summary>
 </member>
 <member name="">
@@ -736,6 +752,38 @@
 </summary>
 </member>
 <member name="T:Fake.MSBuildHelper">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.MailBoxHelper.logMessageToConsole(System.Boolean,System.Boolean,System.String)">
+<summary>
+ Logs the specified string to the console
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:Fake.MailBoxHelper">
 
 </member>
 <member name="M:Fake.MessageHelper.WaitForMessageFile(System.String,System.TimeSpan)">
@@ -1558,7 +1606,7 @@
  Send message to TeamCity
 </summary>
 </member>
-<member name="M:Fake.TeamCityHelper.sendToTeamCity(Microsoft.FSharp.Core.PrintfFormat{Microsoft.FSharp.Core.FSharpFunc`2{System.String,Microsoft.FSharp.Core.Unit},System.IO.TextWriter,Microsoft.FSharp.Core.Unit,Microsoft.FSharp.Core.Unit},System.String)">
+<member name="M:Fake.TeamCityHelper.sendToTeamCity(Microsoft.FSharp.Core.PrintfFormat{Microsoft.FSharp.Core.FSharpFunc`2{System.String,System.String},Microsoft.FSharp.Core.Unit,System.String,System.String},System.String)">
 <summary>
  Send message to TeamCity
 </summary>
@@ -1588,32 +1636,6 @@
 </member>
 <member name="T:Fake.TemplateHelper">
 
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="T:Fake.TraceHelper.TraceMode">
-<summary>
- The trace Mode type.
-</summary>
 </member>
 <member name="M:Fake.TraceHelper.traceEndTask(System.String,System.String)">
 <summary>
@@ -1737,9 +1759,6 @@
 <member name="">
 
 </member>
-<member name="">
-
-</member>
 <member name="P:Fake.TraceHelper.fakeVersion">
 <summary>
  Gets the FAKE version no.
@@ -1754,22 +1773,6 @@
 <summary>
  Trace verbose output
 </summary>
-</member>
-<member name="P:Fake.TraceHelper.traceMode">
-<summary>
- The actual trace mode.
-</summary>
-</member>
-<member name="">
-
-</member>
-<member name="M:Fake.TraceHelper.logMessageToConsole(System.Boolean,System.Boolean,System.String)">
-<summary>
- Logs the specified string to the console
-</summary>
-</member>
-<member name="">
-
 </member>
 <member name="T:Fake.TraceHelper">
 
