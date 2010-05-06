@@ -158,7 +158,7 @@ let CopyDir target source filterFile =
   |> Seq.filter filterFile
   |> Seq.iter (fun file -> 
       let newFile = target + file.Remove(0, source.Length)
-      logfn "%s => %s" file newFile
+      logVerbosefn "%s => %s" file newFile
       Directory.CreateDirectory(Path.GetDirectoryName(newFile)) |> ignore
       File.Copy(file, newFile, true))
   
