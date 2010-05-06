@@ -2,18 +2,15 @@
 module Fake.ZipHelper
 
 open System.IO
-open ICSharpCode.SharpZipLib.Checksums
 open ICSharpCode.SharpZipLib.Zip
 open System.Globalization
 open System
-open ICSharpCode.SharpZipLib
 
 /// The default zip level
-let DefaultZipLevel = 6
+let DefaultZipLevel = 7
 
 /// Creates a zip file with the given files
 let CreateZip workingDir fileName comment level flatten files =
-  let crc = new Crc32()
   let workingDir =
     let dir = new DirectoryInfo(workingDir)
     if not dir.Exists then failwithf "Directory not found: %s" dir.FullName
@@ -27,7 +24,7 @@ let CreateZip workingDir fileName comment level flatten files =
   if not (String.IsNullOrEmpty comment) then      
     stream.SetComment comment
     
-  let buffer = Array.create 32768 (byte 0)
+  let buffer = Array.create 32768 0uy
 
   for item in files do      
     let info = new FileInfo(item)      
@@ -43,29 +40,22 @@ let CreateZip workingDir fileName comment level flatten files =
       let itemSpec = ZipEntry.CleanName(itemSpec)
       let entry = new ZipEntry(itemSpec)
       entry.DateTime <- info.LastWriteTime
-      entry.Size <- info.Length;
+      entry.Size <- info.Length
       
       use stream2 = info.OpenRead()
-      crc.Reset()
-      let length = ref stream2.Length
-      while !length > 0L do
-        let len = stream2.Read(buffer, 0, buffer.Length)
-        crc.Update(buffer, 0, len)
-        length := !length - (len |> int64)
-        
-      entry.Crc <- crc.Value
+
       stream.PutNextEntry(entry)
       let length = ref stream2.Length
       stream2.Seek(0L, SeekOrigin.Begin) |> ignore
       while !length > 0L do
         let count = stream2.Read(buffer, 0, buffer.Length)
         stream.Write(buffer, 0, count)
-        length := !length - (count |> int64)
+        length := !length - (int64 count)
       
       logfn "File added %s" itemSpec
       
   stream.Finish()
-  tracefn "Zip successfully %s" fileName
+  tracefn "Zip successfully created %s" fileName
  
 /// Creates a zip file with the given files 
 ///
@@ -90,4 +80,3 @@ let ZipFile fileName file =
 let Unzip target fileName =  
     let zip = new FastZip()
     zip.ExtractZip (fileName, target, "")
-    

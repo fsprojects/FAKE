@@ -101,12 +101,28 @@
 <member name="">
 
 </member>
+<member name="T:Fake.BuildServerHelper.TraceMode">
+<summary>
+ The trace Mode type.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
 <member name="">
 
 </member>
 <member name="T:Fake.BuildServerHelper.BuildServer">
 <summary>
  The BuildServer type.
+</summary>
+</member>
+<member name="P:Fake.BuildServerHelper.traceMode">
+<summary>
+ The actual trace mode.
 </summary>
 </member>
 <member name="">
@@ -320,7 +336,7 @@
    param file: The orginal FileName.
 </summary>
 </member>
-<member name="M:Fake.FileHelper.Copy(System.String,System.Collections.Generic.IEnumerable{System.String})">
+<member name="M:Fake.FileHelper.Copy(System.String)">
 <summary>
  Copies the files to the target
    param target: The target directory.
@@ -738,6 +754,38 @@
 <member name="T:Fake.MSBuildHelper">
 
 </member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.MailBoxHelper.logMessageToConsole(System.Boolean,System.Boolean,System.String)">
+<summary>
+ Logs the specified string to the console
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:Fake.MailBoxHelper">
+
+</member>
 <member name="M:Fake.MessageHelper.WaitForMessageFile(System.String,System.TimeSpan)">
 <summary>
  Waits for another application to create a output file
@@ -783,6 +831,9 @@
 </summary>
 </member>
 <member name="T:Fake.NCoverHelper">
+
+</member>
+<member name="">
 
 </member>
 <member name="">
@@ -1196,7 +1247,7 @@
  Reads a file as one text
 </summary>
 </member>
-<member name="M:Fake.StringHelper.separated(System.String)">
+<member name="M:Fake.StringHelper.separated(System.String,System.Collections.Generic.IEnumerable{System.String})">
 <summary>
  Converts a sequence of strings to a string with delimiters
 </summary>
@@ -1555,7 +1606,7 @@
  Send message to TeamCity
 </summary>
 </member>
-<member name="M:Fake.TeamCityHelper.sendToTeamCity(Microsoft.FSharp.Core.PrintfFormat{Microsoft.FSharp.Core.FSharpFunc`2{System.String,Microsoft.FSharp.Core.Unit},System.IO.TextWriter,Microsoft.FSharp.Core.Unit,Microsoft.FSharp.Core.Unit},System.String)">
+<member name="M:Fake.TeamCityHelper.sendToTeamCity(Microsoft.FSharp.Core.PrintfFormat{Microsoft.FSharp.Core.FSharpFunc`2{System.String,System.String},Microsoft.FSharp.Core.Unit,System.String,System.String},System.String)">
 <summary>
  Send message to TeamCity
 </summary>
@@ -1585,17 +1636,6 @@
 </member>
 <member name="T:Fake.TemplateHelper">
 
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="T:Fake.TraceHelper.TraceMode">
-<summary>
- The trace Mode type.
-</summary>
 </member>
 <member name="M:Fake.TraceHelper.traceEndTask(System.String,System.String)">
 <summary>
@@ -1683,7 +1723,7 @@
 </member>
 <member name="M:Fake.TraceHelper.logColored(System.Boolean,System.ConsoleColor,System.Boolean,System.String)">
 <summary>
- Writes a trace to the command line (in the given color)
+ Writes a trace output to the message buffer (in the given color)
 </summary>
 </member>
 <member name="M:Fake.TraceHelper.logVerbosefn``1(Microsoft.FSharp.Core.PrintfFormat{``0,Microsoft.FSharp.Core.Unit,System.String,Microsoft.FSharp.Core.Unit})">
@@ -1708,16 +1748,16 @@
 </member>
 <member name="M:Fake.TraceHelper.logMessage(System.Boolean,System.Boolean,System.String)">
 <summary>
- logs the specified string        
+ Logs the specified string (via message buffer)
+</summary>
+</member>
+<member name="M:Fake.TraceHelper.xmlMessage(System.String)">
+<summary>
+ Writes a XML message to the bufffer.
 </summary>
 </member>
 <member name="">
 
-</member>
-<member name="M:Fake.TraceHelper.logMessageToConsole(System.Boolean,System.Boolean,System.String)">
-<summary>
- logs the specified string to the console
-</summary>
 </member>
 <member name="P:Fake.TraceHelper.fakeVersion">
 <summary>
@@ -1732,17 +1772,6 @@
 <member name="P:Fake.TraceHelper.verbose">
 <summary>
  Trace verbose output
-</summary>
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="P:Fake.TraceHelper.traceMode">
-<summary>
- The actual trace mode.
 </summary>
 </member>
 <member name="T:Fake.TraceHelper">
@@ -2029,7 +2058,12 @@
 <member name="T:Fake.XCopyHelper">
 
 </member>
-<member name="M:Fake.XMLHelper.parseSubNode``1(System.String,Microsoft.FSharp.Core.FSharpFunc`2{System.Xml.XmlNode,``0},System.Xml.XmlNode)">
+<member name="M:Fake.XMLHelper.XmlPoke(System.String,System.String,System.String)">
+<summary>
+ Replaces text in an XML file at the location specified by an XPath expression.
+</summary>
+</member>
+<member name="M:Fake.XMLHelper.parseSubNode``1(System.String,Microsoft.FSharp.Core.FSharpFunc`2{System.Xml.XmlNode,``0})">
 <summary>
  parses a subnode
 </summary>
@@ -2039,17 +2073,19 @@
  parses a node
 </summary>
 </member>
-<member name="M:Fake.XMLHelper.getSubNode(System.String,System.Xml.XmlNode)">
+<member name="M:Fake.XMLHelper.getSubNode(System.String)">
 <summary>
  gets the sub node with the name
 </summary>
 </member>
-<member name="">
-
+<member name="M:Fake.XMLHelper.getChilds``1(``0)">
+<summary>
+ Gets the child nodes for the given nodes
+</summary>
 </member>
 <member name="M:Fake.XMLHelper.getAttribute``1(System.String,``0)">
 <summary>
- gets the attribute with the given name 
+ Gets the attribute with the given name 
 </summary>
 </member>
 <member name="M:Fake.XMLHelper.XmlCDataElement(System.String,System.String,System.Xml.XmlTextWriter)">

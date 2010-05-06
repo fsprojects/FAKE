@@ -3,17 +3,19 @@ module Fake.TeamCityHelper
 
 /// Send message to TeamCity
 let sendToTeamCity format message =
-  if buildServer = TeamCity then
-    message 
-     |> RemoveLineBreaks 
-     |> EncapsulateApostrophe
-     |> toRelativePath 
-     |> printfn format
+    if buildServer = TeamCity then
+        let m = 
+            message 
+              |> RemoveLineBreaks 
+              |> EncapsulateApostrophe
+              |> toRelativePath 
+              |> sprintf format
+        buffer.Post {defaultMessage with Text = m }
     
 /// Send message to TeamCity
 let sendStrToTeamCity s =
-  if buildServer = TeamCity then
-    s |> RemoveLineBreaks |> printfn "%s"
+    if buildServer = TeamCity then
+        buffer.Post {defaultMessage with Text = RemoveLineBreaks s }
   
 /// Sends an error to TeamCity
 let sendTeamCityError x =
