@@ -18,9 +18,9 @@ let ReadFile (file:string) =
 
 /// Writes a file line by line
 let WriteToFile append file (lines: seq<string>) =    
-  let fi = new FileInfo(file)
-  use writer = if append && fi.Exists then fi.AppendText() else fi.CreateText() 
-  lines |> Seq.iter (writer.WriteLine)
+    let fi = new FileInfo(file)
+    use writer = if append && fi.Exists then fi.AppendText() else fi.CreateText() 
+    lines |> Seq.iter (writer.WriteLine)
 
 /// Writes a file line by line
 let WriteFile file lines = WriteToFile false file lines
@@ -29,8 +29,7 @@ let WriteFile file lines = WriteToFile false file lines
 let AppendToFile file lines = WriteToFile true file lines
 
 /// Converts a sequence of strings to a string with delimiters
-let separated delimiter =
-  Seq.fold (fun acc t -> if acc <> "" then acc + delimiter + t else t) ""
+let separated delimiter items = String.Join(delimiter, Array.ofSeq items)
        
 /// Reads a file as one text
 let ReadFileAsString file = File.ReadAllText file 
@@ -65,8 +64,7 @@ let appendFileNamesIfNotNull fileNames (builder:StringBuilder) =
     |> Seq.fold (fun builder file -> appendIfTrue (String.IsNullOrEmpty file |> not) file builder) builder
 
 /// Replaces the absolute path to a relative
-let toRelativePath (value:string) =
-  value.Replace((new DirectoryInfo(".")).FullName,".")
+let toRelativePath (value:string) = value.Replace(Path.GetFullPath("."),".")
 
 /// Removes the slashes from the end of the given string
 let trimSlash (s:string) = s.TrimEnd('\\')
