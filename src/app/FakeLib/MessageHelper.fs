@@ -4,7 +4,7 @@ module Fake.MessageHelper
 /// Waits for other applications to create a output files
 /// if the timeout is reached an exception will be raised
 let WaitForMessageFiles files timeOut =
-    let files = Seq.toList files
+    let files = Seq.cache files
     tracefn "Waiting for message files %A (Timeout: %A)" files timeOut
 
     let watch = new System.Diagnostics.Stopwatch()

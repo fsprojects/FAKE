@@ -181,7 +181,7 @@ let CleanDir dir =
             Directory.GetDirectories(actDir) |> Seq.iter deleteDirs
             Directory.Delete(actDir,true)
     
-        Directory.GetDirectories(dir) |> Seq.iter deleteDirs      
+        Directory.GetDirectories dir |> Seq.iter deleteDirs      
     else
         CreateDir dir
     
@@ -196,10 +196,9 @@ let CleanDirs dirs = Seq.iter CleanDir dirs
 let ReadCSVFile(file:string) =             
     let csvRegEx = new RegularExpressions.Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))")   
          
-    seq {for line in ReadFile file ->
-          csvRegEx.Split line 
-            |> Array.map (fun s -> s.Trim([| '"' |]))}  
-
+    ReadFile file
+      |> Seq.map csvRegEx.Split 
+      |> Seq.map (Array.map (fun s -> s.Trim([| '"' |])))
              
 /// Appends all given files to one file 
 ///   param newFileName: The target FileName.
@@ -212,9 +211,7 @@ let AppendTextFiles newFileName files =
     files 
       |> Seq.iter (fun file ->       
             logVerbosefn "Appending %s to %s" file fi.FullName
-            ReadFile file |> Seq.iter(fun line -> writer.WriteLine(line)))
-         
-    writer.Close() 
+            ReadFile file |> Seq.iter writer.WriteLine)
 
 /// Checks if the two files are byte-to-byte equal
 let FilesAreEqual (first:FileInfo) (second:FileInfo) =   
