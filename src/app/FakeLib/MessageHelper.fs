@@ -13,17 +13,17 @@ let WaitForMessageFiles files timeOut =
 
     let watch = new Stopwatch()
     watch.Start()
-    let fileInfos = files |> Seq.map (fun file -> new FileInfo(file)) |> Seq.toList
-    let allFilesExists = Seq.forall (fun (fi:FileInfo) -> fi.Refresh(); fi.Exists)      
+    let fileInfos = 
+        files 
+          |> Seq.map (fun file -> new FileInfo(file)) 
+          |> Seq.toList
       
-    // wait for file    
-    while watch.Elapsed < timeOut && (not (allFilesExists fileInfos)) do
+    while 
+      fileInfos |> Seq.exists (fun fi -> fi.Refresh(); not fi.Exists) do
+        if watch.Elapsed > timeOut then failwith "MessageFile timeout" 
         Thread.Sleep 100
 
-    let time = watch.Elapsed  
-    if time > timeOut then failwith "MessageFile timeout"    
-    Thread.Sleep 100   
-    time
+    watch.Elapsed    
   
 /// Waits for another application to create a output file
 ///   - if the timeout is reached an exception will be raised
