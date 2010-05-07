@@ -7,34 +7,7 @@ open System.Diagnostics
 open System.IO
 open System.Threading
 
-let mutable redirectOutputToTrace = false
-
-/// Runs the given process
-/// returns the exit code
-let execProcessAndReturnExitCode infoAction =
-  use p = new Process()
-  p.StartInfo.UseShellExecute <- false
-  infoAction p.StartInfo
-  p.StartInfo.RedirectStandardOutput <- true
-  p.StartInfo.RedirectStandardError <- true
-
-  p.ErrorDataReceived.Add(fun d -> if d.Data <> null then traceError d.Data)
-  p.OutputDataReceived.Add(fun d -> if d.Data <> null then trace d.Data)
-  try
-    p.Start() |> ignore
-  with
-  | :? Win32Exception -> failwithf "Could not execute %s" p.StartInfo.FileName
-  
-  p.BeginErrorReadLine()
-  p.BeginOutputReadLine()     
-  
-  p.WaitForExit()
-    
-  p.ExitCode
-
-/// Runs the given process
-/// returns if the exit code was 0
-let execProcess3 infoAction = execProcessAndReturnExitCode infoAction = 0    
+let mutable redirectOutputToTrace = false 
 
 /// Runs the given process
 /// returns the exit code
@@ -45,20 +18,28 @@ let execProcess2 infoAction silent =
     if silent then
         p.StartInfo.RedirectStandardOutput <- true
         p.StartInfo.RedirectStandardError <- true
+        p.ErrorDataReceived.Add(fun d -> if d.Data <> null then traceError d.Data)
+        p.OutputDataReceived.Add(fun d -> if d.Data <> null then trace d.Data)
     try
         p.Start() |> ignore
     with
     | exn -> failwithf "Could not execute %s. %s" p.StartInfo.FileName exn.Message
- 
+    
+    if silent then 
+        p.BeginErrorReadLine()
+        p.BeginOutputReadLine()     
+  
     p.WaitForExit()
-
-    if silent then
-        log <| p.StandardOutput.ReadToEnd()
-
-        if p.ExitCode <> 0 then
-            traceError <| p.StandardError.ReadToEnd()
     
     p.ExitCode  
+
+/// Runs the given process
+/// returns the exit code
+let execProcessAndReturnExitCode infoAction = execProcess2 infoAction true
+
+/// Runs the given process
+/// returns if the exit code was 0
+let execProcess3 infoAction = execProcessAndReturnExitCode infoAction = 0   
 
 /// Runs the given process
 /// returns the exit code

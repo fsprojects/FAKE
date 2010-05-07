@@ -775,7 +775,7 @@
 <member name="">
 
 </member>
-<member name="M:Fake.MailBoxHelper.logMessageToConsole(System.Boolean,System.Boolean,System.String)">
+<member name="M:Fake.MailBoxHelper.logMessageToConsole(Fake.MailBoxHelper.Message)">
 <summary>
  Logs the specified string to the console
 </summary>
@@ -786,7 +786,7 @@
 <member name="T:Fake.MailBoxHelper">
 
 </member>
-<member name="M:Fake.MessageHelper.WaitForMessageFile(System.String)">
+<member name="M:Fake.MessageHelper.WaitForMessageFile(System.String,System.TimeSpan)">
 <summary>
  Waits for another application to create a output file
    - if the timeout is reached an exception will be raised
@@ -998,12 +998,6 @@
  returns the exit code
 </summary>
 </member>
-<member name="M:Fake.ProcessHelper.execProcess2(Microsoft.FSharp.Core.FSharpFunc`2{System.Diagnostics.ProcessStartInfo,Microsoft.FSharp.Core.Unit},System.Boolean)">
-<summary>
- Runs the given process
- returns the exit code
-</summary>
-</member>
 <member name="M:Fake.ProcessHelper.execProcess3(Microsoft.FSharp.Core.FSharpFunc`2{System.Diagnostics.ProcessStartInfo,Microsoft.FSharp.Core.Unit})">
 <summary>
  Runs the given process
@@ -1011,6 +1005,12 @@
 </summary>
 </member>
 <member name="M:Fake.ProcessHelper.execProcessAndReturnExitCode(Microsoft.FSharp.Core.FSharpFunc`2{System.Diagnostics.ProcessStartInfo,Microsoft.FSharp.Core.Unit})">
+<summary>
+ Runs the given process
+ returns the exit code
+</summary>
+</member>
+<member name="M:Fake.ProcessHelper.execProcess2(Microsoft.FSharp.Core.FSharpFunc`2{System.Diagnostics.ProcessStartInfo,Microsoft.FSharp.Core.Unit},System.Boolean)">
 <summary>
  Runs the given process
  returns the exit code
