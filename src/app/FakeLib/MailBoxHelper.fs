@@ -16,12 +16,15 @@ let defaultMessage =
       Important = false }
 
 /// Logs the specified string to the console
-let private logMessageToConsole important newLine s =   
-    let r = toRelativePath s
-    if important && buildServer <> CCNet then
-        if newLine then eprintfn "%s" r else eprintf "%s" r
+let private logMessageToConsole (msg:Message) =   
+    let text = toRelativePath msg.Text
+    let curColor = Console.ForegroundColor
+    Console.ForegroundColor <- msg.Color
+    if msg.Important && buildServer <> CCNet then
+        if msg.Newline then eprintfn "%s" text else eprintf "%s" text
     else
-        if newLine then printfn "%s" r else printf "%s" r
+        if msg.Newline then printfn "%s" text else printf "%s" text
+    Console.ForegroundColor <- curColor
 
 let private appendXML line = AppendToFile xmlOutputFile [line]
 
@@ -30,11 +33,7 @@ let buffer = MailboxProcessor.Start (fun inbox ->
         async {
             let! (msg:Message) = inbox.Receive()
             match traceMode with
-            | Console ->
-                let curColor = Console.ForegroundColor
-                Console.ForegroundColor <- msg.Color
-                logMessageToConsole msg.Important msg.Newline msg.Text
-                Console.ForegroundColor <- curColor
+            | Console -> logMessageToConsole msg
             | Xml     -> appendXML msg.Text
 
             return! loop ()}
