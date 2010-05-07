@@ -23,7 +23,7 @@ try
         cmdArgs 
             |> Seq.skip 1
             |> Seq.map (fun (a:string) ->
-                  logf "%A" a
+                  logfn "%A" a
                   if a.Contains "=" then
                       let s = a.Split splitter
                       s.[0],s.[1]
