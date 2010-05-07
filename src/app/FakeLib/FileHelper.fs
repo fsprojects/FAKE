@@ -4,6 +4,9 @@ module Fake.FileHelper
 open System.IO
 open System.Text
 
+/// Checks if all given files exists
+let allFilesExist files = Seq.forall File.Exists files
+
 /// Sets the directory readonly 
 let setDirectoryReadOnly readOnly (dir:DirectoryInfo) = 
     if dir.Exists then
