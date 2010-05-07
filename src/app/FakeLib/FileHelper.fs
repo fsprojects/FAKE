@@ -293,3 +293,26 @@ let GeneratePatchWithFindOldFileFunction lastReleaseDir patchDir srcFiles findOl
 ///  param srcFiles: The source files
 let GeneratePatch lastReleaseDir patchDir srcFiles =
     GeneratePatchWithFindOldFileFunction lastReleaseDir patchDir srcFiles (fun a b -> b)
+
+/// Copies the file structure recursive
+let rec copyRecursive (dir:DirectoryInfo) (outputDir:DirectoryInfo) overwrite =
+    let files =    
+      dir.GetDirectories() 
+        |> Seq.fold 
+             (fun acc (d:DirectoryInfo) ->
+               let newDir = new DirectoryInfo(Path.Combine(outputDir.FullName,d.Name))
+               if not newDir.Exists then
+                 newDir.Create()
+               copyRecursive d newDir overwrite @ acc)
+           []
+  
+    (dir.GetFiles()
+      |> Seq.map
+          (fun f ->
+             let newFileName = Path.Combine(outputDir.FullName, f.Name)
+             f.CopyTo(newFileName, overwrite) |> ignore
+             newFileName)
+      |> Seq.toList) @ files
+  
+/// Copies the file structure recursive
+let CopyRecursive dir outputDir = copyRecursive (new DirectoryInfo(dir)) (new DirectoryInfo(outputDir))
