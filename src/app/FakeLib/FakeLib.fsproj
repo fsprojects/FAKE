@@ -48,6 +48,7 @@
     <Compile Include="StringHelper.fs" />
     <Compile Include="CacheHelper.fs" />
     <Compile Include="XMLHelper.fs" />
+    <Compile Include="REST.fs" />
     <Compile Include="CCNetHelper.fs" />
     <Compile Include="BuildServerHelper.fs" />
     <Compile Include="MailBoxHelper.fs" />
@@ -55,6 +56,7 @@
     <Compile Include="TraceHelper.fs" />
     <Compile Include="SQLServer.fs" />
     <Compile Include="AssemblyInfoHelper.fs" />
+    <Compile Include="TwitterHelper.fs" />
     <Compile Include="ProcessHelper.fs" />
     <Compile Include="FxCopHelper.fs" />
     <Compile Include="NCoverHelper.fs" />
