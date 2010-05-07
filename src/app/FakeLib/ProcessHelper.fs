@@ -24,9 +24,10 @@ let execProcess2 infoAction silent =
         p.Start() |> ignore
     with
     | exn -> failwithf "Could not execute %s. %s" p.StartInfo.FileName exn.Message
-     
-    p.BeginErrorReadLine()
-    p.BeginOutputReadLine()     
+    
+    if silent then 
+        p.BeginErrorReadLine()
+        p.BeginOutputReadLine()     
   
     p.WaitForExit()
     
