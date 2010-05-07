@@ -236,7 +236,7 @@ let FilesAreEqual (first:FileInfo) (second:FileInfo) =
     eq
 
 /// Converts a file to it's full file system name
-let FullName fileName = Path.GetFullPath fileName
+let FullName fileName = (new FileInfo(fileName)).FullName
   
 /// Compares the given files for changes
 /// If delete = true then equal files will be removed  

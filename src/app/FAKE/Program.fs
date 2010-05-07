@@ -29,6 +29,7 @@ try
                       s.[0],s.[1]
                   else
                       a,"1")
+            |> Seq.toList
 
     log ""
     traceFAKE "FSI-Path: %s" fsiPath
