@@ -27,4 +27,4 @@ let WaitForMessageFiles files timeOut =
   
 /// Waits for another application to create a output file
 ///   - if the timeout is reached an exception will be raised
-let WaitForMessageFile file = WaitForMessageFiles [file]
+let WaitForMessageFile file timeOut = WaitForMessageFiles [file] timeOut
