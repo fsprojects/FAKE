@@ -14,7 +14,9 @@ let WaitForMessageFiles files timeOut =
         if watch.Elapsed > timeOut then failwith "MessageFile timeout" 
         System.Threading.Thread.Sleep 100
 
-    watch.Elapsed    
+    let time = watch.Elapsed    
+    System.Threading.Thread.Sleep 100
+    time
   
 /// Waits for another application to create a output file
 ///   - if the timeout is reached an exception will be raised
