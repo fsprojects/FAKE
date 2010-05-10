@@ -7,29 +7,6 @@ open System.Text
 open System.IO
 open System.Configuration
 
-/// Copies the file structure recursive
-let rec copyRecursive (dir:DirectoryInfo) (outputDir:DirectoryInfo) overwrite =
-    let files =    
-      dir.GetDirectories() 
-        |> Seq.fold 
-             (fun acc (d:DirectoryInfo) ->
-               let newDir = new DirectoryInfo(Path.Combine(outputDir.FullName,d.Name))
-               if not newDir.Exists then
-                 newDir.Create()
-               copyRecursive d newDir overwrite @ acc)
-           []
-  
-    dir.GetFiles()
-      |> Seq.fold 
-          (fun acc f ->
-             let newFileName = Path.Combine(outputDir.FullName, f.Name)
-             f.CopyTo(newFileName, overwrite) |> ignore
-             newFileName :: acc)
-          files
-  
-/// Copies the file structure recursive
-let CopyRecursive dir outputDir = copyRecursive (new DirectoryInfo(dir)) (new DirectoryInfo(outputDir))
-
 /// MSBuild exe fileName
 let msBuildExe =   
     let ev = environVar "MSBuild"
@@ -45,7 +22,7 @@ let build outputPath targets properties overwrite project =
     let targetsA = sprintf "/target:%s" targets |> toParam
     let output = 
         if isNullOrEmpty outputPath then "" else
-        let outputDir = new System.IO.DirectoryInfo(outputPath)
+        let outputDir = new DirectoryInfo(outputPath)
     
         sprintf "/p:OutputPath=\"%s\"\\" <| outputDir.FullName.Trim('\\')    
 
@@ -65,10 +42,11 @@ let build outputPath targets properties overwrite project =
 /// Builds the given project files and collects the output files
 let MSBuild outputPath targets properties projects =      
     projects |> Seq.iter (build outputPath targets properties true)
-    !+ (outputPath + "/**/*.*") |> Scan   
+    !+ (outputPath + "/**/*.*") 
+      |> Scan   
 
 /// Builds the given project files and collects the output files
-let MSBuildDebug outputPath targets = MSBuild outputPath targets [("Configuration","Debug")]
+let MSBuildDebug outputPath targets = MSBuild outputPath targets ["Configuration","Debug"]
 
 /// Builds the given project files and collects the output files
-let MSBuildRelease outputPath targets = MSBuild outputPath targets [("Configuration","Release")]
+let MSBuildRelease outputPath targets = MSBuild outputPath targets ["Configuration","Release"]

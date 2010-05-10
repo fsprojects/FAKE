@@ -4,6 +4,9 @@ module Fake.FileHelper
 open System.IO
 open System.Text
 
+/// Checks if all given files exists
+let allFilesExist files = Seq.forall File.Exists files
+
 /// Sets the directory readonly 
 let setDirectoryReadOnly readOnly (dir:DirectoryInfo) = 
     if dir.Exists then
@@ -178,7 +181,7 @@ let CleanDir dir =
             Directory.GetDirectories(actDir) |> Seq.iter deleteDirs
             Directory.Delete(actDir,true)
     
-        Directory.GetDirectories(dir) |> Seq.iter deleteDirs      
+        Directory.GetDirectories dir |> Seq.iter deleteDirs      
     else
         CreateDir dir
     
@@ -193,10 +196,9 @@ let CleanDirs dirs = Seq.iter CleanDir dirs
 let ReadCSVFile(file:string) =             
     let csvRegEx = new RegularExpressions.Regex(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))")   
          
-    seq {for line in ReadFile file ->
-          csvRegEx.Split line 
-            |> Array.map (fun s -> s.Trim([| '"' |]))}  
-
+    ReadFile file
+      |> Seq.map csvRegEx.Split 
+      |> Seq.map (Array.map (fun s -> s.Trim([| '"' |])))
              
 /// Appends all given files to one file 
 ///   param newFileName: The target FileName.
@@ -209,9 +211,7 @@ let AppendTextFiles newFileName files =
     files 
       |> Seq.iter (fun file ->       
             logVerbosefn "Appending %s to %s" file fi.FullName
-            ReadFile file |> Seq.iter(fun line -> writer.WriteLine(line)))
-         
-    writer.Close() 
+            ReadFile file |> Seq.iter writer.WriteLine)
 
 /// Checks if the two files are byte-to-byte equal
 let FilesAreEqual (first:FileInfo) (second:FileInfo) =   
@@ -290,3 +290,26 @@ let GeneratePatchWithFindOldFileFunction lastReleaseDir patchDir srcFiles findOl
 ///  param srcFiles: The source files
 let GeneratePatch lastReleaseDir patchDir srcFiles =
     GeneratePatchWithFindOldFileFunction lastReleaseDir patchDir srcFiles (fun a b -> b)
+
+/// Copies the file structure recursive
+let rec copyRecursive (dir:DirectoryInfo) (outputDir:DirectoryInfo) overwrite =
+    let files =    
+      dir.GetDirectories() 
+        |> Seq.fold 
+             (fun acc (d:DirectoryInfo) ->
+               let newDir = new DirectoryInfo(Path.Combine(outputDir.FullName,d.Name))
+               if not newDir.Exists then
+                 newDir.Create()
+               copyRecursive d newDir overwrite @ acc)
+           []
+  
+    (dir.GetFiles()
+      |> Seq.map
+          (fun f ->
+             let newFileName = Path.Combine(outputDir.FullName, f.Name)
+             f.CopyTo(newFileName, overwrite) |> ignore
+             newFileName)
+      |> Seq.toList) @ files
+  
+/// Copies the file structure recursive
+let CopyRecursive dir outputDir = copyRecursive (new DirectoryInfo(dir)) (new DirectoryInfo(outputDir))

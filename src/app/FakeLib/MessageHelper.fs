@@ -1,28 +1,21 @@
 ﻿[<AutoOpen>]
 module Fake.MessageHelper
 
-open System
-open System.Diagnostics
-open System.IO
-open System.Threading
-
 /// Waits for other applications to create a output files
 /// if the timeout is reached an exception will be raised
 let WaitForMessageFiles files timeOut =
+    let files = Seq.cache files
     tracefn "Waiting for message files %A (Timeout: %A)" files timeOut
 
-    let watch = new Stopwatch()
-    watch.Start()
-    let fileInfos = files |> Seq.map (fun file -> new FileInfo(file))
-    let allFilesExists = Seq.forall (fun (fi:FileInfo) -> fi.Refresh(); fi.Exists)      
-      
-    // wait for file    
-    while watch.Elapsed < timeOut && (not (allFilesExists fileInfos)) do
-        Thread.Sleep 100
+    let watch = new System.Diagnostics.Stopwatch()
+    watch.Start()    
 
-    let time = watch.Elapsed  
-    if time > timeOut then failwith "MessageFile timeout"    
-    Thread.Sleep 500   
+    while allFilesExist files |> not do
+        if watch.Elapsed > timeOut then failwith "MessageFile timeout" 
+        System.Threading.Thread.Sleep 100
+
+    let time = watch.Elapsed    
+    System.Threading.Thread.Sleep 100
     time
   
 /// Waits for another application to create a output file

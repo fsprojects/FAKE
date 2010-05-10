@@ -102,7 +102,10 @@ let regexPattern originalPattern =
   // This ensures that C:\*foo* matches C:\foo and C:\* won't match C:.
   let pattern = 
     new StringBuilder(
-      Regex.Replace(pattern.ToString(), "(?<=" + seperator + ")\\*(?=($|" + seperator + "))", "[^" + replacementSeparator + "]+"))
+      Regex.Replace(
+        pattern.ToString(),
+        "(?<=" + seperator + ")\\*(?=($|" + seperator + "))",
+        "[^" + replacementSeparator + "]+"))
 
   // SPECIAL CASE: to match subdirectory OR current directory, If
   // we do this then we can write something like 'src/**/*.cs'
@@ -365,7 +368,7 @@ let SetBaseDir dir fileInclude = {fileInclude with BaseDirectories = [dir]}
       
 /// Scans immediately for include files
 /// Files will be memoized
-let ScanImmediately includes : EagerFileSet = Scan includes |> Seq.toList    
+let ScanImmediately includes : EagerFileSet = Scan includes |> Seq.toList
   
 /// Include prefix operator
 let inline (!+) x = Include x

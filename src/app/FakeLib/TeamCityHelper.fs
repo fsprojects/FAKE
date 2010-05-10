@@ -11,6 +11,7 @@ let sendToTeamCity format message =
               |> toRelativePath 
               |> sprintf format
         buffer.Post {defaultMessage with Text = m }
+
     
 /// Send message to TeamCity
 let sendStrToTeamCity s =
@@ -35,54 +36,58 @@ let StartTestCase testCaseName =
   
 /// Finishes the test case.
 let FinishTestCase testCaseName (duration:System.TimeSpan) =
-  sendStrToTeamCity <| sprintf "##teamcity[testFinished name='%s' duration='%s']" testCaseName (duration.TotalMilliseconds |> round |> string) 
+  sprintf "##teamcity[testFinished name='%s' duration='%s']" 
+     (testCaseName |> EncapsulateApostrophe)
+     (duration.TotalMilliseconds |> round |> string) 
+     |> sendStrToTeamCity 
                 
 /// Ignores the test case.      
 let IgnoreTestCase name message =
   StartTestCase name
-  sendStrToTeamCity (sprintf "##teamcity[testIgnored name='%s' message='%s']" name message)
+  sprintf "##teamcity[testIgnored name='%s' message='%s']" (EncapsulateApostrophe name) (EncapsulateApostrophe message)
+    |> sendStrToTeamCity
   FinishTestCase name System.TimeSpan.Zero
   
 /// Finishes the test suite.
 let FinishTestSuite testSuiteName =
-  sendToTeamCity "##teamcity[testSuiteFinished name='%s']" testSuiteName
+  sendToTeamCity "##teamcity[testSuiteFinished name='%s']" (EncapsulateApostrophe testSuiteName)
 
 /// Starts the test suite.
 let StartTestSuite testSuiteName =
-  sendToTeamCity "##teamcity[testSuiteStarted name='%s']" testSuiteName
+  sendToTeamCity "##teamcity[testSuiteStarted name='%s']" (EncapsulateApostrophe testSuiteName)
 
 /// Reports the progress.
 let ReportProgress message =
-  sendToTeamCity "##teamcity[progressMessage '%s']" message
+  sendToTeamCity "##teamcity[progressMessage '%s']" (EncapsulateApostrophe message)
 
 let ReportProgressStart message =
-  sendToTeamCity "##teamcity[progressStart '%s']" message
+  sendToTeamCity "##teamcity[progressStart '%s']" (EncapsulateApostrophe message)
 
 let ReportProgressFinish message =
-  sendToTeamCity "##teamcity[progressFinish '%s']" message
+  sendToTeamCity "##teamcity[progressFinish '%s']" (EncapsulateApostrophe message)
 
 /// Tests the failed.
 let TestFailed name message details =  
   sprintf "##teamcity[testFailed name='%s' message='%s' details='%s']"
-    name
-    message
-    details
+    (EncapsulateApostrophe name)
+    (EncapsulateApostrophe message)
+    (EncapsulateApostrophe details)
     |> sendStrToTeamCity 
   
 /// ComparisonFailure.
 let ComparisonFailure name message details expected actual =
   sprintf "##teamcity[testFailed type='comparisonFailure' name='%s' message='%s' details='%s' expected='%s' actual='%s']"
-    name
-    message
-    details
-    expected
-    actual
+    (EncapsulateApostrophe name)
+    (EncapsulateApostrophe message)
+    (EncapsulateApostrophe details)
+    (EncapsulateApostrophe expected)
+    (EncapsulateApostrophe actual)
     |> sendStrToTeamCity 
        
 let showRecentlyFailedTests() =
-  let s = System.Configuration.ConfigurationManager.AppSettings.["teamcity.tests.recentlyFailedTests.file"]    
-  ReadFile s
-    |> Seq.iter (printfn "%s")      
+    let s = System.Configuration.ConfigurationManager.AppSettings.["teamcity.tests.recentlyFailedTests.file"]    
+    ReadFile s
+      |> Seq.iter (printfn "%s")      
 
 let prepareURL restURL (serverURL:string) = 
   serverURL.Trim('/') + restURL

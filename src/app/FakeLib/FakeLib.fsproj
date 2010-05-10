@@ -56,7 +56,6 @@
     <Compile Include="TraceHelper.fs" />
     <Compile Include="SQLServer.fs" />
     <Compile Include="AssemblyInfoHelper.fs" />
-    <Compile Include="TwitterHelper.fs" />
     <Compile Include="ProcessHelper.fs" />
     <Compile Include="FxCopHelper.fs" />
     <Compile Include="NCoverHelper.fs" />
