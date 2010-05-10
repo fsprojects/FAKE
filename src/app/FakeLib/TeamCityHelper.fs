@@ -1,16 +1,13 @@
 ﻿[<AutoOpen>]
 module Fake.TeamCityHelper
 
-/// Encapsulates special chars for TeamCity
-let encapsulate (s:string) = s.Replace("'","|'")
-
 /// Send message to TeamCity
 let sendToTeamCity format message =
     if buildServer = TeamCity then
         let m = 
             message 
               |> RemoveLineBreaks 
-              |> encapsulate
+              |> EncapsulateApostrophe
               |> toRelativePath 
               |> sprintf format
         buffer.Post {defaultMessage with Text = m }
@@ -40,14 +37,14 @@ let StartTestCase testCaseName =
 /// Finishes the test case.
 let FinishTestCase testCaseName (duration:System.TimeSpan) =
   sprintf "##teamcity[testFinished name='%s' duration='%s']" 
-     (testCaseName |> encapsulate)
+     (testCaseName |> EncapsulateApostrophe)
      (duration.TotalMilliseconds |> round |> string) 
      |> sendStrToTeamCity 
                 
 /// Ignores the test case.      
 let IgnoreTestCase name message =
   StartTestCase name
-  sprintf "##teamcity[testIgnored name='%s' message='%s']" (encapsulate name) (encapsulate message)
+  sprintf "##teamcity[testIgnored name='%s' message='%s']" (EncapsulateApostrophe name) (EncapsulateApostrophe message)
     |> sendStrToTeamCity
   FinishTestCase name System.TimeSpan.Zero
   
@@ -72,19 +69,19 @@ let ReportProgressFinish message =
 /// Tests the failed.
 let TestFailed name message details =  
   sprintf "##teamcity[testFailed name='%s' message='%s' details='%s']"
-    (encapsulate name)
-    (encapsulate message)
-    (encapsulate details)
+    (EncapsulateApostrophe name)
+    (EncapsulateApostrophe message)
+    (EncapsulateApostrophe details)
     |> sendStrToTeamCity 
   
 /// ComparisonFailure.
 let ComparisonFailure name message details expected actual =
   sprintf "##teamcity[testFailed type='comparisonFailure' name='%s' message='%s' details='%s' expected='%s' actual='%s']"
-    (encapsulate name)
-    (encapsulate message)
-    (encapsulate details)
-    (encapsulate expected)
-    (encapsulate actual)
+    (EncapsulateApostrophe name)
+    (EncapsulateApostrophe message)
+    (EncapsulateApostrophe details)
+    (EncapsulateApostrophe expected)
+    (EncapsulateApostrophe actual)
     |> sendStrToTeamCity 
        
 let showRecentlyFailedTests() =
