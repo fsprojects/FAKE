@@ -50,21 +50,21 @@ let IgnoreTestCase name message =
   
 /// Finishes the test suite.
 let FinishTestSuite testSuiteName =
-  sendToTeamCity "##teamcity[testSuiteFinished name='%s']" testSuiteName
+  sendToTeamCity "##teamcity[testSuiteFinished name='%s']" (EncapsulateApostrophe testSuiteName)
 
 /// Starts the test suite.
 let StartTestSuite testSuiteName =
-  sendToTeamCity "##teamcity[testSuiteStarted name='%s']" testSuiteName
+  sendToTeamCity "##teamcity[testSuiteStarted name='%s']" (EncapsulateApostrophe testSuiteName)
 
 /// Reports the progress.
 let ReportProgress message =
-  sendToTeamCity "##teamcity[progressMessage '%s']" message
+  sendToTeamCity "##teamcity[progressMessage '%s']" (EncapsulateApostrophe message)
 
 let ReportProgressStart message =
-  sendToTeamCity "##teamcity[progressStart '%s']" message
+  sendToTeamCity "##teamcity[progressStart '%s']" (EncapsulateApostrophe message)
 
 let ReportProgressFinish message =
-  sendToTeamCity "##teamcity[progressFinish '%s']" message
+  sendToTeamCity "##teamcity[progressFinish '%s']" (EncapsulateApostrophe message)
 
 /// Tests the failed.
 let TestFailed name message details =  
