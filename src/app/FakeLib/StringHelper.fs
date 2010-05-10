@@ -55,9 +55,6 @@ let RemoveLineBreaks (s:string) =
       .Replace("\n",String.Empty)
       .ToString()
 
-/// Encapsulates the Apostrophe
-let EncapsulateApostrophe (s:string) = s.Replace("'","`") 
-
 /// Appends a text
 let append s (builder:StringBuilder) = builder.Append(sprintf "\"%s\" " s)
 

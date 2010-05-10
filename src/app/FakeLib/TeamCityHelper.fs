@@ -1,16 +1,20 @@
 ﻿[<AutoOpen>]
 module Fake.TeamCityHelper
 
+/// Encapsulates special chars for TeamCity
+let encapsulate (s:string) = s.Replace("'","|'")
+
 /// Send message to TeamCity
 let sendToTeamCity format message =
     if buildServer = TeamCity then
         let m = 
             message 
               |> RemoveLineBreaks 
-              |> EncapsulateApostrophe
+              |> encapsulate
               |> toRelativePath 
               |> sprintf format
         buffer.Post {defaultMessage with Text = m }
+
     
 /// Send message to TeamCity
 let sendStrToTeamCity s =
@@ -35,12 +39,16 @@ let StartTestCase testCaseName =
   
 /// Finishes the test case.
 let FinishTestCase testCaseName (duration:System.TimeSpan) =
-  sendStrToTeamCity <| sprintf "##teamcity[testFinished name='%s' duration='%s']" testCaseName (duration.TotalMilliseconds |> round |> string) 
+  sprintf "##teamcity[testFinished name='%s' duration='%s']" 
+     (testCaseName |> encapsulate)
+     (duration.TotalMilliseconds |> round |> string) 
+     |> sendStrToTeamCity 
                 
 /// Ignores the test case.      
 let IgnoreTestCase name message =
   StartTestCase name
-  sendStrToTeamCity (sprintf "##teamcity[testIgnored name='%s' message='%s']" name message)
+  sprintf "##teamcity[testIgnored name='%s' message='%s']" (encapsulate name) (encapsulate message)
+    |> sendStrToTeamCity
   FinishTestCase name System.TimeSpan.Zero
   
 /// Finishes the test suite.
@@ -64,25 +72,25 @@ let ReportProgressFinish message =
 /// Tests the failed.
 let TestFailed name message details =  
   sprintf "##teamcity[testFailed name='%s' message='%s' details='%s']"
-    name
-    message
-    details
+    (encapsulate name)
+    (encapsulate message)
+    (encapsulate details)
     |> sendStrToTeamCity 
   
 /// ComparisonFailure.
 let ComparisonFailure name message details expected actual =
   sprintf "##teamcity[testFailed type='comparisonFailure' name='%s' message='%s' details='%s' expected='%s' actual='%s']"
-    name
-    message
-    details
-    expected
-    actual
+    (encapsulate name)
+    (encapsulate message)
+    (encapsulate details)
+    (encapsulate expected)
+    (encapsulate actual)
     |> sendStrToTeamCity 
        
 let showRecentlyFailedTests() =
-  let s = System.Configuration.ConfigurationManager.AppSettings.["teamcity.tests.recentlyFailedTests.file"]    
-  ReadFile s
-    |> Seq.iter (printfn "%s")      
+    let s = System.Configuration.ConfigurationManager.AppSettings.["teamcity.tests.recentlyFailedTests.file"]    
+    ReadFile s
+      |> Seq.iter (printfn "%s")      
 
 let prepareURL restURL (serverURL:string) = 
   serverURL.Trim('/') + restURL
