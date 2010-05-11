@@ -23,6 +23,9 @@ let getBuildParam name = if hasBuildParam name then environVar name else String.
 /// Returns the value of the buildParam if it is set and otherwise the default
 let getBuildParamOrDefault name defaultParam = if hasBuildParam name then getBuildParam name else defaultParam
 
+/// The path of Program Files - might be x64 on x64 machine
+let ProgramFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
+
 /// The path of Program Files (x86)
 let ProgramFilesX86 =
     if 8 = IntPtr.Size || not (isNullOrEmpty(environVar "PROCESSOR_ARCHITEW6432")) then

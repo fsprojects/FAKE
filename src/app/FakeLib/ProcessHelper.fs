@@ -72,7 +72,7 @@ let tryFindFile dirs file =
                (fun (path:string) ->
                    let path' = 
                      path
-                       .Replace("[ProgramFiles]",Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles))
+                       .Replace("[ProgramFiles]",ProgramFiles)
                        .Replace("[ProgramFilesX86]",ProgramFilesX86)
                    let dir = new DirectoryInfo(path')
                    if not dir.Exists then "" else
