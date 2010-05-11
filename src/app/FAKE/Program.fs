@@ -4,11 +4,11 @@ open System.IO
 
 let showFakeCommands() = traceFAKE "FAKE [buildScript]"
 
-try  
-    let cmdArgs = System.Environment.GetCommandLineArgs()  
+try
     traceStartBuild()
-
     try
+        let cmdArgs = System.Environment.GetCommandLineArgs()
+
         if cmdArgs.Length = 0 then showFakeCommands() else
 
             traceFAKE "FakePath: %s" fakePath 
@@ -24,12 +24,12 @@ try
                 cmdArgs 
                     |> Seq.skip 1
                     |> Seq.map (fun (a:string) ->
-                          logfn "%A" a
-                          if a.Contains "=" then
-                              let s = a.Split splitter
-                              s.[0],s.[1]
-                          else
-                              a,"1")
+                            logfn "%A" a
+                            if a.Contains "=" then
+                                let s = a.Split splitter
+                                s.[0], s.[1]
+                            else
+                                a,"1")
                     |> Seq.toList
 
             log ""
@@ -40,15 +40,17 @@ try
                 Environment.ExitCode <- 1
             else
                 log "Ready."
-    finally
-        traceEndBuild()
-with
-| exn -> 
-    if exn.InnerException <> null then
-        sprintf "Build failed.\nError:\n%s\nInnerException:\n%s" exn.Message exn.InnerException.Message
-          |> traceError
-    else
-        sprintf "Build failed.\nError:\n%s" exn.Message
-          |> traceError
-    sendTeamCityError exn.Message
-    Environment.ExitCode <- 1
+    with
+    | exn -> 
+        if exn.InnerException <> null then
+            sprintf "Build failed.\nError:\n%s\nInnerException:\n%s" exn.Message exn.InnerException.Message
+            |> traceError
+        else
+            sprintf "Build failed.\nError:\n%s" exn.Message
+            |> traceError
+        sendTeamCityError exn.Message
+        Environment.ExitCode <- 1
+finally
+    traceEndBuild()
+    Threading.Thread.Sleep 1000
+
