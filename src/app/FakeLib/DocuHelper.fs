@@ -1,9 +1,6 @@
 ﻿[<AutoOpen>]
 module Fake.DocuHelper
 
-open System
-open System.IO
-
 type DocuParams =
  { ToolPath: string;
    TemplatesPath: string;

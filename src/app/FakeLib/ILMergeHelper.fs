@@ -1,9 +1,6 @@
 ﻿[<AutoOpen>]
 module Fake.ILMergeHelper
 
-open System
-open System.IO
-
 type ILMergeParams =
  { ToolPath: string;
    Version: string;

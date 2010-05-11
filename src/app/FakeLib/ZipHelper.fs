@@ -3,7 +3,6 @@ module Fake.ZipHelper
 
 open System.IO
 open ICSharpCode.SharpZipLib.Zip
-open System.Globalization
 open System
 
 /// The default zip level
@@ -31,7 +30,7 @@ let CreateZip workingDir fileName comment level flatten files =
           let itemSpec =
               if flatten then info.Name else
               if not (String.IsNullOrEmpty(workingDir)) && 
-                  info.FullName.StartsWith(workingDir, true, CultureInfo.InvariantCulture) 
+                  info.FullName.StartsWith(workingDir, true, Globalization.CultureInfo.InvariantCulture) 
               then
                   info.FullName.Remove(0, workingDir.Length)
               else

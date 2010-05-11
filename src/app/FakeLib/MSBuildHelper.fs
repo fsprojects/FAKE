@@ -2,7 +2,6 @@
 module Fake.MSBuildHelper
 
 open System
-open System.Collections.Generic
 open System.Text
 open System.IO
 open System.Configuration

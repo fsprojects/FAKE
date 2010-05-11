@@ -29,12 +29,12 @@ let NCover setParams (assemblies: string seq) (excludeAssemblies: string seq) =
   let commandLineCommands =
     let args = ref (new StringBuilder())
     
-    let append (s:string) = args := (!args).Append(s + " ")      
-    let appendQuoted (s:string) = args := (!args).Append("\"" + s + "\" ")
+    let append (s:string) = args := (!args).Append(s).Append(" ")      
+    let appendQuoted (s:string) = args := (!args).Append("\"").Append(s).Append("\" ")
     
     let fi = new FileInfo(param.TestRunnerExe)
     appendQuoted fi.FullName
-    assemblies |> Seq.iter(appendQuoted)
+    assemblies |> Seq.iter appendQuoted
     
     if excludeAssemblies |> Seq.isEmpty |> not then
       append "//eas"

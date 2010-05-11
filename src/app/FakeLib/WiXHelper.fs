@@ -1,6 +1,7 @@
 ﻿[<AutoOpen>]
 module Fake.WiXHelper
 
+open System
 open System.IO
 
 let mutable fileCount = 0
@@ -23,7 +24,7 @@ let rec wixDir fileFilter asSubDir (dir:System.IO.DirectoryInfo) =
 
     let compo =
       if files = "" then "" else
-      sprintf "<Component Id=\"%s\" Guid=\"%s\">%s</Component>" dir.Name (System.Guid.NewGuid().ToString()) files
+      sprintf "<Component Id=\"%s\" Guid=\"%s\">%s</Component>" dir.Name (Guid.NewGuid().ToString()) files
 
     if asSubDir then
         sprintf "<Directory Id=\"%s\" Name=\"%s\">%s%s</Directory>" dir.Name dir.Name dirs compo
@@ -40,13 +41,12 @@ let rec wixComponentRefs (dir:DirectoryInfo) =
 
 let getFilesAsWiXString files =
     files
-      |> Seq.map (fun file -> new FileInfo(file))
-      |> Seq.map wixFile
+      |> Seq.map (fun file -> new FileInfo(file) |> wixFile)
       |> separated " "
 
 open System
 
-type WiXParams = { ToolDirectory: string;}
+type WiXParams = { ToolDirectory: string}
 
 /// WiX default params  
 let WiXDefaults : WiXParams = { ToolDirectory = currentDirectory @@ "tools" @@ "Wix" }
@@ -96,7 +96,7 @@ let Light (parameters:WiXParams) outputFile wixObj =
 
 /// Uses Candle and Light to create a msi.
 let WiX setParams outputFile wixScript =
-    let parameters = WiXDefaults |> setParams    
+    let parameters = setParams WiXDefaults     
     wixScript
       |> Candle parameters 
       |> Light parameters outputFile 

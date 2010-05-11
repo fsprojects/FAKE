@@ -1,10 +1,5 @@
 ﻿[<AutoOpen>]
 module Fake.FSIHelper
-
-open System
-open System.IO
-open System.Configuration
-open System.Threading
    
 let fsiPath = 
     let ev = environVar "FSI"
@@ -23,5 +18,5 @@ let runBuildScript script args =
       if not <| info.EnvironmentVariables.ContainsKey "FSI" then
           info.EnvironmentVariables.Add("FSI", fsiPath) )
     
-    Thread.Sleep 1000
+    System.Threading.Thread.Sleep 1000
     result
