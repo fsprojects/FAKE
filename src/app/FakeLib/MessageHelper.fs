@@ -7,14 +7,12 @@ let WaitForMessageFiles files timeOut =
     let files = Seq.cache files
     tracefn "Waiting for message files %A (Timeout: %A)" files timeOut
 
-    let watch = new System.Diagnostics.Stopwatch()
-    watch.Start()    
-
-    while allFilesExist files |> not do
-        if watch.Elapsed > timeOut then failwith "MessageFile timeout" 
-        System.Threading.Thread.Sleep 100
-
-    let time = watch.Elapsed    
+    let time = 
+        waitFor 
+            (fun _ -> allFilesExist files) 
+            timeOut 
+            100 
+            (fun _ -> failwith "MessageFile timeout") 
     System.Threading.Thread.Sleep 100
     time
   
