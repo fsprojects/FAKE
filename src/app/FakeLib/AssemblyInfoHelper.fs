@@ -64,22 +64,22 @@ let generateFile param (attributes:Dictionary<string, string>) imports (writer:T
   let provider,outputFileName = 
     match param.CodeLanguage with
     | CSharp      -> 
-        let provider =
-          new Microsoft.CSharp.CSharpCodeProvider() :> CodeDomProvider
+        let provider = new Microsoft.CSharp.CSharpCodeProvider() :> CodeDomProvider
         provider, Path.ChangeExtension(param.OutputFileName, ".cs")
     | FSharp      -> failwith "No CodeDom available."            
     | VisualBasic -> 
-        let provider =
-          new Microsoft.VisualBasic.VBCodeProvider() :> CodeDomProvider
+        let provider = new Microsoft.VisualBasic.VBCodeProvider() :> CodeDomProvider
         provider, Path.ChangeExtension(param.OutputFileName, ".vb")           
 
   let codeCompileUnit = new CodeCompileUnit()
   let codeNamespace = new CodeNamespace()
 
-  for import in imports do
-    codeNamespace.Imports.Add(new CodeNamespaceImport(import))
+  imports
+    |> Seq.iter (fun import ->
+          new CodeNamespaceImport(import)
+            |> codeNamespace.Imports.Add)
       
-  codeCompileUnit.Namespaces.Add(codeNamespace) |> ignore
+  codeCompileUnit.Namespaces.Add codeNamespace |> ignore
   
   let addString =
     match param.CodeLanguage with

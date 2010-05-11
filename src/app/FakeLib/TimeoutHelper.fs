@@ -6,9 +6,8 @@ let waitFor f timeout (testMS:int) timeoutF =
     let watch = new System.Diagnostics.Stopwatch()
     watch.Start()    
 
-    while not (f()) do
+    while f() |> not do
         if watch.Elapsed > timeout then timeoutF()
         System.Threading.Thread.Sleep testMS
 
-    watch.Elapsed    
-    
+    watch.Elapsed

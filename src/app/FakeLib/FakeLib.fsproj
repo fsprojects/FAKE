@@ -44,13 +44,12 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="RegistryHelper.fs" />
-    <Compile Include="StringHelper.fs" />
     <Compile Include="EnvironmentHelper.fs" />
+    <Compile Include="StringHelper.fs" />
     <Compile Include="TimeoutHelper.fs" />
     <Compile Include="CacheHelper.fs" />
     <Compile Include="XMLHelper.fs" />
     <Compile Include="REST.fs" />
-    <Compile Include="CCNetHelper.fs" />
     <Compile Include="BuildServerHelper.fs" />
     <Compile Include="MailBoxHelper.fs" />
     <Compile Include="TeamCityHelper.fs" />
