@@ -125,8 +125,10 @@
  The actual trace mode.
 </summary>
 </member>
-<member name="">
-
+<member name="P:Fake.BuildServerHelper.isLocalBuild">
+<summary>
+ Determines if the current build is a local build.
+</summary>
 </member>
 <member name="P:Fake.BuildServerHelper.buildServer">
 <summary>
@@ -136,6 +138,11 @@
 <member name="P:Fake.BuildServerHelper.buildVersion">
 <summary>
  Determines the current BuildVersion and if it is a local build
+</summary>
+</member>
+<member name="P:Fake.BuildServerHelper.ccBuildLabel">
+<summary>
+ CruiseControl.NET Build label
 </summary>
 </member>
 <member name="P:Fake.BuildServerHelper.tcBuildNumber">
@@ -155,12 +162,6 @@
 </summary>
 </member>
 <member name="T:Fake.BuildServerHelper">
-
-</member>
-<member name="">
-
-</member>
-<member name="T:Fake.CCNetHelper">
 
 </member>
 <member name="M:Fake.CacheHelper.lookup``2(``0,Microsoft.FSharp.Core.FSharpFunc`2{Microsoft.FSharp.Core.Unit,``1},System.Collections.Generic.IDictionary{``0,``1})">
@@ -198,6 +199,16 @@
 <member name="">
 
 </member>
+<member name="P:Fake.EnvironmentHelper.ProgramFilesX86">
+<summary>
+ The path of Program Files (x86)
+</summary>
+</member>
+<member name="P:Fake.EnvironmentHelper.ProgramFiles">
+<summary>
+ The path of Program Files - might be x64 on x64 machine
+</summary>
+</member>
 <member name="M:Fake.EnvironmentHelper.getBuildParamOrDefault(System.String,System.String)">
 <summary>
  Returns the value of the buildParam if it is set and otherwise the default
@@ -216,6 +227,16 @@
 <member name="M:Fake.EnvironmentHelper.environVars(System.EnvironmentVariableTarget)">
 <summary>
  Retrieves the EnvironmentVariable
+</summary>
+</member>
+<member name="M:Fake.EnvironmentHelper.op_AtAt(System.String,System.String)">
+<summary>
+ Combines to path strings
+</summary>
+</member>
+<member name="P:Fake.EnvironmentHelper.currentDirectory">
+<summary>
+ Gets the current directory
 </summary>
 </member>
 <member name="M:Fake.EnvironmentHelper.environVar(System.String)">
@@ -980,9 +1001,6 @@
  Searches the given directories for all occurrences of the given file name
 </summary>
 </member>
-<member name="">
-
-</member>
 <member name="M:Fake.ProcessHelper.UseDefaults``1">
 <summary>
  Use default Parameters
@@ -1072,9 +1090,6 @@
    param url: The URL to perform the GET operation  
    returns: The response of the request, or null if we got 404 or nothing.
 </summary>
-</member>
-<member name="">
-
 </member>
 <member name="T:Fake.REST">
 
