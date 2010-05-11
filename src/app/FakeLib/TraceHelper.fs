@@ -43,11 +43,14 @@ let logVerbosefn fmt = Printf.ksprintf (if verbose then log else ignore) fmt
 
 /// Writes a trace output to the message buffer (in the given color)
 let logColored important color newLine message =
-    { Text = message
-      Color = color
-      Important = important
-      Newline = newLine}
+    match traceMode with
+    | Console ->
+        { Text = message
+          Color = color
+          Important = important
+          Newline = newLine }
         |> buffer.Post
+    | Xml     -> xmlMessage message
     
 /// Writes a trace to the command line (in green)
 let trace s = logColored false ConsoleColor.Green true s
@@ -90,7 +93,7 @@ let TraceEnvironmentVariables() =
 let fakeVersionStr = sprintf "FAKE - F# Make - Version %s" <| fakeVersion.ToString()
 
 /// Traces the begin of the build
-let traceStartBuild _ =
+let traceStartBuild () =
     match traceMode with
     | Console -> ()
     | Xml     ->         
@@ -103,7 +106,7 @@ let traceStartBuild _ =
         buffer.Post { defaultMessage with Text = "<buildresults>" }
 
 /// Traces the end of the build
-let traceEndBuild _ =
+let traceEndBuild () =
     match traceMode with
     | Console -> ()
     | Xml     -> buffer.Post { defaultMessage with Text = "</buildresults>" }
