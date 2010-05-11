@@ -7,6 +7,16 @@ open System.Text
 /// Checks if all given files exists
 let allFilesExist files = Seq.forall File.Exists files
 
+/// Performs the given actions on all files and subdirectories
+let rec recursively dirF fileF (dir:DirectoryInfo) =
+    dir.GetDirectories() 
+      |> Seq.iter (fun dir ->
+        recursively dirF fileF dir
+        dirF dir)
+
+    dir.GetFiles() 
+      |> Seq.iter fileF
+
 /// Sets the directory readonly 
 let setDirectoryReadOnly readOnly (dir:DirectoryInfo) = 
     if dir.Exists then
@@ -17,11 +27,8 @@ let setDirectoryReadOnly readOnly (dir:DirectoryInfo) =
             dir.Attributes <- dir.Attributes &&& (~~~FileAttributes.ReadOnly)  
 
 /// Sets all files in the directory readonly 
-let rec SetDirReadOnly readOnly (dir:DirectoryInfo) =
-    dir.GetDirectories() |> Seq.iter (fun dir ->
-        SetDirReadOnly readOnly dir
-        setDirectoryReadOnly readOnly dir)
-    dir.GetFiles() |> Seq.iter (fun file -> file.IsReadOnly <- readOnly)    
+let SetDirReadOnly readOnly dir =
+    recursively (setDirectoryReadOnly readOnly) (fun file -> file.IsReadOnly <- readOnly) dir
   
 /// Sets all files in the directory readonly 
 let SetReadOnly readOnly (files: string seq) =
@@ -31,8 +38,7 @@ let SetReadOnly readOnly (files: string seq) =
           fi.IsReadOnly <- readOnly
       else
           let di = new DirectoryInfo(file)
-          setDirectoryReadOnly readOnly di)
-      
+          setDirectoryReadOnly readOnly di)      
       
 /// Deletes a directory if it exists
 let DeleteDir x =   
@@ -47,7 +53,7 @@ let DeleteDir x =
         logfn "Deleting %s" dir.FullName
         dir.Delete true
     else
-      logfn "%s does not exist." dir.FullName
+        logfn "%s does not exist." dir.FullName
     
 /// Creates a directory if it does not exist
 let CreateDir x =   
@@ -96,13 +102,13 @@ let (|FileInfoNameSections|) (f:FileInfo) = (f.Name,f.Extension,f.FullName)
 ///   param target: The targetDirectory
 ///   param file: The fileName
 let CopyFileIntoSubFolder target file =
-    let relative = (toRelativePath file).TrimStart('.')
+    let relative = (toRelativePath file).TrimStart '.'
     let fi = new FileInfo(file)
   
-    let targetName = target + relative
+    let targetName = target @@ relative
     let target = new FileInfo(targetName)
-    if not target.Directory.Exists then
-        target.Directory.Create()
+    if not target.Directory.Exists then target.Directory.Create()
+
     logVerbosefn "Copy %s to %s" file targetName
     fi.CopyTo(targetName,true) |> ignore    
 
@@ -135,7 +141,7 @@ let SilentCopy target files =
               targetFI.Attributes <- FileAttributes.Normal
               fi.CopyTo(targetName,true) |> ignore
         else
-          fi.CopyTo(targetName) |> ignore)
+            fi.CopyTo(targetName) |> ignore)
                
 
 /// Copies the files to the target - Alias for Copy
@@ -159,9 +165,11 @@ let CopyDir target source filterFile =
     Directory.GetFiles(source, "*.*", SearchOption.AllDirectories)
       |> Seq.filter filterFile
       |> Seq.iter (fun file -> 
-            let newFile = target + file.Remove(0, source.Length)
+            let newFile = target @@ file.Remove(0, source.Length)
             logVerbosefn "%s => %s" file newFile
-            Directory.CreateDirectory(Path.GetDirectoryName(newFile)) |> ignore
+            Path.GetDirectoryName newFile
+              |> Directory.CreateDirectory
+              |> ignore
             File.Copy(file, newFile, true))
   
 /// Cleans a directory
@@ -277,7 +285,7 @@ let GeneratePatchWithFindOldFileFunction lastReleaseDir patchDir srcFiles findOl
     srcFiles
       |> Seq.map (fun n -> 
             let newFile = toRelativePath n 
-            let oldFile = findOldFileF newFile (lastReleaseDir + newFile.TrimStart('.'))
+            let oldFile = findOldFileF newFile (lastReleaseDir @@ (newFile.TrimStart '.'))
             let fi = new FileInfo(oldFile)
             if not fi.Exists then logVerbosefn "LastRelease has no file like %s" fi.FullName
             newFile,oldFile)         
@@ -298,8 +306,8 @@ let rec copyRecursive (dir:DirectoryInfo) (outputDir:DirectoryInfo) overwrite =
         |> Seq.fold 
              (fun acc (d:DirectoryInfo) ->
                let newDir = new DirectoryInfo(outputDir.FullName @@ d.Name)
-               if not newDir.Exists then
-                 newDir.Create()
+               if not newDir.Exists then newDir.Create()
+
                copyRecursive d newDir overwrite @ acc)
            []
   

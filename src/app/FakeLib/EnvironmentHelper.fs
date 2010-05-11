@@ -13,11 +13,11 @@ let environVar = Environment.GetEnvironmentVariable
 let currentDirectory = Path.GetFullPath "."
 
 /// Combines to path strings
-let inline (@@) path1 path2 = Path.Combine(path1,path2)
+let (@@) path1 path2 = Path.Combine(path1,path2)
 
 /// Retrieves the EnvironmentVariable
-let environVars x = 
-  [for e in Environment.GetEnvironmentVariables x ->
+let environVars target = 
+  [for e in Environment.GetEnvironmentVariables target ->
      let e1 = e :?> Collections.DictionaryEntry
      e1.Key,e1.Value]
 
@@ -31,7 +31,7 @@ let getBuildParam name = if hasBuildParam name then environVar name else String.
 let getBuildParamOrDefault name defaultParam = if hasBuildParam name then getBuildParam name else defaultParam
 
 /// The path of Program Files - might be x64 on x64 machine
-let ProgramFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
+let ProgramFiles = Environment.GetFolderPath Environment.SpecialFolder.ProgramFiles
 
 /// The path of Program Files (x86)
 let ProgramFilesX86 =

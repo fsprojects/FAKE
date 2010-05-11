@@ -15,7 +15,7 @@ let XCopy source destination =
 
     tracefn " via: cmd.exe %s" args
     let result = ExecProcess (fun info ->  
-       info.FileName <- "CMD.exe "
+       info.FileName <- "CMD.exe"
        info.Arguments <- args)
                
     if result <> 0 then failwithf "Error during XCopy From: %s To: %s" source destination
