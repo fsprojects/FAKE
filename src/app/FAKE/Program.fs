@@ -52,5 +52,9 @@ try
         Environment.ExitCode <- 1
 finally
     traceEndBuild()
-    Threading.Thread.Sleep 1000
-
+    waitFor 
+        MessageBoxIsEmpty
+        (System.TimeSpan.FromSeconds 5.0) 
+        100
+        ignore
+     |> ignore
