@@ -165,7 +165,8 @@ let CopyDir target source filterFile =
     Directory.GetFiles(source, "*.*", SearchOption.AllDirectories)
       |> Seq.filter filterFile
       |> Seq.iter (fun file -> 
-            let newFile = target @@ file.Remove(0, source.Length)
+            let fi = new FileInfo(file)
+            let newFile = target @@ fi.Name
             logVerbosefn "%s => %s" file newFile
             Path.GetDirectoryName newFile
               |> Directory.CreateDirectory
