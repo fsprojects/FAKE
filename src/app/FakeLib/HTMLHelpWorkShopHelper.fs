@@ -19,5 +19,5 @@ let CompileHTMLHelpProject helpCompiler projectFile =
 
     let name = fi.Name.Split('.').[0]
     traceEndTask "HTMLHelpWorkshop" projectFile
-    [ Path.Combine(fi.Directory.FullName, sprintf "%s.chm" name)
-      Path.Combine(fi.Directory.FullName, sprintf "%s.hh" name)]         
+    [ fi.Directory.FullName @@ sprintf "%s.chm" name
+      fi.Directory.FullName @@ sprintf "%s.hh" name]         

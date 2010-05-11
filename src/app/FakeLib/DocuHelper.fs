@@ -11,9 +11,9 @@ type DocuParams =
 
 /// Docu default params  
 let DocuDefaults =
- { ToolPath = Path.Combine(Path.Combine(Path.Combine(currentDirectory,"tools"),"FAKE"),"docu.exe");
-   TemplatesPath = Path.Combine(currentDirectory,"templates");
-   OutputPath = Path.Combine(currentDirectory,"output") }
+ { ToolPath = currentDirectory @@ "tools" @@ "FAKE" @@ "docu.exe";
+   TemplatesPath = currentDirectory @@ "templates";
+   OutputPath = currentDirectory @@ "output" }
    
 let Docu setParams assembly = 
     traceStartTask "Docu" assembly

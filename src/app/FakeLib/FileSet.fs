@@ -38,7 +38,7 @@ let cleanPathBuilder (path:string) =
 let cleanPath path = (cleanPathBuilder path).ToString()      
     
 let combinePath baseDirectory path =
-    Path.Combine(baseDirectory, cleanPath(path))
+    baseDirectory @@ cleanPath(path)
       |> Path.GetFullPath
   
           
@@ -182,8 +182,8 @@ let parseSearchDirectoryAndPattern (baseDir:DirectoryInfo) originalPattern =
     if Path.IsPathRooted s then
         Path.GetFullPath s
     else 
-      // we also (correctly) get to this branch of code when s.Length == 0
-        Path.Combine(baseDir.FullName, s)
+        // we also (correctly) get to this branch of code when s.Length == 0
+        baseDir.FullName @@ s
           |> Path.GetFullPath
   
   // remove trailing directory separator character, fixes bug #1195736
@@ -226,11 +226,11 @@ let convertPatterns baseDir patterns =
             Pattern = regexPattern}
             :: regExPatterns,names                          
         else
-          let exactName = Path.Combine(searchDirectory, regexPattern)
-          if names |> List.exists (fun e ->  e = exactName) then
-            regExPatterns,names
+          let exactName = searchDirectory @@ regexPattern
+          if names |> List.exists ((=) exactName) then
+              regExPatterns,names
           else
-            regExPatterns,exactName::names)
+              regExPatterns,exactName::names)
        ([],[])
     
 
@@ -322,7 +322,7 @@ let rec scanDirectory caseSensitive includeNames
 
     // scan files
     for fi in currentDirectoryInfo.GetFiles() do
-      let fileName = Path.Combine(path, fi.Name)
+      let fileName = path @@ fi.Name
       if isPathIncluded fileName caseSensitive compareOptions includeNames includedPatterns excludeNames excludePatterns then                      
         yield fileName
 

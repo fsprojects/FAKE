@@ -11,7 +11,7 @@ type ILMergeParams =
 
 /// ILMerge default params  
 let ILMergeDefaults : ILMergeParams =
- { ToolPath = Path.Combine(Path.Combine(Path.Combine(currentDirectory,"tools"),"ILMerge"),"ilmerge.exe");
+ { ToolPath = currentDirectory @@ "tools" @@ "ILMerge" @@ "ilmerge.exe";
    Version = "";
    Libraries = []; }
    

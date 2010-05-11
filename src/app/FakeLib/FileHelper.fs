@@ -111,7 +111,7 @@ let CopyFileIntoSubFolder target file =
 ///   param file: The FileName
 let CopyFile target file =
     let fi = new FileInfo(file)
-    let targetName = Path.Combine(target, fi.Name)
+    let targetName = target @@ fi.Name
     logVerbosefn "Copy %s to %s" file targetName
     fi.CopyTo(targetName,true) |> ignore    
   
@@ -128,7 +128,7 @@ let Rename target file = (new FileInfo(file)).MoveTo target
 let SilentCopy target files =
     files |> Seq.iter (fun file ->
         let fi = new FileInfo(file)
-        let targetName = Path.Combine(target, fi.Name)
+        let targetName = target @@ fi.Name
         let targetFI = new FileInfo(targetName)
         if targetFI.Exists then
             if fi.LastWriteTime > targetFI.LastWriteTime then
@@ -297,7 +297,7 @@ let rec copyRecursive (dir:DirectoryInfo) (outputDir:DirectoryInfo) overwrite =
       dir.GetDirectories() 
         |> Seq.fold 
              (fun acc (d:DirectoryInfo) ->
-               let newDir = new DirectoryInfo(Path.Combine(outputDir.FullName,d.Name))
+               let newDir = new DirectoryInfo(outputDir.FullName @@ d.Name)
                if not newDir.Exists then
                  newDir.Create()
                copyRecursive d newDir overwrite @ acc)
@@ -306,7 +306,7 @@ let rec copyRecursive (dir:DirectoryInfo) (outputDir:DirectoryInfo) overwrite =
     (dir.GetFiles()
       |> Seq.map
           (fun f ->
-             let newFileName = Path.Combine(outputDir.FullName, f.Name)
+             let newFileName = outputDir.FullName @@ f.Name
              f.CopyTo(newFileName, overwrite) |> ignore
              newFileName)
       |> Seq.toList) @ files

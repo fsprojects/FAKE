@@ -47,9 +47,9 @@ let toolName = @"nunit-console.exe"
 let NUnitDefaults =
   { IncludeCategory = null;
     ExcludeCategory = null;
-    ToolPath = Path.Combine(Path.Combine(currentDirectory,"tools"),"Nunit");
+    ToolPath = currentDirectory @@ "tools" @@ "Nunit";
     TestInNewThread = false;
-    OutputFile = Path.Combine(currentDirectory,"TestResult.xml");
+    OutputFile = currentDirectory @@ "TestResult.xml";
     ErrorOutputFile = null;
     WorkingDir = null;
     Framework = null;
@@ -77,7 +77,7 @@ let NUnit setParams (assemblies: string seq) =
       |> appendIfNotNull parameters.Framework  "/framework:"
       |> appendIfNotNull parameters.ErrorOutputFile "/err:"
 
-  let tool = Path.Combine(parameters.ToolPath, toolName)
+  let tool = parameters.ToolPath @@ toolName
   let args = commandLineBuilder.ToString()
   trace (tool + " " + args)
   let result =

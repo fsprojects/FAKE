@@ -49,16 +49,15 @@ open System
 type WiXParams = { ToolDirectory: string;}
 
 /// WiX default params  
-let WiXDefaults : WiXParams =
- { ToolDirectory = Path.Combine(Path.Combine(currentDirectory,"tools"),"Wix") }
+let WiXDefaults : WiXParams = { ToolDirectory = currentDirectory @@ "tools" @@ "Wix" }
    
 let Candle (parameters:WiXParams) wixScript = 
     traceStartTask "Candle" wixScript  
 
-    let fi = new System.IO.FileInfo(wixScript)
-    let wixObj = Path.Combine(fi.Directory.FullName,sprintf @"%s.wixobj" fi.Name)
+    let fi = new FileInfo(wixScript)
+    let wixObj = fi.Directory.FullName @@ sprintf @"%s.wixobj" fi.Name
 
-    let tool = Path.Combine(parameters.ToolDirectory,"candle.exe")
+    let tool = parameters.ToolDirectory @@ "candle.exe"
     let args = 
         sprintf "-out \"%s\" \"%s\" -ext WiXNetFxExtension" 
             wixObj
@@ -79,7 +78,7 @@ let Candle (parameters:WiXParams) wixScript =
 let Light (parameters:WiXParams) outputFile wixObj = 
     traceStartTask "Light" wixObj   
 
-    let tool = Path.Combine(parameters.ToolDirectory,"light.exe")
+    let tool = parameters.ToolDirectory @@ "light.exe"
     let args = 
             sprintf "\"%s\" -spdb -dcl:high -out \"%s\" -ext WiXNetFxExtension -ext WixUIExtension.dll -ext WixUtilExtension.dll" 
                 (wixObj |> FullName)

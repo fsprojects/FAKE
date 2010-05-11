@@ -58,7 +58,7 @@ let FxCopDefaults =
     RuleLibraries = Seq.empty;
     Rules = Seq.empty;
     ConsoleXslFileName = String.Empty;
-    ReportFileName = Path.Combine(currentDirectory,"FXCopResults.html");
+    ReportFileName = currentDirectory @@ "FXCopResults.html";
     OutputXslFileName = String.Empty;
     PlatformDirectory = String.Empty;
     ProjectFile = String.Empty;
@@ -68,7 +68,7 @@ let FxCopDefaults =
     WorkingDir = currentDirectory;
     Verbose = true;
     FailOnError = FxCopyErrorLevel.DontFailBuild;
-    ToolPath = Path.Combine(ProgramFilesX86,"Microsoft FxCop 1.36\"") }
+    ToolPath = ProgramFilesX86 @@ "Microsoft FxCop 1.36" }
         
 /// Run FxCop on a group of assemblies.
 let FxCop setParams (assemblies: string seq) =
@@ -78,7 +78,7 @@ let FxCop setParams (assemblies: string seq) =
   let param = 
     if param.ApplyOutXsl && param.OutputXslFileName = String.Empty then
       {param with
-        OutputXslFileName = Path.Combine(Path.Combine(param.ToolPath, "Xml"),"FxCopReport.xsl") }
+        OutputXslFileName = param.ToolPath @@ "Xml" @@ "FxCopReport.xsl" }
     else param
       
   let commandLineCommands =
@@ -105,7 +105,7 @@ let FxCop setParams (assemblies: string seq) =
     appendFormat "/p:\"{0}\" " param.ProjectFile
  
     for item in param.RuleLibraries do      
-      appendFormat "/r:\"{0}\" " (Path.Combine(Path.Combine(param.ToolPath, "Rules"), item))
+      appendFormat "/r:\"{0}\" " (param.ToolPath @@ "Rules" @@ item)
 
     appendItems "/rid:{0} " param.Rules
     

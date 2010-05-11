@@ -2,6 +2,7 @@
 module Fake.EnvironmentHelper
 
 open System
+open System.IO
 
 type EnvironTarget = EnvironmentVariableTarget
 
@@ -9,7 +10,10 @@ type EnvironTarget = EnvironmentVariableTarget
 let environVar = Environment.GetEnvironmentVariable
 
 /// Gets the current directory
-let currentDirectory = System.IO.Path.GetFullPath "."
+let currentDirectory = Path.GetFullPath "."
+
+/// Combines to path strings
+let inline (@@) path1 path2 = Path.Combine(path1,path2)
 
 /// Retrieves the EnvironmentVariable
 let environVars x = 
