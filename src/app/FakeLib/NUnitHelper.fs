@@ -110,7 +110,7 @@ let writeXMLOutput (testSuite:TestSuite) fileName =
                     |> XmlAttribute "name" test.Name
                     |> XmlAttribute "executed" test.Executed
                     |> XmlAttribute "success" test.Success
-                    |> XmlAttribute "time" (test.RunTime.ToString(System.Globalization.CultureInfo.InvariantCulture))
+                    |> XmlAttribute "time" (test.RunTime.ToString(Globalization.CultureInfo.InvariantCulture))
               let writer'' = 
                 if test.Success then writer' else
                 writer'

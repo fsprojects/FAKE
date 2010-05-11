@@ -97,6 +97,8 @@ let isUmlaut c = List.exists ((=) c) ['ä'; 'ö'; 'ü'; 'Ä'; 'Ö'; 'Ü'; 'ß']
 let charsAndDigits = ['a'..'z'] @ ['A'..'Z'] @ ['0'..'9'] 
 let isLetterOrDigit c = List.exists ((=) c) charsAndDigits
 
+let trimBackslash (s:string) = s.Trim '\\'
+
 let trimSpecialChars (s:string) =
     s
       |> Seq.filter isLetterOrDigit

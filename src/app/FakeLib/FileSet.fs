@@ -245,7 +245,7 @@ let testRegex caseSensitive (path:string) (entry:RegexEntry) =
   let r = lookup entry.Pattern (fun () -> new Regex(entry.Pattern, regexOptions)) regexCache
     
   // Check to see if the empty string matches the pattern
-  if path.Length = entry.BaseDirectory.Length then r.IsMatch("") else
+  if path.Length = entry.BaseDirectory.Length then r.IsMatch "" else
 
   if endsWithSlash entry.BaseDirectory then
       r.IsMatch(path.Substring(entry.BaseDirectory.Length))

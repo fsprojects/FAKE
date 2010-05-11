@@ -12,7 +12,7 @@ let runBuildScript script args =
     let result = execProcess (fun info ->  
       info.FileName <- fsiPath
       info.Arguments <- script           
-      Seq.iter info.EnvironmentVariables.Add args
+      Seq.iter info.EnvironmentVariables.Add args      
       if not <| info.EnvironmentVariables.ContainsKey "MSBuild" then
           info.EnvironmentVariables.Add("MSBuild", msBuildExe)
       if not <| info.EnvironmentVariables.ContainsKey "FSI" then

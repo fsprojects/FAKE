@@ -206,7 +206,7 @@ let AssemblyInfo setParams =
      attributes 
          |> Seq.iter
              (fun attr ->
-               match bool.TryParse(attr.Value) with
+               match bool.TryParse attr.Value with
                | true, value -> 
                     writer.WriteLine(sprintf "\n[<assembly: %s (%A)>]" attr.Key value)
                | false, _ -> 
