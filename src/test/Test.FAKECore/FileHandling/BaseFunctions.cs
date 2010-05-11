@@ -18,7 +18,6 @@ namespace Test.FAKECore.FileHandling
         /// <param name="dir">The dir.</param>
         public static void CleanDir(string dir)
         {
-            Trace.WriteLine(string.Format("Clean {0}", dir));
             FileHelper.CleanDir(dir);
         }
 
@@ -61,12 +60,9 @@ namespace Test.FAKECore.FileHandling
         /// <param name="text">The text.</param>
         public static void CreateTestFile(string path, string text)
         {
-            Trace.WriteLine(string.Format("Creating test file: {0}", path));
+            TraceHelper.trace(string.Format("Creating test file: {0}", path));
             using (var sw = new StreamWriter(path))
-            {
                 sw.Write(text);
-                sw.Close();
-            }
 
             var fi = new FileInfo(path);
             if (!fi.Exists)
@@ -110,14 +106,14 @@ namespace Test.FAKECore.FileHandling
         /// <returns></returns>
         public static List<string> Scan(string pattern, string baseDir)
         {
-            Trace.WriteLine(string.Format("Scan for {0} in {1}:", pattern, baseDir));
+            TraceHelper.trace(string.Format("Scan for {0} in {1}:", pattern, baseDir));
 
             List<string> list =
                 FileSetHelper.Scan(
                     FileSetHelper.SetBaseDir(baseDir,
                                              FileSetHelper.Include(pattern))).ToList();
             foreach (string file in list)
-                Trace.WriteLine(string.Format("  - {0}", file));
+                TraceHelper.trace(string.Format("  - {0}", file));
             return list;
         }
 

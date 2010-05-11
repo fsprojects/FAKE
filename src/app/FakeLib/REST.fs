@@ -39,29 +39,25 @@ let ExecuteGetCommand (userName:string) (password:string) (url:string) =
 ///   param data: The data to post
 ///   returns: The response of the request, or null if we got 404 or nothing.
 let ExecutePostCommand headerF (url:string) userName password (data:string) =
-  System.Net.ServicePointManager.Expect100Continue <- false 
-  let request = WebRequest.Create(url)    
-  if String.IsNullOrEmpty userName || String.IsNullOrEmpty password then 
-    invalidArg userName "You have to specify username and password for post operations."
-  request.Credentials <- new NetworkCredential(userName, password)
-  request.ContentType <- "application/x-www-form-urlencoded"
-  request.Method <- "POST"
+    System.Net.ServicePointManager.Expect100Continue <- false 
+    let request = WebRequest.Create(url)    
+    if String.IsNullOrEmpty userName || String.IsNullOrEmpty password then 
+      invalidArg userName "You have to specify username and password for post operations."
+    request.Credentials <- new NetworkCredential(userName, password)
+    request.ContentType <- "application/x-www-form-urlencoded"
+    request.Method <- "POST"
 
-  headerF request.Headers
+    headerF request.Headers
 
-  let bytes = Encoding.UTF8.GetBytes(data)
+    let bytes = Encoding.UTF8.GetBytes(data)
 
-  request.ContentLength <- (int64)bytes.Length 
-  use requestStream = request.GetRequestStream()
-  requestStream.Write(bytes, 0, bytes.Length)
-  try
+    request.ContentLength <- (int64)bytes.Length 
+    use requestStream = request.GetRequestStream()
+    requestStream.Write(bytes, 0, bytes.Length)
+
     use response = request.GetResponse()
     use reader = new StreamReader(response.GetResponseStream())
     reader.ReadToEnd()
-  with
-  | :? WebException as ex -> 
-      Diagnostics.Trace.WriteLine ex.Message
-      raise ex
 
  /// Gets the result as xml
 let GetAsXML output =
