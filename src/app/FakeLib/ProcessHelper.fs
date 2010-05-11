@@ -64,15 +64,6 @@ let toParam x = " \"" + x + "\" "
 /// Use default Parameters
 let UseDefaults = id
 
-let ProgramFilesX86 =
-    if 8 = IntPtr.Size || 
-       not (String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))) 
-    then
-        Environment.GetEnvironmentVariable("ProgramFiles(x86)")
-    else
-        Environment.GetEnvironmentVariable("ProgramFiles")
-
-
 /// Searches the given directories for all occurrences of the given file name
 let tryFindFile dirs file =
     let files = 
