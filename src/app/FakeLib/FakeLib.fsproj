@@ -50,7 +50,6 @@
     <Compile Include="CacheHelper.fs" />
     <Compile Include="XMLHelper.fs" />
     <Compile Include="REST.fs" />
-    <Compile Include="CCNetHelper.fs" />
     <Compile Include="BuildServerHelper.fs" />
     <Compile Include="MailBoxHelper.fs" />
     <Compile Include="TeamCityHelper.fs" />

@@ -11,8 +11,6 @@ type PostMethod =
 | GET
 | POST
 
-let lowerString s = (sprintf "%A" s).ToLower()
-
 /// Executes an HTTP GET command and retrives the information.    
 ///   param userName: The username to use with the request
 ///   param password: The password to use with the request
@@ -62,18 +60,14 @@ let ExecutePostCommand headerF (url:string) userName password (data:string) =
     reader.ReadToEnd()
   with
   | :? WebException as ex -> 
-      Diagnostics.Trace.WriteLine(ex.Message)
+      Diagnostics.Trace.WriteLine ex.Message
       raise ex
 
  /// Gets the result as xml
 let GetAsXML output =
-  if output <> null && output <> String.Empty then 
+    if isNullOrEmpty output then null else
     let xmlDocument = new XmlDocument()
-    xmlDocument.LoadXml(output)
-
+    xmlDocument.LoadXml output
     xmlDocument
-  else
-    null      
 
-let ExecutePost url userName password data =
-  ExecutePostCommand ignore url userName password data
+let ExecutePost url userName = ExecutePostCommand ignore url userName

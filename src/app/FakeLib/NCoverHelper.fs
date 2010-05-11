@@ -14,9 +14,9 @@ type NCoverParams =
 /// NCover default params
 let NCoverDefaults =   
   { ProjectName = String.Empty;
-    ToolPath = "C:\Programs\NCover\ncover.console.exe";
-    TestRunnerExe = @"C:\Programs\Nunit\bin\nunit-console.exe";
-    WorkingDir = "."}
+    ToolPath = ProgramFiles @@ "NCover" @@ "ncover.console.exe";
+    TestRunnerExe = ProgramFiles @@ "NUnit" @@ "bin" @@ "nunit-console.exe";
+    WorkingDir = currentDirectory}
     
 /// Run NCover on a group of assemblies.
 /// params:
@@ -29,12 +29,12 @@ let NCover setParams (assemblies: string seq) (excludeAssemblies: string seq) =
   let commandLineCommands =
     let args = ref (new StringBuilder())
     
-    let append (s:string) = args := (!args).Append(s + " ")      
-    let appendQuoted (s:string) = args := (!args).Append("\"" + s + "\" ")
+    let append (s:string) = args := (!args).Append(s).Append(" ")      
+    let appendQuoted (s:string) = args := (!args).Append("\"").Append(s).Append("\" ")
     
     let fi = new FileInfo(param.TestRunnerExe)
     appendQuoted fi.FullName
-    assemblies |> Seq.iter(appendQuoted)
+    assemblies |> Seq.iter appendQuoted
     
     if excludeAssemblies |> Seq.isEmpty |> not then
       append "//eas"

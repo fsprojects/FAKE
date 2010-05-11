@@ -1,8 +1,6 @@
 ﻿[<AutoOpen>]
 module Fake.DocuHelper
 
-open System
-
 type DocuParams =
  { ToolPath: string;
    TemplatesPath: string;
@@ -10,9 +8,9 @@ type DocuParams =
 
 /// Docu default params  
 let DocuDefaults =
- { ToolPath = @".\tools\FAKE\docu.exe";
-   TemplatesPath = @".\templates";
-   OutputPath = @".\output" }
+ { ToolPath = currentDirectory @@ "tools" @@ "FAKE" @@ "docu.exe";
+   TemplatesPath = currentDirectory @@ "templates";
+   OutputPath = currentDirectory @@ "output" }
    
 let Docu setParams assembly = 
     traceStartTask "Docu" assembly

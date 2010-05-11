@@ -84,7 +84,7 @@ let getSubNode name =
 /// parses a node
 let parse name f (node : #System.Xml.XmlNode) =
     if node.Name = name then f node else 
-    failwith <| sprintf "Could not parse %s - Node was %s" name node.Name
+    failwithf "Could not parse %s - Node was %s" name node.Name
 
 /// parses a subnode
 let parseSubNode name f =

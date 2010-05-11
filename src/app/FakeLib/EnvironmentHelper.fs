@@ -2,11 +2,18 @@
 module Fake.EnvironmentHelper
 
 open System
+open System.IO
 
 type EnvironTarget = EnvironmentVariableTarget
 
 /// Retrieves the EnvironmentVariable
 let environVar = Environment.GetEnvironmentVariable
+
+/// Gets the current directory
+let currentDirectory = Path.GetFullPath "."
+
+/// Combines to path strings
+let inline (@@) path1 path2 = Path.Combine(path1,path2)
 
 /// Retrieves the EnvironmentVariable
 let environVars x = 
@@ -22,3 +29,14 @@ let getBuildParam name = if hasBuildParam name then environVar name else String.
 
 /// Returns the value of the buildParam if it is set and otherwise the default
 let getBuildParamOrDefault name defaultParam = if hasBuildParam name then getBuildParam name else defaultParam
+
+/// The path of Program Files - might be x64 on x64 machine
+let ProgramFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
+
+/// The path of Program Files (x86)
+let ProgramFilesX86 =
+    let a = environVar "PROCESSOR_ARCHITEW6432"
+    if 8 = IntPtr.Size || (a <> null && a <> "") then
+        environVar "ProgramFiles(x86)"
+    else
+        environVar "ProgramFiles"

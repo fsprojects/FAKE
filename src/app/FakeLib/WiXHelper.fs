@@ -1,6 +1,7 @@
 ﻿[<AutoOpen>]
 module Fake.WiXHelper
 
+open System
 open System.IO
 
 let mutable fileCount = 0
@@ -23,7 +24,7 @@ let rec wixDir fileFilter asSubDir (dir:System.IO.DirectoryInfo) =
 
     let compo =
       if files = "" then "" else
-      sprintf "<Component Id=\"%s\" Guid=\"%s\">%s</Component>" dir.Name (System.Guid.NewGuid().ToString()) files
+      sprintf "<Component Id=\"%s\" Guid=\"%s\">%s</Component>" dir.Name (Guid.NewGuid().ToString()) files
 
     if asSubDir then
         sprintf "<Directory Id=\"%s\" Name=\"%s\">%s%s</Directory>" dir.Name dir.Name dirs compo
@@ -40,25 +41,23 @@ let rec wixComponentRefs (dir:DirectoryInfo) =
 
 let getFilesAsWiXString files =
     files
-      |> Seq.map (fun file -> new FileInfo(file))
-      |> Seq.map wixFile
+      |> Seq.map (fun file -> new FileInfo(file) |> wixFile)
       |> separated " "
 
 open System
 
-type WiXParams = { ToolDirectory: string;}
+type WiXParams = { ToolDirectory: string}
 
 /// WiX default params  
-let WiXDefaults : WiXParams =
- { ToolDirectory = @".\tools\Wix\"; }
+let WiXDefaults : WiXParams = { ToolDirectory = currentDirectory @@ "tools" @@ "Wix" }
    
 let Candle (parameters:WiXParams) wixScript = 
     traceStartTask "Candle" wixScript  
 
-    let fi = new System.IO.FileInfo(wixScript)
-    let wixObj = sprintf @"%s\%s.wixobj" fi.Directory.FullName fi.Name
+    let fi = new FileInfo(wixScript)
+    let wixObj = fi.Directory.FullName @@ sprintf @"%s.wixobj" fi.Name
 
-    let tool = Path.Combine(parameters.ToolDirectory,"candle.exe")
+    let tool = parameters.ToolDirectory @@ "candle.exe"
     let args = 
         sprintf "-out \"%s\" \"%s\" -ext WiXNetFxExtension" 
             wixObj
@@ -79,7 +78,7 @@ let Candle (parameters:WiXParams) wixScript =
 let Light (parameters:WiXParams) outputFile wixObj = 
     traceStartTask "Light" wixObj   
 
-    let tool = Path.Combine(parameters.ToolDirectory,"light.exe")
+    let tool = parameters.ToolDirectory @@ "light.exe"
     let args = 
             sprintf "\"%s\" -spdb -dcl:high -out \"%s\" -ext WiXNetFxExtension -ext WixUIExtension.dll -ext WixUtilExtension.dll" 
                 (wixObj |> FullName)
@@ -97,7 +96,7 @@ let Light (parameters:WiXParams) outputFile wixObj =
 
 /// Uses Candle and Light to create a msi.
 let WiX setParams outputFile wixScript =
-    let parameters = WiXDefaults |> setParams    
+    let parameters = setParams WiXDefaults     
     wixScript
       |> Candle parameters 
       |> Light parameters outputFile 
