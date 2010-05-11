@@ -27,7 +27,7 @@ let setDirectoryReadOnly readOnly (dir:DirectoryInfo) =
             dir.Attributes <- dir.Attributes &&& (~~~FileAttributes.ReadOnly)  
 
 /// Sets all files in the directory readonly 
-let SetDirReadOnly readOnly (dir:DirectoryInfo) =
+let SetDirReadOnly readOnly dir =
     recursively (setDirectoryReadOnly readOnly) (fun file -> file.IsReadOnly <- readOnly) dir
   
 /// Sets all files in the directory readonly 
@@ -53,7 +53,7 @@ let DeleteDir x =
         logfn "Deleting %s" dir.FullName
         dir.Delete true
     else
-      logfn "%s does not exist." dir.FullName
+        logfn "%s does not exist." dir.FullName
     
 /// Creates a directory if it does not exist
 let CreateDir x =   
@@ -107,8 +107,8 @@ let CopyFileIntoSubFolder target file =
   
     let targetName = target @@ relative
     let target = new FileInfo(targetName)
-    if not target.Directory.Exists then
-        target.Directory.Create()
+    if not target.Directory.Exists then target.Directory.Create()
+
     logVerbosefn "Copy %s to %s" file targetName
     fi.CopyTo(targetName,true) |> ignore    
 
@@ -141,7 +141,7 @@ let SilentCopy target files =
               targetFI.Attributes <- FileAttributes.Normal
               fi.CopyTo(targetName,true) |> ignore
         else
-          fi.CopyTo(targetName) |> ignore)
+            fi.CopyTo(targetName) |> ignore)
                
 
 /// Copies the files to the target - Alias for Copy
@@ -306,8 +306,8 @@ let rec copyRecursive (dir:DirectoryInfo) (outputDir:DirectoryInfo) overwrite =
         |> Seq.fold 
              (fun acc (d:DirectoryInfo) ->
                let newDir = new DirectoryInfo(outputDir.FullName @@ d.Name)
-               if not newDir.Exists then
-                 newDir.Create()
+               if not newDir.Exists then newDir.Create()
+
                copyRecursive d newDir overwrite @ acc)
            []
   
