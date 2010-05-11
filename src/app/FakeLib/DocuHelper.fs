@@ -2,6 +2,7 @@
 module Fake.DocuHelper
 
 open System
+open System.IO
 
 type DocuParams =
  { ToolPath: string;
@@ -10,9 +11,9 @@ type DocuParams =
 
 /// Docu default params  
 let DocuDefaults =
- { ToolPath = @".\tools\FAKE\docu.exe";
-   TemplatesPath = @".\templates";
-   OutputPath = @".\output" }
+ { ToolPath = Path.Combine(Path.Combine(Path.Combine(currentDirectory,"tools"),"FAKE"),"docu.exe");
+   TemplatesPath = Path.Combine(currentDirectory,"templates");
+   OutputPath = Path.Combine(currentDirectory,"output") }
    
 let Docu setParams assembly = 
     traceStartTask "Docu" assembly

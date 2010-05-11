@@ -8,6 +8,9 @@ type EnvironTarget = EnvironmentVariableTarget
 /// Retrieves the EnvironmentVariable
 let environVar = Environment.GetEnvironmentVariable
 
+/// Gets the current directory
+let currentDirectory = System.IO.Path.GetFullPath "."
+
 /// Retrieves the EnvironmentVariable
 let environVars x = 
   [for e in Environment.GetEnvironmentVariables x ->
@@ -28,7 +31,8 @@ let ProgramFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFi
 
 /// The path of Program Files (x86)
 let ProgramFilesX86 =
-    if 8 = IntPtr.Size || not (isNullOrEmpty(environVar "PROCESSOR_ARCHITEW6432")) then
+    let a = environVar "PROCESSOR_ARCHITEW6432"
+    if 8 = IntPtr.Size || (a <> null && a <> "") then
         environVar "ProgramFiles(x86)"
     else
         environVar "ProgramFiles"

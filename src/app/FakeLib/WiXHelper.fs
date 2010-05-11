@@ -50,13 +50,13 @@ type WiXParams = { ToolDirectory: string;}
 
 /// WiX default params  
 let WiXDefaults : WiXParams =
- { ToolDirectory = @".\tools\Wix\"; }
+ { ToolDirectory = Path.Combine(Path.Combine(currentDirectory,"tools"),"Wix") }
    
 let Candle (parameters:WiXParams) wixScript = 
     traceStartTask "Candle" wixScript  
 
     let fi = new System.IO.FileInfo(wixScript)
-    let wixObj = sprintf @"%s\%s.wixobj" fi.Directory.FullName fi.Name
+    let wixObj = Path.Combine(fi.Directory.FullName,sprintf @"%s.wixobj" fi.Name)
 
     let tool = Path.Combine(parameters.ToolDirectory,"candle.exe")
     let args = 

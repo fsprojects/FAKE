@@ -82,7 +82,7 @@ let appendFileNamesIfNotNull fileNames (builder:StringBuilder) =
     |> Seq.fold (fun builder file -> appendIfTrue (String.IsNullOrEmpty file |> not) file builder) builder
 
 /// Replaces the absolute path to a relative
-let toRelativePath (value:string) = value.Replace(Path.GetFullPath("."),".")
+let toRelativePath (value:string) = value.Replace(currentDirectory,".")
 
 /// Removes the slashes from the end of the given string
 let trimSlash (s:string) = s.TrimEnd('\\')
@@ -96,6 +96,7 @@ let (<*) prefix (text:string) = text.StartsWith prefix
 let isUmlaut c = List.exists ((=) c) ['ä'; 'ö'; 'ü'; 'Ä'; 'Ö'; 'Ü'; 'ß']
 let charsAndDigits = ['a'..'z'] @ ['A'..'Z'] @ ['0'..'9'] 
 let isLetterOrDigit c = List.exists ((=) c) charsAndDigits
+
 let trimSpecialChars (s:string) =
     s
       |> Seq.filter isLetterOrDigit

@@ -58,17 +58,17 @@ let FxCopDefaults =
     RuleLibraries = Seq.empty;
     Rules = Seq.empty;
     ConsoleXslFileName = String.Empty;
-    ReportFileName = @".\FXCopResults.html";
+    ReportFileName = Path.Combine(currentDirectory,"FXCopResults.html");
     OutputXslFileName = String.Empty;
     PlatformDirectory = String.Empty;
     ProjectFile = String.Empty;
     IncludeSummaryReport = true;
     TypeList = Seq.empty;
     SaveResultsInProjectFile = false;
-    WorkingDir = ".";
+    WorkingDir = currentDirectory;
     Verbose = true;
     FailOnError = FxCopyErrorLevel.DontFailBuild;
-    ToolPath = @"c:\Program Files (x86)\Microsoft FxCop 1.36\" }
+    ToolPath = Path.Combine(ProgramFilesX86,"Microsoft FxCop 1.36\"") }
         
 /// Run FxCop on a group of assemblies.
 let FxCop setParams (assemblies: string seq) =
@@ -78,7 +78,7 @@ let FxCop setParams (assemblies: string seq) =
   let param = 
     if param.ApplyOutXsl && param.OutputXslFileName = String.Empty then
       {param with
-        OutputXslFileName = param.ToolPath + @"\Xml\FxCopReport.xsl"}
+        OutputXslFileName = Path.Combine(Path.Combine(param.ToolPath, "Xml"),"FxCopReport.xsl") }
     else param
       
   let commandLineCommands =

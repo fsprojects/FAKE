@@ -18,7 +18,7 @@ type XUnitParams =
 
 /// xUnit default params  
 let XUnitDefaults =
- { ToolPath = @".\tools\xUnit\xunit.console.exe";
+ { ToolPath = Path.Combine(Path.Combine(Path.Combine(currentDirectory,"tools"),"xUnit"),"xunit.console.exe");
    ConfigFile = null;
    HtmlOutput = false;
    NUnitXmlOutput = false;
@@ -29,7 +29,7 @@ let XUnitDefaults =
    OutputDir = null}
    
 let ResourceStream toolPath xmlResourceName =
-    new FileStream(toolPath + xmlResourceName, FileMode.Open, FileAccess.Read)
+    new FileStream(Path.Combine(toolPath,xmlResourceName), FileMode.Open, FileAccess.Read)
   
 
 let xUnit setParams assemblies = 

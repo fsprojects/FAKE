@@ -2,6 +2,7 @@
 module Fake.ILMergeHelper
 
 open System
+open System.IO
 
 type ILMergeParams =
  { ToolPath: string;
@@ -10,7 +11,7 @@ type ILMergeParams =
 
 /// ILMerge default params  
 let ILMergeDefaults : ILMergeParams =
- { ToolPath = @".\tools\ILMerge\ilmerge.exe";
+ { ToolPath = Path.Combine(Path.Combine(Path.Combine(currentDirectory,"tools"),"ILMerge"),"ilmerge.exe");
    Version = "";
    Libraries = []; }
    

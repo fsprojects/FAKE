@@ -14,9 +14,9 @@ type NCoverParams =
 /// NCover default params
 let NCoverDefaults =   
   { ProjectName = String.Empty;
-    ToolPath = "C:\Programs\NCover\ncover.console.exe";
-    TestRunnerExe = @"C:\Programs\Nunit\bin\nunit-console.exe";
-    WorkingDir = "."}
+    ToolPath = Path.Combine(Path.Combine(ProgramFiles,"NCover"),"ncover.console.exe");
+    TestRunnerExe = Path.Combine(Path.Combine(Path.Combine(ProgramFiles,"NUnit"),"bin"),"nunit-console.exe");
+    WorkingDir = currentDirectory}
     
 /// Run NCover on a group of assemblies.
 /// params:
