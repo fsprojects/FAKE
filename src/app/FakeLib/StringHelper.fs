@@ -97,7 +97,7 @@ let isUmlaut c = List.exists ((=) c) ['ä'; 'ö'; 'ü'; 'Ä'; 'Ö'; 'Ü'; 'ß']
 let charsAndDigits = ['a'..'z'] @ ['A'..'Z'] @ ['0'..'9'] 
 let isLetterOrDigit c = List.exists ((=) c) charsAndDigits
 
-let trimBackslash (s:string) = s.Trim '\\'
+let trimSeparator (s:string) = s.Trim Path.DirectorySeparatorChar
 
 let trimSpecialChars (s:string) =
     s

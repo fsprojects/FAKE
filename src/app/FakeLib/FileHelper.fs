@@ -165,7 +165,7 @@ let CopyDir target source filterFile =
     Directory.GetFiles(source, "*.*", SearchOption.AllDirectories)
       |> Seq.filter filterFile
       |> Seq.iter (fun file -> 
-            let fi = file.Replace(source,"") |> trimBackslash
+            let fi = file.Replace(source,"") |> trimSeparator
             let newFile = target @@ fi
             logVerbosefn "%s => %s" file newFile
             Path.GetDirectoryName newFile
@@ -284,9 +284,9 @@ let TestDir dir =
 ///            (newFile -> oldFileProposal)
 let GeneratePatchWithFindOldFileFunction lastReleaseDir patchDir srcFiles findOldFileF =
     srcFiles
-      |> Seq.map (fun n -> 
-            let newFile = toRelativePath n 
-            let oldFile = findOldFileF newFile (lastReleaseDir @@ (newFile.TrimStart '.'))
+      |> Seq.map (fun file -> 
+            let newFile = toRelativePath file
+            let oldFile = findOldFileF newFile (lastReleaseDir @@ (newFile.TrimStart '.' |> trimSeparator))
             let fi = new FileInfo(oldFile)
             if not fi.Exists then logVerbosefn "LastRelease has no file like %s" fi.FullName
             newFile,oldFile)         

@@ -4,7 +4,7 @@ module Fake.VSSHelper
 let getVSSProjectWithLabel toolPath srcSafeIni username password project (localSpec:string) label =    
     let args' = 
         sprintf "get %s -R \"-GL%s\" -I-Y -Y%s,%s -GTM" 
-          project (localSpec |> FullName |> trimBackslash) username password
+          project (localSpec |> FullName |> trimSeparator) username password
 
     let args = 
         if isNullOrEmpty label then args' else

@@ -150,7 +150,7 @@ let parseSearchDirectoryAndPattern (baseDir:DirectoryInfo) originalPattern =
   let s = if indexOfFirstWildcard <> -1 then s.Substring(0, indexOfFirstWildcard) else s
 
   // find the last DirectorySeparatorChar (if any) and exclude the rest of the string
-  let indexOfLastDirectorySeparator = s.LastIndexOf(Path.DirectorySeparatorChar)
+  let indexOfLastDirectorySeparator = s.LastIndexOf Path.DirectorySeparatorChar
 
   // The pattern is potentially recursive if and only if more than one base directory could be matched.
   // ie: 
