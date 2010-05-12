@@ -822,7 +822,7 @@
 </member>
 <member name="M:Fake.MailBoxHelper.MessageBoxIsEmpty">
 <summary>
- Checks if the current Message queue is empty
+ Checks if the current message queue is empty
 </summary>
 </member>
 <member name="">
@@ -835,6 +835,9 @@
 <summary>
  Logs the specified string to the console
 </summary>
+</member>
+<member name="">
+
 </member>
 <member name="">
 
@@ -1792,6 +1795,11 @@
 <member name="T:Fake.TimeoutHelper">
 
 </member>
+<member name="M:Fake.TraceHelper.WaitUntilEverythingIsPrinted">
+<summary>
+ Waits until the message queue is empty
+</summary>
+</member>
 <member name="M:Fake.TraceHelper.traceEndTask(System.String,System.String)">
 <summary>
  Traces the end of a task
@@ -1923,9 +1931,6 @@
 <summary>
  Gets the path of the current FAKE instance
 </summary>
-</member>
-<member name="">
-
 </member>
 <member name="P:Fake.TraceHelper.verbose">
 <summary>
