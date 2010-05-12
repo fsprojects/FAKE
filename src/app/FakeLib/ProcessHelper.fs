@@ -58,8 +58,17 @@ let setEnvironmentVariables (startInfo:ProcessStartInfo) environmentSettings =
 /// returns true if the exit code was 0
 let execProcess infoAction = ExecProcess infoAction = 0    
 
-/// Adds quotes around the string   
-let toParam x = " \"" + x + "\" " 
+/// Adds quotes around the string if needed
+let quote str =
+    if isNullOrEmpty str then
+        ""
+    elif str.Contains " " then
+        "\"" + str + "\""
+    else
+        str
+
+/// Adds quotes and a blank around the string   
+let toParam x = " " + quote x
  
 /// Use default Parameters
 let UseDefaults = id
@@ -101,3 +110,77 @@ let findPath settingsName tool =
     match tryFindFile paths tool with
     | Some file -> file
     | None -> tool
+
+
+// See: http://stackoverflow.com/questions/2649161/need-help-regarding-async-and-fsi/
+module Event =
+    let guard f (e:IEvent<'Del, 'Args>) = 
+        let e = Event.map id e
+        { new IEvent<'Args> with 
+          member this.AddHandler d = 
+             e.AddHandler d 
+             f() //must call f here!
+          member this.RemoveHandler d = e.RemoveHandler d
+          member this.Subscribe observer = let rm = e.Subscribe observer in f(); rm }
+
+type ExecParams = {
+    /// The path to the executable, without arguments. 
+    Program          : string
+    /// The working directory for the program. Defaults to "".
+    WorkingDirectory : string
+    /// Command-line parameters in a string.
+    CommandLine      : string
+    /// Command-line argument pairs. The value will be quoted if it contains
+    /// a string, and the result will be appended to the CommandLine property.
+    /// If the key ends in a letter or number, a space will be inserted between
+    /// the key and the value.
+    Args             : (string * string) list
+}
+
+let defaultParams = {
+    Program          = ""
+    WorkingDirectory = ""
+    CommandLine      = ""
+    Args             = []
+}
+
+let private formatArgs args =
+    let delimit (str:string) =
+        if isLetterOrDigit (str.Chars(str.Length - 1))
+        then str + " " else str
+
+    args
+    |> Seq.map (fun (k, v) -> delimit k + quote v)
+    |> separated " "
+
+/// Execute an external program asynchronously and return the exit code,
+/// logging output and error messages to FAKE output. You can compose the result
+/// with Async.Parallel to run multiple external programs at once, but be
+/// sure that none of them depend on the output of another.
+let asyncShellExec (args:ExecParams) = async {
+    if isNullOrEmpty args.Program then
+        invalidArg "args" "You must specify a program to run!"
+    let commandLine = args.CommandLine + " " + formatArgs args.Args
+    let info = ProcessStartInfo( args.Program, 
+                                 UseShellExecute = false,
+                                 RedirectStandardError = true,
+                                 RedirectStandardOutput = true,
+                                 WindowStyle = ProcessWindowStyle.Hidden,
+                                 WorkingDirectory = args.WorkingDirectory,
+                                 Arguments = commandLine )
+
+    use proc = new Process(StartInfo = info, EnableRaisingEvents = true)
+    proc.ErrorDataReceived.Add(fun e -> if e.Data <> null then traceError e.Data)
+    proc.OutputDataReceived.Add(fun e -> if e.Data <> null then trace e.Data)
+    
+    let! exit = proc.Exited 
+                |> Event.guard (fun () -> proc.Start() |> ignore
+                                          proc.BeginErrorReadLine()
+                                          proc.BeginOutputReadLine())
+                |> Async.AwaitEvent
+    
+    return proc.ExitCode
+}
+
+/// Execute an external program and return the exit code.
+let shellExec = asyncShellExec >> Async.RunSynchronously
