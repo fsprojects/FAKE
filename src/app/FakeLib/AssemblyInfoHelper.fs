@@ -90,7 +90,7 @@ let generateFile param (attributes:Dictionary<string, string>) imports (writer:T
                match bool.TryParse attr.Value with
                | true, value -> sprintf "[<assembly: %s (%A)>]" attr.Key value
                | _ -> sprintf "[<assembly: %s (\"%s\")>]" attr.Key attr.Value)
-         |> separated "\n") + "\n()"        
+         |> toLines) + "\r\n()"        
     | _ ->  
       for attr in attributes do            
         // create new assembly-level attribute

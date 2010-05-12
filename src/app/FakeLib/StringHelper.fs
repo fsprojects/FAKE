@@ -49,11 +49,7 @@ let separated delimiter items = String.Join(delimiter, Array.ofSeq items)
 let ReadFileAsString file = File.ReadAllText(file,Encoding.Default)
 
 /// Removes linebreaks from the given string
-let RemoveLineBreaks (s:string) = 
-    (new StringBuilder(s))
-      .Replace("\r",String.Empty)
-      .Replace("\n",String.Empty)
-      .ToString()
+let RemoveLineBreaks (s:string) = s.Replace("\r",String.Empty).Replace("\n",String.Empty)
 
 /// Encapsulates the Apostrophe
 let EncapsulateApostrophe (s:string) = s.Replace("'","`") 
