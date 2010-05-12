@@ -85,12 +85,12 @@ let generateFile param (attributes:Dictionary<string, string>) imports (writer:T
     match param.CodeLanguage with
     | FSharp      ->          
        (attributes 
-         |> Seq.fold
-             (fun acc attr ->
-               match bool.TryParse(attr.Value) with
-               | true, value -> acc + sprintf "\n[<assembly: %s (%A)>]" attr.Key value
-               | false, _ -> acc + sprintf "\n[<assembly: %s (\"%s\")>]" attr.Key (attr.Value.ToString()))
-             String.Empty) + "\n()"        
+         |> Seq.map
+             (fun attr ->
+               match bool.TryParse attr.Value with
+               | true, value -> sprintf "[<assembly: %s (%A)>]" attr.Key value
+               | false, _ -> sprintf "[<assembly: %s (\"%s\")>]" attr.Key (attr.Value.ToString()))
+         |> separated "\n") + "\n()"        
     | _ ->  
       for attr in attributes do            
         // create new assembly-level attribute
@@ -100,7 +100,7 @@ let generateFile param (attributes:Dictionary<string, string>) imports (writer:T
         | "CLSCompliant"
         | "AssemblyDelaySign"
         | "ComVisible" -> 
-          let found,value = bool.TryParse(attr.Value)
+          let found,value = bool.TryParse attr.Value
           if found then
             codeAttributeDeclaration.Arguments.Add(new CodeAttributeArgument(new CodePrimitiveExpression(value))) |> ignore
             codeCompileUnit.AssemblyCustomAttributes.Add(codeAttributeDeclaration) |> ignore
@@ -118,21 +118,23 @@ let generateFile param (attributes:Dictionary<string, string>) imports (writer:T
 
     let privateConstructor = new CodeConstructor()
     privateConstructor.Attributes <- MemberAttributes.Private
-    thisAssemblyType.Members.Add(privateConstructor)  |> ignore
+    thisAssemblyType.Members.Add privateConstructor |> ignore
     
-    for attr in attributes do
-      match attr.Key with
-      | "CLSCompliant"
-      | "AssemblyDelaySign"
-      | "ComVisible"
-      | "AssemblyKeyFile" -> ()
-      | _ -> 
+    attributes
+      |> Seq.filter (fun attr -> 
+          match attr.Key with
+          | "CLSCompliant"
+          | "AssemblyDelaySign"
+          | "ComVisible"
+          | "AssemblyKeyFile" -> false
+          | _ -> true)
+      |> Seq.iter (fun attr ->
           let field = new CodeMemberField(typeof<string>, attr.Key)
           field.Attributes <- MemberAttributes.Assembly ||| MemberAttributes.Const
           field.InitExpression <- new CodePrimitiveExpression(attr.Value)
-          thisAssemblyType.Members.Add(field) |> ignore
+          thisAssemblyType.Members.Add field |> ignore)
     
-    codeNamespace.Types.Add(thisAssemblyType) |> ignore                                     
+    codeNamespace.Types.Add thisAssemblyType |> ignore                                     
              
   let options = new CodeGeneratorOptions()
              
@@ -143,7 +145,7 @@ let generateFile param (attributes:Dictionary<string, string>) imports (writer:T
 
 /// Generates an AssemblyInfo file for projects
 let AssemblyInfo setParams = 
-  let param' = AssemblyInfoDefaults |> setParams
+  let param' = setParams AssemblyInfoDefaults
   traceStartTask "AssemblyInfo" param'.OutputFileName
   let param'' =
     if param'.AssemblyFileVersion <> String.Empty then param' else
@@ -153,13 +155,14 @@ let AssemblyInfo setParams =
     if param''.AssemblyProduct <> String.Empty then param'' else
     {param'' with AssemblyProduct = param''.AssemblyTitle}
   
-  if param.OutputFileName = String.Empty then failwith "You have to specify the OutputFileName for the AssemblyInfo task."
-  let attributes = new Dictionary<string, string>()
+  if isNullOrEmpty param.OutputFileName then failwith "You have to specify the OutputFileName for the AssemblyInfo task."
+  let attributes = new Dictionary<_,_>()
   let attr name p =
     try
       let value = p.ToString()
       if value <> String.Empty then attributes.Add(name, value)
-    with | exn -> ()
+    with 
+    | exn -> ()
     
   attr "ComVisible" param.ComVisible
   attr "CLSCompliant" param.CLSCompliant
@@ -180,38 +183,37 @@ let AssemblyInfo setParams =
   attr "AssemblyDelaySign" param.AssemblyDelaySign
   
   let imports = 
-    ["System"; 
-     "System.Reflection"; 
-     "System.Runtime.CompilerServices"; 
-     "System.Runtime.InteropServices" ]
+      ["System" 
+       "System.Reflection"
+       "System.Runtime.CompilerServices"
+       "System.Runtime.InteropServices" ]
 
   let fi = fileInfo param.OutputFileName
-  use writer = File.CreateText(param.OutputFileName)
+  use writer = File.CreateText param.OutputFileName
+  let write (x:string) = writer.WriteLine x
   match param.CodeLanguage with
   | FSharp -> 
-     writer.WriteLine (sprintf "module %s.AssemblyInfo" fi.Directory.Name)
-     writer.WriteLine "#nowarn \"49\" // uppercase argument names"
-     writer.WriteLine "#nowarn \"67\" // this type test or downcast will always hold"
-     writer.WriteLine "#nowarn \"66\" // tis upast is unnecessary - the types are identical"
-     writer.WriteLine "#nowarn \"58\" // possible incorrect indentation.."
-     writer.WriteLine "#nowarn \"57\" // do not use create_DelegateEvent"
-     writer.WriteLine "#nowarn \"51\" // address-of operator can occur in the code"
-     writer.WriteLine "open System"
-     writer.WriteLine "open System.Reflection"
-     writer.WriteLine "open System.Runtime.CompilerServices"
-     writer.WriteLine "open System.Runtime.InteropServices"
-     writer.WriteLine "exception ReturnException183c26a427ae489c8fd92ec21a0c9a59 of obj"
-     writer.WriteLine "exception ReturnNoneException183c26a427ae489c8fd92ec21a0c9a59"
+     write (sprintf "module %s.AssemblyInfo" fi.Directory.Name)
+     write "#nowarn \"49\" // uppercase argument names"
+     write "#nowarn \"67\" // this type test or downcast will always hold"
+     write "#nowarn \"66\" // tis upast is unnecessary - the types are identical"
+     write "#nowarn \"58\" // possible incorrect indentation.."
+     write "#nowarn \"57\" // do not use create_DelegateEvent"
+     write "#nowarn \"51\" // address-of operator can occur in the code"
+     write "open System"
+     write "open System.Reflection"
+     write "open System.Runtime.CompilerServices"
+     write "open System.Runtime.InteropServices"
+     write "exception ReturnException183c26a427ae489c8fd92ec21a0c9a59 of obj"
+     write "exception ReturnNoneException183c26a427ae489c8fd92ec21a0c9a59"
 
      attributes 
          |> Seq.iter
              (fun attr ->
                match bool.TryParse attr.Value with
-               | true, value -> 
-                    writer.WriteLine(sprintf "\n[<assembly: %s (%A)>]" attr.Key value)
-               | false, _ -> 
-                    writer.WriteLine(sprintf "\n[<assembly: %s (\"%s\")>]" attr.Key (attr.Value.ToString())))
-     writer.WriteLine "\n()"        
+               | true, value -> write(sprintf "\n[<assembly: %s (%A)>]" attr.Key value)
+               | false, _ ->  write(sprintf "\n[<assembly: %s (\"%s\")>]" attr.Key (attr.Value.ToString())))
+     write "\n()"        
 
   | _ -> generateFile param attributes imports writer
   writer.Flush()
