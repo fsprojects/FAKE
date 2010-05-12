@@ -12,12 +12,14 @@ let wixFile (fi:FileInfo) =
 
 let rec wixDir fileFilter asSubDir (dir:System.IO.DirectoryInfo) =
     let dirs =
-      dir.GetDirectories()
+      dir
+        |> subDirectories
         |> Seq.map (wixDir fileFilter true)
         |> separated ""
 
     let files =
-      dir.GetFiles()
+      dir
+        |> filesInDir
         |> Seq.filter fileFilter
         |> Seq.map wixFile
         |> separated ""
@@ -33,11 +35,12 @@ let rec wixDir fileFilter asSubDir (dir:System.IO.DirectoryInfo) =
 
 let rec wixComponentRefs (dir:DirectoryInfo) =
     let compos =
-      dir.GetDirectories()
+      dir
+        |> subDirectories
         |> Seq.map wixComponentRefs
         |> separated ""
 
-    if dir.GetFiles().Length > 0 then sprintf "%s<ComponentRef Id=\"%s\"/>" compos dir.Name else compos
+    if (filesInDir dir).Length > 0 then sprintf "%s<ComponentRef Id=\"%s\"/>" compos dir.Name else compos
 
 let getFilesAsWiXString files =
     files

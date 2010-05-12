@@ -312,7 +312,7 @@ let rec scanDirectory caseSensitive includeNames
       []         
 
   seq {
-    for dirInfo in currentDirectoryInfo.GetDirectories() do          
+    for dirInfo in subDirectories currentDirectoryInfo do          
       if recursivePattern then
         yield! scanDirectory caseSensitive includeNames includePatterns 
                  excludeNames excludePatterns dirInfo.FullName recursivePattern
@@ -321,7 +321,7 @@ let rec scanDirectory caseSensitive includeNames
           yield dirInfo.FullName
 
     // scan files
-    for fi in currentDirectoryInfo.GetFiles() do
+    for fi in filesInDir currentDirectoryInfo do
       let fileName = path @@ fi.Name
       if isPathIncluded fileName caseSensitive compareOptions includeNames includedPatterns excludeNames excludePatterns then                      
         yield fileName

@@ -9,12 +9,14 @@ let allFilesExist files = Seq.forall File.Exists files
 
 /// Performs the given actions on all files and subdirectories
 let rec recursively dirF fileF (dir:DirectoryInfo) =
-    dir.GetDirectories() 
+    dir
+      |> subDirectories
       |> Seq.iter (fun dir ->
         recursively dirF fileF dir
         dirF dir)
 
-    dir.GetFiles() 
+    dir
+      |> filesInDir
       |> Seq.iter fileF
 
 /// Sets the directory readonly 
@@ -178,7 +180,7 @@ let CopyDir target source filterFile =
 let CleanDir path =
     let di = directoryInfo path
     if di.Exists then
-        logfn "Deleting content of %s" path
+        logfn "Deleting contents of %s" path
         // delete all files
         Directory.GetFiles(path, "*.*", SearchOption.AllDirectories)
           |> Seq.iter (fun file -> 
@@ -302,7 +304,8 @@ let GeneratePatch lastReleaseDir patchDir srcFiles =
 /// Copies the file structure recursive
 let rec copyRecursive (dir:DirectoryInfo) (outputDir:DirectoryInfo) overwrite =
     let files =    
-      dir.GetDirectories() 
+      dir
+        |> subDirectories 
         |> Seq.fold 
              (fun acc (d:DirectoryInfo) ->
                let newDir = outputDir.FullName @@ d.Name |> directoryInfo
@@ -311,7 +314,8 @@ let rec copyRecursive (dir:DirectoryInfo) (outputDir:DirectoryInfo) overwrite =
                copyRecursive d newDir overwrite @ acc)
            []
   
-    (dir.GetFiles()
+    (dir
+      |> filesInDir
       |> Seq.map
           (fun f ->
              let newFileName = outputDir.FullName @@ f.Name
