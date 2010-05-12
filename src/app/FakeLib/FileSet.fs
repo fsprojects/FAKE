@@ -44,7 +44,7 @@ let combinePath baseDirectory path =
           
 /// The base directory to scan. The default is the 
 /// <see cref="Environment.CurrentDirectory">current directory</see>.
-let baseDirectory value = new DirectoryInfo(cleanPath value)
+let baseDirectory value = cleanPath value |> directoryInfo
   
 /// Determines whether the last character of the given <see cref="string" />
 /// matches the specified character.    
@@ -279,7 +279,7 @@ let rec scanDirectory caseSensitive includeNames
      includePatterns excludeNames excludePatterns path recursivePattern =
   if not <| Directory.Exists(path) then Seq.empty else
 
-  let currentDirectoryInfo = new DirectoryInfo(path)
+  let currentDirectoryInfo = directoryInfo path
 
   let compare = CultureInfo.InvariantCulture.CompareInfo    
   let compareOptions = 

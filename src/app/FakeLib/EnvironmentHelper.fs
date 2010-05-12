@@ -40,3 +40,9 @@ let ProgramFilesX86 =
         environVar "ProgramFiles(x86)"
     else
         environVar "ProgramFiles"
+
+/// Creates a DirectoryInfo for the given path
+let inline directoryInfo path = new DirectoryInfo(path)
+
+/// Creates a FileInfo for the given path
+let inline fileInfo path = new FileInfo(path)

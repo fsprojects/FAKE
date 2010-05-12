@@ -17,10 +17,10 @@ let ReadFile (file:string) =
              yield textReader.ReadLine()}
 
 /// Writes a file line by line
-let WriteToFile append file (lines: seq<string>) =    
-    let fi = new FileInfo(file)
+let WriteToFile append fileName (lines: seq<string>) =    
+    let fi = fileInfo fileName
 
-    use writer =  new StreamWriter(file,append && fi.Exists,Encoding.Default) 
+    use writer =  new StreamWriter(fileName,append && fi.Exists,Encoding.Default) 
     lines |> Seq.iter (writer.WriteLine)
 
 /// Writes string to a file
@@ -28,7 +28,7 @@ let WriteStringToFile append file text = WriteToFile append file [text]
 
 /// Replaces the file with the given string
 let ReplaceFile fileName text =
-    let fi = new FileInfo(fileName)
+    let fi = fileInfo fileName
     if fi.Exists then
         fi.IsReadOnly <- false
         fi.Delete()

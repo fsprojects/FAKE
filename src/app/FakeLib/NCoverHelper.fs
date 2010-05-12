@@ -32,7 +32,7 @@ let NCover setParams (assemblies: string seq) (excludeAssemblies: string seq) =
     let append (s:string) = args := (!args).Append(s).Append(" ")      
     let appendQuoted (s:string) = args := (!args).Append("\"").Append(s).Append("\" ")
     
-    let fi = new FileInfo(param.TestRunnerExe)
+    let fi = fileInfo param.TestRunnerExe
     appendQuoted fi.FullName
     assemblies |> Seq.iter appendQuoted
     
@@ -45,7 +45,7 @@ let NCover setParams (assemblies: string seq) (excludeAssemblies: string seq) =
     
     append "//ssp \"Registry, SymbolServer, BuildPath, ExecutingDir\""
     
-    let fi = new FileInfo(param.WorkingDir)
+    let fi = fileInfo param.WorkingDir
     append "//w"
 
     fi.FullName.TrimEnd([| '\\' |]) |> appendQuoted 

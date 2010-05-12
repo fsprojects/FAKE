@@ -41,7 +41,7 @@ let rec wixComponentRefs (dir:DirectoryInfo) =
 
 let getFilesAsWiXString files =
     files
-      |> Seq.map (fun file -> new FileInfo(file) |> wixFile)
+      |> Seq.map (fileInfo >> wixFile)
       |> separated " "
 
 open System
@@ -54,7 +54,7 @@ let WiXDefaults : WiXParams = { ToolDirectory = currentDirectory @@ "tools" @@ "
 let Candle (parameters:WiXParams) wixScript = 
     traceStartTask "Candle" wixScript  
 
-    let fi = new FileInfo(wixScript)
+    let fi = fileInfo wixScript
     let wixObj = fi.Directory.FullName @@ sprintf @"%s.wixobj" fi.Name
 
     let tool = parameters.ToolDirectory @@ "candle.exe"

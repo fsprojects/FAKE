@@ -74,9 +74,9 @@ let tryFindFile dirs file =
                      path
                        .Replace("[ProgramFiles]",ProgramFiles)
                        .Replace("[ProgramFilesX86]",ProgramFilesX86)
-                   let dir = new DirectoryInfo(path')
+                   let dir = directoryInfo path'
                    if not dir.Exists then "" else
-                   let fi = new FileInfo(dir.FullName @@ file)
+                   let fi = dir.FullName @@ file |> fileInfo
                    if fi.Exists then fi.FullName else "")
           |> Seq.filter ((<>) "")
     if not (Seq.isEmpty files) then

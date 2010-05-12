@@ -11,7 +11,7 @@ let DefaultZipLevel = 7
 /// Creates a zip file with the given files
 let CreateZip workingDir fileName comment level flatten files =
     let workingDir =
-        let dir = new DirectoryInfo(workingDir)
+        let dir = directoryInfo workingDir
         if not dir.Exists then failwithf "Directory not found: %s" dir.FullName
         dir.FullName
   
@@ -25,7 +25,7 @@ let CreateZip workingDir fileName comment level flatten files =
     let buffer = Array.create 32768 0uy
 
     for item in files do      
-        let info = new FileInfo(item)      
+        let info = fileInfo item      
         if info.Exists then
           let itemSpec =
               if flatten then info.Name else
@@ -67,8 +67,8 @@ let Zip workingDir fileName = CreateZip workingDir fileName "" DefaultZipLevel f
 ///
 /// Parameter 1: fileName - The fileName of the resulting zip file.
 /// Parameter 2: fileName - The file to zip.
-let ZipFile fileName file =
-    let fi = new FileInfo(file)    
+let ZipFile fileName targetFileName =
+    let fi = fileInfo targetFileName    
     CreateZip (fi.Directory.FullName) fileName "" DefaultZipLevel false [fi.FullName]
 
 /// Unzips a file with the given fileName

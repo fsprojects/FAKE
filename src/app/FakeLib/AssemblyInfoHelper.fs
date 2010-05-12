@@ -185,7 +185,7 @@ let AssemblyInfo setParams =
      "System.Runtime.CompilerServices"; 
      "System.Runtime.InteropServices" ]
 
-  let fi = new FileInfo(param.OutputFileName)
+  let fi = fileInfo param.OutputFileName
   use writer = File.CreateText(param.OutputFileName)
   match param.CodeLanguage with
   | FSharp -> 

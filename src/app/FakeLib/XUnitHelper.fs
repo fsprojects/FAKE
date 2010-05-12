@@ -39,7 +39,7 @@ let xUnit setParams assemblies =
     assemblies
       |> Seq.iter (fun assembly ->
           let commandLineBuilder =          
-              let fi = new FileInfo(assembly)
+              let fi = fileInfo assembly
               let name = fi.Name
 
               let dir = 

@@ -21,7 +21,7 @@ let build outputPath targets properties overwrite project =
     let targetsA = sprintf "/target:%s" targets |> toParam
     let output = 
         if isNullOrEmpty outputPath then "" else
-        let outputDir = new DirectoryInfo(outputPath)
+        let outputDir = directoryInfo outputPath
     
         sprintf "/p:OutputPath=\"%s\"\\" <| outputDir.FullName.Trim('\\')    
 
