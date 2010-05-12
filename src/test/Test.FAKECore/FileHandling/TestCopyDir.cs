@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace Test.FAKECore.FileHandling
 {
     [TestFixture]
-    public class TestCopyDir
+    public class TestCopyDir : BaseTest
     {
         /// <summary>
         ///   Tests the CopyDir Function without filter.

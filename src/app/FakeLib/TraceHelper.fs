@@ -158,3 +158,12 @@ let traceEndTask task  description =
     | Xml     -> closeTag "task"
 
     ReportProgressFinish <| sprintf "Task: %s %s" task description       
+
+/// Waits until the message queue is empty
+let WaitUntilEverythingIsPrinted () =
+     waitFor 
+        MessageBoxIsEmpty
+        (System.TimeSpan.FromSeconds 5.0) 
+        100
+        ignore
+       |> ignore

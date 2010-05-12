@@ -5,12 +5,12 @@ using NUnit.Framework;
 namespace Test.FAKECore.FileHandling
 {
     [TestFixture]
-    public class TestFileScan
+    public class TestFileScan : BaseTest
     {
         #region Setup/Teardown
 
         /// <summary>
-        /// Cleans the test dir.
+        ///   Cleans the test dir.
         /// </summary>
         [SetUp]
         public void CleanTestDir()
@@ -24,7 +24,7 @@ namespace Test.FAKECore.FileHandling
         #endregion
 
         /// <summary>
-        /// Creates some files and scan them.
+        ///   Creates some files and scan them.
         /// </summary>
         [Test]
         public void CreateSomeFilesAndScanThem()
@@ -41,7 +41,7 @@ namespace Test.FAKECore.FileHandling
         }
 
         /// <summary>
-        /// Creates some files and scan them.
+        ///   Creates some files and scan them.
         /// </summary>
         [Test]
         public void CreateSomeFilesAndScanThemWithConcretePath()

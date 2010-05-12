@@ -43,5 +43,5 @@ let buffer = MailboxProcessor.Start (fun inbox ->
 
     loop ())
 
-/// Checks if the current Message queue is empty
+/// Checks if the current message queue is empty
 let MessageBoxIsEmpty() = buffer.CurrentQueueLength = 0

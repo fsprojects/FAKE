@@ -5,12 +5,12 @@ using NUnit.Framework;
 namespace Test.FAKECore.FileHandling
 {
     [TestFixture]
-    public class TestRelativeFileScan
+    public class TestRelativeFileScan : BaseTest
     {
         #region Setup/Teardown
 
         /// <summary>
-        /// Cleans the test dir.
+        ///   Cleans the test dir.
         /// </summary>
         [SetUp]
         public void CleanTestDir()
@@ -19,15 +19,15 @@ namespace Test.FAKECore.FileHandling
 
             Assert.AreEqual(0, Directory.GetDirectories(TestData.TestDir).Length);
             Assert.AreEqual(0, Directory.GetFiles(
-                                   TestData.TestDir,
-                                   "*.*",
-                                   SearchOption.AllDirectories).Length);
+                TestData.TestDir,
+                "*.*",
+                SearchOption.AllDirectories).Length);
         }
 
         #endregion
 
         /// <summary>
-        /// Creates some files and scan them.
+        ///   Creates some files and scan them.
         /// </summary>
         [Test]
         public void CreateSomeFilesAndScanThemWithConcretePath()

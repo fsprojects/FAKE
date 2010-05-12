@@ -4,10 +4,10 @@ using NUnit.Framework;
 namespace Test.FAKECore.FileHandling
 {
     [TestFixture]
-    public class TestCleanDir
+    public class TestCleanDir : BaseTest
     {
         /// <summary>
-        /// Tests the CleanDir function after creating directories.
+        ///   Tests the CleanDir function after creating directories.
         /// </summary>
         [Test]
         public void TestCleanDirAfterCreatingDirectories()
@@ -23,7 +23,7 @@ namespace Test.FAKECore.FileHandling
         }
 
         /// <summary>
-        /// Tests the CleanDir function after creating directories and files.
+        ///   Tests the CleanDir function after creating directories and files.
         /// </summary>
         [Test]
         public void TestCleanDirAfterCreatingDirectoriesAndFiles()
@@ -39,7 +39,7 @@ namespace Test.FAKECore.FileHandling
         }
 
         /// <summary>
-        /// Tests the cleaned dir is writeable.
+        ///   Tests the cleaned dir is writeable.
         /// </summary>
         [Test]
         public void TestCleanedDirIsWriteable()

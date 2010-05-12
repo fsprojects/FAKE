@@ -1,13 +1,14 @@
 ﻿using Fake;
 using NUnit.Framework;
+using Test.FAKECore.FileHandling;
 
 namespace Test.FAKECore
 {
     [TestFixture]
-    public class TestIfFAKEIsAvailable
+    public class TestIfFAKEIsAvailable : BaseTest
     {
         /// <summary>
-        /// Tests the fake path.
+        ///   Tests the fake path.
         /// </summary>
         [Test]
         public void TestFakePath()
@@ -16,7 +17,7 @@ namespace Test.FAKECore
         }
 
         /// <summary>
-        /// Tests the fake version.
+        ///   Tests the fake version.
         /// </summary>
         [Test]
         public void TestFakeVersion()
