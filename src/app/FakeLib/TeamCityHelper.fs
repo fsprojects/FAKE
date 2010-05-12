@@ -120,10 +120,11 @@ type BuildConfiguration =
     Builds: Build seq}
 
 let getFirstNode serverURL username password url =
-  (serverURL
-    |> prepareURL url
-    |> REST.ExecuteGetCommand username password 
-    |> REST.GetAsXML).DocumentElement
+    serverURL
+      |> prepareURL url
+      |> REST.ExecuteGetCommand username password 
+      |> XMLDoc
+      |> DocElement
  
 /// Gets a projects from the TeamCity server
 let getBuildConfig serverURL username password id =

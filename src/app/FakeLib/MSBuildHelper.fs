@@ -21,21 +21,23 @@ let build outputPath targets properties overwrite project =
     let targetsA = sprintf "/target:%s" targets |> toParam
     let output = 
         if isNullOrEmpty outputPath then "" else
-        let outputDir = new DirectoryInfo(outputPath)
-    
-        sprintf "/p:OutputPath=\"%s\"\\" <| outputDir.FullName.Trim('\\')    
-
-    let logger = sprintf " /logger:MSBUILDLogger,\"%s\\FakeLib.dll\"" fakePath
+        outputPath
+          |> FullName
+          |> trimSeparator
+          |> sprintf "/p:OutputPath=\"%s\"\\"
+        
     let props = 
-      properties
-        |> Seq.fold (fun acc (key,value) -> sprintf "%s /p:%s=%s " acc key value) ""
+        properties
+          |> Seq.map (fun (key,value) -> sprintf "/p:%s=%s " key value)
+          |> separated " "
  
     let args = toParam project + targetsA + props + output
     logfn "Building project: %s\n  %s %s" project msBuildExe args
     if not (execProcess3 (fun info ->  
         info.FileName <- msBuildExe
         info.Arguments <- args))
-    then failwithf "Building %s project failed." project      
+    then failwithf "Building %s project failed." project
+
     traceEndTask "MSBuild" project
 
 /// Builds the given project files and collects the output files

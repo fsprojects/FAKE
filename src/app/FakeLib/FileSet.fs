@@ -26,10 +26,8 @@ type FileIncludes =
     
 /// Patterns can use either / \ as a directory separator.
 /// cleanPath replaces both of these characters with Path.DirectorySeparatorChar
-let cleanPathBuilder (path:string) =
-    let pathBuilder = new StringBuilder(path);
-
-    pathBuilder
+let cleanPathBuilder (path:string) =    
+    (new StringBuilder(path))
       .Replace('/',  Path.DirectorySeparatorChar)
       .Replace('\\', Path.DirectorySeparatorChar)
     
@@ -44,7 +42,7 @@ let combinePath baseDirectory path =
           
 /// The base directory to scan. The default is the 
 /// <see cref="Environment.CurrentDirectory">current directory</see>.
-let baseDirectory value = new DirectoryInfo(cleanPath value)
+let baseDirectory value = cleanPath value |> directoryInfo
   
 /// Determines whether the last character of the given <see cref="string" />
 /// matches the specified character.    
@@ -279,7 +277,7 @@ let rec scanDirectory caseSensitive includeNames
      includePatterns excludeNames excludePatterns path recursivePattern =
   if not <| Directory.Exists(path) then Seq.empty else
 
-  let currentDirectoryInfo = new DirectoryInfo(path)
+  let currentDirectoryInfo = directoryInfo path
 
   let compare = CultureInfo.InvariantCulture.CompareInfo    
   let compareOptions = 
@@ -312,7 +310,7 @@ let rec scanDirectory caseSensitive includeNames
       []         
 
   seq {
-    for dirInfo in currentDirectoryInfo.GetDirectories() do          
+    for dirInfo in subDirectories currentDirectoryInfo do          
       if recursivePattern then
         yield! scanDirectory caseSensitive includeNames includePatterns 
                  excludeNames excludePatterns dirInfo.FullName recursivePattern
@@ -321,7 +319,7 @@ let rec scanDirectory caseSensitive includeNames
           yield dirInfo.FullName
 
     // scan files
-    for fi in currentDirectoryInfo.GetFiles() do
+    for fi in filesInDir currentDirectoryInfo do
       let fileName = path @@ fi.Name
       if isPathIncluded fileName caseSensitive compareOptions includeNames includedPatterns excludeNames excludePatterns then                      
         yield fileName

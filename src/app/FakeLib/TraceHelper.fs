@@ -100,7 +100,7 @@ let traceStartBuild () =
     match traceMode with
     | Console -> ()
     | Xml     ->         
-        let fi = new FileInfo(xmlOutputFile)
+        let fi = fileInfo xmlOutputFile
         if fi.Exists then
             fi.IsReadOnly <- false
             fi.Delete()

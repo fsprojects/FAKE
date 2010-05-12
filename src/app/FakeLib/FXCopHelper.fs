@@ -72,13 +72,12 @@ let FxCopDefaults =
         
 /// Run FxCop on a group of assemblies.
 let FxCop setParams (assemblies: string seq) =
-  let param = FxCopDefaults |> setParams
+  let param = setParams FxCopDefaults
   traceStartTask "FxCop" "" 
       
   let param = 
     if param.ApplyOutXsl && param.OutputXslFileName = String.Empty then
-      {param with
-        OutputXslFileName = param.ToolPath @@ "Xml" @@ "FxCopReport.xsl" }
+      {param with OutputXslFileName = param.ToolPath @@ "Xml" @@ "FxCopReport.xsl" }
     else param
       
   let commandLineCommands =

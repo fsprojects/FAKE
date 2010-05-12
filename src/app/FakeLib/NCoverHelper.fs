@@ -24,7 +24,7 @@ let NCoverDefaults =
 ///   assemblies - the test assemblies, which should be inspected#
 ///   excludeAssemblies - these assemblies are excluded 
 let NCover setParams (assemblies: string seq) (excludeAssemblies: string seq) =
-  let param = NCoverDefaults |> setParams
+  let param = setParams NCoverDefaults
       
   let commandLineCommands =
     let args = ref (new StringBuilder())
@@ -32,23 +32,26 @@ let NCover setParams (assemblies: string seq) (excludeAssemblies: string seq) =
     let append (s:string) = args := (!args).Append(s).Append(" ")      
     let appendQuoted (s:string) = args := (!args).Append("\"").Append(s).Append("\" ")
     
-    let fi = new FileInfo(param.TestRunnerExe)
-    appendQuoted fi.FullName
-    assemblies |> Seq.iter appendQuoted
+    param.TestRunnerExe
+      |> FullName    
+      |> appendQuoted 
+
+    Seq.iter appendQuoted assemblies
     
     if excludeAssemblies |> Seq.isEmpty |> not then
-      append "//eas"
-      excludeAssemblies |> Seq.iter(appendQuoted)
+        append "//eas"
+        Seq.iter appendQuoted excludeAssemblies
     
     append "//p"
     appendQuoted param.ProjectName
     
-    append "//ssp \"Registry, SymbolServer, BuildPath, ExecutingDir\""
-    
-    let fi = new FileInfo(param.WorkingDir)
+    append "//ssp \"Registry, SymbolServer, BuildPath, ExecutingDir\""    
     append "//w"
 
-    fi.FullName.TrimEnd([| '\\' |]) |> appendQuoted 
+    param.WorkingDir
+      |> FullName
+      |> trimSeparator
+      |> appendQuoted 
 
     (!args).ToString()
  
@@ -57,7 +60,7 @@ let NCover setParams (assemblies: string seq) (excludeAssemblies: string seq) =
   let ok =
     execProcess (fun info ->  
       info.FileName <- param.ToolPath
-      if param.WorkingDir <> String.Empty then info.WorkingDirectory <- param.WorkingDir
+      if param.WorkingDir <> String.Empty then 
+          info.WorkingDirectory <- param.WorkingDir
       info.Arguments <- commandLineCommands)
-  if not ok then
-    failwithf "NCover reported errors."
+  if not ok then failwithf "NCover reported errors."

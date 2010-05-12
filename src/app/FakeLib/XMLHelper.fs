@@ -91,10 +91,19 @@ let parseSubNode name f =
     getSubNode name
       >> parse name f
 
+/// Gets the result as xml
+let XMLDoc text =
+    if isNullOrEmpty text then null else
+    let xmlDocument = new XmlDocument()
+    xmlDocument.LoadXml text
+    xmlDocument
+
+/// Gets the DocumentElement of the XmlDocument
+let DocElement (doc:XmlDocument) = doc.DocumentElement
+
 /// Replaces text in an XML file at the location specified by an XPath expression.
 let XmlPoke (fileName:string) xpath value =
-    let doc = new XmlDocument()
-    doc.Load fileName
+    let doc = XMLDoc fileName
     let node = doc.SelectSingleNode xpath
     node.Value <- value
     doc.Save fileName

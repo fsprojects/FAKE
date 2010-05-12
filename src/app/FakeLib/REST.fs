@@ -40,7 +40,7 @@ let ExecuteGetCommand (userName:string) (password:string) (url:string) =
 ///   returns: The response of the request, or null if we got 404 or nothing.
 let ExecutePostCommand headerF (url:string) userName password (data:string) =
     System.Net.ServicePointManager.Expect100Continue <- false 
-    let request = WebRequest.Create(url)    
+    let request = WebRequest.Create url
     if String.IsNullOrEmpty userName || String.IsNullOrEmpty password then 
       invalidArg userName "You have to specify username and password for post operations."
     request.Credentials <- new NetworkCredential(userName, password)
@@ -51,19 +51,12 @@ let ExecutePostCommand headerF (url:string) userName password (data:string) =
 
     let bytes = Encoding.UTF8.GetBytes(data)
 
-    request.ContentLength <- (int64)bytes.Length 
+    request.ContentLength <- int64 bytes.Length 
     use requestStream = request.GetRequestStream()
     requestStream.Write(bytes, 0, bytes.Length)
 
     use response = request.GetResponse()
     use reader = new StreamReader(response.GetResponseStream())
     reader.ReadToEnd()
-
- /// Gets the result as xml
-let GetAsXML output =
-    if isNullOrEmpty output then null else
-    let xmlDocument = new XmlDocument()
-    xmlDocument.LoadXml output
-    xmlDocument
 
 let ExecutePost url userName = ExecutePostCommand ignore url userName

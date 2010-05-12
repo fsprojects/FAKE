@@ -92,6 +92,6 @@ let RunScripts connectionString scripts =
     Disconnect serverInfo
 
 /// Runs all sql scripts from the given directory on the server  
-let RunScriptsFromDirectory connectionString scriptDirectory = 
+let RunScriptsFromDirectory connectionString scriptDirectory =
     Directory.GetFiles(scriptDirectory, "*.sql")
       |> RunScripts connectionString  
