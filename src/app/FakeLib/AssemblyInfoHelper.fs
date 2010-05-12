@@ -80,8 +80,6 @@ let generateFile param (attributes:Dictionary<string, string>) imports (writer:T
             |> codeNamespace.Imports.Add)
       
   codeCompileUnit.Namespaces.Add codeNamespace |> ignore
-  
-  let codeAttrArg value = new CodeAttributeArgument(new CodePrimitiveExpression(value))
 
   let addString =
     match param.CodeLanguage with
@@ -96,7 +94,8 @@ let generateFile param (attributes:Dictionary<string, string>) imports (writer:T
     | _ ->  
       for attr in attributes do            
         // create new assembly-level attribute
-        let codeAttributeDeclaration = new CodeAttributeDeclaration(attr.Key)      
+        let codeAttributeDeclaration = new CodeAttributeDeclaration(attr.Key)
+        let codeAttrArg value = new CodeAttributeArgument(new CodePrimitiveExpression(value))
         
         match attr.Key with
         | "CLSCompliant"
