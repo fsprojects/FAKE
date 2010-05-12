@@ -27,13 +27,9 @@ let XUnitDefaults =
    Verbose = false;
    XmlOutput = false
    OutputDir = null}
-   
-let ResourceStream toolPath xmlResourceName =
-    new FileStream(toolPath @@ xmlResourceName, FileMode.Open, FileAccess.Read)
-  
 
 let xUnit setParams assemblies = 
-    let details = assemblies |> separated ", "
+    let details = separated ", " assemblies
     traceStartTask "xUnit" details
     let parameters = setParams XUnitDefaults
     assemblies

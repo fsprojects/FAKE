@@ -79,6 +79,8 @@ let tryFindFile dirs file =
                    let fi = dir.FullName @@ file |> fileInfo
                    if fi.Exists then fi.FullName else "")
           |> Seq.filter ((<>) "")
+          |> Seq.cache
+
     if not (Seq.isEmpty files) then
         Some (Seq.head files)
     else
