@@ -199,6 +199,31 @@
 <member name="">
 
 </member>
+<member name="M:Fake.EnvironmentHelper.filesInDir(System.IO.DirectoryInfo)">
+<summary>
+ Gets all files in the directory
+</summary>
+</member>
+<member name="M:Fake.EnvironmentHelper.subDirectories(System.IO.DirectoryInfo)">
+<summary>
+ Gets all subdirectories
+</summary>
+</member>
+<member name="M:Fake.EnvironmentHelper.FullName(System.String)">
+<summary>
+ Converts a file to it&apos;s full file system name
+</summary>
+</member>
+<member name="M:Fake.EnvironmentHelper.fileInfo(System.String)">
+<summary>
+ Creates a FileInfo for the given path
+</summary>
+</member>
+<member name="M:Fake.EnvironmentHelper.directoryInfo(System.String)">
+<summary>
+ Creates a DirectoryInfo for the given path
+</summary>
+</member>
 <member name="P:Fake.EnvironmentHelper.ProgramFilesX86">
 <summary>
  The path of Program Files (x86)
@@ -298,11 +323,6 @@
  If delete = true then equal files will be removed  
 </summary>
 </member>
-<member name="M:Fake.FileHelper.FullName(System.String)">
-<summary>
- Converts a file to it&apos;s full file system name
-</summary>
-</member>
 <member name="M:Fake.FileHelper.FilesAreEqual(System.IO.FileInfo,System.IO.FileInfo)">
 <summary>
  Checks if the two files are byte-to-byte equal
@@ -378,14 +398,14 @@
 <summary>
  Copies a single file to the target
    param target: The target directory.
-   param file: The FileName
+   param fileName: The FileName
 </summary>
 </member>
 <member name="M:Fake.FileHelper.CopyFileIntoSubFolder(System.String,System.String)">
 <summary>
  Copies a single file to a relative subfolder of the target
    param target: The targetDirectory
-   param file: The fileName
+   param fileName: The fileName
 </summary>
 </member>
 <member name="M:Fake.FileHelper.|FileInfoNameSections|(System.IO.FileInfo)">
@@ -439,6 +459,11 @@
 <member name="M:Fake.FileHelper.setDirectoryReadOnly(System.Boolean,System.IO.DirectoryInfo)">
 <summary>
  Sets the directory readonly 
+</summary>
+</member>
+<member name="M:Fake.FileHelper.recursively(Microsoft.FSharp.Core.FSharpFunc`2{System.IO.DirectoryInfo,Microsoft.FSharp.Core.Unit},Microsoft.FSharp.Core.FSharpFunc`2{System.IO.FileInfo,Microsoft.FSharp.Core.Unit},System.IO.DirectoryInfo)">
+<summary>
+ Performs the given actions on all files and subdirectories
 </summary>
 </member>
 <member name="M:Fake.FileHelper.allFilesExist(System.Collections.Generic.IEnumerable{System.String})">
@@ -981,6 +1006,51 @@
 <member name="T:Fake.NUnitHelper">
 
 </member>
+<member name="F:Fake.ProcessHelper.ExecParams.Args">
+<summary>
+ Command-line argument pairs. The value will be quoted if it contains
+ a string, and the result will be appended to the CommandLine property.
+ If the key ends in a letter or number, a space will be inserted between
+ the key and the value.
+</summary>
+</member>
+<member name="F:Fake.ProcessHelper.ExecParams.CommandLine">
+<summary>
+ Command-line parameters in a string.
+</summary>
+</member>
+<member name="F:Fake.ProcessHelper.ExecParams.WorkingDirectory">
+<summary>
+ The working directory for the program. Defaults to &quot;&quot;.
+</summary>
+</member>
+<member name="F:Fake.ProcessHelper.ExecParams.Program">
+<summary>
+ The path to the executable, without arguments. 
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="P:Fake.ProcessHelper.shellExec">
+<summary>
+ Execute an external program and return the exit code.
+</summary>
+</member>
+<member name="M:Fake.ProcessHelper.asyncShellExec(Fake.ProcessHelper.ExecParams)">
+<summary>
+ Execute an external program asynchronously and return the exit code,
+ logging output and error messages to FAKE output. You can compose the result
+ with Async.Parallel to run multiple external programs at once, but be
+ sure that none of them depend on the output of another.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
 <member name="M:Fake.ProcessHelper.findPath(System.String,System.String)">
 <summary>
  Tries to find the tool via AppSettings. If no path has the right tool we are trying the PATH system variable. 
@@ -1008,7 +1078,12 @@
 </member>
 <member name="M:Fake.ProcessHelper.toParam(System.String)">
 <summary>
- Adds quotes around the string   
+ Adds quotes and a blank around the string   
+</summary>
+</member>
+<member name="M:Fake.ProcessHelper.quote(System.String)">
+<summary>
+ Adds quotes around the string if needed
 </summary>
 </member>
 <member name="M:Fake.ProcessHelper.execProcess(Microsoft.FSharp.Core.FSharpFunc`2{System.Diagnostics.ProcessStartInfo,Microsoft.FSharp.Core.Unit})">
@@ -1050,6 +1125,12 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
+<member name="T:Fake.ProcessHelper.Event">
+
+</member>
 <member name="T:Fake.ProcessHelper">
 
 </member>
@@ -1064,11 +1145,6 @@
 </member>
 <member name="">
 
-</member>
-<member name="M:Fake.REST.GetAsXML(System.String)">
-<summary>
- Gets the result as xml
-</summary>
 </member>
 <member name="M:Fake.REST.ExecutePostCommand(Microsoft.FSharp.Core.FSharpFunc`2{System.Net.WebHeaderCollection,Microsoft.FSharp.Core.Unit},System.String,System.String,System.String,System.String)">
 <summary>
@@ -1227,6 +1303,9 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
 <member name="M:Fake.StringHelper.op_LessMultiply(System.String,System.String)">
 <summary>
  Checks wether the given text starts with the given prefix
@@ -1290,6 +1369,11 @@
 <member name="M:Fake.StringHelper.RemoveLineBreaks(System.String)">
 <summary>
  Removes linebreaks from the given string
+</summary>
+</member>
+<member name="M:Fake.StringHelper.replace(System.String,System.String,System.String)">
+<summary>
+ Replaces the given pattern in the given text with the replacement
 </summary>
 </member>
 <member name="M:Fake.StringHelper.ReadFileAsString(System.String)">
@@ -1840,6 +1924,9 @@
  Gets the path of the current FAKE instance
 </summary>
 </member>
+<member name="">
+
+</member>
 <member name="P:Fake.TraceHelper.verbose">
 <summary>
  Trace verbose output
@@ -1912,6 +1999,16 @@
  Replaces text in an XML file at the location specified by an XPath expression.
 </summary>
 </member>
+<member name="M:Fake.XMLHelper.DocElement(System.Xml.XmlDocument)">
+<summary>
+ Gets the DocumentElement of the XmlDocument
+</summary>
+</member>
+<member name="M:Fake.XMLHelper.XMLDoc(System.String)">
+<summary>
+ Gets the result as xml
+</summary>
+</member>
 <member name="M:Fake.XMLHelper.parseSubNode``1(System.String,Microsoft.FSharp.Core.FSharpFunc`2{System.Xml.XmlNode,``0})">
 <summary>
  parses a subnode
@@ -1979,9 +2076,6 @@
 </summary>
 </member>
 <member name="T:Fake.XMLHelper">
-
-</member>
-<member name="">
 
 </member>
 <member name="">
