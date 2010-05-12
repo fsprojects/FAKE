@@ -105,7 +105,7 @@ let CopyFileIntoSubFolder target file =
     let relative = (toRelativePath file).TrimStart '.'
     let fi = new FileInfo(file)
   
-    let targetName = target @@ relative
+    let targetName = target + relative
     let target = new FileInfo(targetName)
     if not target.Directory.Exists then target.Directory.Create()
 
