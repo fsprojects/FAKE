@@ -286,7 +286,7 @@ let GeneratePatchWithFindOldFileFunction lastReleaseDir patchDir srcFiles findOl
     srcFiles
       |> Seq.map (fun file -> 
             let newFile = toRelativePath file
-            let oldFile = findOldFileF newFile (lastReleaseDir @@ (newFile.TrimStart '.' |> trimSeparator))
+            let oldFile = findOldFileF newFile (lastReleaseDir + newFile.TrimStart('.'))
             let fi = new FileInfo(oldFile)
             if not fi.Exists then logVerbosefn "LastRelease has no file like %s" fi.FullName
             newFile,oldFile)         
