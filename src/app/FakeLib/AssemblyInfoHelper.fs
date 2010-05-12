@@ -81,6 +81,8 @@ let generateFile param (attributes:Dictionary<string, string>) imports (writer:T
       
   codeCompileUnit.Namespaces.Add codeNamespace |> ignore
   
+  let codeAttrArg value = new CodeAttributeArgument(new CodePrimitiveExpression(value))
+
   let addString =
     match param.CodeLanguage with
     | FSharp      ->          
@@ -89,7 +91,7 @@ let generateFile param (attributes:Dictionary<string, string>) imports (writer:T
              (fun attr ->
                match bool.TryParse attr.Value with
                | true, value -> sprintf "[<assembly: %s (%A)>]" attr.Key value
-               | false, _ -> sprintf "[<assembly: %s (\"%s\")>]" attr.Key (attr.Value.ToString()))
+               | _ -> sprintf "[<assembly: %s (\"%s\")>]" attr.Key attr.Value)
          |> separated "\n") + "\n()"        
     | _ ->  
       for attr in attributes do            
@@ -100,12 +102,13 @@ let generateFile param (attributes:Dictionary<string, string>) imports (writer:T
         | "CLSCompliant"
         | "AssemblyDelaySign"
         | "ComVisible" -> 
-          let found,value = bool.TryParse attr.Value
-          if found then
-            codeAttributeDeclaration.Arguments.Add(new CodeAttributeArgument(new CodePrimitiveExpression(value))) |> ignore
-            codeCompileUnit.AssemblyCustomAttributes.Add(codeAttributeDeclaration) |> ignore
+          match bool.TryParse attr.Value with
+          | true,value ->
+              codeAttributeDeclaration.Arguments.Add(codeAttrArg value) |> ignore
+              codeCompileUnit.AssemblyCustomAttributes.Add(codeAttributeDeclaration) |> ignore
+          | _ -> ()
         | _ -> 
-            codeAttributeDeclaration.Arguments.Add(new CodeAttributeArgument(new CodePrimitiveExpression(attr.Value))) |> ignore
+            codeAttributeDeclaration.Arguments.Add(codeAttrArg attr.Value) |> ignore
             codeCompileUnit.AssemblyCustomAttributes.Add(codeAttributeDeclaration) |> ignore
       String.Empty
         
