@@ -48,11 +48,17 @@ let separated delimiter items = String.Join(delimiter, Array.ofSeq items)
 /// Reads a file as one text
 let ReadFileAsString file = File.ReadAllText(file,Encoding.Default)
 
+/// Replaces the given pattern in the given text with the replacement
+let inline replace (pattern:string) replacement (text:string) = text.Replace(pattern,replacement)
+
 /// Removes linebreaks from the given string
-let RemoveLineBreaks (s:string) = s.Replace("\r",String.Empty).Replace("\n",String.Empty)
+let RemoveLineBreaks text = 
+    text
+      |> replace "\r" String.Empty
+      |> replace "\n" String.Empty
 
 /// Encapsulates the Apostrophe
-let EncapsulateApostrophe (s:string) = s.Replace("'","`") 
+let EncapsulateApostrophe text = replace "'" "`" text
 
 /// Appends a text
 let append s (builder:StringBuilder) = builder.Append(sprintf "\"%s\" " s)
@@ -78,14 +84,13 @@ let appendFileNamesIfNotNull fileNames (builder:StringBuilder) =
     |> Seq.fold (fun builder file -> appendIfTrue (String.IsNullOrEmpty file |> not) file builder) builder
 
 /// Replaces the absolute path to a relative
-let toRelativePath (value:string) = value.Replace(currentDirectory,".")
+let toRelativePath value = replace currentDirectory "." value
 
 /// Removes the slashes from the end of the given string
 let trimSlash (s:string) = s.TrimEnd('\\')
 
 /// Converts a sequence of strings into a string separated with line ends
 let toLines s = separated "\r\n" s
-
 /// Checks wether the given text starts with the given prefix
 let (<*) prefix (text:string) = text.StartsWith prefix
 

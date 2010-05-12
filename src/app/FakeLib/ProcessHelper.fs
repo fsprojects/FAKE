@@ -70,11 +70,11 @@ let tryFindFile dirs file =
         dirs
           |> Seq.map 
                (fun (path:string) ->
-                   let path' = 
+                   let dir =
                      path
-                       .Replace("[ProgramFiles]",ProgramFiles)
-                       .Replace("[ProgramFilesX86]",ProgramFilesX86)
-                   let dir = directoryInfo path'
+                       |> replace "[ProgramFiles]" ProgramFiles
+                       |> replace "[ProgramFilesX86]" ProgramFilesX86
+                       |> directoryInfo
                    if not dir.Exists then "" else
                    let fi = dir.FullName @@ file |> fileInfo
                    if fi.Exists then fi.FullName else "")

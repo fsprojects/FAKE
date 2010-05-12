@@ -168,7 +168,7 @@ let CopyDir target source filterFile =
     Directory.GetFiles(source, "*.*", SearchOption.AllDirectories)
       |> Seq.filter filterFile
       |> Seq.iter (fun file -> 
-            let fi = file.Replace(source,"") |> trimSeparator
+            let fi = file |> replace source "" |> trimSeparator
             let newFile = target @@ fi
             logVerbosefn "%s => %s" file newFile
             Path.GetDirectoryName newFile

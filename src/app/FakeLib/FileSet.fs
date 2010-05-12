@@ -26,10 +26,8 @@ type FileIncludes =
     
 /// Patterns can use either / \ as a directory separator.
 /// cleanPath replaces both of these characters with Path.DirectorySeparatorChar
-let cleanPathBuilder (path:string) =
-    let pathBuilder = new StringBuilder(path);
-
-    pathBuilder
+let cleanPathBuilder (path:string) =    
+    (new StringBuilder(path))
       .Replace('/',  Path.DirectorySeparatorChar)
       .Replace('\\', Path.DirectorySeparatorChar)
     
