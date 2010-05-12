@@ -6,12 +6,12 @@ using NUnit.Framework;
 namespace Test.FAKECore.FileHandling
 {
     [TestFixture]
-    public class TestDirectoryScan
+    public class TestDirectoryScan : BaseTest
     {
         #region Setup/Teardown
 
         /// <summary>
-        /// Cleans the test dir.
+        ///   Cleans the test dir.
         /// </summary>
         [SetUp]
         public void CleanTestDir()
@@ -20,25 +20,25 @@ namespace Test.FAKECore.FileHandling
 
             Assert.AreEqual(0, Directory.GetDirectories(TestData.TestDir).Length);
             Assert.AreEqual(0, Directory.GetFiles(
-                                   TestData.TestDir,
-                                   "*.*",
-                                   SearchOption.AllDirectories).Length);
+                TestData.TestDir,
+                "*.*",
+                SearchOption.AllDirectories).Length);
         }
 
         #endregion
 
         /// <summary>
-        /// Creates some directories and scan them.
+        ///   Creates some directories and scan them.
         /// </summary>
         [Test]
         public void CreateSomeDirectoriesAndScanThem()
         {
             BaseFunctions.CreateTestDirStructure();
 
-            string[] dirs = Directory.GetDirectories(TestData.TestDir, "*", SearchOption.AllDirectories);
+            var dirs = Directory.GetDirectories(TestData.TestDir, "*", SearchOption.AllDirectories);
             Assert.AreEqual(16, dirs.Count());
 
-            List<string> scanned = BaseFunctions.Scan("Test");
+            var scanned = BaseFunctions.Scan("Test");
             Assert.AreEqual(TestData.TestDir, scanned.First());
             Assert.AreEqual(1, scanned.Count());
 
@@ -50,7 +50,7 @@ namespace Test.FAKECore.FileHandling
         }
 
         /// <summary>
-        /// Finds the test dir in base dir.
+        ///   Finds the test dir in base dir.
         /// </summary>
         [Test]
         public void FindTestDirInBaseDir()

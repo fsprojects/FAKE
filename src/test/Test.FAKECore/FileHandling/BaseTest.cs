@@ -1,12 +1,14 @@
 ﻿using Fake;
+using NUnit.Framework;
 
 namespace Test.FAKECore.FileHandling
 {
     public class BaseTest
     {
-        public BaseTest()
+        [TearDown]
+        public void WaitUntilEverythingIsPrinted()
         {
-            TraceHelper.logViaBuffer = false;
+            TraceHelper.WaitUntilEverythingIsPrinted();
         }
     }
 }

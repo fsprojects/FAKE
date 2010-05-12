@@ -52,9 +52,4 @@ try
         Environment.ExitCode <- 1
 finally
     traceEndBuild()
-    waitFor 
-        MessageBoxIsEmpty
-        (System.TimeSpan.FromSeconds 5.0) 
-        100
-        ignore
-     |> ignore
+    WaitUntilEverythingIsPrinted()

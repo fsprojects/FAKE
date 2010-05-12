@@ -15,16 +15,19 @@ let defaultMessage =
       Newline   = true
       Important = false }
 
+let locker = new obj()
+
 /// Logs the specified string to the console
 let internal logMessageToConsole (msg:Message) =   
     let text = toRelativePath msg.Text
-    let curColor = Console.ForegroundColor
-    Console.ForegroundColor <- msg.Color
-    if msg.Important && buildServer <> CCNet then
-        if msg.Newline then eprintfn "%s" text else eprintf "%s" text
-    else
-        if msg.Newline then printfn "%s" text else printf "%s" text
-    Console.ForegroundColor <- curColor
+    lock locker (fun () -> 
+        let curColor = Console.ForegroundColor
+        Console.ForegroundColor <- msg.Color
+        if msg.Important && buildServer <> CCNet then
+            if msg.Newline then eprintfn "%s" text else eprintf "%s" text
+        else
+            if msg.Newline then printfn "%s" text else printf "%s" text
+        Console.ForegroundColor <- curColor)
 
 let private appendXML line = AppendToFile xmlOutputFile [line]
 
@@ -40,5 +43,5 @@ let buffer = MailboxProcessor.Start (fun inbox ->
 
     loop ())
 
-/// Checks if the current Message queue is empty
+/// Checks if the current message queue is empty
 let MessageBoxIsEmpty() = buffer.CurrentQueueLength = 0

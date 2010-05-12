@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Fake;
@@ -10,7 +9,7 @@ using NUnit.Framework;
 namespace Test.FAKECore.FileHandling
 {
     [TestFixture]
-    public class BaseFunctions
+    public class BaseFunctions : BaseTest
     {
         /// <summary>
         /// Cleans the dir.

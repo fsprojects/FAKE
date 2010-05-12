@@ -28,8 +28,8 @@ let build outputPath targets properties overwrite project =
         
     let props = 
         properties
-          |> Seq.map (fun (key,value) -> sprintf "/p:%s=%s " key value)
-          |> separated " "
+          |> Seq.map (fun (key,value) -> sprintf " /p:%s=%s " key value)
+          |> separated ""
  
     let args = toParam project + targetsA + props + output
     logfn "Building project: %s\n  %s %s" project msBuildExe args
