@@ -7,8 +7,6 @@ open System.Reflection
 
 /// Trace verbose output
 let mutable verbose = hasBuildParam "verbose"
-
-let mutable logViaBuffer = true
    
 /// Gets the path of the current FAKE instance
 let fakePath = productName.GetType().Assembly.Location
@@ -46,13 +44,12 @@ let logVerbosefn fmt = Printf.ksprintf (if verbose then log else ignore) fmt
 /// Writes a trace output to the message buffer (in the given color)
 let logColored important color newLine message =
     match traceMode with
-    | Console ->
-        let msg = 
-            { Text = message
-              Color = color
-              Important = important
-              Newline = newLine }
-        if logViaBuffer then buffer.Post msg else logMessageToConsole msg
+    | Console ->        
+        { Text = message
+          Color = color
+          Important = important
+          Newline = newLine }
+          |> buffer.Post
     | Xml     -> xmlMessage message
     
 /// Writes a trace to the command line (in green)
