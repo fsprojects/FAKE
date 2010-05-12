@@ -16,7 +16,7 @@ let replaceKeywords replacements =
                sb.ToString()))
       
 /// saves all files (lazy - file by file!)
-let saveFiles = Seq.iter (fun (fileName,file) -> WriteFile fileName (file |> Seq.toList))
+let saveFiles = Seq.iter (fun (fileName,file) -> WriteFile fileName (Seq.toList file))
 
 /// Replaces the templates with the given replacements
 let processTemplates replacements files =

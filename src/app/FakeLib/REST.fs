@@ -59,11 +59,4 @@ let ExecutePostCommand headerF (url:string) userName password (data:string) =
     use reader = new StreamReader(response.GetResponseStream())
     reader.ReadToEnd()
 
- /// Gets the result as xml
-let GetAsXML output =
-    if isNullOrEmpty output then null else
-    let xmlDocument = new XmlDocument()
-    xmlDocument.LoadXml output
-    xmlDocument
-
 let ExecutePost url userName = ExecutePostCommand ignore url userName
