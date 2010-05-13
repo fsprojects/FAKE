@@ -103,8 +103,8 @@ let DocElement (doc:XmlDocument) = doc.DocumentElement
 
 /// Replaces text in an XML file at the location specified by an XPath expression.
 let XmlPoke (fileName:string) xpath value =
-    let doc = XMLDoc fileName
+    let doc = new XmlDocument()
+    doc.Load fileName    
     let node = doc.SelectSingleNode xpath
     node.Value <- value
     doc.Save fileName
-    
