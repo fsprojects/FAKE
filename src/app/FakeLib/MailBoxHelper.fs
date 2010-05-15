@@ -26,15 +26,13 @@ let internal logMessageToConsole (msg:Message) =
         if msg.Newline then printfn "%s" text else printf "%s" text
     Console.ForegroundColor <- curColor
 
-let private appendXML line = AppendToFile xmlOutputFile [line]
-
 let buffer = MailboxProcessor.Start (fun inbox ->
     let rec loop () = 
         async {
             let! (msg:Message) = inbox.Receive()
             match traceMode with
             | Console -> logMessageToConsole msg
-            | Xml     -> appendXML msg.Text
+            | Xml     -> AppendToFile xmlOutputFile [msg.Text]
 
             return! loop ()}
 
