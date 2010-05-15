@@ -77,8 +77,10 @@
   <ItemGroup>
     <Compile Include="FileHandling\BaseFunctions.cs" />
     <Compile Include="FileHandling\BaseTest.cs" />
-    <Compile Include="FileHandling\TestRelativeFileScan.cs" />
     <Compile Include="FileHandling\TestCopyDir.cs" />
+    <Compile Include="FileHandling\TestRelativeFileScan.cs" />
+    <Compile Include="XMLHandling\TestLoadXML.cs" />
+    <Compile Include="XMLHandling\TestXMLPoke.cs" />
     <Compile Include="FileHandling\TestFileScan.cs" />
     <Compile Include="TestData.cs" />
     <Compile Include="FileHandling\TestCleanDir.cs" />

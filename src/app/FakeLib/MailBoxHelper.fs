@@ -15,19 +15,16 @@ let defaultMessage =
       Newline   = true
       Important = false }
 
-let locker = new obj()
-
 /// Logs the specified string to the console
 let internal logMessageToConsole (msg:Message) =   
     let text = toRelativePath msg.Text
-    lock locker (fun () -> 
-        let curColor = Console.ForegroundColor
-        Console.ForegroundColor <- msg.Color
-        if msg.Important && buildServer <> CCNet then
-            if msg.Newline then eprintfn "%s" text else eprintf "%s" text
-        else
-            if msg.Newline then printfn "%s" text else printf "%s" text
-        Console.ForegroundColor <- curColor)
+    let curColor = Console.ForegroundColor
+    Console.ForegroundColor <- msg.Color
+    if msg.Important && buildServer <> CCNet then
+        if msg.Newline then eprintfn "%s" text else eprintf "%s" text
+    else
+        if msg.Newline then printfn "%s" text else printf "%s" text
+    Console.ForegroundColor <- curColor
 
 let private appendXML line = AppendToFile xmlOutputFile [line]
 
