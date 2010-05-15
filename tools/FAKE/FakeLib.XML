@@ -839,9 +839,6 @@
 <member name="">
 
 </member>
-<member name="">
-
-</member>
 <member name="T:Fake.MailBoxHelper">
 
 </member>
@@ -2002,6 +1999,11 @@
 <member name="M:Fake.XMLHelper.XmlPoke(System.String,System.String,System.String)">
 <summary>
  Replaces text in an XML file at the location specified by an XPath expression.
+</summary>
+</member>
+<member name="M:Fake.XMLHelper.XPathReplace(System.String,System.String,System.Xml.XmlDocument)">
+<summary>
+ Replaces text in XML document specified by an XPath expression.
 </summary>
 </member>
 <member name="M:Fake.XMLHelper.DocElement(System.Xml.XmlDocument)">
