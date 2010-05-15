@@ -22,7 +22,6 @@ namespace Test.FAKECore.FileHandling
 
         string xPath = "painting/caption/date/@year";
 
-
         string fileName = Path.Combine(TestData.TestDir, "test.xml");
 
         [SetUp]
