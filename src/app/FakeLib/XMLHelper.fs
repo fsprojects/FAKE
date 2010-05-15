@@ -101,10 +101,15 @@ let XMLDoc text =
 /// Gets the DocumentElement of the XmlDocument
 let DocElement (doc:XmlDocument) = doc.DocumentElement
 
+/// Replaces text in XML document specified by an XPath expression.
+let XPathReplace xpath value (doc:XmlDocument) =
+    let node = doc.SelectSingleNode xpath
+    node.Value <- value
+    doc
+
 /// Replaces text in an XML file at the location specified by an XPath expression.
 let XmlPoke (fileName:string) xpath value =
     let doc = new XmlDocument()
-    doc.Load fileName    
-    let node = doc.SelectSingleNode xpath
-    node.Value <- value
-    doc.Save fileName
+    doc.Load fileName
+    XPathReplace xpath value doc
+      |> fun x -> x.Save fileName
