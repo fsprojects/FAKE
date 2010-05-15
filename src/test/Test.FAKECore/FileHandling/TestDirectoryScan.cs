@@ -19,10 +19,7 @@ namespace Test.FAKECore.FileHandling
             BaseFunctions.CleanDir(TestData.TestDir);
 
             Assert.AreEqual(0, Directory.GetDirectories(TestData.TestDir).Length);
-            Assert.AreEqual(0, Directory.GetFiles(
-                TestData.TestDir,
-                "*.*",
-                SearchOption.AllDirectories).Length);
+            Assert.AreEqual(0, Directory.GetFiles(TestData.TestDir, "*.*", SearchOption.AllDirectories).Length);
         }
 
         #endregion
