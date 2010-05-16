@@ -156,18 +156,18 @@ let WriteTaskTimeSummary total =
 let run targetName =            
     let rec runTarget targetName =
         try      
-            if ExecutedTargets.Contains targetName || errors <> [] then () else
-            let target = getTarget targetName      
-            traceStartTarget target.Name (dependencyString target)
+            if errors = [] && ExecutedTargets.Contains targetName |> not then
+                let target = getTarget targetName      
+                traceStartTarget target.Name (dependencyString target)
       
-            List.iter runTarget target.Dependencies
+                List.iter runTarget target.Dependencies
       
-            if errors = [] then
-                let watch = new System.Diagnostics.Stopwatch()
-                watch.Start()
-                target.Function()
-                addExecutedTarget targetName watch.Elapsed
-                traceEndTarget target.Name                
+                if errors = [] then
+                    let watch = new System.Diagnostics.Stopwatch()
+                    watch.Start()
+                    target.Function()
+                    addExecutedTarget targetName watch.Elapsed
+                    traceEndTarget target.Name                
         with
         | exn -> targetError targetName exn.Message        
       
