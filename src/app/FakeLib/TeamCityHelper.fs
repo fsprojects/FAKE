@@ -4,42 +4,39 @@ module Fake.TeamCityHelper
 /// Send message to TeamCity
 let sendToTeamCity format message =
     if buildServer = TeamCity then
-        let m = 
-            message 
-              |> RemoveLineBreaks 
-              |> EncapsulateApostrophe
-              |> toRelativePath 
-              |> sprintf format
-        buffer.Post {defaultMessage with Text = m }
-
+        message 
+          |> RemoveLineBreaks 
+          |> EncapsulateApostrophe
+          |> toRelativePath 
+          |> sprintf format
+          |> fun m -> buffer.Post {defaultMessage with Text = m }
     
 /// Send message to TeamCity
 let sendStrToTeamCity s =
-    if buildServer = TeamCity then
-        buffer.Post {defaultMessage with Text = RemoveLineBreaks s }
+    if buildServer = TeamCity then buffer.Post {defaultMessage with Text = RemoveLineBreaks s }
   
 /// Sends an error to TeamCity
-let sendTeamCityError x =
-  sendToTeamCity "##teamcity[buildStatus status='FAILURE' text='{build.status.text} %s']" x
+let sendTeamCityError error =
+    sendToTeamCity "##teamcity[buildStatus status='FAILURE' text='{build.status.text} %s']" error
 
 /// Sends an NUnit results filename to TeamCity
-let sendTeamCityNUnitImport x =  
-  sendToTeamCity "##teamcity[importData type='nunit' file='%s']" x
+let sendTeamCityNUnitImport path =  
+    sendToTeamCity "##teamcity[importData type='nunit' file='%s']" path
 
 /// Sends an FXCop results filename to TeamCity    
-let sendTeamCityFXCopImport x =      
-  sendToTeamCity "##teamcity[importData type='FxCop' path='%s']" x
+let sendTeamCityFXCopImport path =      
+    sendToTeamCity "##teamcity[importData type='FxCop' path='%s']" path
   
 /// Starts the test case.
 let StartTestCase testCaseName =
-  sendToTeamCity "##teamcity[testStarted name='%s' captureStandardOutput='true']" testCaseName
+    sendToTeamCity "##teamcity[testStarted name='%s' captureStandardOutput='true']" testCaseName
   
 /// Finishes the test case.
 let FinishTestCase testCaseName (duration:System.TimeSpan) =
-  sprintf "##teamcity[testFinished name='%s' duration='%s']" 
-     (testCaseName |> EncapsulateApostrophe)
-     (duration.TotalMilliseconds |> round |> string) 
-     |> sendStrToTeamCity 
+    sprintf "##teamcity[testFinished name='%s' duration='%s']" 
+      (testCaseName |> EncapsulateApostrophe)
+      (duration.TotalMilliseconds |> round |> string) 
+      |> sendStrToTeamCity 
                 
 /// Ignores the test case.      
 let IgnoreTestCase name message =
