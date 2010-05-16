@@ -31,17 +31,18 @@ let DoNothing = (fun () -> ())
 
 /// Adds the dependency to the list of dependencies
 let dependency targetName dependentTargetName =
-    let target,dependentTarget = getTarget targetName,getTarget dependentTargetName
+    let target = getTarget targetName
+    let dependentTarget = getTarget dependentTargetName
     let rec checkDependencies dependentTarget =
-      dependentTarget.Dependencies |> List.iter (fun dep ->
-        if dep = targetName then 
-            failwithf "Cyclic dependency between %s and %s" targetName dependentTarget.Name
-        checkDependencies (getTarget dep))
+        dependentTarget.Dependencies 
+          |> List.iter (fun dep ->
+               if dep = targetName then 
+                  failwithf "Cyclic dependency between %s and %s" targetName dependentTarget.Name
+               checkDependencies (getTarget dep))
       
     checkDependencies dependentTarget
     
-    TargetDict.[targetName] <- 
-      {target with Dependencies = target.Dependencies @ [dependentTargetName]}
+    TargetDict.[targetName] <- { target with Dependencies = target.Dependencies @ [dependentTargetName] }
   
 /// Adds the dependencies to the list of dependencies  
 let Dependencies targetName = List.iter (dependency targetName)
@@ -86,7 +87,7 @@ let targetError targetName msg =
     traceError <| sprintf "Running build failed.\nError:\n%s" msg
     sendTeamCityError msg        
  
-/// runs all activated final targets (in alphabetically order)
+/// Runs all activated final targets (in alphabetically order)
 let runFinalTargets() =
     FinalTargets
       |> Seq.filter (fun kv -> kv.Value)     // only if activated
