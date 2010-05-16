@@ -18,13 +18,21 @@ let TargetDict = new Dictionary<_,_>()
 let FinalTargets = new Dictionary<_,_>()
 
 /// The executed targets
-let ExecutedTargets = new HashSet<_>()
+let ExecutedTargets = new Dictionary<_,_>()
 
-/// Gets a Target from the Target dictionary
-let getTarget x = 
-    match TargetDict.TryGetValue x with
+/// Gets a target with the given name from the target dictionary
+let getTarget name = 
+    match TargetDict.TryGetValue name with
     | true, target -> target
-    | _  -> failwithf "Target \"%s\" is not defined." x   
+    | _  -> failwithf "Target \"%s\" is not defined." name
+
+/// Returns the DependencyString for the given target
+let dependencyString target =
+    if target.Dependencies.IsEmpty then String.Empty else
+    target.Dependencies 
+      |> Seq.map (fun d -> (getTarget d).Name)
+      |> separated ", "
+      |> sprintf "(==> %s)"
     
 /// Do nothing - fun () -> ()   
 let DoNothing = (fun () -> ())
@@ -116,29 +124,24 @@ let PrintDependencyGraph verbose target =
     printDependencies 0 target
     log ""
     log "The resulting target order is:"
-    order |> Seq.iter (logfn " - %s")     
+    order |> Seq.iter (logfn " - %s") 
 
 /// Runs a Target and its dependencies        
 let run targetName =
     let rec runTarget targetName =
         try      
-            if ExecutedTargets.Contains targetName || errors <> [] then () else
-            let target = getTarget targetName    
-            let dependencyString =
-                if target.Dependencies.IsEmpty then String.Empty else
-                sprintf "(==> %s)"
-                  (target.Dependencies 
-                    |> Seq.map (fun d -> (getTarget d).Name)
-                    |> separated ", ")
+            if ExecutedTargets.ContainsKey targetName || errors <> [] then () else
+            let watch = new System.Diagnostics.Stopwatch()
+            watch.Start()
+
+            let target = getTarget targetName      
+            traceStartTarget target.Name (dependencyString target)
       
-            traceStartTarget target.Name dependencyString
-      
-            // run dependencies
-            target.Dependencies |> List.iter runTarget
+            List.iter runTarget target.Dependencies
       
             if errors = [] then
                 target.Function()
-                ExecutedTargets.Add targetName |> ignore
+                ExecutedTargets.Add(targetName,watch.Elapsed) |> ignore
                 traceEndTarget target.Name                
         with
         | exn -> targetError targetName exn.Message        
