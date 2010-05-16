@@ -18,7 +18,10 @@ let TargetDict = new Dictionary<_,_>()
 let FinalTargets = new Dictionary<_,_>()
 
 /// The executed targets
-let ExecutedTargets = new Dictionary<_,_>()
+let ExecutedTargets = new HashSet<_>()
+
+/// The executed target time
+let ExecutedTargetTimes = new List<_>()
 
 /// Gets a target with the given name from the target dictionary
 let getTarget name = 
@@ -95,6 +98,10 @@ let targetError targetName msg =
     traceError <| sprintf "Running build failed.\nError:\n%s" msg
     sendTeamCityError msg        
  
+let addExecutedTarget target time =
+    ExecutedTargets.Add target |> ignore
+    ExecutedTargetTimes.Add(target,time) |> ignore
+
 /// Runs all activated final targets (in alphabetically order)
 let runFinalTargets() =
     FinalTargets
@@ -106,7 +113,7 @@ let runFinalTargets() =
                watch.Start()
                tracefn "Starting Finaltarget: %s" name
                TargetDict.[name].Function()
-               ExecutedTargets.Add(name,watch.Elapsed) |> ignore
+               addExecutedTarget name watch.Elapsed
            with
            | exn -> targetError name exn.Message)                     
               
@@ -126,34 +133,54 @@ let PrintDependencyGraph verbose target =
     printDependencies 0 target
     log ""
     log "The resulting target order is:"
-    order |> Seq.iter (logfn " - %s") 
+    Seq.iter (logfn " - %s") order
+
+let WriteTaskTimeSummary total =    
+    traceHeader "Build Time Report"
+    let width = 
+        ExecutedTargetTimes 
+          |> Seq.map (fun (a,b) -> a.Length) 
+          |> Seq.max
+          |> max 8
+    let aligned (name:string) duration = tracefn "%s   %O" (name.PadRight width) duration
+
+    aligned "Target" "Duration"
+    aligned "------" "--------"
+    ExecutedTargetTimes
+      |> Seq.iter (fun (name,time) -> aligned name time)
+
+    aligned "Total:" total
+    traceLine()
 
 /// Runs a Target and its dependencies        
-let run targetName =
+let run targetName =            
     let rec runTarget targetName =
         try      
-            if ExecutedTargets.ContainsKey targetName || errors <> [] then () else
-            let watch = new System.Diagnostics.Stopwatch()
-            watch.Start()
-
+            if ExecutedTargets.Contains targetName || errors <> [] then () else
             let target = getTarget targetName      
             traceStartTarget target.Name (dependencyString target)
       
             List.iter runTarget target.Dependencies
       
             if errors = [] then
+                let watch = new System.Diagnostics.Stopwatch()
+                watch.Start()
                 target.Function()
-                ExecutedTargets.Add(targetName,watch.Elapsed) |> ignore
+                addExecutedTarget targetName watch.Elapsed
                 traceEndTarget target.Name                
         with
         | exn -> targetError targetName exn.Message        
-         
-    try    
+      
+    let watch = new System.Diagnostics.Stopwatch()
+    watch.Start()        
+    try
         PrintDependencyGraph false targetName
         runTarget targetName
     finally
         runFinalTargets()
+        WriteTaskTimeSummary watch.Elapsed
         List.iter raise errors
+        WaitUntilEverythingIsPrinted()
  
 /// Registers a final target (not activated)
 let FinalTarget name body = 
