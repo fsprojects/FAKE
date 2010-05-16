@@ -28,7 +28,6 @@ namespace Test.FAKECore
         /// <value>The test dir.</value>
         public static string TestDir2 { get; set; }
 
-
         /// <summary>
         ///   Gets or sets the base dir.
         /// </summary>

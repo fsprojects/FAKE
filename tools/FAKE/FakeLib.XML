@@ -249,6 +249,11 @@
  Returns true if the buildParam is set and otherwise false
 </summary>
 </member>
+<member name="M:Fake.EnvironmentHelper.appSetting(System.String)">
+<summary>
+ Retrieves a ApplicationSettings variable
+</summary>
+</member>
 <member name="M:Fake.EnvironmentHelper.environVars(System.EnvironmentVariableTarget)">
 <summary>
  Retrieves the EnvironmentVariable
@@ -828,16 +833,10 @@
 <member name="">
 
 </member>
-<member name="">
-
-</member>
 <member name="M:Fake.MailBoxHelper.logMessageToConsole(Fake.MailBoxHelper.Message)">
 <summary>
  Logs the specified string to the console
 </summary>
-</member>
-<member name="">
-
 </member>
 <member name="">
 
@@ -1511,10 +1510,16 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
 <member name="M:Fake.TargetHelper.runFinalTargets">
 <summary>
- runs all activated final targets (in alphabetically order)
+ Runs all activated final targets (in alphabetically order)
 </summary>
+</member>
+<member name="">
+
 </member>
 <member name="">
 
@@ -1559,12 +1564,22 @@
 </member>
 <member name="M:Fake.TargetHelper.DoNothing">
 <summary>
- Do nothing -  fun () -&gt; ()   
+ Do nothing - fun () -&gt; ()   
+</summary>
+</member>
+<member name="M:Fake.TargetHelper.dependencyString``1(Fake.TargetHelper.TargetTemplate{``0})">
+<summary>
+ Returns the DependencyString for the given target
 </summary>
 </member>
 <member name="M:Fake.TargetHelper.getTarget(System.String)">
 <summary>
- Gets a Target from the Target dictionary
+ Gets a target with the given name from the target dictionary
+</summary>
+</member>
+<member name="P:Fake.TargetHelper.ExecutedTargetTimes">
+<summary>
+ The executed target time
 </summary>
 </member>
 <member name="P:Fake.TargetHelper.ExecutedTargets">
@@ -1574,8 +1589,7 @@
 </member>
 <member name="P:Fake.TargetHelper.FinalTargets">
 <summary>
- Final Targets 
- Stores target and if it is activated
+ Final Targets - stores final target and if it is activated
 </summary>
 </member>
 <member name="P:Fake.TargetHelper.TargetDict">
@@ -1586,125 +1600,50 @@
 <member name="T:Fake.TargetHelper">
 
 </member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="M:Fake.TeamCityHelper.getProjects(System.String,System.String,System.String)">
+<member name="M:Fake.TeamCityHelper.getRecentlyFailedTests">
 <summary>
- Gets all projects on the TeamCity 
+ Gets the recently failed tests
 </summary>
-</member>
-<member name="M:Fake.TeamCityHelper.getProject(System.String,System.String,System.String,System.String)">
-<summary>
- Gets a projects from the TeamCity server
-</summary>
-</member>
-<member name="M:Fake.TeamCityHelper.getBuildConfig(System.String,System.String,System.String,System.String)">
-<summary>
- Gets a projects from the TeamCity server
-</summary>
-</member>
-<member name="">
-
-</member>
-<member name="M:Fake.TeamCityHelper.getRESTVersion(System.String,System.String,System.String)">
-<summary>
- Returns the REST version of the TeamCity server
-</summary>
-</member>
-<member name="">
-
-</member>
-<member name="">
-
 </member>
 <member name="M:Fake.TeamCityHelper.ComparisonFailure(System.String,System.String,System.String,System.String,System.String)">
 <summary>
- ComparisonFailure.
+ Reports a failed comparison.
 </summary>
 </member>
 <member name="M:Fake.TeamCityHelper.TestFailed(System.String,System.String,System.String)">
 <summary>
- Tests the failed.
+ Reports a failed test.
 </summary>
 </member>
-<member name="">
-
+<member name="M:Fake.TeamCityHelper.SetBuildStatistic(System.String,System.String)">
+<summary>
+ Reports a build statistic.
+</summary>
 </member>
-<member name="">
-
+<member name="M:Fake.TeamCityHelper.SetBuildNumber(System.String)">
+<summary>
+ Sets the TeamCity build number.
+</summary>
+</member>
+<member name="M:Fake.TeamCityHelper.PublishArticfact(System.String)">
+<summary>
+ Publishes an artifact on the TeamcCity build server.
+</summary>
+</member>
+<member name="M:Fake.TeamCityHelper.ReportBuildStatus(System.String,System.String)">
+<summary>
+ Reports the build status.
+</summary>
+</member>
+<member name="M:Fake.TeamCityHelper.ReportProgressFinish(System.String)">
+<summary>
+ Reports the progress end.
+</summary>
+</member>
+<member name="M:Fake.TeamCityHelper.ReportProgressStart(System.String)">
+<summary>
+ Reports the progress start.
+</summary>
 </member>
 <member name="M:Fake.TeamCityHelper.ReportProgress(System.String)">
 <summary>
@@ -1762,6 +1701,110 @@
 </summary>
 </member>
 <member name="T:Fake.TeamCityHelper">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.TeamCityRESTHelper.getProjects(System.String,System.String,System.String)">
+<summary>
+ Gets all projects on the TeamCity 
+</summary>
+</member>
+<member name="M:Fake.TeamCityRESTHelper.getProject(System.String,System.String,System.String,System.String)">
+<summary>
+ Gets a projects from the TeamCity server
+</summary>
+</member>
+<member name="M:Fake.TeamCityRESTHelper.getBuildConfig(System.String,System.String,System.String,System.String)">
+<summary>
+ Gets a projects from the TeamCity server
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.TeamCityRESTHelper.getRESTVersion(System.String,System.String,System.String)">
+<summary>
+ Returns the REST version of the TeamCity server
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:Fake.TeamCityRESTHelper">
 
 </member>
 <member name="M:Fake.TemplateHelper.processTemplates(System.Collections.Generic.IEnumerable{System.Tuple`2{System.String,System.String}},System.Collections.Generic.IEnumerable{System.String})">
@@ -1837,6 +1880,16 @@
 <member name="M:Fake.TraceHelper.traceStartBuild">
 <summary>
  Traces the begin of the build
+</summary>
+</member>
+<member name="M:Fake.TraceHelper.traceHeader(System.String)">
+<summary>
+ Traces a header
+</summary>
+</member>
+<member name="M:Fake.TraceHelper.traceLine">
+<summary>
+ Traces a line
 </summary>
 </member>
 <member name="P:Fake.TraceHelper.fakeVersionStr">
@@ -2002,6 +2055,11 @@
 <member name="M:Fake.XMLHelper.XmlPoke(System.String,System.String,System.String)">
 <summary>
  Replaces text in an XML file at the location specified by an XPath expression.
+</summary>
+</member>
+<member name="M:Fake.XMLHelper.XPathReplace(System.String,System.String,System.Xml.XmlDocument)">
+<summary>
+ Replaces text in XML document specified by an XPath expression.
 </summary>
 </member>
 <member name="M:Fake.XMLHelper.DocElement(System.Xml.XmlDocument)">

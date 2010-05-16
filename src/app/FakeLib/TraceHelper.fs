@@ -92,6 +92,16 @@ let TraceEnvironmentVariables() =
 /// Gets the FAKE Version string
 let fakeVersionStr = sprintf "FAKE - F# Make - Version %s" <| fakeVersion.ToString()
 
+/// Traces a line
+let traceLine() = trace "---------------------------------------------------------------------"
+
+/// Traces a header
+let traceHeader name =
+    trace ""
+    traceLine()
+    trace name
+    traceLine()
+
 /// Traces the begin of the build
 let traceStartBuild () =
     match traceMode with

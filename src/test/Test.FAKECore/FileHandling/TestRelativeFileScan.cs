@@ -18,10 +18,7 @@ namespace Test.FAKECore.FileHandling
             BaseFunctions.CleanDir(TestData.TestDir);
 
             Assert.AreEqual(0, Directory.GetDirectories(TestData.TestDir).Length);
-            Assert.AreEqual(0, Directory.GetFiles(
-                TestData.TestDir,
-                "*.*",
-                SearchOption.AllDirectories).Length);
+            Assert.AreEqual(0, Directory.GetFiles(TestData.TestDir, "*.*", SearchOption.AllDirectories).Length);
         }
 
         #endregion
@@ -36,8 +33,6 @@ namespace Test.FAKECore.FileHandling
 
             Assert.AreEqual(3, BaseFunctions.ScanCount(FileSetHelper.DefaultBaseDir + "/**/file1.nav"));
             Assert.AreEqual(5, BaseFunctions.ScanCount(FileSetHelper.DefaultBaseDir + "/**/file1.*"));
-            // TODO:
-            //Assert.AreEqual(11, BaseFunctions.ScanCount(TestData.TestDir2 + "/../Test/**/file?.n??", TestData.TestDir2));
             Assert.AreEqual(6, BaseFunctions.ScanCount(FileSetHelper.DefaultBaseDir + "/Test/**/Sub1/**/file*.*"));
             Assert.AreEqual(7, BaseFunctions.ScanCount(FileSetHelper.DefaultBaseDir + "/Test/**/*.nav"));
             Assert.AreEqual(0, BaseFunctions.ScanCount(FileSetHelper.DefaultBaseDir + "/*.nav"));

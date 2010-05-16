@@ -3,6 +3,7 @@ module Fake.EnvironmentHelper
 
 open System
 open System.IO
+open System.Configuration
 
 type EnvironTarget = EnvironmentVariableTarget
 
@@ -20,6 +21,9 @@ let environVars target =
   [for e in Environment.GetEnvironmentVariables target ->
      let e1 = e :?> Collections.DictionaryEntry
      e1.Key,e1.Value]
+
+/// Retrieves a ApplicationSettings variable
+let appSetting (name:string) = ConfigurationManager.AppSettings.[name]
 
 /// Returns true if the buildParam is set and otherwise false
 let inline hasBuildParam name = environVar name <> null

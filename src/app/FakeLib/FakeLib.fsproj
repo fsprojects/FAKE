@@ -53,6 +53,7 @@
     <Compile Include="BuildServerHelper.fs" />
     <Compile Include="MailBoxHelper.fs" />
     <Compile Include="TeamCityHelper.fs" />
+    <Compile Include="TeamCityRESTHelper.fs" />
     <Compile Include="TraceHelper.fs" />
     <Compile Include="SQLServer.fs" />
     <Compile Include="AssemblyInfoHelper.fs" />
