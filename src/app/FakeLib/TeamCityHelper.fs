@@ -73,25 +73,49 @@ let ReportProgressFinish message =
     EncapsulateApostrophe message
       |> sendToTeamCity "##teamcity[progressFinish '%s']"
 
-/// Tests the failed.
+/// Reports the build status.
+let ReportBuildStatus status message =
+    sprintf "##teamcity[buildStatus '%s' text='%s']"
+      (EncapsulateApostrophe status)
+      (EncapsulateApostrophe message)
+      |> sendStrToTeamCity
+
+/// Publishes an artifact on the TeamcCity build server.
+let PublishArticfact path =
+    EncapsulateApostrophe path
+      |> sendToTeamCity "##teamcity[publishArtifacts '%s']"
+
+/// Sets the TeamCity build number.
+let SetBuildNumber buildNumber =
+    EncapsulateApostrophe buildNumber
+      |> sendToTeamCity "##teamcity[buildNumber '%s']"
+
+/// Reports a build statistic.
+let SetBuildStatistic key value =
+    sprintf "##teamcity[buildStatisticValue key='%s' value='%s']"
+      (EncapsulateApostrophe key)
+      (EncapsulateApostrophe value)
+      |> sendStrToTeamCity
+
+/// Reports a failed test.
 let TestFailed name message details =  
-  sprintf "##teamcity[testFailed name='%s' message='%s' details='%s']"
-    (EncapsulateApostrophe name)
-    (EncapsulateApostrophe message)
-    (EncapsulateApostrophe details)
-    |> sendStrToTeamCity 
+    sprintf "##teamcity[testFailed name='%s' message='%s' details='%s']"
+      (EncapsulateApostrophe name)
+      (EncapsulateApostrophe message)
+      (EncapsulateApostrophe details)
+      |> sendStrToTeamCity
   
-/// ComparisonFailure.
+/// Reports a failed comparison.
 let ComparisonFailure name message details expected actual =
-  sprintf "##teamcity[testFailed type='comparisonFailure' name='%s' message='%s' details='%s' expected='%s' actual='%s']"
-    (EncapsulateApostrophe name)
-    (EncapsulateApostrophe message)
-    (EncapsulateApostrophe details)
-    (EncapsulateApostrophe expected)
-    (EncapsulateApostrophe actual)
-    |> sendStrToTeamCity 
+    sprintf "##teamcity[testFailed type='comparisonFailure' name='%s' message='%s' details='%s' expected='%s' actual='%s']"
+      (EncapsulateApostrophe name)
+      (EncapsulateApostrophe message)
+      (EncapsulateApostrophe details)
+      (EncapsulateApostrophe expected)
+      (EncapsulateApostrophe actual)
+      |> sendStrToTeamCity 
        
 /// Gets the recently failed tests
 let getRecentlyFailedTests() =
-    System.Configuration.ConfigurationManager.AppSettings.["teamcity.tests.recentlyFailedTests.file"]    
+    appSetting "teamcity.tests.recentlyFailedTests.file"
       |> ReadFile
