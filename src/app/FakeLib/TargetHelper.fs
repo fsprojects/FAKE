@@ -102,8 +102,11 @@ let runFinalTargets() =
       |> Seq.map (fun kv -> kv.Key)
       |> Seq.iter (fun name ->
            try             
+               let watch = new System.Diagnostics.Stopwatch()
+               watch.Start()
                tracefn "Starting Finaltarget: %s" name
                TargetDict.[name].Function()
+               ExecutedTargets.Add(name,watch.Elapsed) |> ignore
            with
            | exn -> targetError name exn.Message)                     
               
@@ -117,8 +120,7 @@ let PrintDependencyGraph verbose target =
         printed.Add act |> ignore
     
         if addToOrder || verbose then log <| (sprintf "<== %s" act).PadLeft(3 * indent)
-        target.Dependencies 
-          |> Seq.iter (printDependencies (indent+1))
+        Seq.iter (printDependencies (indent+1)) target.Dependencies
         if addToOrder then order.Add act
         
     printDependencies 0 target
@@ -151,7 +153,7 @@ let run targetName =
         runTarget targetName
     finally
         runFinalTargets()
-        errors |> List.iter raise    
+        List.iter raise errors
  
 /// Registers a final target (not activated)
 let FinalTarget name body = 
