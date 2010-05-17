@@ -43,7 +43,7 @@ let WriteFile file lines = WriteToFile false file lines
 let AppendToFile file lines = WriteToFile true file lines
 
 /// Converts a sequence of strings to a string with delimiters
-let separated delimiter items = String.Join(delimiter, Array.ofSeq items)
+let inline separated delimiter items = String.Join(delimiter, Array.ofSeq items)
        
 /// Reads a file as one text
 let ReadFileAsString file = File.ReadAllText(file,Encoding.Default)
@@ -52,55 +52,56 @@ let ReadFileAsString file = File.ReadAllText(file,Encoding.Default)
 let inline replace (pattern:string) replacement (text:string) = text.Replace(pattern,replacement)
 
 /// Removes linebreaks from the given string
-let RemoveLineBreaks text = 
+let inline RemoveLineBreaks text = 
     text
       |> replace "\r" String.Empty
       |> replace "\n" String.Empty
 
 /// Encapsulates the Apostrophe
-let EncapsulateApostrophe text = replace "'" "`" text
+let inline EncapsulateApostrophe text = replace "'" "`" text
 
 /// Appends a text
-let append s (builder:StringBuilder) = builder.Append(sprintf "\"%s\" " s)
+let inline append s (builder:StringBuilder) = builder.Append(sprintf "\"%s\" " s)
 
 /// Appends a text if the predicate is true
-let appendIfTrue p s builder = if p then append s builder else builder
+let inline appendIfTrue p s builder = if p then append s builder else builder
 
 /// Appends a text if the predicate is false
-let appendIfFalse p = appendIfTrue (not p)
+let inline appendIfFalse p = appendIfTrue (not p)
 
 /// Appends a text if the value is not null
-let appendIfNotNull value s = appendIfTrue (value <> null) (sprintf "%s%A" s value)
+let inline appendIfNotNull value s = appendIfTrue (value <> null) (sprintf "%s%A" s value)
 
 /// Appends a text if the value is not null
-let appendStringIfValueIsNotNull value = appendIfTrue (value <> null)
+let inline appendStringIfValueIsNotNull value = appendIfTrue (value <> null)
 
 /// Appends a text if the value is not null or empty
-let appendStringIfValueIsNotNullOrEmpty value = appendIfTrue (String.IsNullOrEmpty value |> not)
+let inline appendStringIfValueIsNotNullOrEmpty value = appendIfTrue (String.IsNullOrEmpty value |> not)
 
 /// Appends all notnull fileNames
-let appendFileNamesIfNotNull fileNames (builder:StringBuilder) =
+let inline appendFileNamesIfNotNull fileNames (builder:StringBuilder) =
   fileNames 
     |> Seq.fold (fun builder file -> appendIfTrue (String.IsNullOrEmpty file |> not) file builder) builder
 
 /// Replaces the absolute path to a relative
-let toRelativePath value = replace currentDirectory "." value
+let inline toRelativePath value = replace currentDirectory "." value
 
 /// Removes the slashes from the end of the given string
-let trimSlash (s:string) = s.TrimEnd('\\')
+let inline trimSlash (s:string) = s.TrimEnd('\\')
 
 /// Converts a sequence of strings into a string separated with line ends
-let toLines s = separated "\r\n" s
+let inline toLines s = separated "\r\n" s
+
 /// Checks wether the given text starts with the given prefix
-let (<*) prefix (text:string) = text.StartsWith prefix
+let inline (<*) prefix (text:string) = text.StartsWith prefix
 
 let isUmlaut c = List.exists ((=) c) ['ä'; 'ö'; 'ü'; 'Ä'; 'Ö'; 'Ü'; 'ß']
 let charsAndDigits = ['a'..'z'] @ ['A'..'Z'] @ ['0'..'9'] 
 let isLetterOrDigit c = List.exists ((=) c) charsAndDigits
 
-let trimSeparator (s:string) = s.Trim Path.DirectorySeparatorChar
+let inline trimSeparator (s:string) = s.Trim Path.DirectorySeparatorChar
 
-let trimSpecialChars (s:string) =
+let inline trimSpecialChars (s:string) =
     s
       |> Seq.filter isLetterOrDigit
       |> Seq.filter (isUmlaut >> not)

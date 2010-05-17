@@ -16,7 +16,7 @@ let defaultMessage =
       Important = false }
 
 /// Logs the specified string to the console
-let internal logMessageToConsole (msg:Message) =   
+let inline logMessageToConsole (msg:Message) =   
     let text = toRelativePath msg.Text
     let curColor = Console.ForegroundColor
     Console.ForegroundColor <- msg.Color
