@@ -95,6 +95,14 @@
 <member name="T:Fake.AssemblyInfoHelper">
 
 </member>
+<member name="M:Fake.AsyncHelper.doParallel``2(Microsoft.FSharp.Core.FSharpFunc`2{``0,``1},System.Collections.Generic.IEnumerable{``0})">
+<summary>
+ Runs the given function on all items in parallel
+</summary>
+</member>
+<member name="T:Fake.AsyncHelper">
+
+</member>
 <member name="">
 
 </member>
@@ -392,7 +400,7 @@
    param file: The orginal FileName.
 </summary>
 </member>
-<member name="M:Fake.FileHelper.Copy(System.String)">
+<member name="M:Fake.FileHelper.Copy(System.String,System.Collections.Generic.IEnumerable{System.String})">
 <summary>
  Copies the files to the target
    param target: The target directory.
@@ -832,11 +840,6 @@
 </member>
 <member name="">
 
-</member>
-<member name="M:Fake.MailBoxHelper.logMessageToConsole(Fake.MailBoxHelper.Message)">
-<summary>
- Logs the specified string to the console
-</summary>
 </member>
 <member name="">
 
