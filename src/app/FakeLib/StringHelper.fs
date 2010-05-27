@@ -20,7 +20,7 @@ let ReadFile (file:string) =
 let WriteToFile append fileName (lines: seq<string>) =    
     let fi = fileInfo fileName
 
-    use writer =  new StreamWriter(fileName,append && fi.Exists,Encoding.Default) 
+    use writer = new StreamWriter(fileName,append && fi.Exists,Encoding.Default) 
     lines |> Seq.iter writer.WriteLine
 
 /// Writes string to a file
