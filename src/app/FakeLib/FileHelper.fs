@@ -219,7 +219,7 @@ let ReadCSVFile(file:string) =
 let AppendTextFiles newFileName files =    
     let fi = fileInfo newFileName
     if fi.Exists then failwithf "File %s already exists." (fi.FullName)
-    use writer = new StreamWriter(fi.FullName, false, Encoding.Default);
+    use writer = new StreamWriter(fi.FullName, false, Encoding.Default)
   
     files 
       |> Seq.iter (fun file ->       
