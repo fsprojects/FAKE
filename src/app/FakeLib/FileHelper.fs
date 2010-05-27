@@ -211,7 +211,7 @@ let ReadCSVFile(file:string) =
          
     ReadFile file
       |> Seq.map csvRegEx.Split 
-      |> Seq.map (Array.map (fun s -> s.Trim([| '"' |])))
+      |> Seq.map (Array.map (fun s -> s.Trim [| '"' |]))
              
 /// Appends all given files to one file 
 ///   param newFileName: The target FileName.
@@ -239,7 +239,7 @@ let FilesAreEqual (first:FileInfo) (second:FileInfo) =
     let two = Array.create BYTES_TO_READ (byte 0)
 
     let mutable eq = true
-    for i in 0..iterations do        
+    for i in 0..iterations do
         if eq then
           fs1.Read(one, 0, BYTES_TO_READ) |> ignore
           fs2.Read(two, 0, BYTES_TO_READ) |> ignore
@@ -256,7 +256,7 @@ let CompareFiles delete originalFileName compareFileName =
 
     let identical = 
         if not (ori.Exists && comp.Exists && ori.Length = comp.Length) then false else
-        if ori.LastWriteTime = comp.LastWriteTime then true else FilesAreEqual ori comp
+        ori.LastWriteTime = comp.LastWriteTime || FilesAreEqual ori comp
 
     if not identical then false else
     if delete then      
@@ -286,13 +286,16 @@ let TestDir path =
 let GeneratePatchWithFindOldFileFunction lastReleaseDir patchDir srcFiles findOldFileF =
     srcFiles
       |> Seq.map (fun file -> 
-            let newFile = toRelativePath file
-            let oldFile = findOldFileF newFile (lastReleaseDir + newFile.TrimStart('.'))
-            let fi = fileInfo oldFile
-            if not fi.Exists then logVerbosefn "LastRelease has no file like %s" fi.FullName
-            newFile,oldFile)         
-      |> Seq.filter (fun (newF,oldF) -> CompareFiles false oldF newF |> not)
-      |> Seq.iter (fun (newF,oldF) -> CopyFileIntoSubFolder patchDir newF)
+            async {
+                let newFile = toRelativePath file
+                let oldFile = findOldFileF newFile (lastReleaseDir + newFile.TrimStart('.'))
+                let fi = fileInfo oldFile
+                if not fi.Exists then logVerbosefn "LastRelease has no file like %s" fi.FullName
+                if CompareFiles false oldFile newFile |> not then
+                    CopyFileIntoSubFolder patchDir newFile })
+      |> Async.Parallel
+      |> Async.RunSynchronously
+      |> ignore
 
 /// Checks the srcFiles for changes to the last release
 ///  param lastReleaseDir: The directory of the last release
