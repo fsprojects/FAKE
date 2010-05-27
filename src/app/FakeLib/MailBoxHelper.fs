@@ -15,23 +15,20 @@ let defaultMessage =
       Newline   = true
       Important = false }
 
-/// Logs the specified string to the console
-let internal logMessageToConsole (msg:Message) =   
-    let text = toRelativePath msg.Text
-    let curColor = Console.ForegroundColor
-    Console.ForegroundColor <- msg.Color
-    if msg.Important && buildServer <> CCNet then
-        if msg.Newline then eprintfn "%s" text else eprintf "%s" text
-    else
-        if msg.Newline then printfn "%s" text else printf "%s" text
-    Console.ForegroundColor <- curColor
-
 let buffer = MailboxProcessor.Start (fun inbox ->
     let rec loop () = 
         async {
             let! (msg:Message) = inbox.Receive()
             match traceMode with
-            | Console -> logMessageToConsole msg
+            | Console -> 
+                let text = toRelativePath msg.Text
+                let curColor = Console.ForegroundColor
+                Console.ForegroundColor <- msg.Color
+                if msg.Important && buildServer <> CCNet then
+                    if msg.Newline then eprintfn "%s" text else eprintf "%s" text
+                else
+                    if msg.Newline then printfn "%s" text else printf "%s" text
+                Console.ForegroundColor <- curColor
             | Xml     -> AppendToFile xmlOutputFile [msg.Text]
 
             return! loop ()}

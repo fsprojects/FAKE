@@ -34,14 +34,16 @@ let SetDirReadOnly readOnly dir =
   
 /// Sets all files in the directory readonly 
 let SetReadOnly readOnly (files: string seq) =
-    files |> Seq.iter (fun file ->
-      let fi = fileInfo file
-      if fi.Exists then 
-          fi.IsReadOnly <- readOnly
-      else
-          file
+    files
+    |> doParallel (fun file ->
+        let fi = fileInfo file
+        if fi.Exists then 
+            fi.IsReadOnly <- readOnly
+        else
+            file
             |> directoryInfo
             |> setDirectoryReadOnly readOnly)
+    |> ignore
       
 /// Deletes a directory if it exists
 let DeleteDir path =   
@@ -127,7 +129,10 @@ let CopyFile target fileName =
 /// Copies the files to the target
 ///   param target: The target directory.
 ///   param files: The original FileNames as a sequence.
-let Copy target = Seq.iter (CopyFile target)   
+let Copy target files = 
+    files
+    |> doParallel (CopyFile target) 
+    |> ignore
 
 /// Renames the files to the target fileName
 ///   param target: The target FileName.
@@ -135,16 +140,18 @@ let Copy target = Seq.iter (CopyFile target)
 let Rename target fileName = (fileInfo fileName).MoveTo target
   
 let SilentCopy target files =
-    files |> Seq.iter (fun file ->
-        let fi = fileInfo file
-        let targetName = target @@ fi.Name
-        let targetFI = fileInfo targetName
-        if targetFI.Exists then
-            if fi.LastWriteTime > targetFI.LastWriteTime then
-              targetFI.Attributes <- FileAttributes.Normal
-              fi.CopyTo(targetName,true) |> ignore
-        else
-            fi.CopyTo(targetName) |> ignore)
+    files
+    |> doParallel (fun file ->
+            let fi = fileInfo file
+            let targetName = target @@ fi.Name
+            let targetFI = fileInfo targetName
+            if targetFI.Exists then
+                if fi.LastWriteTime > targetFI.LastWriteTime then
+                  targetFI.Attributes <- FileAttributes.Normal
+                  fi.CopyTo(targetName,true) |> ignore
+            else
+                fi.CopyTo(targetName) |> ignore)
+    |> ignore
                
 
 /// Copies the files to the target - Alias for Copy
@@ -166,15 +173,17 @@ let allFiles (path:string) = true
 let CopyDir target source filterFile =
     CreateDir target
     Directory.GetFiles(source, "*.*", SearchOption.AllDirectories)
-      |> Seq.filter filterFile
-      |> Seq.iter (fun file -> 
-            let fi = file |> replace source "" |> trimSeparator
-            let newFile = target @@ fi
-            logVerbosefn "%s => %s" file newFile
-            Path.GetDirectoryName newFile
-              |> Directory.CreateDirectory
-              |> ignore
-            File.Copy(file, newFile, true))
+    |> Seq.filter filterFile
+    |> doParallel (fun file -> 
+        let fi = file |> replace source "" |> trimSeparator
+        let newFile = target @@ fi
+        logVerbosefn "%s => %s" file newFile
+        Path.GetDirectoryName newFile
+        |> Directory.CreateDirectory
+        |> ignore
+
+        File.Copy(file, newFile, true))
+    |> ignore
   
 /// Cleans a directory
 let CleanDir path =
@@ -211,7 +220,7 @@ let ReadCSVFile(file:string) =
          
     ReadFile file
       |> Seq.map csvRegEx.Split 
-      |> Seq.map (Array.map (fun s -> s.Trim([| '"' |])))
+      |> Seq.map (Array.map (fun s -> s.Trim [| '"' |]))
              
 /// Appends all given files to one file 
 ///   param newFileName: The target FileName.
@@ -219,12 +228,12 @@ let ReadCSVFile(file:string) =
 let AppendTextFiles newFileName files =    
     let fi = fileInfo newFileName
     if fi.Exists then failwithf "File %s already exists." (fi.FullName)
-    use writer = new StreamWriter(fi.FullName, false, Encoding.Default);
+    use writer = new StreamWriter(fi.FullName, false, Encoding.Default)
   
     files 
-      |> Seq.iter (fun file ->       
-            logVerbosefn "Appending %s to %s" file fi.FullName
-            ReadFile file |> Seq.iter writer.WriteLine)
+    |> Seq.iter (fun file ->       
+        logVerbosefn "Appending %s to %s" file fi.FullName
+        ReadFile file |> Seq.iter writer.WriteLine)
 
 /// Checks if the two files are byte-to-byte equal
 let FilesAreEqual (first:FileInfo) (second:FileInfo) =   
@@ -239,7 +248,7 @@ let FilesAreEqual (first:FileInfo) (second:FileInfo) =
     let two = Array.create BYTES_TO_READ (byte 0)
 
     let mutable eq = true
-    for i in 0..iterations do        
+    for i in 0..iterations do
         if eq then
           fs1.Read(one, 0, BYTES_TO_READ) |> ignore
           fs2.Read(two, 0, BYTES_TO_READ) |> ignore
@@ -256,7 +265,7 @@ let CompareFiles delete originalFileName compareFileName =
 
     let identical = 
         if not (ori.Exists && comp.Exists && ori.Length = comp.Length) then false else
-        if ori.LastWriteTime = comp.LastWriteTime then true else FilesAreEqual ori comp
+        ori.LastWriteTime = comp.LastWriteTime || FilesAreEqual ori comp
 
     if not identical then false else
     if delete then      
@@ -285,14 +294,17 @@ let TestDir path =
 ///            (newFile -> oldFileProposal)
 let GeneratePatchWithFindOldFileFunction lastReleaseDir patchDir srcFiles findOldFileF =
     srcFiles
-      |> Seq.map (fun file -> 
+    |> Seq.map (fun file -> 
+        async {
             let newFile = toRelativePath file
             let oldFile = findOldFileF newFile (lastReleaseDir + newFile.TrimStart('.'))
             let fi = fileInfo oldFile
             if not fi.Exists then logVerbosefn "LastRelease has no file like %s" fi.FullName
-            newFile,oldFile)         
-      |> Seq.filter (fun (newF,oldF) -> CompareFiles false oldF newF |> not)
-      |> Seq.iter (fun (newF,oldF) -> CopyFileIntoSubFolder patchDir newF)
+            if CompareFiles false oldFile newFile |> not then
+                CopyFileIntoSubFolder patchDir newFile })
+    |> Async.Parallel
+    |> Async.RunSynchronously
+    |> ignore
 
 /// Checks the srcFiles for changes to the last release
 ///  param lastReleaseDir: The directory of the last release

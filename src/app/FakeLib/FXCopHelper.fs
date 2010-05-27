@@ -8,7 +8,7 @@ open System.Text
 open System.Text.RegularExpressions
 open Microsoft.Win32
 
-type FxCopyErrorLevel =
+type FxCopErrorLevel =
 | Warning = 5
 | CriticalWarning = 4
 | Error = 3
@@ -33,7 +33,7 @@ type FxCopParams =
    SaveResultsInProjectFile: bool;
    WorkingDir: string;
    Verbose: bool;
-   FailOnError: FxCopyErrorLevel;
+   FailOnError: FxCopErrorLevel;
    ToolPath:string}
  
 let checkForErrors resultFile =
@@ -67,7 +67,7 @@ let FxCopDefaults =
     SaveResultsInProjectFile = false;
     WorkingDir = currentDirectory;
     Verbose = true;
-    FailOnError = FxCopyErrorLevel.DontFailBuild;
+    FailOnError = FxCopErrorLevel.DontFailBuild;
     ToolPath = ProgramFilesX86 @@ "Microsoft FxCop 1.36" }
         
 /// Run FxCop on a group of assemblies.
@@ -125,17 +125,17 @@ let FxCop setParams (assemblies: string seq) =
     sendTeamCityFXCopImport param.ReportFileName
 
   // test if FxCop test failed
-  if not ok && (param.FailOnError >= FxCopyErrorLevel.ToolError) then
+  if not ok && (param.FailOnError >= FxCopErrorLevel.ToolError) then
     failwith "FxCop test failed."
-  if param.FailOnError <> FxCopyErrorLevel.DontFailBuild && param.ReportFileName <> String.Empty then 
+  if param.FailOnError <> FxCopErrorLevel.DontFailBuild && param.ReportFileName <> String.Empty then 
     let criticalErrors,errors,criticalWarnings,warnings = checkForErrors param.ReportFileName
-    if criticalErrors <> 0 && param.FailOnError >= FxCopyErrorLevel.CriticalError then
+    if criticalErrors <> 0 && param.FailOnError >= FxCopErrorLevel.CriticalError then
       failwithf "FxCop found %d critical errors." criticalErrors
-    if criticalErrors <> 0 && param.FailOnError >= FxCopyErrorLevel.Error then
+    if criticalErrors <> 0 && param.FailOnError >= FxCopErrorLevel.Error then
       failwithf "FxCop found %d errors." errors      
-    if criticalWarnings <> 0 && param.FailOnError >= FxCopyErrorLevel.CriticalWarning then
+    if criticalWarnings <> 0 && param.FailOnError >= FxCopErrorLevel.CriticalWarning then
       failwithf "FxCop found %d critical warnings." criticalWarnings
-    if warnings <> 0 && param.FailOnError >= FxCopyErrorLevel.Warning then
+    if warnings <> 0 && param.FailOnError >= FxCopErrorLevel.Warning then
       failwithf "FxCop found %d warnings." warnings       
   
   traceEndTask "FxCop" ""

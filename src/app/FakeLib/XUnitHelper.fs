@@ -45,6 +45,7 @@ let xUnit setParams assemblies =
               new StringBuilder()
                 |> appendFileNamesIfNotNull [assembly]
                 |> appendIfFalse parameters.ShadowCopy "/noshadow"
+                |> appendIfTrue (buildServer = TeamCity) "/teamcity"
                 |> appendIfTrue parameters.XmlOutput (sprintf "/xml\" \"%s%s.xml" dir name) 
                 |> appendIfTrue parameters.HtmlOutput (sprintf "/html\" \"%s%s.html" dir name) 
                 |> appendIfTrue parameters.NUnitXmlOutput (sprintf "/nunit\" \"%s%s.xml" dir name) 

@@ -43,6 +43,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="AsyncHelper.fs" />
     <Compile Include="RegistryHelper.fs" />
     <Compile Include="EnvironmentHelper.fs" />
     <Compile Include="StringHelper.fs" />

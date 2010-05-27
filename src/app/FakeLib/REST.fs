@@ -49,7 +49,7 @@ let ExecutePostCommand headerF (url:string) userName password (data:string) =
 
     headerF request.Headers
 
-    let bytes = Encoding.UTF8.GetBytes(data)
+    let bytes = Encoding.UTF8.GetBytes data
 
     request.ContentLength <- int64 bytes.Length 
     use requestStream = request.GetRequestStream()

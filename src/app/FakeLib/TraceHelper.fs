@@ -85,9 +85,9 @@ let TraceEnvironmentVariables() =
     [ EnvironTarget.Machine; 
       EnvironTarget.Process;
       EnvironTarget.User]
-    |> List.iter (fun mode ->    
-        traceFAKE "Environment-Settings (%A):" mode
-        environVars mode |> List.iter (tracefn "  %A"))        
+    |> Seq.iter (fun mode ->    
+        tracefn "Environment-Settings (%A):" mode
+        environVars mode |> Seq.iter (tracefn "  %A"))        
  
 /// Gets the FAKE Version string
 let fakeVersionStr = sprintf "FAKE - F# Make - Version %s" <| fakeVersion.ToString()
