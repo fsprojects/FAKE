@@ -1,6 +1,9 @@
 ﻿[<AutoOpen>]
 module Fake.MailBoxHelper
 
+/// Trace verbose output
+let mutable verbose = hasBuildParam "verbose"
+
 open System
 
 type Message = 
@@ -21,7 +24,7 @@ let buffer = MailboxProcessor.Start (fun inbox ->
             let! (msg:Message) = inbox.Receive()
             match traceMode with
             | Console -> 
-                let text = toRelativePath msg.Text
+                let text = if not verbose then toRelativePath msg.Text else msg.Text
                 let curColor = Console.ForegroundColor
                 Console.ForegroundColor <- msg.Color
                 if msg.Important && buildServer <> CCNet then
