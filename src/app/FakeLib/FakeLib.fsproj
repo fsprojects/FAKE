@@ -84,6 +84,7 @@
     <Compile Include="Git\Branches.fs" />
     <Compile Include="Git\Checkout.fs" />
     <Compile Include="Git\Reset.fs" />
+    <Compile Include="Git\Merge.fs" />    
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core">
