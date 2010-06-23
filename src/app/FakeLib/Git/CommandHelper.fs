@@ -13,10 +13,6 @@ let gitPath =
     let ev = environVar "GIT"
     if not (isNullOrEmpty ev) then ev else findPath "GitPath" "git.exe"
     
-let gitExPath = 
-    let ev = environVar "GIT"
-    if not (isNullOrEmpty ev) then ev else findPath "GitExPath" "gitex.cmd"
-
 let getString sequence =
     let sb = sequence |> Seq.fold (fun (sb:StringBuilder) (s:string) -> sb.Append s) (new StringBuilder())
     sb.ToString()
@@ -34,8 +30,23 @@ let getGitResult command =
     let _,msg,_ = runGitCommand command
     msg
 
+/// Runs the given process and returns the exit code
+let directExec infoAction =
+    use p = new Process()
+    p.StartInfo.UseShellExecute <- false
+    infoAction p.StartInfo
+  
+    try
+        p.Start() |> ignore
+    with
+    | exn -> failwithf "Start of process %s failed. %s" p.StartInfo.FileName exn.Message
+  
+    p.WaitForExit()
+    
+    p.ExitCode = 0
+
 let directRunGitCommand command = 
-    execProcess2 (fun info ->  
+    directExec (fun info ->  
       info.FileName <- gitPath
       info.Arguments <- command)
 
@@ -52,18 +63,6 @@ let showGitCommand command =
     msg |> Seq.iter (printfn "%s")
     if errors <> "" then
       printfn "Errors: %s" errors
-
-let runGitExCommand command = 
-    execProcess (fun info ->  
-      info.FileName <- gitExPath
-      info.Arguments <- command)
-
-let runAsyncGitExCommand command = 
-    use p = new Process()
-    p.StartInfo.UseShellExecute <- false
-    p.StartInfo.FileName <- gitExPath
-    p.StartInfo.Arguments <- command
-    p.Start()
 
 /// Runs the git command and returns the first line of the result
 let runSimpleGitCommand command =

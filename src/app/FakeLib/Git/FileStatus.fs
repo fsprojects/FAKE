@@ -43,16 +43,6 @@ let getConflictedFiles() =
 /// Returns true if the working copy is in a conflicted merge otherwise false
 let isInTheMiddleOfConflictedMerge() = Seq.isEmpty <| getConflictedFiles()
 
-/// Shows the repository browser
-let gitexBrowse () = runAsyncGitExCommand "browse" |> ignore
-    
-/// Shows the file history
-let gitexFileHistory fileName =
-    checkFileExists fileName
-    sprintf "filehistory %s" fileName
-      |> runGitExCommand
-      |> ignore
-
 /// Cleans the working copy by doing a git reset --hard and a clean -f
 let cleanWorkingCopy () = 
     ResetHard()
