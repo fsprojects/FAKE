@@ -79,6 +79,7 @@
     <Compile Include="TargetHelper.fs" />
     <Compile Include="Git\CommandHelper.fs" />
     <Compile Include="Git\Sha1.fs" />
+    <Compile Include="Git\Repository.fs" />
     <Compile Include="Git\Checkout.fs" />
   </ItemGroup>
   <ItemGroup>
