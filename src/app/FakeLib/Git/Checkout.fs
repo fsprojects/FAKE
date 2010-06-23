@@ -9,3 +9,6 @@ let checkout create trackBranch branch =
         gitCommandf "checkout %s %s"
           (if create then "-b" else "")
           branch
+
+/// Push all
+let push() = directRunGitCommand "push" |> ignore
