@@ -4,7 +4,7 @@ module Fake.Git.SanityChecks
 open Fake
 
 let checkRevisionExists revision1 =
-  let ok1,_,errors1 = CommandHelper.runGitCommand <| sprintf "log %s" revision1
+  let ok1,_,errors1 = runGitCommand <| sprintf "log %s" revision1
   
   if not ok1 || errors1 <> "" then
       failwithf "Revision %s is not found in the current repository." revision1

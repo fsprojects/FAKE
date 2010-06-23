@@ -20,5 +20,5 @@ let calcGitSHA1 (text:string) =
 
 /// shows the SHA1 calculated by git
 let showObjectHash fileName =
-    let _,msg,_ = CommandHelper.runGitCommand (sprintf "hash-object %s" fileName)
+    let _,msg,_ = runGitCommand (sprintf "hash-object %s" fileName)
     msg |> Seq.head

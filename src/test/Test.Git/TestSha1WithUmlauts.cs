@@ -13,7 +13,6 @@ namespace Test.Git
                 .ShouldEqual("0f0f3e3b1ff2bc6722afc3e3812e6b782683896f");
         }
 
-
         [Test]
         public void CanCalcSha1OfSmallUeInTwoChars()
         {

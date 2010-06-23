@@ -18,18 +18,18 @@ with
     member x.GetRemotePath() =
         x.Name.Trim()
           |> sprintf "config -f .gitmodules --get submodule.%s.url"
-          |> CommandHelper.runSimpleGitCommand
+          |> runSimpleGitCommand
 
     member x.GetLocalPath() =
         x.Name.Trim()
           |> sprintf  "config -f .gitmodules --get submodule.%s.path"
-          |> CommandHelper.runSimpleGitCommand
+          |> runSimpleGitCommand
 
 let internal trimChars (s:string) = s.Trim [| '('; ')'; ' ' |]
 
 /// Gets all submodules
 let getSubModules () =
-    let ok,submodules,errors = CommandHelper.runGitCommand "submodule status"
+    let ok,submodules,errors = runGitCommand "submodule status"
 
     submodules
       |> Seq.filter (fun submodule -> submodule.Length >= 43)
@@ -51,7 +51,7 @@ let getSubModules () =
 /// Inits a submodule
 let init name =
     if isNullOrEmpty name then "submodule update --init" else "submodule update --init \"" + name.Trim() + "\""
-      |> CommandHelper.gitCommand
+      |> gitCommand
 
 /// Adds a submodule to the current repository.
 ///  params: remote Path
@@ -59,7 +59,7 @@ let init name =
 ///  params: branch (can be null)
 let add remotePath localPath branch =
     sprintf "submodule add \"%s\" \"%s\" %s"
-      (remotePath |> CommandHelper.fixPath)
-      (localPath |> CommandHelper.fixPath)
+      (remotePath |> fixPath)
+      (localPath |> fixPath)
       (if isNullOrEmpty branch then "" else " \"" + branch.Trim() + "\"")
-      |> CommandHelper.gitCommand
+      |> gitCommand
