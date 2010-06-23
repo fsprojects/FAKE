@@ -83,6 +83,7 @@
     <Compile Include="Git\Submodule.fs" />
     <Compile Include="Git\Branches.fs" />
     <Compile Include="Git\Checkout.fs" />
+    <Compile Include="Git\Reset.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core">
