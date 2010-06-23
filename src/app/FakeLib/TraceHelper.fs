@@ -4,9 +4,6 @@ module Fake.TraceHelper
 open System
 open System.IO
 open System.Reflection
-
-/// Trace verbose output
-let mutable verbose = hasBuildParam "verbose"
    
 /// Gets the path of the current FAKE instance
 let fakePath = productName.GetType().Assembly.Location

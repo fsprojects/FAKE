@@ -2,28 +2,28 @@
 #I "tools\FAKE"
 #r "FakeLib.dll"
 
-// include CustomTask
-#r "MyCustomTask.dll"
-
 open Fake
- 
-// open CustomNamespace
-open MyCustomTask
 
-// use custom functionality
-let x = RandomNumberTask.RandomNumber(2,13)
-sprintf "RandomNumber: %d" x |> trace
-
-// properties
+// Directories
 let buildDir  = @".\build\"
 let testDir   = @".\test\"
 let deployDir = @".\deploy\"
-let appReferences  = !+ @"src\app\**\*.csproj" |> Scan
-let testReferences = !+ @"src\test\**\*.csproj" |> Scan
 
 // tools
 let nunitPath = @".\Tools\NUnit"
 let fxCopRoot = @".\Tools\FxCop\FxCopCmd.exe"
+
+// Filesets
+let appReferences  = 
+    !+ @"src\app\**\*.csproj" 
+      ++ @"src\app\**\*.fsproj" 
+        |> Scan
+
+let testReferences = 
+    !+ @"src\test\**\*.csproj" 
+      |> Scan
+
+// version info
 let version = "0.2"  // or retrieve from CI server
 
 // Targets
@@ -52,67 +52,52 @@ Target? BuildApp <-
               Guid = "EE5621DB-B86B-44eb-987F-9C94BCC98441";
               OutputFileName = @".\src\app\CalculatorLib\Properties\AssemblyInfo.cs"})          
       
-        let target = "Build"
-        
         // compile all projects below src\app\
-        let apps = MSBuildRelease buildDir target appReferences
-        
-        // log the output files
-        Log "AppBuild-Output: " apps
+        MSBuildRelease buildDir "Build" appReferences
+          |> Log "AppBuild-Output: "
 
 Target? BuildTest <-
     fun _ -> 
-        let testApps = MSBuildDebug testDir "Build" testReferences
-        Log "TestBuild-Output: " testApps
+        MSBuildDebug testDir "Build" testReferences
+          |> Log "TestBuild-Output: "
 
 Target? NUnitTest <-
     fun _ ->  
-        let testAssemblies = 
-          !+ (testDir + @"\NUnit.Test.*.dll") |> Scan
-            
-        let output = testDir + @"TestResults.xml"
-        NUnit (fun p -> 
-            {p with 
-               ToolPath = nunitPath; 
-               DisableShadowCopy = true; 
-               OutputFile = output}) 
-          testAssemblies
+        !+ (testDir + @"\NUnit.Test.*.dll") 
+          |> Scan
+          |> NUnit (fun p -> 
+                {p with 
+                    ToolPath = nunitPath; 
+                    DisableShadowCopy = true; 
+                    OutputFile = testDir + @"TestResults.xml"}) 
 
 Target? xUnitTest <-
     fun _ ->  
-        let testAssemblies = 
-          !+ (testDir + @"\xUnit.Test.*.dll") 
-            |> Scan
-      
-        xUnit 
-          (fun p -> 
-             {p with 
-                 ShadowCopy = false;
-                 HtmlOutput = true;
-                 XmlOutput = true;
-                 OutputDir = testDir }) 
-          testAssemblies
+        !+ (testDir + @"\xUnit.Test.*.dll") 
+          |> Scan
+          |> xUnit (fun p -> 
+                {p with 
+                    ShadowCopy = false;
+                    HtmlOutput = true;
+                    XmlOutput = true;
+                    OutputDir = testDir }) 
 
 Target? FxCop <-
     fun _ ->
-        let assemblies = 
-          !+ (buildDir + @"\**\*.dll") 
-            ++ (buildDir + @"\**\*.exe") 
-            |> Scan  
-            
-        FxCop 
-          (fun p -> 
-            {p with 
-              // override default parameters
-              ReportFileName = testDir + "FXCopResults.xml";
-              ToolPath = fxCopRoot})
-          assemblies
+        !+ (buildDir + @"\**\*.dll") 
+         ++ (buildDir + @"\**\*.exe") 
+           |> Scan  
+           |> FxCop (fun p -> 
+                {p with                     
+                    ReportFileName = testDir + "FXCopResults.xml";
+                    ToolPath = fxCopRoot})
 
 Target? Deploy <-
     fun _ ->
-        let artifacts = !+ (buildDir + "\**\*.*") -- "*.zip" |> Scan
-        let zipFileName = deployDir + "Calculator.zip" 
-        Zip buildDir zipFileName artifacts
+        !+ (buildDir + "\**\*.*") 
+          -- "*.zip" 
+          |> Scan
+          |> Zip buildDir (deployDir + "Calculator." + version + ".zip")
 
 Target? Default <- DoNothing
 Target? Test <- DoNothing

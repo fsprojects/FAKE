@@ -95,6 +95,18 @@ let inline toLines s = separated "\r\n" s
 /// Checks wether the given text starts with the given prefix
 let inline (<*) prefix (text:string) = text.StartsWith prefix
 
+let regexes = new System.Collections.Generic.Dictionary<_,_>()
+
+let getRegEx pattern =
+    match regexes.TryGetValue pattern with
+    | true, regex -> regex
+    | _ -> (new System.Text.RegularExpressions.Regex(pattern))
+
+let (>=>) pattern (replacement:string) text =
+    (getRegEx pattern).Replace(text,replacement)
+
+let (>**) pattern text = (getRegEx pattern).IsMatch text
+
 let isUmlaut c = List.exists ((=) c) ['ä'; 'ö'; 'ü'; 'Ä'; 'Ö'; 'Ü'; 'ß']
 let charsAndDigits = ['a'..'z'] @ ['A'..'Z'] @ ['0'..'9'] 
 let isLetterOrDigit c = List.exists ((=) c) charsAndDigits

@@ -9,29 +9,40 @@ open System.Threading
 
 let mutable redirectOutputToTrace = false 
 
-/// Runs the given process
-/// returns the exit code
-let execProcess2 infoAction silent =
+/// Runs the given process and returns the exit code
+let ExecProcessWithLambdas infoAction silent errorF messageF =
     use p = new Process()
     p.StartInfo.UseShellExecute <- false
     infoAction p.StartInfo
     if silent then
         p.StartInfo.RedirectStandardOutput <- true
         p.StartInfo.RedirectStandardError <- true
-        p.ErrorDataReceived.Add(fun d -> if d.Data <> null then traceError d.Data)
-        p.OutputDataReceived.Add(fun d -> if d.Data <> null then trace d.Data)
+
+        p.ErrorDataReceived.Add (fun d -> if d.Data <> null then errorF d.Data)
+        p.OutputDataReceived.Add (fun d -> if d.Data <> null then messageF d.Data)
     try
         p.Start() |> ignore
     with
-    | exn -> failwithf "Could not execute %s. %s" p.StartInfo.FileName exn.Message
-    
-    if silent then 
+    | exn -> failwithf "Start of process %s failed. %s" p.StartInfo.FileName exn.Message
+
+    if silent then
         p.BeginErrorReadLine()
         p.BeginOutputReadLine()     
   
     p.WaitForExit()
     
-    p.ExitCode  
+    p.ExitCode
+
+/// Runs the given process and returns the exit code
+let ExecProcessAndReturnMessages infoAction =
+    let errors = new System.Collections.Generic.List<_>()
+    let messages = new System.Collections.Generic.List<_>()
+    let exitCode = ExecProcessWithLambdas infoAction true (errors.Add) (messages.Add)    
+    exitCode = 0,messages,errors
+
+/// Runs the given process
+/// returns the exit code
+let execProcess2 infoAction silent = ExecProcessWithLambdas infoAction silent traceError trace  
 
 /// Runs the given process
 /// returns the exit code
@@ -48,11 +59,11 @@ let ExecProcess infoAction = execProcess2 infoAction redirectOutputToTrace
 /// sets the environment Settings for the given startInfo
 /// existing values will be overrriden
 let setEnvironmentVariables (startInfo:ProcessStartInfo) environmentSettings = 
-  for key,value in environmentSettings do
-    if startInfo.EnvironmentVariables.ContainsKey key then
-      startInfo.EnvironmentVariables.[key] <- value
-    else
-      startInfo.EnvironmentVariables.Add(key, value)
+    for key,value in environmentSettings do
+        if startInfo.EnvironmentVariables.ContainsKey key then
+            startInfo.EnvironmentVariables.[key] <- value
+        else
+            startInfo.EnvironmentVariables.Add(key, value)
           
 /// Runs the given process
 /// returns true if the exit code was 0
@@ -102,7 +113,11 @@ let findFile dirs file =
     | None -> failwithf "%s not found in %A." file dirs
 
 /// Returns the AppSettings for the key - Splitted on ;
-let appSettings (key:string) = System.Configuration.ConfigurationManager.AppSettings.[key].Split(';')
+let appSettings (key:string) = 
+    try
+        System.Configuration.ConfigurationManager.AppSettings.[key].Split(';')
+    with
+    | exn -> [||]
 
 /// Tries to find the tool via AppSettings. If no path has the right tool we are trying the PATH system variable. 
 let findPath settingsName tool = 
@@ -110,7 +125,6 @@ let findPath settingsName tool =
     match tryFindFile paths tool with
     | Some file -> file
     | None -> tool
-
 
 // See: http://stackoverflow.com/questions/2649161/need-help-regarding-async-and-fsi/
 module Event =
