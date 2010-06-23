@@ -86,7 +86,8 @@
     <Compile Include="Git\Reset.fs" />
     <Compile Include="Git\Merge.fs" />    
     <Compile Include="Git\SanityChecks.fs" />
-    <Compile Include="Git\Information.fs" />         
+    <Compile Include="Git\Information.fs" />
+    <Compile Include="Git\FileStatus.fs" />                     
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core">
