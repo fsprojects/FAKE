@@ -2,10 +2,9 @@
 module Fake.Git.Merge
 
 open Fake
+open System.IO
 
+/// Gets the current merge message
 let getMergeMessage() =
     let file = CommandHelper.getWorkingDirGitDir() + "\\MERGE_MSG";
-    if System.IO.File.Exists file then
-        System.IO.File.ReadAllText file
-    else
-        ""
+    if File.Exists file then File.ReadAllText file else ""
