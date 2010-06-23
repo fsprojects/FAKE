@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -77,6 +77,9 @@
     <Compile Include="HTMLHelpWorkShopHelper.fs" />
     <Compile Include="TemplateHelper.fs" />
     <Compile Include="TargetHelper.fs" />
+    <Compile Include="Git\CommandHelper.fs" />
+    <Compile Include="Git\Sha1.fs" />
+    <Compile Include="Git\Checkout.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core">

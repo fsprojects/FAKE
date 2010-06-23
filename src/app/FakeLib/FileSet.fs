@@ -350,9 +350,9 @@ let DefaultBaseDir = Path.GetFullPath "."
   
 /// Include files  
 let Include x =    
- { BaseDirectories = [DefaultBaseDir];
-   Includes = [x];
-   Excludes = []}           
+    { BaseDirectories = [DefaultBaseDir];
+      Includes = [x];
+      Excludes = []}           
        
 /// Lazy scan for include files
 /// Will be processed at the time when needed
