@@ -81,6 +81,7 @@
     <Compile Include="Git\Sha1.fs" />
     <Compile Include="Git\Repository.fs" />
     <Compile Include="Git\Submodule.fs" />
+    <Compile Include="Git\Branches.fs" />
     <Compile Include="Git\Checkout.fs" />
   </ItemGroup>
   <ItemGroup>
