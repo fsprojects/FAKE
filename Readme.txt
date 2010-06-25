@@ -51,3 +51,15 @@ Main Features
     * Extensible platform (Write your own tasks)
     * Easy debugging
     * Intellisense support (when using Visual Studio)
+
+Building FAKE
+
+   You can always download the latest "FAKE - F# Make" builds from http://teamcity.codebetter.com/viewType.html?buildTypeId=bt114&tab=buildTypeStatusDiv by using a guest login.
+
+   If you want to build "FAKE - F# Make" on you have to follow these steps:
+
+   1. git clone git://github.com/forki/FAKE.git
+   2. cd FAKE
+   3. git submodule init
+   4. git submodule update
+   5. build.bat 
