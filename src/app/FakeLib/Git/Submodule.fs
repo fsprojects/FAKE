@@ -8,6 +8,7 @@ type Submodule =
        Branch: string;
        CurrentCommit: string;
        Initialized:bool;       
+       SuperRepositoryDir: string;
        UpToDate: bool }
 with 
     member x.Status =
@@ -18,18 +19,18 @@ with
     member x.GetRemotePath() =
         x.Name.Trim()
           |> sprintf "config -f .gitmodules --get submodule.%s.url"
-          |> runSimpleGitCommand
+          |> runSimpleGitCommand x.SuperRepositoryDir
 
     member x.GetLocalPath() =
         x.Name.Trim()
           |> sprintf  "config -f .gitmodules --get submodule.%s.path"
-          |> runSimpleGitCommand
+          |> runSimpleGitCommand x.SuperRepositoryDir
 
 let internal trimChars (s:string) = s.Trim [| '('; ')'; ' ' |]
 
 /// Gets all submodules
-let getSubModules () =
-    let ok,submodules,errors = runGitCommand "submodule status"
+let getSubModules repositoryDir =
+    let ok,submodules,errors = runGitCommand repositoryDir "submodule status"
 
     submodules
       |> Seq.filter (fun submodule -> submodule.Length >= 43)
@@ -46,20 +47,22 @@ let getSubModules () =
                CurrentCommit = submodule.Substring(1, 40).Trim();
                Initialized = submodule.[0] <> '-';
                Name = name;
+               SuperRepositoryDir = repositoryDir;
                UpToDate = submodule.[0] <> '+' })
 
 /// Inits a submodule
-let init name =
+let init superRepositoryDir name =
     if isNullOrEmpty name then "submodule update --init" else "submodule update --init \"" + name.Trim() + "\""
-      |> gitCommand
+      |> gitCommand superRepositoryDir
 
 /// Adds a submodule to the current repository.
+///  params: superRepositoryDir
 ///  params: remote Path
 ///  params: local Path
 ///  params: branch (can be null)
-let add remotePath localPath branch =
+let add superRepositoryDir remotePath localPath branch =
     sprintf "submodule add \"%s\" \"%s\" %s"
       (remotePath |> fixPath)
       (localPath |> fixPath)
       (if isNullOrEmpty branch then "" else " \"" + branch.Trim() + "\"")
-      |> gitCommand
+      |> gitCommand superRepositoryDir

@@ -5,10 +5,11 @@ open Fake
 open System
 open System.IO
 
-let messageFile = new FileInfo(getWorkingDirGitDir() + "\\COMMITMESSAGE")
+let getCommitMessageFileName repositoryDir = new FileInfo((findGitDir repositoryDir).FullName + "\\COMMITMESSAGE")
 
 /// Sets the commit message
-let setMessage text =
+let setMessage repositoryDir text =
+    let messageFile = getCommitMessageFileName repositoryDir
     if String.IsNullOrEmpty text then
         if messageFile.Exists then messageFile.Delete()
     else

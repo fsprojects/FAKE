@@ -4,6 +4,10 @@ module Fake.FileHelper
 open System.IO
 open System.Text
 
+/// Checks if the file exists on disk.
+let checkFileExists fileName =
+    if not <| File.Exists fileName then failwithf "File %s does not exist." fileName
+
 /// Checks if all given files exists
 let allFilesExist files = Seq.forall File.Exists files
 
