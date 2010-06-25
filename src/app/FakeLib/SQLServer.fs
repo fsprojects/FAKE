@@ -99,8 +99,10 @@ let runScript serverInfo sqlFile =
 let Disconnect serverInfo = serverInfo.Server.ConnectionContext.Disconnect()
 
 /// Replaces the database files
-let ReplaceDatabaseFiles serverInfo targetDir files attachOptions =
-    if existDBOnServer serverInfo (getDBName serverInfo) then Detach serverInfo else serverInfo
+let ReplaceDatabaseFiles connectionString targetDir files attachOptions =
+    connectionString
+      |> getServerInfo
+      |> fun si -> if existDBOnServer si (getDBName si) then Detach si else si
       |> fun si ->             
             files 
               |> Seq.map (fun fileName ->     
