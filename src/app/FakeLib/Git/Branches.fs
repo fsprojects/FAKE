@@ -68,6 +68,10 @@ let deleteBranch repositoryDir force branch =
     sprintf "branch %s %s" (if force then "-D" else "-d") branch
       |> gitCommand repositoryDir
 
+let FastForwardFlag = "--ff"
+
+let NoFastForwardFlag = "--no-ff"
+
 /// Deletes the given tag
 let deleteTag repositoryDir tag =
     sprintf "tag -d %s" tag
