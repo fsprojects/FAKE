@@ -60,9 +60,29 @@ let DropDb serverInfo =
         (getDatabase serverInfo).DropBackupHistory |> ignore
         getDBName serverInfo |> serverInfo.Server.KillDatabase
     serverInfo
-    
-/// Drops the given InitialCatalog from the server (if it exists)
-let CreateDb serverInfo = 
+
+/// Kills all Processes
+let KillAllProcesses serverInfo =
+    serverInfo.Server.KillAllProcesses (getDBName serverInfo)
+    serverInfo
+
+/// Detach a database        
+let Detach serverInfo =
+    serverInfo
+      |> KillAllProcesses
+      |> fun si -> 
+            si.Server.DetachDatabase(getDBName si, true)
+            si
+
+/// Attach a database  
+let Attach serverInfo files (attachOptions:AttachOptions) =
+    let sc = new Collections.Specialized.StringCollection ()
+    files |> Seq.iter (fun file -> sc.Add file |> ignore)
+
+    serverInfo.Server.AttachDatabase(getDBName serverInfo,sc,attachOptions)
+
+/// Creates a new db on the given server
+let CreateDb serverInfo =     
     logfn "Creating database %s on server %s" (getDBName serverInfo) (getServerName serverInfo)
     (getDatabase serverInfo).Create()  
     serverInfo
