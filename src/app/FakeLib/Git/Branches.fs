@@ -53,6 +53,11 @@ let merge repositoryDir flags branch =
     sprintf "merge %s %s" flags branch
       |> gitCommand repositoryDir
 
+/// Performs a rebase on top of the given branch with the current branch
+let rebase repositoryDir onTopOfBranch =
+    sprintf "rebase %s" onTopOfBranch
+      |> gitCommand repositoryDir
+
 /// Creates a new branch from the given commit
 let createBranch repositoryDir newBranchName fromCommit =
     sprintf "branch -f %s %s" newBranchName fromCommit
