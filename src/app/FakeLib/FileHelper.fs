@@ -121,7 +121,7 @@ let CopyFileIntoSubFolder target fileName =
     logVerbosefn "Copy %s to %s" fileName targetName
     fi.CopyTo(targetName,true) |> ignore    
 
-/// Copies a single file to the target
+/// Copies a single file to the target and overwrites the existing file.
 ///   param target: The target directory.
 ///   param fileName: The FileName
 let CopyFile target fileName =

@@ -75,11 +75,12 @@ let Detach serverInfo =
             si
 
 /// Attach a database  
-let Attach serverInfo files (attachOptions:AttachOptions) =
+let Attach serverInfo (attachOptions:AttachOptions) files =
     let sc = new Collections.Specialized.StringCollection ()
     files |> Seq.iter (fun file -> sc.Add file |> ignore)
 
     serverInfo.Server.AttachDatabase(getDBName serverInfo,sc,attachOptions)
+    serverInfo
 
 /// Creates a new db on the given server
 let CreateDb serverInfo =     
@@ -96,6 +97,18 @@ let runScript serverInfo sqlFile =
     
 /// Closes the connection to the server
 let Disconnect serverInfo = serverInfo.Server.ConnectionContext.Disconnect()
+
+/// Replaces the database files
+let ReplaceDatabaseFiles serverInfo targetDir files attachOptions =
+    if existDBOnServer serverInfo (getDBName serverInfo) then Detach serverInfo else serverInfo
+      |> fun si ->             
+            files 
+              |> Seq.map (fun fileName ->     
+                    let fi = new FileInfo(fileName)
+                    CopyFile targetDir fileName
+                    targetDir @@ fi.Name)
+              |> Attach si attachOptions
+      |> Disconnect
  
 /// Drops and creates the database (dropped if db exists. created nonetheless)
 let DropAndCreateDatabase connectionString = 
