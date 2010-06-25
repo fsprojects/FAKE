@@ -58,7 +58,7 @@ let gitCommand repositoryDir command =
     if not ok then failwith error else 
     msg |> Seq.iter (printfn "%s")
 
-let gitCommandf fmt = Printf.ksprintf gitCommand fmt
+let gitCommandf repositoryDir fmt = Printf.ksprintf (gitCommand repositoryDir) fmt
 
 let showGitCommand repositoryDir command =
     let ok,msg,errors = runGitCommand repositoryDir command
