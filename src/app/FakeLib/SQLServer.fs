@@ -63,7 +63,9 @@ let DropDb serverInfo =
 
 /// Kills all Processes
 let KillAllProcesses serverInfo =
-    serverInfo.Server.KillAllProcesses (getDBName serverInfo)
+    let dbName = getDBName serverInfo
+    logfn "Killing all processes from database %s on server %s." dbName (getServerName serverInfo)
+    serverInfo.Server.KillAllProcesses dbName
     serverInfo
 
 /// Detach a database        
@@ -71,7 +73,9 @@ let Detach serverInfo =
     serverInfo
       |> KillAllProcesses
       |> fun si -> 
-            si.Server.DetachDatabase(getDBName si, true)
+            let dbName = getDBName si
+            logfn "Detaching database %s on server %s." dbName (getServerName serverInfo)
+            si.Server.DetachDatabase(dbName, true)
             si
 
 /// Attach a database  
@@ -79,7 +83,10 @@ let Attach serverInfo (attachOptions:AttachOptions) files =
     let sc = new Collections.Specialized.StringCollection ()
     files |> Seq.iter (fun file -> sc.Add file |> ignore)
 
-    serverInfo.Server.AttachDatabase(getDBName serverInfo,sc,attachOptions)
+    let dbName = getDBName serverInfo
+
+    logfn "Attaching database %s on server %s." dbName (getServerName serverInfo)
+    serverInfo.Server.AttachDatabase(dbName,sc,attachOptions)
     serverInfo
 
 /// Creates a new db on the given server
