@@ -53,6 +53,11 @@ let merge repositoryDir flags branch =
     sprintf "merge %s %s" flags branch
       |> gitCommand repositoryDir
 
+/// Creates a new branch from the given commit
+let createBranch repositoryDir newBranchName fromCommit =
+    sprintf "branch -f %s %s" newBranchName fromCommit
+      |> gitCommand repositoryDir
+
 /// Deletes the given branch
 let deleteBranch repositoryDir force branch =
     sprintf "branch %s %s" (if force then "-D" else "-d") branch
