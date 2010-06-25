@@ -1792,6 +1792,11 @@
  Removes the slashes from the end of the given string
 </summary>
 </member>
+<member name="M:Fake.StringHelper.shortenCurrentDirectory(System.String)">
+<summary>
+ Replaces any occurence of the currentDirectory with .
+</summary>
+</member>
 <member name="M:Fake.StringHelper.toRelativePath(System.String)">
 <summary>
  Replaces the absolute path to a relative
@@ -1805,6 +1810,9 @@
  <param name="targetLocation">The target folder</param>
  <returns>The relative path relative to baseLocation</returns>
  <exception cref="ArgumentNullException">base or target locations are null or empty</exception>
+</member>
+<member name="">
+
 </member>
 <member name="">
 
