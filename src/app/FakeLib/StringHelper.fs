@@ -83,8 +83,55 @@ let inline appendFileNamesIfNotNull fileNames (builder:StringBuilder) =
   fileNames 
     |> Seq.fold (fun builder file -> appendIfTrue (String.IsNullOrEmpty file |> not) file builder) builder
 
+let directorySeparator = Path.DirectorySeparatorChar.ToString()
+
+/// <summary>
+/// Produces relative path when possible to go from baseLocation to targetLocation
+/// </summary>
+/// <param name="baseLocation">The root folder</param>
+/// <param name="targetLocation">The target folder</param>
+/// <returns>The relative path relative to baseLocation</returns>
+/// <exception cref="ArgumentNullException">base or target locations are null or empty</exception>
+let ProduceRelativePath baseLocation targetLocation =
+    if isNullOrEmpty baseLocation then
+        raise (new ArgumentNullException("baseLocation"))
+    
+    if isNullOrEmpty targetLocation then
+        raise (new ArgumentNullException("targetLocation"))
+
+    if not <| Path.IsPathRooted baseLocation then baseLocation else
+    if not <| Path.IsPathRooted targetLocation then targetLocation else
+    if String.Compare(Path.GetPathRoot baseLocation, Path.GetPathRoot targetLocation, true) <> 0 then targetLocation else
+    if String.Compare(baseLocation, targetLocation, true) = 0 then "." else
+    let resultPath = ref "."
+
+    let targetLocation =
+        if targetLocation.EndsWith directorySeparator then targetLocation
+        else targetLocation + directorySeparator
+    
+    let baseLocation =
+        if baseLocation.EndsWith directorySeparator then
+            ref (baseLocation.Substring(0, baseLocation.Length - 1))
+        else 
+            ref baseLocation
+
+    while not <| targetLocation.StartsWith(!baseLocation + directorySeparator, StringComparison.OrdinalIgnoreCase) do
+        resultPath := !resultPath + directorySeparator + ".."
+        baseLocation := Path.GetDirectoryName !baseLocation
+
+        if (!baseLocation).EndsWith directorySeparator then
+            baseLocation := (!baseLocation).Substring(0, (!baseLocation).Length - 1)
+
+    resultPath := !resultPath + targetLocation.Substring((!baseLocation).Length)
+
+    // preprocess .\..\ case
+    if (!resultPath).StartsWith (sprintf ".%s..%s" directorySeparator directorySeparator) then
+        (!resultPath).Substring(2, (!resultPath).Length - 3)
+    else
+        (!resultPath).Substring(0, (!resultPath).Length - 1)
+
 /// Replaces the absolute path to a relative
-let inline toRelativePath value = replace currentDirectory "." value
+let inline toRelativePath value = ProduceRelativePath currentDirectory value
 
 /// Removes the slashes from the end of the given string
 let inline trimSlash (s:string) = s.TrimEnd('\\')
