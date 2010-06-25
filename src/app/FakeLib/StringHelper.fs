@@ -85,6 +85,8 @@ let inline appendFileNamesIfNotNull fileNames (builder:StringBuilder) =
 
 let directorySeparator = Path.DirectorySeparatorChar.ToString()
 
+let relativePaths = new System.Collections.Generic.Dictionary<_,_>()
+
 /// <summary>
 /// Produces relative path when possible to go from baseLocation to targetLocation
 /// </summary>
@@ -131,7 +133,16 @@ let ProduceRelativePath baseLocation targetLocation =
         (!resultPath).Substring(0, (!resultPath).Length - 1)
 
 /// Replaces the absolute path to a relative
-let inline toRelativePath value = ProduceRelativePath currentDirectory value
+let inline toRelativePath value = 
+    match relativePaths.TryGetValue value with
+    | true,x -> x
+    | _ ->
+         let x = ProduceRelativePath currentDirectory value
+         relativePaths.Add(value,x)
+         x
+
+/// Replaces any occurence of the currentDirectory with .
+let inline shortenCurrentDirectory value = replace currentDirectory "." value
 
 /// Removes the slashes from the end of the given string
 let inline trimSlash (s:string) = s.TrimEnd('\\')

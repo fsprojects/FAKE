@@ -24,7 +24,7 @@ let buffer = MailboxProcessor.Start (fun inbox ->
             let! (msg:Message) = inbox.Receive()
             match traceMode with
             | Console -> 
-                let text = if not verbose then toRelativePath msg.Text else msg.Text
+                let text = if not verbose then shortenCurrentDirectory msg.Text else msg.Text
                 let curColor = Console.ForegroundColor
                 Console.ForegroundColor <- msg.Color
                 if msg.Important && buildServer <> CCNet then
