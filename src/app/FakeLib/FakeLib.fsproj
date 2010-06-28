@@ -45,8 +45,9 @@
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="AsyncHelper.fs" />
     <Compile Include="RegistryHelper.fs" />
-    <Compile Include="EnvironmentHelper.fs" />
+    <Compile Include="FileSystemHelper.fs" />
     <Compile Include="StringHelper.fs" />
+    <Compile Include="EnvironmentHelper.fs" />
     <Compile Include="TimeoutHelper.fs" />
     <Compile Include="CacheHelper.fs" />
     <Compile Include="XMLHelper.fs" />
