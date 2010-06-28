@@ -19,6 +19,9 @@ let environVars target =
      let e1 = e :?> Collections.DictionaryEntry
      e1.Key,e1.Value]
 
+/// Sets the Environment variable
+let setEnvironVar environVar value = Environment.SetEnvironmentVariable(environVar,value) 
+
 /// Retrieves the EnvironmentVariable or a default
 let environVarOrDefault name defaultValue =
     let var = environVar name
