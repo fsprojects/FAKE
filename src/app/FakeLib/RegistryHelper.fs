@@ -21,11 +21,10 @@ let getKey = function
 | HKEYPerformanceData -> Registry.PerformanceData
 
 /// gets a registy key
-let getRegistryKey baseKey subKey =
-  (getKey baseKey).OpenSubKey subKey
+let getRegistryKey baseKey subKey = (getKey baseKey).OpenSubKey subKey
 
 /// gets a registy value as string
 let getRegistryValue baseKey subKey value =
-  use key = getRegistryKey baseKey subKey
-  (key.GetValue value).ToString()
+    use key = getRegistryKey baseKey subKey
+    (key.GetValue value).ToString()
     

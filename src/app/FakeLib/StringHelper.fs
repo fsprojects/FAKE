@@ -4,6 +4,7 @@ module Fake.StringHelper
 open System
 open System.IO
 open System.Text
+open System.Collections.Generic
 
 let productName() = "FAKE"
 
@@ -76,16 +77,16 @@ let inline appendIfNotNull value s = appendIfTrue (value <> null) (sprintf "%s%A
 let inline appendStringIfValueIsNotNull value = appendIfTrue (value <> null)
 
 /// Appends a text if the value is not null or empty
-let inline appendStringIfValueIsNotNullOrEmpty value = appendIfTrue (String.IsNullOrEmpty value |> not)
+let inline appendStringIfValueIsNotNullOrEmpty value = appendIfTrue (isNullOrEmpty value |> not)
 
 /// Appends all notnull fileNames
 let inline appendFileNamesIfNotNull fileNames (builder:StringBuilder) =
-  fileNames 
-    |> Seq.fold (fun builder file -> appendIfTrue (String.IsNullOrEmpty file |> not) file builder) builder
+    fileNames 
+      |> Seq.fold (fun builder file -> appendIfTrue (isNullOrEmpty file |> not) file builder) builder
 
 let directorySeparator = Path.DirectorySeparatorChar.ToString()
 
-let relativePaths = new System.Collections.Generic.Dictionary<_,_>()
+let relativePaths = new Dictionary<_,_>()
 
 /// <summary>
 /// Produces relative path when possible to go from baseLocation to targetLocation
@@ -153,7 +154,7 @@ let inline toLines s = separated "\r\n" s
 /// Checks wether the given text starts with the given prefix
 let inline (<*) prefix (text:string) = text.StartsWith prefix
 
-let regexes = new System.Collections.Generic.Dictionary<_,_>()
+let regexes = new Dictionary<_,_>()
 
 let getRegEx pattern =
     match regexes.TryGetValue pattern with
