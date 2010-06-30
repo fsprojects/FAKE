@@ -14,3 +14,7 @@ let checkout repositoryDir create branch =
 
 /// Push all
 let push repositoryDir = directRunGitCommand repositoryDir "push" |> ignore
+
+/// Pull
+let pull repositoryDir remote branch = 
+    directRunGitCommand repositoryDir (sprintf "pull %s %s" remote branch) |> ignore
