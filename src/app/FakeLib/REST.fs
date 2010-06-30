@@ -17,18 +17,18 @@ type PostMethod =
 ///   param url: The URL to perform the GET operation  
 ///   returns: The response of the request, or null if we got 404 or nothing.
 let ExecuteGetCommand (userName:string) (password:string) (url:string) =
-  use client = new WebClient()
-  if userName <> null || password <> null then    
-    client.Credentials <- new NetworkCredential(userName, password)
+    use client = new WebClient()
+    if userName <> null || password <> null then    
+        client.Credentials <- new NetworkCredential(userName, password)
   
-  try 
-    use stream = client.OpenRead(url)
-    use reader = new StreamReader(stream)
-    reader.ReadToEnd()
-  with 
-  | exn ->
-     // TODO: Handle HTTP 404 errors gracefully and return a null string to indicate there is no content.
-     null
+    try 
+        use stream = client.OpenRead(url)
+        use reader = new StreamReader(stream)
+        reader.ReadToEnd()
+    with 
+    | exn ->
+         // TODO: Handle HTTP 404 errors gracefully and return a null string to indicate there is no content.
+         null
 
 /// Executes an HTTP POST command and retrives the information.    
 /// This function will automatically include a "source" parameter if the "Source" property is set.

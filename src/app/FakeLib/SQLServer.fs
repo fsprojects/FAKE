@@ -8,8 +8,8 @@ open Microsoft.SqlServer.Management.Common
 open System.IO
 
 type ServerInfo =
-  { Server: Server;
-    ConnBuilder: SqlConnectionStringBuilder}
+    { Server: Server;
+      ConnBuilder: SqlConnectionStringBuilder}
   
 /// Gets a connection to the SQL server and an instance to the ConnectionStringBuilder
 let getServerInfo connectionString = 

@@ -4,9 +4,6 @@ module Fake.FileHelper
 open System.IO
 open System.Text
 
-/// Checks if all given files exists
-let allFilesExist files = Seq.forall File.Exists files
-
 /// Performs the given actions on all files and subdirectories
 let rec recursively dirF fileF (dir:DirectoryInfo) =
     dir

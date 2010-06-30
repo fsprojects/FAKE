@@ -2,15 +2,15 @@
 module Fake.DocuHelper
 
 type DocuParams =
- { ToolPath: string;
-   TemplatesPath: string;
-   OutputPath: string}
+    { ToolPath: string;
+      TemplatesPath: string;
+      OutputPath: string}
 
 /// Docu default params  
 let DocuDefaults =
- { ToolPath = currentDirectory @@ "tools" @@ "FAKE" @@ "docu.exe";
-   TemplatesPath = currentDirectory @@ "templates";
-   OutputPath = currentDirectory @@ "output" }
+    { ToolPath = currentDirectory @@ "tools" @@ "FAKE" @@ "docu.exe";
+      TemplatesPath = currentDirectory @@ "templates";
+      OutputPath = currentDirectory @@ "output" }
    
 let Docu setParams assembly = 
     traceStartTask "Docu" assembly
