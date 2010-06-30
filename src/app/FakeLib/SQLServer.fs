@@ -30,20 +30,30 @@ let getServerInfo connectionString =
      ConnBuilder = connbuilder}
   
 /// gets the DatabaseNames from the server
+let getDatabasesFromServer (serverInfo:ServerInfo) = 
+    seq {for db in serverInfo.Server.Databases -> db}
+
+/// gets the DatabaseNames from the server
 let getDatabaseNamesFromServer (serverInfo:ServerInfo) = 
-    seq {for db in serverInfo.Server.Databases -> db.Name}
+    getDatabasesFromServer serverInfo
+      |> Seq.map (fun db -> db.Name)
+
+    /// Gets the initial catalog name
+let getDBName serverInfo = serverInfo.ConnBuilder.InitialCatalog 
+
+/// Gets the name of the server
+let getServerName serverInfo = serverInfo.ConnBuilder.DataSource   
                   
 /// Checks wether the given Database exists on the server
 let existDBOnServer serverInfo dbName = 
-    serverInfo
-      |> getDatabaseNamesFromServer
-      |> Seq.exists ((=) dbName)
-    
-/// Gets the name of the sercer
-let getServerName serverInfo = serverInfo.ConnBuilder.DataSource   
+    let names = getDatabaseNamesFromServer serverInfo
+    let searched = getDBName serverInfo
+    tracefn "Searching for database %s on server %s. Found: " searched (getServerName serverInfo)
+    names
+      |> Seq.iter (tracefn "  - %s ")
 
-/// Gets the initial catalog name
-let getDBName serverInfo = serverInfo.ConnBuilder.InitialCatalog 
+    names
+      |> Seq.exists ((=) dbName)
 
 /// Gets the initial catalog as database instance
 let getDatabase serverInfo = new Database(serverInfo.Server, getDBName serverInfo)
@@ -81,7 +91,9 @@ let Detach serverInfo =
 /// Attach a database  
 let Attach serverInfo (attachOptions:AttachOptions) files =
     let sc = new Collections.Specialized.StringCollection ()
-    files |> Seq.iter (fun file -> sc.Add file |> ignore)
+    files |> Seq.iter (fun file ->         
+        sc.Add file |> ignore
+        checkFileExists file)
 
     let dbName = getDBName serverInfo
 

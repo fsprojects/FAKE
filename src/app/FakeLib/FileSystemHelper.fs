@@ -21,3 +21,7 @@ let inline filesInDir (dir:DirectoryInfo) = dir.GetFiles()
 
 /// Gets the current directory
 let currentDirectory = Path.GetFullPath "."
+
+/// Checks if the file exists on disk.
+let checkFileExists fileName =
+    if not <| File.Exists fileName then failwithf "File %s does not exist." fileName
