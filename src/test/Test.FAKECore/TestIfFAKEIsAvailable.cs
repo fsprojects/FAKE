@@ -5,7 +5,7 @@ using Test.FAKECore.FileHandling;
 namespace Test.FAKECore
 {
     [TestFixture]
-    public class TestIfFAKEIsAvailable : BaseTest
+    public class TestIfFakeIsAvailable : BaseTest
     {
         /// <summary>
         ///   Tests the fake path.

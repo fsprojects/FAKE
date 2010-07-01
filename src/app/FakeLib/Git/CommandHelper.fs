@@ -13,62 +13,63 @@ let gitPath =
     let ev = environVar "GIT"
     if not (isNullOrEmpty ev) then ev else findPath "GitPath" "git.exe"
     
-let gitExPath = 
-    let ev = environVar "GIT"
-    if not (isNullOrEmpty ev) then ev else findPath "GitExPath" "gitex.cmd"
-
 let getString sequence =
     let sb = sequence |> Seq.fold (fun (sb:StringBuilder) (s:string) -> sb.Append s) (new StringBuilder())
     sb.ToString()
 
-let runGitCommand command = 
+let runGitCommand repositoryDir command = 
     let ok,msg,errors = 
         ExecProcessAndReturnMessages (fun info ->  
           info.FileName <- gitPath
+          info.WorkingDirectory <- repositoryDir
           info.Arguments <- command)
     ok,msg,toLines errors
 
 let runGitCommandf fmt = Printf.ksprintf runGitCommand fmt
 
-let getGitResult command = 
-    let _,msg,_ = runGitCommand command
+let getGitResult repositoryDir command = 
+    let _,msg,_ = runGitCommand repositoryDir command
     msg
 
-let directRunGitCommand command = 
-    execProcess2 (fun info ->  
+/// Runs the given process and returns the exit code
+let directExec infoAction =
+    use p = new Process()
+    p.StartInfo.UseShellExecute <- false
+    infoAction p.StartInfo
+  
+    try
+        p.Start() |> ignore
+    with
+    | exn -> failwithf "Start of process %s failed. %s" p.StartInfo.FileName exn.Message
+  
+    p.WaitForExit()
+    
+    p.ExitCode = 0
+
+let directRunGitCommand repositoryDir command = 
+    directExec (fun info ->  
       info.FileName <- gitPath
+      info.WorkingDirectory <- repositoryDir
       info.Arguments <- command)
 
-let gitCommand command =
-    let ok,msg,error = runGitCommand command
+let gitCommand repositoryDir command =
+    let ok,msg,error = runGitCommand repositoryDir command
 
     if not ok then failwith error else 
     msg |> Seq.iter (printfn "%s")
 
-let gitCommandf fmt = Printf.ksprintf gitCommand fmt
+let gitCommandf repositoryDir fmt = Printf.ksprintf (gitCommand repositoryDir) fmt
 
-let showGitCommand command =
-    let ok,msg,errors = runGitCommand command
+let showGitCommand repositoryDir command =
+    let ok,msg,errors = runGitCommand repositoryDir command
     msg |> Seq.iter (printfn "%s")
     if errors <> "" then
       printfn "Errors: %s" errors
 
-let runGitExCommand command = 
-    execProcess (fun info ->  
-      info.FileName <- gitExPath
-      info.Arguments <- command)
-
-let runAsyncGitExCommand command = 
-    use p = new Process()
-    p.StartInfo.UseShellExecute <- false
-    p.StartInfo.FileName <- gitExPath
-    p.StartInfo.Arguments <- command
-    p.Start()
-
 /// Runs the git command and returns the first line of the result
-let runSimpleGitCommand command =
+let runSimpleGitCommand repositoryDir command =
     try
-        let ok,msg,errors = runGitCommand command
+        let ok,msg,errors = runGitCommand repositoryDir command
         try
             msg.[0]
         with 
@@ -80,12 +81,12 @@ let fixPath (path:string) =
     let path = path.Trim()
     if "\\\\" <* path then path.Trim() else path.Replace('\\', '/').Trim()
 
-let workingDirGitDir =
-    lazy (
-        let di = new System.IO.DirectoryInfo("./.git")
-        
-        if di.Exists then di.FullName else
-        let di2 = new  System.IO.DirectoryInfo(".")
-        failwithf ".git directory not found in current woking copy (%s)" di2.FullName)
+/// Searches the git dir recursivly up to the root
+let findGitDir repositoryDir =
+    let rec findGitDir (dirInfo:DirectoryInfo) =
+        let gitDir = new DirectoryInfo(dirInfo.FullName + @"\.git")
+        if gitDir.Exists then gitDir else findGitDir dirInfo.Parent
+    
 
-let getWorkingDirGitDir() = workingDirGitDir.Force()
+    if isNullOrEmpty repositoryDir then new DirectoryInfo(".") else new DirectoryInfo(repositoryDir)
+      |> findGitDir

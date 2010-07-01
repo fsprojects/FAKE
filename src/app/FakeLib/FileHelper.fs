@@ -4,9 +4,6 @@ module Fake.FileHelper
 open System.IO
 open System.Text
 
-/// Checks if all given files exists
-let allFilesExist files = Seq.forall File.Exists files
-
 /// Performs the given actions on all files and subdirectories
 let rec recursively dirF fileF (dir:DirectoryInfo) =
     dir
@@ -117,7 +114,7 @@ let CopyFileIntoSubFolder target fileName =
     logVerbosefn "Copy %s to %s" fileName targetName
     fi.CopyTo(targetName,true) |> ignore    
 
-/// Copies a single file to the target
+/// Copies a single file to the target and overwrites the existing file.
 ///   param target: The target directory.
 ///   param fileName: The FileName
 let CopyFile target fileName =

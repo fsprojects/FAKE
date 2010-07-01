@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -45,8 +45,9 @@
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="AsyncHelper.fs" />
     <Compile Include="RegistryHelper.fs" />
-    <Compile Include="EnvironmentHelper.fs" />
+    <Compile Include="FileSystemHelper.fs" />
     <Compile Include="StringHelper.fs" />
+    <Compile Include="EnvironmentHelper.fs" />
     <Compile Include="TimeoutHelper.fs" />
     <Compile Include="CacheHelper.fs" />
     <Compile Include="XMLHelper.fs" />
@@ -56,7 +57,6 @@
     <Compile Include="TeamCityHelper.fs" />
     <Compile Include="TeamCityRESTHelper.fs" />
     <Compile Include="TraceHelper.fs" />
-    <Compile Include="SQLServer.fs" />
     <Compile Include="AssemblyInfoHelper.fs" />
     <Compile Include="ProcessHelper.fs" />
     <Compile Include="FxCopHelper.fs" />
@@ -67,6 +67,7 @@
     <Compile Include="MSBuildHelper.fs" />
     <Compile Include="ZipHelper.fs" />
     <Compile Include="FileHelper.fs" />
+    <Compile Include="SQLServer.fs" />
     <Compile Include="DocuHelper.fs" />
     <Compile Include="ILMergeHelper.fs" />
     <Compile Include="WiXHelper.fs" />
@@ -84,12 +85,12 @@
     <Compile Include="Git\Branches.fs" />
     <Compile Include="Git\Checkout.fs" />
     <Compile Include="Git\Reset.fs" />
-    <Compile Include="Git\Merge.fs" />    
+    <Compile Include="Git\Merge.fs" />
     <Compile Include="Git\SanityChecks.fs" />
     <Compile Include="Git\Information.fs" />
     <Compile Include="Git\FileStatus.fs" />
     <Compile Include="Git\CommitMessage.fs" />
-    <Compile Include="Git\Staging.fs" />                                     
+    <Compile Include="Git\Staging.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core">

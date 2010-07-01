@@ -409,7 +409,7 @@
 </member>
 <member name="M:Fake.FileHelper.CopyFile(System.String,System.String)">
 <summary>
- Copies a single file to the target
+ Copies a single file to the target and overwrites the existing file.
    param target: The target directory.
    param fileName: The FileName
 </summary>
@@ -482,6 +482,11 @@
 <member name="M:Fake.FileHelper.allFilesExist(System.Collections.Generic.IEnumerable{System.String})">
 <summary>
  Checks if all given files exists
+</summary>
+</member>
+<member name="M:Fake.FileHelper.checkFileExists(System.String)">
+<summary>
+ Checks if the file exists on disk.
 </summary>
 </member>
 <member name="T:Fake.FileHelper">
@@ -754,6 +759,420 @@
 <member name="T:Fake.FxCopHelper">
 
 </member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.Git.Branches.compareBranches(System.String,System.String,System.String)">
+<summary>
+ Tests whether branches and their &quot;origin&quot; counterparts have diverged and need
+ merging first. It returns error codes to provide more detail, like so:
+
+ 0 - repositoryDir
+ 1 - Branch heads point to the same commit
+ 2 - First given branch needs fast-forwarding
+ 3 - Second given branch needs fast-forwarding
+ 4 - Branch needs a real merge
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.deleteTag(System.String,System.String)">
+<summary>
+ Deletes the given tag
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.Git.Branches.deleteBranch(System.String,System.Boolean,System.String)">
+<summary>
+ Deletes the given branch
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.createBranch(System.String,System.String,System.String)">
+<summary>
+ Creates a new branch from the given commit
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.rebase(System.String,System.String)">
+<summary>
+ Performs a rebase on top of the given branch with the current branch
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.merge(System.String,System.String,System.String)">
+<summary>
+ Performs a merge of the given branch with the current branch
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.checkoutBranch(System.String,System.String)">
+<summary>
+ Performs a checkout of the given branch to the working copy
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.checkoutNewBranch(System.String,System.String,System.String)">
+<summary>
+ Creates a new branch based on the given baseBranch and checks it out to the working copy
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.revisionsBetween(System.String,System.String,System.String)">
+<summary>
+ Returns the number of revisions between the two given commits
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.findMergeBase(System.String,System.String,System.String)">
+<summary>
+ Returns the SHA1 of the merge base of the two given commits
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.getSHA1(System.String,System.String)">
+<summary>
+ Returns the SHA1 of the given head
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.getAllBranches(System.String)">
+<summary>
+ Gets all local and remote branches
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.getRemoteBranches(System.String)">
+<summary>
+ Gets all remote branches
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.getLocalBranches(System.String)">
+<summary>
+ Gets all local branches
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:Fake.Git.Branches">
+
+</member>
+<member name="M:Fake.Git.Checkout.push(System.String)">
+<summary>
+ Push all
+</summary>
+</member>
+<member name="M:Fake.Git.Checkout.checkout(System.String,System.Boolean,System.String)">
+<summary>
+ Checks a branch out
+</summary>
+</member>
+<member name="M:Fake.Git.Checkout.checkoutTracked``1(System.String,``0,System.String,System.String)">
+<summary>
+ Checks a branch out
+</summary>
+</member>
+<member name="T:Fake.Git.Checkout">
+
+</member>
+<member name="M:Fake.Git.CommandHelper.findGitDir(System.String)">
+<summary>
+ Searches the git dir recursivly up to the root
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.Git.CommandHelper.runSimpleGitCommand(System.String,System.String)">
+<summary>
+ Runs the git command and returns the first line of the result
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.Git.CommandHelper.directExec(Microsoft.FSharp.Core.FSharpFunc`2{System.Diagnostics.ProcessStartInfo,Microsoft.FSharp.Core.Unit})">
+<summary>
+ Runs the given process and returns the exit code
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Fake.Git.CommandHelper">
+
+</member>
+<member name="M:Fake.Git.CommitMessage.setMessage(System.String,System.String)">
+<summary>
+ Sets the commit message
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:Fake.Git.CommitMessage">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.Git.FileStatus.cleanWorkingCopy(System.String)">
+<summary>
+ Cleans the working copy by doing a git reset --hard and a clean -f
+</summary>
+</member>
+<member name="M:Fake.Git.FileStatus.isInTheMiddleOfConflictedMerge(System.String)">
+<summary>
+ Returns true if the working copy is in a conflicted merge otherwise false
+</summary>
+</member>
+<member name="M:Fake.Git.FileStatus.getConflictedFiles(System.String)">
+<summary>
+ Gets all conflicted files
+</summary>
+</member>
+<member name="M:Fake.Git.FileStatus.getChangedFilesInWorkingCopy(System.String,System.String)">
+<summary>
+ Gets the changed files since the given revision incl. changes in the working copy
+</summary>
+</member>
+<member name="M:Fake.Git.FileStatus.getChangedFiles(System.String,System.String,System.String)">
+<summary>
+ Gets the changed files between the given revisions
+</summary>
+</member>
+<member name="T:Fake.Git.FileStatus">
+
+</member>
+<member name="M:Fake.Git.Information.isAheadOf(System.String,System.String,System.String)">
+<summary>
+ Returns true if rev1 is ahead of rev2
+</summary>
+</member>
+<member name="M:Fake.Git.Information.showName(System.String,System.String)">
+<summary>
+ Returns a friendly name from a SHA1
+</summary>
+</member>
+<member name="M:Fake.Git.Information.isCleanWorkingCopy(System.String)">
+<summary>
+ Checks if the working copy is clean
+</summary>
+</member>
+<member name="M:Fake.Git.Information.showStatus(System.String)">
+<summary>
+ Shows the git status
+</summary>
+</member>
+<member name="M:Fake.Git.Information.getCurrentSHA1(System.String)">
+<summary>
+ Returns the SHA1 of the current HEAD
+</summary>
+</member>
+<member name="M:Fake.Git.Information.getVersion(System.String)">
+<summary>
+ Gets the git version
+</summary>
+</member>
+<member name="M:Fake.Git.Information.getBranchName(System.String)">
+<summary>
+ Gets the git branch name
+</summary>
+</member>
+<member name="T:Fake.Git.Information">
+
+</member>
+<member name="M:Fake.Git.Merge.getMergeMessage(System.String)">
+<summary>
+ Gets the current merge message
+</summary>
+</member>
+<member name="T:Fake.Git.Merge">
+
+</member>
+<member name="M:Fake.Git.Repository.init(System.String,System.Boolean,System.Boolean)">
+<summary>
+ Inits a git repository
+</summary>
+</member>
+<member name="M:Fake.Git.Repository.clone(System.String,System.String,System.String)">
+<summary>
+ Clones a git repository
+</summary>
+</member>
+<member name="T:Fake.Git.Repository">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Fake.Git.Reset">
+
+</member>
+<member name="M:Fake.Git.SHA1.showObjectHash(System.String,System.String)">
+<summary>
+ shows the SHA1 calculated by git
+</summary>
+</member>
+<member name="M:Fake.Git.SHA1.calcGitSHA1(System.String)">
+<summary>
+ Calculates the SHA1 like git
+</summary>
+</member>
+<member name="M:Fake.Git.SHA1.calcSHA1(System.String)">
+<summary>
+ Calculates the SHA1 for a given string
+</summary>
+</member>
+<member name="T:Fake.Git.SHA1">
+
+</member>
+<member name="M:Fake.Git.SanityChecks.checkIsRemoteBranch(System.String,System.String)">
+<summary>
+ Checks if the given branch is a remote branch.
+</summary>
+</member>
+<member name="M:Fake.Git.SanityChecks.checkIsLocalBranch(System.String,System.String)">
+<summary>
+ Checks if the given branch is a local branch.
+</summary>
+</member>
+<member name="M:Fake.Git.SanityChecks.checkIfBranchIsAbsent(System.String,System.String)">
+<summary>
+ Checks if the given branch is absent.
+</summary>
+</member>
+<member name="M:Fake.Git.SanityChecks.checkIfBranchExists(System.String,System.String)">
+<summary>
+ Checks if the given branch exists.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:Fake.Git.SanityChecks">
+
+</member>
+<member name="M:Fake.Git.Staging.StageFile(System.String,System.String)">
+<summary>
+ Adds a file to the staging area
+</summary>
+</member>
+<member name="T:Fake.Git.Staging">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.Git.Submodule.add(System.String,System.String,System.String,System.String)">
+<summary>
+ Adds a submodule to the current repository.
+  params: superRepositoryDir
+  params: remote Path
+  params: local Path
+  params: branch (can be null)
+</summary>
+</member>
+<member name="M:Fake.Git.Submodule.init(System.String,System.String)">
+<summary>
+ Inits a submodule
+</summary>
+</member>
+<member name="M:Fake.Git.Submodule.getSubModules(System.String)">
+<summary>
+ Gets all submodules
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:Fake.Git.Submodule">
+
+</member>
 <member name="M:Fake.HTMLHelpWorkShopHelper.CompileHTMLHelpProject(System.String,System.String)">
 <summary>
  Uses the HTML Help Workshop to compile a help project
@@ -843,6 +1262,11 @@
 </member>
 <member name="">
 
+</member>
+<member name="P:Fake.MailBoxHelper.verbose">
+<summary>
+ Trace verbose output
+</summary>
 </member>
 <member name="T:Fake.MailBoxHelper">
 
@@ -1127,6 +1551,16 @@
  returns the exit code
 </summary>
 </member>
+<member name="M:Fake.ProcessHelper.ExecProcessAndReturnMessages(Microsoft.FSharp.Core.FSharpFunc`2{System.Diagnostics.ProcessStartInfo,Microsoft.FSharp.Core.Unit})">
+<summary>
+ Runs the given process and returns the exit code
+</summary>
+</member>
+<member name="M:Fake.ProcessHelper.ExecProcessWithLambdas(Microsoft.FSharp.Core.FSharpFunc`2{System.Diagnostics.ProcessStartInfo,Microsoft.FSharp.Core.Unit},System.Boolean,Microsoft.FSharp.Core.FSharpFunc`2{System.String,Microsoft.FSharp.Core.Unit},Microsoft.FSharp.Core.FSharpFunc`2{System.String,Microsoft.FSharp.Core.Unit})">
+<summary>
+ Runs the given process and returns the exit code
+</summary>
+</member>
 <member name="">
 
 </member>
@@ -1238,6 +1672,11 @@
  Drops and creates the database (dropped if db exists. created nonetheless)
 </summary>
 </member>
+<member name="M:Fake.SqlServer.ReplaceDatabaseFiles(System.String,System.String,System.Collections.Generic.IEnumerable{System.String},Microsoft.SqlServer.Management.Smo.AttachOptions)">
+<summary>
+ Replaces the database files
+</summary>
+</member>
 <member name="M:Fake.SqlServer.Disconnect(Fake.SqlServer.ServerInfo)">
 <summary>
  Closes the connection to the server
@@ -1250,7 +1689,22 @@
 </member>
 <member name="M:Fake.SqlServer.CreateDb(Fake.SqlServer.ServerInfo)">
 <summary>
- Drops the given InitialCatalog from the server (if it exists)
+ Creates a new db on the given server
+</summary>
+</member>
+<member name="M:Fake.SqlServer.Attach(Fake.SqlServer.ServerInfo,Microsoft.SqlServer.Management.Smo.AttachOptions,System.Collections.Generic.IEnumerable{System.String})">
+<summary>
+ Attach a database  
+</summary>
+</member>
+<member name="M:Fake.SqlServer.Detach(Fake.SqlServer.ServerInfo)">
+<summary>
+ Detach a database        
+</summary>
+</member>
+<member name="M:Fake.SqlServer.KillAllProcesses(Fake.SqlServer.ServerInfo)">
+<summary>
+ Kills all Processes
 </summary>
 </member>
 <member name="M:Fake.SqlServer.DropDb(Fake.SqlServer.ServerInfo)">
@@ -1311,6 +1765,18 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
 <member name="M:Fake.StringHelper.op_LessMultiply(System.String,System.String)">
 <summary>
  Checks wether the given text starts with the given prefix
@@ -1326,10 +1792,30 @@
  Removes the slashes from the end of the given string
 </summary>
 </member>
+<member name="M:Fake.StringHelper.shortenCurrentDirectory(System.String)">
+<summary>
+ Replaces any occurence of the currentDirectory with .
+</summary>
+</member>
 <member name="M:Fake.StringHelper.toRelativePath(System.String)">
 <summary>
  Replaces the absolute path to a relative
 </summary>
+</member>
+<member name="M:Fake.StringHelper.ProduceRelativePath(System.String,System.String)">
+ <summary>
+ Produces relative path when possible to go from baseLocation to targetLocation
+ </summary>
+ <param name="baseLocation">The root folder</param>
+ <param name="targetLocation">The target folder</param>
+ <returns>The relative path relative to baseLocation</returns>
+ <exception cref="ArgumentNullException">base or target locations are null or empty</exception>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
 </member>
 <member name="M:Fake.StringHelper.appendFileNamesIfNotNull(System.Collections.Generic.IEnumerable{System.String},System.Text.StringBuilder)">
 <summary>
@@ -1986,11 +2472,6 @@
 <member name="P:Fake.TraceHelper.fakePath">
 <summary>
  Gets the path of the current FAKE instance
-</summary>
-</member>
-<member name="P:Fake.TraceHelper.verbose">
-<summary>
- Trace verbose output
 </summary>
 </member>
 <member name="T:Fake.TraceHelper">
