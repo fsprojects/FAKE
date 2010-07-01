@@ -8,13 +8,12 @@ type FileStatus =
 | Added
 | Modified
 | Deleted
-  with 
-    static member parse s = 
-      match s with
-      | "A" -> Added
-      | "M" -> Modified
-      | "D" -> Deleted
-      | _ -> failwith <| sprintf "Unknown file status %s" s
+    with 
+        static member Parse = function      
+          | "A" -> Added
+          | "M" -> Modified
+          | "D" -> Deleted
+          | s -> failwithf "Unknown file status %s" s
  
 /// Gets the changed files between the given revisions
 let getChangedFiles repositoryDir revision1 revision2 =    
@@ -26,7 +25,7 @@ let getChangedFiles repositoryDir revision1 revision2 =
     msg
       |> Seq.map (fun line -> 
             let a = line.Split('\t')
-            FileStatus.parse a.[0],a.[1])
+            FileStatus.Parse a.[0],a.[1])
 
 /// Gets the changed files since the given revision incl. changes in the working copy
 let getChangedFilesInWorkingCopy repositoryDir revision = getChangedFiles repositoryDir revision ""
