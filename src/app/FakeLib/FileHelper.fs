@@ -128,8 +128,26 @@ let CopyFile target fileName =
 ///   param files: The original FileNames as a sequence.
 let Copy target files = 
     files
-    |> doParallel (CopyFile target) 
-    |> ignore
+      |> doParallel (CopyFile target) 
+      |> ignore
+
+/// Copies the files from a cache folder
+/// If the files ar not cached or the original files have a different write time the cache will be refreshed
+let CopyCached target cacheDir files = 
+    let cache = directoryInfo cacheDir
+    if not cache.Exists then cache.Create()
+    files
+        |> doParallel (fun fileName -> 
+            let fi = fileInfo fileName
+            let cached = cacheDir @@ fi.Name
+            let cachedFi = fileInfo cached
+            if not cachedFi.Exists || cachedFi.LastWriteTime <> fi.LastWriteTime then
+                tracefn "Cached file %s doesn't exist or is not up to date. Copying file to cache." cached
+                CopyFile cacheDir fi.FullName
+            else
+               tracefn "Cached file %s is up to date." cached
+            CopyFile target cached
+            target @@ fi.Name)
 
 /// Renames the files to the target fileName
 ///   param target: The target FileName.
