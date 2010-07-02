@@ -51,4 +51,4 @@ let ProgramFilesX86 =
         environVar "ProgramFiles"
 
 /// The path to the personal documents
-let personalFolder = Environment.GetFolderPath(Environment.SpecialFolder.Personal)
+let documentsFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
