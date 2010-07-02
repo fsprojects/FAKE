@@ -19,11 +19,6 @@ let appReferences  =
       ++ @"src\app\**\*.fsproj" 
         |> Scan
 
-let testReferences = 
-    !+ @"src\app\**\*.csproj" 
-      ++ @"src\app\**\*.fsproj" 
-        |> Scan
-
 // version info
 let version = "0.2"  // or retrieve from CI server
 
@@ -49,7 +44,7 @@ Target? BuildApp <-
 
 Target? BuildTest <-
     fun _ -> 
-        MSBuildDebug testDir "Build" testReferences
+        MSBuildDebug testDir "Build" appReferences
           |> Log "TestBuild-Output: "
 
 Target? NUnitTest <-
