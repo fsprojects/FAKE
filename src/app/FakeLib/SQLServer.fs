@@ -118,18 +118,28 @@ let runScript serverInfo sqlFile =
 let Disconnect serverInfo = serverInfo.Server.ConnectionContext.Disconnect()
 
 /// Replaces the database files
-let ReplaceDatabaseFiles connectionString targetDir files attachOptions =
+let internal replaceDatabaseFiles connectionString attachOptions copyF =
     connectionString
       |> getServerInfo
       |> fun si -> if existDBOnServer si (getDBName si) then Detach si else si
-      |> fun si ->             
+      |> fun si -> copyF() |> Attach si attachOptions
+      |> Disconnect
+
+/// Replaces the database files
+let ReplaceDatabaseFiles connectionString targetDir files attachOptions =
+    replaceDatabaseFiles connectionString attachOptions
+        (fun _ ->
             files 
               |> Seq.map (fun fileName ->     
                     let fi = new FileInfo(fileName)
                     CopyFile targetDir fileName
-                    targetDir @@ fi.Name)
-              |> Attach si attachOptions
-      |> Disconnect
+                    targetDir @@ fi.Name))
+
+/// Replaces the database files from a cache
+/// If the files in the cache are not up to date, they will be refreshed
+let ReplaceDatabaseFilesWithCache connectionString targetDir cacheDir files attachOptions =
+    replaceDatabaseFiles connectionString attachOptions
+        (fun _ -> CopyCached targetDir cacheDir files)
  
 /// Drops and creates the database (dropped if db exists. created nonetheless)
 let DropAndCreateDatabase connectionString = 
