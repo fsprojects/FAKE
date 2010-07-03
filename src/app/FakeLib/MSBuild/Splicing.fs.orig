@@ -5,11 +5,19 @@ open Fake
 open System.Xml
 open System.Xml.Linq
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3f98a2a73c84dec93096f4bc3c6174f64181c5b4
 type MSBuildProject = XDocument
 
 let normalize (project:MSBuildProject) =
     "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
         project.ToString(SaveOptions.DisableFormatting) 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3f98a2a73c84dec93096f4bc3c6174f64181c5b4
 
 let ns = "http://schemas.microsoft.com/developer/msbuild/2003"
 let xname name = XName.Get(name,ns)
