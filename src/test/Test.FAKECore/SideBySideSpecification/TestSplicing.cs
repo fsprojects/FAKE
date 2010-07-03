@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Xml.Linq;
 using Fake.MSBuild;
 using NUnit.Framework;
 using Test.Git;
@@ -8,26 +9,38 @@ namespace Test.FAKECore.SideBySideSpecification
     [TestFixture]
     public class TestSplicing
     {
+        #region Setup/Teardown
+
+        [SetUp]
+        public void Setup()
+        {
+            _project1 = Splicing.loadProject(@"SideBySideSpecification\Project1.txt");
+        }
+
+        #endregion
+
+        private XDocument _project1;
+
+        private static void CheckResult(XDocument result, string resultFileName)
+        {
+            Splicing.normalize(result).ShouldEqual(File.ReadAllText(resultFileName));
+        }
+
         [Test]
         public void CanSpliceNUnitReference()
         {
-            var project1 = File.ReadAllText(@"SideBySideSpecification\Project1.txt");
-            var project1Result = File.ReadAllText(@"SideBySideSpecification\Project1_WithoutNUnit.txt");
-
-            var result = Splicing.removeAssemblyReference(project1,
+            var result = Splicing.removeAssemblyReference(_project1,
                                                           Extensions.Convert<string, bool>(s => s.StartsWith("nunit")));
-            result.ShouldEqual(project1Result);
+
+            CheckResult(result, @"SideBySideSpecification\Project1_WithoutNUnit.txt");
         }
 
         [Test]
         public void CanSpliceTestFiles()
         {
-            var project1 = File.ReadAllText(@"SideBySideSpecification\Project1.txt");
-            var project1Result = File.ReadAllText(@"SideBySideSpecification\Project1_WithoutTests.txt");
+            var result = Splicing.removeFiles(_project1, Extensions.Convert<string, bool>(s => s.EndsWith("Specs.cs")));
 
-            var result = Splicing.removeFiles(project1,
-                                                          Extensions.Convert<string, bool>(s => s.EndsWith("Specs.cs")));
-            result.ShouldEqual(project1Result);
+            CheckResult(result, @"SideBySideSpecification\Project1_WithoutTests.txt");
         }
     }
 }
