@@ -18,5 +18,16 @@ namespace Test.FAKECore.SideBySideSpecification
                                                           Extensions.Convert<string, bool>(s => s.StartsWith("nunit")));
             result.ShouldEqual(project1Result);
         }
+
+        [Test]
+        public void CanSpliceTestFiles()
+        {
+            var project1 = File.ReadAllText(@"SideBySideSpecification\Project1.txt");
+            var project1Result = File.ReadAllText(@"SideBySideSpecification\Project1_WithoutTests.txt");
+
+            var result = Splicing.removeFiles(project1,
+                                                          Extensions.Convert<string, bool>(s => s.EndsWith("Specs.cs")));
+            result.ShouldEqual(project1Result);
+        }
     }
 }
