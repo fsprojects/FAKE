@@ -11,8 +11,8 @@ let normalize (project:MSBuildProject) =
     "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
         project.ToString(SaveOptions.DisableFormatting) 
 
-let ns = "http://schemas.microsoft.com/developer/msbuild/2003"
-let xname name = XName.Get(name,ns)
+let msbuildNamespace = "http://schemas.microsoft.com/developer/msbuild/2003"
+let xname name = XName.Get(name,msbuildNamespace)
 
 let loadProject (projectFileName:string) : MSBuildProject = 
     MSBuildProject.Load(projectFileName,LoadOptions.PreserveWhitespace)
