@@ -82,6 +82,7 @@
     <Compile Include="FileHandling\BaseTest.cs" />
     <Compile Include="FileHandling\TestCopyDir.cs" />
     <Compile Include="FileHandling\TestRelativeFileScan.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="SideBySideSpecification\StripingOfTestClasses.cs" />
     <Compile Include="TestRelativePaths.cs" />
     <Compile Include="XMLHandling\TestLoadXML.cs" />
@@ -120,7 +121,10 @@
     <Content Include="SideBySideSpecification\Project1.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="SideBySideSpecification\Project1_WithoutNUnit.txt" />
+    <Content Include="SideBySideSpecification\Project1_WithoutNUnit.txt">
+      <DependentUpon>Project1.txt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
