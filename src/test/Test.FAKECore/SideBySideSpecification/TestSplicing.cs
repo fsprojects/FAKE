@@ -29,8 +29,8 @@ namespace Test.FAKECore.SideBySideSpecification
         [Test]
         public void CanSpliceNUnitReference()
         {
-            var result = Splicing.removeAssemblyReference(_project1,
-                                                          Extensions.Convert<string, bool>(s => s.StartsWith("nunit")));
+            var result = Splicing.removeAssemblyReference(Extensions.Convert<string, bool>(s => s.StartsWith("nunit")),
+                                                          _project1);
 
             CheckResult(result, @"SideBySideSpecification\Project1_WithoutNUnit.txt");
         }
@@ -38,7 +38,7 @@ namespace Test.FAKECore.SideBySideSpecification
         [Test]
         public void CanSpliceTestFiles()
         {
-            var result = Splicing.removeFiles(_project1, Extensions.Convert<string, bool>(s => s.EndsWith("Specs.cs")));
+            var result = Splicing.removeFiles(Extensions.Convert<string, bool>(s => s.EndsWith("Specs.cs")), _project1);
 
             CheckResult(result, @"SideBySideSpecification\Project1_WithoutTests.txt");
         }

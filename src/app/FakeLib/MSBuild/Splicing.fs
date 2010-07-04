@@ -17,7 +17,7 @@ let xname name = XName.Get(name,msbuildNamespace)
 let loadProject (projectFileName:string) : MSBuildProject = 
     MSBuildProject.Load(projectFileName,LoadOptions.PreserveWhitespace)
 
-let removeFilteredElement (doc:XDocument) elementName filterF =
+let removeFilteredElement elementName filterF (doc:XDocument) =
     let references =
         doc
           .Descendants(xname "Project")
@@ -29,9 +29,15 @@ let removeFilteredElement (doc:XDocument) elementName filterF =
     references.Remove()
     doc
 
-let removeAssemblyReference (doc:XDocument) filterF =
-    removeFilteredElement doc "Reference" filterF
+let removeAssemblyReference filterF (doc:XDocument)=
+    removeFilteredElement "Reference" filterF doc
 
+let removeFiles filterF (doc:XDocument) =
+    removeFilteredElement "Compile" filterF doc
 
-let removeFiles (doc:XDocument) filterF =
-    removeFilteredElement doc "Compile" filterF
+let RemoveTestsFromProject assemblyFilterF fileFilterF (targetFileName:string) projectFileName =
+    projectFileName
+      |> loadProject
+      |> removeAssemblyReference assemblyFilterF
+      |> removeFiles fileFilterF
+      |> fun doc -> doc.Save(targetFileName,SaveOptions.DisableFormatting)

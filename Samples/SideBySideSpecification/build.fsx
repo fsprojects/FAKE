@@ -1,8 +1,9 @@
 // include Fake libs
-#I "tools\FAKE"
+#I @"tools\FAKE"
 #r "FakeLib.dll"
 
 open Fake
+open Fake.MSBuild
 
 // Directories
 let buildDir  = @".\build\"
@@ -39,7 +40,16 @@ Target? BuildApp <-
               OutputFileName = @".\src\app\CalculatorLib\Properties\AssemblyInfo.cs"})          
       
         // compile all projects below src\app\
-        MSBuildRelease buildDir "Build" appReferences
+        appReferences 
+          |> Seq.map (fun project -> 
+                let target = project + "_Spliced"
+                RemoveTestsFromProject 
+                    (fun s -> s.StartsWith("nunit"))
+                    (fun s -> s.EndsWith("Specs.cs"))
+                    target
+                    project
+                target)
+          |> MSBuildRelease buildDir "Build"
           |> Log "AppBuild-Output: "
 
 Target? BuildTest <-
