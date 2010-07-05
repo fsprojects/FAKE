@@ -42,13 +42,11 @@ Target? BuildApp <-
         // compile all projects below src\app\
         appReferences 
           |> Seq.map (fun project -> 
-                let target = project + "_Spliced"
                 RemoveTestsFromProject 
                     (fun s -> s.StartsWith("nunit"))
                     (fun s -> s.EndsWith("Specs.cs"))
-                    target
-                    project
-                target)
+                    (project + "_Spliced")
+                    project)
           |> MSBuildRelease buildDir "Build"
           |> Log "AppBuild-Output: "
 

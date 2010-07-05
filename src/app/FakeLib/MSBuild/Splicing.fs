@@ -41,3 +41,4 @@ let RemoveTestsFromProject assemblyFilterF fileFilterF (targetFileName:string) p
       |> removeAssemblyReference assemblyFilterF
       |> removeFiles fileFilterF
       |> fun doc -> doc.Save(targetFileName,SaveOptions.DisableFormatting)
+    targetFileName
