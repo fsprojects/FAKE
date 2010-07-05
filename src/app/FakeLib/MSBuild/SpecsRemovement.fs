@@ -1,5 +1,5 @@
 [<AutoOpen>]
-module Fake.MSBuild.Splicing
+module Fake.MSBuild.SpecsRemovement
 
 open Fake
 open System.Xml

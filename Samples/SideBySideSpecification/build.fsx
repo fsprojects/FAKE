@@ -39,7 +39,6 @@ Target? BuildApp <-
               Guid = "EE5621DB-B86B-44eb-987F-9C94BCC98441";
               OutputFileName = @".\src\app\CalculatorLib\Properties\AssemblyInfo.cs"})          
       
-        // compile all projects below src\app\
         appReferences 
           |> Seq.map (RemoveTestsFromProject AllNUnitReferences AllSpecFiles)
           |> MSBuildRelease buildDir "Build"

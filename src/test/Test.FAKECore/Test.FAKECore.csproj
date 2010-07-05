@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -83,7 +83,7 @@
     <Compile Include="FileHandling\TestCopyDir.cs" />
     <Compile Include="FileHandling\TestRelativeFileScan.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="SideBySideSpecification\TestSplicing.cs" />
+    <Compile Include="SideBySideSpecification\SpecsRemovementTest.cs" />
     <Compile Include="TestRelativePaths.cs" />
     <Compile Include="XMLHandling\TestLoadXML.cs" />
     <Compile Include="XMLHandling\TestXMLPoke.cs" />
@@ -118,8 +118,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SideBySideSpecification\Project1.txt" >
-          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Include="SideBySideSpecification\Project1.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="SideBySideSpecification\Project1_WithoutNUnit.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
