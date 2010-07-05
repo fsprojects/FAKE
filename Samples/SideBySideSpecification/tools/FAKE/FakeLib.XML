@@ -207,29 +207,9 @@
 <member name="">
 
 </member>
-<member name="M:Fake.EnvironmentHelper.filesInDir(System.IO.DirectoryInfo)">
+<member name="P:Fake.EnvironmentHelper.documentsFolder">
 <summary>
- Gets all files in the directory
-</summary>
-</member>
-<member name="M:Fake.EnvironmentHelper.subDirectories(System.IO.DirectoryInfo)">
-<summary>
- Gets all subdirectories
-</summary>
-</member>
-<member name="M:Fake.EnvironmentHelper.FullName(System.String)">
-<summary>
- Converts a file to it&apos;s full file system name
-</summary>
-</member>
-<member name="M:Fake.EnvironmentHelper.fileInfo(System.String)">
-<summary>
- Creates a FileInfo for the given path
-</summary>
-</member>
-<member name="M:Fake.EnvironmentHelper.directoryInfo(System.String)">
-<summary>
- Creates a DirectoryInfo for the given path
+ The path to the personal documents
 </summary>
 </member>
 <member name="P:Fake.EnvironmentHelper.ProgramFilesX86">
@@ -262,6 +242,16 @@
  Retrieves a ApplicationSettings variable
 </summary>
 </member>
+<member name="M:Fake.EnvironmentHelper.environVarOrDefault(System.String,System.String)">
+<summary>
+ Retrieves the EnvironmentVariable or a default
+</summary>
+</member>
+<member name="M:Fake.EnvironmentHelper.setEnvironVar(System.String,System.String)">
+<summary>
+ Sets the Environment variable
+</summary>
+</member>
 <member name="M:Fake.EnvironmentHelper.environVars(System.EnvironmentVariableTarget)">
 <summary>
  Retrieves the EnvironmentVariable
@@ -270,11 +260,6 @@
 <member name="M:Fake.EnvironmentHelper.op_AtAt(System.String,System.String)">
 <summary>
  Combines to path strings
-</summary>
-</member>
-<member name="P:Fake.EnvironmentHelper.currentDirectory">
-<summary>
- Gets the current directory
 </summary>
 </member>
 <member name="M:Fake.EnvironmentHelper.environVar(System.String)">
@@ -400,6 +385,12 @@
    param file: The orginal FileName.
 </summary>
 </member>
+<member name="M:Fake.FileHelper.CopyCached(System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
+<summary>
+ Copies the files from a cache folder
+ If the files ar not cached or the original files have a different write time the cache will be refreshed
+</summary>
+</member>
 <member name="M:Fake.FileHelper.Copy(System.String,System.Collections.Generic.IEnumerable{System.String})">
 <summary>
  Copies the files to the target
@@ -477,16 +468,6 @@
 <member name="M:Fake.FileHelper.recursively(Microsoft.FSharp.Core.FSharpFunc`2{System.IO.DirectoryInfo,Microsoft.FSharp.Core.Unit},Microsoft.FSharp.Core.FSharpFunc`2{System.IO.FileInfo,Microsoft.FSharp.Core.Unit},System.IO.DirectoryInfo)">
 <summary>
  Performs the given actions on all files and subdirectories
-</summary>
-</member>
-<member name="M:Fake.FileHelper.allFilesExist(System.Collections.Generic.IEnumerable{System.String})">
-<summary>
- Checks if all given files exists
-</summary>
-</member>
-<member name="M:Fake.FileHelper.checkFileExists(System.String)">
-<summary>
- Checks if the file exists on disk.
 </summary>
 </member>
 <member name="T:Fake.FileHelper">
@@ -660,6 +641,49 @@
 </summary>
 </member>
 <member name="T:Fake.FileSetHelper">
+
+</member>
+<member name="M:Fake.FileSystemHelper.allFilesExist(System.Collections.Generic.IEnumerable{System.String})">
+<summary>
+ Checks if all given files exists
+</summary>
+</member>
+<member name="M:Fake.FileSystemHelper.checkFileExists(System.String)">
+<summary>
+ Checks if the file exists on disk.
+</summary>
+</member>
+<member name="P:Fake.FileSystemHelper.currentDirectory">
+<summary>
+ Gets the current directory
+</summary>
+</member>
+<member name="M:Fake.FileSystemHelper.filesInDir(System.IO.DirectoryInfo)">
+<summary>
+ Gets all files in the directory
+</summary>
+</member>
+<member name="M:Fake.FileSystemHelper.subDirectories(System.IO.DirectoryInfo)">
+<summary>
+ Gets all subdirectories
+</summary>
+</member>
+<member name="M:Fake.FileSystemHelper.FullName(System.String)">
+<summary>
+ Converts a file to it&apos;s full file system name
+</summary>
+</member>
+<member name="M:Fake.FileSystemHelper.fileInfo(System.String)">
+<summary>
+ Creates a FileInfo for the given path
+</summary>
+</member>
+<member name="M:Fake.FileSystemHelper.directoryInfo(System.String)">
+<summary>
+ Creates a DirectoryInfo for the given path
+</summary>
+</member>
+<member name="T:Fake.FileSystemHelper">
 
 </member>
 <member name="">
@@ -863,6 +887,11 @@
 <member name="T:Fake.Git.Branches">
 
 </member>
+<member name="M:Fake.Git.Checkout.pull(System.String,System.String,System.String)">
+<summary>
+ Pull
+</summary>
+</member>
 <member name="M:Fake.Git.Checkout.push(System.String)">
 <summary>
  Push all
@@ -973,6 +1002,11 @@
 <member name="M:Fake.Git.FileStatus.getChangedFilesInWorkingCopy(System.String,System.String)">
 <summary>
  Gets the changed files since the given revision incl. changes in the working copy
+</summary>
+</member>
+<member name="M:Fake.Git.FileStatus.getAllFiles(System.String)">
+<summary>
+ Gets all changed files in the current revision
 </summary>
 </member>
 <member name="M:Fake.Git.FileStatus.getChangedFiles(System.String,System.String,System.String)">
@@ -1207,6 +1241,49 @@
 </summary>
 </member>
 <member name="T:Fake.ILMergeHelper">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.MSBuild.Splicing.AllSpecFiles(System.String)">
+<summary>
+ All Spec.cs or Spec.f files
+</summary>
+</member>
+<member name="M:Fake.MSBuild.Splicing.AllNUnitReferences(System.String)">
+<summary>
+ All references to nunit.*.dlls
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Fake.MSBuild.Splicing">
 
 </member>
 <member name="M:Fake.MSBuildHelper.MSBuildRelease(System.String,System.String)">
@@ -1659,20 +1736,41 @@
 </member>
 <member name="M:Fake.SqlServer.RunScriptsFromDirectory(System.String,System.String)">
 <summary>
- Runs all sql scripts from the given directory on the server  
+ Runs all sql scripts from the given directory on the server
+ &lt;param name=&quot;connectionString&quot;&gt;Used to open the connection to the database.&lt;/param&gt;
+ &lt;param name=&quot;scriptDirectory&quot;&gt;All *.sql files inside this directory and all subdirectories will be run.&lt;/param&gt;
 </summary>
 </member>
 <member name="M:Fake.SqlServer.RunScripts(System.String,System.Collections.Generic.IEnumerable{System.String})">
 <summary>
  Runs the given sql scripts on the server
+ &lt;param name=&quot;connectionString&quot;&gt;Used to open the connection to the database.&lt;/param&gt;
+ &lt;param name=&quot;scripts&quot;&gt;The scripts which will be run.&lt;/param&gt;
 </summary>
 </member>
 <member name="M:Fake.SqlServer.DropAndCreateDatabase(System.String)">
 <summary>
  Drops and creates the database (dropped if db exists. created nonetheless)
+ &lt;param name=&quot;connectionString&quot;&gt;Used to open the connection to the database.&lt;/param&gt;
+</summary>
+</member>
+<member name="M:Fake.SqlServer.ReplaceDatabaseFilesWithCache(System.String,System.String,System.String,System.Collections.Generic.IEnumerable{System.String},Microsoft.SqlServer.Management.Smo.AttachOptions)">
+<summary>
+ Replaces the database files from a cache
+ If the files in the cache are not up to date, they will be refreshed
+ &lt;param name=&quot;connectionString&quot;&gt;Used to open the connection to the database.&lt;/param&gt;
+ &lt;param name=&quot;targetDir&quot;&gt;The directory where the attached files will live.&lt;/param&gt;
+ &lt;param name=&quot;cacheDir&quot;&gt;The file cache. If the files in the cache are not up to date, they will be refreshed.&lt;/param&gt;
+ &lt;param name=&quot;files&quot;&gt;The original database files.&lt;/param&gt;
+ &lt;param name=&quot;attachOptions&quot;&gt;AttachOptions for Sql server.&lt;/param&gt;
 </summary>
 </member>
 <member name="M:Fake.SqlServer.ReplaceDatabaseFiles(System.String,System.String,System.Collections.Generic.IEnumerable{System.String},Microsoft.SqlServer.Management.Smo.AttachOptions)">
+<summary>
+ Replaces the database files
+</summary>
+</member>
+<member name="M:Fake.SqlServer.replaceDatabaseFiles``1(System.String,Microsoft.SqlServer.Management.Smo.AttachOptions,Microsoft.FSharp.Core.FSharpFunc`2{Microsoft.FSharp.Core.Unit,``0})">
 <summary>
  Replaces the database files
 </summary>
@@ -1685,6 +1783,8 @@
 <member name="M:Fake.SqlServer.runScript(Fake.SqlServer.ServerInfo,System.String)">
 <summary>
  Runs a sql script on the server
+ &lt;param name=&quot;serverInfo&quot;&gt;Used as a connection to the database.&lt;/param&gt;
+ &lt;param name=&quot;sqlFile&quot;&gt;The script which will be run.&lt;/param&gt;
 </summary>
 </member>
 <member name="M:Fake.SqlServer.CreateDb(Fake.SqlServer.ServerInfo)">
@@ -1722,22 +1822,27 @@
  Gets the initial catalog as database instance
 </summary>
 </member>
-<member name="M:Fake.SqlServer.getDBName(Fake.SqlServer.ServerInfo)">
-<summary>
- Gets the initial catalog name
-</summary>
-</member>
-<member name="M:Fake.SqlServer.getServerName(Fake.SqlServer.ServerInfo)">
-<summary>
- Gets the name of the sercer
-</summary>
-</member>
 <member name="M:Fake.SqlServer.existDBOnServer(Fake.SqlServer.ServerInfo,System.String)">
 <summary>
  Checks wether the given Database exists on the server
 </summary>
 </member>
+<member name="M:Fake.SqlServer.getServerName(Fake.SqlServer.ServerInfo)">
+<summary>
+ Gets the name of the server
+</summary>
+</member>
+<member name="M:Fake.SqlServer.getDBName(Fake.SqlServer.ServerInfo)">
+<summary>
+ Gets the initial catalog name
+</summary>
+</member>
 <member name="M:Fake.SqlServer.getDatabaseNamesFromServer(Fake.SqlServer.ServerInfo)">
+<summary>
+ gets the DatabaseNames from the server
+</summary>
+</member>
+<member name="M:Fake.SqlServer.getDatabasesFromServer(Fake.SqlServer.ServerInfo)">
 <summary>
  gets the DatabaseNames from the server
 </summary>
