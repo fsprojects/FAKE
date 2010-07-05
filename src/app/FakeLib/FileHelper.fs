@@ -141,11 +141,17 @@ let CopyCached target cacheDir files =
             let fi = fileInfo fileName
             let cached = cacheDir @@ fi.Name
             let cachedFi = fileInfo cached
-            if not cachedFi.Exists || cachedFi.LastWriteTime <> fi.LastWriteTime then
-                tracefn "Cached file %s doesn't exist or is not up to date. Copying file to cache." cached
-                CopyFile cacheDir fi.FullName
+            if not fi.Exists then
+                if not cachedFi.Exists then 
+                    failwithf "Original file %s and cached file %s do not exist." fileName cached
+                else
+                    tracefn "Original file %s does not exist, using cached file %s." fileName cached
             else
-               tracefn "Cached file %s is up to date." cached
+                if not cachedFi.Exists || cachedFi.LastWriteTime <> fi.LastWriteTime then
+                    tracefn "Cached file %s doesn't exist or is not up to date. Copying file to cache." cached
+                    CopyFile cacheDir fi.FullName
+                else
+                   tracefn "Cached file %s is up to date." cached
             CopyFile target cached
             target @@ fi.Name)
 
