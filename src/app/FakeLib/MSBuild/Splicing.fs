@@ -35,10 +35,23 @@ let removeAssemblyReference filterF (doc:XDocument)=
 let removeFiles filterF (doc:XDocument) =
     removeFilteredElement "Compile" filterF doc
 
-let RemoveTestsFromProject assemblyFilterF fileFilterF (targetFileName:string) projectFileName =
+let RemoveTestsFromProjectWithFileName assemblyFilterF fileFilterF (targetFileName:string) projectFileName =
     projectFileName
       |> loadProject
       |> removeAssemblyReference assemblyFilterF
       |> removeFiles fileFilterF
       |> fun doc -> doc.Save(targetFileName,SaveOptions.DisableFormatting)
     targetFileName
+
+let RemoveTestsFromProject assemblyFilterF fileFilterF projectFileName =
+    let fi = fileInfo projectFileName            
+    let targetFileName = fi.Directory.FullName @@ (fi.Name + "_Spliced" + fi.Extension)
+    RemoveTestsFromProjectWithFileName assemblyFilterF fileFilterF targetFileName projectFileName 
+
+// Default filters
+
+/// All references to nunit.*.dlls
+let AllNUnitReferences = fun (s:string) -> s.StartsWith("nunit")
+
+/// All Spec.cs or Spec.f files
+let AllSpecFiles = fun (s:string) -> s.EndsWith("Specs.cs") || s.EndsWith("Specs.fs")

@@ -41,12 +41,7 @@ Target? BuildApp <-
       
         // compile all projects below src\app\
         appReferences 
-          |> Seq.map (fun project -> 
-                RemoveTestsFromProject 
-                    (fun s -> s.StartsWith("nunit"))
-                    (fun s -> s.EndsWith("Specs.cs"))
-                    (project + "_Spliced")
-                    project)
+          |> Seq.map (RemoveTestsFromProject AllNUnitReferences AllSpecFiles)
           |> MSBuildRelease buildDir "Build"
           |> Log "AppBuild-Output: "
 
