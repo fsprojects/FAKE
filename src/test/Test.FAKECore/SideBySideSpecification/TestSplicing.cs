@@ -23,7 +23,9 @@ namespace Test.FAKECore.SideBySideSpecification
 
         private static void CheckResult(XDocument result, string resultFileName)
         {
-            Splicing.normalize(result).ShouldEqual(File.ReadAllText(resultFileName));
+            var spliced = Splicing.normalize(result);
+            var expected = File.ReadAllText(resultFileName).Replace("\r\n", "\n");
+            spliced.Replace("\r\n", "\n").ShouldEqual(expected);
         }
 
         [Test]
