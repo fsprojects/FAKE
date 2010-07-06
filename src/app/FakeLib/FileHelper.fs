@@ -116,7 +116,7 @@ let CopyFileIntoSubFolder target fileName =
 
 /// <summary>Copies a single file to the target and overwrites the existing file.</summary>
 /// <param name="target">The target directory.</param>
-/// <param fileName">The FileName.</param>
+/// <param name="fileName">The FileName.</param>
 let CopyFile target fileName =
     let fi = fileInfo fileName
     let targetName = target @@ fi.Name
