@@ -12,10 +12,10 @@ type PostMethod =
 | POST
 
 /// Executes an HTTP GET command and retrives the information.    
-///   param userName: The username to use with the request
-///   param password: The password to use with the request
-///   param url: The URL to perform the GET operation  
-///   returns: The response of the request, or null if we got 404 or nothing.
+/// <param name="userName">The username to use with the request</param>
+/// <param name="password">The password to use with the request</param>
+/// <param name="url">The URL to perform the GET operation</param>
+/// <returns>The response of the request, or null if we got 404 or nothing.</returns>
 let ExecuteGetCommand (userName:string) (password:string) (url:string) =
     use client = new WebClient()
     if userName <> null || password <> null then    
@@ -32,12 +32,12 @@ let ExecuteGetCommand (userName:string) (password:string) (url:string) =
 
 /// Executes an HTTP POST command and retrives the information.    
 /// This function will automatically include a "source" parameter if the "Source" property is set.
-///   param headerF: The client information to perform the POST operation  
-///   param url: The URL to perform the POST operation
-///   param userName: The username to use with the request
-///   param password: The password to use with the request
-///   param data: The data to post
-///   returns: The response of the request, or null if we got 404 or nothing.
+/// <param name="headerF">The client information to perform the POST operation.</param>
+/// <param name="url">The URL to perform the POST operation</param>
+/// <param name="userName">The username to use with the request</param>
+/// <param name="password">The password to use with the request</param>
+/// <param name="data">The data to post</param>
+/// <returns> The response of the request, or null if we got 404 or nothing.</returns>
 let ExecutePostCommand headerF (url:string) userName password (data:string) =
     System.Net.ServicePointManager.Expect100Continue <- false 
     let request = WebRequest.Create url
