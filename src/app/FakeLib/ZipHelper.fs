@@ -56,25 +56,22 @@ let CreateZip workingDir fileName comment level flatten files =
     stream.Finish()
     tracefn "Zip successfully created %s" fileName
  
-/// Creates a zip file with the given files 
-///
-/// Parameter 1: workingDir - The relative dir of the zip files. Use this parameter to influence directory structure within zip file.
-/// Parameter 2: fileName - The fileName of the resulting zip file.
-/// Parameter 3: files - A sequence with files to zip.
+/// <summary>Creates a zip file with the given files.</summary>
+/// <param name="workingDir">The relative dir of the zip files. Use this parameter to influence directory structure within zip file.</param>
+/// <param name="fileName">The fileName of the resulting zip file.</param>
+/// <param name="files">A sequence with files to zip.</param>
 let Zip workingDir fileName = CreateZip workingDir fileName "" DefaultZipLevel false
   
-/// Creates a zip file with the given file 
-///
-/// Parameter 1: fileName - The fileName of the resulting zip file.
-/// Parameter 2: fileName - The file to zip.
+/// <summary>Creates a zip file with the given file.</summary>
+/// <param name="fileName">The fileName of the resulting zip file.</param>
+/// <param name="targetFileName">The file to zip.</param>
 let ZipFile fileName targetFileName =
     let fi = fileInfo targetFileName    
     CreateZip (fi.Directory.FullName) fileName "" DefaultZipLevel false [fi.FullName]
 
-/// Unzips a file with the given fileName
-///
-/// Parameter 1: target - The target directory.
-/// Parameter 2: fileName - The fileName of the zip file.
+/// <summary>Unzips a file with the given fileName.</summary>
+/// <param name="target">The target directory.</param>
+/// <param name="fileName">The fileName of the zip file.</param>
 let Unzip target fileName =  
     let zip = new FastZip()
     zip.ExtractZip (fileName, target, "")

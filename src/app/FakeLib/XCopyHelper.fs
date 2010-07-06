@@ -1,9 +1,9 @@
 ﻿[<AutoOpen>]
 module Fake.XCopyHelper
 
-/// Performs a XCopy 
-///  param source: The source directory (fileName)
-///  param destination: The target directory (fileName)
+/// <summary>Performs a XCopy.</summary>
+/// <param name="source">The source directory (fileName)</param>
+/// <param name="destination">The target directory (fileName)</param>
 let XCopy source destination =
     tracefn "XCopy %s %s" source destination
     

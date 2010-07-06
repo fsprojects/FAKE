@@ -11,7 +11,7 @@ type PostMethod =
 | GET
 | POST
 
-/// Executes an HTTP GET command and retrives the information.    
+/// <summary>Executes an HTTP GET command and retrives the information.</summary>    
 /// <param name="userName">The username to use with the request</param>
 /// <param name="password">The password to use with the request</param>
 /// <param name="url">The URL to perform the GET operation</param>
@@ -30,8 +30,8 @@ let ExecuteGetCommand (userName:string) (password:string) (url:string) =
          // TODO: Handle HTTP 404 errors gracefully and return a null string to indicate there is no content.
          null
 
-/// Executes an HTTP POST command and retrives the information.    
-/// This function will automatically include a "source" parameter if the "Source" property is set.
+/// <summary>Executes an HTTP POST command and retrives the information.    
+/// This function will automatically include a "source" parameter if the "Source" property is set.</summary>
 /// <param name="headerF">The client information to perform the POST operation.</param>
 /// <param name="url">The URL to perform the POST operation</param>
 /// <param name="userName">The username to use with the request</param>

@@ -3,10 +3,10 @@ module Fake.HTMLHelpWorkShopHelper
 
 open System
 
-/// Uses the HTML Help Workshop to compile a help project
-///   param helpCompiler: The filename of the HTML Help WorkShop tool
-///   param projectFile: the fileName of the help project 
-///   returns: The generated files (fileNames)
+/// <summary>Uses the HTML Help Workshop to compile a help project.</summary>
+/// <param name="helpCompiler">The filename of the HTML Help WorkShop tool</param>
+/// <param name="projectFile">the fileName of the help project</param>
+/// <returns>The generated files (fileNames)</returns>
 let CompileHTMLHelpProject helpCompiler projectFile =
     traceStartTask "HTMLHelpWorkshop" projectFile
     let fi = new IO.FileInfo(projectFile)

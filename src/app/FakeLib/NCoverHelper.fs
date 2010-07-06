@@ -18,11 +18,10 @@ let NCoverDefaults =
     TestRunnerExe = ProgramFiles @@ "NUnit" @@ "bin" @@ "nunit-console.exe";
     WorkingDir = currentDirectory}
     
-/// Run NCover on a group of assemblies.
-/// params:
-///   params - NCover params
-///   assemblies - the test assemblies, which should be inspected#
-///   excludeAssemblies - these assemblies are excluded 
+/// <summary>Run NCover on a group of assemblies.</summary>
+/// <param name="setParams">NCover parameter function</param>
+/// <param name="assemblies">The test assemblies, which should be inspected</param>
+/// <param name="excludeAssemblies">These assemblies are excluded</param>
 let NCover setParams (assemblies: string seq) (excludeAssemblies: string seq) =
   let param = setParams NCoverDefaults
       

@@ -100,9 +100,9 @@ let (|FileInfoFullName|) (f:FileInfo) = f.FullName
 /// Active Pattern for determining FileInfoNameSections
 let (|FileInfoNameSections|) (f:FileInfo) = (f.Name,f.Extension,f.FullName)
 
-/// Copies a single file to a relative subfolder of the target
-///   param target: The targetDirectory
-///   param fileName: The fileName
+/// <summary>Copies a single file to a relative subfolder of the target.</summary>
+/// <param name="target">The target directory</param>
+/// <param name="fileName">The fileName</param>
 let CopyFileIntoSubFolder target fileName =
     let relative = (toRelativePath fileName).TrimStart '.'
     let fi = fileInfo fileName
@@ -114,18 +114,18 @@ let CopyFileIntoSubFolder target fileName =
     logVerbosefn "Copy %s to %s" fileName targetName
     fi.CopyTo(targetName,true) |> ignore    
 
-/// Copies a single file to the target and overwrites the existing file.
-///   param target: The target directory.
-///   param fileName: The FileName
+/// <summary>Copies a single file to the target and overwrites the existing file.</summary>
+/// <param name="target">The target directory.</param>
+/// <param fileName">The FileName.</param>
 let CopyFile target fileName =
     let fi = fileInfo fileName
     let targetName = target @@ fi.Name
     logVerbosefn "Copy %s to %s" fileName targetName
     fi.CopyTo(targetName,true) |> ignore    
   
-/// Copies the files to the target
-///   param target: The target directory.
-///   param files: The original FileNames as a sequence.
+/// <summary>Copies the files to the target.</summary>
+/// <param name="target">The target directory.</param>
+/// <param name="files">The original FileNames as a sequence.</param>
 let Copy target files = 
     files
       |> doParallel (CopyFile target) 
@@ -155,9 +155,9 @@ let CopyCached target cacheDir files =
             CopyFile target cached
             target @@ fi.Name)
 
-/// Renames the files to the target fileName
-///   param target: The target FileName.
-///   param file: The orginal FileName.
+/// <summary>Renames the files to the target fileName.</summary>
+/// <param name="target">The target FileName.</param>
+/// <param name="file">The orginal FileName.</param>
 let Rename target fileName = (fileInfo fileName).MoveTo target
   
 let SilentCopy target files =
@@ -175,9 +175,9 @@ let SilentCopy target files =
     |> ignore
                
 
-/// Copies the files to the target - Alias for Copy
-///   param target: The target directory.
-///   param files: The original FileNames as a sequence.
+/// <summary>Copies the files to the target - Alias for Copy</summary>
+/// <param name="target">The target FileName.</param>
+/// <param name="file">The orginal FileName.</param>
 let CopyFiles target files = Copy target files  
 
 /// Exclude SVN files (path with .svn)
@@ -186,11 +186,11 @@ let excludeSVNFiles (path:string) = not <| path.Contains ".svn"
 /// Includes all files
 let allFiles (path:string) = true
 
-/// Copies a directory recursivly
-/// If the target directory does not exist, it will be created
-///   param target: The target directory.
-///   param files: The source directory.
-///   param filterFile: A file filter.
+/// <summary>Copies a directory recursivly.
+/// If the target directory does not exist, it will be created.</summary>
+/// <param name="target">The target directory.</param>
+/// <param name="files">The source directory.</param>
+/// <param name="filterFile">A file filter function.</param>
 let CopyDir target source filterFile =
     CreateDir target
     Directory.GetFiles(source, "*.*", SearchOption.AllDirectories)
@@ -243,9 +243,9 @@ let ReadCSVFile(file:string) =
       |> Seq.map csvRegEx.Split 
       |> Seq.map (Array.map (fun s -> s.Trim [| '"' |]))
              
-/// Appends all given files to one file 
-///   param newFileName: The target FileName.
-///   param files: The original FileNames as a sequence.
+/// <summary>Appends all given files to one file.</summary>
+/// <param name="newFileName">The target FileName.</param>
+/// <param name="files">The original FileNames as a sequence.</param>
 let AppendTextFiles newFileName files =    
     let fi = fileInfo newFileName
     if fi.Exists then failwithf "File %s already exists." (fi.FullName)
@@ -306,13 +306,11 @@ let TestDir path =
     logfn "%s not found" di.FullName
     false
 
-/// Checks the srcFiles for changes to the last release
-///  param lastReleaseDir: The directory of the last release
-///  param patchDir: The target directory
-///  param srcFiles: The source files
-///  param findOldFileF: A function which finds the old file
-///            (string -> string -> string)
-///            (newFile -> oldFileProposal)
+/// <summary>Checks the srcFiles for changes to the last release.</summary>
+/// <param name="lastReleaseDir">The directory of the last release</param>
+/// <param name="patchDir">The target directory</param>
+/// <param name="srcFiles">The source files</param>
+/// <param name="findOldFileF">A function which finds the old file</param>
 let GeneratePatchWithFindOldFileFunction lastReleaseDir patchDir srcFiles findOldFileF =
     srcFiles
     |> Seq.map (fun file -> 
@@ -327,10 +325,10 @@ let GeneratePatchWithFindOldFileFunction lastReleaseDir patchDir srcFiles findOl
     |> Async.RunSynchronously
     |> ignore
 
-/// Checks the srcFiles for changes to the last release
-///  param lastReleaseDir: The directory of the last release
-///  param patchDir: The target directory
-///  param srcFiles: The source files
+/// <summary>Checks the srcFiles for changes to the last release.</summary>
+/// <param name="lastReleaseDir">The directory of the last release.</param>
+/// <param name="patchDir">The target directory.</param>
+/// <param name="srcFiles">The source files.</param>
 let GeneratePatch lastReleaseDir patchDir srcFiles =
     GeneratePatchWithFindOldFileFunction lastReleaseDir patchDir srcFiles (fun a b -> b)
 

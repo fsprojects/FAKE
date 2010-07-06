@@ -88,9 +88,7 @@ let directorySeparator = Path.DirectorySeparatorChar.ToString()
 
 let relativePaths = new Dictionary<_,_>()
 
-/// <summary>
-/// Produces relative path when possible to go from baseLocation to targetLocation
-/// </summary>
+/// <summary>Produces relative path when possible to go from baseLocation to targetLocation.</summary>
 /// <param name="baseLocation">The root folder</param>
 /// <param name="targetLocation">The target folder</param>
 /// <returns>The relative path relative to baseLocation</returns>
