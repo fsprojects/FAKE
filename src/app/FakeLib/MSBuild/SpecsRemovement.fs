@@ -25,7 +25,7 @@ let removeFilteredElement elementName filterF (doc:XDocument) =
           .Descendants(xname elementName)
          |> Seq.filter(fun e -> 
                 let a = e.Attribute(XName.Get "Include")
-                a <> null && filterF (a.Value))
+                a <> null && filterF elementName a.Value)
     references.Remove()
     doc
 
@@ -34,6 +34,7 @@ let removeAssemblyReference filterF (doc:XDocument)=
 
 let removeFiles filterF (doc:XDocument) =
     removeFilteredElement "Compile" filterF doc
+      |> removeFilteredElement "Content" filterF
 
 let RemoveTestsFromProjectWithFileName assemblyFilterF fileFilterF (targetFileName:string) projectFileName =
     projectFileName
@@ -45,16 +46,24 @@ let RemoveTestsFromProjectWithFileName assemblyFilterF fileFilterF (targetFileNa
 
 let RemoveTestsFromProject assemblyFilterF fileFilterF projectFileName =
     let fi = fileInfo projectFileName            
-    let targetFileName = fi.Directory.FullName @@ (fi.Name + "_Spliced" + fi.Extension)
+    let targetFileName = fi.Directory.FullName @@ (fi.Name.Replace(fi.Extension,"") + "_Spliced" + fi.Extension)
     RemoveTestsFromProjectWithFileName assemblyFilterF fileFilterF targetFileName projectFileName 
 
 // Default filters
 
 /// All references to nunit.*.dlls
-let AllNUnitReferences = fun (s:string) -> s.StartsWith("nunit")
+let AllNUnitReferences elementName (s:string) = s.StartsWith("nunit")
 
 /// All Spec.cs or Spec.fs files
-let AllSpecFiles = fun (s:string) -> s.EndsWith("Specs.cs") || s.EndsWith("Specs.fs")
+let AllSpecFiles elementName (s:string) = s.EndsWith("Specs.cs") || s.EndsWith("Specs.fs")
 
 /// All Spec.cs or Spec.fs files and all files containing TestData
-let AllSpecAndTestDataFiles (s:string) = AllSpecFiles s || s.Contains("TestData")
+let AllSpecAndTestDataFiles elementName (s:string) = AllSpecFiles elementName s || s.Contains("TestData")
+
+let Nothing _ _ = false
+
+let RemoveAllNUnitReferences projectFileName =
+    RemoveTestsFromProject AllNUnitReferences Nothing projectFileName
+
+let RemoveAllSpecAndTestDataFiles projectFileName =
+    RemoveTestsFromProject Nothing AllSpecAndTestDataFiles projectFileName
