@@ -53,16 +53,6 @@
     <Compile Include="ZipLib.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BDDExtensions\BDDExtensions.csproj">
-      <Project>{AF774748-A989-42A9-9144-6D3D12DA7B3F}</Project>
-      <Name>BDDExtensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Helpers\Helpers.csproj">
-      <Project>{EE5E33C5-8933-4F32-A369-294B806E99B0}</Project>
-      <Name>Helpers</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     
     
   </ItemGroup>
