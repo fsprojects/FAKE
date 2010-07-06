@@ -53,5 +53,8 @@ let RemoveTestsFromProject assemblyFilterF fileFilterF projectFileName =
 /// All references to nunit.*.dlls
 let AllNUnitReferences = fun (s:string) -> s.StartsWith("nunit")
 
-/// All Spec.cs or Spec.f files
+/// All Spec.cs or Spec.fs files
 let AllSpecFiles = fun (s:string) -> s.EndsWith("Specs.cs") || s.EndsWith("Specs.fs")
+
+/// All Spec.cs or Spec.fs files and all files containing TestData
+let AllSpecAndTestDataFiles (s:string) = AllSpecFiles s || s.Contains("TestData")
