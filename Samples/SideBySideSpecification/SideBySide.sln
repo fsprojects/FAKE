@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2A0CE6C6-0ECB-4552-88D4-A719EBDA4F83}"
@@ -8,6 +8,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorLib", "src\app\CalculatorLib\CalculatorLib.csproj", "{A0E4285E-415C-4FA6-834F-1FB090C16064}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dependency", "src\app\Dependency\Dependency.csproj", "{A89A0D9E-E51A-4011-9B80-3A0173D0497B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,6 +21,10 @@ Global
 		{A0E4285E-415C-4FA6-834F-1FB090C16064}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0E4285E-415C-4FA6-834F-1FB090C16064}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0E4285E-415C-4FA6-834F-1FB090C16064}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A89A0D9E-E51A-4011-9B80-3A0173D0497B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A89A0D9E-E51A-4011-9B80-3A0173D0497B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A89A0D9E-E51A-4011-9B80-3A0173D0497B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A89A0D9E-E51A-4011-9B80-3A0173D0497B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

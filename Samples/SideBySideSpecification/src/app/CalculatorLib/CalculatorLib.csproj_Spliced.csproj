@@ -52,10 +52,7 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework, Version=2.5.5.10112, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\tools\Nunit\nunit.framework.dll</HintPath>
-    </Reference>
+    
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -70,13 +67,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArticleSpecs.cs">
-      <DependentUpon>Article.cs</DependentUpon>
-    </Compile>
+    
     <Compile Include="Calculator.cs" />
-    <Compile Include="CalculatorSpecs.cs">
-      <DependentUpon>Calculator.cs</DependentUpon>
-    </Compile>
+    
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubFolder\Article.cs" />
   </ItemGroup>
@@ -98,7 +91,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Dependency\Dependency.csproj">
+    <ProjectReference Include="..\..\..\Dependency\Dependency.csproj">
       <Project>{A89A0D9E-E51A-4011-9B80-3A0173D0497B}</Project>
       <Name>Dependency</Name>
     </ProjectReference>

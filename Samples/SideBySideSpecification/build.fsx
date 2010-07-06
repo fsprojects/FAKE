@@ -17,7 +17,8 @@ let fxCopRoot = @".\Tools\FxCop\FxCopCmd.exe"
 // Filesets
 let appReferences  = 
     !+ @"src\app\**\*.csproj" 
-      ++ @"src\app\**\*.fsproj" 
+      ++ @"src\app\**\*.fsproj"
+      -- "**\*_Spliced*" 
         |> Scan
 
 // version info
@@ -40,7 +41,7 @@ Target? BuildApp <-
               OutputFileName = @".\src\app\CalculatorLib\Properties\AssemblyInfo.cs"})          
       
         appReferences 
-          |> Seq.map (RemoveTestsFromProject AllNUnitReferences AllSpecFiles)
+          |> Seq.map (RemoveTestsFromProject AllNUnitReferences AllSpecAndTestDataFiles)
           |> MSBuildRelease buildDir "Build"
           |> Log "AppBuild-Output: "
 
