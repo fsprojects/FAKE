@@ -9,11 +9,13 @@ namespace Test.FAKECore.SideBySideSpecification
     public class SpecsRemovementTest
     {
         private const string Project1 = @"SideBySideSpecification\Project1.txt";
+        private const string Project2 = @"SideBySideSpecification\Project2.txt";
 
         private static void CheckResult(string result, string resultFileName)
         {
             var expected = File.ReadAllText(resultFileName).Replace("\r\n", "\n");
-            File.ReadAllText(result).Replace("\r\n", "\n").ShouldEqual(expected);
+            var actual = File.ReadAllText(result);
+            actual.Replace("\r\n", "\n").ShouldEqual(expected);
         }
 
         [Test]
@@ -30,6 +32,14 @@ namespace Test.FAKECore.SideBySideSpecification
             var result = SpecsRemovement.RemoveAllSpecAndTestDataFiles(Project1);
 
             CheckResult(result, @"SideBySideSpecification\Project1_WithoutTests.txt");
+        }
+
+        [Test]
+        public void CanSpliceTestFilesAndTestDataFiles()
+        {
+            var result = SpecsRemovement.RemoveAllSpecAndTestDataFiles(Project2);
+
+            CheckResult(result, @"SideBySideSpecification\Project2_WithoutTests.txt");
         }
     }
 }

@@ -130,6 +130,13 @@
       <DependentUpon>Project1.txt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="SideBySideSpecification\Project2.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SideBySideSpecification\Project2_WithoutTests.txt">
+      <DependentUpon>Project2.txt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\AllObjects.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

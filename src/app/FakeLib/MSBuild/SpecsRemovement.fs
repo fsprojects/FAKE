@@ -58,7 +58,8 @@ let AllNUnitReferences elementName (s:string) = s.StartsWith("nunit")
 let AllSpecFiles elementName (s:string) = s.EndsWith("Specs.cs") || s.EndsWith("Specs.fs")
 
 /// All Spec.cs or Spec.fs files and all files containing TestData
-let AllSpecAndTestDataFiles elementName (s:string) = AllSpecFiles elementName s || s.Contains("TestData")
+let AllSpecAndTestDataFiles elementName (s:string) =
+    AllSpecFiles elementName s || (elementName = "Content" && s.Contains("TestData"))
 
 let Nothing _ _ = false
 
