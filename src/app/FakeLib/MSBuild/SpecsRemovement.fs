@@ -34,6 +34,7 @@ let removeAssemblyReference filterF (doc:XDocument)=
 
 let removeFiles filterF (doc:XDocument) =
     removeFilteredElement "Compile" filterF doc
+      |> removeFilteredElement "None" filterF
       |> removeFilteredElement "Content" filterF
 
 let RemoveTestsFromProjectWithFileName assemblyFilterF fileFilterF (targetFileName:string) projectFileName =
@@ -59,7 +60,7 @@ let AllSpecFiles elementName (s:string) = s.EndsWith("Specs.cs") || s.EndsWith("
 
 /// All Spec.cs or Spec.fs files and all files containing TestData
 let AllSpecAndTestDataFiles elementName (s:string) =
-    AllSpecFiles elementName s || (elementName = "Content" && s.Contains("TestData"))
+    AllSpecFiles elementName s || ((elementName = "Content" || elementName = "None") && s.Contains("TestData"))
 
 let Nothing _ _ = false
 
