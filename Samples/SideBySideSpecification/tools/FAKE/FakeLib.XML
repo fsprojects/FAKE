@@ -1246,12 +1246,26 @@
 <member name="">
 
 </member>
-<member name="M:Fake.MSBuild.Splicing.AllSpecFiles(System.String)">
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.MSBuild.SpecsRemovement.AllSpecAndTestDataFiles(System.String,System.String)">
 <summary>
- All Spec.cs or Spec.f files
+ All Spec.cs or Spec.fs files and all files containing TestData
 </summary>
 </member>
-<member name="M:Fake.MSBuild.Splicing.AllNUnitReferences(System.String)">
+<member name="M:Fake.MSBuild.SpecsRemovement.AllSpecFiles``1(``0,System.String)">
+<summary>
+ All Spec.cs or Spec.fs files
+</summary>
+</member>
+<member name="M:Fake.MSBuild.SpecsRemovement.AllNUnitReferences``1(``0,System.String)">
 <summary>
  All references to nunit.*.dlls
 </summary>
@@ -1283,7 +1297,10 @@
 <member name="">
 
 </member>
-<member name="T:Fake.MSBuild.Splicing">
+<member name="">
+
+</member>
+<member name="T:Fake.MSBuild.SpecsRemovement">
 
 </member>
 <member name="M:Fake.MSBuildHelper.MSBuildRelease(System.String,System.String)">
