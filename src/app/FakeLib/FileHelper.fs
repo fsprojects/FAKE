@@ -131,8 +131,11 @@ let Copy target files =
       |> doParallel (CopyFile target) 
       |> ignore
 
-/// Copies the files from a cache folder
-/// If the files ar not cached or the original files have a different write time the cache will be refreshed
+/// Copies the files from a cache folder.
+/// If the files are not cached or the original files have a different write time the cache will be refreshed.
+/// <param name="target">The target FileName.</param>
+/// <param name="cacheDir">The cache directory.</param>
+/// <param name="files">The orginal files.</param>
 let CopyCached target cacheDir files = 
     let cache = directoryInfo cacheDir
     if not cache.Exists then cache.Create()
@@ -141,7 +144,8 @@ let CopyCached target cacheDir files =
             let fi = fileInfo fileName
             let cached = cacheDir @@ fi.Name
             let cachedFi = fileInfo cached
-            if not fi.Exists then
+            let originalExists = try fi.Exists with exn -> false
+            if not originalExists then
                 if not cachedFi.Exists then 
                     failwithf "Original file %s and cached file %s do not exist." fileName cached
                 else
