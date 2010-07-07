@@ -260,11 +260,10 @@ let AppendTextFiles newFileName files =
         logVerbosefn "Appending %s to %s" file fi.FullName
         ReadFile file |> Seq.iter writer.WriteLine)
 
-/// Checks if the two files are byte-to-byte equal
+/// Checks if the two files are byte-to-byte equal.
 let FilesAreEqual (first:FileInfo) (second:FileInfo) =   
     if first.Length <> second.Length then false else
     let BYTES_TO_READ = 32768
-    let iterations = System.Math.Ceiling((float first.Length) / (float BYTES_TO_READ)) |> int
 
     use fs1 = first.OpenRead()
     use fs2 = second.OpenRead()
@@ -273,12 +272,11 @@ let FilesAreEqual (first:FileInfo) (second:FileInfo) =
     let two = Array.create BYTES_TO_READ (byte 0)
 
     let mutable eq = true
-    for i in 0..iterations do
-        if eq then
-          fs1.Read(one, 0, BYTES_TO_READ) |> ignore
-          fs2.Read(two, 0, BYTES_TO_READ) |> ignore
-
-          if one <> two then eq <- false
+    while 
+        eq && 
+          fs1.Read(one, 0, BYTES_TO_READ) <> 0 && 
+          fs2.Read(two, 0, BYTES_TO_READ) <> 0 do
+        if one <> two then eq <- false
 
     eq
   
