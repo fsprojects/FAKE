@@ -292,23 +292,17 @@
 </summary>
 </member>
 <member name="M:Fake.FileHelper.GeneratePatch(System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
-<summary>
- Checks the srcFiles for changes to the last release
-  param lastReleaseDir: The directory of the last release
-  param patchDir: The target directory
-  param srcFiles: The source files
-</summary>
+ <summary>Checks the srcFiles for changes to the last release.</summary>
+ <param name="lastReleaseDir">The directory of the last release.</param>
+ <param name="patchDir">The target directory.</param>
+ <param name="srcFiles">The source files.</param>
 </member>
 <member name="M:Fake.FileHelper.GeneratePatchWithFindOldFileFunction(System.String,System.String,System.Collections.Generic.IEnumerable{System.String},Microsoft.FSharp.Core.FSharpFunc`2{System.String,Microsoft.FSharp.Core.FSharpFunc`2{System.String,System.String}})">
-<summary>
- Checks the srcFiles for changes to the last release
-  param lastReleaseDir: The directory of the last release
-  param patchDir: The target directory
-  param srcFiles: The source files
-  param findOldFileF: A function which finds the old file
-            (string -&gt; string -&gt; string)
-            (newFile -&gt; oldFileProposal)
-</summary>
+ <summary>Checks the srcFiles for changes to the last release.</summary>
+ <param name="lastReleaseDir">The directory of the last release</param>
+ <param name="patchDir">The target directory</param>
+ <param name="srcFiles">The source files</param>
+ <param name="findOldFileF">A function which finds the old file</param>
 </member>
 <member name="M:Fake.FileHelper.TestDir(System.String)">
 <summary>
@@ -323,15 +317,13 @@
 </member>
 <member name="M:Fake.FileHelper.FilesAreEqual(System.IO.FileInfo,System.IO.FileInfo)">
 <summary>
- Checks if the two files are byte-to-byte equal
+ Checks if the two files are byte-to-byte equal.
 </summary>
 </member>
 <member name="M:Fake.FileHelper.AppendTextFiles(System.String,System.Collections.Generic.IEnumerable{System.String})">
-<summary>
- Appends all given files to one file 
-   param newFileName: The target FileName.
-   param files: The original FileNames as a sequence.
-</summary>
+ <summary>Appends all given files to one file.</summary>
+ <param name="newFileName">The target FileName.</param>
+ <param name="files">The original FileNames as a sequence.</param>
 </member>
 <member name="M:Fake.FileHelper.ReadCSVFile(System.String)">
 <summary>
@@ -350,13 +342,11 @@
 </summary>
 </member>
 <member name="M:Fake.FileHelper.CopyDir(System.String,System.String,Microsoft.FSharp.Core.FSharpFunc`2{System.String,System.Boolean})">
-<summary>
- Copies a directory recursivly
- If the target directory does not exist, it will be created
-   param target: The target directory.
-   param files: The source directory.
-   param filterFile: A file filter.
-</summary>
+ <summary>Copies a directory recursivly.
+ If the target directory does not exist, it will be created.</summary>
+ <param name="target">The target directory.</param>
+ <param name="files">The source directory.</param>
+ <param name="filterFile">A file filter function.</param>
 </member>
 <member name="M:Fake.FileHelper.allFiles(System.String)">
 <summary>
@@ -369,48 +359,41 @@
 </summary>
 </member>
 <member name="M:Fake.FileHelper.CopyFiles(System.String,System.Collections.Generic.IEnumerable{System.String})">
-<summary>
- Copies the files to the target - Alias for Copy
-   param target: The target directory.
-   param files: The original FileNames as a sequence.
-</summary>
+ <summary>Copies the files to the target - Alias for Copy</summary>
+ <param name="target">The target FileName.</param>
+ <param name="file">The orginal FileName.</param>
 </member>
 <member name="">
 
 </member>
 <member name="M:Fake.FileHelper.Rename(System.String,System.String)">
-<summary>
- Renames the files to the target fileName
-   param target: The target FileName.
-   param file: The orginal FileName.
-</summary>
+ <summary>Renames the files to the target fileName.</summary>
+ <param name="target">The target FileName.</param>
+ <param name="file">The orginal FileName.</param>
 </member>
 <member name="M:Fake.FileHelper.CopyCached(System.String,System.String,System.Collections.Generic.IEnumerable{System.String})">
 <summary>
- Copies the files from a cache folder
- If the files ar not cached or the original files have a different write time the cache will be refreshed
+ Copies the files from a cache folder.
+ If the files are not cached or the original files have a different write time the cache will be refreshed.
+ &lt;param name=&quot;target&quot;&gt;The target FileName.&lt;/param&gt;
+ &lt;param name=&quot;cacheDir&quot;&gt;The cache directory.&lt;/param&gt;
+ &lt;param name=&quot;files&quot;&gt;The orginal files.&lt;/param&gt;
 </summary>
 </member>
 <member name="M:Fake.FileHelper.Copy(System.String,System.Collections.Generic.IEnumerable{System.String})">
-<summary>
- Copies the files to the target
-   param target: The target directory.
-   param files: The original FileNames as a sequence.
-</summary>
+ <summary>Copies the files to the target.</summary>
+ <param name="target">The target directory.</param>
+ <param name="files">The original FileNames as a sequence.</param>
 </member>
 <member name="M:Fake.FileHelper.CopyFile(System.String,System.String)">
-<summary>
- Copies a single file to the target and overwrites the existing file.
-   param target: The target directory.
-   param fileName: The FileName
-</summary>
+ <summary>Copies a single file to the target and overwrites the existing file.</summary>
+ <param name="target">The target directory.</param>
+ <param name="fileName">The FileName.</param>
 </member>
 <member name="M:Fake.FileHelper.CopyFileIntoSubFolder(System.String,System.String)">
-<summary>
- Copies a single file to a relative subfolder of the target
-   param target: The targetDirectory
-   param fileName: The fileName
-</summary>
+ <summary>Copies a single file to a relative subfolder of the target.</summary>
+ <param name="target">The target directory</param>
+ <param name="fileName">The fileName</param>
 </member>
 <member name="M:Fake.FileHelper.|FileInfoNameSections|(System.IO.FileInfo)">
 <summary>
@@ -1208,12 +1191,10 @@
 
 </member>
 <member name="M:Fake.HTMLHelpWorkShopHelper.CompileHTMLHelpProject(System.String,System.String)">
-<summary>
- Uses the HTML Help Workshop to compile a help project
-   param helpCompiler: The filename of the HTML Help WorkShop tool
-   param projectFile: the fileName of the help project 
-   returns: The generated files (fileNames)
-</summary>
+ <summary>Uses the HTML Help Workshop to compile a help project.</summary>
+ <param name="helpCompiler">The filename of the HTML Help WorkShop tool</param>
+ <param name="projectFile">the fileName of the help project</param>
+ <returns>The generated files (fileNames)</returns>
 </member>
 <member name="T:Fake.HTMLHelpWorkShopHelper">
 
@@ -1396,13 +1377,10 @@
 
 </member>
 <member name="M:Fake.NCoverHelper.NCover(Microsoft.FSharp.Core.FSharpFunc`2{Fake.NCoverHelper.NCoverParams,Fake.NCoverHelper.NCoverParams},System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String})">
-<summary>
- Run NCover on a group of assemblies.
- params:
-   params - NCover params
-   assemblies - the test assemblies, which should be inspected#
-   excludeAssemblies - these assemblies are excluded 
-</summary>
+ <summary>Run NCover on a group of assemblies.</summary>
+ <param name="setParams">NCover parameter function</param>
+ <param name="assemblies">The test assemblies, which should be inspected</param>
+ <param name="excludeAssemblies">These assemblies are excluded</param>
 </member>
 <member name="P:Fake.NCoverHelper.NCoverDefaults">
 <summary>
@@ -1680,25 +1658,21 @@
 
 </member>
 <member name="M:Fake.REST.ExecutePostCommand(Microsoft.FSharp.Core.FSharpFunc`2{System.Net.WebHeaderCollection,Microsoft.FSharp.Core.Unit},System.String,System.String,System.String,System.String)">
-<summary>
- Executes an HTTP POST command and retrives the information.    
- This function will automatically include a &quot;source&quot; parameter if the &quot;Source&quot; property is set.
-   param headerF: The client information to perform the POST operation  
-   param url: The URL to perform the POST operation
-   param userName: The username to use with the request
-   param password: The password to use with the request
-   param data: The data to post
-   returns: The response of the request, or null if we got 404 or nothing.
-</summary>
+ <summary>Executes an HTTP POST command and retrives the information.    
+ This function will automatically include a "source" parameter if the "Source" property is set.</summary>
+ <param name="headerF">The client information to perform the POST operation.</param>
+ <param name="url">The URL to perform the POST operation</param>
+ <param name="userName">The username to use with the request</param>
+ <param name="password">The password to use with the request</param>
+ <param name="data">The data to post</param>
+ <returns> The response of the request, or null if we got 404 or nothing.</returns>
 </member>
 <member name="M:Fake.REST.ExecuteGetCommand(System.String,System.String,System.String)">
-<summary>
- Executes an HTTP GET command and retrives the information.    
-   param userName: The username to use with the request
-   param password: The password to use with the request
-   param url: The URL to perform the GET operation  
-   returns: The response of the request, or null if we got 404 or nothing.
-</summary>
+ <summary>Executes an HTTP GET command and retrives the information.</summary>    
+ <param name="userName">The username to use with the request</param>
+ <param name="password">The password to use with the request</param>
+ <param name="url">The URL to perform the GET operation</param>
+ <returns>The response of the request, or null if we got 404 or nothing.</returns>
 </member>
 <member name="T:Fake.REST">
 
@@ -1752,35 +1726,27 @@
 
 </member>
 <member name="M:Fake.SqlServer.RunScriptsFromDirectory(System.String,System.String)">
-<summary>
- Runs all sql scripts from the given directory on the server
- &lt;param name=&quot;connectionString&quot;&gt;Used to open the connection to the database.&lt;/param&gt;
- &lt;param name=&quot;scriptDirectory&quot;&gt;All *.sql files inside this directory and all subdirectories will be run.&lt;/param&gt;
-</summary>
+ <summary>Runs all sql scripts from the given directory on the server.</summary>
+ <param name="connectionString">Used to open the connection to the database.</param>
+ <param name="scriptDirectory">All *.sql files inside this directory and all subdirectories will be run.</param>
 </member>
 <member name="M:Fake.SqlServer.RunScripts(System.String,System.Collections.Generic.IEnumerable{System.String})">
-<summary>
- Runs the given sql scripts on the server
- &lt;param name=&quot;connectionString&quot;&gt;Used to open the connection to the database.&lt;/param&gt;
- &lt;param name=&quot;scripts&quot;&gt;The scripts which will be run.&lt;/param&gt;
-</summary>
+ <summary>Runs the given sql scripts on the server.</summary>
+ <param name="connectionString">Used to open the connection to the database.</param>
+ <param name="scripts">The scripts which will be run.</param>
 </member>
 <member name="M:Fake.SqlServer.DropAndCreateDatabase(System.String)">
-<summary>
- Drops and creates the database (dropped if db exists. created nonetheless)
- &lt;param name=&quot;connectionString&quot;&gt;Used to open the connection to the database.&lt;/param&gt;
-</summary>
+ <summary>Drops and creates the database (dropped if db exists. created nonetheless)</summary>
+ <param name="connectionString">Used to open the connection to the database.</param>
 </member>
 <member name="M:Fake.SqlServer.ReplaceDatabaseFilesWithCache(System.String,System.String,System.String,System.Collections.Generic.IEnumerable{System.String},Microsoft.SqlServer.Management.Smo.AttachOptions)">
-<summary>
- Replaces the database files from a cache
- If the files in the cache are not up to date, they will be refreshed
- &lt;param name=&quot;connectionString&quot;&gt;Used to open the connection to the database.&lt;/param&gt;
- &lt;param name=&quot;targetDir&quot;&gt;The directory where the attached files will live.&lt;/param&gt;
- &lt;param name=&quot;cacheDir&quot;&gt;The file cache. If the files in the cache are not up to date, they will be refreshed.&lt;/param&gt;
- &lt;param name=&quot;files&quot;&gt;The original database files.&lt;/param&gt;
- &lt;param name=&quot;attachOptions&quot;&gt;AttachOptions for Sql server.&lt;/param&gt;
-</summary>
+ <summary>Replaces the database files from a cache.
+ If the files in the cache are not up to date, they will be refreshed.</summary>
+ <param name="connectionString">Used to open the connection to the database.</param>
+ <param name="targetDir">The directory where the attached files will live.</param>
+ <param name="cacheDir">The file cache. If the files in the cache are not up to date, they will be refreshed.</param>
+ <param name="files">The original database files.</param>
+ <param name="attachOptions">AttachOptions for Sql server.</param>
 </member>
 <member name="M:Fake.SqlServer.ReplaceDatabaseFiles(System.String,System.String,System.Collections.Generic.IEnumerable{System.String},Microsoft.SqlServer.Management.Smo.AttachOptions)">
 <summary>
@@ -1798,11 +1764,9 @@
 </summary>
 </member>
 <member name="M:Fake.SqlServer.runScript(Fake.SqlServer.ServerInfo,System.String)">
-<summary>
- Runs a sql script on the server
- &lt;param name=&quot;serverInfo&quot;&gt;Used as a connection to the database.&lt;/param&gt;
- &lt;param name=&quot;sqlFile&quot;&gt;The script which will be run.&lt;/param&gt;
-</summary>
+ <summary>Runs a sql script on the server.</summary>
+ <param name="serverInfo">Used as a connection to the database.</param>
+ <param name="sqlFile">The script which will be run.</param>
 </member>
 <member name="M:Fake.SqlServer.CreateDb(Fake.SqlServer.ServerInfo)">
 <summary>
@@ -1925,9 +1889,7 @@
 </summary>
 </member>
 <member name="M:Fake.StringHelper.ProduceRelativePath(System.String,System.String)">
- <summary>
- Produces relative path when possible to go from baseLocation to targetLocation
- </summary>
+ <summary>Produces relative path when possible to go from baseLocation to targetLocation.</summary>
  <param name="baseLocation">The root folder</param>
  <param name="targetLocation">The target folder</param>
  <returns>The relative path relative to baseLocation</returns>
@@ -2649,11 +2611,9 @@
 
 </member>
 <member name="M:Fake.XCopyHelper.XCopy(System.String,System.String)">
-<summary>
- Performs a XCopy 
-  param source: The source directory (fileName)
-  param destination: The target directory (fileName)
-</summary>
+ <summary>Performs a XCopy.</summary>
+ <param name="source">The source directory (fileName)</param>
+ <param name="destination">The target directory (fileName)</param>
 </member>
 <member name="T:Fake.XCopyHelper">
 
@@ -2789,29 +2749,20 @@
 
 </member>
 <member name="M:Fake.ZipHelper.Unzip(System.String,System.String)">
-<summary>
- Unzips a file with the given fileName
-
- Parameter 1: target - The target directory.
- Parameter 2: fileName - The fileName of the zip file.
-</summary>
+ <summary>Unzips a file with the given fileName.</summary>
+ <param name="target">The target directory.</param>
+ <param name="fileName">The fileName of the zip file.</param>
 </member>
 <member name="M:Fake.ZipHelper.ZipFile(System.String,System.String)">
-<summary>
- Creates a zip file with the given file 
-
- Parameter 1: fileName - The fileName of the resulting zip file.
- Parameter 2: fileName - The file to zip.
-</summary>
+ <summary>Creates a zip file with the given file.</summary>
+ <param name="fileName">The fileName of the resulting zip file.</param>
+ <param name="targetFileName">The file to zip.</param>
 </member>
 <member name="M:Fake.ZipHelper.Zip(System.String,System.String)">
-<summary>
- Creates a zip file with the given files 
-
- Parameter 1: workingDir - The relative dir of the zip files. Use this parameter to influence directory structure within zip file.
- Parameter 2: fileName - The fileName of the resulting zip file.
- Parameter 3: files - A sequence with files to zip.
-</summary>
+ <summary>Creates a zip file with the given files.</summary>
+ <param name="workingDir">The relative dir of the zip files. Use this parameter to influence directory structure within zip file.</param>
+ <param name="fileName">The fileName of the resulting zip file.</param>
+ <param name="files">A sequence with files to zip.</param>
 </member>
 <member name="M:Fake.ZipHelper.CreateZip(System.String,System.String,System.String,System.Int32,System.Boolean,System.Collections.Generic.IEnumerable{System.String})">
 <summary>
