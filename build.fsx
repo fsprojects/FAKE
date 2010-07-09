@@ -85,7 +85,7 @@ Target? GenerateDocumentation <-
                ToolPath = buildDir + "docu.exe"
                TemplatesPath = templatesSrcDir
                OutputPath = docsDir })
-            (buildDir + "FakeLib.dll")
+            (!+ buildDir + "Fake*.dll")
 
 Target? CopyLicense <-
     fun _ -> Copy buildDir [@"License.txt"; @"readme.txt"]
