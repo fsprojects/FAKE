@@ -18,7 +18,7 @@ let deployZip = deployDir + sprintf "%s-%s.zip" projectName buildVersion
 
 // files
 let appReferences  = !+ @"src\app\**\*.*sproj"  |> Scan
-let testReferences = !+ @"src\test\**\*.sproj" |> Scan
+let testReferences = !+ @"src\test\**\*.*sproj" |> Scan
 
 // tools
 let nunitPath = @".\Tools\NUnit"
