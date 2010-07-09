@@ -80,12 +80,14 @@ Target? BuildDocu <-
 
 Target? GenerateDocumentation <-
     fun _ ->
-        Docu (fun p ->
-            {p with
-               ToolPath = buildDir + "docu.exe"
-               TemplatesPath = templatesSrcDir
-               OutputPath = docsDir })
-            (!+ buildDir + "Fake*.dll")
+        !+ (buildDir + "Fake*.dll")
+          |> Scan
+          |> Docu (fun p ->
+                {p with
+                    ToolPath = buildDir + "docu.exe"
+                    TemplatesPath = templatesSrcDir
+                    OutputPath = docsDir })
+            
 
 Target? CopyLicense <-
     fun _ -> Copy buildDir [@"License.txt"; @"readme.txt"]
