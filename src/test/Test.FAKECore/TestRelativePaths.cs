@@ -20,19 +20,10 @@ namespace Test.FAKECore
         }
 
         [Test]
-        public void CanGetRelativePathOfSubDirectory()
-        {
-            var di = new DirectoryInfo(Environment.CurrentDirectory + @"\Test1\Test2");
-            
-            StringHelper.toRelativePath(di.FullName).
-                ShouldEqual(@".\Test1\Test2");
-        }
-
-        [Test]
         public void CanGetRelativePathOfFileSubDirectory()
         {
             var di = new DirectoryInfo(Environment.CurrentDirectory + @"\Test1\Test2\text.txt");
-            
+
             StringHelper.toRelativePath(di.FullName).
                 ShouldEqual(@".\Test1\Test2\text.txt");
         }
@@ -53,6 +44,15 @@ namespace Test.FAKECore
 
             StringHelper.toRelativePath(di.FullName).
                 ShouldEqual(@"..\..");
+        }
+
+        [Test]
+        public void CanGetRelativePathOfSubDirectory()
+        {
+            var di = new DirectoryInfo(Environment.CurrentDirectory + @"\Test1\Test2");
+
+            StringHelper.toRelativePath(di.FullName).
+                ShouldEqual(@".\Test1\Test2");
         }
 
 
