@@ -47,7 +47,7 @@ Target? BuildApp <-
                    AssemblyVersion = buildVersion;
                    AssemblyTitle = "FAKE - F# Make Lib";
                    Guid = "d6dd5aec-636d-4354-88d6-d66e094dadb5";
-                   OutputFileName = @".\src\app\FakeLib\AssemblyInfo.fs"}
+                   OutputFileName = @".\src\app\FakeLib\AssemblyInfo.fs"})
 
             AssemblyInfo 
              (fun p -> 
