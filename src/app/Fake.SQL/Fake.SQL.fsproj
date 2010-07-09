@@ -1,17 +1,17 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{13d56521-772a-41db-9772-1da1a4aa8e3a}</ProjectGuid>
+    <ProjectGuid>{12319188-8893-4fe4-bf1d-62b85661dea9}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>FakeLib</RootNamespace>
-    <AssemblyName>FakeLib</AssemblyName>
+    <RootNamespace>Fake.SQL</RootNamespace>
+    <AssemblyName>Fake.SQL</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <Name>FakeLib</Name>
+    <Name>Fake.SQL</Name>
     <TargetFrameworkProfile />
     <FscToolPath>..\..\..\tools\FSharp\</FscToolPath>
   </PropertyGroup>
@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>3</WarningLevel>
+    <DocumentationFile>bin\Debug\Fake.SQL.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,70 +34,45 @@
     <WarningLevel>3</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DocumentationFile>bin\Release\FakeLib.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\Fake.SQL.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <DocumentationFile>bin\Debug\FakeLib.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\Fake.SQL.xml</DocumentationFile>
     <OtherFlags>
     </OtherFlags>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
-    <Compile Include="AsyncHelper.fs" />
-    <Compile Include="RegistryHelper.fs" />
-    <Compile Include="FileSystemHelper.fs" />
-    <Compile Include="StringHelper.fs" />
-    <Compile Include="EnvironmentHelper.fs" />
-    <Compile Include="TimeoutHelper.fs" />
-    <Compile Include="CacheHelper.fs" />
-    <Compile Include="XMLHelper.fs" />
-    <Compile Include="REST.fs" />
-    <Compile Include="BuildServerHelper.fs" />
-    <Compile Include="MailBoxHelper.fs" />
-    <Compile Include="TeamCityHelper.fs" />
-    <Compile Include="TeamCityRESTHelper.fs" />
-    <Compile Include="TraceHelper.fs" />
-    <Compile Include="AssemblyInfoHelper.fs" />
-    <Compile Include="ProcessHelper.fs" />
-    <Compile Include="FxCopHelper.fs" />
-    <Compile Include="NCoverHelper.fs" />
-    <Compile Include="NUnitHelper.fs" />
-    <Compile Include="XUnitHelper.fs" />
-    <Compile Include="FileSet.fs" />
-    <Compile Include="MSBuildHelper.fs" />
-    <Compile Include="ZipHelper.fs" />
-    <Compile Include="FileHelper.fs" />
-    <Compile Include="DocuHelper.fs" />
-    <Compile Include="ILMergeHelper.fs" />
-    <Compile Include="WiXHelper.fs" />
-    <Compile Include="VSSHelper.fs" />
-    <Compile Include="XCopyHelper.fs" />
-    <Compile Include="FSIHelper.fs" />
-    <Compile Include="MessageHelper.fs" />
-    <Compile Include="HTMLHelpWorkShopHelper.fs" />
-    <Compile Include="TemplateHelper.fs" />
-    <Compile Include="TargetHelper.fs" />
-    <Compile Include="MSBuild\SpecsRemovement.fs" />
+    <Compile Include="SQLServer.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core">
       <HintPath>..\..\..\tools\FSharp\FSharp.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>..\..\..\lib\ICSharpCode.SharpZipLib.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo">
+      <HintPath>..\..\..\lib\SQLServer\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Management.Sdk.Sfc">
+      <HintPath>..\..\..\lib\SQLServer\Microsoft.SqlServer.Management.Sdk.Sfc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Smo">
+      <HintPath>..\..\..\lib\SQLServer\Microsoft.SqlServer.Smo.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Web" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FakeLib\FakeLib.fsproj">
+      <Name>FakeLib</Name>
+      <Project>{13d56521-772a-41db-9772-1da1a4aa8e3a}</Project>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="..\..\..\tools\FSharp\Microsoft.FSharp.Targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,17 +1,17 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{13d56521-772a-41db-9772-1da1a4aa8e3a}</ProjectGuid>
+    <ProjectGuid>{064905c5-f1dc-4469-9be3-6337807f43cf}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>FakeLib</RootNamespace>
-    <AssemblyName>FakeLib</AssemblyName>
+    <RootNamespace>Fake.Git</RootNamespace>
+    <AssemblyName>Fake.Git</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <Name>FakeLib</Name>
+    <Name>Fake.Git</Name>
     <TargetFrameworkProfile />
     <FscToolPath>..\..\..\tools\FSharp\</FscToolPath>
   </PropertyGroup>
@@ -33,70 +33,47 @@
     <WarningLevel>3</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DocumentationFile>bin\Release\FakeLib.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\Fake.Git.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <DocumentationFile>bin\Debug\FakeLib.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\Fake.Git.xml</DocumentationFile>
     <OtherFlags>
     </OtherFlags>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
-    <Compile Include="AsyncHelper.fs" />
-    <Compile Include="RegistryHelper.fs" />
-    <Compile Include="FileSystemHelper.fs" />
-    <Compile Include="StringHelper.fs" />
-    <Compile Include="EnvironmentHelper.fs" />
-    <Compile Include="TimeoutHelper.fs" />
-    <Compile Include="CacheHelper.fs" />
-    <Compile Include="XMLHelper.fs" />
-    <Compile Include="REST.fs" />
-    <Compile Include="BuildServerHelper.fs" />
-    <Compile Include="MailBoxHelper.fs" />
-    <Compile Include="TeamCityHelper.fs" />
-    <Compile Include="TeamCityRESTHelper.fs" />
-    <Compile Include="TraceHelper.fs" />
-    <Compile Include="AssemblyInfoHelper.fs" />
-    <Compile Include="ProcessHelper.fs" />
-    <Compile Include="FxCopHelper.fs" />
-    <Compile Include="NCoverHelper.fs" />
-    <Compile Include="NUnitHelper.fs" />
-    <Compile Include="XUnitHelper.fs" />
-    <Compile Include="FileSet.fs" />
-    <Compile Include="MSBuildHelper.fs" />
-    <Compile Include="ZipHelper.fs" />
-    <Compile Include="FileHelper.fs" />
-    <Compile Include="DocuHelper.fs" />
-    <Compile Include="ILMergeHelper.fs" />
-    <Compile Include="WiXHelper.fs" />
-    <Compile Include="VSSHelper.fs" />
-    <Compile Include="XCopyHelper.fs" />
-    <Compile Include="FSIHelper.fs" />
-    <Compile Include="MessageHelper.fs" />
-    <Compile Include="HTMLHelpWorkShopHelper.fs" />
-    <Compile Include="TemplateHelper.fs" />
-    <Compile Include="TargetHelper.fs" />
-    <Compile Include="MSBuild\SpecsRemovement.fs" />
+    <Compile Include="CommandHelper.fs" />
+    <Compile Include="Sha1.fs" />
+    <Compile Include="Repository.fs" />
+    <Compile Include="Submodule.fs" />
+    <Compile Include="Branches.fs" />
+    <Compile Include="Checkout.fs" />
+    <Compile Include="Reset.fs" />
+    <Compile Include="Merge.fs" />
+    <Compile Include="SanityChecks.fs" />
+    <Compile Include="Information.fs" />
+    <Compile Include="FileStatus.fs" />
+    <Compile Include="CommitMessage.fs" />
+    <Compile Include="Staging.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core">
       <HintPath>..\..\..\tools\FSharp\FSharp.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>..\..\..\lib\ICSharpCode.SharpZipLib.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Web" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FakeLib\FakeLib.fsproj">
+      <Name>FakeLib</Name>
+      <Project>{13d56521-772a-41db-9772-1da1a4aa8e3a}</Project>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="..\..\..\tools\FSharp\Microsoft.FSharp.Targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

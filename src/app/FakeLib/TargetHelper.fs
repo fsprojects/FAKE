@@ -178,7 +178,9 @@ let run targetName =
         runTarget targetName
     finally
         runFinalTargets()
+        WaitUntilEverythingIsPrinted()
         WriteTaskTimeSummary watch.Elapsed
+        WaitUntilEverythingIsPrinted()
         List.iter raise errors
         WaitUntilEverythingIsPrinted()
  

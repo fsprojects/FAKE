@@ -1,6 +1,7 @@
 ﻿[<AutoOpen>]
-module Fake.SqlServer
+module Fake.SQL.SqlServer
  
+open Fake
 open System
 open System.Data.SqlClient
 open Microsoft.SqlServer.Management.Smo

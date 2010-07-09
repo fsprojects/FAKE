@@ -12,12 +12,14 @@ let DocuDefaults =
       TemplatesPath = currentDirectory @@ "templates";
       OutputPath = currentDirectory @@ "output" }
    
-let Docu setParams assembly = 
-    traceStartTask "Docu" assembly
+let Docu setParams assemblies = 
+    let details = assemblies |> separated ", "
+    traceStartTask "Docu" details
     let parameters = DocuDefaults |> setParams
 
+    let files = assemblies |> Seq.map FullName |> separated " "
     let args =
-        (assembly |> FullName) +
+        files +
             " --output=" + parameters.OutputPath +
             " --templates=" + parameters.TemplatesPath
 
@@ -28,4 +30,4 @@ let Docu setParams assembly =
     then
         failwith "Documentation generation failed."
                     
-    traceEndTask "Docu" assembly
+    traceEndTask "Docu" details

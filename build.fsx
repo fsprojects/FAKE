@@ -1,7 +1,7 @@
 #I @"tools\FAKE"
 #r "FakeLib.dll"
 
-open Fake 
+open Fake
  
 // properties 
 let projectName = "FAKE"
@@ -17,8 +17,8 @@ let templatesSrcDir = @".\docu\src\Docu.Console\templates\"
 let deployZip = deployDir + sprintf "%s-%s.zip" projectName buildVersion
 
 // files
-let appReferences  = !+ @"src\app\**\*.*proj"  |> Scan
-let testReferences = !+ @"src\test\**\*.csproj" |> Scan
+let appReferences  = !+ @"src\app\**\*.*sproj"  |> Scan
+let testReferences = !+ @"src\test\**\*.*sproj" |> Scan
 
 // tools
 let nunitPath = @".\Tools\NUnit"
@@ -47,7 +47,25 @@ Target? BuildApp <-
                    AssemblyVersion = buildVersion;
                    AssemblyTitle = "FAKE - F# Make Lib";
                    Guid = "d6dd5aec-636d-4354-88d6-d66e094dadb5";
-                   OutputFileName = @".\src\app\FakeLib\AssemblyInfo.fs"})                                
+                   OutputFileName = @".\src\app\FakeLib\AssemblyInfo.fs"})
+
+            AssemblyInfo 
+             (fun p -> 
+                {p with
+                   CodeLanguage = FSharp;
+                   AssemblyVersion = buildVersion;
+                   AssemblyTitle = "FAKE - F# Make SQL Lib";
+                   Guid = "A161EAAF-EFDA-4EF2-BD5A-4AD97439F1BE";
+                   OutputFileName = @".\src\app\Fake.SQL\AssemblyInfo.fs"})     
+                      
+            AssemblyInfo 
+             (fun p -> 
+                {p with
+                   CodeLanguage = FSharp;
+                   AssemblyVersion = buildVersion;
+                   AssemblyTitle = "FAKE - F# Make Git Lib";
+                   Guid = "2101B852-0B08-4EAA-A343-85E399327A98";
+                   OutputFileName = @".\src\app\Fake.Git\AssemblyInfo.fs"})                                                                  
                      
         MSBuildRelease buildDir "Build" appReferences
             |> Log "AppBuild-Output: "
@@ -62,12 +80,14 @@ Target? BuildDocu <-
 
 Target? GenerateDocumentation <-
     fun _ ->
-        Docu (fun p ->
-            {p with
-               ToolPath = buildDir + "docu.exe"
-               TemplatesPath = templatesSrcDir
-               OutputPath = docsDir })
-            (buildDir + "FakeLib.dll")
+        !+ (buildDir + "Fake*.dll")
+          |> Scan
+          |> Docu (fun p ->
+                {p with
+                    ToolPath = buildDir + "docu.exe"
+                    TemplatesPath = templatesSrcDir
+                    OutputPath = docsDir })
+            
 
 Target? CopyLicense <-
     fun _ -> Copy buildDir [@"License.txt"; @"readme.txt"]
@@ -87,7 +107,7 @@ Target? BuildTest <-
 
 Target? Test <-
     fun _ ->  
-        !+ (testDir + @"\Test.*.dll") 
+        !+ (testDir + @"\*.dll") 
           |> Scan
           |> NUnit (fun p -> 
                 {p with 

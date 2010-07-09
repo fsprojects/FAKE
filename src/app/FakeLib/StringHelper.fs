@@ -123,7 +123,7 @@ let ProduceRelativePath baseLocation targetLocation =
         if (!baseLocation).EndsWith directorySeparator then
             baseLocation := (!baseLocation).Substring(0, (!baseLocation).Length - 1)
 
-    resultPath := !resultPath + targetLocation.Substring((!baseLocation).Length)
+    resultPath := (!resultPath + targetLocation.Substring((!baseLocation).Length)).Replace(directorySeparator + directorySeparator,directorySeparator)
 
     // preprocess .\..\ case
     if (!resultPath).StartsWith (sprintf ".%s..%s" directorySeparator directorySeparator) then
