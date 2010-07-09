@@ -1,7 +1,7 @@
 #I @"tools\FAKE"
 #r "FakeLib.dll"
 
-open Fake 
+open Fake
  
 // properties 
 let projectName = "FAKE"
@@ -17,8 +17,8 @@ let templatesSrcDir = @".\docu\src\Docu.Console\templates\"
 let deployZip = deployDir + sprintf "%s-%s.zip" projectName buildVersion
 
 // files
-let appReferences  = !+ @"src\app\**\*.*proj"  |> Scan
-let testReferences = !+ @"src\test\**\*.csproj" |> Scan
+let appReferences  = !+ @"src\app\**\*.*sproj"  |> Scan
+let testReferences = !+ @"src\test\**\*.sproj" |> Scan
 
 // tools
 let nunitPath = @".\Tools\NUnit"
@@ -87,7 +87,7 @@ Target? BuildTest <-
 
 Target? Test <-
     fun _ ->  
-        !+ (testDir + @"\Test.*.dll") 
+        !+ (testDir + @"\*.dll") 
           |> Scan
           |> NUnit (fun p -> 
                 {p with 
