@@ -47,7 +47,16 @@ Target? BuildApp <-
                    AssemblyVersion = buildVersion;
                    AssemblyTitle = "FAKE - F# Make Lib";
                    Guid = "d6dd5aec-636d-4354-88d6-d66e094dadb5";
-                   OutputFileName = @".\src\app\FakeLib\AssemblyInfo.fs"})                                
+                   OutputFileName = @".\src\app\FakeLib\AssemblyInfo.fs"}
+
+            AssemblyInfo 
+             (fun p -> 
+                {p with
+                   CodeLanguage = FSharp;
+                   AssemblyVersion = buildVersion;
+                   AssemblyTitle = "FAKE - F# Make SQL Lib";
+                   Guid = "A161EAAF-EFDA-4EF2-BD5A-4AD97439F1BE  ";
+                   OutputFileName = @".\src\app\Fake.SQL\AssemblyInfo.fs"})                                                                  
                      
         MSBuildRelease buildDir "Build" appReferences
             |> Log "AppBuild-Output: "
