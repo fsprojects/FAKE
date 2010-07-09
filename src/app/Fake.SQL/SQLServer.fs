@@ -1,5 +1,5 @@
 ﻿[<AutoOpen>]
-module Fake.SqlServer
+module Fake.SQL.SqlServer
  
 open System
 open System.Data.SqlClient
