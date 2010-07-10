@@ -20,6 +20,13 @@ namespace Test.FAKECore
         }
 
         [Test]
+        public void CanGetRelativePathOfDifferentMachine()
+        {
+            StringHelper.toRelativePath(@"\\Hades\Dir1").
+                ShouldEqual(@"\\Hades\Dir1");
+        }
+
+        [Test]
         public void CanGetRelativePathOfFileSubDirectory()
         {
             var di = new DirectoryInfo(Environment.CurrentDirectory + @"\Test1\Test2\text.txt");

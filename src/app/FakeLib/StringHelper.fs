@@ -84,8 +84,10 @@ let inline appendFileNamesIfNotNull fileNames (builder:StringBuilder) =
     fileNames 
       |> Seq.fold (fun builder file -> appendIfTrue (isNullOrEmpty file |> not) file builder) builder
 
+/// The directory separator string. On most systems / or \
 let directorySeparator = Path.DirectorySeparatorChar.ToString()
 
+/// A cache of relative path names.
 let relativePaths = new Dictionary<_,_>()
 
 /// <summary>Produces relative path when possible to go from baseLocation to targetLocation.</summary>
@@ -95,10 +97,10 @@ let relativePaths = new Dictionary<_,_>()
 /// <exception cref="ArgumentNullException">base or target locations are null or empty</exception>
 let ProduceRelativePath baseLocation targetLocation =
     if isNullOrEmpty baseLocation then
-        raise (new ArgumentNullException("baseLocation"))
+        raise (new ArgumentNullException "baseLocation")
     
     if isNullOrEmpty targetLocation then
-        raise (new ArgumentNullException("targetLocation"))
+        raise (new ArgumentNullException "targetLocation")
 
     if not <| Path.IsPathRooted baseLocation then baseLocation else
     if not <| Path.IsPathRooted targetLocation then targetLocation else
@@ -152,7 +154,7 @@ let inline toLines s = separated "\r\n" s
 /// Checks wether the given text starts with the given prefix
 let inline (<*) prefix (text:string) = text.StartsWith prefix
 
-let regexes = new Dictionary<_,_>()
+let private regexes = new Dictionary<_,_>()
 
 let getRegEx pattern =
     match regexes.TryGetValue pattern with
@@ -164,10 +166,16 @@ let (>=>) pattern (replacement:string) text =
 
 let (>**) pattern text = (getRegEx pattern).IsMatch text
 
+/// Checks wether the given char is a german umlaut.
 let isUmlaut c = List.exists ((=) c) ['ä'; 'ö'; 'ü'; 'Ä'; 'Ö'; 'Ü'; 'ß']
+
+/// Returns all standard chars and digits.
 let charsAndDigits = ['a'..'z'] @ ['A'..'Z'] @ ['0'..'9'] 
+
+/// Checks wether the given char is a standard char or digit.
 let isLetterOrDigit c = List.exists ((=) c) charsAndDigits
 
+/// Trims the given string with the DirectorySeparatorChar
 let inline trimSeparator (s:string) = s.Trim Path.DirectorySeparatorChar
 
 let inline trimSpecialChars (s:string) =
