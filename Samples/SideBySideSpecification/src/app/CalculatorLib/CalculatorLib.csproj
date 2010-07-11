@@ -70,7 +70,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArticleSpecs.cs">
+    <Compile Include="SubFolder\ExtendedArticleSpecs.cs">
+      <DependentUpon>Article.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubFolder\SimpleArticleSpecs.cs">
       <DependentUpon>Article.cs</DependentUpon>
     </Compile>
     <Compile Include="Calculator.cs" />
@@ -102,6 +105,11 @@
       <Project>{A89A0D9E-E51A-4011-9B80-3A0173D0497B}</Project>
       <Name>Dependency</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TestData\TextFile1.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

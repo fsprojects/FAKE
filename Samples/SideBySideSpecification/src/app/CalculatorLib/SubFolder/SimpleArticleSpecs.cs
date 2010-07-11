@@ -1,10 +1,9 @@
-﻿using CalculatorLib.SubFolder;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
-namespace CalculatorLib
+namespace CalculatorLib.SubFolder
 {
     [TestFixture]
-    public class ArticleSpecs
+    public class SimpleArticleSpecs
     {
         [Test]
         public static void TestStupidArticle()
