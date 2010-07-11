@@ -102,3 +102,21 @@ let compareBranches repositoryDir local remote =
     | x when x = commit1 -> FirstNeedsFastForward
     | x when x = commit2 -> SecondNeedsFastForward
     | _  -> NeedsRealMerge
+
+/// Checks a branch out
+let checkoutTracked repositoryDir create trackBranch branch =
+    gitCommandf repositoryDir "checkout --track -b %s %s" branch trackBranch
+
+
+/// Checks a branch out
+let checkout repositoryDir create branch =
+    gitCommandf repositoryDir "checkout %s %s"
+        (if create then "-b" else "")
+        branch
+
+/// Push all
+let push repositoryDir = directRunGitCommand repositoryDir "push" |> ignore
+
+/// Pull
+let pull repositoryDir remote branch = 
+    directRunGitCommand repositoryDir (sprintf "pull %s %s" remote branch) |> ignore
