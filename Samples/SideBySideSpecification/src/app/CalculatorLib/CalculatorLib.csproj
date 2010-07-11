@@ -70,7 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SubFolder\ExtendedArticleSpecs.cs">
+    <Compile Include="SubFolder\ArticleSpecs.cs">
       <DependentUpon>Article.cs</DependentUpon>
     </Compile>
     <Compile Include="SubFolder\SimpleArticleSpecs.cs">
