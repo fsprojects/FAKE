@@ -13,6 +13,7 @@ type NUnitParams =
    OutputFile:string;
    ErrorOutputFile:string;
    Framework:string;
+   ShowLabels: bool;
    WorkingDir:string; 
    XsltTransformFile:string;
    DisableShadowCopy:bool}
@@ -53,6 +54,7 @@ let NUnitDefaults =
     ErrorOutputFile = null;
     WorkingDir = null;
     Framework = null;
+    ShowLabels = true;
     XsltTransformFile = null;
     DisableShadowCopy = false}
 
@@ -68,6 +70,7 @@ let NUnit setParams (assemblies: string seq) =
     new StringBuilder()
       |> append "/nologo"
       |> appendIfTrue parameters.DisableShadowCopy "/noshadow" 
+      |> appendIfTrue parameters.ShowLabels "/labels" 
       |> appendIfTrue parameters.TestInNewThread "/thread" 
       |> appendFileNamesIfNotNull assemblies
       |> appendIfNotNull parameters.IncludeCategory "/include:"
