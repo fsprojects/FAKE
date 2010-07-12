@@ -15,7 +15,6 @@ try
             cmdArgs 
                 |> Seq.skip 1
                 |> Seq.map (fun (a:string) ->
-                        logfn "%A" a
                         if a.Contains "=" then
                             let s = a.Split splitter
                             if s.[0] = "logfile" then
@@ -34,7 +33,9 @@ try
         else
             tracefn "Build-Version: %s" buildVersion
       
-        if cmdArgs |> Array.length > 1 then traceFAKE "FAKE Arguments:"
+        if cmdArgs |> Array.length > 1 then 
+            traceFAKE "FAKE Arguments:"
+            args |> Seq.iter (tracefn "%A")
 
         log ""
         traceFAKE "FSI-Path: %s" fsiPath
