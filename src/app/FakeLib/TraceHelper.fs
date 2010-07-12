@@ -15,16 +15,21 @@ let mutable private openTags = []
 
 /// Writes a XML message to the bufffer.
 let xmlMessage message =
-    { defaultMessage with Text = sprintf "<message level=\"Info\"><![CDATA[%s]]></message>" message }
-      |> buffer.Post 
+    { defaultMessage with 
+        Text = sprintf "<message level=\"Info\"><![CDATA[%s]]></message>" message
+        Target = Xml }
+         |> buffer.Post 
     
 /// Logs the specified string (via message buffer)
 let logMessage important newLine message =
-    match traceMode with
-    | Console ->
-        { Text = message; Important = important; Newline = newLine; Color = ConsoleColor.White }
+    if traceMode = Xml then xmlMessage message
+
+    { Target = TraceMode.Console
+      Text = message
+      Important = important
+      Newline = newLine
+      Color = ConsoleColor.White }
           |> buffer.Post
-    | Xml     -> xmlMessage message
 
 /// Logs the specified string        
 let log = logMessage false true
@@ -40,14 +45,14 @@ let logVerbosefn fmt = Printf.ksprintf (if verbose then log else ignore) fmt
 
 /// Writes a trace output to the message buffer (in the given color)
 let logColored important color newLine message =
-    match traceMode with
-    | Console ->        
-        { Text = message
-          Color = color
-          Important = important
-          Newline = newLine }
+    if traceMode = Xml then xmlMessage message
+
+    { Target = TraceMode.Console
+      Text = message
+      Color = color
+      Important = important
+      Newline = newLine }
           |> buffer.Post
-    | Xml     -> xmlMessage message
     
 /// Writes a trace to the command line (in green)
 let trace s = logColored false ConsoleColor.Green true s
@@ -69,12 +74,13 @@ let traceFAKE fmt = Printf.ksprintf (logColored true ConsoleColor.Yellow true) f
 
 /// Traces an error (in red)
 let traceError error = 
-    match traceMode with
-    | Console -> logColored true ConsoleColor.Red true error
-    | Xml     -> 
+    if traceMode = Xml then
         { defaultMessage with 
-            Text = sprintf "<failure><builderror><message level=\"Error\"><![CDATA[%s]]></message></builderror></failure>" error }
-          |> buffer.Post
+            Text = sprintf "<failure><builderror><message level=\"Error\"><![CDATA[%s]]></message></builderror></failure>" error
+            Target = Xml }
+             |> buffer.Post
+
+    logColored true ConsoleColor.Red true error
   
 
 /// Traces the EnvironmentVariables
@@ -110,13 +116,20 @@ let traceStartBuild () =
             fi.Delete()
         if not fi.Directory.Exists then fi.Directory.Create()
         
-        buffer.Post { defaultMessage with Text = "<buildresults>" }
+        { defaultMessage with 
+            Text = "<buildresults>"
+            Target = Xml }
+                |> buffer.Post
 
 /// Traces the end of the build
 let traceEndBuild () =
     match traceMode with
     | Console -> ()
-    | Xml     -> buffer.Post { defaultMessage with Text = "</buildresults>" }
+    | Xml     -> 
+        { defaultMessage with 
+            Text = "</buildresults>"
+            Target = Xml }
+                |> buffer.Post
 
 let openTag tag =  openTags <- tag :: openTags
 
@@ -125,26 +138,30 @@ let closeTag tag =
     | x::rest when x = tag -> openTags <- rest
     | _ -> failwith "Invalid Tag-structure"
 
-    buffer.Post { defaultMessage with Text = sprintf "</%s>" tag }
+    { defaultMessage with 
+        Text = sprintf "</%s>" tag
+        Target = Xml }
+            |> buffer.Post
   
-let closeAllOpenTags() = openTags |> Seq.iter closeTag
+let closeAllOpenTags() = Seq.iter closeTag openTags
 
 /// Traces the begin of a target
 let traceStartTarget name dependencyString =
-    match traceMode with
-    | Console -> tracefn "Starting Target: %s %s" name dependencyString
-    | Xml     -> 
+    if traceMode = Xml then
         openTag "target"
-        buffer.Post { defaultMessage with Text = sprintf "<target name=\"%s\">" name }
-        xmlMessage dependencyString
+        { defaultMessage with 
+            Text = sprintf "<target name=\"%s\">" name
+            Target = Xml }
+                |> buffer.Post
+
+    tracefn "Starting Target: %s %s" name dependencyString
 
     ReportProgressStart <| sprintf "Target: %s" name
    
 /// Traces the end of a target   
 let traceEndTarget name =
-    match traceMode with
-    | Console -> tracefn "Finished Target: %s" name
-    | Xml     -> closeTag "target"
+    tracefn "Finished Target: %s" name
+    if traceMode = Xml then closeTag "target"
 
     ReportProgressFinish <| sprintf "Target: %s" name
   
@@ -154,7 +171,10 @@ let traceStartTask task description =
     | Console -> ()
     | Xml     -> 
         openTag "task"
-        buffer.Post { defaultMessage with Text = sprintf "<task name=\"%s\">" task }
+        { defaultMessage with 
+            Text = sprintf "<task name=\"%s\">" task
+            Target = Xml }
+                |> buffer.Post
 
     ReportProgressStart <| sprintf "Task: %s %s" task description
    

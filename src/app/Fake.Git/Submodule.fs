@@ -55,11 +55,11 @@ let init superRepositoryDir name =
     if isNullOrEmpty name then "submodule update --init" else "submodule update --init \"" + name.Trim() + "\""
       |> gitCommand superRepositoryDir
 
-/// Adds a submodule to the current repository.
-///  params: superRepositoryDir
-///  params: remote Path
-///  params: local Path
-///  params: branch (can be null)
+/// <summary>Adds a submodule to the current repository.</summary>
+/// <param name="superRepositoryDir">The super repository.</param>
+/// <param name="remotePath">The path to the remote repository of the submodule.</param>
+/// <param name="localPath">The local path to the submodule.</param>
+/// <param name="branch">The branch to  clone. (can be null)</param>
 let add superRepositoryDir remotePath localPath branch =
     sprintf "submodule add \"%s\" \"%s\" %s"
       (remotePath |> fixPath)

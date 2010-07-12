@@ -72,6 +72,11 @@ let FastForwardFlag = "--ff"
 
 let NoFastForwardFlag = "--no-ff"
 
+/// Tags the current branch
+let tag repositoryDir tag =
+    sprintf "tag %s" tag
+      |> gitCommand repositoryDir
+
 /// Deletes the given tag
 let deleteTag repositoryDir tag =
     sprintf "tag -d %s" tag
@@ -83,14 +88,12 @@ type MergeType =
 | SecondNeedsFastForward
 | NeedsRealMerge
 
-/// Tests whether branches and their "origin" counterparts have diverged and need
-/// merging first. It returns error codes to provide more detail, like so:
+/// <summary>Tests whether branches and their "origin" counterparts have diverged and need
+/// merging first.</summary>
 ///
-/// 0 - repositoryDir
-/// 1 - Branch heads point to the same commit
-/// 2 - First given branch needs fast-forwarding
-/// 3 - Second given branch needs fast-forwarding
-/// 4 - Branch needs a real merge
+/// <param name="repositoryDir">The path to the repository.</param>
+/// <param name="local">The local branch name.</param>
+/// <param name="remote">The remote branch name.</param>
 let compareBranches repositoryDir local remote =
     let commit1 = getSHA1 repositoryDir local
     let commit2 = getSHA1 repositoryDir remote
@@ -99,3 +102,21 @@ let compareBranches repositoryDir local remote =
     | x when x = commit1 -> FirstNeedsFastForward
     | x when x = commit2 -> SecondNeedsFastForward
     | _  -> NeedsRealMerge
+
+/// Checks a branch out
+let checkoutTracked repositoryDir create trackBranch branch =
+    gitCommandf repositoryDir "checkout --track -b %s %s" branch trackBranch
+
+
+/// Checks a branch out
+let checkout repositoryDir create branch =
+    gitCommandf repositoryDir "checkout %s %s"
+        (if create then "-b" else "")
+        branch
+
+/// Push all
+let push repositoryDir = directRunGitCommand repositoryDir "push" |> ignore
+
+/// Pull
+let pull repositoryDir remote branch = 
+    directRunGitCommand repositoryDir (sprintf "pull %s %s" remote branch) |> ignore
