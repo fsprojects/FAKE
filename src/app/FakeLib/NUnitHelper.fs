@@ -6,96 +6,95 @@ open System.IO
 open System.Text
 
 type NUnitParams =
- { IncludeCategory:string;
-   ExcludeCategory:string;
-   ToolPath:string;
-   TestInNewThread:bool;
-   OutputFile:string;
-   ErrorOutputFile:string;
-   Framework:string;
-   ShowLabels: bool;
-   WorkingDir:string; 
-   XsltTransformFile:string;
-   DisableShadowCopy:bool}
+    { IncludeCategory:string;
+      ExcludeCategory:string;
+      ToolPath:string;
+      TestInNewThread:bool;
+      OutputFile:string;
+      ErrorOutputFile:string;
+      Framework:string;
+      ShowLabels: bool;
+      WorkingDir:string; 
+      XsltTransformFile:string;
+      DisableShadowCopy:bool}
    
 type TestCase =
-  { Name: string;
-    Executed: bool;
-    Ignored: bool;
-    Skipped: bool;
-    Success: bool;
-    RunTime: float;
-    ErrorMessage: string;
-    StackTrace:string}
+    { Name: string;
+      Executed: bool;
+      Ignored: bool;
+      Skipped: bool;
+      Success: bool;
+      RunTime: float;
+      ErrorMessage: string;
+      StackTrace:string}
       
 type TestSuite = 
-  { Name: string;
-    DateTime: DateTime;
-    TestCases: TestCase list}           
+    { Name: string;
+      DateTime: DateTime;
+      TestCases: TestCase list}           
     
-  member x.Success   = x.TestCases |> List.exists (fun test -> not test.Success)
-  member x.Executed  = x.TestCases |> List.exists (fun test -> test.Executed)
-  member x.TestCount = x.TestCases |> List.length
-  member x.Errors = x.TestCases  |> Seq.filter (fun test -> not test.Success) |> Seq.length
-  member x.NotRun = x.TestCases  |> Seq.filter (fun test -> not test.Executed) |> Seq.length
-  member x.Ignored = x.TestCases |> Seq.filter (fun test -> test.Ignored) |> Seq.length
-  member x.Skipped = x.TestCases |> Seq.filter (fun test -> test.Skipped) |> Seq.length
-  member x.Runtime = x.TestCases |> List.sumBy (fun test -> test.RunTime)         
+    member x.Success   = x.TestCases |> List.exists (fun test -> not test.Success)
+    member x.Executed  = x.TestCases |> List.exists (fun test -> test.Executed)
+    member x.TestCount = x.TestCases |> List.length
+    member x.Errors = x.TestCases  |> Seq.filter (fun test -> not test.Success) |> Seq.length
+    member x.NotRun = x.TestCases  |> Seq.filter (fun test -> not test.Executed) |> Seq.length
+    member x.Ignored = x.TestCases |> Seq.filter (fun test -> test.Ignored) |> Seq.length
+    member x.Skipped = x.TestCases |> Seq.filter (fun test -> test.Skipped) |> Seq.length
+    member x.Runtime = x.TestCases |> List.sumBy (fun test -> test.RunTime)         
 
 let toolName = @"nunit-console.exe"
 
 /// NUnit default params  
 let NUnitDefaults =
-  { IncludeCategory = null;
-    ExcludeCategory = null;
-    ToolPath = currentDirectory @@ "tools" @@ "Nunit";
-    TestInNewThread = false;
-    OutputFile = currentDirectory @@ "TestResult.xml";
-    ErrorOutputFile = null;
-    WorkingDir = null;
-    Framework = null;
-    ShowLabels = true;
-    XsltTransformFile = null;
-    DisableShadowCopy = false}
-
+    { IncludeCategory = null;
+      ExcludeCategory = null;
+      ToolPath = currentDirectory @@ "tools" @@ "Nunit";
+      TestInNewThread = false;
+      OutputFile = currentDirectory @@ "TestResult.xml";
+      ErrorOutputFile = null;
+      WorkingDir = null;
+      Framework = null;
+      ShowLabels = true;
+      XsltTransformFile = null;
+      DisableShadowCopy = false}
 
 /// Run NUnit on a group of assemblies.
 let NUnit setParams (assemblies: string seq) =
-  let details = assemblies |> separated ", "
-  traceStartTask "NUnit" details
-  let parameters = NUnitDefaults |> setParams
+    let details = assemblies |> separated ", "
+    traceStartTask "NUnit" details
+    let parameters = NUnitDefaults |> setParams
               
-  let assemblies =  assemblies |> Seq.toArray
-  let commandLineBuilder =
-    new StringBuilder()
-      |> append "/nologo"
-      |> appendIfTrue parameters.DisableShadowCopy "/noshadow" 
-      |> appendIfTrue parameters.ShowLabels "/labels" 
-      |> appendIfTrue parameters.TestInNewThread "/thread" 
-      |> appendFileNamesIfNotNull assemblies
-      |> appendIfNotNull parameters.IncludeCategory "/include:"
-      |> appendIfNotNull parameters.ExcludeCategory "/exclude:"
-      |> appendIfNotNull parameters.XsltTransformFile "/transform:"
-      |> appendIfNotNull parameters.OutputFile  "/xml:"
-      |> appendIfNotNull parameters.Framework  "/framework:"
-      |> appendIfNotNull parameters.ErrorOutputFile "/err:"
+    let assemblies =  assemblies |> Seq.toArray
+    let commandLineBuilder =
+        new StringBuilder()
+          |> append "/nologo"
+          |> appendIfTrue parameters.DisableShadowCopy "/noshadow" 
+          |> appendIfTrue parameters.ShowLabels "/labels" 
+          |> appendIfTrue parameters.TestInNewThread "/thread" 
+          |> appendFileNamesIfNotNull assemblies
+          |> appendIfNotNull parameters.IncludeCategory "/include:"
+          |> appendIfNotNull parameters.ExcludeCategory "/exclude:"
+          |> appendIfNotNull parameters.XsltTransformFile "/transform:"
+          |> appendIfNotNull parameters.OutputFile  "/xml:"
+          |> appendIfNotNull parameters.Framework  "/framework:"
+          |> appendIfNotNull parameters.ErrorOutputFile "/err:"
 
-  let tool = parameters.ToolPath @@ toolName
-  let args = commandLineBuilder.ToString()
-  trace (tool + " " + args)
-  let result =
-    execProcessAndReturnExitCode (fun info ->  
-      info.FileName <- tool
-      info.WorkingDirectory <- parameters.WorkingDir
-      info.Arguments <- args)
+    let tool = parameters.ToolPath @@ toolName
+    let args = commandLineBuilder.ToString()
+    trace (tool + " " + args)
+    let result =
+        execProcessAndReturnExitCode (fun info ->  
+            info.FileName <- tool
+            info.WorkingDirectory <- parameters.WorkingDir
+            info.Arguments <- args)
 
-  sendTeamCityNUnitImport parameters.OutputFile
-  if result = 0 then          
-      traceEndTask "NUnit" details
-  else
-      if result = 2 then
-          failwith "NUnit test failed."
-      failwithf "NUnit test failed. Process finished with exit code %d." result
+    sendTeamCityNUnitImport parameters.OutputFile
+    if result = 0 then          
+        traceEndTask "NUnit" details
+    else
+        if result = 2 then
+            failwith "NUnit test failed."
+        failwithf "NUnit test failed. Process finished with exit code %d." result
 
 /// writes the given TestSuite as XML file in NUnit style
 let writeXMLOutput (testSuite:TestSuite) fileName =
