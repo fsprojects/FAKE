@@ -827,8 +827,11 @@
  All references to nunit.*.dlls
 </summary>
 </member>
-<member name="">
-
+<member name="M:Fake.MSBuild.SpecsRemovement.RemoveTestsFromProject(Microsoft.FSharp.Core.FSharpFunc`2{System.String,Microsoft.FSharp.Core.FSharpFunc`2{System.String,System.Boolean}},Microsoft.FSharp.Core.FSharpFunc`2{System.String,Microsoft.FSharp.Core.FSharpFunc`2{System.String,System.Boolean}},System.String)">
+ <summary>Removes test data and test files from a given MSBuild project and recursivly from all MSBuild project dependencies</summary>
+ <param name="assemblyFilterF">A filter function for assembly references.</param>
+ <param name="fileFilterF">A filter function for files in a project.</param>
+ <param name="projectFileName">The MSBuild project to start.</param>
 </member>
 <member name="">
 
@@ -886,6 +889,9 @@
 </summary>
 </member>
 <member name="T:Fake.MSBuildHelper">
+
+</member>
+<member name="">
 
 </member>
 <member name="">
@@ -1295,17 +1301,25 @@
 <member name="">
 
 </member>
-<member name="">
-
+<member name="M:Fake.StringHelper.trimSeparator(System.String)">
+<summary>
+ Trims the given string with the DirectorySeparatorChar
+</summary>
 </member>
-<member name="">
-
+<member name="M:Fake.StringHelper.isLetterOrDigit(System.Char)">
+<summary>
+ Checks wether the given char is a standard char or digit.
+</summary>
 </member>
-<member name="">
-
+<member name="P:Fake.StringHelper.charsAndDigits">
+<summary>
+ Returns all standard chars and digits.
+</summary>
 </member>
-<member name="">
-
+<member name="M:Fake.StringHelper.isUmlaut(System.Char)">
+<summary>
+ Checks wether the given char is a german umlaut.
+</summary>
 </member>
 <member name="">
 
@@ -1351,11 +1365,15 @@
  <returns>The relative path relative to baseLocation</returns>
  <exception cref="ArgumentNullException">base or target locations are null or empty</exception>
 </member>
-<member name="">
-
+<member name="P:Fake.StringHelper.relativePaths">
+<summary>
+ A cache of relative path names.
+</summary>
 </member>
-<member name="">
-
+<member name="P:Fake.StringHelper.directorySeparator">
+<summary>
+ The directory separator string. On most systems / or \
+</summary>
 </member>
 <member name="M:Fake.StringHelper.appendFileNamesIfNotNull(System.Collections.Generic.IEnumerable{System.String},System.Text.StringBuilder)">
 <summary>

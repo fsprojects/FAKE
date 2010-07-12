@@ -29,21 +29,42 @@
 <member name="">
 
 </member>
-<member name="M:Fake.Git.Branches.compareBranches(System.String,System.String,System.String)">
+<member name="M:Fake.Git.Branches.pull(System.String,System.String,System.String)">
 <summary>
- Tests whether branches and their &quot;origin&quot; counterparts have diverged and need
- merging first. It returns error codes to provide more detail, like so:
-
- 0 - repositoryDir
- 1 - Branch heads point to the same commit
- 2 - First given branch needs fast-forwarding
- 3 - Second given branch needs fast-forwarding
- 4 - Branch needs a real merge
+ Pull
 </summary>
+</member>
+<member name="M:Fake.Git.Branches.push(System.String)">
+<summary>
+ Push all
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.checkout(System.String,System.Boolean,System.String)">
+<summary>
+ Checks a branch out
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.checkoutTracked``1(System.String,``0,System.String,System.String)">
+<summary>
+ Checks a branch out
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.compareBranches(System.String,System.String,System.String)">
+ <summary>Tests whether branches and their "origin" counterparts have diverged and need
+ merging first.</summary>
+
+ <param name="repositoryDir">The path to the repository.</param>
+ <param name="local">The local branch name.</param>
+ <param name="remote">The remote branch name.</param>
 </member>
 <member name="M:Fake.Git.Branches.deleteTag(System.String,System.String)">
 <summary>
  Deletes the given tag
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.tag(System.String,System.String)">
+<summary>
+ Tags the current branch
 </summary>
 </member>
 <member name="">
@@ -116,29 +137,6 @@
 
 </member>
 <member name="T:Fake.Git.Branches">
-
-</member>
-<member name="M:Fake.Git.Checkout.pull(System.String,System.String,System.String)">
-<summary>
- Pull
-</summary>
-</member>
-<member name="M:Fake.Git.Checkout.push(System.String)">
-<summary>
- Push all
-</summary>
-</member>
-<member name="M:Fake.Git.Checkout.checkout(System.String,System.Boolean,System.String)">
-<summary>
- Checks a branch out
-</summary>
-</member>
-<member name="M:Fake.Git.Checkout.checkoutTracked``1(System.String,``0,System.String,System.String)">
-<summary>
- Checks a branch out
-</summary>
-</member>
-<member name="T:Fake.Git.Checkout">
 
 </member>
 <member name="M:Fake.Git.CommandHelper.findGitDir(System.String)">
@@ -414,13 +412,11 @@
 
 </member>
 <member name="M:Fake.Git.Submodule.add(System.String,System.String,System.String,System.String)">
-<summary>
- Adds a submodule to the current repository.
-  params: superRepositoryDir
-  params: remote Path
-  params: local Path
-  params: branch (can be null)
-</summary>
+ <summary>Adds a submodule to the current repository.</summary>
+ <param name="superRepositoryDir">The super repository.</param>
+ <param name="remotePath">The path to the remote repository of the submodule.</param>
+ <param name="localPath">The local path to the submodule.</param>
+ <param name="branch">The branch to  clone. (can be null)</param>
 </member>
 <member name="M:Fake.Git.Submodule.init(System.String,System.String)">
 <summary>
