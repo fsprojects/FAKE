@@ -117,7 +117,7 @@ let traceStartBuild () =
         if not fi.Directory.Exists then fi.Directory.Create()
         
         { defaultMessage with 
-            Text = "<buildresults>"
+            Text = "<?xml version=\"1.0\"?>\r\n<buildresults>" 
             Target = Xml }
                 |> buffer.Post
 

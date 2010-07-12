@@ -5,20 +5,11 @@ open System.IO
 let showFakeCommands() = traceFAKE "FAKE [buildScript]"
 
 try
-    traceStartBuild()
-    try
+    try        
         let cmdArgs = System.Environment.GetCommandLineArgs()
 
         if cmdArgs.Length <= 1 || cmdArgs.[1] = "help" then showFakeCommands() else
 
-        traceFAKE "FakePath: %s" fakePath 
-        traceFAKE "%s" fakeVersionStr
-        if buildServer = LocalBuild then
-            trace localBuildLabel
-        else
-            tracefn "Build-Version: %s" buildVersion
-      
-        if cmdArgs |> Array.length > 1 then traceFAKE "FAKE Arguments:"
         let args = 
             let splitter = [|'='|]
             cmdArgs 
@@ -27,10 +18,23 @@ try
                         logfn "%A" a
                         if a.Contains "=" then
                             let s = a.Split splitter
+                            if s.[0] = "logfile" then
+                                xmlOutputFile <- s.[1]
+                                traceMode <- Xml
                             s.[0], s.[1]
                         else
                             a,"1")
                 |> Seq.toList
+
+        traceStartBuild()
+        traceFAKE "FakePath: %s" fakePath 
+        traceFAKE "%s" fakeVersionStr
+        if buildServer = LocalBuild then
+            trace localBuildLabel
+        else
+            tracefn "Build-Version: %s" buildVersion
+      
+        if cmdArgs |> Array.length > 1 then traceFAKE "FAKE Arguments:"
 
         log ""
         traceFAKE "FSI-Path: %s" fsiPath
