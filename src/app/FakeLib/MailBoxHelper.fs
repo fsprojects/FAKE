@@ -7,13 +7,15 @@ let mutable verbose = hasBuildParam "verbose"
 open System
 
 type Message = 
-    { Text      : string
+    { Target    : TraceMode
+      Text      : string
       Color     : ConsoleColor
       Newline   : bool
       Important : bool}
 
 let defaultMessage = 
-    { Text      = ""
+    { Target    = TraceMode.Console
+      Text      = ""
       Color     = ConsoleColor.White
       Newline   = true
       Important = false }
@@ -22,7 +24,7 @@ let buffer = MailboxProcessor.Start (fun inbox ->
     let rec loop () = 
         async {
             let! (msg:Message) = inbox.Receive()
-            match traceMode with
+            match msg.Target with
             | Console -> 
                 let text = if not verbose then shortenCurrentDirectory msg.Text else msg.Text
                 let curColor = Console.ForegroundColor
