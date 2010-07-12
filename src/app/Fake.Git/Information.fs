@@ -14,7 +14,7 @@ let getBranchName repositoryDir =
 /// Gets the git version
 let getVersion repositoryDir = 
     let ok,msg,errors = runGitCommand repositoryDir "--version"
-    msg |> getString
+    msg |> separated ""
 
 /// Returns the SHA1 of the current HEAD
 let getCurrentSHA1 repositoryDir = getSHA1 repositoryDir "HEAD"

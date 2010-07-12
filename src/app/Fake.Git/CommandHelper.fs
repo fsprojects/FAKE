@@ -11,11 +11,7 @@ open Fake
 
 let gitPath = 
     let ev = environVar "GIT"
-    if not (isNullOrEmpty ev) then ev else findPath "GitPath" "git.exe"
-    
-let getString sequence =
-    let sb = sequence |> Seq.fold (fun (sb:StringBuilder) (s:string) -> sb.Append s) (new StringBuilder())
-    sb.ToString()
+    if not (isNullOrEmpty ev) then ev else findPath "GitPath" "git.exe"   
 
 let runGitCommand repositoryDir command = 
     let ok,msg,errors = 
@@ -84,9 +80,10 @@ let fixPath (path:string) =
 /// Searches the git dir recursivly up to the root
 let findGitDir repositoryDir =
     let rec findGitDir (dirInfo:DirectoryInfo) =
-        let gitDir = new DirectoryInfo(dirInfo.FullName + @"\.git")
+        let gitDir = dirInfo.FullName @@ @"\.git" |> directoryInfo
         if gitDir.Exists then gitDir else findGitDir dirInfo.Parent
-    
+ 
 
-    if isNullOrEmpty repositoryDir then new DirectoryInfo(".") else new DirectoryInfo(repositoryDir)
+    if isNullOrEmpty repositoryDir then "." else repositoryDir
+      |> directoryInfo
       |> findGitDir
