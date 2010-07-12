@@ -2,10 +2,11 @@
 open Fake
 open System.IO
 
-let showFakeCommands() = traceFAKE "FAKE [buildScript]"
+let showFakeCommands() = Console.WriteLine "FAKE [buildScript]"
 
 try
-    try        
+    try    
+        AutoCloseXmlWriter <- true    
         let cmdArgs = System.Environment.GetCommandLineArgs()
 
         if cmdArgs.Length <= 1 || cmdArgs.[1] = "help" then showFakeCommands() else

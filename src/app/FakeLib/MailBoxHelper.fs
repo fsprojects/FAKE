@@ -20,7 +20,18 @@ let defaultMessage =
       Newline   = true
       Important = false }
 
+let mutable private xmlWriter = null
+
+let mutable AutoCloseXmlWriter = false
+
+let private openWriter() = xmlWriter <- new IO.StreamWriter(xmlOutputFile,true,Text.Encoding.Default)
+let private closeWriter() = 
+    if xmlWriter <> null then
+        xmlWriter.Close()
+        xmlWriter <- null
+
 let buffer = MailboxProcessor.Start (fun inbox ->
+
     let rec loop () = 
         async {
             let! (msg:Message) = inbox.Receive()
@@ -34,8 +45,12 @@ let buffer = MailboxProcessor.Start (fun inbox ->
                 else
                     if msg.Newline then printfn "%s" text else printf "%s" text
                 Console.ForegroundColor <- curColor
-            | Xml     -> AppendToFile xmlOutputFile [msg.Text]
-
+            | Xml     -> 
+                if xmlWriter = null then openWriter()
+                xmlWriter.WriteLine msg.Text
+                xmlWriter.Flush()
+                if AutoCloseXmlWriter || msg.Text = "</buildresults>" then closeWriter()
+                
             return! loop ()}
 
     loop ())
