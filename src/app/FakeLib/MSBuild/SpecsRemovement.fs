@@ -58,23 +58,35 @@ let createFileName projectFileName =
     let fi = fileInfo projectFileName            
     fi.Directory.FullName @@ (fi.Name.Replace(fi.Extension,"") + "_Spliced" + fi.Extension)
 
-let rec RemoveTestsFromProject assemblyFilterF fileFilterF projectFileName =
-    let targetFileName = createFileName projectFileName
-    projectFileName
-      |> loadProject
-      |> removeAssemblyReference assemblyFilterF
-      |> removeFiles fileFilterF     
-      |> removeFromProjectReferences (RemoveTestsFromProject assemblyFilterF fileFilterF) projectFileName
-      |> fun doc -> doc.Save(targetFileName,SaveOptions.DisableFormatting)
-    targetFileName
+/// <summary>Removes test data and test files from a given MSBuild project and recursivly from all MSBuild project dependencies</summary>
+/// <param name="assemblyFilterF">A filter function for assembly references.</param>
+/// <param name="fileFilterF">A filter function for files in a project.</param>
+/// <param name="projectFileName">The MSBuild project to start.</param>
+let RemoveTestsFromProject assemblyFilterF fileFilterF projectFileName =
+    let processedProjects = new System.Collections.Generic.HashSet<_>()
+    let rec removeTestsFromProject assemblyFilterF fileFilterF projectFileName =        
+        let targetFileName = createFileName projectFileName
+
+        if not <| processedProjects.Contains projectFileName then
+            processedProjects.Add projectFileName |> ignore
+            projectFileName
+              |> loadProject
+              |> removeAssemblyReference assemblyFilterF
+              |> removeFiles fileFilterF     
+              |> removeFromProjectReferences (removeTestsFromProject assemblyFilterF fileFilterF) projectFileName
+              |> fun doc -> doc.Save(targetFileName,SaveOptions.DisableFormatting)
+
+        targetFileName
+
+    removeTestsFromProject assemblyFilterF fileFilterF projectFileName
 
 // Default filters
 
 /// All references to nunit.*.dlls
-let AllNUnitReferences elementName (s:string) = s.StartsWith("nunit")
+let AllNUnitReferences elementName (s:string) = s.StartsWith "nunit"
 
 /// All Spec.cs or Spec.fs files
-let AllSpecFiles elementName (s:string) = s.EndsWith("Specs.cs") || s.EndsWith("Specs.fs")
+let AllSpecFiles elementName (s:string) = s.EndsWith "Specs.cs" || s.EndsWith "Specs.fs"
 
 /// All Spec.cs or Spec.fs files and all files containing TestData
 let AllSpecAndTestDataFiles elementName (s:string) =
