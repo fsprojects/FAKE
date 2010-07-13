@@ -37,8 +37,8 @@ let ExecProcessWithLambdas infoAction (timeOut:TimeSpan) silent errorF messageF 
             WaitUntilEverythingIsPrinted()
             try
                 p.Kill()
-            with exn -> traceError <| sprintf "Could not kill process %s (Parameters: %s) after timeout." p.StartInfo.FileName p.StartInfo.Arguments
-            failwithf "Process %s (Parameters: %s) timed out." p.StartInfo.FileName p.StartInfo.Arguments
+            with exn -> traceError <| sprintf "Could not kill process %s  %s after timeout." p.StartInfo.FileName p.StartInfo.Arguments
+            failwithf "Process %s %s timed out." p.StartInfo.FileName p.StartInfo.Arguments
     
     p.ExitCode
 
