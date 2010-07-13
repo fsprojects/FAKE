@@ -29,23 +29,6 @@ let removeFiles filterF (doc:XDocument) =
       |> removeFilteredElement "None" filterF
       |> removeFilteredElement "Content" filterF
 
-let removeFromProjectReferences f projectFileName (doc:XDocument) =
-    let fi = fileInfo projectFileName
-    doc
-        .Descendants(xname "Project")
-        .Descendants(xname "ItemGroup")
-        .Descendants(xname "ProjectReference")
-        |> Seq.iter(fun e -> 
-            let a = e.Attribute(XName.Get "Include")
-            let value = a.Value
-            let fileName =
-                if value.StartsWith(@"..\") then
-                    fi.Directory.FullName @@ value
-                else
-                    value                                      
-            a.Value <- f fileName)
-    doc
-
 let createFileName projectFileName =
     let fi = fileInfo projectFileName            
     fi.Directory.FullName @@ (fi.Name.Replace(fi.Extension,"") + "_Spliced" + fi.Extension)
@@ -65,7 +48,7 @@ let RemoveTestsFromProject assemblyFilterF fileFilterF projectFileName =
               |> loadProject
               |> removeAssemblyReference assemblyFilterF
               |> removeFiles fileFilterF     
-              |> removeFromProjectReferences (removeTestsFromProject assemblyFilterF fileFilterF) projectFileName
+              |> processReferences "ProjectReference" (removeTestsFromProject assemblyFilterF fileFilterF) projectFileName
               |> fun doc -> doc.Save(targetFileName,SaveOptions.DisableFormatting)
 
         targetFileName

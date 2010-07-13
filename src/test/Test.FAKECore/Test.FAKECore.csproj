@@ -135,6 +135,9 @@
       <DependentUpon>Project2.txt</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="SideBySideSpecification\Project_WithRecursiveProjectReference.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\AllObjects.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

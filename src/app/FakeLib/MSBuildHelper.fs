@@ -26,16 +26,41 @@ let xname name = XName.Get(name,msbuildNamespace)
 let loadProject (projectFileName:string) : MSBuildProject = 
     MSBuildProject.Load(projectFileName,LoadOptions.PreserveWhitespace)
 
-let internal getReference elementName (doc:XDocument) =
+let internal getReferenceElements elementName projectFileName (doc:XDocument) =
+    let fi = fileInfo projectFileName
     doc
       .Descendants(xname "Project")
       .Descendants(xname "ItemGroup")
-      .Descendants(xname elementName )
-         |> Seq.map(fun e -> e.Attribute(XName.Get "Include").Value)
+      .Descendants(xname elementName)
+        |> Seq.map(fun e -> 
+            let a = e.Attribute(XName.Get "Include")
+            let value = a.Value
+            let fileName =
+                if value.StartsWith(".." + directorySeparator) || (not <| value.Contains directorySeparator) then
+                    fi.Directory.FullName @@ value
+                else
+                    value
+            a,fileName |> FullName)   
 
-let getReferences doc = getReference "Reference" doc
-let getProjectReferences doc = getReference "ProjectReference" doc
 
+let processReferences elementName f projectFileName (doc:XDocument) =
+    let fi = fileInfo projectFileName
+    doc
+        |> getReferenceElements elementName projectFileName
+        |> Seq.iter (fun (a,fileName) -> a.Value <- f fileName)
+    doc
+
+let rec getProjectReferences projectFileName= 
+    let doc = loadProject projectFileName
+    let references =
+        getReferenceElements "ProjectReference" projectFileName doc
+            |> Seq.map snd
+
+    references
+      |> Seq.map getProjectReferences
+      |> Seq.concat
+      |> Seq.append references
+      |> Set.ofSeq
 
 /// Runs a msbuild project
 let build outputPath targets properties overwrite project =
@@ -63,8 +88,8 @@ let build outputPath targets properties overwrite project =
     traceEndTask "MSBuild" project
 
 /// Builds the given project files and collects the output files
-let MSBuild outputPath targets properties projects =      
-    projects 
+let MSBuild outputPath targets properties projects = 
+    projects
       |> Seq.toList
       |> List.iter (build outputPath targets properties true)
 

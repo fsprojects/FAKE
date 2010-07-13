@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 
@@ -51,6 +52,20 @@ namespace Test.Git
         }
 
         /// <summary>
+        /// Asserts that the item supplied by
+        /// <paramref name = "item" />
+        /// should be contained
+        /// in the enumerable supplied by
+        /// <paramref name = "items" />
+        /// .
+        /// </summary>
+        public static void ShouldContain<T>(this IEnumerable<T> items, T item)
+        {
+            if (!items.Contains(item))
+                throw new ItemNotFoundException<T>(item);
+        }
+
+        /// <summary>
         ///   Shoulds the be empty.
         /// </summary>
         /// <param name = "text">The text.</param>
@@ -68,6 +83,24 @@ namespace Test.Git
         {
             collection.Any().ShouldBeTrue();
             return collection;
+        }
+    }
+
+    /// <summary>
+    /// ItemNotFoundException
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class ItemNotFoundException<T> : Exception
+    {
+        /// <summary>
+        /// Initializes a new instance of the
+        /// <see cref="ItemNotFoundException&lt;T&gt;" />
+        /// class.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        public ItemNotFoundException(T item)
+            : base(string.Format("The item {0} was not found in the given collection.", item))
+        {
         }
     }
 }
