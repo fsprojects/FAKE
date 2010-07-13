@@ -115,7 +115,7 @@ Target? Test <-
                    ToolPath = nunitPath; 
                    DisableShadowCopy = true; 
                    Framework = "net-2.0.50727";
-                   OutputFile = metricsDir @@ "nunit-results.xml"}) 
+                   OutputFile = metricsDir @@ "nunit-result.xml"}) 
 
 Target? ZipCalculatorSample <-
     fun _ ->
