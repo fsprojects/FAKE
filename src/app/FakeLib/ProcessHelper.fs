@@ -30,9 +30,12 @@ let ExecProcessWithLambdas infoAction (timeOut:TimeSpan) silent errorF messageF 
         p.BeginErrorReadLine()
         p.BeginOutputReadLine()     
   
-    if not <| p.WaitForExit(int timeOut.TotalMilliseconds) then
-        WaitUntilEverythingIsPrinted()
-        failwithf "Process %A (StartInfo: %A) timed out." p p.StartInfo
+    if timeOut = TimeSpan.MaxValue then
+        p.WaitForExit()
+    else
+        if not <| p.WaitForExit(int timeOut.TotalMilliseconds) then
+            WaitUntilEverythingIsPrinted()
+            failwithf "Process %A (StartInfo: %A) timed out." p p.StartInfo
     
     p.ExitCode
 
