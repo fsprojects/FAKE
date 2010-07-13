@@ -10,6 +10,7 @@ TraceEnvironmentVariables()
   
 let buildDir = @".\build\"
 let testDir = @".\test\"
+let metricsDir = @".\BuildMetrics\"
 let deployDir = @".\deploy\"
 let docsDir = @".\docs\" 
 let templatesSrcDir = @".\docu\src\Docu.Console\templates\" 
@@ -25,7 +26,7 @@ let nunitPath = @".\Tools\NUnit"
 
 // Targets
 Target? Clean <-
-    fun _ ->  CleanDirs [buildDir; testDir; deployDir; docsDir]
+    fun _ ->  CleanDirs [buildDir; testDir; deployDir; docsDir; metricsDir]
 
 
 Target? BuildApp <-
@@ -84,7 +85,7 @@ Target? GenerateDocumentation <-
           |> Scan
           |> Docu (fun p ->
                 {p with
-                    ToolPath = buildDir + "docu.exe"
+                    ToolPath = buildDir @@ "docu.exe"
                     TemplatesPath = templatesSrcDir
                     OutputPath = docsDir })
             
@@ -114,7 +115,7 @@ Target? Test <-
                    ToolPath = nunitPath; 
                    DisableShadowCopy = true; 
                    Framework = "net-2.0.50727";
-                   OutputFile = testDir + @"TestResults.xml"}) 
+                   OutputFile = metricsDir @@ "nunit-results.xml"}) 
 
 Target? ZipCalculatorSample <-
     fun _ ->
@@ -131,13 +132,13 @@ Target? ZipCalculatorSample <-
           -- "**\bin\Release\**"
           -- "**\obj\Release\**"
             |> Scan
-            |> Zip @".\Samples\Calculator" (deployDir + sprintf "CalculatorSample-%s.zip" buildVersion)
+            |> Zip @".\Samples\Calculator" (deployDir @@ sprintf "CalculatorSample-%s.zip" buildVersion)
 
 Target? ZipDocumentation <-
     fun _ ->    
         !+ (docsDir + @"\**\*.*")  
           |> Scan
-          |> Zip docsDir (deployDir + sprintf "Documentation-%s.zip" buildVersion)
+          |> Zip docsDir (deployDir @@ sprintf "Documentation-%s.zip" buildVersion)
 
 Target? Deploy <- DoNothing
 Target? Default <- DoNothing
