@@ -11,7 +11,7 @@ TraceEnvironmentVariables()
 let buildDir = @".\build\"
 let testDir = @".\test\"
 let metricsDir = @".\BuildMetrics\"
-let deployDir = @".\deploy\"
+let deployDir = @".\Publish\"
 let docsDir = @".\docs\" 
 let templatesSrcDir = @".\docu\src\Docu.Console\templates\" 
 
