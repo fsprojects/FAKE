@@ -35,7 +35,7 @@ let ExecProcessWithLambdas infoAction (timeOut:TimeSpan) silent errorF messageF 
     else
         if not <| p.WaitForExit(int timeOut.TotalMilliseconds) then
             WaitUntilEverythingIsPrinted()
-            failwithf "Process %A (StartInfo: %A) timed out." p p.StartInfo
+            failwithf "Process %s (Parameters: %s) timed out." p.StartInfo.FileName p.StartInfo.Arguments
     
     p.ExitCode
 
