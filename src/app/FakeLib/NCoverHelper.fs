@@ -6,17 +6,19 @@ open System.IO
 open System.Text  
 
 type NCoverParams =
- { ProjectName: string;
-   ToolPath: string;
-   TestRunnerExe: string;
-   WorkingDir: string;}
+    { ProjectName: string;
+      ToolPath: string;
+      TestRunnerExe: string;
+      TimeOut: TimeSpan;
+      WorkingDir: string;}
    
 /// NCover default params
 let NCoverDefaults =   
-  { ProjectName = String.Empty;
-    ToolPath = ProgramFiles @@ "NCover" @@ "ncover.console.exe";
-    TestRunnerExe = ProgramFiles @@ "NUnit" @@ "bin" @@ "nunit-console.exe";
-    WorkingDir = currentDirectory}
+    { ProjectName = String.Empty;
+      ToolPath = ProgramFiles @@ "NCover" @@ "ncover.console.exe";
+      TestRunnerExe = ProgramFiles @@ "NUnit" @@ "bin" @@ "nunit-console.exe";
+      TimeOut = TimeSpan.FromMinutes 5.
+      WorkingDir = currentDirectory}
     
 /// <summary>Run NCover on a group of assemblies.</summary>
 /// <param name="setParams">NCover parameter function</param>
@@ -61,5 +63,5 @@ let NCover setParams (assemblies: string seq) (excludeAssemblies: string seq) =
       info.FileName <- param.ToolPath
       if param.WorkingDir <> String.Empty then 
           info.WorkingDirectory <- param.WorkingDir
-      info.Arguments <- commandLineCommands)
+      info.Arguments <- commandLineCommands) param.TimeOut
   if not ok then failwithf "NCover reported errors."

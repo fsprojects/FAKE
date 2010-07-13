@@ -35,7 +35,7 @@ let build outputPath targets properties overwrite project =
     logfn "Building project: %s\n  %s %s" project msBuildExe args
     if not (execProcess3 (fun info ->  
         info.FileName <- msBuildExe
-        info.Arguments <- args))
+        info.Arguments <- args) TimeSpan.MaxValue)
     then failwithf "Building %s project failed." project
 
     traceEndTask "MSBuild" project

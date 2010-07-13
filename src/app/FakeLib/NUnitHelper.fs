@@ -16,6 +16,7 @@ type NUnitParams =
       ShowLabels: bool;
       WorkingDir:string; 
       XsltTransformFile:string;
+      TimeOut: TimeSpan;
       DisableShadowCopy:bool}
    
 type TestCase =
@@ -56,6 +57,7 @@ let NUnitDefaults =
       Framework = null;
       ShowLabels = true;
       XsltTransformFile = null;
+      TimeOut = TimeSpan.FromMinutes 5.
       DisableShadowCopy = false}
 
 /// Run NUnit on a group of assemblies.
@@ -86,7 +88,7 @@ let NUnit setParams (assemblies: string seq) =
         execProcessAndReturnExitCode (fun info ->  
             info.FileName <- tool
             info.WorkingDirectory <- parameters.WorkingDir
-            info.Arguments <- args)
+            info.Arguments <- args) parameters.TimeOut
 
     sendTeamCityNUnitImport parameters.OutputFile
     if result = 0 then          

@@ -9,6 +9,8 @@ open System.Text
 open System.Collections.Generic
 open Fake
 
+let mutable gitTimeOut = TimeSpan.MaxValue
+
 let gitPath = 
     let ev = environVar "GIT"
     if not (isNullOrEmpty ev) then ev else findPath "GitPath" "git.exe"   
@@ -18,7 +20,7 @@ let runGitCommand repositoryDir command =
         ExecProcessAndReturnMessages (fun info ->  
           info.FileName <- gitPath
           info.WorkingDirectory <- repositoryDir
-          info.Arguments <- command)
+          info.Arguments <- command) gitTimeOut
     ok,msg,toLines errors
 
 let runGitCommandf fmt = Printf.ksprintf runGitCommand fmt

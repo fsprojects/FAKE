@@ -1,16 +1,20 @@
 ﻿[<AutoOpen>]
 module Fake.ILMergeHelper
 
+open System
+
 type ILMergeParams =
  { ToolPath: string;
    Version: string;
+   TimeOut: TimeSpan;
    Libraries : string seq}
 
 /// ILMerge default params  
 let ILMergeDefaults : ILMergeParams =
- { ToolPath = currentDirectory @@ "tools" @@ "ILMerge" @@ "ilmerge.exe";
-   Version = "";
-   Libraries = []; }
+    { ToolPath = currentDirectory @@ "tools" @@ "ILMerge" @@ "ilmerge.exe";
+      Version = "";
+      TimeOut = TimeSpan.FromMinutes 5.
+      Libraries = []; }
    
 /// Use ILMerge to merge some .NET assemblies.
 let ILMerge setParams outputFile primaryAssembly = 
@@ -27,7 +31,7 @@ let ILMerge setParams outputFile primaryAssembly =
     if not (execProcess3 (fun info ->  
         info.FileName <- parameters.ToolPath
         info.WorkingDirectory <- null
-        info.Arguments <- args))
+        info.Arguments <- args) parameters.TimeOut)
     then
         failwith "ILMerge failed."
                     

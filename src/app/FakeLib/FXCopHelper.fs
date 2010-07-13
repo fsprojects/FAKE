@@ -34,6 +34,7 @@ type FxCopParams =
    WorkingDir: string;
    Verbose: bool;
    FailOnError: FxCopErrorLevel;
+   TimeOut: TimeSpan;
    ToolPath:string}
  
 let checkForErrors resultFile =
@@ -68,6 +69,7 @@ let FxCopDefaults =
     WorkingDir = currentDirectory;
     Verbose = true;
     FailOnError = FxCopErrorLevel.DontFailBuild;
+    TimeOut = TimeSpan.FromMinutes 5.
     ToolPath = ProgramFilesX86 @@ "Microsoft FxCop 1.36" }
         
 /// Run FxCop on a group of assemblies.
@@ -120,7 +122,7 @@ let FxCop setParams (assemblies: string seq) =
     execProcess3 (fun info ->  
       info.FileName <- param.ToolPath
       if param.WorkingDir <> String.Empty then info.WorkingDirectory <- param.WorkingDir
-      info.Arguments <- commandLineCommands)
+      info.Arguments <- commandLineCommands) param.TimeOut
   if param.ReportFileName <> String.Empty then 
     sendTeamCityFXCopImport param.ReportFileName
 

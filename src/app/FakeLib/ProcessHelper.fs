@@ -6,11 +6,12 @@ open System.ComponentModel
 open System.Diagnostics
 open System.IO
 open System.Threading
+open System.Collections.Generic
 
 let mutable redirectOutputToTrace = false 
 
 /// Runs the given process and returns the exit code
-let ExecProcessWithLambdas infoAction silent errorF messageF =
+let ExecProcessWithLambdas infoAction (timeOut:TimeSpan) silent errorF messageF =
     use p = new Process()
     p.StartInfo.UseShellExecute <- false
     infoAction p.StartInfo
@@ -29,32 +30,34 @@ let ExecProcessWithLambdas infoAction silent errorF messageF =
         p.BeginErrorReadLine()
         p.BeginOutputReadLine()     
   
-    p.WaitForExit()
+    if not <| p.WaitForExit(int timeOut.TotalMilliseconds) then
+        WaitUntilEverythingIsPrinted()
+        failwithf "Process %A (StartInfo: %A) timed out." p p.StartInfo
     
     p.ExitCode
 
 /// Runs the given process and returns the exit code
-let ExecProcessAndReturnMessages infoAction =
-    let errors = new System.Collections.Generic.List<_>()
-    let messages = new System.Collections.Generic.List<_>()
-    let exitCode = ExecProcessWithLambdas infoAction true (errors.Add) (messages.Add)    
+let ExecProcessAndReturnMessages infoAction timeOut =
+    let errors = new List<_>()
+    let messages = new List<_>()
+    let exitCode = ExecProcessWithLambdas infoAction timeOut true (errors.Add) (messages.Add)    
     exitCode = 0,messages,errors
 
 /// Runs the given process
 /// returns the exit code
-let execProcess2 infoAction silent = ExecProcessWithLambdas infoAction silent traceError trace  
+let execProcess2 infoAction timeOut silent = ExecProcessWithLambdas infoAction timeOut silent traceError trace  
 
 /// Runs the given process
 /// returns the exit code
-let execProcessAndReturnExitCode infoAction = execProcess2 infoAction true
+let execProcessAndReturnExitCode infoAction timeOut = execProcess2 infoAction timeOut true
 
 /// Runs the given process
 /// returns if the exit code was 0
-let execProcess3 infoAction = execProcessAndReturnExitCode infoAction = 0   
+let execProcess3 infoAction timeOut = execProcessAndReturnExitCode infoAction timeOut = 0   
 
 /// Runs the given process
 /// returns the exit code
-let ExecProcess infoAction = execProcess2 infoAction redirectOutputToTrace
+let ExecProcess infoAction timeOut = execProcess2 infoAction timeOut redirectOutputToTrace
   
 /// sets the environment Settings for the given startInfo
 /// existing values will be overrriden
@@ -67,7 +70,7 @@ let setEnvironmentVariables (startInfo:ProcessStartInfo) environmentSettings =
           
 /// Runs the given process
 /// returns true if the exit code was 0
-let execProcess infoAction = ExecProcess infoAction = 0    
+let execProcess infoAction timeOut = ExecProcess infoAction timeOut = 0    
 
 /// Adds quotes around the string if needed
 let quote str =

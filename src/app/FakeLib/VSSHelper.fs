@@ -17,7 +17,7 @@ let getVSSProjectWithLabel toolPath srcSafeIni username password project (localS
 
         info.FileName <- toolPath
         info.WorkingDirectory <- currentDirectory
-        info.Arguments <- args) true
+        info.Arguments <- args) System.TimeSpan.MaxValue true
     if result <> 0 then failwith "Could not get sources from VSS"
     
 let getVSSProject toolPath srcSafeIni username password project localSpec = 

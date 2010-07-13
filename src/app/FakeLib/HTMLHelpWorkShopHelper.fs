@@ -13,7 +13,7 @@ let CompileHTMLHelpProject helpCompiler projectFile =
     if not fi.Exists then invalidArg "projectFile" "Projectfile doesn't exist."
     if ExecProcess (fun info ->
         info.FileName <- helpCompiler
-        info.Arguments <- fi.FullName |> toParam ) <> 1 
+        info.Arguments <- fi.FullName |> toParam ) System.TimeSpan.MaxValue <> 1 
     then failwith "Error in HTML Help Workshop"
 
     let name = fi.Name.Split('.').[0]

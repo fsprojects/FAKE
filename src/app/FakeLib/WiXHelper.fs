@@ -49,10 +49,14 @@ let getFilesAsWiXString files =
 
 open System
 
-type WiXParams = { ToolDirectory: string}
+type WiXParams = 
+    { ToolDirectory: string;
+      TimeOut: TimeSpan }
 
 /// WiX default params  
-let WiXDefaults : WiXParams = { ToolDirectory = currentDirectory @@ "tools" @@ "Wix" }
+let WiXDefaults : WiXParams = 
+    { ToolDirectory = currentDirectory @@ "tools" @@ "Wix";
+      TimeOut = TimeSpan.FromMinutes 5.0 }
    
 let Candle (parameters:WiXParams) wixScript = 
     traceStartTask "Candle" wixScript  
@@ -70,7 +74,7 @@ let Candle (parameters:WiXParams) wixScript =
     if not (execProcess3 (fun info ->  
         info.FileName <- tool
         info.WorkingDirectory <- null
-        info.Arguments <- args))
+        info.Arguments <- args) parameters.TimeOut)
     then
         failwith "Candle failed."
                     
@@ -91,7 +95,7 @@ let Light (parameters:WiXParams) outputFile wixObj =
     if not (execProcess3 (fun info ->  
         info.FileName <- tool
         info.WorkingDirectory <- null
-        info.Arguments <- args))
+        info.Arguments <- args) parameters.TimeOut)
     then
         failwith "Light failed."
                     

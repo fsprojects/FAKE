@@ -1,15 +1,19 @@
 ﻿[<AutoOpen>]
 module Fake.DocuHelper
 
+open System
+
 type DocuParams =
     { ToolPath: string;
       TemplatesPath: string;
+      TimeOut: TimeSpan;
       OutputPath: string}
 
 /// Docu default params  
 let DocuDefaults =
-    { ToolPath = currentDirectory @@ "tools" @@ "FAKE" @@ "docu.exe";
-      TemplatesPath = currentDirectory @@ "templates";
+    { ToolPath = currentDirectory @@ "tools" @@ "FAKE" @@ "docu.exe"
+      TemplatesPath = currentDirectory @@ "templates"
+      TimeOut = TimeSpan.FromMinutes 5.
       OutputPath = currentDirectory @@ "output" }
    
 let Docu setParams assemblies = 
@@ -25,8 +29,8 @@ let Docu setParams assemblies =
 
     tracefn  "%s %s" parameters.ToolPath args
     if not (execProcess3 (fun info ->  
-        info.FileName <- parameters.ToolPath
-        info.Arguments <- args))
+        info.FileName <- parameters.ToolPath        
+        info.Arguments <- args) parameters.TimeOut)
     then
         failwith "Documentation generation failed."
                     

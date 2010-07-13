@@ -6,27 +6,29 @@ open System.IO
 open System.Text
 
 type XUnitParams =
- { ToolPath: string;
-   ConfigFile :string;
-   HtmlOutput: bool;
-   NUnitXmlOutput: bool;
-   XmlOutput: bool;
-   WorkingDir:string; 
-   ShadowCopy :bool;
-   Verbose:bool;
-   OutputDir: string}
+    { ToolPath: string;
+      ConfigFile :string;
+      HtmlOutput: bool;
+      NUnitXmlOutput: bool;
+      XmlOutput: bool;
+      WorkingDir:string; 
+      ShadowCopy :bool;
+      Verbose:bool;
+      TimeOut: TimeSpan;
+      OutputDir: string}
 
 /// xUnit default params  
 let XUnitDefaults =
- { ToolPath = currentDirectory @@ "tools" @@ "xUnit" @@ "xunit.console.exe";
-   ConfigFile = null;
-   HtmlOutput = false;
-   NUnitXmlOutput = false;
-   WorkingDir = null;
-   ShadowCopy = true;
-   Verbose = false;
-   XmlOutput = false
-   OutputDir = null}
+    { ToolPath = currentDirectory @@ "tools" @@ "xUnit" @@ "xunit.console.exe";
+      ConfigFile = null;
+      HtmlOutput = false;
+      NUnitXmlOutput = false;
+      WorkingDir = null;
+      ShadowCopy = true;
+      Verbose = false;
+      XmlOutput = false;
+      TimeOut = TimeSpan.FromMinutes 5.
+      OutputDir = null}
 
 let xUnit setParams assemblies = 
     let details = separated ", " assemblies
@@ -53,7 +55,7 @@ let xUnit setParams assemblies =
           if not (execProcess3 (fun info ->  
               info.FileName <- parameters.ToolPath
               info.WorkingDirectory <- parameters.WorkingDir
-              info.Arguments <- commandLineBuilder.ToString()))
+              info.Arguments <- commandLineBuilder.ToString()) parameters.TimeOut)
           then
               failwith "xUnit test failed.")
                   

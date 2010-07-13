@@ -16,7 +16,7 @@ let runBuildScript script args =
         |> Seq.iter (fun (k,v) -> setEnvironVar k v)
 
       setEnvironVar "MSBuild" msBuildExe
-      setEnvironVar "FSI" fsiPath)
+      setEnvironVar "FSI" fsiPath) System.TimeSpan.MaxValue
     
     System.Threading.Thread.Sleep 1000
     result
