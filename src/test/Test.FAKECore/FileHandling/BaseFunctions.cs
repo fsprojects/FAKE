@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace Test.FAKECore.FileHandling
 {
     [TestFixture]
-    public class BaseFunctions : BaseTest
+    public class BaseFunctions
     {
         /// <summary>
         /// Cleans the dir.

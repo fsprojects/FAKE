@@ -1,11 +1,10 @@
 ﻿using Fake;
 using NUnit.Framework;
-using Test.FAKECore.FileHandling;
 
 namespace Test.FAKECore
 {
     [TestFixture]
-    public class TestIfFakeIsAvailable : BaseTest
+    public class TestIfFakeIsAvailable
     {
         /// <summary>
         ///   Tests the fake path.

@@ -2,13 +2,12 @@
 using System.IO;
 using Fake;
 using NUnit.Framework;
-using Test.FAKECore.FileHandling;
 using Test.Git;
 
 namespace Test.FAKECore
 {
     [TestFixture]
-    public class TestRelativePaths : BaseTest
+    public class TestRelativePaths
     {
         [Test]
         public void CanGetRelativePathOfCurrentDirectory()

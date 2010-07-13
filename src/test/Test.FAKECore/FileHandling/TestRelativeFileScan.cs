@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace Test.FAKECore.FileHandling
 {
     [TestFixture]
-    public class TestRelativeFileScan : BaseTest
+    public class TestRelativeFileScan
     {
         #region Setup/Teardown
 

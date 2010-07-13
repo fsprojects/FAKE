@@ -3,42 +3,42 @@ using Fake;
 using NUnit.Framework;
 using System.Xml;
 
-namespace Test.FAKECore.FileHandling
+namespace Test.FAKECore.XMLHandling
 {
     [TestFixture]
-    public class TestXMLPoke : BaseTest
+    public class TestXmlPoke
     {
-        string originalText =
+        const string OriginalText =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" +
                 "<painting> <img src=\"madonna.jpg\" alt=\"Foligno Madonna, by Raphael\" />" +
                 "<caption>This is Raphael's \"Foligno\" Madonna, painted in <date year=\"1511\" /> - <date year=\"1512\" />.</caption>" +
                 "</painting>";
 
-        string targetText =
+        const string TargetText =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n" +
                 "<painting>  <img src=\"madonna.jpg\" alt=\"Foligno Madonna, by Raphael\" />  " +
                 "<caption>This is Raphael's \"Foligno\" Madonna, painted in <date year=\"1515\" /> - <date year=\"1512\" />.</caption>" +
                 "</painting>";
 
-        string xPath = "painting/caption/date/@year";
+        const string XPath = "painting/caption/date/@year";
 
-        string fileName = Path.Combine(TestData.TestDir, "test.xml");
+        readonly string _fileName = Path.Combine(TestData.TestDir, "test.xml");
 
         [SetUp]
         public void SaveFiles()
         {
-            StringHelper.WriteStringToFile(false, fileName, originalText);
+            StringHelper.WriteStringToFile(false, _fileName, OriginalText);
         }
 
         [Test]
-        public void CanXMLPoke()
+        public void CanXmlPoke()
         {
             // Act
-            XMLHelper.XmlPoke(fileName, xPath, "1515");
+            XMLHelper.XmlPoke(_fileName, XPath, "1515");
 
             // Assert
-            var result = StringHelper.ReadFileAsString(fileName).Replace("\r\n", "");
-            Assert.AreEqual(targetText.Replace("\r\n", ""), result);
+            var result = StringHelper.ReadFileAsString(_fileName).Replace("\r\n", "");
+            Assert.AreEqual(TargetText.Replace("\r\n", ""), result);
         }
 
         [Test]
@@ -46,20 +46,20 @@ namespace Test.FAKECore.FileHandling
         {
             // Arrange
             var doc = new XmlDocument();
-            doc.LoadXml(originalText);
+            doc.LoadXml(OriginalText);
 
             // Act
-            XMLHelper.XPathReplace(xPath, "1515", doc).Save(fileName);
+            XMLHelper.XPathReplace(XPath, "1515", doc).Save(_fileName);
 
             // Assert
-            var result = StringHelper.ReadFileAsString(fileName).Replace("\r\n", "");
-            Assert.AreEqual(targetText.Replace("\r\n", ""), result);
+            var result = StringHelper.ReadFileAsString(_fileName).Replace("\r\n", "");
+            Assert.AreEqual(TargetText.Replace("\r\n", ""), result);
         }
 
         [TearDown]
         public void DeleteFiles()
         {
-            FileHelper.DeleteFile(fileName);
+            FileHelper.DeleteFile(_fileName);
         }
 
     }

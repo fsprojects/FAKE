@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace Test.FAKECore.FileHandling
 {
     [TestFixture]
-    public class TestCleanDir : BaseTest
+    public class TestCleanDir
     {
         /// <summary>
         ///   Tests the CleanDir function after creating directories.

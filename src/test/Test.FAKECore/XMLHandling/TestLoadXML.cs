@@ -1,29 +1,26 @@
-using System.IO;
 using Fake;
 using NUnit.Framework;
 using System.Xml;
 
-namespace Test.FAKECore.FileHandling
+namespace Test.FAKECore.XMLHandling
 {
     [TestFixture]
-    public class TestLoadXML : BaseTest
+    public class TestLoadXml 
     {
-        string targetText =
+        const string TargetText =
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
                 "<painting><img src=\"madonna.jpg\" alt=\"Foligno Madonna, by Raphael\" />" +
                 "<caption>This is Raphael's \"Foligno\" Madonna, painted in <date year=\"1515\" /> - <date year=\"1512\" />.</caption>" +
                 "</painting>";
 
-        string fileName = Path.Combine(TestData.TestDir, "test.xml");
-
         [Test]
-        public void CanLoadXML()
+        public void CanLoadXml()
         {
             // Act
-            XmlDocument doc = XMLHelper.XMLDoc(targetText);           
+            XmlDocument doc = XMLHelper.XMLDoc(TargetText);           
 
             // Assert
-            Assert.AreEqual(targetText, doc.OuterXml);
+            Assert.AreEqual(TargetText, doc.OuterXml);
         }
     }
 }
