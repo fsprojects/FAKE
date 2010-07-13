@@ -83,6 +83,7 @@
     <Compile Include="FileHandling\TestCopyDir.cs" />
     <Compile Include="FileHandling\TestRelativeFileScan.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="SideBySideSpecification\FindReferencesTest.cs" />
     <Compile Include="SideBySideSpecification\SpecsRemovementTest.cs" />
     <Compile Include="StringHelperTest.cs" />
     <Compile Include="TestRelativePaths.cs" />
@@ -122,6 +123,9 @@
     </Content>
     <Content Include="SideBySideSpecification\Project1_WithoutTests.txt">
       <DependentUpon>Project1.txt</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SideBySideSpecification\Project_WithProjectReference.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="SideBySideSpecification\Project2.txt">

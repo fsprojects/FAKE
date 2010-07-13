@@ -5,6 +5,10 @@ open System
 open System.Text
 open System.IO
 open System.Configuration
+open System.Xml
+open System.Xml.Linq
+
+type MSBuildProject = XDocument
 
 /// MSBuild exe fileName
 let msBuildExe =   
@@ -14,6 +18,24 @@ let msBuildExe =
             String.Empty 
         else 
             findPath "MSBuildPath" "MSBuild.exe"
+
+
+let msbuildNamespace = "http://schemas.microsoft.com/developer/msbuild/2003"
+let xname name = XName.Get(name,msbuildNamespace)
+
+let loadProject (projectFileName:string) : MSBuildProject = 
+    MSBuildProject.Load(projectFileName,LoadOptions.PreserveWhitespace)
+
+let internal getReference elementName (doc:XDocument) =
+    doc
+      .Descendants(xname "Project")
+      .Descendants(xname "ItemGroup")
+      .Descendants(xname elementName )
+         |> Seq.map(fun e -> e.Attribute(XName.Get "Include").Value)
+
+let getReferences doc = getReference "Reference" doc
+let getProjectReferences doc = getReference "ProjectReference" doc
+
 
 /// Runs a msbuild project
 let build outputPath targets properties overwrite project =
@@ -42,7 +64,10 @@ let build outputPath targets properties overwrite project =
 
 /// Builds the given project files and collects the output files
 let MSBuild outputPath targets properties projects =      
-    projects |> Seq.iter (build outputPath targets properties true)
+    projects 
+      |> Seq.toList
+      |> List.iter (build outputPath targets properties true)
+
     !+ (outputPath + "/**/*.*") 
       |> Scan   
 

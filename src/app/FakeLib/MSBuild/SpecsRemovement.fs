@@ -5,17 +5,9 @@ open Fake
 open System.Xml
 open System.Xml.Linq
 
-type MSBuildProject = XDocument
-
 let normalize (project:MSBuildProject) =
     "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
         project.ToString(SaveOptions.DisableFormatting) 
-
-let msbuildNamespace = "http://schemas.microsoft.com/developer/msbuild/2003"
-let xname name = XName.Get(name,msbuildNamespace)
-
-let loadProject (projectFileName:string) : MSBuildProject = 
-    MSBuildProject.Load(projectFileName,LoadOptions.PreserveWhitespace)
 
 let removeFilteredElement elementName filterF (doc:XDocument) =
     let references =
