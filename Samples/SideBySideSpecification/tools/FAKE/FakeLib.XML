@@ -196,6 +196,9 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
 <member name="P:Fake.DocuHelper.DocuDefaults">
 <summary>
  Docu default params  
@@ -750,6 +753,9 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
 <member name="M:Fake.FxCopHelper.FxCop(Microsoft.FSharp.Core.FSharpFunc`2{Fake.FxCopHelper.FxCopParams,Fake.FxCopHelper.FxCopParams},System.Collections.Generic.IEnumerable{System.String})">
 <summary>
  Run FxCop on a group of assemblies.
@@ -787,6 +793,9 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
 <member name="M:Fake.ILMergeHelper.ILMerge(Microsoft.FSharp.Core.FSharpFunc`2{Fake.ILMergeHelper.ILMergeParams,Fake.ILMergeHelper.ILMergeParams},System.String,System.String)">
 <summary>
  Use ILMerge to merge some .NET assemblies.
@@ -798,9 +807,6 @@
 </summary>
 </member>
 <member name="T:Fake.ILMergeHelper">
-
-</member>
-<member name="">
 
 </member>
 <member name="">
@@ -848,19 +854,10 @@
 <member name="">
 
 </member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
 <member name="T:Fake.MSBuild.SpecsRemovement">
+
+</member>
+<member name="">
 
 </member>
 <member name="M:Fake.MSBuildHelper.MSBuildRelease(System.String,System.String)">
@@ -882,6 +879,24 @@
 <summary>
  Runs a msbuild project
 </summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
 </member>
 <member name="P:Fake.MSBuildHelper.msBuildExe">
 <summary>
@@ -913,6 +928,18 @@
 <summary>
  Checks if the current message queue is empty
 </summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
 </member>
 <member name="">
 
@@ -958,6 +985,9 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
 <member name="M:Fake.NCoverHelper.NCover(Microsoft.FSharp.Core.FSharpFunc`2{Fake.NCoverHelper.NCoverParams,Fake.NCoverHelper.NCoverParams},System.Collections.Generic.IEnumerable{System.String},System.Collections.Generic.IEnumerable{System.String})">
  <summary>Run NCover on a group of assemblies.</summary>
  <param name="setParams">NCover parameter function</param>
@@ -970,6 +1000,12 @@
 </summary>
 </member>
 <member name="T:Fake.NCoverHelper">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
 
 </member>
 <member name="">
@@ -1169,7 +1205,7 @@
  Adds quotes around the string if needed
 </summary>
 </member>
-<member name="M:Fake.ProcessHelper.execProcess(Microsoft.FSharp.Core.FSharpFunc`2{System.Diagnostics.ProcessStartInfo,Microsoft.FSharp.Core.Unit})">
+<member name="M:Fake.ProcessHelper.execProcess(Microsoft.FSharp.Core.FSharpFunc`2{System.Diagnostics.ProcessStartInfo,Microsoft.FSharp.Core.Unit},System.TimeSpan)">
 <summary>
  Runs the given process
  returns true if the exit code was 0
@@ -1181,36 +1217,36 @@
  existing values will be overrriden
 </summary>
 </member>
-<member name="M:Fake.ProcessHelper.ExecProcess(Microsoft.FSharp.Core.FSharpFunc`2{System.Diagnostics.ProcessStartInfo,Microsoft.FSharp.Core.Unit})">
+<member name="M:Fake.ProcessHelper.ExecProcess(Microsoft.FSharp.Core.FSharpFunc`2{System.Diagnostics.ProcessStartInfo,Microsoft.FSharp.Core.Unit},System.TimeSpan)">
 <summary>
  Runs the given process
  returns the exit code
 </summary>
 </member>
-<member name="M:Fake.ProcessHelper.execProcess3(Microsoft.FSharp.Core.FSharpFunc`2{System.Diagnostics.ProcessStartInfo,Microsoft.FSharp.Core.Unit})">
+<member name="M:Fake.ProcessHelper.execProcess3(Microsoft.FSharp.Core.FSharpFunc`2{System.Diagnostics.ProcessStartInfo,Microsoft.FSharp.Core.Unit},System.TimeSpan)">
 <summary>
  Runs the given process
  returns if the exit code was 0
 </summary>
 </member>
-<member name="M:Fake.ProcessHelper.execProcessAndReturnExitCode(Microsoft.FSharp.Core.FSharpFunc`2{System.Diagnostics.ProcessStartInfo,Microsoft.FSharp.Core.Unit})">
+<member name="M:Fake.ProcessHelper.execProcessAndReturnExitCode(Microsoft.FSharp.Core.FSharpFunc`2{System.Diagnostics.ProcessStartInfo,Microsoft.FSharp.Core.Unit},System.TimeSpan)">
 <summary>
  Runs the given process
  returns the exit code
 </summary>
 </member>
-<member name="M:Fake.ProcessHelper.execProcess2(Microsoft.FSharp.Core.FSharpFunc`2{System.Diagnostics.ProcessStartInfo,Microsoft.FSharp.Core.Unit},System.Boolean)">
+<member name="M:Fake.ProcessHelper.execProcess2(Microsoft.FSharp.Core.FSharpFunc`2{System.Diagnostics.ProcessStartInfo,Microsoft.FSharp.Core.Unit},System.TimeSpan,System.Boolean)">
 <summary>
  Runs the given process
  returns the exit code
 </summary>
 </member>
-<member name="M:Fake.ProcessHelper.ExecProcessAndReturnMessages(Microsoft.FSharp.Core.FSharpFunc`2{System.Diagnostics.ProcessStartInfo,Microsoft.FSharp.Core.Unit})">
+<member name="M:Fake.ProcessHelper.ExecProcessAndReturnMessages(Microsoft.FSharp.Core.FSharpFunc`2{System.Diagnostics.ProcessStartInfo,Microsoft.FSharp.Core.Unit},System.TimeSpan)">
 <summary>
  Runs the given process and returns the exit code
 </summary>
 </member>
-<member name="M:Fake.ProcessHelper.ExecProcessWithLambdas(Microsoft.FSharp.Core.FSharpFunc`2{System.Diagnostics.ProcessStartInfo,Microsoft.FSharp.Core.Unit},System.Boolean,Microsoft.FSharp.Core.FSharpFunc`2{System.String,Microsoft.FSharp.Core.Unit},Microsoft.FSharp.Core.FSharpFunc`2{System.String,Microsoft.FSharp.Core.Unit})">
+<member name="M:Fake.ProcessHelper.ExecProcessWithLambdas(Microsoft.FSharp.Core.FSharpFunc`2{System.Diagnostics.ProcessStartInfo,Microsoft.FSharp.Core.Unit},System.TimeSpan,System.Boolean,Microsoft.FSharp.Core.FSharpFunc`2{System.String,Microsoft.FSharp.Core.Unit},Microsoft.FSharp.Core.FSharpFunc`2{System.String,Microsoft.FSharp.Core.Unit})">
 <summary>
  Runs the given process and returns the exit code
 </summary>
@@ -1885,11 +1921,6 @@
 <member name="T:Fake.TimeoutHelper">
 
 </member>
-<member name="M:Fake.TraceHelper.WaitUntilEverythingIsPrinted">
-<summary>
- Waits until the message queue is empty
-</summary>
-</member>
 <member name="M:Fake.TraceHelper.traceEndTask(System.String,System.String)">
 <summary>
  Traces the end of a task
@@ -2019,6 +2050,11 @@
  Writes a XML message to the bufffer.
 </summary>
 </member>
+<member name="M:Fake.TraceHelper.WaitUntilEverythingIsPrinted">
+<summary>
+ Waits until the message queue is empty
+</summary>
+</member>
 <member name="">
 
 </member>
@@ -2042,6 +2078,9 @@
 
 </member>
 <member name="T:Fake.VSSHelper">
+
+</member>
+<member name="">
 
 </member>
 <member name="">
@@ -2179,6 +2218,9 @@
 </summary>
 </member>
 <member name="T:Fake.XMLHelper">
+
+</member>
+<member name="">
 
 </member>
 <member name="">
