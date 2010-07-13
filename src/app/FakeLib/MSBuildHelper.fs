@@ -89,8 +89,14 @@ let build outputPath targets properties overwrite project =
 
 /// Builds the given project files and collects the output files
 let MSBuild outputPath targets properties projects = 
+    let projects = projects |> Seq.toList
+    let dependencies =
+        projects 
+            |> List.map getProjectReferences
+            |> Set.unionMany
+
     projects
-      |> Seq.toList
+      |> List.filter (fun project -> not <| Set.contains project dependencies)
       |> List.iter (build outputPath targets properties true)
 
     !+ (outputPath + "/**/*.*") 
