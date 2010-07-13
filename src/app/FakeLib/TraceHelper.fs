@@ -13,21 +13,12 @@ let fakeVersion = productName.GetType().Assembly.GetName().Version
     
 let mutable private openTags = []
 
-/// Waits until the message queue is empty
-let WaitUntilEverythingIsPrinted () =
-     waitFor 
-        MessageBoxIsEmpty
-        (System.TimeSpan.FromSeconds 5.0) 
-        100
-        ignore
-       |> ignore
-
 /// Writes a XML message to the bufffer.
 let xmlMessage message =
     { defaultMessage with 
         Text = sprintf "<message level=\"Info\"><![CDATA[%s]]></message>" message
         Target = Xml }
-         |> buffer.Post 
+         |> postMessage 
     
 /// Logs the specified string (via message buffer)
 let logMessage important newLine message =
@@ -38,7 +29,7 @@ let logMessage important newLine message =
       Important = important
       Newline = newLine
       Color = ConsoleColor.White }
-          |> buffer.Post
+          |> postMessage
 
 /// Logs the specified string        
 let log = logMessage false true
@@ -61,7 +52,7 @@ let logColored important color newLine message =
       Color = color
       Important = important
       Newline = newLine }
-          |> buffer.Post
+          |> postMessage
     
 /// Writes a trace to the command line (in green)
 let trace s = logColored false ConsoleColor.Green true s
@@ -89,7 +80,7 @@ let traceError error =
         { defaultMessage with 
             Text = sprintf "<failure><builderror><message level=\"Error\"><![CDATA[%s]]></message></builderror></failure>" error
             Target = Xml }
-             |> buffer.Post
+             |> postMessage
 
     logColored true ConsoleColor.Red true error
     WaitUntilEverythingIsPrinted()
@@ -131,7 +122,7 @@ let traceStartBuild () =
         { defaultMessage with 
             Text = "<?xml version=\"1.0\"?>\r\n<buildresults>" 
             Target = Xml }
-                |> buffer.Post
+                |> postMessage
 
 /// Traces the end of the build
 let traceEndBuild () =
@@ -141,7 +132,7 @@ let traceEndBuild () =
         { defaultMessage with 
             Text = "</buildresults>"
             Target = Xml }
-                |> buffer.Post
+                |> postMessage
 
 let openTag tag =  openTags <- tag :: openTags
 
@@ -153,7 +144,7 @@ let closeTag tag =
     { defaultMessage with 
         Text = sprintf "</%s>" tag
         Target = Xml }
-            |> buffer.Post
+            |> postMessage
   
 let closeAllOpenTags() = Seq.iter closeTag openTags
 
@@ -164,7 +155,7 @@ let traceStartTarget name dependencyString =
         { defaultMessage with 
             Text = sprintf "<target name=\"%s\">" name
             Target = Xml }
-                |> buffer.Post
+                |> postMessage
 
     tracefn "Starting Target: %s %s" name dependencyString
 
@@ -187,7 +178,7 @@ let traceStartTask task description =
         { defaultMessage with 
             Text = sprintf "<task name=\"%s\">" task
             Target = Xml }
-                |> buffer.Post
+                |> postMessage
 
     ReportProgressStart <| sprintf "Task: %s %s" task description
    
