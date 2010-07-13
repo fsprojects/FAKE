@@ -74,4 +74,4 @@ let MessageBoxIsEmpty() = buffer.CurrentQueueLength = 0
 
 /// Waits until the message queue is empty
 let WaitUntilEverythingIsPrinted () =
-    buffer.PostAndReply((fun channel -> ProcessAll channel),5000)
+    buffer.PostAndReply(fun channel -> ProcessAll channel)
