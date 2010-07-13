@@ -113,6 +113,7 @@ Target? Test <-
                 {p with 
                    ToolPath = nunitPath; 
                    DisableShadowCopy = true; 
+                   Framework = "net-2.0.50727";
                    OutputFile = testDir + @"TestResults.xml"}) 
 
 Target? ZipCalculatorSample <-
