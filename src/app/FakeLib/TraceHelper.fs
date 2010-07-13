@@ -13,6 +13,15 @@ let fakeVersion = productName.GetType().Assembly.GetName().Version
     
 let mutable private openTags = []
 
+/// Waits until the message queue is empty
+let WaitUntilEverythingIsPrinted () =
+     waitFor 
+        MessageBoxIsEmpty
+        (System.TimeSpan.FromSeconds 5.0) 
+        100
+        ignore
+       |> ignore
+
 /// Writes a XML message to the bufffer.
 let xmlMessage message =
     { defaultMessage with 
@@ -67,7 +76,9 @@ let tracef fmt = Printf.ksprintf (logColored false ConsoleColor.Green false) fmt
 let traceVerbose s = if verbose then trace s
 
 /// Writes a trace to stderr (in green)  
-let traceImportant s = logColored true ConsoleColor.Green true s
+let traceImportant s = 
+    logColored true ConsoleColor.Green true s
+    WaitUntilEverythingIsPrinted()
   
 /// Writes a trace to the command line (in yellow)
 let traceFAKE fmt = Printf.ksprintf (logColored true ConsoleColor.Yellow true) fmt
@@ -81,6 +92,7 @@ let traceError error =
              |> buffer.Post
 
     logColored true ConsoleColor.Red true error
+    WaitUntilEverythingIsPrinted()
   
 
 /// Traces the EnvironmentVariables
@@ -157,15 +169,6 @@ let traceStartTarget name dependencyString =
     tracefn "Starting Target: %s %s" name dependencyString
 
     ReportProgressStart <| sprintf "Target: %s" name
-
-/// Waits until the message queue is empty
-let WaitUntilEverythingIsPrinted () =
-     waitFor 
-        MessageBoxIsEmpty
-        (System.TimeSpan.FromSeconds 5.0) 
-        100
-        ignore
-       |> ignore
    
 /// Traces the end of a target   
 let traceEndTarget name =
@@ -173,7 +176,6 @@ let traceEndTarget name =
     if traceMode = Xml then closeTag "target"
 
     ReportProgressFinish <| sprintf "Target: %s" name
-    WaitUntilEverythingIsPrinted()
   
 /// Traces the begin of a task
 let traceStartTask task description =
