@@ -157,6 +157,15 @@ let traceStartTarget name dependencyString =
     tracefn "Starting Target: %s %s" name dependencyString
 
     ReportProgressStart <| sprintf "Target: %s" name
+
+/// Waits until the message queue is empty
+let WaitUntilEverythingIsPrinted () =
+     waitFor 
+        MessageBoxIsEmpty
+        (System.TimeSpan.FromSeconds 5.0) 
+        100
+        ignore
+       |> ignore
    
 /// Traces the end of a target   
 let traceEndTarget name =
@@ -164,6 +173,7 @@ let traceEndTarget name =
     if traceMode = Xml then closeTag "target"
 
     ReportProgressFinish <| sprintf "Target: %s" name
+    WaitUntilEverythingIsPrinted()
   
 /// Traces the begin of a task
 let traceStartTask task description =
@@ -184,13 +194,4 @@ let traceEndTask task  description =
     | Console -> ()
     | Xml     -> closeTag "task"
 
-    ReportProgressFinish <| sprintf "Task: %s %s" task description       
-
-/// Waits until the message queue is empty
-let WaitUntilEverythingIsPrinted () =
-     waitFor 
-        MessageBoxIsEmpty
-        (System.TimeSpan.FromSeconds 5.0) 
-        100
-        ignore
-       |> ignore
+    ReportProgressFinish <| sprintf "Task: %s %s" task description
