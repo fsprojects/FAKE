@@ -8,7 +8,8 @@ test/
 obj/
 build/
 helpBuild/
-deploy/
+Publish/
+BuildMetrics/
 [Bb]in
 [Rr]elease*/
 _ReSharper*/
