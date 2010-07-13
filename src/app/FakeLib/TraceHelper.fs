@@ -176,6 +176,7 @@ let traceEndTarget name =
     if traceMode = Xml then closeTag "target"
 
     ReportProgressFinish <| sprintf "Target: %s" name
+    WaitUntilEverythingIsPrinted()
   
 /// Traces the begin of a task
 let traceStartTask task description =
