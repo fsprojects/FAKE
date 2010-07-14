@@ -37,7 +37,7 @@ type TraceMessage =
     | ProcessAll of AsyncReplyChannel<unit>
 
 
-let private buffer = MailboxProcessor.Start (fun inbox ->
+let internal buffer = MailboxProcessor.Start (fun inbox ->
     let rec loop () = 
         async {
             let! msg = inbox.Receive()
@@ -71,7 +71,3 @@ let postMessage msg = buffer.Post (Message msg)
 
 /// Checks if the current message queue is empty
 let MessageBoxIsEmpty() = buffer.CurrentQueueLength = 0
-
-/// Waits until the message queue is empty
-let WaitUntilEverythingIsPrinted () =
-    buffer.PostAndReply(fun channel -> ProcessAll channel)

@@ -13,6 +13,9 @@ let fakeVersion = productName.GetType().Assembly.GetName().Version
     
 let mutable private openTags = []
 
+/// Waits until the message queue is empty
+let WaitUntilEverythingIsPrinted () = buffer.PostAndReply(fun channel -> ProcessAll channel)
+
 /// Writes a XML message to the bufffer.
 let xmlMessage message =
     { defaultMessage with 
