@@ -1,11 +1,12 @@
 ﻿[<AutoOpen>]
 module Fake.FSIHelper
    
+/// The Path to the F# interactive tool
 let fsiPath = 
     let ev = environVar "FSI"
     if not (isNullOrEmpty ev) then ev else findPath "FSIPath" "fsi.exe"
       
-/// Run the buildscript with fsi
+/// Run the given buildscript with fsi.exe
 let runBuildScript script args = 
     traceFAKE "Running Buildscript: %s" script
   

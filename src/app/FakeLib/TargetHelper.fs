@@ -85,12 +85,12 @@ let TargetTemplate body = TargetTemplateWithDependecies [] body
 /// Creates a Target
 let Target name body = TargetTemplate body name ()  
 
-type BuildError(target, msg) =
+type private BuildError(target, msg) =
     inherit System.Exception(sprintf "Stopped build! Error occured in target \"%s\".\r\nMessage: %s" target msg)
     member e.Target = target
     new (msg : string) = BuildError("[Unknown]", msg)
 
-let mutable errors = []   
+let mutable private errors = []   
 
 let targetError targetName msg =
     closeAllOpenTags()
@@ -117,6 +117,9 @@ let runFinalTargets() =
            with
            | exn -> targetError name exn.Message)                     
               
+/// <summary>Writes a dependency graph.</summary>
+/// <param name="verbose">Whether to print verbose output or not.</param>
+/// <param name="target">The target for which the dependencies should be printed.</param>
 let PrintDependencyGraph verbose target =
     logfn "%sDependencyGraph for Target %s:" (if verbose then String.Empty else "Shortened ") target 
     let printed = new HashSet<_>()
@@ -135,6 +138,8 @@ let PrintDependencyGraph verbose target =
     log "The resulting target order is:"
     Seq.iter (logfn " - %s") order
 
+/// <summary>Writes a build time report.</summary>
+/// <param name="total">The total runtime.</param>
 let WriteTaskTimeSummary total =    
     traceHeader "Build Time Report"
     let width = 
@@ -152,7 +157,8 @@ let WriteTaskTimeSummary total =
     aligned "Total:" total
     traceLine()
 
-/// Runs a Target and its dependencies        
+/// <summary>Runs a target and its dependencies</summary>
+/// <param name="targetName">The target to run.</param>
 let run targetName =            
     let rec runTarget targetName =
         try      
