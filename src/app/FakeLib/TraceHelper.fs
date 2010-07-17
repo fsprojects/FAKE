@@ -16,79 +16,43 @@ let mutable private openTags = []
 /// Waits until the message queue is empty
 let WaitUntilEverythingIsPrinted () = buffer.PostAndReply(fun channel -> ProcessAll channel)
 
-/// Writes a XML message to the bufffer.
-let xmlMessage message =
-    { defaultMessage with 
-        Text = sprintf "<message level=\"Info\"><![CDATA[%s]]></message>" message
-        Target = Xml }
-         |> postMessage 
-    
-/// Logs the specified string (via message buffer)
-let logMessage important newLine message =
-    if traceMode = Xml then xmlMessage message
-
-    { Target = TraceMode.Console
-      Text = message
-      Important = important
-      Newline = newLine
-      Color = ConsoleColor.White }
-          |> postMessage
-
 /// Logs the specified string        
-let log = logMessage false true
+let log message = LogMessage(message,true) |> postMessage
 
 /// Logs the specified message
 let logfn fmt = Printf.ksprintf log fmt
 
 /// Logs the specified message (without line break)
-let logf fmt = Printf.ksprintf (logMessage false false) fmt
+let logf fmt = Printf.ksprintf (fun text -> postMessage(LogMessage(text,false))) fmt
 
 /// Logs the specified string if the verbose mode is activated.
 let logVerbosefn fmt = Printf.ksprintf (if verbose then log else ignore) fmt
-
-/// Writes a trace output to the message buffer (in the given color)
-let logColored important color newLine message =
-    if traceMode = Xml then xmlMessage message
-
-    { Target = TraceMode.Console
-      Text = message
-      Color = color
-      Important = important
-      Newline = newLine }
-          |> postMessage
     
 /// Writes a trace to the command line (in green)
-let trace s = logColored false ConsoleColor.Green true s
+let trace message = postMessage(TraceMessage(message,true))
 
 /// Writes a message to the command line (in green)
 let tracefn fmt = Printf.ksprintf trace fmt
 
 /// Writes a message to the command line (in green) and without a line break
-let tracef fmt = Printf.ksprintf (logColored false ConsoleColor.Green false) fmt
+let tracef fmt = Printf.ksprintf (fun text -> postMessage(TraceMessage(text,false))) fmt
 
 /// Writes a trace to the command line (in green) if the verbose mode is activated.
 let traceVerbose s = if verbose then trace s
 
-/// Writes a trace to stderr (in green)  
-let traceImportant s = 
-    logColored true ConsoleColor.Green true s
+/// Writes a trace to stderr (in yellow)  
+let traceImportant text = 
+    postMessage(ImportantMessage text)
     WaitUntilEverythingIsPrinted()
   
 /// Writes a trace to the command line (in yellow)
-let traceFAKE fmt = Printf.ksprintf (logColored true ConsoleColor.Yellow true) fmt
+let traceFAKE fmt = Printf.ksprintf (fun text -> postMessage(ImportantMessage text)) fmt
 
 /// Traces an error (in red)
-let traceError error = 
-    if traceMode = Xml then
-        { defaultMessage with 
-            Text = sprintf "<failure><builderror><message level=\"Error\"><![CDATA[%s]]></message></builderror></failure>" error
-            Target = Xml }
-             |> postMessage
-
-    logColored true ConsoleColor.Red true error
+let traceError error =
+    postMessage(ErrorMessage error)
     WaitUntilEverythingIsPrinted()
   
-
 /// Traces the EnvironmentVariables
 let TraceEnvironmentVariables() = 
     [ EnvironTarget.Machine; 
@@ -112,31 +76,11 @@ let traceHeader name =
     traceLine()
 
 /// Traces the begin of the build
-let traceStartBuild () =
-    match traceMode with
-    | Console -> ()
-    | Xml     ->         
-        let fi = fileInfo xmlOutputFile
-        if fi.Exists then
-            fi.IsReadOnly <- false
-            fi.Delete()
-        if not fi.Directory.Exists then fi.Directory.Create()
+let traceStartBuild() = postMessage StartMessage
         
-        { defaultMessage with 
-            Text = "<?xml version=\"1.0\"?>\r\n<buildresults>" 
-            Target = Xml }
-                |> postMessage
-
 /// Traces the end of the build
-let traceEndBuild () =
-    match traceMode with
-    | Console -> ()
-    | Xml     -> 
-        { defaultMessage with 
-            Text = "</buildresults>"
-            Target = Xml }
-                |> postMessage
-
+let traceEndBuild () = postMessage FinishedMessage
+   
 let openTag tag =  openTags <- tag :: openTags
 
 let closeTag tag =
@@ -144,21 +88,14 @@ let closeTag tag =
     | x::rest when x = tag -> openTags <- rest
     | _ -> failwith "Invalid Tag-structure"
 
-    { defaultMessage with 
-        Text = sprintf "</%s>" tag
-        Target = Xml }
-            |> postMessage
+    CloseTag tag |> postMessage
   
 let closeAllOpenTags() = Seq.iter closeTag openTags
 
 /// Traces the begin of a target
 let traceStartTarget name dependencyString =
-    if traceMode = Xml then
-        openTag "target"
-        { defaultMessage with 
-            Text = sprintf "<target name=\"%s\">" name
-            Target = Xml }
-                |> postMessage
+    openTag "target"
+    OpenTag("target",name) |> postMessage
 
     tracefn "Starting Target: %s %s" name dependencyString
 
@@ -167,28 +104,20 @@ let traceStartTarget name dependencyString =
 /// Traces the end of a target   
 let traceEndTarget name =
     tracefn "Finished Target: %s" name
-    if traceMode = Xml then closeTag "target"
+    closeTag "target"
 
     ReportProgressFinish <| sprintf "Target: %s" name
     WaitUntilEverythingIsPrinted()
   
 /// Traces the begin of a task
 let traceStartTask task description =
-    match traceMode with
-    | Console -> ()
-    | Xml     -> 
-        openTag "task"
-        { defaultMessage with 
-            Text = sprintf "<task name=\"%s\">" task
-            Target = Xml }
-                |> postMessage
+    openTag "task"
+    OpenTag("task",task) |> postMessage
 
     ReportProgressStart <| sprintf "Task: %s %s" task description
    
 /// Traces the end of a task
 let traceEndTask task  description =
-    match traceMode with
-    | Console -> ()
-    | Xml     -> closeTag "task"
+    closeTag "task"
 
     ReportProgressFinish <| sprintf "Task: %s %s" task description

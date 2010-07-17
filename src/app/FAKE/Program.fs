@@ -2,14 +2,12 @@
 open Fake
 open System.IO
 
-let showFakeCommands() = Console.WriteLine "FAKE [buildScript]"
-
 try
-    try    
-        AutoCloseXmlWriter <- true    
+    try            
+        AutoCloseXmlWriter <- true            
         let cmdArgs = System.Environment.GetCommandLineArgs()
 
-        if cmdArgs.Length <= 1 || cmdArgs.[1] = "help" then showFakeCommands() else
+        if cmdArgs.Length <= 1 || cmdArgs.[1] = "help" then Console.WriteLine "FAKE [buildScript]" else
 
         let args = 
             let splitter = [|'='|]
@@ -19,13 +17,12 @@ try
                         if a.Contains "=" then
                             let s = a.Split splitter
                             if s.[0] = "logfile" then
-                                xmlOutputFile <- s.[1]
-                                traceMode <- Xml
+                                addXmlListener s.[1]
                             s.[0], s.[1]
                         else
                             a,"1")
                 |> Seq.toList
-
+        
         traceStartBuild()
         traceFAKE "FakePath: %s" fakePath 
         traceFAKE "%s" fakeVersionStr
