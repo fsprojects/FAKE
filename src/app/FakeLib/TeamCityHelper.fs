@@ -9,11 +9,11 @@ let sendToTeamCity format message =
           |> EncapsulateApostrophe
           |> toRelativePath 
           |> sprintf format
-          |> fun m -> postMessage {defaultMessage with Text = m }
-    
+          |> fun m -> postMessage(LogMessage(m,true))
+              
 /// Send message to TeamCity
 let sendStrToTeamCity s =
-    if buildServer = TeamCity then postMessage {defaultMessage with Text = RemoveLineBreaks s }
+    if buildServer = TeamCity then postMessage(LogMessage(RemoveLineBreaks s,true))
   
 /// Sends an error to TeamCity
 let sendTeamCityError error =

@@ -12,6 +12,9 @@ type TraceMode =
 | Console
 | Xml
 
+/// Trace verbose output
+let mutable verbose = hasBuildParam "verbose"
+
 /// A constant for local builds            
 let localBuildLabel = "LocalBuild"
 
@@ -33,11 +36,3 @@ let buildVersion,buildServer =
 
 /// Determines if the current build is a local build.
 let isLocalBuild = LocalBuild = buildServer
-
-/// The actual trace mode.
-let mutable traceMode = 
-    if hasBuildParam "logfile" then Xml else
-    match buildServer with
-    | TeamCity   -> Console
-    | CCNet      -> Xml
-    | LocalBuild -> Console

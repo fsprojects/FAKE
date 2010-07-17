@@ -1,41 +1,10 @@
 ﻿[<AutoOpen>]
 module Fake.MailBoxHelper
 
-/// Trace verbose output
-let mutable verbose = hasBuildParam "verbose"
-
-open System
-
-type Message = 
-    { Target    : TraceMode
-      Text      : string
-      Color     : ConsoleColor
-      Newline   : bool
-      Important : bool}
-
-let defaultMessage = 
-    { Target    = TraceMode.Console
-      Text      = ""
-      Color     = ConsoleColor.White
-      Newline   = true
-      Important = false }
-
-let mutable private xmlWriter = null
-
-let mutable AutoCloseXmlWriter = false
-
-let private openWriter() = xmlWriter <- new IO.StreamWriter(xmlOutputFile,true,Text.Encoding.Default)
-let private closeWriter() = 
-    if xmlWriter <> null then
-        xmlWriter.Close()
-        xmlWriter <- null
-
-
-type TraceMessage =
+type MailboxMessage =
     | Die
-    | Message of Message
+    | Message of TraceData
     | ProcessAll of AsyncReplyChannel<unit>
-
 
 let internal buffer = MailboxProcessor.Start (fun inbox ->
     let rec loop () = 
@@ -44,22 +13,8 @@ let internal buffer = MailboxProcessor.Start (fun inbox ->
             match msg with
             | Die -> return ()
             | Message x -> 
-                match x.Target with
-                | Console -> 
-                    let text = if not verbose then shortenCurrentDirectory x.Text else x.Text
-                    let curColor = Console.ForegroundColor
-                    Console.ForegroundColor <- x.Color
-                    if x.Important && buildServer <> CCNet then
-                        if x.Newline then eprintfn "%s" text else eprintf "%s" text
-                    else
-                        if x.Newline then printfn "%s" text else printf "%s" text
-                    Console.ForegroundColor <- curColor
-                | Xml     -> 
-                    if xmlWriter = null then openWriter()
-                    xmlWriter.WriteLine x.Text
-                    xmlWriter.Flush()
-                    if AutoCloseXmlWriter || x.Text = "</buildresults>" then closeWriter()
-                
+                for listener in listeners do
+                    listener.Write x
                 return! loop ()
             | ProcessAll reply ->
                 reply.Reply()
