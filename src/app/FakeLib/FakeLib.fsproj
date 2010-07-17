@@ -72,6 +72,7 @@
     <Compile Include="ILMergeHelper.fs" />
     <Compile Include="WiXHelper.fs" />
     <Compile Include="VSSHelper.fs" />
+    <Compile Include="SCPHelper.fs" />
     <Compile Include="XCopyHelper.fs" />
     <Compile Include="FSIHelper.fs" />
     <Compile Include="MessageHelper.fs" />
