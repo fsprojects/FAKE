@@ -7,7 +7,7 @@ let sendToTeamCity format message =
         message 
           |> RemoveLineBreaks 
           |> EncapsulateApostrophe
-          |> toRelativePath 
+          |> shortenCurrentDirectory 
           |> sprintf format
           |> fun m -> postMessage(LogMessage(m,true))
               
