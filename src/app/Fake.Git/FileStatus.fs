@@ -46,7 +46,7 @@ let getConflictedFiles repositoryDir =
       |> Seq.toList
 
 /// Returns true if the working copy is in a conflicted merge otherwise false
-let isInTheMiddleOfConflictedMerge repositoryDir = Seq.isEmpty <| getConflictedFiles repositoryDir
+let isInTheMiddleOfConflictedMerge repositoryDir = [] <> getConflictedFiles repositoryDir
 
 /// Cleans the working copy by doing a git reset --hard and a clean -f
 let cleanWorkingCopy repositoryDir = 
