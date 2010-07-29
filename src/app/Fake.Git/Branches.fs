@@ -38,7 +38,10 @@ let revisionsBetween repositoryDir branch1 branch2 =
         |> runGitCommand repositoryDir
     msg.Count
 
-/// Creates a new branch based on the given baseBranch and checks it out to the working copy
+/// <summary>Creates a new branch based on the given baseBranch and checks it out to the working copy</summary>
+/// <param name="repositoryDir">The repository directory.</param>
+/// <param name="baseBranch">The base branch.</param>
+/// <param name="branch">The new branch.</param>
 let checkoutNewBranch repositoryDir baseBranch branch =
     sprintf "checkout -b %s %s" branch baseBranch
       |> gitCommand repositoryDir
