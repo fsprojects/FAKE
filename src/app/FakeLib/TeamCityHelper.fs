@@ -1,12 +1,19 @@
 ﻿[<AutoOpen>]
 module Fake.TeamCityHelper
 
+
+/// Encapsulates special chars
+let inline EncapsulateSpecialChars text = 
+    text
+      |> replace "'" "|'" 
+      |> replace "]" "|]" 
+
 /// Send message to TeamCity
 let sendToTeamCity format message =
     if buildServer = TeamCity then
         message 
           |> RemoveLineBreaks 
-          |> EncapsulateApostrophe
+          |> EncapsulateSpecialChars
           |> shortenCurrentDirectory 
           |> sprintf format
           |> fun m -> postMessage(LogMessage(m,true))
