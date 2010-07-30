@@ -50,6 +50,7 @@
     <Compile Include="Branches.fs" />
     <Compile Include="Reset.fs" />
     <Compile Include="Merge.fs" />
+    <Compile Include="Stash.fs" />
     <Compile Include="SanityChecks.fs" />
     <Compile Include="Information.fs" />
     <Compile Include="FileStatus.fs" />
