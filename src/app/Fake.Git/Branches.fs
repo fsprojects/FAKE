@@ -51,16 +51,6 @@ let checkoutBranch repositoryDir branch =
     sprintf "checkout %s" branch
       |> gitCommand repositoryDir
 
-/// Performs a merge of the given branch with the current branch
-let merge repositoryDir flags branch =
-    sprintf "merge %s %s" flags branch
-      |> gitCommand repositoryDir
-
-/// Performs a rebase on top of the given branch with the current branch
-let rebase repositoryDir onTopOfBranch =
-    sprintf "rebase %s" onTopOfBranch
-      |> gitCommand repositoryDir
-
 /// Creates a new branch from the given commit
 let createBranch repositoryDir newBranchName fromCommit =
     sprintf "branch -f %s %s" newBranchName fromCommit
@@ -71,10 +61,6 @@ let deleteBranch repositoryDir force branch =
     sprintf "branch %s %s" (if force then "-D" else "-d") branch
       |> gitCommand repositoryDir
 
-let FastForwardFlag = "--ff"
-
-let NoFastForwardFlag = "--no-ff"
-
 /// Tags the current branch
 let tag repositoryDir tag =
     sprintf "tag %s" tag
@@ -84,27 +70,6 @@ let tag repositoryDir tag =
 let deleteTag repositoryDir tag =
     sprintf "tag -d %s" tag
       |> gitCommand repositoryDir
-
-type MergeType =
-| SameCommit
-| FirstNeedsFastForward
-| SecondNeedsFastForward
-| NeedsRealMerge
-
-/// <summary>Tests whether branches and their "origin" counterparts have diverged and need
-/// merging first.</summary>
-///
-/// <param name="repositoryDir">The path to the repository.</param>
-/// <param name="local">The local branch name.</param>
-/// <param name="remote">The remote branch name.</param>
-let compareBranches repositoryDir local remote =
-    let commit1 = getSHA1 repositoryDir local
-    let commit2 = getSHA1 repositoryDir remote
-    if commit1 = commit2 then SameCommit else
-    match findMergeBase repositoryDir commit1 commit2 with
-    | x when x = commit1 -> FirstNeedsFastForward
-    | x when x = commit2 -> SecondNeedsFastForward
-    | _  -> NeedsRealMerge
 
 /// Checks a branch out
 let checkoutTracked repositoryDir create trackBranch branch =
