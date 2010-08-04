@@ -21,13 +21,13 @@ let skip repositoryDir = gitCommand repositoryDir "rebase --skip"
 /// If the rebasing process fails a normal merge will be started.
 /// </summary>
 /// <returns>If the process used merge instead of rebase.</returns>
-let rebaseOrFallbackOnMerge repositoryDir baseBranch =
-    start repositoryDir baseBranch
+let rebaseOrFallbackOnMerge repositoryDir onTopOfBranch =
+    start repositoryDir onTopOfBranch
     if not (isInTheMiddleOfConflictedMerge repositoryDir) &&
         not (isInTheMiddleOfRebase repositoryDir)
     then false else
 
     // rebase failed ==> fallback on merge
     abort repositoryDir
-    merge repositoryDir "" baseBranch
+    merge repositoryDir "" onTopOfBranch
     true
