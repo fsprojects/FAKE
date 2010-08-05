@@ -24,7 +24,7 @@ module GemHelper =
         { ProjectName = ""
           ToolPath = @"c:\Ruby191\bin\gem.bat" // FullName
           Platform = "Gem::Platform::RUBY"
-          Version = ""
+          Version = "0.0.0.0"
           Summary = ""
           Description = ""
           Authors = []
@@ -89,27 +89,27 @@ module GemHelper =
             failwith "You have to specify a project name for your GemSpec."
 
         gemParams.WorkingDir @@ (gemParams.ProjectName + ".gemspec")
+          |> FullName
 
-    let getGemFileName (gemParams:GemParams) = 
+    let getGemName (gemParams:GemParams) = 
         if isNullOrEmpty gemParams.ProjectName then
             failwith "You have to specify a project name for your Gem."
 
         if isNullOrEmpty gemParams.Version then
             failwith "You have to specify a version for your Gem."
 
-        gemParams.WorkingDir @@ (gemParams.ProjectName + "-" + gemParams.Version + ".gem")
+        gemParams.ProjectName + "-" + gemParams.Version
+
+    let getGemFileName (gemParams:GemParams) = gemParams.WorkingDir @@ (getGemName gemParams + ".gem") |> FullName
 
     let CreateGemSpecification setParams =
-        let p = setParams {GemDefaults with Version = buildVersion}
+        let p = setParams (if isLocalBuild then GemDefaults else {GemDefaults with Version = buildVersion})
                 
         CreateGemSpecificationAsString p
           |> WriteStringToFile false (getGemSpecFileName p)
         p
-       
-    let private RunGem command onCreatedGem gemParams =
-        let fileName = if onCreatedGem then getGemFileName gemParams else getGemSpecFileName gemParams
-        let fi = fileInfo fileName
-        let args = sprintf "%s \"%s\"" command (FullName fileName)
+    
+    let private RunGem args gemParams =
         tracefn "%s %s" gemParams.ToolPath args
         let result = 
             ExecProcess (fun info ->
@@ -117,16 +117,33 @@ module GemHelper =
                 info.WorkingDirectory <- gemParams.WorkingDir |> FullName
                 info.Arguments <- args) System.TimeSpan.MaxValue
                
-        if result <> 0 then failwithf "Error while running gem %s for %s" command fileName
+        if result <> 0 then failwithf "Error while running gem %s" args
         gemParams
 
     let BuildGem (gemParams:GemParams) = 
         if gemParams.Files = [] then
             failwith "You have to specify target files for your Gem."
 
-        RunGem "build" false gemParams
+        let args = sprintf "build \"%s\"" (getGemSpecFileName gemParams)
+        RunGem args gemParams
     
-    let InstallGem gemParams = RunGem "install" true gemParams
+    let InstallGem gemParams = 
+        let args = sprintf "install \"%s\"" (getGemFileName gemParams)
+        RunGem args gemParams
 
-    let PushGem gemParams = RunGem "push" true gemParams |> ignore
+    let UninstallGem (gemParams:GemParams) = 
+        if isNullOrEmpty gemParams.ProjectName then
+            failwith "You have to specify a project name for your Gem."
+
+        let args =
+            if isNullOrEmpty gemParams.Version then
+                sprintf "uninstall %s -a" gemParams.ProjectName
+            else
+                sprintf "uninstall %s -v %s" gemParams.ProjectName gemParams.Version
+
+        RunGem args gemParams
+
+    let PushGem gemParams = 
+        let args = sprintf "push \"%s\"" (getGemFileName gemParams)
+        RunGem args gemParams |> ignore
 

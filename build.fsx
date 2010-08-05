@@ -103,7 +103,7 @@ Target? BuildZip <-
     fun _ ->     
       !+ (buildDir + @"\**\*.*") 
         -- "*.zip" 
-        -- "**\*.pdb"
+        -- "**/*.pdb"
           |> Scan
           |> Zip buildDir deployZip
 
@@ -147,19 +147,33 @@ Target? ZipDocumentation <-
           |> Zip docsDir (deployDir @@ sprintf "Documentation-%s.zip" buildVersion)
 
 Target? CreateGem <-
-    fun _ ->
+    fun _ ->        
+        let gemDocsDir = gemsDir @@ "docs/"
+        let gemLibDir = gemsDir @@ "lib/"
+        
+        XCopy docsDir gemDocsDir
+        XCopy buildDir gemLibDir
+
         CreateGemSpecification 
-          (fun p ->
-              {p with 
-                ProjectName = projectName.ToLower()        
-                Summary = projectSummary
-                Description = projectDescription
-                Authors = authors
-                EMail = mail
-                Homepage = homepage
-                WorkingDir = gemsDir })
-          |> BuildGem
-          |> PushGem          
+            (fun p ->
+                {p with 
+                    ProjectName = projectName.ToLower()        
+                    Summary = projectSummary
+                    Description = projectDescription
+                    Authors = authors
+                    EMail = mail
+                    Homepage = homepage
+                    Files = 
+                        !+ (gemDocsDir + "**/*.*") 
+                            ++ (gemLibDir + "**/*.*")
+                            -- "**/*.zip" 
+                            -- "**/*.pdb"
+                            |> ScanImmediately
+                    WorkingDir = gemsDir })
+            |> BuildGem
+            |> InstallGem
+            |> UninstallGem
+            |> fun p -> if hasBuildParam "pushGem" then PushGem p else ignore p
 
 
 Target? Deploy <- DoNothing
