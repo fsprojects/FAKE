@@ -1,5 +1,6 @@
 ﻿namespace Fake
 
+type GemDependency = string * (string option)
 type GemParams =
     { ProjectName: string;
       ToolPath: string;
@@ -12,6 +13,7 @@ type GemParams =
       Homepage: string;
       RubyForgeProjectName: string;
       Files: string list;
+      Dependencies: GemDependency list;
       WorkingDir: string;}
 
 [<AutoOpen>]
@@ -32,6 +34,7 @@ module GemHelper =
           Homepage = ""
           RubyForgeProjectName = ""
           Files = []
+          Dependencies = []
           WorkingDir = @".\gems" }
 
     let CreateGemSpecificationAsString gemParams =        
@@ -75,6 +78,14 @@ module GemHelper =
               |> separated ", "
               |> sprintf "  spec.files             = [%s]" 
               |> append
+
+        
+        gemParams.Dependencies 
+          |> Seq.iter (fun (gem,version) ->
+                match version with
+                | None   -> sprintf "  spec.add_dependency('%s')" gem
+                | Some v -> sprintf "  spec.add_dependency('%s', '%s')" gem v
+                |> append)
 
         appendIf gemParams.EMail <| sprintf "  spec.email             = '%s'" gemParams.EMail
         appendIf gemParams.Homepage <| sprintf "  spec.homepage          = '%s'" gemParams.Homepage
