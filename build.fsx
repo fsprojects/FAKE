@@ -159,8 +159,7 @@ Target? CreateGem <-
                 Homepage = homepage
                 WorkingDir = gemsDir })
           |> BuildGem
-          |> ignore
-          
+          |> PushGem          
 
 
 Target? Deploy <- DoNothing

@@ -73,10 +73,10 @@ module GemHelper =
           |> WriteStringToFile false (getGemFileName p)
         p
        
-    let BuildGem (gemParams:GemParams) =
+    let RunGem command gemParams =
         let fileName = getGemFileName gemParams
         let fi = fileInfo fileName
-        let args = sprintf "build \"%s\"" (FullName fileName)
+        let args = sprintf "%s \"%s\"" command (FullName fileName)
         tracefn "%s %s" gemParams.ToolPath args
         let result = 
             ExecProcess (fun info ->
@@ -84,5 +84,9 @@ module GemHelper =
                 info.WorkingDirectory <- gemParams.WorkingDir |> FullName
                 info.Arguments <- args) System.TimeSpan.MaxValue
                
-        if result <> 0 then failwithf "Error while building Gem from %s" fileName
+        if result <> 0 then failwithf "Error while running gem %s for %s" command fileName
         gemParams
+
+    let BuildGem gemParams = RunGem "build" gemParams
+
+    let PushGem gemParams = RunGem "push" gemParams |> ignore
