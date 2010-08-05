@@ -3,6 +3,7 @@ module Fake.Git.FileStatus
 
 open Fake
 open System
+open System.IO
 
 type FileStatus =
 | Added
@@ -46,7 +47,22 @@ let getConflictedFiles repositoryDir =
       |> Seq.toList
 
 /// Returns true if the working copy is in a conflicted merge otherwise false
-let isInTheMiddleOfConflictedMerge repositoryDir = Seq.isEmpty <| getConflictedFiles repositoryDir
+let isInTheMiddleOfConflictedMerge repositoryDir = [] <> getConflictedFiles repositoryDir
+
+let getRebaseDir (repositoryDir:string) =
+    if Directory.Exists(repositoryDir + ".git\\rebase-apply\\") then
+        repositoryDir + ".git\\rebase-apply\\"
+    elif Directory.Exists(repositoryDir + ".git\\rebase\\") then
+        repositoryDir + ".git\\rebase\\"
+    else ""
+
+let isInTheMiddleOfRebase repositoryDir = 
+    let rebaseDir = getRebaseDir repositoryDir
+    Directory.Exists rebaseDir && (not <| File.Exists(rebaseDir + "applying"))
+
+let isInTheMiddleOfPatch repositoryDir =
+    let rebaseDir = getRebaseDir repositoryDir
+    Directory.Exists rebaseDir && (not <| File.Exists(rebaseDir + "rebasing"))
 
 /// Cleans the working copy by doing a git reset --hard and a clean -f
 let cleanWorkingCopy repositoryDir = 
