@@ -22,7 +22,7 @@ module GemHelper =
     /// Gem default params
     let GemDefaults =   
         { ProjectName = ""
-          ToolPath = @"c:\Ruby191\bin\gem.bat" // FullName
+          ToolPath = @"c:\Ruby\bin\gem.bat" // FullName
           Platform = "Gem::Platform::RUBY"
           Version = "0.0.0.0"
           Summary = ""
