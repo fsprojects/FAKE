@@ -11,6 +11,7 @@ type GemParams =
       EMail: string;
       Homepage: string;
       RubyForgeProjectName: string;
+      Files: string list;
       WorkingDir: string;}
 
 [<AutoOpen>]
@@ -30,6 +31,7 @@ module GemHelper =
           EMail = ""
           Homepage = ""
           RubyForgeProjectName = ""
+          Files = []
           WorkingDir = @".\gems" }
 
     let CreateGemSpecificationAsString gemParams =        
@@ -51,6 +53,11 @@ module GemHelper =
         | [] -> ()
         | a::[] -> appends "  spec.authors           = '%s'" a
         | _  -> sprintf "  spec.authors           = %A" gemParams.Authors |> replace ";" "," |> append
+        
+        match gemParams.Files with
+        | [] -> ()
+        | a::[] -> appends "  spec.files             = '%s'" a
+        | _  -> sprintf "  spec.files             = %A" gemParams.Files |> replace ";" "," |> append
 
         appendIf gemParams.EMail <| sprintf "  spec.email             = '%s'" gemParams.EMail
         appendIf gemParams.Homepage <| sprintf "  spec.homepage          = '%s'" gemParams.Homepage
@@ -60,21 +67,30 @@ module GemHelper =
 
         sb.ToString()
 
-    let getGemFileName (gemParams:GemParams) = 
+    let getGemSpecFileName (gemParams:GemParams) = 
         if isNullOrEmpty gemParams.ProjectName then
-            failwith "You have to specify a project name for your GemSpec"
+            failwith "You have to specify a project name for your GemSpec."
 
         gemParams.WorkingDir @@ (gemParams.ProjectName + ".gemspec")
+
+    let getGemFileName (gemParams:GemParams) = 
+        if isNullOrEmpty gemParams.ProjectName then
+            failwith "You have to specify a project name for your Gem."
+
+        if isNullOrEmpty gemParams.Version then
+            failwith "You have to specify a version for your Gem."
+
+        gemParams.WorkingDir @@ (gemParams.ProjectName + "-" + gemParams.Version + ".gem")
 
     let CreateGemSpecification setParams =
         let p = setParams {GemDefaults with Version = buildVersion}
                 
         CreateGemSpecificationAsString p
-          |> WriteStringToFile false (getGemFileName p)
+          |> WriteStringToFile false (getGemSpecFileName p)
         p
        
-    let RunGem command gemParams =
-        let fileName = getGemFileName gemParams
+    let private RunGem command onCreatedGem gemParams =
+        let fileName = if onCreatedGem then getGemFileName gemParams else getGemSpecFileName gemParams
         let fi = fileInfo fileName
         let args = sprintf "%s \"%s\"" command (FullName fileName)
         tracefn "%s %s" gemParams.ToolPath args
@@ -87,6 +103,9 @@ module GemHelper =
         if result <> 0 then failwithf "Error while running gem %s for %s" command fileName
         gemParams
 
-    let BuildGem gemParams = RunGem "build" gemParams
+    let BuildGem gemParams = RunGem "build" false gemParams
+    
+    let InstallGem gemParams = RunGem "install" true gemParams
 
-    let PushGem gemParams = RunGem "push" gemParams |> ignore
+    let PushGem gemParams = RunGem "push" true gemParams |> ignore
+
