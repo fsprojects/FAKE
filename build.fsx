@@ -9,7 +9,7 @@ let projectSummary = "FAKE - F# Make - Get rid of the noise in your build script
 let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. Tasks and dependencies are specified in a DSL which is integrated in F#."
 let authors = ["Steffen Forkmann"]
 let mail = "forkmann@gmx.de"
-let homepage = "http://github.com/forki/fake" 
+let homepage = "http://github.com/forki/fake"
 
 TraceEnvironmentVariables()  
   
@@ -158,6 +158,8 @@ Target? CreateGem <-
                 EMail = mail
                 Homepage = homepage
                 WorkingDir = gemsDir })
+          |> BuildGem
+          |> ignore
           
 
 

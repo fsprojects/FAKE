@@ -21,7 +21,7 @@ module GemHelper =
     /// Gem default params
     let GemDefaults =   
         { ProjectName = ""
-          ToolPath = "gem.bat"
+          ToolPath = @"c:\Ruby191\bin\gem.bat" // FullName
           Platform = "Gem::Platform::RUBY"
           Version = ""
           Summary = ""
@@ -60,10 +60,29 @@ module GemHelper =
 
         sb.ToString()
 
-    let CreateGemSpecification setParams =
-        let p = setParams {GemDefaults with Version = buildVersion}
-        if isNullOrEmpty p.ProjectName then
+    let getGemFileName (gemParams:GemParams) = 
+        if isNullOrEmpty gemParams.ProjectName then
             failwith "You have to specify a project name for your GemSpec"
 
+        gemParams.WorkingDir @@ (gemParams.ProjectName + ".gemspec")
+
+    let CreateGemSpecification setParams =
+        let p = setParams {GemDefaults with Version = buildVersion}
+                
         CreateGemSpecificationAsString p
-          |> WriteStringToFile false (p.WorkingDir @@ (p.ProjectName + ".gemspec"))
+          |> WriteStringToFile false (getGemFileName p)
+        p
+       
+    let BuildGem (gemParams:GemParams) =
+        let fileName = getGemFileName gemParams
+        let fi = fileInfo fileName
+        let args = sprintf "build \"%s\"" (FullName fileName)
+        tracefn "%s %s" gemParams.ToolPath args
+        let result = 
+            ExecProcess (fun info ->
+                info.FileName <- gemParams.ToolPath
+                info.WorkingDirectory <- gemParams.WorkingDir |> FullName
+                info.Arguments <- args) System.TimeSpan.MaxValue
+               
+        if result <> 0 then failwithf "Error while building Gem from %s" fileName
+        gemParams
