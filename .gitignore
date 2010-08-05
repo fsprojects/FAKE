@@ -9,6 +9,7 @@ obj/
 build/
 helpBuild/
 Publish/
+gems/
 BuildMetrics/
 [Bb]in
 [Rr]elease*/
