@@ -5,6 +5,11 @@ open Fake
  
 // properties 
 let projectName = "FAKE"
+let projectSummary = "FAKE - F# Make - Get rid of the noise in your build scripts."
+let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. Tasks and dependencies are specified in a DSL which is integrated in F#."
+let authors = ["Steffen Forkmann"]
+let mail = "forkmann@gmx.de"
+let homepage = "http://github.com/forki/fake" 
 
 TraceEnvironmentVariables()  
   
@@ -13,6 +18,7 @@ let testDir = @".\test\"
 let metricsDir = @".\BuildMetrics\"
 let deployDir = @".\Publish\"
 let docsDir = @".\docs\" 
+let gemsDir = @".\gems\" 
 let templatesSrcDir = @".\docu\src\Docu.Console\templates\" 
 
 let deployZip = deployDir + sprintf "%s-%s.zip" projectName buildVersion
@@ -26,7 +32,7 @@ let nunitPath = @".\Tools\NUnit"
 
 // Targets
 Target? Clean <-
-    fun _ ->  CleanDirs [buildDir; testDir; deployDir; docsDir; metricsDir]
+    fun _ ->  CleanDirs [buildDir; testDir; deployDir; docsDir; metricsDir; gemsDir]
 
 
 Target? BuildApp <-
@@ -140,6 +146,21 @@ Target? ZipDocumentation <-
           |> Scan
           |> Zip docsDir (deployDir @@ sprintf "Documentation-%s.zip" buildVersion)
 
+Target? CreateGem <-
+    fun _ ->
+        CreateGemSpecification 
+          (fun p ->
+              {p with 
+                ProjectName = projectName.ToLower()        
+                Summary = projectSummary
+                Description = projectDescription
+                Authors = authors
+                EMail = mail
+                Homepage = homepage
+                WorkingDir = gemsDir })
+          
+
+
 Target? Deploy <- DoNothing
 Target? Default <- DoNothing
 
@@ -151,13 +172,14 @@ For? BuildZip <- Dependency? BuildApp |> And? CopyLicense
 For? ZipCalculatorSample <- Dependency? Clean
 For? Test <- Dependency? BuildApp |> And? BuildTest
 
-For? Deploy <- 
+For? CreateGem <- 
     Dependency? Test 
       |> And? BuildDocu 
       |> And? BuildZip 
       |> And? ZipCalculatorSample
-      |> And? ZipDocumentation
+      |> And? ZipDocumentation      
 
+For? Deploy <- Dependency? CreateGem
 For? GenerateDocumentation <- Dependency? BuildApp
 For? ZipDocumentation <- Dependency? GenerateDocumentation
 For? Default <- Dependency? Deploy

@@ -30,16 +30,10 @@ module GemHelper =
           EMail = ""
           Homepage = ""
           RubyForgeProjectName = ""
-          WorkingDir = currentDirectory}
+          WorkingDir = @".\gems" }
 
-    let CreateGemSpecification setParams =
-        let p = 
-          setParams {GemDefaults with Version = buildVersion}
-            |> fun (p:GemParams) -> 
-                if isNullOrEmpty p.RubyForgeProjectName then 
-                  {p with RubyForgeProjectName = p.ProjectName}
-                else 
-                  p
+    let CreateGemSpecificationAsString gemParams =        
+        let rubyForgeName = if isNullOrEmpty gemParams.RubyForgeProjectName then gemParams.ProjectName else gemParams.RubyForgeProjectName
 
         let sb = new StringBuilder()
         let append text  = sb.AppendLine text |> ignore
@@ -47,21 +41,29 @@ module GemHelper =
         let appendIf p text = if isNullOrEmpty p |> not then append text
 
         append   "Gem::Specification.new do |spec|"
-        appends  "  spec.platform    = %s" p.Platform
-        appends  "  spec.name        = '%s'" p.ProjectName
-        appends  "  spec.version     = '%s'" p.Version
-        appendIf p.Summary <| sprintf "  spec.summary     = '%s'" p.Summary
-        appendIf p.Description <| sprintf "  spec.description = '%s'" p.Description
+        appends  "  spec.platform          = %s" gemParams.Platform
+        appends  "  spec.name              = '%s'" gemParams.ProjectName
+        appends  "  spec.version           = '%s'" gemParams.Version
+        appendIf gemParams.Summary <| sprintf "  spec.summary           = '%s'" gemParams.Summary
+        appendIf gemParams.Description <| sprintf "  spec.description       = '%s'" gemParams.Description
 
-        match p.Authors with
+        match gemParams.Authors with
         | [] -> ()
         | a::[] -> appends "  spec.authors           = '%s'" a
-        | _  -> sprintf "  spec.authors           = %A" p.Authors |> replace ";" "," |> append
+        | _  -> sprintf "  spec.authors           = %A" gemParams.Authors |> replace ";" "," |> append
 
-        appendIf p.EMail <| sprintf "  spec.email             = '%s'" p.EMail
-        appendIf p.Homepage <| sprintf "  spec.homepage          = '%s'" p.Homepage
-        appendIf p.RubyForgeProjectName <| sprintf "  spec.rubyforge_project = '%s'" p.RubyForgeProjectName
+        appendIf gemParams.EMail <| sprintf "  spec.email             = '%s'" gemParams.EMail
+        appendIf gemParams.Homepage <| sprintf "  spec.homepage          = '%s'" gemParams.Homepage
+        appends "  spec.rubyforge_project = '%s'" rubyForgeName
 
         append "end"
 
         sb.ToString()
+
+    let CreateGemSpecification setParams =
+        let p = setParams {GemDefaults with Version = buildVersion}
+        if isNullOrEmpty p.ProjectName then
+            failwith "You have to specify a project name for your GemSpec"
+
+        CreateGemSpecificationAsString p
+          |> WriteStringToFile false (p.WorkingDir @@ (p.ProjectName + ".gemspec"))

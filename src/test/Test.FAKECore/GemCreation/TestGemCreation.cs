@@ -1,5 +1,4 @@
-﻿using System;
-using Fake;
+﻿using Fake;
 using Microsoft.FSharp.Collections;
 using NUnit.Framework;
 using Test.Git;
@@ -9,57 +8,30 @@ namespace Test.FAKECore.GemCreation
     [TestFixture]
     public class TestGemCreation
     {
+        private static readonly GemParams DefaultParam = GemHelper.GemDefaults;
+
         [Test]
         public void CanCreateGemSpecifactionWithVersion()
         {
-            Func<GemParams, GemParams> func =
-                defaultParam =>
+            var param =
                 new GemParams("fake",
-                              defaultParam.ToolPath,
-                              defaultParam.Platform,
+                              DefaultParam.ToolPath,
+                              DefaultParam.Platform,
                               "1.2.3.4",
-                              defaultParam.Summary,
-                              defaultParam.Description,
-                              defaultParam.Authors,
-                              defaultParam.EMail,
-                              defaultParam.Homepage,
-                              defaultParam.RubyForgeProjectName,
-                              defaultParam.WorkingDir);
+                              DefaultParam.Summary,
+                              DefaultParam.Description,
+                              DefaultParam.Authors,
+                              DefaultParam.EMail,
+                              DefaultParam.Homepage,
+                              DefaultParam.RubyForgeProjectName,
+                              DefaultParam.WorkingDir);
 
-            GemHelper.CreateGemSpecification(func.Convert())
+            GemHelper.CreateGemSpecificationAsString(param)
                 .ShouldEqual(
                     "Gem::Specification.new do |spec|\r\n" +
-                    "  spec.platform    = Gem::Platform::RUBY\r\n" +
-                    "  spec.name        = 'fake'\r\n" +
-                    "  spec.version     = '1.2.3.4'\r\n" +
-                    "  spec.rubyforge_project = 'fake'\r\n" +
-                    "end\r\n");
-        }
-
-        [Test]
-        public void CanCreateGemSpecifactionWithVersionAndSummary()
-        {
-            Func<GemParams, GemParams> func =
-                defaultParam =>
-                new GemParams("fake",
-                              defaultParam.ToolPath,
-                              defaultParam.Platform,
-                              "1.2.3.4",
-                              "My summary",
-                              defaultParam.Description,
-                              defaultParam.Authors,
-                              defaultParam.EMail,
-                              defaultParam.Homepage,
-                              defaultParam.RubyForgeProjectName,
-                              defaultParam.WorkingDir);
-
-            GemHelper.CreateGemSpecification(func.Convert())
-                .ShouldEqual(
-                    "Gem::Specification.new do |spec|\r\n" +
-                    "  spec.platform    = Gem::Platform::RUBY\r\n" +
-                    "  spec.name        = 'fake'\r\n" +
-                    "  spec.version     = '1.2.3.4'\r\n" +
-                    "  spec.summary     = 'My summary'\r\n" +
+                    "  spec.platform          = Gem::Platform::RUBY\r\n" +
+                    "  spec.name              = 'fake'\r\n" +
+                    "  spec.version           = '1.2.3.4'\r\n" +
                     "  spec.rubyforge_project = 'fake'\r\n" +
                     "end\r\n");
         }
@@ -67,169 +39,190 @@ namespace Test.FAKECore.GemCreation
         [Test]
         public void CanCreateGemSpecifactionWithVersionAndDescription()
         {
-            Func<GemParams, GemParams> func =
-                defaultParam =>
+            var param =
                 new GemParams("fake",
-                              defaultParam.ToolPath,
-                              defaultParam.Platform,
+                              DefaultParam.ToolPath,
+                              DefaultParam.Platform,
                               "1.2.3.4",
-                              defaultParam.Summary,
+                              DefaultParam.Summary,
                               "My description",
-                              defaultParam.Authors,
-                              defaultParam.EMail,
-                              defaultParam.Homepage,
-                              defaultParam.RubyForgeProjectName,
-                              defaultParam.WorkingDir);
+                              DefaultParam.Authors,
+                              DefaultParam.EMail,
+                              DefaultParam.Homepage,
+                              DefaultParam.RubyForgeProjectName,
+                              DefaultParam.WorkingDir);
 
-            GemHelper.CreateGemSpecification(func.Convert())
+            GemHelper.CreateGemSpecificationAsString(param)
                 .ShouldEqual(
                     "Gem::Specification.new do |spec|\r\n" +
-                    "  spec.platform    = Gem::Platform::RUBY\r\n" +
-                    "  spec.name        = 'fake'\r\n" +
-                    "  spec.version     = '1.2.3.4'\r\n" +
-                    "  spec.description = 'My description'\r\n" +
+                    "  spec.platform          = Gem::Platform::RUBY\r\n" +
+                    "  spec.name              = 'fake'\r\n" +
+                    "  spec.version           = '1.2.3.4'\r\n" +
+                    "  spec.description       = 'My description'\r\n" +
                     "  spec.rubyforge_project = 'fake'\r\n" +
-                    "end\r\n");
-        }
-
-        [Test]
-        public void CanCreateGemSpecifactionWithVersionAndSingleAuthor()
-        {
-            Func<GemParams, GemParams> func =
-                defaultParam =>
-                new GemParams("fake",
-                              defaultParam.ToolPath,
-                              defaultParam.Platform,
-                              "4.3.2.1",
-                              defaultParam.Summary,
-                              defaultParam.Description,
-                              new FSharpList<string>("Steffen Forkmann", FSharpList<string>.Empty),
-                              defaultParam.EMail,
-                              defaultParam.Homepage,
-                              defaultParam.RubyForgeProjectName,
-                              defaultParam.WorkingDir);
-
-            GemHelper.CreateGemSpecification(func.Convert())
-                .ShouldEqual(
-                    "Gem::Specification.new do |spec|\r\n" +
-                    "  spec.platform    = Gem::Platform::RUBY\r\n" +
-                    "  spec.name        = 'fake'\r\n" +
-                    "  spec.version     = '4.3.2.1'\r\n" +
-                    "  spec.authors           = 'Steffen Forkmann'\r\n" +
-                    "  spec.rubyforge_project = 'fake'\r\n" +
-                    "end\r\n");
-        }
-
-        [Test]
-        public void CanCreateGemSpecifactionWithVersionAndMultipleAuthors()
-        {
-            Func<GemParams, GemParams> func =
-                defaultParam =>
-                new GemParams("naturalspec",
-                              defaultParam.ToolPath,
-                              defaultParam.Platform,
-                              "4.3.2.1",
-                              defaultParam.Summary,
-                              defaultParam.Description,
-                              new FSharpList<string>("Steffen Forkmann",
-                              new FSharpList<string>("Max Mustermann",
-                                  FSharpList<string>.Empty)),
-                                  defaultParam.EMail,
-                                  defaultParam.Homepage,
-                                  defaultParam.RubyForgeProjectName,
-                              defaultParam.WorkingDir);
-
-            GemHelper.CreateGemSpecification(func.Convert())
-                .ShouldEqual(
-                    "Gem::Specification.new do |spec|\r\n" +
-                    "  spec.platform    = Gem::Platform::RUBY\r\n" +
-                    "  spec.name        = 'naturalspec'\r\n" +
-                    "  spec.version     = '4.3.2.1'\r\n" +
-                    "  spec.authors           = [\"Steffen Forkmann\", \"Max Mustermann\"]\r\n" +
-                    "  spec.rubyforge_project = 'naturalspec'\r\n" +
-                    "end\r\n");
-        }
-
-        [Test]
-        public void CanCreateGemSpecifactionWithVersionAndEMail()
-        {
-            Func<GemParams, GemParams> func =
-                defaultParam =>
-                new GemParams("naturalspec",
-                              defaultParam.ToolPath,
-                              defaultParam.Platform,
-                              "4.3.2.1",
-                              defaultParam.Summary,
-                              defaultParam.Description,
-                              defaultParam.Authors,
-                              "test@test.com",
-                              defaultParam.Homepage,
-                              defaultParam.RubyForgeProjectName,
-                              defaultParam.WorkingDir);
-
-            GemHelper.CreateGemSpecification(func.Convert())
-                .ShouldEqual(
-                    "Gem::Specification.new do |spec|\r\n" +
-                    "  spec.platform    = Gem::Platform::RUBY\r\n" +
-                    "  spec.name        = 'naturalspec'\r\n" +
-                    "  spec.version     = '4.3.2.1'\r\n" +
-                    "  spec.email             = 'test@test.com'\r\n" +
-                    "  spec.rubyforge_project = 'naturalspec'\r\n" +
-                    "end\r\n");
-        }      
-        
-        [Test]
-        public void CanCreateGemSpecifactionWithVersionAndHomepage()
-        {
-            Func<GemParams, GemParams> func =
-                defaultParam =>
-                new GemParams("naturalspec",
-                              defaultParam.ToolPath,
-                              defaultParam.Platform,
-                              "4.3.2.1",
-                              defaultParam.Summary,
-                              defaultParam.Description,
-                              defaultParam.Authors,
-                              defaultParam.EMail,
-                              "http://github.com/forki/fake",
-                              defaultParam.RubyForgeProjectName,
-                              defaultParam.WorkingDir);
-
-            GemHelper.CreateGemSpecification(func.Convert())
-                .ShouldEqual(
-                    "Gem::Specification.new do |spec|\r\n" +
-                    "  spec.platform    = Gem::Platform::RUBY\r\n" +
-                    "  spec.name        = 'naturalspec'\r\n" +
-                    "  spec.version     = '4.3.2.1'\r\n" +
-                    "  spec.homepage          = 'http://github.com/forki/fake'\r\n" +
-                    "  spec.rubyforge_project = 'naturalspec'\r\n" +
                     "end\r\n");
         }
 
         [Test]
         public void CanCreateGemSpecifactionWithVersionAndDifferentRubyForgeProjectName()
         {
-            Func<GemParams, GemParams> func =
-                defaultParam =>
+            var param =
                 new GemParams("naturalspec",
-                              defaultParam.ToolPath,
-                              defaultParam.Platform,
+                              DefaultParam.ToolPath,
+                              DefaultParam.Platform,
                               "4.3.2.1",
-                              defaultParam.Summary,
-                              defaultParam.Description,
-                              defaultParam.Authors,
-                              defaultParam.EMail,
-                              defaultParam.Homepage,
+                              DefaultParam.Summary,
+                              DefaultParam.Description,
+                              DefaultParam.Authors,
+                              DefaultParam.EMail,
+                              DefaultParam.Homepage,
                               "naturalspec2",
-                              defaultParam.WorkingDir);
+                              DefaultParam.WorkingDir);
 
-            GemHelper.CreateGemSpecification(func.Convert())
+            GemHelper.CreateGemSpecificationAsString(param)
                 .ShouldEqual(
                     "Gem::Specification.new do |spec|\r\n" +
-                    "  spec.platform    = Gem::Platform::RUBY\r\n" +
-                    "  spec.name        = 'naturalspec'\r\n" +
-                    "  spec.version     = '4.3.2.1'\r\n" +
+                    "  spec.platform          = Gem::Platform::RUBY\r\n" +
+                    "  spec.name              = 'naturalspec'\r\n" +
+                    "  spec.version           = '4.3.2.1'\r\n" +
                     "  spec.rubyforge_project = 'naturalspec2'\r\n" +
+                    "end\r\n");
+        }
+
+        [Test]
+        public void CanCreateGemSpecifactionWithVersionAndEMail()
+        {
+            var param =
+                new GemParams("naturalspec",
+                              DefaultParam.ToolPath,
+                              DefaultParam.Platform,
+                              "4.3.2.1",
+                              DefaultParam.Summary,
+                              DefaultParam.Description,
+                              DefaultParam.Authors,
+                              "test@test.com",
+                              DefaultParam.Homepage,
+                              DefaultParam.RubyForgeProjectName,
+                              DefaultParam.WorkingDir);
+
+            GemHelper.CreateGemSpecificationAsString(param)
+                .ShouldEqual(
+                    "Gem::Specification.new do |spec|\r\n" +
+                    "  spec.platform          = Gem::Platform::RUBY\r\n" +
+                    "  spec.name              = 'naturalspec'\r\n" +
+                    "  spec.version           = '4.3.2.1'\r\n" +
+                    "  spec.email             = 'test@test.com'\r\n" +
+                    "  spec.rubyforge_project = 'naturalspec'\r\n" +
+                    "end\r\n");
+        }
+
+        [Test]
+        public void CanCreateGemSpecifactionWithVersionAndHomepage()
+        {
+            var param =
+                new GemParams("naturalspec",
+                              DefaultParam.ToolPath,
+                              DefaultParam.Platform,
+                              "4.3.2.1",
+                              DefaultParam.Summary,
+                              DefaultParam.Description,
+                              DefaultParam.Authors,
+                              DefaultParam.EMail,
+                              "http://github.com/forki/fake",
+                              DefaultParam.RubyForgeProjectName,
+                              DefaultParam.WorkingDir);
+
+            GemHelper.CreateGemSpecificationAsString(param)
+                .ShouldEqual(
+                    "Gem::Specification.new do |spec|\r\n" +
+                    "  spec.platform          = Gem::Platform::RUBY\r\n" +
+                    "  spec.name              = 'naturalspec'\r\n" +
+                    "  spec.version           = '4.3.2.1'\r\n" +
+                    "  spec.homepage          = 'http://github.com/forki/fake'\r\n" +
+                    "  spec.rubyforge_project = 'naturalspec'\r\n" +
+                    "end\r\n");
+        }
+
+        [Test]
+        public void CanCreateGemSpecifactionWithVersionAndMultipleAuthors()
+        {
+            var param =
+                new GemParams("naturalspec",
+                              DefaultParam.ToolPath,
+                              DefaultParam.Platform,
+                              "4.3.2.1",
+                              DefaultParam.Summary,
+                              DefaultParam.Description,
+                              new FSharpList<string>("Steffen Forkmann",
+                                                     new FSharpList<string>("Max Mustermann",
+                                                                            FSharpList<string>.Empty)),
+                              DefaultParam.EMail,
+                              DefaultParam.Homepage,
+                              DefaultParam.RubyForgeProjectName,
+                              DefaultParam.WorkingDir);
+
+            GemHelper.CreateGemSpecificationAsString(param)
+                .ShouldEqual(
+                    "Gem::Specification.new do |spec|\r\n" +
+                    "  spec.platform          = Gem::Platform::RUBY\r\n" +
+                    "  spec.name              = 'naturalspec'\r\n" +
+                    "  spec.version           = '4.3.2.1'\r\n" +
+                    "  spec.authors           = [\"Steffen Forkmann\", \"Max Mustermann\"]\r\n" +
+                    "  spec.rubyforge_project = 'naturalspec'\r\n" +
+                    "end\r\n");
+        }
+
+        [Test]
+        public void CanCreateGemSpecifactionWithVersionAndSingleAuthor()
+        {
+            var param =
+                new GemParams("fake",
+                              DefaultParam.ToolPath,
+                              DefaultParam.Platform,
+                              "4.3.2.1",
+                              DefaultParam.Summary,
+                              DefaultParam.Description,
+                              new FSharpList<string>("Steffen Forkmann", FSharpList<string>.Empty),
+                              DefaultParam.EMail,
+                              DefaultParam.Homepage,
+                              DefaultParam.RubyForgeProjectName,
+                              DefaultParam.WorkingDir);
+
+            GemHelper.CreateGemSpecificationAsString(param)
+                .ShouldEqual(
+                    "Gem::Specification.new do |spec|\r\n" +
+                    "  spec.platform          = Gem::Platform::RUBY\r\n" +
+                    "  spec.name              = 'fake'\r\n" +
+                    "  spec.version           = '4.3.2.1'\r\n" +
+                    "  spec.authors           = 'Steffen Forkmann'\r\n" +
+                    "  spec.rubyforge_project = 'fake'\r\n" +
+                    "end\r\n");
+        }
+
+        [Test]
+        public void CanCreateGemSpecifactionWithVersionAndSummary()
+        {
+            var param =
+                new GemParams("fake",
+                              DefaultParam.ToolPath,
+                              DefaultParam.Platform,
+                              "1.2.3.4",
+                              "My summary",
+                              DefaultParam.Description,
+                              DefaultParam.Authors,
+                              DefaultParam.EMail,
+                              DefaultParam.Homepage,
+                              DefaultParam.RubyForgeProjectName,
+                              DefaultParam.WorkingDir);
+
+            GemHelper.CreateGemSpecificationAsString(param)
+                .ShouldEqual(
+                    "Gem::Specification.new do |spec|\r\n" +
+                    "  spec.platform          = Gem::Platform::RUBY\r\n" +
+                    "  spec.name              = 'fake'\r\n" +
+                    "  spec.version           = '1.2.3.4'\r\n" +
+                    "  spec.summary           = 'My summary'\r\n" +
+                    "  spec.rubyforge_project = 'fake'\r\n" +
                     "end\r\n");
         }
     }
