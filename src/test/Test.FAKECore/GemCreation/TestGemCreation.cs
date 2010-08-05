@@ -45,7 +45,6 @@ namespace Test.FAKECore.GemCreation
                     "  spec.version           = '1.2.3.4'\r\n" +
                     "  spec.add_dependency('naturalspec')\r\n" +
                     "  spec.add_dependency('nunit', '>= 1.4.5.6')\r\n" +
-                    "  spec.rubyforge_project = 'fake'\r\n" +
                     "end\r\n");
         }
 
@@ -73,7 +72,6 @@ namespace Test.FAKECore.GemCreation
                     "  spec.platform          = Gem::Platform::RUBY\r\n" +
                     "  spec.name              = 'fake'\r\n" +
                     "  spec.version           = '1.2.3.4'\r\n" +
-                    "  spec.rubyforge_project = 'fake'\r\n" +
                     "end\r\n");
         }
 
@@ -102,7 +100,6 @@ namespace Test.FAKECore.GemCreation
                     "  spec.name              = 'fake'\r\n" +
                     "  spec.version           = '1.2.3.4'\r\n" +
                     "  spec.description       = 'My description'\r\n" +
-                    "  spec.rubyforge_project = 'fake'\r\n" +
                     "end\r\n");
         }
 
@@ -159,7 +156,6 @@ namespace Test.FAKECore.GemCreation
                     "  spec.name              = 'naturalspec'\r\n" +
                     "  spec.version           = '4.3.2.1'\r\n" +
                     "  spec.email             = 'test@test.com'\r\n" +
-                    "  spec.rubyforge_project = 'naturalspec'\r\n" +
                     "end\r\n");
         }
 
@@ -188,7 +184,6 @@ namespace Test.FAKECore.GemCreation
                     "  spec.name              = 'naturalspec'\r\n" +
                     "  spec.version           = '4.3.2.1'\r\n" +
                     "  spec.homepage          = 'http://github.com/forki/fake'\r\n" +
-                    "  spec.rubyforge_project = 'naturalspec'\r\n" +
                     "end\r\n");
         }
 
@@ -218,7 +213,6 @@ namespace Test.FAKECore.GemCreation
                     "  spec.name              = 'naturalspec'\r\n" +
                     "  spec.version           = '4.3.2.1'\r\n" +
                     "  spec.authors           = [\"Steffen Forkmann\", \"Max Mustermann\"]\r\n" +
-                    "  spec.rubyforge_project = 'naturalspec'\r\n" +
                     "end\r\n");
         }
 
@@ -248,7 +242,6 @@ namespace Test.FAKECore.GemCreation
                     "  spec.name              = 'fake'\r\n" +
                     "  spec.version           = '4.3.2.1'\r\n" +
                     "  spec.authors           = 'Steffen Forkmann'\r\n" +
-                    "  spec.rubyforge_project = 'fake'\r\n" +
                     "end\r\n");
         }
 
@@ -283,7 +276,6 @@ namespace Test.FAKECore.GemCreation
                     "  spec.name              = 'fake'\r\n" +
                     "  spec.version           = '1.2.3.4'\r\n" +
                     "  spec.files             = [\"./lib/test.text\", \"./docs/index.htm\"]\r\n" +
-                    "  spec.rubyforge_project = 'fake'\r\n" +
                     "end\r\n");
         }
 
@@ -313,7 +305,6 @@ namespace Test.FAKECore.GemCreation
                     "  spec.name              = 'fake'\r\n" +
                     "  spec.version           = '1.2.3.4'\r\n" +
                     "  spec.summary           = 'My summary'\r\n" +
-                    "  spec.rubyforge_project = 'fake'\r\n" +
                     "end\r\n");
         }
 
@@ -348,7 +339,6 @@ namespace Test.FAKECore.GemCreation
                     "  spec.name              = 'fake'\r\n" +
                     "  spec.version           = '1.2.3.4'\r\n" +
                     "  spec.files             = [\"./lib/test.text\", \"./docs/index.htm\"]\r\n" +
-                    "  spec.rubyforge_project = 'fake'\r\n" +
                     "end\r\n");
         }
     }

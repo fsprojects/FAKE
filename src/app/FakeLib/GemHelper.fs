@@ -38,8 +38,6 @@ module GemHelper =
           WorkingDir = @".\gems" }
 
     let CreateGemSpecificationAsString gemParams =        
-        let rubyForgeName = if isNullOrEmpty gemParams.RubyForgeProjectName then gemParams.ProjectName else gemParams.RubyForgeProjectName
-
         let sb = new StringBuilder()
         let append text  = sb.AppendLine text |> ignore
         let appends text = Printf.kprintf append text
@@ -89,7 +87,7 @@ module GemHelper =
 
         appendIf gemParams.EMail <| sprintf "  spec.email             = '%s'" gemParams.EMail
         appendIf gemParams.Homepage <| sprintf "  spec.homepage          = '%s'" gemParams.Homepage
-        appends "  spec.rubyforge_project = '%s'" rubyForgeName
+        appendIf gemParams.RubyForgeProjectName <| sprintf "  spec.rubyforge_project = '%s'" gemParams.RubyForgeProjectName
 
         append "end"
 
