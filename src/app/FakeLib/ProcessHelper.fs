@@ -78,17 +78,20 @@ let setEnvironmentVariables (startInfo:ProcessStartInfo) environmentSettings =
 /// returns true if the exit code was 0
 let execProcess infoAction timeOut = ExecProcess infoAction timeOut = 0    
 
+/// Adds quotes around the string
+let quote str = "\"" + str + "\""
+
 /// Adds quotes around the string if needed
-let quote str =
+let quoteIfNeeded str =
     if isNullOrEmpty str then
         ""
     elif str.Contains " " then
-        "\"" + str + "\""
+        quote str
     else
         str
 
 /// Adds quotes and a blank around the string   
-let toParam x = " " + quote x
+let toParam x = " " + quoteIfNeeded x
  
 /// Use default Parameters
 let UseDefaults = id
@@ -173,7 +176,7 @@ let private formatArgs args =
         then str + " " else str
 
     args
-    |> Seq.map (fun (k, v) -> delimit k + quote v)
+    |> Seq.map (fun (k, v) -> delimit k + quoteIfNeeded v)
     |> separated " "
 
 /// Execute an external program asynchronously and return the exit code,

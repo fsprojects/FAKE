@@ -52,12 +52,29 @@ module GemHelper =
         match gemParams.Authors with
         | [] -> ()
         | a::[] -> appends "  spec.authors           = '%s'" a
-        | _  -> sprintf "  spec.authors           = %A" gemParams.Authors |> replace ";" "," |> append
+        | _  ->           
+            gemParams.Authors
+              |> Seq.map quote
+              |> separated ", "
+              |> sprintf "  spec.authors           = [%s]"
+              |> append
         
+        let encapsulate =  
+            let replaceFolder dir = replace dir (if dir.EndsWith directorySeparator then "." + directorySeparator else ".") 
+            replaceFolder gemParams.WorkingDir
+              >> replaceFolder (gemParams.WorkingDir |> FullName)
+              >> replace "\\" "/" 
+              >> quote
+
         match gemParams.Files with
         | [] -> ()
-        | a::[] -> appends "  spec.files             = '%s'" a
-        | _  -> sprintf "  spec.files             = %A" gemParams.Files |> replace ";" "," |> append
+        | a::[] -> appends "  spec.files             = '%s'" (encapsulate a)
+        | _  -> 
+            gemParams.Files 
+              |> Seq.map encapsulate 
+              |> separated ", "
+              |> sprintf "  spec.files             = [%s]" 
+              |> append
 
         appendIf gemParams.EMail <| sprintf "  spec.email             = '%s'" gemParams.EMail
         appendIf gemParams.Homepage <| sprintf "  spec.homepage          = '%s'" gemParams.Homepage
@@ -103,7 +120,11 @@ module GemHelper =
         if result <> 0 then failwithf "Error while running gem %s for %s" command fileName
         gemParams
 
-    let BuildGem gemParams = RunGem "build" false gemParams
+    let BuildGem (gemParams:GemParams) = 
+        if gemParams.Files = [] then
+            failwith "You have to specify target files for your Gem."
+
+        RunGem "build" false gemParams
     
     let InstallGem gemParams = RunGem "install" true gemParams
 

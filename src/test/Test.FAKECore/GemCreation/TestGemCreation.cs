@@ -220,8 +220,8 @@ namespace Test.FAKECore.GemCreation
                               DefaultParam.EMail,
                               DefaultParam.Homepage,
                               DefaultParam.RubyForgeProjectName,
-                              new FSharpList<string>("lib/test.text",
-                                                     new FSharpList<string>("docs/index.htm",
+                              new FSharpList<string>(@".\lib\test.text",
+                                                     new FSharpList<string>(@".\docs\index.htm",
                                                                             FSharpList<string>.Empty)),
                               DefaultParam.WorkingDir);
 
@@ -231,7 +231,38 @@ namespace Test.FAKECore.GemCreation
                     "  spec.platform          = Gem::Platform::RUBY\r\n" +
                     "  spec.name              = 'fake'\r\n" +
                     "  spec.version           = '1.2.3.4'\r\n" +
-                    "  spec.files             = [\"lib/test.text\", \"docs/index.htm\"]\r\n" +
+                    "  spec.files             = [\"./lib/test.text\", \"./docs/index.htm\"]\r\n" +
+                    "  spec.rubyforge_project = 'fake'\r\n" +
+                    "end\r\n");
+        }
+
+
+        [Test]
+        public void CanReplaceWorkingDir()
+        {
+            var param =
+                new GemParams("fake",
+                              DefaultParam.ToolPath,
+                              DefaultParam.Platform,
+                              "1.2.3.4",
+                              DefaultParam.Summary,
+                              DefaultParam.Description,
+                              DefaultParam.Authors,
+                              DefaultParam.EMail,
+                              DefaultParam.Homepage,
+                              DefaultParam.RubyForgeProjectName,
+                              new FSharpList<string>(@"C:\test\lib\test.text",
+                                                     new FSharpList<string>(@"C:\test\docs\index.htm",
+                                                                            FSharpList<string>.Empty)),
+                              @"C:\test\");
+
+            GemHelper.CreateGemSpecificationAsString(param)
+                .ShouldEqual(
+                    "Gem::Specification.new do |spec|\r\n" +
+                    "  spec.platform          = Gem::Platform::RUBY\r\n" +
+                    "  spec.name              = 'fake'\r\n" +
+                    "  spec.version           = '1.2.3.4'\r\n" +
+                    "  spec.files             = [\"./lib/test.text\", \"./docs/index.htm\"]\r\n" +
                     "  spec.rubyforge_project = 'fake'\r\n" +
                     "end\r\n");
         }
