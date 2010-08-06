@@ -43,6 +43,7 @@ For instance custom build tasks can be added simply by referencing .NET assembli
 * Easy systax
 * Full power of .NET Framework
 * Simple [TeamCity](http://www.jetbrains.com/teamcity) integration (see [Integrating a "FAKE - F# Make" build script into TeamCity](http://www.navision-blog.de/2009/04/15/integrate-a-fake-f-make-build-script-into-teamcity))
+* Simple CruiseControl.NET integration (see [Integrating a "FAKE - F# Make" build script into CruiseControl.NET](http://www.navision-blog.de/2009/10/14/integrating-a-fake-f-make-build-script-into-cruisecontrol-net))
 * FinalTarget feature (to release resources even if build fails)
 * Extensible platform - [Write your own tasks](http://www.navision-blog.de/2009/04/14/writing-custom-tasks-for-fake-f-make)
 * Easy debugging
@@ -61,6 +62,7 @@ For instance custom build tasks can be added simply by referencing .NET assembli
 * VSS task (Get sources from Visual Source Safe)
 * XCopy task
 * Zip task
+* [git](http://git-scm.com/) tasks
 * AssemblyInfo task
 
 # Using FAKE
