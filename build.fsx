@@ -97,7 +97,7 @@ Target? GenerateDocumentation <-
             
 
 Target? CopyLicense <-
-    fun _ -> Copy buildDir [@"License.txt"; @"readme.txt"]
+    fun _ -> Copy buildDir [@"License.txt"; @"readme.markdown"]
 
 Target? BuildZip <-
     fun _ ->     
