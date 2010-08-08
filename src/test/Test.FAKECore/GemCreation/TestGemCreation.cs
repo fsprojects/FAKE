@@ -1,5 +1,7 @@
-﻿using Fake;
-using Microsoft.FSharp.Collections;
+﻿using System;
+using System.Collections.Generic;
+using Fake;
+using Microsoft.FSharp.Core;
 using NUnit.Framework;
 using Test.Git;
 
@@ -9,6 +11,42 @@ namespace Test.FAKECore.GemCreation
     public class TestGemCreation
     {
         private static readonly GemParams DefaultParam = GemHelper.GemDefaults;
+
+        [Test]
+        public void CanCreateGemSpecifactionWithDependencies()
+        {
+            var dependencies =
+                new List<Tuple<string, FSharpOption<string>>>
+                    {
+                        Tuple.Create("naturalspec", FSharpOption<string>.None),
+                        Tuple.Create("nunit", FSharpOption<string>.Some(">= 1.4.5.6"))
+                    };
+
+            var param =
+                new GemParams("fake",
+                              DefaultParam.ToolPath,
+                              DefaultParam.Platform,
+                              "1.2.3.4",
+                              DefaultParam.Summary,
+                              DefaultParam.Description,
+                              DefaultParam.Authors,
+                              DefaultParam.EMail,
+                              DefaultParam.Homepage,
+                              DefaultParam.RubyForgeProjectName,
+                              DefaultParam.Files,
+                              dependencies.ToFSharpList(),
+                              @"C:\test\");
+
+            GemHelper.CreateGemSpecificationAsString(param)
+                .ShouldEqual(
+                    "Gem::Specification.new do |spec|\r\n" +
+                    "  spec.platform          = Gem::Platform::RUBY\r\n" +
+                    "  spec.name              = 'fake'\r\n" +
+                    "  spec.version           = '1.2.3.4'\r\n" +
+                    "  spec.add_dependency('naturalspec')\r\n" +
+                    "  spec.add_dependency('nunit', '>= 1.4.5.6')\r\n" +
+                    "end\r\n");
+        }
 
         [Test]
         public void CanCreateGemSpecifactionWithVersion()
@@ -25,6 +63,7 @@ namespace Test.FAKECore.GemCreation
                               DefaultParam.Homepage,
                               DefaultParam.RubyForgeProjectName,
                               DefaultParam.Files,
+                              DefaultParam.Dependencies,
                               DefaultParam.WorkingDir);
 
             GemHelper.CreateGemSpecificationAsString(param)
@@ -33,7 +72,6 @@ namespace Test.FAKECore.GemCreation
                     "  spec.platform          = Gem::Platform::RUBY\r\n" +
                     "  spec.name              = 'fake'\r\n" +
                     "  spec.version           = '1.2.3.4'\r\n" +
-                    "  spec.rubyforge_project = 'fake'\r\n" +
                     "end\r\n");
         }
 
@@ -52,6 +90,7 @@ namespace Test.FAKECore.GemCreation
                               DefaultParam.Homepage,
                               DefaultParam.RubyForgeProjectName,
                               DefaultParam.Files,
+                              DefaultParam.Dependencies,
                               DefaultParam.WorkingDir);
 
             GemHelper.CreateGemSpecificationAsString(param)
@@ -61,7 +100,6 @@ namespace Test.FAKECore.GemCreation
                     "  spec.name              = 'fake'\r\n" +
                     "  spec.version           = '1.2.3.4'\r\n" +
                     "  spec.description       = 'My description'\r\n" +
-                    "  spec.rubyforge_project = 'fake'\r\n" +
                     "end\r\n");
         }
 
@@ -80,6 +118,7 @@ namespace Test.FAKECore.GemCreation
                               DefaultParam.Homepage,
                               "naturalspec2",
                               DefaultParam.Files,
+                              DefaultParam.Dependencies,
                               DefaultParam.WorkingDir);
 
             GemHelper.CreateGemSpecificationAsString(param)
@@ -107,6 +146,7 @@ namespace Test.FAKECore.GemCreation
                               DefaultParam.Homepage,
                               DefaultParam.RubyForgeProjectName,
                               DefaultParam.Files,
+                              DefaultParam.Dependencies,
                               DefaultParam.WorkingDir);
 
             GemHelper.CreateGemSpecificationAsString(param)
@@ -116,7 +156,6 @@ namespace Test.FAKECore.GemCreation
                     "  spec.name              = 'naturalspec'\r\n" +
                     "  spec.version           = '4.3.2.1'\r\n" +
                     "  spec.email             = 'test@test.com'\r\n" +
-                    "  spec.rubyforge_project = 'naturalspec'\r\n" +
                     "end\r\n");
         }
 
@@ -135,6 +174,7 @@ namespace Test.FAKECore.GemCreation
                               "http://github.com/forki/fake",
                               DefaultParam.RubyForgeProjectName,
                               DefaultParam.Files,
+                              DefaultParam.Dependencies,
                               DefaultParam.WorkingDir);
 
             GemHelper.CreateGemSpecificationAsString(param)
@@ -144,13 +184,13 @@ namespace Test.FAKECore.GemCreation
                     "  spec.name              = 'naturalspec'\r\n" +
                     "  spec.version           = '4.3.2.1'\r\n" +
                     "  spec.homepage          = 'http://github.com/forki/fake'\r\n" +
-                    "  spec.rubyforge_project = 'naturalspec'\r\n" +
                     "end\r\n");
         }
 
         [Test]
         public void CanCreateGemSpecifactionWithVersionAndMultipleAuthors()
         {
+            var authors = new List<string> {"Steffen Forkmann", "Max Mustermann"};
             var param =
                 new GemParams("naturalspec",
                               DefaultParam.ToolPath,
@@ -158,13 +198,12 @@ namespace Test.FAKECore.GemCreation
                               "4.3.2.1",
                               DefaultParam.Summary,
                               DefaultParam.Description,
-                              new FSharpList<string>("Steffen Forkmann",
-                                                     new FSharpList<string>("Max Mustermann",
-                                                                            FSharpList<string>.Empty)),
+                              authors.ToFSharpList(),
                               DefaultParam.EMail,
                               DefaultParam.Homepage,
                               DefaultParam.RubyForgeProjectName,
                               DefaultParam.Files,
+                              DefaultParam.Dependencies,
                               DefaultParam.WorkingDir);
 
             GemHelper.CreateGemSpecificationAsString(param)
@@ -174,13 +213,13 @@ namespace Test.FAKECore.GemCreation
                     "  spec.name              = 'naturalspec'\r\n" +
                     "  spec.version           = '4.3.2.1'\r\n" +
                     "  spec.authors           = [\"Steffen Forkmann\", \"Max Mustermann\"]\r\n" +
-                    "  spec.rubyforge_project = 'naturalspec'\r\n" +
                     "end\r\n");
         }
 
         [Test]
         public void CanCreateGemSpecifactionWithVersionAndSingleAuthor()
         {
+            var authors = new List<string> {"Steffen Forkmann"};
             var param =
                 new GemParams("fake",
                               DefaultParam.ToolPath,
@@ -188,11 +227,12 @@ namespace Test.FAKECore.GemCreation
                               "4.3.2.1",
                               DefaultParam.Summary,
                               DefaultParam.Description,
-                              new FSharpList<string>("Steffen Forkmann", FSharpList<string>.Empty),
+                              authors.ToFSharpList(),
                               DefaultParam.EMail,
                               DefaultParam.Homepage,
                               DefaultParam.RubyForgeProjectName,
                               DefaultParam.Files,
+                              DefaultParam.Dependencies,
                               DefaultParam.WorkingDir);
 
             GemHelper.CreateGemSpecificationAsString(param)
@@ -202,13 +242,18 @@ namespace Test.FAKECore.GemCreation
                     "  spec.name              = 'fake'\r\n" +
                     "  spec.version           = '4.3.2.1'\r\n" +
                     "  spec.authors           = 'Steffen Forkmann'\r\n" +
-                    "  spec.rubyforge_project = 'fake'\r\n" +
                     "end\r\n");
         }
 
         [Test]
         public void CanCreateGemSpecifactionWithVersionAndSomeFiles()
         {
+            var files =
+                new List<string>
+                    {
+                        @".\lib\test.text",
+                        @".\docs\index.htm"
+                    };
             var param =
                 new GemParams("fake",
                               DefaultParam.ToolPath,
@@ -220,9 +265,8 @@ namespace Test.FAKECore.GemCreation
                               DefaultParam.EMail,
                               DefaultParam.Homepage,
                               DefaultParam.RubyForgeProjectName,
-                              new FSharpList<string>(@".\lib\test.text",
-                                                     new FSharpList<string>(@".\docs\index.htm",
-                                                                            FSharpList<string>.Empty)),
+                              files.ToFSharpList(),
+                              DefaultParam.Dependencies,
                               DefaultParam.WorkingDir);
 
             GemHelper.CreateGemSpecificationAsString(param)
@@ -232,40 +276,9 @@ namespace Test.FAKECore.GemCreation
                     "  spec.name              = 'fake'\r\n" +
                     "  spec.version           = '1.2.3.4'\r\n" +
                     "  spec.files             = [\"./lib/test.text\", \"./docs/index.htm\"]\r\n" +
-                    "  spec.rubyforge_project = 'fake'\r\n" +
                     "end\r\n");
         }
 
-
-        [Test]
-        public void CanReplaceWorkingDir()
-        {
-            var param =
-                new GemParams("fake",
-                              DefaultParam.ToolPath,
-                              DefaultParam.Platform,
-                              "1.2.3.4",
-                              DefaultParam.Summary,
-                              DefaultParam.Description,
-                              DefaultParam.Authors,
-                              DefaultParam.EMail,
-                              DefaultParam.Homepage,
-                              DefaultParam.RubyForgeProjectName,
-                              new FSharpList<string>(@"C:\test\lib\test.text",
-                                                     new FSharpList<string>(@"C:\test\docs\index.htm",
-                                                                            FSharpList<string>.Empty)),
-                              @"C:\test\");
-
-            GemHelper.CreateGemSpecificationAsString(param)
-                .ShouldEqual(
-                    "Gem::Specification.new do |spec|\r\n" +
-                    "  spec.platform          = Gem::Platform::RUBY\r\n" +
-                    "  spec.name              = 'fake'\r\n" +
-                    "  spec.version           = '1.2.3.4'\r\n" +
-                    "  spec.files             = [\"./lib/test.text\", \"./docs/index.htm\"]\r\n" +
-                    "  spec.rubyforge_project = 'fake'\r\n" +
-                    "end\r\n");
-        }
 
         [Test]
         public void CanCreateGemSpecifactionWithVersionAndSummary()
@@ -282,6 +295,7 @@ namespace Test.FAKECore.GemCreation
                               DefaultParam.Homepage,
                               DefaultParam.RubyForgeProjectName,
                               DefaultParam.Files,
+                              DefaultParam.Dependencies,
                               DefaultParam.WorkingDir);
 
             GemHelper.CreateGemSpecificationAsString(param)
@@ -291,7 +305,40 @@ namespace Test.FAKECore.GemCreation
                     "  spec.name              = 'fake'\r\n" +
                     "  spec.version           = '1.2.3.4'\r\n" +
                     "  spec.summary           = 'My summary'\r\n" +
-                    "  spec.rubyforge_project = 'fake'\r\n" +
+                    "end\r\n");
+        }
+
+        [Test]
+        public void CanReplaceWorkingDir()
+        {
+            var files =
+                new List<string>
+                    {
+                        @"C:\test\lib\test.text",
+                        @"C:\test\docs\index.htm"
+                    };
+            var param =
+                new GemParams("fake",
+                              DefaultParam.ToolPath,
+                              DefaultParam.Platform,
+                              "1.2.3.4",
+                              DefaultParam.Summary,
+                              DefaultParam.Description,
+                              DefaultParam.Authors,
+                              DefaultParam.EMail,
+                              DefaultParam.Homepage,
+                              DefaultParam.RubyForgeProjectName,
+                              files.ToFSharpList(),
+                              DefaultParam.Dependencies,
+                              @"C:\test\");
+
+            GemHelper.CreateGemSpecificationAsString(param)
+                .ShouldEqual(
+                    "Gem::Specification.new do |spec|\r\n" +
+                    "  spec.platform          = Gem::Platform::RUBY\r\n" +
+                    "  spec.name              = 'fake'\r\n" +
+                    "  spec.version           = '1.2.3.4'\r\n" +
+                    "  spec.files             = [\"./lib/test.text\", \"./docs/index.htm\"]\r\n" +
                     "end\r\n");
         }
     }

@@ -1,5 +1,6 @@
 ﻿namespace Fake
 
+type GemDependency = string * (string option)
 type GemParams =
     { ProjectName: string;
       ToolPath: string;
@@ -12,6 +13,7 @@ type GemParams =
       Homepage: string;
       RubyForgeProjectName: string;
       Files: string list;
+      Dependencies: GemDependency list;
       WorkingDir: string;}
 
 [<AutoOpen>]
@@ -32,11 +34,10 @@ module GemHelper =
           Homepage = ""
           RubyForgeProjectName = ""
           Files = []
+          Dependencies = []
           WorkingDir = @".\gems" }
 
     let CreateGemSpecificationAsString gemParams =        
-        let rubyForgeName = if isNullOrEmpty gemParams.RubyForgeProjectName then gemParams.ProjectName else gemParams.RubyForgeProjectName
-
         let sb = new StringBuilder()
         let append text  = sb.AppendLine text |> ignore
         let appends text = Printf.kprintf append text
@@ -76,9 +77,17 @@ module GemHelper =
               |> sprintf "  spec.files             = [%s]" 
               |> append
 
+        
+        gemParams.Dependencies 
+          |> Seq.iter (fun (gem,version) ->
+                match version with
+                | None   -> sprintf "  spec.add_dependency('%s')" gem
+                | Some v -> sprintf "  spec.add_dependency('%s', '%s')" gem v
+                |> append)
+
         appendIf gemParams.EMail <| sprintf "  spec.email             = '%s'" gemParams.EMail
         appendIf gemParams.Homepage <| sprintf "  spec.homepage          = '%s'" gemParams.Homepage
-        appends "  spec.rubyforge_project = '%s'" rubyForgeName
+        appendIf gemParams.RubyForgeProjectName <| sprintf "  spec.rubyforge_project = '%s'" gemParams.RubyForgeProjectName
 
         append "end"
 
