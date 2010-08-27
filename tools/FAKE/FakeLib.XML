@@ -116,6 +116,21 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
 <member name="M:Fake.AssemblyInfoHelper.AssemblyInfo(Microsoft.FSharp.Core.FSharpFunc`2{Fake.AssemblyInfoHelper.AssemblyInfoParams,Fake.AssemblyInfoHelper.AssemblyInfoParams})">
 <summary>
  Generates an AssemblyInfo file for projects
@@ -843,6 +858,9 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
 <member name="P:Fake.GemHelper.GemDefaults">
 <summary>
  Gem default params
@@ -1399,10 +1417,15 @@
 <member name="T:Fake.RegistryHelper">
 
 </member>
-<member name="M:Fake.SCPHelper.SCP(System.String,System.String,System.String)">
+<member name="M:Fake.SCPHelper.SCP(Microsoft.FSharp.Core.FSharpFunc`2{Fake.SCPParams,Fake.SCPParams},System.String,System.String)">
  <summary>Performs a SCP copy.</summary>
  <param name="source">The source directory (fileName)</param>
  <param name="destination">The target directory (fileName)</param>
+</member>
+<member name="P:Fake.SCPHelper.SCPDefaults">
+<summary>
+ SCP default params  
+</summary>
 </member>
 <member name="T:Fake.SCPHelper">
 
