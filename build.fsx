@@ -173,7 +173,7 @@ Target? CreateGem <-
             |> BuildGem
             |> InstallGem
             |> UninstallGem
-            |> fun p -> if hasBuildParam "pushGem" then PushGem p else ignore p
+            |> fun p -> if hasBuildParam "pushGem" then PushGem p (getBuildParam "pushGem") else ignore p
 
 
 Target? Deploy <- DoNothing

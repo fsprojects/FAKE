@@ -152,7 +152,13 @@ module GemHelper =
 
         RunGem args gemParams
 
-    let PushGem gemParams = 
-        let args = sprintf "push \"%s\"" (getGemFileName gemParams)
-        RunGem args gemParams |> ignore
+    let mutable rubyGems = "http://rubygems.org/api/v1/gems"
 
+    let PushGem gemParams authCode = 
+        let client = new System.Net.WebClient()
+        client.Headers.Add(Net.HttpRequestHeader.Authorization,authCode)
+
+        logfn "Uploading gem to %s." rubyGems
+        client.UploadFile(rubyGems,getGemFileName gemParams)
+          |> System.Text.Encoding.ASCII.GetString
+          |> printfn "%s"
