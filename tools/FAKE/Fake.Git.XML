@@ -14,21 +14,6 @@
 <member name="T:Fake.Git.AssemblyInfo">
 
 </member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
 <member name="M:Fake.Git.Branches.pull(System.String,System.String,System.String)">
 <summary>
  Pull
@@ -49,14 +34,6 @@
  Checks a branch out
 </summary>
 </member>
-<member name="M:Fake.Git.Branches.compareBranches(System.String,System.String,System.String)">
- <summary>Tests whether branches and their "origin" counterparts have diverged and need
- merging first.</summary>
-
- <param name="repositoryDir">The path to the repository.</param>
- <param name="local">The local branch name.</param>
- <param name="remote">The remote branch name.</param>
-</member>
 <member name="M:Fake.Git.Branches.deleteTag(System.String,System.String)">
 <summary>
  Deletes the given tag
@@ -66,12 +43,6 @@
 <summary>
  Tags the current branch
 </summary>
-</member>
-<member name="">
-
-</member>
-<member name="">
-
 </member>
 <member name="M:Fake.Git.Branches.deleteBranch(System.String,System.Boolean,System.String)">
 <summary>
@@ -83,25 +54,16 @@
  Creates a new branch from the given commit
 </summary>
 </member>
-<member name="M:Fake.Git.Branches.rebase(System.String,System.String)">
-<summary>
- Performs a rebase on top of the given branch with the current branch
-</summary>
-</member>
-<member name="M:Fake.Git.Branches.merge(System.String,System.String,System.String)">
-<summary>
- Performs a merge of the given branch with the current branch
-</summary>
-</member>
 <member name="M:Fake.Git.Branches.checkoutBranch(System.String,System.String)">
 <summary>
  Performs a checkout of the given branch to the working copy
 </summary>
 </member>
 <member name="M:Fake.Git.Branches.checkoutNewBranch(System.String,System.String,System.String)">
-<summary>
- Creates a new branch based on the given baseBranch and checks it out to the working copy
-</summary>
+ <summary>Creates a new branch based on the given baseBranch and checks it out to the working copy</summary>
+ <param name="repositoryDir">The repository directory.</param>
+ <param name="baseBranch">The base branch.</param>
+ <param name="branch">The new branch.</param>
 </member>
 <member name="M:Fake.Git.Branches.revisionsBetween(System.String,System.String,System.String)">
 <summary>
@@ -192,6 +154,11 @@
  Sets the commit message
 </summary>
 </member>
+<member name="M:Fake.Git.CommitMessage.getCommitMessage(System.String)">
+<summary>
+ Gets the commit message
+</summary>
+</member>
 <member name="">
 
 </member>
@@ -217,6 +184,15 @@
 <summary>
  Cleans the working copy by doing a git reset --hard and a clean -f
 </summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
 </member>
 <member name="M:Fake.Git.FileStatus.isInTheMiddleOfConflictedMerge(System.String)">
 <summary>
@@ -284,12 +260,78 @@
 <member name="T:Fake.Git.Information">
 
 </member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.Git.Merge.merge(System.String,System.String,System.String)">
+<summary>
+ Performs a merge of the given branch with the current branch
+</summary>
+</member>
+<member name="M:Fake.Git.Merge.compareBranches(System.String,System.String,System.String)">
+ <summary>
+ Tests whether branches and their "origin" counterparts have diverged and need
+ merging first.
+ </summary>
+
+ <param name="repositoryDir">The path to the repository.</param>
+ <param name="local">The local branch name.</param>
+ <param name="remote">The remote branch name.</param>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
 <member name="M:Fake.Git.Merge.getMergeMessage(System.String)">
 <summary>
  Gets the current merge message
 </summary>
 </member>
 <member name="T:Fake.Git.Merge">
+
+</member>
+<member name="M:Fake.Git.Rebase.rebaseOrFallbackOnMerge(System.String,System.String)">
+ <summary>
+ Tries to rebase on top of the given branch.
+ If the rebasing process fails a normal merge will be started.
+ </summary>
+ <returns>If the process used merge instead of rebase.</returns>
+</member>
+<member name="M:Fake.Git.Rebase.skip(System.String)">
+<summary>
+ Restart the rebasing process by skipping the current patch. 
+</summary>
+</member>
+<member name="M:Fake.Git.Rebase.continueRebase(System.String)">
+<summary>
+ Restart the rebasing process after having resolved a merge conflict. 
+</summary>
+</member>
+<member name="M:Fake.Git.Rebase.abort(System.String)">
+<summary>
+ Restore the original branch and abort the rebase operation. 
+</summary>
+</member>
+<member name="M:Fake.Git.Rebase.start(System.String,System.String)">
+<summary>
+ Performs a rebase on top of the given branch with the current branch
+</summary>
+</member>
+<member name="T:Fake.Git.Rebase">
 
 </member>
 <member name="M:Fake.Git.Repository.init(System.String,System.Boolean,System.Boolean)">
@@ -379,6 +421,22 @@
 </summary>
 </member>
 <member name="T:Fake.Git.Staging">
+
+</member>
+<member name="M:Fake.Git.Stash.pop(System.String)">
+<summary>
+ Remove a single stashed state from the stash list and 
+ apply it on top of the current working tree state, 
+ i.e., do the inverse operation of git stash save. 
+ The working directory must match the index. 
+</summary>
+</member>
+<member name="M:Fake.Git.Stash.push(System.String,System.String)">
+<summary>
+ Stash the changes in a dirty working directory away.
+</summary>
+</member>
+<member name="T:Fake.Git.Stash">
 
 </member>
 <member name="">
