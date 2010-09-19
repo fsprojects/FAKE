@@ -157,8 +157,9 @@ module GemHelper =
     let PushGem gemParams authCode = 
         let client = new System.Net.WebClient()
         client.Headers.Add(Net.HttpRequestHeader.Authorization,authCode)
+        let gemFileName = getGemFileName gemParams
 
-        logfn "Uploading gem to %s." rubyGems
-        client.UploadFile(rubyGems,getGemFileName gemParams)
+        logfn "Uploading gem %s to %s." gemFileName rubyGems
+        client.UploadFile(rubyGems,gemFileName)
           |> System.Text.Encoding.ASCII.GetString
           |> printfn "%s"
