@@ -63,7 +63,7 @@ let rec getProjectReferences projectFileName=
       |> Set.ofSeq
 
 /// Runs a msbuild project
-let build outputPath targets properties overwrite project =
+let build outputPath targets properties project =
     traceStartTask "MSBuild" project
     let targetsA = sprintf "/target:%s" targets |> toParam
     let output = 
@@ -97,9 +97,9 @@ let MSBuild outputPath targets properties projects =
 
     projects
       |> List.filter (fun project -> not <| Set.contains project dependencies)
-      |> List.iter (build outputPath targets properties true)
+      |> List.iter (build outputPath targets properties)
 
-    !+ (outputPath + "/**/*.*") 
+    !+ (outputPath + "/**/*.*")
       |> Scan   
 
 /// Builds the given project files and collects the output files
