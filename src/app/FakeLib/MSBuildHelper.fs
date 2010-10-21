@@ -62,42 +62,95 @@ let rec getProjectReferences projectFileName=
       |> Seq.append references
       |> Set.ofSeq
 
+type MSBuildVerbosity = Quiet | Minimal | Normal | Detailed | Diagnostic
+
+type MSBuildParams = 
+    { Targets: string list
+      Properties: (string * string) list
+      MaxCpuCount: int option option
+      ToolsVersion: string option
+      Verbosity: MSBuildVerbosity option }
+
+let MSBuildDefaults = 
+    { Targets = []
+      Properties = []
+      MaxCpuCount = Some None
+      ToolsVersion = None
+      Verbosity = None }
+
+let serializeMSBuildParams (p: MSBuildParams) = 
+    let targets = 
+        match p.Targets with
+        | [] -> None
+        | t -> Some ("t", t |> separated ";")
+    let properties = 
+        p.Properties |> List.map (fun (k,v) -> Some ("p", sprintf "%s=\"%s\"" k v))
+    let maxcpu = 
+        match p.MaxCpuCount with
+        | None -> None
+        | Some x -> Some ("m", match x with Some v -> v.ToString() | _ -> "")
+    let tools =
+        match p.ToolsVersion with
+        | None -> None
+        | Some t -> Some ("tv", t)
+    let verbosity = 
+        match p.Verbosity with
+        | None -> None
+        | Some v -> 
+            let level = 
+                match v with
+                | Quiet -> "q"
+                | Minimal -> "m"
+                | Normal -> "n"
+                | Detailed -> "d"
+                | Diagnostic -> "diag"
+            Some ("v", level)
+    let allParameters = [targets; maxcpu; tools; verbosity] @ properties
+    allParameters
+    |> Seq.map (function
+                    | None -> ""
+                    | Some (k,v) -> "/" + k + (if isNullOrEmpty v then "" else ":" + v))
+    |> separated " "
+
 /// Runs a msbuild project
-let build outputPath targets properties project =
+let build setParams project =
     traceStartTask "MSBuild" project
-    let targetsA = sprintf "/target:%s" targets |> toParam
-    let output = 
-        if isNullOrEmpty outputPath then "" else
-        outputPath
-          |> FullName
-          |> trimSeparator
-          |> sprintf "/p:OutputPath=\"%s\"\\"
-        
-    let props = 
-        properties
-          |> Seq.map (fun (key,value) -> sprintf " /p:%s=%s " key value)
-          |> separated ""
- 
-    let args = toParam project + targetsA + props + output
+    let args = MSBuildDefaults |> setParams |> serializeMSBuildParams        
+    let args = toParam project + " " + args
     logfn "Building project: %s\n  %s %s" project msBuildExe args
     if not (execProcess3 (fun info ->  
         info.FileName <- msBuildExe
         info.Arguments <- args) TimeSpan.MaxValue)
     then failwithf "Building %s project failed." project
-
     traceEndTask "MSBuild" project
 
 /// Builds the given project files and collects the output files
-let MSBuild outputPath targets properties projects = 
+let MSBuild outputPath (targets: string) (properties: (string*string) list) projects = 
     let projects = projects |> Seq.toList
+    let output = 
+        if isNullOrEmpty outputPath then "" else
+        outputPath
+          |> FullName
+          |> trimSeparator
+
+    let properties = 
+        if isNullOrEmpty output 
+            then properties
+            else ("OutputPath", output)::properties
+
     let dependencies =
         projects 
             |> List.map getProjectReferences
             |> Set.unionMany
 
+    let setParam p = 
+        { p with
+            Targets = targets.Split(';') |> List.ofArray 
+            Properties = p.Properties @ properties }
+
     projects
       |> List.filter (fun project -> not <| Set.contains project dependencies)
-      |> List.iter (build outputPath targets properties)
+      |> List.iter (build setParam)
 
     !+ (outputPath + "/**/*.*")
       |> Scan   
