@@ -156,8 +156,7 @@ let private createRuntimeSetup param =
     param.PluginDirectories |> Seq.iter rtSetup.AddPluginDirectory
     rtSetup
 
-let Run (setParam: GallioParams -> GallioParams) assemblies =
-    let param = setParam GallioDefaults
+let private createLauncher param = 
     let package = createPackage param
     let project = createProject param package
     let logger = createLogger param
@@ -177,6 +176,11 @@ let Run (setParam: GallioParams -> GallioParams) assemblies =
                     TestExplorationOptions = addProperties param.TestExplorationOptions (TestExplorationOptions()),
                     TestRunnerOptions = addProperties param.TestRunnerOptions (TestRunnerOptions())
                    )
+    launcher
+
+let Run (setParam: GallioParams -> GallioParams) assemblies =
+    let param = setParam GallioDefaults
+    let launcher = createLauncher param
     assemblies |> Seq.iter launcher.AddFilePattern
 
     let result = launcher.Run()
