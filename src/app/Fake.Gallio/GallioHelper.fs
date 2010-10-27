@@ -1,5 +1,7 @@
 ﻿module Fake.Gallio
 
+// this module is largely based on Gallio's NAnt task implementation
+
 open System
 open System.IO
 open Gallio.Runner
@@ -17,9 +19,7 @@ open FSharp.Nullable
 type GallioParams = 
     { DoNotRun: bool
       EchoResults: bool
-      //FilePatterns: string list
       IgnoreAnnotations: bool
-      //ReportFormats: string list
       RunTimeLimit: TimeSpan option
       ConfigurationFilePath: string
       InstallationConfiguration: string
@@ -57,9 +57,7 @@ type GallioParams =
 let GallioDefaults = 
     { DoNotRun = false
       EchoResults = true
-      //FilePatterns = []
       IgnoreAnnotations = false
-      //ReportFormats = []
       RunTimeLimit = None
       ConfigurationFilePath = null
       InstallationConfiguration = null
@@ -154,7 +152,6 @@ let Run (setParam: GallioParams -> GallioParams) assemblies =
                     DoNotRun = param.DoNotRun,
                     EchoResults = param.EchoResults,
                     ShowReports = param.ShowReports,
-                    //FilePatterns = upcast (ResizeArray.ofList param.FilePatterns),
                     IgnoreAnnotations = param.IgnoreAnnotations,
                     ReportFormatterOptions = addProperties param.ReportFormatterOptions (ReportFormatterOptions()),
                     RunTimeLimit = Option.toNullable param.RunTimeLimit,
