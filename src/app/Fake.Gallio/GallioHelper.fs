@@ -17,40 +17,59 @@ open Gallio.Model.Filters
 open FSharp.Nullable
 
 type GallioParams = 
+      /// Sets whether to load the tests but not run them.
     { DoNotRun: bool
+      /// Sets whether to echo results to the screen as tests finish.
       EchoResults: bool
+      /// Sets whether to ignore annotations when determining the result code.
       IgnoreAnnotations: bool
+      /// Sets the maximum amount of time (in seconds) the tests can run 
+      /// before they are canceled.
       RunTimeLimit: TimeSpan option
-      ConfigurationFilePath: string
-      InstallationConfiguration: string
+      /// Sets whether to show generated reports in a window using the default system application
+      /// registered to the report file type.
       ShowReports: bool
+      /// Specifies option property key/value pairs for the report formatter
       ReportFormatterOptions: (string*string) list
       TestExecutionOptions: (string*string) list
       TestExplorationOptions: (string*string) list
       TestRunnerOptions: (string*string) list
       Verbosity: Verbosity
-
       /// The types supported "out of the box" are: Local, IsolatedAppDomain
       /// and IsolatedProcess (default), but more types could be available as plugins.
       RunnerType: string
-
       /// Specifies the type, assembly, and parameters of custom test runner
       /// extensions to use during the test run.
       /// The value must be in the form '[Namespace.]Type,Assembly[;Parameters]'
       RunnerExtensions: string list // use type + parameters instead of descriptor as string?
+      /// The list of directories used for loading referenced assemblies and other dependent resources.
       HintDirectories: string seq
+      /// Additional Gallio plugin directories to search recursively.
       PluginDirectories: string seq 
+      /// Gets or sets the relative or absolute path of the application base directory,
+      /// or null to use a default value selected by the consumer.
       ApplicationBaseDirectory: DirectoryInfo
+      /// Gets or sets the relative or absolute path of the working directory
+      /// or null to use a default value selected by the consumer.
       WorkingDirectory: DirectoryInfo
+      /// Shadow copying allows the original assemblies to be modified while the tests are running.
+      /// However, shadow copying may occasionally cause some tests to fail if they depend on their original location.
       ShadowCopy: bool option
+      /// Attaches the debugger to the test process when set to true.
       Debug: bool option
+      /// Gets or sets the version of the .Net runtime to use for running tests.
+      /// For the CLR, this must be the name of one of the framework directories in %SystemRoot%\Microsoft.Net\Framework.  eg. 'v2.0.50727'.
+      /// The default is null which uses the most recent installed and supported framework.
       RuntimeVersion: string 
-      ReportDirectory: string 
-
+      /// Sets the name of the directory where the reports will be put.
+      /// The directory will be created if it doesn't exist. Existing files will be overwritten.
+      /// The default report directory is "Reports".
+      ReportDirectory: string
       /// Sets the format string to use to generate the reports filenames.
       /// Any occurence of {0} will be replaced by the date, and any occurrence of {1} by the time.
       /// The default format string is test-report-{0}-{1}.
       ReportNameFormat: string 
+      /// Test filters (i.e. exclusion rules)
       Filters: string // TODO use something more strongly-typed
       }
 
@@ -59,8 +78,6 @@ let GallioDefaults =
       EchoResults = true
       IgnoreAnnotations = false
       RunTimeLimit = None
-      ConfigurationFilePath = null
-      InstallationConfiguration = null
       ShowReports = true
       ReportFormatterOptions = []
       TestExecutionOptions = []
