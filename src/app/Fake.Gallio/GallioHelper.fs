@@ -16,6 +16,8 @@ open Gallio.Model
 open Gallio.Model.Filters
 open FSharp.Nullable
 
+type ReportArchiveMode = Normal | Zip
+
 type GallioParams = 
       /// Sets whether to load the tests but not run them.
     { DoNotRun: bool
@@ -33,6 +35,7 @@ type GallioParams =
       ReportFormatterOptions: (string*string) list
       TestExecutionOptions: (string*string) list
       TestExplorationOptions: (string*string) list
+      /// Specifies option property key/value pairs for the test runner.
       TestRunnerOptions: (string*string) list
       Verbosity: Verbosity
       /// The types supported "out of the box" are: Local, IsolatedAppDomain
@@ -70,7 +73,8 @@ type GallioParams =
       /// The default format string is test-report-{0}-{1}.
       ReportNameFormat: string 
       /// Test filters (i.e. exclusion rules)
-      Filters: string // TODO use something more strongly-typed
+      Filters: string // TODO use a EDSL instead of string descriptors?
+      ReportArchive: ReportArchiveMode option
       }
 
 let GallioDefaults = 
@@ -95,7 +99,8 @@ let GallioDefaults =
       RuntimeVersion = null
       ReportDirectory = null 
       ReportNameFormat = null 
-      Filters = null }
+      Filters = null
+      ReportArchive = None }
 
 let inline private addProperties properties propertyContainer =
     properties
@@ -145,6 +150,14 @@ let private createProject param package =
         project.ReportDirectory <- param.ReportDirectory
     if param.ReportNameFormat <> null then
         project.ReportNameFormat <- param.ReportNameFormat
+    match param.ReportArchive with
+    | None -> ()
+    | Some v -> 
+        project.ReportArchive <- 
+            match v with
+            | Normal -> ReportArchive.Normal
+            | Zip -> ReportArchive.Zip
+
     project
 
 let private createExecutionOptions param = 
