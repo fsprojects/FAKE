@@ -38,7 +38,6 @@ type GallioParams =
       /// extensions to use during the test run.
       /// The value must be in the form '[Namespace.]Type,Assembly[;Parameters]'
       RunnerExtensions: string list // use type + parameters instead of descriptor as string?
-      Assemblies: string seq
       HintDirectories: string seq
       PluginDirectories: string seq 
       ApplicationBaseDirectory: DirectoryInfo
@@ -72,7 +71,6 @@ let GallioDefaults =
       Verbosity = Verbosity.Normal
       RunnerType = null
       RunnerExtensions = []
-      Assemblies = [] 
       HintDirectories = [] 
       PluginDirectories = []
       ApplicationBaseDirectory = null
@@ -143,7 +141,7 @@ let private createRuntimeSetup param =
     param.PluginDirectories |> Seq.iter rtSetup.AddPluginDirectory
     rtSetup
 
-let Run (setParam: GallioParams -> GallioParams) =
+let Run (setParam: GallioParams -> GallioParams) assemblies =
     let param = setParam GallioDefaults
     let package = createPackage param
     let project = createProject param package
@@ -165,7 +163,7 @@ let Run (setParam: GallioParams -> GallioParams) =
                     TestExplorationOptions = addProperties param.TestExplorationOptions (TestExplorationOptions()),
                     TestRunnerOptions = addProperties param.TestRunnerOptions (TestRunnerOptions())
                    )
-    param.Assemblies |> Seq.iter launcher.AddFilePattern
+    assemblies |> Seq.iter launcher.AddFilePattern
 
     let result = launcher.Run()
     log result.ResultSummary
