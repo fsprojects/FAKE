@@ -43,6 +43,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="FSharpHelpers\Nullable.fs" />
     <Compile Include="AsyncHelper.fs" />
     <Compile Include="RegistryHelper.fs" />
     <Compile Include="FileSystemHelper.fs" />
@@ -67,7 +68,6 @@
     <Compile Include="FileSet.fs" />
     <Compile Include="MSBuildHelper.fs" />
     <Compile Include="ZipHelper.fs" />
-    <Compile Include="GemHelper.fs" />
     <Compile Include="FileHelper.fs" />
     <Compile Include="DocuHelper.fs" />
     <Compile Include="ILMergeHelper.fs" />
