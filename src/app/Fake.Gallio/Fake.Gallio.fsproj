@@ -9,8 +9,9 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Fake.Gallio</RootNamespace>
     <AssemblyName>Fake.Gallio</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <Name>Fake.Gallio</Name>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,7 +33,6 @@
     <DocumentationFile>bin\Release\Fake.Gallio.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FSharp.PowerPack, Version=1.9.9.9, Culture=neutral, PublicKeyToken=a19089b1c74d0809" />
     <Reference Include="Gallio">
       <HintPath>..\..\..\lib\Gallio.dll</HintPath>
     </Reference>
@@ -40,10 +40,8 @@
     <Reference Include="FSharp.Core" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Nullable.fs" />
     <Compile Include="GallioHelper.fs" />
   </ItemGroup>
   <ItemGroup>
