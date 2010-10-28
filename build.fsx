@@ -18,7 +18,7 @@ let testDir = @".\test\"
 let metricsDir = @".\BuildMetrics\"
 let deployDir = @".\Publish\"
 let docsDir = @".\docs\" 
-let gemsDir = @".\gems\" 
+let nugetDir = @".\nuget\" 
 let templatesSrcDir = @".\docu\src\Docu.Console\templates\" 
 
 let deployZip = deployDir + sprintf "%s-%s.zip" projectName buildVersion
@@ -32,7 +32,7 @@ let nunitPath = @".\Tools\NUnit"
 
 // Targets
 Target? Clean <-
-    fun _ ->  CleanDirs [buildDir; testDir; deployDir; docsDir; metricsDir; gemsDir]
+    fun _ ->  CleanDirs [buildDir; testDir; deployDir; docsDir; metricsDir; nugetDir]
 
 
 Target? BuildApp <-
@@ -146,6 +146,35 @@ Target? ZipDocumentation <-
           |> Scan
           |> Zip docsDir (deployDir @@ sprintf "Documentation-%s.zip" buildVersion)
 
+Target? DeployNuGet <-
+    fun _ -> 
+        let nugetDocsDir = nugetDir @@ "docs/"
+        let nugetToolsDir = nugetDir @@ "sol/"
+        
+        XCopy docsDir nugetDocsDir
+        XCopy buildDir nugetToolsDir
+
+        CopyFile nugetDir @".\fake.nuspec" 
+
+        let replacements =
+          ["@build.number@",if not isLocalBuild then buildVersion else "0.1.0.0"
+           "@authors@",authors |> Seq.map (sprintf "<author>%s</author>") |> separated " "
+           "@project@",projectName
+           "@summary@",projectSummary
+           "@description@",projectDescription]
+
+        processTemplates replacements [nugetDir @@ "fake.nuspec"]
+        
+        let nugetTool = @".\tools\NuGet\NuGet.exe"
+        let args = "pack fake.nuspec" 
+        let result = 
+            ExecProcess (fun info ->
+                info.FileName <- nugetTool
+                info.WorkingDirectory <- nugetDir |> FullName
+                info.Arguments <- args) System.TimeSpan.MaxValue
+               
+        if result <> 0 then failwithf "Error during NuGet creation. %s %s" nugetTool args
+
 Target? Deploy <- DoNothing
 Target? Default <- DoNothing
 
@@ -157,13 +186,14 @@ For? BuildZip <- Dependency? BuildApp |> And? CopyLicense
 For? ZipCalculatorSample <- Dependency? Clean
 For? Test <- Dependency? BuildApp |> And? BuildTest
 
-For? Deploy <-
+For? DeployNuGet <- 
     Dependency? Test 
       |> And? BuildDocu 
       |> And? BuildZip 
       |> And? ZipCalculatorSample
-      |> And? ZipDocumentation    
+      |> And? ZipDocumentation      
 
+For? Deploy <- Dependency? DeployNuGet
 For? GenerateDocumentation <- Dependency? BuildApp
 For? ZipDocumentation <- Dependency? GenerateDocumentation
 For? Default <- Dependency? Deploy

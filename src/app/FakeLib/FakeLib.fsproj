@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -48,6 +48,7 @@
     <Compile Include="RegistryHelper.fs" />
     <Compile Include="FileSystemHelper.fs" />
     <Compile Include="StringHelper.fs" />
+    <Compile Include="TemplateHelper.fs" />    
     <Compile Include="EnvironmentHelper.fs" />
     <Compile Include="TimeoutHelper.fs" />
     <Compile Include="CacheHelper.fs" />
@@ -72,13 +73,13 @@
     <Compile Include="DocuHelper.fs" />
     <Compile Include="ILMergeHelper.fs" />
     <Compile Include="WiXHelper.fs" />
+    <Compile Include="NuGetHelper.fs" />
     <Compile Include="VSSHelper.fs" />
     <Compile Include="SCPHelper.fs" />
     <Compile Include="XCopyHelper.fs" />
     <Compile Include="FSIHelper.fs" />
     <Compile Include="MessageHelper.fs" />
     <Compile Include="HTMLHelpWorkShopHelper.fs" />
-    <Compile Include="TemplateHelper.fs" />
     <Compile Include="TargetHelper.fs" />
     <Compile Include="MSBuild\SpecsRemovement.fs" />
   </ItemGroup>
