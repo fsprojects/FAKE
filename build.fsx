@@ -146,36 +146,6 @@ Target? ZipDocumentation <-
           |> Scan
           |> Zip docsDir (deployDir @@ sprintf "Documentation-%s.zip" buildVersion)
 
-Target? CreateGem <-
-    fun _ ->        
-        let gemDocsDir = gemsDir @@ "docs/"
-        let gemLibDir = gemsDir @@ "lib/"
-        
-        XCopy docsDir gemDocsDir
-        XCopy buildDir gemLibDir
-
-        CreateGemSpecification 
-            (fun p ->
-                {p with 
-                    ProjectName = projectName.ToLower()        
-                    Summary = projectSummary
-                    Description = projectDescription
-                    Authors = authors
-                    EMail = mail
-                    Homepage = homepage
-                    Files = 
-                        !+ (gemDocsDir + "**/*.*") 
-                            ++ (gemLibDir + "**/*.*")
-                            -- "**/*.zip" 
-                            -- "**/*.pdb"
-                            |> ScanImmediately
-                    WorkingDir = gemsDir })
-            |> BuildGem
-            |> InstallGem
-            |> UninstallGem
-            |> fun p -> if hasBuildParam "pushGem" then PushGem p (getBuildParam "pushGem") else ignore p
-
-
 Target? Deploy <- DoNothing
 Target? Default <- DoNothing
 
@@ -187,14 +157,13 @@ For? BuildZip <- Dependency? BuildApp |> And? CopyLicense
 For? ZipCalculatorSample <- Dependency? Clean
 For? Test <- Dependency? BuildApp |> And? BuildTest
 
-For? CreateGem <- 
+For? Deploy <-
     Dependency? Test 
       |> And? BuildDocu 
       |> And? BuildZip 
       |> And? ZipCalculatorSample
-      |> And? ZipDocumentation      
+      |> And? ZipDocumentation    
 
-For? Deploy <- Dependency? CreateGem
 For? GenerateDocumentation <- Dependency? BuildApp
 For? ZipDocumentation <- Dependency? GenerateDocumentation
 For? Default <- Dependency? Deploy

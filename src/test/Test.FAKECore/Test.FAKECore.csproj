@@ -83,7 +83,6 @@
     <Compile Include="FileHandling\TestCopyDir.cs" />
     <Compile Include="FileHandling\TestRelativeFileScan.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="GemCreation\TestGemCreation.cs" />
     <Compile Include="SideBySideSpecification\FindReferencesTest.cs" />
     <Compile Include="SideBySideSpecification\SpecsRemovementTest.cs" />
     <Compile Include="StringHelperTest.cs" />
