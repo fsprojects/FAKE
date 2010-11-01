@@ -3,18 +3,25 @@ module Fake.ILMergeHelper
 
 open System
 
+type AllowDuplicateTypes = 
+    | No
+    | All
+    | Types of string list
+
 type ILMergeParams =
  { ToolPath: string
    Version: string
    TimeOut: TimeSpan
-   Libraries : string seq}
+   Libraries : string seq
+   AllowDuplicateTypes: AllowDuplicateTypes }
 
 /// ILMerge default params  
 let ILMergeDefaults : ILMergeParams =
     { ToolPath = currentDirectory @@ "tools" @@ "ILMerge" @@ "ilmerge.exe"
       Version = ""
       TimeOut = TimeSpan.FromMinutes 5.
-      Libraries = [] }
+      Libraries = [] 
+      AllowDuplicateTypes = No }
    
 /// Use ILMerge to merge some .NET assemblies.
 let ILMerge setParams outputFile primaryAssembly = 
@@ -27,9 +34,13 @@ let ILMerge setParams outputFile primaryAssembly =
                 then Some("ver", parameters.Version)
                 else None
         let output = Some("out", outputFile)
-        let allowDup = Some("allowDup", null)
+        let allowDup = 
+            match parameters.AllowDuplicateTypes with
+            | No -> [None]
+            | All -> [Some("allowDup", null)]
+            | Types types -> types |> List.map (fun t -> Some("allowDup", t))
         let allParameters = 
-            [output; version; allowDup] 
+            [output; version] @ allowDup
             |> Seq.choose id
             |> Seq.map (fun (k,v) -> "/" + k + (if isNullOrEmpty v then "" else ":" + v))
             |> separated " "
