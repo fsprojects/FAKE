@@ -4,8 +4,11 @@ module Fake.ILMergeHelper
 open System
 
 type AllowDuplicateTypes = 
+    /// No duplicates of public types allowed
     | NoDuplicateTypes
+    /// All public types are allowed to be duplicate and renamed
     | AllPublicTypes
+    /// List of types to allow to be duplicate
     | DuplicateTypes of string list
 
 type InternalizeTypes =
@@ -14,27 +17,39 @@ type InternalizeTypes =
     | InternalizeExcept of string
 
 type ILMergeParams =
+   /// Path to ILMerge.exe
  { ToolPath: string
+   /// Version to use for the merged assembly
    Version: string
    TimeOut: TimeSpan
+   /// Assemblies to merge with the primary assembly
    Libraries : string seq
+   /// Duplicate types policy
    AllowDuplicateTypes: AllowDuplicateTypes
+   /// Assembly-level attributes names that have the same type are copied over into the target directory
    AllowMultipleAssemblyLevelAttributes: bool
+   /// Wild cards in file names are expanded and all matching files will be used as input.
    AllowWildcards: bool
    AllowZeroPeKind: bool 
+   /// Path to an assembly that will be used to get all of the assembly-level attributes
    AttributeFile: string
+   /// True -> transitive closure of the input assemblies is computed and added to the list of input assemblies.
    Closed: bool 
-   CopyAttributes: bool 
+   CopyAttributes: bool
+   /// True (default) -> creates a .pdb file for the output assembly and merges into it any .pdb files found for input assemblies.
    DebugInfo: bool 
    Internalize: InternalizeTypes
    FileAlignment: int option
    // KeyFile / DelaySign
    // Log / LogFile
    // PublicKeyTokens
+   /// Directories to be used to search for input assemblies
    SearchDirectories: string seq
    // TargetPlatform: v1 or v1.1 or v2 or v4 or version,platform
    // TargetKind: Dll or Exe or WinExe // /target 
-   UnionMerge: bool 
+   /// True -> types with the same name are all merged into a single type in the target assembly.
+   UnionMerge: bool
+   /// True -> XML documentation files are merged to produce an XML documentation file for the target assembly.
    XmlDocs: bool 
    }
 
