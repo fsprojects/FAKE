@@ -36,7 +36,7 @@ For instance custom build tasks can be added simply by referencing .NET assembli
 * [Writing custom tasks for "FAKE - F# Make"](http://www.navision-blog.de/2009/04/14/writing-custom-tasks-for-fake-f-make)
 * [Integrating a "FAKE - F# Make" build script into TeamCity](http://www.navision-blog.de/2009/04/15/integrate-a-fake-f-make-build-script-into-teamcity)
 * [Integrating a "FAKE - F# Make" build script into CruiseControl.NET](http://www.navision-blog.de/2009/10/14/integrating-a-fake-f-make-build-script-into-cruisecontrol-net)
-* [Running specific targets in "FAKE – F# Make"] (http://www.navision-blog.de/2010/11/03/running-specific-targets-in-fake-f-make/)
+* [Running specific targets in "FAKE – F# Make"](http://www.navision-blog.de/2010/11/03/running-specific-targets-in-fake-f-make/)
 
 ## Main Features
 
