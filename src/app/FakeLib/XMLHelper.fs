@@ -104,6 +104,7 @@ let DocElement (doc:XmlDocument) = doc.DocumentElement
 /// Replaces text in XML document specified by an XPath expression.
 let XPathReplace xpath value (doc:XmlDocument) =
     let node = doc.SelectSingleNode xpath
+    if node = null then failwithf "XML node '%s' not found" xpath else
     node.Value <- value
     doc
 

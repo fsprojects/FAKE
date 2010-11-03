@@ -200,7 +200,7 @@ let CopyDir target source filterFile =
     Directory.GetFiles(source, "*.*", SearchOption.AllDirectories)
     |> Seq.filter filterFile
     |> doParallel (fun file -> 
-        let fi = file |> replace source "" |> trimSeparator
+        let fi = file |> replaceFirst source "" |> trimSeparator
         let newFile = target @@ fi
         logVerbosefn "%s => %s" file newFile
         Path.GetDirectoryName newFile

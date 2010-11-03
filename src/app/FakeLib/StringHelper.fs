@@ -52,6 +52,12 @@ let ReadFileAsString file = File.ReadAllText(file,Encoding.Default)
 /// Replaces the given pattern in the given text with the replacement
 let inline replace (pattern:string) replacement (text:string) = text.Replace(pattern,replacement)
 
+let replaceFirst (pattern: string) replacement (text: string) = 
+    let pos = text.IndexOf pattern
+    if pos < 0
+        then text
+        else text.Remove(pos, pattern.Length).Insert(pos, replacement)
+
 /// Removes linebreaks from the given string
 let inline RemoveLineBreaks text = 
     text
