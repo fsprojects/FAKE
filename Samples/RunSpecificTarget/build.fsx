@@ -21,7 +21,5 @@ Target "Deploy" (fun () ->
 "Deploy"  <== ["Build"]
 
 // *** Start Build ***
-if not (hasBuildParam "target") then 
-  Run "Deploy" 
-else 
-  Run <| getBuildParam "target"
+getBuildParamOrDefault "target" "Deploy"
+  |> Run
