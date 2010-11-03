@@ -72,9 +72,8 @@ let deleteTag repositoryDir tag =
       |> gitCommand repositoryDir
 
 /// Checks a branch out
-let checkoutTracked repositoryDir create trackBranch branch =
+let checkoutTracked repositoryDir trackBranch branch =
     gitCommandf repositoryDir "checkout --track -b %s %s" branch trackBranch
-
 
 /// Checks a branch out
 let checkout repositoryDir create branch =
