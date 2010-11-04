@@ -362,7 +362,7 @@ let Scan includes : LazyFileSet = Files includes.BaseDirectories includes.Includ
 let AddBaseDir dir fileInclude = {fileInclude with BaseDirectories = dir::fileInclude.BaseDirectories}    
     
 /// Sets a directory as baseDirectory for fileIncludes  
-let SetBaseDir dir fileInclude = {fileInclude with BaseDirectories = [dir]}   
+let SetBaseDir (dir:string) fileInclude = {fileInclude with BaseDirectories = [dir.TrimEnd(directorySeparator.[0])]}   
       
 /// Scans immediately for include files
 /// Files will be memoized
