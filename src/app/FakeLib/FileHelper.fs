@@ -119,15 +119,18 @@ let CopyFileIntoSubFolder target fileName =
 /// <param name="fileName">The FileName.</param>
 let CopyFile target fileName =
     let fi = fileInfo fileName
-    let targetName = target @@ fi.Name
-    logVerbosefn "Copy %s to %s" fileName targetName
-    fi.CopyTo(targetName,true) |> ignore    
+    match fi with
+    | File _ ->  
+        let targetName = target @@ fi.Name
+        logVerbosefn "Copy %s to %s" fileName targetName
+        fi.CopyTo(targetName,true) |> ignore    
+    | Directory _ -> logVerbosefn "Ignoring %s, because it is no file" fileName
   
 /// <summary>Copies the files to the target.</summary>
 /// <param name="target">The target directory.</param>
 /// <param name="files">The original FileNames as a sequence.</param>
 let Copy target files = 
-    files
+    files      
       |> doParallel (CopyFile target) 
       |> ignore
 
