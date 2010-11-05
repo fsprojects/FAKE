@@ -10,6 +10,12 @@ let inline directoryInfo path = new DirectoryInfo(path)
 /// Creates a FileInfo for the given path
 let inline fileInfo path = new FileInfo(path)
 
+/// Creates a FileInfo or a DirectoryInfo for the given path
+let inline fileSystemInfo path : FileSystemInfo =
+    if Directory.Exists path
+        then upcast directoryInfo path
+        else upcast fileInfo path
+
 /// Converts a file to it's full file system name
 let inline FullName fileName = Path.GetFullPath fileName
 
