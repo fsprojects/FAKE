@@ -210,3 +210,18 @@ let asyncShellExec (args:ExecParams) = async {
 
 /// Execute an external program and return the exit code.
 let shellExec = asyncShellExec >> Async.RunSynchronously
+
+type Shell() =
+    static member private GetParams (cmd, ?args, ?dir) =
+        let args = defaultArg args ""
+        let dir = defaultArg dir (Directory.GetCurrentDirectory())
+        { WorkingDirectory = dir
+          Program = cmd
+          CommandLine = args 
+          Args = [] }
+        
+    static member Exec (cmd, ?args, ?dir) = 
+        shellExec (Shell.GetParams(cmd, ?args = args, ?dir = dir))
+
+    static member AsyncExec (cmd, ?args, ?dir) =
+        asyncShellExec (Shell.GetParams(cmd, ?args = args, ?dir = dir))

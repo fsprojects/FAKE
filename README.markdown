@@ -25,7 +25,14 @@ including the extensive class library, powerful debuggers and integrated develop
 like Visual Studio 2008 or SharpDevelop, which provide syntax highlighting and code completion. 
 
 The new language was designed to be succinct, typed, declarative, extensible and easy to use. 
-For instance custom build tasks can be added simply by referencing .NET assemblies and using the corresponding classes. 
+For instance custom build tasks can be added simply by referencing .NET assemblies and using the corresponding classes.
+
+## Lastest builds
+
+You can download the latest builds from http://teamcity.codebetter.com. You don't need to register, a guest login is ok.
+
+* [Latest stable build](http://teamcity.codebetter.com/viewLog.html?buildId=18154&buildTypeId=bt114&tab=artifacts)
+* [Latest development build](http://teamcity.codebetter.com/viewLog.html?buildId=18219&buildTypeId=bt166&tab=artifacts) 
 
 ## Articles
 
@@ -65,6 +72,7 @@ For instance custom build tasks can be added simply by referencing .NET assembli
 * Zip task
 * [git](http://git-scm.com/) tasks
 * AssemblyInfo task
+* ...
 
 # Using FAKE
 

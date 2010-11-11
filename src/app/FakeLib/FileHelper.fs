@@ -87,8 +87,8 @@ let DeleteFile fileName =
     
 let (|File|Directory|) (fileSysInfo : FileSystemInfo) =
     match fileSysInfo with
-    | :? FileInfo as file -> File (file.Name)
-    | :? DirectoryInfo as dir -> Directory (dir.Name, seq { for x in dir.GetFileSystemInfos() -> x })
+    | :? FileInfo as file -> File (file)
+    | :? DirectoryInfo as dir -> Directory (dir, seq { for x in dir.GetFileSystemInfos() -> x })
     | _ -> failwith "No file or directory given."      
       
 /// Active Pattern for determining file extension
@@ -118,16 +118,19 @@ let CopyFileIntoSubFolder target fileName =
 /// <param name="target">The target directory.</param>
 /// <param name="fileName">The FileName.</param>
 let CopyFile target fileName =
-    let fi = fileInfo fileName
-    let targetName = target @@ fi.Name
-    logVerbosefn "Copy %s to %s" fileName targetName
-    fi.CopyTo(targetName,true) |> ignore    
+    let fi = fileSystemInfo fileName
+    match fi with
+    | File f ->  
+        let targetName = target @@ fi.Name
+        logVerbosefn "Copy %s to %s" fileName targetName
+        f.CopyTo(targetName,true) |> ignore    
+    | Directory _ -> logVerbosefn "Ignoring %s, because it is no file" fileName
   
 /// <summary>Copies the files to the target.</summary>
 /// <param name="target">The target directory.</param>
 /// <param name="files">The original FileNames as a sequence.</param>
 let Copy target files = 
-    files
+    files      
       |> doParallel (CopyFile target) 
       |> ignore
 

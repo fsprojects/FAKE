@@ -2,49 +2,20 @@
 <doc>
 <assembly><name>FakeLib</name></assembly>
 <members>
-<member name="">
+<member name="M:FSharp.Nullable.Option.toNullable``1(Microsoft.FSharp.Core.FSharpOption{``0})">
+<summary>
+ Converts an F# option into a nullable object
+</summary>
+</member>
+<member name="M:FSharp.Nullable.Option.fromNullable``1(System.Nullable{``0})">
+<summary>
+ Converts a nullable object into an F# option
+</summary>
+</member>
+<member name="T:FSharp.Nullable.Option">
 
 </member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
+<member name="T:FSharp.Nullable">
 
 </member>
 <member name="">
@@ -828,47 +799,6 @@
 <member name="T:Fake.FxCopHelper">
 
 </member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="P:Fake.GemHelper.GemDefaults">
-<summary>
- Gem default params
-</summary>
-</member>
-<member name="T:Fake.GemHelper">
-
-</member>
 <member name="M:Fake.HTMLHelpWorkShopHelper.CompileHTMLHelpProject(System.String,System.String)">
  <summary>Uses the HTML Help Workshop to compile a help project.</summary>
  <param name="helpCompiler">The filename of the HTML Help WorkShop tool</param>
@@ -878,8 +808,80 @@
 <member name="T:Fake.HTMLHelpWorkShopHelper">
 
 </member>
+<member name="F:Fake.ILMergeHelper.ILMergeParams.XmlDocs">
+<summary>
+ True -&gt; XML documentation files are merged to produce an XML documentation file for the target assembly.
+</summary>
+</member>
+<member name="F:Fake.ILMergeHelper.ILMergeParams.UnionMerge">
+<summary>
+ True -&gt; types with the same name are all merged into a single type in the target assembly.
+</summary>
+</member>
+<member name="F:Fake.ILMergeHelper.ILMergeParams.SearchDirectories">
+<summary>
+ Directories to be used to search for input assemblies
+</summary>
+</member>
 <member name="">
 
+</member>
+<member name="">
+
+</member>
+<member name="F:Fake.ILMergeHelper.ILMergeParams.DebugInfo">
+<summary>
+ True (default) -&gt; creates a .pdb file for the output assembly and merges into it any .pdb files found for input assemblies.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="F:Fake.ILMergeHelper.ILMergeParams.Closed">
+<summary>
+ True -&gt; transitive closure of the input assemblies is computed and added to the list of input assemblies.
+</summary>
+</member>
+<member name="F:Fake.ILMergeHelper.ILMergeParams.AttributeFile">
+<summary>
+ Path to an assembly that will be used to get all of the assembly-level attributes
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="F:Fake.ILMergeHelper.ILMergeParams.AllowWildcards">
+<summary>
+ Wild cards in file names are expanded and all matching files will be used as input.
+</summary>
+</member>
+<member name="F:Fake.ILMergeHelper.ILMergeParams.AllowMultipleAssemblyLevelAttributes">
+<summary>
+ Assembly-level attributes names that have the same type are copied over into the target directory
+</summary>
+</member>
+<member name="F:Fake.ILMergeHelper.ILMergeParams.AllowDuplicateTypes">
+<summary>
+ Duplicate types policy
+</summary>
+</member>
+<member name="F:Fake.ILMergeHelper.ILMergeParams.Libraries">
+<summary>
+ Assemblies to merge with the primary assembly
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="F:Fake.ILMergeHelper.ILMergeParams.Version">
+<summary>
+ Version to use for the merged assembly
+</summary>
+</member>
+<member name="F:Fake.ILMergeHelper.ILMergeParams.ToolPath">
+<summary>
+ Path to ILMerge.exe
+</summary>
 </member>
 <member name="">
 
@@ -889,6 +891,27 @@
 </member>
 <member name="">
 
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Fake.ILMergeHelper.AllowDuplicateTypes.DuplicateTypes">
+<summary>
+ List of types to allow to be duplicate
+</summary>
+</member>
+<member name="T:Fake.ILMergeHelper.AllowDuplicateTypes.AllPublicTypes">
+<summary>
+ All public types are allowed to be duplicate and renamed
+</summary>
+</member>
+<member name="T:Fake.ILMergeHelper.AllowDuplicateTypes.NoDuplicateTypes">
+<summary>
+ No duplicates of public types allowed
+</summary>
 </member>
 <member name="">
 
@@ -961,6 +984,42 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
 <member name="M:Fake.MSBuildHelper.MSBuildRelease(System.String,System.String)">
 <summary>
  Builds the given project files and collects the output files
@@ -971,15 +1030,21 @@
  Builds the given project files and collects the output files
 </summary>
 </member>
-<member name="M:Fake.MSBuildHelper.MSBuild(System.String,System.String,System.Collections.Generic.IEnumerable{System.Tuple`2{System.String,System.String}},System.Collections.Generic.IEnumerable{System.String})">
+<member name="M:Fake.MSBuildHelper.MSBuild(System.String,System.String,Microsoft.FSharp.Collections.FSharpList{System.Tuple`2{System.String,System.String}},System.Collections.Generic.IEnumerable{System.String})">
 <summary>
  Builds the given project files and collects the output files
 </summary>
 </member>
-<member name="M:Fake.MSBuildHelper.build``1(System.String,System.String,System.Collections.Generic.IEnumerable{System.Tuple`2{System.String,System.String}},``0,System.String)">
+<member name="M:Fake.MSBuildHelper.build(Microsoft.FSharp.Core.FSharpFunc`2{Fake.MSBuildHelper.MSBuildParams,Fake.MSBuildHelper.MSBuildParams},System.String)">
 <summary>
  Runs a msbuild project
 </summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
 </member>
 <member name="">
 
@@ -1201,6 +1266,46 @@
 
 </member>
 <member name="T:Fake.NUnitHelper">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.NuGetHelper.NuGet(Microsoft.FSharp.Core.FSharpFunc`2{Fake.NuGetHelper.NuGetParams,Fake.NuGetHelper.NuGetParams},System.String)">
+<summary>
+ Creates a new NuGet package   
+</summary>
+</member>
+<member name="M:Fake.NuGetHelper.NuGetDefaults">
+<summary>
+ NuGet default params  
+</summary>
+</member>
+<member name="T:Fake.NuGetHelper">
 
 </member>
 <member name="F:Fake.ProcessHelper.ExecParams.Args">
@@ -1551,6 +1656,9 @@
 <summary>
  Removes linebreaks from the given string
 </summary>
+</member>
+<member name="">
+
 </member>
 <member name="M:Fake.StringHelper.replace(System.String,System.String,System.String)">
 <summary>

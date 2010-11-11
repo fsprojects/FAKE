@@ -148,30 +148,16 @@ Target "ZipDocumentation" (fun _ ->
 Target "DeployNuGet" (fun _ -> 
     let nugetDocsDir = nugetDir @@ "docs/"
     let nugetToolsDir = nugetDir @@ "sol/"
-        
+
     XCopy docsDir nugetDocsDir
     XCopy buildDir nugetToolsDir
 
-    CopyFile nugetDir @".\fake.nuspec" 
-
-    let replacements =
-        ["@build.number@",if not isLocalBuild then buildVersion else "0.1.0.0"
-         "@authors@",authors |> Seq.map (sprintf "<author>%s</author>") |> separated " "
-         "@project@",projectName
-         "@summary@",projectSummary
-         "@description@",projectDescription]
-
-    processTemplates replacements [nugetDir @@ "fake.nuspec"]
-        
-    let nugetTool = @".\tools\NuGet\NuGet.exe"
-    let args = "pack fake.nuspec" 
-    let result = 
-        ExecProcess (fun info ->
-            info.FileName <- nugetTool
-            info.WorkingDirectory <- nugetDir |> FullName
-            info.Arguments <- args) System.TimeSpan.MaxValue
-               
-    if result <> 0 then failwithf "Error during NuGet creation. %s %s" nugetTool args
+    NuGet (fun p -> 
+        {p with               
+            Authors = authors
+            Project = projectName
+            Description = projectDescription                
+            OutputPath = nugetDir })  "fake.nuspec"
 )
 
 Target "Deploy" DoNothing
