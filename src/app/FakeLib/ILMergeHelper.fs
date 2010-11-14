@@ -40,7 +40,8 @@ type ILMergeParams =
    DebugInfo: bool 
    Internalize: InternalizeTypes
    FileAlignment: int option
-   // KeyFile / DelaySign
+   KeyFile: string
+   // DelaySign
    // Log / LogFile
    // PublicKeyTokens
    /// Directories to be used to search for input assemblies
@@ -69,6 +70,7 @@ let ILMergeDefaults : ILMergeParams =
       DebugInfo = true 
       Internalize = NoInternalize
       FileAlignment = None
+      KeyFile = null
       SearchDirectories = []
       UnionMerge = false 
       XmlDocs = false }
@@ -88,6 +90,10 @@ let ILMerge setParams outputFile primaryAssembly =
             if isNullOrEmpty parameters.AttributeFile
                 then None
                 else Some("attr", quote parameters.AttributeFile)
+        let keyFile = 
+            if isNullOrEmpty parameters.KeyFile
+                then None
+                else Some("keyfile", quote parameters.KeyFile)
         let fileAlign = 
             match parameters.FileAlignment with
             | Some a -> Some("align", a.ToString())
@@ -119,7 +125,7 @@ let ILMerge setParams outputFile primaryAssembly =
             [ parameters.DebugInfo, "ndebug" ]
             |> List.map (fun (v,d) -> if v then None else Some(d, null))
         let allParameters = 
-            [output; attrFile; fileAlign; version; internalize] @ booleans @ notbooleans @ allowDup @ libDirs
+            [output; attrFile; keyFile; fileAlign; version; internalize] @ booleans @ notbooleans @ allowDup @ libDirs
             |> Seq.choose id
             |> Seq.map (fun (k,v) -> "/" + k + (if isNullOrEmpty v then "" else ":" + v))
             |> separated " "
