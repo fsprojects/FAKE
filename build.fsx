@@ -32,8 +32,12 @@ let nunitPath = @".\Tools\NUnit"
 // Targets
 Target "Clean" (fun _ ->
     CleanDirs [buildDir; testDir; deployDir; docsDir; metricsDir; nugetDir]
-    CopyFile buildDir "./tools/FSharp/FSharp.Core.sigdata"
-    CopyFile buildDir "./tools/FSharp/FSharp.Core.optdata"    
+
+    ["./tools/Docu/docu.exe"
+     "./tools/Docu/DocuLicense.txt"
+     "./tools/FSharp/FSharp.Core.optdata"
+     "./tools/FSharp/FSharp.Core.sigdata"]
+      |> CopyTo buildDir
 )
 
 Target "SetAssemblyInfo" (fun _ ->
@@ -68,8 +72,6 @@ Target "SetAssemblyInfo" (fun _ ->
 Target "BuildApp" (fun _ ->                     
     MSBuildRelease buildDir "Build" appReferences
         |> Log "AppBuild-Output: "
-
-    Copy buildDir [@".\tools\Docu\docu.exe"; @".\tools\Docu\DocuLicense.txt"]
 )
 
 Target "GenerateDocumentation" (fun _ ->

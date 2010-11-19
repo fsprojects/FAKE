@@ -135,6 +135,10 @@ let Copy target files =
     files      
       |> Seq.iter (CopyFile target)
 
+/// <summary>Copies the given files to the target.</summary>
+/// <param name="target">The target directory.</param>
+let CopyTo target = Copy target
+
 /// Copies the files from a cache folder.
 /// If the files are not cached or the original files have a different write time the cache will be refreshed.
 /// <param name="target">The target FileName.</param>
