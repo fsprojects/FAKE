@@ -44,7 +44,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="FSharpHelpers\Nullable.fs" />
-    <Compile Include="AsyncHelper.fs" />
+    <Compile Include="FSharpHelpers\AsyncHelper.fs" />
     <Compile Include="RegistryHelper.fs" />
     <Compile Include="FileSystemHelper.fs" />
     <Compile Include="StringHelper.fs" />
