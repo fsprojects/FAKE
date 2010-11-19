@@ -17,6 +17,7 @@ open Gallio.Model.Filters
 open FSharp.Nullable
 
 type ReportArchiveMode = Normal | Zip
+type Verbosity = Quiet | Normal | Verbose | Debug 
 
 type GallioParams = 
       /// Sets whether to load the tests but not run them.
@@ -87,7 +88,7 @@ let GallioDefaults =
       TestExecutionOptions = []
       TestExplorationOptions = []
       TestRunnerOptions = []
-      Verbosity = Verbosity.Normal
+      Verbosity = Normal
       RunnerType = null
       RunnerExtensions = []
       HintDirectories = [] 
@@ -134,7 +135,12 @@ let private createPackage param =
 let private createLogger param = 
     let logger = { new BaseLogger() with
                     override x.LogImpl(severity, message, exceptionData) = log message }
-    FilteredLogger(logger, param.Verbosity)
+    let v = match param.Verbosity with
+            | Quiet -> Logging.Verbosity.Quiet
+            | Normal -> Logging.Verbosity.Normal
+            | Verbose -> Logging.Verbosity.Verbose
+            | Debug -> Logging.Verbosity.Debug
+    FilteredLogger(logger, v)
 
 let private createProject param package = 
     let runnerFactoryName = 
@@ -155,8 +161,8 @@ let private createProject param package =
     | Some v -> 
         project.ReportArchive <- 
             match v with
-            | Normal -> ReportArchive.Normal
-            | Zip -> ReportArchive.Zip
+            | ReportArchiveMode.Normal -> ReportArchive.Normal
+            | ReportArchiveMode.Zip -> ReportArchive.Zip
 
     project
 

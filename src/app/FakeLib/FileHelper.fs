@@ -83,7 +83,10 @@ let DeleteFile fileName =
         logfn "Deleting %s" file.FullName
         file.Delete()
     else
-        logfn "%s does not exist." file.FullName                
+        logfn "%s does not exist." file.FullName
+
+/// Deletes files
+let DeleteFiles files = Seq.iter DeleteFile files
     
 let (|File|Directory|) (fileSysInfo : FileSystemInfo) =
     match fileSysInfo with

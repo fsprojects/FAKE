@@ -115,7 +115,7 @@ let runFinalTargets() =
                TargetDict.[name].Function()
                addExecutedTarget name watch.Elapsed
            with
-           | exn -> targetError name exn.Message)                     
+           | exn -> targetError name (exn.ToString()))
               
 /// <summary>Writes a dependency graph.</summary>
 /// <param name="verbose">Whether to print verbose output or not.</param>
@@ -175,7 +175,7 @@ let run targetName =
                     addExecutedTarget targetName watch.Elapsed
                     traceEndTarget target.Name                
         with
-        | exn -> targetError targetName exn.Message        
+        | exn -> targetError targetName (exn.ToString())
       
     let watch = new System.Diagnostics.Stopwatch()
     watch.Start()        
