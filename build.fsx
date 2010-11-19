@@ -19,9 +19,8 @@ let metricsDir = @".\BuildMetrics\"
 let deployDir = @".\Publish\"
 let docsDir = @".\docs\" 
 let nugetDir = @".\nuget\" 
-let templatesSrcDir = @".\tools\Docu\templates\" 
-
-let deployZip = deployDir + sprintf "%s-%s.zip" projectName buildVersion
+let templatesSrcDir = @".\tools\Docu\templates\"
+let deployZip = deployDir @@ sprintf "%s-%s.zip" projectName buildVersion
 
 // files
 let appReferences  = !+ @"src\app\**\*.*sproj"  |> Scan
