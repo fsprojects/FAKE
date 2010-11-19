@@ -162,6 +162,7 @@ let CopyCached target cacheDir files =
                    tracefn "Cached file %s is up to date." cached
             CopyFile target cached
             target @@ fi.Name)
+        |> Seq.toList
 
 /// <summary>Renames the files to the target fileName.</summary>
 /// <param name="target">The target FileName.</param>
