@@ -37,35 +37,36 @@ Target "Clean" (fun _ ->
     CopyFile buildDir "./tools/FSharp/FSharp.Core.optdata"    
 )
 
-Target "BuildApp" (fun _ ->   
-    if not isLocalBuild then
-        AssemblyInfo 
-            (fun p -> 
-            {p with
-                CodeLanguage = FSharp;
-                AssemblyVersion = buildVersion;
-                AssemblyTitle = "FAKE - F# Make Command line tool";
-                Guid = "fb2b540f-d97a-4660-972f-5eeff8120fba";
-                OutputFileName = @".\src\app\FAKE\AssemblyInfo.fs"})
+Target "SetAssemblyInfo" (fun _ ->
+    AssemblyInfo 
+        (fun p -> 
+        {p with
+            CodeLanguage = FSharp;
+            AssemblyVersion = buildVersion;
+            AssemblyTitle = "FAKE - F# Make Command line tool";
+            Guid = "fb2b540f-d97a-4660-972f-5eeff8120fba";
+            OutputFileName = @".\src\app\FAKE\AssemblyInfo.fs"})
                    
-        AssemblyInfo 
-            (fun p -> 
-            {p with
-                CodeLanguage = FSharp;
-                AssemblyVersion = buildVersion;
-                AssemblyTitle = "FAKE - F# Make Lib";
-                Guid = "d6dd5aec-636d-4354-88d6-d66e094dadb5";
-                OutputFileName = @".\src\app\FakeLib\AssemblyInfo.fs"})
+    AssemblyInfo 
+        (fun p -> 
+        {p with
+            CodeLanguage = FSharp;
+            AssemblyVersion = buildVersion;
+            AssemblyTitle = "FAKE - F# Make Lib";
+            Guid = "d6dd5aec-636d-4354-88d6-d66e094dadb5";
+            OutputFileName = @".\src\app\FakeLib\AssemblyInfo.fs"})
 
-        AssemblyInfo 
-            (fun p -> 
-            {p with
-                CodeLanguage = FSharp;
-                AssemblyVersion = buildVersion;
-                AssemblyTitle = "FAKE - F# Make SQL Lib";
-                Guid = "A161EAAF-EFDA-4EF2-BD5A-4AD97439F1BE";
-                OutputFileName = @".\src\app\Fake.SQL\AssemblyInfo.fs"})                                                                  
-                     
+    AssemblyInfo 
+        (fun p -> 
+        {p with
+            CodeLanguage = FSharp;
+            AssemblyVersion = buildVersion;
+            AssemblyTitle = "FAKE - F# Make SQL Lib";
+            Guid = "A161EAAF-EFDA-4EF2-BD5A-4AD97439F1BE";
+            OutputFileName = @".\src\app\Fake.SQL\AssemblyInfo.fs"})
+)
+
+Target "BuildApp" (fun _ ->                     
     MSBuildRelease buildDir "Build" appReferences
         |> Log "AppBuild-Output: "
 
@@ -151,6 +152,11 @@ Target "DeployNuGet" (fun _ ->
 Target "Deploy" DoNothing
 
 // Dependencies
+
+"SetAssemblyInfo" <== ["Clean"]
+if not isLocalBuild then
+    "BuildApp" <== ["SetAssemblyInfo"]
+
 "BuildApp" <== ["Clean"]
 "Test" <== ["Clean"]
 "BuildZip" <== ["BuildApp"; "CopyLicense"]
