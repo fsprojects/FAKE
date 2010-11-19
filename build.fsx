@@ -19,7 +19,7 @@ let metricsDir = @".\BuildMetrics\"
 let deployDir = @".\Publish\"
 let docsDir = @".\docs\" 
 let nugetDir = @".\nuget\" 
-let templatesSrcDir = @".\docu\src\Docu.Console\templates\" 
+let templatesSrcDir = @".\tools\Docu\templates\" 
 
 let deployZip = deployDir + sprintf "%s-%s.zip" projectName buildVersion
 
@@ -70,14 +70,8 @@ Target "BuildApp" (fun _ ->
         |> Log "AppBuild-Output: "
 )
 
-Target "BuildDocu" (fun _ ->                                               
-    MSBuildRelease null "Build" [@".\docu\Build.proj"]
-        |> Log "DocuBuild-Output: "
-    Copy buildDir [@".\docu\artifacts\docu.exe"; @".\docu\License.txt"]        
-    Rename (buildDir + @"DocuLicense.txt") (buildDir + @"License.txt")
-)
-
 Target "GenerateDocumentation" (fun _ ->
+    Copy buildDir [@".\tools\Docu\docu.exe"; @".\tools\Docu\DocuLicense.txt"]
     !+ (buildDir + "Fake*.dll")
         |> Scan
         |> Docu (fun p ->
@@ -161,7 +155,7 @@ Target "Deploy" DoNothing
 "BuildZip" <== ["BuildApp"; "CopyLicense"]
 "ZipCalculatorSample" <== ["Clean"]
 "Test" <== ["BuildApp"; "BuildTest"]
-"DeployNuGet" <== ["Test"; "BuildDocu"; "BuildZip"; "ZipCalculatorSample"; "ZipDocumentation"]
+"DeployNuGet" <== ["Test"; "BuildZip"; "ZipCalculatorSample"; "ZipDocumentation"]
 "Deploy" <== ["DeployNuGet"]
 "GenerateDocumentation" <== ["BuildApp"]
 "ZipDocumentation" <== ["GenerateDocumentation"]
