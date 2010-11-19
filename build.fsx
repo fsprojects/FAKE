@@ -33,6 +33,7 @@ let nunitPath = @".\Tools\NUnit"
 // Targets
 Target "Clean" (fun _ ->
     CleanDirs [buildDir; testDir; deployDir; docsDir; metricsDir; nugetDir]
+    CopyFile buildDir "./tools/FSharp/FSharp.Core.sigdata"
 )
 
 Target "BuildApp" (fun _ ->   
