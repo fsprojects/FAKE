@@ -157,11 +157,12 @@ AllTargetsDependOn "Clean"
 if not isLocalBuild then
     "BuildApp" <== ["SetAssemblyInfo"]
 
-"BuildZip" <== ["BuildApp"; "CopyLicense"]
-"Test" <== ["BuildApp"; "BuildTest"]
+["BuildZip"; "Test"; "GenerateDocumentation"] |> TargetsDependOn "BuildApp"
+
+"BuildZip" <== ["CopyLicense"]
+"Test" <== ["BuildTest"]
 "DeployNuGet" <== ["Test"; "BuildZip"; "ZipCalculatorSample"; "ZipDocumentation"]
 "Deploy" <== ["DeployNuGet"]
-"GenerateDocumentation" <== ["BuildApp"]
 "ZipDocumentation" <== ["GenerateDocumentation"]
 
 // start build

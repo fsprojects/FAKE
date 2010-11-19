@@ -36,6 +36,9 @@ let dependencyString target =
       |> Seq.map (fun d -> (getTarget d).Name)
       |> separated ", "
       |> sprintf "(==> %s)"
+
+/// Returns a list with all targetNames
+let getAllTargetsNames() = TargetDict |> Seq.map (fun t -> t.Key) |> Seq.toList
     
 /// Do nothing - fun () -> ()   
 let DoNothing = (fun () -> ())
@@ -76,13 +79,16 @@ let Dependencies targetName = List.iter (dependency targetName)
 /// Dependencies operator
 let inline (<==) x y = Dependencies x y
 
-/// Set a dependency for all registered targets
-let AllTargetsDependOn target =
-    TargetDict 
-    |> Seq.map (fun t -> t.Key) 
+/// Set a dependency for all given targets
+let TargetsDependOn target targets =
+    getAllTargetsNames()
     |> Seq.toList  // work on copy since the dict will be changed
     |> List.filter ((<>) target)
+    |> List.filter (fun t -> Seq.contains t targets)
     |> List.iter (fun t -> dependencyAtFront t target)
+
+/// Set a dependency for all registered targets
+let AllTargetsDependOn target = getAllTargetsNames() |> TargetsDependOn target
   
 /// Creates a target from template
 let targetFromTemplate template name parameters =    

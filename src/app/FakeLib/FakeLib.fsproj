@@ -43,7 +43,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
-    <Compile Include="FSharpHelpers\Nullable.fs" />
+    <Compile Include="FSharpHelpers\SeqExtensions.fs" />
+    <Compile Include="FSharpHelpers\OptionExtensions.fs" />
     <Compile Include="FSharpHelpers\AsyncHelper.fs" />
     <Compile Include="RegistryHelper.fs" />
     <Compile Include="FileSystemHelper.fs" />
@@ -96,7 +97,7 @@
     <Compile Include="FSIHelper.fs" />
     <Compile Include="MessageHelper.fs" />
     <Compile Include="HTMLHelpWorkShopHelper.fs" />
-    <Compile Include="TargetHelper.fs" />    
+    <Compile Include="TargetHelper.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core">
