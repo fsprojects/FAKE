@@ -68,10 +68,11 @@ Target "BuildApp" (fun _ ->
                      
     MSBuildRelease buildDir "Build" appReferences
         |> Log "AppBuild-Output: "
+
+    Copy buildDir [@".\tools\Docu\docu.exe"; @".\tools\Docu\DocuLicense.txt"]
 )
 
 Target "GenerateDocumentation" (fun _ ->
-    Copy buildDir [@".\tools\Docu\docu.exe"; @".\tools\Docu\DocuLicense.txt"]
     !+ (buildDir + "Fake*.dll")
         |> Scan
         |> Docu (fun p ->
