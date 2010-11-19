@@ -376,3 +376,9 @@ let inline (++) x y = {x with Includes = y::x.Includes}
 
 /// Exclude operator
 let inline (--) x y = {x with Excludes = y::x.Excludes}  
+
+/// Includes a single pattern and scans the files - !! x = AllFilesMatching x
+let inline (!!) x = !+ x |> Scan
+
+/// Includes a single pattern and scans the files - !! x = AllFilesMatching x
+let AllFilesMatching x = !! x

@@ -51,9 +51,8 @@ Target "BuildTest" (fun _ ->
         |> Log "TestBuild-Output: "
 )
 
-Target "NUnitTest" (fun _ ->  
-    !+ (testDir + @"\*.dll") 
-        |> Scan
+Target "Test" (fun _ ->  
+    !! (testDir @@ "*.dll") 
         |> NUnit (fun p -> 
             {p with 
                 ToolPath = nunitPath; 
@@ -68,13 +67,9 @@ Target "Deploy" (fun _ ->
         |> Zip buildDir (deployDir + "Calculator." + version + ".zip")
 )
 
-Target "Test" DoNothing
-
 // Dependencies
-"BuildApp" <== ["Clean"]
-"BuildTest" <== ["Clean"]
-"NUnitTest" <== ["BuildApp"; "BuildTest"]
-"Test" <== ["NUnitTest"]
+AllTargetsDependOn "Clean"
+"Test" <== ["BuildApp"; "BuildTest"]
 "Deploy" <== ["Test"]
  
 // start build

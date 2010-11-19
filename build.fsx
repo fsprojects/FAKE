@@ -23,8 +23,8 @@ let templatesSrcDir = @".\tools\Docu\templates\"
 let deployZip = deployDir @@ sprintf "%s-%s.zip" projectName buildVersion
 
 // files
-let appReferences  = !+ @"src\app\**\*.*sproj"  |> Scan
-let testReferences = !+ @"src\test\**\*.*sproj" |> Scan
+let appReferences  = !! @"src\app\**\*.*sproj"
+let testReferences = !! @"src\test\**\*.*sproj"
 
 // tools
 let nunitPath = @".\Tools\NUnit"
@@ -35,7 +35,7 @@ Target "Clean" (fun _ ->
 
     ["./tools/FSharp/FSharp.Core.optdata"
      "./tools/FSharp/FSharp.Core.sigdata"]
-      |> Copy buildDir
+      |> CopyTo buildDir
 )
 
 Target "SetAssemblyInfo" (fun _ ->
@@ -73,13 +73,12 @@ Target "BuildApp" (fun _ ->
 )
 
 Target "GenerateDocumentation" (fun _ ->
-    !+ (buildDir + "Fake*.dll")
-        |> Scan
-        |> Docu (fun p ->
-            {p with
-                ToolPath = buildDir @@ "docu.exe"
-                TemplatesPath = templatesSrcDir
-                OutputPath = docsDir })
+    !! (buildDir + "Fake*.dll")
+    |> Docu (fun p ->
+        {p with
+            ToolPath = buildDir @@ "docu.exe"
+            TemplatesPath = templatesSrcDir
+            OutputPath = docsDir })
 )
 
 Target "CopyLicense" (fun _ -> 
@@ -87,15 +86,15 @@ Target "CopyLicense" (fun _ ->
      "readme.markdown"
      "./tools/Docu/docu.exe"
      "./tools/Docu/DocuLicense.txt"]
-       |> Copy buildDir
+       |> CopyTo buildDir
 )
 
 Target "BuildZip" (fun _ ->     
     !+ (buildDir + @"\**\*.*") 
     -- "*.zip" 
     -- "**/*.pdb"
-        |> Scan
-        |> Zip buildDir deployZip
+      |> Scan
+      |> Zip buildDir deployZip
 )
 
 Target "BuildTest" (fun _ -> 
@@ -104,9 +103,8 @@ Target "BuildTest" (fun _ ->
 )
 
 Target "Test" (fun _ ->  
-    !+ (testDir + @"\*.dll") 
-        |> Scan
-        |> NUnit (fun p -> 
+    !! (testDir @@ "*.dll") 
+      |> NUnit (fun p -> 
             {p with 
                 ToolPath = nunitPath; 
                 DisableShadowCopy = true; 
@@ -115,9 +113,8 @@ Target "Test" (fun _ ->
 )
 
 Target "ZipCalculatorSample" (fun _ ->
-    // copy fake file output to sample tools path
-    !+ (buildDir + @"\**\*.*") 
-        |> CopyTo "./Samples/Calculator/tools/FAKE/"
+    !! (buildDir + "\**\*.*") 
+      |> CopyTo "./Samples/Calculator/tools/FAKE/"
         
     !+ @"Samples\Calculator\**\*.*" 
         -- "**\*Resharper*\**"
@@ -128,12 +125,11 @@ Target "ZipCalculatorSample" (fun _ ->
 )
 
 Target "ZipDocumentation" (fun _ ->    
-    !+ (docsDir + @"\**\*.*")  
-        |> Scan
-        |> Zip docsDir (deployDir @@ sprintf "Documentation-%s.zip" buildVersion)
+    !! (docsDir + @"\**\*.*")  
+      |> Zip docsDir (deployDir @@ sprintf "Documentation-%s.zip" buildVersion)
 )
 
-Target "DeployNuGet" (fun _ -> 
+Target "CreateNuGet" (fun _ -> 
     let nugetDocsDir = nugetDir @@ "docs/"
     let nugetToolsDir = nugetDir @@ "tools/"
 
@@ -160,9 +156,9 @@ if not isLocalBuild then
 
 "BuildZip" <== ["CopyLicense"]
 "Test" <== ["BuildTest"]
-"DeployNuGet" <== ["Test"; "BuildZip"; "ZipCalculatorSample"; "ZipDocumentation"]
-"Deploy" <== ["DeployNuGet"]
 "ZipDocumentation" <== ["GenerateDocumentation"]
+"CreateNuGet" <== ["Test"; "BuildZip"; "ZipCalculatorSample"; "ZipDocumentation"]
+"Deploy" <== ["CreateNuGet"]
 
 // start build
 Run "Deploy"

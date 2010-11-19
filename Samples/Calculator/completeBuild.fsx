@@ -19,9 +19,7 @@ let appReferences  =
       ++ @"src\app\**\*.fsproj" 
         |> Scan
 
-let testReferences = 
-    !+ @"src\test\**\*.csproj" 
-      |> Scan
+let testReferences = !! @"src\test\**\*.csproj"  // !! creates a lazy fileset
 
 // version info
 let version = "0.2"  // or retrieve from CI server
@@ -63,8 +61,7 @@ Target "BuildTest" (fun _ ->
 )
 
 Target "NUnitTest" (fun _ ->  
-    !+ (testDir + @"\NUnit.Test.*.dll") 
-        |> Scan
+    !! (testDir + @"\NUnit.Test.*.dll") 
         |> NUnit (fun p -> 
             {p with 
                 ToolPath = nunitPath; 
@@ -73,8 +70,7 @@ Target "NUnitTest" (fun _ ->
 )
 
 Target "xUnitTest" (fun _ ->  
-    !+ (testDir + @"\xUnit.Test.*.dll") 
-        |> Scan
+    !! (testDir + @"\xUnit.Test.*.dll") 
         |> xUnit (fun p -> 
             {p with 
                 ShadowCopy = false;
