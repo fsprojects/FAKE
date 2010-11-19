@@ -32,7 +32,7 @@ let SetDirReadOnly readOnly dir =
 /// Sets all files in the directory readonly 
 let SetReadOnly readOnly (files: string seq) =
     files
-    |> doParallel (fun file ->
+    |> Seq.iter (fun file ->
         let fi = fileInfo file
         if fi.Exists then 
             fi.IsReadOnly <- readOnly
@@ -40,7 +40,6 @@ let SetReadOnly readOnly (files: string seq) =
             file
             |> directoryInfo
             |> setDirectoryReadOnly readOnly)
-    |> ignore
       
 /// Deletes a directory if it exists
 let DeleteDir path =   
@@ -134,8 +133,7 @@ let CopyFile target fileName =
 /// <param name="files">The original FileNames as a sequence.</param>
 let Copy target files = 
     files      
-      |> doParallel (CopyFile target) 
-      |> ignore
+      |> Seq.iter (CopyFile target)
 
 /// Copies the files from a cache folder.
 /// If the files are not cached or the original files have a different write time the cache will be refreshed.
@@ -146,7 +144,7 @@ let CopyCached target cacheDir files =
     let cache = directoryInfo cacheDir
     if not cache.Exists then cache.Create()
     files
-        |> doParallel (fun fileName -> 
+        |> Seq.map (fun fileName -> 
             let fi = fileInfo fileName
             let cached = cacheDir @@ fi.Name
             let cachedFi = fileInfo cached
@@ -172,7 +170,7 @@ let Rename target fileName = (fileInfo fileName).MoveTo target
   
 let SilentCopy target files =
     files
-    |> doParallel (fun file ->
+    |> Seq.iter (fun file ->
             let fi = fileInfo file
             let targetName = target @@ fi.Name
             let targetFI = fileInfo targetName
@@ -182,7 +180,6 @@ let SilentCopy target files =
                   fi.CopyTo(targetName,true) |> ignore
             else
                 fi.CopyTo(targetName) |> ignore)
-    |> ignore
                
 
 /// <summary>Copies the files to the target - Alias for Copy</summary>
@@ -205,7 +202,7 @@ let CopyDir target source filterFile =
     CreateDir target
     Directory.GetFiles(source, "*.*", SearchOption.AllDirectories)
     |> Seq.filter filterFile
-    |> doParallel (fun file -> 
+    |> Seq.iter (fun file -> 
         let fi = file |> replaceFirst source "" |> trimSeparator
         let newFile = target @@ fi
         logVerbosefn "%s => %s" file newFile
