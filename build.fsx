@@ -7,7 +7,7 @@ open Fake
 let projectName = "FAKE"
 let projectSummary = "FAKE - F# Make - Get rid of the noise in your build scripts."
 let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. Tasks and dependencies are specified in a DSL which is integrated in F#."
-let authors = ["Steffen Forkmann", "Mauricio Scheffer"]
+let authors = ["Steffen Forkmann"; "Mauricio Scheffer"]
 let mail = "forkmann@gmx.de"
 let homepage = "http://github.com/forki/fake"
 
