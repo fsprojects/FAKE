@@ -40,10 +40,11 @@ let dependencyString target =
 /// Do nothing - fun () -> ()   
 let DoNothing = (fun () -> ())
 
-/// Adds the dependency to the list of dependencies
-let dependency targetName dependentTargetName =
+/// Checks wether the dependency can be add
+let checkIfDependencyCanBeAdd targetName dependentTargetName =
     let target = getTarget targetName
     let dependentTarget = getTarget dependentTargetName
+
     let rec checkDependencies dependentTarget =
         dependentTarget.Dependencies 
           |> List.iter (fun dep ->
@@ -52,14 +53,36 @@ let dependency targetName dependentTargetName =
                checkDependencies (getTarget dep))
       
     checkDependencies dependentTarget
+    target,dependentTarget
+
+/// Adds the dependency to the front of the list of dependencies
+let dependencyAtFront targetName dependentTargetName =
+    let target,dependentTarget = checkIfDependencyCanBeAdd targetName dependentTargetName
+    
+    TargetDict.[targetName] <- { target with Dependencies = dependentTargetName :: target.Dependencies }
+  
+/// Appends the dependency to the list of dependencies
+let dependencyAtEnd targetName dependentTargetName =
+    let target,dependentTarget = checkIfDependencyCanBeAdd targetName dependentTargetName
     
     TargetDict.[targetName] <- { target with Dependencies = target.Dependencies @ [dependentTargetName] }
+
+/// Adds the dependency to the list of dependencies
+let dependency = dependencyAtEnd
   
 /// Adds the dependencies to the list of dependencies  
 let Dependencies targetName = List.iter (dependency targetName)
 
 /// Dependencies operator
-let inline (<==) x y = Dependencies x y       
+let inline (<==) x y = Dependencies x y
+
+/// Set a dependency for all registered targets
+let AllTargetsDependOn target =
+    TargetDict 
+    |> Seq.map (fun t -> t.Key) 
+    |> Seq.toList  // work on copy since the dict will be changed
+    |> List.filter ((<>) target)
+    |> List.iter (fun t -> dependencyAtFront t target)
   
 /// Creates a target from template
 let targetFromTemplate template name parameters =    
@@ -180,6 +203,7 @@ let run targetName =
     let watch = new System.Diagnostics.Stopwatch()
     watch.Start()        
     try
+        WaitUntilEverythingIsPrinted()
         PrintDependencyGraph false targetName
         runTarget targetName
     finally

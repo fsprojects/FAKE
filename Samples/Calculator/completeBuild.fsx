@@ -103,8 +103,7 @@ Target "Deploy" (fun _ ->
 Target "Test" DoNothing
 
 // Dependencies
-"BuildApp" <== ["Clean"]
-"BuildTest" <== ["Clean"]
+AllTargetsDependOn "Clean"
 "NUnitTest" <== ["BuildApp"; "BuildTest"; "FxCop"]
 "xUnitTest" <== ["BuildApp"; "BuildTest"; "FxCop"]
 "Test" <== ["xUnitTest"; "NUnitTest"]
