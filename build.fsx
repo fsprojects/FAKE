@@ -33,11 +33,9 @@ let nunitPath = @".\Tools\NUnit"
 Target "Clean" (fun _ ->
     CleanDirs [buildDir; testDir; deployDir; docsDir; metricsDir; nugetDir]
 
-    ["./tools/Docu/docu.exe"
-     "./tools/Docu/DocuLicense.txt"
-     "./tools/FSharp/FSharp.Core.optdata"
+    ["./tools/FSharp/FSharp.Core.optdata"
      "./tools/FSharp/FSharp.Core.sigdata"]
-      |> CopyTo buildDir
+      |> Copy buildDir
 )
 
 Target "SetAssemblyInfo" (fun _ ->
@@ -85,7 +83,11 @@ Target "GenerateDocumentation" (fun _ ->
 )
 
 Target "CopyLicense" (fun _ -> 
-    Copy buildDir [@"License.txt"; @"readme.markdown"]
+    ["License.txt"
+     "readme.markdown"
+     "./tools/Docu/docu.exe"
+     "./tools/Docu/DocuLicense.txt"]
+       |> Copy buildDir
 )
 
 Target "BuildZip" (fun _ ->     
@@ -115,16 +117,12 @@ Target "Test" (fun _ ->
 Target "ZipCalculatorSample" (fun _ ->
     // copy fake file output to sample tools path
     !+ (buildDir + @"\**\*.*") 
-        |> Scan
-        |> Copy @".\Samples\Calculator\tools\FAKE\"
+        |> CopyTo "./Samples/Calculator/tools/FAKE/"
         
     !+ @"Samples\Calculator\**\*.*" 
         -- "**\*Resharper*\**"
-        -- "**\*Resharper*"
-        -- "**\bin\Debug\**"
-        -- "**\obj\Debug\**"
-        -- "**\bin\Release\**"
-        -- "**\obj\Release\**"
+        -- "**\bin\**\**"
+        -- "**\obj\**\**"
         |> Scan
         |> Zip @".\Samples\Calculator" (deployDir @@ sprintf "CalculatorSample-%s.zip" buildVersion)
 )
@@ -137,7 +135,7 @@ Target "ZipDocumentation" (fun _ ->
 
 Target "DeployNuGet" (fun _ -> 
     let nugetDocsDir = nugetDir @@ "docs/"
-    let nugetToolsDir = nugetDir @@ "sol/"
+    let nugetToolsDir = nugetDir @@ "tools/"
 
     XCopy docsDir nugetDocsDir
     XCopy buildDir nugetToolsDir
