@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="CommandlineParams.fs" />
     <Compile Include="Program.fs" />
     <Content Include="app.config" />
   </ItemGroup>
