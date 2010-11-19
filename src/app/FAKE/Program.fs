@@ -3,22 +3,22 @@ open Fake
 open System.IO
 
 let printEnvironment cmdArgs args =
-        traceStartBuild()
-        traceFAKE "FakePath: %s" fakePath 
-        traceFAKE "%s" fakeVersionStr
+    traceStartBuild()
+    traceFAKE "FakePath: %s" fakePath 
+    traceFAKE "%s" fakeVersionStr
 
-        if buildServer = LocalBuild then
-            trace localBuildLabel
-        else
-            tracefn "Build-Version: %s" buildVersion
+    if buildServer = LocalBuild then
+        trace localBuildLabel
+    else
+        tracefn "Build-Version: %s" buildVersion
 
-        if cmdArgs |> Array.length > 1 then
-            traceFAKE "FAKE Arguments:"
-            args |> Seq.iter (tracefn "%A")
+    if cmdArgs |> Array.length > 1 then
+        traceFAKE "FAKE Arguments:"
+        args |> Seq.iter (tracefn "%A")
 
-        log ""
-        traceFAKE "FSI-Path: %s" fsiPath
-        traceFAKE "MSBuild-Path: %s" msBuildExe
+    log ""
+    traceFAKE "FSI-Path: %s" fsiPath
+    traceFAKE "MSBuild-Path: %s" msBuildExe
       
 
 try
