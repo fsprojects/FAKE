@@ -7,7 +7,7 @@ open Fake
 let projectName = "FAKE"
 let projectSummary = "FAKE - F# Make - Get rid of the noise in your build scripts."
 let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. Tasks and dependencies are specified in a DSL which is integrated in F#."
-let authors = ["Steffen Forkmann"]
+let authors = ["Steffen Forkmann"; "Mauricio Scheffer"]
 let mail = "forkmann@gmx.de"
 let homepage = "http://github.com/forki/fake"
 
@@ -34,6 +34,7 @@ let nunitPath = @".\Tools\NUnit"
 Target "Clean" (fun _ ->
     CleanDirs [buildDir; testDir; deployDir; docsDir; metricsDir; nugetDir]
     CopyFile buildDir "./tools/FSharp/FSharp.Core.sigdata"
+    CopyFile buildDir "./tools/FSharp/FSharp.Core.optdata"    
 )
 
 Target "BuildApp" (fun _ ->   
