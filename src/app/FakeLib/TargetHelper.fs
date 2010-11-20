@@ -36,14 +36,18 @@ let dependencyString target =
       |> Seq.map (fun d -> (getTarget d).Name)
       |> separated ", "
       |> sprintf "(==> %s)"
+
+/// Returns a list with all targetNames
+let getAllTargetsNames() = TargetDict |> Seq.map (fun t -> t.Key) |> Seq.toList
     
 /// Do nothing - fun () -> ()   
 let DoNothing = (fun () -> ())
 
-/// Adds the dependency to the list of dependencies
-let dependency targetName dependentTargetName =
+/// Checks wether the dependency can be add
+let checkIfDependencyCanBeAdd targetName dependentTargetName =
     let target = getTarget targetName
     let dependentTarget = getTarget dependentTargetName
+
     let rec checkDependencies dependentTarget =
         dependentTarget.Dependencies 
           |> List.iter (fun dep ->
@@ -52,14 +56,39 @@ let dependency targetName dependentTargetName =
                checkDependencies (getTarget dep))
       
     checkDependencies dependentTarget
+    target,dependentTarget
+
+/// Adds the dependency to the front of the list of dependencies
+let dependencyAtFront targetName dependentTargetName =
+    let target,dependentTarget = checkIfDependencyCanBeAdd targetName dependentTargetName
+    
+    TargetDict.[targetName] <- { target with Dependencies = dependentTargetName :: target.Dependencies }
+  
+/// Appends the dependency to the list of dependencies
+let dependencyAtEnd targetName dependentTargetName =
+    let target,dependentTarget = checkIfDependencyCanBeAdd targetName dependentTargetName
     
     TargetDict.[targetName] <- { target with Dependencies = target.Dependencies @ [dependentTargetName] }
+
+/// Adds the dependency to the list of dependencies
+let dependency = dependencyAtEnd
   
 /// Adds the dependencies to the list of dependencies  
 let Dependencies targetName = List.iter (dependency targetName)
 
 /// Dependencies operator
-let inline (<==) x y = Dependencies x y       
+let inline (<==) x y = Dependencies x y
+
+/// Set a dependency for all given targets
+let TargetsDependOn target targets =
+    getAllTargetsNames()
+    |> Seq.toList  // work on copy since the dict will be changed
+    |> List.filter ((<>) target)
+    |> List.filter (fun t -> Seq.contains t targets)
+    |> List.iter (fun t -> dependencyAtFront t target)
+
+/// Set a dependency for all registered targets
+let AllTargetsDependOn target = getAllTargetsNames() |> TargetsDependOn target
   
 /// Creates a target from template
 let targetFromTemplate template name parameters =    
@@ -180,6 +209,7 @@ let run targetName =
     let watch = new System.Diagnostics.Stopwatch()
     watch.Start()        
     try
+        WaitUntilEverythingIsPrinted()
         PrintDependencyGraph false targetName
         runTarget targetName
     finally
@@ -217,3 +247,6 @@ let And x y = y @ [x]
 
 /// Runs a Target and its dependencies
 let Run = run
+
+/// Runs the target given by the build script parameter or the given default target
+let RunParameterTargetOrDefault parameterName defaultTarget = getBuildParamOrDefault parameterName defaultTarget |> Run

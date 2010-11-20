@@ -14,7 +14,6 @@ open Gallio.Runtime.ProgressMonitoring
 open Gallio.Common.Reflection
 open Gallio.Model
 open Gallio.Model.Filters
-open FSharp.Nullable
 
 type ReportArchiveMode = Normal | Zip
 type Verbosity = Quiet | Normal | Verbose | Debug 

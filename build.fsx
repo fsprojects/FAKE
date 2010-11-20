@@ -19,13 +19,12 @@ let metricsDir = @".\BuildMetrics\"
 let deployDir = @".\Publish\"
 let docsDir = @".\docs\" 
 let nugetDir = @".\nuget\" 
-let templatesSrcDir = @".\docu\src\Docu.Console\templates\" 
-
-let deployZip = deployDir + sprintf "%s-%s.zip" projectName buildVersion
+let templatesSrcDir = @".\tools\Docu\templates\"
+let deployZip = deployDir @@ sprintf "%s-%s.zip" projectName buildVersion
 
 // files
-let appReferences  = !+ @"src\app\**\*.*sproj"  |> Scan
-let testReferences = !+ @"src\test\**\*.*sproj" |> Scan
+let appReferences  = !! @"src\app\**\*.*sproj"
+let testReferences = !! @"src\test\**\*.*sproj"
 
 // tools
 let nunitPath = @".\Tools\NUnit"
@@ -33,79 +32,69 @@ let nunitPath = @".\Tools\NUnit"
 // Targets
 Target "Clean" (fun _ ->
     CleanDirs [buildDir; testDir; deployDir; docsDir; metricsDir; nugetDir]
-    CopyFile buildDir "./tools/FSharp/FSharp.Core.sigdata"
-    CopyFile buildDir "./tools/FSharp/FSharp.Core.optdata"    
+
+    ["./tools/FSharp/FSharp.Core.optdata"
+     "./tools/FSharp/FSharp.Core.sigdata"]
+      |> CopyTo buildDir
 )
 
-Target "BuildApp" (fun _ ->   
-    if not isLocalBuild then
-        AssemblyInfo 
-            (fun p -> 
-            {p with
-                CodeLanguage = FSharp;
-                AssemblyVersion = buildVersion;
-                AssemblyTitle = "FAKE - F# Make Command line tool";
-                Guid = "fb2b540f-d97a-4660-972f-5eeff8120fba";
-                OutputFileName = @".\src\app\FAKE\AssemblyInfo.fs"})
+Target "SetAssemblyInfo" (fun _ ->
+    AssemblyInfo 
+        (fun p -> 
+        {p with
+            CodeLanguage = FSharp;
+            AssemblyVersion = buildVersion;
+            AssemblyTitle = "FAKE - F# Make Command line tool";
+            Guid = "fb2b540f-d97a-4660-972f-5eeff8120fba";
+            OutputFileName = @".\src\app\FAKE\AssemblyInfo.fs"})
                    
-        AssemblyInfo 
-            (fun p -> 
-            {p with
-                CodeLanguage = FSharp;
-                AssemblyVersion = buildVersion;
-                AssemblyTitle = "FAKE - F# Make Lib";
-                Guid = "d6dd5aec-636d-4354-88d6-d66e094dadb5";
-                OutputFileName = @".\src\app\FakeLib\AssemblyInfo.fs"})
+    AssemblyInfo 
+        (fun p -> 
+        {p with
+            CodeLanguage = FSharp;
+            AssemblyVersion = buildVersion;
+            AssemblyTitle = "FAKE - F# Make Lib";
+            Guid = "d6dd5aec-636d-4354-88d6-d66e094dadb5";
+            OutputFileName = @".\src\app\FakeLib\AssemblyInfo.fs"})
 
-        AssemblyInfo 
-            (fun p -> 
-            {p with
-                CodeLanguage = FSharp;
-                AssemblyVersion = buildVersion;
-                AssemblyTitle = "FAKE - F# Make SQL Lib";
-                Guid = "A161EAAF-EFDA-4EF2-BD5A-4AD97439F1BE";
-                OutputFileName = @".\src\app\Fake.SQL\AssemblyInfo.fs"})     
-                      
-        AssemblyInfo 
-            (fun p -> 
-            {p with
-                CodeLanguage = FSharp;
-                AssemblyVersion = buildVersion;
-                AssemblyTitle = "FAKE - F# Make Git Lib";
-                Guid = "2101B852-0B08-4EAA-A343-85E399327A98";
-                OutputFileName = @".\src\app\Fake.Git\AssemblyInfo.fs"})                                                                  
-                     
+    AssemblyInfo 
+        (fun p -> 
+        {p with
+            CodeLanguage = FSharp;
+            AssemblyVersion = buildVersion;
+            AssemblyTitle = "FAKE - F# Make SQL Lib";
+            Guid = "A161EAAF-EFDA-4EF2-BD5A-4AD97439F1BE";
+            OutputFileName = @".\src\app\Fake.SQL\AssemblyInfo.fs"})
+)
+
+Target "BuildApp" (fun _ ->                     
     MSBuildRelease buildDir "Build" appReferences
         |> Log "AppBuild-Output: "
 )
 
-Target "BuildDocu" (fun _ ->                                               
-    MSBuildRelease null "Build" [@".\docu\Build.proj"]
-        |> Log "DocuBuild-Output: "
-    Copy buildDir [@".\docu\artifacts\docu.exe"; @".\docu\License.txt"]        
-    Rename (buildDir + @"DocuLicense.txt") (buildDir + @"License.txt")
-)
-
 Target "GenerateDocumentation" (fun _ ->
-    !+ (buildDir + "Fake*.dll")
-        |> Scan
-        |> Docu (fun p ->
-            {p with
-                ToolPath = buildDir @@ "docu.exe"
-                TemplatesPath = templatesSrcDir
-                OutputPath = docsDir })
+    !! (buildDir + "Fake*.dll")
+    |> Docu (fun p ->
+        {p with
+            ToolPath = buildDir @@ "docu.exe"
+            TemplatesPath = templatesSrcDir
+            OutputPath = docsDir })
 )
 
 Target "CopyLicense" (fun _ -> 
-    Copy buildDir [@"License.txt"; @"readme.markdown"]
+    ["License.txt"
+     "readme.markdown"
+     "./tools/Docu/docu.exe"
+     "./tools/Docu/DocuLicense.txt"]
+       |> CopyTo buildDir
 )
 
 Target "BuildZip" (fun _ ->     
     !+ (buildDir + @"\**\*.*") 
     -- "*.zip" 
     -- "**/*.pdb"
-        |> Scan
-        |> Zip buildDir deployZip
+      |> Scan
+      |> Zip buildDir deployZip
 )
 
 Target "BuildTest" (fun _ -> 
@@ -114,9 +103,8 @@ Target "BuildTest" (fun _ ->
 )
 
 Target "Test" (fun _ ->  
-    !+ (testDir + @"\*.dll") 
-        |> Scan
-        |> NUnit (fun p -> 
+    !! (testDir @@ "*.dll") 
+      |> NUnit (fun p -> 
             {p with 
                 ToolPath = nunitPath; 
                 DisableShadowCopy = true; 
@@ -125,31 +113,25 @@ Target "Test" (fun _ ->
 )
 
 Target "ZipCalculatorSample" (fun _ ->
-    // copy fake file output to sample tools path
-    !+ (buildDir + @"\**\*.*") 
-        |> Scan
-        |> Copy @".\Samples\Calculator\tools\FAKE\"
+    !! (buildDir + "\**\*.*") 
+      |> CopyTo "./Samples/Calculator/tools/FAKE/"
         
     !+ @"Samples\Calculator\**\*.*" 
         -- "**\*Resharper*\**"
-        -- "**\*Resharper*"
-        -- "**\bin\Debug\**"
-        -- "**\obj\Debug\**"
-        -- "**\bin\Release\**"
-        -- "**\obj\Release\**"
+        -- "**\bin\**\**"
+        -- "**\obj\**\**"
         |> Scan
         |> Zip @".\Samples\Calculator" (deployDir @@ sprintf "CalculatorSample-%s.zip" buildVersion)
 )
 
 Target "ZipDocumentation" (fun _ ->    
-    !+ (docsDir + @"\**\*.*")  
-        |> Scan
-        |> Zip docsDir (deployDir @@ sprintf "Documentation-%s.zip" buildVersion)
+    !! (docsDir + @"\**\*.*")  
+      |> Zip docsDir (deployDir @@ sprintf "Documentation-%s.zip" buildVersion)
 )
 
-Target "DeployNuGet" (fun _ -> 
+Target "CreateNuGet" (fun _ -> 
     let nugetDocsDir = nugetDir @@ "docs/"
-    let nugetToolsDir = nugetDir @@ "sol/"
+    let nugetToolsDir = nugetDir @@ "tools/"
 
     XCopy docsDir nugetDocsDir
     XCopy buildDir nugetToolsDir
@@ -165,15 +147,18 @@ Target "DeployNuGet" (fun _ ->
 Target "Deploy" DoNothing
 
 // Dependencies
-"BuildApp" <== ["Clean"]
-"Test" <== ["Clean"]
-"BuildZip" <== ["BuildApp"; "CopyLicense"]
-"ZipCalculatorSample" <== ["Clean"]
-"Test" <== ["BuildApp"; "BuildTest"]
-"DeployNuGet" <== ["Test"; "BuildDocu"; "BuildZip"; "ZipCalculatorSample"; "ZipDocumentation"]
-"Deploy" <== ["DeployNuGet"]
-"GenerateDocumentation" <== ["BuildApp"]
+
+AllTargetsDependOn "Clean"
+if not isLocalBuild then
+    "BuildApp" <== ["SetAssemblyInfo"]
+
+["BuildZip"; "Test"; "GenerateDocumentation"] |> TargetsDependOn "BuildApp"
+
+"BuildZip" <== ["CopyLicense"]
+"Test" <== ["BuildTest"]
 "ZipDocumentation" <== ["GenerateDocumentation"]
+"CreateNuGet" <== ["Test"; "BuildZip"; "ZipCalculatorSample"; "ZipDocumentation"]
+"Deploy" <== ["CreateNuGet"]
 
 // start build
 Run "Deploy"
