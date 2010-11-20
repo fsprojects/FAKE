@@ -247,3 +247,6 @@ let And x y = y @ [x]
 
 /// Runs a Target and its dependencies
 let Run = run
+
+/// Runs the target given by the build script parameter or the given default target
+let RunParameterTargetOrDefault parameterName defaultTarget = getBuildParamOrDefault parameterName defaultTarget |> Run
