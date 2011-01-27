@@ -114,3 +114,20 @@ let XmlPoke (fileName:string) xpath value =
     doc.Load fileName
     XPathReplace xpath value doc
       |> fun x -> x.Save fileName
+
+
+/// Replaces text in XML document specified by an XPath expression, with support for namespaces.
+let XPathReplaceNS xpath value (namespaces:#seq<string * string>) (doc:XmlDocument) =
+    let nsmgr = XmlNamespaceManager(doc.NameTable)
+    namespaces |> Seq.iter nsmgr.AddNamespace
+    let node = doc.SelectSingleNode(xpath, nsmgr)
+
+    node.Value <- value
+    doc
+ 
+/// Replaces text in an XML file at the location specified by an XPath expression, with support for namespaces.
+let XmlPokeNS (fileName:string) namespaces xpath value =
+    let doc = new XmlDocument()
+    doc.Load fileName
+    XPathReplaceNS xpath value namespaces doc
+    |> fun x -> x.Save fileName
