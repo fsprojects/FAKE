@@ -21,5 +21,4 @@ Target "Deploy" (fun () ->
 "Deploy"  <== ["Build"]
 
 // *** Start Build ***
-getBuildParamOrDefault "target" "Deploy"
-  |> Run
+RunParameterTargetOrDefault "target" "Deploy"

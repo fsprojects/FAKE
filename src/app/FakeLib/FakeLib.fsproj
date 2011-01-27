@@ -43,8 +43,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
-    <Compile Include="FSharpHelpers\Nullable.fs" />
-    <Compile Include="AsyncHelper.fs" />
+    <Compile Include="FSharpHelpers\SeqExtensions.fs" />
+    <Compile Include="FSharpHelpers\OptionExtensions.fs" />
+    <Compile Include="FSharpHelpers\AsyncHelper.fs" />
     <Compile Include="RegistryHelper.fs" />
     <Compile Include="FileSystemHelper.fs" />
     <Compile Include="StringHelper.fs" />
@@ -78,11 +79,25 @@
     <Compile Include="VSSHelper.fs" />
     <Compile Include="SCPHelper.fs" />
     <Compile Include="XCopyHelper.fs" />
+    <Compile Include="MSBuild\SpecsRemovement.fs" />
+    <Compile Include="Git\CommandHelper.fs" />
+    <Compile Include="Git\Sha1.fs" />
+    <Compile Include="Git\Repository.fs" />
+    <Compile Include="Git\Submodule.fs" />
+    <Compile Include="Git\Branches.fs" />
+    <Compile Include="Git\Reset.fs" />
+    <Compile Include="Git\Merge.fs" />
+    <Compile Include="Git\Stash.fs" />
+    <Compile Include="Git\SanityChecks.fs" />
+    <Compile Include="Git\Information.fs" />
+    <Compile Include="Git\FileStatus.fs" />
+    <Compile Include="Git\Rebase.fs" />
+    <Compile Include="Git\CommitMessage.fs" />
+    <Compile Include="Git\Staging.fs" />
     <Compile Include="FSIHelper.fs" />
     <Compile Include="MessageHelper.fs" />
     <Compile Include="HTMLHelpWorkShopHelper.fs" />
     <Compile Include="TargetHelper.fs" />
-    <Compile Include="MSBuild\SpecsRemovement.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core">

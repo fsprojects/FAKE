@@ -173,7 +173,7 @@ let (>=>) pattern (replacement:string) text =
 let (>**) pattern text = (getRegEx pattern).IsMatch text
 
 /// Checks wether the given char is a german umlaut.
-let isUmlaut c = List.exists ((=) c) ['ä'; 'ö'; 'ü'; 'Ä'; 'Ö'; 'Ü'; 'ß']
+let isUmlaut c = Seq.contains c ['ä'; 'ö'; 'ü'; 'Ä'; 'Ö'; 'Ü'; 'ß']
 
 /// Returns all standard chars and digits.
 let charsAndDigits = ['a'..'z'] @ ['A'..'Z'] @ ['0'..'9'] 

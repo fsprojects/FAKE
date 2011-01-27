@@ -23,6 +23,7 @@ let runBuildScript script args =
         args |> Seq.iter setVar
 
         setVar("MSBuild",msBuildExe)
+        setVar("GIT",Git.CommandHelper.gitPath)
         setVar("FSI",fsiPath)) System.TimeSpan.MaxValue
     
     System.Threading.Thread.Sleep 1000

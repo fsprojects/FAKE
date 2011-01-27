@@ -77,6 +77,15 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
 <member name="M:Fake.AssemblyInfoHelper.AssemblyInfo(Microsoft.FSharp.Core.FSharpFunc`2{Fake.AssemblyInfoHelper.AssemblyInfoParams,Fake.AssemblyInfoHelper.AssemblyInfoParams})">
 <summary>
  Generates an AssemblyInfo file for projects
@@ -128,11 +137,6 @@
  The BuildServer type.
 </summary>
 </member>
-<member name="P:Fake.BuildServerHelper.traceMode">
-<summary>
- The actual trace mode.
-</summary>
-</member>
 <member name="P:Fake.BuildServerHelper.isLocalBuild">
 <summary>
  Determines if the current build is a local build.
@@ -167,6 +171,11 @@
 <member name="P:Fake.BuildServerHelper.localBuildLabel">
 <summary>
  A constant for local builds            
+</summary>
+</member>
+<member name="P:Fake.BuildServerHelper.verbose">
+<summary>
+ Trace verbose output
 </summary>
 </member>
 <member name="T:Fake.BuildServerHelper">
@@ -275,11 +284,13 @@
 </member>
 <member name="M:Fake.FSIHelper.runBuildScript(System.String,System.Collections.Generic.IEnumerable{System.Tuple`2{System.String,System.String}})">
 <summary>
- Run the buildscript with fsi
+ Run the given buildscript with fsi.exe
 </summary>
 </member>
-<member name="">
-
+<member name="P:Fake.FSIHelper.fsiPath">
+<summary>
+ The Path to the F# interactive tool
+</summary>
 </member>
 <member name="T:Fake.FSIHelper">
 
@@ -383,6 +394,10 @@
  &lt;param name=&quot;files&quot;&gt;The orginal files.&lt;/param&gt;
 </summary>
 </member>
+<member name="M:Fake.FileHelper.CopyTo(System.String)">
+ <summary>Copies the given files to the target.</summary>
+ <param name="target">The target directory.</param>
+</member>
 <member name="M:Fake.FileHelper.Copy(System.String,System.Collections.Generic.IEnumerable{System.String})">
  <summary>Copies the files to the target.</summary>
  <param name="target">The target directory.</param>
@@ -415,6 +430,11 @@
 </member>
 <member name="">
 
+</member>
+<member name="M:Fake.FileHelper.DeleteFiles(System.Collections.Generic.IEnumerable{System.String})">
+<summary>
+ Deletes files
+</summary>
 </member>
 <member name="M:Fake.FileHelper.DeleteFile(System.String)">
 <summary>
@@ -493,6 +513,16 @@
 <summary>
  The FileSet is eagerly loaded into a list of strings.
  The scan is only done once.
+</summary>
+</member>
+<member name="M:Fake.FileSetHelper.AllFilesMatching(System.String)">
+<summary>
+ Includes a single pattern and scans the files - !! x = AllFilesMatching x
+</summary>
+</member>
+<member name="M:Fake.FileSetHelper.op_BangBang(System.String)">
+<summary>
+ Includes a single pattern and scans the files - !! x = AllFilesMatching x
 </summary>
 </member>
 <member name="M:Fake.FileSetHelper.op_MinusMinus(Fake.FileSetHelper.FileIncludes,System.String)">
@@ -659,6 +689,11 @@
  Converts a file to it&apos;s full file system name
 </summary>
 </member>
+<member name="M:Fake.FileSystemHelper.fileSystemInfo(System.String)">
+<summary>
+ Creates a FileInfo or a DirectoryInfo for the given path
+</summary>
+</member>
 <member name="M:Fake.FileSystemHelper.fileInfo(System.String)">
 <summary>
  Creates a FileInfo for the given path
@@ -670,6 +705,36 @@
 </summary>
 </member>
 <member name="T:Fake.FileSystemHelper">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Fake.FileUtils">
 
 </member>
 <member name="">
@@ -772,6 +837,487 @@
 <member name="T:Fake.FxCopHelper">
 
 </member>
+<member name="M:Fake.Git.Branches.pull(System.String,System.String,System.String)">
+<summary>
+ Pull
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.push(System.String)">
+<summary>
+ Push all
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.checkout(System.String,System.Boolean,System.String)">
+<summary>
+ Checks a branch out
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.checkoutTracked(System.String,System.String,System.String)">
+<summary>
+ Checks a branch out
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.deleteTag(System.String,System.String)">
+<summary>
+ Deletes the given tag
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.tag(System.String,System.String)">
+<summary>
+ Tags the current branch
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.deleteBranch(System.String,System.Boolean,System.String)">
+<summary>
+ Deletes the given branch
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.createBranch(System.String,System.String,System.String)">
+<summary>
+ Creates a new branch from the given commit
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.checkoutBranch(System.String,System.String)">
+<summary>
+ Performs a checkout of the given branch to the working copy
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.checkoutNewBranch(System.String,System.String,System.String)">
+ <summary>Creates a new branch based on the given baseBranch and checks it out to the working copy</summary>
+ <param name="repositoryDir">The repository directory.</param>
+ <param name="baseBranch">The base branch.</param>
+ <param name="branch">The new branch.</param>
+</member>
+<member name="M:Fake.Git.Branches.revisionsBetween(System.String,System.String,System.String)">
+<summary>
+ Returns the number of revisions between the two given commits
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.findMergeBase(System.String,System.String,System.String)">
+<summary>
+ Returns the SHA1 of the merge base of the two given commits
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.getSHA1(System.String,System.String)">
+<summary>
+ Returns the SHA1 of the given head
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.getAllBranches(System.String)">
+<summary>
+ Gets all local and remote branches
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.getRemoteBranches(System.String)">
+<summary>
+ Gets all remote branches
+</summary>
+</member>
+<member name="M:Fake.Git.Branches.getLocalBranches(System.String)">
+<summary>
+ Gets all local branches
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:Fake.Git.Branches">
+
+</member>
+<member name="M:Fake.Git.CommandHelper.findGitDir(System.String)">
+<summary>
+ Searches the git dir recursivly up to the root
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.Git.CommandHelper.runSimpleGitCommand(System.String,System.String)">
+<summary>
+ Runs the git command and returns the first line of the result
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.Git.CommandHelper.directExec(Microsoft.FSharp.Core.FSharpFunc`2{System.Diagnostics.ProcessStartInfo,Microsoft.FSharp.Core.Unit})">
+<summary>
+ Runs the given process and returns the exit code
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Fake.Git.CommandHelper">
+
+</member>
+<member name="M:Fake.Git.CommitMessage.setMessage(System.String,System.String)">
+<summary>
+ Sets the commit message
+</summary>
+</member>
+<member name="M:Fake.Git.CommitMessage.getCommitMessage(System.String)">
+<summary>
+ Gets the commit message
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:Fake.Git.CommitMessage">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.Git.FileStatus.cleanWorkingCopy(System.String)">
+<summary>
+ Cleans the working copy by doing a git reset --hard and a clean -f
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.Git.FileStatus.isInTheMiddleOfConflictedMerge(System.String)">
+<summary>
+ Returns true if the working copy is in a conflicted merge otherwise false
+</summary>
+</member>
+<member name="M:Fake.Git.FileStatus.getConflictedFiles(System.String)">
+<summary>
+ Gets all conflicted files
+</summary>
+</member>
+<member name="M:Fake.Git.FileStatus.getChangedFilesInWorkingCopy(System.String,System.String)">
+<summary>
+ Gets the changed files since the given revision incl. changes in the working copy
+</summary>
+</member>
+<member name="M:Fake.Git.FileStatus.getAllFiles(System.String)">
+<summary>
+ Gets all changed files in the current revision
+</summary>
+</member>
+<member name="M:Fake.Git.FileStatus.getChangedFiles(System.String,System.String,System.String)">
+<summary>
+ Gets the changed files between the given revisions
+</summary>
+</member>
+<member name="T:Fake.Git.FileStatus">
+
+</member>
+<member name="M:Fake.Git.Information.isAheadOf(System.String,System.String,System.String)">
+<summary>
+ Returns true if rev1 is ahead of rev2
+</summary>
+</member>
+<member name="M:Fake.Git.Information.showName(System.String,System.String)">
+<summary>
+ Returns a friendly name from a SHA1
+</summary>
+</member>
+<member name="M:Fake.Git.Information.isCleanWorkingCopy(System.String)">
+<summary>
+ Checks if the working copy is clean
+</summary>
+</member>
+<member name="M:Fake.Git.Information.showStatus(System.String)">
+<summary>
+ Shows the git status
+</summary>
+</member>
+<member name="M:Fake.Git.Information.getCurrentSHA1(System.String)">
+<summary>
+ Returns the SHA1 of the current HEAD
+</summary>
+</member>
+<member name="M:Fake.Git.Information.getVersion(System.String)">
+<summary>
+ Gets the git version
+</summary>
+</member>
+<member name="M:Fake.Git.Information.getBranchName(System.String)">
+<summary>
+ Gets the git branch name
+</summary>
+</member>
+<member name="T:Fake.Git.Information">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.Git.Merge.merge(System.String,System.String,System.String)">
+<summary>
+ Performs a merge of the given branch with the current branch
+</summary>
+</member>
+<member name="M:Fake.Git.Merge.compareBranches(System.String,System.String,System.String)">
+ <summary>
+ Tests whether branches and their "origin" counterparts have diverged and need
+ merging first.
+ </summary>
+
+ <param name="repositoryDir">The path to the repository.</param>
+ <param name="local">The local branch name.</param>
+ <param name="remote">The remote branch name.</param>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.Git.Merge.getMergeMessage(System.String)">
+<summary>
+ Gets the current merge message
+</summary>
+</member>
+<member name="T:Fake.Git.Merge">
+
+</member>
+<member name="M:Fake.Git.Rebase.rebaseOrFallbackOnMerge(System.String,System.String)">
+ <summary>
+ Tries to rebase on top of the given branch.
+ If the rebasing process fails a normal merge will be started.
+ </summary>
+ <returns>If the process used merge instead of rebase.</returns>
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.Git.Rebase.skip(System.String)">
+<summary>
+ Restart the rebasing process by skipping the current patch. 
+</summary>
+</member>
+<member name="M:Fake.Git.Rebase.continueRebase(System.String)">
+<summary>
+ Restart the rebasing process after having resolved a merge conflict. 
+</summary>
+</member>
+<member name="M:Fake.Git.Rebase.abort(System.String)">
+<summary>
+ Restore the original branch and abort the rebase operation. 
+</summary>
+</member>
+<member name="M:Fake.Git.Rebase.start(System.String,System.String)">
+<summary>
+ Performs a rebase on top of the given branch with the current branch
+</summary>
+</member>
+<member name="T:Fake.Git.Rebase">
+
+</member>
+<member name="M:Fake.Git.Repository.init(System.String,System.Boolean,System.Boolean)">
+<summary>
+ Inits a git repository
+</summary>
+</member>
+<member name="M:Fake.Git.Repository.clone(System.String,System.String,System.String)">
+<summary>
+ Clones a git repository
+</summary>
+</member>
+<member name="T:Fake.Git.Repository">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Fake.Git.Reset">
+
+</member>
+<member name="M:Fake.Git.SHA1.showObjectHash(System.String,System.String)">
+<summary>
+ shows the SHA1 calculated by git
+</summary>
+</member>
+<member name="M:Fake.Git.SHA1.calcGitSHA1(System.String)">
+<summary>
+ Calculates the SHA1 like git
+</summary>
+</member>
+<member name="M:Fake.Git.SHA1.calcSHA1(System.String)">
+<summary>
+ Calculates the SHA1 for a given string
+</summary>
+</member>
+<member name="T:Fake.Git.SHA1">
+
+</member>
+<member name="M:Fake.Git.SanityChecks.checkIsRemoteBranch(System.String,System.String)">
+<summary>
+ Checks if the given branch is a remote branch.
+</summary>
+</member>
+<member name="M:Fake.Git.SanityChecks.checkIsLocalBranch(System.String,System.String)">
+<summary>
+ Checks if the given branch is a local branch.
+</summary>
+</member>
+<member name="M:Fake.Git.SanityChecks.checkIfBranchIsAbsent(System.String,System.String)">
+<summary>
+ Checks if the given branch is absent.
+</summary>
+</member>
+<member name="M:Fake.Git.SanityChecks.checkIfBranchExists(System.String,System.String)">
+<summary>
+ Checks if the given branch exists.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:Fake.Git.SanityChecks">
+
+</member>
+<member name="M:Fake.Git.Staging.StageFile(System.String,System.String)">
+<summary>
+ Adds a file to the staging area
+</summary>
+</member>
+<member name="T:Fake.Git.Staging">
+
+</member>
+<member name="M:Fake.Git.Stash.pop(System.String)">
+<summary>
+ Remove a single stashed state from the stash list and 
+ apply it on top of the current working tree state, 
+ i.e., do the inverse operation of git stash save. 
+ The working directory must match the index. 
+</summary>
+</member>
+<member name="M:Fake.Git.Stash.push(System.String,System.String)">
+<summary>
+ Stash the changes in a dirty working directory away.
+</summary>
+</member>
+<member name="T:Fake.Git.Stash">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.Git.Submodule.add(System.String,System.String,System.String,System.String)">
+ <summary>Adds a submodule to the current repository.</summary>
+ <param name="superRepositoryDir">The super repository.</param>
+ <param name="remotePath">The path to the remote repository of the submodule.</param>
+ <param name="localPath">The local path to the submodule.</param>
+ <param name="branch">The branch to  clone. (can be null)</param>
+</member>
+<member name="M:Fake.Git.Submodule.init(System.String,System.String)">
+<summary>
+ Inits a submodule
+</summary>
+</member>
+<member name="M:Fake.Git.Submodule.getSubModules(System.String)">
+<summary>
+ Gets all submodules
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:Fake.Git.Submodule">
+
+</member>
 <member name="M:Fake.HTMLHelpWorkShopHelper.CompileHTMLHelpProject(System.String,System.String)">
  <summary>Uses the HTML Help Workshop to compile a help project.</summary>
  <param name="helpCompiler">The filename of the HTML Help WorkShop tool</param>
@@ -781,8 +1327,20 @@
 <member name="T:Fake.HTMLHelpWorkShopHelper">
 
 </member>
-<member name="">
-
+<member name="F:Fake.ILMergeHelper.ILMergeParams.XmlDocs">
+<summary>
+ True -&gt; XML documentation files are merged to produce an XML documentation file for the target assembly.
+</summary>
+</member>
+<member name="F:Fake.ILMergeHelper.ILMergeParams.UnionMerge">
+<summary>
+ True -&gt; types with the same name are all merged into a single type in the target assembly.
+</summary>
+</member>
+<member name="F:Fake.ILMergeHelper.ILMergeParams.SearchDirectories">
+<summary>
+ Directories to be used to search for input assemblies
+</summary>
 </member>
 <member name="">
 
@@ -792,6 +1350,90 @@
 </member>
 <member name="">
 
+</member>
+<member name="F:Fake.ILMergeHelper.ILMergeParams.DebugInfo">
+<summary>
+ True (default) -&gt; creates a .pdb file for the output assembly and merges into it any .pdb files found for input assemblies.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="F:Fake.ILMergeHelper.ILMergeParams.Closed">
+<summary>
+ True -&gt; transitive closure of the input assemblies is computed and added to the list of input assemblies.
+</summary>
+</member>
+<member name="F:Fake.ILMergeHelper.ILMergeParams.AttributeFile">
+<summary>
+ Path to an assembly that will be used to get all of the assembly-level attributes
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="F:Fake.ILMergeHelper.ILMergeParams.AllowWildcards">
+<summary>
+ Wild cards in file names are expanded and all matching files will be used as input.
+</summary>
+</member>
+<member name="F:Fake.ILMergeHelper.ILMergeParams.AllowMultipleAssemblyLevelAttributes">
+<summary>
+ Assembly-level attributes names that have the same type are copied over into the target directory
+</summary>
+</member>
+<member name="F:Fake.ILMergeHelper.ILMergeParams.AllowDuplicateTypes">
+<summary>
+ Duplicate types policy
+</summary>
+</member>
+<member name="F:Fake.ILMergeHelper.ILMergeParams.Libraries">
+<summary>
+ Assemblies to merge with the primary assembly
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="F:Fake.ILMergeHelper.ILMergeParams.Version">
+<summary>
+ Version to use for the merged assembly
+</summary>
+</member>
+<member name="F:Fake.ILMergeHelper.ILMergeParams.ToolPath">
+<summary>
+ Path to ILMerge.exe
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Fake.ILMergeHelper.AllowDuplicateTypes.DuplicateTypes">
+<summary>
+ List of types to allow to be duplicate
+</summary>
+</member>
+<member name="T:Fake.ILMergeHelper.AllowDuplicateTypes.AllPublicTypes">
+<summary>
+ All public types are allowed to be duplicate and renamed
+</summary>
+</member>
+<member name="T:Fake.ILMergeHelper.AllowDuplicateTypes.NoDuplicateTypes">
+<summary>
+ No duplicates of public types allowed
+</summary>
 </member>
 <member name="">
 
@@ -815,8 +1457,10 @@
 <member name="">
 
 </member>
-<member name="">
-
+<member name="M:Fake.MSBuild.SpecsRemovement.Nothing``2(``0,``1)">
+<summary>
+ A Convetion which matches nothing
+</summary>
 </member>
 <member name="M:Fake.MSBuild.SpecsRemovement.AllSpecAndTestDataFiles(System.String,System.String)">
 <summary>
@@ -851,10 +1495,48 @@
 <member name="">
 
 </member>
+<member name="M:Fake.MSBuild.SpecsRemovement.normalize(System.Xml.Linq.XDocument)">
+<summary>
+ Converts a MSBuildProject to XML
+</summary>
+</member>
+<member name="T:Fake.MSBuild.SpecsRemovement">
+
+</member>
 <member name="">
 
 </member>
-<member name="T:Fake.MSBuild.SpecsRemovement">
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
 
 </member>
 <member name="">
@@ -870,15 +1552,21 @@
  Builds the given project files and collects the output files
 </summary>
 </member>
-<member name="M:Fake.MSBuildHelper.MSBuild(System.String,System.String,System.Collections.Generic.IEnumerable{System.Tuple`2{System.String,System.String}},System.Collections.Generic.IEnumerable{System.String})">
+<member name="M:Fake.MSBuildHelper.MSBuild(System.String,System.String,Microsoft.FSharp.Collections.FSharpList{System.Tuple`2{System.String,System.String}},System.Collections.Generic.IEnumerable{System.String})">
 <summary>
  Builds the given project files and collects the output files
 </summary>
 </member>
-<member name="M:Fake.MSBuildHelper.build``1(System.String,System.String,System.Collections.Generic.IEnumerable{System.Tuple`2{System.String,System.String}},``0,System.String)">
+<member name="M:Fake.MSBuildHelper.build(Microsoft.FSharp.Core.FSharpFunc`2{Fake.MSBuildHelper.MSBuildParams,Fake.MSBuildHelper.MSBuildParams},System.String)">
 <summary>
  Runs a msbuild project
 </summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
 </member>
 <member name="">
 
@@ -918,12 +1606,6 @@
 <member name="">
 
 </member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
 <member name="M:Fake.MailBoxHelper.MessageBoxIsEmpty">
 <summary>
  Checks if the current message queue is empty
@@ -934,23 +1616,6 @@
 </member>
 <member name="">
 
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="P:Fake.MailBoxHelper.verbose">
-<summary>
- Trace verbose output
-</summary>
 </member>
 <member name="T:Fake.MailBoxHelper">
 
@@ -1125,6 +1790,74 @@
 <member name="T:Fake.NUnitHelper">
 
 </member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.NuGetHelper.NuGet(Microsoft.FSharp.Core.FSharpFunc`2{Fake.NuGetHelper.NuGetParams,Fake.NuGetHelper.NuGetParams},System.String)">
+<summary>
+ Creates a new NuGet package   
+</summary>
+</member>
+<member name="M:Fake.NuGetHelper.NuGetDefaults">
+<summary>
+ NuGet default params  
+</summary>
+</member>
+<member name="T:Fake.NuGetHelper">
+
+</member>
+<member name="M:Fake.Option.toNullable``1(Microsoft.FSharp.Core.FSharpOption{``0})">
+<summary>
+ Converts an F# option into a nullable object
+</summary>
+</member>
+<member name="M:Fake.Option.fromNullable``1(System.Nullable{``0})">
+<summary>
+ Converts a nullable object into an F# option
+</summary>
+</member>
+<member name="T:Fake.Option">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
 <member name="F:Fake.ProcessHelper.ExecParams.Args">
 <summary>
  Command-line argument pairs. The value will be quoted if it contains
@@ -1200,9 +1933,14 @@
  Adds quotes and a blank around the string   
 </summary>
 </member>
-<member name="M:Fake.ProcessHelper.quote(System.String)">
+<member name="M:Fake.ProcessHelper.quoteIfNeeded(System.String)">
 <summary>
  Adds quotes around the string if needed
+</summary>
+</member>
+<member name="M:Fake.ProcessHelper.quote(System.String)">
+<summary>
+ Adds quotes around the string
 </summary>
 </member>
 <member name="M:Fake.ProcessHelper.execProcess(Microsoft.FSharp.Core.FSharpFunc`2{System.Diagnostics.ProcessStartInfo,Microsoft.FSharp.Core.Unit},System.TimeSpan)">
@@ -1334,6 +2072,27 @@
 <member name="T:Fake.RegistryHelper">
 
 </member>
+<member name="M:Fake.SCPHelper.SCP(Microsoft.FSharp.Core.FSharpFunc`2{Fake.SCPParams,Fake.SCPParams},System.String,System.String)">
+ <summary>Performs a SCP copy.</summary>
+ <param name="source">The source directory (fileName)</param>
+ <param name="destination">The target directory (fileName)</param>
+</member>
+<member name="P:Fake.SCPHelper.SCPDefaults">
+<summary>
+ SCP default params  
+</summary>
+</member>
+<member name="T:Fake.SCPHelper">
+
+</member>
+<member name="M:Fake.Seq.contains``1(``0)">
+<summary>
+ Returns true if the given element exists in the sequence
+</summary>
+</member>
+<member name="T:Fake.Seq">
+
+</member>
 <member name="">
 
 </member>
@@ -1456,6 +2215,9 @@
  Removes linebreaks from the given string
 </summary>
 </member>
+<member name="">
+
+</member>
 <member name="M:Fake.StringHelper.replace(System.String,System.String,System.String)">
 <summary>
  Replaces the given pattern in the given text with the replacement
@@ -1545,6 +2307,11 @@
 <member name="">
 
 </member>
+<member name="M:Fake.TargetHelper.RunParameterTargetOrDefault(System.String,System.String)">
+<summary>
+ Runs the target given by the build script parameter or the given default target
+</summary>
+</member>
 <member name="P:Fake.TargetHelper.Run">
 <summary>
  Runs a Target and its dependencies
@@ -1586,15 +2353,17 @@
 </summary>
 </member>
 <member name="M:Fake.TargetHelper.run(System.String)">
-<summary>
- Runs a Target and its dependencies        
-</summary>
+ <summary>Runs a target and its dependencies</summary>
+ <param name="targetName">The target to run.</param>
 </member>
-<member name="">
-
+<member name="M:Fake.TargetHelper.WriteTaskTimeSummary``1(``0)">
+ <summary>Writes a build time report.</summary>
+ <param name="total">The total runtime.</param>
 </member>
-<member name="">
-
+<member name="M:Fake.TargetHelper.PrintDependencyGraph(System.Boolean,System.String)">
+ <summary>Writes a dependency graph.</summary>
+ <param name="verbose">Whether to print verbose output or not.</param>
+ <param name="target">The target for which the dependencies should be printed.</param>
 </member>
 <member name="M:Fake.TargetHelper.runFinalTargets">
 <summary>
@@ -1630,6 +2399,16 @@
  Creates a target from template
 </summary>
 </member>
+<member name="M:Fake.TargetHelper.AllTargetsDependOn(System.String)">
+<summary>
+ Set a dependency for all registered targets
+</summary>
+</member>
+<member name="M:Fake.TargetHelper.TargetsDependOn(System.String,System.Collections.Generic.IEnumerable{System.String})">
+<summary>
+ Set a dependency for all given targets
+</summary>
+</member>
 <member name="M:Fake.TargetHelper.op_LessEqualsEquals(System.String,Microsoft.FSharp.Collections.FSharpList{System.String})">
 <summary>
  Dependencies operator
@@ -1640,14 +2419,34 @@
  Adds the dependencies to the list of dependencies  
 </summary>
 </member>
-<member name="M:Fake.TargetHelper.dependency(System.String,System.String)">
+<member name="P:Fake.TargetHelper.dependency">
 <summary>
  Adds the dependency to the list of dependencies
+</summary>
+</member>
+<member name="M:Fake.TargetHelper.dependencyAtEnd(System.String,System.String)">
+<summary>
+ Appends the dependency to the list of dependencies
+</summary>
+</member>
+<member name="M:Fake.TargetHelper.dependencyAtFront(System.String,System.String)">
+<summary>
+ Adds the dependency to the front of the list of dependencies
+</summary>
+</member>
+<member name="M:Fake.TargetHelper.checkIfDependencyCanBeAdd(System.String,System.String)">
+<summary>
+ Checks wether the dependency can be add
 </summary>
 </member>
 <member name="M:Fake.TargetHelper.DoNothing">
 <summary>
  Do nothing - fun () -&gt; ()   
+</summary>
+</member>
+<member name="M:Fake.TargetHelper.getAllTargetsNames">
+<summary>
+ Returns a list with all targetNames
 </summary>
 </member>
 <member name="M:Fake.TargetHelper.dependencyString``1(Fake.TargetHelper.TargetTemplate{``0})">
@@ -1781,6 +2580,11 @@
 <member name="M:Fake.TeamCityHelper.sendToTeamCity(Microsoft.FSharp.Core.PrintfFormat{Microsoft.FSharp.Core.FSharpFunc`2{System.String,System.String},Microsoft.FSharp.Core.Unit,System.String,System.String},System.String)">
 <summary>
  Send message to TeamCity
+</summary>
+</member>
+<member name="M:Fake.TeamCityHelper.EncapsulateSpecialChars(System.String)">
+<summary>
+ Encapsulates special chars
 </summary>
 </member>
 <member name="T:Fake.TeamCityHelper">
@@ -1992,7 +2796,7 @@
 </member>
 <member name="M:Fake.TraceHelper.traceImportant(System.String)">
 <summary>
- Writes a trace to stderr (in green)  
+ Writes a trace to stderr (in yellow)  
 </summary>
 </member>
 <member name="M:Fake.TraceHelper.traceVerbose(System.String)">
@@ -2015,11 +2819,6 @@
  Writes a trace to the command line (in green)
 </summary>
 </member>
-<member name="M:Fake.TraceHelper.logColored(System.Boolean,System.ConsoleColor,System.Boolean,System.String)">
-<summary>
- Writes a trace output to the message buffer (in the given color)
-</summary>
-</member>
 <member name="M:Fake.TraceHelper.logVerbosefn``1(Microsoft.FSharp.Core.PrintfFormat{``0,Microsoft.FSharp.Core.Unit,System.String,Microsoft.FSharp.Core.Unit})">
 <summary>
  Logs the specified string if the verbose mode is activated.
@@ -2035,19 +2834,9 @@
  Logs the specified message
 </summary>
 </member>
-<member name="P:Fake.TraceHelper.log">
+<member name="M:Fake.TraceHelper.log(System.String)">
 <summary>
  Logs the specified string        
-</summary>
-</member>
-<member name="M:Fake.TraceHelper.logMessage(System.Boolean,System.Boolean,System.String)">
-<summary>
- Logs the specified string (via message buffer)
-</summary>
-</member>
-<member name="M:Fake.TraceHelper.xmlMessage(System.String)">
-<summary>
- Writes a XML message to the bufffer.
 </summary>
 </member>
 <member name="M:Fake.TraceHelper.WaitUntilEverythingIsPrinted">
@@ -2069,6 +2858,102 @@
 </summary>
 </member>
 <member name="T:Fake.TraceHelper">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.TraceListener.NAntXmlTraceListener.Fake-TraceListener-ITraceListener-Write(Fake.TraceListener.TraceData)">
+<summary>
+ Writes the given message to the xml file.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:Fake.TraceListener.NAntXmlTraceListener">
+ <summary>Implements a TraceListener which writes NAnt like XML files.</summary>
+ <param name="xmlOutputFile">Defines the xml output file.</param>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.TraceListener.ConsoleTraceListener.Fake-TraceListener-ITraceListener-Write(Fake.TraceListener.TraceData)">
+<summary>
+ Writes the given message to the Console.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:Fake.TraceListener.ConsoleTraceListener">
+ <summary>Implements a TraceListener for System.Console</summary>
+ <param name="importantMessagesToStdErr">Defines whether to trace important messages to StdErr.</param>
+ <param name="colorMap">A function which maps TracePriorities to ConsoleColors.</param>
+</member>
+<member name="">
+
+</member>
+<member name="T:Fake.TraceListener.ITraceListener">
+<summary>
+ Defines a TraceListener interface
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Fake.TraceListener.TraceData">
+<summary>
+ Defines Tracing information for TraceListeners
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:Fake.TraceListener.defaultConsoleTraceListener">
+<summary>
+ The default TraceListener for Console
+</summary>
+</member>
+<member name="M:Fake.TraceListener.colorMap(Fake.TraceListener.TraceData)">
+<summary>
+ Maps TracePriorities to ConsoleColors
+</summary>
+</member>
+<member name="T:Fake.TraceListener">
 
 </member>
 <member name="">
