@@ -11,6 +11,9 @@ let productName() = "FAKE"
 /// Returns if the string is null or empty
 let isNullOrEmpty = String.IsNullOrEmpty
 
+/// Returns if the string is not null or empty
+let isNotNullOrEmpty = String.IsNullOrEmpty >> not
+
 /// Reads a file line by line
 let ReadFile (file:string) =   
     seq {use textReader = new StreamReader(file, Encoding.Default)

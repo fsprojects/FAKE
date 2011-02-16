@@ -8,7 +8,10 @@ open System.Text
 type MSpecParams =
     { ToolPath: string;
       HtmlOutputDir: string;
-      WorkingDir:string; 
+      WorkingDir:string;
+      Silent: bool; 
+      ExcludeTags: string list; 
+      IncludeTags: string list;
       TimeOut: TimeSpan}
 
 /// MSpec default params  
@@ -16,6 +19,9 @@ let MSpecDefaults =
     { ToolPath = currentDirectory @@ "tools" @@ "MSpec" @@ "mspec.exe";
       HtmlOutputDir = null;
       WorkingDir = null;
+      Silent = false;
+      ExcludeTags = [];
+      IncludeTags = [];
       TimeOut = TimeSpan.FromMinutes 5.}
 
 let MSpec setParams assemblies = 
@@ -25,12 +31,17 @@ let MSpec setParams assemblies =
     assemblies
       |> Seq.iter (fun assembly ->
           let commandLineBuilder =
-              let html = isNullOrEmpty parameters.HtmlOutputDir |> not
+              let html = isNotNullOrEmpty parameters.HtmlOutputDir
+              let includes = parameters.IncludeTags |> separated ","
+              let excludes = parameters.ExcludeTags |> separated ","
 
               new StringBuilder()
                 |> appendIfTrue (buildServer = TeamCity) "--teamcity"
+                |> appendIfTrue parameters.Silent "-s" 
                 |> appendIfTrue html "-t" 
                 |> appendIfTrue html (sprintf "--html\" \"%s" <| parameters.HtmlOutputDir.TrimEnd Path.DirectorySeparatorChar) 
+                |> appendIfTrue (isNotNullOrEmpty excludes) (sprintf "-x\" \"%s" excludes) 
+                |> appendIfTrue (isNotNullOrEmpty includes) (sprintf "-i\" \"%s" includes) 
                 |> appendFileNamesIfNotNull [assembly]
 
           if not (execProcess3 (fun info ->  
