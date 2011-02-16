@@ -33,7 +33,6 @@ let MSpec setParams assemblies =
                 |> appendIfTrue html (sprintf "--html\" \"%s" <| parameters.HtmlOutputDir.TrimEnd Path.DirectorySeparatorChar) 
                 |> appendFileNamesIfNotNull [assembly]
 
-          printfn "%A" <| commandLineBuilder.ToString()
           if not (execProcess3 (fun info ->  
               info.FileName <- parameters.ToolPath
               info.WorkingDirectory <- parameters.WorkingDir
