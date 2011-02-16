@@ -67,6 +67,7 @@
     <Compile Include="NCoverHelper.fs" />
     <Compile Include="NUnitHelper.fs" />
     <Compile Include="XUnitHelper.fs" />
+    <Compile Include="MSpecHelper.fs" />
     <Compile Include="FileSet.fs" />
     <Compile Include="MSBuildHelper.fs" />
     <Compile Include="ZipHelper.fs" />
