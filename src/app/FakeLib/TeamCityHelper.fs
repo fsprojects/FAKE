@@ -125,3 +125,8 @@ let ComparisonFailure name message details expected actual =
 let getRecentlyFailedTests() =
     appSetting "teamcity.tests.recentlyFailedTests.file"
       |> ReadFile
+
+/// Gets the changed files
+let getChangedFiles() =
+    appSetting "teamcity.build.changedFiles.file"
+      |> ReadFile
