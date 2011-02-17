@@ -29,7 +29,8 @@ let testReferences = !! @"src\test\**\*.*sproj"
 // tools
 let nunitPath = @".\Tools\NUnit"
 
-appSetting "teamcity.build.changedFiles.file"
+printfn "Test:"
+appSetting "system.teamcity.build.changedFiles.file"
    |> ReadFile
    |> printfn "%A"
 
