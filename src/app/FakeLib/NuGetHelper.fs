@@ -41,6 +41,7 @@ let NuGet setParams nuSpec =
     CopyFile parameters.OutputPath nuSpec
 
     let specFile = parameters.OutputPath @@ nuSpec
+    let packageFile = parameters.OutputPath @@ (sprintf "%s.%s.nupkg" parameters.Project parameters.Version)
 
     let replacements =
         ["@build.number@",parameters.Version
@@ -64,8 +65,8 @@ let NuGet setParams nuSpec =
     // push package
     if parameters.Publish then
         let tracing = enableProcessTracing
-        let enableProcessTracing = false
-        let args = sprintf "push -source %s %s %s" parameters.PublishUrl nuSpec parameters.AccessKey
+        enableProcessTracing <- false
+        let args = sprintf "push -source %s \"%s\" %s" parameters.PublishUrl packageFile parameters.AccessKey
 
         if tracing then tracefn "%s %s" parameters.ToolPath (args.Replace(parameters.AccessKey,"PRIVATEKEY"))
 
@@ -75,7 +76,7 @@ let NuGet setParams nuSpec =
                 info.WorkingDirectory <- parameters.OutputPath |> FullName
                 info.Arguments <- args) parameters.TimeOut
         
-        let enableProcessTracing = tracing
+        enableProcessTracing <- tracing
         if result <> 0 then failwithf "Error during NuGet push. %s %s" parameters.ToolPath args
                     
     traceEndTask "NuGet" nuSpec
