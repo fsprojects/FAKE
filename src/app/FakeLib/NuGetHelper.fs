@@ -12,7 +12,10 @@ type NuGetParams =
       Project: string;
       Summary: string;
       Description: string;                               
-      OutputPath: string}
+      OutputPath: string;
+      PublishUrl: string;
+      AccessKey:string;
+      Publish:bool }
 
 /// NuGet default params  
 let NuGetDefaults() =
@@ -23,7 +26,10 @@ let NuGetDefaults() =
       Project = "";
       Summary = null;
       Description = null;
-      OutputPath = currentDirectory @@ "NuGet" }
+      OutputPath = currentDirectory @@ "NuGet";
+      PublishUrl = "http://packages.nuget.org/v1/";
+      AccessKey = null;
+      Publish = false}
  
 /// Creates a new NuGet package   
 let NuGet setParams nuSpec = 
@@ -31,6 +37,7 @@ let NuGet setParams nuSpec =
 
     let parameters = NuGetDefaults() |> setParams
 
+    // create .nuspec file
     CopyFile parameters.OutputPath nuSpec
 
     let specFile = parameters.OutputPath @@ nuSpec
@@ -44,6 +51,7 @@ let NuGet setParams nuSpec =
 
     processTemplates replacements [specFile]
 
+    // create package
     let args = sprintf "pack %s" nuSpec
     let result = 
         ExecProcess (fun info ->
@@ -52,5 +60,16 @@ let NuGet setParams nuSpec =
             info.Arguments <- args) parameters.TimeOut
                
     if result <> 0 then failwithf "Error during NuGet creation. %s %s" parameters.ToolPath args
+
+    // push package
+    if parameters.Publish then
+        let args = sprintf "push --source %s %s %s" parameters.PublishUrl nuSpec parameters.AccessKey
+        let result = 
+            ExecProcess (fun info ->
+                info.FileName <- parameters.ToolPath
+                info.WorkingDirectory <- parameters.OutputPath |> FullName
+                info.Arguments <- args) parameters.TimeOut
+               
+        if result <> 0 then failwithf "Error during NuGet push. %s %s" parameters.ToolPath args
                     
     traceEndTask "NuGet" nuSpec
