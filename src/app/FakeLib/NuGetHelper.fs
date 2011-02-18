@@ -37,10 +37,7 @@ let NuGet setParams nuSpec =
 
     let replacements =
         ["@build.number@",parameters.Version
-         "@authors@",
-            match parameters.Authors with
-            | [x] -> x
-            | xs -> xs |> Seq.map (sprintf "<author>%s</author>") |> separated " "
+         "@authors@",parameters.Authors |> separated ", "
          "@project@",parameters.Project
          "@summary@",if isNullOrEmpty parameters.Summary then "" else parameters.Summary
          "@description@",parameters.Description]
