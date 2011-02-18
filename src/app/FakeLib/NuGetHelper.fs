@@ -41,7 +41,7 @@ let NuGet setParams nuSpec =
     CopyFile parameters.OutputPath nuSpec
 
     let specFile = parameters.OutputPath @@ nuSpec
-    let packageFile = parameters.OutputPath @@ (sprintf "%s.%s.nupkg" parameters.Project parameters.Version)
+    let packageFile = sprintf "%s.%s.nupkg" parameters.Project parameters.Version
 
     let replacements =
         ["@build.number@",parameters.Version
