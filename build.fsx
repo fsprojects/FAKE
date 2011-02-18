@@ -29,11 +29,6 @@ let testReferences = !! @"src\test\**\*.*sproj"
 // tools
 let nunitPath = @".\Tools\NUnit"
 
-printfn "Test:"
-appSetting "system.teamcity.build.changedFiles.file"
-   |> ReadFile
-   |> printfn "%A"
-
 // Targets
 Target "Clean" (fun _ ->
     CleanDirs [buildDir; testDir; deployDir; docsDir; metricsDir; nugetDir]

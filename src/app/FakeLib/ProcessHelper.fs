@@ -22,6 +22,7 @@ let ExecProcessWithLambdas infoAction (timeOut:TimeSpan) silent errorF messageF 
         p.ErrorDataReceived.Add (fun d -> if d.Data <> null then errorF d.Data)
         p.OutputDataReceived.Add (fun d -> if d.Data <> null then messageF d.Data)
     try
+        tracefn "%s %s" p.StartInfo.FileName p.StartInfo.Arguments
         p.Start() |> ignore
     with
     | exn -> failwithf "Start of process %s failed. %s" p.StartInfo.FileName exn.Message
