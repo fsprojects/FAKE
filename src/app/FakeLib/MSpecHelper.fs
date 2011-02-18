@@ -28,27 +28,26 @@ let MSpec setParams assemblies =
     let details = separated ", " assemblies
     traceStartTask "MSpec" details
     let parameters = setParams MSpecDefaults
-    assemblies
-      |> Seq.iter (fun assembly ->
-          let commandLineBuilder =
-              let html = isNotNullOrEmpty parameters.HtmlOutputDir
-              let includes = parameters.IncludeTags |> separated ","
-              let excludes = parameters.ExcludeTags |> separated ","
+    
+    let commandLineBuilder =
+        let html = isNotNullOrEmpty parameters.HtmlOutputDir
+        let includes = parameters.IncludeTags |> separated ","
+        let excludes = parameters.ExcludeTags |> separated ","
 
-              new StringBuilder()
-                |> appendIfTrue (buildServer = TeamCity) "--teamcity"
-                |> appendIfTrue parameters.Silent "-s" 
-                |> appendIfTrue html "-t" 
-                |> appendIfTrue html (sprintf "--html\" \"%s" <| parameters.HtmlOutputDir.TrimEnd Path.DirectorySeparatorChar) 
-                |> appendIfTrue (isNotNullOrEmpty excludes) (sprintf "-x\" \"%s" excludes) 
-                |> appendIfTrue (isNotNullOrEmpty includes) (sprintf "-i\" \"%s" includes) 
-                |> appendFileNamesIfNotNull [assembly]
+        new StringBuilder()
+        |> appendIfTrue (buildServer = TeamCity) "--teamcity"
+        |> appendIfTrue parameters.Silent "-s" 
+        |> appendIfTrue html "-t" 
+        |> appendIfTrue html (sprintf "--html\" \"%s" <| parameters.HtmlOutputDir.TrimEnd Path.DirectorySeparatorChar) 
+        |> appendIfTrue (isNotNullOrEmpty excludes) (sprintf "-x\" \"%s" excludes) 
+        |> appendIfTrue (isNotNullOrEmpty includes) (sprintf "-i\" \"%s" includes) 
+        |> appendFileNamesIfNotNull assemblies
 
-          if not (execProcess3 (fun info ->  
-              info.FileName <- parameters.ToolPath
-              info.WorkingDirectory <- parameters.WorkingDir
-              info.Arguments <- commandLineBuilder.ToString()) parameters.TimeOut)
-          then
-              failwith "MSpec test failed.")
+    if not (execProcess3 (fun info ->  
+        info.FileName <- parameters.ToolPath
+        info.WorkingDirectory <- parameters.WorkingDir
+        info.Arguments <- commandLineBuilder.ToString()) parameters.TimeOut)
+    then
+        failwith "MSpec test failed."
                   
     traceEndTask "MSpec" details
