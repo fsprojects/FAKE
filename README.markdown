@@ -1,9 +1,5 @@
 # What is "FAKE - F# Make"?
 
-## Mailing list
-
-The "FAKE - F# Make" mailing list can be found at [http://groups.google.com/group/fsharpMake](http://groups.google.com/group/fsharpMake).
-
 ## Introduction
 
 Modern build automation systems are not limited to simply recompile programs if source code has changed. 
@@ -39,7 +35,11 @@ You can download the latest builds from http://teamcity.codebetter.com. You don'
 * Login in github (you need an account)
 * Fork the main repository from [Github](https://github.com/forki/FAKE)
 * Push your changes to your fork
-* Send me a pull request 
+* Send me a pull request
+
+## Mailing list
+
+The "FAKE - F# Make" mailing list can be found at [http://groups.google.com/group/fsharpMake](http://groups.google.com/group/fsharpMake).
 
 ## Articles
 
