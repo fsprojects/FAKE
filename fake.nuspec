@@ -8,5 +8,4 @@
     <language>en-US</language>
     <summary>@summary@</summary>
   </metadata>
-  <files><file src="sol\*.*" target="..\..\libs" /></files>
 </package>
