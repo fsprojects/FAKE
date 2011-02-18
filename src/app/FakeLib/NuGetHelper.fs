@@ -63,13 +63,19 @@ let NuGet setParams nuSpec =
 
     // push package
     if parameters.Publish then
-        let args = sprintf "push --source %s %s %s" parameters.PublishUrl nuSpec parameters.AccessKey
+        let tracing = enableProcessTracing
+        let enableProcessTracing = false
+        let args = sprintf "push -source %s %s %s" parameters.PublishUrl nuSpec parameters.AccessKey
+
+        if tracing then tracefn "%s %s" parameters.ToolPath (args.Replace(parameters.AccessKey,"PRIVATEKEY"))
+
         let result = 
             ExecProcess (fun info ->
                 info.FileName <- parameters.ToolPath
                 info.WorkingDirectory <- parameters.OutputPath |> FullName
                 info.Arguments <- args) parameters.TimeOut
-               
+        
+        let enableProcessTracing = tracing
         if result <> 0 then failwithf "Error during NuGet push. %s %s" parameters.ToolPath args
                     
     traceEndTask "NuGet" nuSpec
