@@ -19,6 +19,7 @@ let metricsDir = @".\BuildMetrics\"
 let deployDir = @".\Publish\"
 let docsDir = @".\docs\" 
 let nugetDir = @".\nuget\" 
+let reportDir = @".\report\" 
 let templatesSrcDir = @".\tools\Docu\templates\"
 let deployZip = deployDir @@ sprintf "%s-%s.zip" projectName buildVersion
 
@@ -26,12 +27,9 @@ let deployZip = deployDir @@ sprintf "%s-%s.zip" projectName buildVersion
 let appReferences  = !! @"src\app\**\*.*sproj"
 let testReferences = !! @"src\test\**\*.*sproj"
 
-// tools
-let nunitPath = @".\Tools\NUnit"
-
 // Targets
 Target "Clean" (fun _ ->
-    CleanDirs [buildDir; testDir; deployDir; docsDir; metricsDir; nugetDir]
+    CleanDirs [buildDir; testDir; deployDir; docsDir; metricsDir; nugetDir; reportDir]
 
     ["./tools/FSharp/FSharp.Core.optdata"
      "./tools/FSharp/FSharp.Core.sigdata"]
@@ -103,13 +101,10 @@ Target "BuildTest" (fun _ ->
 )
 
 Target "Test" (fun _ ->  
-    !! (testDir @@ "*.dll") 
-      |> NUnit (fun p -> 
+    !! (testDir @@ "Test.*.dll") 
+      |> MSpec (fun p -> 
             {p with 
-                ToolPath = nunitPath; 
-                DisableShadowCopy = true; 
-                Framework = "net-2.0.50727";
-                OutputFile = metricsDir @@ "nunit-result.xml"}) 
+                HtmlOutputDir = reportDir}) 
 )
 
 Target "ZipCalculatorSample" (fun _ ->
