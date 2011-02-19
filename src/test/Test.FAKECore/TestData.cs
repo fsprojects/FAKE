@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 
 namespace Test.FAKECore
@@ -10,10 +11,10 @@ namespace Test.FAKECore
         static TestData()
         {
             BaseDir = Directory.GetCurrentDirectory();
-            TestDir = string.Format("{0}\\Test", BaseDir);
-            TestDir2 = string.Format("{0}\\Test2", BaseDir);
-            SubDir1 = string.Format("{0}\\Dir1", TestDir);
-            SubDir7 = string.Format("{0}\\Dir7", TestDir);
+            TestDir = String.Format("{0}\\Test", BaseDir);
+            TestDir2 = String.Format("{0}\\Test2", BaseDir);
+            SubDir1 = String.Format("{0}\\Dir1", TestDir);
+            SubDir7 = String.Format("{0}\\Dir7", TestDir);
         }
 
         /// <summary>
@@ -45,5 +46,8 @@ namespace Test.FAKECore
         /// </summary>
         /// <value>The sub dir7.</value>
         public static string SubDir7 { get; set; }
+
+        public static readonly string SideBySideFolder = 
+            new DirectoryInfo(Environment.CurrentDirectory + @"\SideBySideSpecification\").FullName;
     }
 }
