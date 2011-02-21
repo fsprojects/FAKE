@@ -135,8 +135,10 @@ Target "CreateNuGet" (fun _ ->
         {p with               
             Authors = authors
             Project = projectName
-            Description = projectDescription                
-            OutputPath = nugetDir })  "fake.nuspec"
+            Description = projectDescription                               
+            OutputPath = nugetDir
+            AccessKey = getBuildParamOrDefault "nugetkey" ""
+            Publish = hasBuildParam "nugetkey" }) "fake.nuspec"
 )
 
 Target "Deploy" DoNothing
