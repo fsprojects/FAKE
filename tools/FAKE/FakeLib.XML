@@ -1606,6 +1606,41 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:Fake.MSpecHelper.MSpecDefaults">
+<summary>
+ MSpec default params  
+</summary>
+</member>
+<member name="T:Fake.MSpecHelper">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
 <member name="M:Fake.MailBoxHelper.MessageBoxIsEmpty">
 <summary>
  Checks if the current message queue is empty
@@ -1817,6 +1852,15 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
 <member name="M:Fake.NuGetHelper.NuGet(Microsoft.FSharp.Core.FSharpFunc`2{Fake.NuGetHelper.NuGetParams,Fake.NuGetHelper.NuGetParams},System.String)">
 <summary>
  Creates a new NuGet package   
@@ -1988,6 +2032,9 @@
 <summary>
  Runs the given process and returns the exit code
 </summary>
+</member>
+<member name="">
+
 </member>
 <member name="">
 
@@ -2266,6 +2313,11 @@
  Reads a file line by line
 </summary>
 </member>
+<member name="P:Fake.StringHelper.isNotNullOrEmpty">
+<summary>
+ Returns if the string is not null or empty
+</summary>
+</member>
 <member name="M:Fake.StringHelper.isNullOrEmpty(System.String)">
 <summary>
  Returns if the string is null or empty
@@ -2481,6 +2533,11 @@
 </member>
 <member name="T:Fake.TargetHelper">
 
+</member>
+<member name="M:Fake.TeamCityHelper.getChangedFiles">
+<summary>
+ Gets the changed files
+</summary>
 </member>
 <member name="M:Fake.TeamCityHelper.getRecentlyFailedTests">
 <summary>
@@ -3015,6 +3072,16 @@
 </member>
 <member name="T:Fake.XCopyHelper">
 
+</member>
+<member name="M:Fake.XMLHelper.XmlPokeNS(System.String,System.Collections.Generic.IEnumerable{System.Tuple`2{System.String,System.String}},System.String,System.String)">
+<summary>
+ Replaces text in an XML file at the location specified by an XPath expression, with support for namespaces.
+</summary>
+</member>
+<member name="M:Fake.XMLHelper.XPathReplaceNS``1(System.String,System.String,``0,System.Xml.XmlDocument)">
+<summary>
+ Replaces text in XML document specified by an XPath expression, with support for namespaces.
+</summary>
 </member>
 <member name="M:Fake.XMLHelper.XmlPoke(System.String,System.String,System.String)">
 <summary>

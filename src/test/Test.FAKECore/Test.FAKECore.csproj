@@ -42,6 +42,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>169</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -57,9 +58,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\FSharp\FSharp.Core.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework, Version=2.5.3.9345, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\tools\Nunit\nunit.framework.dll</HintPath>
+    <Reference Include="Machine.Specifications">
+      <HintPath>..\..\..\tools\MSpec\Machine.Specifications.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -75,27 +75,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Test.Git\ShouldExtensions.cs">
-      <Link>ShouldExtensions.cs</Link>
-    </Compile>
     <Compile Include="FileHandling\BaseFunctions.cs" />
-    <Compile Include="FileHandling\TestCompareFiles.cs" />
-    <Compile Include="FileHandling\TestCopyDir.cs" />
-    <Compile Include="FileHandling\TestRelativeFileScan.cs" />
+    <Compile Include="FileHandling\FileComparisonSpecs.cs" />
+    <Compile Include="FileHandling\CopyDirectorySpec.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="Globbing\Directories\TestGlobbingOfDirectories.cs" />
-    <Compile Include="SideBySideSpecification\FindReferencesTest.cs" />
-    <Compile Include="SideBySideSpecification\SpecsRemovementTest.cs" />
-    <Compile Include="StringHelperTest.cs" />
-    <Compile Include="TestRelativePaths.cs" />
-    <Compile Include="XMLHandling\TestLoadXML.cs" />
-    <Compile Include="XMLHandling\TestXMLPoke.cs" />
-    <Compile Include="FileHandling\TestFileScan.cs" />
+    <Compile Include="Globbing\Directories\GlobbingOfDirectoriesSpecs.cs" />
+    <Compile Include="SideBySideSpecification\ReferencesScanningSpecs.cs" />
+    <Compile Include="SideBySideSpecification\SpecsRemovementSpecs.cs" />
+    <Compile Include="StringHelperSpecs.cs" />
+    <Compile Include="RelativePathsSpecs.cs" />
+    <Compile Include="XmlSpecs.cs" />
     <Compile Include="TestData.cs" />
-    <Compile Include="FileHandling\TestCleanDir.cs" />
-    <Compile Include="TestIfFAKEIsAvailable.cs" />
+    <Compile Include="FileHandling\CleanDirectorySpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="FileHandling\TestDirectoryScan.cs" />
+    <Compile Include="FileHandling\GlobbingSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

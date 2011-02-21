@@ -1,14 +1,31 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Fake;
+using Machine.Specifications;
 using Microsoft.FSharp.Core;
-using NUnit.Framework;
 
 namespace Test.FAKECore.FileHandling
-{
-    [TestFixture]
+{   
+    public class when_creating_test_directory_structure : BaseFunctions
+    {
+        Because of = CreateTestDirStructure;
+
+        It should_create_all_dirs = () => AllDirectories().Length.ShouldEqual(16);
+
+        It should_create_no_files = () => AllFiles().ShouldBeEmpty();
+    }
+
+    public class when_creating_test_file_structure : BaseFunctions
+    {
+        Because of = CreateTestFileStructure;
+
+        It should_create_all_dirs = () => AllDirectories().Length.ShouldEqual(16);
+
+        It should_create_all_files = () => AllFiles().Length.ShouldEqual(17);
+    }
+
     public class BaseFunctions
     {
         /// <summary>
@@ -19,7 +36,6 @@ namespace Test.FAKECore.FileHandling
         {
             FileHelper.CleanDir(dir);
         }
-
 
         /// <summary>
         /// Creates the test dir structure.
@@ -38,18 +54,6 @@ namespace Test.FAKECore.FileHandling
             CleanDir(TestData.TestDir + "\\Dir7\\Sub1");
             CleanDir(TestData.TestDir + "\\Dir7\\Sub2\\Sub1");
             CleanDir(TestData.TestDir + "\\Dir8\\Sub1");
-        }
-
-        /// <summary>
-        /// Tests if dir is empty or doesn't exists.
-        /// </summary>
-        /// <param name="dir">The dir.</param>
-        public static void TestIfDirIsEmpty(string dir)
-        {
-            var di = new DirectoryInfo(dir);
-            if (!di.Exists) return;
-            Assert.AreEqual(0, Directory.GetDirectories(dir, "*", SearchOption.AllDirectories).Length);
-            Assert.AreEqual(0, Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories).Length);
         }
 
         /// <summary>
@@ -166,29 +170,14 @@ namespace Test.FAKECore.FileHandling
         }
 
 
-        /// <summary>
-        /// Tests the creating of directories.
-        /// </summary>
-        [Test]
-        public void TestDirStructure()
+        public static string[] AllDirectories()
         {
-            CreateTestDirStructure();
-
-            Assert.AreEqual(16, Directory.GetDirectories(TestData.TestDir, "*", SearchOption.AllDirectories).Length);
-            Assert.AreEqual(0, Directory.GetFiles(TestData.TestDir, "*.*", SearchOption.AllDirectories).Length);
+            return Directory.GetDirectories(TestData.TestDir, "*", SearchOption.AllDirectories);
         }
 
-
-        /// <summary>
-        /// Tests the creating of directories and files.
-        /// </summary>
-        [Test]
-        public void TestFileStructure()
+        protected static string[] AllFiles()
         {
-            CreateTestFileStructure();
-
-            Assert.AreEqual(16, Directory.GetDirectories(TestData.TestDir, "*", SearchOption.AllDirectories).Length);
-            Assert.AreEqual(17, Directory.GetFiles(TestData.TestDir, "*.*", SearchOption.AllDirectories).Length);
+            return Directory.GetFiles(TestData.TestDir, "*.*", SearchOption.AllDirectories);
         }
     }
 }
