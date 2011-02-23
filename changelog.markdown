@@ -1,3 +1,7 @@
+## 1.48.0.0
+
+* Bundled with docu.exe compiled against .Net 4.0.
+
 ## 1.46.0.0
 
 * Fixed Nuget support and allows automatic push.
