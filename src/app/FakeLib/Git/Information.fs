@@ -39,7 +39,8 @@ let isAheadOf repositoryDir rev1 rev2 =
 
 /// Gets the last git tag by calling git describe
 let describe repositoryDir =
-    let _,msg,_ = runGitCommand repositoryDir "describe"
+    let _,msg,error = runGitCommand repositoryDir "describe"
+    if error <> "" then failwithf "git describe failed: %s" error
     msg |> Seq.head
 
 /// Gets the last git tag by calling git describe
