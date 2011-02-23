@@ -246,6 +246,9 @@ let CleanDir path =
 /// Clean multiple directories
 let CleanDirs dirs = Seq.iter CleanDir dirs
 
+/// Delete multiple directories
+let DeleteDirs dirs = Seq.iter DeleteDir dirs
+
 /// Reads a csv file line by line
 /// delimiter is a ,
 let ReadCSVFile(file:string) =             
