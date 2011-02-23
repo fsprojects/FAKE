@@ -2,6 +2,7 @@
 
 * Bundled with docu.exe compiled against .Net 4.0.
 * Added targetplatform switch for ILMerge task.
+* Added log switch for ILMerge task.
 
 ## 1.46.0.0
 
