@@ -11,10 +11,10 @@ type DocuParams =
 
 /// Docu default params  
 let DocuDefaults =
-    { ToolPath = currentDirectory @@ "tools" @@ "FAKE" @@ "docu.exe"
-      TemplatesPath = currentDirectory @@ "templates"
+    { ToolPath = "./tools/FAKE/docu.exe"
+      TemplatesPath = "./tools/FAKE/templates"
       TimeOut = TimeSpan.FromMinutes 5.
-      OutputPath = currentDirectory @@ "output" }
+      OutputPath = "./output" }
    
 let Docu setParams assemblies = 
     let details = assemblies |> separated ", "
@@ -24,11 +24,11 @@ let Docu setParams assemblies =
     let files = assemblies |> Seq.map FullName |> separated " "
     let args =
         files +
-            " --output=" + parameters.OutputPath +
-            " --templates=" + parameters.TemplatesPath
+            " --output=" + (parameters.OutputPath |> FullName) +
+            " --templates=" + (parameters.TemplatesPath |> FullName)
 
     if not (execProcess3 (fun info ->  
-        info.FileName <- parameters.ToolPath        
+        info.FileName <- parameters.ToolPath |> FullName                 
         info.Arguments <- args) parameters.TimeOut)
     then
         failwith "Documentation generation failed."

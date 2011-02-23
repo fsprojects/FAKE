@@ -1,6 +1,7 @@
 ## 1.48.0.0
 
 * Bundled with docu.exe compiled against .Net 4.0.
+* Fixed docu calls to run with full filenames.
 * Added targetplatform switch for ILMerge task.
 * Added log switch for ILMerge task.
 
