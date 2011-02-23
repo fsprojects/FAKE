@@ -12,9 +12,14 @@ type AllowDuplicateTypes =
     | DuplicateTypes of string list
 
 type InternalizeTypes =
-    | NoInternalize
-    | Internalize
-    | InternalizeExcept of string
+| NoInternalize
+| Internalize
+| InternalizeExcept of string
+
+type TargetKind =
+| Library
+| Exe
+| WinExe
 
 type ILMergeParams =
    /// Path to ILMerge.exe
@@ -48,7 +53,7 @@ type ILMergeParams =
    SearchDirectories: string seq
    /// v1 or v1.1 or v2 or v4 or version,platform
    TargetPlatform: string
-   // TargetKind: Dll or Exe or WinExe // /target 
+   TargetKind: TargetKind
    /// True -> types with the same name are all merged into a single type in the target assembly.
    UnionMerge: bool
    /// True -> XML documentation files are merged to produce an XML documentation file for the target assembly.
@@ -75,6 +80,7 @@ let ILMergeDefaults : ILMergeParams =
       TargetPlatform = null
       LogFile = null
       SearchDirectories = []
+      TargetKind = Library
       UnionMerge = false 
       XmlDocs = false }
    
@@ -109,6 +115,11 @@ let ILMerge setParams outputFile primaryAssembly =
             if isNullOrEmpty parameters.TargetPlatform
                 then None
                 else Some("targetplatform", quote parameters.TargetPlatform)
+        let targetKind = 
+            match parameters.TargetKind with
+            | Library -> Some("target", "library")
+            | Exe -> Some("target", "exe")
+            | WinExe -> Some("target", "winexe")
         let allowDup = 
             match parameters.AllowDuplicateTypes with
             | NoDuplicateTypes -> [None]
@@ -136,7 +147,7 @@ let ILMerge setParams outputFile primaryAssembly =
             [ parameters.DebugInfo, "ndebug" ]
             |> List.map (fun (v,d) -> if v then None else Some(d, null))
         let allParameters = 
-            [output; attrFile; keyFile; logFile; fileAlign; version; internalize; targetPlatform] 
+            [output; attrFile; keyFile; logFile; fileAlign; version; internalize; targetPlatform; targetKind] 
                @ booleans @ notbooleans @ allowDup @ libDirs
             |> Seq.choose id
             |> Seq.map (fun (k,v) -> "/" + k + (if isNullOrEmpty v then "" else ":" + v))
