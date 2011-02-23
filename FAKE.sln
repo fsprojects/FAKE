@@ -25,6 +25,11 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.SQL", "src\app\Fake.SQ
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Gallio", "src\app\Fake.Gallio\Fake.Gallio.fsproj", "{AA2BB7A4-B590-40E7-A749-BCC87B68FEAC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{4609456B-C12B-444C-AE55-AE96E096D7F1}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\install.ps1 = scripts\install.ps1
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +66,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{EA6A2A1A-80C9-418F-A835-11758E1AE87E} = {0F0488CC-2580-4C07-9E16-3997480F0221}
+		{4609456B-C12B-444C-AE55-AE96E096D7F1} = {0F0488CC-2580-4C07-9E16-3997480F0221}
 		{13D56521-772A-41DB-9772-1DA1A4AA8E3A} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
 		{CA923BCA-C273-4744-9658-7DF7001FF266} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
 		{12319188-8893-4FE4-BF1D-62B85661DEA9} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
