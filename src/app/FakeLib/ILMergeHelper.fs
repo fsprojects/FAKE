@@ -46,7 +46,8 @@ type ILMergeParams =
    // PublicKeyTokens
    /// Directories to be used to search for input assemblies
    SearchDirectories: string seq
-   // TargetPlatform: v1 or v1.1 or v2 or v4 or version,platform
+   /// v1 or v1.1 or v2 or v4 or version,platform
+   TargetPlatform: string
    // TargetKind: Dll or Exe or WinExe // /target 
    /// True -> types with the same name are all merged into a single type in the target assembly.
    UnionMerge: bool
@@ -56,7 +57,7 @@ type ILMergeParams =
 
 /// ILMerge default params  
 let ILMergeDefaults : ILMergeParams =
-    { ToolPath = currentDirectory @@ "tools" @@ "ILMerge" @@ "ilmerge.exe"
+    { ToolPath = @".\tools\ILMerge\ilmerge.exe"
       Version = ""
       TimeOut = TimeSpan.FromMinutes 5.
       Libraries = [] 
@@ -71,6 +72,7 @@ let ILMergeDefaults : ILMergeParams =
       Internalize = NoInternalize
       FileAlignment = None
       KeyFile = null
+      TargetPlatform = null
       SearchDirectories = []
       UnionMerge = false 
       XmlDocs = false }
@@ -98,6 +100,10 @@ let ILMerge setParams outputFile primaryAssembly =
             match parameters.FileAlignment with
             | Some a -> Some("align", a.ToString())
             | None -> None
+        let targetPlatform = 
+            if isNullOrEmpty parameters.TargetPlatform
+                then None
+                else Some("targetplatform", quote parameters.TargetPlatform)
         let allowDup = 
             match parameters.AllowDuplicateTypes with
             | NoDuplicateTypes -> [None]
@@ -125,14 +131,14 @@ let ILMerge setParams outputFile primaryAssembly =
             [ parameters.DebugInfo, "ndebug" ]
             |> List.map (fun (v,d) -> if v then None else Some(d, null))
         let allParameters = 
-            [output; attrFile; keyFile; fileAlign; version; internalize] @ booleans @ notbooleans @ allowDup @ libDirs
+            [output; attrFile; keyFile; fileAlign; version; internalize; targetPlatform] 
+               @ booleans @ notbooleans @ allowDup @ libDirs
             |> Seq.choose id
             |> Seq.map (fun (k,v) -> "/" + k + (if isNullOrEmpty v then "" else ":" + v))
             |> separated " "
         let libraries = primaryAssembly + " " + (separated " " parameters.Libraries)
         allParameters + " " + libraries
 
-    tracefn "%s %s" parameters.ToolPath args
     if not (execProcess3 (fun info ->  
         info.FileName <- parameters.ToolPath
         info.WorkingDirectory <- null
