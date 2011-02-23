@@ -79,11 +79,15 @@ Target "GenerateDocumentation" (fun _ ->
             OutputPath = docsDir })
 )
 
+Target "CopyDocu" (fun _ -> 
+    ["./tools/Docu/docu.exe"
+     "./tools/Docu/DocuLicense.txt"]
+       |> CopyTo buildDir
+)
+
 Target "CopyLicense" (fun _ -> 
     ["License.txt"
-     "readme.markdown"
-     "./tools/Docu/docu.exe"
-     "./tools/Docu/DocuLicense.txt"]
+     "readme.markdown"]
        |> CopyTo buildDir
 )
 
@@ -150,9 +154,9 @@ if not isLocalBuild then
     "BuildApp" <== ["SetAssemblyInfo"]
 
 ["BuildZip"; "Test"; "GenerateDocumentation"] |> TargetsDependOn "BuildApp"
-
-"BuildZip" <== ["CopyLicense"]
+"BuildZip" <== ["CopyLicense"; "CopyDocu"]
 "Test" <== ["BuildTest"]
+"GenerateDocumentation" <== ["CopyDocu"]
 "ZipDocumentation" <== ["GenerateDocumentation"]
 "CreateNuGet" <== ["Test"; "BuildZip"; "ZipCalculatorSample"; "ZipDocumentation"]
 "Deploy" <== ["CreateNuGet"]

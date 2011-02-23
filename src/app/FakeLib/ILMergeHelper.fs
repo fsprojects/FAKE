@@ -12,9 +12,14 @@ type AllowDuplicateTypes =
     | DuplicateTypes of string list
 
 type InternalizeTypes =
-    | NoInternalize
-    | Internalize
-    | InternalizeExcept of string
+| NoInternalize
+| Internalize
+| InternalizeExcept of string
+
+type TargetKind =
+| Library
+| Exe
+| WinExe
 
 type ILMergeParams =
    /// Path to ILMerge.exe
@@ -42,12 +47,13 @@ type ILMergeParams =
    FileAlignment: int option
    KeyFile: string
    // DelaySign
-   // Log / LogFile
+   LogFile : string
    // PublicKeyTokens
    /// Directories to be used to search for input assemblies
    SearchDirectories: string seq
-   // TargetPlatform: v1 or v1.1 or v2 or v4 or version,platform
-   // TargetKind: Dll or Exe or WinExe // /target 
+   /// v1 or v1.1 or v2 or v4 or version,platform
+   TargetPlatform: string
+   TargetKind: TargetKind
    /// True -> types with the same name are all merged into a single type in the target assembly.
    UnionMerge: bool
    /// True -> XML documentation files are merged to produce an XML documentation file for the target assembly.
@@ -56,7 +62,7 @@ type ILMergeParams =
 
 /// ILMerge default params  
 let ILMergeDefaults : ILMergeParams =
-    { ToolPath = currentDirectory @@ "tools" @@ "ILMerge" @@ "ilmerge.exe"
+    { ToolPath = @".\tools\ILMerge\ilmerge.exe"
       Version = ""
       TimeOut = TimeSpan.FromMinutes 5.
       Libraries = [] 
@@ -71,7 +77,10 @@ let ILMergeDefaults : ILMergeParams =
       Internalize = NoInternalize
       FileAlignment = None
       KeyFile = null
+      TargetPlatform = null
+      LogFile = null
       SearchDirectories = []
+      TargetKind = Library
       UnionMerge = false 
       XmlDocs = false }
    
@@ -94,10 +103,23 @@ let ILMerge setParams outputFile primaryAssembly =
             if isNullOrEmpty parameters.KeyFile
                 then None
                 else Some("keyfile", quote parameters.KeyFile)
+        let logFile = 
+            if isNullOrEmpty parameters.LogFile
+                then None
+                else Some("log", quote parameters.LogFile)
         let fileAlign = 
             match parameters.FileAlignment with
             | Some a -> Some("align", a.ToString())
             | None -> None
+        let targetPlatform = 
+            if isNullOrEmpty parameters.TargetPlatform
+                then None
+                else Some("targetplatform", quote parameters.TargetPlatform)
+        let targetKind = 
+            match parameters.TargetKind with
+            | Library -> Some("target", "library")
+            | Exe -> Some("target", "exe")
+            | WinExe -> Some("target", "winexe")
         let allowDup = 
             match parameters.AllowDuplicateTypes with
             | NoDuplicateTypes -> [None]
@@ -125,14 +147,14 @@ let ILMerge setParams outputFile primaryAssembly =
             [ parameters.DebugInfo, "ndebug" ]
             |> List.map (fun (v,d) -> if v then None else Some(d, null))
         let allParameters = 
-            [output; attrFile; keyFile; fileAlign; version; internalize] @ booleans @ notbooleans @ allowDup @ libDirs
+            [output; attrFile; keyFile; logFile; fileAlign; version; internalize; targetPlatform; targetKind] 
+               @ booleans @ notbooleans @ allowDup @ libDirs
             |> Seq.choose id
             |> Seq.map (fun (k,v) -> "/" + k + (if isNullOrEmpty v then "" else ":" + v))
             |> separated " "
         let libraries = primaryAssembly + " " + (separated " " parameters.Libraries)
         allParameters + " " + libraries
 
-    tracefn "%s %s" parameters.ToolPath args
     if not (execProcess3 (fun info ->  
         info.FileName <- parameters.ToolPath
         info.WorkingDirectory <- null

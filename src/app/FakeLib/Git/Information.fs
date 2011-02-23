@@ -37,3 +37,25 @@ let isAheadOf repositoryDir rev1 rev2 =
     if rev1 = rev2 then false else
     findMergeBase repositoryDir rev1 rev2 = rev2
 
+/// Gets the last git tag by calling git describe
+let describe repositoryDir =
+    let _,msg,error = runGitCommand repositoryDir "describe"
+    if error <> "" then failwithf "git describe failed: %s" error
+    msg |> Seq.head
+
+/// Gets the git log in one line
+let shortlog repositoryDir =
+    let _,msg,error = runGitCommand repositoryDir "log --oneline -1"
+    if error <> "" then failwithf "git log --oneline failed: %s" error
+    msg |> Seq.head
+
+/// Gets the last git tag of the current repository by calling git describe
+let getLastTag() = (describe "").Split('-') |> Seq.head
+
+/// Gets the current hash of the current repository
+let getCurrentHash() =
+    let tmp =
+        (shortlog "").Split(' ') 
+          |> Seq.head
+          |> fun s -> s.Split('m')
+    if tmp |> Array.length > 2 then tmp.[1].Substring(0,6) else tmp.[0].Substring(0,6)
