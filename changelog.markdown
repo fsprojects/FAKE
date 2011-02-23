@@ -1,3 +1,8 @@
+## 1.50.0.0
+
+* New task DeleteDirs allows to delete multiple directories.
+* New parameter for NuGet dependencies.
+
 ## 1.48.0.0
 
 * Bundled with docu.exe compiled against .Net 4.0.
