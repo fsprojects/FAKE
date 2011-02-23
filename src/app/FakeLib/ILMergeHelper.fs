@@ -106,7 +106,7 @@ let ILMerge setParams outputFile primaryAssembly =
         let logFile = 
             if isNullOrEmpty parameters.LogFile
                 then None
-                else Some("log", quote parameters.KeyFile)
+                else Some("log", quote parameters.LogFile)
         let fileAlign = 
             match parameters.FileAlignment with
             | Some a -> Some("align", a.ToString())
