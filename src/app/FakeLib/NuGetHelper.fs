@@ -15,6 +15,7 @@ type NuGetParams =
       OutputPath: string;
       PublishUrl: string;
       AccessKey:string;
+      Dependencies: (string*string) list;
       Publish:bool }
 
 /// NuGet default params  
@@ -26,6 +27,7 @@ let NuGetDefaults() =
       Project = "";
       Summary = null;
       Description = null;
+      Dependencies = [];
       OutputPath = currentDirectory @@ "NuGet";
       PublishUrl = "http://packages.nuget.org/v1/";
       AccessKey = null;
@@ -42,12 +44,19 @@ let NuGet setParams nuSpec =
 
     let specFile = parameters.OutputPath @@ nuSpec
     let packageFile = sprintf "%s.%s.nupkg" parameters.Project parameters.Version
+    let dependencies =
+        if parameters.Dependencies = [] then "" else
+        parameters.Dependencies
+          |> Seq.map (fun (package,version) -> sprintf "<dependency id=\"%s\" version=\"%s\" />" package version)
+          |> separated "\r\n"
+          |> fun s -> sprintf "<dependencies>\r\n%s\r\n</dependencies>" s
 
     let replacements =
         ["@build.number@",parameters.Version
          "@authors@",parameters.Authors |> separated ", "
          "@project@",parameters.Project
          "@summary@",if isNullOrEmpty parameters.Summary then "" else parameters.Summary
+         "@dependencies@",dependencies
          "@description@",parameters.Description]
 
     processTemplates replacements [specFile]
