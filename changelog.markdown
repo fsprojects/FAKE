@@ -4,6 +4,7 @@
 * Fixed docu calls to run with full filenames.
 * Added targetplatform switch for ILMerge task.
 * Added log switch for ILMerge task.
+* Added Git.Information.getLastGitTag() which gets the last git tag by calling git describe.
 
 ## 1.46.0.0
 

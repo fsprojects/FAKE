@@ -37,3 +37,10 @@ let isAheadOf repositoryDir rev1 rev2 =
     if rev1 = rev2 then false else
     findMergeBase repositoryDir rev1 rev2 = rev2
 
+/// Gets the last git tag by calling git describe
+let describe repositoryDir =
+    let _,msg,_ = runGitCommand repositoryDir "describe"
+    msg |> Seq.head
+
+/// Gets the last git tag by calling git describe
+let getLastGitTag() = (describe "").Split('-') |> Seq.head
