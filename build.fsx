@@ -34,8 +34,6 @@ Target "Clean" (fun _ ->
     ["./tools/FSharp/FSharp.Core.optdata"
      "./tools/FSharp/FSharp.Core.sigdata"]
       |> CopyTo buildDir
-
-    failwithf "Test"
 )
 
 Target "SetAssemblyInfo" (fun _ ->
@@ -193,10 +191,7 @@ let inline (<=>) x y =
     ==> "Deploy"
   
 if not isLocalBuild then
-    "Clean" ==> "SetAssemblyInfo" ==> "BuildApp" |> ignore   
-
-let target_x = getTarget "Test"
-tracefn "Test: %A" target_x.Dependencies
+    "Clean" ==> "SetAssemblyInfo" ==> "BuildApp" |> ignore
 
 // start build
 Run "Deploy"
