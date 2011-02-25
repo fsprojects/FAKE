@@ -147,19 +147,51 @@ Target "CreateNuGet" (fun _ ->
 
 Target "Deploy" DoNothing
 
+open System.Collections.Generic
+let sameLevels = new Dictionary<_,_>()
+
+let targetsAreOnSameLevel x y =
+    match sameLevels.TryGetValue y with
+    | true, z -> failwithf "Target %s is already on same level with %s" x z
+    | _  -> sameLevels.[y] <- x
+
+let rec addDependenciesOnSameLevel target dependency =
+    match sameLevels.TryGetValue dependency with
+    | true, x -> 
+        addDependenciesOnSameLevel target x
+        Dependencies target [x]
+    | _  -> ()
+
 // Dependencies
+let inline (==>) x y =
+    addDependenciesOnSameLevel y x 
+    Dependencies y [x]
 
-AllTargetsDependOn "Clean"
+    y
+
+// Dependencies
+let inline (<=>) x y =   
+    let target_x = getTarget x
+    Dependencies y target_x.Dependencies
+    targetsAreOnSameLevel x y
+    y
+      
+
+// Dependencies
+"Clean"
+    ==> "BuildApp" <=> "BuildTest"
+    ==> "Test"
+    ==> "CopyLicense"
+    ==> "CopyDocu"
+    ==> "BuildZip"
+    ==> "GenerateDocumentation"
+    ==> "ZipDocumentation"
+    ==> "ZipCalculatorSample"
+    ==> "CreateNuGet"
+    ==> "Deploy"
+  
 if not isLocalBuild then
-    "BuildApp" <== ["SetAssemblyInfo"]
-
-["BuildZip"; "Test"; "GenerateDocumentation"] |> TargetsDependOn "BuildApp"
-"BuildZip" <== ["CopyLicense"; "CopyDocu"]
-"Test" <== ["BuildTest"]
-"GenerateDocumentation" <== ["CopyDocu"]
-"ZipDocumentation" <== ["GenerateDocumentation"]
-"CreateNuGet" <== ["Test"; "BuildZip"; "ZipCalculatorSample"; "ZipDocumentation"]
-"Deploy" <== ["CreateNuGet"]
+    "Clean" ==> "SetAssemblyInfo" ==> "BuildApp" |> ignore
 
 // start build
 Run "Deploy"
