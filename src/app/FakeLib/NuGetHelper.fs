@@ -33,12 +33,9 @@ let NuGetDefaults() =
       AccessKey = null;
       Publish = false}
  
-/// Creates a new NuGet package   
-let NuGet setParams nuSpec = 
-    traceStartTask "NuGet" nuSpec
+let replaceAccessKey key (s:string) = s.Replace(key,"PRIVATEKEY")
 
-    let parameters = NuGetDefaults() |> setParams
-
+let private runNuget parameters nuSpec = 
     // create .nuspec file
     CopyFile parameters.OutputPath nuSpec
 
@@ -77,7 +74,10 @@ let NuGet setParams nuSpec =
         enableProcessTracing <- false
         let args = sprintf "push -source %s \"%s\" %s" parameters.PublishUrl packageFile parameters.AccessKey
 
-        if tracing then tracefn "%s %s" parameters.ToolPath (args.Replace(parameters.AccessKey,"PRIVATEKEY"))
+        if tracing then 
+            args
+              |> replaceAccessKey parameters.AccessKey
+              |> tracefn "%s %s" parameters.ToolPath 
 
         let result = 
             ExecProcess (fun info ->
@@ -86,6 +86,18 @@ let NuGet setParams nuSpec =
                 info.Arguments <- args) parameters.TimeOut
         
         enableProcessTracing <- tracing
-        if result <> 0 then failwithf "Error during NuGet push. %s %s" parameters.ToolPath args
-                    
+        if result <> 0 then failwithf "Error during NuGet push. %s %s" parameters.ToolPath args                   
+
+/// Creates a new NuGet package   
+let NuGet setParams nuSpec =
+    traceStartTask "NuGet" nuSpec
+    let parameters = NuGetDefaults() |> setParams
+    try    
+        runNuget parameters nuSpec
+    with
+    | exn -> 
+        exn.Message
+          |> replaceAccessKey parameters.AccessKey
+          |> failwith
+
     traceEndTask "NuGet" nuSpec
