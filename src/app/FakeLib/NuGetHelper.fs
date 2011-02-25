@@ -33,7 +33,7 @@ let NuGetDefaults() =
       AccessKey = null;
       Publish = false}
  
-let replaceAccessKey key (s:string) = s.Replace(key,"PRIVATEKEY")
+let private replaceAccessKey key (s:string) = s.Replace(key,"PRIVATEKEY")
 
 let private runNuget parameters nuSpec = 
     // create .nuspec file
