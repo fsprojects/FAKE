@@ -193,7 +193,7 @@ let inline (<=>) x y =
     ==> "Deploy"
   
 if not isLocalBuild then
-    "Clean" ==> "SetAssemblyInfo" ==> "BuildApp"    
+    "Clean" ==> "SetAssemblyInfo" ==> "BuildApp" |> ignore   
 
 let target_x = getTarget "Test"
 tracefn "Test: %A" target_x.Dependencies
