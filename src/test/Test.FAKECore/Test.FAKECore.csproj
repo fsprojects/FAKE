@@ -80,6 +80,7 @@
     <Compile Include="FileHandling\CopyDirectorySpec.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Globbing\Directories\GlobbingOfDirectoriesSpecs.cs" />
+    <Compile Include="ILMerge\ILMergeSpecs.cs" />
     <Compile Include="SideBySideSpecification\ReferencesScanningSpecs.cs" />
     <Compile Include="SideBySideSpecification\SpecsRemovementSpecs.cs" />
     <Compile Include="StringHelperSpecs.cs" />

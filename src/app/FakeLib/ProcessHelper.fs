@@ -98,6 +98,27 @@ let toParam x = " " + quoteIfNeeded x
 /// Use default Parameters
 let UseDefaults = id
 
+let stringParam(paramName,paramValue) = 
+    if isNullOrEmpty paramValue then None else Some(paramName, quote paramValue)
+
+let multipleStringParams paramName =
+    Seq.map (fun x -> stringParam(paramName,x)) >> Seq.toList
+
+let optionParam(paramName,paramValue) = 
+    match paramValue with
+    | Some x -> Some(paramName, x.ToString())
+    | None -> None
+
+let boolParam(paramName,paramValue) = if paramValue then Some(paramName, null) else None
+
+let parametersToString flagPrefix delimiter parameters =
+    parameters
+      |> Seq.choose id
+      |> Seq.map (fun (paramName,paramValue) -> 
+            flagPrefix + paramName + 
+                if isNullOrEmpty paramValue then "" else delimiter + paramValue)
+      |> separated " "
+
 /// Searches the given directories for all occurrences of the given file name
 let tryFindFile dirs file =
     let files = 
