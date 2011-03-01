@@ -58,6 +58,10 @@
       <Private>True</Private>
       <HintPath>..\..\..\packages\FSharp.Core.2.0.0.0\lib\FSharp.Core.dll</HintPath>
     </Reference>
+    <Reference Include="FSharp.Testing, Version=0.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\FSharp.Testing.0.2.3.0\lib\FSharp.Testing.dll</HintPath>
+    </Reference>
     <Reference Include="Machine.Specifications">
       <HintPath>..\..\..\tools\MSpec\Machine.Specifications.dll</HintPath>
     </Reference>
@@ -150,6 +154,7 @@
     <None Include="Globbing\Directories\SampleApp.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
