@@ -4,12 +4,12 @@ module Fake.ILMergeHelper
 open System
 
 type AllowDuplicateTypes = 
-    /// No duplicates of public types allowed
-    | NoDuplicateTypes
-    /// All public types are allowed to be duplicate and renamed
-    | AllPublicTypes
-    /// List of types to allow to be duplicate
-    | DuplicateTypes of string list
+/// No duplicates of public types allowed
+| NoDuplicateTypes
+/// All public types are allowed to be duplicated and renamed
+| AllPublicTypes
+/// List of types to allow to be duplicated
+| DuplicateTypes of string list
 
 type InternalizeTypes =
 | NoInternalize
@@ -21,9 +21,9 @@ type TargetKind =
 | Exe
 | WinExe
 
-type ILMergeParams =
+type ILMergeParams = {
    /// Path to ILMerge.exe
- { ToolPath: string
+   ToolPath: string
    /// Version to use for the merged assembly
    Version: string
    TimeOut: TimeSpan
@@ -83,82 +83,62 @@ let ILMergeDefaults : ILMergeParams =
       TargetKind = Library
       UnionMerge = false 
       XmlDocs = false }
+
+/// Builds the arguments for the ILMerge task
+let getArguments outputFile primaryAssembly parameters =
+    let stringParams =
+        ["out", outputFile
+         "ver", parameters.Version
+         "attr", parameters.AttributeFile
+         "keyfile", parameters.KeyFile
+         "log", parameters.LogFile
+         "target", parameters.TargetKind.ToString().ToLower()
+         "targetplatform", parameters.TargetPlatform]
+          |> List.map stringParam
+
+    let fileAlign = optionParam("align",parameters.FileAlignment)
+
+    let allowDup = 
+        match parameters.AllowDuplicateTypes with
+        | NoDuplicateTypes -> [None]
+        | AllPublicTypes -> [Some("allowDup", null)]
+        | DuplicateTypes types -> multipleStringParams "allowDup" types
+
+    let libDirs = multipleStringParams "lib" parameters.SearchDirectories
+
+    let internalize = 
+        match parameters.Internalize with
+        | NoInternalize -> None
+        | Internalize -> Some("internalize", null)
+        | InternalizeExcept excludeFile -> Some("internalize", quote excludeFile)
+
+    let flags = 
+        ["allowMultiple", parameters.AllowMultipleAssemblyLevelAttributes
+         "wildcards", parameters.AllowWildcards
+         "zeroPeKind" , parameters.AllowZeroPeKind
+         "closed", parameters.Closed
+         "copyattrs", parameters.CopyAttributes
+         "union", parameters.UnionMerge
+         "ndebug", not parameters.DebugInfo
+         "xmldocs", parameters.XmlDocs ]
+           |> List.map boolParam
+
+    let allParameters = 
+        stringParams @ [fileAlign; internalize] @ flags @ allowDup @ libDirs
+            |> parametersToString "/" ":"
+
+    let libraries = primaryAssembly :: (parameters.Libraries |> Seq.toList) |> separated " "
+    allParameters + " " + libraries
    
 /// Use ILMerge to merge some .NET assemblies.
 let ILMerge setParams outputFile primaryAssembly = 
     traceStartTask "ILMerge" primaryAssembly
-    let parameters = ILMergeDefaults |> setParams    
-
-    let args =  
-        let output = Some("out", outputFile)
-        let version = 
-            if parameters.Version <> "" 
-                then Some("ver", parameters.Version)
-                else None
-        let attrFile = 
-            if isNullOrEmpty parameters.AttributeFile
-                then None
-                else Some("attr", quote parameters.AttributeFile)
-        let keyFile = 
-            if isNullOrEmpty parameters.KeyFile
-                then None
-                else Some("keyfile", quote parameters.KeyFile)
-        let logFile = 
-            if isNullOrEmpty parameters.LogFile
-                then None
-                else Some("log", quote parameters.LogFile)
-        let fileAlign = 
-            match parameters.FileAlignment with
-            | Some a -> Some("align", a.ToString())
-            | None -> None
-        let targetPlatform = 
-            if isNullOrEmpty parameters.TargetPlatform
-                then None
-                else Some("targetplatform", quote parameters.TargetPlatform)
-        let targetKind = 
-            match parameters.TargetKind with
-            | Library -> Some("target", "library")
-            | Exe -> Some("target", "exe")
-            | WinExe -> Some("target", "winexe")
-        let allowDup = 
-            match parameters.AllowDuplicateTypes with
-            | NoDuplicateTypes -> [None]
-            | AllPublicTypes -> [Some("allowDup", null)]
-            | DuplicateTypes types -> types |> List.map (fun t -> Some("allowDup", t))
-        let libDirs = 
-            parameters.SearchDirectories
-            |> Seq.map (fun d -> Some("lib", quote d))
-            |> Seq.toList
-        let internalize = 
-            match parameters.Internalize with
-            | NoInternalize -> None
-            | Internalize -> Some("internalize", null)
-            | InternalizeExcept excludeFile -> Some("internalize", quote excludeFile)
-        let booleans = 
-            [ parameters.AllowMultipleAssemblyLevelAttributes, "allowMultiple"
-              parameters.AllowWildcards, "wildcards"
-              parameters.AllowZeroPeKind, "zeroPeKind" 
-              parameters.Closed, "closed" 
-              parameters.CopyAttributes, "copyattrs"
-              parameters.UnionMerge, "union"
-              parameters.XmlDocs, "xmldocs" ]
-            |> List.map (fun (v,d) -> if v then Some(d, null) else None)
-        let notbooleans =
-            [ parameters.DebugInfo, "ndebug" ]
-            |> List.map (fun (v,d) -> if v then None else Some(d, null))
-        let allParameters = 
-            [output; attrFile; keyFile; logFile; fileAlign; version; internalize; targetPlatform; targetKind] 
-               @ booleans @ notbooleans @ allowDup @ libDirs
-            |> Seq.choose id
-            |> Seq.map (fun (k,v) -> "/" + k + (if isNullOrEmpty v then "" else ":" + v))
-            |> separated " "
-        let libraries = primaryAssembly + " " + (separated " " parameters.Libraries)
-        allParameters + " " + libraries
+    let parameters = setParams ILMergeDefaults
 
     if not (execProcess3 (fun info ->  
         info.FileName <- parameters.ToolPath
         info.WorkingDirectory <- null
-        info.Arguments <- args) parameters.TimeOut)
+        info.Arguments <- getArguments outputFile primaryAssembly parameters) parameters.TimeOut)
     then
         failwith "ILMerge failed."
                     
