@@ -345,6 +345,11 @@
  delimiter is a ,
 </summary>
 </member>
+<member name="M:Fake.FileHelper.DeleteDirs(System.Collections.Generic.IEnumerable{System.String})">
+<summary>
+ Delete multiple directories
+</summary>
+</member>
 <member name="M:Fake.FileHelper.CleanDirs(System.Collections.Generic.IEnumerable{System.String})">
 <summary>
  Clean multiple directories
@@ -1045,6 +1050,26 @@
 <member name="T:Fake.Git.FileStatus">
 
 </member>
+<member name="M:Fake.Git.Information.getCurrentHash">
+<summary>
+ Gets the current hash of the current repository
+</summary>
+</member>
+<member name="M:Fake.Git.Information.getLastTag">
+<summary>
+ Gets the last git tag of the current repository by calling git describe
+</summary>
+</member>
+<member name="M:Fake.Git.Information.shortlog(System.String)">
+<summary>
+ Gets the git log in one line
+</summary>
+</member>
+<member name="M:Fake.Git.Information.describe(System.String)">
+<summary>
+ Gets the last git tag by calling git describe
+</summary>
+</member>
 <member name="M:Fake.Git.Information.isAheadOf(System.String,System.String,System.String)">
 <summary>
  Returns true if rev1 is ahead of rev2
@@ -1337,10 +1362,21 @@
  True -&gt; types with the same name are all merged into a single type in the target assembly.
 </summary>
 </member>
+<member name="">
+
+</member>
+<member name="F:Fake.ILMergeHelper.ILMergeParams.TargetPlatform">
+<summary>
+ v1 or v1.1 or v2 or v4 or version,platform
+</summary>
+</member>
 <member name="F:Fake.ILMergeHelper.ILMergeParams.SearchDirectories">
 <summary>
  Directories to be used to search for input assemblies
 </summary>
+</member>
+<member name="">
+
 </member>
 <member name="">
 
@@ -1420,14 +1456,26 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
 <member name="T:Fake.ILMergeHelper.AllowDuplicateTypes.DuplicateTypes">
 <summary>
- List of types to allow to be duplicate
+ List of types to allow to be duplicated
 </summary>
 </member>
 <member name="T:Fake.ILMergeHelper.AllowDuplicateTypes.AllPublicTypes">
 <summary>
- All public types are allowed to be duplicate and renamed
+ All public types are allowed to be duplicated and renamed
 </summary>
 </member>
 <member name="T:Fake.ILMergeHelper.AllowDuplicateTypes.NoDuplicateTypes">
@@ -1441,6 +1489,11 @@
 <member name="M:Fake.ILMergeHelper.ILMerge(Microsoft.FSharp.Core.FSharpFunc`2{Fake.ILMergeHelper.ILMergeParams,Fake.ILMergeHelper.ILMergeParams},System.String,System.String)">
 <summary>
  Use ILMerge to merge some .NET assemblies.
+</summary>
+</member>
+<member name="M:Fake.ILMergeHelper.getArguments(System.String,System.String,Fake.ILMergeHelper.ILMergeParams)">
+<summary>
+ Builds the arguments for the ILMerge task
 </summary>
 </member>
 <member name="P:Fake.ILMergeHelper.ILMergeDefaults">
@@ -1861,10 +1914,19 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
 <member name="M:Fake.NuGetHelper.NuGet(Microsoft.FSharp.Core.FSharpFunc`2{Fake.NuGetHelper.NuGetParams,Fake.NuGetHelper.NuGetParams},System.String)">
 <summary>
  Creates a new NuGet package   
 </summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
 </member>
 <member name="M:Fake.NuGetHelper.NuGetDefaults">
 <summary>
@@ -1966,6 +2028,21 @@
 <summary>
  Searches the given directories for all occurrences of the given file name
 </summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
 </member>
 <member name="M:Fake.ProcessHelper.UseDefaults``1">
 <summary>
