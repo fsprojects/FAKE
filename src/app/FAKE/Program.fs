@@ -14,7 +14,9 @@ let printEnvironment cmdArgs args =
 
     if cmdArgs |> Array.length > 1 then
         traceFAKE "FAKE Arguments:"
-        args |> Seq.iter (tracefn "%A")
+        args 
+          |> Seq.map fst
+          |> Seq.iter (tracefn "%A")
 
     log ""
     traceFAKE "FSI-Path: %s" fsiPath
