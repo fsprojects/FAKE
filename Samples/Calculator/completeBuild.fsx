@@ -99,11 +99,13 @@ Target "Deploy" (fun _ ->
 Target "Test" DoNothing
 
 // Dependencies
-AllTargetsDependOn "Clean"
-"NUnitTest" <== ["BuildApp"; "BuildTest"; "FxCop"]
-"xUnitTest" <== ["BuildApp"; "BuildTest"; "FxCop"]
-"Test" <== ["xUnitTest"; "NUnitTest"]
-"Deploy" <== ["Test"]
+"Clean"
+  ==> "BuildApp" <=> "BuildTest"
+  ==> "FxCop"
+  ==> "NUnitTest"
+  ==> "xUnitTest"
+  ==> "Test"
+  ==> "Deploy"
  
 // start build
 Run "Deploy"
