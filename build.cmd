@@ -1,7 +1,7 @@
 @echo off
 cls
 
-SET TARGET="Default"
+SET TARGET="Deploy"
 
 IF NOT [%1]==[] (set TARGET="%1")
   

@@ -181,12 +181,10 @@ let inline (<=>) x y =
 "Clean"
     ==> "BuildApp" <=> "BuildTest"
     ==> "Test"
-    ==> "CopyLicense"
-    ==> "CopyDocu"
+    ==> "CopyLicense" <=> "CopyDocu"
     ==> "BuildZip"
     ==> "GenerateDocumentation"
-    ==> "ZipDocumentation"
-    ==> "ZipCalculatorSample"
+    ==> "ZipDocumentation" <=> "ZipCalculatorSample"
     ==> "CreateNuGet"
     ==> "Deploy"
   
@@ -194,4 +192,5 @@ if not isLocalBuild then
     "Clean" ==> "SetAssemblyInfo" ==> "BuildApp" |> ignore
 
 // start build
-Run "Deploy"
+getBuildParamOrDefault "target" "Deploy"
+  |> Run
