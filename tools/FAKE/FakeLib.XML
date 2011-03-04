@@ -2436,6 +2436,27 @@
 <member name="">
 
 </member>
+<member name="M:Fake.TargetHelper.op_LessEqualsGreater(System.String,System.String)">
+<summary>
+ Defines that x and y are not dependent on each other but y is dependent on all dependencies of x.
+</summary>
+</member>
+<member name="M:Fake.TargetHelper.op_EqualsEqualsGreater(System.String,System.String)">
+<summary>
+ Defines a dependency - y is dependent on x
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:Fake.TargetHelper.sameLevels">
+<summary>
+ Stores which targets are on the same level
+</summary>
+</member>
 <member name="M:Fake.TargetHelper.RunParameterTargetOrDefault(System.String,System.String)">
 <summary>
  Runs the target given by the build script parameter or the given default target
