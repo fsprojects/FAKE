@@ -1,9 +1,5 @@
 # What is "FAKE - F# Make"?
 
-## Mailing list
-
-The "FAKE - F# Make" mailing list can be found at [http://groups.google.com/group/fsharpMake](http://groups.google.com/group/fsharpMake).
-
 ## Introduction
 
 Modern build automation systems are not limited to simply recompile programs if source code has changed. 
@@ -31,8 +27,19 @@ For instance custom build tasks can be added simply by referencing .NET assembli
 
 You can download the latest builds from http://teamcity.codebetter.com. You don't need to register, a guest login is ok.
 
-* [Latest stable build](http://teamcity.codebetter.com/viewLog.html?buildId=18154&buildTypeId=bt114&tab=artifacts)
-* [Latest development build](http://teamcity.codebetter.com/viewLog.html?buildId=18219&buildTypeId=bt166&tab=artifacts) 
+* [Latest stable build](http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt114&tab=artifacts)
+* [Latest development build](http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt166&tab=artifacts)
+
+## How to contribute code
+
+* Login in github (you need an account)
+* Fork the main repository from [Github](https://github.com/forki/FAKE)
+* Push your changes to your fork
+* Send me a pull request
+
+## Mailing list
+
+The "FAKE - F# Make" mailing list can be found at [http://groups.google.com/group/fsharpMake](http://groups.google.com/group/fsharpMake).
 
 ## Articles
 
@@ -62,6 +69,7 @@ You can download the latest builds from http://teamcity.codebetter.com. You don'
 * Clean task
 * [NUnit](http://www.nunit.org) support
 * [xUnit.net](http://www.codeplex.com/xunit) support
+* [MSpec](https://github.com/machine/machine.specifications) support
 * NCover support
 * FxCop support
 * ExecProcess task (To run tools via the command line)
@@ -171,7 +179,19 @@ and memoizes it.
 						  {p with 
 							 ToolPath = nunitPath; 
 							 DisableShadowCopy = true; 
-							 OutputFile = testDir + "TestResults.xml"}))   
+							 OutputFile = testDir + "TestResults.xml"}))
+							 
+### MSpec
+	// define test dlls
+	let testDlls = !+ (testDir + @"/Test.*.dll") |> Scan
+	 
+	Target "MSpecTest" (fun _ ->
+			testDlls
+			  |> MSpec (fun p -> 
+						  {p with 
+							 ExcludeTags = ["LongRunning"]
+							 HtmlOutputDir = testOutputDir						  
+							 ToolPath = ".\toools\MSpec\mspec.exe"}))
 
 ### xUnit.net
 
