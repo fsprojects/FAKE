@@ -2506,6 +2506,9 @@
  <summary>Runs a target and its dependencies</summary>
  <param name="targetName">The target to run.</param>
 </member>
+<member name="">
+
+</member>
 <member name="M:Fake.TargetHelper.WriteTaskTimeSummary``1(``0)">
  <summary>Writes a build time report.</summary>
  <param name="total">The total runtime.</param>
@@ -2628,6 +2631,9 @@
 <summary>
  TargetDictionary  
 </summary>
+</member>
+<member name="">
+
 </member>
 <member name="T:Fake.TargetHelper">
 
