@@ -182,7 +182,9 @@ let WriteTaskTimeSummary total =
           |> Seq.map (fun (a,b) -> a.Length) 
           |> Seq.max
           |> max 8
+
     let aligned (name:string) duration = tracefn "%s   %O" (name.PadRight width) duration
+    let alignedError (name:string) duration = sprintf "%s   %O" (name.PadRight width) duration |> traceError
 
     aligned "Target" "Duration"
     aligned "------" "--------"
@@ -190,6 +192,7 @@ let WriteTaskTimeSummary total =
       |> Seq.iter (fun (name,time) -> aligned name time)
 
     aligned "Total:" total
+    if errors = [] then aligned "Status:" "Ok" else alignedError "Status:" "Failure"
     traceLine()
 
 let private changeExitCodeIfErrorOccured() = if errors <> [] then exit 42 
