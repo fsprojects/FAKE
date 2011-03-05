@@ -326,7 +326,7 @@ You can read [Getting started with FAKE](http://www.navision-blog.de/2009/04/01/
             |> Zip buildDir (deployDir + "Calculator." + version + ".zip")
     )
     
-    // Dependencies
+    // Build order
 	"Clean"
       ==> "BuildApp" <=> "BuildTest"
       ==> "FxCop"
