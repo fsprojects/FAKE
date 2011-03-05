@@ -1,4 +1,4 @@
-## 1.51.0.0
+## 1.52.0.0
 
 * Some smaller bugfixes
 * New dependency syntax with ==> and <=>
