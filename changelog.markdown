@@ -2,6 +2,7 @@
 
 * Some smaller bugfixes
 * New dependency syntax with ==> and <=>
+* Tracing of StackTrace only if TargetHelper.PrintStackTraceOnError was set to true
 
 ## 1.50.0.0
 
