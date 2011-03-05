@@ -1,3 +1,8 @@
+## 1.51.0.0
+
+* Some smaller bugfixes
+* New dependency syntax with ==> and <=>
+
 ## 1.50.0.0
 
 * New task DeleteDirs allows to delete multiple directories.
