@@ -87,7 +87,8 @@ Target "CopyDocu" (fun _ ->
 
 Target "CopyLicense" (fun _ -> 
     ["License.txt"
-     "readme.markdown"]
+     "readme.markdown"
+     "changelog.markdown"]
        |> CopyTo buildDir
 )
 

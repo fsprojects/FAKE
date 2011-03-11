@@ -1,3 +1,8 @@
+## 1.54.0.0
+
+* BREAKING CHANGE: Nuget dependencies are now encapsulate in a separate type. This allows to specify the upgrade strategy.
+* Added Changelog.markdown to FAKE deployment
+ 
 ## 1.50.0.0
 
 * New task DeleteDirs allows to delete multiple directories.
