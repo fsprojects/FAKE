@@ -2,6 +2,7 @@
 
 * If the publishment of a Nuget package fails, then FAKE will try it again.
 * Added Changelog.markdown to FAKE deployment
+* Added RequireExactly helper function in order to require a specific nuget dependency.
 
 ## 1.52.0.0
 

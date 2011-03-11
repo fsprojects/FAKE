@@ -34,6 +34,8 @@ let NuGetDefaults() =
       AccessKey = null;
       PublishTrials = 5;
       Publish = false}
+
+let RequireExactly version = sprintf "[%s]" version
  
 let private replaceAccessKey key (s:string) = s.Replace(key,"PRIVATEKEY")
 
