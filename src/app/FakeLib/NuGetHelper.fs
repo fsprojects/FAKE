@@ -21,6 +21,7 @@ type NuGetParams =
       PublishUrl: string;
       AccessKey:string;
       Dependencies: PackageDependency list;
+      PublishTrials: int;
       Publish:bool }
 
 /// NuGet default params  
@@ -36,6 +37,7 @@ let NuGetDefaults() =
       OutputPath = currentDirectory @@ "NuGet";
       PublishUrl = "http://packages.nuget.org/v1/";
       AccessKey = null;
+      PublishTrials = 5;
       Publish = false}
  
 let private replaceAccessKey key (s:string) = s.Replace(key,"PRIVATEKEY")
@@ -74,16 +76,16 @@ let private runNuget parameters nuSpec =
                
     if result <> 0 then failwithf "Error during NuGet creation. %s %s" parameters.ToolPath args
 
-    // push package
-    if parameters.Publish then
+    // push package (and try again if something fails)
+    let rec publish trials =
         let tracing = enableProcessTracing
         enableProcessTracing <- false
         let args = sprintf "push -source %s \"%s\" %s" parameters.PublishUrl packageFile parameters.AccessKey
 
         if tracing then 
             args
-              |> replaceAccessKey parameters.AccessKey
-              |> tracefn "%s %s" parameters.ToolPath 
+                |> replaceAccessKey parameters.AccessKey
+                |> tracefn "%s %s" parameters.ToolPath 
 
         let result = 
             ExecProcess (fun info ->
@@ -92,8 +94,12 @@ let private runNuget parameters nuSpec =
                 info.Arguments <- args) parameters.TimeOut
         
         enableProcessTracing <- tracing
-        if result <> 0 then failwithf "Error during NuGet push. %s %s" parameters.ToolPath args                   
-
+        if result <> 0 then 
+            if trials > 0 then publish (trials - 1) else
+            failwithf "Error during NuGet push. %s %s" parameters.ToolPath args                   
+            
+    if parameters.Publish then publish parameters.PublishTrials
+        
 /// Creates a new NuGet package   
 let NuGet setParams nuSpec =
     traceStartTask "NuGet" nuSpec
