@@ -1,6 +1,5 @@
 ## 1.54.0.0
 
-* BREAKING CHANGE: Nuget dependencies are now encapsulate in a separate type. This allows to specify the upgrade strategy.
 * If the publishment of a Nuget package fails, then FAKE will try it again.
 * Added Changelog.markdown to FAKE deployment
 

@@ -4,11 +4,6 @@ module Fake.NuGetHelper
 open System
 open System.IO
 
-type PackageDependency = {
-    Package: string
-    Version: string
-    }
-
 type NuGetParams =
     { ToolPath: string;
       TimeOut: TimeSpan;
@@ -20,7 +15,7 @@ type NuGetParams =
       OutputPath: string;
       PublishUrl: string;
       AccessKey:string;
-      Dependencies: PackageDependency list;
+      Dependencies: (string*string) list;
       PublishTrials: int;
       Publish:bool }
 
@@ -51,8 +46,7 @@ let private runNuget parameters nuSpec =
     let dependencies =
         if parameters.Dependencies = [] then "" else
         parameters.Dependencies
-          |> Seq.map (fun dependency -> 
-                sprintf "<dependency id=\"%s\" version=\"%s\" />" dependency.Package dependency.Version)
+          |> Seq.map (fun (package,version) -> sprintf "<dependency id=\"%s\" version=\"%s\" />" package version)
           |> separated "\r\n"
           |> fun s -> sprintf "<dependencies>\r\n%s\r\n</dependencies>" s
 
