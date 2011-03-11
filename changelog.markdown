@@ -1,3 +1,8 @@
+## 1.54.0.0
+
+* If the publishment of a Nuget package fails, then FAKE will try it again.
+* Added Changelog.markdown to FAKE deployment
+
 ## 1.52.0.0
 
 * Some smaller bugfixes
