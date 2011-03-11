@@ -102,6 +102,11 @@ You can define prerequisites for tasks:
 	// Target Default is dependent from target Clean and BuildApp
 	// "FAKE - F# Make" will run these targets before Default
 	"Default"  <== ["Clean"; "BuildApp"]
+	
+It is also possible to define the dependencies as a build order:
+	
+	// "FAKE - F# Make" will run these targets in the order Clean, BuildApp, Default
+	"Clean" ==> "BuildApp" ==> "Default"
 
 ### Running targets
 
@@ -321,15 +326,13 @@ You can read [Getting started with FAKE](http://www.navision-blog.de/2009/04/01/
             |> Zip buildDir (deployDir + "Calculator." + version + ".zip")
     )
     
-    Target "Test" DoNothing
-    
-    // Dependencies
-    "BuildApp" <== ["Clean"]
-    "BuildTest" <== ["Clean"]
-    "NUnitTest" <== ["BuildApp"; "BuildTest"; "FxCop"]
-    "xUnitTest" <== ["BuildApp"; "BuildTest"; "FxCop"]
-    "Test" <== ["xUnitTest"; "NUnitTest"]
-    "Deploy" <== ["Test"]
+    // Build order
+	"Clean"
+      ==> "BuildApp" <=> "BuildTest"
+      ==> "FxCop"
+      ==> "NUnitTest"
+      ==> "xUnitTest"
+      ==> "Deploy"
      
     // start build
-    Run "Deploy
+    Run "Deploy"

@@ -10,6 +10,8 @@ type TargetTemplate<'a> =
       Function : 'a -> unit}
    
 type Target = TargetTemplate<unit>
+
+let mutable PrintStackTraceOnError = false
    
 /// TargetDictionary  
 let TargetDict = new Dictionary<_,_>()
@@ -115,15 +117,19 @@ let TargetTemplate body = TargetTemplateWithDependecies [] body
 let Target name body = TargetTemplate body name ()  
 
 type private BuildError(target, msg) =
-    inherit System.Exception(sprintf "Stopped build! Error occured in target \"%s\".\r\nMessage: %s" target msg)
+    inherit System.Exception(sprintf "Stopped build! Error occured in target \"%s\"." target)
     member e.Target = target
     new (msg : string) = BuildError("[Unknown]", msg)
 
 let mutable private errors = []   
-
-let targetError targetName msg =
+ 
+let targetError targetName (exn:System.Exception) =
     closeAllOpenTags()
-    errors <- BuildError(targetName, msg) :: errors
+    errors <- BuildError(targetName, exn.ToString()) :: errors
+    let msg = 
+        if PrintStackTraceOnError then exn.ToString() else
+        sprintf "%s%s" exn.Message (if exn.InnerException <> null then "\n" + exn.InnerException.Message else "")
+            
     traceError <| sprintf "Running build failed.\nError:\n%s" msg
     sendTeamCityError msg        
  
@@ -144,7 +150,7 @@ let runFinalTargets() =
                TargetDict.[name].Function()
                addExecutedTarget name watch.Elapsed
            with
-           | exn -> targetError name (exn.ToString()))
+           | exn -> targetError name exn)
               
 /// <summary>Writes a dependency graph.</summary>
 /// <param name="verbose">Whether to print verbose output or not.</param>
@@ -176,7 +182,9 @@ let WriteTaskTimeSummary total =
           |> Seq.map (fun (a,b) -> a.Length) 
           |> Seq.max
           |> max 8
+
     let aligned (name:string) duration = tracefn "%s   %O" (name.PadRight width) duration
+    let alignedError (name:string) duration = sprintf "%s   %O" (name.PadRight width) duration |> traceError
 
     aligned "Target" "Duration"
     aligned "------" "--------"
@@ -184,7 +192,10 @@ let WriteTaskTimeSummary total =
       |> Seq.iter (fun (name,time) -> aligned name time)
 
     aligned "Total:" total
+    if errors = [] then aligned "Status:" "Ok" else alignedError "Status:" "Failure"
     traceLine()
+
+let private changeExitCodeIfErrorOccured() = if errors <> [] then exit 42 
 
 /// <summary>Runs a target and its dependencies</summary>
 /// <param name="targetName">The target to run.</param>
@@ -204,7 +215,7 @@ let run targetName =
                     addExecutedTarget targetName watch.Elapsed
                     traceEndTarget target.Name                
         with
-        | exn -> targetError targetName (exn.ToString())
+        | exn -> targetError targetName exn
       
     let watch = new System.Diagnostics.Stopwatch()
     watch.Start()        
@@ -217,8 +228,7 @@ let run targetName =
         WaitUntilEverythingIsPrinted()
         WriteTaskTimeSummary watch.Elapsed
         WaitUntilEverythingIsPrinted()
-        List.iter raise errors
-        WaitUntilEverythingIsPrinted()
+        changeExitCodeIfErrorOccured()
  
 /// Registers a final target (not activated)
 let FinalTarget name body = 
