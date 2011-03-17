@@ -127,6 +127,6 @@ let getRecentlyFailedTests() =
       |> ReadFile
 
 /// Gets the changed files
-let getChangedFiles() =
+let getChangedFilesInCurrentBuild() =
     appSetting "teamcity.build.changedFiles.file"
       |> ReadFile
