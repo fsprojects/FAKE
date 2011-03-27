@@ -3,6 +3,7 @@
 * If the publishment of a Nuget package fails, then FAKE will try it again.
 * Added Changelog.markdown to FAKE deployment
 * Added RequireExactly helper function in order to require a specific nuget dependency.
+* NugetHelper.GetPackageVersion - Gets the version no. for a given package in the packages folder.
 
 ## 1.52.0.0
 
