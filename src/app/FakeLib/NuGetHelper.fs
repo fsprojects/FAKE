@@ -36,7 +36,17 @@ let NuGetDefaults() =
       Publish = false}
 
 let RequireExactly version = sprintf "[%s]" version
- 
+
+/// Gets the version no. for a given package in the packages folder
+let GetPackageVersion packagesDir package = 
+    let version = 
+        Directory.GetDirectories(packagesDir, sprintf "%s.*" package) 
+        |> Seq.head
+        |> fun full -> full.Substring (full.LastIndexOf package + package.Length + 1)
+
+    logfn "Version %s found for package %s" version package
+    version
+
 let private replaceAccessKey key (s:string) = s.Replace(key,"PRIVATEKEY")
 
 let private runNuget parameters nuSpec = 
