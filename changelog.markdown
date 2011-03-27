@@ -4,6 +4,7 @@
 * Added Changelog.markdown to FAKE deployment
 * Added RequireExactly helper function in order to require a specific nuget dependency.
 * NugetHelper.GetPackageVersion - Gets the version no. for a given package in the packages folder.
+* EnvironmentHelper.getTargetPlatformDir - Gets the directory for the given target platform.
 
 ## 1.52.0.0
 
