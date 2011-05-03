@@ -221,6 +221,7 @@ let run targetName =
     watch.Start()        
     try
         WaitUntilEverythingIsPrinted()
+        tracefn "Building project with version: %s" buildVersion
         PrintDependencyGraph false targetName
         runTarget targetName
     finally
