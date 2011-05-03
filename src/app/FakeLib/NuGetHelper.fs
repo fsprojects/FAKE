@@ -15,6 +15,7 @@ type NuGetParams =
       OutputPath: string;
       PublishUrl: string;
       AccessKey:string;
+      ProjectFile:string;
       Dependencies: (string*string) list;
       PublishTrials: int;
       Publish:bool }
@@ -27,6 +28,7 @@ let NuGetDefaults() =
       Authors = []
       Project = "";
       Summary = null;
+      ProjectFile = null;
       Description = null;
       Dependencies = [];
       OutputPath = currentDirectory @@ "NuGet";
@@ -71,6 +73,18 @@ let private runNuget parameters nuSpec =
          "@description@",parameters.Description]
 
     processTemplates replacements [specFile]
+
+    if parameters.ProjectFile <> null then
+        // create symbols package
+        let args = sprintf "pack -sym \"%s\"" (parameters.ProjectFile |> FullName)
+        let result = 
+            ExecProcess (fun info ->
+                info.FileName <- parameters.ToolPath
+                info.WorkingDirectory <- parameters.OutputPath |> FullName
+                info.Arguments <- args) parameters.TimeOut
+               
+        if result <> 0 then failwithf "Error during NuGet symbols creation. %s %s" parameters.ToolPath args
+        parameters.OutputPath @@ packageFile |> File.Delete
 
     // create package
     let args = sprintf "pack %s" nuSpec
