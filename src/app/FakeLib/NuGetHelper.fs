@@ -51,12 +51,15 @@ let GetPackageVersion packagesDir package =
 
 let private replaceAccessKey key (s:string) = s.Replace(key,"PRIVATEKEY")
 
-let private runNuget parameters nuSpec = 
+let private runNuget parameters nuSpec =
+    let mutable version = parameters.Version
+    while version.EndsWith ".0" do version <- version.Remove(version.Length-2,2)
+
     // create .nuspec file
     CopyFile parameters.OutputPath nuSpec
 
     let specFile = parameters.OutputPath @@ nuSpec
-    let packageFile = sprintf "%s.%s.nupkg" parameters.Project parameters.Version
+    let packageFile = sprintf "%s.%s.nupkg" parameters.Project version
     let dependencies =
         if parameters.Dependencies = [] then "" else
         parameters.Dependencies
@@ -65,7 +68,7 @@ let private runNuget parameters nuSpec =
           |> fun s -> sprintf "<dependencies>\r\n%s\r\n</dependencies>" s
 
     let replacements =
-        ["@build.number@",parameters.Version
+        ["@build.number@",version
          "@authors@",parameters.Authors |> separated ", "
          "@project@",parameters.Project
          "@summary@",if isNullOrEmpty parameters.Summary then "" else parameters.Summary
