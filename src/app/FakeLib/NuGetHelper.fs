@@ -84,7 +84,7 @@ let private runNuget parameters nuSpec =
                 info.Arguments <- args) parameters.TimeOut
                
         if result <> 0 then failwithf "Error during NuGet symbols creation. %s %s" parameters.ToolPath args
-        parameters.OutputPath @@ packageFile |> File.Delete
+        parameters.OutputPath @@ packageFile |> DeleteFile
 
     // create package
     let args = sprintf "pack %s" nuSpec
