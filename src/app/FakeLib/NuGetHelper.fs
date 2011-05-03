@@ -119,7 +119,7 @@ let private runNuget parameters nuSpec =
             if trials > 0 then publish (trials - 1) else
             failwithf "Error during NuGet push. %s %s" parameters.ToolPath args
             
-    let symbolsPackage = packageFile.Replace(".nupkg","symbols.nupkg")
+    let symbolsPackage = packageFile.Replace(".nupkg",".symbols.nupkg")
 
     // push package to symbol server (and try again if something fails)
     let rec publishSymbols trials =
