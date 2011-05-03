@@ -27,6 +27,10 @@ let WriteToFile append fileName (lines: seq<string>) =
     use writer = new StreamWriter(fileName,append && fi.Exists,Encoding.Default) 
     lines |> Seq.iter writer.WriteLine
 
+/// Removes all trailing .0 from a version string
+let rec NormalizeVersion(version:string) =
+    if version.EndsWith ".0" then version.Remove(version.Length-2,2) |> NormalizeVersion else version
+
 /// Writes string to a file
 let WriteStringToFile append file text = WriteToFile append file [text]
 
