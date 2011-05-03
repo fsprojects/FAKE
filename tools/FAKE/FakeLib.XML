@@ -224,6 +224,14 @@
  The path to the personal documents
 </summary>
 </member>
+<member name="M:Fake.EnvironmentHelper.getTargetPlatformDir(System.String)">
+<summary>
+ Gets the local directory for the given target platform
+</summary>
+</member>
+<member name="">
+
+</member>
 <member name="P:Fake.EnvironmentHelper.ProgramFilesX86">
 <summary>
  The path of Program Files (x86)
@@ -1917,6 +1925,12 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
 <member name="M:Fake.NuGetHelper.NuGet(Microsoft.FSharp.Core.FSharpFunc`2{Fake.NuGetHelper.NuGetParams,Fake.NuGetHelper.NuGetParams},System.String)">
 <summary>
  Creates a new NuGet package   
@@ -1924,6 +1938,14 @@
 </member>
 <member name="">
 
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.NuGetHelper.GetPackageVersion(System.String,System.String)">
+<summary>
+ Gets the version no. for a given package in the packages folder
+</summary>
 </member>
 <member name="">
 
@@ -2638,7 +2660,7 @@
 <member name="T:Fake.TargetHelper">
 
 </member>
-<member name="M:Fake.TeamCityHelper.getChangedFiles">
+<member name="M:Fake.TeamCityHelper.getChangedFilesInCurrentBuild">
 <summary>
  Gets the changed files
 </summary>
