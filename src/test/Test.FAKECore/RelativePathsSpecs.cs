@@ -7,6 +7,18 @@ namespace Test.FAKECore
 {
     public class when_working_with_relative_paths
     {
+        It should_combine_two_paths_with_additional_backslash =
+            () => EnvironmentHelper.combinePaths(@"\\Hades\Dir1", @"\Test")
+                  .ShouldEqual(@"\\Hades\Dir1\Test");
+
+        It should_combine_two_paths =
+            () => EnvironmentHelper.combinePaths(@"\\Hades\Dir1", @"Test\blub")
+                  .ShouldEqual(@"\\Hades\Dir1\Test\blub");
+
+        It should_combine_a_directory_with_a_file =
+            () => EnvironmentHelper.combinePaths(@"C:\Dir1\", @"\Test\myfile.txt")
+                  .ShouldEqual(@"C:\Dir1\Test\myfile.txt");
+
         It should_get_the_path_of_a_different_machine =
             () => GetRelativePath(@"\\Hades\Dir1")
                       .ShouldEqual(@"\\Hades\Dir1");
