@@ -161,6 +161,9 @@ let inline shortenCurrentDirectory value = replace currentDirectory "." value
 /// Removes the slashes from the end of the given string
 let inline trimSlash (s:string) = s.TrimEnd('\\')
 
+/// Splits the given string at the given delimiter
+let inline split (delimiter:char) (text:string) = text.Split [|delimiter|] |> Array.toList
+
 /// Converts a sequence of strings into a string separated with line ends
 let inline toLines s = separated "\r\n" s
 

@@ -133,27 +133,23 @@ let MSBuild outputPath (targets: string) (properties: (string*string) list) proj
           |> FullName
           |> trimSeparator
 
-    let properties = 
-        if isNullOrEmpty output 
-            then properties
-            else ("OutputPath", output)::properties
+    let properties = if isNullOrEmpty output then properties else ("OutputPath", output)::properties
 
     let dependencies =
         projects 
             |> List.map getProjectReferences
             |> Set.unionMany
 
-    let setParam p = 
-        { p with
-            Targets = targets.Split(';') |> List.ofArray 
-            Properties = p.Properties @ properties }
+    let setBuildParam project = 
+        { project with
+            Targets = targets |> split ';' 
+            Properties = project.Properties @ properties }
 
     projects
       |> List.filter (fun project -> not <| Set.contains project dependencies)
-      |> List.iter (build setParam)
+      |> List.iter (build setBuildParam)
 
-    !+ (outputPath + "/**/*.*")
-      |> Scan   
+    !! (outputPath + "/**/*.*")
 
 /// Builds the given project files and collects the output files
 let MSBuildDebug outputPath targets = MSBuild outputPath targets ["Configuration","Debug"]
