@@ -50,7 +50,8 @@ let processReferences elementName f projectFileName (doc:XDocument) =
         |> Seq.iter (fun (a,fileName) -> a.Value <- f fileName)
     doc
 
-let rec getProjectReferences projectFileName= 
+let rec getProjectReferences (projectFileName:string) =
+    if projectFileName.EndsWith ".sln" then Set.empty else // exclude .sln-files since the are not XML
     let doc = loadProject projectFileName
     let references =
         getReferenceElements "ProjectReference" projectFileName doc
@@ -117,7 +118,7 @@ let build setParams project =
     traceStartTask "MSBuild" project
     let args = MSBuildDefaults |> setParams |> serializeMSBuildParams        
     let args = toParam project + " " + args
-    logfn "Building project: %s\n  %s %s" project msBuildExe args
+    tracefn "Building project: %s\n  %s %s" project msBuildExe args
     if not (execProcess3 (fun info ->  
         info.FileName <- msBuildExe
         info.Arguments <- args) TimeSpan.MaxValue)
