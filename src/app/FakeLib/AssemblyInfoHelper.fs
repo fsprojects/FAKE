@@ -256,6 +256,6 @@ let ReplaceAssemblyInfoVersions param =
 
     ReadFile parameters.OutputFileName
       |> Seq.map replaceLine
-      |> Seq.toList            // break laziyness
+      |> Seq.toList            // break laziness
       |> WriteFile parameters.OutputFileName
       
