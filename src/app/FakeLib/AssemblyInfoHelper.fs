@@ -222,3 +222,40 @@ let AssemblyInfo setParams =
   writer.Close()
   tracefn "Created AssemblyInfo file \"%s\"." param.OutputFileName
   traceEndTask "AssemblyInfo" param'.OutputFileName
+
+type AssemblyInfoReplacementParams =
+  { OutputFileName: string
+    AssemblyVersion: string
+    AssemblyFileVersion: string
+    AssemblyInformationalVersion: string
+    AssemblyConfiguration :string }
+
+/// AssemblyInfoReplacement default params
+let AssemblyInfoReplacementDefaults =
+  { OutputFileName = null
+    AssemblyConfiguration = null;
+    AssemblyVersion = null;
+    AssemblyFileVersion = null;
+    AssemblyInformationalVersion = null }
+
+let ReplaceAssemblyInfoVersions param =
+    let (parameters:AssemblyInfoReplacementParams) = param AssemblyInfoReplacementDefaults
+    let replaceAttribute attributeName value line =
+        if isNullOrEmpty value then line else
+        regex_replace 
+            (sprintf "%s\\s*[(][^)]*[)]" attributeName) 
+            (sprintf "%s(\"%s\")" attributeName value) 
+            line
+
+    let replaceLine line =
+        line 
+            |> replaceAttribute "AssemblyVersion" parameters.AssemblyVersion
+            |> replaceAttribute "AssemblyConfiguration" parameters.AssemblyConfiguration
+            |> replaceAttribute "AssemblyFileVersion" parameters.AssemblyFileVersion
+            |> replaceAttribute "AssemblyInformationalVersion" parameters.AssemblyInformationalVersion
+
+    ReadFile parameters.OutputFileName
+      |> Seq.map replaceLine
+      |> Seq.toList            // break laziyness
+      |> WriteFile parameters.OutputFileName
+      

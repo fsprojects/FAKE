@@ -1,3 +1,7 @@
+## 1.58.0.0
+
+* ReplaceAssemblyInfoVersions task allows to replace version info in AssemblyVersion-files
+
 ## 1.56.10.0
 
 * Allows to build .sln files
