@@ -3,8 +3,7 @@ open Fake
 open System.IO
 
 let printEnvironment cmdArgs args =
-    traceStartBuild()
-    traceFAKE "FakePath: %s" fakePath 
+    traceFAKE "FakePath: %s" fakePath
     traceFAKE "%s" fakeVersionStr
 
     if buildServer = LocalBuild then
@@ -28,6 +27,7 @@ try
     try            
         AutoCloseXmlWriter <- true            
         let cmdArgs = System.Environment.GetCommandLineArgs()
+        let printDetails = cmdArgs |> Seq.map (fun (a:string) -> a.ToLower()) |> Seq.exists ((=) "details")
 
         if (cmdArgs.Length = 2 && cmdArgs.[1].ToLower() = "help") || (cmdArgs.Length = 1 && List.length buildScripts = 0) then CommandlineParams.printAllParams() else
         
@@ -35,12 +35,13 @@ try
         
         let args = CommandlineParams.parseArgs cmdArgs
         
-        printEnvironment cmdArgs args
+        traceStartBuild()
+        if printDetails then printEnvironment cmdArgs args
 
-        if not (runBuildScript buildScriptArg args) then
+        if not (runBuildScript printDetails buildScriptArg args) then
             Environment.ExitCode <- 1
         else
-            log "Ready."
+            if printDetails then log "Ready."
     with
     | exn -> 
         WaitUntilEverythingIsPrinted()
