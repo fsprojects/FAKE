@@ -211,9 +211,19 @@ let WriteTaskTimeSummary total =
 
 let private changeExitCodeIfErrorOccured() = if errors <> [] then exit 42 
 
+let isListMode = hasBuildParam "list"
+
+let listTargets() =
+    tracefn "Available targets:"
+    TargetDict.Values
+      |> Seq.iter (fun target -> 
+            tracefn "  - %s %s" target.Name (if target.Description <> null then " - " + target.Description else "")
+            tracefn "     Depends on: %A" target.Dependencies)
+
 /// <summary>Runs a target and its dependencies</summary>
 /// <param name="targetName">The target to run.</param>
 let run targetName =            
+    if isListMode then listTargets(); WaitUntilEverythingIsPrinted() else
     if LastDescription <> null then failwithf "You set a task description (%A) but didn't specify a task." LastDescription
     let rec runTarget targetName =
         try      
