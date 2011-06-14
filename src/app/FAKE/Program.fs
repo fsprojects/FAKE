@@ -22,19 +22,22 @@ let printEnvironment cmdArgs args =
     traceFAKE "FSI-Path: %s" fsiPath
     traceFAKE "MSBuild-Path: %s" msBuildExe
       
+let buildScripts = !! "*.fsx" |> Seq.toList
 
 try
     try            
         AutoCloseXmlWriter <- true            
         let cmdArgs = System.Environment.GetCommandLineArgs()
 
-        if cmdArgs.Length <= 1 || cmdArgs.[1] = "help" then CommandlineParams.printAllParams() else
-
+        if (cmdArgs.Length = 2 && cmdArgs.[1].ToLower() = "help") || (cmdArgs.Length = 1 && List.length buildScripts = 0) then CommandlineParams.printAllParams() else
+        
+        let buildScriptArg = if cmdArgs.Length > 1 && cmdArgs.[1].EndsWith "*.fsx" then cmdArgs.[1] else Seq.head buildScripts
+        
         let args = CommandlineParams.parseArgs cmdArgs
         
         printEnvironment cmdArgs args
 
-        if not (runBuildScript cmdArgs.[1] args) then
+        if not (runBuildScript buildScriptArg args) then
             Environment.ExitCode <- 1
         else
             log "Ready."
