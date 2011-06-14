@@ -2,9 +2,9 @@
 module Fake.MailBoxHelper
 
 type MailboxMessage =
-    | Die
-    | Message of TraceData
-    | ProcessAll of AsyncReplyChannel<unit>
+| Die
+| Message of TraceData
+| ProcessAll of AsyncReplyChannel<unit>
 
 let internal buffer = MailboxProcessor.Start (fun inbox ->
     let rec loop () = 
@@ -13,8 +13,7 @@ let internal buffer = MailboxProcessor.Start (fun inbox ->
             match msg with
             | Die -> return ()
             | Message x -> 
-                for listener in listeners do
-                    listener.Write x
+                listeners.ForEach (fun listener -> listener.Write x)
                 return! loop ()
             | ProcessAll reply ->
                 reply.Reply()
