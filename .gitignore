@@ -21,3 +21,4 @@ _ReSharper*/
 */*.suo
 *.user
 output.xml
+FAKE.crunchsolution.cache

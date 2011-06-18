@@ -7,9 +7,9 @@ let fsiPath =
     if not (isNullOrEmpty ev) then ev else findPath "FSIPath" "fsi.exe"
       
 /// Run the given buildscript with fsi.exe
-let runBuildScript script args = 
-    traceFAKE "Running Buildscript: %s" script
-  
+let runBuildScript printDetails script args = 
+    if printDetails then traceFAKE "Running Buildscript: %s" script
+    
     let result = execProcess (fun info ->  
         info.FileName <- fsiPath
         info.Arguments <- script     

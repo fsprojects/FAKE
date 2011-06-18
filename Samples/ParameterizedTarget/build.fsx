@@ -4,6 +4,8 @@
 open Fake 
 
 // *** Define Targets ***
+
+Description "Cleans the last build"
 Target "Clean" (fun () -> 
     trace " --- Cleaning stuff --- "
 )

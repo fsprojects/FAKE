@@ -99,6 +99,7 @@
     <Compile Include="MessageHelper.fs" />
     <Compile Include="HTMLHelpWorkShopHelper.fs" />
     <Compile Include="TargetHelper.fs" />
+    <Compile Include="AdditionalSyntax.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core">

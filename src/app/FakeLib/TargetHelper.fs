@@ -4,15 +4,26 @@ module Fake.TargetHelper
 open System
 open System.Collections.Generic
 
-type TargetTemplate<'a> =
+type TargetDescription = string
+
+type 'a TargetTemplate =
     { Name: string;
       Dependencies: string list;
+      Description: TargetDescription;
       Function : 'a -> unit}
    
-type Target = TargetTemplate<unit>
+type Target = unit TargetTemplate
 
 let mutable PrintStackTraceOnError = false
+
+let mutable LastDescription = null
    
+/// Sets the Description for the next target
+let Description text = 
+    if LastDescription <> null then 
+        failwithf "You can't set the description for a target twice. There is already a description: %A" LastDescription
+    LastDescription <- text
+
 /// TargetDictionary  
 let TargetDict = new Dictionary<_,_>()
 
@@ -46,7 +57,7 @@ let getAllTargetsNames() = TargetDict |> Seq.map (fun t -> t.Key) |> Seq.toList
 let DoNothing = (fun () -> ())
 
 /// Checks wether the dependency can be add
-let checkIfDependencyCanBeAdd targetName dependentTargetName =
+let checkIfDependencyCanBeAdded targetName dependentTargetName =
     let target = getTarget targetName
     let dependentTarget = getTarget dependentTargetName
 
@@ -62,13 +73,13 @@ let checkIfDependencyCanBeAdd targetName dependentTargetName =
 
 /// Adds the dependency to the front of the list of dependencies
 let dependencyAtFront targetName dependentTargetName =
-    let target,dependentTarget = checkIfDependencyCanBeAdd targetName dependentTargetName
+    let target,dependentTarget = checkIfDependencyCanBeAdded targetName dependentTargetName
     
     TargetDict.[targetName] <- { target with Dependencies = dependentTargetName :: target.Dependencies }
   
 /// Appends the dependency to the list of dependencies
 let dependencyAtEnd targetName dependentTargetName =
-    let target,dependentTarget = checkIfDependencyCanBeAdd targetName dependentTargetName
+    let target,dependentTarget = checkIfDependencyCanBeAdded targetName dependentTargetName
     
     TargetDict.[targetName] <- { target with Dependencies = target.Dependencies @ [dependentTargetName] }
 
@@ -97,16 +108,19 @@ let targetFromTemplate template name parameters =
     TargetDict.Add(name,
       { Name = name; 
         Dependencies = [];
+        Description = template.Description;
         Function = fun () ->
           // Don't run function now
           template.Function parameters })
-
+    
     name <== template.Dependencies
-  
+    LastDescription <- null
+
 /// Creates a TargetTemplate with dependencies
 let TargetTemplateWithDependecies dependencies body =
     { Name = String.Empty;
       Dependencies = dependencies;
+      Description = LastDescription;
       Function = body}     
         |> targetFromTemplate
 
@@ -197,14 +211,25 @@ let WriteTaskTimeSummary total =
 
 let private changeExitCodeIfErrorOccured() = if errors <> [] then exit 42 
 
+let isListMode = hasBuildParam "list"
+
+let listTargets() =
+    tracefn "Available targets:"
+    TargetDict.Values
+      |> Seq.iter (fun target -> 
+            tracefn "  - %s %s" target.Name (if target.Description <> null then " - " + target.Description else "")
+            tracefn "     Depends on: %A" target.Dependencies)
+
 /// <summary>Runs a target and its dependencies</summary>
 /// <param name="targetName">The target to run.</param>
 let run targetName =            
+    if isListMode then listTargets(); WaitUntilEverythingIsPrinted() else
+    if LastDescription <> null then failwithf "You set a task description (%A) but didn't specify a task." LastDescription
     let rec runTarget targetName =
         try      
             if errors = [] && ExecutedTargets.Contains targetName |> not then
                 let target = getTarget targetName      
-                traceStartTarget target.Name (dependencyString target)
+                traceStartTarget target.Name target.Description (dependencyString target)
       
                 List.iter runTarget target.Dependencies
       
@@ -240,53 +265,3 @@ let FinalTarget name body =
 let ActivateFinalTarget name = 
     let t = getTarget name // test if target is defined
     FinalTargets.[name] <- true
-
-/// Allows to use Tokens instead of strings
-let (?) f s = f s
-
-/// Allows to use Tokens instead of strings for TargetNames
-let (?<-) f str action = f str action
-
-/// Allows to use For? syntax for Dependencies
-let For x y = x <== y
-
-/// Converts a dependency into a list
-let Dependency x = [x]
-
-/// Appends the dependency to the list of dependencies
-let And x y = y @ [x]
-
-/// Runs a Target and its dependencies
-let Run = run
-
-/// Runs the target given by the build script parameter or the given default target
-let RunParameterTargetOrDefault parameterName defaultTarget = getBuildParamOrDefault parameterName defaultTarget |> Run
-
-/// Stores which targets are on the same level
-let private sameLevels = new Dictionary<_,_>()
-
-let targetsAreOnSameLevel x y =
-    match sameLevels.TryGetValue y with
-    | true, z -> failwithf "Target %s is already on same level with %s" x z
-    | _  -> sameLevels.[y] <- x
-
-let rec addDependenciesOnSameLevel target dependency =
-    match sameLevels.TryGetValue dependency with
-    | true, x -> 
-        addDependenciesOnSameLevel target x
-        Dependencies target [x]
-    | _  -> ()
-
-/// Defines a dependency - y is dependent on x
-let inline (==>) x y =
-    addDependenciesOnSameLevel y x 
-    Dependencies y [x]
-
-    y
-
-/// Defines that x and y are not dependent on each other but y is dependent on all dependencies of x.
-let inline (<=>) x y =   
-    let target_x = getTarget x
-    Dependencies y target_x.Dependencies
-    targetsAreOnSameLevel x y
-    y

@@ -177,8 +177,10 @@ let getRegEx pattern =
     | true, regex -> regex
     | _ -> (new System.Text.RegularExpressions.Regex(pattern))
 
-let (>=>) pattern (replacement:string) text =
+let regex_replace pattern (replacement:string) text =
     (getRegEx pattern).Replace(text,replacement)
+
+let (>=>) pattern replacement text = regex_replace pattern replacement text
 
 let (>**) pattern text = (getRegEx pattern).IsMatch text
 
