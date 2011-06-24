@@ -2,9 +2,10 @@
   <CopyReferencedAssembliesToWorkspace>false</CopyReferencedAssembliesToWorkspace>
   <RunPreBuildEvents>false</RunPreBuildEvents>
   <RunPostBuildEvents>false</RunPostBuildEvents>
+  <PreviouslyBuiltSuccessfully>true</PreviouslyBuiltSuccessfully>
   <InstrumentAssembly>true</InstrumentAssembly>
-  <BuildOutputPath />
+  <BuildOutputPath></BuildOutputPath>
   <DefaultTestTimeout>60000</DefaultTestTimeout>
-  <UseBuildConfiguration />
+  <UseBuildConfiguration></UseBuildConfiguration>
   <AdditionalFilesToInclude>..\..\..\tools\FSharp\*.dll;..\..\..\tools\FSharp\*.exe</AdditionalFilesToInclude>
 </ProjectConfiguration>
