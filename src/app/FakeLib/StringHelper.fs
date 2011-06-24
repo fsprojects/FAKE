@@ -56,8 +56,27 @@ let inline separated delimiter items = String.Join(delimiter, Array.ofSeq items)
 /// Reads a file as one text
 let ReadFileAsString file = File.ReadAllText(file,Encoding.Default)
 
+/// Replaces the text in the given file
+let ReplaceInFile replaceF fileName =
+    fileName
+    |> ReadFileAsString
+    |> replaceF
+    |> ReplaceFile fileName
+
 /// Replaces the given pattern in the given text with the replacement
 let inline replace (pattern:string) replacement (text:string) = text.Replace(pattern,replacement)
+
+let LinuxLineBreaks = "\n"
+let WindowsLineBreaks = "\r\n"
+let MacLineBreaks = "\r"
+
+let ConvertTextToWindowsLineBreaks text = 
+    text
+    |> replace WindowsLineBreaks LinuxLineBreaks 
+    |> replace MacLineBreaks LinuxLineBreaks 
+    |> replace LinuxLineBreaks WindowsLineBreaks
+
+let ConvertFileToWindowsLineBreaks fileName = ReplaceInFile ConvertTextToWindowsLineBreaks fileName
 
 let replaceFirst (pattern: string) replacement (text: string) = 
     let pos = text.IndexOf pattern
