@@ -11,7 +11,63 @@
 <member name="">
 
 </member>
+<member name="M:Fake.AdditionalSyntax.op_LessEqualsGreater(System.String,System.String)">
+<summary>
+ Defines that x and y are not dependent on each other but y is dependent on all dependencies of x.
+</summary>
+</member>
+<member name="M:Fake.AdditionalSyntax.op_EqualsEqualsGreater(System.String,System.String)">
+<summary>
+ Defines a dependency - y is dependent on x
+</summary>
+</member>
 <member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:Fake.AdditionalSyntax.sameLevels">
+<summary>
+ Stores which targets are on the same level
+</summary>
+</member>
+<member name="M:Fake.AdditionalSyntax.RunParameterTargetOrDefault(System.String,System.String)">
+<summary>
+ Runs the target given by the build script parameter or the given default target
+</summary>
+</member>
+<member name="P:Fake.AdditionalSyntax.Run">
+<summary>
+ Runs a Target and its dependencies
+</summary>
+</member>
+<member name="M:Fake.AdditionalSyntax.And``1(``0,Microsoft.FSharp.Collections.FSharpList{``0})">
+<summary>
+ Appends the dependency to the list of dependencies
+</summary>
+</member>
+<member name="M:Fake.AdditionalSyntax.Dependency``1(``0)">
+<summary>
+ Converts a dependency into a list
+</summary>
+</member>
+<member name="M:Fake.AdditionalSyntax.For(System.String,Microsoft.FSharp.Collections.FSharpList{System.String})">
+<summary>
+ Allows to use For? syntax for Dependencies
+</summary>
+</member>
+<member name="M:Fake.AdditionalSyntax.op_DynamicAssignment``3(Microsoft.FSharp.Core.FSharpFunc`2{``0,Microsoft.FSharp.Core.FSharpFunc`2{``1,``2}},``0,``1)">
+<summary>
+ Allows to use Tokens instead of strings for TargetNames
+</summary>
+</member>
+<member name="M:Fake.AdditionalSyntax.op_Dynamic``2(Microsoft.FSharp.Core.FSharpFunc`2{``0,``1},``0)">
+<summary>
+ Allows to use Tokens instead of strings
+</summary>
+</member>
+<member name="T:Fake.AdditionalSyntax">
 
 </member>
 <member name="">
@@ -85,6 +141,35 @@
 </member>
 <member name="">
 
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:Fake.AssemblyInfoHelper.AssemblyInfoReplacementDefaults">
+<summary>
+ AssemblyInfoReplacement default params
+</summary>
 </member>
 <member name="M:Fake.AssemblyInfoHelper.AssemblyInfo(Microsoft.FSharp.Core.FSharpFunc`2{Fake.AssemblyInfoHelper.AssemblyInfoParams,Fake.AssemblyInfoHelper.AssemblyInfoParams})">
 <summary>
@@ -279,7 +364,12 @@
 </member>
 <member name="M:Fake.EnvironmentHelper.op_AtAt(System.String,System.String)">
 <summary>
- Combines to path strings
+ Combines two path strings
+</summary>
+</member>
+<member name="M:Fake.EnvironmentHelper.combinePaths(System.String,System.String)">
+<summary>
+ Combines two path strings
 </summary>
 </member>
 <member name="M:Fake.EnvironmentHelper.environVar(System.String)">
@@ -290,7 +380,7 @@
 <member name="T:Fake.EnvironmentHelper">
 
 </member>
-<member name="M:Fake.FSIHelper.runBuildScript(System.String,System.Collections.Generic.IEnumerable{System.Tuple`2{System.String,System.String}})">
+<member name="M:Fake.FSIHelper.runBuildScript(System.Boolean,System.String,System.Collections.Generic.IEnumerable{System.Tuple`2{System.String,System.String}})">
 <summary>
  Run the given buildscript with fsi.exe
 </summary>
@@ -1690,32 +1780,6 @@
 <member name="T:Fake.MSpecHelper">
 
 </member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="M:Fake.MailBoxHelper.MessageBoxIsEmpty">
-<summary>
- Checks if the current message queue is empty
-</summary>
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="T:Fake.MailBoxHelper">
-
-</member>
 <member name="M:Fake.MessageHelper.WaitForMessageFile(System.String,System.TimeSpan)">
 <summary>
  Waits for another application to create a output file
@@ -2274,6 +2338,9 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
 <member name="M:Fake.StringHelper.op_LessMultiply(System.String,System.String)">
 <summary>
  Checks wether the given text starts with the given prefix
@@ -2282,6 +2349,11 @@
 <member name="M:Fake.StringHelper.toLines(System.Collections.Generic.IEnumerable{System.String})">
 <summary>
  Converts a sequence of strings into a string separated with line ends
+</summary>
+</member>
+<member name="M:Fake.StringHelper.split(System.Char,System.String)">
+<summary>
+ Splits the given string at the given delimiter
 </summary>
 </member>
 <member name="M:Fake.StringHelper.trimSlash(System.String)">
@@ -2364,9 +2436,29 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
 <member name="M:Fake.StringHelper.replace(System.String,System.String,System.String)">
 <summary>
  Replaces the given pattern in the given text with the replacement
+</summary>
+</member>
+<member name="M:Fake.StringHelper.ReplaceInFile(Microsoft.FSharp.Core.FSharpFunc`2{System.String,System.String},System.String)">
+<summary>
+ Replaces the text in the given file
 </summary>
 </member>
 <member name="M:Fake.StringHelper.ReadFileAsString(System.String)">
@@ -2400,6 +2492,11 @@
 <member name="M:Fake.StringHelper.WriteStringToFile(System.Boolean,System.String,System.String)">
 <summary>
  Writes string to a file
+</summary>
+</member>
+<member name="M:Fake.StringHelper.NormalizeVersion(System.String)">
+<summary>
+ Removes all trailing .0 from a version string
 </summary>
 </member>
 <member name="M:Fake.StringHelper.WriteToFile(System.Boolean,System.String,System.Collections.Generic.IEnumerable{System.String})">
@@ -2458,61 +2555,11 @@
 <member name="">
 
 </member>
-<member name="M:Fake.TargetHelper.op_LessEqualsGreater(System.String,System.String)">
-<summary>
- Defines that x and y are not dependent on each other but y is dependent on all dependencies of x.
-</summary>
-</member>
-<member name="M:Fake.TargetHelper.op_EqualsEqualsGreater(System.String,System.String)">
-<summary>
- Defines a dependency - y is dependent on x
-</summary>
-</member>
 <member name="">
 
 </member>
 <member name="">
 
-</member>
-<member name="P:Fake.TargetHelper.sameLevels">
-<summary>
- Stores which targets are on the same level
-</summary>
-</member>
-<member name="M:Fake.TargetHelper.RunParameterTargetOrDefault(System.String,System.String)">
-<summary>
- Runs the target given by the build script parameter or the given default target
-</summary>
-</member>
-<member name="P:Fake.TargetHelper.Run">
-<summary>
- Runs a Target and its dependencies
-</summary>
-</member>
-<member name="M:Fake.TargetHelper.And``1(``0,Microsoft.FSharp.Collections.FSharpList{``0})">
-<summary>
- Appends the dependency to the list of dependencies
-</summary>
-</member>
-<member name="M:Fake.TargetHelper.Dependency``1(``0)">
-<summary>
- Converts a dependency into a list
-</summary>
-</member>
-<member name="M:Fake.TargetHelper.For(System.String,Microsoft.FSharp.Collections.FSharpList{System.String})">
-<summary>
- Allows to use For? syntax for Dependencies
-</summary>
-</member>
-<member name="M:Fake.TargetHelper.op_DynamicAssignment``3(Microsoft.FSharp.Core.FSharpFunc`2{``0,Microsoft.FSharp.Core.FSharpFunc`2{``1,``2}},``0,``1)">
-<summary>
- Allows to use Tokens instead of strings for TargetNames
-</summary>
-</member>
-<member name="M:Fake.TargetHelper.op_Dynamic``2(Microsoft.FSharp.Core.FSharpFunc`2{``0,``1},``0)">
-<summary>
- Allows to use Tokens instead of strings
-</summary>
 </member>
 <member name="M:Fake.TargetHelper.ActivateFinalTarget(System.String)">
 <summary>
@@ -2527,6 +2574,12 @@
 <member name="M:Fake.TargetHelper.run(System.String)">
  <summary>Runs a target and its dependencies</summary>
  <param name="targetName">The target to run.</param>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
 </member>
 <member name="">
 
@@ -2609,7 +2662,7 @@
  Adds the dependency to the front of the list of dependencies
 </summary>
 </member>
-<member name="M:Fake.TargetHelper.checkIfDependencyCanBeAdd(System.String,System.String)">
+<member name="M:Fake.TargetHelper.checkIfDependencyCanBeAdded(System.String,System.String)">
 <summary>
  Checks wether the dependency can be add
 </summary>
@@ -2653,6 +2706,14 @@
 <summary>
  TargetDictionary  
 </summary>
+</member>
+<member name="M:Fake.TargetHelper.Description(System.String)">
+<summary>
+ Sets the Description for the next target
+</summary>
+</member>
+<member name="">
+
 </member>
 <member name="">
 
@@ -2923,7 +2984,7 @@
  Traces the end of a target   
 </summary>
 </member>
-<member name="M:Fake.TraceHelper.traceStartTarget(System.String,System.String)">
+<member name="M:Fake.TraceHelper.traceStartTarget(System.String,System.String,System.String)">
 <summary>
  Traces the begin of a target
 </summary>
@@ -3022,11 +3083,6 @@
  Logs the specified string        
 </summary>
 </member>
-<member name="M:Fake.TraceHelper.WaitUntilEverythingIsPrinted">
-<summary>
- Waits until the message queue is empty
-</summary>
-</member>
 <member name="">
 
 </member>
@@ -3116,6 +3172,9 @@
 <summary>
  Defines Tracing information for TraceListeners
 </summary>
+</member>
+<member name="">
+
 </member>
 <member name="">
 

@@ -108,3 +108,5 @@ let addXmlListener xmlOutputFile = listeners.Add(new NAntXmlTraceListener(xmlOut
 // register listeners
 listeners.Add defaultConsoleTraceListener
 if hasBuildParam "logfile" || buildServer = CCNet then addXmlListener xmlOutputFile
+
+let postMessage x = listeners.ForEach (fun listener -> listener.Write x)

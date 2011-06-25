@@ -223,7 +223,7 @@ let listTargets() =
 /// <summary>Runs a target and its dependencies</summary>
 /// <param name="targetName">The target to run.</param>
 let run targetName =            
-    if isListMode then listTargets(); WaitUntilEverythingIsPrinted() else
+    if isListMode then listTargets() else
     if LastDescription <> null then failwithf "You set a task description (%A) but didn't specify a task." LastDescription
     let rec runTarget targetName =
         try      
@@ -245,15 +245,12 @@ let run targetName =
     let watch = new System.Diagnostics.Stopwatch()
     watch.Start()        
     try
-        WaitUntilEverythingIsPrinted()
         tracefn "Building project with version: %s" buildVersion
         PrintDependencyGraph false targetName
         runTarget targetName
     finally
         runFinalTargets()
-        WaitUntilEverythingIsPrinted()
         WriteTaskTimeSummary watch.Elapsed
-        WaitUntilEverythingIsPrinted()
         changeExitCodeIfErrorOccured()
  
 /// Registers a final target (not activated)
