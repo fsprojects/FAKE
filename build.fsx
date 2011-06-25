@@ -142,7 +142,6 @@ Target "CreateNuGet" (fun _ ->
             Project = projectName
             Description = projectDescription                               
             OutputPath = nugetDir
-            ProjectFile = @".\src\app\FakeLib\FakeLib.fsproj"
             AccessKey = getBuildParamOrDefault "nugetkey" ""
             Publish = hasBuildParam "nugetkey" }) "fake.nuspec"
 )
