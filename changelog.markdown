@@ -1,3 +1,7 @@
+## 1.58.1.0
+
+* Removed message system for build output. Back to simpler tracing.
+
 ## 1.58.0.0
 
 * ReplaceAssemblyInfoVersions task allows to replace version info in AssemblyVersion-files
