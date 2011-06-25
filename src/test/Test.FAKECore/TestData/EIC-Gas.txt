@@ -1,0 +1,24 @@
+37Y701125MH0000I;Marktgebiet H-Gas;;01.10.2008;Bilanzierungsgebiet/Marktgebiet;Gas
+37Y700876MH0000H;Marktgebiet H-Gas Norddeutschland;;01.06.2007;Bilanzierungsgebiet/Marktgebiet;Gas
+37Y700276MH00003;Marktgebiet Süddeutschland;;01.01.2006;Bilanzierungsgebiet/Marktgebiet;Gas
+37Y700984MH0000E;Marktgebiet Süddeutschland;;01.01.2006;Bilanzierungsgebiet/Marktgebiet;Gas
+37Y700820MH0001Y;Marktgebiet ONTRAS;;01.01.2006;Bilanzierungsgebiet/Marktgebiet;Gas
+37Y700096MH00005;Marktgebiet RWE H-Gas;;01.04.2007;Bilanzierungsgebiet/Marktgebiet;Gas
+37Y700100MH0001B;Marktgebiet WINGAS TRANSPORT;;01.10.2007;Bilanzierungsgebiet/Marktgebiet;Gas
+37Y700087ML0000J;Marktgebiet Verbundnetz Ems-Weser-Elbe;;01.04.2007;Bilanzierungsgebiet/Marktgebiet;Gas
+37Y700111MLEGMTA;Marktgebiet EGMT;;01.04.2007;Bilanzierungsgebiet/Marktgebiet;Gas
+37Y700876ML0000U;Marktgebiet L-Gas Norddeutschland;;01.04.2007;Bilanzierungsgebiet/Marktgebiet;Gas
+37Y700096ML0000I;Marktgebiet RWE L-Gas;;01.10.2007;Bilanzierungsgebiet/Marktgebiet;Gas
+37Y700476ML0000X;Marktgebiet L-Gas;;01.10.2007;Bilanzierungsgebiet/Marktgebiet;Gas
+37Z701125MH00004;NetConnect Germany GmbH & Co. KG i.G.;NC;01.10.2008;Bilanzkreis;Gas
+37Z700876MH00003;Gasunie Deutschland Transport Services GmbH;BS;01.06.2007;Bilanzkreis;Gas
+37Z700276MH0000Q;GVS Netz GmbH & Eni Gas Transport Deutschland S.P.A;SD;01.01.2006;Bilanzkreis;Gas
+37Z700984MH00000;Gaz de France Deutschland Transport GmbH;SD;01.01.2006;Bilanzkreis;Gas
+37Z700820MH0001K;ONTRAS VNG Gastransport GmbH;ON;01.01.2006;Bilanzkreis;Gas
+37Z700096MH0000S;RWE Transportnetz Gas GmbH;RW;01.04.2007;Bilanzkreis;Gas
+37Z700100MH0001Y;WINGAS Transport GmbH & Co. KG;WT;01.10.2007;Bilanzkreis;Gas
+37Z700087ML00005;EWE NETZ GmbH & & Co. KG &;EW;01.04.2007;Bilanzkreis;Gas
+37Z700111MLEGMTX;EGMT Erdgas Münster Transport GmbH;EM;01.04.2007;Bilanzkreis;Gas
+37Z700876ML0000G;Gasunie Deutschland Transport Services GmbH;GL;01.04.2007;Bilanzkreis;Gas
+37Z700096ML00004;RWE Transportnetz Gas GmbH Marktgebiet RWE L-Gas &;RW;01.10.2007;Bilanzkreis;Gas
+37Z700476ML0000J;E.ON Gastransport AG & Co. KG;EG;01.10.2007;Bilanzkreis;Gas

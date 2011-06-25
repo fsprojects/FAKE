@@ -44,7 +44,6 @@ try
             if printDetails then log "Ready."
     with
     | exn -> 
-        WaitUntilEverythingIsPrinted()
         if exn.InnerException <> null then
             sprintf "Build failed.\nError:\n%s\nInnerException:\n%s" exn.Message exn.InnerException.Message
             |> traceError
@@ -53,7 +52,5 @@ try
             |> traceError
         sendTeamCityError exn.Message
         Environment.ExitCode <- 1
-        WaitUntilEverythingIsPrinted()
 finally
     traceEndBuild()
-    WaitUntilEverythingIsPrinted()

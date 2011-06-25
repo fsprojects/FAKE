@@ -13,9 +13,6 @@ let fakeVersion = productName.GetType().Assembly.GetName().Version
     
 let mutable private openTags = []
 
-/// Waits until the message queue is empty
-let WaitUntilEverythingIsPrinted () = buffer.PostAndReply(fun channel -> ProcessAll channel)
-
 /// Logs the specified string        
 let log message = LogMessage(message,true) |> postMessage
 
@@ -41,17 +38,13 @@ let tracef fmt = Printf.ksprintf (fun text -> postMessage(TraceMessage(text,fals
 let traceVerbose s = if verbose then trace s
 
 /// Writes a trace to stderr (in yellow)  
-let traceImportant text = 
-    postMessage(ImportantMessage text)
-    WaitUntilEverythingIsPrinted()
+let traceImportant text = postMessage(ImportantMessage text)
   
 /// Writes a trace to the command line (in yellow)
 let traceFAKE fmt = Printf.ksprintf (fun text -> postMessage(ImportantMessage text)) fmt
 
 /// Traces an error (in red)
-let traceError error =
-    postMessage(ErrorMessage error)
-    WaitUntilEverythingIsPrinted()
+let traceError error = postMessage(ErrorMessage error)
   
 /// Traces the EnvironmentVariables
 let TraceEnvironmentVariables() = 
@@ -109,7 +102,6 @@ let traceEndTarget name =
     closeTag "target"
 
     ReportProgressFinish <| sprintf "Target: %s" name
-    WaitUntilEverythingIsPrinted()
   
 /// Traces the begin of a task
 let traceStartTask task description =

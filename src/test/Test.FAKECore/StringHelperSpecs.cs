@@ -62,4 +62,13 @@ namespace Test.FAKECore
             () => StringHelper.ConvertTextToWindowsLineBreaks("This is my text\r\nI love it\r\n\r\nreally.\r\n")
                       .ShouldEqual("This is my text\r\nI love it\r\n\r\nreally.\r\n");
     }
+
+    public class when_reading_a_file_with_wrong_line_breaks
+    {
+        static string Text;
+        static string Replaced;
+        Establish context = () => Text = StringHelper.ReadFileAsString(@"TestData\EIC-Gas.txt");
+        Because of = () => Replaced = StringHelper.ConvertTextToWindowsLineBreaks(Text);
+        It should_be_the_same_text = () => Replaced.ShouldEqual(Text);
+    }
 }
