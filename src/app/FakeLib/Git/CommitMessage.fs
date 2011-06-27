@@ -3,6 +3,7 @@ module Fake.Git.CommitMessage
 
 open Fake
 open System
+open System.Text
 open System.IO
 
 let getCommitMessageFileInfo repositoryDir = 
@@ -20,5 +21,5 @@ let setMessage repositoryDir text =
     if isNullOrEmpty text then
         if messageFile.Exists then messageFile.Delete()
     else
-        use textWriter = new StreamWriter(messageFile.FullName, false)
+        use textWriter = new StreamWriter(messageFile.FullName, false, new UTF8Encoding(true))
         textWriter.Write text
