@@ -51,6 +51,9 @@ try
             sprintf "Build failed.\nError:\n%s" exn.Message
             |> traceError
         sendTeamCityError exn.Message
+        killFSI()
+        killMSBuild()
+
         Environment.ExitCode <- 1
 finally
     traceEndBuild()

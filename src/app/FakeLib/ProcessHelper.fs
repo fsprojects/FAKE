@@ -232,6 +232,14 @@ let asyncShellExec (args:ExecParams) = async {
     return proc.ExitCode
 }
 
+let killProcess(name:string) =
+    Process.GetProcesses()
+      |> Seq.filter (fun p -> p.ProcessName.ToLower().StartsWith(name.ToLower()))
+      |> Seq.iter (fun p -> p.Kill())
+
+let killFSI() = killProcess "fsi.exe"
+let killMSBuild() = killProcess "msbuild.exe"
+
 /// Execute an external program and return the exit code.
 let shellExec = asyncShellExec >> Async.RunSynchronously
 
