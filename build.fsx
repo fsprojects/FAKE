@@ -20,8 +20,13 @@ let deployDir = @".\Publish\"
 let docsDir = @".\docs\" 
 let nugetDir = @".\nuget\" 
 let reportDir = @".\report\" 
-let templatesSrcDir = @".\tools\Docu\templates\"
 let deployZip = deployDir @@ sprintf "%s-%s.zip" projectName buildVersion
+let packagesDir = @".\packages\"
+
+// tools
+let templatesSrcDir = @".\tools\Docu\templates\"
+let MSpecVersion = GetPackageVersion packagesDir "Machine.Specifications"
+let mspecTool = sprintf @"%sMachine.Specifications.%s\tools\mspec-clr4.exe" packagesDir MSpecVersion
 
 // files
 let appReferences  = !! @"src\app\**\*.*sproj"
@@ -108,7 +113,8 @@ Target "BuildTest" (fun _ ->
 Target "Test" (fun _ ->  
     !! (testDir @@ "Test.*.dll") 
       |> MSpec (fun p -> 
-            {p with 
+            {p with
+                ToolPath = mspecTool
                 HtmlOutputDir = reportDir}) 
 )
 
@@ -146,7 +152,7 @@ Target "CreateNuGet" (fun _ ->
             Publish = hasBuildParam "nugetkey" }) "fake.nuspec"
 )
 
-Target "Deploy" DoNothing
+Target "Default" DoNothing
 
 // Dependencies
 "Clean"
@@ -157,10 +163,10 @@ Target "Deploy" DoNothing
     ==> "GenerateDocumentation"
     ==> "ZipDocumentation" <=> "ZipCalculatorSample"
     ==> "CreateNuGet"
-    ==> "Deploy"
+    ==> "Default"
   
 if not isLocalBuild then
     "Clean" ==> "SetAssemblyInfo" ==> "BuildApp" |> ignore
 
 // start build
-RunParameterTargetOrDefault "target" "Deploy"
+RunParameterTargetOrDefault "target" "Default"

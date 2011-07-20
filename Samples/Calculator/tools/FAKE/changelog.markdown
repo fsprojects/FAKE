@@ -1,7 +1,3 @@
-## 1.58.5.0
-
-* Using nuget packages for mspec.
-
 ## 1.58.1.0
 
 * Removed message system for build output. Back to simpler tracing.
