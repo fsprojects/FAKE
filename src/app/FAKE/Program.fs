@@ -53,8 +53,9 @@ try
         sendTeamCityError exn.Message
         Environment.ExitCode <- 1
 
-    killFSI()
-    killMSBuild()
+    if buildServer = BuildServer.TeamCity then
+        killFSI()
+        killMSBuild()
 
 finally
     traceEndBuild()
