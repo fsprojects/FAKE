@@ -1,7 +1,7 @@
-## 1.58.5.0
+## 1.58.6.0
 
 * Using nuget packages for mspec.
-* If a build fails - FAKE tries to kill all MSBuild and FSI processes.
+* FAKE tries to kill all MSBuild and FSI processes at the end of a build.
 
 ## 1.58.1.0
 

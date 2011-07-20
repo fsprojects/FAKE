@@ -232,10 +232,11 @@ let asyncShellExec (args:ExecParams) = async {
     return proc.ExitCode
 }
 
-let killProcess(name:string) =
+
+let killProcess (name:string) =
     Process.GetProcesses()
       |> Seq.filter (fun p -> p.ProcessName.ToLower().StartsWith(name.ToLower()))
-      |> Seq.iter (fun p -> p.Kill())
+      |> Seq.performSafeOnEveryItem (fun p -> p.Kill())
 
 let killFSI() = killProcess "fsi.exe"
 let killMSBuild() = killProcess "msbuild.exe"
