@@ -233,13 +233,14 @@ let asyncShellExec (args:ExecParams) = async {
 }
 
 
-let killProcess (name:string) =
+let killProcess name =
+    tracefn "Searching for process with name = %s" name
     Process.GetProcesses()
       |> Seq.filter (fun p -> p.ProcessName.ToLower().StartsWith(name.ToLower()))
-      |> Seq.performSafeOnEveryItem (fun p -> p.Kill())
+      |> Seq.performSafeOnEveryItem (fun p -> tracefn "Trying to kill process %s (Id = %d)" p.ProcessName p.Id; p.Kill())
 
 let killFSI() = killProcess "fsi.exe"
-let killMSBuild() = killProcess "msbuild.exe"
+let killMSBuild() = killProcess "msbuild"
 
 /// Execute an external program and return the exit code.
 let shellExec = asyncShellExec >> Async.RunSynchronously
