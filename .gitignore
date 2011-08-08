@@ -22,3 +22,4 @@ _ReSharper*/
 *.user
 output.xml
 FAKE.crunchsolution.cache
+FAKE_mm_cache.bin

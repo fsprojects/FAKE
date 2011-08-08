@@ -9,6 +9,7 @@ type NUnitParams =
     { IncludeCategory:string;
       ExcludeCategory:string;
       ToolPath:string;
+      ToolName:string;
       TestInNewThread:bool;
       OutputFile:string;
       ErrorOutputFile:string;
@@ -43,13 +44,12 @@ type TestSuite =
     member x.Skipped = x.TestCases |> Seq.filter (fun test -> test.Skipped) |> Seq.length
     member x.Runtime = x.TestCases |> List.sumBy (fun test -> test.RunTime)         
 
-let toolName = @"nunit-console.exe"
-
 /// NUnit default params  
 let NUnitDefaults =
     { IncludeCategory = null;
       ExcludeCategory = null;
       ToolPath = currentDirectory @@ "tools" @@ "Nunit";
+      ToolName = @"nunit-console.exe";
       TestInNewThread = false;
       OutputFile = currentDirectory @@ "TestResult.xml";
       ErrorOutputFile = null;
@@ -81,7 +81,8 @@ let NUnit setParams (assemblies: string seq) =
           |> appendIfNotNull parameters.Framework  "/framework:"
           |> appendIfNotNull parameters.ErrorOutputFile "/err:"
 
-    let tool = parameters.ToolPath @@ toolName
+    let tool = parameters.ToolPath @@ parameters.ToolName
+
     let args = commandLineBuilder.ToString()
     trace (tool + " " + args)
     let result =

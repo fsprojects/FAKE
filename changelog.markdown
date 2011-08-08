@@ -1,3 +1,7 @@
+## 1.58.9.0
+
+* Allow to choose specific nunit-console runner.
+
 ## 1.58.6.0
 
 * Using nuget packages for mspec.
