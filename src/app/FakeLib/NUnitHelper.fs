@@ -81,7 +81,10 @@ let NUnit setParams (assemblies: string seq) =
           |> appendIfNotNull parameters.Framework  "/framework:"
           |> appendIfNotNull parameters.ErrorOutputFile "/err:"
 
-    let tool = parameters.ToolPath @@ toolName
+    let tool = if parameters.ToolPath.EndsWith("exe") then
+                 parameters.ToolPath
+               else
+                 parameters.ToolPath @@ toolName
     let args = commandLineBuilder.ToString()
     trace (tool + " " + args)
     let result =
