@@ -12,12 +12,15 @@ type MSBuildProject = XDocument
 
 /// MSBuild exe fileName
 let msBuildExe =   
-    let ev = environVar "MSBuild"
-    if not (isNullOrEmpty ev) then ev else
-        if "true".Equals(ConfigurationManager.AppSettings.["IgnoreMSBuild"],StringComparison.OrdinalIgnoreCase) then 
-            String.Empty 
-        else 
-            findPath "MSBuildPath" "MSBuild.exe"
+    if System.Environment.OSVersion.Platform = System.PlatformID.Unix then
+        "xbuild"
+    else
+        let ev = environVar "MSBuild"
+        if not (isNullOrEmpty ev) then ev else
+            if "true".Equals(ConfigurationManager.AppSettings.["IgnoreMSBuild"],StringComparison.OrdinalIgnoreCase) then 
+                String.Empty 
+            else 
+                findPath "MSBuildPath" "MSBuild.exe"
 
 
 let msbuildNamespace = "http://schemas.microsoft.com/developer/msbuild/2003"
