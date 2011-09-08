@@ -3,8 +3,11 @@ module Fake.FSIHelper
    
 /// The Path to the F# interactive tool
 let fsiPath = 
-    let ev = environVar "FSI"
-    if not (isNullOrEmpty ev) then ev else findPath "FSIPath" "fsi.exe"
+    if System.Environment.OSVersion.Platform = System.PlatformID.Unix then
+        "fsi"
+    else
+        let ev = environVar "FSI"
+        if not (isNullOrEmpty ev) then ev else findPath "FSIPath" "fsi.exe"
       
 /// Run the given buildscript with fsi.exe
 let runBuildScript printDetails script args = 
