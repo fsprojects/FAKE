@@ -51,7 +51,7 @@ let WriteFile file lines = WriteToFile false file lines
 let AppendToFile file lines = WriteToFile true file lines
 
 /// Converts a sequence of strings to a string with delimiters
-let inline separated delimiter items = String.Join(delimiter, (string (Array.ofSeq items)))
+let inline separated delimiter (items: string seq) = String.Join(delimiter, Array.ofSeq items)
 
 /// Reads a file as one text
 let ReadFileAsString file = File.ReadAllText(file,Encoding.Default)
