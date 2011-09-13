@@ -64,3 +64,5 @@ let getTargetPlatformDir platformVersion =
 
 /// The path to the personal documents
 let documentsFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+
+let isUnix = System.Environment.OSVersion.Platform = System.PlatformID.Unix
