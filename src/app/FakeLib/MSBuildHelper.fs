@@ -12,7 +12,7 @@ type MSBuildProject = XDocument
 
 /// MSBuild exe fileName
 let msBuildExe =   
-    if System.Environment.OSVersion.Platform = System.PlatformID.Unix then
+    if isUnix then
         "xbuild"
     else
         let ev = environVar "MSBuild"

@@ -3,7 +3,7 @@ module Fake.FSIHelper
    
 /// The Path to the F# interactive tool
 let fsiPath = 
-    if System.Environment.OSVersion.Platform = System.PlatformID.Unix then
+    if isUnix then
         "fsi"
     else
         let ev = environVar "FSI"
