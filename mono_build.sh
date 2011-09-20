@@ -11,7 +11,7 @@ unamestr=`uname`
 if [ "$unamestr" == "Darwin" ]; then
 	monopath='/Library/Frameworks/Mono.framework/libraries/mono/4.0/'
 	fscorepath='/Library/Frameworks/Mono.framework/libraries/mono/4.0/'
-elif [ "unamestr" == "Linux" ]; then
+elif [ "$unamestr" == "Linux" ]; then
 	monopath='/usr/lib/mono/4.0/'
 	fscorepath='/usr/local/lib/mono/4.0/'
 fi
