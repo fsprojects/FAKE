@@ -82,6 +82,12 @@ let MSBuildDefaults =
       ToolsVersion = None
       Verbosity = None }
 
+let getAllParameters targets maxcpu tools verbosity properties =
+    if isUnix then
+        [targets; tools; verbosity] @ properties
+    else
+        [targets; maxcpu; tools; verbosity] @ properties
+
 let serializeMSBuildParams (p: MSBuildParams) = 
     let targets = 
         match p.Targets with
@@ -109,7 +115,7 @@ let serializeMSBuildParams (p: MSBuildParams) =
                 | Detailed -> "d"
                 | Diagnostic -> "diag"
             Some ("v", level)
-    let allParameters = [targets; maxcpu; tools; verbosity] @ properties
+    let allParameters = getAllParameters targets maxcpu tools verbosity properties
     allParameters
     |> Seq.map (function
                     | None -> ""
