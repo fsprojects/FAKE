@@ -12,12 +12,15 @@ type MSBuildProject = XDocument
 
 /// MSBuild exe fileName
 let msBuildExe =   
-    let ev = environVar "MSBuild"
-    if not (isNullOrEmpty ev) then ev else
-        if "true".Equals(ConfigurationManager.AppSettings.["IgnoreMSBuild"],StringComparison.OrdinalIgnoreCase) then 
-            String.Empty 
-        else 
-            findPath "MSBuildPath" "MSBuild.exe"
+    if isUnix then
+        "xbuild"
+    else
+        let ev = environVar "MSBuild"
+        if not (isNullOrEmpty ev) then ev else
+            if "true".Equals(ConfigurationManager.AppSettings.["IgnoreMSBuild"],StringComparison.OrdinalIgnoreCase) then 
+                String.Empty 
+            else 
+                findPath "MSBuildPath" "MSBuild.exe"
 
 
 let msbuildNamespace = "http://schemas.microsoft.com/developer/msbuild/2003"
@@ -79,6 +82,12 @@ let MSBuildDefaults =
       ToolsVersion = None
       Verbosity = None }
 
+let getAllParameters targets maxcpu tools verbosity properties =
+    if isUnix then
+        [targets; tools; verbosity] @ properties
+    else
+        [targets; maxcpu; tools; verbosity] @ properties
+
 let serializeMSBuildParams (p: MSBuildParams) = 
     let targets = 
         match p.Targets with
@@ -106,7 +115,7 @@ let serializeMSBuildParams (p: MSBuildParams) =
                 | Detailed -> "d"
                 | Diagnostic -> "diag"
             Some ("v", level)
-    let allParameters = [targets; maxcpu; tools; verbosity] @ properties
+    let allParameters = getAllParameters targets maxcpu tools verbosity properties
     allParameters
     |> Seq.map (function
                     | None -> ""

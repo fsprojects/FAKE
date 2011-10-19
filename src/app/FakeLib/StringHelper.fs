@@ -50,11 +50,35 @@ let WriteFile file lines = WriteToFile false file lines
 /// Appends all lines to a file line by line
 let AppendToFile file lines = WriteToFile true file lines
 
+/// Replaces the given pattern in the given text with the replacement
+let inline replace (pattern:string) replacement (text:string) = text.Replace(pattern,replacement)
+
 /// Converts a sequence of strings to a string with delimiters
-let inline separated delimiter items = String.Join(delimiter, Array.ofSeq items)
-       
+let inline separated delimiter (items: string seq) = String.Join(delimiter, Array.ofSeq items)
+
 /// Reads a file as one text
 let ReadFileAsString file = File.ReadAllText(file,Encoding.Default)
+
+/// Replaces any occurence of the currentDirectory with .
+let inline shortenCurrentDirectory value = replace currentDirectory "." value
+
+/// Removes the slashes from the end of the given string
+let inline trimSlash (s:string) = s.TrimEnd('\\')
+
+/// Splits the given string at the given delimiter
+let inline split (delimiter:char) (text:string) = text.Split [|delimiter|] |> Array.toList
+
+/// Converts a sequence of strings into a string separated with line ends
+let inline toLines s = separated "\r\n" s
+
+/// Checks wether the given text starts with the given prefix
+let startsWith prefix (text:string) = text.StartsWith prefix
+
+/// Checks wether the given text starts with the given prefix
+let inline (<*) prefix text = startsWith prefix text
+
+/// Checks wether the given text ends with the given suffix
+let endsWith suffix (text:string) = text.EndsWith suffix
 
 /// Replaces the text in the given file
 let ReplaceInFile replaceF fileName =
@@ -62,9 +86,6 @@ let ReplaceInFile replaceF fileName =
     |> ReadFileAsString
     |> replaceF
     |> ReplaceFile fileName
-
-/// Replaces the given pattern in the given text with the replacement
-let inline replace (pattern:string) replacement (text:string) = text.Replace(pattern,replacement)
 
 let LinuxLineBreaks = "\n"
 let WindowsLineBreaks = "\r\n"
@@ -141,11 +162,11 @@ let ProduceRelativePath baseLocation targetLocation =
     let resultPath = ref "."
 
     let targetLocation =
-        if targetLocation.EndsWith directorySeparator then targetLocation
+        if targetLocation |> endsWith directorySeparator then targetLocation
         else targetLocation + directorySeparator
     
     let baseLocation =
-        if baseLocation.EndsWith directorySeparator then
+        if baseLocation |> endsWith directorySeparator then
             ref (baseLocation.Substring(0, baseLocation.Length - 1))
         else 
             ref baseLocation
@@ -154,13 +175,15 @@ let ProduceRelativePath baseLocation targetLocation =
         resultPath := !resultPath + directorySeparator + ".."
         baseLocation := Path.GetDirectoryName !baseLocation
 
-        if (!baseLocation).EndsWith directorySeparator then
+        if (!baseLocation) |> endsWith directorySeparator then
             baseLocation := (!baseLocation).Substring(0, (!baseLocation).Length - 1)
 
-    resultPath := (!resultPath + targetLocation.Substring((!baseLocation).Length)).Replace(directorySeparator + directorySeparator,directorySeparator)
+    resultPath := 
+        (!resultPath + targetLocation.Substring((!baseLocation).Length))
+          |> replace (directorySeparator + directorySeparator) directorySeparator
 
     // preprocess .\..\ case
-    if (!resultPath).StartsWith (sprintf ".%s..%s" directorySeparator directorySeparator) then
+    if (sprintf ".%s..%s" directorySeparator directorySeparator) <* (!resultPath) then
         (!resultPath).Substring(2, (!resultPath).Length - 3)
     else
         (!resultPath).Substring(0, (!resultPath).Length - 1)
@@ -173,21 +196,6 @@ let inline toRelativePath value =
          let x = ProduceRelativePath currentDirectory value
          relativePaths.Add(value,x)
          x
-
-/// Replaces any occurence of the currentDirectory with .
-let inline shortenCurrentDirectory value = replace currentDirectory "." value
-
-/// Removes the slashes from the end of the given string
-let inline trimSlash (s:string) = s.TrimEnd('\\')
-
-/// Splits the given string at the given delimiter
-let inline split (delimiter:char) (text:string) = text.Split [|delimiter|] |> Array.toList
-
-/// Converts a sequence of strings into a string separated with line ends
-let inline toLines s = separated "\r\n" s
-
-/// Checks wether the given text starts with the given prefix
-let inline (<*) prefix (text:string) = text.StartsWith prefix
 
 let private regexes = new Dictionary<_,_>()
 

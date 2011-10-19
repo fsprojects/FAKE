@@ -61,9 +61,9 @@
     <Reference Include="FSharp.Testing">
       <HintPath>..\..\..\packages\FSharp.Testing.0.2.8.0\lib\FSharp.Testing.dll</HintPath>
     </Reference>
-    <Reference Include="Machine.Specifications, Version=0.4.21.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Machine.Specifications, Version=0.4.24.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Machine.Specifications.0.4.21.0\lib\Machine.Specifications.dll</HintPath>
+      <HintPath>..\..\..\packages\Machine.Specifications.0.4.24.0\lib\Machine.Specifications.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -145,16 +145,17 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\app\FakeLib\FakeLib.fsproj">
-      <Project>{13D56521-772A-41DB-9772-1DA1A4AA8E3A}</Project>
-      <Name>FakeLib</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="app.config" />
     <None Include="Globbing\Directories\SampleApp.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\app\FakeLib\FakeLib.fsproj">
+      <Project>{13D56521-772A-41DB-9772-1DA1A4AA8E3A}</Project>
+      <Name>FakeLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

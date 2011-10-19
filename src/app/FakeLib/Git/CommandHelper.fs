@@ -12,8 +12,11 @@ open Fake
 let mutable gitTimeOut = TimeSpan.MaxValue
 
 let gitPath = 
-    let ev = environVar "GIT"
-    if not (isNullOrEmpty ev) then ev else findPath "GitPath" "git.exe"   
+    if isUnix then
+        "git"
+    else
+        let ev = environVar "GIT"
+        if not (isNullOrEmpty ev) then ev else findPath "GitPath" "git.exe"   
 
 let runGitCommand repositoryDir command = 
     let ok,msg,errors = 
