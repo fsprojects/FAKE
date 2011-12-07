@@ -56,7 +56,7 @@ let private runNuget parameters nuSpec =
     // create .nuspec file
     CopyFile parameters.OutputPath nuSpec
 
-    let specFile = parameters.OutputPath @@ nuSpec
+    let specFile = parameters.OutputPath @@ (nuSpec |> Path.GetFileName)
     let packageFile = sprintf "%s.%s.nupkg" parameters.Project version
     let dependencies =
         if parameters.Dependencies = [] then "" else
@@ -88,7 +88,7 @@ let private runNuget parameters nuSpec =
         parameters.OutputPath @@ packageFile |> DeleteFile
 
     // create package
-    let args = sprintf "pack %s" nuSpec
+    let args = sprintf "pack %s" (Path.GetFileName specFile)
     let result = 
         ExecProcess (fun info ->
             info.FileName <- parameters.ToolPath
