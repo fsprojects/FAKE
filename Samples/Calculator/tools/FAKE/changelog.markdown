@@ -1,3 +1,12 @@
+## 1.58.9.0
+
+* Allow to choose specific nunit-console runner.
+
+## 1.58.6.0
+
+* Using nuget packages for mspec.
+* FAKE tries to kill all MSBuild and FSI processes at the end of a build.
+
 ## 1.58.1.0
 
 * Removed message system for build output. Back to simpler tracing.

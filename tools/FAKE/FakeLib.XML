@@ -304,6 +304,9 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
 <member name="P:Fake.EnvironmentHelper.documentsFolder">
 <summary>
  The path to the personal documents
@@ -1737,6 +1740,9 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
 <member name="P:Fake.MSBuildHelper.msBuildExe">
 <summary>
  MSBuild exe fileName
@@ -1929,6 +1935,9 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
 <member name="M:Fake.NUnitHelper.writeXMLOutput(Fake.NUnitHelper.TestSuite,System.String)">
 <summary>
  writes the given TestSuite as XML file in NUnit style
@@ -1943,9 +1952,6 @@
 <summary>
  NUnit default params  
 </summary>
-</member>
-<member name="">
-
 </member>
 <member name="T:Fake.NUnitHelper">
 
@@ -2080,6 +2086,15 @@
 <summary>
  Execute an external program and return the exit code.
 </summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
 </member>
 <member name="M:Fake.ProcessHelper.asyncShellExec(Fake.ProcessHelper.ExecParams)">
 <summary>
@@ -2295,6 +2310,12 @@
 <member name="T:Fake.SCPHelper">
 
 </member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
 <member name="M:Fake.Seq.contains``1(``0)">
 <summary>
  Returns true if the given element exists in the sequence
@@ -2340,31 +2361,6 @@
 </member>
 <member name="">
 
-</member>
-<member name="M:Fake.StringHelper.op_LessMultiply(System.String,System.String)">
-<summary>
- Checks wether the given text starts with the given prefix
-</summary>
-</member>
-<member name="M:Fake.StringHelper.toLines(System.Collections.Generic.IEnumerable{System.String})">
-<summary>
- Converts a sequence of strings into a string separated with line ends
-</summary>
-</member>
-<member name="M:Fake.StringHelper.split(System.Char,System.String)">
-<summary>
- Splits the given string at the given delimiter
-</summary>
-</member>
-<member name="M:Fake.StringHelper.trimSlash(System.String)">
-<summary>
- Removes the slashes from the end of the given string
-</summary>
-</member>
-<member name="M:Fake.StringHelper.shortenCurrentDirectory(System.String)">
-<summary>
- Replaces any occurence of the currentDirectory with .
-</summary>
 </member>
 <member name="M:Fake.StringHelper.toRelativePath(System.String)">
 <summary>
@@ -2451,14 +2447,44 @@
 <member name="">
 
 </member>
-<member name="M:Fake.StringHelper.replace(System.String,System.String,System.String)">
-<summary>
- Replaces the given pattern in the given text with the replacement
-</summary>
-</member>
 <member name="M:Fake.StringHelper.ReplaceInFile(Microsoft.FSharp.Core.FSharpFunc`2{System.String,System.String},System.String)">
 <summary>
  Replaces the text in the given file
+</summary>
+</member>
+<member name="M:Fake.StringHelper.endsWith(System.String,System.String)">
+<summary>
+ Checks wether the given text ends with the given suffix
+</summary>
+</member>
+<member name="M:Fake.StringHelper.op_LessMultiply(System.String,System.String)">
+<summary>
+ Checks wether the given text starts with the given prefix
+</summary>
+</member>
+<member name="M:Fake.StringHelper.startsWith(System.String,System.String)">
+<summary>
+ Checks wether the given text starts with the given prefix
+</summary>
+</member>
+<member name="M:Fake.StringHelper.toLines(System.Collections.Generic.IEnumerable{System.String})">
+<summary>
+ Converts a sequence of strings into a string separated with line ends
+</summary>
+</member>
+<member name="M:Fake.StringHelper.split(System.Char,System.String)">
+<summary>
+ Splits the given string at the given delimiter
+</summary>
+</member>
+<member name="M:Fake.StringHelper.trimSlash(System.String)">
+<summary>
+ Removes the slashes from the end of the given string
+</summary>
+</member>
+<member name="M:Fake.StringHelper.shortenCurrentDirectory(System.String)">
+<summary>
+ Replaces any occurence of the currentDirectory with .
 </summary>
 </member>
 <member name="M:Fake.StringHelper.ReadFileAsString(System.String)">
@@ -2469,6 +2495,11 @@
 <member name="M:Fake.StringHelper.separated(System.String,System.Collections.Generic.IEnumerable{System.String})">
 <summary>
  Converts a sequence of strings to a string with delimiters
+</summary>
+</member>
+<member name="M:Fake.StringHelper.replace(System.String,System.String,System.String)">
+<summary>
+ Replaces the given pattern in the given text with the replacement
 </summary>
 </member>
 <member name="M:Fake.StringHelper.AppendToFile(System.String,System.Collections.Generic.IEnumerable{System.String})">
