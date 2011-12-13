@@ -32,7 +32,7 @@ let NuGetDefaults() =
       Description = null;
       Dependencies = [];
       OutputPath = currentDirectory @@ "NuGet";
-      PublishUrl = "http://packages.nuget.org/v1/";
+      PublishUrl = null;
       AccessKey = null;
       PublishTrials = 5;
       Publish = false}
@@ -101,7 +101,8 @@ let private runNuget parameters nuSpec =
     let rec publish trials =
         let tracing = enableProcessTracing
         enableProcessTracing <- false
-        let args = sprintf "push -source %s \"%s\" %s" parameters.PublishUrl packageFile parameters.AccessKey
+        let source = if isNullOrEmpty parameters.PublishUrl then "" else sprintf "-s %s" parameters.PublishUrl
+        let args = sprintf "push \"%s\" %s %s" packageFile parameters.AccessKey source
 
         if tracing then 
             args
