@@ -17,8 +17,8 @@ let MSIDefaults =
       LogFile = "InstallLog.txt"
       TimeOut = TimeSpan.FromMinutes 5. }
 
-let MSI setParams setup = 
-    traceStartTask "MSI" setup
+let Install setParams setup = 
+    traceStartTask "MSI-Install" setup
     let parameters = setParams MSIDefaults
     
     if not (execProcess3 (fun info ->  
@@ -26,6 +26,19 @@ let MSI setParams setup =
         info.WorkingDirectory <- parameters.WorkingDir
         info.Arguments <- sprintf "/qb /l* %s /i %s" parameters.LogFile setup) parameters.TimeOut)
     then
-        failwith "MSi failed."
+        failwith "MSI-Install failed."
                   
-    traceEndTask "MSI" setup
+    traceEndTask "MSI-Install" setup
+
+let Uninstall setParams setup = 
+    traceStartTask "MSI-Uninstall" setup
+    let parameters = setParams MSIDefaults
+    
+    if not (execProcess3 (fun info ->  
+        info.FileName <- parameters.ToolPath
+        info.WorkingDirectory <- parameters.WorkingDir
+        info.Arguments <- sprintf "/qb /l* %s /x %s" parameters.LogFile setup) parameters.TimeOut)
+    then
+        failwith "MSI-Uninstall failed."
+                  
+    traceEndTask "MSI-Uninstall" setup
