@@ -1775,6 +1775,38 @@
 <member name="">
 
 </member>
+<member name="P:Fake.MSIHelper.MSIDefaults">
+<summary>
+ MSI default params  
+</summary>
+</member>
+<member name="T:Fake.MSIHelper">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
 <member name="">
 
 </member>
@@ -2256,6 +2288,31 @@
  <returns>The response of the request, or null if we got 404 or nothing.</returns>
 </member>
 <member name="T:Fake.REST">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Fake.RegAsmHelper.RegAsm(Microsoft.FSharp.Core.FSharpFunc`2{Fake.RegAsmHelper.RegAsmParams,Fake.RegAsmHelper.RegAsmParams},System.String)">
+<summary>
+ Runs regasm on the given lib
+</summary>
+</member>
+<member name="P:Fake.RegAsmHelper.RegAsmDefaults">
+<summary>
+ RegAsm default params  
+</summary>
+</member>
+<member name="T:Fake.RegAsmHelper">
 
 </member>
 <member name="">
