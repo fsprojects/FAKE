@@ -30,6 +30,12 @@ You can download the latest builds from http://teamcity.codebetter.com. You don'
 * [Latest stable build](http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt114&tab=artifacts)
 * [Latest development build](http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt166&tab=artifacts)
 
+## Nuget package
+
+We have a Nuget package at http://nuget.org/packages/FAKE. You can install it with:
+
+	install-package FAKE
+
 ## How to contribute code
 
 * Login in github (you need an account)
