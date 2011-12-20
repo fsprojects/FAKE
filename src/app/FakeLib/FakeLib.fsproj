@@ -78,6 +78,7 @@
     <Compile Include="ILMergeHelper.fs" />
     <Compile Include="WiXHelper.fs" />
     <Compile Include="MSIHelper.fs" />
+    <Compile Include="RegAsmHelper.fs" />
     <Compile Include="NuGetHelper.fs" />
     <Compile Include="VSSHelper.fs" />
     <Compile Include="SCPHelper.fs" />
