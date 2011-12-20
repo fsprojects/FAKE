@@ -10,7 +10,7 @@ type RegAsmParams =
 
 /// RegAsm default params  
 let RegAsmDefaults =
-    { ToolPath = TargetPlatformPrefix @@ "v2.0.50727\regasm.exe"
+    { ToolPath = @"C:\Windows\Microsoft.NET\Framework\v2.0.50727\regasm.exe"
       WorkingDir = "."
       TimeOut = TimeSpan.FromMinutes 5. }
 

@@ -80,6 +80,8 @@ The "FAKE - F# Make" mailing list can be found at [http://groups.google.com/grou
 * Zip task
 * [git](http://git-scm.com/) tasks
 * AssemblyInfo task
+* MSI task (to run msi-setups with msiexec)
+* RegAsm task (to create TLBs from a .dll)
 * ...
 
 # Using FAKE
