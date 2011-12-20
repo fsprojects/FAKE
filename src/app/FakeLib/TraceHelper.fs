@@ -79,7 +79,7 @@ let openTag tag =  openTags <- tag :: openTags
 let closeTag tag =
     match openTags with
     | x::rest when x = tag -> openTags <- rest
-    | _ -> failwith "Invalid Tag-structure"
+    | _ -> failwithf "Invalid tag structure: %A" openTags
 
     CloseTag tag |> postMessage
   
