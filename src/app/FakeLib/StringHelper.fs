@@ -29,7 +29,16 @@ let WriteToFile append fileName (lines: seq<string>) =
 
 /// Removes all trailing .0 from a version string
 let rec NormalizeVersion(version:string) =
-    if version.EndsWith ".0" then version.Remove(version.Length-2,2) |> NormalizeVersion else version
+    let elements = version.Split [|'.'|]
+    let mutable version = ""
+    for i in 0..3 do
+        if i < elements.Length then
+            if version = "" then version <- elements.[i] else version <- version + "." + elements.[i]
+
+    if version.EndsWith ".0" then 
+        version.Remove(version.Length-2,2) |> NormalizeVersion 
+    else 
+        version
 
 /// Writes string to a file
 let WriteStringToFile append file text = WriteToFile append file [text]

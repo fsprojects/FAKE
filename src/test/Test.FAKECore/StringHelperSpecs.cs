@@ -15,6 +15,15 @@ namespace Test.FAKECore
 
         It should_remove_the_last_version_if_it_is_empty =
             () => StringHelper.NormalizeVersion("0.1.2.0").ShouldEqual("0.1.2");
+
+        It should_remove_the_fith_part =
+            () => StringHelper.NormalizeVersion("0.1.2.1.6").ShouldEqual("0.1.2.1");
+
+        It should_remove_the_sixth_part =
+            () => StringHelper.NormalizeVersion("0.1.2.1.6.5").ShouldEqual("0.1.2.1");
+
+        It should_remove_the_fith_part_and_trim =
+                    () => StringHelper.NormalizeVersion("0.1.2.0.6").ShouldEqual("0.1.2");
     }
 
     public class when_using_string_helper
