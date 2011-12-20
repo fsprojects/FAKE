@@ -1,3 +1,9 @@
+## 1.62.0.0
+
+* New RegAsm task, allows to create TLBs from a dll.
+* New MSI task, allows to install or uninstall msi files.
+* StringHelper.NormalizeVersion fixed for WiX.
+
 ## 1.58.9.0
 
 * Allow to choose specific nunit-console runner.
