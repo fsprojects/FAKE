@@ -38,21 +38,10 @@ let cleanPath path = (cleanPathBuilder path).ToString()
 let combinePath baseDirectory path =
     baseDirectory @@ cleanPath(path)
       |> Path.GetFullPath
-  
-          
+            
 /// The base directory to scan. The default is the 
 /// <see cref="Environment.CurrentDirectory">current directory</see>.
 let baseDirectory value = cleanPath value |> directoryInfo
-  
-/// Determines whether the last character of the given <see cref="string" />
-/// matches the specified character.    
-let endsWithChar (value:string) c =
-    let stringLength = value.Length
-    stringLength <> 0 && value.[stringLength - 1] = c
-
-/// Determines whether the last character of the given <see cref="string" />
-/// matches Path.DirectorySeparatorChar.         
-let endsWithSlash value = endsWithChar value Path.DirectorySeparatorChar   
   
 /// Ensures that the last character of the given <see cref="string" />
 /// matches Path.DirectorySeparatorChar.          
