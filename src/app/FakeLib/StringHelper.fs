@@ -89,6 +89,10 @@ let inline (<*) prefix text = startsWith prefix text
 /// Checks wether the given text ends with the given suffix
 let endsWith suffix (text:string) = text.EndsWith suffix
 
+/// Determines whether the last character of the given <see cref="string" />
+/// matches Path.DirectorySeparatorChar.         
+let endsWithSlash = endsWith (Path.DirectorySeparatorChar.ToString())
+
 /// Replaces the text in the given file
 let ReplaceInFile replaceF fileName =
     fileName
