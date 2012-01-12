@@ -729,6 +729,18 @@
  matches Path.DirectorySeparatorChar.          
 </summary>
 </member>
+<member name="M:Fake.FileSetHelper.endsWithSlash(System.String)">
+<summary>
+ Determines whether the last character of the given &lt;see cref=&quot;string&quot; /&gt;
+ matches Path.DirectorySeparatorChar.         
+</summary>
+</member>
+<member name="M:Fake.FileSetHelper.endsWithChar(System.String,System.Char)">
+<summary>
+ Determines whether the last character of the given &lt;see cref=&quot;string&quot; /&gt;
+ matches the specified character.    
+</summary>
+</member>
 <member name="M:Fake.FileSetHelper.baseDirectory(System.String)">
 <summary>
  The base directory to scan. The default is the 
@@ -2495,12 +2507,6 @@
 <member name="M:Fake.StringHelper.ReplaceInFile(Microsoft.FSharp.Core.FSharpFunc`2{System.String,System.String},System.String)">
 <summary>
  Replaces the text in the given file
-</summary>
-</member>
-<member name="P:Fake.StringHelper.endsWithSlash">
-<summary>
- Determines whether the last character of the given &lt;see cref=&quot;string&quot; /&gt;
- matches Path.DirectorySeparatorChar.         
 </summary>
 </member>
 <member name="M:Fake.StringHelper.endsWith(System.String,System.String)">
