@@ -18,7 +18,7 @@ type AssemblyInfoParams =
   { OutputFileName: string;
     ComVisible: bool option;
     CLSCompliant: bool option;
-    Guid: string option;
+    Guid: string;
     CodeLanguage: CodeLanguage;
     AssemblyTitle: string;
     AssemblyDescription: string;
@@ -41,7 +41,7 @@ let AssemblyInfoDefaults =
   { OutputFileName = String.Empty ;
     ComVisible = Some false ;
     CLSCompliant = Some false ;
-    Guid = Some(Guid.NewGuid().ToString());
+    Guid = Guid.NewGuid().ToString();
     CodeLanguage = CSharp;
     AssemblyTitle = String.Empty;
     AssemblyDescription = String.Empty;
@@ -173,7 +173,7 @@ let AssemblyInfo setParams =
 
   writeAttributeOption "ComVisible" param.ComVisible
   writeAttributeOption "CLSCompliant" param.CLSCompliant
-  writeAttributeOption "Guid" param.Guid
+  writeAttribute "Guid" param.Guid
   writeAttribute "AssemblyTitle" param.AssemblyTitle
   writeAttribute "AssemblyDescription" param.AssemblyDescription
   writeAttribute "AssemblyConfiguration" param.AssemblyConfiguration
