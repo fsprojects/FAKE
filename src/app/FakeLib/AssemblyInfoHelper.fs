@@ -16,9 +16,9 @@ type CodeLanguage =
 
 type AssemblyInfoParams =
   { OutputFileName: string;
-    ComVisible: bool;
-    CLSCompliant: bool;
-    Guid: string;
+    ComVisible: bool option;
+    CLSCompliant: bool option;
+    Guid: string option;
     CodeLanguage: CodeLanguage;
     AssemblyTitle: string;
     AssemblyDescription: string;
@@ -33,15 +33,15 @@ type AssemblyInfoParams =
     AssemblyInformationalVersion: string;
     AssemblyKeyFile: string;
     AssemblyKeyName: string;
-    AssemblyDelaySign: bool;
-    GenerateClass:bool }
+    AssemblyDelaySign: bool option;
+    GenerateClass: bool }
 
 /// AssemblyInfo default params
 let AssemblyInfoDefaults =
   { OutputFileName = String.Empty ;
-    ComVisible = false ;
-    CLSCompliant = false ;
-    Guid = Guid.NewGuid().ToString() ;
+    ComVisible = Some false ;
+    CLSCompliant = Some false ;
+    Guid = Some(Guid.NewGuid().ToString());
     CodeLanguage = CSharp;
     AssemblyTitle = String.Empty;
     AssemblyDescription = String.Empty;
@@ -56,7 +56,7 @@ let AssemblyInfoDefaults =
     AssemblyInformationalVersion = String.Empty;
     AssemblyKeyFile = String.Empty;
     AssemblyKeyName = String.Empty;
-    AssemblyDelaySign = false;
+    AssemblyDelaySign = Some false;
     GenerateClass = false}  
     
 /// generates the assembly info file
@@ -158,31 +158,36 @@ let AssemblyInfo setParams =
     {param'' with AssemblyProduct = param''.AssemblyTitle}
   
   if isNullOrEmpty param.OutputFileName then failwith "You have to specify the OutputFileName for the AssemblyInfo task."
+
   let attributes = new Dictionary<_,_>()
-  let attr name p =
-    try
-      let value = p.ToString()
-      if value <> String.Empty then attributes.Add(name, value)
-    with 
-    | exn -> ()
-    
-  attr "ComVisible" param.ComVisible
-  attr "CLSCompliant" param.CLSCompliant
-  attr "Guid" param.Guid
-  attr "AssemblyTitle" param.AssemblyTitle
-  attr "AssemblyDescription" param.AssemblyDescription
-  attr "AssemblyConfiguration" param.AssemblyConfiguration
-  attr "AssemblyCompany" param.AssemblyCompany
-  attr "AssemblyProduct" param.AssemblyProduct
-  attr "AssemblyCopyright" param.AssemblyCopyright
-  attr "AssemblyTrademark" param.AssemblyTrademark
-  attr "AssemblyCulture" param.AssemblyCulture
-  attr "AssemblyVersion" param.AssemblyVersion
-  attr "AssemblyFileVersion" param.AssemblyFileVersion
-  attr "AssemblyInformationalVersion" param.AssemblyInformationalVersion
-  attr "AssemblyKeyFile" param.AssemblyKeyFile
-  attr "AssemblyKeyName" param.AssemblyKeyName
-  attr "AssemblyDelaySign" param.AssemblyDelaySign
+
+  let writeAttribute name attribute = if attribute <> String.Empty then attributes.Add(name, attribute)
+
+  let writeAttributeOption name = function
+    | Some attribute ->
+        try
+            attribute.ToString() |> writeAttribute name
+        with 
+        | exn -> ()  
+    | _ -> ()
+
+  writeAttributeOption "ComVisible" param.ComVisible
+  writeAttributeOption "CLSCompliant" param.CLSCompliant
+  writeAttributeOption "Guid" param.Guid
+  writeAttribute "AssemblyTitle" param.AssemblyTitle
+  writeAttribute "AssemblyDescription" param.AssemblyDescription
+  writeAttribute "AssemblyConfiguration" param.AssemblyConfiguration
+  writeAttribute "AssemblyCompany" param.AssemblyCompany
+  writeAttribute "AssemblyProduct" param.AssemblyProduct
+  writeAttribute "AssemblyCopyright" param.AssemblyCopyright
+  writeAttribute "AssemblyTrademark" param.AssemblyTrademark
+  writeAttribute "AssemblyCulture" param.AssemblyCulture
+  writeAttribute "AssemblyVersion" param.AssemblyVersion
+  writeAttribute "AssemblyFileVersion" param.AssemblyFileVersion
+  writeAttribute "AssemblyInformationalVersion" param.AssemblyInformationalVersion
+  writeAttribute "AssemblyKeyFile" param.AssemblyKeyFile
+  writeAttribute "AssemblyKeyName" param.AssemblyKeyName
+  writeAttributeOption "AssemblyDelaySign" param.AssemblyDelaySign
   
   let imports = 
       ["System" 
