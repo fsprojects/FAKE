@@ -52,3 +52,6 @@ let inline (<=>) x y =
     Dependencies y target_x.Dependencies
     targetsAreOnSameLevel x y
     y
+
+/// Defines a conditional dependency - y is dependent on x if the condition is true
+let inline (=?>) x (y,condition) = if condition then x ==> y else x
