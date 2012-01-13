@@ -114,7 +114,16 @@ You can define prerequisites for tasks:
 It is also possible to define the dependencies as a build order:
 	
 	// "FAKE - F# Make" will run these targets in the order Clean, BuildApp, Default
-	"Clean" ==> "BuildApp" ==> "Default"
+	"Clean" 
+	  ==> "BuildApp" 
+	  ==> "Default"
+
+If one target should only be run on a specific condition you can use the =?> operator:
+	
+	"Clean" 
+	  ==> "BuildApp"
+	  =?> ("Test",hasBuildParam "test")  // runs the Test target only if FAKE was called with parameter test
+	  ==> "Default"
 
 ### Running targets
 
@@ -339,7 +348,7 @@ You can read [Getting started with FAKE](http://www.navision-blog.de/2009/04/01/
       ==> "BuildApp" <=> "BuildTest"
       ==> "FxCop"
       ==> "NUnitTest"
-      ==> "xUnitTest"
+      =?> ("xUnitTest",hasBuildParam "xUnitTest")  // runs the target only if FAKE was called with parameter xUnitTest
       ==> "Deploy"
      
     // start build
