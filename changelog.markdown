@@ -1,3 +1,8 @@
+## 1.64.0.0
+
+* New conditional dependency operator =?>
+* BREAKING CHANGE: Some AssemblyInfo task parameters are now option types. See type hints.
+
 ## 1.62.0.0
 
 * New RegAsm task, allows to create TLBs from a dll.
