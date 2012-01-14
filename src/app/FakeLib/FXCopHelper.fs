@@ -70,7 +70,7 @@ let FxCopDefaults =
     Verbose = true;
     FailOnError = FxCopErrorLevel.DontFailBuild;
     TimeOut = TimeSpan.FromMinutes 5.
-    ToolPath = ProgramFilesX86 @@ "Microsoft FxCop 1.36" }
+    ToolPath = ProgramFilesX86 @@ @"Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\FxCopCmd.exe" }
         
 /// Run FxCop on a group of assemblies.
 let FxCop setParams (assemblies: string seq) =
