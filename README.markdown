@@ -57,6 +57,7 @@ The "FAKE - F# Make" mailing list can be found at [http://groups.google.com/grou
 * [Writing custom tasks for "FAKE - F# Make"](http://www.navision-blog.de/2009/04/14/writing-custom-tasks-for-fake-f-make)
 * [Integrating a "FAKE - F# Make" build script into TeamCity](http://www.navision-blog.de/2009/04/15/integrate-a-fake-f-make-build-script-into-teamcity)
 * [Integrating a "FAKE - F# Make" build script into CruiseControl.NET](http://www.navision-blog.de/2009/10/14/integrating-a-fake-f-make-build-script-into-cruisecontrol-net)
+* [Building FAKE scripts with Jenkins](http://www.navision-blog.de/2012/01/16/building-fake-scripts-with-jenkins/)
 * [Running specific targets in "FAKE – F# Make"](http://www.navision-blog.de/2010/11/03/running-specific-targets-in-fake-f-make/)
 
 ## Main Features
