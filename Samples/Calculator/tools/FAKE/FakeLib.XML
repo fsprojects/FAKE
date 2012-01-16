@@ -222,6 +222,9 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
 <member name="T:Fake.BuildServerHelper.BuildServer">
 <summary>
  The BuildServer type.
@@ -245,6 +248,11 @@
 <member name="P:Fake.BuildServerHelper.ccBuildLabel">
 <summary>
  CruiseControl.NET Build label
+</summary>
+</member>
+<member name="P:Fake.BuildServerHelper.jenkinsBuildNumber">
+<summary>
+ Build number retrieved from Jenkins
 </summary>
 </member>
 <member name="P:Fake.BuildServerHelper.tcBuildNumber">

@@ -23,12 +23,13 @@ like Visual Studio 2008 or SharpDevelop, which provide syntax highlighting and c
 The new language was designed to be succinct, typed, declarative, extensible and easy to use. 
 For instance custom build tasks can be added simply by referencing .NET assemblies and using the corresponding classes.
 
-## Lastest builds
+## Lastest builds and changelog
 
 You can download the latest builds from http://teamcity.codebetter.com. You don't need to register, a guest login is ok.
 
 * [Latest stable build](http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt114&tab=artifacts)
 * [Latest development build](http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt166&tab=artifacts)
+* [Changelog](http://github.com/forki/FAKE/blob/develop/changelog.markdown)
 
 ## Nuget package
 
@@ -99,19 +100,12 @@ Targets have a name and an action (given as a code block).
 
 	// The clean target cleans the build and deploy folders
 	Target "Clean" (fun _ -> 
-			CleanDir "./build/"
-			CleanDir "./deploy/"
+		CleanDirs ["./build/"; "./deploy/"]
 	)
 
-### Dependencies
+### Build target order
 
-You can define prerequisites for tasks:
-
-	// Target Default is dependent from target Clean and BuildApp
-	// "FAKE - F# Make" will run these targets before Default
-	"Default"  <== ["Clean"; "BuildApp"]
-	
-It is also possible to define the dependencies as a build order:
+You can specify the build order using the ==> operator:
 	
 	// "FAKE - F# Make" will run these targets in the order Clean, BuildApp, Default
 	"Clean" 
@@ -124,6 +118,12 @@ If one target should only be run on a specific condition you can use the =?> ope
 	  ==> "BuildApp"
 	  =?> ("Test",hasBuildParam "test")  // runs the Test target only if FAKE was called with parameter test
 	  ==> "Default"
+
+It's also possible to specify the dependencies for targets:
+
+    // Target Default is dependent from target Clean and BuildApp
+    // "FAKE - F# Make" will ensure to run these targets before Default
+    "Default"  <== ["Clean"; "BuildApp"]
 
 ### Running targets
 
@@ -139,7 +139,7 @@ These targets will be executed even if the build fails but have to be activated 
 
 	// FinalTarget will be excuted even if build fails
 	FinalTarget "CloseSomePrograms" (fun _ ->
-			// close stuff and release resources
+		// close stuff and release resources
 	)
 
 	// Activate FinalTarget somewhere during build
@@ -178,6 +178,11 @@ The following code defines a lazy FileSet:
 	  !+ "src/app/**/*.csproj"
 		|> Scan
 
+The same FileSet by using the !! operator:
+
+    // Includes all *.csproj files under /src/app and scans them lazy
+    let apps = !! "src/app/**/*.csproj"
+
 ScanImmediately() scans the FileSet immediatly at time of its definition
 and memoizes it. 
 
@@ -193,39 +198,42 @@ and memoizes it.
 ### NUnit
 
 	// define test dlls
-	let testDlls = !+ (testDir + @"/Test.*.dll") |> Scan
+	let testDlls = !! (testDir + @"/Test.*.dll")
 	 
 	Target "NUnitTest" (fun _ ->
-			testDlls
-			  |> NUnit (fun p -> 
-						  {p with 
-							 ToolPath = nunitPath; 
-							 DisableShadowCopy = true; 
-							 OutputFile = testDir + "TestResults.xml"}))
+		testDlls
+			|> NUnit (fun p -> 
+				{p with 
+					ToolPath = nunitPath; 
+					DisableShadowCopy = true; 
+					OutputFile = testDir + "TestResults.xml"})
+    )
 							 
 ### MSpec
 	// define test dlls
-	let testDlls = !+ (testDir + @"/Test.*.dll") |> Scan
+	let testDlls = !! (testDir + @"/Test.*.dll")
 	 
 	Target "MSpecTest" (fun _ ->
-			testDlls
-			  |> MSpec (fun p -> 
-						  {p with 
-							 ExcludeTags = ["LongRunning"]
-							 HtmlOutputDir = testOutputDir						  
-							 ToolPath = ".\toools\MSpec\mspec.exe"}))
+		testDlls
+			|> MSpec (fun p -> 
+				{p with 
+					ExcludeTags = ["LongRunning"]
+					HtmlOutputDir = testOutputDir						  
+					ToolPath = ".\toools\MSpec\mspec.exe"})
+    )
 
 ### xUnit.net
 
 	// define test dlls
-	let testDlls = !+ (testDir + @"/Test.*.dll") |> Scan
+	let testDlls = !! (testDir + @"/Test.*.dll")
 
 	Target "xUnitTest" (fun _ ->
-			testDlls
-			  |> xUnit (fun p ->
-						  {p with
-							  ShadowCopy = false;
-							  HtmlPrefix = testDir}))
+		testDlls
+			|> xUnit (fun p ->
+				{p with
+					ShadowCopy = false;
+					HtmlPrefix = testDir})
+    )
 
 ## Sample script
 
@@ -262,10 +270,8 @@ You can read [Getting started with FAKE](http://www.navision-blog.de/2009/04/01/
           ++ @"src\app\**\*.fsproj" 
             |> Scan
     
-    let testReferences = 
-        !+ @"src\test\**\*.csproj" 
-          |> Scan
-    
+    let testReferences = !! @"src\test\**\*.csproj"
+        
     // version info
     let version = "0.2"  // or retrieve from CI server
     
@@ -306,8 +312,7 @@ You can read [Getting started with FAKE](http://www.navision-blog.de/2009/04/01/
     )
     
     Target "NUnitTest" (fun _ ->  
-        !+ (testDir + @"\NUnit.Test.*.dll") 
-            |> Scan
+        !! (testDir + @"\NUnit.Test.*.dll")
             |> NUnit (fun p -> 
                 {p with 
                     ToolPath = nunitPath; 
@@ -316,8 +321,7 @@ You can read [Getting started with FAKE](http://www.navision-blog.de/2009/04/01/
     )
     
     Target "xUnitTest" (fun _ ->  
-        !+ (testDir + @"\xUnit.Test.*.dll") 
-            |> Scan
+        !! (testDir + @"\xUnit.Test.*.dll")
             |> xUnit (fun p -> 
                 {p with 
                     ShadowCopy = false;
