@@ -26,12 +26,12 @@ let buildScripts = !! "*.fsx" |> Seq.toList
 try
     try            
         AutoCloseXmlWriter <- true            
-        let cmdArgs = System.Environment.GetCommandLineArgs()
+        let cmdArgs = System.Environment.GetCommandLineArgs()                
         let printDetails = cmdArgs |> Seq.map (fun (a:string) -> a.ToLower()) |> Seq.exists ((=) "details")
 
         if (cmdArgs.Length = 2 && cmdArgs.[1].ToLower() = "help") || (cmdArgs.Length = 1 && List.length buildScripts = 0) then CommandlineParams.printAllParams() else
         
-        let buildScriptArg = if cmdArgs.Length > 1 && cmdArgs.[1].EndsWith "*.fsx" then cmdArgs.[1] else Seq.head buildScripts
+        let buildScriptArg = if cmdArgs.Length > 1 && cmdArgs.[1].EndsWith ".fsx" then cmdArgs.[1] else Seq.head buildScripts
         
         let args = CommandlineParams.parseArgs cmdArgs
         
