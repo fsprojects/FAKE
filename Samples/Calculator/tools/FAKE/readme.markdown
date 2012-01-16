@@ -30,6 +30,12 @@ You can download the latest builds from http://teamcity.codebetter.com. You don'
 * [Latest stable build](http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt114&tab=artifacts)
 * [Latest development build](http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt166&tab=artifacts)
 
+## Nuget package
+
+We have a Nuget package at http://nuget.org/packages/FAKE. You can install it with:
+
+	install-package FAKE
+
 ## How to contribute code
 
 * Login in github (you need an account)
@@ -80,6 +86,8 @@ The "FAKE - F# Make" mailing list can be found at [http://groups.google.com/grou
 * Zip task
 * [git](http://git-scm.com/) tasks
 * AssemblyInfo task
+* MSI task (to run msi-setups with msiexec)
+* RegAsm task (to create TLBs from a .dll)
 * ...
 
 # Using FAKE
@@ -106,7 +114,16 @@ You can define prerequisites for tasks:
 It is also possible to define the dependencies as a build order:
 	
 	// "FAKE - F# Make" will run these targets in the order Clean, BuildApp, Default
-	"Clean" ==> "BuildApp" ==> "Default"
+	"Clean" 
+	  ==> "BuildApp" 
+	  ==> "Default"
+
+If one target should only be run on a specific condition you can use the =?> operator:
+	
+	"Clean" 
+	  ==> "BuildApp"
+	  =?> ("Test",hasBuildParam "test")  // runs the Test target only if FAKE was called with parameter test
+	  ==> "Default"
 
 ### Running targets
 
@@ -331,7 +348,7 @@ You can read [Getting started with FAKE](http://www.navision-blog.de/2009/04/01/
       ==> "BuildApp" <=> "BuildTest"
       ==> "FxCop"
       ==> "NUnitTest"
-      ==> "xUnitTest"
+      =?> ("xUnitTest",hasBuildParam "xUnitTest")  // runs the target only if FAKE was called with parameter xUnitTest
       ==> "Deploy"
      
     // start build

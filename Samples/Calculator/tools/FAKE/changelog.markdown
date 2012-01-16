@@ -1,3 +1,18 @@
+## 1.64.1.0
+
+* Fixed bug where FAKE didn't run the correct build script
+
+## 1.64.0.0
+
+* New conditional dependency operator =?>
+* BREAKING CHANGE: Some AssemblyInfo task parameters are now option types. See type hints.
+
+## 1.62.0.0
+
+* New RegAsm task, allows to create TLBs from a dll.
+* New MSI task, allows to install or uninstall msi files.
+* StringHelper.NormalizeVersion fixed for WiX.
+
 ## 1.58.9.0
 
 * Allow to choose specific nunit-console runner.
