@@ -202,7 +202,8 @@ and memoizes it.
 						  {p with 
 							 ToolPath = nunitPath; 
 							 DisableShadowCopy = true; 
-							 OutputFile = testDir + "TestResults.xml"}))
+							 OutputFile = testDir + "TestResults.xml"})
+    )
 							 
 ### MSpec
 	// define test dlls
@@ -214,7 +215,8 @@ and memoizes it.
 						  {p with 
 							 ExcludeTags = ["LongRunning"]
 							 HtmlOutputDir = testOutputDir						  
-							 ToolPath = ".\toools\MSpec\mspec.exe"}))
+							 ToolPath = ".\toools\MSpec\mspec.exe"})
+    )
 
 ### xUnit.net
 
@@ -226,7 +228,8 @@ and memoizes it.
 			  |> xUnit (fun p ->
 						  {p with
 							  ShadowCopy = false;
-							  HtmlPrefix = testDir}))
+							  HtmlPrefix = testDir})
+    )
 
 ## Sample script
 
