@@ -179,6 +179,11 @@ The following code defines a lazy FileSet:
 	  !+ "src/app/**/*.csproj"
 		|> Scan
 
+The same FileSet by using the !! operator:
+
+    // Includes all *.csproj files under /src/app and scans them lazy
+    let apps = !! "src/app/**/*.csproj"
+
 ScanImmediately() scans the FileSet immediatly at time of its definition
 and memoizes it. 
 
@@ -194,7 +199,7 @@ and memoizes it.
 ### NUnit
 
 	// define test dlls
-	let testDlls = !+ (testDir + @"/Test.*.dll") |> Scan
+	let testDlls = !! (testDir + @"/Test.*.dll")
 	 
 	Target "NUnitTest" (fun _ ->
 			testDlls
@@ -207,7 +212,7 @@ and memoizes it.
 							 
 ### MSpec
 	// define test dlls
-	let testDlls = !+ (testDir + @"/Test.*.dll") |> Scan
+	let testDlls = !! (testDir + @"/Test.*.dll")
 	 
 	Target "MSpecTest" (fun _ ->
 			testDlls
@@ -221,7 +226,7 @@ and memoizes it.
 ### xUnit.net
 
 	// define test dlls
-	let testDlls = !+ (testDir + @"/Test.*.dll") |> Scan
+	let testDlls = !! (testDir + @"/Test.*.dll")
 
 	Target "xUnitTest" (fun _ ->
 			testDlls
@@ -266,10 +271,8 @@ You can read [Getting started with FAKE](http://www.navision-blog.de/2009/04/01/
           ++ @"src\app\**\*.fsproj" 
             |> Scan
     
-    let testReferences = 
-        !+ @"src\test\**\*.csproj" 
-          |> Scan
-    
+    let testReferences = !! @"src\test\**\*.csproj"
+        
     // version info
     let version = "0.2"  // or retrieve from CI server
     
@@ -310,8 +313,7 @@ You can read [Getting started with FAKE](http://www.navision-blog.de/2009/04/01/
     )
     
     Target "NUnitTest" (fun _ ->  
-        !+ (testDir + @"\NUnit.Test.*.dll") 
-            |> Scan
+        !! (testDir + @"\NUnit.Test.*.dll")
             |> NUnit (fun p -> 
                 {p with 
                     ToolPath = nunitPath; 
@@ -320,8 +322,7 @@ You can read [Getting started with FAKE](http://www.navision-blog.de/2009/04/01/
     )
     
     Target "xUnitTest" (fun _ ->  
-        !+ (testDir + @"\xUnit.Test.*.dll") 
-            |> Scan
+        !! (testDir + @"\xUnit.Test.*.dll")
             |> xUnit (fun p -> 
                 {p with 
                     ShadowCopy = false;
