@@ -1,3 +1,7 @@
+## 1.64.1.0
+
+* Fixed bug where FAKE didn't run the correct build script
+
 ## 1.64.0.0
 
 * New conditional dependency operator =?>
