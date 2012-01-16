@@ -23,12 +23,13 @@ like Visual Studio 2008 or SharpDevelop, which provide syntax highlighting and c
 The new language was designed to be succinct, typed, declarative, extensible and easy to use. 
 For instance custom build tasks can be added simply by referencing .NET assemblies and using the corresponding classes.
 
-## Lastest builds
+## Lastest builds and changelog
 
 You can download the latest builds from http://teamcity.codebetter.com. You don't need to register, a guest login is ok.
 
 * [Latest stable build](http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt114&tab=artifacts)
 * [Latest development build](http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt166&tab=artifacts)
+* [Changelog](http://github.com/forki/FAKE/blob/develop/changelog.markdown)
 
 ## Nuget package
 
