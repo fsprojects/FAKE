@@ -11,6 +11,11 @@
 <member name="">
 
 </member>
+<member name="M:Fake.AdditionalSyntax.op_EqualsQmarkGreater(System.String,System.String,System.Boolean)">
+<summary>
+ Defines a conditional dependency - y is dependent on x if the condition is true
+</summary>
+</member>
 <member name="M:Fake.AdditionalSyntax.op_LessEqualsGreater(System.String,System.String)">
 <summary>
  Defines that x and y are not dependent on each other but y is dependent on all dependencies of x.
