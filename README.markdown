@@ -104,15 +104,9 @@ Targets have a name and an action (given as a code block).
 			CleanDir "./deploy/"
 	)
 
-### Dependencies
+### Build target order
 
-You can define prerequisites for tasks:
-
-	// Target Default is dependent from target Clean and BuildApp
-	// "FAKE - F# Make" will run these targets before Default
-	"Default"  <== ["Clean"; "BuildApp"]
-	
-It is also possible to define the dependencies as a build order:
+You can specify the build order using the ==> operator:
 	
 	// "FAKE - F# Make" will run these targets in the order Clean, BuildApp, Default
 	"Clean" 
@@ -125,6 +119,12 @@ If one target should only be run on a specific condition you can use the =?> ope
 	  ==> "BuildApp"
 	  =?> ("Test",hasBuildParam "test")  // runs the Test target only if FAKE was called with parameter test
 	  ==> "Default"
+
+It's also possible to specify the dependencies for targets:
+
+    // Target Default is dependent from target Clean and BuildApp
+    // "FAKE - F# Make" will ensure to run these targets before Default
+    "Default"  <== ["Clean"; "BuildApp"]
 
 ### Running targets
 
