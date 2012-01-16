@@ -101,8 +101,7 @@ Targets have a name and an action (given as a code block).
 
 	// The clean target cleans the build and deploy folders
 	Target "Clean" (fun _ -> 
-			CleanDir "./build/"
-			CleanDir "./deploy/"
+		CleanDirs ["./build/"; "./deploy/"]
 	)
 
 ### Build target order
@@ -141,7 +140,7 @@ These targets will be executed even if the build fails but have to be activated 
 
 	// FinalTarget will be excuted even if build fails
 	FinalTarget "CloseSomePrograms" (fun _ ->
-			// close stuff and release resources
+		// close stuff and release resources
 	)
 
 	// Activate FinalTarget somewhere during build
@@ -203,12 +202,12 @@ and memoizes it.
 	let testDlls = !! (testDir + @"/Test.*.dll")
 	 
 	Target "NUnitTest" (fun _ ->
-			testDlls
-			  |> NUnit (fun p -> 
-						  {p with 
-							 ToolPath = nunitPath; 
-							 DisableShadowCopy = true; 
-							 OutputFile = testDir + "TestResults.xml"})
+		testDlls
+			|> NUnit (fun p -> 
+				{p with 
+					ToolPath = nunitPath; 
+					DisableShadowCopy = true; 
+					OutputFile = testDir + "TestResults.xml"})
     )
 							 
 ### MSpec
@@ -216,12 +215,12 @@ and memoizes it.
 	let testDlls = !! (testDir + @"/Test.*.dll")
 	 
 	Target "MSpecTest" (fun _ ->
-			testDlls
-			  |> MSpec (fun p -> 
-						  {p with 
-							 ExcludeTags = ["LongRunning"]
-							 HtmlOutputDir = testOutputDir						  
-							 ToolPath = ".\toools\MSpec\mspec.exe"})
+		testDlls
+			|> MSpec (fun p -> 
+				{p with 
+					ExcludeTags = ["LongRunning"]
+					HtmlOutputDir = testOutputDir						  
+					ToolPath = ".\toools\MSpec\mspec.exe"})
     )
 
 ### xUnit.net
@@ -230,11 +229,11 @@ and memoizes it.
 	let testDlls = !! (testDir + @"/Test.*.dll")
 
 	Target "xUnitTest" (fun _ ->
-			testDlls
-			  |> xUnit (fun p ->
-						  {p with
-							  ShadowCopy = false;
-							  HtmlPrefix = testDir})
+		testDlls
+			|> xUnit (fun p ->
+				{p with
+					ShadowCopy = false;
+					HtmlPrefix = testDir})
     )
 
 ## Sample script
