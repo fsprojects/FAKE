@@ -229,11 +229,13 @@ and memoizes it.
 	let testDlls = !! (testDir + @"/Test.*.dll")
 
 	Target "xUnitTest" (fun _ ->
-		testDlls
-			|> xUnit (fun p ->
-				{p with
-					ShadowCopy = false;
-					HtmlPrefix = testDir})
+        testDlls
+            |> xUnit (fun p -> 
+                {p with 
+                    ShadowCopy = false;
+                    HtmlOutput = true;
+                    XmlOutput = true;
+                    OutputDir = testDir })
     )
 
 ## Sample script
