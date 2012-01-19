@@ -27,7 +27,7 @@ For instance custom build tasks can be added simply by referencing .NET assembli
 
 You can download the latest builds from http://teamcity.codebetter.com. You don't need to register, a guest login is ok.
 
-* [Latest stable build](http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt114&tab=artifacts)
+* [Latest stable build](http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt335&tab=artifacts)
 * [Latest development build](http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt166&tab=artifacts)
 * [Changelog](http://github.com/forki/FAKE/blob/develop/changelog.markdown)
 
