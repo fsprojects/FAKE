@@ -64,7 +64,7 @@
     <Compile Include="TraceHelper.fs" />
     <Compile Include="AssemblyInfoHelper.fs" />
     <Compile Include="ProcessHelper.fs" />
-    <Compile Include="FxCopHelper.fs" />
+    <Compile Include="FXCopHelper.fs" />
     <Compile Include="NCoverHelper.fs" />
     <Compile Include="NUnitHelper.fs" />
     <Compile Include="XUnitHelper.fs" />
