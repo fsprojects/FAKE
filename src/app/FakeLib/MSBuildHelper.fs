@@ -164,5 +164,14 @@ let MSBuild outputPath (targets: string) (properties: (string*string) list) proj
 /// Builds the given project files and collects the output files
 let MSBuildDebug outputPath targets = MSBuild outputPath targets ["Configuration","Debug"]
 
+let MSBuildDebugExt outputPath properties targets = 
+    let properties = ("Configuration", "Debug") :: properties; 
+    MSBuild outputPath targets properties
+
 /// Builds the given project files and collects the output files
 let MSBuildRelease outputPath targets = MSBuild outputPath targets ["Configuration","Release"]
+
+let MSBuildReleaseExt outputPath properties targets = 
+    let properties = ("Configuration", "Release") :: properties; 
+    MSBuild outputPath targets properties
+
