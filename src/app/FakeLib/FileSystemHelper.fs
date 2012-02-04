@@ -34,3 +34,8 @@ let checkFileExists fileName =
 
 /// Checks if all given files exists
 let allFilesExist files = Seq.forall File.Exists files
+
+let ensureDirectory dir = 
+    if not <| Directory.Exists(dir) 
+    then Directory.CreateDirectory(dir) |> ignore
+        
