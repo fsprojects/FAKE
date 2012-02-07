@@ -7,11 +7,11 @@
     open Newtonsoft.Json
     open Fake.DeploymentHelper
 
-    let mutable eventLog : EventLog = null 
+    let mutable logger : (string * EventLogEntryType) -> unit = ignore 
 
-    let private listener = 
+    let private listener port = 
         let l = new HttpListener()
-        l.Prefixes.Add("http://localhost:8080/fake/")
+        l.Prefixes.Add(sprintf "http://localhost:%s/fake/" port)
         l.Start()
         l
 
@@ -26,13 +26,13 @@
 
     let handleSuccess package (ctx : HttpListenerContext) = 
         let msg = sprintf "Successfully deployed %A" package
-        eventLog.WriteEntry(msg, EventLogEntryType.Information)
+        logger (msg, EventLogEntryType.Information)
         let response = JsonConvert.SerializeObject(DeploymentResponse.Sucessful(package.Id, package.Version))
         writeResponse response ctx
 
     let handleFailure package (ctx : HttpListenerContext) exn = 
         let msg = sprintf "Deployment failed: %A " package
-        eventLog.WriteEntry(msg, EventLogEntryType.Information)
+        logger (msg, EventLogEntryType.Information)
         let response = JsonConvert.SerializeObject(DeploymentResponse.Failure(package.Id, package.Version, exn))
         writeResponse response ctx
 
@@ -47,26 +47,27 @@
                 | Choice2Of2(e) -> handleFailure package ctx e
             with e ->
                 let msg = sprintf "Fake Deploy Request Error:\n\n%A" e
-                eventLog.WriteEntry(msg, EventLogEntryType.Error)
+                logger (msg, EventLogEntryType.Error)
                 writeResponse msg ctx
                 
 
-    let start log =
-        eventLog <- log
+    let start log port =
+        logger <- log
         let listenerLoop = 
             async {
                 try
-                    use l = listener
+                    use l = listener port
+                    log (sprintf "Fake Deploy now listening @ %s" (String.Join(",", l.Prefixes |> Seq.map id)), EventLogEntryType.Information)
                     while true do
                         handleRequest (l.GetContext())
                 with e ->
-                    eventLog.WriteEntry(sprintf "Fake Deploy Listener Error:\n\n%A" e, EventLogEntryType.Error)
+                    logger (sprintf "Fake Deploy Listener Error:\n\n%A" e, EventLogEntryType.Error)
                     
             }
         Async.Start(listenerLoop, cts.Token)
 
     let stop() = 
-        ()
+        cts.Cancel()
 
 
 

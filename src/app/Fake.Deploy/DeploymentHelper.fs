@@ -41,20 +41,22 @@
             override x.ToString() = 
                 x.Id + " " + x.Version
 
-    let createDeploymentPackageFromZip packageName version fakescript archive =
+    let createDeploymentPackageFromZip packageName version fakescript archive output =
+        ensureDirectory output
         let package = {
             Id = packageName
             Version = version
             Script = File.ReadAllBytes(Path.GetFullPath(fakescript))
             Package = File.ReadAllBytes(Path.GetFullPath(archive))
         }
-        IO.File.WriteAllBytes(packageName + ".fakepkg", Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(package)))
-        
-    let createDeploymentPackageFromDirectory packageName fakescript dir =
+        IO.File.WriteAllBytes(Path.Combine(output,packageName + ".fakepkg"), Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(package)))
+        File.Delete(archive)
+
+    let createDeploymentPackageFromDirectory packageName version fakescript dir output =
         let archive = packageName + ".zip"
         let files = Directory.EnumerateFiles(dir, "*.*", SearchOption.AllDirectories)
         Zip dir archive files
-        createDeploymentPackageFromZip packageName fakescript archive
+        createDeploymentPackageFromZip packageName version fakescript archive output
 
     let ensureDeployDir (package : DeploymentPackage) = 
         let path = Path.Combine("Work", package.TargetDir)
@@ -74,12 +76,21 @@
     
     let doDeployment package = 
        let (script, _) = prepare package
-       (FSIHelper.runBuildScript true script Seq.empty, package)
+       let workingDirectory = Path.GetDirectoryName(script)
+       let fakeLibTarget = Path.Combine(workingDirectory, "FakeLib.dll")
+       if  not <| File.Exists(fakeLibTarget) then File.Copy("FakeLib.dll", fakeLibTarget)
+       (FSIHelper.runBuildScriptAt workingDirectory true (Path.GetFullPath(script)) Seq.empty, package)
        
     let runDeployment package = 
         try
             doDeployment package |> Choice1Of2
         with e ->
+            Choice2Of2(e)
+
+    let runDeploymentFromPackage packagePath = 
+        try
+            runDeployment (JsonConvert.DeserializeObject<DeploymentPackage>(File.ReadAllText(packagePath)))
+        with e -> 
             Choice2Of2(e)
         
 

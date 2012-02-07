@@ -10,12 +10,13 @@ let fsiPath =
         if not (isNullOrEmpty ev) then ev else findPath "FSIPath" "fsi.exe"
       
 /// Run the given buildscript with fsi.exe
-let runBuildScript printDetails script args = 
+let runBuildScriptAt workingDirectory printDetails script args =
     if printDetails then traceFAKE "Running Buildscript: %s" script
     
     let result = execProcess (fun info ->  
         info.FileName <- fsiPath
-        info.Arguments <- script     
+        info.Arguments <- script
+        info.WorkingDirectory <- workingDirectory
             
         let setVar (k,v) =
             if info.EnvironmentVariables.ContainsKey k then
@@ -31,3 +32,7 @@ let runBuildScript printDetails script args =
     
     System.Threading.Thread.Sleep 1000
     result
+
+let runBuildScript printDetails script args =
+    runBuildScriptAt "" printDetails script args
+    

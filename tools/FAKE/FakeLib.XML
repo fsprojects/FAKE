@@ -396,7 +396,10 @@
 <member name="T:Fake.EnvironmentHelper">
 
 </member>
-<member name="M:Fake.FSIHelper.runBuildScript(System.Boolean,System.String,System.Collections.Generic.IEnumerable{System.Tuple`2{System.String,System.String}})">
+<member name="">
+
+</member>
+<member name="M:Fake.FSIHelper.runBuildScriptAt(System.String,System.Boolean,System.String,System.Collections.Generic.IEnumerable{System.Tuple`2{System.String,System.String}})">
 <summary>
  Run the given buildscript with fsi.exe
 </summary>
@@ -764,6 +767,9 @@
 </summary>
 </member>
 <member name="T:Fake.FileSetHelper">
+
+</member>
+<member name="">
 
 </member>
 <member name="M:Fake.FileSystemHelper.allFilesExist(System.Collections.Generic.IEnumerable{System.String})">
