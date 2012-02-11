@@ -21,23 +21,22 @@
         let response = Text.Encoding.UTF8.GetBytes(str)
         ctx.Response.ContentLength64 <- response.Length |> int64
         ctx.Response.ContentEncoding <- Text.Encoding.UTF8
-        ctx.Response.OutputStream.Write(response, 0, response.Length)
-        ctx.Response.OutputStream.Close()
+        ctx.Response.Close(response, true)
 
     let handleSuccess package (ctx : HttpListenerContext) = 
-        let msg = sprintf "Successfully deployed %A" package
+        let msg = sprintf "Successfully deployed %s" (package.ToString())
         logger (msg, EventLogEntryType.Information)
         let response = JsonConvert.SerializeObject(DeploymentResponse.Sucessful(package.Id, package.Version))
         writeResponse response ctx
 
     let handleFailure package (ctx : HttpListenerContext) exn = 
-        let msg = sprintf "Deployment failed: %A " package
+        let msg = sprintf "Deployment failed: %s " (package.ToString())
         logger (msg, EventLogEntryType.Information)
         let response = JsonConvert.SerializeObject(DeploymentResponse.Failure(package.Id, package.Version, exn))
         writeResponse response ctx
 
     let handleRequest (ctx : HttpListenerContext) = 
-        if ctx.Request.HasEntityBody
+        if ctx.Request.HttpMethod = "POST" && ctx.Request.ContentType = "application/fake" && ctx.Request.HasEntityBody
         then 
             try
                 use sr = new IO.StreamReader(ctx.Request.InputStream, Text.Encoding.UTF8)

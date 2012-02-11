@@ -2,6 +2,7 @@
     
     open System
     open System.IO
+    open System.Net
     open Fake
     open Newtonsoft.Json
 
@@ -27,6 +28,11 @@
                     Version = version;
                     Error = error;
                 }
+
+            override x.ToString() = 
+                if x.Success 
+                then sprintf "Deployment of %s %s successful" x.Id x.Version
+                else sprintf "Deployment of %s %s failed\n\n%A" x.Id x.Version x.Error
 
     type DeploymentPackage = {
             Id : string
@@ -92,6 +98,36 @@
             runDeployment (JsonConvert.DeserializeObject<DeploymentPackage>(File.ReadAllText(packagePath)))
         with e -> 
             Choice2Of2(e)
+
+
+    let postDeploymentPackage url packagePath = 
+        let result = ref None
+        let waitHandle = new Threading.AutoResetEvent(false)
+        let handle (event : UploadDataCompletedEventArgs) =
+            if event.Cancelled 
+            then 
+                result := Some <| Choice2Of2(OperationCanceledException() :> exn)
+                waitHandle.Set() |> ignore
+            elif event.Error <> null
+            then 
+                result := Some <| Choice2Of2(event.Error)
+                waitHandle.Set() |> ignore
+            else
+                use ms = new MemoryStream(event.Result)
+                use sr = new StreamReader(ms, Text.Encoding.UTF8)
+                let res = sr.ReadToEnd()
+                result := Some <| Choice1Of2(JsonConvert.DeserializeObject<DeploymentResponse>(res))
+                waitHandle.Set() |> ignore
+
+        let uri = new Uri(url, UriKind.Absolute)
+        let client = new WebClient()
+        let mutable uploaded = false
+        client.Headers.Add(HttpRequestHeader.ContentType, "application/fake")
+        client.UploadDataCompleted |> Event.add handle
+        client.UploadDataAsync(uri, "POST", File.ReadAllBytes(packagePath))
+        waitHandle.WaitOne() |> ignore
+        !result
+        
         
 
      

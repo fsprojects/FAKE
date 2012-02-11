@@ -109,7 +109,13 @@ module Main =
             | "/createfromarchive" ->
                 let name, version, script, archive, output = args.[1], args.[2], args.[3], args.[4], args.[5]
                 DeploymentHelper.createDeploymentPackageFromZip name version script archive output
-            | "/deployremote" -> raise(NotImplementedException()) 
+            | "/deployremote" ->
+                match DeploymentHelper.postDeploymentPackage args.[1] args.[2] with
+                | Some(Choice1Of2(p)) -> 
+                    Console.WriteLine(p.ToString())
+                | Some(Choice2Of2(e)) ->  
+                    Console.WriteLine(sprintf "Deployment of %A Failed\r\n%A" (args.[1]) e)
+                | _ -> Console.WriteLine(sprintf "Deployment of %A Failed\r\nCould not derive reason sorry!!!" (args.[1]))
             | "/deploy" -> 
                 match DeploymentHelper.runDeploymentFromPackage args.[1] with
                 | Choice1Of2(r, p) -> 
