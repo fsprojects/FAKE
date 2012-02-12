@@ -64,8 +64,8 @@ module Main =
         fun args ->
             match DeploymentHelper.postDeploymentPackage args.[1] args.[2] with
             | Some(Choice1Of2 p ) -> printfn "%A" p
-            | Some(Choice2Of2(e)) -> printfn "Deployment of %A Failed\r\n%A" args.[1] e
-            | _ -> printfn "Deployment of %A Failed\r\nCould not derive reason sorry!!!" args.[1] }
+            | Some(Choice2Of2(e)) -> printfn "Deployment of %A failed\r\n%A" args.[1] e
+            | _ -> printfn "Deployment of %A failed\r\nCould not derive reason sorry!!!" args.[1] }
         |> register
 
     { Name = "deploy"
@@ -74,8 +74,8 @@ module Main =
       Function =
         fun args -> 
             match DeploymentHelper.runDeploymentFromPackage args.[1] with
-            | Choice1Of2(r, p) -> printfn "Deployment of %A %s" p (if r then "Sucessful" else "Failed")
-            | Choice2Of2(e) -> printfn "Deployment of %A Failed\r\n%A" args.[1] e }
+            | Choice1Of2(r, p) -> printfn "Deployment of %s %s" (p.ToString()) (if r then "sucessful" else "failed")
+            | Choice2Of2(e) -> printfn "Deployment of %A failed\r\n%A" args.[1] e }
         |> register
 
     { Name = "help"

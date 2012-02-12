@@ -1,4 +1,4 @@
-﻿// include Fake libs
+// include Fake libs
 #r @"FakeLib.dll"
 
 open Fake 
@@ -13,7 +13,7 @@ Target "Clean" (fun () ->
 
 Target "Build" (fun () -> 
     trace " --- Building the app --- "
-    trace (File.ReadAllText(@"Readme.txt"))
+    trace (File.ReadAllText @"App\Readme.txt")
 )
 
 Target "Deploy" (fun () -> 

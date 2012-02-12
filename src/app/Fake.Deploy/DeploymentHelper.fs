@@ -12,6 +12,8 @@ type DeploymentResponseStatus =
 type DeploymentPackageKey = {
     Id : string
     Version : string }
+    with
+        override x.ToString() = sprintf "%s %s" x.Id x.Version
 
 type DeploymentResponse = {
         Status : DeploymentResponseStatus
@@ -33,7 +35,7 @@ type DeploymentPackage = {
     }
     with
         member x.TargetDir = sprintf "%s_%s" x.Key.Id x.Key.Version |> replace "." "_"
-        override x.ToString() = sprintf "%A" x.Key
+        override x.ToString() = x.Key.ToString()
 
 let createDeploymentPackageFromZip packageName version fakescript archive output =
     ensureDirectory output
