@@ -16,7 +16,7 @@
 
     let cts = new CancellationTokenSource()
 
-    let writeResponse (str : string) (ctx : HttpListenerContext) = 
+    let writeResponse (ctx : HttpListenerContext) (str : string) = 
         let response = Text.Encoding.UTF8.GetBytes(str)
         ctx.Response.ContentLength64 <- response.Length |> int64
         ctx.Response.ContentEncoding <- Text.Encoding.UTF8
@@ -25,14 +25,16 @@
     let handleSuccess package (ctx : HttpListenerContext) = 
         let msg = sprintf "Successfully deployed %s" (package.ToString())
         logger (msg, EventLogEntryType.Information)
-        let response = DeploymentResponse.Sucessful(package.Id, package.Version) |> Json.serialize
-        writeResponse response ctx
+        DeploymentResponse.Sucessful(package.Id, package.Version) 
+        |> Json.serialize
+        |> writeResponse ctx
 
     let handleFailure package (ctx : HttpListenerContext) exn = 
         let msg = sprintf "Deployment failed: %s " (package.ToString())
         logger (msg, EventLogEntryType.Information)
-        let response = DeploymentResponse.Failure(package.Id, package.Version, exn) |> Json.serialize
-        writeResponse response ctx
+        DeploymentResponse.Failure(package.Id, package.Version, exn) 
+        |> Json.serialize
+        |> writeResponse ctx
 
     let handleRequest (ctx : HttpListenerContext) = 
         if ctx.Request.HttpMethod = "POST" && ctx.Request.ContentType = "application/fake" && ctx.Request.HasEntityBody
@@ -46,7 +48,7 @@
             with e ->
                 let msg = sprintf "Fake Deploy Request Error:\n\n%A" e
                 logger (msg, EventLogEntryType.Error)
-                writeResponse msg ctx
+                writeResponse ctx msg
                 
 
     let start log port =
