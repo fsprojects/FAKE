@@ -64,24 +64,26 @@ type FakeDeployInstaller() as self =
         let sc = new ServiceController("Fake Deploy Agent")
         sc.Start()
 
+type DeployCommand = {
+    Name :  string;
+    Parameters : string list
+    Description : string
+    Function: string array -> unit
+}  
 
 module Main = 
-    
+    let registeredCommands = System.Collections.Generic.Dictionary<_,_>()
+    let register command = registeredCommands.Add(command.Name.ToLower(), command)
+
     let printUsage() =
-        [
-            "---- Usage -----";
-            "/install ->\r\n\tinstalls the deployment agent as a service";
-            "/uninstall ->\r\n\tuninstalls the deployment agent";
-            "/start ->\r\n\tstarts the deployment agent";
-            "/stop ->\r\n\tstops the deployment agent";
-            "/createFromArchive name version scriptpath archive output ->\r\n\tcreates a Fake deployment package from the given zip and\r\n\toutputs to the given directory";
-            "/createFromDirectory name version scriptpath dir output ->\r\n\tcreates a Fake deployment package from the given dir and\r\n\toutputs to the given directory";
-            "/deployRemote url package ->\r\n\tpushes the deployment package to the deployment agent\r\n\tlistening on the url";
-            "/deploy package ->\r\n\truns the deployment on the local machine (for testing purposes)";
-            "/help ->\r\n\tprints this message";
-            "Otherwise the service is just started as a command line process" 
-        ] |> List.iter (printfn "%s\r\n")
-     
+        printfn "---- Usage -----"
+
+        registeredCommands        
+        |> Seq.map (fun p -> sprintf "/%s %s ->\r\n\t%s" p.Value.Name (separated " " p.Value.Parameters) p.Value.Description)
+        |> Seq.iter (printfn "%s\r\n")
+            
+        printfn "Otherwise the service is just started as a command line process"
+
     let installer f = 
         let ti = new TransactedInstaller()
         let installer = new FakeDeployInstaller()
@@ -94,38 +96,76 @@ module Main =
         ServiceController.GetServices() 
         |> Array.find (fun (x : ServiceController) -> x.ServiceName = "Fake Deploy Agent") 
 
+    { Name = "install"
+      Parameters = []
+      Description = "installs the deployment agent as a service"
+      Function = fun _ -> installer (fun i -> i.Install(new System.Collections.Hashtable())) }
+        |> register
+
+    { Name = "uninstall"
+      Parameters = []
+      Description = "uninstalls the deployment agent"
+      Function = fun _ -> installer (fun i -> i.Uninstall(null)) }
+        |> register
+
+    { Name = "start"
+      Parameters = []
+      Description = "starts the deployment agent"
+      Function = fun _ -> (getService()).Start() }
+        |> register
+
+    { Name = "stop"
+      Parameters = []
+      Description = "stops the deployment agent"
+      Function = fun _ -> (getService()).Stop() }
+        |> register
+
+    { Name = "createFromArchive"
+      Parameters = ["name"; "version"; "scriptpath"; "archive"; "output"]
+      Description = "creates a Fake deployment package from the given zip and\r\n\toutputs to the given directory"
+      Function = fun args -> DeploymentHelper.createDeploymentPackageFromZip args.[1] args.[2] args.[3] args.[4] args.[5] }
+        |> register
+
+    { Name = "createFromDirectory"
+      Parameters = ["name"; "version"; "scriptpath"; "dir"; "output"]
+      Description = "creates a Fake deployment package from the given dir and\r\n\toutputs to the given directory"
+      Function = fun args -> DeploymentHelper.createDeploymentPackageFromDirectory args.[1] args.[2] args.[3] args.[4] args.[5] }
+        |> register
+
+    { Name = "deployRemote"
+      Parameters = ["url"; "package"]
+      Description = "pushes the deployment package to the deployment agent\r\n\tlistening on the url"
+      Function = 
+        fun args ->
+            match DeploymentHelper.postDeploymentPackage args.[1] args.[2] with
+            | Some(Choice1Of2 p ) -> printfn "%A" p
+            | Some(Choice2Of2(e)) -> printfn "Deployment of %A Failed\r\n%A" args.[1] e
+            | _ -> printfn "Deployment of %A Failed\r\nCould not derive reason sorry!!!" args.[1] }
+        |> register
+
+    { Name = "deploy"
+      Parameters = ["package"]
+      Description = "runs the deployment on the local machine (for testing purposes)"
+      Function =
+        fun args -> 
+            match DeploymentHelper.runDeploymentFromPackage args.[1] with
+            | Choice1Of2(r, p) -> printfn "Deployment of %A %s" p (if r then "Sucessful" else "Failed")
+            | Choice2Of2(e) -> printfn "Deployment of %A Failed\r\n%A" args.[1] e }
+        |> register
+
+    { Name = "help"
+      Parameters = []
+      Description = "prints this message"
+      Function = fun _ -> printUsage() }
+        |> register   
+     
+
     [<EntryPoint>]
     let main(args) =
         if args <> null && args.Length > 0 then
-            match args.[0].ToLower() with
-            | "/install" ->
-                installer (fun i -> i.Install(new System.Collections.Hashtable()))
-            | "/uninstall" -> 
-                installer (fun i -> i.Uninstall(null))
-            | "/start" ->
-               (getService()).Start()
-            | "/stop" -> 
-               (getService()).Stop()     
-            | "/createfromarchive" ->
-                let name, version, script, archive, output = args.[1], args.[2], args.[3], args.[4], args.[5]
-                DeploymentHelper.createDeploymentPackageFromZip name version script archive output
-            | "/deployremote" ->
-                match DeploymentHelper.postDeploymentPackage args.[1] args.[2] with
-                | Some(Choice1Of2(p)) -> 
-                    Console.WriteLine(p.ToString())
-                | Some(Choice2Of2(e)) ->  
-                    Console.WriteLine(sprintf "Deployment of %A Failed\r\n%A" (args.[1]) e)
-                | _ -> Console.WriteLine(sprintf "Deployment of %A Failed\r\nCould not derive reason sorry!!!" (args.[1]))
-            | "/deploy" -> 
-                match DeploymentHelper.runDeploymentFromPackage args.[1] with
-                | Choice1Of2(r, p) -> 
-                    Console.WriteLine(sprintf "Deployment of %s %s" (p.ToString()) (if r then "Sucessful" else "Failed"))
-                | Choice2Of2(e) ->  
-                    Console.WriteLine(sprintf "Deployment of %A Failed\r\n%A" (args.[1]) e)
-            | "/createfromdirectory" ->
-                let name, version, script, archive, output = args.[1], args.[2], args.[3], args.[4], args.[5]
-                DeploymentHelper.createDeploymentPackageFromDirectory name version script archive output
-            | "/help" | _ -> printUsage()
+            match args.[0].ToLower() |> registeredCommands.TryGetValue with
+            | true,cmd -> cmd.Function args
+            | false,_ -> printUsage()
             0
         else 
             use srv = new FakeDeployService()
