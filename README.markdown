@@ -365,6 +365,14 @@ You can read [Getting started with FAKE](http://www.navision-blog.de/2009/04/01/
 
     * Assumes Fake.Deploy is available in the current directory or path.
 
+### Introduction
+
+FAKE deployment, allows users to deploy applications using FAKE scripts to remote computers. A typical scenario maybe as follows, 
+
+* Build an application -> run tests -> create artifacts and save on build server
+* Extract artifacts from build server and create a FAKE deployment package (*.fakepkg)
+* Push the fake package to the desired computer.
+
 ### (Un)Installing Fake deployment service
 
 To deploy using FAKE scripts to a remote computer, a deployment agent needs to be running on that server.
