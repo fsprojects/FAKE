@@ -10,7 +10,7 @@ type DeployCommand = {
 
 module Main = 
     let registeredCommands = System.Collections.Generic.Dictionary<_,_>()
-    let register command = registeredCommands.Add(command.Name.ToLower(), command)
+    let register command = registeredCommands.Add("/" + command.Name.ToLower(), command)
 
     let printUsage() =
         printfn "---- Usage -----"
