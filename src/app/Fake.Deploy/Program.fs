@@ -46,13 +46,13 @@ module Main =
         |> register
 
     { Name = "createFromArchive"
-      Parameters = ["name"; "version"; "scriptpath"; "archive"; "outputDir"]
+      Parameters = ["name"; "version"; "scriptFileName"; "archiveFileName"; "outputDir"]
       Description = "creates a Fake deployment package from the given zip and\r\n\toutputs to the given directory"
       Function = fun args -> DeploymentHelper.createDeploymentPackageFromZip args.[1] args.[2] args.[3] args.[4] args.[5] }
         |> register
 
     { Name = "createFromDirectory"
-      Parameters = ["name"; "version"; "scriptpath"; "dir"; "outputDir"]
+      Parameters = ["name"; "version"; "scriptFileName"; "packageDir"; "outputDir"]
       Description = "creates a Fake deployment package from the given dir and\r\n\toutputs to the given directory"
       Function = fun args -> DeploymentHelper.createDeploymentPackageFromDirectory args.[1] args.[2] args.[3] args.[4] args.[5] }
         |> register
