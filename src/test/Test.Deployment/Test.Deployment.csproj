@@ -53,7 +53,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PackageUnpackSpecs.cs" />
+    <Compile Include="v1\PackageParsingSpecs.cs" />
+    <Compile Include="v1\PackageUnpackSpecs.cs" />
     <Compile Include="PackageCreationSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestData.cs" />

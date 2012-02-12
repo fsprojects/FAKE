@@ -2,7 +2,7 @@
 using Fake;
 using Machine.Specifications;
 
-namespace Test.Deployment
+namespace Test.Deployment.v1
 {
     public class when_unpacking_a_package
     {
