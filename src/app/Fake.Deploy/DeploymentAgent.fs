@@ -56,7 +56,7 @@
             async {
                 try
                     use l = listener port
-                    log (sprintf "Fake Deploy now listening @ %s" (String.Join(",", l.Prefixes |> Seq.map id)), EventLogEntryType.Information)
+                    log (sprintf "Fake Deploy now listening @ %s" (String.Join(",", l.Prefixes |> Seq.map id |> Array.ofSeq)), EventLogEntryType.Information)
                     while true do
                         handleRequest (l.GetContext())
                 with e ->

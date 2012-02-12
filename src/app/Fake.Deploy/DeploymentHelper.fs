@@ -60,7 +60,7 @@
 
     let createDeploymentPackageFromDirectory packageName version fakescript dir output =
         let archive = packageName + ".zip"
-        let files = Directory.EnumerateFiles(dir, "*.*", SearchOption.AllDirectories)
+        let files = Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories)
         Zip dir archive files
         createDeploymentPackageFromZip packageName version fakescript archive output
 
