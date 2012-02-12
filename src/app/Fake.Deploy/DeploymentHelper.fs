@@ -52,11 +52,18 @@
         let package = {
             Id = packageName
             Version = version
-            Script = File.ReadAllBytes(Path.GetFullPath(fakescript))
-            Package = File.ReadAllBytes(Path.GetFullPath(archive))
+            Script =  fakescript |> FullName |> ReadFileAsBytes
+            Package = archive |> FullName  |> ReadFileAsBytes
         }
-        IO.File.WriteAllBytes(Path.Combine(output,packageName + ".fakepkg"), Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(package)))
-        File.Delete(archive)
+
+        let fileName = output @@ (packageName + ".fakepkg")
+
+        package
+          |> JsonConvert.SerializeObject
+          |> Text.Encoding.UTF8.GetBytes
+          |> WriteBytesToFile fileName
+
+        File.Delete archive
 
     let createDeploymentPackageFromDirectory packageName version fakescript dir output =
         let archive = packageName + ".zip"
@@ -65,7 +72,7 @@
         createDeploymentPackageFromZip packageName version fakescript archive output
 
     let ensureDeployDir (package : DeploymentPackage) = 
-        let path = Path.Combine("Work", package.TargetDir)
+        let path = "Work" @@ package.TargetDir
         ensureDirectory path
         path,package
 
@@ -74,7 +81,7 @@
         File.WriteAllBytes(archive, package.Package)
         Unzip dir archive
         File.Delete archive
-        let script = Path.Combine(dir, package.Id + ".fsx")
+        let script = dir @@ (package.Id + ".fsx")
         File.WriteAllBytes(script, package.Script)
         script, package
 
@@ -83,9 +90,9 @@
     let doDeployment package = 
        let (script, _) = prepare package
        let workingDirectory = Path.GetDirectoryName(script)
-       let fakeLibTarget = Path.Combine(workingDirectory, "FakeLib.dll")
+       let fakeLibTarget = workingDirectory @@ "FakeLib.dll"
        if  not <| File.Exists(fakeLibTarget) then File.Copy("FakeLib.dll", fakeLibTarget)
-       (FSIHelper.runBuildScriptAt workingDirectory true (Path.GetFullPath(script)) Seq.empty, package)
+       (FSIHelper.runBuildScriptAt workingDirectory true (FullName script) Seq.empty, package)
        
     let runDeployment package = 
         try
