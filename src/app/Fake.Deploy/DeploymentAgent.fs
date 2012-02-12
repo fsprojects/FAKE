@@ -37,8 +37,7 @@ let handleFailure package (ctx : HttpListenerContext) exn =
     |> writeResponse ctx
 
 let handleRequest (ctx : HttpListenerContext) = 
-    if ctx.Request.HttpMethod = "POST" && ctx.Request.ContentType = "application/fake" && ctx.Request.HasEntityBody
-    then 
+    if ctx.Request.HttpMethod = "POST" && ctx.Request.ContentType = "application/fake" && ctx.Request.HasEntityBody then 
         try
             use sr = new IO.StreamReader(ctx.Request.InputStream, Text.Encoding.UTF8)
             let package = sr.ReadToEnd() |> Json.deserialize
@@ -57,7 +56,8 @@ let start log port =
         async {
             try
                 use l = listener port
-                log (sprintf "Fake Deploy now listening @ %s" (String.Join(",", l.Prefixes |> Seq.map id |> Array.ofSeq)), EventLogEntryType.Information)
+                let prefixes = l.Prefixes |> separated ","
+                log (sprintf "Fake Deploy now listening @ %s" prefixes, EventLogEntryType.Information)
                 while true do
                     handleRequest (l.GetContext())
             with e ->
