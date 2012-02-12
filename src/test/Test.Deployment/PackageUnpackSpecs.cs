@@ -6,9 +6,12 @@ namespace Test.Deployment
 {
     public class when_unpacking_a_package
     {
-        Because of = () =>
-                     DeploymentHelper.unpack(TestData.OutputDir,DeploymentHelper.getPackageFromFile(TestData.GetPackageFile("v1","helloworld")));
+        static DeploymentHelper.DeploymentPackage _package;
+        static readonly string OutputDir = TestData.OutputDir + "HelloWorld";
 
-        It should_extract_the_package = () => Directory.Exists(TestData.OutputDir + "App").ShouldBeTrue();
+        Establish context = () => _package = DeploymentHelper.getPackageFromFile(TestData.GetPackageFile("v1", "helloworld"));
+        Because of = () => DeploymentHelper.unpack(OutputDir, _package);
+
+        It should_extract_the_package = () => Directory.Exists(OutputDir + "\\App").ShouldBeTrue();
     }
 }
