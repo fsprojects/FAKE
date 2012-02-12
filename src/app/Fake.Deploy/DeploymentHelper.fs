@@ -5,51 +5,40 @@ open System.IO
 open System.Net
 open Fake
 
+type DeploymentResponseStatus =
+| Success
+| Failure of obj
+
+type DeploymentPackageKey = {
+    Id : string
+    Version : string }
+
 type DeploymentResponse = {
-        Success : bool
-        Id : string
-        Version : string
-        Error : obj
+        Status : DeploymentResponseStatus
+        Key : DeploymentPackageKey
     }
     with 
-        static member Sucessful(packageId, version) = 
-            {
-                Success = true;
-                Id = packageId;
-                Version = version;
-                Error = null;
-            }
-
-        static member Failure(packageId, version, error) =
-            {
-                Success = false;
-                Id = packageId;
-                Version = version;
-                Error = error;
-            }
+        static member Sucessful packageKey =  { Status = Success; Key =  packageKey}
+        static member Failure(packageKey, error) = { Status = Failure error; Key = packageKey}
 
         override x.ToString() = 
-            if x.Success then
-                sprintf "Deployment of %s %s successful" x.Id x.Version
-            else 
-                sprintf "Deployment of %s %s failed\n\n%A" x.Id x.Version x.Error
+            match x.Status with
+            | Success   -> sprintf "Deployment of %A successful" x.Key
+            | Failure e -> sprintf "Deployment of %A failed\n\n%A" x.Key e
 
 type DeploymentPackage = {
-        Id : string
-        Version : string
+        Key : DeploymentPackageKey        
         Script : byte[]
         Package : byte[]
     }
     with
-        member x.TargetDir = sprintf "%s_%s" x.Id x.Version |> replace "." "_"
-
-        override x.ToString() = sprintf "%s %s" x.Id x.Version
+        member x.TargetDir = sprintf "%s_%s" x.Key.Id x.Key.Version |> replace "." "_"
+        override x.ToString() = sprintf "%A" x.Key
 
 let createDeploymentPackageFromZip packageName version fakescript archive output =
     ensureDirectory output
     let package = {
-        Id = packageName
-        Version = version
+        Key = { Id = packageName; Version = version}
         Script =  fakescript |> FullName |> ReadFileAsBytes
         Package = archive |> FullName  |> ReadFileAsBytes
     }
@@ -75,13 +64,13 @@ let ensureDeployDir (package : DeploymentPackage) =
     path,package
 
 let unpack (dir,package) =
-    let archive = package.Id + ".zip"
+    let archive = package.Key.Id + ".zip"
 
     package.Package |> WriteBytesToFile archive
     Unzip dir archive
     File.Delete archive
 
-    let script = dir @@ (package.Id + ".fsx")
+    let script = dir @@ (package.Key.Id + ".fsx")
     package.Script |> WriteBytesToFile script
     script, package
 

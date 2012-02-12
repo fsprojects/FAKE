@@ -25,14 +25,14 @@ let writeResponse (ctx : HttpListenerContext) (str : string) =
 let handleSuccess package (ctx : HttpListenerContext) = 
     let msg = sprintf "Successfully deployed %s" (package.ToString())
     logger (msg, EventLogEntryType.Information)
-    DeploymentResponse.Sucessful(package.Id, package.Version) 
+    DeploymentResponse.Sucessful package.Key 
     |> Json.serialize
     |> writeResponse ctx
 
 let handleFailure package (ctx : HttpListenerContext) exn = 
     let msg = sprintf "Deployment failed: %s " (package.ToString())
     logger (msg, EventLogEntryType.Information)
-    DeploymentResponse.Failure(package.Id, package.Version, exn) 
+    DeploymentResponse.Failure(package.Key, exn) 
     |> Json.serialize
     |> writeResponse ctx
 
