@@ -363,69 +363,72 @@ You can read [Getting started with FAKE](http://www.navision-blog.de/2009/04/01/
 
 ## Deployment using FAKE
 
-    * Assumes Fake.Deploy is available in the current directory or path.
+    * Assumes Fake.Deploy.exe is available in the current directory or path.
 
 ### Introduction
 
-FAKE deployment, allows users to deploy applications using FAKE scripts to remote computers. A typical scenario maybe as follows, 
+The FAKE deployment tool allows users to deploy applications using FAKE scripts to remote computers. A typical scenario maybe as follows: 
 
-* Build an application -> run tests -> create artifacts and save on build server
+* Build an application -> run tests -> create artifacts and save on build server (Classical FAKE build workflow)
 * Extract artifacts from build server and create a FAKE deployment package (*.fakepkg)
-* Push the fake package to the desired computer.
+* Push the fake package to the desired computer
+* Run the package's FAKE script on the remote machine
 
-### (Un)Installing Fake deployment service
+### Installing Fake deployment services
 
-To deploy using FAKE scripts to a remote computer, a deployment agent needs to be running on that server.
+In order to deploy application to a remote computer a deployment agent needs to be running on that server.
 
-To run an agent in a console, simply run 
+To run an agent in a console, simply run:
     
     Fake.Deploy
 
-To install an agent as a windows service
+To install an agent as a windows service:
  
-   * Open a command prompt with Administrator Privledges
+   * Open a command prompt with Administrator Priviledges
    * Run Fake.Deploy /install
 
 By default the service starts a listener on port 8080. This can however be change by editing the Fake.Deploy.exe.config file
-and changing 
+and changing
     
     <add key="Port" value="8080"/>
 
 to the desired value.
 
+### Uninstalling Fake deployment services
+
 To uninstall an agent
 
-   * Open a command prompt with Administrator Privledges
+   * Open a command prompt with Administrator Priviledges
    * Run Fake.Deploy /uninstall
      
-### Creating a FAKE Deploy package
+### Creating a FAKE Deployment package
 
-FAKE deployments packages can be created in two ways
+FAKE deployment packages can be created in two ways:
 
-    * From a current zip archive using (Fake.Deploy /createFromArchive)
-    * From a directory tree (Fake.Deploy /createFromDirectory)
+    * From a current zip archive (using Fake.Deploy.exe /createFromArchive)
+    * From a directory tree (using Fake.Deploy.exe /createFromDirectory)
 
-For example, if you wanted to create a deployment package C:\Appdev\MyDeployment.fakepkg from the contents of a 
+For example, if you want to create the deployment package C:\Appdev\MyDeployment.fakepkg from the contents of a 
 directory located at C:\Appdev\MyApp with a script called DeploymentScript.fsx located in the 
-current directory, you would run the following command 
+current directory, you would run the following command:
 
     Fake.Deploy /createFromDirectory MyDeployment 1.0.0.1 DeploymentScript.fsx C:\Appdev\MyApp C:\Appdev
 
-Similarly if it was a zip file at C:\Appdev\MyApp.zip and not a directory you would run the following command
+Similarly if it was a zip file at C:\Appdev\MyApp.zip and not a directory you would run the following command:
 
     Fake.Deploy /createFromArchive MyDeployment 1.0.0.1 DeploymentScript.fsx C:\Appdev\MyApp.zip C:\Appdev
 
 ### Running a FAKE Deployment Package
 
-Fake deployment packages can be run manually on the current machine, to aid testing etc; Or they can be pushed to an agent on a remote machine 
+Fake deployment packages can be run manually on the current machine or they can be pushed to an agent on a remote machine.
 
-To run a package on the local machine located at C:\Appdev\MyDeployment.fakepkg you would run the following command,
+To run a package on the local machine located at C:\Appdev\MyDeployment.fakepkg you would run the following command:
 
     Fake.Deploy /deploy C:\Appdev\MyDeployment.fakepkg
     
-To run the same package on a remote computer (e.g. integration-1) you can run
+To run the same package on a remote computer (e.g. integration-1) you can run:
 
     Fake.Deploy /deployRemote http://integration-1:8080 C:\Appdev\MyDeployment.fakepkg 
 
 This will push the directory to the given url. It is worth noting that the port may well be different, as this depends on the configuration of the 
-listening agent (see. (Un)Installing Fake deployment service)
+listening agent (see. Installing Fake deployment service)
