@@ -13,14 +13,15 @@ type FakeDeployService() as self =
     let console = new ConsoleTraceListener(false, colorMap) :> ITraceListener
 
     let logger (msg, eventLogEntry : EventLogEntryType) = 
-        if Environment.UserInteractive
-        then 
+        if Environment.UserInteractive then 
             match eventLogEntry with
-            | EventLogEntryType.Error -> console.Write(ErrorMessage(msg))
-            | EventLogEntryType.Information -> console.Write(TraceMessage(msg, true))
-            | EventLogEntryType.Warning -> console.Write(ImportantMessage(msg))
-            | _ -> console.Write(LogMessage(msg, true))
-        else self.EventLog.WriteEntry(msg, eventLogEntry)
+            | EventLogEntryType.Error -> ErrorMessage msg
+            | EventLogEntryType.Information -> TraceMessage (msg, true)
+            | EventLogEntryType.Warning -> ImportantMessage msg
+            | _ -> LogMessage (msg, true)
+            |> console.Write
+        else 
+            self.EventLog.WriteEntry(msg, eventLogEntry)
 
     do 
         self.AutoLog <- true

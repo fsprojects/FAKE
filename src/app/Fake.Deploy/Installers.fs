@@ -29,10 +29,10 @@ type FakeDeployInstaller() as self =
         sc.Start()
 
 
-let installer f = 
+let getInstaller () = 
     let ti = new TransactedInstaller()
     let installer = new FakeDeployInstaller()
     ti.Installers.Add(installer) |> ignore
     let ctx = new InstallContext("", [|"/assemblypath=" + (Assembly.GetEntryAssembly()).Location|]) 
     ti.Context <- ctx
-    f(ti)
+    ti

@@ -24,25 +24,25 @@ module Main =
     { Name = "install"
       Parameters = []
       Description = "installs the deployment agent as a service"
-      Function = fun _ -> Installers.installer (fun i -> i.Install(new System.Collections.Hashtable())) }
+      Function = fun _ -> Installers.getInstaller().Install(new System.Collections.Hashtable()) }
         |> register
 
     { Name = "uninstall"
       Parameters = []
       Description = "uninstalls the deployment agent"
-      Function = fun _ -> Installers.installer (fun i -> i.Uninstall(null)) }
+      Function = fun _ -> Installers.getInstaller().Uninstall(null) }
         |> register
 
     { Name = "start"
       Parameters = []
       Description = "starts the deployment agent"
-      Function = fun _ -> (Services.getFakeAgentService()).Start() }
+      Function = fun _ -> Services.getFakeAgentService().Start() }
         |> register
 
     { Name = "stop"
       Parameters = []
       Description = "stops the deployment agent"
-      Function = fun _ -> (Services.getFakeAgentService()).Stop() }
+      Function = fun _ -> Services.getFakeAgentService().Stop() }
         |> register
 
     { Name = "createFromArchive"
@@ -91,12 +91,9 @@ module Main =
             match args.[0].ToLower() |> registeredCommands.TryGetValue with
             | true,cmd -> cmd.Function args
             | false,_ -> printUsage()
-            0
         else 
             use srv = new Services.FakeDeployService()
             srv.Start(args)
             System.Console.ReadLine() |> ignore
-            0
 
-    
-
+        0
