@@ -1,68 +1,5 @@
 ﻿
 open Fake
-open System
-open System.Diagnostics
-open System.ServiceProcess
-open System.ComponentModel
-open System.Configuration
-open System.Configuration.Install
-open System.Reflection
-open Fake.TraceListener
-
-type FakeDeployService() as self =
-    inherit ServiceBase()
-
-    let console = new ConsoleTraceListener(false, colorMap) :> ITraceListener
-
-    let logger (msg, eventLogEntry : EventLogEntryType) = 
-        if Environment.UserInteractive
-        then 
-            match eventLogEntry with
-            | EventLogEntryType.Error -> console.Write(ErrorMessage(msg))
-            | EventLogEntryType.Information -> console.Write(TraceMessage(msg, true))
-            | EventLogEntryType.Warning -> console.Write(ImportantMessage(msg))
-            | _ -> console.Write(LogMessage(msg, true))
-        else self.EventLog.WriteEntry(msg, eventLogEntry)
-
-    do 
-        self.AutoLog <- true
-        self.ServiceName <- "Fake Deploy Agent"
-
-    override x.OnStart(args) = 
-        DeploymentAgent.start logger (ConfigurationManager.AppSettings.["Port"])
-
-    override x.OnStop() = 
-        DeploymentAgent.stop()
-
-    member x.Start(args) =
-        if Environment.UserInteractive
-        then x.OnStart(args)
-        else ServiceBase.Run(x)
-
-    member x.Stop() = 
-        x.OnStop()
-
-[<RunInstaller(true)>]
-type FakeDeployInstaller() as self = 
-    inherit Installer()
-     
-    let processInstaller = new ServiceProcessInstaller(Account = ServiceAccount.LocalSystem)
-    let serviceInstaller = 
-        new ServiceInstaller(
-                                DisplayName = "Fake Deploy Service Agent",
-                                Description = "Allows FAKE scripts to run as a deployment",
-                                ServiceName = "Fake Deploy Agent",
-                                StartType = ServiceStartMode.Automatic
-                            )
-
-    do 
-        self.Installers.Add(processInstaller) |> ignore
-        self.Installers.Add(serviceInstaller) |> ignore
-
-    override x.OnCommitted(savedState) = 
-        base.OnCommitted(savedState)
-        let sc = new ServiceController("Fake Deploy Agent")
-        sc.Start()
 
 type DeployCommand = {
     Name :  string;
@@ -84,40 +21,28 @@ module Main =
             
         printfn "Otherwise the service is just started as a command line process"
 
-    let installer f = 
-        let ti = new TransactedInstaller()
-        let installer = new FakeDeployInstaller()
-        ti.Installers.Add(installer) |> ignore
-        let ctx = new InstallContext("", [|"/assemblypath=" + (Assembly.GetEntryAssembly()).Location|]) 
-        ti.Context <- ctx
-        f(ti)
-
-    let getService() = 
-        ServiceController.GetServices() 
-        |> Array.find (fun (x : ServiceController) -> x.ServiceName = "Fake Deploy Agent") 
-
     { Name = "install"
       Parameters = []
       Description = "installs the deployment agent as a service"
-      Function = fun _ -> installer (fun i -> i.Install(new System.Collections.Hashtable())) }
+      Function = fun _ -> Installers.installer (fun i -> i.Install(new System.Collections.Hashtable())) }
         |> register
 
     { Name = "uninstall"
       Parameters = []
       Description = "uninstalls the deployment agent"
-      Function = fun _ -> installer (fun i -> i.Uninstall(null)) }
+      Function = fun _ -> Installers.installer (fun i -> i.Uninstall(null)) }
         |> register
 
     { Name = "start"
       Parameters = []
       Description = "starts the deployment agent"
-      Function = fun _ -> (getService()).Start() }
+      Function = fun _ -> (Services.getFakeAgentService()).Start() }
         |> register
 
     { Name = "stop"
       Parameters = []
       Description = "stops the deployment agent"
-      Function = fun _ -> (getService()).Stop() }
+      Function = fun _ -> (Services.getFakeAgentService()).Stop() }
         |> register
 
     { Name = "createFromArchive"
@@ -168,9 +93,9 @@ module Main =
             | false,_ -> printUsage()
             0
         else 
-            use srv = new FakeDeployService()
+            use srv = new Services.FakeDeployService()
             srv.Start(args)
-            Console.ReadLine() |> ignore
+            System.Console.ReadLine() |> ignore
             0
 
     

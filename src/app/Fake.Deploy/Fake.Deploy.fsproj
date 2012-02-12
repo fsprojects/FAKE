@@ -42,6 +42,8 @@
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="DeploymentHelper.fs" />
     <Compile Include="DeploymentAgent.fs" />
+    <Compile Include="Services.fs" />
+    <Compile Include="Installers.fs" />
     <Compile Include="Program.fs" />
     <None Include="App.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
