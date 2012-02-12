@@ -23,28 +23,26 @@ let writeResponse (ctx : HttpListenerContext) (str : string) =
     ctx.Response.Close(response, true)
 
 let handleRequest (ctx : HttpListenerContext) = 
-    if ctx.Request.HttpMethod = "POST" && ctx.Request.ContentType = "application/fake" && ctx.Request.HasEntityBody then 
-        try
-            use sr = new IO.StreamReader(ctx.Request.InputStream, Text.Encoding.UTF8)
-            let package = sr.ReadToEnd() |> Json.deserialize
-            match runDeployment package with
-            | Choice1Of2(result, package) -> 
-                let msg = sprintf "Successfully deployed %s" (package.ToString())
-                logger (msg, EventLogEntryType.Information)
-                DeploymentResponse.Sucessful package.Key 
-                |> Json.serialize
-                |> writeResponse ctx
-            | Choice2Of2(exn) ->
-                let msg = sprintf "Deployment failed: %s " (package.ToString())
-                logger (msg, EventLogEntryType.Information)
-                DeploymentResponse.Failure(package.Key, exn) 
-                |> Json.serialize
-                |> writeResponse ctx
+    if ctx.Request.HttpMethod <> "POST" || ctx.Request.ContentType <> "application/fake" || not ctx.Request.HasEntityBody then () else
 
-        with e ->
-            let msg = sprintf "Fake Deploy Request Error:\n\n%A" e
-            logger (msg, EventLogEntryType.Error)
-            writeResponse ctx msg
+    try
+        use sr = new IO.StreamReader(ctx.Request.InputStream, Text.Encoding.UTF8)
+        let package = sr.ReadToEnd() |> Json.deserialize
+        match runDeployment package with
+        | Choice1Of2(result, package) ->
+            logger (sprintf "Successfully deployed %A" package.Key, EventLogEntryType.Information)
+
+            DeploymentResponse.Sucessful package.Key |> Json.serialize
+        | Choice2Of2(exn) ->
+            logger (sprintf "Deployment failed: %A" package.Key, EventLogEntryType.Information)
+
+            DeploymentResponse.Failure(package.Key, exn) |> Json.serialize
+    with e ->
+        let msg = sprintf "Fake Deploy Request Error:\n\n%A" e
+        logger (msg, EventLogEntryType.Error)
+        msg
+        
+    |> writeResponse ctx
                 
 
 let start log port =
