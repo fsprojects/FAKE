@@ -102,12 +102,10 @@ let postDeploymentPackage url packagePath =
     let result = ref None
     let waitHandle = new Threading.AutoResetEvent(false)
     let handle (event : UploadDataCompletedEventArgs) =
-        if event.Cancelled 
-        then 
+        if event.Cancelled then 
             result := Some <| Choice2Of2(OperationCanceledException() :> exn)
             waitHandle.Set() |> ignore
-        elif event.Error <> null
-        then 
+        elif event.Error <> null then 
             result := Some <| Choice2Of2(event.Error)
             waitHandle.Set() |> ignore
         else
