@@ -39,7 +39,7 @@
     <Reference Include="FSharp.Testing">
       <HintPath>..\..\..\packages\FSharp.Testing.0.2.8.0\lib\FSharp.Testing.dll</HintPath>
     </Reference>
-    <Reference Include="Machine.Specifications">
+    <Reference Include="Machine.Specifications, Version=0.5.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Machine.Specifications.0.5.3.0\lib\Machine.Specifications.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.0.8.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
