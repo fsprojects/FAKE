@@ -134,7 +134,7 @@
         let mutable uploaded = false
         client.Headers.Add(HttpRequestHeader.ContentType, "application/fake")
         client.UploadDataCompleted |> Event.add handle
-        client.UploadDataAsync(uri, "POST", File.ReadAllBytes(packagePath))
+        client.UploadDataAsync(uri, "POST", ReadFileAsBytes packagePath)
         waitHandle.WaitOne() |> ignore
         !result
         

@@ -4,7 +4,6 @@
     open System.Net
     open System.Threading
     open System.Diagnostics
-    open Newtonsoft.Json
     open Fake.DeploymentHelper
 
     let mutable logger : (string * EventLogEntryType) -> unit = ignore 
@@ -26,13 +25,13 @@
     let handleSuccess package (ctx : HttpListenerContext) = 
         let msg = sprintf "Successfully deployed %s" (package.ToString())
         logger (msg, EventLogEntryType.Information)
-        let response = JsonConvert.SerializeObject(DeploymentResponse.Sucessful(package.Id, package.Version))
+        let response = DeploymentResponse.Sucessful(package.Id, package.Version) |> Json.serialize
         writeResponse response ctx
 
     let handleFailure package (ctx : HttpListenerContext) exn = 
         let msg = sprintf "Deployment failed: %s " (package.ToString())
         logger (msg, EventLogEntryType.Information)
-        let response = JsonConvert.SerializeObject(DeploymentResponse.Failure(package.Id, package.Version, exn))
+        let response = DeploymentResponse.Failure(package.Id, package.Version, exn) |> Json.serialize
         writeResponse response ctx
 
     let handleRequest (ctx : HttpListenerContext) = 
@@ -40,7 +39,7 @@
         then 
             try
                 use sr = new IO.StreamReader(ctx.Request.InputStream, Text.Encoding.UTF8)
-                let package = (JsonConvert.DeserializeObject<DeploymentPackage>(sr.ReadToEnd()))
+                let package = sr.ReadToEnd() |> Json.deserialize
                 match runDeployment package with
                 | Choice1Of2(result, package) -> handleSuccess package ctx
                 | Choice2Of2(e) -> handleFailure package ctx e
