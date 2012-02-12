@@ -37,15 +37,15 @@ type DeploymentPackage = {
         member x.TargetDir = sprintf "%s_%s" x.Key.Id x.Key.Version |> replace "." "_"
         override x.ToString() = x.Key.ToString()
 
-let createDeploymentPackageFromZip packageName version fakescript archive output =
-    ensureDirectory output
+let createDeploymentPackageFromZip packageName version fakescript archive outputDir =
+    ensureDirectory outputDir
     let package = {
         Key = { Id = packageName; Version = version}
         Script =  fakescript |> FullName |> ReadFileAsBytes
         Package = archive |> FullName  |> ReadFileAsBytes
     }
 
-    let fileName = output @@ (packageName + ".fakepkg")
+    let fileName = outputDir @@ (packageName + ".fakepkg")
 
     package
         |> Json.serialize
@@ -54,11 +54,11 @@ let createDeploymentPackageFromZip packageName version fakescript archive output
 
     File.Delete archive
 
-let createDeploymentPackageFromDirectory packageName version fakescript dir output =
+let createDeploymentPackageFromDirectory packageName version fakescript dir outputDir =
     let archive = packageName + ".zip"
     let files = Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories)
     Zip dir archive files
-    createDeploymentPackageFromZip packageName version fakescript archive output
+    createDeploymentPackageFromZip packageName version fakescript archive outputDir
 
 let ensureDeployDir (package : DeploymentPackage) = 
     let path = "Work" @@ package.TargetDir

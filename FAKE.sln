@@ -34,7 +34,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{4609
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Deploy", "src\app\Fake.Deploy\Fake.Deploy.fsproj", "{ED164049-BCFD-4837-96F4-9A5FA417931D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Deployment", "src\Test.Deployment\Test.Deployment.csproj", "{482546BC-97E4-4718-961F-E28B29C4A651}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Deployment", "src\test\Test.Deployment\Test.Deployment.csproj", "{482546BC-97E4-4718-961F-E28B29C4A651}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
