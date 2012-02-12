@@ -4,18 +4,27 @@ using Machine.Specifications;
 
 namespace Test.Deployment
 {
-    public class TestData
+    public class when_creating_a_package_from_directory
     {
-        public static string OutputDir
+        const string PackageName = "helloworld";
+        const string PackageVersion = "0.1";
+        static readonly string Path = TestData.OutputDir + "helloworld.fakepkg";
+
+        Because of = () =>
+                     DeploymentHelper.createDeploymentPackageFromDirectory(
+                         PackageName,
+                         PackageVersion,
+                         TestData.GetPackageDir("HelloWorld") + "DeployScript.fsx",
+                         TestData.GetPackageDir("HelloWorld"),
+                         TestData.OutputDir);
+
+        It should_be_parsable_as_json = () =>
         {
-            get { return "output\\"; }
-        }
-    }
+            var package = Json.deserialize<DeploymentHelper.DeploymentPackage>(File.ReadAllText(Path));
+            package.Key.Id.ShouldEqual(PackageName);
+            package.Key.Version.ShouldEqual(PackageVersion);
+        };
 
-    public class When_creating_a_package_from_directory
-    {
-        Because of = () => DeploymentHelper.createDeploymentPackageFromDirectory("helloworld", "0.1", @"packages\HelloWorld\DeployScript.fsx", @"packages\HelloWorld", TestData.OutputDir);
-
-        It should_create_the_package = () => File.Exists(TestData.OutputDir + "helloworld.fakepkg").ShouldBeTrue();
+        It should_create_the_package = () => File.Exists(Path).ShouldBeTrue();
     }
 }
