@@ -20,7 +20,7 @@ namespace Test.Deployment
 
         It should_be_parsable_as_json = () =>
         {
-            var package = Json.deserialize<DeploymentHelper.DeploymentPackage>(File.ReadAllText(Path));
+            var package = DeploymentHelper.getPackageFromFile(Path);
             package.Key.Id.ShouldEqual(PackageName);
             package.Key.Version.ShouldEqual(PackageVersion);
         };

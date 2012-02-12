@@ -46,13 +46,13 @@ module Main =
         |> register
 
     { Name = "createFromArchive"
-      Parameters = ["name"; "version"; "scriptpath"; "archive"; "output"]
+      Parameters = ["name"; "version"; "scriptpath"; "archive"; "outputDir"]
       Description = "creates a Fake deployment package from the given zip and\r\n\toutputs to the given directory"
       Function = fun args -> DeploymentHelper.createDeploymentPackageFromZip args.[1] args.[2] args.[3] args.[4] args.[5] }
         |> register
 
     { Name = "createFromDirectory"
-      Parameters = ["name"; "version"; "scriptpath"; "dir"; "output"]
+      Parameters = ["name"; "version"; "scriptpath"; "dir"; "outputDir"]
       Description = "creates a Fake deployment package from the given dir and\r\n\toutputs to the given directory"
       Function = fun args -> DeploymentHelper.createDeploymentPackageFromDirectory args.[1] args.[2] args.[3] args.[4] args.[5] }
         |> register
@@ -73,7 +73,7 @@ module Main =
       Description = "runs the deployment on the local machine (for testing purposes)"
       Function =
         fun args -> 
-            match DeploymentHelper.runDeploymentFromPackage args.[1] with
+            match DeploymentHelper.runDeploymentFromPackageFile args.[1] with
             | Choice1Of2(r, p) -> printfn "Deployment of %s %s" (p.ToString()) (if r then "sucessful" else "failed")
             | Choice2Of2(e) -> printfn "Deployment of %A failed\r\n%A" args.[1] e }
         |> register

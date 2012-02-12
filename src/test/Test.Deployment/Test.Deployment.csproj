@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PackageUnpackSpecs.cs" />
     <Compile Include="PackageCreationSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestData.cs" />
@@ -60,6 +61,9 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="packages\HelloWorld\DeployScript.fsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="packages\v1\helloworld.fakepkg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

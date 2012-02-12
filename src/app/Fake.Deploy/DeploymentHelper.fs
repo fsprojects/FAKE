@@ -60,12 +60,8 @@ let createDeploymentPackageFromDirectory packageName version fakescript dir outp
     Zip dir archive files
     createDeploymentPackageFromZip packageName version fakescript archive outputDir
 
-let ensureDeployDir (package : DeploymentPackage) = 
-    let path = "Work" @@ package.TargetDir
-    ensureDirectory path
-    path,package
-
-let unpack (dir,package) =
+let unpack dir package =
+    ensureDirectory dir
     let archive = package.Key.Id + ".zip"
 
     package.Package |> WriteBytesToFile archive
@@ -74,12 +70,11 @@ let unpack (dir,package) =
 
     let script = dir @@ (package.Key.Id + ".fsx")
     package.Script |> WriteBytesToFile script
-    script, package
-
-let prepare = ensureDeployDir >> unpack
+    script
     
-let doDeployment package = 
-    let (script, _) = prepare package
+let doDeployment (package:DeploymentPackage) = 
+    let dir = "Work" @@ package.TargetDir 
+    let script = unpack dir package
     let workingDirectory = DirectoryName script
     let fakeLibTarget = workingDirectory @@ "FakeLib.dll"
     if  not <| File.Exists fakeLibTarget then File.Copy("FakeLib.dll", fakeLibTarget)
@@ -91,10 +86,12 @@ let runDeployment package =
     with e ->
         Choice2Of2(e)
 
-let runDeploymentFromPackage packagePath = 
+let getPackageFromFile fileName = Json.deserializeFile<DeploymentPackage> fileName
+
+let runDeploymentFromPackageFile packageFileName = 
     try
-        ReadFileAsString packagePath
-        |> Json.deserialize
+        packageFileName
+        |> getPackageFromFile
         |> runDeployment
     with e -> 
         Choice2Of2(e)
