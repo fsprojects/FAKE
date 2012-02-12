@@ -4,7 +4,6 @@
     open System.IO
     open System.Net
     open Fake
-    open Newtonsoft.Json
 
     type DeploymentResponse = {
             Success : bool
@@ -41,7 +40,7 @@
             Package : byte[]
         }
         with
-            member x.TargetDir = 
+            member x.TargetDir =
                 x.Id + "_" + (x.Version.Replace('.','_'))
 
             override x.ToString() = 
@@ -59,7 +58,7 @@
         let fileName = output @@ (packageName + ".fakepkg")
 
         package
-          |> JsonConvert.SerializeObject
+          |> Json.serialize
           |> Text.Encoding.UTF8.GetBytes
           |> WriteBytesToFile fileName
 
@@ -78,20 +77,22 @@
 
     let unpack (dir,package) =
         let archive = package.Id + ".zip"
-        File.WriteAllBytes(archive, package.Package)
+
+        package.Package |> WriteBytesToFile archive
         Unzip dir archive
         File.Delete archive
+
         let script = dir @@ (package.Id + ".fsx")
-        File.WriteAllBytes(script, package.Script)
+        package.Script |> WriteBytesToFile script
         script, package
 
     let prepare = ensureDeployDir >> unpack
     
     let doDeployment package = 
        let (script, _) = prepare package
-       let workingDirectory = Path.GetDirectoryName(script)
+       let workingDirectory = DirectoryName script
        let fakeLibTarget = workingDirectory @@ "FakeLib.dll"
-       if  not <| File.Exists(fakeLibTarget) then File.Copy("FakeLib.dll", fakeLibTarget)
+       if  not <| File.Exists fakeLibTarget then File.Copy("FakeLib.dll", fakeLibTarget)
        (FSIHelper.runBuildScriptAt workingDirectory true (FullName script) Seq.empty, package)
        
     let runDeployment package = 
@@ -102,7 +103,9 @@
 
     let runDeploymentFromPackage packagePath = 
         try
-            runDeployment (JsonConvert.DeserializeObject<DeploymentPackage>(File.ReadAllText(packagePath)))
+            ReadFileAsString packagePath
+            |> Json.deserialize
+            |> runDeployment
         with e -> 
             Choice2Of2(e)
 
@@ -123,7 +126,7 @@
                 use ms = new MemoryStream(event.Result)
                 use sr = new StreamReader(ms, Text.Encoding.UTF8)
                 let res = sr.ReadToEnd()
-                result := Some <| Choice1Of2(JsonConvert.DeserializeObject<DeploymentResponse>(res))
+                result := Json.deserialize<DeploymentResponse> res |> Choice1Of2 |> Some 
                 waitHandle.Set() |> ignore
 
         let uri = new Uri(url, UriKind.Absolute)

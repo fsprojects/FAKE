@@ -19,6 +19,9 @@ let inline fileSystemInfo path : FileSystemInfo =
 /// Converts a file to it's full file system name
 let inline FullName fileName = Path.GetFullPath fileName
 
+/// Gets the directory part of a filename
+let inline DirectoryName fileName = Path.GetDirectoryName fileName
+
 /// Gets all subdirectories
 let inline subDirectories (dir:DirectoryInfo) = dir.GetDirectories()
 
@@ -35,7 +38,8 @@ let checkFileExists fileName =
 /// Checks if all given files exists
 let allFilesExist files = Seq.forall File.Exists files
 
+/// Checks if all given directory exists. If not then this functions creates the directory
 let ensureDirectory dir = 
-    if not <| Directory.Exists(dir) 
-    then Directory.CreateDirectory(dir) |> ignore
+    if not <| Directory.Exists(dir) then 
+      Directory.CreateDirectory(dir) |> ignore
         

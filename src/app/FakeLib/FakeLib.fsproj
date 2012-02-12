@@ -44,6 +44,7 @@
     </OtherFlags>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
   </PropertyGroup>
+  <Import Project="..\..\..\tools\FSharp\Microsoft.FSharp.Targets" />
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="FSharpHelpers\SeqExtensions.fs" />
@@ -57,6 +58,7 @@
     <Compile Include="TimeoutHelper.fs" />
     <Compile Include="CacheHelper.fs" />
     <Compile Include="XMLHelper.fs" />
+    <Compile Include="JSON.fs" />
     <Compile Include="REST.fs" />
     <Compile Include="BuildServerHelper.fs" />
     <Compile Include="TraceListener.fs" />
@@ -104,6 +106,7 @@
     <Compile Include="HTMLHelpWorkShopHelper.fs" />
     <Compile Include="TargetHelper.fs" />
     <Compile Include="AdditionalSyntax.fs" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core">
@@ -115,6 +118,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="mscorlib" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.4.0.8\lib\net35\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
@@ -124,7 +131,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
-  <Import Project="..\..\..\tools\FSharp\Microsoft.FSharp.Targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
 	     Other similar extension points exist, see Microsoft.Common.targets.
 	<Target Name="BeforeBuild">
