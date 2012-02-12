@@ -29,9 +29,10 @@ type DeploymentResponse = {
             }
 
         override x.ToString() = 
-            if x.Success 
-            then sprintf "Deployment of %s %s successful" x.Id x.Version
-            else sprintf "Deployment of %s %s failed\n\n%A" x.Id x.Version x.Error
+            if x.Success then
+                sprintf "Deployment of %s %s successful" x.Id x.Version
+            else 
+                sprintf "Deployment of %s %s failed\n\n%A" x.Id x.Version x.Error
 
 type DeploymentPackage = {
         Id : string
@@ -40,11 +41,9 @@ type DeploymentPackage = {
         Package : byte[]
     }
     with
-        member x.TargetDir =
-            x.Id + "_" + (x.Version.Replace('.','_'))
+        member x.TargetDir = sprintf "%s_%s" x.Id x.Version |> replace "." "_"
 
-        override x.ToString() = 
-            x.Id + " " + x.Version
+        override x.ToString() = sprintf "%s %s" x.Id x.Version
 
 let createDeploymentPackageFromZip packageName version fakescript archive output =
     ensureDirectory output

@@ -9,10 +9,10 @@ open Fake.DeploymentHelper
 let mutable logger : (string * EventLogEntryType) -> unit = ignore 
 
 let private listener port = 
-    let l = new HttpListener()
-    l.Prefixes.Add(sprintf "http://localhost:%s/fake/" port)
-    l.Start()
-    l
+    let listener = new HttpListener()
+    listener.Prefixes.Add(sprintf "http://localhost:%s/fake/" port)
+    listener.Start()
+    listener
 
 let cts = new CancellationTokenSource()
 
