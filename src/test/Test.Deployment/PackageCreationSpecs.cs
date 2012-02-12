@@ -6,7 +6,7 @@ namespace Test.Deployment
 {
     public class when_creating_a_package_from_directory
     {
-        const string PackageName = "helloworld";
+        const string PackageName = "HelloWorld";
         const string PackageVersion = "0.1";
         static readonly string Path = TestData.OutputDir + "helloworld.fakepkg";
 
@@ -14,8 +14,8 @@ namespace Test.Deployment
                      DeploymentHelper.createDeploymentPackageFromDirectory(
                          PackageName,
                          PackageVersion,
-                         TestData.GetPackageDir("HelloWorld") + "DeployScript.fsx",
-                         TestData.GetPackageDir("HelloWorld"),
+                         TestData.GetPackageDir(PackageName) + "DeployScript.fsx",
+                         TestData.GetPackageDir(PackageName),
                          TestData.OutputDir);
 
         It should_be_parsable_as_json = () =>
