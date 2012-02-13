@@ -229,5 +229,6 @@ let getLatestPackage repoUrl packageName =
 let downloadPackage targetDir (package:NugetFeedPackage) =
     ensureDirectory targetDir    
     let targetFileName = targetDir @@ package.FileName
+    tracefn "Downloading package %s %s from %s and saving it to %s" package.Id package.Version package.Url targetFileName
     webClient.DownloadFile(package.Url,targetFileName)
     targetFileName
