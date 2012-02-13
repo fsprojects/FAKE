@@ -24,13 +24,13 @@ module Main =
     { Name = "install"
       Parameters = []
       Description = "installs the deployment agent as a service"
-      Function = fun _ -> Installers.getInstaller().Install(new System.Collections.Hashtable()) }
+      Function = fun _ -> Installers.installServices() }
         |> register
 
     { Name = "uninstall"
       Parameters = []
       Description = "uninstalls the deployment agent"
-      Function = fun _ -> Installers.getInstaller().Uninstall(null) }
+      Function = fun _ -> Installers.uninstallServices() }
         |> register
 
     { Name = "start"

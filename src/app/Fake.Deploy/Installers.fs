@@ -29,10 +29,16 @@ type FakeDeployInstaller() as self =
         sc.Start()
 
 
-let getInstaller () = 
+let getInstaller() = 
     let ti = new TransactedInstaller()
     let installer = new FakeDeployInstaller()
     ti.Installers.Add(installer) |> ignore
     let ctx = new InstallContext("", [|"/assemblypath=" + (Assembly.GetEntryAssembly()).Location|]) 
     ti.Context <- ctx
     ti
+
+/// Installs the Fake listener
+let installServices() = getInstaller().Install(new System.Collections.Hashtable())
+
+/// Uninstalls the Fake listener
+let uninstallServices() = getInstaller().Uninstall(null)
