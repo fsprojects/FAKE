@@ -164,14 +164,26 @@ let NuGet setParams nuSpec =
 
 let feedUrl = "http://go.microsoft.com/fwlink/?LinkID=206669"
 
-let discoverRepoUrl = 
-    lazy (
-        let webClient = new System.Net.WebClient()
+let private webClient = new System.Net.WebClient()
 
+let discoverRepoUrl = 
+    lazy (     
         let resp = webClient.DownloadString(feedUrl)
         let doc = XMLDoc resp
 
         doc.["service"].GetAttribute("xml:base"))
 
 let getRepoUrl() = discoverRepoUrl.Force()
+
+type NugetFeedPackage = {
+    Url: string
+}
+
+let getLatestPackage repoUrl package =
+    let url:string = repoUrl + "Packages()?$filter=(Id%20eq%20'" + package + "')%20and%20IsLatestVersion"
+    let resp = webClient.DownloadString(url)
+    let doc = XMLDoc resp
+    let entries = doc.["feed"].["entry"]
+
+    { Url = entries.["content"].GetAttribute("src")}
 

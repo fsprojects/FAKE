@@ -1,4 +1,4 @@
-namespace Test.FAKECore.Nuget
+namespace Test.FAKECore.NugetFeed
 {
     public class NugetData
     {
