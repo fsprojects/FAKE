@@ -85,6 +85,8 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Globbing\Directories\GlobbingOfDirectoriesSpecs.cs" />
     <Compile Include="ILMerge\ILMergeSpecs.cs" />
+    <Compile Include="Nuget\FeedSpecs.cs" />
+    <Compile Include="Nuget\NugetData.cs" />
     <Compile Include="SideBySideSpecification\ReferencesScanningSpecs.cs" />
     <Compile Include="SideBySideSpecification\SpecsRemovementSpecs.cs" />
     <Compile Include="StringHelperSpecs.cs" />

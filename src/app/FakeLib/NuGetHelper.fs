@@ -161,3 +161,13 @@ let NuGet setParams nuSpec =
           |> failwith
 
     traceEndTask "NuGet" nuSpec
+
+let feedUrl = "http://go.microsoft.com/fwlink/?LinkID=206669"
+
+let getRepoUrl() =
+    let webClient = new System.Net.WebClient()
+
+    let resp = webClient.DownloadString(feedUrl)
+    let doc = XMLDoc resp
+
+    doc.["service"].GetAttribute("xml:base")
