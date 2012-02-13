@@ -190,7 +190,7 @@ type NugetFeedPackage = {
     with
       member x.FileName = x.Id + "." + x.Version + ".nupkg"
 
-let extractFeedPackage (entry:Xml.XmlNode) =
+let extractFeedPackageFromXml (entry:Xml.XmlNode) =
     let properties = entry.["m:properties"]
     let property name = properties.["d:" + name].InnerText
     let boolProperty name = (property name).ToLower() = "true"
@@ -213,13 +213,13 @@ let getPackage repoUrl packageName version =
     let resp = webClient.DownloadString(url)
     let doc = XMLDoc resp
    
-    extractFeedPackage doc.["entry"]
+    extractFeedPackageFromXml doc.["entry"]
 
 let getFeedPackagesFromUrl (url:string) =
     let resp = webClient.DownloadString(url)
     let doc = XMLDoc resp
    
-    [for entry in doc.["feed"].GetElementsByTagName("entry") -> extractFeedPackage entry]
+    [for entry in doc.["feed"].GetElementsByTagName("entry") -> extractFeedPackageFromXml entry]
 
 let getLatestPackage repoUrl packageName =
     repoUrl + "Packages()?$filter=(Id%20eq%20'" + packageName + "')%20and%20IsLatestVersion"
