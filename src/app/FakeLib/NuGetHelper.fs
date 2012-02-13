@@ -186,8 +186,9 @@ type NugetFeedPackage = {
     ProjectUrl: string
     PackageHash: string
     PackageHashAlgorithm: string
-    Authors: string
-}
+    Authors: string }
+    with
+      member x.FileName = x.Id + "." + x.Version + ".nupkg"
 
 let extractFeedPackage (entry:Xml.XmlNode) =
     let properties = entry.["m:properties"]
@@ -213,7 +214,13 @@ let getFeedPackagesFromUrl (url:string) =
    
     [for entry in doc.["feed"].GetElementsByTagName("entry") -> extractFeedPackage entry]
 
-let getLatestPackage repoUrl package =
-    repoUrl + "Packages()?$filter=(Id%20eq%20'" + package + "')%20and%20IsLatestVersion"
+let getLatestPackage repoUrl packageName =
+    repoUrl + "Packages()?$filter=(Id%20eq%20'" + packageName + "')%20and%20IsLatestVersion"
     |> getFeedPackagesFromUrl
     |> Seq.head
+
+let downloadLatestPackage targetDir repoUrl packageName =
+    ensureDirectory targetDir
+    let package = getLatestPackage repoUrl packageName
+    webClient.DownloadFile(package.Url,targetDir @@ package.FileName)
+    package

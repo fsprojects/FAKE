@@ -1,4 +1,5 @@
-﻿using Fake;
+﻿using System.IO;
+using Fake;
 using Machine.Specifications;
 
 namespace Test.FAKECore.NugetFeed
@@ -8,7 +9,7 @@ namespace Test.FAKECore.NugetFeed
         It should_return_the_package_url = () => NuGetHelper.getRepoUrl().ShouldEqual(NugetData.RepositoryUrl);
     }
 
-    public class when_using_the_lastest_FAKE_package
+    public class when_discorvering_the_lastest_FAKE_package
     {
         static NuGetHelper.NugetFeedPackage _package;
         Because of = () => _package = NuGetHelper.getLatestPackage(NuGetHelper.getRepoUrl(), "FAKE");
@@ -26,5 +27,14 @@ namespace Test.FAKECore.NugetFeed
         It should_contain_the_packet_hash = () => _package.PackageHash.ShouldNotBeNull();
         It should_contain_the_packet_hash_algorithm = () => _package.PackageHashAlgorithm.ShouldEqual("SHA512");
         It should_contain_the_project_url = () => _package.ProjectUrl.ShouldEqual("https://github.com/forki/Fake");
+    }
+
+    public class when_downloading_the_lastest_FAKE_package
+    {
+        static NuGetHelper.NugetFeedPackage _package;
+        Because of = () => _package = NuGetHelper.downloadLatestPackage(NugetData.OutputDir, NuGetHelper.getRepoUrl(), "FAKE");
+
+        It should_have_downloaded_the_file =
+            () => File.Exists(NugetData.OutputDir + _package.FileName).ShouldBeTrue();
     }
 }

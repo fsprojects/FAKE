@@ -6,5 +6,10 @@ namespace Test.FAKECore.NugetFeed
         {
             get { return "http://packages.nuget.org/v1/FeedService.svc/"; }
         }
+
+        public static string OutputDir
+        {
+            get { return @"output\"; }
+        }
     }
 }
