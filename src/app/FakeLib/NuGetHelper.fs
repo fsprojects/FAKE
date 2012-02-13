@@ -189,12 +189,8 @@ type NugetFeedPackage = {
     Authors: string
 }
 
-let getLatestPackage repoUrl package =
-    let url:string = repoUrl + "Packages()?$filter=(Id%20eq%20'" + package + "')%20and%20IsLatestVersion"
-    let resp = webClient.DownloadString(url)
-    let doc = XMLDoc resp
-    let entries = doc.["feed"].["entry"]
-    let properties = entries.["m:properties"]
+let extractFeedPackage (entry:Xml.XmlNode) =
+    let properties = entry.["m:properties"]
     let property name = properties.["d:" + name].InnerText
     let boolProperty name = (property name).ToLower() = "true"
     let dateTimeProperty name = DateTime.Parse(property name)
@@ -209,5 +205,15 @@ let getLatestPackage repoUrl package =
       PackageHashAlgorithm = property "PackageHashAlgorithm"
       Created = dateTimeProperty "Created"
       Published = dateTimeProperty "Published"
-      Url = entries.["content"].GetAttribute("src")}
+      Url = entry.["content"].GetAttribute("src")}
 
+let getFeedPackagesFromUrl (url:string) =
+    let resp = webClient.DownloadString(url)
+    let doc = XMLDoc resp
+   
+    [for entry in doc.["feed"].GetElementsByTagName("entry") -> extractFeedPackage entry]
+
+let getLatestPackage repoUrl package =
+    repoUrl + "Packages()?$filter=(Id%20eq%20'" + package + "')%20and%20IsLatestVersion"
+    |> getFeedPackagesFromUrl
+    |> Seq.head
