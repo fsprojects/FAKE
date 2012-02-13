@@ -208,6 +208,13 @@ let extractFeedPackage (entry:Xml.XmlNode) =
       Published = dateTimeProperty "Published"
       Url = entry.["content"].GetAttribute("src")}
 
+let getPackage repoUrl packageName version =
+    let url:string = repoUrl + "Packages(Id='" + packageName + "',Version='" + version + "')"
+    let resp = webClient.DownloadString(url)
+    let doc = XMLDoc resp
+   
+    extractFeedPackage doc.["entry"]
+
 let getFeedPackagesFromUrl (url:string) =
     let resp = webClient.DownloadString(url)
     let doc = XMLDoc resp

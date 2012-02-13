@@ -29,6 +29,16 @@ namespace Test.FAKECore.NugetFeed
             () => _package.Url.ShouldEqual("http://packages.nuget.org/api/v1/package/FAKE/" + _package.Version);
     }
 
+    public class when_discorvering_a_specific_outdated_FAKE_package
+    {
+        static NuGetHelper.NugetFeedPackage _package;
+        Because of = () => _package = NuGetHelper.getPackage(NuGetHelper.getRepoUrl(), "FAKE", "1.56.10");
+
+        It should_be_the_latest_version = () => _package.IsLatestVersion.ShouldBeFalse();
+        It should_contain_the_id = () => _package.Id.ShouldEqual("FAKE");
+        It should_contain_the_version = () => _package.Version.ShouldEqual("1.56.10");
+    }
+
     public class when_downloading_the_lastest_FAKE_package
     {
         static NuGetHelper.NugetFeedPackage _package;
