@@ -18,5 +18,8 @@ namespace Test.FAKECore.NugetFeed
 
         It should_return_the_version = () => _package.Version.ShouldContain(".");
         It should_return_the_id = () => _package.Id.ShouldEqual("FAKE");
+        It should_be_the_latest_version = () => _package.IsLatestVersion.ShouldBeTrue();
+        It should_contain_steffen_as_author = () => _package.Authors.ShouldContain("Steffen Forkmann");
+        It should_contain_the_creation_date = () => _package.Created.Year.ShouldBeGreaterThanOrEqualTo(2012);
     }
 }

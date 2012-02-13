@@ -178,7 +178,10 @@ let getRepoUrl() = discoverRepoUrl.Force()
 type NugetFeedPackage = {
     Id: string
     Url: string
+    IsLatestVersion: bool
     Version: string
+    Created: DateTime
+    Authors: string
 }
 
 let getLatestPackage repoUrl package =
@@ -188,8 +191,13 @@ let getLatestPackage repoUrl package =
     let entries = doc.["feed"].["entry"]
     let properties = entries.["m:properties"]
     let property name = properties.["d:" + name].InnerText
+    let boolProperty name = (property name).ToLower() = "true"
+    let dateTimeProperty name = DateTime.Parse(property name)
 
     { Id = property "Id"
       Version = property "Version"
+      IsLatestVersion = boolProperty "IsLatestVersion"
+      Authors = property "Authors"
+      Created = dateTimeProperty "Created"
       Url = entries.["content"].GetAttribute("src")}
 
