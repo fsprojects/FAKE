@@ -164,10 +164,14 @@ let NuGet setParams nuSpec =
 
 let feedUrl = "http://go.microsoft.com/fwlink/?LinkID=206669"
 
-let getRepoUrl() =
-    let webClient = new System.Net.WebClient()
+let discoverRepoUrl = 
+    lazy (
+        let webClient = new System.Net.WebClient()
 
-    let resp = webClient.DownloadString(feedUrl)
-    let doc = XMLDoc resp
+        let resp = webClient.DownloadString(feedUrl)
+        let doc = XMLDoc resp
 
-    doc.["service"].GetAttribute("xml:base")
+        doc.["service"].GetAttribute("xml:base"))
+
+let getRepoUrl() = discoverRepoUrl.Force()
+
