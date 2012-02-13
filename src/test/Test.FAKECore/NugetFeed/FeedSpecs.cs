@@ -46,6 +46,10 @@ namespace Test.FAKECore.NugetFeed
         Establish context = () => _package = NuGetHelper.getLatestPackage(NuGetHelper.getRepoUrl(), "FAKE");
         Because of = () => _fileName = NuGetHelper.downloadPackage(NugetData.OutputDir, _package);
 
-        It should_have_downloaded_the_file = () => File.Exists(_fileName).ShouldBeTrue();
+        It should_have_downloaded_the_file = () =>
+        {
+            File.Exists(_fileName).ShouldBeTrue();
+            File.Delete(_fileName);
+        };        
     }
 }
