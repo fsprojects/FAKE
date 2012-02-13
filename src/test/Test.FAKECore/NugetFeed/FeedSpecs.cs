@@ -16,10 +16,15 @@ namespace Test.FAKECore.NugetFeed
         It should_return_URL =
             () => _package.Url.ShouldEqual("http://packages.nuget.org/api/v1/package/FAKE/" + _package.Version);
 
-        It should_return_the_version = () => _package.Version.ShouldContain(".");
-        It should_return_the_id = () => _package.Id.ShouldEqual("FAKE");
+        It should_contain_the_version = () => _package.Version.ShouldContain(".");
+        It should_contain_the_id = () => _package.Id.ShouldEqual("FAKE");
+        It should_contain_the_title = () => _package.Title.ShouldEqual("FAKE");
         It should_be_the_latest_version = () => _package.IsLatestVersion.ShouldBeTrue();
         It should_contain_steffen_as_author = () => _package.Authors.ShouldContain("Steffen Forkmann");
         It should_contain_the_creation_date = () => _package.Created.Year.ShouldBeGreaterThanOrEqualTo(2012);
+        It should_contain_the_publishing_date = () => _package.Published.Year.ShouldBeGreaterThanOrEqualTo(2012);
+        It should_contain_the_packet_hash = () => _package.PackageHash.ShouldNotBeNull();
+        It should_contain_the_packet_hash_algorithm = () => _package.PackageHashAlgorithm.ShouldEqual("SHA512");
+        It should_contain_the_project_url = () => _package.ProjectUrl.ShouldEqual("https://github.com/forki/Fake");
     }
 }

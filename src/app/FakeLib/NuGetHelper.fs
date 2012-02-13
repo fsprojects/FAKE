@@ -177,10 +177,15 @@ let getRepoUrl() = discoverRepoUrl.Force()
 
 type NugetFeedPackage = {
     Id: string
+    Title: string
     Url: string
     IsLatestVersion: bool
     Version: string
     Created: DateTime
+    Published: DateTime
+    ProjectUrl: string
+    PackageHash: string
+    PackageHashAlgorithm: string
     Authors: string
 }
 
@@ -196,8 +201,13 @@ let getLatestPackage repoUrl package =
 
     { Id = property "Id"
       Version = property "Version"
+      Title = property "Title"
       IsLatestVersion = boolProperty "IsLatestVersion"
       Authors = property "Authors"
+      ProjectUrl = property "ProjectUrl"
+      PackageHash = property "PackageHash"
+      PackageHashAlgorithm = property "PackageHashAlgorithm"
       Created = dateTimeProperty "Created"
+      Published = dateTimeProperty "Published"
       Url = entries.["content"].GetAttribute("src")}
 
