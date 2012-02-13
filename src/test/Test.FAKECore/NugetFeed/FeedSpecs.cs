@@ -39,11 +39,11 @@ namespace Test.FAKECore.NugetFeed
         It should_contain_the_version = () => _package.Version.ShouldEqual("1.56.10");
     }
 
-    public class when_downloading_the_lastest_FAKE_package
+    public class when_downloading_the_lastest_SignalR_package
     {
         static NuGetHelper.NugetFeedPackage _package;
         static string _fileName;
-        Establish context = () => _package = NuGetHelper.getLatestPackage(NuGetHelper.getRepoUrl(), "FAKE");
+        Establish context = () => _package = NuGetHelper.getLatestPackage(NuGetHelper.getRepoUrl(), "SignalR");
         Because of = () => _fileName = NuGetHelper.downloadPackage(NugetData.OutputDir, _package);
 
         It should_have_downloaded_the_file = () =>
