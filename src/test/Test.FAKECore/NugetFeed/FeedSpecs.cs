@@ -14,6 +14,9 @@ namespace Test.FAKECore.NugetFeed
         Because of = () => _package = NuGetHelper.getLatestPackage(NuGetHelper.getRepoUrl(), "FAKE");
 
         It should_return_URL =
-            () => _package.Url.ShouldStartWith("http://packages.nuget.org/api/v1/package/FAKE/");
+            () => _package.Url.ShouldEqual("http://packages.nuget.org/api/v1/package/FAKE/" + _package.Version);
+
+        It should_return_the_version = () => _package.Version.ShouldContain(".");
+        It should_return_the_id = () => _package.Id.ShouldEqual("FAKE");
     }
 }

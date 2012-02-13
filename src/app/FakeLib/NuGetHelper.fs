@@ -176,7 +176,9 @@ let discoverRepoUrl =
 let getRepoUrl() = discoverRepoUrl.Force()
 
 type NugetFeedPackage = {
+    Id: string
     Url: string
+    Version: string
 }
 
 let getLatestPackage repoUrl package =
@@ -184,6 +186,10 @@ let getLatestPackage repoUrl package =
     let resp = webClient.DownloadString(url)
     let doc = XMLDoc resp
     let entries = doc.["feed"].["entry"]
+    let properties = entries.["m:properties"]
+    let property name = properties.["d:" + name].InnerText
 
-    { Url = entries.["content"].GetAttribute("src")}
+    { Id = property "Id"
+      Version = property "Version"
+      Url = entries.["content"].GetAttribute("src")}
 
