@@ -219,8 +219,8 @@ let getLatestPackage repoUrl packageName =
     |> getFeedPackagesFromUrl
     |> Seq.head
 
-let downloadLatestPackage targetDir repoUrl packageName =
-    ensureDirectory targetDir
-    let package = getLatestPackage repoUrl packageName
-    webClient.DownloadFile(package.Url,targetDir @@ package.FileName)
-    package
+let downloadPackage targetDir (package:NugetFeedPackage) =
+    ensureDirectory targetDir    
+    let targetFileName = targetDir @@ package.FileName
+    webClient.DownloadFile(package.Url,targetFileName)
+    targetFileName

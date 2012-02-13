@@ -14,27 +14,28 @@ namespace Test.FAKECore.NugetFeed
         static NuGetHelper.NugetFeedPackage _package;
         Because of = () => _package = NuGetHelper.getLatestPackage(NuGetHelper.getRepoUrl(), "FAKE");
 
-        It should_return_URL =
-            () => _package.Url.ShouldEqual("http://packages.nuget.org/api/v1/package/FAKE/" + _package.Version);
-
-        It should_contain_the_version = () => _package.Version.ShouldContain(".");
-        It should_contain_the_id = () => _package.Id.ShouldEqual("FAKE");
-        It should_contain_the_title = () => _package.Title.ShouldEqual("FAKE");
         It should_be_the_latest_version = () => _package.IsLatestVersion.ShouldBeTrue();
         It should_contain_steffen_as_author = () => _package.Authors.ShouldContain("Steffen Forkmann");
         It should_contain_the_creation_date = () => _package.Created.Year.ShouldBeGreaterThanOrEqualTo(2012);
-        It should_contain_the_publishing_date = () => _package.Published.Year.ShouldBeGreaterThanOrEqualTo(2012);
+        It should_contain_the_id = () => _package.Id.ShouldEqual("FAKE");
         It should_contain_the_packet_hash = () => _package.PackageHash.ShouldNotBeNull();
         It should_contain_the_packet_hash_algorithm = () => _package.PackageHashAlgorithm.ShouldEqual("SHA512");
         It should_contain_the_project_url = () => _package.ProjectUrl.ShouldEqual("https://github.com/forki/Fake");
+        It should_contain_the_publishing_date = () => _package.Published.Year.ShouldBeGreaterThanOrEqualTo(2012);
+        It should_contain_the_title = () => _package.Title.ShouldEqual("FAKE");
+        It should_contain_the_version = () => _package.Version.ShouldContain(".");
+
+        It should_containt_the_package_url =
+            () => _package.Url.ShouldEqual("http://packages.nuget.org/api/v1/package/FAKE/" + _package.Version);
     }
 
     public class when_downloading_the_lastest_FAKE_package
     {
         static NuGetHelper.NugetFeedPackage _package;
-        Because of = () => _package = NuGetHelper.downloadLatestPackage(NugetData.OutputDir, NuGetHelper.getRepoUrl(), "FAKE");
+        static string _fileName;
+        Establish context = () => _package = NuGetHelper.getLatestPackage(NuGetHelper.getRepoUrl(), "FAKE");
+        Because of = () => _fileName = NuGetHelper.downloadPackage(NugetData.OutputDir, _package);
 
-        It should_have_downloaded_the_file =
-            () => File.Exists(NugetData.OutputDir + _package.FileName).ShouldBeTrue();
+        It should_have_downloaded_the_file = () => File.Exists(_fileName).ShouldBeTrue();
     }
 }
