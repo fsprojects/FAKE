@@ -23,47 +23,63 @@ namespace Test.FAKECore.XMLHandling
         It should_equal_the_target_text = () => _doc.OuterXml.ShouldEqual(TargetText);
     }
 
-    public class when_modifying_xml
+
+    public class when_poking_xml
     {
-        protected const string OriginalText =
+        const string OriginalText =
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
             "<painting>  <img src=\"madonna.jpg\" alt=\"Foligno Madonna, by Raphael\" />" +
             "  <caption>This is Raphael's \"Foligno\" Madonna, painted in <date year=\"1511\" /> - <date year=\"1512\" />.</caption>" +
             "</painting>";
 
-        protected const string XPath = "painting/caption/date/@year";
+        const string XPath = "painting/caption/date/@year";
 
-        protected static readonly string FileName = Path.Combine(TestData.TestDir, "test.xml");
+        static readonly string FileName = Path.Combine(TestData.TestDir, "test.xml");
 
-        protected static XmlDocument Doc;
-        protected static string TargetText = OriginalText.Replace("1511", "1515");
+        static XmlDocument _doc;
+        static readonly string TargetText = OriginalText.Replace("1511", "1515");
+
 
         Cleanup after = () => FileHelper.DeleteFile(FileName);
 
         Establish context = () =>
         {
             StringHelper.WriteStringToFile(false, FileName, OriginalText);
-            Doc = new XmlDocument();
-            Doc.LoadXml(OriginalText);
+            _doc = new XmlDocument();
+            _doc.LoadXml(OriginalText);
         };
 
-        protected static string ResultXml
-        {
-            get { return StringHelper.ReadFileAsString(FileName).Replace("\r\n", ""); }
-        }
-    }
-
-    public class when_poking_xml : when_modifying_xml
-    {
         Because of = () => XMLHelper.XmlPoke(FileName, XPath, "1515");
 
-        It should_equal_the_target_text = () => ResultXml.ShouldEqual(TargetText.Replace("\r\n", ""));
+        It should_equal_the_target_text =
+            () => StringHelper.ReadFileAsString(FileName).Replace("\r\n", "")
+                      .ShouldEqual(TargetText.Replace("\r\n", ""));
     }
 
-    public class when_modifying_xml_with_xpath : when_modifying_xml
+    public class when_modifying_xml_with_xpath
     {
-        Because of = () => XMLHelper.XPathReplace(XPath, "1515", Doc).Save(FileName);
+        const string OriginalText =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+            "<painting>  <img src=\"madonna.jpg\" alt=\"Foligno Madonna, by Raphael\" />" +
+            "  <caption>This is Raphael's \"Foligno\" Madonna, painted in <date year=\"1511\" /> - <date year=\"1512\" />.</caption>" +
+            "</painting>";
 
-        It should_equal_the_target_text = () => ResultXml.ShouldEqual(TargetText.Replace("\r\n", ""));
+        const string XPath = "painting/caption/date/@year";
+
+        static XmlDocument _doc;
+        static XmlDocument _resultDoc;
+        static string _targetText;
+
+        Establish context = () =>
+        {
+            _doc = new XmlDocument();
+            _doc.LoadXml(OriginalText);
+            _targetText = _doc.OuterXml.Replace("1511", "1515");
+        };
+
+        Because of = () => _resultDoc = XMLHelper.XPathReplace(XPath, "1515", _doc);
+
+        It should_equal_the_target_text =
+            () => _resultDoc.OuterXml.ShouldEqual(_targetText);
     }
 }
