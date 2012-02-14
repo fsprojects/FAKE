@@ -108,6 +108,14 @@ let XPathReplace xpath value (doc:XmlDocument) =
     node.Value <- value
     doc
 
+/// Selects and xml nodes value via xpath from the given document
+let XPathValue xpath (namespaces:#seq<string * string>) (doc : XmlDocument) =
+    let nsmgr = XmlNamespaceManager(doc.NameTable)
+    namespaces |> Seq.iter nsmgr.AddNamespace
+    let node = doc.DocumentElement.SelectSingleNode(xpath,nsmgr)
+    if node = null then failwithf "XML node '%s' not found" xpath else
+    node.InnerText
+
 /// Replaces text in an XML file at the location specified by an XPath expression.
 let XmlPoke (fileName:string) xpath value =
     let doc = new XmlDocument()

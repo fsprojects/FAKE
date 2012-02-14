@@ -162,6 +162,38 @@ let NuGet setParams nuSpec =
 
     traceEndTask "NuGet" nuSpec
 
+type NuSpecPackage = {
+    Id : string
+    Version : string
+    Authors : string
+    Owners : string
+    LicenseUrl : string
+    ProjectUrl : string
+    RequireLicenseAcceptance : bool
+    Description : string
+    Language : string
+    Tags : string
+}
+with
+    override x.ToString() = sprintf "%s %s" x.Id x.Version
+
+let getNuspecProperties (nuspecPath : string) =
+    let doc = XMLDoc (File.ReadAllText nuspecPath)
+    let getValue name = 
+        XPathValue ("x:metadata/x:" + name) ["x","http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"] doc
+    {
+       Id = getValue "id"
+       Version = getValue "version"
+       Authors = getValue "authors"
+       Owners = getValue "owners"
+       LicenseUrl = getValue "licenseUrl"
+       ProjectUrl = getValue "projectUrl"
+       RequireLicenseAcceptance = ((getValue "requireLicenseAcceptance").ToLower()) = "true" 
+       Description = getValue "description" 
+       Language = getValue "language"
+       Tags = getValue "tags"
+    }
+
 let feedUrl = "http://go.microsoft.com/fwlink/?LinkID=206669"
 
 let private webClient = new System.Net.WebClient()

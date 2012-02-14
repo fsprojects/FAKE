@@ -8,16 +8,15 @@ open Fake
 type DeploymentResponseStatus =
 | Success
 | Failure of obj
-
-type DeploymentPackageKey = {
-    Id : string
-    Version : string }
-    with
-        override x.ToString() = sprintf "%s %s" x.Id x.Version
+with 
+    member x.GetError() = 
+        match x with
+        | Success -> null
+        | Failure(err) -> err
 
 type DeploymentResponse = {
         Status : DeploymentResponseStatus
-        Key : DeploymentPackageKey
+        Key : NuSpecPackage
     }
     with 
         static member Sucessful packageKey =  { Status = Success; Key =  packageKey}
@@ -28,90 +27,81 @@ type DeploymentResponse = {
             | Success   -> sprintf "Deployment of %A successful" x.Key
             | Failure e -> sprintf "Deployment of %A failed\n\n%A" x.Key e
 
-type DeploymentPackage = {
-        Key : DeploymentPackageKey        
-        Script : byte[]
-        Package : byte[]
-    }
-    with
-        member x.TargetDir = sprintf "%s_%s" x.Key.Id x.Key.Version |> replace "." "_"
-        override x.ToString() = x.Key.ToString()
+type DeploymentPushStatus = 
+    | Cancelled
+    | Error of exn
+    | Ok of DeploymentResponse
+    | Unknown
 
-let createDeploymentPackageFromZip packageName version fakescript archive outputDir =
-    ensureDirectory outputDir
-    let package = {
-        Key = { Id = packageName; Version = version}
-        Script =  fakescript |> FullName |> ReadFileAsBytes
-        Package = archive |> FullName  |> ReadFileAsBytes
-    }
 
-    let fileName = outputDir @@ (packageName + ".fakepkg")
+let private extractPackageToTempPath (package : byte[]) = 
+    let extractTempPath = Path.GetTempPath() @@ (Guid.NewGuid().ToString())
+    let tempFile = Path.GetTempFileName()
+    File.WriteAllBytes(tempFile, package)
 
-    package
-        |> Json.serialize
-        |> Text.Encoding.UTF8.GetBytes
-        |> WriteBytesToFile fileName
+    Unzip extractTempPath tempFile
+    File.Delete(tempFile)
+    directoryInfo extractTempPath
 
-    File.Delete archive
+let private getNuSpecDetails (dir:DirectoryInfo) = 
+    match dir |> filesInDirMatching "*.nuspec" |> List.ofArray with
+    | h :: t ->  dir, NuGetHelper.getNuspecProperties h.FullName
+    | _ -> failwith "Could not find nuspec file"
 
-let createDeploymentPackageFromDirectory packageName version fakescript dir outputDir =
-    let archive = packageName + ".zip"
-    let files = Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories)
-    Zip dir archive files
-    createDeploymentPackageFromZip packageName version fakescript archive outputDir
+let private copyAndUnpackDeployment (tempDir : DirectoryInfo, package : NuSpecPackage) =
+    let id = (sprintf "%s_%s" package.Id package.Version |> replace "." "_")
+    let backupDir = directoryInfo ("Backup" @@ id + "/" + (DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss")))
+    let workDirectory = directoryInfo ("Work" @@ id)
+    if not <| workDirectory.Exists then () else FileUtils.cp_r workDirectory.FullName backupDir.FullName
+    FileUtils.cp_r tempDir.FullName workDirectory.FullName
+    match workDirectory |> filesInDirMatching "*.fsx" |> List.ofArray with
+    | h :: t -> package, h
+    | _ -> failwith "Could not find deployment script"
 
-let unpack dir package =
-    ensureDirectory dir
-    let archive = package.Key.Id + ".zip"
+let unpack (package : byte[]) =
+    let package, scriptFile =
+        extractPackageToTempPath package
+        |> getNuSpecDetails 
+        |> copyAndUnpackDeployment
 
-    package.Package |> WriteBytesToFile archive
-    Unzip dir archive
-    File.Delete archive
-
-    let script = dir @@ (package.Key.Id + ".fsx")
-    package.Script |> WriteBytesToFile script
-    script
+    package, scriptFile.FullName
     
-let doDeployment (package:DeploymentPackage) = 
-    let dir = "Work" @@ package.TargetDir 
-    let script = unpack dir package
-    let workingDirectory = DirectoryName script
-    let fakeLibTarget = workingDirectory @@ "FakeLib.dll"
-    if  not <| File.Exists fakeLibTarget then File.Copy("FakeLib.dll", fakeLibTarget)
-    (FSIHelper.runBuildScriptAt workingDirectory true (FullName script) Seq.empty, package)
-       
-let runDeployment package = 
+let doDeployment (package,script) =
     try
-        doDeployment package |> Choice1Of2
+        let workingDirectory = DirectoryName script
+        let fakeLibTarget = workingDirectory @@ "FakeLib.dll"
+        if  not <| File.Exists fakeLibTarget then File.Copy("FakeLib.dll", fakeLibTarget)
+        if FSIHelper.runBuildScriptAt workingDirectory true (FullName script) Seq.empty
+        then DeploymentResponse.Sucessful(package)
+        else DeploymentResponse.Failure(package, Exception("Deployment script didn't run successfully"))
     with e ->
-        Choice2Of2(e)
+        DeploymentResponse.Failure(package, e) 
+       
+let runDeployment (package : byte[]) =
+     unpack package |> doDeployment
 
-let getPackageFromFile fileName = Json.deserializeFile<DeploymentPackage> fileName
+let getPackageFromFile fileName = File.ReadAllBytes(fileName)
 
 let runDeploymentFromPackageFile packageFileName = 
-    try
-        packageFileName
-        |> getPackageFromFile
-        |> runDeployment
-    with e -> 
-        Choice2Of2(e)
-
+    packageFileName
+    |> getPackageFromFile
+    |> runDeployment
 
 let postDeploymentPackage url packagePath = 
-    let result = ref None
+    let result = ref Unknown
     let waitHandle = new Threading.AutoResetEvent(false)
     let handle (event : UploadDataCompletedEventArgs) =
         if event.Cancelled then 
-            result := Some <| Choice2Of2(OperationCanceledException() :> exn)
+            result := Cancelled
             waitHandle.Set() |> ignore
         elif event.Error <> null then 
-            result := Some <| Choice2Of2(event.Error)
+            result := Error(event.Error)
             waitHandle.Set() |> ignore
         else
             use ms = new MemoryStream(event.Result)
             use sr = new StreamReader(ms, Text.Encoding.UTF8)
             let res = sr.ReadToEnd()
-            result := Json.deserialize<DeploymentResponse> res |> Choice1Of2 |> Some 
+            result := Json.deserialize<DeploymentResponse> res |> Ok
             waitHandle.Set() |> ignore
 
     let uri = new Uri(url, UriKind.Absolute)
