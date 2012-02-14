@@ -38,7 +38,8 @@
     <DocumentationFile>bin\Release\Fake.Deploy.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <OutputPath>bin\Debug</OutputPath>
+    <OutputPath>..\..\..\tools\Fake.Deploy\</OutputPath>
+    <StartArguments>/deploy "C:\Appdev\fake\Samples\DeploySample\Hello.World.Deploy.1.0.1.nupkg"</StartArguments>
   </PropertyGroup>
   <Import Project="..\..\..\tools\FSharp\Microsoft.FSharp.Targets" />
   <ItemGroup>

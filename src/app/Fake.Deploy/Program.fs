@@ -1,5 +1,6 @@
 ﻿
 open Fake
+open DeploymentHelper
 
 type DeployCommand = {
     Name :  string;
@@ -45,27 +46,16 @@ module Main =
       Function = fun _ -> Services.getFakeAgentService().Stop() }
         |> register
 
-    { Name = "createFromArchive"
-      Parameters = ["name"; "version"; "scriptFileName"; "archiveFileName"; "outputDir"]
-      Description = "creates a Fake deployment package from the given zip and\r\n\toutputs to the given directory"
-      Function = fun args -> DeploymentHelper.createDeploymentPackageFromZip args.[1] args.[2] args.[3] args.[4] args.[5] }
-        |> register
-
-    { Name = "createFromDirectory"
-      Parameters = ["name"; "version"; "scriptFileName"; "packageDir"; "outputDir"]
-      Description = "creates a Fake deployment package from the given dir and\r\n\toutputs to the given directory"
-      Function = fun args -> DeploymentHelper.createDeploymentPackageFromDirectory args.[1] args.[2] args.[3] args.[4] args.[5] }
-        |> register
-
     { Name = "deployRemote"
       Parameters = ["url"; "package"]
       Description = "pushes the deployment package to the deployment agent\r\n\tlistening on the url"
       Function = 
         fun args ->
             match DeploymentHelper.postDeploymentPackage args.[1] args.[2] with
-            | Some(Choice1Of2 p ) -> printfn "%A" p
-            | Some(Choice2Of2(e)) -> printfn "Deployment of %A failed\r\n%A" args.[1] e
-            | _ -> printfn "Deployment of %A failed\r\nCould not derive reason sorry!!!" args.[1] }
+            | Ok(p) -> printfn "Deployment of %A" p
+            | Error(e) -> printfn "Deployment of %A failed\r\n%A" args.[1] e
+            | Cancelled -> printfn "Deployment of %A cancelled" args.[1] 
+            | Unknown -> printfn "Deployment of %A failed\r\nCould not derive reason sorry!!!" args.[1] }
         |> register
 
     { Name = "deploy"
@@ -74,8 +64,8 @@ module Main =
       Function =
         fun args -> 
             match DeploymentHelper.runDeploymentFromPackageFile args.[1] with
-            | Choice1Of2(r, p) -> printfn "Deployment of %s %s" (p.ToString()) (if r then "sucessful" else "failed")
-            | Choice2Of2(e) -> printfn "Deployment of %A failed\r\n%A" args.[1] e }
+            | response when response.Status = Success -> printfn "Deployment of %s successful" (response.ToString())
+            | response -> printfn "Deployment of %A failed\r\n%A" args.[1] (response.Status.GetError()) }
         |> register
 
     { Name = "help"

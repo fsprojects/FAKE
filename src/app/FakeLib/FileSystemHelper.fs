@@ -28,6 +28,9 @@ let inline subDirectories (dir:DirectoryInfo) = dir.GetDirectories()
 /// Gets all files in the directory
 let inline filesInDir (dir:DirectoryInfo) = dir.GetFiles()
 
+/// Finds all the files in the directory matching the search pattern 
+let inline filesInDirMatching pattern (dir:DirectoryInfo) = dir.GetFiles(pattern)
+
 /// Gets the current directory
 let currentDirectory = Path.GetFullPath "."
 

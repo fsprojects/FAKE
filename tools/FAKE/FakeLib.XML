@@ -769,8 +769,10 @@
 <member name="T:Fake.FileSetHelper">
 
 </member>
-<member name="">
-
+<member name="M:Fake.FileSystemHelper.ensureDirectory(System.String)">
+<summary>
+ Checks if all given directory exists. If not then this functions creates the directory
+</summary>
 </member>
 <member name="M:Fake.FileSystemHelper.allFilesExist(System.Collections.Generic.IEnumerable{System.String})">
 <summary>
@@ -787,6 +789,11 @@
  Gets the current directory
 </summary>
 </member>
+<member name="M:Fake.FileSystemHelper.filesInDirMatching(System.String,System.IO.DirectoryInfo)">
+<summary>
+ Finds all the files in the directory matching the search pattern 
+</summary>
+</member>
 <member name="M:Fake.FileSystemHelper.filesInDir(System.IO.DirectoryInfo)">
 <summary>
  Gets all files in the directory
@@ -795,6 +802,11 @@
 <member name="M:Fake.FileSystemHelper.subDirectories(System.IO.DirectoryInfo)">
 <summary>
  Gets all subdirectories
+</summary>
+</member>
+<member name="M:Fake.FileSystemHelper.DirectoryName(System.String)">
+<summary>
+ Gets the directory part of a filename
 </summary>
 </member>
 <member name="M:Fake.FileSystemHelper.FullName(System.String)">
@@ -1612,6 +1624,24 @@
 <member name="T:Fake.ILMergeHelper">
 
 </member>
+<member name="M:Fake.Json.deserializeFile``1">
+<summary>
+ Deserializes a file into a object of type &apos;a
+</summary>
+</member>
+<member name="M:Fake.Json.deserialize``1(System.String)">
+<summary>
+ Deserializes a text into a object of type &apos;a
+</summary>
+</member>
+<member name="M:Fake.Json.serialize``1(``0)">
+<summary>
+ Serializes a object to json
+</summary>
+</member>
+<member name="T:Fake.Json">
+
+</member>
 <member name="">
 
 </member>
@@ -1993,6 +2023,111 @@
 </summary>
 </member>
 <member name="T:Fake.NUnitHelper">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
 
 </member>
 <member name="">
@@ -2557,6 +2692,11 @@
  Replaces any occurence of the currentDirectory with .
 </summary>
 </member>
+<member name="M:Fake.StringHelper.ReadFileAsBytes(System.String)">
+<summary>
+ Reads a file as one array of bytes
+</summary>
+</member>
 <member name="M:Fake.StringHelper.ReadFileAsString(System.String)">
 <summary>
  Reads a file as one text
@@ -2593,6 +2733,11 @@
 <member name="M:Fake.StringHelper.WriteStringToFile(System.Boolean,System.String,System.String)">
 <summary>
  Writes string to a file
+</summary>
+</member>
+<member name="M:Fake.StringHelper.WriteBytesToFile(System.String,System.Byte[])">
+<summary>
+ Writes a byte array to a file
 </summary>
 </member>
 <member name="M:Fake.StringHelper.NormalizeVersion(System.String)">
@@ -3372,6 +3517,11 @@
 <member name="M:Fake.XMLHelper.XmlPoke(System.String,System.String,System.String)">
 <summary>
  Replaces text in an XML file at the location specified by an XPath expression.
+</summary>
+</member>
+<member name="M:Fake.XMLHelper.XPathValue``1(System.String,``0,System.Xml.XmlDocument)">
+<summary>
+ Selects and xml nodes value via xpath from the given document
 </summary>
 </member>
 <member name="M:Fake.XMLHelper.XPathReplace(System.String,System.String,System.Xml.XmlDocument)">

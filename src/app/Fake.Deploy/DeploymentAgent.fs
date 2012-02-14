@@ -1,6 +1,7 @@
 ﻿module Fake.DeploymentAgent
     
 open System
+open System.IO
 open System.Net
 open System.Threading
 open System.Diagnostics
@@ -22,21 +23,31 @@ let writeResponse (ctx : HttpListenerContext) (str : string) =
     ctx.Response.ContentEncoding <- Text.Encoding.UTF8
     ctx.Response.Close(response, true)
 
-let handleRequest (ctx : HttpListenerContext) = 
+let readAllBytes (s : Stream) =
+    let ms = new MemoryStream()
+    let buf = Array.zeroCreate 8192
+    let rec impl () = 
+        let read = s.Read(buf, 0, buf.Length) 
+        if read > 0 then 
+            ms.Write(buf, 0, read)
+            impl ()
+    impl ()
+    ms
+
+let handleRequest (ctx : HttpListenerContext) =     
     if ctx.Request.HttpMethod <> "POST" || ctx.Request.ContentType <> "application/fake" || not ctx.Request.HasEntityBody then () else
 
     try
-        use sr = new IO.StreamReader(ctx.Request.InputStream, Text.Encoding.UTF8)
-        let package = sr.ReadToEnd() |> Json.deserialize
-        match runDeployment package with
-        | Choice1Of2(result, package) ->
-            logger (sprintf "Successfully deployed %A" package.Key, EventLogEntryType.Information)
+        use sr =  readAllBytes (ctx.Request.InputStream)
+        match (runDeployment (sr.ToArray())) with
+        | response when response.Status = Success ->
+            logger (sprintf "Successfully deployed %A" response.Key, EventLogEntryType.Information)
+            response
+        | response ->
+            logger (sprintf "Deployment failed: %A" response.Key, EventLogEntryType.Information)
+            response 
+        |> Json.serialize
 
-            DeploymentResponse.Sucessful package.Key |> Json.serialize
-        | Choice2Of2(exn) ->
-            logger (sprintf "Deployment failed: %A" package.Key, EventLogEntryType.Information)
-
-            DeploymentResponse.Failure(package.Key, exn) |> Json.serialize
     with e ->
         let msg = sprintf "Fake Deploy Request Error:\n\n%A" e
         logger (msg, EventLogEntryType.Error)
