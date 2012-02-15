@@ -6,6 +6,7 @@ docsBuild/
 report/
 test/
 !src/test/
+!Samples/ContinuousDeploymentWebsite/src/test/
 obj/
 build/
 nuget/

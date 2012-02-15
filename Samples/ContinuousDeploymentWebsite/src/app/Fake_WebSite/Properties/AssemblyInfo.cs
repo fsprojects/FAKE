@@ -19,8 +19,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Fake_Website")]
 [assembly: AssemblyDescription("Sample website for FAKE - F# MAKE")]
 [assembly: AssemblyProduct("Fake_Website")]
-[assembly: AssemblyVersion("0.2")]
-[assembly: AssemblyFileVersion("0.2")]
+[assembly: AssemblyVersion("0.1")]
+[assembly: AssemblyFileVersion("0.1")]
 [assembly: AssemblyDelaySign(false)]
 
 
