@@ -9,8 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{ECB58ABC
 		01_build.fsx = 01_build.fsx
 		02_build.bat = 02_build.bat
 		02_build.fsx = 02_build.fsx
-		deployment\deploy.fsx = deployment\deploy.fsx
 		Fake_Website.nuspec = Fake_Website.nuspec
+		deployment\install.fsx = deployment\install.fsx
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fake_WebSite", "src\app\Fake_WebSite\Fake_WebSite.csproj", "{25949F7F-D3A3-4FC8-BAF3-7EA6D7D505F7}"
