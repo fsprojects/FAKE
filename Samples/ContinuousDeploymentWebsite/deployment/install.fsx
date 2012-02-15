@@ -4,19 +4,17 @@
 
 open Fake
 
-open System
-open System.ComponentModel
-open System.Diagnostics
-open System.IO
-open System.Threading
-open System.Collections.Generic
-
-
+let targetWebsitePath = @"..\website\"
 
 // Targets
 Target "StopCassini" (fun _ ->
     killProcess "CassiniDev4"
 )
+
+Target "InstallWebsite" (fun _ ->
+    XCopy @".\website\" targetWebsitePath
+)
+
 
 Target "StartCassini" (fun _ ->
     { Program          = @".\tools\cassini\CassiniDev4.exe"
@@ -28,6 +26,7 @@ Target "StartCassini" (fun _ ->
 )
 
 "StopCassini"
+  ==> "InstallWebsite"
   ==> "StartCassini"
  
 // start build
