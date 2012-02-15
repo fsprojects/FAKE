@@ -64,11 +64,11 @@ let unpack (package : byte[]) =
 let doDeployment (packageName,script) =
     try
         let workingDirectory = DirectoryName script
-        let fakeLibTarget = workingDirectory @@ "FakeLib.dll"
-        if  not <| File.Exists fakeLibTarget then File.Copy("FakeLib.dll", fakeLibTarget)
-        if FSIHelper.runBuildScriptAt workingDirectory true (FullName script) Seq.empty
-        then DeploymentResponse.Sucessful(packageName)
-        else DeploymentResponse.Failure(packageName, Exception("Deployment script didn't run successfully"))
+        
+        if FSIHelper.runBuildScriptAt workingDirectory true (FullName script) Seq.empty then 
+            DeploymentResponse.Sucessful(packageName)
+        else 
+            DeploymentResponse.Failure(packageName, Exception("Deployment script didn't run successfully"))
     with e ->
         DeploymentResponse.Failure(packageName, e) 
        

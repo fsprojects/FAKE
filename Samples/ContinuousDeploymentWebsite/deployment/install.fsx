@@ -17,12 +17,13 @@ Target "InstallWebsite" (fun _ ->
 
 
 Target "StartCassini" (fun _ ->
-    { Program          = @".\tools\cassini\CassiniDev4.exe"
-      WorkingDirectory = "."
-      CommandLine      = ""
-      Args             = ["/a:",@".\website"]}
-        |> shellExec
-        |> ignore
+    let args = "/a:" + @".\website"
+
+    StartProcess
+       (fun info ->  
+           info.FileName <- @".\tools\cassini\CassiniDev4.exe"
+           info.WorkingDirectory <- null
+           info.Arguments <- args)
 )
 
 "StopCassini"

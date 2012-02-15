@@ -81,6 +81,13 @@ let setEnvironmentVariables (startInfo:ProcessStartInfo) environmentSettings =
 /// returns true if the exit code was 0
 let execProcess infoAction timeOut = ExecProcess infoAction timeOut = 0    
 
+/// Starts the given process and forgets about it
+let StartProcess infoAction =
+   use p = new Process()
+   p.StartInfo.UseShellExecute <- false
+   infoAction p.StartInfo
+   p.Start() |> ignore
+
 /// Adds quotes around the string
 let quote str = "\"" + str + "\""
 

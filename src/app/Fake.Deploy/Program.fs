@@ -51,7 +51,7 @@ module Main =
       Description = "pushes the deployment package to the deployment agent\r\n\tlistening on the url"
       Function = 
         fun args ->
-            match DeploymentHelper.postDeploymentPackage args.[1] args.[2] with
+            match postDeploymentPackage args.[1] args.[2] with
             | Ok(p) -> printfn "Deployment of %A" p
             | Error(e) -> printfn "Deployment of %A failed\r\n%A" args.[1] e
             | Cancelled -> printfn "Deployment of %A cancelled" args.[1] 
@@ -63,7 +63,7 @@ module Main =
       Description = "runs the deployment on the local machine (for testing purposes)"
       Function =
         fun args -> 
-            match DeploymentHelper.runDeploymentFromPackageFile args.[1] with
+            match runDeploymentFromPackageFile args.[1] with
             | response when response.Status = Success -> printfn "Deployment of %s successful" args.[1]
             | response -> printfn "Deployment of %A failed\r\n%A" args.[1] (response.Status.GetError()) 
             System.Console.ReadKey() |> ignore }
