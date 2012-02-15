@@ -15,7 +15,6 @@ Target "InstallWebsite" (fun _ ->
     XCopy @".\website\" targetWebsitePath
 )
 
-
 Target "StartCassini" (fun _ ->
     let args = "/a:" + @".\website"
 
