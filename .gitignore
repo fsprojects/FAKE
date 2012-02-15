@@ -24,3 +24,4 @@ output.xml
 FAKE.crunchsolution.cache
 FAKE_mm_cache.bin
 Samples/ContinuousDeploymentWebsite/src/app/Fake.Mvc/Properties/AssemblyInfo.cs
+*.crunchsolution.cache

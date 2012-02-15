@@ -30,7 +30,7 @@ let appReferences  =
 let testReferences = !! @"src\test\**\*.csproj"  // !! creates a lazy fileset
 
 // version info
-let version = "0.2"  // or retrieve from CI server
+let version = "0.1"  // or retrieve from CI server
 
 // Targets
 Target "Clean" (fun _ -> 

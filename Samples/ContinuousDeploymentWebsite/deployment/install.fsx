@@ -11,12 +11,7 @@ open System.IO
 open System.Threading
 open System.Collections.Generic
 
-/// Runs the given process and returns the exit code
-let StartProcess infoAction =
-    use p = new Process()
-    p.StartInfo.UseShellExecute <- false
-    infoAction p.StartInfo
-    p.Start() |> ignore
+
 
 // Targets
 Target "StopCassini" (fun _ ->
@@ -24,13 +19,12 @@ Target "StopCassini" (fun _ ->
 )
 
 Target "StartCassini" (fun _ ->
-    let args = "/a:" + @".\website"
-
-    StartProcess
-        (fun info ->  
-            info.FileName <- @".\tools\cassini\CassiniDev4.exe"
-            info.WorkingDirectory <- null
-            info.Arguments <- args)
+    { Program          = @".\tools\cassini\CassiniDev4.exe"
+      WorkingDirectory = "."
+      CommandLine      = ""
+      Args             = ["/a:",@".\website"]}
+        |> shellExec
+        |> ignore
 )
 
 "StopCassini"
