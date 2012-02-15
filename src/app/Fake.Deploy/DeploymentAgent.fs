@@ -41,10 +41,10 @@ let handleRequest (ctx : HttpListenerContext) =
         use sr =  readAllBytes (ctx.Request.InputStream)
         match (runDeployment (sr.ToArray())) with
         | response when response.Status = Success ->
-            logger (sprintf "Successfully deployed %A" response.Key, EventLogEntryType.Information)
+            logger (sprintf "Successfully deployed %A" response.PackageName, EventLogEntryType.Information)
             response
         | response ->
-            logger (sprintf "Deployment failed: %A" response.Key, EventLogEntryType.Information)
+            logger (sprintf "Deployment failed: %A" response.PackageName, EventLogEntryType.Information)
             response 
         |> Json.serialize
 

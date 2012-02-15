@@ -16,11 +16,11 @@ with
 
 type DeploymentResponse = {
         Status : DeploymentResponseStatus
-        Key : NuSpecPackage
+        PackageName : string
     }
     with 
-        static member Sucessful packageKey =  { Status = Success; Key =  packageKey}
-        static member Failure(packageKey, error) = { Status = Failure error; Key = packageKey}
+        static member Sucessful name =  { Status = Success; PackageName = name}
+        static member Failure(name, error) = { Status = Failure error; PackageName = name}
 
 type DeploymentPushStatus = 
     | Cancelled
@@ -59,28 +59,31 @@ let unpack (package : byte[]) =
         |> getNuSpecDetails 
         |> copyAndUnpackDeployment
 
-    package, scriptFile.FullName
+    package.ToString(), scriptFile.FullName
     
-let doDeployment (package,script) =
+let doDeployment (packageName,script) =
     try
         let workingDirectory = DirectoryName script
         let fakeLibTarget = workingDirectory @@ "FakeLib.dll"
         if  not <| File.Exists fakeLibTarget then File.Copy("FakeLib.dll", fakeLibTarget)
         if FSIHelper.runBuildScriptAt workingDirectory true (FullName script) Seq.empty
-        then DeploymentResponse.Sucessful(package)
-        else DeploymentResponse.Failure(package, Exception("Deployment script didn't run successfully"))
+        then DeploymentResponse.Sucessful(packageName)
+        else DeploymentResponse.Failure(packageName, Exception("Deployment script didn't run successfully"))
     with e ->
-        DeploymentResponse.Failure(package, e) 
+        DeploymentResponse.Failure(packageName, e) 
        
 let runDeployment (package : byte[]) =
      unpack package |> doDeployment
 
 let getPackageFromFile fileName = File.ReadAllBytes(fileName)
 
-let runDeploymentFromPackageFile packageFileName = 
-    packageFileName
-    |> getPackageFromFile
-    |> runDeployment
+let runDeploymentFromPackageFile packageFileName =
+    try
+        packageFileName
+        |> getPackageFromFile
+        |> runDeployment
+    with e ->
+        DeploymentResponse.Failure(packageFileName, e) 
 
 let postDeploymentPackage url packagePath = 
     let result = ref Unknown
