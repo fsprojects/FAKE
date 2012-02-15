@@ -85,6 +85,11 @@ let runDeploymentFromPackageFile packageFileName =
     with e ->
         DeploymentResponse.Failure(packageFileName, e) 
 
+let DeployPackageLocally packageFileName =
+    match runDeploymentFromPackageFile packageFileName with
+    | response when response.Status = Success -> tracefn "Deployment of %s successful" packageFileName
+    | response -> failwithf "Deployment of %A failed\r\n%A" packageFileName (response.Status.GetError())     
+
 let postDeploymentPackage url packagePath = 
     let result = ref Unknown
     let waitHandle = new Threading.AutoResetEvent(false)

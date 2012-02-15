@@ -26,3 +26,4 @@ FAKE_mm_cache.bin
 Samples/ContinuousDeploymentWebsite/src/app/Fake.Mvc/Properties/AssemblyInfo.cs
 *.crunchsolution.cache
 Samples/ContinuousDeploymentWebsite/Work/
+Samples/ContinuousDeploymentWebsite/Backup/

@@ -86,13 +86,10 @@ Target "Publish" (fun _ ->
       |> Copy deployDir
 )
 
-open Fake.DeploymentHelper
-
 Target "Deploy" (fun _ ->   
-    let packageFile = !! (deployDir + "*.nupkg") |> Seq.head      
-    match runDeploymentFromPackageFile packageFile with
-    | response when response.Status = Success -> tracefn "Deployment of %s successful" packageFile
-    | response -> failwithf "Deployment of %A failed\r\n%A" packageFile (response.Status.GetError())     
+    !! (deployDir + "*.nupkg") 
+      |> Seq.head
+      |> DeploymentHelper.DeployPackageLocally
 )
 
 Target "Default" DoNothing
