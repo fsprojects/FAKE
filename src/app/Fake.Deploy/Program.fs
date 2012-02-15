@@ -64,8 +64,9 @@ module Main =
       Function =
         fun args -> 
             match DeploymentHelper.runDeploymentFromPackageFile args.[1] with
-            | response when response.Status = Success -> printfn "Deployment of %s successful" (response.ToString())
-            | response -> printfn "Deployment of %A failed\r\n%A" args.[1] (response.Status.GetError()) }
+            | response when response.Status = Success -> printfn "Deployment of %s successful" args.[1]
+            | response -> printfn "Deployment of %A failed\r\n%A" args.[1] (response.Status.GetError()) 
+            System.Console.ReadKey() |> ignore }
         |> register
 
     { Name = "help"

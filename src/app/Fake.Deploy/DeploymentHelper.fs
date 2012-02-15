@@ -22,11 +22,6 @@ type DeploymentResponse = {
         static member Sucessful packageKey =  { Status = Success; Key =  packageKey}
         static member Failure(packageKey, error) = { Status = Failure error; Key = packageKey}
 
-        override x.ToString() = 
-            match x.Status with
-            | Success   -> sprintf "Deployment of %A successful" x.Key
-            | Failure e -> sprintf "Deployment of %A failed\n\n%A" x.Key e
-
 type DeploymentPushStatus = 
     | Cancelled
     | Error of exn
