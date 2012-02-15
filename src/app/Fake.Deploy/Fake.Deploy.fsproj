@@ -25,7 +25,7 @@
     <WarningLevel>3</WarningLevel>
     <DocumentationFile>
     </DocumentationFile>
-    <StartArguments>/deployRemote http://localhost:8080/fake "C:\Appdev\Test.fakepkg"</StartArguments>
+    <StartArguments>/deploy C:\Code\FAKE\Samples\ContinuousDeploymentWebsite\Publish\Fake_Website.0.1.nupkg</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>pdbonly</DebugType>
@@ -44,8 +44,6 @@
   <Import Project="..\..\..\tools\FSharp\Microsoft.FSharp.Targets" />
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
-    <Compile Include="DeploymentHelper.fs" />
-    <Compile Include="DeploymentAgent.fs" />
     <Compile Include="Services.fs" />
     <Compile Include="Installers.fs" />
     <Compile Include="Program.fs" />
