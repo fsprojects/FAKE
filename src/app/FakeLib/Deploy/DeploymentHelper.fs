@@ -72,26 +72,22 @@ let private extractPackageToTempPath (package : byte[]) =
     File.Delete(tempFile)
     directoryInfo extractTempPath
 
-let private getNuSpecDetails (dir:DirectoryInfo) =
-    dir,FindFirstMatchingFile "*.nuspec" dir |> NuGetHelper.getNuspecProperties
-
 let private copyAndUnpackDeployment (tempDir : DirectoryInfo, package : NuSpecPackage) =    
     let backupDir = directoryInfo ("Backup" @@ package.DirectoryName + "/" + (DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss")))
     let workDirectory = directoryInfo ("packages" @@ package.DirectoryName)
     if not <| workDirectory.Exists then () else FileUtils.cp_r workDirectory.FullName backupDir.FullName
     FileUtils.cp_r tempDir.FullName workDirectory.FullName
 
-    package,FindFirstMatchingFile "*.fsx" workDirectory
+    FindFirstMatchingFile "*.fsx" workDirectory
 
-let unpack (package : byte[]) =
-    let package, scriptFile =
-        extractPackageToTempPath package
-        |> getNuSpecDetails 
-        |> copyAndUnpackDeployment
+let unpack packageBytes =
+    let dir = extractPackageToTempPath packageBytes
+    let package = FindFirstMatchingFile "*.nuspec" dir |> NuGetHelper.getNuspecProperties
+    let scriptFile = copyAndUnpackDeployment(dir,package)
 
-    package.ToString(), scriptFile
+    package, scriptFile
     
-let doDeployment (packageName,script) =
+let doDeployment packageName script =
     try
         let workingDirectory = DirectoryName script
         
@@ -102,15 +98,14 @@ let doDeployment (packageName,script) =
     with e ->
         DeploymentResponse.Failure(packageName, e) 
        
-let runDeployment (package : byte[]) =
-     unpack package |> doDeployment
-
-let getPackageFromFile fileName = File.ReadAllBytes(fileName)
+let runDeployment (packageBytes : byte[]) =
+     let package,scriptFile = unpack packageBytes
+     doDeployment package.Name scriptFile
 
 let runDeploymentFromPackageFile packageFileName =
     try
         packageFileName
-        |> getPackageFromFile
+        |> File.ReadAllBytes
         |> runDeployment
     with e ->
         DeploymentResponse.Failure(packageFileName, e) 

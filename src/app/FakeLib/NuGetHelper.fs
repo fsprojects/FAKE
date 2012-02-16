@@ -182,7 +182,8 @@ type NuSpecPackage = {
     Tags : string
 }
 with
-    override x.ToString() = sprintf "%s %s" x.Id x.Version
+    member x.Name = sprintf "%s %s" x.Id x.Version
+    override x.ToString() = x.Name
     member x.DirectoryName = sprintf "%s.%s" x.Id x.Version
     member x.FileName = sprintf "%s.%s.nupkg" x.Id x.Version
 
