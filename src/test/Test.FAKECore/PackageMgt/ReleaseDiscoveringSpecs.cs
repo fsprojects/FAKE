@@ -1,17 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Fake;
 using Machine.Specifications;
 
 namespace Test.FAKECore.PackageMgt
 {
-    class when_getting_all_releases_from_test_folder
+    public class when_getting_all_active_releases_from_test_folder
     {
-        Because of = () => _activeReleases = DeploymentHelper.getActiveReleasesInDirectory(TestData.TestDataDir);
         static IEnumerable<NuGetHelper.NuSpecPackage> _activeReleases;
+        Because of = () => _activeReleases = DeploymentHelper.getActiveReleasesInDirectory(TestData.TestDataDir);
 
+        It should_contain_a_SignalR_releases = () => _activeReleases.Where(x => x.Id == "SignalR").ShouldNotBeEmpty();
+        It should_contain_a_jQuery_releases = () => _activeReleases.Where(x => x.Id == "jQuery").ShouldNotBeEmpty();
         It should_contain_two_active_releases = () => _activeReleases.Count().ShouldEqual(2);
+    }
+
+    public class when_getting_all_releases_from_test_folder
+    {
+        static IEnumerable<NuGetHelper.NuSpecPackage> _releases;
+        Because of = () => _releases = DeploymentHelper.getAllReleasesInDirectory(TestData.TestDataDir);
+
+        It should_contain_3_SignalR_releases = () => _releases.Count(x => x.Id == "SignalR").ShouldEqual(3);
+        It should_contain_3_jQuery_releases = () => _releases.Count(x => x.Id == "jQuery").ShouldEqual(3);
+        It should_contain_six_releases = () => _releases.Count().ShouldEqual(6);
+    }
+
+    public class when_getting_all_SignalR_releases_from_test_folder
+    {
+        static IEnumerable<NuGetHelper.NuSpecPackage> _releases;
+        Because of = () => _releases = DeploymentHelper.getAllReleasesInDirectoryFor(TestData.TestDataDir, "SignalR");
+
+        It should_all_be_SignalR_releases = () => _releases.Count(x => x.Id == "SignalR").ShouldEqual(3);
+        It should_contain_three_releases = () => _releases.Count().ShouldEqual(3);
     }
 }

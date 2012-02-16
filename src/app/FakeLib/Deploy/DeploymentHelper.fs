@@ -43,13 +43,16 @@ let private getDirectoriesFor (appname : string) =
         |> List.map (fun x -> ensureDirectory x; directoryInfo x)
     { App = dirs.[0]; Backups = dirs.[1]; Active = dirs.[2] }
 
+let private getNuspecInfos seq =
+    seq
+      |> Seq.map (fun pf ->
+            pf
+              |> ZipHelper.UnzipSingleFileInMemory ((fileInfo pf).Directory.Parent.Name + ".nuspec")
+              |> NuGetHelper.getNuspecProperties)
+
 let getActiveReleasesInDirectory dir = 
     !! (dir @@ "packages/**/active/*.nupkg")
-      |> Seq.map (fun pf ->
-            let fi = fileInfo pf
-            let di = fi.Directory.Parent.Name
-            ZipHelper.UnzipSingleFileInMemory (fi.Directory.Parent.Name + ".nuspec") pf)
-      |> Seq.map NuGetHelper.getNuspecProperties
+      |> getNuspecInfos
 
 let getActiveReleases() = getActiveReleasesInDirectory "."
 
@@ -58,14 +61,18 @@ let getActiveReleasesFor (app : string) =
     !! (dirs.Active.FullName @@ "*.nupkg") 
         |> Seq.map NuGetHelper.getNuspecProperties
 
-let getAllReleases() = 
-    !! "packages/**/*.nupkg"
-       |> Seq.map NuGetHelper.getNuspecProperties
+let getAllReleasesInDirectory dir = 
+    !! (dir @@ "packages/**/*.nupkg")
+      |> getNuspecInfos
 
-let getAllReleasesFor (app : string) = 
+let getAllReleases() = getAllReleasesInDirectory "."
+
+let getAllReleasesInDirectoryFor dir (app : string) = 
     let dirs = getDirectoriesFor app
-    !! (dirs.App.FullName @@ "*.nupkg") 
-        |> Seq.map NuGetHelper.getNuspecProperties
+    !! (dir @@ "packages/" + app + "/**/*.nupkg") 
+      |> getNuspecInfos
+
+let getAllReleasesFor (app : string) = getAllReleasesInDirectoryFor "." app
 
 let unpack packageBytes =
     let extractTempPath = Path.GetTempPath() @@ (Guid.NewGuid().ToString())
