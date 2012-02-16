@@ -69,7 +69,7 @@ let inline replace (pattern:string) replacement (text:string) = text.Replace(pat
 let inline separated delimiter (items: string seq) = String.Join(delimiter, Array.ofSeq items)
 
 /// Reads a file as one text
-let ReadFileAsString file = File.ReadAllText(file,Encoding.Default)
+let inline ReadFileAsString file = File.ReadAllText(file,Encoding.Default)
 
 /// Reads a file as one array of bytes
 let ReadFileAsBytes = File.ReadAllBytes

@@ -90,6 +90,10 @@ Target "Deploy" (fun _ ->
     !! (deployDir + "*.nupkg") 
       |> Seq.head
       |> DeploymentHelper.DeployPackageLocally
+
+    tracefn "Active Releases:"
+    DeploymentHelper.getActiveReleases()
+      |> Seq.iter (tracefn "%A")
 )
 
 Target "Default" DoNothing

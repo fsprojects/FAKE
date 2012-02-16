@@ -37,53 +37,50 @@ type Directories = {
 let private getDirectoriesFor (appname : string) =
     let appName = appname.ToUpper()
     let dirs = 
-        ["packages" @@ appName; "packages" @@ appName @@ "backups"; "packages" @@ appName @@ "active"]
+        ["packages" @@ appName
+         "packages" @@ appName @@ "backups"
+         "packages" @@ appName @@ "active"]
         |> List.map (fun x -> ensureDirectory x; directoryInfo x)
     { App = dirs.[0]; Backups = dirs.[1]; Active = dirs.[2] }
 
 let getActiveReleases() = 
-    !+ "packages/**/active/*.nupkg" 
-        |> ScanImmediately
-            |> Seq.map (NuGetHelper.getNuspecProperties)
+    !! "packages/**/active/*.nupkg" 
+      |> Seq.map NuGetHelper.getNuspecProperties
 
 let getActiveReleasesFor (app : string) = 
     let dirs = getDirectoriesFor app
-    !+ (dirs.Active.FullName @@ "*.nupkg") 
-        |> ScanImmediately
-            |> Seq.map (NuGetHelper.getNuspecProperties)
+    !! (dirs.Active.FullName @@ "*.nupkg") 
+        |> Seq.map NuGetHelper.getNuspecProperties
 
 let getAllReleases() = 
-    !+ "packages/**/*.nupkg"
-       |> ScanImmediately
-            |> Seq.map (NuGetHelper.getNuspecProperties)
+    !! "packages/**/*.nupkg"
+       |> Seq.map NuGetHelper.getNuspecProperties
 
 let getAllReleasesFor (app : string) = 
     let dirs = getDirectoriesFor app
-    !+ (dirs.App.FullName @@ "*.nupkg") 
-        |> ScanImmediately
-            |> Seq.map (NuGetHelper.getNuspecProperties)
+    !! (dirs.App.FullName @@ "*.nupkg") 
+        |> Seq.map NuGetHelper.getNuspecProperties
 
-let private extractPackageToTempPath (package : byte[]) = 
+let unpack packageBytes =
     let extractTempPath = Path.GetTempPath() @@ (Guid.NewGuid().ToString())
     let tempFile = Path.GetTempFileName()
-    File.WriteAllBytes(tempFile, package)
+    File.WriteAllBytes(tempFile, packageBytes)
 
     Unzip extractTempPath tempFile
     File.Delete(tempFile)
-    directoryInfo extractTempPath
 
-let private copyAndUnpackDeployment (tempDir : DirectoryInfo, package : NuSpecPackage) =    
+    let tempDir = directoryInfo extractTempPath
+
+    let package = FindFirstMatchingFile "*.nuspec" tempDir |> NuGetHelper.getNuspecProperties
+
     let backupDir = directoryInfo ("Backup" @@ package.DirectoryName + "/" + (DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss")))
     let workDirectory = directoryInfo ("packages" @@ package.DirectoryName)
-    if not <| workDirectory.Exists then () else FileUtils.cp_r workDirectory.FullName backupDir.FullName
+    if workDirectory.Exists then 
+      FileUtils.cp_r workDirectory.FullName backupDir.FullName
+
     FileUtils.cp_r tempDir.FullName workDirectory.FullName
 
-    FindFirstMatchingFile "*.fsx" workDirectory
-
-let unpack packageBytes =
-    let dir = extractPackageToTempPath packageBytes
-    let package = FindFirstMatchingFile "*.nuspec" dir |> NuGetHelper.getNuspecProperties
-    let scriptFile = copyAndUnpackDeployment(dir,package)
+    let scriptFile = FindFirstMatchingFile "*.fsx" workDirectory
 
     package, scriptFile
     
@@ -105,7 +102,7 @@ let runDeployment (packageBytes : byte[]) =
 let runDeploymentFromPackageFile packageFileName =
     try
         packageFileName
-        |> File.ReadAllBytes
+        |> ReadFileAsBytes
         |> runDeployment
     with e ->
         DeploymentResponse.Failure(packageFileName, e) 
