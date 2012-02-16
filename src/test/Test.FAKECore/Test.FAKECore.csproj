@@ -85,6 +85,7 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Globbing\Directories\GlobbingOfDirectoriesSpecs.cs" />
     <Compile Include="ILMerge\ILMergeSpecs.cs" />
+    <Compile Include="PackageMgt\ReleaseDiscoveringSpecs.cs" />
     <Compile Include="PackageMgt\FeedSpecs.cs" />
     <Compile Include="PackageMgt\NugetData.cs" />
     <Compile Include="PackageMgt\NuSpecFileSpecs.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="FileHandling\CleanDirectorySpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FileHandling\GlobbingSpecs.cs" />
+    <Compile Include="Zip\FileExtractionSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -157,6 +159,24 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="TestData\packages\jQuery\active\jQuery.1.7.1.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\packages\jQuery\backups\jQuery.1.5.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\packages\jQuery\backups\jQuery.1.6.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\packages\SignalR\active\SignalR.0.4.0.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\packages\SignalR\backups\SignalR.0.1.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\packages\SignalR\backups\SignalR.0.2.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\app\FakeLib\FakeLib.fsproj">
@@ -164,6 +184,7 @@
       <Name>FakeLib</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

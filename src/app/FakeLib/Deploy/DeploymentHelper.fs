@@ -43,9 +43,15 @@ let private getDirectoriesFor (appname : string) =
         |> List.map (fun x -> ensureDirectory x; directoryInfo x)
     { App = dirs.[0]; Backups = dirs.[1]; Active = dirs.[2] }
 
-let getActiveReleases() = 
-    !! "packages/**/active/*.nupkg" 
+let getActiveReleasesInDirectory dir = 
+    !! (dir @@ "packages/**/active/*.nupkg")
+      |> Seq.map (fun pf ->
+            let fi = fileInfo pf
+            let di = fi.Directory.Parent.Name
+            ZipHelper.UnzipSingleFileInMemory (fi.Directory.Parent.Name + ".nuspec") pf)
       |> Seq.map NuGetHelper.getNuspecProperties
+
+let getActiveReleases() = getActiveReleasesInDirectory "."
 
 let getActiveReleasesFor (app : string) = 
     let dirs = getDirectoriesFor app
@@ -71,7 +77,10 @@ let unpack packageBytes =
 
     let tempDir = directoryInfo extractTempPath
 
-    let package = FindFirstMatchingFile "*.nuspec" tempDir |> NuGetHelper.getNuspecProperties
+    let package = 
+        FindFirstMatchingFile "*.nuspec" tempDir 
+        |> File.ReadAllText
+        |> NuGetHelper.getNuspecProperties
 
     let backupDir = directoryInfo ("Backup" @@ package.DirectoryName + "/" + (DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss")))
     let workDirectory = directoryInfo ("packages" @@ package.DirectoryName)

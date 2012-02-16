@@ -75,3 +75,16 @@ let ZipFile fileName targetFileName =
 let Unzip target fileName =  
     let zip = new FastZip()
     zip.ExtractZip (fileName, target, "")
+
+/// <summary>Unzips a single file from the archive with the given fileName.</summary>
+/// <param name="fileToUnzip">The file inside the archive.</param>
+/// <param name="zipFileName">The FileName of the zip file.</param>
+let UnzipSingleFileInMemory fileToUnzip (zipFileName:string) =
+    use zf = new ZipFile(zipFileName)
+    let ze = zf.GetEntry fileToUnzip
+    if ze = null then
+        raise <| ArgumentException(fileToUnzip, "not found in zip")
+
+    use stream = zf.GetInputStream(ze)
+    use reader = new StreamReader(stream)
+    reader.ReadToEnd()       

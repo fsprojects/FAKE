@@ -187,8 +187,8 @@ with
     member x.DirectoryName = sprintf "%s.%s" x.Id x.Version
     member x.FileName = sprintf "%s.%s.nupkg" x.Id x.Version
 
-let getNuspecProperties (nuspecPath : string) =
-    let doc = XMLDoc (File.ReadAllText nuspecPath)
+let getNuspecProperties (nuspec : string) =
+    let doc = XMLDoc nuspec
     let namespaces = ["x","http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"]
     let getValue name = 
         try
