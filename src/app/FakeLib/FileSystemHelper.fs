@@ -31,6 +31,14 @@ let inline filesInDir (dir:DirectoryInfo) = dir.GetFiles()
 /// Finds all the files in the directory matching the search pattern 
 let inline filesInDirMatching pattern (dir:DirectoryInfo) = dir.GetFiles(pattern)
 
+/// Gets the first file in the directory matching the search pattern or throws if nothing was found
+let FindFirstMatchingFile pattern dir =
+    let files = filesInDirMatching pattern dir
+    if Seq.isEmpty files then
+        new FileNotFoundException(sprintf "Could not find file matching %s in %s" pattern dir.FullName)
+          |> raise
+    (Seq.head files).FullName
+
 /// Gets the current directory
 let currentDirectory = Path.GetFullPath "."
 

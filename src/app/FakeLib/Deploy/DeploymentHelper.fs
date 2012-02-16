@@ -72,19 +72,16 @@ let private extractPackageToTempPath (package : byte[]) =
     File.Delete(tempFile)
     directoryInfo extractTempPath
 
-let private getNuSpecDetails (dir:DirectoryInfo) = 
-    match dir |> filesInDirMatching "*.nuspec" |> List.ofArray with
-    | h :: t ->  dir, NuGetHelper.getNuspecProperties h.FullName
-    | _ -> failwith "Could not find nuspec file"
+let private getNuSpecDetails (dir:DirectoryInfo) =
+    dir,FindFirstMatchingFile "*.nuspec" dir |> NuGetHelper.getNuspecProperties
 
 let private copyAndUnpackDeployment (tempDir : DirectoryInfo, package : NuSpecPackage) =    
     let backupDir = directoryInfo ("Backup" @@ package.DirectoryName + "/" + (DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss")))
     let workDirectory = directoryInfo ("packages" @@ package.DirectoryName)
     if not <| workDirectory.Exists then () else FileUtils.cp_r workDirectory.FullName backupDir.FullName
     FileUtils.cp_r tempDir.FullName workDirectory.FullName
-    match workDirectory |> filesInDirMatching "*.fsx" |> List.ofArray with
-    | h :: t -> package, h
-    | _ -> failwith "Could not find deployment script"
+
+    package,FindFirstMatchingFile "*.fsx" workDirectory
 
 let unpack (package : byte[]) =
     let package, scriptFile =
@@ -92,7 +89,7 @@ let unpack (package : byte[]) =
         |> getNuSpecDetails 
         |> copyAndUnpackDeployment
 
-    package.ToString(), scriptFile.FullName
+    package.ToString(), scriptFile
     
 let doDeployment (packageName,script) =
     try

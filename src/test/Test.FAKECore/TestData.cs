@@ -20,7 +20,10 @@ namespace Test.FAKECore
             SubDir1 = String.Format("{0}\\Dir1", TestDir);
             SubDir7 = String.Format("{0}\\Dir7", TestDir);
             TestDataDir = "TestData\\";
+            TestDirectory = new DirectoryInfo(TestDir);
         }
+
+        public static DirectoryInfo TestDirectory { get; set; }
 
         public static string TestDir { get; set; }
 
