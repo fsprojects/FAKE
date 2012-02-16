@@ -14,15 +14,31 @@ namespace Test.FAKECore.PackageMgt
         static NuGetHelper.NuSpecPackage _package;
         Because of = () => _package = NuGetHelper.getLatestPackage(NuGetHelper.getRepoUrl(), "FAKE");
 
-        It should_be_the_latest_version = () => _package.IsLatestVersion.ShouldBeTrue();
-        It should_contain_steffen_as_author = () => _package.Authors.ShouldContain("Steffen Forkmann");
-        It should_contain_the_creation_date = () => _package.Created.Year.ShouldBeGreaterThanOrEqualTo(2012);
+        It should_be_the_latest_version =
+            () => _package.IsLatestVersion.ShouldBeTrue();
+
+        It should_contain_steffen_as_author =
+            () => _package.Authors.ShouldContain("Steffen Forkmann");
+
+        It should_contain_the_creation_date = 
+            () => _package.Created.Year.ShouldBeGreaterThanOrEqualTo(2012);
+
         It should_contain_the_id = () => _package.Id.ShouldEqual("FAKE");
+
         It should_contain_the_packet_hash = () => _package.PackageHash.ShouldNotBeNull();
-        It should_contain_the_packet_hash_algorithm = () => _package.PackageHashAlgorithm.ShouldEqual("SHA512");
-        It should_contain_the_project_url = () => _package.ProjectUrl.ShouldEqual("https://github.com/forki/Fake");
-        It should_contain_the_publiNuSpecPackageshing_date = () => _package.Published.Year.ShouldBeGreaterThanOrEqualTo(2012);
-        It should_contain_the_license_url = () => _package.LicenseUrl.ShouldEqual("https://github.com/forki/Fake/blob/master/License.txt");
+
+        It should_contain_the_packet_hash_algorithm = 
+            () => _package.PackageHashAlgorithm.ShouldEqual("SHA512");
+
+        It should_contain_the_project_url = 
+            () => _package.ProjectUrl.ShouldEqual("https://github.com/forki/Fake");
+
+        It should_contain_the_publiNuSpecPackageshing_date = 
+            () => _package.Published.Year.ShouldBeGreaterThanOrEqualTo(2012);
+
+        It should_contain_the_license_url = 
+            () => _package.LicenseUrl.ShouldEqual("https://github.com/forki/Fake/blob/master/License.txt");
+
         It should_contain_the_version = () => _package.Version.ShouldContain(".");
 
         It should_contain_the_package_url =

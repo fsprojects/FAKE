@@ -184,7 +184,7 @@ type NuSpecPackage = {
 with
     override x.ToString() = sprintf "%s %s" x.Id x.Version
     member x.DirectoryName = sprintf "%s.%s" x.Id x.Version
-    member x.FileName = x.Id + "." + x.Version + ".nupkg"
+    member x.FileName = sprintf "%s.%s.nupkg" x.Id x.Version
 
 let getNuspecProperties (nuspecPath : string) =
     let doc = XMLDoc (File.ReadAllText nuspecPath)
