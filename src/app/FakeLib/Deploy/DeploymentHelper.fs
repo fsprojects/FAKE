@@ -28,6 +28,40 @@ type DeploymentPushStatus =
     | Ok of DeploymentResponse
     | Unknown
 
+type Directories = {
+    App : DirectoryInfo
+    Backups : DirectoryInfo
+    Active : DirectoryInfo
+}
+
+let private getDirectoriesFor (appname : string) =
+    let appName = appname.ToUpper()
+    let dirs = 
+        ["packages" @@ appName; "packages" @@ appName @@ "backups"; "packages" @@ appName @@ "active"]
+        |> List.map (fun x -> ensureDirectory x; directoryInfo x)
+    { App = dirs.[0]; Backups = dirs.[1]; Active = dirs.[2] }
+
+let getActiveReleases() = 
+    !+ "packages/**/active/*.nupkg" 
+        |> ScanImmediately
+            |> Seq.map (NuGetHelper.getNuspecProperties)
+
+let getActiveReleasesFor (app : string) = 
+    let dirs = getDirectoriesFor app
+    !+ (dirs.Active.FullName @@ "*.nupkg") 
+        |> ScanImmediately
+            |> Seq.map (NuGetHelper.getNuspecProperties)
+
+let getAllReleases() = 
+    !+ "packages/**/*.nupkg"
+       |> ScanImmediately
+            |> Seq.map (NuGetHelper.getNuspecProperties)
+
+let getAllReleasesFor (app : string) = 
+    let dirs = getDirectoriesFor app
+    !+ (dirs.App.FullName @@ "*.nupkg") 
+        |> ScanImmediately
+            |> Seq.map (NuGetHelper.getNuspecProperties)
 
 let private extractPackageToTempPath (package : byte[]) = 
     let extractTempPath = Path.GetTempPath() @@ (Guid.NewGuid().ToString())
@@ -46,7 +80,7 @@ let private getNuSpecDetails (dir:DirectoryInfo) =
 let private copyAndUnpackDeployment (tempDir : DirectoryInfo, package : NuSpecPackage) =
     let id = (sprintf "%s_%s" package.Id package.Version |> replace "." "_")
     let backupDir = directoryInfo ("Backup" @@ id + "/" + (DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss")))
-    let workDirectory = directoryInfo ("Work" @@ id)
+    let workDirectory = directoryInfo ("packages" @@ id)
     if not <| workDirectory.Exists then () else FileUtils.cp_r workDirectory.FullName backupDir.FullName
     FileUtils.cp_r tempDir.FullName workDirectory.FullName
     match workDirectory |> filesInDirMatching "*.fsx" |> List.ofArray with

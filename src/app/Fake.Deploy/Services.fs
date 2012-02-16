@@ -28,7 +28,7 @@ type FakeDeployService() as self =
         self.ServiceName <- "Fake Deploy Agent"
 
     override x.OnStart(args) = 
-        DeploymentAgent.start logger (ConfigurationManager.AppSettings.["Port"])
+        DeploymentAgent.start (ConfigurationManager.AppSettings.["Port"]) logger 
 
     override x.OnStop() = 
         DeploymentAgent.stop()
