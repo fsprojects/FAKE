@@ -34,15 +34,6 @@ type Directories = {
     Active : DirectoryInfo
 }
 
-let private getDirectoriesFor (appname : string) =
-    let appName = appname.ToUpper()
-    let dirs = 
-        ["packages" @@ appName
-         "packages" @@ appName @@ "backups"
-         "packages" @@ appName @@ "active"]
-        |> List.map (fun x -> ensureDirectory x; directoryInfo x)
-    { App = dirs.[0]; Backups = dirs.[1]; Active = dirs.[2] }
-
 let private getNuspecInfos seq =
     seq
       |> Seq.map (fun pf ->
@@ -56,10 +47,12 @@ let getActiveReleasesInDirectory dir =
 
 let getActiveReleases() = getActiveReleasesInDirectory "."
 
-let getActiveReleasesFor (app : string) = 
-    let dirs = getDirectoriesFor app
-    !! (dirs.Active.FullName @@ "*.nupkg") 
-        |> Seq.map NuGetHelper.getNuspecProperties
+let getActiveReleaseInDirectoryFor dir (app : string) = 
+    !! (dir @@ "packages/" + app + "/active/*.nupkg") 
+      |> getNuspecInfos
+      |> Seq.head
+
+let getActiveReleaseFor (app : string) = getActiveReleaseInDirectoryFor "." app
 
 let getAllReleasesInDirectory dir = 
     !! (dir @@ "packages/**/*.nupkg")
@@ -68,7 +61,6 @@ let getAllReleasesInDirectory dir =
 let getAllReleases() = getAllReleasesInDirectory "."
 
 let getAllReleasesInDirectoryFor dir (app : string) = 
-    let dirs = getDirectoriesFor app
     !! (dir @@ "packages/" + app + "/**/*.nupkg") 
       |> getNuspecInfos
 

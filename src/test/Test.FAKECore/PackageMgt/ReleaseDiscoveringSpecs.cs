@@ -15,6 +15,15 @@ namespace Test.FAKECore.PackageMgt
         It should_contain_two_active_releases = () => _activeReleases.Count().ShouldEqual(2);
     }
 
+    public class when_getting_active_jQuery_release_from_test_folder
+    {
+        static NuGetHelper.NuSpecPackage _release;
+        Because of = () => _release = DeploymentHelper.getActiveReleaseInDirectoryFor(TestData.TestDataDir, "jQuery");
+
+        It should_the_right_id = () => _release.Id.ShouldEqual("jQuery");
+        It should_the_right_version = () => _release.Version.ShouldEqual("1.7.1");
+    }
+
     public class when_getting_all_releases_from_test_folder
     {
         static IEnumerable<NuGetHelper.NuSpecPackage> _releases;
