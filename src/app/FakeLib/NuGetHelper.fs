@@ -188,8 +188,13 @@ with
 
 let getNuspecProperties (nuspecPath : string) =
     let doc = XMLDoc (File.ReadAllText nuspecPath)
+    let namespaces = ["x","http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"]
     let getValue name = 
-        XPathValue ("x:metadata/x:" + name) ["x","http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"] doc
+        try
+            doc
+            |> XPathValue ("x:metadata/x:" + name) namespaces
+        with
+        | exn -> String.Empty
 
     {
        Id = getValue "id"
@@ -198,7 +203,7 @@ let getNuspecProperties (nuspecPath : string) =
        Owners = getValue "owners"
        LicenseUrl = getValue "licenseUrl"
        ProjectUrl = getValue "projectUrl"
-       RequireLicenseAcceptance = ((getValue "requireLicenseAcceptance").ToLower()) = "true" 
+       RequireLicenseAcceptance = (getValue "requireLicenseAcceptance").ToLower() = "true" 
        Description = getValue "description" 
        Language = getValue "language"
        Tags = getValue "tags"

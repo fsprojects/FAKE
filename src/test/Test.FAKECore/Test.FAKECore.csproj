@@ -87,6 +87,7 @@
     <Compile Include="ILMerge\ILMergeSpecs.cs" />
     <Compile Include="PackageMgt\FeedSpecs.cs" />
     <Compile Include="PackageMgt\NugetData.cs" />
+    <Compile Include="PackageMgt\NuSpecFileSpecs.cs" />
     <Compile Include="SideBySideSpecification\ReferencesScanningSpecs.cs" />
     <Compile Include="SideBySideSpecification\SpecsRemovementSpecs.cs" />
     <Compile Include="StringHelperSpecs.cs" />
@@ -147,6 +148,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\fake.nuspec">
+      <Link>TestData\fake.nuspec</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="app.config" />
     <None Include="Globbing\Directories\SampleApp.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

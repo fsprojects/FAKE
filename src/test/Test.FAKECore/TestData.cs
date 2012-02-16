@@ -15,6 +15,7 @@ namespace Test.FAKECore
             TestDir2 = String.Format("{0}\\Test2", BaseDir);
             SubDir1 = String.Format("{0}\\Dir1", TestDir);
             SubDir7 = String.Format("{0}\\Dir7", TestDir);
+            TestDataDir = "TestData\\";
         }
 
         /// <summary>
@@ -49,5 +50,7 @@ namespace Test.FAKECore
 
         public static readonly string SideBySideFolder = 
             new DirectoryInfo(Environment.CurrentDirectory + @"\SideBySideSpecification\").FullName;
+
+        public static string TestDataDir { get; set; }
     }
 }

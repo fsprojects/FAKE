@@ -25,8 +25,11 @@ namespace Test.FAKECore.PackageMgt
         It should_contain_the_license_url = () => _package.LicenseUrl.ShouldEqual("https://github.com/forki/Fake/blob/master/License.txt");
         It should_contain_the_version = () => _package.Version.ShouldContain(".");
 
-        It should_containt_the_package_url =
+        It should_contain_the_package_url =
             () => _package.Url.ShouldEqual("http://packages.nuget.org/api/v1/package/FAKE/" + _package.Version);
+
+        It should_build_the_FileName_from_id_and_version =
+            () => _package.FileName.ShouldEqual("FAKE.1.64.5.nupkg");
     }
 
     public class when_discovering_a_specific_outdated_FAKE_package
