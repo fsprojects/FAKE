@@ -2,7 +2,7 @@
 using Fake;
 using Machine.Specifications;
 
-namespace Test.FAKECore.NugetFeed
+namespace Test.FAKECore.PackageMgt
 {
     public class when_getting_the_nuget_feed_url
     {
@@ -11,7 +11,7 @@ namespace Test.FAKECore.NugetFeed
 
     public class when_discorvering_the_lastest_FAKE_package
     {
-        static NuGetHelper.NugetFeedPackage _package;
+        static NuGetHelper.NuSpecPackage _package;
         Because of = () => _package = NuGetHelper.getLatestPackage(NuGetHelper.getRepoUrl(), "FAKE");
 
         It should_be_the_latest_version = () => _package.IsLatestVersion.ShouldBeTrue();
@@ -21,8 +21,8 @@ namespace Test.FAKECore.NugetFeed
         It should_contain_the_packet_hash = () => _package.PackageHash.ShouldNotBeNull();
         It should_contain_the_packet_hash_algorithm = () => _package.PackageHashAlgorithm.ShouldEqual("SHA512");
         It should_contain_the_project_url = () => _package.ProjectUrl.ShouldEqual("https://github.com/forki/Fake");
-        It should_contain_the_publishing_date = () => _package.Published.Year.ShouldBeGreaterThanOrEqualTo(2012);
-        It should_contain_the_title = () => _package.Title.ShouldEqual("FAKE");
+        It should_contain_the_publiNuSpecPackageshing_date = () => _package.Published.Year.ShouldBeGreaterThanOrEqualTo(2012);
+        It should_contain_the_license_url = () => _package.LicenseUrl.ShouldEqual("https://github.com/forki/Fake/blob/master/License.txt");
         It should_contain_the_version = () => _package.Version.ShouldContain(".");
 
         It should_containt_the_package_url =
@@ -31,7 +31,7 @@ namespace Test.FAKECore.NugetFeed
 
     public class when_discovering_a_specific_outdated_FAKE_package
     {
-        static NuGetHelper.NugetFeedPackage _package;
+        static NuGetHelper.NuSpecPackage _package;
         Because of = () => _package = NuGetHelper.getPackage(NuGetHelper.getRepoUrl(), "FAKE", "1.56.10");
 
         It should_be_the_latest_version = () => _package.IsLatestVersion.ShouldBeFalse();
@@ -41,7 +41,7 @@ namespace Test.FAKECore.NugetFeed
 
     public class when_downloading_the_lastest_SignalR_package
     {
-        static NuGetHelper.NugetFeedPackage _package;
+        static NuGetHelper.NuSpecPackage _package;
         static string _fileName;
         Establish context = () => _package = NuGetHelper.getLatestPackage(NuGetHelper.getRepoUrl(), "SignalR");
         Because of = () => _fileName = NuGetHelper.downloadPackage(NugetData.OutputDir, _package);
@@ -50,6 +50,6 @@ namespace Test.FAKECore.NugetFeed
         {
             File.Exists(_fileName).ShouldBeTrue();
             File.Delete(_fileName);
-        };        
+        };
     }
 }

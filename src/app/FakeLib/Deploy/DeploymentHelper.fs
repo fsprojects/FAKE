@@ -77,10 +77,9 @@ let private getNuSpecDetails (dir:DirectoryInfo) =
     | h :: t ->  dir, NuGetHelper.getNuspecProperties h.FullName
     | _ -> failwith "Could not find nuspec file"
 
-let private copyAndUnpackDeployment (tempDir : DirectoryInfo, package : NuSpecPackage) =
-    let id = (sprintf "%s_%s" package.Id package.Version |> replace "." "_")
-    let backupDir = directoryInfo ("Backup" @@ id + "/" + (DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss")))
-    let workDirectory = directoryInfo ("packages" @@ id)
+let private copyAndUnpackDeployment (tempDir : DirectoryInfo, package : NuSpecPackage) =    
+    let backupDir = directoryInfo ("Backup" @@ package.DirectoryName + "/" + (DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss")))
+    let workDirectory = directoryInfo ("packages" @@ package.DirectoryName)
     if not <| workDirectory.Exists then () else FileUtils.cp_r workDirectory.FullName backupDir.FullName
     FileUtils.cp_r tempDir.FullName workDirectory.FullName
     match workDirectory |> filesInDirMatching "*.fsx" |> List.ofArray with

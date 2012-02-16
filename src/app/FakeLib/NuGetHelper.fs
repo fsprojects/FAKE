@@ -162,11 +162,18 @@ let NuGet setParams nuSpec =
 
     traceEndTask "NuGet" nuSpec
 
+
 type NuSpecPackage = {
     Id : string
     Version : string
     Authors : string
     Owners : string
+    Url: string
+    IsLatestVersion: bool
+    Created: DateTime
+    Published: DateTime
+    PackageHash: string
+    PackageHashAlgorithm: string
     LicenseUrl : string
     ProjectUrl : string
     RequireLicenseAcceptance : bool
@@ -176,11 +183,14 @@ type NuSpecPackage = {
 }
 with
     override x.ToString() = sprintf "%s %s" x.Id x.Version
+    member x.DirectoryName = sprintf "%s.%s" x.Id x.Version
+    member x.FileName = x.Id + "." + x.Version + ".nupkg"
 
 let getNuspecProperties (nuspecPath : string) =
     let doc = XMLDoc (File.ReadAllText nuspecPath)
     let getValue name = 
         XPathValue ("x:metadata/x:" + name) ["x","http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"] doc
+
     {
        Id = getValue "id"
        Version = getValue "version"
@@ -192,7 +202,14 @@ let getNuspecProperties (nuspecPath : string) =
        Description = getValue "description" 
        Language = getValue "language"
        Tags = getValue "tags"
+       Url = String.Empty
+       IsLatestVersion = false
+       Created = DateTime.MinValue
+       Published = DateTime.MinValue
+       PackageHash = String.Empty
+       PackageHashAlgorithm = String.Empty
     }
+    
 
 let feedUrl = "http://go.microsoft.com/fwlink/?LinkID=206669"
 
@@ -205,22 +222,7 @@ let discoverRepoUrl =
 
         doc.["service"].GetAttribute("xml:base"))
 
-let getRepoUrl() = discoverRepoUrl.Force()
-
-type NugetFeedPackage = {
-    Id: string
-    Title: string
-    Url: string
-    IsLatestVersion: bool
-    Version: string
-    Created: DateTime
-    Published: DateTime
-    ProjectUrl: string
-    PackageHash: string
-    PackageHashAlgorithm: string
-    Authors: string }
-    with
-      member x.FileName = x.Id + "." + x.Version + ".nupkg"
+let getRepoUrl() = discoverRepoUrl.Force()      
 
 let extractFeedPackageFromXml (entry:Xml.XmlNode) =
     let properties = entry.["m:properties"]
@@ -230,10 +232,15 @@ let extractFeedPackageFromXml (entry:Xml.XmlNode) =
 
     { Id = property "Id"
       Version = property "Version"
-      Title = property "Title"
+      Description = property "Description"
       IsLatestVersion = boolProperty "IsLatestVersion"
       Authors = property "Authors"
+      Owners = property "Authors"
+      Language = property "Language"
+      Tags = property "Tags"
       ProjectUrl = property "ProjectUrl"
+      LicenseUrl = property "LicenseUrl"
+      RequireLicenseAcceptance = boolProperty "RequireLicenseAcceptance"
       PackageHash = property "PackageHash"
       PackageHashAlgorithm = property "PackageHashAlgorithm"
       Created = dateTimeProperty "Created"
@@ -258,7 +265,7 @@ let getLatestPackage repoUrl packageName =
     |> getFeedPackagesFromUrl
     |> Seq.head
 
-let downloadPackage targetDir (package:NugetFeedPackage) =
+let downloadPackage targetDir (package:NuSpecPackage) =
     ensureDirectory targetDir    
     let targetFileName = targetDir @@ package.FileName
     tracefn "Downloading package %s %s from %s and saving it to %s" package.Id package.Version package.Url targetFileName
