@@ -97,19 +97,18 @@ let unpack isRollback packageBytes =
     match TryFindFirstMatchingFile "*.nupkg" activeDir with
     | Some activeFilePath ->
         let backupDir = workDir @@ deploymentRootDir @@ package.Id @@ "backups"
-        let backedUpFilePath = (FullName backupDir) @@ Path.GetFileName(activeFilePath)
     
         ensureDirectory backupDir
-        if (directoryInfo activeDir).Exists && (not isRollback) then
-            FileUtils.mv activeFilePath backedUpFilePath
+        if not isRollback then
+            MoveFile backupDir activeFilePath
     | None -> ()
     
     CleanDir activeDir
-
-    WriteBytesToFile newActiveFilePath packageBytes
-    
+          
     XCopy extractTempPath activeDir
     FileUtils.rm_rf extractTempPath
+
+    WriteBytesToFile newActiveFilePath packageBytes
 
     let scriptFile = FindFirstMatchingFile "*.fsx" activeDir
     package, scriptFile
