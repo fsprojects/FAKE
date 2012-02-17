@@ -107,7 +107,8 @@ let unpack isRollback packageBytes =
             FileUtils.mv activeFilePath backedUpFilePath
     | None -> ()
     
-    workDirectory.Delete(true)
+    if workDirectory.Exists then
+        workDirectory.Delete(true)
     workDirectory.Create()
 
     WriteBytesToFile newActiveFilePath packageBytes
