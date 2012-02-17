@@ -32,13 +32,18 @@ let inline filesInDir (dir:DirectoryInfo) = dir.GetFiles()
 let filesInDirMatching pattern (dir:DirectoryInfo) =
     if dir.Exists then dir.GetFiles pattern else [||]
 
+/// Gets the first file in the directory matching the search pattern or None
+let TryFindFirstMatchingFile pattern dir =
+    let files = filesInDirMatching pattern dir
+    if Seq.isEmpty files then None else (Seq.head files).FullName |> Some
+
 /// Gets the first file in the directory matching the search pattern or throws if nothing was found
 let FindFirstMatchingFile pattern dir =
-    let files = filesInDirMatching pattern dir
-    if Seq.isEmpty files then
+    match TryFindFirstMatchingFile pattern dir with
+    | Some x -> x
+    | None -> 
         new FileNotFoundException(sprintf "Could not find file matching %s in %s" pattern dir.FullName)
           |> raise
-    (Seq.head files).FullName
 
 /// Gets the current directory
 let currentDirectory = Path.GetFullPath "."
@@ -52,6 +57,6 @@ let allFilesExist files = Seq.forall File.Exists files
 
 /// Checks if all given directory exists. If not then this functions creates the directory
 let ensureDirectory dir = 
-    if not <| Directory.Exists(dir) then 
-      Directory.CreateDirectory(dir) |> ignore
+    if not <| Directory.Exists dir then 
+      Directory.CreateDirectory dir |> ignore
         

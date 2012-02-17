@@ -96,7 +96,7 @@ let unpack isRollback packageBytes =
     let backupDir = directoryInfo (workDir @@ "packages" @@ package.Id @@ "backups")
     let workDirectory = directoryInfo (workDir @@ "packages" @@ package.Id @@ "active")
     let activeFilePath = FindFirstMatchingFile "*.nupkg" workDirectory
-    let newActiveFilePath = workDirectory.FullName @@ (package.Id + "." + package.Version + ".nupkg")
+    let newActiveFilePath = workDirectory.FullName @@ package.FileName
     let backedUpFilePath = (backupDir.FullName @@ Path.GetFileName(activeFilePath))
     
     if backupDir.Exists then () else backupDir.Create()
