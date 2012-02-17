@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\..\tools\Fake\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>3</WarningLevel>
@@ -38,7 +38,7 @@
     <DocumentationFile>bin\Release\Fake.Deploy.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <OutputPath>..\..\..\tools\Fake.Deploy\</OutputPath>
+    <OutputPath>..\..\..\tools\Fake\</OutputPath>
     <StartArguments>
     </StartArguments>
   </PropertyGroup>
