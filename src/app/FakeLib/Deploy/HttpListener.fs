@@ -3,6 +3,7 @@
 open System
 open System.IO
 open System.Net
+open System.Net.NetworkInformation
 open System.Threading
 open System.Diagnostics
 open System.Text.RegularExpressions
@@ -68,12 +69,23 @@ let getBodyFromContext (ctx : HttpListenerContext) =
     then (readAllBytes ctx.Request.InputStream).ToArray() 
     else failwith "Attempted To Read body from request when there is not one"
 
+let getPort configPort =
+    let defaultPort = 6666
+    match configPort with
+    | "*" -> 
+        let usedports = NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpListeners() |> Seq.map (fun x -> x.Port)
+        let ports = seq { for port in defaultPort .. defaultPort + 2048 do yield port }
+        let port = ports |> Seq.find (fun p -> not <| Seq.contains p usedports)
+        port.ToString()
+    | _ -> configPort 
+
+
 let start port log requestMap =
     logger <- log
     let listenerLoop = 
         async {
             try
-                use l = listener port
+                use l = listener (getPort(port))
                 let prefixes = l.Prefixes |> separated ","
                 log (sprintf "Fake Deploy now listening @ %s" prefixes, EventLogEntryType.Information)
                 while true do
