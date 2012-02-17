@@ -39,10 +39,10 @@ let NuGetDefaults() =
 
 let RequireExactly version = sprintf "[%s]" version
 
-/// Gets the version no. for a given package in the packages folder
-let GetPackageVersion packagesDir package = 
+/// Gets the version no. for a given package in the deployments folder
+let GetPackageVersion deploymentsDir package = 
     let version = 
-        Directory.GetDirectories(packagesDir, sprintf "%s.*" package) 
+        Directory.GetDirectories(deploymentsDir, sprintf "%s.*" package) 
         |> Seq.head
         |> fun full -> full.Substring (full.LastIndexOf package + package.Length + 1)
 

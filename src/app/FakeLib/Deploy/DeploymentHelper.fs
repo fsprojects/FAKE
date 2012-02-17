@@ -45,35 +45,36 @@ let private getNuspecInfos seq =
               |> NuGetHelper.getNuspecProperties)
 
 let mutable workDir = "."
+let mutable deploymentRootDir = "deployments/"
 
 let getActiveReleasesInDirectory dir = 
-    !! (dir @@ "packages/**/active/*.nupkg")
+    !! (dir @@ deploymentRootDir @@ "**/active/*.nupkg")
       |> getNuspecInfos
 
 let getActiveReleases() = getActiveReleasesInDirectory workDir
 
 let getActiveReleaseInDirectoryFor dir (app : string) = 
-    !! (dir @@ "packages/" + app + "/active/*.nupkg") 
+    !! (dir @@ deploymentRootDir + app + "/active/*.nupkg") 
       |> getNuspecInfos
       |> Seq.head
 
 let getActiveReleaseFor (app : string) = getActiveReleaseInDirectoryFor workDir app
 
 let getAllReleasesInDirectory dir = 
-    !! (dir @@ "packages/**/*.nupkg")
+    !! (dir @@ deploymentRootDir @@ "**/*.nupkg")
       |> getNuspecInfos
 
 let getAllReleases() = getAllReleasesInDirectory workDir
 
 let getAllReleasesInDirectoryFor dir (app : string) = 
-    !! (dir @@ "packages/" + app + "/**/*.nupkg") 
+    !! (dir @@ deploymentRootDir + app + "/**/*.nupkg") 
       |> getNuspecInfos
 
 let getAllReleasesFor (app : string) = getAllReleasesInDirectoryFor workDir app
 
 let getBackupFor dir (app : string) (version : string) =
     let backupFileName =  app + "." + version + ".nupkg"
-    let dir = directoryInfo (dir @@ "packages" @@ app @@ "backups") 
+    let dir = directoryInfo (dir @@ deploymentRootDir @@ app @@ "backups") 
     FindFirstMatchingFile backupFileName dir
 
 
@@ -93,17 +94,15 @@ let unpack isRollback packageBytes =
         |> File.ReadAllText
         |> NuGetHelper.getNuspecProperties
     
-    let backupDir = directoryInfo (workDir @@ "packages" @@ package.Id @@ "backups")
-    let workDirectory = directoryInfo (workDir @@ "packages" @@ package.Id @@ "active")
+    let backupDir = directoryInfo (workDir @@ deploymentRootDir @@ package.Id @@ "backups")
+    let workDirectory = directoryInfo (workDir @@ deploymentRootDir @@ package.Id @@ "active")
+    let activeFilePath = FindFirstMatchingFile "*.nupkg" workDirectory
+    let newActiveFilePath = workDirectory.FullName @@ package.FileName
+    let backedUpFilePath = (backupDir.FullName @@ Path.GetFileName(activeFilePath))
     
-    if workDirectory.Exists then () else workDirectory.Create()
     if backupDir.Exists then () else backupDir.Create()
 
-    let activeFilePath =  (workDirectory.FullName @@ "/*.nupkg")
-    let newActiveFilePath = workDirectory.FullName @@ package.FileName
-
-    if workDirectory.Exists && (not isRollback) && File.Exists(activeFilePath) then
-      let backedUpFilePath = (backupDir.FullName @@ Path.GetFileName(activeFilePath))
+    if workDirectory.Exists && (not isRollback) then
       FileUtils.mv activeFilePath backedUpFilePath
 
     workDirectory.Delete(true)
@@ -142,7 +141,7 @@ let runDeploymentFromPackageFile packageFileName =
 
 let rollbackFor dir (app : string) (version : string) =
     try 
-        let currentPackageFileName = !! (dir @@ "packages/" + app + "/active/*.nupkg") |> Seq.head
+        let currentPackageFileName = !! (dir @@ deploymentRootDir + app + "/active/*.nupkg") |> Seq.head
         let backupPackageFileName = getBackupFor dir app version
         if currentPackageFileName = backupPackageFileName
         then DeploymentResponse.Failure(app + "." + version + ".nupkg", "Cannot rollback to currently active version")
