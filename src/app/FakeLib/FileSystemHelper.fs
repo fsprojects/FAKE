@@ -29,7 +29,8 @@ let inline subDirectories (dir:DirectoryInfo) = dir.GetDirectories()
 let inline filesInDir (dir:DirectoryInfo) = dir.GetFiles()
 
 /// Finds all the files in the directory matching the search pattern 
-let inline filesInDirMatching pattern (dir:DirectoryInfo) = dir.GetFiles(pattern)
+let filesInDirMatching pattern (dir:DirectoryInfo) =
+    if dir.Exists then dir.GetFiles pattern else [||]
 
 /// Gets the first file in the directory matching the search pattern or throws if nothing was found
 let FindFirstMatchingFile pattern dir =
