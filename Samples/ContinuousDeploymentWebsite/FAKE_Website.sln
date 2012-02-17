@@ -9,6 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{ECB58ABC
 		02_build.fsx = 02_build.fsx
 		03_deploy.bat = 03_deploy.bat
 		03_deploy.fsx = 03_deploy.fsx
+		04_listen.bat = 04_listen.bat
+		05_start_service.bat = 05_start_service.bat
+		06_stop_service.bat = 06_stop_service.bat
 		Fake_Website.nuspec = Fake_Website.nuspec
 		deployment\install.fsx = deployment\install.fsx
 	EndProjectSection
