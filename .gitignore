@@ -29,3 +29,4 @@ Samples/ContinuousDeploymentWebsite/src/app/Fake.Mvc/Properties/AssemblyInfo.cs
 Samples/ContinuousDeploymentWebsite/Work/
 Samples/ContinuousDeploymentWebsite/Backup/
 Samples/ContinuousDeploymentWebsite/src/app/Fake_WebSite/Properties/AssemblyInfo.cs
+*.ncrunchsolution

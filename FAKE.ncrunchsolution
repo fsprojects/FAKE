@@ -1,9 +1,0 @@
-<SolutionConfiguration>
-  <FileVersion>1</FileVersion>
-  <AutoEnableOnStartup>False</AutoEnableOnStartup>
-  <AllowParallelTestExecution>true</AllowParallelTestExecution>
-  <FrameworkUtilisationTypeForNUnit>UseDynamicAnalysis</FrameworkUtilisationTypeForNUnit>
-  <FrameworkUtilisationTypeForGallio>UseStaticAnalysis</FrameworkUtilisationTypeForGallio>
-  <FrameworkUtilisationTypeForMSpec>UseStaticAnalysis</FrameworkUtilisationTypeForMSpec>
-  <FrameworkUtilisationTypeForMSTest>UseStaticAnalysis</FrameworkUtilisationTypeForMSTest>
-</SolutionConfiguration>
