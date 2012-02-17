@@ -34,15 +34,17 @@ let filesInDirMatching pattern (dir:DirectoryInfo) =
 
 /// Gets the first file in the directory matching the search pattern or None
 let TryFindFirstMatchingFile pattern dir =
-    let files = filesInDirMatching pattern dir
-    if Seq.isEmpty files then None else (Seq.head files).FullName |> Some
+    dir 
+    |> directoryInfo
+    |> filesInDirMatching pattern
+    |> fun files -> if Seq.isEmpty files then None else (Seq.head files).FullName |> Some
 
 /// Gets the first file in the directory matching the search pattern or throws if nothing was found
 let FindFirstMatchingFile pattern dir =
     match TryFindFirstMatchingFile pattern dir with
     | Some x -> x
     | None -> 
-        new FileNotFoundException(sprintf "Could not find file matching %s in %s" pattern dir.FullName)
+        new FileNotFoundException(sprintf "Could not find file matching %s in %s" pattern dir)
           |> raise
 
 /// Gets the current directory

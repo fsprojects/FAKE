@@ -50,16 +50,16 @@ namespace Test.FAKECore.FileHandling
         Establish context = CreateTestFileStructure;
 
         It should_find_any_file =
-            () => FileSystemHelper.FindFirstMatchingFile("*.*", TestData.TestDirectory)
-                      .ShouldStartWith(TestData.TestDirectory.FullName);
+            () => FileSystemHelper.FindFirstMatchingFile("*.*", TestData.TestDir)
+                      .ShouldStartWith(TestData.TestDir);
 
 
         It should_find_fff_file =
-            () => FileSystemHelper.FindFirstMatchingFile("*.fff", TestData.TestDirectory)
+            () => FileSystemHelper.FindFirstMatchingFile("*.fff", TestData.TestDir)
                       .ShouldEndWith("file2.fff");
 
         It should_not_find_fsx_file =
-            () => Catch.Exception(() => FileSystemHelper.FindFirstMatchingFile("*.fsx", TestData.TestDirectory))
+            () => Catch.Exception(() => FileSystemHelper.FindFirstMatchingFile("*.fsx", TestData.TestDir))
                       .ShouldBeOfType<FileNotFoundException>();
     }
 }

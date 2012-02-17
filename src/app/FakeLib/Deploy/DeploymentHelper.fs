@@ -74,50 +74,44 @@ let getAllReleasesFor (app : string) = getAllReleasesInDirectoryFor workDir app
 
 let getBackupFor dir (app : string) (version : string) =
     let backupFileName =  app + "." + version + ".nupkg"
-    let dir = directoryInfo (dir @@ deploymentRootDir @@ app @@ "backups") 
-    FindFirstMatchingFile backupFileName dir
-
+    dir @@ deploymentRootDir @@ app @@ "backups"
+    |> FindFirstMatchingFile backupFileName
 
 let unpack isRollback packageBytes =
     let extractTempPath = Path.GetTempPath() @@ (Guid.NewGuid().ToString())
     let tempFile = Path.GetTempFileName()
-    File.WriteAllBytes(tempFile, packageBytes)
+    WriteBytesToFile tempFile packageBytes
 
     Unzip extractTempPath tempFile
     File.Delete(tempFile)
 
-    let tempDir = directoryInfo extractTempPath
-
-    let nuSpecFile = FindFirstMatchingFile "*.nuspec" tempDir 
+    let nuSpecFile = FindFirstMatchingFile "*.nuspec" extractTempPath 
     let package = 
         nuSpecFile
         |> File.ReadAllText
         |> NuGetHelper.getNuspecProperties
         
-    let workDirectory = directoryInfo (workDir @@ deploymentRootDir @@ package.Id @@ "active")   
-    let newActiveFilePath = workDirectory.FullName @@ package.FileName
+    let activeDir = workDir @@ deploymentRootDir @@ package.Id @@ "active"   
+    let newActiveFilePath = activeDir @@ package.FileName
 
-    match TryFindFirstMatchingFile "*.nupkg" workDirectory with
+    match TryFindFirstMatchingFile "*.nupkg" activeDir with
     | Some activeFilePath ->
         let backupDir = workDir @@ deploymentRootDir @@ package.Id @@ "backups"
         let backedUpFilePath = (FullName backupDir) @@ Path.GetFileName(activeFilePath)
     
         ensureDirectory backupDir
-        if workDirectory.Exists && (not isRollback) then
+        if (directoryInfo activeDir).Exists && (not isRollback) then
             FileUtils.mv activeFilePath backedUpFilePath
     | None -> ()
     
-    if workDirectory.Exists then
-        workDirectory.Delete(true)
-    workDirectory.Create()
+    CleanDir activeDir
 
     WriteBytesToFile newActiveFilePath packageBytes
     
-    FileUtils.cp_r tempDir.FullName workDirectory.FullName
-    FileUtils.rm_rf tempDir.FullName
+    XCopy extractTempPath activeDir
+    FileUtils.rm_rf extractTempPath
 
-    let scriptFile = FindFirstMatchingFile "*.fsx" workDirectory
-
+    let scriptFile = FindFirstMatchingFile "*.fsx" activeDir
     package, scriptFile
     
 let doDeployment packageName script =
