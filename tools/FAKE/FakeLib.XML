@@ -441,6 +441,9 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
 <member name="T:Fake.DeploymentHelper">
 
 </member>
@@ -950,9 +953,14 @@
  Gets the current directory
 </summary>
 </member>
-<member name="M:Fake.FileSystemHelper.FindFirstMatchingFile(System.String,System.IO.DirectoryInfo)">
+<member name="M:Fake.FileSystemHelper.FindFirstMatchingFile(System.String,System.String)">
 <summary>
  Gets the first file in the directory matching the search pattern or throws if nothing was found
+</summary>
+</member>
+<member name="M:Fake.FileSystemHelper.TryFindFirstMatchingFile(System.String,System.String)">
+<summary>
+ Gets the first file in the directory matching the search pattern or None
 </summary>
 </member>
 <member name="M:Fake.FileSystemHelper.filesInDirMatching(System.String,System.IO.DirectoryInfo)">
@@ -2408,7 +2416,7 @@
 </member>
 <member name="M:Fake.NuGetHelper.GetPackageVersion(System.String,System.String)">
 <summary>
- Gets the version no. for a given package in the packages folder
+ Gets the version no. for a given package in the deployments folder
 </summary>
 </member>
 <member name="">
