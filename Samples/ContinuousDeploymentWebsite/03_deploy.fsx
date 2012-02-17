@@ -92,7 +92,7 @@ Target "Deploy" (fun _ ->
       |> DeploymentHelper.DeployPackageLocally
 
     tracefn "Active Releases:"
-    DeploymentHelper.getActiveReleases()
+    DeploymentHelper.getAllReleases()
       |> Seq.iter (tracefn "%A")
 )
 
