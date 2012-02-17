@@ -93,24 +93,24 @@ let unpack isRollback packageBytes =
         nuSpecFile
         |> File.ReadAllText
         |> NuGetHelper.getNuspecProperties
-    
-    let backupDir = directoryInfo (workDir @@ deploymentRootDir @@ package.Id @@ "backups")
+        
     let workDirectory = directoryInfo (workDir @@ deploymentRootDir @@ package.Id @@ "active")   
     let newActiveFilePath = workDirectory.FullName @@ package.FileName
 
     match TryFindFirstMatchingFile "*.nupkg" workDirectory with
     | Some activeFilePath ->
-        let backedUpFilePath = (backupDir.FullName @@ Path.GetFileName(activeFilePath))
+        let backupDir = workDir @@ deploymentRootDir @@ package.Id @@ "backups"
+        let backedUpFilePath = (FullName backupDir) @@ Path.GetFileName(activeFilePath)
     
-        if backupDir.Exists then () else backupDir.Create()
-
+        ensureDirectory backupDir
         if workDirectory.Exists && (not isRollback) then
-          FileUtils.mv activeFilePath backedUpFilePath
+            FileUtils.mv activeFilePath backedUpFilePath
     | None -> ()
-
+    
     workDirectory.Delete(true)
     workDirectory.Create()
-    File.WriteAllBytes(newActiveFilePath, packageBytes)
+
+    WriteBytesToFile newActiveFilePath packageBytes
     
     FileUtils.cp_r tempDir.FullName workDirectory.FullName
     FileUtils.rm_rf tempDir.FullName
