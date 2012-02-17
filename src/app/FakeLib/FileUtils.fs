@@ -20,6 +20,7 @@ let cp = flip CopyFile
 let chdir = Directory.SetCurrentDirectory
 let cd = chdir
 let pwd = Directory.GetCurrentDirectory
+let mv = flip MoveFile
 
 (*
 TODO: 

@@ -5,12 +5,15 @@ open System.IO
 open System.Net
 open System.Threading
 open System.Diagnostics
+open System.Text.RegularExpressions
 open Fake.DeploymentHelper
 
 type Route = {
         Verb : string
         Path : string
     }
+    with 
+        override x.ToString() = sprintf "%s %s" x.Verb x.Path
 
 let mutable private logger : (string * EventLogEntryType) -> unit = ignore 
 let private cts = new CancellationTokenSource()
@@ -27,12 +30,18 @@ let private writeResponse (ctx : HttpListenerContext) (str : string) =
     ctx.Response.ContentEncoding <- Text.Encoding.UTF8
     ctx.Response.Close(response, true)
 
+let matchGroups (pat:string) (inp:string) =
+    let m = Regex.Match(inp, pat) in
+    if m.Success
+    then Some (List.tail [ for g in m.Groups -> g.Value ])
+    else None
+
 let private routeRequest (ctx : HttpListenerContext) (requestMap : Map<Route, (HttpListenerContext -> string option)>) =     
     try
-        let route =  { Verb = ctx.Request.HttpMethod; Path = ctx.Request.RawUrl.Replace("fake/", "").Trim('/') }
-        
+        let route =  { Verb = ctx.Request.HttpMethod; Path = ctx.Request.RawUrl.Replace("fake/", "").Trim('/').ToLower() }
         match Map.tryFind route requestMap with
-        | Some(handler) -> handler(ctx) |> Option.iter (writeResponse ctx)
+        | Some(handler) -> 
+            handler(ctx) |> Option.iter (writeResponse ctx)
         | None -> writeResponse ctx (sprintf "Unknown route %s" ctx.Request.Url.AbsoluteUri)
     with e ->
         let msg = sprintf "Fake Deploy Request Error:\n\n%A" e
@@ -41,7 +50,7 @@ let private routeRequest (ctx : HttpListenerContext) (requestMap : Map<Route, (H
 
 let createRequestMap routes : Map<Route, (HttpListenerContext -> string option)>= 
     routes
-    |> Seq.map (fun (verb, route : string, func) -> { Verb = verb; Path = route.Trim([|'/'; '\\'|]) }, func)
+    |> Seq.map (fun (verb, route : string, func) -> { Verb = verb; Path = route.Trim([|'/'; '\\'|]).ToLower() }, func)
     |> Map.ofSeq
 
 let getBodyFromContext (ctx : HttpListenerContext) = 

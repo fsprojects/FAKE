@@ -309,7 +309,40 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
 <member name="T:Fake.DeploymentAgent">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
 
 </member>
 <member name="">
@@ -534,6 +567,11 @@
 </member>
 <member name="T:Fake.FSIHelper">
 
+</member>
+<member name="M:Fake.FileHelper.MoveFile(System.String,System.String)">
+ <summary>Moves a single file to the target and overwrites the existing file.</summary>
+ <param name="target">The target directory.</param>
+ <param name="fileName">The FileName.</param>
 </member>
 <member name="M:Fake.FileHelper.CopyRecursive(System.String,System.String)">
 <summary>
@@ -912,6 +950,11 @@
  Gets the current directory
 </summary>
 </member>
+<member name="M:Fake.FileSystemHelper.FindFirstMatchingFile(System.String,System.IO.DirectoryInfo)">
+<summary>
+ Gets the first file in the directory matching the search pattern or throws if nothing was found
+</summary>
+</member>
 <member name="M:Fake.FileSystemHelper.filesInDirMatching(System.String,System.IO.DirectoryInfo)">
 <summary>
  Finds all the files in the directory matching the search pattern 
@@ -953,6 +996,9 @@
 </summary>
 </member>
 <member name="T:Fake.FileSystemHelper">
+
+</member>
+<member name="">
 
 </member>
 <member name="">
@@ -1631,6 +1677,12 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
 <member name="T:Fake.HttpListener">
 
 </member>
@@ -1786,6 +1838,21 @@
 <member name="T:Fake.ILMergeHelper">
 
 </member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
 <member name="M:Fake.Json.deserializeFile``1">
 <summary>
  Deserializes a file into a object of type &apos;a
@@ -1800,6 +1867,9 @@
 <summary>
  Serializes a object to json
 </summary>
+</member>
+<member name="">
+
 </member>
 <member name="T:Fake.Json">
 
@@ -2185,18 +2255,6 @@
 </summary>
 </member>
 <member name="T:Fake.NUnitHelper">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
 
 </member>
 <member name="">
@@ -3818,6 +3876,11 @@
 </member>
 <member name="T:Fake.XUnitHelper">
 
+</member>
+<member name="M:Fake.ZipHelper.UnzipSingleFileInMemory(System.String,System.String)">
+ <summary>Unzips a single file from the archive with the given fileName.</summary>
+ <param name="fileToUnzip">The file inside the archive.</param>
+ <param name="zipFileName">The FileName of the zip file.</param>
 </member>
 <member name="M:Fake.ZipHelper.Unzip(System.String,System.String)">
  <summary>Unzips a file with the given fileName.</summary>

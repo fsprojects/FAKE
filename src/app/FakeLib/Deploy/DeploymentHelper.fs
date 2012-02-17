@@ -8,10 +8,11 @@ open Fake
 type DeploymentResponseStatus =
 | Success
 | Failure of obj
+| RolledBack
 with 
     member x.GetError() = 
         match x with
-        | Success -> null
+        | Success | RolledBack -> null
         | Failure(err) -> err
 
 type DeploymentResponse = {
@@ -20,7 +21,9 @@ type DeploymentResponse = {
     }
     with 
         static member Sucessful name =  { Status = Success; PackageName = name}
+        static member RolledBack name = { Status = RolledBack; PackageName = name }
         static member Failure(name, error) = { Status = Failure error; PackageName = name}
+        member x.SwitchTo(status) = { x with Status = status }
 
 type DeploymentPushStatus = 
     | Cancelled
@@ -41,32 +44,40 @@ let private getNuspecInfos seq =
               |> ZipHelper.UnzipSingleFileInMemory ((fileInfo pf).Directory.Parent.Name + ".nuspec")
               |> NuGetHelper.getNuspecProperties)
 
+let mutable workDir = "."
+
 let getActiveReleasesInDirectory dir = 
     !! (dir @@ "packages/**/active/*.nupkg")
       |> getNuspecInfos
 
-let getActiveReleases() = getActiveReleasesInDirectory "."
+let getActiveReleases() = getActiveReleasesInDirectory workDir
 
 let getActiveReleaseInDirectoryFor dir (app : string) = 
     !! (dir @@ "packages/" + app + "/active/*.nupkg") 
       |> getNuspecInfos
       |> Seq.head
 
-let getActiveReleaseFor (app : string) = getActiveReleaseInDirectoryFor "." app
+let getActiveReleaseFor (app : string) = getActiveReleaseInDirectoryFor workDir app
 
 let getAllReleasesInDirectory dir = 
     !! (dir @@ "packages/**/*.nupkg")
       |> getNuspecInfos
 
-let getAllReleases() = getAllReleasesInDirectory "."
+let getAllReleases() = getAllReleasesInDirectory workDir
 
 let getAllReleasesInDirectoryFor dir (app : string) = 
     !! (dir @@ "packages/" + app + "/**/*.nupkg") 
       |> getNuspecInfos
 
-let getAllReleasesFor (app : string) = getAllReleasesInDirectoryFor "." app
+let getAllReleasesFor (app : string) = getAllReleasesInDirectoryFor workDir app
 
-let unpack packageBytes =
+let getBackupFor dir (app : string) (version : string) =
+    let backupFileName =  app + "." + version + ".nupkg"
+    let dir = directoryInfo (dir @@ "packages" @@ app @@ "backups") 
+    FindFirstMatchingFile backupFileName dir
+
+
+let unpack isRollback packageBytes =
     let extractTempPath = Path.GetTempPath() @@ (Guid.NewGuid().ToString())
     let tempFile = Path.GetTempFileName()
     File.WriteAllBytes(tempFile, packageBytes)
@@ -76,17 +87,29 @@ let unpack packageBytes =
 
     let tempDir = directoryInfo extractTempPath
 
+    let nuSpecFile = FindFirstMatchingFile "*.nuspec" tempDir 
     let package = 
-        FindFirstMatchingFile "*.nuspec" tempDir 
+        nuSpecFile
         |> File.ReadAllText
         |> NuGetHelper.getNuspecProperties
+    
+    let backupDir = directoryInfo (workDir @@ "packages" @@ package.Id @@ "backups")
+    let workDirectory = directoryInfo (workDir @@ "packages" @@ package.Id @@ "active")
+    let activeFilePath = FindFirstMatchingFile "*.nupkg" workDirectory
+    let newActiveFilePath = workDirectory.FullName @@ (package.Id + "." + package.Version + ".nupkg")
+    let backedUpFilePath = (backupDir.FullName @@ Path.GetFileName(activeFilePath))
+    
+    if backupDir.Exists then () else backupDir.Create()
 
-    let backupDir = directoryInfo ("Backup" @@ package.DirectoryName + "/" + (DateTime.Now.ToString("dd_MM_yyyy_hh_mm_ss")))
-    let workDirectory = directoryInfo ("packages" @@ package.DirectoryName)
-    if workDirectory.Exists then 
-      FileUtils.cp_r workDirectory.FullName backupDir.FullName
+    if workDirectory.Exists && (not isRollback) then
+      FileUtils.mv activeFilePath backedUpFilePath
 
+    workDirectory.Delete(true)
+    workDirectory.Create()
+    File.WriteAllBytes(newActiveFilePath, packageBytes)
+    
     FileUtils.cp_r tempDir.FullName workDirectory.FullName
+    FileUtils.rm_rf tempDir.FullName
 
     let scriptFile = FindFirstMatchingFile "*.fsx" workDirectory
 
@@ -102,9 +125,9 @@ let doDeployment packageName script =
             DeploymentResponse.Failure(packageName, Exception("Deployment script didn't run successfully"))
     with e ->
         DeploymentResponse.Failure(packageName, e) 
-       
+              
 let runDeployment (packageBytes : byte[]) =
-     let package,scriptFile = unpack packageBytes
+     let package,scriptFile = unpack false packageBytes
      doDeployment package.Name scriptFile
 
 let runDeploymentFromPackageFile packageFileName =
@@ -114,6 +137,21 @@ let runDeploymentFromPackageFile packageFileName =
         |> runDeployment
     with e ->
         DeploymentResponse.Failure(packageFileName, e) 
+
+let rollbackFor dir (app : string) (version : string) =
+    try 
+        let currentPackageFileName = !! (dir @@ "packages/" + app + "/active/*.nupkg") |> Seq.head
+        let backupPackageFileName = getBackupFor dir app version
+        if currentPackageFileName = backupPackageFileName
+        then DeploymentResponse.Failure(app + "." + version + ".nupkg", "Cannot rollback to currently active version")
+        else 
+            let package,scriptFile = unpack true (backupPackageFileName |> ReadFileAsBytes)
+            (doDeployment package.Name scriptFile).SwitchTo(RolledBack)
+    with
+        | :? FileNotFoundException as e -> DeploymentResponse.Failure(e.FileName, sprintf "Failed to rollback to %s %s could not find package file or deployment script file ensure the version is within the backup directory and the deployment script is in the root directory of the *.nupkg file" app version)
+        | _ as e -> DeploymentResponse.Failure(app + "." + version + ".nupkg", "Rollback Failed: " + e.Message)
+
+let rollback (app : string) (version : string) = rollbackFor workDir app version
 
 let DeployPackageLocally packageFileName =
     match runDeploymentFromPackageFile packageFileName with

@@ -369,3 +369,15 @@ let rec copyRecursive (dir:DirectoryInfo) (outputDir:DirectoryInfo) overwrite =
   
 /// Copies the file structure recursive
 let CopyRecursive dir outputDir = copyRecursive (directoryInfo dir) (directoryInfo outputDir)
+
+/// <summary>Moves a single file to the target and overwrites the existing file.</summary>
+/// <param name="target">The target directory.</param>
+/// <param name="fileName">The FileName.</param>
+let MoveFile target fileName =
+    let fi = fileSystemInfo fileName
+    match fi with
+    | File f ->  
+        let targetName = target @@ fi.Name
+        logVerbosefn "Move %s to %s" fileName targetName
+        f.MoveTo(targetName) |> ignore    
+    | Directory _ -> logVerbosefn "Ignoring %s, because it is no file" fileName
