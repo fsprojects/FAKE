@@ -315,9 +315,6 @@
 <member name="">
 
 </member>
-<member name="">
-
-</member>
 <member name="T:Fake.DeploymentAgent">
 
 </member>
@@ -1694,7 +1691,28 @@
 <member name="">
 
 </member>
-<member name="T:Fake.HttpListener">
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Fake.HttpListenerHelper">
 
 </member>
 <member name="F:Fake.ILMergeHelper.ILMergeParams.XmlDocs">
@@ -3449,6 +3467,12 @@
 </summary>
 </member>
 <member name="T:Fake.TimeoutHelper">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
 
 </member>
 <member name="M:Fake.TraceHelper.traceEndTask(System.String,System.String)">
