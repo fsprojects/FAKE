@@ -13,6 +13,7 @@ namespace Test.FAKECore.PackageMgt
         It should_find_a_port = () => _port.ShouldNotBeEmpty();
     }
 
+    [Tags("HTTP")]
     public class when_starting_the_http_server
     {
         const string ServerName = "localhost";

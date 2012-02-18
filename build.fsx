@@ -124,6 +124,7 @@ Target "Test" (fun _ ->
       |> MSpec (fun p -> 
             {p with
                 ToolPath = mspecTool
+                ExcludeTags = ["HTTP"]
                 HtmlOutputDir = reportDir}) 
 )
 
