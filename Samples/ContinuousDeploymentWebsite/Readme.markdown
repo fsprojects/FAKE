@@ -1,6 +1,6 @@
 ## FAKE.Deploy - Sample app
 
-* Run 03_listen.bat - This will start the build with FAKE:
+* Run 02_build.bat - This will start the build with FAKE:
 	* It compiles the website project
 	* It compiles the test project
 	* It runs the tests with mspec
