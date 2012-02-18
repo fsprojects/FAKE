@@ -21,20 +21,24 @@ type FakeDeployService() as self =
         self.AutoLog <- true
         self.ServiceName <- "Fake Deploy Agent"
 
-    override x.OnStart(args) =
-        listener <-
-            DeploymentAgent.start 
-                logger 
-                (ConfigurationManager.AppSettings.["ServerName"])
-                (ConfigurationManager.AppSettings.["Port"])
+    override x.OnStart args =
+        let serverName =
+            if args <> null && args.Length > 1 then args.[1] else 
+            ConfigurationManager.AppSettings.["ServerName"]
+
+        let port = 
+            if args <> null && args.Length > 2 then args.[2] else 
+            ConfigurationManager.AppSettings.["Port"]
+
+        listener <- DeploymentAgent.start logger serverName port
 
     override x.OnStop() = listener.Cancel()
 
     member x.Start(args) =
         if Environment.UserInteractive then 
-            x.OnStart(args)
+            x.OnStart args
         else 
-            ServiceBase.Run(x)
+            ServiceBase.Run x
 
     member x.Stop() = 
         x.OnStop()

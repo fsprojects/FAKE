@@ -151,12 +151,7 @@ let rollbackFor dir (app : string) (version : string) =
 
 let rollback (app : string) (version : string) = rollbackFor workDir app version
 
-let DeployPackageLocally packageFileName =
-    match runDeploymentFromPackageFile packageFileName with
-    | response when response.Status = Success -> tracefn "Deployment of %s successful" packageFileName
-    | response -> failwithf "Deployment of %A failed\r\n%A" packageFileName (response.Status.GetError())     
-
-let postDeploymentPackage url packagePath = 
+let postDeploymentPackage url packageFileName = 
     let result = ref Unknown
     let waitHandle = new Threading.AutoResetEvent(false)
     let handle (event : UploadDataCompletedEventArgs) =
@@ -178,6 +173,13 @@ let postDeploymentPackage url packagePath =
     let mutable uploaded = false
     client.Headers.Add(HttpRequestHeader.ContentType, "application/fake")
     client.UploadDataCompleted |> Event.add handle
-    client.UploadDataAsync(uri, "POST", ReadFileAsBytes packagePath)
+    client.UploadDataAsync(uri, "POST", ReadFileAsBytes packageFileName)
     waitHandle.WaitOne() |> ignore
     !result
+
+
+let PostDeploymentPackage url packageFileName = 
+    match postDeploymentPackage url packageFileName with
+    | Ok(_) -> tracefn "Deployment of %s successful" packageFileName
+    | Error(exn) -> failwithf "Deployment of %A failed\r\n%A" packageFileName exn
+    | response -> failwithf "Deployment of %A failed\r\n%A" packageFileName response

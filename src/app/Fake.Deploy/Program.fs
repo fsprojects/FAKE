@@ -22,6 +22,11 @@ module Main =
             
         printfn "Otherwise the service is just started as a command line process"
 
+    let listen args =
+        use srv = new Services.FakeDeployService()
+        srv.Start(args)
+        System.Console.ReadLine() |> ignore
+
     { Name = "install"
       Parameters = []
       Description = "installs the deployment agent as a service"
@@ -44,6 +49,12 @@ module Main =
       Parameters = []
       Description = "stops the deployment agent"
       Function = fun _ -> Services.getFakeAgentService().Stop() }
+        |> register
+
+    { Name = "listen"
+      Parameters = ["serverName"; "port"]
+      Description = "starts the deployment agent"
+      Function = listen }
         |> register
 
     { Name = "deployRemote"
@@ -83,8 +94,6 @@ module Main =
             | true,cmd -> cmd.Function args
             | false,_ -> printUsage()
         else 
-            use srv = new Services.FakeDeployService()
-            srv.Start(args)
-            System.Console.ReadLine() |> ignore
+            listen args
 
         0

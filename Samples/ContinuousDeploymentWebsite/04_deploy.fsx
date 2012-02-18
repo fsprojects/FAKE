@@ -86,10 +86,10 @@ Target "Publish" (fun _ ->
       |> Copy deployDir
 )
 
-Target "Deploy" (fun _ ->   
+Target "Deploy" (fun _ ->
     !! (deployDir + "*.nupkg") 
-      |> Seq.head
-      |> DeploymentHelper.DeployPackageLocally
+        |> Seq.head
+        |> DeploymentHelper.PostDeploymentPackage "http://localhost:8085/fake/"
 
     tracefn "Active Releases:"
     DeploymentHelper.getAllReleases()
