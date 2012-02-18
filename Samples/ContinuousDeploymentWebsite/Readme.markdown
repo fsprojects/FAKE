@@ -9,8 +9,8 @@
 		* the install.fsx file and the referenced FAKE libs
 		* Cassini - a mini webserver.
 * Run 03_listen.bat - This will start the Fake.Deploy agent as console.
-* Run 04_deploy.bat - This will the deploy process by POSTing to http://localhost:8085/fake, which:
-	* Unpackw the package in ./Work/
+* Run 04_deploy.bat - This will the deploy process by POSTing to http://localhost:8085/fake, which runs install.fsx:
+	* Unpacks the package in ./Work/
 	* Copies the website into a separate folder
 	* Copies Cassini into a separate folder
 	* Starts Casssini on the website folder
