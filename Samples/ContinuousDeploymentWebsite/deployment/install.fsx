@@ -5,6 +5,7 @@
 open Fake
 
 let targetWebsitePath = @"..\website\"
+let targetServerPath = @"..\server\"
 
 // Targets
 Target "StopCassini" (fun _ ->
@@ -13,15 +14,15 @@ Target "StopCassini" (fun _ ->
 
 Target "InstallWebsite" (fun _ ->
     XCopy @".\website\" targetWebsitePath
-    XCopy @".\tools\cassini\" targetWebsitePath
+    XCopy @".\tools\cassini\" targetServerPath
 )
 
 Target "StartCassini" (fun _ ->
-    let args = "/a:" + @".\website"
+    let args = "/a:" + targetWebsitePath
 
     StartProcess
        (fun info ->  
-           info.FileName <- @".\website\CassiniDev4.exe"
+           info.FileName <- targetServerPath @@ "CassiniDev4.exe"
            info.WorkingDirectory <- null
            info.Arguments <- args)
 )
