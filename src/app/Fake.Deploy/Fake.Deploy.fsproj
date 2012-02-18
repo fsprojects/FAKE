@@ -49,9 +49,7 @@
     <Compile Include="Services.fs" />
     <Compile Include="Installers.fs" />
     <Compile Include="Program.fs" />
-    <None Include="app.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <Content Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

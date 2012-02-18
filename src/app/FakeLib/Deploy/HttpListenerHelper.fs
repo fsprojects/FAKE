@@ -75,14 +75,13 @@ let getBodyFromContext (ctx : HttpListenerContext) =
     else failwith "Attempted To Read body from request when there is not one"
 
 let getFirstFreePort() =
-    let defaultPort = 6666
+    let defaultPort = 8080
     let usedports = NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpListeners() |> Seq.map (fun x -> x.Port)
     let ports = seq { for port in defaultPort .. defaultPort + 2048 do yield port }
     let port = ports |> Seq.find (fun p -> not <| Seq.contains p usedports)
     port.ToString()
 
-let getPort configPort =
-    let defaultPort = 6666
+let getPort configPort =    
     match configPort with
     | "*" -> getFirstFreePort()
     | _ -> configPort 
@@ -106,7 +105,8 @@ let start log serverName port requestMap =
     let usedPort = getPort port
     let listenerLoop = 
         async {
-            try                
+            try 
+                log (sprintf "Trying to start Fake Deploy server @ %s port %s" serverName usedPort, EventLogEntryType.Information)
                 use l = listener serverName usedPort
                 let prefixes = l.Prefixes |> separated ","
                 log (sprintf "Fake Deploy now listening @ %s" prefixes, EventLogEntryType.Information)
