@@ -1,5 +1,7 @@
 ## FAKE.Deploy - Sample app
 
+### Initial deployment
+
 * Run 02_build.bat - This will start the build with FAKE:
 	* It compiles the website project
 	* It compiles the test project
@@ -14,3 +16,11 @@
 	* Copies the website into a separate folder
 	* Copies Cassini into a separate folder
 	* Starts Casssini on the website folder
+* Take a look at the deployed website - probably at http://localhost:32768/
+
+### Pushing an update
+
+* Increment the version no. in version.txt
+* Run 02_build.bat
+* Run 04_deploy.bat
+* Now take another look at the deployed website
