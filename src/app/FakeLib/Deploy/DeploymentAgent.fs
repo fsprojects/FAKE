@@ -41,14 +41,14 @@ let requestMap =
     DeploymentHelper.getAllReleases() 
     |> Seq.collect (fun spec -> 
                                 [
-                                    "GET", "/releases/all/"+spec.Id, getAllReleasesFor spec.Id
-                                    "GET", "/releases/active/"+spec.Id, getActiveReleaseFor spec.Id
+                                    "GET", "/deployments/all/"+spec.Id, getAllReleasesFor spec.Id
+                                    "GET", "/deployments/active/"+spec.Id, getActiveReleaseFor spec.Id
                                     "GET", "/rollback/"+spec.Id+"?version="+spec.Version, runRollback spec.Id spec.Version
                                 ])
     |> Seq.append [
         "POST", "", runDeployment
-        "GET", "/releases/active", getActiveReleases
-        "GET", "/releases/all", getAllReleases
+        "GET", "/deployments/active", getActiveReleases
+        "GET", "/deployments/all", getAllReleases
     ] |> createRequestMap
 
 
