@@ -5,31 +5,12 @@ open System.IO
 open System.Net
 open Fake
 
-type DeploymentResponseStatus =
+type DeploymentResponse =
 | Success
 | Failure of obj
 | RolledBack
-with 
-    member x.GetError() = 
-        match x with
-        | Success | RolledBack -> null
-        | Failure(err) -> err
-
-type DeploymentResponse = {
-        Status : DeploymentResponseStatus
-        PackageName : string
-    }
-    with 
-        static member Sucessful name =  { Status = Success; PackageName = name}
-        static member RolledBack name = { Status = RolledBack; PackageName = name }
-        static member Failure(name, error) = { Status = Failure error; PackageName = name}
-        member x.SwitchTo(status) = { x with Status = status }
-
-type DeploymentPushStatus = 
-    | Cancelled
-    | Error of exn
-    | Ok of DeploymentResponse
-    | Unknown
+| Cancelled
+| Unknown
 
 type Directories = {
     App : DirectoryInfo
@@ -107,36 +88,36 @@ let doDeployment packageName script =
         let workingDirectory = DirectoryName script
         
         if FSIHelper.runBuildScriptAt workingDirectory true (FullName script) Seq.empty then 
-            DeploymentResponse.Sucessful(packageName)
+            Success
         else 
-            DeploymentResponse.Failure(packageName, Exception("Deployment script didn't run successfully"))
-    with e ->
-        DeploymentResponse.Failure(packageName, e) 
+            Failure(Exception "Deployment script didn't run successfully")
+    with e -> Failure e
               
 let runDeployment (packageBytes : byte[]) =
      let package,scriptFile = unpack false packageBytes
-     doDeployment package.Name scriptFile
+     package.FileName,doDeployment package.Name scriptFile
 
 let runDeploymentFromPackageFile packageFileName =
     try
         packageFileName
         |> ReadFileAsBytes
         |> runDeployment
-    with e ->
-        DeploymentResponse.Failure(packageFileName, e) 
+    with e -> packageFileName,Failure e
 
 let rollbackFor dir (app : string) (version : string) =
     try 
         let currentPackageFileName = !! (dir @@ deploymentRootDir + app + "/active/*.nupkg") |> Seq.head
         let backupPackageFileName = getBackupFor dir app version
         if currentPackageFileName = backupPackageFileName
-        then DeploymentResponse.Failure(app + "." + version + ".nupkg", "Cannot rollback to currently active version")
+        then Failure "Cannot rollback to currently active version"
         else 
             let package,scriptFile = unpack true (backupPackageFileName |> ReadFileAsBytes)
-            (doDeployment package.Name scriptFile).SwitchTo(RolledBack)
+            match doDeployment package.Name scriptFile with
+            | Success -> RolledBack
+            | x -> x
     with
-        | :? FileNotFoundException as e -> DeploymentResponse.Failure(e.FileName, sprintf "Failed to rollback to %s %s could not find package file or deployment script file ensure the version is within the backup directory and the deployment script is in the root directory of the *.nupkg file" app version)
-        | _ as e -> DeploymentResponse.Failure(app + "." + version + ".nupkg", "Rollback Failed: " + e.Message)
+        | :? FileNotFoundException as e -> Failure (sprintf "Failed to rollback to %s %s could not find package file or deployment script file ensure the version is within the backup directory and the deployment script is in the root directory of the *.nupkg file" app version)
+        | _ as e -> Failure("Rollback failed: " + e.Message)
 
 let rollback (app : string) (version : string) = rollbackFor workDir app version
 
@@ -148,13 +129,13 @@ let postDeploymentPackage url packageFileName =
             result := Cancelled
             waitHandle.Set() |> ignore
         elif event.Error <> null then 
-            result := Error(event.Error)
+            result := Failure event.Error
             waitHandle.Set() |> ignore
         else
             use ms = new MemoryStream(event.Result)
             use sr = new StreamReader(ms, Text.Encoding.UTF8)
             let res = sr.ReadToEnd()
-            result := Json.deserialize<DeploymentResponse> res |> Ok
+            result := Json.deserialize<DeploymentResponse> res
             waitHandle.Set() |> ignore
 
     let uri = new Uri(url, UriKind.Absolute)
@@ -169,6 +150,6 @@ let postDeploymentPackage url packageFileName =
 
 let PostDeploymentPackage url packageFileName = 
     match postDeploymentPackage url packageFileName with
-    | Ok(_) -> tracefn "Deployment of %s successful" packageFileName
-    | Error(exn) -> failwithf "Deployment of %A failed\r\n%A" packageFileName exn
+    | Success -> tracefn "Deployment of %s successful" packageFileName
+    | Failure exn -> failwithf "Deployment of %A failed\r\n%A" packageFileName exn
     | response -> failwithf "Deployment of %A failed\r\n%A" packageFileName response

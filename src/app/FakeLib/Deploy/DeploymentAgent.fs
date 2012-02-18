@@ -11,13 +11,12 @@ open Fake.HttpListenerHelper
 let mutable private logger : (string * EventLogEntryType) -> unit = ignore 
 
 let private runDeployment (ctx : HttpListenerContext) =
-    match (runDeployment (getBodyFromContext ctx)) with
-    | response when response.Status = Success ->
-        logger (sprintf "Successfully deployed %A" response.PackageName, EventLogEntryType.Information)
-        response
-    | response ->
-        logger (sprintf "Deployment failed: %A" response.PackageName, EventLogEntryType.Information)
-        response 
+    let response = runDeployment (getBodyFromContext ctx)
+    match response with
+    | (fileName,Success) -> logger (sprintf "Successfully deployed %A" fileName, EventLogEntryType.Information)
+    | (fileName,response) -> logger (sprintf "Deployment failed: %A" fileName, EventLogEntryType.Information)
+
+    response
     |> Json.serialize
     |> Some
 

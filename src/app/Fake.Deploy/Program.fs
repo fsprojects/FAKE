@@ -63,9 +63,10 @@ module Main =
       Function = 
         fun args ->
             match postDeploymentPackage args.[1] args.[2] with
-            | Ok(p) -> printfn "Deployment of %A" p
-            | Error(e) -> printfn "Deployment of %A failed\r\n%A" args.[1] e
+            | Success -> printfn "Deployment of %A successful" args.[1]
+            | Failure exn -> printfn "Deployment of %A failed\r\n%A" args.[1] exn
             | Cancelled -> printfn "Deployment of %A cancelled" args.[1] 
+            | RolledBack -> printfn "Deployment of %A rolled back" args.[1] 
             | Unknown -> printfn "Deployment of %A failed\r\nCould not derive reason sorry!!!" args.[1] }
         |> register
 
@@ -75,8 +76,9 @@ module Main =
       Function =
         fun args -> 
             match runDeploymentFromPackageFile args.[1] with
-            | response when response.Status = Success -> printfn "Deployment of %s successful" args.[1]
-            | response -> printfn "Deployment of %A failed\r\n%A" args.[1] (response.Status.GetError()) 
+            | (fileName,Success) -> printfn "Deployment of %s successful" args.[1]
+            | (fileName,Failure exn) -> printfn "Deployment of %A failed\r\n%A" args.[1] exn 
+            | (fileName,response) -> printfn "Deployment of %A failed\r\n%A" args.[1] response
             System.Console.ReadKey() |> ignore }
         |> register
 
