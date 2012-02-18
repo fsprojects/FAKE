@@ -87,4 +87,18 @@ let UnzipSingleFileInMemory fileToUnzip (zipFileName:string) =
 
     use stream = zf.GetInputStream(ze)
     use reader = new StreamReader(stream)
-    reader.ReadToEnd()       
+    reader.ReadToEnd()
+    
+/// <summary>Unzips a single file from the archive with the given fileName.</summary>
+/// <param name="predicate">The predictae for the searched file in the archive.</param>
+/// <param name="zipFileName">The FileName of the zip file.</param>
+let UnzipFirstMatchingFileInMemory predicate (zipFileName:string) =
+    use zf = new ZipFile(zipFileName)
+
+    let ze = 
+        seq { for ze in zf do yield ze :?> ZipEntry }
+        |> Seq.find predicate
+
+    use stream = zf.GetInputStream(ze)
+    use reader = new StreamReader(stream)
+    reader.ReadToEnd()         

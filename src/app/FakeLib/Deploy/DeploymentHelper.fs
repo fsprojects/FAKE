@@ -37,38 +37,36 @@ type Directories = {
     Active : DirectoryInfo
 }
 
-let private getNuspecInfos seq =
-    seq
-      |> Seq.map (fun pf ->
-            pf
-              |> ZipHelper.UnzipSingleFileInMemory ((fileInfo pf).Directory.Parent.Name + ".nuspec")
-              |> NuGetHelper.getNuspecProperties)
+let private extractNuspecFromPackageFile packageFileName =   
+    packageFileName
+    |> ZipHelper.UnzipFirstMatchingFileInMemory (fun ze -> ze.Name.EndsWith ".nuspec") 
+    |> NuGetHelper.getNuspecProperties
 
 let mutable workDir = "."
 let mutable deploymentRootDir = "deployments/"
 
 let getActiveReleasesInDirectory dir = 
     !! (dir @@ deploymentRootDir @@ "**/active/*.nupkg")
-      |> getNuspecInfos
+      |> Seq.map extractNuspecFromPackageFile
 
 let getActiveReleases() = getActiveReleasesInDirectory workDir
 
 let getActiveReleaseInDirectoryFor dir (app : string) = 
     !! (dir @@ deploymentRootDir + app + "/active/*.nupkg") 
-      |> getNuspecInfos
+      |> Seq.map extractNuspecFromPackageFile
       |> Seq.head
 
 let getActiveReleaseFor (app : string) = getActiveReleaseInDirectoryFor workDir app
 
 let getAllReleasesInDirectory dir = 
     !! (dir @@ deploymentRootDir @@ "**/*.nupkg")
-      |> getNuspecInfos
+      |> Seq.map extractNuspecFromPackageFile
 
 let getAllReleases() = getAllReleasesInDirectory workDir
 
 let getAllReleasesInDirectoryFor dir (app : string) = 
     !! (dir @@ deploymentRootDir + app + "/**/*.nupkg") 
-      |> getNuspecInfos
+      |> Seq.map extractNuspecFromPackageFile
 
 let getAllReleasesFor (app : string) = getAllReleasesInDirectoryFor workDir app
 
@@ -78,18 +76,10 @@ let getBackupFor dir (app : string) (version : string) =
     |> FindFirstMatchingFile backupFileName
 
 let unpack isRollback packageBytes =
-    let extractTempPath = Path.GetTempPath() @@ (Guid.NewGuid().ToString())
     let tempFile = Path.GetTempFileName()
     WriteBytesToFile tempFile packageBytes
 
-    Unzip extractTempPath tempFile
-    File.Delete(tempFile)
-
-    let nuSpecFile = FindFirstMatchingFile "*.nuspec" extractTempPath 
-    let package = 
-        nuSpecFile
-        |> File.ReadAllText
-        |> NuGetHelper.getNuspecProperties
+    let package = extractNuspecFromPackageFile tempFile   
         
     let activeDir = workDir @@ deploymentRootDir @@ package.Id @@ "active"   
     let newActiveFilePath = activeDir @@ package.FileName
@@ -104,9 +94,8 @@ let unpack isRollback packageBytes =
     | None -> ()
     
     CleanDir activeDir
-          
-    XCopy extractTempPath activeDir
-    FileUtils.rm_rf extractTempPath
+    Unzip activeDir tempFile
+    File.Delete tempFile
 
     WriteBytesToFile newActiveFilePath packageBytes
 
