@@ -13,6 +13,7 @@ Target "StopCassini" (fun _ ->
 
 Target "InstallWebsite" (fun _ ->
     XCopy @".\website\" targetWebsitePath
+    XCopy @".\tools\cassini\" targetWebsitePath
 )
 
 Target "StartCassini" (fun _ ->
@@ -20,7 +21,7 @@ Target "StartCassini" (fun _ ->
 
     StartProcess
        (fun info ->  
-           info.FileName <- @".\tools\cassini\CassiniDev4.exe"
+           info.FileName <- @".\website\CassiniDev4.exe"
            info.WorkingDirectory <- null
            info.Arguments <- args)
 )
