@@ -16,15 +16,29 @@ namespace Test.FAKECore.PackageMgt
     [Tags("HTTP")]
     public class when_starting_the_http_server
     {
-        const string ServerName = "localhost";
-        static HttpListenerHelper.Listener _listener;
+        protected const string ServerName = "localhost";
+        protected static HttpListenerHelper.Listener Listener;
 
-        Cleanup after = () => _listener.Cancel();
+        Cleanup after = () => Listener.Cancel();
 
-        Because of = () => _listener = HttpListenerHelper.startWithConsoleLogger(ServerName, "*", HttpListenerHelper.StatusRequestMap);
+        Establish context = () => Listener = HttpListenerHelper.startWithConsoleLogger(ServerName, "*", HttpListenerHelper.StatusRequestMap);
+    }
 
-        It should_serve_the_status_page =
-            () => new WebClient().DownloadString(string.Format("http://{0}:{1}/fake/", ServerName, _listener.Port))
-                      .ShouldEqual("Http listener is running");
+    [Tags("HTTP")]
+    public class when_retrieving_the_status : when_starting_the_http_server
+    {
+        static string _text;
+        Because of = () => _text = new WebClient().DownloadString(Listener.RootUrl);
+
+        It should_serve_the_status_page = () => _text.ShouldEqual("Http listener is running");
+    }
+
+    [Tags("HTTP")]
+    public class when_retrieving_a_unknown_route : when_starting_the_http_server
+    {
+        static string _text;
+        Because of = () => _text = new WebClient().DownloadString(Listener.RootUrl + "somthingsilly/");
+
+        It should_serve_the_status_page = () => _text.ShouldStartWith("Unknown route");
     }
 }

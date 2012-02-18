@@ -36,10 +36,14 @@ let matchGroups (pat:string) (inp:string) =
 
 let private routeRequest log (ctx : HttpListenerContext) (requestMap : Map<Route, (HttpListenerContext -> string option)>) =     
     try
-        let route =  { Verb = ctx.Request.HttpMethod; Path = ctx.Request.RawUrl.Replace("fake/", "").Trim('/').ToLower() }
+        let route = { 
+            Verb = ctx.Request.HttpMethod
+            Path = ctx.Request.RawUrl.Replace("fake/", "").Trim('/').ToLower() }
+
         match Map.tryFind route requestMap with
-        | Some(handler) -> 
-            handler(ctx) |> Option.iter (writeResponse ctx)
+        | Some handler -> 
+            handler(ctx) 
+              |> Option.iter (writeResponse ctx)
         | None -> writeResponse ctx (sprintf "Unknown route %s" ctx.Request.Url.AbsoluteUri)
     with e ->
         let msg = sprintf "Fake Deploy Request Error:\n\n%A" e
@@ -88,12 +92,12 @@ let getPort configPort =
 
 
 type Listener =
-  { 
-    ServerName: string
+  { ServerName: string
     Port: string
     CancelF: unit -> unit }
   with
       member x.Cancel() = x.CancelF()
+      member x.RootUrl = sprintf "http://%s:%s/fake/" x.ServerName x.Port
 
 let emptyListener = { 
     ServerName = ""
