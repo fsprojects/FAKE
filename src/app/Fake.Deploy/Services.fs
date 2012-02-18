@@ -5,33 +5,30 @@ open System
 open System.Diagnostics
 open System.ServiceProcess
 open System.Configuration
-open Fake.TraceListener
 
 type FakeDeployService() as self =
     inherit ServiceBase()
 
-    let console = new ConsoleTraceListener(false, colorMap) :> ITraceListener
+    let mutable listener = HttpListenerHelper.emptyListener
 
-    let logger (msg, eventLogEntry : EventLogEntryType) = 
+    let logger = 
         if Environment.UserInteractive then 
-            match eventLogEntry with
-            | EventLogEntryType.Error -> ErrorMessage msg
-            | EventLogEntryType.Information -> TraceMessage (msg, true)
-            | EventLogEntryType.Warning -> ImportantMessage msg
-            | _ -> LogMessage (msg, true)
-            |> console.Write
+            TraceHelper.logToConsole
         else 
-            self.EventLog.WriteEntry(msg, eventLogEntry)
+            self.EventLog.WriteEntry
 
     do 
         self.AutoLog <- true
         self.ServiceName <- "Fake Deploy Agent"
 
-    override x.OnStart(args) = 
-        DeploymentAgent.start (ConfigurationManager.AppSettings.["Port"]) logger 
+    override x.OnStart(args) =
+        listener <-
+            DeploymentAgent.start 
+                logger 
+                (ConfigurationManager.AppSettings.["ServerName"])
+                (ConfigurationManager.AppSettings.["Port"])
 
-    override x.OnStop() = 
-        DeploymentAgent.stop()
+    override x.OnStop() = listener.Cancel()
 
     member x.Start(args) =
         if Environment.UserInteractive then 

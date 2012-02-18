@@ -6,12 +6,12 @@ open System.Net
 open System.Threading
 open System.Diagnostics
 open Fake.DeploymentHelper
-open Fake.HttpListener
+open Fake.HttpListenerHelper
 
 let mutable private logger : (string * EventLogEntryType) -> unit = ignore 
 
 let private runDeployment (ctx : HttpListenerContext) =
-    match (runDeployment (HttpListener.getBodyFromContext ctx)) with
+    match (runDeployment (getBodyFromContext ctx)) with
     | response when response.Status = Success ->
         logger (sprintf "Successfully deployed %A" response.PackageName, EventLogEntryType.Information)
         response
@@ -49,13 +49,10 @@ let requestMap =
         "POST", "", runDeployment
         "GET", "/releases/active", getActiveReleases
         "GET", "/releases/all", getAllReleases
-    ] |> HttpListener.createRequestMap
+    ] |> createRequestMap
 
 
-let start port log = 
+let start log serverName port = 
     logger <- log
     requestMap.Value |> Map.iter (fun k _ -> Console.WriteLine(k))
-    HttpListener.start port log requestMap.Value
-
-let stop() = 
-    HttpListener.stop()
+    HttpListenerHelper.start log serverName port requestMap.Value

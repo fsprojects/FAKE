@@ -1,4 +1,4 @@
-﻿module Fake.HttpListener
+﻿module Fake.HttpListenerHelper
 
 open System
 open System.IO
@@ -15,13 +15,10 @@ type Route = {
     }
     with 
         override x.ToString() = sprintf "%s %s" x.Verb x.Path
-
-let mutable private logger : (string * EventLogEntryType) -> unit = ignore 
-let private cts = new CancellationTokenSource()
-
-let private listener port = 
+        
+let private listener serverName port = 
     let listener = new HttpListener()
-    listener.Prefixes.Add(sprintf "http://+:%s/fake/" port)
+    listener.Prefixes.Add(sprintf "http://%s:%s/fake/" serverName port)
     listener.Start()
     listener
 
@@ -37,7 +34,7 @@ let matchGroups (pat:string) (inp:string) =
     then Some (List.tail [ for g in m.Groups -> g.Value ])
     else None
 
-let private routeRequest (ctx : HttpListenerContext) (requestMap : Map<Route, (HttpListenerContext -> string option)>) =     
+let private routeRequest log (ctx : HttpListenerContext) (requestMap : Map<Route, (HttpListenerContext -> string option)>) =     
     try
         let route =  { Verb = ctx.Request.HttpMethod; Path = ctx.Request.RawUrl.Replace("fake/", "").Trim('/').ToLower() }
         match Map.tryFind route requestMap with
@@ -46,13 +43,21 @@ let private routeRequest (ctx : HttpListenerContext) (requestMap : Map<Route, (H
         | None -> writeResponse ctx (sprintf "Unknown route %s" ctx.Request.Url.AbsoluteUri)
     with e ->
         let msg = sprintf "Fake Deploy Request Error:\n\n%A" e
-        logger (msg, EventLogEntryType.Error)
+        log (msg, EventLogEntryType.Error)
         writeResponse ctx msg
+
+let private getStatus (ctx : HttpListenerContext) =
+    "Http listener is running"
+    |> Some
 
 let createRequestMap routes : Map<Route, (HttpListenerContext -> string option)>= 
     routes
     |> Seq.map (fun (verb, route : string, func) -> { Verb = verb; Path = route.Trim([|'/'; '\\'|]).ToLower() }, func)
     |> Map.ofSeq
+
+let StatusRequestMap = 
+    [ "GET", "", getStatus ] 
+    |> createRequestMap
 
 let getBodyFromContext (ctx : HttpListenerContext) = 
     let readAllBytes (s : Stream) =
@@ -69,32 +74,50 @@ let getBodyFromContext (ctx : HttpListenerContext) =
     then (readAllBytes ctx.Request.InputStream).ToArray() 
     else failwith "Attempted To Read body from request when there is not one"
 
+let getFirstFreePort() =
+    let defaultPort = 6666
+    let usedports = NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpListeners() |> Seq.map (fun x -> x.Port)
+    let ports = seq { for port in defaultPort .. defaultPort + 2048 do yield port }
+    let port = ports |> Seq.find (fun p -> not <| Seq.contains p usedports)
+    port.ToString()
+
 let getPort configPort =
     let defaultPort = 6666
     match configPort with
-    | "*" -> 
-        let usedports = NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpListeners() |> Seq.map (fun x -> x.Port)
-        let ports = seq { for port in defaultPort .. defaultPort + 2048 do yield port }
-        let port = ports |> Seq.find (fun p -> not <| Seq.contains p usedports)
-        port.ToString()
+    | "*" -> getFirstFreePort()
     | _ -> configPort 
 
 
-let start port log requestMap =
-    logger <- log
+type Listener =
+  { 
+    ServerName: string
+    Port: string
+    CancelF: unit -> unit }
+  with
+      member x.Cancel() = x.CancelF()
+
+let emptyListener = { 
+    ServerName = ""
+    Port = ""
+    CancelF = id }
+
+let start log serverName port requestMap =
+    let cts = new CancellationTokenSource()
+    let usedPort = getPort port
     let listenerLoop = 
         async {
-            try
-                use l = listener (getPort(port))
+            try                
+                use l = listener serverName usedPort
                 let prefixes = l.Prefixes |> separated ","
                 log (sprintf "Fake Deploy now listening @ %s" prefixes, EventLogEntryType.Information)
                 while true do
-                    routeRequest (l.GetContext()) requestMap
+                    routeRequest log (l.GetContext()) requestMap
             with e ->
-                logger (sprintf "Listener Error:\n\n%A" e, EventLogEntryType.Error)
+                log (sprintf "Listener Error:\n\n%A" e, EventLogEntryType.Error)
                     
         }
     Async.Start(listenerLoop, cts.Token)
+    { ServerName = serverName; Port = usedPort; CancelF = cts.Cancel }
 
-let stop() = 
-    cts.Cancel()
+let startWithConsoleLogger serverName port requestMap =
+    start TraceHelper.logToConsole serverName port requestMap
