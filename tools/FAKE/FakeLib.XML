@@ -2430,6 +2430,9 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
 <member name="M:Fake.NuGetHelper.NuGet(Microsoft.FSharp.Core.FSharpFunc`2{Fake.NuGetHelper.NuGetParams,Fake.NuGetHelper.NuGetParams},System.String)">
 <summary>
  Creates a new NuGet package   

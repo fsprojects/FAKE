@@ -76,6 +76,7 @@ Target "CreateNuget" (fun _ ->
             Authors = authors
             Project = projectName
             Version = version
+            NoPackageAnalysis = true
             Description = projectDescription                               
             ToolPath = @"..\..\tools\Nuget\Nuget.exe"                             
             OutputPath = nugetDir }) "Fake_Website.nuspec"
