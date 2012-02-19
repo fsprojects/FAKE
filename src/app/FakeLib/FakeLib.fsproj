@@ -107,6 +107,7 @@
     <Compile Include="TargetHelper.fs" />
     <Compile Include="AdditionalSyntax.fs" />
     <Compile Include="Deploy\DeploymentHelper.fs" />
+    <Compile Include="Deploy\HttpClientHelper.fs" />
     <Compile Include="Deploy\HttpListenerHelper.fs" />
     <Compile Include="Deploy\DeploymentAgent.fs" />
     <None Include="packages.config" />

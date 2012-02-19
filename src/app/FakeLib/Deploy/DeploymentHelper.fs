@@ -140,31 +140,14 @@ let rollbackFor dir (app : string) (version : string) =
 
 let rollback (app : string) (version : string) = rollbackFor workDir app version
 
-let postDeploymentPackage url packageFileName = 
-    let result = ref Unknown
-    let waitHandle = new Threading.AutoResetEvent(false)
-    let handle (event : UploadDataCompletedEventArgs) =
-        if event.Cancelled then 
-            result := Cancelled
-            waitHandle.Set() |> ignore
-        elif event.Error <> null then 
-            result := Error(event.Error)
-            waitHandle.Set() |> ignore
-        else
-            use ms = new MemoryStream(event.Result)
-            use sr = new StreamReader(ms, Text.Encoding.UTF8)
-            let res = sr.ReadToEnd()
-            result := Json.deserialize<DeploymentResponse> res |> Ok
-            waitHandle.Set() |> ignore
+let 
 
-    let uri = new Uri(url, UriKind.Absolute)
-    let client = new WebClient()
-    let mutable uploaded = false
-    client.Headers.Add(HttpRequestHeader.ContentType, "application/fake")
-    client.UploadDataCompleted |> Event.add handle
-    client.UploadDataAsync(uri, "POST", ReadFileAsBytes packageFileName)
-    waitHandle.WaitOne() |> ignore
-    !result
+let postRollback url app version =
+    ()
+
+      
+
+
 
 
 let PostDeploymentPackage url packageFileName = 

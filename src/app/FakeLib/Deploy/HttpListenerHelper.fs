@@ -125,3 +125,6 @@ let start log serverName port requestMap =
 
 let startWithConsoleLogger serverName port requestMap =
     start TraceHelper.logToConsole serverName port requestMap
+
+
+    

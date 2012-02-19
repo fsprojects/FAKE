@@ -80,6 +80,15 @@ module Main =
             System.Console.ReadKey() |> ignore }
         |> register
 
+    { Name = "activereleases"
+      Parameters = ["server"; "[optional: appname]"]
+      Description = "gets all of the active releases on the given agent, optionally you can filter by application"
+      Function = 
+            fun args -> () }
+        |> register
+
+         
+
     { Name = "help"
       Parameters = []
       Description = "prints this message"
