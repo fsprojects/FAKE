@@ -28,5 +28,5 @@
 
 ### Rollback to version 0.1
 
-* Visit [http://localhost:8085/fake/rollback/Fake_Website?version=0.1](http://localhost:8085/fake/rollback/Fake_Website?version=0.1)
+* Run 05_rollback.bat
 * Now take another look at the deployed website - should be rolled back to 0.1
