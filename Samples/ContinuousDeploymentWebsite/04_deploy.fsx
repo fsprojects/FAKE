@@ -11,7 +11,7 @@ let deployDir = @".\Publish\"
 Target "Deploy" (fun _ ->
     !! (deployDir + "*.nupkg") 
         |> Seq.head
-        |> DeploymentHelper.PostDeploymentPackage "http://localhost:8085/fake/"
+        |> HttpClientHelper.PostDeploymentPackage "http://localhost:8085/fake/"
 
     tracefn "Active Releases:"
     DeploymentHelper.getAllReleases()
