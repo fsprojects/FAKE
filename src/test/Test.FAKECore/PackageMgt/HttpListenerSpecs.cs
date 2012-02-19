@@ -22,7 +22,7 @@ namespace Test.FAKECore.PackageMgt
 
         Cleanup after = () => Listener.Cancel();
 
-        Establish context = () => Listener = HttpListenerHelper.startWithConsoleLogger(ServerName, Port, HttpListenerHelper.StatusRequestMap);
+        Establish context = () => Listener = HttpListenerHelper.startWithConsoleLogger(ServerName, Port, HttpListenerHelper.CreateDefaultRequestMap());
     }
 
     [Tags("HTTP")]

@@ -47,6 +47,7 @@ let requestMap =
                                     "GET", "/deployments/" + spec.Id + "?status=active", getActiveReleaseFor spec.Id
                                     "GET", "/rollback/" + spec.Id + "?version="+spec.Version, runRollback spec.Id spec.Version
                                 ])
+    |> Seq.append defaultRoutes
     |> Seq.append [
         "POST", "", runDeployment
         "GET", "/deployments/?status=active", getActiveReleases

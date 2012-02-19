@@ -52,14 +52,15 @@ let private routeRequest log (ctx : HttpListenerContext) (requestMap : Map<Route
 
 let private getStatus (ctx : HttpListenerContext) = "Http listener is running"
 
+let defaultRoutes =
+    [ "GET", "", getStatus] 
+
 let createRequestMap routes : Map<Route, (HttpListenerContext -> string)>= 
     routes
     |> Seq.map (fun (verb, route : string, func) -> { Verb = verb; Path = route.Trim([|'/'; '\\'|]).ToLower() }, func)
     |> Map.ofSeq
 
-let StatusRequestMap = 
-    [ "GET", "", getStatus ] 
-    |> createRequestMap
+let CreateDefaultRequestMap() = createRequestMap defaultRoutes
 
 let getBodyFromContext (ctx : HttpListenerContext) = 
     let readAllBytes (s : Stream) =
