@@ -111,6 +111,8 @@
     <Compile Include="Deploy\HttpListenerHelper.fs" />
     <Compile Include="Deploy\DeploymentAgent.fs" />
     <None Include="packages.config" />
+    <Compile Include="PermissionsHelper.fs" />
+    <Compile Include="ServiceControllerHelper.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core">
@@ -131,6 +133,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />

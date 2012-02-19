@@ -27,6 +27,15 @@ let post url body =
     use sr = new StreamReader(ms, Text.Encoding.UTF8)
     sr.ReadToEnd() |> Json.deserialize<DeploymentResponse>
 
+let put body url = 
+    let uri = new Uri(url, UriKind.Absolute)
+    let client = new WebClient()
+    let mutable uploaded = false
+    client.Headers.Add(HttpRequestHeader.ContentType, "application/fake")
+    use ms = new MemoryStream(client.UploadData(uri, "PUT", body))
+    use sr = new StreamReader(ms, Text.Encoding.UTF8)
+    sr.ReadToEnd() |> Json.deserialize<DeploymentResponse>
+
 let getReleasesFor server appname status =
     if String.IsNullOrEmpty(appname)
     then server + "/deployments?status=" + status 
@@ -35,7 +44,11 @@ let getReleasesFor server appname status =
 
 let rollbackFor server appname version =
     server + "/rollback/"+ appname + "?version=" + version 
-        |> get (Json.deserialize<DeploymentResponse>)
+        |> put [||]
+
+let rollbackOneFor server appname = 
+    server + "/rollback/" + appname
+        |> put [||]
 
 let getAllActiveReleases server = getReleasesFor server null "active"
 
@@ -49,7 +62,7 @@ let getAllReleasesFor server appname =
 
 let getAllReleases server = getAllReleasesFor server null
 
-let postDeploymentPackage url packageFileName = ReadFileAsBytes packageFileName |> post url
+let postDeploymentPackage url packageFileName = put (ReadFileAsBytes packageFileName) url
 
 let PostDeploymentPackage url packageFileName = 
     match postDeploymentPackage url packageFileName with

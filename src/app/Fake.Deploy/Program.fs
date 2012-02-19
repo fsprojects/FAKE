@@ -94,6 +94,7 @@ module Main =
       Function = 
             fun args ->
                 match args with
+                | [|_;server;app|] -> rollbackOne server app |> traceDeploymentResult server app
                 | [|_;server;app;version|] -> rollbackFor server app version |> traceDeploymentResult server app 
                 | _ -> printUsage()}
         |> register
