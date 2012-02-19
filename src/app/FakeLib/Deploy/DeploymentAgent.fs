@@ -24,25 +24,24 @@ let private runDeployment (ctx : HttpListenerContext) =
     |> Json.serialize
 
 let private getActiveReleases (ctx : HttpListenerContext) =
-    getActiveReleases() |> Json.serialize
+    getActiveReleases workDir |> Json.serialize
 
 let private getAllReleases (ctx : HttpListenerContext) = 
-    getAllReleases() |> Json.serialize
+    getAllReleases workDir |> Json.serialize
 
 let private getAllReleasesFor appname (ctx : HttpListenerContext) = 
-    getAllReleasesFor appname |> Json.serialize
+    getAllReleasesFor workDir appname |> Json.serialize
 
 let private getActiveReleaseFor appname (ctx : HttpListenerContext) =
-    getActiveReleaseFor appname |> Json.serialize
+    getActiveReleaseFor workDir appname |> Json.serialize
 
 let private runRollback appname version (ctx : HttpListenerContext) = 
-    rollback appname version |> Json.serialize
+    rollback workDir appname version |> Json.serialize
 
 let requestMap =
     lazy
-    DeploymentHelper.getAllReleases() 
-    |> Seq.collect (fun spec -> 
-                                [
+    DeploymentHelper.getAllReleases workDir
+    |> Seq.collect (fun spec -> [
                                     "GET", "/deployments/" + spec.Id, getAllReleasesFor spec.Id
                                     "GET", "/deployments/" + spec.Id + "?status=active", getActiveReleaseFor spec.Id
                                     "GET", "/rollback/" + spec.Id + "?version="+spec.Version, runRollback spec.Id spec.Version

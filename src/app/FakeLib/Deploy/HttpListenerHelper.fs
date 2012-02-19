@@ -30,9 +30,7 @@ let private writeResponse (ctx : HttpListenerContext) (str : string) =
 
 let matchGroups (pat:string) (inp:string) =
     let m = Regex.Match(inp, pat) in
-    if m.Success
-    then Some (List.tail [ for g in m.Groups -> g.Value ])
-    else None
+    if m.Success then Some (List.tail [ for g in m.Groups -> g.Value ]) else None
 
 let private routeRequest log (ctx : HttpListenerContext) (requestMap : Map<Route, (HttpListenerContext -> string)>) =     
     try
@@ -57,7 +55,10 @@ let defaultRoutes =
 
 let createRequestMap routes : Map<Route, (HttpListenerContext -> string)>= 
     routes
-    |> Seq.map (fun (verb, route : string, func) -> { Verb = verb; Path = route.Trim([|'/'; '\\'|]).ToLower() }, func)
+    |> Seq.map (fun (verb, route : string, func) -> 
+        { Verb = verb
+          Path = route.Trim([|'/'; '\\'|]).ToLower() }, 
+        func)
     |> Map.ofSeq
 
 let CreateDefaultRequestMap() = createRequestMap defaultRoutes

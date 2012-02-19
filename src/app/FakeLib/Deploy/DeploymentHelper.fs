@@ -23,38 +23,31 @@ let private extractNuspecFromPackageFile packageFileName =
     |> ZipHelper.UnzipFirstMatchingFileInMemory (fun ze -> ze.Name.EndsWith ".nuspec") 
     |> NuGetHelper.getNuspecProperties
 
-let mutable workDir = "."
 let mutable deploymentRootDir = "deployments/"
 
-let getActiveReleasesInDirectory dir = 
+let getActiveReleases dir = 
     !! (dir @@ deploymentRootDir @@ "**/active/*.nupkg")
       |> Seq.map extractNuspecFromPackageFile
 
-let getActiveReleases() = getActiveReleasesInDirectory workDir
-
-let getActiveReleaseInDirectoryFor dir (app : string) = 
+let getActiveReleaseFor dir (app : string) = 
     !! (dir @@ deploymentRootDir + app + "/active/*.nupkg") 
       |> Seq.map extractNuspecFromPackageFile
       |> Seq.head
 
-let getActiveReleaseFor (app : string) = getActiveReleaseInDirectoryFor workDir app
-
-let getAllReleasesInDirectory dir = 
+let getAllReleases dir = 
     !! (dir @@ deploymentRootDir @@ "**/*.nupkg")
       |> Seq.map extractNuspecFromPackageFile
 
-let getAllReleases() = getAllReleasesInDirectory workDir
-
-let getAllReleasesInDirectoryFor dir (app : string) = 
+let getAllReleasesFor dir (app : string) = 
     !! (dir @@ deploymentRootDir + app + "/**/*.nupkg") 
       |> Seq.map extractNuspecFromPackageFile
-
-let getAllReleasesFor (app : string) = getAllReleasesInDirectoryFor workDir app
 
 let getBackupFor dir (app : string) (version : string) =
     let backupFileName =  app + "." + version + ".nupkg"
     dir @@ deploymentRootDir @@ app @@ "backups"
     |> FindFirstMatchingFile backupFileName
+
+let mutable workDir = "."
 
 let unpack isRollback packageBytes =
     let tempFile = Path.GetTempFileName()
@@ -100,7 +93,7 @@ let runDeploymentFromPackageFile packageFileName =
       doDeployment package.Name scriptFile        
     with e -> Failure e
 
-let rollbackFor dir (app : string) (version : string) =
+let rollback dir (app : string) (version : string) =
     try 
         let currentPackageFileName = !! (dir @@ deploymentRootDir + app + "/active/*.nupkg") |> Seq.head
         let backupPackageFileName = getBackupFor dir app version
@@ -114,8 +107,6 @@ let rollbackFor dir (app : string) (version : string) =
     with
         | :? FileNotFoundException as e -> Failure (sprintf "Failed to rollback to %s %s could not find package file or deployment script file ensure the version is within the backup directory and the deployment script is in the root directory of the *.nupkg file" app version)
         | _ as e -> Failure("Rollback failed: " + e.Message)
-
-let rollback (app : string) (version : string) = rollbackFor workDir app version
 
 let postDeploymentPackage url packageFileName = 
     let result = ref Unknown
