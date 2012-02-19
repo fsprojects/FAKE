@@ -369,16 +369,10 @@ You can read [Getting started with FAKE](http://www.navision-blog.de/2009/04/01/
 
 The FAKE deployment tool allows users to deploy applications to remote computers and to run scripts on these remote agents. A typical scenario maybe as follows: 
 
-<<<<<<< HEAD
+
 * Build an application -> run tests -> create artifacts and save on build server (Classical FAKE build workflow)
 * Extract artifacts from build server and create a NuGet deployment package
 * Push the NuGet package to the desired computer this will run the package's FAKE script on the remote machine
-=======
-* Build an application -> run tests -> create artifacts and save on build server (classical FAKE build workflow)
-* Extract artifacts from build server and create a Nuget package
-* Push the Nuget package to the desired computer vie HTTP
-* Run the package's FAKE script on the remote machine
->>>>>>> upstream/develop
 
 ### Installing Fake deployment services
 
@@ -409,8 +403,7 @@ status if the service
 To uninstall an agent
 
    * Open a command prompt with Administrator Priviledges
-   * Run Fake.Deploy /uninstall
-     
+   * Run Fake.Deploy /uninstall     
 
 ### Running a FAKE Deployment Package
 
