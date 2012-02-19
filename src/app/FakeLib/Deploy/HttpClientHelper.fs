@@ -62,7 +62,7 @@ let getAllReleasesFor server appname =
 
 let getAllReleases server = getAllReleasesFor server null
 
-let postDeploymentPackage url packageFileName = put (ReadFileAsBytes packageFileName) url
+let postDeploymentPackage url packageFileName = post url (ReadFileAsBytes packageFileName)
 
 let PostDeploymentPackage url packageFileName = 
     match postDeploymentPackage url packageFileName with

@@ -22,6 +22,24 @@ namespace Test.FAKECore.PackageMgt
         It should_find_the_verb = () => _result.Value.Route.Verb.ShouldEqual("GET");
     }
 
+    public class when_matching_empty_route_with_POST
+    {
+        static FSharpOption<HttpListenerHelper.RouteResult> _result;
+        static List<HttpListenerHelper.Route> _routes;
+
+        Establish context = () => _routes = new List<HttpListenerHelper.Route>
+        {
+            new HttpListenerHelper.Route("POST", "", null),
+            new HttpListenerHelper.Route("GET", "", null),
+            new HttpListenerHelper.Route("GET", "test", null),
+        };
+
+        Because of = () => _result = HttpListenerHelper.matchRoute(_routes, "POST", "/");
+
+        It should_find_the_path = () => _result.Value.Route.Path.ShouldEqual("");
+        It should_find_the_verb = () => _result.Value.Route.Verb.ShouldEqual("POST");
+    }
+
     public class when_matching_nonexisting_route
     {
         static FSharpOption<HttpListenerHelper.RouteResult> _result;
