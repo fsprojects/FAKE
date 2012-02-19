@@ -4,19 +4,7 @@ open System
 open System.IO
 open System.Net
 open Fake
-
-type DeploymentResponse =
-| Success
-| Failure of obj
-| RolledBack
-| Cancelled
-| Unknown
-
-type Directories = {
-    App : DirectoryInfo
-    Backups : DirectoryInfo
-    Active : DirectoryInfo
-}
+open Fake.HttpClientHelper
 
 let private extractNuspecFromPackageFile packageFileName =   
     packageFileName
@@ -107,36 +95,3 @@ let rollback dir (app : string) (version : string) =
     with
         | :? FileNotFoundException as e -> Failure (sprintf "Failed to rollback to %s %s could not find package file or deployment script file ensure the version is within the backup directory and the deployment script is in the root directory of the *.nupkg file" app version)
         | _ as e -> Failure("Rollback failed: " + e.Message)
-
-let postDeploymentPackage url packageFileName = 
-    let result = ref Unknown
-    let waitHandle = new Threading.AutoResetEvent(false)
-    let handle (event : UploadDataCompletedEventArgs) =
-        if event.Cancelled then 
-            result := Cancelled
-            waitHandle.Set() |> ignore
-        elif event.Error <> null then 
-            result := Failure event.Error
-            waitHandle.Set() |> ignore
-        else
-            use ms = new MemoryStream(event.Result)
-            use sr = new StreamReader(ms, Text.Encoding.UTF8)
-            let res = sr.ReadToEnd()
-            result := Json.deserialize<DeploymentResponse> res
-            waitHandle.Set() |> ignore
-
-    let uri = new Uri(url, UriKind.Absolute)
-    let client = new WebClient()
-    let mutable uploaded = false
-    client.Headers.Add(HttpRequestHeader.ContentType, "application/fake")
-    client.UploadDataCompleted |> Event.add handle
-    client.UploadDataAsync(uri, "POST", ReadFileAsBytes packageFileName)
-    waitHandle.WaitOne() |> ignore
-    !result
-
-
-let PostDeploymentPackage url packageFileName = 
-    match postDeploymentPackage url packageFileName with
-    | Success -> tracefn "Deployment of %s successful" packageFileName
-    | Failure exn -> failwithf "Deployment of %A failed\r\n%A" packageFileName exn
-    | response -> failwithf "Deployment of %A failed\r\n%A" packageFileName response

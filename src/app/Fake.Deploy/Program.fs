@@ -1,6 +1,7 @@
 ﻿
 open Fake
 open DeploymentHelper
+open Fake.HttpClientHelper
 
 type DeployCommand = {
     Name :  string;
@@ -56,14 +57,47 @@ module Main =
       Description = "starts the deployment agent"
       Function = listen }
         |> register
-        
+
     let traceDeploymentResult server fileName = function        
         | Success -> tracefn "Deployment of %s to %s successful" fileName server
         | Failure exn -> traceError <| sprintf "Deployment of %s to %s failed\r\n%A" fileName server exn 
         | Cancelled -> tracefn "Deployment of %s to %s cancelled" fileName server
         | RolledBack -> tracefn "Deployment of %s to %s rolled back" fileName server
         | Unknown -> traceError <| sprintf  "Deployment of %s to %s failed\r\nCould not derive reason sorry!!!" fileName server
+        | QueryResult result -> tracefn "Query Result for %s %s\n\t%s" server fileName (System.String.Join("\n\t", result |> Seq.map (fun r -> r.Name) |> Seq.toArray))
 
+    { Name = "activereleases"
+      Parameters = ["server"; "appname"]
+      Description = "gets all of the active releases on the given agent, optionally you can filter by application"
+      Function = 
+           fun args -> 
+               match args with
+               | [|_;server;app|] -> getActiveReleasesFor server app |> traceDeploymentResult server app
+               | [|_;server|] -> getAllActiveReleases server |> traceDeploymentResult server ""
+               | _ -> printUsage()   }
+       |> register
+
+    { Name = "allreleases"
+      Parameters = ["server"; "appname"]
+      Description = "gets all of the releases on the given agent, optionally you can filter by application"
+      Function = 
+           fun args ->
+               match args with
+               | [|_;server;app|] -> getAllReleasesFor server app |> traceDeploymentResult server app
+               | [|_;server|] -> getAllReleases server |> traceDeploymentResult server ""
+               | _ -> printUsage()  }
+       |> register
+
+    { Name = "rollback"
+      Parameters = ["server"; "appname"; "version"]
+      Description = "rollback the application to the given version"
+      Function = 
+            fun args ->
+                match args with
+                | [|_;server;app;version|] -> rollbackFor server app version |> traceDeploymentResult server app 
+                | _ -> printUsage()}
+        |> register
+    
     { Name = "deployRemote"
       Parameters = ["url"; "package"]
       Description = "pushes the deployment package to the deployment agent\r\n\tlistening on the url"

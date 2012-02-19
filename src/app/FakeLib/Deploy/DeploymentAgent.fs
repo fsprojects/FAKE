@@ -17,23 +17,32 @@ let private runDeployment args (ctx : HttpListenerContext) =
     let response = doDeployment package.Name scriptFile
     
     match response with
-    | Success -> logger (sprintf "Successfully deployed %s %s" package.Id package.Version, EventLogEntryType.Information)
+    | HttpClientHelper.Success -> logger (sprintf "Successfully deployed %s %s" package.Id package.Version, EventLogEntryType.Information)
     | response -> logger (sprintf "Deployment failed of %s %s failed" package.Id package.Version, EventLogEntryType.Information)
 
     response
     |> Json.serialize
 
 let private getActiveReleases args (ctx : HttpListenerContext) =
-    getActiveReleases workDir |> Json.serialize
+    getActiveReleases workDir 
+    |> HttpClientHelper.DeploymentResponse.QueryResult 
+    |> Json.serialize
 
 let private getAllReleases args (ctx : HttpListenerContext) = 
-    getAllReleases workDir |> Json.serialize
+    getAllReleases workDir 
+    |> HttpClientHelper.DeploymentResponse.QueryResult 
+    |> Json.serialize
 
 let private getAllReleasesFor (args: string list) (ctx : HttpListenerContext) = 
-    getAllReleasesFor workDir args.[0] |> Json.serialize
+    getAllReleasesFor workDir args.[0] 
+    |> HttpClientHelper.DeploymentResponse.QueryResult 
+    |> Json.serialize
 
 let private getActiveReleaseFor (args: string list) (ctx : HttpListenerContext) =
-    getActiveReleaseFor workDir args.[0] |> Json.serialize
+    getActiveReleaseFor workDir args.[0]
+    |> Seq.singleton
+    |> HttpClientHelper.DeploymentResponse.QueryResult 
+    |> Json.serialize
 
 let private runRollback (args: string list)  (ctx : HttpListenerContext) = 
     rollback workDir args.[0] args.[1] |> Json.serialize
