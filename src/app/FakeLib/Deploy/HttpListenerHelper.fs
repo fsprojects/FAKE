@@ -34,7 +34,7 @@ let matchGroups (pat:string) (inp:string) =
     then Some (List.tail [ for g in m.Groups -> g.Value ])
     else None
 
-let private routeRequest log (ctx : HttpListenerContext) (requestMap : Map<Route, (HttpListenerContext -> string option)>) =     
+let private routeRequest log (ctx : HttpListenerContext) (requestMap : Map<Route, (HttpListenerContext -> string)>) =     
     try
         let route = { 
             Verb = ctx.Request.HttpMethod
@@ -42,19 +42,17 @@ let private routeRequest log (ctx : HttpListenerContext) (requestMap : Map<Route
 
         match Map.tryFind route requestMap with
         | Some handler -> 
-            handler(ctx) 
-              |> Option.iter (writeResponse ctx)
+            handler ctx 
+              |> writeResponse ctx
         | None -> writeResponse ctx (sprintf "Unknown route %s" ctx.Request.Url.AbsoluteUri)
     with e ->
         let msg = sprintf "Fake Deploy Request Error:\n\n%A" e
         log (msg, EventLogEntryType.Error)
         writeResponse ctx msg
 
-let private getStatus (ctx : HttpListenerContext) =
-    "Http listener is running"
-    |> Some
+let private getStatus (ctx : HttpListenerContext) = "Http listener is running"
 
-let createRequestMap routes : Map<Route, (HttpListenerContext -> string option)>= 
+let createRequestMap routes : Map<Route, (HttpListenerContext -> string)>= 
     routes
     |> Seq.map (fun (verb, route : string, func) -> { Verb = verb; Path = route.Trim([|'/'; '\\'|]).ToLower() }, func)
     |> Map.ofSeq
@@ -76,7 +74,7 @@ let getBodyFromContext (ctx : HttpListenerContext) =
         ms
     if ctx.Request.HasEntityBody 
     then (readAllBytes ctx.Request.InputStream).ToArray() 
-    else failwith "Attempted To Read body from request when there is not one"
+    else failwith "Attempted to read body from request when there is not one"
 
 let getFirstFreePort() =
     let defaultPort = 8080
@@ -117,9 +115,9 @@ let start log serverName port requestMap =
                 while true do
                     routeRequest log (l.GetContext()) requestMap
             with e ->
-                log (sprintf "Listener Error:\n\n%A" e, EventLogEntryType.Error)
-                    
+                log (sprintf "Listener Error:\n\n%A" e, EventLogEntryType.Error)             
         }
+
     Async.Start(listenerLoop, cts.Token)
     { ServerName = serverName; Port = usedPort; CancelF = cts.Cancel }
 

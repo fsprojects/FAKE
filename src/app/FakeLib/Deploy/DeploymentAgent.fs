@@ -11,45 +11,47 @@ open Fake.HttpListenerHelper
 let mutable private logger : (string * EventLogEntryType) -> unit = ignore 
 
 let private runDeployment (ctx : HttpListenerContext) =
-    match (runDeployment (getBodyFromContext ctx)) with
-    | response when response.Status = Success ->
-        logger (sprintf "Successfully deployed %A" response.PackageName, EventLogEntryType.Information)
-        response
-    | response ->
-        logger (sprintf "Deployment failed: %A" response.PackageName, EventLogEntryType.Information)
-        response 
+    let packageBytes = getBodyFromContext ctx
+
+    let package,scriptFile = unpack false packageBytes
+    let response = doDeployment package.Name scriptFile
+    
+    match response with
+    | HttpClientHelper.DeploymentResponse.Success -> logger (sprintf "Successfully deployed %s %s" package.Id package.Version, EventLogEntryType.Information)
+    | response -> logger (sprintf "Deployment failed of %s %s failed" package.Id package.Version, EventLogEntryType.Information)
+
+    response
     |> Json.serialize
-    |> Some
 
 let private getActiveReleases (ctx : HttpListenerContext) =
-    getActiveReleases() |> Json.serialize |> Some
+    getActiveReleases() |> HttpClientHelper.DeploymentResponse.QueryResult |> Json.serialize
 
 let private getAllReleases (ctx : HttpListenerContext) = 
-    getAllReleases() |> Json.serialize |> Some
+    getAllReleases() |> HttpClientHelper.DeploymentResponse.QueryResult |> Json.serialize
 
 let private getAllReleasesFor appname (ctx : HttpListenerContext) = 
-    getAllReleasesFor appname |> Json.serialize |> Some
+    getAllReleasesFor appname |> HttpClientHelper.DeploymentResponse.QueryResult |> Json.serialize
 
 let private getActiveReleaseFor appname (ctx : HttpListenerContext) =
-    getActiveReleaseFor appname |> Json.serialize |> Some
+    Seq.singleton (getActiveReleaseFor appname) |> HttpClientHelper.DeploymentResponse.QueryResult |> Json.serialize
 
 let private runRollback appname version (ctx : HttpListenerContext) = 
-    rollback appname version |> Json.serialize |> Some
+    rollback appname version |> Json.serialize
 
 let requestMap =
     lazy
-    DeploymentHelper.getAllReleases() 
+    DeploymentHelper.getAllReleases()
     |> Seq.collect (fun spec -> 
-                                [
-                                    "GET", "/deployments/" + spec.Id, getAllReleasesFor spec.Id
-                                    "GET", "/deployments/" + spec.Id + "?status=active", getActiveReleaseFor spec.Id
-                                    "GET", "/rollback/" + spec.Id + "?version="+spec.Version, runRollback spec.Id spec.Version
-                                ])
-    |> Seq.append [
-        "POST", "", runDeployment
-        "GET", "/deployments/?status=active", getActiveReleases
-        "GET", "/deployments/", getAllReleases
-    ] |> createRequestMap
+                                    [
+                                        "GET", "/deployments/" + spec.Id, getAllReleasesFor spec.Id
+                                        "GET", "/deployments/" + spec.Id + "?status=active", getActiveReleaseFor spec.Id
+                                        "GET", "/rollback/" + spec.Id + "?version="+spec.Version, runRollback spec.Id spec.Version
+                                    ])
+        |> Seq.append [
+            "POST", "", runDeployment
+            "GET", "/deployments/?status=active", getActiveReleases
+            "GET", "/deployments/", getAllReleases
+        ] |> createRequestMap
 
 
 let start log serverName port = 

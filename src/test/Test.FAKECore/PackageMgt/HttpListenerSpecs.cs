@@ -17,11 +17,12 @@ namespace Test.FAKECore.PackageMgt
     public class when_starting_the_http_server
     {
         protected const string ServerName = "localhost";
+        const string Port = "*";
         protected static HttpListenerHelper.Listener Listener;
 
         Cleanup after = () => Listener.Cancel();
 
-        Establish context = () => Listener = HttpListenerHelper.startWithConsoleLogger(ServerName, "*", HttpListenerHelper.StatusRequestMap);
+        Establish context = () => Listener = HttpListenerHelper.startWithConsoleLogger(ServerName, Port, HttpListenerHelper.StatusRequestMap);
     }
 
     [Tags("HTTP")]
