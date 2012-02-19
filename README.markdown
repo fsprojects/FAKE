@@ -449,6 +449,7 @@ It's easy to get information about the deployments. Just make a HTTP request to 
 
 ### Rollback of releases
 
-If you want to perform a rollback of a release so do a HTTP request to:
+If you want to perform a rollback of a release so do a HTTP-PUT to:
 
     fake/rollback/{app}?version={version} -> roles the app back to given version
+    fake/rollback/{app} -> roles the app back to the last release
