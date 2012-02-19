@@ -9,7 +9,7 @@ namespace Test.FAKECore.PackageMgt
         It should_return_the_package_url = () => NuGetHelper.getRepoUrl().ShouldEqual(NugetData.RepositoryUrl);
     }
 
-    public class when_discorvering_the_lastest_FAKE_package
+    public class when_discovering_the_lastest_FAKE_package
     {
         static NuGetHelper.NuSpecPackage _package;
         Because of = () => _package = NuGetHelper.getLatestPackage(NuGetHelper.getRepoUrl(), "FAKE");
