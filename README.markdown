@@ -367,11 +367,11 @@ You can read [Getting started with FAKE](http://www.navision-blog.de/2009/04/01/
 
 ### Introduction
 
-The FAKE deployment tool allows users to deploy applications using FAKE scripts to remote computers. A typical scenario maybe as follows: 
+The FAKE deployment tool allows users to deploy applications to remote computers and to run scripts on these remote agents. A typical scenario maybe as follows: 
 
-* Build an application -> run tests -> create artifacts and save on build server (Classical FAKE build workflow)
-* Extract artifacts from build server and create a FAKE deployment package (*.fakepkg)
-* Push the fake package to the desired computer
+* Build an application -> run tests -> create artifacts and save on build server (classical FAKE build workflow)
+* Extract artifacts from build server and create a Nuget package
+* Push the Nuget package to the desired computer vie HTTP
 * Run the package's FAKE script on the remote machine
 
 ### Installing Fake deployment services
@@ -382,17 +382,18 @@ To run an agent in a console, simply run:
     
     Fake.Deploy
 
-To install an agent as a windows service:
+To install a windows service on that agent:
  
    * Open a command prompt with Administrator Priviledges
    * Run Fake.Deploy /install
 
-By default the service starts a listener on port 8080. This can however be change by editing the Fake.Deploy.exe.config file
+By default the service starts a listener on port 8080. This can however be configured by editing the Fake.Deploy.exe.config file
 and changing
     
-    <add key="Port" value="8080"/>
+    <add key="ServerName" value="localhost" />
+    <add key="Port" value="8080" />
 
-to the desired value.
+to the desired value. If you use the asterisk as port no. then Fake.Deploy will assign the first open port behind of 8080.
 
 ### Uninstalling Fake deployment services
 
@@ -401,34 +402,27 @@ To uninstall an agent
    * Open a command prompt with Administrator Priviledges
    * Run Fake.Deploy /uninstall
      
-### Creating a FAKE Deployment package
+### Getting help
 
-FAKE deployment packages can be created in two ways:
+If you want to learn about Fake.Deploy's command line switches then run:
 
-    * From a current zip archive (using Fake.Deploy.exe /createFromArchive)
-    * From a directory tree (using Fake.Deploy.exe /createFromDirectory)
+    Fake.Deploy /help
 
-For example, if you want to create the deployment package C:\Appdev\MyDeployment.fakepkg from the contents of a 
-directory located at C:\Appdev\MyApp with a script called DeploymentScript.fsx located in the 
-current directory, you would run the following command:
+### Creating a Deployment package
 
-    Fake.Deploy /createFromDirectory MyDeployment 1.0.0.1 DeploymentScript.fsx C:\Appdev\MyApp C:\Appdev
+Since Fake.Deploy uses Nuget packages for deployment you only need to create one of those and include a .fsx file in the root folder of the package.
 
-Similarly if it was a zip file at C:\Appdev\MyApp.zip and not a directory you would run the following command:
-
-    Fake.Deploy /createFromArchive MyDeployment 1.0.0.1 DeploymentScript.fsx C:\Appdev\MyApp.zip C:\Appdev
-
-### Running a FAKE Deployment Package
+### Running a Deployment Package
 
 Fake deployment packages can be run manually on the current machine or they can be pushed to an agent on a remote machine.
 
-To run a package on the local machine located at C:\Appdev\MyDeployment.fakepkg you would run the following command:
+To run a package on the local machine located at C:\Appdev\MyDeployment.nupkg you would run the following command:
 
-    Fake.Deploy /deploy C:\Appdev\MyDeployment.fakepkg
+    Fake.Deploy /deploy C:\Appdev\MyDeployment.nupkg
     
 To run the same package on a remote computer (e.g. integration-1) you can run:
 
-    Fake.Deploy /deployRemote http://integration-1:8080 C:\Appdev\MyDeployment.fakepkg 
+    Fake.Deploy /deployRemote http://integration-1:8080 C:\Appdev\MyDeployment.nupkg 
 
 This will push the directory to the given url. It is worth noting that the port may well be different, as this depends on the configuration of the 
 listening agent (see. Installing Fake deployment service)
