@@ -10,7 +10,7 @@
 		* the website itself
 		* the install.fsx file and the referenced FAKE libs
 		* Cassini - a mini webserver.
-* Run 03_listen.bat - This will start the Fake.Deploy agent as console which listens at [http://localhost:8085/fake](http://localhost:8085/fake)
+* Run 03_listen.bat - This will start the Fake.Deploy agent as console which listens at [http://localhost:8085/fake/](http://localhost:8085/fake/). Try visting [http://localhost:8085/fake/deployments](http://localhost:8085/fake/deployments).
 * Run 04_deploy.bat - This will the deploy process by POSTing to the agent, which will run install.fsx:
 	* Unpacks the package in ./deployments/Fake_Website/active/
 	* Copies the website into a separate folder
