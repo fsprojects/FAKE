@@ -15,6 +15,7 @@ type NuGetParams =
       OutputPath: string;
       PublishUrl: string;
       AccessKey:string;
+      NoPackageAnalysis: bool;
       ProjectFile:string;
       Dependencies: (string*string) list;
       PublishTrials: int;
@@ -34,6 +35,7 @@ let NuGetDefaults() =
       OutputPath = currentDirectory @@ "NuGet";
       PublishUrl = null;
       AccessKey = null;
+      NoPackageAnalysis = false;
       PublishTrials = 5;
       Publish = false}
 
@@ -88,7 +90,7 @@ let private runNuget parameters nuSpec =
         parameters.OutputPath @@ packageFile |> DeleteFile
 
     // create package
-    let args = sprintf "pack %s" (Path.GetFileName specFile)
+    let args = sprintf "pack %s %s" (Path.GetFileName specFile) (if parameters.NoPackageAnalysis then "-NoPackageAnalysis" else "")
     let result = 
         ExecProcess (fun info ->
             info.FileName <- parameters.ToolPath
