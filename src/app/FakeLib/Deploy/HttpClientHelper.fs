@@ -69,3 +69,10 @@ let PostDeploymentPackage url packageFileName =
     | Success -> tracefn "Deployment of %s successful" packageFileName
     | Failure exn -> failwithf "Deployment of %A failed\r\n%A" packageFileName exn
     | response -> failwithf "Deployment of %A failed\r\n%A" packageFileName response
+
+let RollbackPackage url appName = 
+    match rollbackOneFor url appName with
+    | Success -> tracefn "Rollback of %s successful" appName
+    | RolledBack -> tracefn "Rollback of %s successful" appName
+    | Failure exn -> failwithf "Deployment of %A failed\r\n%A" appName exn
+    | response -> failwithf "Deployment of %A failed\r\n%A" appName response

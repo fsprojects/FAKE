@@ -6,23 +6,27 @@ open Fake
 
 // Directories
 let deployDir = @".\Publish\"
+let serverUrl = "http://localhost:8085/fake/"
+
+let traceActiveReleases() =
+    tracefn "Active Releases:"
+    DeploymentHelper.getAllReleases "."
+      |> Seq.iter (tracefn "%A")
 
 // Targets
 Target "Deploy" (fun _ ->
     !! (deployDir + "*.nupkg") 
         |> Seq.head
-        |> HttpClientHelper.PostDeploymentPackage "http://localhost:8085/fake/"
+        |> HttpClientHelper.PostDeploymentPackage serverUrl
 
-    tracefn "Active Releases:"
-    DeploymentHelper.getAllReleases "."
-      |> Seq.iter (tracefn "%A")
+    traceActiveReleases()
 )
 
-Target "Default" DoNothing
+Target "Rollback" (fun _ ->
+    HttpClientHelper.RollbackPackage serverUrl "Fake_Website"
 
-// Dependencies
-"Deploy"
-  ==> "Default"
- 
+    traceActiveReleases()
+)
+
 // start build
-RunParameterTargetOrDefault "target" "Default"
+RunParameterTargetOrDefault "target" "Deploy"
