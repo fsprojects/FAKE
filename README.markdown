@@ -412,7 +412,7 @@ If you want to learn about Fake.Deploy's command line switches then run:
 
 Since Fake.Deploy uses Nuget packages for deployment you only need to create one of those and include a .fsx file in the root folder of the package.
 
-### Running a Deployment Package
+### Running deployment
 
 Fake deployment packages can be run manually on the current machine or they can be pushed to an agent on a remote machine.
 
@@ -424,5 +424,25 @@ To run the same package on a remote computer (e.g. integration-1) you can run:
 
     Fake.Deploy /deployRemote http://integration-1:8080 C:\Appdev\MyDeployment.nupkg 
 
+It's also possible to just make a HTTP-POST with the package to http://integration-1:8080/fake
+
 This will push the directory to the given url. It is worth noting that the port may well be different, as this depends on the configuration of the 
 listening agent (see. Installing Fake deployment service)
+
+
+### Getting information about the deployments
+
+    The following assumes you have Fake.Deploy running.
+
+It's easy to get information about the deployments. Just make a HTTP request to server with:
+    
+    fake/deployments/                     -> gives all releases
+    fake/deployments?status=active        -> gives all active releases
+    fake/deployments/{app}                -> gives all releases of app
+    fake/deployments/{app}?status=active  -> gives the active release of the app
+
+### Rollback of releases
+
+If you want to perform a rollback of a release so do a HTTP request to:
+
+    fake/rollback/{app}?version={version} -> roles the app back to given version
