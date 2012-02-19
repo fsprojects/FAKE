@@ -93,16 +93,12 @@ let doDeployment packageName script =
             Failure(Exception "Deployment script didn't run successfully")
     with e -> Failure e
               
-let runDeployment (packageBytes : byte[]) =
-     let package,scriptFile = unpack false packageBytes
-     package.FileName,doDeployment package.Name scriptFile
-
 let runDeploymentFromPackageFile packageFileName =
     try
-        packageFileName
-        |> ReadFileAsBytes
-        |> runDeployment
-    with e -> packageFileName,Failure e
+      let packageBytes =  ReadFileAsBytes packageFileName
+      let package,scriptFile = unpack false packageBytes
+      doDeployment package.Name scriptFile        
+    with e -> Failure e
 
 let rollbackFor dir (app : string) (version : string) =
     try 

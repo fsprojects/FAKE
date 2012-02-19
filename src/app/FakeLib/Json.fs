@@ -38,7 +38,8 @@ type UnionTypeConverter() =
          then 
             doRead reader
             doRead reader
-            let case = cases |> Array.find(fun x -> x.Name = if reader.Value = null then "None" else reader.Value.ToString())
+            let value = if reader.Value = null then "None" else reader.Value.ToString()
+            let case = cases |> Array.find(fun x -> x.Name = value)
             doRead reader
             doRead reader
             doRead reader

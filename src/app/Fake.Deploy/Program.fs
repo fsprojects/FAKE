@@ -56,18 +56,21 @@ module Main =
       Description = "starts the deployment agent"
       Function = listen }
         |> register
+        
+    let traceDeploymentResult server fileName = function        
+        | Success -> tracefn "Deployment of %s to %s successful" fileName server
+        | Failure exn -> traceError <| sprintf "Deployment of %s to %s failed\r\n%A" fileName server exn 
+        | Cancelled -> tracefn "Deployment of %s to %s cancelled" fileName server
+        | RolledBack -> tracefn "Deployment of %s to %s rolled back" fileName server
+        | Unknown -> traceError <| sprintf  "Deployment of %s to %s failed\r\nCould not derive reason sorry!!!" fileName server
 
     { Name = "deployRemote"
       Parameters = ["url"; "package"]
       Description = "pushes the deployment package to the deployment agent\r\n\tlistening on the url"
       Function = 
         fun args ->
-            match postDeploymentPackage args.[1] args.[2] with
-            | Success -> printfn "Deployment of %A successful" args.[1]
-            | Failure exn -> printfn "Deployment of %A failed\r\n%A" args.[1] exn
-            | Cancelled -> printfn "Deployment of %A cancelled" args.[1] 
-            | RolledBack -> printfn "Deployment of %A rolled back" args.[1] 
-            | Unknown -> printfn "Deployment of %A failed\r\nCould not derive reason sorry!!!" args.[1] }
+            postDeploymentPackage args.[1] args.[2]
+            |> traceDeploymentResult args.[1] args.[2] }
         |> register
 
     { Name = "deploy"
@@ -75,11 +78,8 @@ module Main =
       Description = "runs the deployment on the local machine (for testing purposes)"
       Function =
         fun args -> 
-            match runDeploymentFromPackageFile args.[1] with
-            | (fileName,Success) -> printfn "Deployment of %s successful" args.[1]
-            | (fileName,Failure exn) -> printfn "Deployment of %A failed\r\n%A" args.[1] exn 
-            | (fileName,response) -> printfn "Deployment of %A failed\r\n%A" args.[1] response
-            System.Console.ReadKey() |> ignore }
+            runDeploymentFromPackageFile args.[1]
+            |> traceDeploymentResult "local" args.[1] }
         |> register
 
     { Name = "help"

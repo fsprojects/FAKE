@@ -11,29 +11,32 @@ open Fake.HttpListenerHelper
 let mutable private logger : (string * EventLogEntryType) -> unit = ignore 
 
 let private runDeployment (ctx : HttpListenerContext) =
-    let response = runDeployment (getBodyFromContext ctx)
+    let packageBytes = getBodyFromContext ctx
+
+    let package,scriptFile = unpack false packageBytes
+    let response = doDeployment package.Name scriptFile
+    
     match response with
-    | (fileName,Success) -> logger (sprintf "Successfully deployed %A" fileName, EventLogEntryType.Information)
-    | (fileName,response) -> logger (sprintf "Deployment failed: %A" fileName, EventLogEntryType.Information)
+    | Success -> logger (sprintf "Successfully deployed %s %s" package.Id package.Version, EventLogEntryType.Information)
+    | response -> logger (sprintf "Deployment failed of %s %s failed" package.Id package.Version, EventLogEntryType.Information)
 
     response
     |> Json.serialize
-    |> Some
 
 let private getActiveReleases (ctx : HttpListenerContext) =
-    getActiveReleases() |> Json.serialize |> Some
+    getActiveReleases() |> Json.serialize
 
 let private getAllReleases (ctx : HttpListenerContext) = 
-    getAllReleases() |> Json.serialize |> Some
+    getAllReleases() |> Json.serialize
 
 let private getAllReleasesFor appname (ctx : HttpListenerContext) = 
-    getAllReleasesFor appname |> Json.serialize |> Some
+    getAllReleasesFor appname |> Json.serialize
 
 let private getActiveReleaseFor appname (ctx : HttpListenerContext) =
-    getActiveReleaseFor appname |> Json.serialize |> Some
+    getActiveReleaseFor appname |> Json.serialize
 
 let private runRollback appname version (ctx : HttpListenerContext) = 
-    rollback appname version |> Json.serialize |> Some
+    rollback appname version |> Json.serialize
 
 let requestMap =
     lazy
