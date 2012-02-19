@@ -85,6 +85,7 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Globbing\Directories\GlobbingOfDirectoriesSpecs.cs" />
     <Compile Include="ILMerge\ILMergeSpecs.cs" />
+    <Compile Include="PackageMgt\RoutingSpecs.cs" />
     <Compile Include="PackageMgt\HttpListenerSpecs.cs" />
     <Compile Include="PackageMgt\ReleaseDiscoveringSpecs.cs" />
     <Compile Include="PackageMgt\FeedSpecs.cs" />

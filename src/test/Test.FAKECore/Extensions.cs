@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Machine.Specifications;
 using Microsoft.FSharp.Collections;
 using Microsoft.FSharp.Core;
 
@@ -17,5 +18,10 @@ namespace Test.FAKECore
         {
             return list.Reverse().Aggregate(FSharpList<T>.Empty, (current, item) => FSharpList<T>.Cons(item, current));
         }
+
+        public static void ShouldBeNone<T>(this FSharpOption<T> value)
+        {
+            value.ShouldEqual(FSharpOption<T>.None);    
+        }        
     }
 }

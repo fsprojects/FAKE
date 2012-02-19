@@ -12,9 +12,14 @@ open Fake.DeploymentHelper
 type Route = {
         Verb : string
         Path : string
+        Handler : string list -> HttpListenerContext -> string        
     }
     with 
-        override x.ToString() = sprintf "%s %s" x.Verb x.Path
+        override x.ToString() = sprintf "%s %s" x.Verb x.Path              
+
+type RouteResult =
+    { Route:Route
+      Parameters:string list }
         
 let private listener serverName port = 
     let listener = new HttpListener()
@@ -28,19 +33,30 @@ let private writeResponse (ctx : HttpListenerContext) (str : string) =
     ctx.Response.ContentEncoding <- Text.Encoding.UTF8
     ctx.Response.Close(response, true)
 
-let matchGroups (pat:string) (inp:string) =
-    let m = Regex.Match(inp, pat) in
-    if m.Success then Some (List.tail [ for g in m.Groups -> g.Value ]) else None
+let routeMatcher route =
+    let r = new System.Text.RegularExpressions.Regex(
+                        "^" + route.Path.TrimEnd '/' + "$",
+                        System.Text.RegularExpressions.RegexOptions.Compiled)
 
-let private routeRequest log (ctx : HttpListenerContext) (requestMap : Map<Route, (HttpListenerContext -> string)>) =     
+    fun verb (url:string) ->
+        let searchedURL = url.Trim('/').ToLower()
+
+        if route.Verb <> verb then None else      
+        if route.Path = searchedURL then Some { Route = route; Parameters = [] } else
+        
+        match r.Match searchedURL with
+        | m when m.Success -> Some { Route = route; Parameters = List.tail [for g in m.Groups -> g.Value]}
+        | _ -> None
+
+
+let private routeRequest log (ctx : HttpListenerContext) routeMatchers =     
     try
-        let route = { 
-            Verb = ctx.Request.HttpMethod
-            Path = ctx.Request.RawUrl.Replace("fake/", "").Trim('/').ToLower() }
+        let verb = ctx.Request.HttpMethod
+        let url = ctx.Request.RawUrl.Replace("fake/", "")
 
-        match Map.tryFind route requestMap with
-        | Some handler -> 
-            handler ctx 
+        match routeMatchers |> Seq.tryPick (fun r -> r verb url) with
+        | Some routeResult ->
+            routeResult.Route.Handler routeResult.Parameters ctx 
               |> writeResponse ctx
         | None -> writeResponse ctx (sprintf "Unknown route %s" ctx.Request.Url.AbsoluteUri)
     with e ->
@@ -48,20 +64,23 @@ let private routeRequest log (ctx : HttpListenerContext) (requestMap : Map<Route
         log (msg, EventLogEntryType.Error)
         writeResponse ctx msg
 
-let private getStatus (ctx : HttpListenerContext) = "Http listener is running"
+let private getStatus args (ctx : HttpListenerContext) = "Http listener is running"
 
 let defaultRoutes =
     [ "GET", "", getStatus] 
 
-let createRequestMap routes : Map<Route, (HttpListenerContext -> string)>= 
+let createRoutes routes = 
     routes
-    |> Seq.map (fun (verb, route : string, func) -> 
+    |> Seq.map (fun (verb, route : string, func) ->        
         { Verb = verb
-          Path = route.Trim([|'/'; '\\'|]).ToLower() }, 
-        func)
-    |> Map.ofSeq
+          Path = route.Trim([|'/'; '\\'|]).ToLower()
+          Handler = func })
+    |> Seq.map routeMatcher
 
-let CreateDefaultRequestMap() = createRequestMap defaultRoutes
+let CreateDefaultRequestMap() = createRoutes defaultRoutes
+
+let matchRoute routes verb url =
+    routes |> Seq.map routeMatcher |> Seq.tryPick (fun r -> r verb url)
 
 let getBodyFromContext (ctx : HttpListenerContext) = 
     let readAllBytes (s : Stream) =
