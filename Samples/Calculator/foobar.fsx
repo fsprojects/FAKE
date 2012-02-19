@@ -4,9 +4,15 @@
 open Fake 
 
 
-Target? Foo <- fun _ -> log "Hello World from Foo"
-Target? Bar <- fun _ -> log "Hello World from Bar"
+Target "Foo" (fun _ ->
+    trace "Hello World from Foo"
+)
 
-For? Foo <- Dependency? Bar
+Target "Bar" (fun _ -> 
+    trace "Hello World from Bar"
+)
 
-Run? Foo
+"Bar"
+  ==> "Foo"
+
+Run "Foo"
