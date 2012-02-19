@@ -12,14 +12,14 @@ open Fake.DeploymentHelper
 type Route = {
         Verb : string
         Path : string
-        Handler : string list -> HttpListenerContext -> string        
+        Handler : Map<string,string> -> HttpListenerContext -> string        
     }
     with 
         override x.ToString() = sprintf "%s %s" x.Verb x.Path              
 
 type RouteResult =
     { Route:Route
-      Parameters:string list }
+      Parameters: Map<string,string> }
         
 let private listener serverName port = 
     let listener = new HttpListener()
@@ -33,19 +33,38 @@ let private writeResponse (ctx : HttpListenerContext) (str : string) =
     ctx.Response.ContentEncoding <- Text.Encoding.UTF8
     ctx.Response.Close(response, true)
 
+let placeholderRegex = new Regex("{([^}]+)}",RegexOptions.Compiled)
+
 let routeMatcher route =
-    let r = new System.Text.RegularExpressions.Regex(
-                        "^" + route.Path.TrimEnd '/' + "$",
-                        System.Text.RegularExpressions.RegexOptions.Compiled)
+    let dict = new System.Collections.Generic.Dictionary<int,string>()
+
+    let normalized = route.Path.Replace("?",@"\?").Trim '/'
+
+    let pattern = 
+        let pat = ref normalized
+        [for m in route.Path |> placeholderRegex.Matches -> m.Groups.[1].Value]
+        |> Seq.iteri (fun i p ->
+                dict.Add(i,p)
+                pat := (!pat).Replace("{" + p + "}","([^/?]+)"))
+        !pat
+    
+    let r = new Regex( "^" + pattern + "$", RegexOptions.Compiled)
 
     fun verb (url:string) ->
         let searchedURL = url.Trim('/').ToLower()
 
         if route.Verb <> verb then None else      
-        if route.Path = searchedURL then Some { Route = route; Parameters = [] } else
+        if route.Path = searchedURL then Some { Route = route; Parameters = Map.empty } else
         
         match r.Match searchedURL with
-        | m when m.Success -> Some { Route = route; Parameters = List.tail [for g in m.Groups -> g.Value]}
+        | m when m.Success -> 
+            let parameters =
+                [for g in m.Groups -> g.Value]
+                |> List.tail
+                |> Seq.mapi (fun i p -> dict.[i],p)
+                |> Map.ofSeq
+
+            Some { Route = route; Parameters = parameters }
         | _ -> None
 
 

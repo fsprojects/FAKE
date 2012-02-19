@@ -354,93 +354,6 @@
 <member name="">
 
 </member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
 <member name="T:Fake.DeploymentHelper">
 
 </member>
@@ -1644,6 +1557,84 @@
  <returns>The generated files (fileNames)</returns>
 </member>
 <member name="T:Fake.HTMLHelpWorkShopHelper">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Fake.HttpClientHelper">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
 
 </member>
 <member name="">
@@ -3911,6 +3902,11 @@
 </member>
 <member name="T:Fake.XUnitHelper">
 
+</member>
+<member name="M:Fake.ZipHelper.UnzipFirstMatchingFileInMemory(Microsoft.FSharp.Core.FSharpFunc`2{ICSharpCode.SharpZipLib.Zip.ZipEntry,System.Boolean},System.String)">
+ <summary>Unzips a single file from the archive with the given fileName.</summary>
+ <param name="predicate">The predictae for the searched file in the archive.</param>
+ <param name="zipFileName">The FileName of the zip file.</param>
 </member>
 <member name="M:Fake.ZipHelper.UnzipSingleFileInMemory(System.String,System.String)">
  <summary>Unzips a single file from the archive with the given fileName.</summary>

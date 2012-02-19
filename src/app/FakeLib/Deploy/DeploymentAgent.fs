@@ -33,31 +33,28 @@ let private getAllReleases args (ctx : HttpListenerContext) =
     |> HttpClientHelper.DeploymentResponse.QueryResult 
     |> Json.serialize
 
-let private getAllReleasesFor (args: string list) (ctx : HttpListenerContext) = 
-    getAllReleasesFor workDir args.[0] 
+let private getAllReleasesFor (args:Map<_,_>) (ctx : HttpListenerContext) = 
+    getAllReleasesFor workDir args.["app"]
     |> HttpClientHelper.DeploymentResponse.QueryResult 
     |> Json.serialize
 
-let private getActiveReleaseFor (args: string list) (ctx : HttpListenerContext) =
-    getActiveReleaseFor workDir args.[0]
+let private getActiveReleaseFor (args:Map<_,_>) (ctx : HttpListenerContext) =
+    getActiveReleaseFor workDir args.["app"]
     |> Seq.singleton
     |> HttpClientHelper.DeploymentResponse.QueryResult 
     |> Json.serialize
 
-let private runRollback (args: string list)  (ctx : HttpListenerContext) = 
-    rollback workDir args.[0] args.[1] |> Json.serialize
+let private runRollback (args:Map<_,_>) (ctx : HttpListenerContext) = 
+    rollback workDir args.["app"] args.["version"] |> Json.serialize
 
 let routes =
     defaultRoutes
-    |> Seq.append [
-        "POST", "", runDeployment
-        "GET", "/deployments/([^/]+)/", getAllReleasesFor
-        "GET", @"/deployments/([^/]+)/\?status=active", getActiveReleaseFor
-        "GET", @"/rollback/(.+)\?version=([^/]+)", runRollback
-        "GET", "/deployments/?status=active", getActiveReleases
-        "GET", "/deployments/", getAllReleases
-    ]
-
+        @ [ "POST", "", runDeployment
+            "GET", "/deployments/{app}/", getAllReleasesFor
+            "GET", "/deployments/{app}?status=active", getActiveReleaseFor
+            "GET", "/rollback/{app}?version={version}", runRollback
+            "GET", "/deployments?status=active", getActiveReleases
+            "GET", "/deployments/", getAllReleases ]
 
 let start log serverName port = 
     logger <- log
