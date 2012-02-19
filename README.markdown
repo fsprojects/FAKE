@@ -369,10 +369,10 @@ You can read [Getting started with FAKE](http://www.navision-blog.de/2009/04/01/
 
 The FAKE deployment tool allows users to deploy applications to remote computers and to run scripts on these remote agents. A typical scenario maybe as follows: 
 
-* Build an application -> run tests -> create artifacts and save on build server (classical FAKE build workflow)
-* Extract artifacts from build server and create a Nuget package
-* Push the Nuget package to the desired computer vie HTTP
-* Run the package's FAKE script on the remote machine
+
+* Build an application -> run tests -> create artifacts and save on build server (Classical FAKE build workflow)
+* Extract artifacts from build server and create a NuGet deployment package
+* Push the NuGet package to the desired computer this will run the package's FAKE script on the remote machine
 
 ### Installing Fake deployment services
 
@@ -395,13 +395,18 @@ and changing
 
 to the desired value. If you use the asterisk as port no. then Fake.Deploy will assign the first open port behind of 8080.
 
+To ensure the service is running you can navigate to http://{computer}:{port}/fake/ and you should be presented with a page giving the 
+status if the service
+
 ### Uninstalling Fake deployment services
 
 To uninstall an agent
 
    * Open a command prompt with Administrator Priviledges
-   * Run Fake.Deploy /uninstall
-     
+   * Run Fake.Deploy /uninstall     
+
+### Running a FAKE Deployment Package
+
 ### Getting help
 
 If you want to learn about Fake.Deploy's command line switches then run:
@@ -411,6 +416,8 @@ If you want to learn about Fake.Deploy's command line switches then run:
 ### Creating a Deployment package
 
 Since Fake.Deploy uses Nuget packages for deployment you only need to create one of those and include a .fsx file in the root folder of the package.
+
+Instructions for creating nuget packages can be found [at the NuGet document page](http://docs.nuget.org/docs/creating-packages/creating-and-publishing-a-package)  
 
 ### Running deployment
 
@@ -428,7 +435,6 @@ It's also possible to just make a HTTP-POST with the package to http://integrati
 
 This will push the directory to the given url. It is worth noting that the port may well be different, as this depends on the configuration of the 
 listening agent (see. Installing Fake deployment service)
-
 
 ### Getting information about the deployments
 

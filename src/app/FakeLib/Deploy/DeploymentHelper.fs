@@ -95,3 +95,27 @@ let rollback dir (app : string) (version : string) =
     with
         | :? FileNotFoundException as e -> Failure (sprintf "Failed to rollback to %s %s could not find package file or deployment script file ensure the version is within the backup directory and the deployment script is in the root directory of the *.nupkg file" app version)
         | _ as e -> Failure("Rollback failed: " + e.Message)
+
+let getPreviousPackageFromBackup dir app = 
+    let currentPackageFileName = !! (dir @@ deploymentRootDir + app + "/active/*.nupkg") |> Seq.head |> Path.GetFileName
+    let previousVersion = 
+        !! (dir @@ deploymentRootDir + app + "/backups/*.nupkg")
+        |> Seq.toList
+        |> List.map (Path.GetFileName) 
+        |> List.filter (fun x -> x < currentPackageFileName)
+        |> List.sort
+        |> List.rev
+        |> List.head
+    dir @@ deploymentRootDir + app + "/backups/" + previousVersion
+
+let rollbackOne dir (app : string) =
+    try
+        let backupPackageFileName = getPreviousPackageFromBackup dir app
+        let package,scriptFile = unpack true (backupPackageFileName |> ReadFileAsBytes)
+        match doDeployment package.Name scriptFile with
+        | Success -> RolledBack
+        | x -> x
+    with
+        | :? FileNotFoundException as e -> Failure (sprintf "Failed to rollback %s could not find package file or deployment script file ensure the version is within the backup directory and the deployment script is in the root directory of the *.nupkg file" app)
+        | _ as e -> Failure("Rollback failed: " + e.Message)
+     
