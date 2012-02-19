@@ -14,7 +14,7 @@ Target "Deploy" (fun _ ->
         |> HttpClientHelper.PostDeploymentPackage "http://localhost:8085/fake/"
 
     tracefn "Active Releases:"
-    DeploymentHelper.getAllReleases()
+    DeploymentHelper.getAllReleases "."
       |> Seq.iter (tracefn "%A")
 )
 
