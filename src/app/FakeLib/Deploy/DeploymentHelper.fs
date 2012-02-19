@@ -105,3 +105,9 @@ let rollbackFor dir (app : string) (version : string) =
         | _ as e -> Failure("Rollback failed: " + e.Message)
 
 let rollback (app : string) (version : string) = rollbackFor workDir app version
+
+let PostDeploymentPackage url packageFileName = 
+    match HttpClientHelper.postDeploymentPackage url packageFileName with
+    | Success -> tracefn "Deployment of %s successful" packageFileName
+    | Failure exn -> failwithf "Deployment of %A failed\r\n%A" packageFileName exn
+    | response -> failwithf "Deployment of %A failed\r\n%A" packageFileName response

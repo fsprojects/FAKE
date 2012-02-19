@@ -50,9 +50,3 @@ let getAllReleasesFor server appname =
 let getAllReleases server = getAllReleasesFor server null
 
 let postDeploymentPackage url packageFileName = ReadFileAsBytes packageFileName |> post url
-
-let PostDeploymentPackage url packageFileName = 
-    match postDeploymentPackage url packageFileName with
-    | Success -> tracefn "Deployment of %s successful" packageFileName
-    | Failure exn -> failwithf "Deployment of %A failed\r\n%A" packageFileName exn
-    | response -> failwithf "Deployment of %A failed\r\n%A" packageFileName response
