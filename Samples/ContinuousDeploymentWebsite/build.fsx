@@ -91,7 +91,8 @@ Target "Default" DoNothing
 
 // Dependencies
 "Clean"
-  ==> "BuildApp" <=> "BuildTest"
+  ==> "BuildApp"
+  ==> "BuildTest"
   ==> "Test"
   ==> "CreateNuget"
   ==> "Publish"
