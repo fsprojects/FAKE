@@ -30,6 +30,8 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <DefaultLanguageSourceExtension>.fs</DefaultLanguageSourceExtension>
         <Language>F#</Language>
         <Tailcalls Condition="'$(Tailcalls)'==''">$(Optimize)</Tailcalls>
+        <!-- Visual studio requires a non-empty RootNamespace value for "Add New Item" to work. -->
+        <RootNamespace Condition="'$(RootNamespace)'==''">RootNamespace</RootNamespace>
     </PropertyGroup>
 
     <!--
