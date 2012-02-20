@@ -42,12 +42,8 @@ let getReleasesFor server appname status =
     else server + "/deployments/" + appname + "?status=" + status
     |> get (Json.deserialize<DeploymentResponse>)
 
-let rollbackFor server appname version =
-    server + "/rollback/"+ appname + "?version=" + version 
-        |> put [||]
-
-let rollbackOneFor server appname = 
-    server + "/rollback/" + appname
+let rollbackTo server appname version =
+    server + "/deployments/"+ appname + "?version=" + version 
         |> put [||]
 
 let getAllActiveReleases server = getReleasesFor server null "active"
@@ -70,9 +66,9 @@ let PostDeploymentPackage url packageFileName =
     | Failure exn -> failwithf "Deployment of %A failed\r\n%A" packageFileName exn
     | response -> failwithf "Deployment of %A failed\r\n%A" packageFileName response
 
-let RollbackPackage url appName = 
-    match rollbackOneFor url appName with
-    | Success -> tracefn "Rollback of %s successful" appName
-    | RolledBack -> tracefn "Rollback of %s successful" appName
-    | Failure exn -> failwithf "Deployment of %A failed\r\n%A" appName exn
-    | response -> failwithf "Deployment of %A failed\r\n%A" appName response
+let RollbackPackage url appName version = 
+    match rollbackTo url appName version with
+    | Success -> tracefn "Rollback of %s to %s successful" appName version
+    | RolledBack -> tracefn "Rollback of %s to %s successful" appName version
+    | Failure exn -> failwithf "Deployment of %s to %s failed\r\n%A" appName version exn
+    | response -> failwithf "Deployment of %s to %s failed\r\n%A" appName version response

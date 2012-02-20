@@ -23,7 +23,7 @@ Target "Deploy" (fun _ ->
 )
 
 Target "Rollback" (fun _ ->
-    HttpClientHelper.RollbackPackage serverUrl "Fake_Website"
+    HttpClientHelper.RollbackPackage serverUrl "Fake_Website" "HEAD~1"
 
     traceActiveReleases()
 )

@@ -1,16 +1,21 @@
-using System.Collections.Generic;
+using Fake;
+using Machine.Specifications;
 
 namespace Test.FAKECore.PackageMgt
 {
-    using Fake;
-    using Machine.Specifications;
-
-    public class when_trying_to_rollback_one
+    public class when_trying_to_get_the_previous_package
     {
         static string _selectedbackup;
-        Because of = () => _selectedbackup = DeploymentHelper.getPreviousPackageFromBackup(TestData.TestDataDir, "JQuery");
+        Because of = () => _selectedbackup = DeploymentHelper.getPreviousPackageVersionFromBackup(TestData.TestDataDir, "JQuery", 1);
 
-        It should_select_for_rollback =
-                () => _selectedbackup.ShouldEqual(@"TestData\deployments/JQuery/backups/jQuery.1.6.nupkg");
+        It should_find_the_predecessor_package = () => _selectedbackup.ShouldEqual("1.6");
+    }
+
+    public class when_trying_to_get_the_another_predecessor_package
+    {
+        static string _selectedbackup;
+        Because of = () => _selectedbackup = DeploymentHelper.getPreviousPackageVersionFromBackup(TestData.TestDataDir, "JQuery", 2);
+
+        It should_find_the_right_package = () => _selectedbackup.ShouldEqual("1.5");
     }
 }

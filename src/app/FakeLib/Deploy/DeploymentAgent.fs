@@ -45,18 +45,15 @@ let private getActiveReleaseFor (args:Map<_,_>) (ctx : HttpListenerContext) =
     |> Json.serialize
 
 let private runRollbackToVersion (args:Map<_,_>) (ctx : HttpListenerContext) = 
-    rollback workDir args.["app"] args.["version"] |> Json.serialize
-
-let private runRollbackOne (args:Map<_,_>) (ctx : HttpListenerContext) = 
-    rollbackOne workDir args.["app"] |> Json.serialize
+    rollbackTo workDir args.["app"] args.["version"]
+    |> Json.serialize
 
 let routes =
     defaultRoutes
         @ [ "POST", "", runDeployment
             "GET", "/deployments/{app}/", getAllReleasesFor
             "GET", "/deployments/{app}?status=active", getActiveReleaseFor
-            "PUT", "/rollback/{app}?version={version}", runRollbackToVersion
-            "PUT", "/rollback/{app}/", runRollbackOne
+            "PUT", "/deployments/{app}?version={version}", runRollbackToVersion
             "GET", "/deployments?status=active", getActiveReleases
             "GET", "/deployments/", getAllReleases ]
 

@@ -315,10 +315,22 @@
 <member name="">
 
 </member>
+<member name="T:Fake.DeploymentAgent">
+
+</member>
 <member name="">
 
 </member>
-<member name="T:Fake.DeploymentAgent">
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
 
 </member>
 <member name="">
@@ -1566,9 +1578,6 @@
  <returns>The generated files (fileNames)</returns>
 </member>
 <member name="T:Fake.HTMLHelpWorkShopHelper">
-
-</member>
-<member name="">
 
 </member>
 <member name="">

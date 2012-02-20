@@ -6,6 +6,18 @@ open System.Net
 open Fake
 open Fake.HttpClientHelper
 
+type VersionInfo =
+| Specific of string
+| Predecessor of int
+    with 
+        static member Parse(s:string) =
+            let s = s.ToLower()
+            let predecessorPrefix = "head~"
+            if s.StartsWith predecessorPrefix then 
+                s.Replace(predecessorPrefix,"") |> Int32.Parse |> Predecessor 
+            else
+                Specific s
+
 let private extractNuspecFromPackageFile packageFileName =   
     packageFileName
     |> ZipHelper.UnzipFirstMatchingFileInMemory (fun ze -> ze.Name.EndsWith ".nuspec") 
@@ -83,10 +95,13 @@ let runDeploymentFromPackageFile packageFileName =
 
 let rollback dir (app : string) (version : string) =
     try 
-        let currentPackageFileName = !! (dir @@ deploymentRootDir + app + "/active/*.nupkg") |> Seq.head
+        let currentPackageFileName = 
+            !! (dir @@ deploymentRootDir + app + "/active/*.nupkg") 
+            |> Seq.head
+
         let backupPackageFileName = getBackupFor dir app version
-        if currentPackageFileName = backupPackageFileName
-        then Failure "Cannot rollback to currently active version"
+        if currentPackageFileName = backupPackageFileName then 
+            Failure "Cannot rollback to currently active version"
         else 
             let package,scriptFile = unpack true (backupPackageFileName |> ReadFileAsBytes)
             match doDeployment package.Name scriptFile with
@@ -96,26 +111,31 @@ let rollback dir (app : string) (version : string) =
         | :? FileNotFoundException as e -> Failure (sprintf "Failed to rollback to %s %s could not find package file or deployment script file ensure the version is within the backup directory and the deployment script is in the root directory of the *.nupkg file" app version)
         | _ as e -> Failure("Rollback failed: " + e.Message)
 
-let getPreviousPackageFromBackup dir app = 
-    let currentPackageFileName = !! (dir @@ deploymentRootDir + app + "/active/*.nupkg") |> Seq.head |> Path.GetFileName
-    let previousVersion = 
-        !! (dir @@ deploymentRootDir + app + "/backups/*.nupkg")
+let getVersionFromNugetFileName (app:string) (fileName:string) = 
+    Path.GetFileName(fileName).ToLower().Replace(".nupkg","").Replace(app.ToLower() + ".","")
+
+let getPreviousPackageVersionFromBackup dir app versions = 
+    let rootPath = dir @@ deploymentRootDir + app
+    let currentPackageFileName = 
+        !! (rootPath + "/active/*.nupkg") 
+        |> Seq.head 
+        |> getVersionFromNugetFileName app
+
+    let backupPath = rootPath + "/backups/"
+
+    !! (backupPath + "*.nupkg")
+        |> Seq.map (getVersionFromNugetFileName app)
+        |> Seq.filter (fun x -> x < currentPackageFileName)
         |> Seq.toList
-        |> List.map (Path.GetFileName) 
-        |> List.filter (fun x -> x < currentPackageFileName)
         |> List.sort
         |> List.rev
-        |> List.head
-    dir @@ deploymentRootDir + app + "/backups/" + previousVersion
+        |> Seq.skip (versions - 1)
+        |> Seq.head
 
-let rollbackOne dir (app : string) =
-    try
-        let backupPackageFileName = getPreviousPackageFromBackup dir app
-        let package,scriptFile = unpack true (backupPackageFileName |> ReadFileAsBytes)
-        match doDeployment package.Name scriptFile with
-        | Success -> RolledBack
-        | x -> x
-    with
-        | :? FileNotFoundException as e -> Failure (sprintf "Failed to rollback %s could not find package file or deployment script file ensure the version is within the backup directory and the deployment script is in the root directory of the *.nupkg file" app)
-        | _ as e -> Failure("Rollback failed: " + e.Message)
-     
+let rollbackTo dir app version =
+    let newVersion =
+        match VersionInfo.Parse version with
+        | Specific version -> version
+        | Predecessor p -> getPreviousPackageVersionFromBackup dir app p
+
+    rollback dir app newVersion
