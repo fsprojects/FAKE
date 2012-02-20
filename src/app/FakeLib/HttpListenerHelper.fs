@@ -7,7 +7,6 @@ open System.Net.NetworkInformation
 open System.Threading
 open System.Diagnostics
 open System.Text.RegularExpressions
-open Fake.DeploymentHelper
 
 type Route = {
         Verb : string
