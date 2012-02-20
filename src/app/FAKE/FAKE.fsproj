@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="CommandlineParams.fs" />
+    <Compile Include="CompilerStream.fs" />
     <Compile Include="Program.fs" />
     <Content Include="app.config" />
     <None Include="..\..\..\tools\FSharp\FSharp.Core.sigdata">

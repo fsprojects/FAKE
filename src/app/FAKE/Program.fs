@@ -1,6 +1,7 @@
 ﻿open System
 open Fake
 open System.IO
+open Microsoft.FSharp.Compiler.Interactive
 
 let printEnvironment cmdArgs args =
     traceFAKE "FakePath: %s" fakePath
@@ -38,10 +39,28 @@ try
         traceStartBuild()
         if printDetails then printEnvironment cmdArgs args
 
-        if not (runBuildScript printDetails buildScriptArg args) then
-            Environment.ExitCode <- 1
-        else
-            if printDetails then log "Ready."
+        let exe = "MyTest.exe"
+        let standardOpts =  [| "--noframework"; "-r:mscorlib.dll"; "-r:FSharp.Core.dll"; "-r:System.dll"; "-r:System.Core.dll"; |]
+        let srcCodeServices = new Runner.SimpleSourceCodeServices()
+        let argv = [| yield "fsc.exe"; yield "-o"; yield exe; yield! standardOpts; yield buildScriptArg; |]
+        let exec = true
+        let stdin, stdout = new Samples.ConsoleApp.CompilerInputStream(), new Samples.ConsoleApp.CompilerOutputStream()
+        let stdins, stdouts = (new StreamReader(stdin)), (new StreamWriter(stdout))
+        let streams =
+            if exec then
+                Some ((stdins :> TextReader), (stdouts :> TextWriter), (stdouts :> TextWriter))
+            else None
+        let errors, result, assemblyOpt = srcCodeServices.CompileToDynamicAssembly (argv, streams)
+        stdouts.Flush()
+        tracefn "Errors - %A" errors
+        let outs = stdout.Read()
+        tracefn "Generated output..."
+        tracefn "%A" outs
+
+//        if not (runBuildScript printDetails buildScriptArg args) then
+//            Environment.ExitCode <- 1
+//        else
+//            if printDetails then log "Ready."
     with
     | exn -> 
         if exn.InnerException <> null then
