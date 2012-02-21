@@ -69,16 +69,6 @@ Target "NUnitTest" (fun _ ->
                 OutputFile = testDir + @"TestResults.xml"})
 )
 
-Target "xUnitTest" (fun _ ->  
-    !! (testDir + @"\xUnit.Test.*.dll") 
-        |> xUnit (fun p -> 
-            {p with 
-                ShadowCopy = false;
-                HtmlOutput = true;
-                XmlOutput = true;
-                OutputDir = testDir })
-)
-
 Target "FxCop" (fun _ ->
     !+ (buildDir + @"\**\*.dll") 
         ++ (buildDir + @"\**\*.exe") 
@@ -104,7 +94,6 @@ Target "Test" DoNothing
   ==> "BuildTest"
   ==> "FxCop"
   ==> "NUnitTest"
-  ==> "xUnitTest"
   ==> "Test"
   ==> "Deploy"
  
