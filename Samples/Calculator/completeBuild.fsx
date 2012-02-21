@@ -100,7 +100,8 @@ Target "Test" DoNothing
 
 // Dependencies
 "Clean"
-  ==> "BuildApp" <=> "BuildTest"
+  ==> "BuildApp" 
+  ==> "BuildTest"
   ==> "FxCop"
   ==> "NUnitTest"
   ==> "xUnitTest"
