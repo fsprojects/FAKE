@@ -10,5 +10,8 @@
     <p>
         To learn more about FAKE visit <a href="https://github.com/forki/FAKE/" title="ASP.NET Website">github.com/forki/FAKE/</a>.
     </p>
+
+    <p>4 + 5 = <%= Calculator.Add(4,5) %></p>
+    
     <p>Website version <%= Version %></p>
 </asp:Content>
