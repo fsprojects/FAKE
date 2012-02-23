@@ -3,7 +3,7 @@
 ### Initial deployment
 
 * Run 01_build.bat - This will start the build with FAKE:
-	* It compiles the website project
+	* It compiles the website project and the lib
 	* It compiles the test project
 	* It runs the tests with mspec
 	* It creates a nuget package containing:
