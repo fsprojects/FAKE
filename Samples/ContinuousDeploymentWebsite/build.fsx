@@ -87,6 +87,7 @@ Target "Publish" (fun _ ->
 
 // Dependencies
 "Clean"
+  ==> "AssemblyInfo"
   ==> "BuildApp"
   ==> "BuildTest"
   ==> "Test"
