@@ -53,6 +53,7 @@ let ProgramFilesX86 =
     else
         environVar "ProgramFiles"
 
+let SystemRoot = environVar "SystemRoot"
 let mutable TargetPlatformPrefix = @"C:\Windows\Microsoft.NET\Framework"
 
 /// Gets the local directory for the given target platform
