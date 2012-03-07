@@ -30,6 +30,10 @@ let environVarOrDefault name defaultValue =
     let var = environVar name
     if isNullOrEmpty var  then defaultValue else var
 
+let environVarOrNone name =
+    let var = environVar name
+    if isNullOrEmpty var  then None else Some var
+
 /// Retrieves a ApplicationSettings variable
 let appSetting (name:string) = ConfigurationManager.AppSettings.[name]
 
@@ -54,7 +58,14 @@ let ProgramFilesX86 =
         environVar "ProgramFiles"
 
 let SystemRoot = environVar "SystemRoot"
-let mutable TargetPlatformPrefix = @"C:\Windows\Microsoft.NET\Framework"
+
+let mutable TargetPlatformPrefix = 
+    let (<|>) a b = match a with None -> b | _ -> a
+    environVarOrNone "FrameworkDir32"
+    <|> Some (SystemRoot @@ @"Microsoft.NET\Framework")
+    <|> Some @"C:\Windows\Microsoft.NET\Framework"
+    |> Option.get
+    
 
 /// Gets the local directory for the given target platform
 let getTargetPlatformDir platformVersion = 
