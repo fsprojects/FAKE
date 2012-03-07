@@ -137,6 +137,7 @@ let tryFindFile dirs file =
                      path
                        |> replace "[ProgramFiles]" ProgramFiles
                        |> replace "[ProgramFilesX86]" ProgramFilesX86
+                       |> replace "[SystemRoot]" SystemRoot
                        |> directoryInfo
                    if not dir.Exists then "" else
                    let fi = dir.FullName @@ file |> fileInfo
