@@ -21,14 +21,6 @@ let packagesDir = @".\packages\"
 let MSpecVersion = GetPackageVersion packagesDir "Machine.Specifications"
 let mspecTool = sprintf @"%sMachine.Specifications.%s\tools\mspec-clr4.exe" packagesDir MSpecVersion
 
-// Filesets
-let appReferences  = 
-    !+ @"src\app\**\*.csproj" 
-      ++ @"src\app\**\*.fsproj" 
-        |> Scan
-
-let testReferences = !! @"src\test\**\*.csproj"  // !! creates a lazy fileset
-
 // version info
 let version = ReadFileAsString "version.txt" // or retrieve from CI server
 
@@ -37,7 +29,7 @@ Target "Clean" (fun _ ->
     CleanDirs [buildDir; testDir; deployDir; reportDir; nugetDir]
 )
 
-Target "BuildApp" (fun _ ->
+Target "AssemblyInfo" (fun _ ->
     AssemblyInfo 
         (fun p -> 
         {p with
@@ -47,15 +39,20 @@ Target "BuildApp" (fun _ ->
             AssemblyDescription = "Sample website for FAKE - F# MAKE";
             Guid = "78B65159-BCE7-413A-A7A7-3B7BB8277E72";
             OutputFileName = @".\src\app\Fake_Website\Properties\AssemblyInfo.cs"})             
-      
-    // compile all projects below src\app\
-    MSBuildRelease buildDir "Build" appReferences
-        |> Log "AppBuild-Output: "
+)
+
+Target "BuildApp" (fun _ ->
+    !+ @"src\app\**\*.csproj" 
+      ++ @"src\app\**\*.fsproj" 
+        |> Scan
+        |> MSBuildRelease buildDir "Build"
+        |> Log "Build-Output: "
 )
 
 Target "BuildTest" (fun _ ->
-    MSBuildDebug testDir "Build" testReferences
-        |> Log "TestBuild-Output: "
+    !! @"src\test\**\*.csproj"
+      |> MSBuildDebug testDir "Build"
+      |> Log "TestBuild-Output: "
 )
 
 Target "Test" (fun _ ->  
@@ -71,15 +68,16 @@ Target "CreateNuget" (fun _ ->
     XCopy @".\build\_publishedWebsites\Fake_WebSite\" (nugetDir @@ "website")
     XCopy @"..\..\tools\FAKE\" (nugetDir @@ "tools\FAKE")
 
-    NuGet (fun p -> 
-        {p with               
-            Authors = authors
-            Project = projectName
-            Version = version
-            NoPackageAnalysis = true
-            Description = projectDescription                               
-            ToolPath = @"..\..\tools\Nuget\Nuget.exe"                             
-            OutputPath = nugetDir }) "Fake_Website.nuspec"
+    "Fake_Website.nuspec"
+      |> NuGet (fun p -> 
+            {p with               
+                Authors = authors
+                Project = projectName
+                Version = version
+                NoPackageAnalysis = true
+                Description = projectDescription                               
+                ToolPath = @"..\..\tools\Nuget\Nuget.exe"                             
+                OutputPath = nugetDir })
 )
 
 Target "Publish" (fun _ ->     
@@ -87,16 +85,14 @@ Target "Publish" (fun _ ->
       |> Copy deployDir
 )
 
-Target "Default" DoNothing
-
 // Dependencies
 "Clean"
+  ==> "AssemblyInfo"
   ==> "BuildApp"
   ==> "BuildTest"
   ==> "Test"
   ==> "CreateNuget"
   ==> "Publish"
-  ==> "Default"
  
 // start build
-RunParameterTargetOrDefault "target" "Default"
+RunParameterTargetOrDefault "target" "Publish"

@@ -423,6 +423,9 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
 <member name="P:Fake.EnvironmentHelper.ProgramFilesX86">
 <summary>
  The path of Program Files (x86)
@@ -452,6 +455,9 @@
 <summary>
  Retrieves a ApplicationSettings variable
 </summary>
+</member>
+<member name="">
+
 </member>
 <member name="M:Fake.EnvironmentHelper.environVarOrDefault(System.String,System.String)">
 <summary>
