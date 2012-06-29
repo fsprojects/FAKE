@@ -12,16 +12,24 @@ type SpecFlowParams =
       ToolName:string;
       ToolPath:string;
       WorkingDir:string;
-      Args:(string*string) list }
+      BinFolder:string;
+      OutputFile:string;
+      XmlTestResultFile:string;
+      Verbose:bool;
+      ForceRegeneration:bool }
 
 // SpecFlow defalt execution params
 let SpecFlowDefaults = 
-    { SubCommand = "stepdefinitionreport";
+    { SubCommand = "nunitexecutionreport";
       ProjectFile = null;
       ToolName = "specflow.exe";
       ToolPath = currentDirectory @@ "tools" @@ "SpecFlow";
       WorkingDir = null;
-      Args = ["",""] }
+      BinFolder = null;
+      OutputFile = null;
+      XmlTestResultFile = null;
+      Verbose = false;
+      ForceRegeneration = false; }
 
 // Run SpecFlow on a set of params.
 let SpecFlow setParams =    
@@ -30,13 +38,18 @@ let SpecFlow setParams =
     let parameters = SpecFlowDefaults |> setParams
 
     // write trace
-    traceStartTask "SpecFlow" parameters.SubCommand
+    traceStartTask "SpecFlow " parameters.SubCommand
 
     // build the command line args
     let commandLineBuilder = 
         new StringBuilder()
             |> append parameters.SubCommand
             |> append parameters.ProjectFile
+            |> appendIfNotNull parameters.BinFolder "/binFolder:"
+            |> appendIfNotNull parameters.OutputFile "/out:"
+            |> appendIfNotNull parameters.XmlTestResultFile "/xmlTestResult:"
+            |> appendIfTrue parameters.Verbose "/verbose"
+            |> appendIfTrue parameters.ForceRegeneration "/force"
 
     // build the command line executable
     let tool = parameters.ToolPath @@ parameters.ToolName
@@ -56,5 +69,5 @@ let SpecFlow setParams =
 
     // handle result
     match result with
-        | 0 -> traceEndTask "SpecFlow" parameters.SubCommand
+        | 0 -> traceEndTask "SpecFlow " parameters.SubCommand
         | _ -> failwithf "SpecFlow %s failed. Process finished with exit code %i" parameters.SubCommand result
