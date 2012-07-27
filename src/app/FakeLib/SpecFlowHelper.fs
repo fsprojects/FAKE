@@ -6,30 +6,34 @@ open System.IO
 open System.Text
 
 // SpecFlow execution params type
-type SpecFlowParams = 
-    { SubCommand:string;
-      ProjectFile:string;
-      ToolName:string;
-      ToolPath:string;
-      WorkingDir:string;
-      BinFolder:string;
-      OutputFile:string;
-      XmlTestResultFile:string;
-      Verbose:bool;
-      ForceRegeneration:bool }
+type SpecFlowParams = { 
+    SubCommand:         string
+    ProjectFile:        string
+    ToolName:           string
+    ToolPath:           string
+    WorkingDir:         string
+    BinFolder:          string
+    OutputFile:         string
+    XmlTestResultFile:  string
+    Verbose:            bool
+    ForceRegeneration:  bool
+    XsltFile:           string
+}
 
 // SpecFlow defalt execution params
-let SpecFlowDefaults = 
-    { SubCommand = "nunitexecutionreport";
-      ProjectFile = null;
-      ToolName = "specflow.exe";
-      ToolPath = currentDirectory @@ "tools" @@ "SpecFlow";
-      WorkingDir = null;
-      BinFolder = null;
-      OutputFile = null;
-      XmlTestResultFile = null;
-      Verbose = false;
-      ForceRegeneration = false; }
+let SpecFlowDefaults = { 
+    SubCommand =        "generateall"
+    ProjectFile =       null
+    ToolName =          "specflow.exe"
+    ToolPath =          currentDirectory @@ "tools" @@ "SpecFlow"
+    WorkingDir =        null
+    BinFolder =         null
+    OutputFile =        null
+    XmlTestResultFile = null
+    Verbose =           false
+    ForceRegeneration = false
+    XsltFile =          null
+}
 
 // Run SpecFlow on a set of params.
 let SpecFlow setParams =    
@@ -43,13 +47,14 @@ let SpecFlow setParams =
     // build the command line args
     let commandLineBuilder = 
         new StringBuilder()
-            |> append parameters.SubCommand
-            |> append parameters.ProjectFile
-            |> appendIfNotNull parameters.BinFolder "/binFolder:"
-            |> appendIfNotNull parameters.OutputFile "/out:"
-            |> appendIfNotNull parameters.XmlTestResultFile "/xmlTestResult:"
-            |> appendIfTrue parameters.Verbose "/verbose"
-            |> appendIfTrue parameters.ForceRegeneration "/force"
+            |> append           parameters.SubCommand
+            |> append           parameters.ProjectFile
+            |> appendIfNotNull  parameters.BinFolder "/binFolder:"
+            |> appendIfNotNull  parameters.OutputFile "/out:"
+            |> appendIfNotNull  parameters.XmlTestResultFile "/xmlTestResult:"
+            |> appendIfTrue     parameters.Verbose "/verbose"
+            |> appendIfTrue     parameters.ForceRegeneration "/force"
+            |> appendIfNotNull  parameters.XsltFile "/xsltFile:"
 
     // build the command line executable
     let tool = parameters.ToolPath @@ parameters.ToolName
