@@ -59,7 +59,7 @@ module Main =
 
     let traceDeploymentResult server fileName = function        
         | HttpClientHelper.Success -> tracefn "Deployment of %s to %s successful" fileName server
-        | HttpClientHelper.Failure exn -> traceError <| sprintf "Deployment of %s to %s failed\r\n%A" fileName server exn 
+        | HttpClientHelper.Failure exn -> traceError <| sprintf "Deployment of %s to %s failed\r\n%O" fileName server exn 
         | HttpClientHelper.Cancelled -> tracefn "Deployment of %s to %s cancelled" fileName server
         | HttpClientHelper.RolledBack -> tracefn "Deployment of %s to %s rolled back" fileName server
         | HttpClientHelper.Unknown -> traceError <| sprintf  "Deployment of %s to %s failed\r\nCould not derive reason sorry!!!" fileName server
