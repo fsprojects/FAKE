@@ -45,10 +45,10 @@ try
     with
     | exn -> 
         if exn.InnerException <> null then
-            sprintf "Build failed.\nError:\n%s\nInnerException:\n%s" exn.Message exn.InnerException.Message
+            sprintf "Build failed.\nError:\n%O\nInnerException:\n%O" exn exn.InnerException
             |> traceError
         else
-            sprintf "Build failed.\nError:\n%s" exn.Message
+            sprintf "Build failed.\nError:\n%O" exn
             |> traceError
         sendTeamCityError exn.Message
         Environment.ExitCode <- 1

@@ -37,7 +37,7 @@ let internal getReferenceElements elementName projectFileName (doc:XDocument) =
       .Descendants(xname elementName)
         |> Seq.map(fun e -> 
             let a = e.Attribute(XName.Get "Include")
-            let value = a.Value
+            let value = convertWindowsToCurrentPath a.Value
             let fileName =
                 if value.StartsWith(".." + directorySeparator) || (not <| value.Contains directorySeparator) then
                     fi.Directory.FullName @@ value

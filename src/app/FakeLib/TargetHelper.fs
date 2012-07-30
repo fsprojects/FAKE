@@ -142,7 +142,7 @@ let targetError targetName (exn:System.Exception) =
     errors <- BuildError(targetName, exn.ToString()) :: errors
     let msg = 
         if PrintStackTraceOnError then exn.ToString() else
-        sprintf "%s%s" exn.Message (if exn.InnerException <> null then "\n" + exn.InnerException.Message else "")
+        sprintf "%O%s" exn (if exn.InnerException <> null then "\n" + (exn.InnerException.ToString()) else "")
             
     traceError <| sprintf "Running build failed.\nError:\n%s" msg
     sendTeamCityError msg        
