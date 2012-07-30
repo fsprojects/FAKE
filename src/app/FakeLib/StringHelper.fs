@@ -40,6 +40,9 @@ let rec NormalizeVersion(version:string) =
     else 
         version
 
+/// Writes a byte array to a file
+let WriteBytesToFile file bytes = File.WriteAllBytes(file,bytes)
+
 /// Writes string to a file
 let WriteStringToFile append file text = WriteToFile append file [text]
 
@@ -66,7 +69,10 @@ let inline replace (pattern:string) replacement (text:string) = text.Replace(pat
 let inline separated delimiter (items: string seq) = String.Join(delimiter, Array.ofSeq items)
 
 /// Reads a file as one text
-let ReadFileAsString file = File.ReadAllText(file,Encoding.Default)
+let inline ReadFileAsString file = File.ReadAllText(file,Encoding.Default)
+
+/// Reads a file as one array of bytes
+let ReadFileAsBytes = File.ReadAllBytes
 
 /// Replaces any occurence of the currentDirectory with .
 let inline shortenCurrentDirectory value = replace currentDirectory "." value

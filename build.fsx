@@ -50,6 +50,15 @@ Target "SetAssemblyInfo" (fun _ ->
             AssemblyTitle = "FAKE - F# Make Command line tool";
             Guid = "fb2b540f-d97a-4660-972f-5eeff8120fba";
             OutputFileName = @".\src\app\FAKE\AssemblyInfo.fs"})
+
+    AssemblyInfo 
+        (fun p -> 
+        {p with
+            CodeLanguage = FSharp;
+            AssemblyVersion = buildVersion;
+            AssemblyTitle = "FAKE - F# Make Deploy tool";
+            Guid = "413E2050-BECC-4FA6-87AA-5A74ACE9B8E1";
+            OutputFileName = @".\src\app\Fake.Deploy\AssemblyInfo.fs"})
                    
     AssemblyInfo 
         (fun p -> 
@@ -115,6 +124,7 @@ Target "Test" (fun _ ->
       |> MSpec (fun p -> 
             {p with
                 ToolPath = mspecTool
+                ExcludeTags = ["HTTP"]
                 HtmlOutputDir = reportDir}) 
 )
 
@@ -141,6 +151,7 @@ Target "CreateNuGet" (fun _ ->
 
     XCopy docsDir nugetDocsDir
     XCopy buildDir nugetToolsDir
+    DeleteFile (nugetToolsDir @@ "Gallio.dll")
 
     NuGet (fun p -> 
         {p with               

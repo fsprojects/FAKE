@@ -19,11 +19,33 @@ let inline fileSystemInfo path : FileSystemInfo =
 /// Converts a file to it's full file system name
 let inline FullName fileName = Path.GetFullPath fileName
 
+/// Gets the directory part of a filename
+let inline DirectoryName fileName = Path.GetDirectoryName fileName
+
 /// Gets all subdirectories
 let inline subDirectories (dir:DirectoryInfo) = dir.GetDirectories()
 
 /// Gets all files in the directory
 let inline filesInDir (dir:DirectoryInfo) = dir.GetFiles()
+
+/// Finds all the files in the directory matching the search pattern 
+let filesInDirMatching pattern (dir:DirectoryInfo) =
+    if dir.Exists then dir.GetFiles pattern else [||]
+
+/// Gets the first file in the directory matching the search pattern or None
+let TryFindFirstMatchingFile pattern dir =
+    dir 
+    |> directoryInfo
+    |> filesInDirMatching pattern
+    |> fun files -> if Seq.isEmpty files then None else (Seq.head files).FullName |> Some
+
+/// Gets the first file in the directory matching the search pattern or throws if nothing was found
+let FindFirstMatchingFile pattern dir =
+    match TryFindFirstMatchingFile pattern dir with
+    | Some x -> x
+    | None -> 
+        new FileNotFoundException(sprintf "Could not find file matching %s in %s" pattern dir)
+          |> raise
 
 /// Gets the current directory
 let currentDirectory = Path.GetFullPath "."
@@ -34,3 +56,9 @@ let checkFileExists fileName =
 
 /// Checks if all given files exists
 let allFilesExist files = Seq.forall File.Exists files
+
+/// Checks if all given directory exists. If not then this functions creates the directory
+let ensureDirectory dir = 
+    if not <| Directory.Exists dir then 
+      Directory.CreateDirectory dir |> ignore
+        

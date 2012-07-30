@@ -12,15 +12,7 @@ let deployDir = @".\deploy\"
 // tools
 let nunitPath = @".\Tools\NUnit"
 let fxCopRoot = @".\Tools\FxCop\FxCopCmd.exe"
-
-// Filesets
-let appReferences  = 
-    !+ @"src\app\**\*.csproj" 
-      ++ @"src\app\**\*.fsproj" 
-        |> Scan
-
-let testReferences = !! @"src\test\**\*.csproj"  // !! creates a lazy fileset
-
+    
 // version info
 let version = "0.2"  // or retrieve from CI server
 
@@ -29,7 +21,7 @@ Target "Clean" (fun _ ->
     CleanDirs [buildDir; testDir; deployDir]
 )
 
-Target "BuildApp" (fun _ ->
+Target "SetVersions" (fun _ ->
     AssemblyInfo 
         (fun p -> 
         {p with
@@ -49,15 +41,21 @@ Target "BuildApp" (fun _ ->
             AssemblyDescription = "Sample project for FAKE - F# MAKE";
             Guid = "EE5621DB-B86B-44eb-987F-9C94BCC98441";
             OutputFileName = @".\src\app\CalculatorLib\Properties\AssemblyInfo.cs"})          
-      
-    // compile all projects below src\app\
-    MSBuildRelease buildDir "Build" appReferences
+)
+
+
+Target "CompileApp" (fun _ ->    
+    !+ @"src\app\**\*.csproj" 
+      ++ @"src\app\**\*.fsproj" 
+        |> Scan
+        |> MSBuildRelease buildDir "Build" 
         |> Log "AppBuild-Output: "
 )
 
-Target "BuildTest" (fun _ ->
-    MSBuildDebug testDir "Build" testReferences
-        |> Log "TestBuild-Output: "
+Target "CompileTest" (fun _ ->
+    !! @"src\test\**\*.csproj"
+      |> MSBuildDebug testDir "Build"
+      |> Log "TestBuild-Output: "
 )
 
 Target "NUnitTest" (fun _ ->  
@@ -67,16 +65,6 @@ Target "NUnitTest" (fun _ ->
                 ToolPath = nunitPath; 
                 DisableShadowCopy = true; 
                 OutputFile = testDir + @"TestResults.xml"})
-)
-
-Target "xUnitTest" (fun _ ->  
-    !! (testDir + @"\xUnit.Test.*.dll") 
-        |> xUnit (fun p -> 
-            {p with 
-                ShadowCopy = false;
-                HtmlOutput = true;
-                XmlOutput = true;
-                OutputDir = testDir })
 )
 
 Target "FxCop" (fun _ ->
@@ -89,23 +77,21 @@ Target "FxCop" (fun _ ->
                 ToolPath = fxCopRoot})
 )
 
-Target "Deploy" (fun _ ->
+Target "Zip" (fun _ ->
     !+ (buildDir + "\**\*.*") 
         -- "*.zip" 
         |> Scan
         |> Zip buildDir (deployDir + "Calculator." + version + ".zip")
 )
 
-Target "Test" DoNothing
-
 // Dependencies
 "Clean"
-  ==> "BuildApp" <=> "BuildTest"
+  ==> "SetVersions" 
+  ==> "CompileApp" 
+  ==> "CompileTest"
   ==> "FxCop"
-  ==> "NUnitTest"
-  ==> "xUnitTest"
-  ==> "Test"
-  ==> "Deploy"
+  ==> "NUnitTest"  
+  ==> "Zip"
  
 // start build
-Run "Deploy"
+Run "Zip"

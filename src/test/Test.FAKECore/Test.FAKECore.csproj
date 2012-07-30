@@ -61,9 +61,9 @@
     <Reference Include="FSharp.Testing">
       <HintPath>..\..\..\packages\FSharp.Testing.0.2.8.0\lib\FSharp.Testing.dll</HintPath>
     </Reference>
-    <Reference Include="Machine.Specifications, Version=0.4.24.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Machine.Specifications, Version=0.5.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Machine.Specifications.0.4.24.0\lib\Machine.Specifications.dll</HintPath>
+      <HintPath>..\..\..\packages\Machine.Specifications.0.5.3.0\lib\Machine.Specifications.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -85,6 +85,14 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Globbing\Directories\GlobbingOfDirectoriesSpecs.cs" />
     <Compile Include="ILMerge\ILMergeSpecs.cs" />
+    <Compile Include="PackageMgt\VersioningSpecs.cs" />
+    <Compile Include="PackageMgt\RollbackSpecs.cs" />
+    <Compile Include="PackageMgt\RoutingSpecs.cs" />
+    <Compile Include="PackageMgt\HttpListenerSpecs.cs" />
+    <Compile Include="PackageMgt\ReleaseDiscoveringSpecs.cs" />
+    <Compile Include="PackageMgt\FeedSpecs.cs" />
+    <Compile Include="PackageMgt\NugetData.cs" />
+    <Compile Include="PackageMgt\NuSpecFileSpecs.cs" />
     <Compile Include="SideBySideSpecification\ReferencesScanningSpecs.cs" />
     <Compile Include="SideBySideSpecification\SpecsRemovementSpecs.cs" />
     <Compile Include="StringHelperSpecs.cs" />
@@ -94,6 +102,7 @@
     <Compile Include="FileHandling\CleanDirectorySpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FileHandling\GlobbingSpecs.cs" />
+    <Compile Include="Zip\FileExtractionSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -145,11 +154,33 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\fake.nuspec">
+      <Link>TestData\fake.nuspec</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="app.config" />
     <None Include="Globbing\Directories\SampleApp.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="TestData\deployments\jQuery\active\jQuery.1.7.1.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\deployments\jQuery\backups\jQuery.1.5.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\deployments\jQuery\backups\jQuery.1.6.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\deployments\SignalR\active\SignalR.0.4.0.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\deployments\SignalR\backups\SignalR.0.1.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\deployments\SignalR\backups\SignalR.0.2.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\app\FakeLib\FakeLib.fsproj">
@@ -157,6 +188,7 @@
       <Name>FakeLib</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
