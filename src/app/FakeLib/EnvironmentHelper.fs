@@ -59,11 +59,17 @@ let ProgramFilesX86 =
 
 let SystemRoot = environVar "SystemRoot"
 
+let isUnix = System.Environment.OSVersion.Platform = System.PlatformID.Unix
+
 let mutable TargetPlatformPrefix = 
     let (<|>) a b = match a with None -> b | _ -> a
     environVarOrNone "FrameworkDir32"
-    <|> Some (SystemRoot @@ @"Microsoft.NET\Framework")
-    <|> Some @"C:\Windows\Microsoft.NET\Framework"
+    <|> 
+        if (isNullOrEmpty SystemRoot) then None
+        else Some (SystemRoot @@ @"Microsoft.NET\Framework")
+    <|> 
+        if (isUnix) then Some "/usr/lib/mono"
+        else Some @"C:\Windows\Microsoft.NET\Framework"
     |> Option.get
     
 
@@ -77,4 +83,9 @@ let getTargetPlatformDir platformVersion =
 /// The path to the personal documents
 let documentsFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
 
-let isUnix = System.Environment.OSVersion.Platform = System.PlatformID.Unix
+/// Convert the given windows path to a path in the current system
+let convertWindowsToCurrentPath (w:string) = 
+    if (w.Length > 2 && w.[1] = ':' && w.[2] = '\\') then
+        failwith "absolute windows paths (currently) not supported"
+    w
+        |> replace @"\" directorySeparator
