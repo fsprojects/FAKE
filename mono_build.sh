@@ -8,6 +8,10 @@ srcfakepath='src/app/FAKE/'
 srcfakelibpath='src/app/FakeLib/'
 unamestr=`uname`
 
+if [ ! -d "$buildpath" ]; then
+	mkdir "$buildpath"
+fi
+
 if [ "$unamestr" == "Darwin" ]; then
 	monopath='/Library/Frameworks/Mono.framework/libraries/mono/4.0/'
 	fscorepath='/Library/Frameworks/Mono.framework/libraries/mono/4.0/'
