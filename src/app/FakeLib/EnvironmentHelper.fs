@@ -30,6 +30,7 @@ let environVarOrDefault name defaultValue =
     let var = environVar name
     if isNullOrEmpty var  then defaultValue else var
 
+/// Retrieves the environment variable or None
 let environVarOrNone name =
     let var = environVar name
     if isNullOrEmpty var  then None else Some var
@@ -57,6 +58,7 @@ let ProgramFilesX86 =
     else
         environVar "ProgramFiles"
 
+/// System root environment variable. Typically "C:\Windows"
 let SystemRoot = environVar "SystemRoot"
 
 let isUnix = System.Environment.OSVersion.Platform = System.PlatformID.Unix
