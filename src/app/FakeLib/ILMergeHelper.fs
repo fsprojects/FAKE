@@ -130,7 +130,12 @@ let getArguments outputFile primaryAssembly parameters =
     let libraries = primaryAssembly :: (parameters.Libraries |> Seq.toList) |> separated " "
     allParameters + " " + libraries
    
-/// Use ILMerge to merge some .NET assemblies.
+/// <summary>Use ILMerge to merge some .NET assemblies.</summary>
+/// <param name="setParams">Function used to create an ILMergeParams value with your required settings.  Called with an ILMergeParams value configured with the defaults.</param>
+/// <param name="outputFile">Output file path for the merged assembly.</param>
+/// <param name="primaryAssembly">The assembly you want ILMerge to consider as the primary.</param>
+/// <remarks>ILMerge must be installed for this to work.</remarks>
+/// <user/>
 let ILMerge setParams outputFile primaryAssembly = 
     traceStartTask "ILMerge" primaryAssembly
     let parameters = setParams ILMergeDefaults

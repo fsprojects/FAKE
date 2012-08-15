@@ -218,7 +218,9 @@ let CopyDir target source filterFile =
         File.Copy(file, newFile, true))
     |> ignore
   
-/// Cleans a directory
+///<summary>Cleans a directory by removing all files and sub-directories.</summary>
+///<param name="path">The path of the directory to clean.</param>
+///<user/>
 let CleanDir path =
     let di = directoryInfo path
     if di.Exists then
