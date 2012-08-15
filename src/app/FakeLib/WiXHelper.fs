@@ -101,7 +101,11 @@ let Light (parameters:WiXParams) outputFile wixObj =
                     
     traceEndTask "Light" wixObj
 
-/// Uses Candle and Light to create a msi.
+/// <summary>Use the WiX tools Candle and Light to create an msi.</summary>
+/// <param name="setParams">Function used to create an WiXParams value with your required settings.  Called with an WixParams value configured with the defaults.</param>
+/// <param name="outputFile">The msi output file path (given to Light).</param>
+/// <param name="wixScript">The path to a WiX script that will be used with Candle.</param>
+/// <user/>
 let WiX setParams outputFile wixScript =
     let parameters = setParams WiXDefaults     
     wixScript
