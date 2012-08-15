@@ -57,8 +57,10 @@ let checkFileExists fileName =
 /// Checks if all given files exists
 let allFilesExist files = Seq.forall File.Exists files
 
+/// Ensure that directory chain exists. Create necessary directories if necessary.
+let inline ensureDirExists (dir : DirectoryInfo) =
+    if not dir.Exists then dir.Create()
+
 /// Checks if all given directory exists. If not then this functions creates the directory
-let ensureDirectory dir = 
-    if not <| Directory.Exists dir then 
-      Directory.CreateDirectory dir |> ignore
-        
+let inline ensureDirectory dir = 
+    directoryInfo dir |> ensureDirExists

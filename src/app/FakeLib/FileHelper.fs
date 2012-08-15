@@ -23,7 +23,7 @@ let setDirectoryReadOnly readOnly (dir:DirectoryInfo) =
         if readOnly && (not isReadOnly) then 
             dir.Attributes <- dir.Attributes ||| FileAttributes.ReadOnly
         if (not readOnly) && not isReadOnly then               
-            dir.Attributes <- dir.Attributes &&& (~~~FileAttributes.ReadOnly)  
+            dir.Attributes <- dir.Attributes &&& (~~~FileAttributes.ReadOnly)
 
 /// Sets all files in the directory readonly 
 let SetDirReadOnly readOnly dir =
@@ -70,6 +70,7 @@ let CreateFile fileName =
     let file = fileInfo fileName
     if not file.Exists then 
         logfn "Creating %s" file.FullName
+        ensureDirExists file.Directory
         let newFile = file.Create()
         newFile.Close()
     else
@@ -111,7 +112,7 @@ let CopyFileIntoSubFolder target fileName =
   
     let targetName = target + relative
     let target = fileInfo targetName
-    if not target.Directory.Exists then target.Directory.Create()
+    ensureDirExists target.Directory
 
     logVerbosefn "Copy %s to %s" fileName targetName
     fi.CopyTo(targetName,true) |> ignore    
@@ -125,6 +126,7 @@ let CopyFile target fileName =
     | File f ->  
         let targetName = target @@ fi.Name
         logVerbosefn "Copy %s to %s" fileName targetName
+        ensureDirectory target
         f.CopyTo(targetName,true) |> ignore    
     | Directory _ -> logVerbosefn "Ignoring %s, because it is no file" fileName
   
@@ -146,7 +148,7 @@ let CopyTo target = Copy target
 /// <param name="files">The orginal files.</param>
 let CopyCached target cacheDir files = 
     let cache = directoryInfo cacheDir
-    if not cache.Exists then cache.Create()
+    ensureDirExists cache
     files
         |> Seq.map (fun fileName -> 
             let fi = fileInfo fileName
@@ -171,9 +173,15 @@ let CopyCached target cacheDir files =
 /// <summary>Renames the files to the target fileName.</summary>
 /// <param name="target">The target FileName.</param>
 /// <param name="file">The orginal FileName.</param>
-let Rename target fileName = (fileInfo fileName).MoveTo target
-  
+let Rename target fileName = 
+    DirectoryName target |> ensureDirectory
+    (fileInfo fileName).MoveTo target
+
+/// <summary>Copy list of files to the specified directory without any output</summary>
+/// <param name="target">The target directory.</param>
+/// <param name="files">List of files to copy.</param>
 let SilentCopy target files =
+    ensureDirectory target
     files
     |> Seq.iter (fun file ->
             let fi = fileInfo file
