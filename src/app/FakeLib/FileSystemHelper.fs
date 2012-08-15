@@ -4,22 +4,27 @@ module Fake.FileSystemHelper
 open System
 open System.IO
 
-/// Creates a DirectoryInfo for the given path
+/// <summary>Creates a DirectoryInfo for the given path</summary>
+/// <user/>
 let inline directoryInfo path = new DirectoryInfo(path)
 
-/// Creates a FileInfo for the given path
+/// <summary>Creates a FileInfo for the given path</summary>
+/// <user/>
 let inline fileInfo path = new FileInfo(path)
 
-/// Creates a FileInfo or a DirectoryInfo for the given path
+/// <summary>Creates a FileInfo or a DirectoryInfo for the given path</summary>
+/// <user/>
 let inline fileSystemInfo path : FileSystemInfo =
     if Directory.Exists path
         then upcast directoryInfo path
         else upcast fileInfo path
 
-/// Converts a file to it's full file system name
+/// <summary>Converts a filename to it's full file system name</summary>
+/// <user/>
 let inline FullName fileName = Path.GetFullPath fileName
 
-/// Gets the directory part of a filename
+/// <summary>Gets the directory part of a filename</summary>
+/// <user/>
 let inline DirectoryName fileName = Path.GetDirectoryName fileName
 
 /// Gets all subdirectories
@@ -47,20 +52,34 @@ let FindFirstMatchingFile pattern dir =
         new FileNotFoundException(sprintf "Could not find file matching %s in %s" pattern dir)
           |> raise
 
-/// Gets the current directory
+/// <summary>Gets the current directory</summary>
+/// <user/>
 let currentDirectory = Path.GetFullPath "."
 
-/// Checks if the file exists on disk.
+/// <summary>Checks if the file exists on disk.</summary>
+/// <user/>
+let fileExists = File.Exists
+
+/// <summary>Raises an exception if the file doesn't exist on disk.</summary>
+/// <user/>
 let checkFileExists fileName =
-    if not <| File.Exists fileName then failwithf "File %s does not exist." fileName
+    if not <| fileExists fileName then 
+        failwithf "File %s does not exist." fileName
 
-/// Checks if all given files exists
-let allFilesExist files = Seq.forall File.Exists files
+/// <summary>Checks if all given files exist</summary>
+/// <user />
+let allFilesExist files = Seq.forall fileExists files
 
-/// Ensure that directory chain exists. Create necessary directories if necessary.
+/// <summary>Checks if the directory exists on disk.</summary>
+/// <user/>
+let directoryExists = Directory.Exists
+
+/// <summary>Ensure that directory chain exists. Create necessary directories if necessary.</summary>
+/// <user/>
 let inline ensureDirExists (dir : DirectoryInfo) =
     if not dir.Exists then dir.Create()
 
-/// Checks if all given directory exists. If not then this functions creates the directory
+/// <summary>Checks if the given directory exists. If not then this functions creates the directory.</summary>
+/// <user/>
 let inline ensureDirectory dir = 
     directoryInfo dir |> ensureDirExists

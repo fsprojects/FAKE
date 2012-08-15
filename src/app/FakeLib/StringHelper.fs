@@ -8,26 +8,31 @@ open System.Collections.Generic
 
 let productName() = "FAKE"
 
-/// Returns if the string is null or empty
+/// <summary>Returns if the string is null or empty</summary>
+/// <user/>
 let isNullOrEmpty = String.IsNullOrEmpty
 
-/// Returns if the string is not null or empty
+/// <summary>Returns if the string is not null or empty</summary>
+/// <user/>
 let isNotNullOrEmpty = String.IsNullOrEmpty >> not
 
-/// Reads a file line by line
+/// <summary>Reads a file line by line</summary>
+/// <user/>
 let ReadFile (file:string) =   
     seq {use textReader = new StreamReader(file, Encoding.Default)
          while not textReader.EndOfStream do
              yield textReader.ReadLine()}
 
-/// Writes a file line by line
+/// <summary>Writes a file line by line</summary>
+/// <user/>
 let WriteToFile append fileName (lines: seq<string>) =    
     let fi = fileInfo fileName
 
     use writer = new StreamWriter(fileName,append && fi.Exists,Encoding.Default) 
     lines |> Seq.iter writer.WriteLine
 
-/// Removes all trailing .0 from a version string
+/// <summary>Removes all trailing .0 from a version string</summary>
+/// <user/>
 let rec NormalizeVersion(version:string) =
     let elements = version.Split [|'.'|]
     let mutable version = ""
@@ -40,13 +45,16 @@ let rec NormalizeVersion(version:string) =
     else 
         version
 
-/// Writes a byte array to a file
+/// <summary>Writes a byte array to a file</summary>
+/// <user/>
 let WriteBytesToFile file bytes = File.WriteAllBytes(file,bytes)
 
-/// Writes string to a file
+/// <summary>Writes string to a file</summary>
+/// <user/>
 let WriteStringToFile append file text = WriteToFile append file [text]
 
-/// Replaces the file with the given string
+/// <summary>Replaces the file with the given string</summary>
+/// <user/>
 let ReplaceFile fileName text =
     let fi = fileInfo fileName
     if fi.Exists then
@@ -56,10 +64,12 @@ let ReplaceFile fileName text =
 
 let Colon = ','
 
-/// Writes a file line by line
+/// <summary>Writes a file line by line</summary>
+/// <user/>
 let WriteFile file lines = WriteToFile false file lines
   
-/// Appends all lines to a file line by line
+/// <summary>Appends all lines to a file line by line</summary>
+/// <user/>
 let AppendToFile file lines = WriteToFile true file lines
 
 /// Replaces the given pattern in the given text with the replacement
@@ -68,10 +78,12 @@ let inline replace (pattern:string) replacement (text:string) = text.Replace(pat
 /// Converts a sequence of strings to a string with delimiters
 let inline separated delimiter (items: string seq) = String.Join(delimiter, Array.ofSeq items)
 
-/// Reads a file as one text
+/// <summary>Reads a file as one text</summary>
+/// <user/>
 let inline ReadFileAsString file = File.ReadAllText(file,Encoding.Default)
 
-/// Reads a file as one array of bytes
+/// <summary>Reads a file as one array of bytes</summary>
+/// <user/>
 let ReadFileAsBytes = File.ReadAllBytes
 
 /// Replaces any occurence of the currentDirectory with .

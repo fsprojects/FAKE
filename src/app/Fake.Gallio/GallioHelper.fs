@@ -203,6 +203,7 @@ let private createLauncher param =
 /// </summary>
 /// <param name="setParam">Function that modifies the default parameters</param>
 /// <param name="assemblies">List of test assemblies</param>
+/// <user/>
 let Run (setParam: GallioParams -> GallioParams) assemblies =
     let param = setParam GallioDefaults
     let launcher = createLauncher param

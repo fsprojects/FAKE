@@ -64,7 +64,8 @@ let intitialCatalogExistsOnServer serverInfo =
     getDBName serverInfo 
       |> existDBOnServer serverInfo  
 
-/// Drops the given InitialCatalog from the server (if it exists)
+/// <summary>Drops the given InitialCatalog from the server (if it exists)</summary>
+/// <user/>
 let DropDb serverInfo = 
     if intitialCatalogExistsOnServer serverInfo then
         logfn "Dropping database %s on server %s" (getDBName serverInfo) (getServerName serverInfo)
@@ -72,14 +73,16 @@ let DropDb serverInfo =
         getDBName serverInfo |> serverInfo.Server.KillDatabase
     serverInfo
 
-/// Kills all Processes
+/// <summary>Kills all Processes</summary>
+/// <user/>
 let KillAllProcesses serverInfo =
     let dbName = getDBName serverInfo
     logfn "Killing all processes from database %s on server %s." dbName (getServerName serverInfo)
     serverInfo.Server.KillAllProcesses dbName
     serverInfo
 
-/// Detach a database        
+/// <summary>Detaches a database</summary>
+/// <user/>
 let Detach serverInfo =
     serverInfo
       |> KillAllProcesses
@@ -89,7 +92,8 @@ let Detach serverInfo =
             si.Server.DetachDatabase(dbName, true)
             si
 
-/// Attach a database  
+/// <summary>Attach a database</summary>
+/// <user/>
 let Attach serverInfo (attachOptions:AttachOptions) files =
     let sc = new Collections.Specialized.StringCollection ()
     files |> Seq.iter (fun file ->         
@@ -102,7 +106,8 @@ let Attach serverInfo (attachOptions:AttachOptions) files =
     serverInfo.Server.AttachDatabase(dbName,sc,attachOptions)
     serverInfo
 
-/// Creates a new db on the given server
+/// <summary>Creates a new db on the given server</summary>
+/// <user/>
 let CreateDb serverInfo =     
     logfn "Creating database %s on server %s" (getDBName serverInfo) (getServerName serverInfo)
     (getDatabase serverInfo).Create()  
@@ -111,13 +116,15 @@ let CreateDb serverInfo =
 /// <summary>Runs a sql script on the server.</summary>
 /// <param name="serverInfo">Used as a connection to the database.</param>
 /// <param name="sqlFile">The script which will be run.</param>
+/// <user/>
 let runScript serverInfo sqlFile =
     logfn "Executing script %s" sqlFile
     sqlFile
       |> StringHelper.ReadFileAsString
       |> (getDatabase serverInfo).ExecuteNonQuery
     
-/// Closes the connection to the server
+/// <summary>Closes the connection to the server</summary>
+/// <user/>
 let Disconnect serverInfo = serverInfo.Server.ConnectionContext.Disconnect()
 
 /// Replaces the database files
@@ -128,7 +135,8 @@ let internal replaceDatabaseFiles connectionString attachOptions copyF =
       |> fun si -> copyF() |> Attach si attachOptions
       |> Disconnect
 
-/// Replaces the database files
+/// <summary>Replaces the database files</summary>
+/// <user/>
 let ReplaceDatabaseFiles connectionString targetDir files attachOptions =
     replaceDatabaseFiles connectionString attachOptions
         (fun _ ->
@@ -145,12 +153,14 @@ let ReplaceDatabaseFiles connectionString targetDir files attachOptions =
 /// <param name="cacheDir">The file cache. If the files in the cache are not up to date, they will be refreshed.</param>
 /// <param name="files">The original database files.</param>
 /// <param name="attachOptions">AttachOptions for Sql server.</param>
+/// <user/>
 let ReplaceDatabaseFilesWithCache connectionString targetDir cacheDir files attachOptions =
     replaceDatabaseFiles connectionString attachOptions
         (fun _ -> CopyCached targetDir cacheDir files)
  
 /// <summary>Drops and creates the database (dropped if db exists. created nonetheless)</summary>
 /// <param name="connectionString">Used to open the connection to the database.</param>
+/// <user/>
 let DropAndCreateDatabase connectionString = 
     connectionString 
       |> getServerInfo
@@ -161,6 +171,7 @@ let DropAndCreateDatabase connectionString =
 /// <summary>Runs the given sql scripts on the server.</summary>
 /// <param name="connectionString">Used to open the connection to the database.</param>
 /// <param name="scripts">The scripts which will be run.</param>
+/// <user/>
 let RunScripts connectionString scripts = 
     let serverInfo = getServerInfo connectionString 
     scripts |> Seq.iter (runScript serverInfo)
@@ -169,6 +180,7 @@ let RunScripts connectionString scripts =
 /// <summary>Runs all sql scripts from the given directory on the server.</summary>
 /// <param name="connectionString">Used to open the connection to the database.</param>
 /// <param name="scriptDirectory">All *.sql files inside this directory and all subdirectories will be run.</param>
+/// <user/>
 let RunScriptsFromDirectory connectionString scriptDirectory =
     Directory.GetFiles(scriptDirectory, "*.sql", SearchOption.AllDirectories)
       |> RunScripts connectionString  
