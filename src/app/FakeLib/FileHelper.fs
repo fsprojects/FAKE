@@ -219,9 +219,7 @@ let CopyDir target source filterFile =
         let fi = file |> replaceFirst source "" |> trimSeparator
         let newFile = target @@ fi
         logVerbosefn "%s => %s" file newFile
-        Path.GetDirectoryName newFile
-        |> Directory.CreateDirectory
-        |> ignore
+        DirectoryName newFile |> ensureDirectory
 
         File.Copy(file, newFile, true))
     |> ignore
@@ -274,6 +272,7 @@ let ReadCSVFile(file:string) =
 let AppendTextFiles newFileName files =    
     let fi = fileInfo newFileName
     if fi.Exists then failwithf "File %s already exists." (fi.FullName)
+    ensureDirExists fi.Directory
     use writer = new StreamWriter(fi.FullName, false, Encoding.Default)
   
     files 
@@ -387,9 +386,10 @@ let MoveFile target fileName =
     let fi = fileSystemInfo fileName
     
     match fi with
-    | File f ->  
+    | File f ->
         let targetName = target @@ fi.Name
         DeleteFile targetName
-        logVerbosefn "Move %s to %s" fileName targetName        
-        f.MoveTo(targetName) |> ignore    
+        logVerbosefn "Move %s to %s" fileName targetName
+        ensureDirectory target
+        f.MoveTo(targetName) |> ignore
     | Directory _ -> logVerbosefn "Ignoring %s, because it is no file" fileName
