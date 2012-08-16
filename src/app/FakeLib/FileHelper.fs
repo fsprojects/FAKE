@@ -219,7 +219,6 @@ let CopyDir target source filterFile =
         let fi = file |> replaceFirst source "" |> trimSeparator
         let newFile = target @@ fi
         logVerbosefn "%s => %s" file newFile
-        DirectoryName newFile |> ensureDirectory
 
         File.Copy(file, newFile, true))
     |> ignore
