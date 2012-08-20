@@ -70,7 +70,6 @@ let CreateFile fileName =
     let file = fileInfo fileName
     if not file.Exists then 
         logfn "Creating %s" file.FullName
-        ensureDirExists file.Directory
         let newFile = file.Create()
         newFile.Close()
     else
@@ -126,7 +125,6 @@ let CopyFile target fileName =
     | File f ->  
         let targetName = target @@ fi.Name
         logVerbosefn "Copy %s to %s" fileName targetName
-        ensureDirectory target
         f.CopyTo(targetName,true) |> ignore    
     | Directory _ -> logVerbosefn "Ignoring %s, because it is no file" fileName
   
@@ -173,15 +171,12 @@ let CopyCached target cacheDir files =
 /// <summary>Renames the files to the target fileName.</summary>
 /// <param name="target">The target FileName.</param>
 /// <param name="file">The orginal FileName.</param>
-let Rename target fileName = 
-    DirectoryName target |> ensureDirectory
-    (fileInfo fileName).MoveTo target
+let Rename target fileName = (fileInfo fileName).MoveTo target
 
 /// <summary>Copy list of files to the specified directory without any output</summary>
 /// <param name="target">The target directory.</param>
 /// <param name="files">List of files to copy.</param>
 let SilentCopy target files =
-    ensureDirectory target
     files
     |> Seq.iter (fun file ->
             let fi = fileInfo file
@@ -219,7 +214,7 @@ let CopyDir target source filterFile =
         let fi = file |> replaceFirst source "" |> trimSeparator
         let newFile = target @@ fi
         logVerbosefn "%s => %s" file newFile
-
+        DirectoryName newFile |> ensureDirectory
         File.Copy(file, newFile, true))
     |> ignore
   
@@ -271,7 +266,6 @@ let ReadCSVFile(file:string) =
 let AppendTextFiles newFileName files =    
     let fi = fileInfo newFileName
     if fi.Exists then failwithf "File %s already exists." (fi.FullName)
-    ensureDirExists fi.Directory
     use writer = new StreamWriter(fi.FullName, false, Encoding.Default)
   
     files 
@@ -389,6 +383,5 @@ let MoveFile target fileName =
         let targetName = target @@ fi.Name
         DeleteFile targetName
         logVerbosefn "Move %s to %s" fileName targetName
-        ensureDirectory target
         f.MoveTo(targetName) |> ignore
     | Directory _ -> logVerbosefn "Ignoring %s, because it is no file" fileName
