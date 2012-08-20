@@ -66,15 +66,20 @@ let checkFileExists fileName =
     if not <| fileExists fileName then 
         failwithf "File %s does not exist." fileName
 
-/// Checks if all given files exist
+/// <summary>Checks if all given files exist</summary>
+/// <user />
 let allFilesExist files = Seq.forall fileExists files
 
 /// <summary>Checks if the directory exists on disk.</summary>
 /// <user/>
 let directoryExists = Directory.Exists
 
-/// Checks if the given directory exists. If not then this functions creates the directory
-let ensureDirectory dir = 
-    if not <| directoryExists dir then 
-      Directory.CreateDirectory dir |> ignore
-        
+/// <summary>Ensure that directory chain exists. Create necessary directories if necessary.</summary>
+/// <user/>
+let inline ensureDirExists (dir : DirectoryInfo) =
+    if not dir.Exists then dir.Create()
+
+/// <summary>Checks if the given directory exists. If not then this functions creates the directory.</summary>
+/// <user/>
+let inline ensureDirectory dir = 
+    directoryInfo dir |> ensureDirExists

@@ -23,7 +23,7 @@ let setDirectoryReadOnly readOnly (dir:DirectoryInfo) =
         if readOnly && (not isReadOnly) then 
             dir.Attributes <- dir.Attributes ||| FileAttributes.ReadOnly
         if (not readOnly) && not isReadOnly then               
-            dir.Attributes <- dir.Attributes &&& (~~~FileAttributes.ReadOnly)  
+            dir.Attributes <- dir.Attributes &&& (~~~FileAttributes.ReadOnly)
 
 /// Sets all files in the directory readonly 
 let SetDirReadOnly readOnly dir =
@@ -111,7 +111,7 @@ let CopyFileIntoSubFolder target fileName =
   
     let targetName = target + relative
     let target = fileInfo targetName
-    if not target.Directory.Exists then target.Directory.Create()
+    ensureDirExists target.Directory
 
     logVerbosefn "Copy %s to %s" fileName targetName
     fi.CopyTo(targetName,true) |> ignore    
@@ -146,7 +146,7 @@ let CopyTo target = Copy target
 /// <param name="files">The orginal files.</param>
 let CopyCached target cacheDir files = 
     let cache = directoryInfo cacheDir
-    if not cache.Exists then cache.Create()
+    ensureDirExists cache
     files
         |> Seq.map (fun fileName -> 
             let fi = fileInfo fileName
@@ -172,7 +172,10 @@ let CopyCached target cacheDir files =
 /// <param name="target">The target FileName.</param>
 /// <param name="file">The orginal FileName.</param>
 let Rename target fileName = (fileInfo fileName).MoveTo target
-  
+
+/// <summary>Copy list of files to the specified directory without any output</summary>
+/// <param name="target">The target directory.</param>
+/// <param name="files">List of files to copy.</param>
 let SilentCopy target files =
     files
     |> Seq.iter (fun file ->
@@ -211,10 +214,7 @@ let CopyDir target source filterFile =
         let fi = file |> replaceFirst source "" |> trimSeparator
         let newFile = target @@ fi
         logVerbosefn "%s => %s" file newFile
-        Path.GetDirectoryName newFile
-        |> Directory.CreateDirectory
-        |> ignore
-
+        DirectoryName newFile |> ensureDirectory
         File.Copy(file, newFile, true))
     |> ignore
   
@@ -379,9 +379,9 @@ let MoveFile target fileName =
     let fi = fileSystemInfo fileName
     
     match fi with
-    | File f ->  
+    | File f ->
         let targetName = target @@ fi.Name
         DeleteFile targetName
-        logVerbosefn "Move %s to %s" fileName targetName        
-        f.MoveTo(targetName) |> ignore    
+        logVerbosefn "Move %s to %s" fileName targetName
+        f.MoveTo(targetName) |> ignore
     | Directory _ -> logVerbosefn "Ignoring %s, because it is no file" fileName
