@@ -191,22 +191,25 @@ let PrintDependencyGraph verbose target =
 /// <param name="total">The total runtime.</param>
 let WriteTaskTimeSummary total =    
     traceHeader "Build Time Report"
-    let width = 
-        ExecutedTargetTimes 
-          |> Seq.map (fun (a,b) -> a.Length) 
-          |> Seq.max
-          |> max 8
+    if ExecutedTargets.Count > 0 then
+        let width = 
+            ExecutedTargetTimes 
+              |> Seq.map (fun (a,b) -> a.Length) 
+              |> Seq.max
+              |> max 8
 
-    let aligned (name:string) duration = tracefn "%s   %O" (name.PadRight width) duration
-    let alignedError (name:string) duration = sprintf "%s   %O" (name.PadRight width) duration |> traceError
+        let aligned (name:string) duration = tracefn "%s   %O" (name.PadRight width) duration
+        let alignedError (name:string) duration = sprintf "%s   %O" (name.PadRight width) duration |> traceError
 
-    aligned "Target" "Duration"
-    aligned "------" "--------"
-    ExecutedTargetTimes
-      |> Seq.iter (fun (name,time) -> aligned name time)
+        aligned "Target" "Duration"
+        aligned "------" "--------"
+        ExecutedTargetTimes
+          |> Seq.iter (fun (name,time) -> aligned name time)
 
-    aligned "Total:" total
-    if errors = [] then aligned "Status:" "Ok" else alignedError "Status:" "Failure"
+        aligned "Total:" total
+        if errors = [] then aligned "Status:" "Ok" else alignedError "Status:" "Failure"
+    else 
+        traceError "No one target was successfully completed"
     traceLine()
 
 let private changeExitCodeIfErrorOccured() = if errors <> [] then exit 42 
