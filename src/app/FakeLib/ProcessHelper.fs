@@ -16,6 +16,7 @@ let ExecProcessWithLambdas infoAction (timeOut:TimeSpan) silent errorF messageF 
     use p = new Process()
     p.StartInfo.UseShellExecute <- false
     infoAction p.StartInfo
+    platformInfoAction p.StartInfo
     if silent then
         p.StartInfo.RedirectStandardOutput <- true
         p.StartInfo.RedirectStandardError <- true
@@ -24,7 +25,7 @@ let ExecProcessWithLambdas infoAction (timeOut:TimeSpan) silent errorF messageF 
         p.OutputDataReceived.Add (fun d -> if d.Data <> null then messageF d.Data)
     try
         if enableProcessTracing && (not <| p.StartInfo.FileName.EndsWith "fsi.exe" ) then 
-            tracefn "%s %s" p.StartInfo.FileName p.StartInfo.Arguments
+          tracefn "%s %s" p.StartInfo.FileName p.StartInfo.Arguments
 
         p.Start() |> ignore
     with

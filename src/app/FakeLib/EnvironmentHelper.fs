@@ -4,6 +4,7 @@ module Fake.EnvironmentHelper
 open System
 open System.IO
 open System.Configuration
+open System.Diagnostics
 
 type EnvironTarget = EnvironmentVariableTarget
 
@@ -62,6 +63,11 @@ let ProgramFilesX86 =
 let SystemRoot = environVar "SystemRoot"
 
 let isUnix = System.Environment.OSVersion.Platform = System.PlatformID.Unix
+
+let platformInfoAction (psi:ProcessStartInfo) =
+    if isUnix && psi.FileName.EndsWith ".exe" then
+      psi.Arguments <- psi.FileName + " " + psi.Arguments
+      psi.FileName <- "mono"  
 
 let mutable TargetPlatformPrefix = 
     let (<|>) a b = match a with None -> b | _ -> a
