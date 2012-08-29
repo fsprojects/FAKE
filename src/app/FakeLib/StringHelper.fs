@@ -252,7 +252,7 @@ let charsAndDigits = ['a'..'z'] @ ['A'..'Z'] @ ['0'..'9']
 let isLetterOrDigit c = List.exists ((=) c) charsAndDigits
 
 /// Trims the given string with the DirectorySeparatorChar
-let inline trimSeparator (s:string) = s.Trim Path.DirectorySeparatorChar
+let inline trimSeparator (s:string) = s.TrimEnd Path.DirectorySeparatorChar
 
 let inline trimSpecialChars (s:string) =
     s
