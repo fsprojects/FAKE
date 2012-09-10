@@ -134,8 +134,9 @@ let build setParams project =
     then failwithf "Building %s project failed." project
     traceEndTask "MSBuild" project
 
-/// Builds the given project files and collects the output files
-let MSBuild outputPath (targets: string) (properties: (string*string) list) projects = 
+/// Builds the given project files and collects the output files.
+/// Properties are parameterized by project name.
+let MSBuildWithProjectProperties outputPath (targets: string) (properties: string -> (string*string) list) projects = 
     let projects = projects |> Seq.toList
     let output = 
         if isNullOrEmpty outputPath then "" else
@@ -143,23 +144,29 @@ let MSBuild outputPath (targets: string) (properties: (string*string) list) proj
           |> FullName
           |> trimSeparator
 
-    let properties = if isNullOrEmpty output then properties else ("OutputPath", output)::properties
+    let properties = 
+        if isNullOrEmpty output 
+            then properties 
+            else fun x -> ("OutputPath", output)::(properties x)
 
     let dependencies =
         projects 
             |> List.map getProjectReferences
             |> Set.unionMany
 
-    let setBuildParam project = 
-        { project with
+    let setBuildParam project projectParams = 
+        { projectParams with
             Targets = targets |> split ';' 
-            Properties = project.Properties @ properties }
+            Properties = projectParams.Properties @ properties project }
 
     projects
       |> List.filter (fun project -> not <| Set.contains project dependencies)
-      |> List.iter (build setBuildParam)
+      |> List.iter (fun project -> build (setBuildParam project) project)
 
     !! (outputPath + "/**/*.*")
+
+/// Builds the given project files and collects the output files
+let MSBuild outputPath targets properties = MSBuildWithProjectProperties outputPath targets (fun _ -> properties)
 
 /// Builds the given project files and collects the output files
 let MSBuildDebug outputPath targets = MSBuild outputPath targets ["Configuration","Debug"]
