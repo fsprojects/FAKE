@@ -5,27 +5,33 @@ open System.Configuration.Install
 open System.ServiceProcess
 open System.ComponentModel
 open System.Reflection
+open System.Diagnostics
+open Fake.Services
+
 
 [<RunInstaller(true)>]
 type FakeDeployInstaller() as self = 
     inherit Installer()
      
+    let eventLogInstaller = new EventLogInstaller()
     let processInstaller = new ServiceProcessInstaller(Account = ServiceAccount.LocalSystem)
     let serviceInstaller = 
         new ServiceInstaller(
                                 DisplayName = "Fake Deploy Service Agent",
                                 Description = "Allows FAKE scripts to run as a deployment",
-                                ServiceName = "Fake Deploy Agent",
+                                ServiceName = ServiceName,
                                 StartType = ServiceStartMode.Automatic
                             )
 
     do 
+        eventLogInstaller.Source <- ServiceName
+        self.Installers.Add eventLogInstaller |> ignore
         self.Installers.Add processInstaller |> ignore
         self.Installers.Add serviceInstaller |> ignore
 
     override x.OnCommitted(savedState) = 
         base.OnCommitted(savedState)
-        let sc = new ServiceController("Fake Deploy Agent")
+        let sc = new ServiceController(ServiceName)
         sc.Start()
 
 
