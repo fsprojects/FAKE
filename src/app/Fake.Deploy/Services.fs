@@ -6,6 +6,8 @@ open System.Diagnostics
 open System.ServiceProcess
 open System.Configuration
 
+let ServiceName = "Fake Deploy Agent"
+
 type FakeDeployService() as self =
     inherit ServiceBase()
 
@@ -14,8 +16,11 @@ type FakeDeployService() as self =
     let logger = 
         if Environment.UserInteractive then 
             TraceHelper.logToConsole
-        else 
+        else
+            self.EventLog.Log <- "Application"
+            self.EventLog.Source <- ServiceName
             self.EventLog.WriteEntry
+
 
     do 
         self.AutoLog <- true
