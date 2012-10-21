@@ -138,10 +138,13 @@ header ul a {
   height:40px;
 }
 
+header p li {
+    list-style:none;
+}
+
 header p a {
   line-height:1;
-  font-size:11px;
-  color:#999;
+  font-size:12px;
   display:block;
   text-align:center;
   padding-top:6px;
