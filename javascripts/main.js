@@ -14,15 +14,15 @@ $(window).resize(sectionHeight);
 
 $(document).ready(function(){
   $("section h1, section h2").each(function(){
-    $("nav p").append("<li class='tag-" + this.nodeName.toLowerCase() + "'><a href='#" + $(this).text().toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g,'') + "'>" + $(this).text() + "</a></li>");
+    $("nav p").append("<p class='tag-" + this.nodeName.toLowerCase() + "'><a href='#" + $(this).text().toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g,'') + "'>" + $(this).text() + "</a></p>");
     $(this).attr("id",$(this).text().toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g,''));
-    $("nav p li:first-child a").parent().addClass("active");
+    $("nav p p:first-child a").parent().addClass("active");
   });
   
-  $("nav p li").on("click", "a", function(event) {
+  $("nav p p").on("click", "a", function(event) {
     var position = $($(this).attr("href")).offset().top - 190;
     $("html, body").animate({scrollTop: position}, 400);
-    $("nav p li a").parent().removeClass("active");
+    $("nav p p a").parent().removeClass("active");
     $(this).parent().addClass("active");
     event.preventDefault();    
   });
