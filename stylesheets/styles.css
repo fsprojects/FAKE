@@ -138,6 +138,16 @@ header ul a {
   height:40px;
 }
 
+header p {
+  line-height:1;
+  font-size:11px;
+  color:#999;
+  display:block;
+  text-align:center;
+  padding-top:6px;
+  height:40px;
+}
+
 strong {
   color:#222;
   font-weight:700;
