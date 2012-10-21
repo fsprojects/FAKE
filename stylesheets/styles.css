@@ -159,21 +159,6 @@ header ul a strong {
   color:#222;
 }
 
-header p li {
-  width:88px;
-  border-left:1px solid #fff;
-}
-
-header p li + li {
-  border-right:none;
-  width:89px;
-}
-
-header p li + li + li {
-  border-right:none;
-  width:89px;
-}
-
 section {
   width:500px;
   float:right;
