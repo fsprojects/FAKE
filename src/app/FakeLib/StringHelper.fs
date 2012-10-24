@@ -259,3 +259,9 @@ let inline trimSpecialChars (s:string) =
       |> Seq.filter isLetterOrDigit
       |> Seq.filter (isUmlaut >> not)
       |> Seq.fold (fun (acc:string) c -> acc + string c) ""
+
+/// Decodes a Base64-encoded UTF-8-encoded string
+let DecodeBase64Utf8String (text:string) = 
+  text
+  |> Convert.FromBase64String
+  |> Encoding.UTF8.GetString
