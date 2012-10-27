@@ -3,11 +3,20 @@ module Fake.FSIHelper
    
 /// The Path to the F# interactive tool
 let fsiPath = 
+    let ev = environVar "FSI"
+    if not (isNullOrEmpty ev) then ev else 
     if isUnix then
-        "fsi"
+        let paths = appSettings "FSIPath"
+        // The standard name on *nix is "fsharpi"
+        match tryFindFile paths "fsharpi" with
+        | Some file -> file
+        | None -> 
+        // The early F# 2.0 name on *nix was "fsi"
+        match tryFindFile paths "fsi" with
+        | Some file -> file
+        | None -> "fsharpi" 
     else
-        let ev = environVar "FSI"
-        if not (isNullOrEmpty ev) then ev else findPath "FSIPath" "fsi.exe"
+        findPath "FSIPath" "fsi.exe"
       
 /// Run the given buildscript with fsi.exe
 let runBuildScriptAt workingDirectory printDetails script args =
