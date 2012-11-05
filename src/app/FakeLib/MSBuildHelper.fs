@@ -67,28 +67,44 @@ let rec getProjectReferences (projectFileName:string) =
       |> Set.ofSeq
 
 type MSBuildVerbosity = Quiet | Minimal | Normal | Detailed | Diagnostic
+type MSBuildLogParameter = Append | PerformanceSummary | Summary | NoSummary | ErrorsOnly | WarningsOnly | NoItemAndPropertyList | ShowCommandLine | ShowTimestamp | ShowEventId | ForceNoAlign  | DisableConsoleColor | DisableMPLogging | EnableMPLogging
+
+type MSBuildFileLoggerConfig =
+    { Number : int
+      Filename : string option
+      Verbosity : MSBuildVerbosity option
+      Parameters : MSBuildLogParameter list option }
 
 type MSBuildParams = 
     { Targets: string list
       Properties: (string * string) list
       MaxCpuCount: int option option
       ToolsVersion: string option
-      Verbosity: MSBuildVerbosity option }
+      Verbosity: MSBuildVerbosity option
+      FileLoggers: MSBuildFileLoggerConfig list option }
 
 let MSBuildDefaults = 
     { Targets = []
       Properties = []
       MaxCpuCount = Some None
       ToolsVersion = None
-      Verbosity = None }
+      Verbosity = None
+      FileLoggers = None }
 
-let getAllParameters targets maxcpu tools verbosity properties =
+let getAllParameters targets maxcpu tools verbosity fileLoggers properties =
     if isUnix then
-        [targets; tools; verbosity] @ properties
+        [targets; tools; verbosity] @ fileLoggers @ properties
     else
-        [targets; maxcpu; tools; verbosity] @ properties
+        [targets; maxcpu; tools; verbosity] @ fileLoggers @ properties
 
 let serializeMSBuildParams (p: MSBuildParams) = 
+    let verbosityName v =
+        match v with
+        | Quiet -> "q"
+        | Minimal -> "m"
+        | Normal -> "n"
+        | Detailed -> "d"
+        | Diagnostic -> "diag"
     let targets = 
         match p.Targets with
         | [] -> None
@@ -107,15 +123,34 @@ let serializeMSBuildParams (p: MSBuildParams) =
         match p.Verbosity with
         | None -> None
         | Some v -> 
-            let level = 
-                match v with
-                | Quiet -> "q"
-                | Minimal -> "m"
-                | Normal -> "n"
-                | Detailed -> "d"
-                | Diagnostic -> "diag"
-            Some ("v", level)
-    let allParameters = getAllParameters targets maxcpu tools verbosity properties
+            Some ("v", verbosityName v)
+    let fileLoggers =
+        let logParams param =
+            match param with
+            | Append -> "Append"
+            | PerformanceSummary -> "PerformanceSummary"
+            | Summary -> "Summary"
+            | NoSummary -> "NoSummary"
+            | ErrorsOnly -> "ErrorsOnly"
+            | WarningsOnly -> "WarningsOnly"
+            | NoItemAndPropertyList -> "NoItemAndPropertyList"
+            | ShowCommandLine -> "ShowCommandLine"
+            | ShowTimestamp -> "ShowTimestamp"
+            | ShowEventId -> "ShowEventId"
+            | ForceNoAlign -> "ForceNoAlign"
+            | DisableConsoleColor -> "DisableConsoleColor"
+            | DisableMPLogging -> "DisableMPLogging"
+            | EnableMPLogging -> "EnableMPLogging"
+        match p.FileLoggers with
+        | None -> []
+        | Some fls ->
+            fls |> List.map (fun fl -> 
+                    Some("flp" + (string fl.Number), 
+                        sprintf "%s%s%s"
+                            (match fl.Filename with | None -> "" | Some f -> sprintf "logfile=%s;" f)
+                            (match fl.Verbosity with | None -> "" | Some v -> sprintf "Verbosity=%s;" (verbosityName v))
+                            (match fl.Parameters with | None -> "" | Some ps -> ps |> List.map (fun p -> logParams p |> sprintf "%s;") |> String.concat "")))
+    let allParameters = getAllParameters targets maxcpu tools verbosity fileLoggers properties
     allParameters
     |> Seq.map (function
                     | None -> ""
