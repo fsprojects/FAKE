@@ -157,6 +157,9 @@ let inline appendIfFalse p = appendIfTrue (not p)
 /// Appends a text if the value is not null
 let inline appendIfNotNull value s = appendIfTrue (value <> null) (sprintf "%s%A" s value)
 
+/// Appends a string if the value is not null (will not wrap it in ")
+let appendIfNotNullString value s = appendIfTrue (value <> null) (sprintf "%s%s" s value)
+
 /// Appends a text if the value is not null
 let inline appendStringIfValueIsNotNull value = appendIfTrue (value <> null)
 

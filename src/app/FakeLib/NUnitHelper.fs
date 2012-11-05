@@ -74,12 +74,12 @@ let NUnit setParams (assemblies: string seq) =
           |> appendIfTrue parameters.ShowLabels "/labels" 
           |> appendIfTrue parameters.TestInNewThread "/thread" 
           |> appendFileNamesIfNotNull assemblies
-          |> appendIfNotNull parameters.IncludeCategory "/include:"
-          |> appendIfNotNull parameters.ExcludeCategory "/exclude:"
-          |> appendIfNotNull parameters.XsltTransformFile "/transform:"
-          |> appendIfNotNull parameters.OutputFile  "/xml:"
-          |> appendIfNotNull parameters.Framework  "/framework:"
-          |> appendIfNotNull parameters.ErrorOutputFile "/err:"
+          |> appendIfNotNullString parameters.IncludeCategory "/include:"
+          |> appendIfNotNullString parameters.ExcludeCategory "/exclude:"
+          |> appendIfNotNullString parameters.XsltTransformFile "/transform:"
+          |> appendIfNotNullString parameters.OutputFile  "/xml:"
+          |> appendIfNotNullString parameters.Framework  "/framework:"
+          |> appendIfNotNullString parameters.ErrorOutputFile "/err:"
 
     let tool = parameters.ToolPath @@ parameters.ToolName
 
