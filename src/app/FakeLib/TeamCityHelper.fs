@@ -103,6 +103,13 @@ let SetBuildStatistic key value =
       (EncapsulateSpecialChars value)
       |> sendStrToTeamCity
 
+/// Reports a parameter value
+let SetTeamCityParameter name value =
+    sprintf "##teamcity[setParameter name='%s' value='%s']"
+      (EncapsulateSpecialChars name)
+      (EncapsulateSpecialChars value)
+      |> sendStrToTeamCity
+
 /// Reports a failed test.
 let TestFailed name message details =  
     sprintf "##teamcity[testFailed name='%s' message='%s' details='%s']"
