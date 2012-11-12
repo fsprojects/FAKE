@@ -155,7 +155,11 @@ let inline appendIfTrue p s builder = if p then append s builder else builder
 let inline appendIfFalse p = appendIfTrue (not p)
 
 /// Appends a text if the value is not null
-let inline appendIfNotNull value s = appendIfTrue (value <> null) (sprintf "%s%A" s value)
+let inline appendIfNotNull (value : Object) s = 
+    appendIfTrue (value <> null) (
+        match value with 
+        | :? String as sv -> (sprintf "%s%s" s sv)
+        | _ -> (sprintf "%s%A" s value))
 
 /// Appends a text if the value is not null
 let inline appendStringIfValueIsNotNull value = appendIfTrue (value <> null)
