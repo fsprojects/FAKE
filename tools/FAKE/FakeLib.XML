@@ -407,8 +407,10 @@
 <member name="">
 
 </member>
-<member name="">
-
+<member name="M:Fake.EnvironmentHelper.convertWindowsToCurrentPath(System.String)">
+<summary>
+ Convert the given windows path to a path in the current system
+</summary>
 </member>
 <member name="P:Fake.EnvironmentHelper.documentsFolder">
 <summary>
@@ -425,6 +427,14 @@
 </member>
 <member name="">
 
+</member>
+<member name="">
+
+</member>
+<member name="P:Fake.EnvironmentHelper.SystemRoot">
+<summary>
+ System root environment variable. Typically &quot;C:\Windows&quot;
+</summary>
 </member>
 <member name="P:Fake.EnvironmentHelper.ProgramFilesX86">
 <summary>
@@ -456,8 +466,10 @@
  Retrieves a ApplicationSettings variable
 </summary>
 </member>
-<member name="">
-
+<member name="M:Fake.EnvironmentHelper.environVarOrNone(System.String)">
+<summary>
+ Retrieves the environment variable or None
+</summary>
 </member>
 <member name="M:Fake.EnvironmentHelper.environVarOrDefault(System.String,System.String)">
 <summary>
@@ -574,9 +586,9 @@
 </summary>
 </member>
 <member name="M:Fake.FileHelper.CleanDir(System.String)">
-<summary>
- Cleans a directory
-</summary>
+<summary>Cleans a directory by removing all files and sub-directories.</summary>
+<param name="path">The path of the directory to clean.</param>
+<user/>
 </member>
 <member name="M:Fake.FileHelper.CopyDir(System.String,System.String,Microsoft.FSharp.Core.FSharpFunc`2{System.String,System.Boolean})">
  <summary>Copies a directory recursivly.
@@ -600,8 +612,10 @@
  <param name="target">The target FileName.</param>
  <param name="file">The orginal FileName.</param>
 </member>
-<member name="">
-
+<member name="M:Fake.FileHelper.SilentCopy(System.String,System.Collections.Generic.IEnumerable{System.String})">
+ <summary>Copy list of files to the specified directory without any output</summary>
+ <param name="target">The target directory.</param>
+ <param name="files">List of files to copy.</param>
 </member>
 <member name="M:Fake.FileHelper.Rename(System.String,System.String)">
  <summary>Renames the files to the target fileName.</summary>
@@ -871,24 +885,32 @@
 
 </member>
 <member name="M:Fake.FileSystemHelper.ensureDirectory(System.String)">
-<summary>
- Checks if all given directory exists. If not then this functions creates the directory
-</summary>
+ <summary>Checks if the given directory exists. If not then this functions creates the directory.</summary>
+ <user/>
+</member>
+<member name="M:Fake.FileSystemHelper.ensureDirExists(System.IO.DirectoryInfo)">
+ <summary>Ensure that directory chain exists. Create necessary directories if necessary.</summary>
+ <user/>
+</member>
+<member name="M:Fake.FileSystemHelper.directoryExists(System.String)">
+ <summary>Checks if the directory exists on disk.</summary>
+ <user/>
 </member>
 <member name="M:Fake.FileSystemHelper.allFilesExist(System.Collections.Generic.IEnumerable{System.String})">
-<summary>
- Checks if all given files exists
-</summary>
+ <summary>Checks if all given files exist</summary>
+ <user />
 </member>
 <member name="M:Fake.FileSystemHelper.checkFileExists(System.String)">
-<summary>
- Checks if the file exists on disk.
-</summary>
+ <summary>Raises an exception if the file doesn't exist on disk.</summary>
+ <user/>
+</member>
+<member name="M:Fake.FileSystemHelper.fileExists(System.String)">
+ <summary>Checks if the file exists on disk.</summary>
+ <user/>
 </member>
 <member name="P:Fake.FileSystemHelper.currentDirectory">
-<summary>
- Gets the current directory
-</summary>
+ <summary>Gets the current directory</summary>
+ <user/>
 </member>
 <member name="M:Fake.FileSystemHelper.FindFirstMatchingFile(System.String,System.String)">
 <summary>
@@ -916,65 +938,83 @@
 </summary>
 </member>
 <member name="M:Fake.FileSystemHelper.DirectoryName(System.String)">
-<summary>
- Gets the directory part of a filename
-</summary>
+ <summary>Gets the directory part of a filename</summary>
+ <user/>
 </member>
 <member name="M:Fake.FileSystemHelper.FullName(System.String)">
-<summary>
- Converts a file to it&apos;s full file system name
-</summary>
+ <summary>Converts a filename to it's full file system name</summary>
+ <user/>
 </member>
 <member name="M:Fake.FileSystemHelper.fileSystemInfo(System.String)">
-<summary>
- Creates a FileInfo or a DirectoryInfo for the given path
-</summary>
+ <summary>Creates a FileInfo or a DirectoryInfo for the given path</summary>
+ <user/>
 </member>
 <member name="M:Fake.FileSystemHelper.fileInfo(System.String)">
-<summary>
- Creates a FileInfo for the given path
-</summary>
+ <summary>Creates a FileInfo for the given path</summary>
+ <user/>
 </member>
 <member name="M:Fake.FileSystemHelper.directoryInfo(System.String)">
-<summary>
- Creates a DirectoryInfo for the given path
-</summary>
+ <summary>Creates a DirectoryInfo for the given path</summary>
+ <user/>
 </member>
 <member name="T:Fake.FileSystemHelper">
 
 </member>
-<member name="">
-
+<member name="P:Fake.FileUtils.mv">
+<summary>
+ Like &quot;mv&quot; in a shell. Moves/renames a file
+</summary>
 </member>
-<member name="">
-
+<member name="M:Fake.FileUtils.pwd">
+<summary>
+ Gets working directory
+</summary>
 </member>
-<member name="">
-
+<member name="P:Fake.FileUtils.cd">
+<summary>
+ Changes working directory
+</summary>
 </member>
-<member name="">
-
+<member name="M:Fake.FileUtils.chdir(System.String)">
+<summary>
+ Changes working directory
+</summary>
 </member>
-<member name="">
-
+<member name="P:Fake.FileUtils.cp">
+<summary>
+ Like &quot;cp&quot; in a shell. Copies a single file.
+</summary>
 </member>
-<member name="">
-
+<member name="M:Fake.FileUtils.cp_r(System.String,System.String)">
+ <summary>
+ Like "cp -r" in a shell. Copies a file or directory recursively.
+ </summary>
+ <param name="src">The source</param>
+ <param name="dest">The destination</param>
 </member>
-<member name="">
-
+<member name="P:Fake.FileUtils.mkdir">
+<summary>
+ Creates a directory if it doesn&apos;t exist.
+</summary>
 </member>
-<member name="">
-
+<member name="M:Fake.FileUtils.rm_rf(System.String)">
+<summary>
+ Like &quot;rm -rf&quot; in a shell. Removes files recursively, ignoring nonexisting files
+</summary>
 </member>
-<member name="">
-
+<member name="P:Fake.FileUtils.rm">
+<summary>
+ Deletes a file if it exists
+</summary>
 </member>
 <member name="">
 
 </member>
 <member name="T:Fake.FileUtils">
-
+<summary>
+ Shell-like functions. 
+ Similar to Ruby&apos;s FileUtils: http://ruby-doc.org/core/classes/FileUtils.htm
+</summary>
 </member>
 <member name="">
 
@@ -1874,9 +1914,12 @@
 
 </member>
 <member name="M:Fake.ILMergeHelper.ILMerge(Microsoft.FSharp.Core.FSharpFunc`2{Fake.ILMergeHelper.ILMergeParams,Fake.ILMergeHelper.ILMergeParams},System.String,System.String)">
-<summary>
- Use ILMerge to merge some .NET assemblies.
-</summary>
+ <summary>Use ILMerge to merge some .NET assemblies.</summary>
+ <param name="setParams">Function used to create an ILMergeParams value with your required settings.  Called with an ILMergeParams value configured with the defaults.</param>
+ <param name="outputFile">Output file path for the merged assembly.</param>
+ <param name="primaryAssembly">The assembly you want ILMerge to consider as the primary.</param>
+ <remarks>ILMerge must be installed for this to work.</remarks>
+ <user/>
 </member>
 <member name="M:Fake.ILMergeHelper.getArguments(System.String,System.String,Fake.ILMergeHelper.ILMergeParams)">
 <summary>
@@ -2018,6 +2061,69 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
 <member name="M:Fake.MSBuildHelper.MSBuildRelease(System.String,System.String)">
 <summary>
  Builds the given project files and collects the output files
@@ -2028,9 +2134,15 @@
  Builds the given project files and collects the output files
 </summary>
 </member>
-<member name="M:Fake.MSBuildHelper.MSBuild(System.String,System.String,Microsoft.FSharp.Collections.FSharpList{System.Tuple`2{System.String,System.String}},System.Collections.Generic.IEnumerable{System.String})">
+<member name="M:Fake.MSBuildHelper.MSBuild(System.String,System.String,Microsoft.FSharp.Collections.FSharpList{System.Tuple`2{System.String,System.String}})">
 <summary>
  Builds the given project files and collects the output files
+</summary>
+</member>
+<member name="M:Fake.MSBuildHelper.MSBuildWithProjectProperties(System.String,System.String,Microsoft.FSharp.Core.FSharpFunc`2{System.String,Microsoft.FSharp.Collections.FSharpList{System.Tuple`2{System.String,System.String}}},System.Collections.Generic.IEnumerable{System.String})">
+<summary>
+ Builds the given project files and collects the output files.
+ Properties are parameterized by project name.
 </summary>
 </member>
 <member name="M:Fake.MSBuildHelper.build(Microsoft.FSharp.Core.FSharpFunc`2{Fake.MSBuildHelper.MSBuildParams,Fake.MSBuildHelper.MSBuildParams},System.String)">
@@ -2766,14 +2878,12 @@
 
 </member>
 <member name="M:Fake.RegistryHelper.getRegistryValue(Fake.RegistryHelper.RegistryBaseKey,System.String,System.String)">
-<summary>
- gets a registy value as string
-</summary>
+ <summary>Gets a registy value as string</summary>
+ <user/>
 </member>
 <member name="M:Fake.RegistryHelper.getRegistryKey(Fake.RegistryHelper.RegistryBaseKey,System.String)">
-<summary>
- gets a registy key
-</summary>
+ <summary>Gets a registy key</summary>
+ <user/>
 </member>
 <member name="M:Fake.RegistryHelper.getKey(Fake.RegistryHelper.RegistryBaseKey)">
 <summary>
@@ -2821,6 +2931,56 @@
 </member>
 <member name="T:Fake.ServiceControllerHelpers">
 
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Fake.SpecFlowHelper">
+
+</member>
+<member name="M:Fake.StringHelper.DecodeBase64Utf8String(System.String)">
+<summary>
+ Decodes a Base64-encoded UTF-8-encoded string
+</summary>
 </member>
 <member name="">
 
@@ -2897,7 +3057,7 @@
  Appends a text if the value is not null
 </summary>
 </member>
-<member name="M:Fake.StringHelper.appendIfNotNull``1(``0,System.String)">
+<member name="M:Fake.StringHelper.appendIfNotNull(System.Object,System.String)">
 <summary>
  Appends a text if the value is not null
 </summary>
@@ -2992,14 +3152,12 @@
 </summary>
 </member>
 <member name="M:Fake.StringHelper.ReadFileAsBytes(System.String)">
-<summary>
- Reads a file as one array of bytes
-</summary>
+ <summary>Reads a file as one array of bytes</summary>
+ <user/>
 </member>
 <member name="M:Fake.StringHelper.ReadFileAsString(System.String)">
-<summary>
- Reads a file as one text
-</summary>
+ <summary>Reads a file as one text</summary>
+ <user/>
 </member>
 <member name="M:Fake.StringHelper.separated(System.String,System.Collections.Generic.IEnumerable{System.String})">
 <summary>
@@ -3012,57 +3170,47 @@
 </summary>
 </member>
 <member name="M:Fake.StringHelper.AppendToFile(System.String,System.Collections.Generic.IEnumerable{System.String})">
-<summary>
- Appends all lines to a file line by line
-</summary>
+ <summary>Appends all lines to a file line by line</summary>
+ <user/>
 </member>
 <member name="M:Fake.StringHelper.WriteFile(System.String,System.Collections.Generic.IEnumerable{System.String})">
-<summary>
- Writes a file line by line
-</summary>
+ <summary>Writes a file line by line</summary>
+ <user/>
 </member>
 <member name="">
 
 </member>
 <member name="M:Fake.StringHelper.ReplaceFile(System.String,System.String)">
-<summary>
- Replaces the file with the given string
-</summary>
+ <summary>Replaces the file with the given string</summary>
+ <user/>
 </member>
 <member name="M:Fake.StringHelper.WriteStringToFile(System.Boolean,System.String,System.String)">
-<summary>
- Writes string to a file
-</summary>
+ <summary>Writes string to a file</summary>
+ <user/>
 </member>
 <member name="M:Fake.StringHelper.WriteBytesToFile(System.String,System.Byte[])">
-<summary>
- Writes a byte array to a file
-</summary>
+ <summary>Writes a byte array to a file</summary>
+ <user/>
 </member>
 <member name="M:Fake.StringHelper.NormalizeVersion(System.String)">
-<summary>
- Removes all trailing .0 from a version string
-</summary>
+ <summary>Removes all trailing .0 from a version string</summary>
+ <user/>
 </member>
 <member name="M:Fake.StringHelper.WriteToFile(System.Boolean,System.String,System.Collections.Generic.IEnumerable{System.String})">
-<summary>
- Writes a file line by line
-</summary>
+ <summary>Writes a file line by line</summary>
+ <user/>
 </member>
 <member name="M:Fake.StringHelper.ReadFile(System.String)">
-<summary>
- Reads a file line by line
-</summary>
+ <summary>Reads a file line by line</summary>
+ <user/>
 </member>
 <member name="P:Fake.StringHelper.isNotNullOrEmpty">
-<summary>
- Returns if the string is not null or empty
-</summary>
+ <summary>Returns if the string is not null or empty</summary>
+ <user/>
 </member>
 <member name="M:Fake.StringHelper.isNullOrEmpty(System.String)">
-<summary>
- Returns if the string is null or empty
-</summary>
+ <summary>Returns if the string is null or empty</summary>
+ <user/>
 </member>
 <member name="">
 
@@ -3284,6 +3432,11 @@
 <member name="M:Fake.TeamCityHelper.TestFailed(System.String,System.String,System.String)">
 <summary>
  Reports a failed test.
+</summary>
+</member>
+<member name="M:Fake.TeamCityHelper.SetTeamCityParameter(System.String,System.String)">
+<summary>
+ Reports a parameter value
 </summary>
 </member>
 <member name="M:Fake.TeamCityHelper.SetBuildStatistic(System.String,System.String)">
@@ -3768,9 +3921,11 @@
 
 </member>
 <member name="M:Fake.WiXHelper.WiX(Microsoft.FSharp.Core.FSharpFunc`2{Fake.WiXHelper.WiXParams,Fake.WiXHelper.WiXParams},System.String,System.String)">
-<summary>
- Uses Candle and Light to create a msi.
-</summary>
+ <summary>Use the WiX tools Candle and Light to create an msi.</summary>
+ <param name="setParams">Function used to create an WiXParams value with your required settings.  Called with an WixParams value configured with the defaults.</param>
+ <param name="outputFile">The msi output file path (given to Light).</param>
+ <param name="wixScript">The path to a WiX script that will be used with Candle.</param>
+ <user/>
 </member>
 <member name="">
 
@@ -3946,8 +4101,11 @@
 <member name="">
 
 </member>
-<member name="">
-
+<member name="M:Fake.XUnitHelper.xUnit(Microsoft.FSharp.Core.FSharpFunc`2{Fake.XUnitHelper.XUnitParams,Fake.XUnitHelper.XUnitParams},System.Collections.Generic.IEnumerable{System.String})">
+<summary>Runs xUnit unit tests.</summary>
+<param name="setParams">Function used to create an XUnitParams value.  Called with an XUnitParams value configured with the defaults.</param>
+<param name="assemblies">Sequence of one or more assemblies containing xUnit unit tests.</param>
+<user/>
 </member>
 <member name="P:Fake.XUnitHelper.XUnitDefaults">
 <summary>

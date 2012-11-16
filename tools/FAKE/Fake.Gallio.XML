@@ -150,8 +150,13 @@
 <member name="">
 
 </member>
-<member name="">
-
+<member name="M:Fake.Gallio.Run(Microsoft.FSharp.Core.FSharpFunc`2{Fake.Gallio.GallioParams,Fake.Gallio.GallioParams},System.Collections.Generic.IEnumerable{System.String})">
+ <summary>
+ Runs tests through Gallio.
+ </summary>
+ <param name="setParam">Function that modifies the default parameters</param>
+ <param name="assemblies">List of test assemblies</param>
+ <user/>
 </member>
 <member name="">
 
@@ -177,8 +182,10 @@
 <member name="">
 
 </member>
-<member name="">
-
+<member name="P:Fake.Gallio.GallioDefaults">
+<summary>
+ Default Gallio parameters
+</summary>
 </member>
 <member name="T:Fake.Gallio">
 
