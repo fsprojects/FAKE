@@ -3434,6 +3434,11 @@
  Reports a failed test.
 </summary>
 </member>
+<member name="M:Fake.TeamCityHelper.SetTeamCityParameter(System.String,System.String)">
+<summary>
+ Reports a parameter value
+</summary>
+</member>
 <member name="M:Fake.TeamCityHelper.SetBuildStatistic(System.String,System.String)">
 <summary>
  Reports a build statistic.
