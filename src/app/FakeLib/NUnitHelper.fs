@@ -69,7 +69,7 @@ let NUnit setParams (assemblies: string seq) =
     let assemblies =  assemblies |> Seq.toArray
     let commandLineBuilder =
         new StringBuilder()
-          |> append "/nologo"
+          |> append "-nologo"
           |> appendIfTrue parameters.DisableShadowCopy "-noshadow" 
           |> appendIfTrue parameters.ShowLabels "-labels" 
           |> appendIfTrue parameters.TestInNewThread "-thread" 
