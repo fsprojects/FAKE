@@ -70,16 +70,16 @@ let NUnit setParams (assemblies: string seq) =
     let commandLineBuilder =
         new StringBuilder()
           |> append "/nologo"
-          |> appendIfTrue parameters.DisableShadowCopy "/noshadow" 
-          |> appendIfTrue parameters.ShowLabels "/labels" 
-          |> appendIfTrue parameters.TestInNewThread "/thread" 
+          |> appendIfTrue parameters.DisableShadowCopy "-noshadow" 
+          |> appendIfTrue parameters.ShowLabels "-labels" 
+          |> appendIfTrue parameters.TestInNewThread "-thread" 
           |> appendFileNamesIfNotNull assemblies
-          |> appendIfNotNull parameters.IncludeCategory "/include:"
-          |> appendIfNotNull parameters.ExcludeCategory "/exclude:"
-          |> appendIfNotNull parameters.XsltTransformFile "/transform:"
-          |> appendIfNotNull parameters.OutputFile  "/xml:"
-          |> appendIfNotNull parameters.Framework  "/framework:"
-          |> appendIfNotNull parameters.ErrorOutputFile "/err:"
+          |> appendIfNotNull parameters.IncludeCategory "-include:"
+          |> appendIfNotNull parameters.ExcludeCategory "-exclude:"
+          |> appendIfNotNull parameters.XsltTransformFile "-transform:"
+          |> appendIfNotNull parameters.OutputFile  "-xml:"
+          |> appendIfNotNull parameters.Framework  "-framework:"
+          |> appendIfNotNull parameters.ErrorOutputFile "-err:"
 
     let tool = parameters.ToolPath @@ parameters.ToolName
 
