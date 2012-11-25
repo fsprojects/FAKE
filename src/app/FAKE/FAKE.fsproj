@@ -51,7 +51,6 @@
   <ItemGroup>
     <Reference Include="FSharp.Core">
       <HintPath>..\..\..\tools\FSharp\FSharp.Core.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System" />
