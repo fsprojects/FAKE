@@ -62,7 +62,7 @@ namespace Test.FAKECore.PackageMgt
     {
         static NuGetHelper.NuSpecPackage _package;
         static string _fileName;
-        Establish context = () => _package = NuGetHelper.getLatestPackage(NuGetHelper.getRepoUrl(), "SignalR");
+        Establish context = () => _package = NuGetHelper.getLatestPackage(NuGetHelper.getRepoUrl(), "SignalR.Signed");
         Because of = () => _fileName = NuGetHelper.downloadPackage(NugetData.OutputDir, _package);
 
         It should_have_downloaded_the_file = () =>
