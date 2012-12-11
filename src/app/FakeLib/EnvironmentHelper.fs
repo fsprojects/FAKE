@@ -52,11 +52,15 @@ let inline getBuildParamOrDefault name defaultParam = if hasBuildParam name then
 let ProgramFiles = Environment.GetFolderPath Environment.SpecialFolder.ProgramFiles
 
 /// The path of Program Files (x86)
+/// I think this covers all cases where PROCESSOR_ARCHITECTURE may misreport and the case where the other variable 
+/// PROCESSOR_ARCHITEW6432 can be null
 let ProgramFilesX86 =
-    let a = environVar "PROCESSOR_ARCHITEW6432"
-    if 8 = IntPtr.Size || (a <> null && a <> "") then
+    let wow64 = (environVar "PROCESSOR_ARCHITEW6432")
+    let globalArch = (environVar "PROCESSOR_ARCHITECTURE")
+    match wow64, globalArch with
+    | "AMD64", "AMD64" | null, "AMD64" | "x86", "AMD64" ->
         environVar "ProgramFiles(x86)"
-    else
+    | _ ->
         environVar "ProgramFiles"
 
 /// System root environment variable. Typically "C:\Windows"

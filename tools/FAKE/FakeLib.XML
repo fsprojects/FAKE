@@ -372,9 +372,6 @@
 <member name="">
 
 </member>
-<member name="">
-
-</member>
 <member name="T:Fake.DeploymentHelper">
 
 </member>
@@ -439,6 +436,8 @@
 <member name="P:Fake.EnvironmentHelper.ProgramFilesX86">
 <summary>
  The path of Program Files (x86)
+ I think this covers all cases where PROCESSOR_ARCHITECTURE may misreport and the case where the other variable 
+ PROCESSOR_ARCHITEW6432 can be null
 </summary>
 </member>
 <member name="P:Fake.EnvironmentHelper.ProgramFiles">
