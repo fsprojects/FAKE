@@ -358,16 +358,16 @@ let SetBaseDir (dir:string) fileInclude = {fileInclude with BaseDirectories = [d
 let ScanImmediately includes : EagerFileSet = Scan includes |> Seq.toList
   
 /// Include prefix operator
-let (!+) x = Include x
+let inline (!+) x = Include x
 
 /// Add Include operator
-let (++) x y = {x with Includes = y::x.Includes}
+let inline (++) x y = {x with Includes = y::x.Includes}
 
 /// Exclude operator
-let (--) x y = {x with Excludes = y::x.Excludes}  
+let inline (--) x y = {x with Excludes = y::x.Excludes}  
 
 /// Includes a single pattern and scans the files - !! x = AllFilesMatching x
-let (!!) x = !+ x |> Scan
+let inline (!!) x = !+ x |> Scan
 
 /// Includes a single pattern and scans the files - !! x = AllFilesMatching x
 let AllFilesMatching x = !! x
