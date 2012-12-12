@@ -98,6 +98,6 @@ let documentsFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocu
 /// Convert the given windows path to a path in the current system
 let convertWindowsToCurrentPath (w:string) = 
     if (w.Length > 2 && w.[1] = ':' && w.[2] = '\\') then
-        failwith "absolute windows paths (currently) not supported"
-    w
-        |> replace @"\" directorySeparator
+        w
+    else
+        replace @"\" directorySeparator w        
