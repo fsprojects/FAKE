@@ -120,12 +120,12 @@ module Main =
         |> register
 
     { Name = "deploy"
-      Parameters = ["package"]
+      Parameters = ["workDir"; "package"]
       Description = "runs the deployment on the local machine (for testing purposes)"
       Function =
         fun args -> 
-            runDeploymentFromPackageFile args.[1]
-            |> traceDeploymentResult "local" args.[1] }
+            runDeploymentFromPackageFile args.[1] args.[2]
+            |> traceDeploymentResult "local" args.[2] }
         |> register
 
     { Name = "help"

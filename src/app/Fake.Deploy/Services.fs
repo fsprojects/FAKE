@@ -35,7 +35,12 @@ type FakeDeployService() as self =
             if args <> null && args.Length > 2 then args.[2] else 
             ConfigurationManager.AppSettings.["Port"]
 
-        listener <- DeploymentAgent.start logger serverName port
+        let workDir = 
+            if args <> null && args.Length > 3 then args.[3] else
+            ConfigurationManager.AppSettings.["WorkDirectory"]
+
+
+        listener <- DeploymentAgent.start logger workDir serverName port
 
     override x.OnStop() = listener.Cancel()
 

@@ -1,6 +1,7 @@
 ﻿module Fake.DeploymentHelper
     
 open System
+open System.Configuration
 open System.IO
 open System.Net
 open Fake
@@ -47,9 +48,7 @@ let getBackupFor dir (app : string) (version : string) =
     dir @@ deploymentRootDir @@ app @@ "backups"
     |> FindFirstMatchingFile backupFileName
 
-let mutable workDir = "."
-
-let unpack isRollback packageBytes =
+let unpack workDir isRollback packageBytes =
     let tempFile = Path.GetTempFileName()
     WriteBytesToFile tempFile packageBytes
 
@@ -86,14 +85,14 @@ let doDeployment packageName script =
             Failure(Exception "Deployment script didn't run successfully")
     with e -> Failure e
               
-let runDeploymentFromPackageFile packageFileName =
+let runDeploymentFromPackageFile workDir packageFileName =
     try
       let packageBytes =  ReadFileAsBytes packageFileName
-      let package,scriptFile = unpack false packageBytes
+      let package,scriptFile = unpack workDir false packageBytes
       doDeployment package.Name scriptFile        
     with e -> Failure e
 
-let rollback dir (app : string) (version : string) =
+let rollback dir workDir (app : string) (version : string) =
     try 
         let currentPackageFileName = 
             !! (dir @@ deploymentRootDir + app + "/active/*.nupkg") 
@@ -103,7 +102,7 @@ let rollback dir (app : string) (version : string) =
         if currentPackageFileName = backupPackageFileName then 
             Failure "Cannot rollback to currently active version"
         else 
-            let package,scriptFile = unpack true (backupPackageFileName |> ReadFileAsBytes)
+            let package,scriptFile = unpack workDir true (backupPackageFileName |> ReadFileAsBytes)
             match doDeployment package.Name scriptFile with
             | Success -> RolledBack
             | x -> x

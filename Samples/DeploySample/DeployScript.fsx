@@ -1,5 +1,5 @@
 // include Fake libs
-#r @"FakeLib.dll"
+#r @"D:\Appdev\FAKE\tools\FAKE\FakeLib.dll"
 
 open Fake 
 open System.IO
