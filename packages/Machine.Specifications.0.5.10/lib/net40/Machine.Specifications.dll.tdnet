@@ -1,0 +1,5 @@
+<TestRunner>
+       <FriendlyName>Machine.Specifications 0.5.10-13af7b4</FriendlyName>
+       <AssemblyPath>Machine.Specifications.TDNetRunner.dll</AssemblyPath>
+       <TypeName>Machine.Specifications.TDNetRunner.SpecificationRunner</TypeName>
+</TestRunner>
