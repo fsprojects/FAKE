@@ -45,7 +45,7 @@
  <summary>Run the event loop.</summary>
  <returns>True if the event loop was restarted; false otherwise.</returns>
 </member>
-<member name="M:Microsoft.FSharp.Compiler.Interactive.IEventLoop.Invoke``1(Microsoft.FSharp.Core.FSharpFunc`2{Microsoft.FSharp.Core.Unit,``0})">
+<member name="M:Microsoft.FSharp.Compiler.Interactive.IEventLoop.Invoke``1(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,``0})">
  <summary>Request that the given operation be run synchronously on the event loop.</summary>
  <returns>The result of the operation.</returns>
 </member>
@@ -130,10 +130,10 @@
 <member name="">
 
 </member>
-<member name="M:Microsoft.FSharp.Compiler.Interactive.InteractiveSession.AddPrinter``1(Microsoft.FSharp.Core.FSharpFunc`2{``0,System.String})">
+<member name="M:Microsoft.FSharp.Compiler.Interactive.InteractiveSession.AddPrinter``1(Microsoft.FSharp.Core.FSharpFunc{``0,System.String})">
  <summary>Register a printer that controls the output of the interactive session.</summary>
 </member>
-<member name="M:Microsoft.FSharp.Compiler.Interactive.InteractiveSession.AddPrintTransformer``1(Microsoft.FSharp.Core.FSharpFunc`2{``0,System.Object})">
+<member name="M:Microsoft.FSharp.Compiler.Interactive.InteractiveSession.AddPrintTransformer``1(Microsoft.FSharp.Core.FSharpFunc{``0,System.Object})">
  <summary>Register a print transformer that controls the output of the interactive session.</summary>
 </member>
 <member name="T:Microsoft.FSharp.Compiler.Interactive.InteractiveSession">

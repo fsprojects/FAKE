@@ -16,7 +16,9 @@ let fsiPath =
         | Some file -> file
         | None -> "fsharpi" 
     else
-        findPath "FSIPath" "fsi.exe"
+        match tryFindPath "FSIPath" "FsiAnyCPU.exe" with
+        | Some file -> file
+        | None -> findPath "FSIPath" "fsi.exe"
       
 /// Run the given buildscript with fsi.exe
 let runBuildScriptAt workingDirectory printDetails script args =

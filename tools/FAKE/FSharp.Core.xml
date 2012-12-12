@@ -1095,6 +1095,87 @@
  <param name="array2">The second input array.</param>
  <returns>The resulting array.</returns>
 </member>
+<member name="M:Microsoft.FSharp.Collections.ArrayModule.Parallel.Partition``1(Microsoft.FSharp.Core.FSharpFunc{``0,System.Boolean},``0[])">
+ <summary>Split the collection into two collections, containing the 
+ elements for which the given predicate returns "true" and "false"
+ respectively </summary>
+
+ <remarks>Performs the operation in parallel using System.Threading.Parallel.For.
+ The order in which the given function is applied to indicies is not specified.</remarks>
+ <param name="predicate">The function to test the input elements.</param>
+ <param name="array">The input array.</param>
+ <returns>'T[] * 'T[]</returns>
+</member>
+<member name="M:Microsoft.FSharp.Collections.ArrayModule.Parallel.Initialize``1(System.Int32,Microsoft.FSharp.Core.FSharpFunc{System.Int32,``0})">
+ <summary>Create an array given the dimension and a generator function to compute the elements.</summary>
+
+ <remarks>Performs the operation in parallel using System.Threading.Parallel.For.
+ The order in which the given function is applied to indicies is not specified.</remarks>
+ <param name="count"></param>
+ <param name="initializer"></param>
+ <returns>'T[]</returns>
+</member>
+<member name="M:Microsoft.FSharp.Collections.ArrayModule.Parallel.IterateIndexed``1(Microsoft.FSharp.Core.FSharpFunc{System.Int32,Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Core.Unit}},``0[])">
+ <summary>Apply the given function to each element of the array. The integer passed to the
+ function indicates the index of element.</summary>
+
+ <remarks>Performs the operation in parallel using System.Threading.Parallel.For.
+ The order in which the given function is applied to elements of the input array is not specified.</remarks>
+ <param name="action"></param>
+ <param name="array">The input array.</param>
+</member>
+<member name="M:Microsoft.FSharp.Collections.ArrayModule.Parallel.Iterate``1(Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Core.Unit},``0[])">
+ <summary>Apply the given function to each element of the array. </summary>
+
+ <remarks>Performs the operation in parallel using System.Threading.Parallel.For.
+ The order in which the given function is applied to elements of the input array is not specified.</remarks>
+ <param name="action"></param>
+ <param name="array">The input array.</param>
+</member>
+<member name="M:Microsoft.FSharp.Collections.ArrayModule.Parallel.MapIndexed``2(Microsoft.FSharp.Core.FSharpFunc{System.Int32,Microsoft.FSharp.Core.FSharpFunc{``0,``1}},``0[])">
+ <summary>Build a new array whose elements are the results of applying the given function
+ to each of the elements of the array. The integer index passed to the
+ function indicates the index of element being transformed.</summary>
+
+ <remarks>Performs the operation in parallel using System.Threading.Parallel.For.
+ The order in which the given function is applied to elements of the input array is not specified.</remarks>
+ <param name="mapping"></param>
+ <param name="array">The input array.</param>
+ <returns>'U[]</returns>
+</member>
+<member name="M:Microsoft.FSharp.Collections.ArrayModule.Parallel.Map``2(Microsoft.FSharp.Core.FSharpFunc{``0,``1},``0[])">
+ <summary>Build a new array whose elements are the results of applying the given function
+ to each of the elements of the array.</summary>
+
+ <remarks>Performs the operation in parallel using System.Threading.Parallel.For.
+ The order in which the given function is applied to elements of the input array is not specified.</remarks>
+ <param name="mapping"></param>
+ <param name="array">The input array.</param>
+ <returns>'U[]</returns>
+</member>
+<member name="M:Microsoft.FSharp.Collections.ArrayModule.Parallel.Collect``2(Microsoft.FSharp.Core.FSharpFunc{``0,``1[]},``0[])">
+ <summary>For each element of the array, apply the given function. Concatenate all the results and return the combined array.</summary>
+
+ <remarks>Performs the operation in parallel using System.Threading.Parallel.For.
+ The order in which the given function is applied to elements of the input array is not specified.</remarks>
+ <param name="mapping"></param>
+ <param name="array">The input array.</param>
+ <returns>'U[]</returns>
+</member>
+<member name="M:Microsoft.FSharp.Collections.ArrayModule.Parallel.Choose``2(Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Core.FSharpOption{``1}},``0[])">
+ <summary>Apply the given function to each element of the array. Return
+ the array comprised of the results "x" for each element where
+ the function returns Some(x).</summary>
+
+ <remarks>Performs the operation in parallel using System.Threading.Parallel.For.
+ The order in which the given function is applied to elements of the input array is not specified.</remarks>
+ <param name="chooser">The function to generate options from the elements.</param>
+ <param name="array">The input array.</param>
+ <returns>'U[]</returns>
+</member>
+<member name="T:Microsoft.FSharp.Collections.ArrayModule.Parallel">
+ <summary>Provides parallel operations on arrays </summary>
+</member>
 <member name="T:Microsoft.FSharp.Collections.ArrayModule">
  <summary>Basic operations on arrays.</summary>
 </member>
@@ -2870,6 +2951,9 @@
  <param name="cancellationToken">The <c>CancellationToken</c> to associate with the computation.
  The default is used if this parameter is not provided.</param>
 </member>
+<member name="M:Microsoft.FSharp.Control.FSharpAsync.StartChildAsTask``1(Microsoft.FSharp.Control.FSharpAsync{``0},Microsoft.FSharp.Core.FSharpOption{System.Threading.Tasks.TaskCreationOptions})">
+ <summary>Creates an asynchronous computation which starts the given computation as a <c>System.Threading.Tasks.Task</c></summary>
+</member>
 <member name="M:Microsoft.FSharp.Control.FSharpAsync.StartChild``1(Microsoft.FSharp.Control.FSharpAsync{``0},Microsoft.FSharp.Core.FSharpOption{System.Int32})">
  <summary>Starts a child computation within an asynchronous workflow. 
  This allows multiple asynchronous computations to be executed simultaneously.</summary>
@@ -2892,6 +2976,13 @@
  <param name="millisecondsTimeout">The timeout value in milliseconds.  If one is not provided
  then the default value of -1 corresponding to <c>System.Threading.Timeout.Infinite</c>.</param>
  <returns>A new computation that waits for the input computation to finish.</returns>
+</member>
+<member name="M:Microsoft.FSharp.Control.FSharpAsync.StartAsTask``1(Microsoft.FSharp.Control.FSharpAsync{``0},Microsoft.FSharp.Core.FSharpOption{System.Threading.Tasks.TaskCreationOptions},Microsoft.FSharp.Core.FSharpOption{System.Threading.CancellationToken})">
+ <summary>Executes a computation in the thread pool.</summary>
+ <remarks>If no cancellation token is provided then the default cancellation token is used.</remarks>
+ <returns>A <c>System.Threading.Tasks.Task</c> that will be completed
+ in the corresponding state once the computation terminates (produces the result, throws exception or gets canceled)</returns>
+        
 </member>
 <member name="M:Microsoft.FSharp.Control.FSharpAsync.Start(Microsoft.FSharp.Control.FSharpAsync{Microsoft.FSharp.Core.Unit},Microsoft.FSharp.Core.FSharpOption{System.Threading.CancellationToken})">
  <summary>Starts the asynchronous computation in the thread pool. Do not await its result.</summary>
@@ -3079,6 +3170,12 @@
  <param name="millisecondsTimeout">The timeout value in milliseconds.  If one is not provided
  then the default value of -1 corresponding to <c>System.Threading.Timeout.Infinite</c>.</param>
  <returns>An asynchronous computation that waits on the given <c>WaitHandle</c>.</returns>
+</member>
+<member name="M:Microsoft.FSharp.Control.FSharpAsync.AwaitTask``1(System.Threading.Tasks.Task{``0})">
+<summary>
+ Return an asynchronous computation that will wait for the given task to complete and return
+ its result.
+</summary>
 </member>
 <member name="M:Microsoft.FSharp.Control.FSharpAsync.AwaitIAsyncResult(System.IAsyncResult,Microsoft.FSharp.Core.FSharpOption{System.Int32})">
  <summary>Creates an asynchronous computation that will wait on the IAsyncResult.</summary>
@@ -4955,6 +5052,259 @@
 <member name="T:Microsoft.FSharp.Core.CompilerServices.GeneratedSequenceBase`1">
  <summary>The F# compiler emits implementations of this type for compiled sequence expressions.</summary>
 </member>
+<member name="P:Microsoft.FSharp.Core.CompilerServices.IProvidedNamespace.NamespaceName">
+<summary>
+ Namespace name the provider injects types into.
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Core.CompilerServices.IProvidedNamespace.ResolveTypeName(System.String)">
+ <summary>
+ Compilers call this method to query a type provider for a type <c>name</c>.
+ </summary>
+ <remarks>Resolver should return a type called <c>name</c> in namespace <c>NamespaceName</c> or <c>null</c> if the type is unknown.
+ </remarks>
+ <returns></returns>
+</member>
+<member name="M:Microsoft.FSharp.Core.CompilerServices.IProvidedNamespace.GetTypes">
+ <summary>
+ The top-level types
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:Microsoft.FSharp.Core.CompilerServices.IProvidedNamespace.GetNestedNamespaces">
+<summary>
+ The sub-namespaces in this namespace. An optional member to prevent generation of namespaces until an outer namespace is explored.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:Microsoft.FSharp.Core.CompilerServices.ITypeProvider.remove_Invalidate(System.EventHandler)">
+ <summary>
+ Triggered when an assumption changes that invalidates the resolutions so far reported by the provider
+ </summary>
+</member>
+<member name="P:Microsoft.FSharp.Core.CompilerServices.ITypeProvider.Invalidate">
+ <summary>
+ Triggered when an assumption changes that invalidates the resolutions so far reported by the provider
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Core.CompilerServices.ITypeProvider.add_Invalidate(System.EventHandler)">
+ <summary>
+ Triggered when an assumption changes that invalidates the resolutions so far reported by the provider
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Core.CompilerServices.ITypeProvider.GetStaticParameters(System.Type)">
+ <summary>
+ Get the static parameters for a provided type. 
+ </summary>
+ <param name="typeWithoutArguments">A type returned by GetTypes or ResolveTypeName</param>
+ <returns></returns>
+</member>
+<member name="M:Microsoft.FSharp.Core.CompilerServices.ITypeProvider.GetNamespaces">
+ <summary>
+ Namespace name the this TypeProvider injects types into.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Core.CompilerServices.ITypeProvider.GetInvokerExpression(System.Reflection.MethodBase,Microsoft.FSharp.Quotations.FSharpExpr[])">
+ <summary>
+ Called by the compiler to ask for an Expression tree to replace the given MethodBase with.
+ </summary>
+ <param name="syntheticMethodBase">MethodBase that was given to the compiler by a type returned by a GetType(s) call.</param>
+ <param name="parameters">Expressions that represent the parameters to this call.</param>
+ <returns>An expression that the compiler will use in place of the given method base.</returns>
+</member>
+<member name="M:Microsoft.FSharp.Core.CompilerServices.ITypeProvider.GetGeneratedAssemblyContents(System.Reflection.Assembly)">
+ <summary>
+ Get the physical contents of the given logical provided assembly.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Core.CompilerServices.ITypeProvider.ApplyStaticArguments(System.Type,System.String[],System.Object[])">
+ <summary>
+ Apply static arguments to a provided type that accepts static arguments. 
+ </summary>
+ <remarks>The provider must return a type with the given mangled name.</remarks>
+ <param name="typeWithoutArguments">the provided type definition which has static parameters</param>
+ <param name="typePathWithArguments">the full path of the type, including encoded representations of static parameters</param>
+ <param name="staticArguments">the static parameters, indexed by name</param>
+ <returns></returns>
+</member>
+<member name="">
+
+</member>
+<member name="T:Microsoft.FSharp.Core.CompilerServices.MeasureInverse`1">
+ <summary>Represents the inverse of a measure expressions when returned as a generic argument of a provided type.</summary>
+</member>
+<member name="T:Microsoft.FSharp.Core.CompilerServices.MeasureOne">
+ <summary>Represents the '1' measure expression when returned as a generic argument of a provided type.</summary>
+</member>
+<member name="T:Microsoft.FSharp.Core.CompilerServices.MeasureProduct`2">
+ <summary>Represents the product of two measure expressions when returned as a generic argument of a provided type.</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:Microsoft.FSharp.Core.CompilerServices.TypeProviderAssemblyAttribute.#ctor(System.String)">
+ <summary>Creates an instance of the attribute</summary>
+ <returns>TypeProviderAssemblyAttribute</returns>
+ <param name="assemblyName">The name of the design-time assembly for this type provider.</param>
+</member>
+<member name="M:Microsoft.FSharp.Core.CompilerServices.TypeProviderAssemblyAttribute.#ctor">
+ <summary>Creates an instance of the attribute</summary>
+ <returns>TypeProviderAssemblyAttribute</returns>
+</member>
+<member name="T:Microsoft.FSharp.Core.CompilerServices.TypeProviderAssemblyAttribute">
+ <summary>Place attribute on runtime assembly to indicate that there is a corresponding design-time 
+ assembly that contains a type provider. Runtime and designer assembly may be the same. </summary>
+</member>
+<member name="M:Microsoft.FSharp.Core.CompilerServices.TypeProviderAttribute.#ctor">
+ <summary>Creates an instance of the attribute</summary>
+ <returns>TypeProviderAttribute</returns>
+</member>
+<member name="T:Microsoft.FSharp.Core.CompilerServices.TypeProviderAttribute">
+ <summary>Place on a class that implements ITypeProvider to extend the compiler</summary>
+</member>
+<member name="P:Microsoft.FSharp.Core.CompilerServices.TypeProviderConfig.TemporaryFolder(System.String)">
+<summary>
+ Get the full path to use for temporary files for the type provider instance.
+</summary>
+</member>
+<member name="P:Microsoft.FSharp.Core.CompilerServices.TypeProviderConfig.SystemRuntimeAssemblyVersion(System.Version)">
+<summary>
+ version of referenced system runtime assembly
+</summary>
+</member>
+<member name="P:Microsoft.FSharp.Core.CompilerServices.TypeProviderConfig.RuntimeAssembly(System.String)">
+<summary>
+ Get the full path to referenced assembly that caused this type provider instance to be created.
+</summary>
+</member>
+<member name="P:Microsoft.FSharp.Core.CompilerServices.TypeProviderConfig.ResolutionFolder(System.String)">
+<summary>
+ Get the full path to use to resolve relative paths in any file name arguments given to the type provider instance.
+</summary>
+</member>
+<member name="P:Microsoft.FSharp.Core.CompilerServices.TypeProviderConfig.ReferencedAssemblies(System.String[])">
+<summary>
+ Get the referenced assemblies for the type provider instance.
+</summary>
+</member>
+<member name="P:Microsoft.FSharp.Core.CompilerServices.TypeProviderConfig.IsInvalidationSupported(System.Boolean)">
+<summary>
+ Indicates if the type provider host responds to invalidation events for type provider instances. 
+</summary>
+</member>
+<member name="P:Microsoft.FSharp.Core.CompilerServices.TypeProviderConfig.IsHostedExecution(System.Boolean)">
+<summary>
+ Indicates if the type provider instance is used in an environment which executes provided code such as F# Interactive.
+</summary>
+</member>
+<member name="P:Microsoft.FSharp.Core.CompilerServices.TypeProviderConfig.TemporaryFolder">
+<summary>
+ Get the full path to use for temporary files for the type provider instance.
+</summary>
+</member>
+<member name="P:Microsoft.FSharp.Core.CompilerServices.TypeProviderConfig.SystemRuntimeAssemblyVersion">
+<summary>
+ version of referenced system runtime assembly
+</summary>
+</member>
+<member name="P:Microsoft.FSharp.Core.CompilerServices.TypeProviderConfig.RuntimeAssembly">
+<summary>
+ Get the full path to referenced assembly that caused this type provider instance to be created.
+</summary>
+</member>
+<member name="P:Microsoft.FSharp.Core.CompilerServices.TypeProviderConfig.ResolutionFolder">
+<summary>
+ Get the full path to use to resolve relative paths in any file name arguments given to the type provider instance.
+</summary>
+</member>
+<member name="P:Microsoft.FSharp.Core.CompilerServices.TypeProviderConfig.ReferencedAssemblies">
+<summary>
+ Get the referenced assemblies for the type provider instance.
+</summary>
+</member>
+<member name="P:Microsoft.FSharp.Core.CompilerServices.TypeProviderConfig.IsInvalidationSupported">
+<summary>
+ Indicates if the type provider host responds to invalidation events for type provider instances. 
+</summary>
+</member>
+<member name="P:Microsoft.FSharp.Core.CompilerServices.TypeProviderConfig.IsHostedExecution">
+<summary>
+ Indicates if the type provider instance is used in an environment which executes provided code such as F# Interactive.
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Core.CompilerServices.TypeProviderConfig.SystemRuntimeContainsType(System.String)">
+<summary>
+ Checks if given type exists in target system runtime library
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:Microsoft.FSharp.Core.CompilerServices.TypeProviderConfig">
+<summary>
+ If the class that implements ITypeProvider has a constructor that accepts TypeProviderConfig
+ then it will be constructed with an instance of TypeProviderConfig.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Microsoft.FSharp.Core.CompilerServices.TypeProviderEditorHideMethodsAttribute.#ctor">
+ <summary>Creates an instance of the attribute</summary>
+ <returns>TypeProviderEditorHideMethodsAttribute</returns>
+</member>
+<member name="T:Microsoft.FSharp.Core.CompilerServices.TypeProviderEditorHideMethodsAttribute">
+ <summary>Indicates that a code editor should hide all System.Object methods from the intellisense menus for instances of a provided type</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Microsoft.FSharp.Core.CompilerServices.TypeProviderTypeAttributes">
+ <summary>Additional type attribute flags related to provided types</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:Microsoft.FSharp.Core.CompilerServices.TypeProviderXmlDocAttribute.#ctor(System.String)">
+ <summary>Creates an instance of the attribute</summary>
+ <returns>TypeProviderXmlDocAttribute</returns>
+</member>
+<member name="T:Microsoft.FSharp.Core.CompilerServices.TypeProviderXmlDocAttribute">
+<summary>
+ The TypeProviderXmlDocAttribute attribute can be added to types and members. 
+ The language service will display the CommentText property from the attribute 
+ in the appropriate place when the user hovers over a type or member.
+</summary>
+</member>
 <member name="">
 
 </member>
@@ -5015,6 +5365,9 @@
 </member>
 <member name="T:Microsoft.FSharp.Core.CompilerServices.RuntimeHelpers">
  <summary>A group of functions used as part of the compiled representation of F# sequence expressions.</summary>
+</member>
+<member name="P:Microsoft.FSharp.Core.ExtraTopLevelOperators.query">
+ <summary>Builds a query using query syntax and operators.</summary>
 </member>
 <member name="M:Microsoft.FSharp.Core.ExtraTopLevelOperators.LazyPattern``1(System.Lazy{``0})">
  <summary>An active pattern to force the execution of values of type <c>Lazy&lt;_&gt;</c>.</summary>
@@ -7791,9 +8144,772 @@
  A synonym for Metre, the SI unit of length
 </summary>
 </member>
-<member name="T:Microsoft.FSharp.Math.BigNat">
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.Zero``2">
+ <summary>
+ A method used to support the F# query syntax.  Returns an empty sequence that has the specified type argument.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.YieldFrom``2(Microsoft.FSharp.Linq.QuerySource{``0,``1})">
+ <summary>
+ A method used to support the F# query syntax.  Returns a sequence that contains the specified values.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.Yield``2(``0)">
+ <summary>
+ A method used to support the F# query syntax.  Returns a sequence of length one that contains the specified value.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.Where``2(Microsoft.FSharp.Linq.QuerySource{``0,``1},Microsoft.FSharp.Core.FSharpFunc{``0,System.Boolean})">
+ <summary>A query operator that selects those elements based on a specified predicate. 
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.ThenByNullableDescending``3(Microsoft.FSharp.Linq.QuerySource{``0,``1},Microsoft.FSharp.Core.FSharpFunc{``0,System.Nullable{``2}})">
+ <summary>A query operator that performs a subsequent ordering of the elements selected so far in descending order by the given nullable sorting key.
+ This operator may only be used immediately after a 'sortBy', 'sortByDescending', 'thenBy' or 'thenByDescending', or their nullable variants.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.ThenByNullable``3(Microsoft.FSharp.Linq.QuerySource{``0,``1},Microsoft.FSharp.Core.FSharpFunc{``0,System.Nullable{``2}})">
+ <summary>A query operator that performs a subsequent ordering of the elements selected so far in ascending order by the given nullable sorting key.
+ This operator may only be used immediately after a 'sortBy', 'sortByDescending', 'thenBy' or 'thenByDescending', or their nullable variants.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.ThenByDescending``3(Microsoft.FSharp.Linq.QuerySource{``0,``1},Microsoft.FSharp.Core.FSharpFunc{``0,``2})">
+ <summary>A query operator that performs a subsequent ordering of the elements selected so far in descending order by the given sorting key.
+ This operator may only be used immediately after a 'sortBy', 'sortByDescending', 'thenBy' or 'thenByDescending', or their nullable variants.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.ThenBy``3(Microsoft.FSharp.Linq.QuerySource{``0,``1},Microsoft.FSharp.Core.FSharpFunc{``0,``2})">
+ <summary>A query operator that performs a subsequent ordering of the elements selected so far in ascending order by the given sorting key.
+ This operator may only be used immediately after a 'sortBy', 'sortByDescending', 'thenBy' or 'thenByDescending', or their nullable variants.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.TakeWhile``2(Microsoft.FSharp.Linq.QuerySource{``0,``1},Microsoft.FSharp.Core.FSharpFunc{``0,System.Boolean})">
+ <summary>A query operator that selects elements from a sequence as long as a specified condition is true, and then skips the remaining elements.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.Take``2(Microsoft.FSharp.Linq.QuerySource{``0,``1},System.Int32)">
+ <summary>A query operator that selects a specified number of contiguous elements from those selected so far.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.SumByNullable``3(Microsoft.FSharp.Linq.QuerySource{``0,``1},Microsoft.FSharp.Core.FSharpFunc{``0,System.Nullable{``2}})">
+ <summary>A query operator that selects a nullable value for each element selected so far and returns the sum of these values. 
+ If any nullable does not have a value, it is ignored.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.SumBy``3(Microsoft.FSharp.Linq.QuerySource{``0,``1},Microsoft.FSharp.Core.FSharpFunc{``0,``2})">
+ <summary>A query operator that selects a value for each element selected so far and returns the sum of these values. 
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.Source``1(System.Collections.Generic.IEnumerable{``0})">
+ <summary>
+ A method used to support the F# query syntax.  Inputs to queries are implicitly wrapped by a call to one of the overloads of this method.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.Source``2(System.Linq.IQueryable{``0})">
+ <summary>
+ A method used to support the F# query syntax.  Inputs to queries are implicitly wrapped by a call to one of the overloads of this method.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.SortByNullableDescending``3(Microsoft.FSharp.Linq.QuerySource{``0,``1},Microsoft.FSharp.Core.FSharpFunc{``0,System.Nullable{``2}})">
+ <summary>A query operator that sorts the elements selected so far in descending order by the given nullable sorting key.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.SortByNullable``3(Microsoft.FSharp.Linq.QuerySource{``0,``1},Microsoft.FSharp.Core.FSharpFunc{``0,System.Nullable{``2}})">
+ <summary>A query operator that sorts the elements selected so far in ascending order by the given nullable sorting key.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.SortByDescending``3(Microsoft.FSharp.Linq.QuerySource{``0,``1},Microsoft.FSharp.Core.FSharpFunc{``0,``2})">
+ <summary>A query operator that sorts the elements selected so far in descending order by the given sorting key.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.SortBy``3(Microsoft.FSharp.Linq.QuerySource{``0,``1},Microsoft.FSharp.Core.FSharpFunc{``0,``2})">
+ <summary>A query operator that sorts the elements selected so far in ascending order by the given sorting key.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.SkipWhile``2(Microsoft.FSharp.Linq.QuerySource{``0,``1},Microsoft.FSharp.Core.FSharpFunc{``0,System.Boolean})">
+ <summary>A query operator that bypasses elements in a sequence as long as a specified condition is true and then selects the remaining elements.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.Skip``2(Microsoft.FSharp.Linq.QuerySource{``0,``1},System.Int32)">
+ <summary>A query operator that bypasses a specified number of the elements selected so far and selects the remaining elements.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.Select``3(Microsoft.FSharp.Linq.QuerySource{``0,``1},Microsoft.FSharp.Core.FSharpFunc{``0,``2})">
+ <summary>A query operator that projects each of the elements selected so far.
+ </summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.Run``1(Microsoft.FSharp.Quotations.FSharpExpr{Microsoft.FSharp.Linq.QuerySource{``0,System.Linq.IQueryable}})">
+ <summary>
+ A method used to support the F# query syntax.  Runs the given quotation as a query using LINQ IQueryable rules.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.Quote``1(Microsoft.FSharp.Quotations.FSharpExpr{``0})">
+ <summary>
+ A method used to support the F# query syntax.  Indicates that the query should be passed as a quotation to the Run method.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.Nth``2(Microsoft.FSharp.Linq.QuerySource{``0,``1},System.Int32)">
+ <summary>A query operator that selects the element at a specified index amongst those selected so far.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.MinByNullable``3(Microsoft.FSharp.Linq.QuerySource{``0,``1},Microsoft.FSharp.Core.FSharpFunc{``0,System.Nullable{``2}})">
+ <summary>A query operator that selects a nullable value for each element selected so far and returns the minimum of these values. 
+ If any nullable does not have a value, it is ignored.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.MinBy``3(Microsoft.FSharp.Linq.QuerySource{``0,``1},Microsoft.FSharp.Core.FSharpFunc{``0,``2})">
+ <summary>A query operator that selects a value for each element selected so far and returns the minimum resulting value. 
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.MaxByNullable``3(Microsoft.FSharp.Linq.QuerySource{``0,``1},Microsoft.FSharp.Core.FSharpFunc{``0,System.Nullable{``2}})">
+ <summary>A query operator that selects a nullable value for each element selected so far and returns the maximum of these values. 
+ If any nullable does not have a value, it is ignored.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.MaxBy``3(Microsoft.FSharp.Linq.QuerySource{``0,``1},Microsoft.FSharp.Core.FSharpFunc{``0,``2})">
+ <summary>A query operator that selects a value for each element selected so far and returns the maximum resulting value. 
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.LeftOuterJoin``5(Microsoft.FSharp.Linq.QuerySource{``0,``1},Microsoft.FSharp.Linq.QuerySource{``2,``1},Microsoft.FSharp.Core.FSharpFunc{``0,``3},Microsoft.FSharp.Core.FSharpFunc{``2,``3},Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Core.FSharpFunc{System.Collections.Generic.IEnumerable{``2},``4}})">
+ <summary>A query operator that correlates two sets of selected values based on matching keys and groups the results.
+ If any group is empty, a group with a single default value is used instead. 
+ Normal usage is 'leftOuterJoin y in elements2 on (key1 = key2) into group'. 
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.LastOrDefault``2(Microsoft.FSharp.Linq.QuerySource{``0,``1})">
+ <summary>A query operator that selects the last element of those selected so far, or a default value if no element is found.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.Last``2(Microsoft.FSharp.Linq.QuerySource{``0,``1})">
+ <summary>A query operator that selects the last element of those selected so far.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.Join``5(Microsoft.FSharp.Linq.QuerySource{``0,``1},Microsoft.FSharp.Linq.QuerySource{``2,``1},Microsoft.FSharp.Core.FSharpFunc{``0,``3},Microsoft.FSharp.Core.FSharpFunc{``2,``3},Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Core.FSharpFunc{``2,``4}})">
+ <summary>A query operator that correlates two sets of selected values based on matching keys. 
+ Normal usage is 'join y in elements2 on (key1 = key2)'. 
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.HeadOrDefault``2(Microsoft.FSharp.Linq.QuerySource{``0,``1})">
+ <summary>A query operator that selects the first element of those selected so far, or a default value if the sequence contains no elements.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.Head``2(Microsoft.FSharp.Linq.QuerySource{``0,``1})">
+ <summary>A query operator that selects the first element from those selected so far.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.GroupValBy``4(Microsoft.FSharp.Linq.QuerySource{``0,``3},Microsoft.FSharp.Core.FSharpFunc{``0,``2},Microsoft.FSharp.Core.FSharpFunc{``0,``1})">
+ <summary>A query operator that selects a value for each element selected so far and groups the elements by the given key.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.GroupJoin``5(Microsoft.FSharp.Linq.QuerySource{``0,``1},Microsoft.FSharp.Linq.QuerySource{``2,``1},Microsoft.FSharp.Core.FSharpFunc{``0,``3},Microsoft.FSharp.Core.FSharpFunc{``2,``3},Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Core.FSharpFunc{System.Collections.Generic.IEnumerable{``2},``4}})">
+ <summary>A query operator that correlates two sets of selected values based on matching keys and groups the results. 
+ Normal usage is 'groupJoin y in elements2 on (key1 = key2) into group'. 
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.GroupBy``3(Microsoft.FSharp.Linq.QuerySource{``0,``1},Microsoft.FSharp.Core.FSharpFunc{``0,``2})">
+ <summary>A query operator that groups the elements selected so far according to a specified key selector.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.For``4(Microsoft.FSharp.Linq.QuerySource{``0,``1},Microsoft.FSharp.Core.FSharpFunc{``0,Microsoft.FSharp.Linq.QuerySource{``2,``3}})">
+ <summary>
+ A method used to support the F# query syntax.  Projects each element of a sequence to another sequence and combines the resulting sequences into one sequence.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.Find``2(Microsoft.FSharp.Linq.QuerySource{``0,``1},Microsoft.FSharp.Core.FSharpFunc{``0,System.Boolean})">
+ <summary>A query operator that selects the first element selected so far that satisfies a specified condition.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.Exists``2(Microsoft.FSharp.Linq.QuerySource{``0,``1},Microsoft.FSharp.Core.FSharpFunc{``0,System.Boolean})">
+ <summary>A query operator that determines whether any element selected so far satisfies a condition.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.ExactlyOneOrDefault``2(Microsoft.FSharp.Linq.QuerySource{``0,``1})">
+ <summary>A query operator that selects the single, specific element of those selected so far, or a default value if that element is not found.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.ExactlyOne``2(Microsoft.FSharp.Linq.QuerySource{``0,``1})">
+ <summary>A query operator that selects the single, specific element selected so far
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.Distinct``2(Microsoft.FSharp.Linq.QuerySource{``0,``1})">
+ <summary>A query operator that selects distinct elements from the elements selected so far. 
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.Count``2(Microsoft.FSharp.Linq.QuerySource{``0,``1})">
+ <summary>A query operator that returns the number of selected elements.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.Contains``2(Microsoft.FSharp.Linq.QuerySource{``0,``1},``0)">
+ <summary>A query operator that determines whether the selected elements contains a specified element.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.AverageByNullable``3(Microsoft.FSharp.Linq.QuerySource{``0,``1},Microsoft.FSharp.Core.FSharpFunc{``0,System.Nullable{``2}})">
+ <summary>A query operator that selects a nullable value for each element selected so far and returns the average of these values. 
+ If any nullable does not have a value, it is ignored.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.AverageBy``3(Microsoft.FSharp.Linq.QuerySource{``0,``1},Microsoft.FSharp.Core.FSharpFunc{``0,``2})">
+ <summary>A query operator that selects a value for each element selected so far and returns the average of these values. 
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.All``2(Microsoft.FSharp.Linq.QuerySource{``0,``1},Microsoft.FSharp.Core.FSharpFunc{``0,System.Boolean})">
+ <summary>A query operator that determines whether all elements selected so far satisfies a condition.
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryBuilder.#ctor">
+ <summary>Create an instance of this builder. Use 'query { ... }' to use the query syntax.</summary>
+</member>
+<member name="T:Microsoft.FSharp.Linq.QueryBuilder">
 <summary>
- Abstract internal type
+ The type used to support the F# query syntax. Use &apos;query { ... }&apos; to use the query syntax.
+</summary>
+</member>
+<member name="P:Microsoft.FSharp.Linq.QuerySource`2.Source">
+ <summary>
+ A property used to support the F# query syntax.  
+ </summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QuerySource`2.#ctor(System.Collections.Generic.IEnumerable{`0})">
+ <summary>
+ A method used to support the F# query syntax.  
+ </summary>
+</member>
+<member name="T:Microsoft.FSharp.Linq.QuerySource`2">
+<summary>
+ A partial input or result in an F# query. This type is used to support the F# query syntax.
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableModule.ToChar``1(System.Nullable{``0})">
+ <summary>Converts the argument to character. Numeric inputs are converted according to the UTF-16 
+ encoding for characters. The operation requires an appropriate static conversion method on the input type.</summary>
+ <param name="value">The input value.</param>
+ <returns>The converted char.</returns>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableModule.ToDecimal``1(System.Nullable{``0})">
+ <summary>Converts the argument to System.Decimal using a direct conversion for all 
+ primitive numeric types. The operation requires an appropriate
+ static conversion method on the input type.</summary>
+ <param name="value">The input value.</param>
+ <returns>The converted decimal.</returns>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableModule.ToUIntPtr``1(System.Nullable{``0})">
+ <summary>Converts the argument to unsigned native integer using a direct conversion for all 
+ primitive numeric types. Otherwise the operation requires an appropriate
+ static conversion method on the input type.</summary>
+ <param name="value">The input value.</param>
+ <returns>The converted unativeint</returns>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableModule.ToIntPtr``1(System.Nullable{``0})">
+ <summary>Converts the argument to signed native integer. This is a direct conversion for all 
+ primitive numeric types. Otherwise the operation requires an appropriate
+ static conversion method on the input type.</summary>
+ <param name="value">The input value.</param>
+ <returns>The converted nativeint</returns>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableModule.ToDouble``1(System.Nullable{``0})">
+ <summary>Converts the argument to 64-bit float. This is a direct conversion for all 
+ primitive numeric types. The operation requires an appropriate
+ static conversion method on the input type.</summary>
+ <param name="value">The input value.</param>
+ <returns>The converted float</returns>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableModule.ToSingle``1(System.Nullable{``0})">
+ <summary>Converts the argument to 32-bit float. This is a direct conversion for all 
+ primitive numeric types. The operation requires an appropriate
+ static conversion method on the input type.</summary>
+ <param name="value">The input value.</param>
+ <returns>The converted float32</returns>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableModule.ToUInt64``1(System.Nullable{``0})">
+ <summary>Converts the argument to unsigned 64-bit integer. This is a direct conversion for all 
+ primitive numeric types. The operation requires an appropriate
+ static conversion method on the input type.</summary>
+ <param name="value">The input value.</param>
+ <returns>The converted uint64</returns>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableModule.ToInt64``1(System.Nullable{``0})">
+ <summary>Converts the argument to signed 64-bit integer. This is a direct conversion for all 
+ primitive numeric types. The operation requires an appropriate
+ static conversion method on the input type.</summary>
+ <param name="value">The input value.</param>
+ <returns>The converted int64</returns>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableModule.ToUInt32``1(System.Nullable{``0})">
+ <summary>Converts the argument to unsigned 32-bit integer. This is a direct conversion for all 
+ primitive numeric types. The operation requires an appropriate
+ static conversion method on the input type.</summary>
+ <param name="value">The input value.</param>
+ <returns>The converted uint32</returns>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableModule.ToInt32``1(System.Nullable{``0})">
+ <summary>Converts the argument to signed 32-bit integer. This is a direct conversion for all 
+ primitive numeric types. The operation requires an appropriate
+ static conversion method on the input type.</summary>
+ <param name="value">The input value.</param>
+ <returns>The converted int32</returns>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableModule.ToEnum``1(System.Nullable{System.Int32})">
+ <summary>Converts the argument to a particular enum type.</summary>
+ <param name="value">The input value.</param>
+ <returns>The converted enum type.</returns>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableModule.ToInt``1(System.Nullable{``0})">
+ <summary>Converts the argument to signed 32-bit integer. This is a direct conversion for all 
+ primitive numeric types. The operation requires an appropriate
+ static conversion method on the input type.</summary>
+ <param name="value">The input value.</param>
+ <returns>The converted int</returns>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableModule.ToUInt16``1(System.Nullable{``0})">
+ <summary>Converts the argument to unsigned 16-bit integer. This is a direct conversion for all 
+ primitive numeric types. The operation requires an appropriate
+ static conversion method on the input type.</summary>
+ <param name="value">The input value.</param>
+ <returns>The converted uint16</returns>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableModule.ToInt16``1(System.Nullable{``0})">
+ <summary>Converts the argument to signed 16-bit integer. This is a direct conversion for all 
+ primitive numeric types. The operation requires an appropriate
+ static conversion method on the input type.</summary>
+ <param name="value">The input value.</param>
+ <returns>The converted int16</returns>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableModule.ToSByte``1(System.Nullable{``0})">
+ <summary>Converts the argument to signed byte. This is a direct conversion for all 
+ primitive numeric types. The operation requires an appropriate
+ static conversion method on the input type.</summary>
+ <param name="value">The input value.</param>
+ <returns>The converted sbyte</returns>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableModule.ToByte``1(System.Nullable{``0})">
+ <summary>Converts the argument to byte. This is a direct conversion for all 
+ primitive numeric types. The operation requires an appropriate
+ static conversion method on the input type.</summary>
+ <param name="value">The input value.</param>
+ <returns>The converted byte</returns>
+</member>
+<member name="T:Microsoft.FSharp.Linq.NullableModule">
+<summary>
+ Functions for converting nullable values
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_QmarkDivideQmark``3(System.Nullable{``0},System.Nullable{``1})">
+<summary>
+ The division operator where a nullable value appears on both left and right sides
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_DivideQmark``3(``0,System.Nullable{``1})">
+<summary>
+ The division operator where a nullable value appears on the right
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_QmarkDivide``3(System.Nullable{``0},``1)">
+<summary>
+ The division operator where a nullable value appears on the left
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_QmarkPercentQmark``3(System.Nullable{``0},System.Nullable{``1})">
+<summary>
+ The modulus operator where a nullable value appears on both left and right sides
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_PercentQmark``3(``0,System.Nullable{``1})">
+<summary>
+ The modulus operator where a nullable value appears on the right
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_QmarkPercent``3(System.Nullable{``0},``1)">
+<summary>
+ The modulus operator where a nullable value appears on the left
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_QmarkMultiplyQmark``3(System.Nullable{``0},System.Nullable{``1})">
+<summary>
+ The multiplication operator where a nullable value appears on both left and right sides
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_MultiplyQmark``3(``0,System.Nullable{``1})">
+<summary>
+ The multiplication operator where a nullable value appears on the right
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_QmarkMultiply``3(System.Nullable{``0},``1)">
+<summary>
+ The multiplication operator where a nullable value appears on the left
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_QmarkMinusQmark``3(System.Nullable{``0},System.Nullable{``1})">
+<summary>
+ The subtraction operator where a nullable value appears on both left and right sides
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_MinusQmark``3(``0,System.Nullable{``1})">
+<summary>
+ The subtraction operator where a nullable value appears on the right
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_QmarkMinus``3(System.Nullable{``0},``1)">
+<summary>
+ The subtraction operator where a nullable value appears on the left
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_QmarkPlusQmark``3(System.Nullable{``0},System.Nullable{``1})">
+<summary>
+ The addition operator where a nullable value appears on both left and right sides
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_PlusQmark``3(``0,System.Nullable{``1})">
+<summary>
+ The addition operator where a nullable value appears on the right
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_QmarkPlus``3(System.Nullable{``0},``1)">
+<summary>
+ The addition operator where a nullable value appears on the left
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_QmarkLessGreaterQmark``1(System.Nullable{``0},System.Nullable{``0})">
+<summary>
+ The &apos;&lt;&gt;&apos; operator where a nullable value appears on both left and right sides
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_QmarkEqualsQmark``1(System.Nullable{``0},System.Nullable{``0})">
+<summary>
+ The &apos;=&apos; operator where a nullable value appears on both left and right sides
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_QmarkLessQmark``1(System.Nullable{``0},System.Nullable{``0})">
+<summary>
+ The &apos;&lt;&apos; operator where a nullable value appears on both left and right sides
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_QmarkLessEqualsQmark``1(System.Nullable{``0},System.Nullable{``0})">
+<summary>
+ The &apos;&lt;=&apos; operator where a nullable value appears on both left and right sides
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_QmarkGreaterQmark``1(System.Nullable{``0},System.Nullable{``0})">
+<summary>
+ The &apos;&gt;&apos; operator where a nullable value appears on both left and right sides
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_QmarkGreaterEqualsQmark``1(System.Nullable{``0},System.Nullable{``0})">
+<summary>
+ The &apos;&gt;=&apos; operator where a nullable value appears on both left and right sides
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_LessGreaterQmark``1(``0,System.Nullable{``0})">
+<summary>
+ The &apos;&lt;&gt;&apos; operator where a nullable value appears on the right
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_EqualsQmark``1(``0,System.Nullable{``0})">
+<summary>
+ The &apos;=&apos; operator where a nullable value appears on the right
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_LessQmark``1(``0,System.Nullable{``0})">
+<summary>
+ The &apos;&lt;&apos; operator where a nullable value appears on the right
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_LessEqualsQmark``1(``0,System.Nullable{``0})">
+<summary>
+ The &apos;&lt;=&apos; operator where a nullable value appears on the right
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_GreaterQmark``1(``0,System.Nullable{``0})">
+<summary>
+ The &apos;&gt;&apos; operator where a nullable value appears on the right
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_GreaterEqualsQmark``1(``0,System.Nullable{``0})">
+<summary>
+ The &apos;&gt;=&apos; operator where a nullable value appears on the right
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_QmarkLessGreater``1(System.Nullable{``0},``0)">
+<summary>
+ The &apos;&lt;&gt;&apos; operator where a nullable value appears on the left
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_QmarkEquals``1(System.Nullable{``0},``0)">
+<summary>
+ The &apos;=&apos; operator where a nullable value appears on the left
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_QmarkLess``1(System.Nullable{``0},``0)">
+<summary>
+ The &apos;&lt;&apos; operator where a nullable value appears on the left
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_QmarkLessEquals``1(System.Nullable{``0},``0)">
+<summary>
+ The &apos;&lt;=&apos; operator where a nullable value appears on the left
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_QmarkGreater``1(System.Nullable{``0},``0)">
+<summary>
+ The &apos;&gt;&apos; operator where a nullable value appears on the left
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.NullableOperators.op_QmarkGreaterEquals``1(System.Nullable{``0},``0)">
+<summary>
+ The &apos;&gt;=&apos; operator where a nullable value appears on the left
+</summary>
+</member>
+<member name="T:Microsoft.FSharp.Linq.NullableOperators">
+<summary>
+ Operators for working with nullable values
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryRunExtensions.HighPriority.RunQueryAsEnumerable``1(Microsoft.FSharp.Linq.QueryBuilder,Microsoft.FSharp.Quotations.FSharpExpr{Microsoft.FSharp.Linq.QuerySource{``0,System.Collections.IEnumerable}})">
+ <summary>
+ A method used to support the F# query syntax.  Runs the given quotation as a query using LINQ IEnumerable rules.
+ </summary>
+</member>
+<member name="T:Microsoft.FSharp.Linq.QueryRunExtensions.HighPriority">
+
+</member>
+<member name="M:Microsoft.FSharp.Linq.QueryRunExtensions.LowPriority.RunQueryAsValue``1(Microsoft.FSharp.Linq.QueryBuilder,Microsoft.FSharp.Quotations.FSharpExpr{``0})">
+ <summary>
+ A method used to support the F# query syntax.  Runs the given quotation as a query using LINQ rules.
+ </summary>
+</member>
+<member name="T:Microsoft.FSharp.Linq.QueryRunExtensions.LowPriority">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Microsoft.FSharp.Linq.RuntimeHelpers.AnonymousObject`1">
+<summary>
+ This type shouldn&apos;t be used directly from user code.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Microsoft.FSharp.Linq.RuntimeHelpers.AnonymousObject`2">
+<summary>
+ This type shouldn&apos;t be used directly from user code.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Microsoft.FSharp.Linq.RuntimeHelpers.AnonymousObject`3">
+<summary>
+ This type shouldn&apos;t be used directly from user code.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Microsoft.FSharp.Linq.RuntimeHelpers.AnonymousObject`4">
+<summary>
+ This type shouldn&apos;t be used directly from user code.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Microsoft.FSharp.Linq.RuntimeHelpers.AnonymousObject`5">
+<summary>
+ This type shouldn&apos;t be used directly from user code.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Microsoft.FSharp.Linq.RuntimeHelpers.AnonymousObject`6">
+<summary>
+ This type shouldn&apos;t be used directly from user code.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Microsoft.FSharp.Linq.RuntimeHelpers.AnonymousObject`7">
+<summary>
+ This type shouldn&apos;t be used directly from user code.
 </summary>
 </member>
 <member name="">
@@ -7847,8 +8963,10 @@
 <member name="">
 
 </member>
-<member name="">
-
+<member name="T:Microsoft.FSharp.Linq.RuntimeHelpers.AnonymousObject`8">
+<summary>
+ This type shouldn&apos;t be used directly from user code.
+</summary>
 </member>
 <member name="">
 
@@ -7868,8 +8986,11 @@
 <member name="">
 
 </member>
-<member name="">
-
+<member name="T:Microsoft.FSharp.Linq.RuntimeHelpers.Grouping`2">
+<summary>
+ A type used to reconstruct a grouping after applying a mutable-&gt;immutable mapping transformation 
+ on a result of a query.
+</summary>
 </member>
 <member name="">
 
@@ -7886,8 +9007,41 @@
 <member name="">
 
 </member>
+<member name="T:Microsoft.FSharp.Linq.RuntimeHelpers.Adapters.ConversionDescription">
+<summary>
+ The generic MethodInfo for Select function
+ Describes how we got from productions of immutable objects to productions of anonymous objects, with enough information
+ that we can invert the process in final query results.
+</summary>
+</member>
 <member name="">
 
+</member>
+<member name="M:Microsoft.FSharp.Linq.RuntimeHelpers.Adapters.ProduceMoreMutables(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Quotations.FSharpExpr,System.Tuple{Microsoft.FSharp.Quotations.FSharpExpr,Microsoft.FSharp.Linq.RuntimeHelpers.Adapters.ConversionDescription}},Microsoft.FSharp.Quotations.FSharpExpr)">
+<summary>
+ Given the expression part of a &quot;yield&quot; or &quot;select&quot; which produces a result in terms of immutable tuples or immutable records,
+ generate an equivalent expression yielding anonymous objects. Also return the conversion for the immutable-to-mutable correspondence
+ so we can reverse this later.
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.RuntimeHelpers.Adapters.SimplifyConsumingExpr(Microsoft.FSharp.Quotations.FSharpExpr)">
+<summary>
+ Simplify gets of tuples and gets of record fields.
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.RuntimeHelpers.Adapters.CleanupLeaf(Microsoft.FSharp.Quotations.FSharpExpr)">
+<summary>
+ Cleanup the use of property-set object constructions in leaf expressions that form parts of F# queries.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:Microsoft.FSharp.Linq.RuntimeHelpers.Adapters.ConvImmutableTypeToMutableType(Microsoft.FSharp.Linq.RuntimeHelpers.Adapters.ConversionDescription,System.Type)">
+<summary>
+ Given an type involving immutable tuples and records, logically corresponding to the type produced at a
+ &quot;yield&quot; or &quot;select&quot;, convert it to a type involving anonymous objects according to the conversion data.
+</summary>
 </member>
 <member name="">
 
@@ -7904,7 +9058,106 @@
 <member name="">
 
 </member>
-<member name="T:Microsoft.FSharp.Math.BigNatModule">
+<member name="M:Microsoft.FSharp.Linq.RuntimeHelpers.Adapters.|NewAnonymousObject|_|(Microsoft.FSharp.Quotations.FSharpExpr)">
+<summary>
+ Recognize anonymous type construction written using &apos;new AnonymousObject(&lt;e1&gt;, &lt;e2&gt;, ...)&apos;
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Microsoft.FSharp.Linq.RuntimeHelpers.Adapters.|ObjectConstruction|_|(Microsoft.FSharp.Quotations.FSharpExpr)">
+<summary>
+ Recognize object construction written using &apos;new O(Prop1 = &lt;e&gt;, Prop2 = &lt;e&gt;, ...)&apos;
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.RuntimeHelpers.Adapters.|PropSetList|_|(Microsoft.FSharp.Quotations.FSharpVar,Microsoft.FSharp.Collections.FSharpList{Microsoft.FSharp.Quotations.FSharpExpr})">
+<summary>
+ Tests whether a list consists only of assignments of properties of the 
+ given variable, null values (ignored) and ends by returning the given variable
+ (pattern returns only property assignments)
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.RuntimeHelpers.Adapters.|LeftSequentialSeries|(Microsoft.FSharp.Quotations.FSharpExpr)">
+<summary>
+ Recognize sequential series written as (... ((&lt;e&gt;; &lt;e&gt;); &lt;e&gt;); ...)
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Microsoft.FSharp.Linq.RuntimeHelpers.Adapters">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:Microsoft.FSharp.Linq.RuntimeHelpers.LeafExpressionConverter.SubstHelper``1(Microsoft.FSharp.Quotations.FSharpExpr,Microsoft.FSharp.Quotations.FSharpVar[],System.Object[])">
+<summary>
+ A runtime helper used to evaluate nested quotation literals.
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.RuntimeHelpers.LeafExpressionConverter.EvaluateQuotation(Microsoft.FSharp.Quotations.FSharpExpr)">
+<summary>
+ Evaluates a subset of F# quotations by first converting to a LINQ expression, for the subset of LINQ expressions represented by the
+ expression syntax in the C# language.
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.RuntimeHelpers.LeafExpressionConverter.QuotationToLambdaExpression``1(Microsoft.FSharp.Quotations.FSharpExpr{``0})">
+<summary>
+ Converts a subset of F# quotations to a LINQ expression, for the subset of LINQ expressions represented by the
+ expression syntax in the C# language. 
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.RuntimeHelpers.LeafExpressionConverter.QuotationToExpression(Microsoft.FSharp.Quotations.FSharpExpr)">
+<summary>
+ Converts a subset of F# quotations to a LINQ expression, for the subset of LINQ expressions represented by the
+ expression syntax in the C# language.
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.RuntimeHelpers.LeafExpressionConverter.NewAnonymousObjectHelper``1(``0)">
+<summary>
+ When used in a quotation, this function indicates a specific conversion
+ should be performed when converting the quotation to a LINQ expression. 
+
+ This function should not be called directly. 
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.RuntimeHelpers.LeafExpressionConverter.MemberInitializationHelper``1(``0)">
+<summary>
+ When used in a quotation, this function indicates a specific conversion
+ should be performed when converting the quotation to a LINQ expression. 
+
+ This function should not be called directly. 
+</summary>
+</member>
+<member name="M:Microsoft.FSharp.Linq.RuntimeHelpers.LeafExpressionConverter.ImplicitExpressionConversionHelper``1(``0)">
+<summary>
+ When used in a quotation, this function indicates a specific conversion
+ should be performed when converting the quotation to a LINQ expression. 
+
+ This function should not be called directly. 
+</summary>
+</member>
+<member name="T:Microsoft.FSharp.Linq.RuntimeHelpers.LeafExpressionConverter">
 
 </member>
 <member name="M:Microsoft.FSharp.NativeInterop.NativePtrModule.StackAllocate``1(System.Int32)">
@@ -8991,6 +10244,10 @@
  <summary>The fields associated with the case, represented by a PropertyInfo.</summary>
  <returns>The fields associated with the case.</returns>
 </member>
+<member name="M:Microsoft.FSharp.Reflection.UnionCaseInfo.GetCustomAttributesData">
+ <summary>Returns the custom attributes data associated with the case.</summary>
+ <returns>An list of custom attribute data items.</returns>
+</member>
 <member name="M:Microsoft.FSharp.Reflection.UnionCaseInfo.GetCustomAttributes(System.Type)">
  <summary>Returns the custom attributes associated with the case matching the given attribute type.</summary>
  <param name="attributeType">The type of attributes to return.</param>
@@ -9255,461 +10512,6 @@
  If a joint is broken the RHS layout occurs on the next line with optional indentation.
  A layout can be squashed to for given width which forces breaks as required.
 </summary>
-</member>
-<member name="P:System.AggregateException.InnerExceptions">
- <summary>Gets a read-only collection of the <c>Exception</c> instances that caused
- the current exception.</summary>
-</member>
-<member name="T:System.AggregateException">
- <summary>Represents one or more errors that occur during application execution.</summary>
-</member>
-<member name="M:System.IObservable`1.Subscribe(System.IObserver{`0})">
- <summary>Subscribe an observer to the source of results</summary>
- <param name="observer">The observer to be added to those that are notified.</param>
- <returns>An IDisposable to allow for unsubscription.</returns>
-</member>
-<member name="T:System.IObservable`1">
- <summary>A source of observable results</summary>
-</member>
-<member name="M:System.IObserver`1.OnNext(`0)">
- <summary>Notify an observer of a new result</summary>
- <param name="value">The value to notify observers.</param>
-</member>
-<member name="M:System.IObserver`1.OnError(System.Exception)">
- <summary>Notify an observer of an error </summary>
- <param name="error">The exception to notify observers.</param>
-</member>
-<member name="M:System.IObserver`1.OnCompleted">
- <summary>Notify an observer that no more results will be produced.</summary>
-</member>
-<member name="T:System.IObserver`1">
- <summary>A client that may be subscribed to observe the results from an IObservable.</summary>
-</member>
-<member name="P:System.Lazy`1.Value">
- <summary>The value contained in the Lazy.</summary>
-</member>
-<member name="P:System.Lazy`1.IsValueCreated">
- <summary>Is true if the value is ready to be accessed.</summary>
-</member>
-<member name="T:System.Lazy`1">
- <summary>Encapsulates a lazily computed value.</summary>
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="T:System.Tuple`1">
- <summary>Compiled versions of F# tuple types. These are not used directly, though
- these compiled forms are seen by other CLI languages.</summary>
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="M:System.Collections.IStructuralComparable.CompareTo(System.Object,System.Collections.IComparer)">
- <summary>Determines whether the current object precedes, occurs in the same position as,
- or follows another object in the sort order.</summary>
- <param name="obj">The object to compare with the current instance.</param>
- <param name="comparer">An object that performs comparisons.</param>
- <returns>An integer that indicates the relationship of the current object to the target object.</returns>
-</member>
-<member name="">
-
-</member>
-<member name="M:System.Collections.IStructuralEquatable.GetHashCode(System.Collections.IEqualityComparer)">
- <summary>Returns a hash code for the current instance.</summary>
- <param name="comparer">An object that computes the hash code of the current object.</param>
- <returns>The hash code for the current instance.</returns>
-</member>
-<member name="M:System.Collections.IStructuralEquatable.Equals(System.Object,System.Collections.IEqualityComparer)">
- <summary>Equality comparison against a target object with a given comparer.</summary>
- <param name="obj">The target for comparison.</param>
- <param name="comparer">Compares the two objects.</param>
- <returns>The result of the comparer.</returns>
-</member>
-<member name="">
-
-</member>
-<member name="M:System.Numerics.BigInteger.op_UnaryPlus(System.Numerics.BigInteger)">
-<summary>
- Return the given big integer
-</summary>
-</member>
-<member name="M:System.Numerics.BigInteger.op_UnaryNegation(System.Numerics.BigInteger)">
-<summary>
- Return the negation of a big integer
-</summary>
-</member>
-<member name="M:System.Numerics.BigInteger.op_Subtraction(System.Numerics.BigInteger,System.Numerics.BigInteger)">
-<summary>
- Return the difference of two big integers
-</summary>
-</member>
-<member name="M:System.Numerics.BigInteger.op_Multiply(System.Numerics.BigInteger,System.Numerics.BigInteger)">
-<summary>
- Return the product of big integers
-</summary>
-</member>
-<member name="M:System.Numerics.BigInteger.op_Modulus(System.Numerics.BigInteger,System.Numerics.BigInteger)">
-<summary>
- Return the modulus of big integers
-</summary>
-</member>
-<member name="M:System.Numerics.BigInteger.op_LessThanOrEqual(System.Numerics.BigInteger,System.Numerics.BigInteger)">
-<summary>
- This operator is for consistency when this type be used from other CLI languages
-</summary>
-</member>
-<member name="M:System.Numerics.BigInteger.op_LessThan(System.Numerics.BigInteger,System.Numerics.BigInteger)">
-<summary>
- This operator is for consistency when this type be used from other CLI languages
-</summary>
-</member>
-<member name="M:System.Numerics.BigInteger.op_Inequality(System.Numerics.BigInteger,System.Numerics.BigInteger)">
-<summary>
- This operator is for consistency when this type be used from other CLI languages
-</summary>
-</member>
-<member name="M:System.Numerics.BigInteger.op_GreaterThanOrEqual(System.Numerics.BigInteger,System.Numerics.BigInteger)">
-<summary>
- This operator is for consistency when this type be used from other CLI languages
-</summary>
-</member>
-<member name="M:System.Numerics.BigInteger.op_GreaterThan(System.Numerics.BigInteger,System.Numerics.BigInteger)">
-<summary>
- This operator is for consistency when this type be used from other CLI languages
-</summary>
-</member>
-<member name="M:System.Numerics.BigInteger.op_Explicit(System.Numerics.BigInteger)">
-<summary>
- Convert a big integer to a 32-bit signed integer
-</summary>
-</member>
-<member name="M:System.Numerics.BigInteger.op_Explicit(System.Numerics.BigInteger)">
-<summary>
- Convert a big integer to a 64-bit signed integer
-</summary>
-</member>
-<member name="M:System.Numerics.BigInteger.op_Explicit(System.Numerics.BigInteger)">
-<summary>
- Convert a big integer to a floating point number
-</summary>
-</member>
-<member name="M:System.Numerics.BigInteger.op_Equality(System.Numerics.BigInteger,System.Numerics.BigInteger)">
-<summary>
- This operator is for consistency when this type be used from other CLI languages
-</summary>
-</member>
-<member name="M:System.Numerics.BigInteger.op_Division(System.Numerics.BigInteger,System.Numerics.BigInteger)">
-<summary>
- Return the ratio of two big integers
-</summary>
-</member>
-<member name="M:System.Numerics.BigInteger.op_Addition(System.Numerics.BigInteger,System.Numerics.BigInteger)">
-<summary>
- Return the sum of two big integers
-</summary>
-</member>
-<member name="P:System.Numerics.BigInteger.Zero">
-<summary>
- Get the big integer for zero
-</summary>
-</member>
-<member name="P:System.Numerics.BigInteger.Sign">
-<summary>
- Return the sign of a big integer: 0, +1 or -1
-</summary>
-</member>
-<member name="P:System.Numerics.BigInteger.One">
-<summary>
- Get the big integer for one
-</summary>
-</member>
-<member name="P:System.Numerics.BigInteger.IsZero">
-<summary>
- Return true if a big integer is &apos;zero&apos;
-</summary>
-</member>
-<member name="P:System.Numerics.BigInteger.IsOne">
-<summary>
- Return true if a big integer is &apos;one&apos;
-</summary>
-</member>
-<member name="">
-
-</member>
-<member name="M:System.Numerics.BigInteger.Pow(System.Numerics.BigInteger,System.Int32)">
-<summary>
- Return n^m for two big integers
-</summary>
-</member>
-<member name="M:System.Numerics.BigInteger.Parse(System.String)">
-<summary>
- Parse a big integer from a string format
-</summary>
-</member>
-<member name="M:System.Numerics.BigInteger.GreatestCommonDivisor(System.Numerics.BigInteger,System.Numerics.BigInteger)">
-<summary>
- Return the greatest common divisor of two big integers
-</summary>
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="M:System.Numerics.BigInteger.DivRem(System.Numerics.BigInteger,System.Numerics.BigInteger,System.Numerics.BigInteger@)">
-<summary>
- Compute the ratio and remainder of two big integers
-</summary>
-</member>
-<member name="M:System.Numerics.BigInteger.Abs(System.Numerics.BigInteger)">
-<summary>
- Compute the absolute value of a big integer 
-</summary>
-</member>
-<member name="M:System.Numerics.BigInteger.#ctor(System.Int64)">
-<summary>
- Construct a BigInteger value for the given 64-bit integer
-</summary>
-</member>
-<member name="M:System.Numerics.BigInteger.#ctor(System.Int32)">
-<summary>
- Construct a BigInteger value for the given integer
-</summary>
-</member>
-<member name="T:System.Numerics.BigInteger">
-<summary>
- The type of arbitrary-sized integers
-</summary>
-</member>
-<member name="P:System.Threading.CancellationTokenSource.Token">
- <summary>Fetches the token representing the capability to detect cancellation of an operation.</summary>
-</member>
-<member name="M:System.Threading.CancellationTokenSource.Dispose">
- <summary>Discards resources associated with this capability.</summary>
-</member>
-<member name="M:System.Threading.CancellationTokenSource.CreateLinkedTokenSource(System.Threading.CancellationToken,System.Threading.CancellationToken)">
- <summary>Creates a cancellation capability linking two tokens.</summary>
- <param name="token1">The first input token.</param>
- <param name="token2">The second input token.</param>
- <returns>The created CancellationTokenSource.</returns>
-</member>
-<member name="M:System.Threading.CancellationTokenSource.Cancel">
- <summary>Cancels the operation.</summary>
-</member>
-<member name="M:System.Threading.CancellationTokenSource.#ctor">
- <summary>Creates a new cancellation capability.</summary>
-</member>
-<member name="T:System.Threading.CancellationTokenSource">
- <summary>Signals to a <c>CancellationToken</c> that it should be cancelled.</summary>
-</member>
-<member name="">
-
-</member>
-<member name="M:System.Threading.CancellationToken.op_Inequality(System.Threading.CancellationToken,System.Threading.CancellationToken)">
- <summary>Inequality operator for tokens.</summary>
- <param name="registration1">The first input token.</param>
- <param name="registration2">The second input token.</param>
- <returns>False if the two tokens are equal.</returns>
-</member>
-<member name="M:System.Threading.CancellationToken.op_Equality(System.Threading.CancellationToken,System.Threading.CancellationToken)">
- <summary>Equality operator for tokens.</summary>
- <param name="registration1">The first input token.</param>
- <param name="registration2">The second input token.</param>
- <returns>True if the two tokens are equal.</returns>
-</member>
-<member name="P:System.Threading.CancellationToken.IsCancellationRequested">
- <summary>Flags whether an operation should be cancelled.</summary>
-</member>
-<member name="M:System.Threading.CancellationToken.Register(System.Action{System.Object},System.Object)">
- <summary>Registers an action to perform with the CancellationToken.</summary>
- <param name="action">The action to associate with the token.</param>
- <param name="state">The state associated with the action.</param>
- <returns>The created registration object.</returns>
-</member>
-<member name="M:System.Threading.CancellationToken.Equals(System.Threading.CancellationToken)">
- <summary>Equality comparison against another token.</summary>
- <param name="token">The target for comparison.</param>
- <returns>True if the two tokens are equal.</returns>
-</member>
-<member name="T:System.Threading.CancellationToken">
- <summary>Represents a capability to detect cancellation of an operation.</summary>
-</member>
-<member name="">
-
-</member>
-<member name="">
-
-</member>
-<member name="M:System.Threading.CancellationTokenRegistration.op_Inequality(System.Threading.CancellationTokenRegistration,System.Threading.CancellationTokenRegistration)">
- <summary>Inequality operator for registrations.</summary>
- <param name="registration1">The first input registration.</param>
- <param name="registration2">The second input registration.</param>
- <returns>False if the two registrations are equal.</returns>
-</member>
-<member name="M:System.Threading.CancellationTokenRegistration.op_Equality(System.Threading.CancellationTokenRegistration,System.Threading.CancellationTokenRegistration)">
- <summary>Equality operator for registrations.</summary>
- <param name="registration1">The first input registration.</param>
- <param name="registration2">The second input registration.</param>
- <returns>True if the two registrations are equal.</returns>
-</member>
-<member name="M:System.Threading.CancellationTokenRegistration.Equals(System.Threading.CancellationTokenRegistration)">
- <summary>Equality comparison against another registration.</summary>
- <param name="registration">The target for comparison.</param>
- <returns>True if the two registrations are equal.</returns>
-</member>
-<member name="M:System.Threading.CancellationTokenRegistration.Dispose">
- <summary>Frees resources associated with the registration.</summary>
-</member>
-<member name="T:System.Threading.CancellationTokenRegistration">
- <summary>Represents a registration to a Cancellation token source.</summary>
 </member>
 </members>
 </doc>

@@ -165,9 +165,13 @@ let appSettings (key:string) =
     | exn -> [||]
 
 /// Tries to find the tool via AppSettings. If no path has the right tool we are trying the PATH system variable. 
-let findPath settingsName tool = 
+let tryFindPath settingsName tool = 
     let paths = appSettings settingsName
-    match tryFindFile paths tool with
+    tryFindFile paths tool
+
+/// Tries to find the tool via AppSettings. If no path has the right tool we are trying the PATH system variable. 
+let findPath settingsName tool =
+    match tryFindPath settingsName tool with
     | Some file -> file
     | None -> tool
 
