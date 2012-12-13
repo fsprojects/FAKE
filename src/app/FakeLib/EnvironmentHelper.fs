@@ -66,24 +66,22 @@ let ProgramFilesX86 =
 /// System root environment variable. Typically "C:\Windows"
 let SystemRoot = environVar "SystemRoot"
 
-let isUnix = System.Environment.OSVersion.Platform = System.PlatformID.Unix
+/// Detemernines if the current system is Unix system
+let isUnix = Environment.OSVersion.Platform = PlatformID.Unix
 
 let platformInfoAction (psi:ProcessStartInfo) =
     if isUnix && psi.FileName.EndsWith ".exe" then
-      psi.Arguments <- psi.FileName + " " + psi.Arguments
-      psi.FileName <- "mono"  
+        psi.Arguments <- psi.FileName + " " + psi.Arguments
+        psi.FileName <- "mono"  
 
-let mutable TargetPlatformPrefix = 
-    let (<|>) a b = match a with None -> b | _ -> a
-    environVarOrNone "FrameworkDir32"
-    <|> 
-        if (isNullOrEmpty SystemRoot) then None
-        else Some (SystemRoot @@ @"Microsoft.NET\Framework")
-    <|> 
-        if (isUnix) then Some "/usr/lib/mono"
-        else Some @"C:\Windows\Microsoft.NET\Framework"
-    |> Option.get
-    
+/// The path of the current target platform
+let mutable TargetPlatformPrefix =
+    match environVarOrNone "FrameworkDir32" with
+    | Some path -> path
+    | _ ->
+        if not (isNullOrEmpty SystemRoot) then SystemRoot @@ @"Microsoft.NET\Framework" else
+        if isUnix then "/usr/lib/mono" else 
+        @"C:\Windows\Microsoft.NET\Framework" 
 
 /// Gets the local directory for the given target platform
 let getTargetPlatformDir platformVersion = 
