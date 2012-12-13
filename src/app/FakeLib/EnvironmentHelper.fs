@@ -88,9 +88,9 @@ let mutable TargetPlatformPrefix =
 /// Gets the local directory for the given target platform
 let getTargetPlatformDir platformVersion = 
     if Directory.Exists(TargetPlatformPrefix + "64") then 
-        Path.Combine(TargetPlatformPrefix + "64",platformVersion) 
+        (TargetPlatformPrefix + "64") @@ platformVersion
     else 
-        Path.Combine(TargetPlatformPrefix,platformVersion)
+        TargetPlatformPrefix @@ platformVersion
 
 /// The path to the personal documents
 let documentsFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
