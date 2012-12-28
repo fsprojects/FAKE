@@ -1,4 +1,4 @@
-﻿namespace Fake.Deploy.Web.App
+﻿namespace Fake.Deploy.Web
 
 module Model = 
 
@@ -85,9 +85,13 @@ module Model =
         ds.Conventions.CustomizeJsonSerializer <- new Action<_>(fun s -> s.Converters.Add(new UnionTypeConverter()))
         ds.Initialize()
 
-    let save instance = 
+    let Save (instances : seq<_>) =
         use session = documentStore.OpenSession()
-        session.Store(instance)
+        let count = ref 0
+        for inst in instances do
+            session.Store(inst)
+            incr(count)
+            if !count > 29 then session.SaveChanges()
         session.SaveChanges()
     
     let Agent (id : string) = 
@@ -116,7 +120,7 @@ module Model =
         | _ ->
             use session = documentStore.OpenSession()
             session.Load<Environment>(id)
-    
+
     let DeleteEnvironment (id : string) =
         use session = documentStore.OpenSession()
         let x = session.Load<Environment>(id)        

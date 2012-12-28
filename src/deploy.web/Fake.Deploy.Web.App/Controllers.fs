@@ -1,6 +1,8 @@
-﻿namespace Fake.Deploy.Web.App
+﻿namespace Fake.Deploy.Web.Controllers
 
 open System.Web.Mvc
+open System.Web.Http
+open Fake.Deploy.Web
 
 type HomeController() = 
     inherit Controller()
@@ -8,51 +10,19 @@ type HomeController() =
     member this.Index() = this.View() :> ActionResult
 
 type EnvironmentController() =
-    inherit Controller()
+    inherit ApiController()
 
-    member this.Index() = 
-        this.View(Model.Environments()) :> ActionResult
+    member this.Get() = Model.Environments()
 
-    member this.Edit(id : string) =
-        this.View(Model.Environment id) :> ActionResult
+    member this.Post(models : seq<Model.Environment>) = Model.Save models
 
-    member this.Create() = this.View(Model.Environment null) :> ActionResult
-
-    [<HttpPost>]
-    member this.Edit(env : Model.Environment) = 
-        Model.save env
-        this.RedirectToAction("Index") :> ActionResult
-
-    [<HttpPost>]
-    member this.Create(env : Model.Environment) = 
-        Model.save env
-        this.RedirectToAction("Index") :> ActionResult
-
-    member this.Delete(id : string) = 
-        Model.DeleteEnvironment id
-        this.RedirectToAction("Index") :> ActionResult
+    member this.Delete(id : string) = Model.DeleteEnvironment id
 
 type AgentController() = 
-    inherit Controller()
+    inherit ApiController()
 
-    member this.Index() = 
-        this.View(Model.Agents()) :> ActionResult
+    member this.Get() = Model.Agents()
         
-    member this.Edit(id : string) =
-        this.View(Model.Agent id) :> ActionResult
+    member this.Post(models : seq<Model.Agent>) = Model.Save models
 
-    member this.Create() = this.View(Model.Agent null) :> ActionResult
-
-    [<HttpPost>]
-    member this.Edit(env : Model.Agent) = 
-        Model.save env
-        this.RedirectToAction("Index") :> ActionResult
-
-    [<HttpPost>]
-    member this.Create(env : Model.Agent) = 
-        Model.save env
-        this.RedirectToAction("Index") :> ActionResult
-
-    member this.Delete(id : string) = 
-        Model.DeleteAgent id
-        this.RedirectToAction("Index") :> ActionResult       
+    member this.Delete(id : string) = Model.DeleteAgent id      
