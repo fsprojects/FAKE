@@ -1,0 +1,59 @@
+﻿@model Fake.Deploy.Web.App.Model.Agent
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Agent</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Server)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Server)
+            @Html.ValidationMessageFor(model => model.Server)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Port)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Port)
+            @Html.ValidationMessageFor(model => model.Port)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Environment)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Environment)
+            @Html.ValidationMessageFor(model => model.Environment)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,18 @@
+{
+  "Name": "Temp/Agents",
+  "Map": "from doc in docs.Agents\r\nselect new {  }",
+  "Maps": [
+    "from doc in docs.Agents\r\nselect new {  }"
+  ],
+  "Reduce": null,
+  "TransformResults": null,
+  "IsMapReduce": false,
+  "IsCompiled": false,
+  "IsTemp": true,
+  "Stores": {},
+  "Indexes": {},
+  "SortOptions": {},
+  "Analyzers": {},
+  "Fields": [],
+  "Type": "Temp"
+}
