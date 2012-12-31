@@ -64,7 +64,6 @@ module Model =
     [<CLIMutable>]
     [<DataContract>]
     type Agent = {
-        [<DataMember>]Id : string
         [<DataMember>]Name : string
         [<DataMember>]Address : Uri
         }
@@ -72,7 +71,6 @@ module Model =
             static member Create(url : string, ?name : string) =
                 let url = Uri(url)
                 {
-                    Id = null
                     Name = defaultArg name url.Host
                     Address = url
                 }
@@ -81,15 +79,20 @@ module Model =
     [<DataContract>]
     type Environment = {
             [<DataMember>]Id : string
+            [<DataMember>]Name : string
             [<DataMember>]Description : string
             [<DataMember>]Agents : seq<Agent>
         }
         with
+            static member Create(name : string, desc : string, agents : seq<_>) =
+                   { Id = null; Name = name; Description = desc; Agents = agents }
             member x.AddAgents(agents : seq<Agent>) = 
                    { x with Agents = Seq.append agents x.Agents }
 
     let private documentStore = 
-        let ds = new EmbeddableDocumentStore(RunInMemory = true)
+        let ds = new EmbeddableDocumentStore(ConnectionStringName = "RavenDB", UseEmbeddedHttpServer = true)
+        ds.Conventions.IdentityPartsSeparator <- "-"
+        ds.Configuration.Port <- 8082
         ds.Conventions.CustomizeJsonSerializer <- new Action<_>(fun s -> s.Converters.Add(new UnionTypeConverter()))
         ds.Initialize()
     
@@ -98,16 +101,26 @@ module Model =
 
     let private createData() = 
         [
-            { Id = "Development";
+            { Id = "environments-1";
+              Name = "Development";
               Description = "Development Environment";
-              Agents = [Agent.Create("http://localhost:8080"); Agent.Create("http://dev-2:8080")]}
-            { Id = "Integration";
+              Agents = [
+                         Agent.Create("http://localhost:8080"); Agent.Create("http://dev-2:8080");
+                         Agent.Create("http://localhost:8080"); Agent.Create("http://dev-2:8080");
+                         Agent.Create("http://localhost:8080"); Agent.Create("http://dev-2:8080");
+                         Agent.Create("http://localhost:8080"); Agent.Create("http://dev-2:8080");
+                       ]}
+            { Id = "environments-2";
+              Name = "Integration";
               Description = "Integration Environment";
               Agents = [Agent.Create("http://int-1:8080"); Agent.Create("http://int-2:8080")] }
-            { Id = "Staging";
+            { Id = "environments-3";
+              Name = "Staging";
               Description = "User Acceptance and pre-Production environment";
               Agents = [Agent.Create("http://uat-1:8080"); Agent.Create("http://uat-2:8080")] }
-            { Id = "Production";
+            {
+              Id = "environments-4"; 
+              Name = "Production";
               Description = "User Acceptance and pre-Production environment";
               Agents = [Agent.Create("http://prod-1:8080"); Agent.Create("http://prod-2:8080")] }
         ]
@@ -127,25 +140,27 @@ module Model =
         createIndexes assembly
         createData() |> Save
 
-    let Environment (id : string) = 
+    let getEnvironment (id : string) = 
         match id with
-        | null -> { Id = null; Description = null; Agents = Seq.empty }
+        | null -> { Id = id; Name = null; Description = null; Agents = Seq.empty }
         | _ ->
             use session = documentStore.OpenSession()
             session.Load<Environment>(id)
 
-    let DeleteEnvironment (id : string) =
+    let deleteEnvironment (id : string) =
         use session = documentStore.OpenSession()
         let x = session.Load<Environment>(id)        
         session.Delete(x)
         session.SaveChanges()
 
-    let Environments() = 
+    let getEnvironments() = 
         use session = documentStore.OpenSession()
         query {
             for env in session.Query<Environment>() do
             select env
-        } |> Seq.toArray
+        } 
+        |> Seq.sortBy (fun e -> e.Id)
+        |> Seq.toArray
 
 
 

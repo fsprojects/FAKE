@@ -7,22 +7,23 @@
     <script type="text/javascript">
         $(function () {
             var vm = new IndexViewModel()
-            vm.build()
-            ko.applyBindings(vm)
+            vm.build();
+            ko.applyBindings(vm);
         });
     </script>
 }
 
 <div class="tabbable tabs-left">
-    <ul class="nav nav-tabs" data-bind="foreach: environments">
-        <li><a data-bind="attr: { href: '#' + Id(), title: Description }, text: Id" data-toggle="tab"></a></li>
+    <ul id="envTabs" class="nav nav-tabs" data-bind="foreach: environments">
+        <li><a data-bind="attr: { href: '#' + Id(), title: Description }, text: Name" data-toggle="tab"></a></li>
     </ul>
-    <div class="tab-content" data-bind="foreach: environments">
-        <div class="tab-pane" data-bind="attr: { id: Id}">
+    <div class="tab-content span10" data-bind="foreach: environments">
+        <div class="tab-pane" data-bind="attr: { id: Id }">
             <h3 data-bind="text: Description"></h3>
-            <ul class="thumbnails" data-bind="foreach: Agents">
+            <ul id="agents" class="thumbnails" data-bind="foreach: Agents">
                 <li class="span3">
                     <a href="#agentDialog" class="thumbnail" style="cursor: pointer" data-bind="click: $root.agentSelected">
+                        <img src="~/Images/server.png" width="64" />
                         <h4 data-bind="text: Name" style="text-align: center"></h4>
                     </a>
                 </li>

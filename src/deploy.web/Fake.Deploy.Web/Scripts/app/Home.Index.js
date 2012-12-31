@@ -48,10 +48,7 @@
                 toastr.error('Failed to rollback ' + agent.Name() + ' - ' + app.Id(), 'Error');
                 console.log(msg.responseText);
             });
-
         }
-
-
     };
 
     self.build = function() {
@@ -65,6 +62,7 @@
                 var inst = ko.mapping.fromJS(d)
                 self.environments.push(inst);
             });
+            $('#agents li:nth-child(4n+1)').css('margin-left', '0');
         }).fail(function (msg) {
             toastr.error('Failed to get environments', 'Error');
         });

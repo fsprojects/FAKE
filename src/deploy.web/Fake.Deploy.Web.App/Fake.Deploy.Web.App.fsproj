@@ -42,20 +42,16 @@
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
       <Private>True</Private>
     </Reference>
-    <Reference Include="Raven.Abstractions">
-      <HintPath>..\..\..\packages\RavenDB.Client.2.0.2186-Unstable\lib\net40\Raven.Abstractions.dll</HintPath>
+    <Reference Include="Raven.Abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593">
       <Private>True</Private>
     </Reference>
-    <Reference Include="Raven.Client.Embedded">
-      <HintPath>..\..\..\packages\RavenDB.Embedded.2.0.2186-Unstable\lib\net40\Raven.Client.Embedded.dll</HintPath>
+    <Reference Include="Raven.Client.Embedded, Version=2.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593">
       <Private>True</Private>
     </Reference>
-    <Reference Include="Raven.Client.Lightweight">
-      <HintPath>..\..\..\packages\RavenDB.Client.2.0.2186-Unstable\lib\net40\Raven.Client.Lightweight.dll</HintPath>
+    <Reference Include="Raven.Client.Lightweight, Version=2.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593">
       <Private>True</Private>
     </Reference>
-    <Reference Include="Raven.Database">
-      <HintPath>..\..\..\packages\RavenDB.Database.2.0.2186-Unstable\lib\net40\Raven.Database.dll</HintPath>
+    <Reference Include="Raven.Database, Version=2.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593">
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -90,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model.fs" />
+    <Compile Include="ViewModels.fs" />
     <Compile Include="Controllers.fs" />
     <None Include="Script.fsx" />
     <None Include="packages.config" />
