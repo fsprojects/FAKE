@@ -1,0 +1,46 @@
+﻿@model Fake.Deploy.Web.ViewModels.RegisterAgentViewModel
+
+@{
+    ViewBag.Title = "Register an Agent";
+}
+
+<h2>Register an Agent</h2>
+
+@using (Html.BeginForm("SaveAgent", "Home", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+  <div class="control-group">
+    <label class="control-label" for="environmentId">Environment</label>
+    <div class="controls">
+      <select id="environmentId" name="environmentId">
+          @foreach (var env in Model.Environments)
+          {
+              <option value="@env.Id">@env.Name</option>
+          }
+      </select>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="agentName">Agent Name</label>
+    <div class="controls">
+      <input type="text" id="agentName" name="agentName" placeholder="Enter agent name...">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="agentUrl">Agent Url</label>
+    <div class="controls">
+      <input type="text" id="agentUrl" name="agentUrl" placeholder="Enter agent base url...">
+    </div>
+  </div>
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">Save changes</button>
+    <button type="button" class="btn">Cancel</button>
+  </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
