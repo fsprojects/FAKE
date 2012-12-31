@@ -92,13 +92,13 @@ let runDeploymentFromPackageFile workDir packageFileName =
       doDeployment package.Name scriptFile        
     with e -> Failure e
 
-let rollback dir workDir (app : string) (version : string) =
+let rollback workDir (app : string) (version : string) =
     try 
         let currentPackageFileName = 
-            !! (dir @@ deploymentRootDir + app + "/active/*.nupkg") 
+            !! (workDir @@ deploymentRootDir + app + "/active/*.nupkg") 
             |> Seq.head
 
-        let backupPackageFileName = getBackupFor dir app version
+        let backupPackageFileName = getBackupFor workDir app version
         if currentPackageFileName = backupPackageFileName then 
             Failure "Cannot rollback to currently active version"
         else 
@@ -131,10 +131,13 @@ let getPreviousPackageVersionFromBackup dir app versions =
         |> Seq.skip (versions - 1)
         |> Seq.head
 
-let rollbackTo dir app version =
-    let newVersion =
-        match VersionInfo.Parse version with
-        | Specific version -> version
-        | Predecessor p -> getPreviousPackageVersionFromBackup dir app p
+let rollbackTo workDir app version =
+    try
+        let newVersion =
+            match VersionInfo.Parse version with
+            | Specific version -> version
+            | Predecessor p -> getPreviousPackageVersionFromBackup workDir app p
 
-    rollback dir app newVersion
+        rollback workDir app newVersion
+    with e ->
+        Failure ("Rollback failed: " + e.Message)

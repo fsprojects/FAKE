@@ -26,6 +26,7 @@ namespace Fake.Deploy.Web
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            ModelConfig.Init();
         }
     }
 }

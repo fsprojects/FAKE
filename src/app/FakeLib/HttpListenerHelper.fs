@@ -30,6 +30,9 @@ let private writeResponse (ctx : HttpListenerContext) (str : string) =
     let response = Text.Encoding.UTF8.GetBytes(str)
     ctx.Response.ContentLength64 <- response.Length |> int64
     ctx.Response.ContentEncoding <- Text.Encoding.UTF8
+    ctx.Response.AddHeader("access-control-allow-origin", "*")
+    ctx.Response.AddHeader("access-control-allow-methods", "GET, POST, PUT, DELETE, OPTIONS")
+    ctx.Response.AddHeader("access-control-allow-headers", "content-type, accept")
     ctx.Response.Close(response, true)
 
 let placeholderRegex = new Regex("{([^}]+)}",RegexOptions.Compiled)

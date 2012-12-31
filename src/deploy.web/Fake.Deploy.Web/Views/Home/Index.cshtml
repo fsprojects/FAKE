@@ -1,7 +1,55 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Summary";
 }
 
 @section scripts {
-    
+    <script src="@Url.Content("~/Scripts/app/Home.Index.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            var vm = new IndexViewModel()
+            vm.build()
+            ko.applyBindings(vm)
+        });
+    </script>
 }
+
+<div class="tabbable tabs-left">
+    <ul class="nav nav-tabs" data-bind="foreach: environments">
+        <li><a data-bind="attr: { href: '#' + Id(), title: Description }, text: Id" data-toggle="tab"></a></li>
+    </ul>
+    <div class="tab-content" data-bind="foreach: environments">
+        <div class="tab-pane" data-bind="attr: { id: Id}">
+            <h3 data-bind="text: Description"></h3>
+            <ul class="thumbnails" data-bind="foreach: Agents">
+                <li class="span3">
+                    <a href="#agentDialog" class="thumbnail" style="cursor: pointer" data-bind="click: $root.agentSelected">
+                        <h4 data-bind="text: Name" style="text-align: center"></h4>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="agentDialog" class="modal hide fade" data-bind="with: selectedAgent">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 data-bind="text: Name"></h3>
+    </div>
+    <div class="modal-body">
+        <div data-bind="foreach: $root.deployments">
+            <div class="well">
+                <h4 data-bind="text: Name"></h4>
+                <p>
+                    <span data-bind="text: Description"></span>
+                </p>
+                <div>
+                    <button class="btn btn-primary" data-bind="click: $root.rollbackDeployment">Rollback to Previous</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#" data-dismiss="modal" class="btn" data-bind="click: $root.unselectAgent">Close</a>
+    </div>
+</div>
