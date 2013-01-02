@@ -64,6 +64,7 @@ module Model =
     [<CLIMutable>]
     [<DataContract>]
     type Agent = {
+        [<DataMember>]Id : string
         [<DataMember>]Name : string
         [<DataMember>]Address : Uri
         }
@@ -71,10 +72,11 @@ module Model =
             static member Create(url : string, ?name : string) =
                 let url = Uri(url)
                 {
+                    Id = url.Host + "-" + (url.Port.ToString())
                     Name = defaultArg name url.Host
                     Address = url
                 }
-
+    
     [<CLIMutable>]
     [<DataContract>]
     type Environment = {
@@ -106,9 +108,9 @@ module Model =
               Description = "Development Environment";
               Agents = [
                          Agent.Create("http://localhost:8080"); Agent.Create("http://dev-2:8080");
-                         Agent.Create("http://localhost:8080"); Agent.Create("http://dev-2:8080");
-                         Agent.Create("http://localhost:8080"); Agent.Create("http://dev-2:8080");
-                         Agent.Create("http://localhost:8080"); Agent.Create("http://dev-2:8080");
+                         Agent.Create("http://dev-1:8080"); Agent.Create("http://dev-2:8080");
+                         Agent.Create("http://dev-1:8080"); Agent.Create("http://dev-2:8080");
+                         Agent.Create("http://dev-1:8080"); Agent.Create("http://dev-2:8080");
                        ]}
             { Id = "environments-2";
               Name = "Integration";
@@ -136,8 +138,8 @@ module Model =
             if !count > 29 then session.SaveChanges()
         session.SaveChanges()
 
-    let Init(assembly : seq<Reflection.Assembly>) = 
-        createIndexes assembly
+    let Init() = 
+        createIndexes [Reflection.Assembly.GetExecutingAssembly()]
         createData() |> Save
 
     let getEnvironment (id : string) = 
@@ -146,7 +148,7 @@ module Model =
         | _ ->
             use session = documentStore.OpenSession()
             session.Load<Environment>(id)
-
+       
     let deleteEnvironment (id : string) =
         use session = documentStore.OpenSession()
         let x = session.Load<Environment>(id)        
@@ -161,6 +163,13 @@ module Model =
         } 
         |> Seq.sortBy (fun e -> e.Id)
         |> Seq.toArray
+
+    let getAgent (id : string) =
+        getEnvironments()
+        |> Seq.collect (fun env -> env.Agents)
+        |> Seq.filter (fun a -> a.Id = id)
+        |> Seq.head
+     
 
 
 

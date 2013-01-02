@@ -12,7 +12,7 @@ namespace Fake.Deploy.Web
         public static void Init()
         {
             NonAdminHttp.EnsureCanListenToWhenInNonAdminContext(8082);
-            Fake.Deploy.Web.Model.Init(new[] { typeof(ModelConfig).Assembly });
+            Fake.Deploy.Web.Model.Init();
         }
 
     }

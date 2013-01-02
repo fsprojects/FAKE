@@ -7,3 +7,8 @@ type RegisterAgentViewModel = {
     Environments : seq<Environment>
 }
 
+type AgentViewModel = {
+    Agent : Agent
+    Packages : seq<Fake.NuGetHelper.NuSpecPackage>
+}
+

@@ -1,0 +1,50 @@
+﻿@model Fake.Deploy.Web.ViewModels.AgentViewModel
+
+@{
+    ViewBag.Title = "Agent";
+}
+
+@section scripts {
+    <script src="@Url.Content("~/Scripts/app/Home.Agent.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            var vm = new AgentViewModel();
+            vm.build(@Model.Agent.Address);
+            ko.applyBindings(vm);
+        });
+    </script>
+}
+
+<h2>Agent - @Model.Agent.Name</h2>
+
+<div>
+    <div>
+        @using (Html.BeginForm("DeployPackage", "Home", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+        {
+            <input type="hidden" name="agentId" value="@Model.Agent.Id" />
+            <input type="hidden" name="agentUrl" value="@Model.Agent.Address" />
+            <div class="control-group">
+                <div class="fileupload fileupload-new" data-provides="fileupload">
+                    <div class="input-append">
+                        <div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i><span class="fileupload-preview"></span></div>
+                        <span class="btn btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span><input type="file" name="package" /></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Deploy Package</button>
+        }
+    </div>
+    <div>
+        @foreach(var deployment in Model.Packages) {
+            <div class="well">
+                <h4>@deployment.Name</h4>
+                <p>
+                    <span>@deployment.Description</span>
+                </p>
+                <div>
+                    <button class="btn btn-primary" data-bind="click: $root.rollbackDeployment(@Model.Agent.Address, @deployment.Id)">Rollback to Previous</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>

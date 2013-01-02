@@ -22,7 +22,7 @@
             <h3 data-bind="text: Description"></h3>
             <ul id="agents" class="thumbnails" data-bind="foreach: Agents">
                 <li class="span3">
-                    <a href="#agentDialog" class="thumbnail" style="cursor: pointer" data-bind="click: $root.agentSelected">
+                    <a class="thumbnail" style="cursor: pointer" data-bind="attr: { href: '/Home/Agent?agentId=' + Id(), Description: Id }">
                         <img src="~/Images/server.png" width="64" />
                         <h4 data-bind="text: Name" style="text-align: center"></h4>
                     </a>
@@ -32,25 +32,4 @@
     </div>
 </div>
 
-<div id="agentDialog" class="modal hide fade" data-bind="with: selectedAgent">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3 data-bind="text: Name"></h3>
-    </div>
-    <div class="modal-body">
-        <div data-bind="foreach: $root.deployments">
-            <div class="well">
-                <h4 data-bind="text: Name"></h4>
-                <p>
-                    <span data-bind="text: Description"></span>
-                </p>
-                <div>
-                    <button class="btn btn-primary" data-bind="click: $root.rollbackDeployment">Rollback to Previous</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <a href="#" data-dismiss="modal" class="btn" data-bind="click: $root.unselectAgent">Close</a>
-    </div>
-</div>
+

@@ -158,6 +158,7 @@
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-1.8.3.intellisense.js" />
     <Content Include="Images\server.png" />
+    <Content Include="Scripts\app\Home.Agent.js" />
     <Content Include="Scripts\app\Home.Index.js" />
     <Content Include="Scripts\jquery-1.8.3.js" />
     <Content Include="Scripts\jquery-1.8.3.min.js" />
@@ -186,11 +187,16 @@
     <None Include="readme.txt" />
     <Content Include="Views\Home\RegisterAgent.cshtml" />
     <Content Include="Views\Home\CreateEnvironment.cshtml" />
+    <Content Include="Views\Home\Agent.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\Package_Temp\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\app\FakeLib\FakeLib.fsproj">
+      <Project>{13d56521-772a-41db-9772-1da1a4aa8e3a}</Project>
+      <Name>FakeLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fake.Deploy.Web.App\Fake.Deploy.Web.App.fsproj">
       <Project>{65bd7fd0-6c61-4c72-b242-65ed2d390b5a}</Project>
       <Name>Fake.Deploy.Web.App</Name>
