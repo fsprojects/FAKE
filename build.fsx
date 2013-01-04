@@ -150,6 +150,7 @@ Target "CreateNuGet" (fun _ ->
 
     XCopy docsDir nugetDocsDir
     XCopy buildDir nugetToolsDir
+    XCopy @".\lib\fsi" nugetToolsDir
     DeleteFile (nugetToolsDir @@ "Gallio.dll")
 
     NuGet (fun p -> 
