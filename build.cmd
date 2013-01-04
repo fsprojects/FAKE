@@ -3,11 +3,13 @@
 :Build
 cls
 
+"tools\nuget\nuget.exe" "install" "FAKE" "-OutputDirectory" "tools" "-ExcludeVersion"
+
 SET TARGET="Default"
 
 IF NOT [%1]==[] (set TARGET="%1")
   
-"tools\FAKE\Fake.exe" "build.fsx" "target=%TARGET%"
+"tools\FAKE\tools\Fake.exe" "build.fsx" "target=%TARGET%"
 
 rem Bail if we're running a TeamCity build.
 if defined TEAMCITY_PROJECT_NAME goto Quit
