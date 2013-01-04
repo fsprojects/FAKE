@@ -31,3 +31,4 @@ Samples/ContinuousDeploymentWebsite/Backup/
 Samples/ContinuousDeploymentWebsite/src/app/Fake_WebSite/Properties/AssemblyInfo.cs
 *.ncrunchsolution
 Samples/ContinuousDeploymentWebsite/deployments
+tools/FAKE/
