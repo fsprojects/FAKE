@@ -1,3 +1,8 @@
+## 1.70.0.0
+
+* FAKE nuget package comes bundles with a fsi.exe
+* Self build downloads latest FAKE master via nuget
+
 ## 1.66.1.0
 
 * Fixed bug where FAKE.Deploy didn't run the deploy scripts where used as a windows service
