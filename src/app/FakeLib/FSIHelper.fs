@@ -16,7 +16,8 @@ let fsiPath =
         | Some file -> file
         | None -> "fsharpi" 
     else
-        let fi = fileInfo "fsi.exe"
+        let dir = System.IO.Path.GetDirectoryName fullAssemblyPath
+        let fi = fileInfo (System.IO.Path.Combine(dir,"fsi.exe"))
         if fi.Exists then fi.FullName else
         findPath "FSIPath" "fsi.exe"
       
