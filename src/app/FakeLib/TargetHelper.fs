@@ -145,7 +145,9 @@ let targetError targetName (exn:System.Exception) =
         sprintf "%O%s" exn (if exn.InnerException <> null then "\n" + (exn.InnerException.ToString()) else "")
             
     traceError <| sprintf "Running build failed.\nError:\n%s" msg
-    sendTeamCityError msg        
+
+    let tcMsg = sprintf "%s" exn.Message
+    sendTeamCityError tcMsg        
  
 let addExecutedTarget target time =
     ExecutedTargets.Add target |> ignore
