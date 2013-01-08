@@ -36,6 +36,8 @@ type EnvironmentController() =
 type AgentController() = 
     inherit ApiController()
     
+    member this.Get() = Model.getAgents()
+
     member this.Get(id : string) = Model.getAgent id
 
     member this.Post(data : HttpRequestMessage) =
@@ -54,6 +56,8 @@ type AgentController() =
                         return this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e)
                 else return this.Request.CreateErrorResponse(HttpStatusCode.UnsupportedMediaType, "Expected URL encoded form data")
             } |> Async.toTask
+
+    member this.Delete(id : string) = Model.deleteAgent id
         
 
 type PackageController() =

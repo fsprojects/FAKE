@@ -156,7 +156,7 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\app\Admin.Agent.js" />
     <None Include="Scripts\jquery-1.8.3.intellisense.js" />
-    <Content Include="img\server.png" />
+    <Content Include="Images\server.png" />
     <Content Include="Scripts\app\Home.Agent.js" />
     <Content Include="Scripts\app\Admin.Environment.js" />
     <Content Include="Scripts\app\Home.Index.js" />

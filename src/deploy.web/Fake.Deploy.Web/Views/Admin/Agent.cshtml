@@ -13,34 +13,60 @@
     </script>
 }
 
-<h2>Manage agents</h2>
+<div class="page-header">
+    <h1>Manage agents</h1>
+</div>
 
-<form class="form-horizontal" data-bind="submit: $root.registerAgent">
-  <div class="control-group">
-    <label class="control-label" for="environmentId">Environment</label>
-    <div class="controls">
-      <select id="environmentId" name="environmentId" data-bind="options: environments, optionsText: 'Name', optionsValue: 'Id', optionsCaption: 'Choose...'">
-      </select>
+<div class="row" style="margin-left: 30px">
+    <div class="span6">
+        <h4>Register Agent</h4>
+        <form class="form-horizontal" data-bind="submit: $root.registerAgent">
+            <div class="control-group">
+                <label class="control-label" for="environmentId">Environment</label>
+                <div class="controls">
+                    <select id="environmentId" name="environmentId" data-bind="options: environments, optionsText: 'Name', optionsValue: 'Id', optionsCaption: 'Choose...'">
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="agentName">Agent Name</label>
+                <div class="controls">
+                    <input type="text" id="agentName" name="agentName" placeholder="Enter agent name...">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="agentUrl">Agent Url</label>
+                <div class="controls">
+                    <input type="text" id="agentUrl" name="agentUrl" placeholder="Enter agent base url...">
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn">Cancel</button>
+            </div>
+        </form>
     </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="agentName">Agent Name</label>
-    <div class="controls">
-      <input type="text" id="agentName" name="agentName" placeholder="Enter agent name...">
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="agentUrl">Agent Url</label>
-    <div class="controls">
-      <input type="text" id="agentUrl" name="agentUrl" placeholder="Enter agent base url...">
-    </div>
-  </div>
-  <div class="form-actions">
-    <button type="submit" class="btn btn-primary">Save changes</button>
-    <button type="button" class="btn">Cancel</button>
-  </div>
-</form>
 
-<table class="table table-bordered" data-bind="">
-
-</table>
+    <div class="span6">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: agents">
+                <tr>
+                    <td data-bind="text: Name"></td>
+                    <td data-bind="text: Address"></td>
+                    <td>
+                        <button class="btn btn-danger" data-bind="click: $root.deleteAgent">
+                            <i class="icon-trash icon-white"></i>&nbsp;Delete
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
