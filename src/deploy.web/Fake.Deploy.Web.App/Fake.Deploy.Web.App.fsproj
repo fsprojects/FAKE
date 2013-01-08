@@ -85,9 +85,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UnionTypeConverter.fs" />
+    <Compile Include="ApiHelpers.fs" />
     <Compile Include="Model.fs" />
-    <Compile Include="ViewModels.fs" />
+    <Compile Include="ApiControllers.fs" />
     <Compile Include="Controllers.fs" />
+    <Compile Include="Global.fs" />
     <None Include="Script.fsx" />
     <None Include="packages.config" />
   </ItemGroup>

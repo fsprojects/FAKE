@@ -13,54 +13,6 @@ module Model =
     open System.ComponentModel.DataAnnotations
     open System.ComponentModel.Composition
 
-    type internal UnionTypeConverter() =
-        inherit JsonConverter()
-    
-        let doRead pos (reader: JsonReader) = 
-            reader.Read() |> ignore 
-    
-        override x.CanConvert(typ:Type) =
-            let result = 
-                ((typ.GetInterface(typeof<System.Collections.IEnumerable>.FullName) = null) 
-                && FSharpType.IsUnion typ)
-            result
-    
-        override x.WriteJson(writer: JsonWriter, value: obj, serializer: JsonSerializer) =
-            let t = value.GetType()
-            let write (name : string) (fields : obj []) = 
-                writer.WriteStartObject()
-                writer.WritePropertyName("case")
-                writer.WriteValue(name)  
-                writer.WritePropertyName("values")
-                serializer.Serialize(writer, fields)
-                writer.WriteEndObject()   
-    
-            let (info, fields) = FSharpValue.GetUnionFields(value, t)
-            write info.Name fields
-    
-        override x.ReadJson(reader: JsonReader, objectType: Type, existingValue: obj, serializer: JsonSerializer) =      
-             let cases = FSharpType.GetUnionCases(objectType)
-             if reader.TokenType <> JsonToken.Null  
-             then 
-                doRead "1" reader
-                doRead "2" reader
-                let case = cases |> Array.find(fun x -> x.Name = if reader.Value = null then "None" else reader.Value.ToString())
-                doRead "3" reader
-                doRead "4" reader
-                doRead "5" reader
-                let fields =  [| 
-                       for field in case.GetFields() do
-                           let result = serializer.Deserialize(reader, field.PropertyType)
-                           reader.Read() |> ignore
-                           yield result
-                 |] 
-                let result = FSharpValue.MakeUnion(case, fields)
-                while reader.TokenType <> JsonToken.EndObject do
-                    doRead "6" reader         
-                result
-             else
-                FSharpValue.MakeUnion(cases.[0], [||]) 
-
     [<CLIMutable>]
     [<DataContract>]
     type Agent = {
@@ -95,7 +47,7 @@ module Model =
         let ds = new EmbeddableDocumentStore(ConnectionStringName = "RavenDB", UseEmbeddedHttpServer = true)
         ds.Conventions.IdentityPartsSeparator <- "-"
         ds.Configuration.Port <- 8082
-        ds.Conventions.CustomizeJsonSerializer <- new Action<_>(fun s -> s.Converters.Add(new UnionTypeConverter()))
+        ds.Conventions.CustomizeJsonSerializer <- new Action<_>(fun s -> s.Converters.Add(new Helpers.RavenUnionTypeConverter()))
         ds.Initialize()
     
     let private createIndexes (assems : seq<Reflection.Assembly>) =
@@ -164,9 +116,12 @@ module Model =
         |> Seq.sortBy (fun e -> e.Id)
         |> Seq.toArray
 
-    let getAgent (id : string) =
+    let getAgents() = 
         getEnvironments()
         |> Seq.collect (fun env -> env.Agents)
+
+    let getAgent (id : string) =
+        getAgents()
         |> Seq.filter (fun a -> a.Id = id)
         |> Seq.head
      
