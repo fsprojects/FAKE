@@ -57,7 +57,12 @@ type AgentController() =
                 else return this.Request.CreateErrorResponse(HttpStatusCode.UnsupportedMediaType, "Expected URL encoded form data")
             } |> Async.toTask
 
-    member this.Delete(id : string) = Model.deleteAgent id
+    member this.Delete(id : string) =
+        try
+            Model.deleteAgent id
+            this.Request.CreateResponse(HttpStatusCode.OK)
+        with e ->
+            this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e)
         
 
 type PackageController() =
