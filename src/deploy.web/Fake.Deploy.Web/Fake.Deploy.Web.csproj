@@ -154,14 +154,17 @@
     <Content Include="Content\toastr.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\app\Admin.Agent.js" />
     <None Include="Scripts\jquery-1.8.3.intellisense.js" />
     <Content Include="img\server.png" />
     <Content Include="Scripts\app\Home.Agent.js" />
+    <Content Include="Scripts\app\Admin.Environment.js" />
     <Content Include="Scripts\app\Home.Index.js" />
     <Content Include="Scripts\jquery-1.8.3.js" />
     <Content Include="Scripts\jquery-1.8.3.min.js" />
     <Content Include="Scripts\jquery.fileupload.js" />
     <Content Include="Scripts\jquery.iframe-transport.js" />
+    <Content Include="Scripts\jquery.serializeToJson.js" />
     <Content Include="Scripts\jquery.ui.widget.js" />
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
@@ -186,8 +189,8 @@
     <Content Include="Views\Web.config" />
     <Content Include="packages.config" />
     <None Include="readme.txt" />
-    <Content Include="Views\Home\RegisterAgent.cshtml" />
-    <Content Include="Views\Home\CreateEnvironment.cshtml" />
+    <Content Include="Views\Admin\Agent.cshtml" />
+    <Content Include="Views\Admin\Environment.cshtml" />
     <Content Include="Views\Home\Agent.cshtml" />
   </ItemGroup>
   <ItemGroup>

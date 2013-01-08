@@ -15,6 +15,7 @@
                 self.environments.push(inst);
             });
             $('#agents li:nth-child(4n+1)').css('margin-left', '0');
+            $('#envTabs a:first').tab('show');
         }).fail(function (msg) {
             toastr.error('Failed to get environments', 'Error');
         });

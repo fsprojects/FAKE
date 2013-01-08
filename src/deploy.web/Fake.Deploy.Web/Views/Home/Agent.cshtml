@@ -9,82 +9,82 @@
     <script type="text/javascript">
         $(function () {
             var vm = new AgentViewModel();
-            vm.createAgentView('@Model');
+            vm.build('@Model');
             ko.applyBindings(vm);
 
-            $('#fileupload').fileupload({
-                dataType: 'json',
-                redirect: '@Url.Action("Agent", new { agentId = Model })',
-                add: function (e, data) {
-                    $('#selectPackageBtn').addClass('hide');
-                    $('#filePlaceHolder').removeClass('hide');
-                    $.each(data.files, function (i, file) {
-                        $('#fileName').html('<h4> Deploying: ' + file.name + '</h4>');
-                    });
-                    
-                    data.submit();
-                },
-                progressall: function (e, data) {
-                    var progress = parseInt(data.loaded / data.total * 100, 10);
-                    $('#progress .bar').css(
-                        'width',
-                        progress + '%'
-                    );
-                },
-                done: function (e, data) {
-                    $('#fileList').html('');
-                    $('#filePlaceHolder').addClass('hide');
-                    $('#selectPackageBtn').removeClass('hide');
-                    toastr.info('Package deployed');
-                    vm.refreshDeploymentsForAgent();
-                },
-                fail: function (e, data) {
-                    $('#fileList').html('');
-                    $('#filePlaceHolder').addClass('hide');
-                    $('#selectPackageBtn').removeClass('hide');
-                    toastr.error('Package deployment failed')
-                }
-            });
+           
         });
     </script>
 }
 
- <!-- ko with: agent -->
-     <h1 data-bind="text: 'Agent - ' + Name()"></h1>
- <!-- /ko -->
- <form id="fileupload" class="form" action="/api/v1/package" method="POST" enctype="multipart/form-data">
-     <fieldset>
-         <div>
-             <span id="selectPackageBtn" class="btn btn-success fileinput-button">
-                 <i class="icon-plus icon-white"></i>
-                 <span>Deploy Package</span>
-                 <input type="file" name="files[]">
-             </span>
+<div class="page-header">
+    <!-- ko with: agent -->
+    <h1 data-bind="text: 'Agent - ' + Name()" style="display: inline"></h1>
+    <!-- /ko -->
+    <!-- ko with: agentStatus -->
+    <h4 data-bind="text: statusMessage, style: { color: available() ? 'green' : 'red' }" style="display: inline; margin-left: 10px"></h4>
+    <!-- /ko -->
+</div>
 
-         </div>
-         <div id="filePlaceHolder" class="hide">
-             <span id="fileName" style="padding: 10px"><i class="icon-file"></i></span>
-             <div id="progress" class="progress progress-striped active">
-                 <div class="bar" style="width: 0%;"></div>
-             </div>
-         </div>
-              <div data-bind="with: agent">
-         <input type="hidden" name="agentId" data-bind="value: Name" />
-         <input type="hidden" name="agentUrl" data-bind="value: Address" />
-     </div>
-     </fieldset>
+<div class="row" style="margin-left: 30px">
+    <div class="span12">
+        <div class="row">
+            <form id="fileupload" class="span12" action="/api/v1/package" method="POST" enctype="multipart/form-data">
+                <div id="selectPackageBtn" class="btn btn-success fileinput-button">
+                    <i class="icon-plus icon-white"></i>
+                    <span>Deploy Package</span>
+                    <input type="file" name="files[]">
+                </div>
+                <div id="filePlaceHolder" class="modal hide fade">
+                    <div class="modal-header">
+                        <span id="fileName" style="padding: 10px"><i class="icon-file"></i></span>
+                    </div>
+                    <div class="modal-body">
+                        <div id="progress" class="progress progress-striped active">
+                            <div class="bar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div data-bind="with: agent">
+                    <input type="hidden" name="agentId" data-bind="value: Name" />
+                    <input type="hidden" name="agentUrl" data-bind="value: Address" />
+                </div>
+            </form>
+        </div>
 
- </form>
+        <div class="row">
+            <div class="span5">
+                <h3>Agent Details</h3>
 
+                <div class="well"></div>
+            </div>
 
-<div class="well" data-bind="foreach: deployments">
-    <div>
-        <h4 data-bind="text: Name"></h4>
-        <p>
-            <span data-bind="text: Description"></span>
-        </p>
-        <div>
-            <button class="btn btn-primary" data-bind="click: $root.rollbackDeployment">Rollback to Previous</button>
+            <div class="span7">
+                <h3>Current deployments</h3>
+
+                <div class="well" data-bind="foreach: deployments">
+                    <div>
+                        <h4 data-bind="text: Name"></h4>
+                        <p>
+                            <span data-bind="text: Description"></span>
+                        </p>
+                        <div>
+                            <button class="btn btn-primary" data-bind="click: $root.rollbackDeployment">Rollback to Previous</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="rollbackDialog" class="modal hide fade">
+    <div class="modal-header">
+        <span style="padding: 10px"><h4>Rolling Back</h4></span>
+    </div>
+    <div class="modal-body">
+        <div class="progress progress-striped active">
+            <div class="bar" style="width: 100%;"></div>
         </div>
     </div>
 </div>

@@ -1,9 +1,16 @@
-﻿function AgentViewModel() {
+﻿function AgentStatusModel(available, msg) {
+    var self = this;
+
+    self.statusMessage = ko.observable(msg);
+    self.available = ko.observable(available);
+}
+
+function AgentViewModel() {
     var self = this;
 
     self.agent = ko.observable();
+    self.agentStatus = ko.observable();
     self.deployments = ko.observableArray();
-    self.environments = ko.observableArray();
 
     self.refreshDeploymentsForAgent = function () {
         $.ajax({
@@ -19,12 +26,14 @@
                     self.deployments.push(deployment);
                 });
             });
+            self.agentStatus(new AgentStatusModel(true, 'Online'));
         }).fail(function (msg) {
             toastr.error('Failed to get active deployments for agent ' + self.agent().Name(), 'Error');
+            self.agentStatus(new AgentStatusModel(false, 'Offline / Unreachable'));
         });
     };
 
-    self.createAgentView = function (agentId) {
+    self.build = function (agentId) {
         $.ajax({
             type: "GET",
             url: '/api/v1/agent/' + agentId,
@@ -37,52 +46,56 @@
         }).fail(function (msg) {
             toastr.error('Failed to get agent ' + agentId, 'Error');
         });
-    };
 
-    self.createRegisterAgentView = function() {
-        $.ajax({
-            type: "GET",
-            url: '/api/v1/environment/',
+        $('#fileupload').fileupload({
             dataType: 'json',
-            contentType: 'application/json'
-        }).done(function (data) {
-            $.each(data, function (i, d) {
-                var inst = ko.mapping.fromJS(d)
-                self.environments.push(inst);
-            });
-        }).fail(function (msg) {
-            toastr.error('Failed to get environments', 'Error');
+            redirect: '@Url.Action("Agent", new { agentId = Model })',
+            add: function (e, data) {
+                $('#selectPackageBtn').addClass('hide');
+                $('#filePlaceHolder').modal('show');
+                $.each(data.files, function (i, file) {
+                    $('#fileName').html('<h4> Deploying: ' + file.name + '</h4>');
+                });
+
+                data.submit();
+            },
+            progressall: function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $('#progress .bar').css(
+                    'width',
+                    progress + '%'
+                );
+            },
+            done: function (e, data) {
+                $('#fileList').html('');
+                $('#filePlaceHolder').modal('hide')
+                $('#selectPackageBtn').removeClass('hide');
+                toastr.info('Package deployed');
+                self.refreshDeploymentsForAgent();
+            },
+            fail: function (e, data) {
+                $('#fileList').html('');
+                $('#selectPackageBtn').removeClass('hide');
+                $('#filePlaceHolder').modal('hide');
+                toastr.error('Package deployment failed')
+            }
         });
     };
-
-    self.registerAgent = function (form) {
-        $.ajax({
-            type: "POST",
-            url: '/api/v1/agent/',
-            dataType: 'json',
-            data: $(form).serialize(),
-            contentType: 'application/x-www-form-urlencoded'
-        }).done(function (data) {
-            toastr.info('Successfully registered agent')
-        }).fail(function (msg) {
-            toastr.error('Failed to register agent', 'Error');
-        });
-    }
-
-    self.deployPackage = function (form) {
-        return true;
-    }
 
     self.rollbackDeployment = function (data) {
+            $('#rollbackDialog').modal('show');
             $.ajax({
                 type: "PUT",
-                url: agent.Address() + '/fake/deployments/' + data.Name() + '?version=HEAD~1',
+                url: self.agent().Address() + '/fake/deployments/' + data.Id() + '?version=HEAD~1',
                 dataType: 'json',
                 contentType: 'application/json'
             }).done(function (data) {
-                toastr.info(app + ' rolled back', 'Info');
+                toastr.info('Rollback succeeded', 'Info');
+                $('#rollbackDialog').modal('hide');
+                self.refreshDeploymentsForAgent();
             }).fail(function (msg) {
-                toastr.error('Failed to rollback ' + agent.Name() + ' - ' + data.Name(), 'Error');
+                toastr.error('Failed to rollback ' + self.agent().Name() + ' - ' + data.Id(), 'Error');
+                $('#rollbackDialog').modal('hide');
                 console.log(msg.responseText);
             });
     };

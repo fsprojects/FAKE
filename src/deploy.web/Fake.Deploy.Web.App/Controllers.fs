@@ -9,13 +9,17 @@ open Fake.Deploy.Web.Model
 open Fake.HttpClientHelper
 
 [<HandleError>]
+type AdminController() = 
+    inherit Controller()
+
+    member this.Agent() = this.View() :> ActionResult
+
+    member this.Environment() = this.View() :> ActionResult
+
+[<HandleError>]
 type HomeController() = 
     inherit Controller()
 
     member this.Index() = this.View() :> ActionResult
 
     member this.Agent(agentId : string) = this.View("Agent", agentId |> box) :> ActionResult
-
-    member this.RegisterAgent() = this.View() :> ActionResult
-
-    member this.CreateEnvironment() = this.View() :> ActionResult

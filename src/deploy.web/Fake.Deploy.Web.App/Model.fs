@@ -15,8 +15,15 @@ module Model =
 
     [<CLIMutable>]
     [<DataContract>]
-    type Agent = {
+    type AgentRef = {
         [<DataMember>]Id : string
+        [<DataMember>]Name : string
+    }
+
+    [<CLIMutable>]
+    [<DataContract>]
+    type Agent = {
+        [<DataMember>] mutable Id : string
         [<DataMember>]Name : string
         [<DataMember>]Address : Uri
         }
@@ -28,20 +35,22 @@ module Model =
                     Name = defaultArg name url.Host
                     Address = url
                 }
-    
+            member x.Ref with get() : AgentRef = { Id = x.Id; Name = x.Name }
+
+
     [<CLIMutable>]
     [<DataContract>]
     type Environment = {
-            [<DataMember>]Id : string
+            [<DataMember>]mutable Id : string
             [<DataMember>]Name : string
             [<DataMember>]Description : string
-            [<DataMember>]Agents : seq<Agent>
+            [<DataMember>]mutable Agents : seq<AgentRef>
         }
         with
             static member Create(name : string, desc : string, agents : seq<_>) =
                    { Id = null; Name = name; Description = desc; Agents = agents }
             member x.AddAgents(agents : seq<Agent>) = 
-                   { x with Agents = Seq.append agents x.Agents }
+                    x.Agents <- Seq.append (agents |> Seq.map (fun a -> a.Ref)) x.Agents
 
     let private documentStore = 
         let ds = new EmbeddableDocumentStore(ConnectionStringName = "RavenDB", UseEmbeddedHttpServer = true)
@@ -58,28 +67,21 @@ module Model =
             { Id = "environments-1";
               Name = "Development";
               Description = "Development Environment";
-              Agents = [
-                         Agent.Create("http://localhost:8080"); Agent.Create("http://dev-2:8080");
-                         Agent.Create("http://dev-1:8080"); Agent.Create("http://dev-2:8080");
-                         Agent.Create("http://dev-1:8080"); Agent.Create("http://dev-2:8080");
-                         Agent.Create("http://dev-1:8080"); Agent.Create("http://dev-2:8080");
-                       ]}
+              Agents = []}
             { Id = "environments-2";
               Name = "Integration";
               Description = "Integration Environment";
-              Agents = [Agent.Create("http://int-1:8080"); Agent.Create("http://int-2:8080")] }
+              Agents = [] }
             { Id = "environments-3";
               Name = "Staging";
               Description = "User Acceptance and pre-Production environment";
-              Agents = [Agent.Create("http://uat-1:8080"); Agent.Create("http://uat-2:8080")] }
+              Agents = [] }
             {
               Id = "environments-4"; 
               Name = "Production";
               Description = "User Acceptance and pre-Production environment";
-              Agents = [Agent.Create("http://prod-1:8080"); Agent.Create("http://prod-2:8080")] }
+              Agents = [] }
         ]
-
-
 
     let Save (instances : seq<_>) =
         use session = documentStore.OpenSession()
@@ -100,6 +102,11 @@ module Model =
         | _ ->
             use session = documentStore.OpenSession()
             session.Load<Environment>(id)
+
+    let saveEnvironment (env : Environment) = 
+        use session = documentStore.OpenSession()
+        session.Store(env)
+        session.SaveChanges()
        
     let deleteEnvironment (id : string) =
         use session = documentStore.OpenSession()
@@ -115,15 +122,36 @@ module Model =
         } 
         |> Seq.sortBy (fun e -> e.Id)
         |> Seq.toArray
+    
+    let saveAgent (environmentId : string) (agent : Agent) = 
+        use session = documentStore.OpenSession()
+        let env = session.Load<Environment>(environmentId)
+        env.AddAgents([agent])
+        session.Store(env)
+        session.Store(agent)
+        session.SaveChanges()
 
     let getAgents() = 
-        getEnvironments()
-        |> Seq.collect (fun env -> env.Agents)
+        use session = documentStore.OpenSession()
+        query {
+            for env in session.Query<Agent>() do
+            select env
+        } 
+        |> Seq.sortBy (fun e -> e.Id)
+        |> Seq.toArray
+
+    let deleteAgent (id : string) =
+        use session = documentStore.OpenSession()
+        let x = session.Load<Agent>(id)        
+        session.Delete(x)
+        session.SaveChanges()
 
     let getAgent (id : string) =
-        getAgents()
-        |> Seq.filter (fun a -> a.Id = id)
-        |> Seq.head
+        match id with
+        | null -> { Id = id; Name = null; Address = null }
+        | _ ->
+            use session = documentStore.OpenSession()
+            session.Load<Agent>(id)
      
 
 

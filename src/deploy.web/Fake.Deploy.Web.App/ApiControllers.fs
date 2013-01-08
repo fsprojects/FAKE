@@ -19,10 +19,10 @@ type EnvironmentController() =
         with e ->
             this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e)
 
-    member this.Post(models : seq<Model.Environment>) = 
+    member this.Post(env : Model.Environment) = 
         try
-            Model.Save models
-            this.Request.CreateResponse(HttpStatusCode.OK)
+            saveEnvironment env
+            this.Request.CreateResponse(HttpStatusCode.Created)
         with e ->
             this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e)
 
@@ -48,9 +48,8 @@ type AgentController() =
                     let environmentId = formData.Get("environmentId")
                     try
                         let agent = Model.Agent.Create(agentUrl, agentName)
-                        let env = (Model.getEnvironment environmentId).AddAgents [agent]
-                        Model.Save [env]
-                        return created (sprintf "Created Agent %s in Environment %s" agentName env.Name) this
+                        Model.saveAgent environmentId agent
+                        return created (sprintf "Created Agent %s" agentName) this
                     with e ->
                         return this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e)
                 else return this.Request.CreateErrorResponse(HttpStatusCode.UnsupportedMediaType, "Expected URL encoded form data")
