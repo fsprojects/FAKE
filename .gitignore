@@ -32,4 +32,4 @@ Samples/ContinuousDeploymentWebsite/src/app/Fake_WebSite/Properties/AssemblyInfo
 *.ncrunchsolution
 Samples/ContinuousDeploymentWebsite/deployments
 tools/FAKE/
-Samples/Calculator/tools/
+Samples/Calculator/tools/FAKE/
