@@ -1,4 +1,5 @@
 @echo off
 cls
-"tools\FAKE\Fake.exe" foobar.fsx
+"tools\nuget\nuget.exe" "install" "FAKE" "-OutputDirectory" "tools" "-ExcludeVersion" "-Prerelease"
+"tools\FAKE\tools\Fake.exe" foobar.fsx
 pause

@@ -1,4 +1,5 @@
 @echo off
 cls
-"tools\FAKE\Fake.exe" completeBuild.fsx
+"tools\nuget\nuget.exe" "install" "FAKE" "-OutputDirectory" "tools" "-ExcludeVersion" "-Prerelease"
+"tools\FAKE\tools\Fake.exe" completeBuild.fsx
 pause
