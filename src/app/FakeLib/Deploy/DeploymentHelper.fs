@@ -43,6 +43,9 @@ let getAllReleasesFor dir (app : string) =
     !! (dir @@ deploymentRootDir + app + "/**/*.nupkg") 
       |> Seq.map extractNuspecFromPackageFile
 
+let getStatistics() = 
+    getMachineEnvironment()
+
 let getBackupFor dir (app : string) (version : string) =
     let backupFileName =  app + "." + version + ".nupkg"
     dir @@ deploymentRootDir @@ app @@ "backups"

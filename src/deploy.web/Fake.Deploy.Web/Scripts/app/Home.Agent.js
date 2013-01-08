@@ -11,6 +11,21 @@ function AgentViewModel() {
     self.agent = ko.observable();
     self.agentStatus = ko.observable();
     self.deployments = ko.observableArray();
+    self.agentDetails = ko.observable();
+
+    self.getAgentDetails = function () {
+        $.ajax({
+            type: "GET",
+            url: self.agent().Address() + 'fake/statistics',
+            dataType: 'json',
+            contentType: 'application/json'
+        }).done(function (data) {
+            var a = ko.mapping.fromJS(data)
+            self.agentDetails(a);
+        }).fail(function (msg) {
+            toastr.error('Failed to get details for agent ' + self.agent().Name(), 'Error');
+        });
+    };
 
     self.refreshDeploymentsForAgent = function () {
         $.ajax({
@@ -43,6 +58,7 @@ function AgentViewModel() {
             var a = ko.mapping.fromJS(data)
             self.agent(a);
             self.refreshDeploymentsForAgent();
+            self.getAgentDetails();
         }).fail(function (msg) {
             toastr.error('Failed to get agent ' + agentId, 'Error');
         });

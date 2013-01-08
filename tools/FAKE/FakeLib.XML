@@ -315,7 +315,13 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
 <member name="T:Fake.DeploymentAgent">
+
+</member>
+<member name="">
 
 </member>
 <member name="">
@@ -399,6 +405,33 @@
 </summary>
 </member>
 <member name="T:Fake.DocuHelper">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
 
 </member>
 <member name="">

@@ -53,10 +53,29 @@
         </div>
 
         <div class="row">
-            <div class="span5">
+            <div class="span5" data-bind="with: agentDetails">
                 <h3>Agent Details</h3>
 
-                <div class="well"></div>
+                <div class="well">
+                    <dl class="dl-horizontal">
+                      <dt>Machine Name:</dt>
+                      <dd data-bind="text: MachineName"></dd>
+                      <dt>User Name:</dt>
+                      <dd data-bind="text: UserDomainName"></dd>
+                      <dt>64 bit Architecture:</dt>
+                      <dd data-bind="text: Is64bit"></dd>
+                      <dt>Processor Count:</dt>
+                      <dd data-bind="text: ProcessorCount"></dd>
+                      <dt>Operating System:</dt>
+                      <dd data-bind="text: OperatingSystem"></dd>
+                      <dt>Installed Frameworks:</dt>
+                        <dd>
+                            <ul data-bind="foreach: NETFrameworks">
+                                <li data-bind="text: $data"></li>
+                            </ul>
+                        </dd>
+                    </dl>
+                </div>
             </div>
 
             <div class="span7">
