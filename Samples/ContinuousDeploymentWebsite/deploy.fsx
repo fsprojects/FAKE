@@ -1,6 +1,5 @@
-// include Fake libs
-#I @"..\..\tools\FAKE\"
-#r "FakeLib.dll"
+// include Fake lib
+#r @"tools\FAKE\tools\FakeLib.dll"
 
 open Fake
 
