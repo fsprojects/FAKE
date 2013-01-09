@@ -10,8 +10,7 @@ let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"]
 let mail = "forkmann@gmx.de"
 let homepage = "http://github.com/forki/fake"
 
-TraceEnvironmentVariables()  
-RestorePackages()
+TraceEnvironmentVariables()
   
 let buildDir = @".\build\"
 let testDir = @".\test\"
@@ -23,16 +22,13 @@ let reportDir = @".\report\"
 let deployZip = deployDir @@ sprintf "%s-%s.zip" projectName buildVersion
 let packagesDir = @".\packages\"
 
-// tools
-let templatesSrcDir = @".\tools\Docu\templates\"
-let MSpecVersion = GetPackageVersion packagesDir "Machine.Specifications"
-let mspecTool = sprintf @"%sMachine.Specifications.%s\tools\mspec-clr4.exe" packagesDir MSpecVersion
-
 // files
 let appReferences  = !! @"src\app\**\*.*sproj"
 let testReferences = !! @"src\test\**\*.*sproj"
 
 // Targets
+Target "RestorePackages" RestorePackages
+
 Target "Clean" (fun _ ->
     CleanDirs [buildDir; testDir; deployDir; docsDir; metricsDir; nugetDir; reportDir]
 
@@ -89,7 +85,7 @@ Target "GenerateDocumentation" (fun _ ->
     |> Docu (fun p ->
         {p with
             ToolPath = buildDir @@ "docu.exe"
-            TemplatesPath = templatesSrcDir
+            TemplatesPath = @".\tools\Docu\templates\"
             OutputPath = docsDir })
 )
 
@@ -119,7 +115,10 @@ Target "BuildTest" (fun _ ->
         |> Log "TestBuild-Output: "
 )
 
-Target "Test" (fun _ ->  
+Target "Test" (fun _ ->
+    let MSpecVersion = GetPackageVersion packagesDir "Machine.Specifications"
+    let mspecTool = sprintf @"%sMachine.Specifications.%s\tools\mspec-clr4.exe" packagesDir MSpecVersion
+
     !! (testDir @@ "Test.*.dll") 
       |> MSpec (fun p -> 
             {p with
@@ -155,7 +154,8 @@ Target "CreateNuGet" (fun _ ->
 Target "Default" DoNothing
 
 // Dependencies
-"Clean"
+"RestorePackages"
+    ==> "Clean"
     ==> "BuildApp" <=> "BuildTest"
     ==> "Test"
     ==> "CopyLicense" <=> "CopyDocu"
