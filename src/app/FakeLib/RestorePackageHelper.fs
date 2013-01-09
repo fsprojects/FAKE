@@ -18,9 +18,8 @@ let RestorePackageDefaults =
       OutputPath = "./packages" }
    
 let RestorePackages setParams = 
-    let details = "bluB"
-    traceStartTask "RestorePackages" details
     let parameters = RestorePackageDefaults |> setParams
+    traceStartTask "RestorePackages" parameters.PackagePattern    
     
     let install package =
         let args =
@@ -36,4 +35,4 @@ let RestorePackages setParams =
     !! parameters.PackagePattern
     |> Seq.iter install
                     
-    traceEndTask "RestorePackages" details
+    traceEndTask "RestorePackages" parameters.PackagePattern
