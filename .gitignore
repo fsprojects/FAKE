@@ -33,3 +33,7 @@ Samples/ContinuousDeploymentWebsite/src/app/Fake_WebSite/Properties/AssemblyInfo
 Samples/ContinuousDeploymentWebsite/deployments
 tools/FAKE/
 Samples/Calculator/tools/FAKE/
+[Pp]ackages/
+src/deploy.web/Fake.Deploy.Web/App_Data/RavenDB/*
+src/deploy.web/Fake.Deploy.Web/App_Data/Package_Temp/*
+tools/FAKE/deployments/*

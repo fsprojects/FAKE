@@ -49,6 +49,10 @@ let private runRollbackToVersion workDir (args:Map<_,_>) (ctx : HttpListenerCont
     rollbackTo workDir args.["app"] args.["version"]
     |> Json.serialize
 
+let private getStatistics (args:Map<_,_>) (ctx : HttpListenerContext) = 
+    getStatistics()
+    |> Json.serialize
+
 let routes workDir =
     defaultRoutes
         @ [ "POST", "", runDeployment workDir
@@ -56,7 +60,8 @@ let routes workDir =
             "GET", "/deployments/{app}?status=active", getActiveReleaseFor workDir
             "PUT", "/deployments/{app}?version={version}", runRollbackToVersion workDir
             "GET", "/deployments?status=active", getActiveReleases workDir
-            "GET", "/deployments/", getAllReleases workDir ]
+            "GET", "/deployments/", getAllReleases workDir 
+            "GET", "/statistics/", getStatistics]
 
 let start log workDir serverName port = 
     logger <- log

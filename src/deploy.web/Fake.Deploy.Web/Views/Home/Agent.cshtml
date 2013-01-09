@@ -1,0 +1,114 @@
+﻿@model string
+
+@{
+    ViewBag.Title = "Agent";
+}
+
+@section scripts {
+    <script src="@Url.Content("~/Scripts/app/Home.Agent.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            var vm = new AgentViewModel();
+            vm.build('@Model');
+            ko.applyBindings(vm);
+
+           
+        });
+    </script>
+}
+
+<div class="page-header">
+    <!-- ko with: agent -->
+    <h1 data-bind="text: 'Agent - ' + Name()" style="display: inline"></h1>
+    <!-- /ko -->
+    <!-- ko with: agentStatus -->
+    <h4 data-bind="text: statusMessage, style: { color: available() ? 'green' : 'red' }" style="display: inline; margin-left: 10px"></h4>
+    <!-- /ko -->
+</div>
+
+<div class="row" style="margin-left: 30px">
+    <div class="span12">
+        <div class="row">
+            <form id="fileupload" class="span12" action="/api/v1/package" method="POST" enctype="multipart/form-data">
+                <div id="selectPackageBtn" class="btn btn-success fileinput-button">
+                    <i class="icon-plus icon-white"></i>
+                    <span>Deploy Package</span>
+                    <input type="file" name="files[]">
+                </div>
+                <div id="filePlaceHolder" class="modal hide fade">
+                    <div class="modal-header">
+                        <span id="fileName" style="padding: 10px"><i class="icon-file"></i></span>
+                    </div>
+                    <div class="modal-body">
+                        <div id="progress" class="progress progress-striped active">
+                            <div class="bar" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div data-bind="with: agent">
+                    <input type="hidden" name="agentId" data-bind="value: Name" />
+                    <input type="hidden" name="agentUrl" data-bind="value: Address" />
+                </div>
+            </form>
+        </div>
+
+        <div class="row">
+            <div class="span5" data-bind="with: agentDetails">
+                <h3>Agent Details</h3>
+
+                <div class="well">
+                    <dl class="dl-horizontal">
+                      <dt>Machine Name:</dt>
+                      <dd data-bind="text: MachineName"></dd>
+                      <dt>User Name:</dt>
+                      <dd data-bind="text: UserDomainName"></dd>
+                      <dt>64 bit Architecture:</dt>
+                      <dd data-bind="text: Is64bit"></dd>
+                      <dt>Processor Count:</dt>
+                      <dd data-bind="text: ProcessorCount"></dd>
+                      <dt>Operating System:</dt>
+                      <dd data-bind="text: OperatingSystem"></dd>
+                      <dt>Installed Frameworks:</dt>
+                        <dd>
+                            <ul data-bind="foreach: NETFrameworks">
+                                <li data-bind="text: $data"></li>
+                            </ul>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="span7">
+                <h3>Current deployments</h3>
+
+                <div class="well" data-bind="foreach: deployments">
+                    <div>
+                        <h4 data-bind="text: Name"></h4>
+                        <p>
+                            <span data-bind="text: Description"></span>
+                        </p>
+                        <div>
+                            <button class="btn btn-primary" data-bind="click: $root.rollbackDeployment">Rollback to Previous</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="rollbackDialog" class="modal hide fade">
+    <div class="modal-header">
+        <span style="padding: 10px"><h4>Rolling Back</h4></span>
+    </div>
+    <div class="modal-body">
+        <div class="progress progress-striped active">
+            <div class="bar" style="width: 100%;"></div>
+        </div>
+    </div>
+</div>
+
+<script src="@Url.Content("~/Scripts/jquery.ui.widget.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.iframe-transport.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.fileupload.js")" type="text/javascript"></script>
+
