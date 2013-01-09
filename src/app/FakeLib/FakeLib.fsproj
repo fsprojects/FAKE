@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -83,6 +83,7 @@
     <Compile Include="MSIHelper.fs" />
     <Compile Include="RegAsmHelper.fs" />
     <Compile Include="NuGetHelper.fs" />
+    <Compile Include="RestorePackageHelper.fs" />
     <Compile Include="VSSHelper.fs" />
     <Compile Include="SCPHelper.fs" />
     <Compile Include="XCopyHelper.fs" />
@@ -113,6 +114,7 @@
     <Compile Include="PermissionsHelper.fs" />
     <Compile Include="ServiceControllerHelper.fs" />
     <Compile Include="SpecFlowHelper.fs" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core">
@@ -134,9 +136,6 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
 	     Other similar extension points exist, see Microsoft.Common.targets.
