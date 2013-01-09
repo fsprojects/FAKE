@@ -83,6 +83,7 @@
     <Compile Include="MSIHelper.fs" />
     <Compile Include="RegAsmHelper.fs" />
     <Compile Include="NuGetHelper.fs" />
+    <Compile Include="RestorePackageHelper.fs" />
     <Compile Include="VSSHelper.fs" />
     <Compile Include="SCPHelper.fs" />
     <Compile Include="XCopyHelper.fs" />
