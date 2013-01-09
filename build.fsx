@@ -11,7 +11,7 @@ let mail = "forkmann@gmx.de"
 let homepage = "http://github.com/forki/fake"
 
 TraceEnvironmentVariables()  
-RestorePackages id
+RestorePackages()
   
 let buildDir = @".\build\"
 let testDir = @".\test\"
