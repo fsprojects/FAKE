@@ -128,15 +128,6 @@ Target "Test" (fun _ ->
                 HtmlOutputDir = reportDir}) 
 )
 
-Target "ZipCalculatorSample" (fun _ ->        
-    !+ @"Samples\Calculator\**\*.*" 
-        -- "**\*Resharper*\**"
-        -- "**\bin\**\**"
-        -- "**\obj\**\**"
-        |> Scan
-        |> Zip @".\Samples\Calculator" (deployDir @@ sprintf "CalculatorSample-%s.zip" buildVersion)
-)
-
 Target "ZipDocumentation" (fun _ ->    
     !! (docsDir + @"\**\*.*")  
       |> Zip docsDir (deployDir @@ sprintf "Documentation-%s.zip" buildVersion)
@@ -170,7 +161,7 @@ Target "Default" DoNothing
     ==> "CopyLicense" <=> "CopyDocu"
     ==> "BuildZip"
     ==> "GenerateDocumentation"
-    ==> "ZipDocumentation" <=> "ZipCalculatorSample"
+    ==> "ZipDocumentation"
     ==> "CreateNuGet"
     ==> "Default"
   
