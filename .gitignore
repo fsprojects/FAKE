@@ -32,6 +32,10 @@ Samples/ContinuousDeploymentWebsite/src/app/Fake_WebSite/Properties/AssemblyInfo
 *.ncrunchsolution
 Samples/ContinuousDeploymentWebsite/deployments
 tools/FAKE/
+src/deploy.web/Fake.Deploy.Web/App_Data/RavenDB/*
+src/deploy.web/Fake.Deploy.Web/App_Data/Package_Temp/*
+tools/FAKE/deployments/*
 packages/
 Samples/Calculator/deploy/
 Samples/Calculator/tools/FAKE/
+*.orig
