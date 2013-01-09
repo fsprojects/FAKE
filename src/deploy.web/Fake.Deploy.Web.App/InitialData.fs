@@ -5,7 +5,7 @@ open Fake.Deploy.Web.Model
 open Raven.Client.Indexes
 
 let private defaultEnvironments() = 
-    let agent1 = Agent.Create("http://localhost:8080/","localhost")
+    let agent1 = Agent.Create("http://localhost:8080","localhost")
 
     [
         { Id = "environments-1";
