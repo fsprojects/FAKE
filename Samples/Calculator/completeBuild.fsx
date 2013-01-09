@@ -1,15 +1,19 @@
-// include Fake libs
+// include Fake lib
 #r @"tools\FAKE\tools\FakeLib.dll"
 
 open Fake
+
+RestorePackages()
 
 // Directories
 let buildDir  = @".\build\"
 let testDir   = @".\test\"
 let deployDir = @".\deploy\"
+let packagesDir = @".\packages"
 
 // tools
-let nunitPath = @".\Tools\NUnit"
+let nunitVersion = GetPackageVersion packagesDir "NUnit.Runners"
+let nunitPath = sprintf @"./packages/NUnit.Runners.%s/tools/" nunitVersion
 let fxCopRoot = @".\Tools\FxCop\FxCopCmd.exe"
     
 // version info
@@ -41,7 +45,6 @@ Target "SetVersions" (fun _ ->
             Guid = "EE5621DB-B86B-44eb-987F-9C94BCC98441";
             OutputFileName = @".\src\app\CalculatorLib\Properties\AssemblyInfo.cs"})          
 )
-
 
 Target "CompileApp" (fun _ ->    
     !+ @"src\app\**\*.csproj" 
