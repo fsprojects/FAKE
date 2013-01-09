@@ -1,5 +1,4 @@
-#I @"tools\FAKE"
-#r "FakeLib.dll"
+#r @"tools\FAKE\tools\FakeLib.dll"
 
 open Fake
  
@@ -7,11 +6,12 @@ open Fake
 let projectName = "FAKE"
 let projectSummary = "FAKE - F# Make - Get rid of the noise in your build scripts."
 let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. Tasks and dependencies are specified in a DSL which is integrated in F#."
-let authors = ["Steffen Forkmann"; "Mauricio Scheffer"]
+let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"]
 let mail = "forkmann@gmx.de"
 let homepage = "http://github.com/forki/fake"
 
 TraceEnvironmentVariables()  
+RestorePackages()
   
 let buildDir = @".\build\"
 let testDir = @".\test\"
@@ -128,18 +128,6 @@ Target "Test" (fun _ ->
                 HtmlOutputDir = reportDir}) 
 )
 
-Target "ZipCalculatorSample" (fun _ ->
-    !! (buildDir + "\**\*.*") 
-      |> CopyTo "./Samples/Calculator/tools/FAKE/"
-        
-    !+ @"Samples\Calculator\**\*.*" 
-        -- "**\*Resharper*\**"
-        -- "**\bin\**\**"
-        -- "**\obj\**\**"
-        |> Scan
-        |> Zip @".\Samples\Calculator" (deployDir @@ sprintf "CalculatorSample-%s.zip" buildVersion)
-)
-
 Target "ZipDocumentation" (fun _ ->    
     !! (docsDir + @"\**\*.*")  
       |> Zip docsDir (deployDir @@ sprintf "Documentation-%s.zip" buildVersion)
@@ -151,6 +139,7 @@ Target "CreateNuGet" (fun _ ->
 
     XCopy docsDir nugetDocsDir
     XCopy buildDir nugetToolsDir
+    XCopy @".\lib\fsi" nugetToolsDir
     DeleteFile (nugetToolsDir @@ "Gallio.dll")
 
     NuGet (fun p -> 
@@ -172,7 +161,7 @@ Target "Default" DoNothing
     ==> "CopyLicense" <=> "CopyDocu"
     ==> "BuildZip"
     ==> "GenerateDocumentation"
-    ==> "ZipDocumentation" <=> "ZipCalculatorSample"
+    ==> "ZipDocumentation"
     ==> "CreateNuGet"
     ==> "Default"
   

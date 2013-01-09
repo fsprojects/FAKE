@@ -56,6 +56,9 @@ let FindFirstMatchingFile pattern dir =
 /// <user/>
 let currentDirectory = Path.GetFullPath "."
 
+/// Get the full location of the current assembly
+let fullAssemblyPath = System.Reflection.Assembly.GetAssembly(typeof<RegistryBaseKey>).Location
+
 /// <summary>Checks if the file exists on disk.</summary>
 /// <user/>
 let fileExists = File.Exists

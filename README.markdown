@@ -23,3 +23,6 @@ the corresponding classes.
 
 See the [project home page](http://fsharp.github.com/FAKE/) for full details and documentation.
 
+# Build the project
+
+I order to build the project and to resolve all nuget packages run build.cmd
