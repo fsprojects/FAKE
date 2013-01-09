@@ -1,6 +1,5 @@
-// include Fake libs
-#I @"..\..\tools\FAKE\"
-#r "FakeLib.dll"
+// include Fake lib
+#r @"tools\FAKE\tools\FakeLib.dll"
 
 open Fake
 
@@ -17,16 +16,13 @@ let reportDir = @".\report\"
 let nugetDir = @".\nuget\" 
 let packagesDir = @".\packages\"
 
-// tools
-let MSpecVersion = GetPackageVersion packagesDir "Machine.Specifications"
-let mspecTool = sprintf @"%sMachine.Specifications.%s\tools\mspec-clr4.exe" packagesDir MSpecVersion
-
 // version info
 let version = ReadFileAsString "version.txt" // or retrieve from CI server
 
 // Targets
 Target "Clean" (fun _ -> 
     CleanDirs [buildDir; testDir; deployDir; reportDir; nugetDir]
+    RestorePackages()
 )
 
 Target "AssemblyInfo" (fun _ ->
@@ -55,7 +51,10 @@ Target "BuildTest" (fun _ ->
       |> Log "TestBuild-Output: "
 )
 
-Target "Test" (fun _ ->  
+Target "Test" (fun _ ->
+    let MSpecVersion = GetPackageVersion packagesDir "Machine.Specifications"
+    let mspecTool = sprintf @"%sMachine.Specifications.%s\tools\mspec-clr4.exe" packagesDir MSpecVersion
+
     !! (testDir @@ "*.Tests.dll") 
       |> MSpec (fun p -> 
             {p with
@@ -66,7 +65,7 @@ Target "Test" (fun _ ->
 Target "CreateNuget" (fun _ ->     
     XCopy @".\deployment\" nugetDir
     XCopy @".\build\_publishedWebsites\Fake_WebSite\" (nugetDir @@ "website")
-    XCopy @"..\..\tools\FAKE\" (nugetDir @@ "tools\FAKE")
+    XCopy @".\tools\FAKE\" (nugetDir @@ "tools\FAKE")
 
     "Fake_Website.nuspec"
       |> NuGet (fun p -> 
@@ -76,7 +75,7 @@ Target "CreateNuget" (fun _ ->
                 Version = version
                 NoPackageAnalysis = true
                 Description = projectDescription                               
-                ToolPath = @"..\..\tools\Nuget\Nuget.exe"                             
+                ToolPath = @".\tools\Nuget\Nuget.exe"                             
                 OutputPath = nugetDir })
 )
 

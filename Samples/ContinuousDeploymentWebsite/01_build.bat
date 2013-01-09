@@ -1,5 +1,5 @@
 @echo off
 cls
-SET FSI=..\..\tools\FSharp\Fsi.exe
-"..\..\tools\FAKE\Fake.exe" build.fsx
+"tools\nuget\nuget.exe" "install" "FAKE" "-OutputDirectory" "tools" "-ExcludeVersion"
+"tools\FAKE\tools\Fake.exe" build.fsx
 pause
