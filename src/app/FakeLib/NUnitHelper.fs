@@ -91,7 +91,9 @@ let NUnit setParams (assemblies: string seq) =
             info.WorkingDirectory <- parameters.WorkingDir
             info.Arguments <- args) parameters.TimeOut
 
-    sendTeamCityNUnitImport parameters.OutputFile
+    let tcNunitFile = parameters.WorkingDir @@ parameters.OutputFile
+    sendTeamCityNUnitImport tcNunitFile
+
     if result = 0 then          
         traceEndTask "NUnit" details
     else
