@@ -33,3 +33,5 @@ Samples/ContinuousDeploymentWebsite/src/app/Fake_WebSite/Properties/AssemblyInfo
 Samples/ContinuousDeploymentWebsite/deployments
 tools/FAKE/
 packages/
+Samples/Calculator/deploy/
+Samples/Calculator/tools/FAKE/
