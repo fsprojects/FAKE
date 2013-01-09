@@ -47,11 +47,9 @@ Target "SetVersions" (fun _ ->
 )
 
 Target "CompileApp" (fun _ ->    
-    !+ @"src\app\**\*.csproj" 
-      ++ @"src\app\**\*.fsproj" 
-        |> Scan
-        |> MSBuildRelease buildDir "Build" 
-        |> Log "AppBuild-Output: "
+    !! @"src\app\**\*.csproj" 
+      |> MSBuildRelease buildDir "Build" 
+      |> Log "AppBuild-Output: "
 )
 
 Target "CompileTest" (fun _ ->
@@ -62,16 +60,16 @@ Target "CompileTest" (fun _ ->
 
 Target "NUnitTest" (fun _ ->  
     !! (testDir + @"\NUnit.Test.*.dll") 
-        |> NUnit (fun p -> 
-            {p with 
-                ToolPath = nunitPath; 
-                DisableShadowCopy = true; 
-                OutputFile = testDir + @"TestResults.xml"})
+      |> NUnit (fun p -> 
+                 {p with 
+                   ToolPath = nunitPath; 
+                   DisableShadowCopy = true; 
+                   OutputFile = testDir + @"TestResults.xml"})
 )
 
 Target "FxCop" (fun _ ->
     !+ (buildDir + @"\**\*.dll") 
-        ++ (buildDir + @"\**\*.exe") 
+      ++ (buildDir + @"\**\*.exe") 
         |> Scan  
         |> FxCop (fun p -> 
             {p with                     
