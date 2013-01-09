@@ -53,48 +53,15 @@ module Model =
                     x.Agents <- Seq.append (agents |> Seq.map (fun a -> a.Ref)) x.Agents
 
     let private documentStore = 
-        let ds = new EmbeddableDocumentStore(ConnectionStringName = "RavenDB", UseEmbeddedHttpServer = true)
+        let ds = new EmbeddableDocumentStore(ConnectionStringName = "RavenDB")
         ds.Conventions.IdentityPartsSeparator <- "-"
-        ds.Configuration.Port <- 8082
         ds.Conventions.CustomizeJsonSerializer <- new Action<_>(fun s -> s.Converters.Add(new Helpers.RavenUnionTypeConverter()))
         ds.Initialize()
     
     let private createIndexes (assems : seq<Reflection.Assembly>) =
         assems |> Seq.iter (fun ass -> IndexCreation.CreateIndexes(ass, documentStore)) 
 
-//    let private createData() = 
-//        [
-//            { Id = "environments-1";
-//              Name = "Development";
-//              Description = "Development Environment";
-//              Agents = []}
-//            { Id = "environments-2";
-//              Name = "Integration";
-//              Description = "Integration Environment";
-//              Agents = [] }
-//            { Id = "environments-3";
-//              Name = "Staging";
-//              Description = "User Acceptance and pre-Production environment";
-//              Agents = [] }
-//            {
-//              Id = "environments-4"; 
-//              Name = "Production";
-//              Description = "User Acceptance and pre-Production environment";
-//              Agents = [] }
-//        ]
-//
-//    let Save (instances : seq<_>) =
-//        use session = documentStore.OpenSession()
-//        let count = ref 0
-//        for inst in instances do
-//            session.Store(inst)
-//            incr(count)
-//            if !count > 29 then session.SaveChanges()
-//        session.SaveChanges()
-
-    let Init() = 
-        createIndexes [Reflection.Assembly.GetExecutingAssembly()]
-//        createData() |> Save
+    let Init() = createIndexes [Reflection.Assembly.GetExecutingAssembly()]
 
     let getEnvironment (id : string) = 
         match id with

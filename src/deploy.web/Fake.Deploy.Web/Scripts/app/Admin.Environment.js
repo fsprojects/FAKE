@@ -9,7 +9,8 @@
             type: "GET",
             url: '/api/v1/environment/',
             dataType: 'json',
-            contentType: 'application/json'
+            contentType: 'application/json',
+            cache: false
         }).done(function (data) {
             $.each(data, function (i, d) {
                 var inst = ko.mapping.fromJS(d)
