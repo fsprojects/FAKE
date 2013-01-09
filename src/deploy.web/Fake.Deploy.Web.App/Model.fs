@@ -8,7 +8,6 @@ module Model =
     open System.Runtime.Serialization
     open Raven.Imports.Newtonsoft.Json
     open Raven.Client.Embedded
-    open Raven.Client.Indexes
     open Microsoft.FSharp.Reflection
     open System.ComponentModel.DataAnnotations
     open System.ComponentModel.Composition
@@ -52,36 +51,12 @@ module Model =
             member x.AddAgents(agents : seq<Agent>) = 
                     x.Agents <- Seq.append (agents |> Seq.map (fun a -> a.Ref)) x.Agents
 
-    let private documentStore = 
+    let documentStore = 
         let ds = new EmbeddableDocumentStore(ConnectionStringName = "RavenDB", UseEmbeddedHttpServer = true)
         ds.Conventions.IdentityPartsSeparator <- "-"
         ds.Configuration.Port <- 8082
         ds.Conventions.CustomizeJsonSerializer <- new Action<_>(fun s -> s.Converters.Add(new Helpers.RavenUnionTypeConverter()))
         ds.Initialize()
-    
-    let private createIndexes (assems : seq<Reflection.Assembly>) =
-        assems |> Seq.iter (fun ass -> IndexCreation.CreateIndexes(ass, documentStore)) 
-
-    let private createData() = 
-        [
-            { Id = "environments-1";
-              Name = "Development";
-              Description = "Development Environment";
-              Agents = []}
-            { Id = "environments-2";
-              Name = "Integration";
-              Description = "Integration Environment";
-              Agents = [] }
-            { Id = "environments-3";
-              Name = "Staging";
-              Description = "User Acceptance and pre-Production environment";
-              Agents = [] }
-            {
-              Id = "environments-4"; 
-              Name = "Production";
-              Description = "User Acceptance and pre-Production environment";
-              Agents = [] }
-        ]
 
     let Save (instances : seq<_>) =
         use session = documentStore.OpenSession()
@@ -91,10 +66,6 @@ module Model =
             incr(count)
             if !count > 29 then session.SaveChanges()
         session.SaveChanges()
-
-    let Init() = 
-        createIndexes [Reflection.Assembly.GetExecutingAssembly()]
-        createData() |> Save
 
     let getEnvironment (id : string) = 
         match id with

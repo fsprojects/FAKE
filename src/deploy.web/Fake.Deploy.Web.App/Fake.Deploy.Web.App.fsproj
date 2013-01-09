@@ -93,6 +93,7 @@
     <Compile Include="UnionTypeConverter.fs" />
     <Compile Include="ApiHelpers.fs" />
     <Compile Include="Model.fs" />
+    <Compile Include="InitialData.fs" />
     <Compile Include="ApiControllers.fs" />
     <Compile Include="Controllers.fs" />
     <Compile Include="Global.fs" />
