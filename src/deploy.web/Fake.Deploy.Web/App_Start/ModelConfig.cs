@@ -6,8 +6,8 @@ namespace Fake.Deploy.Web
     {
         public static void Init()
         {
-            NonAdminHttp.EnsureCanListenToWhenInNonAdminContext(8082);
             InitialData.Init();
         }
+
     }
 }

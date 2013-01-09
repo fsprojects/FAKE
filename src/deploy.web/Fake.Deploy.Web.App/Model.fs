@@ -54,18 +54,8 @@ module Model =
     let documentStore = 
         let ds = new EmbeddableDocumentStore(ConnectionStringName = "RavenDB", UseEmbeddedHttpServer = true)
         ds.Conventions.IdentityPartsSeparator <- "-"
-        ds.Configuration.Port <- 8082
         ds.Conventions.CustomizeJsonSerializer <- new Action<_>(fun s -> s.Converters.Add(new Helpers.RavenUnionTypeConverter()))
         ds.Initialize()
-
-    let Save (instances : seq<_>) =
-        use session = documentStore.OpenSession()
-        let count = ref 0
-        for inst in instances do
-            session.Store(inst)
-            incr(count)
-            if !count > 29 then session.SaveChanges()
-        session.SaveChanges()
 
     let getEnvironment (id : string) = 
         match id with
@@ -77,6 +67,15 @@ module Model =
     let saveEnvironment (env : Environment) = 
         use session = documentStore.OpenSession()
         session.Store(env)
+        session.SaveChanges()
+
+    let Save (instances : seq<_>) =
+        use session = documentStore.OpenSession()
+        let count = ref 0
+        for inst in instances do
+            session.Store(inst)
+            incr(count)
+            if !count > 29 then session.SaveChanges()
         session.SaveChanges()
        
     let deleteEnvironment (id : string) =

@@ -27,7 +27,8 @@
 	        type: "GET",
 	        url: '/api/v1/agent/',
 	        dataType: 'json',
-	        contentType: 'application/json'
+	        contentType: 'application/json',
+            nocache: true
 	    }).done(function (data) {
 	        $.each(data, function (i, d) {
 	            var inst = ko.mapping.fromJS(d)

@@ -45,13 +45,13 @@ type AgentController() =
                 if data.Content.IsFormData() 
                 then
                     let! formData = data.Content.ReadAsFormDataAsync() |> Async.AwaitTask
-                    let agentUrl = formData.Get("agentUrl")
+                    let agentUrl = formData.Get("agentUrl").Trim('/') + "/"
                     let agentName = formData.Get("agentName")
                     let environmentId = formData.Get("environmentId")
                     try
                         let agent = Model.Agent.Create(agentUrl, agentName)
                         Model.saveAgent environmentId agent
-                        return created (sprintf "Created Agent %s" agentName) this
+                        return this.Request.CreateResponse(HttpStatusCode.Created)
                     with e ->
                         return this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e)
                 else return this.Request.CreateErrorResponse(HttpStatusCode.UnsupportedMediaType, "Expected URL encoded form data")
@@ -68,14 +68,19 @@ type AgentController() =
 type PackageController() =
     inherit ApiController()
 
+    let packageTemp = 
+        let dir = DirectoryInfo(HttpContext.Current.Server.MapPath("~/App_Data/Package_Temp"))
+        if not <| dir.Exists then dir.Create()
+        dir
+
     member this.Post() =
-        let path = HttpContext.Current.Server.MapPath("~/App_Data/Package_Temp")
+        
         async {
-            let! result = savePostedFiles path this
+            let! result = savePostedFiles packageTemp.FullName this
             let provider, fileNames = result
-            let filePath = Path.Combine(path, fileNames |> Seq.head)
+            let filePath = Path.Combine(packageTemp.FullName, fileNames |> Seq.head)
             let agentUrl = provider.FormData.Get("agentUrl")
-            match postDeploymentPackage (agentUrl + "/fake/") filePath with
+            match postDeploymentPackage (agentUrl.Trim('/') + "/fake/") filePath with
             | Failure(err) -> return this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, err :?> System.Exception)
             | Success -> 
                 if File.Exists(filePath) then File.Delete(filePath)
