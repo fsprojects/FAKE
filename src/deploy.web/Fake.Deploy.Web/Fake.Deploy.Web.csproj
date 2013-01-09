@@ -181,7 +181,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="packages.config" />
-    <None Include="readme.txt" />
     <Content Include="Views\Admin\Agent.cshtml" />
     <Content Include="Views\Admin\Environment.cshtml" />
     <Content Include="Views\Home\Agent.cshtml" />
