@@ -44,6 +44,9 @@ type TestSuite =
     member x.Skipped = x.TestCases |> Seq.filter (fun test -> test.Skipped) |> Seq.length
     member x.Runtime = x.TestCases |> List.sumBy (fun test -> test.RunTime)         
 
+let coalesce (strings : seq<string>) =
+    strings |> Seq.find (fun s -> String.IsNullOrWhiteSpace(s) = false)
+
 /// NUnit default params  
 let NUnitDefaults =
     { IncludeCategory = null;
@@ -91,10 +94,8 @@ let NUnit setParams (assemblies: string seq) =
             info.WorkingDirectory <- parameters.WorkingDir
             info.Arguments <- args) parameters.TimeOut
 
-    let tcNunitFile = if parameters.WorkingDir <> null then parameters.WorkingDir @@ parameters.OutputFile else parameters.OutputFile
-
-    sendTeamCityNUnitImport tcNunitFile
-
+    let workingDir = coalesce [parameters.WorkingDir; environVar("teamcity.build.workingDir"); "."]
+    sendTeamCityNUnitImport (workingDir @@ parameters.OutputFile)
     if result = 0 then          
         traceEndTask "NUnit" details
     else
