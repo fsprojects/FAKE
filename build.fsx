@@ -128,10 +128,7 @@ Target "Test" (fun _ ->
                 HtmlOutputDir = reportDir}) 
 )
 
-Target "ZipCalculatorSample" (fun _ ->
-    !! (buildDir + "\**\*.*") 
-      |> CopyTo "./Samples/Calculator/tools/FAKE/"
-        
+Target "ZipCalculatorSample" (fun _ ->        
     !+ @"Samples\Calculator\**\*.*" 
         -- "**\*Resharper*\**"
         -- "**\bin\**\**"
