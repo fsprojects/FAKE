@@ -38,3 +38,4 @@ tools/FAKE/deployments/*
 packages/
 Samples/Calculator/deploy/
 Samples/Calculator/tools/FAKE/
+*.orig
