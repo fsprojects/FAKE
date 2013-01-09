@@ -39,3 +39,4 @@ packages/
 Samples/Calculator/deploy/
 Samples/Calculator/tools/FAKE/
 *.orig
+deploy/
