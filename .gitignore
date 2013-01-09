@@ -37,3 +37,4 @@ tools/FAKE/deployments/*
 packages/
 *.orig
 tools/FAKE/
+deploy/
