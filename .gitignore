@@ -36,3 +36,4 @@ Samples/Calculator/tools/FAKE/
 src/deploy.web/Fake.Deploy.Web/App_Data/RavenDB/*
 src/deploy.web/Fake.Deploy.Web/App_Data/Package_Temp/*
 tools/FAKE/deployments/*
+packages/
