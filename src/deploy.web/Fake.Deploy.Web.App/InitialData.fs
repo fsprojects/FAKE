@@ -4,12 +4,14 @@ open System
 open Fake.Deploy.Web.Model
 open Raven.Client.Indexes
 
-let private createData() = 
+let private defaultEnvironments() = 
+    let agent1 = Agent.Create("http://localhost:8080/","localhost")
+
     [
         { Id = "environments-1";
           Name = "Development";
           Description = "Development Environment";
-          Agents = []}
+          Agents = [agent1.Ref]}
         { Id = "environments-2";
           Name = "Integration";
           Description = "Integration Environment";
@@ -20,7 +22,7 @@ let private createData() =
           Agents = [] }
         { Id = "environments-4"; 
           Name = "Production";
-          Description = "User Acceptance and pre-Production environment";
+          Description = "Production environment";
           Agents = [] }
     ]
 
@@ -29,4 +31,4 @@ let private createIndexes (assems : seq<Reflection.Assembly>) =
 
 let Init() = 
     createIndexes [Reflection.Assembly.GetExecutingAssembly()]
-    createData() |> Save
+    defaultEnvironments() |> Save
