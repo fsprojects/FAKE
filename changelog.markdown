@@ -1,3 +1,7 @@
+## 1.72.0.0
+
+* "RestorePackages" allows to restore nuget packages
+
 ## 1.70.0.0
 
 * FAKE nuget package comes bundles with a fsi.exe
