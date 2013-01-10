@@ -28,6 +28,21 @@ module Fake.IISHelper
                             | None -> (site mgr).Applications.[0].ApplicationPoolName <- (appPool mgr).Name
                             commit mgr
                       )
+
+    let deleteSite (name : string) = 
+        use mgr = new ServerManager()
+        mgr.Sites.[name].Delete()
+        commit mgr 
+
+    let deleteApp (name : string) (site : Site) = 
+        use mgr = new ServerManager()
+        site.Applications.[name].Delete()
+        commit mgr
+
+    let deleteApplicationPool (name : string) = 
+        use mgr = new ServerManager()
+        mgr.ApplicationPools.[name].Delete()
+        commit mgr
         
         
 
