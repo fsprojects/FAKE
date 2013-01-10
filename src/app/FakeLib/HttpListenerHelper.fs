@@ -150,7 +150,7 @@ let start log serverName port requestMap =
     let listenerLoop = 
         async {
             try 
-                log (sprintf "Trying to start Fake Deploy server @ %s port %s" serverName usedPort, EventLogEntryType.Information)
+                log (sprintf "Trying to start Fake Deploy server @ %s on port %s" serverName usedPort, EventLogEntryType.Information)
                 use l = listener serverName usedPort
                 let prefixes = l.Prefixes |> separated ","
                 log (sprintf "Fake Deploy now listening @ %s" prefixes, EventLogEntryType.Information)
