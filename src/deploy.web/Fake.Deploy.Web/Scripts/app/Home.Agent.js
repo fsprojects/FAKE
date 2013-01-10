@@ -36,8 +36,8 @@ function AgentViewModel() {
         }).done(function (data) {
             self.deployments([]);
             $.each(data.values, function (i, d) {
-                $.each(d, function (i, dep) {
-                    var deployment = ko.mapping.fromJS(dep)
+                $.each(d, function (i2, dep) {
+                    var deployment = ko.mapping.fromJS(dep);
                     self.deployments.push(deployment);
                 });
             });
@@ -55,7 +55,7 @@ function AgentViewModel() {
             dataType: 'json',
             contentType: 'application/json'
         }).done(function (data) {
-            var a = ko.mapping.fromJS(data)
+            var a = ko.mapping.fromJS(data);
             self.agent(a);
             self.refreshDeploymentsForAgent();
             self.getAgentDetails();
@@ -84,7 +84,7 @@ function AgentViewModel() {
             },
             done: function (e, data) {
                 $('#fileList').html('');
-                $('#filePlaceHolder').modal('hide')
+                $('#filePlaceHolder').modal('hide');
                 $('#selectPackageBtn').removeClass('hide');
                 toastr.info('Package deployed');
                 self.refreshDeploymentsForAgent();
@@ -93,7 +93,7 @@ function AgentViewModel() {
                 $('#fileList').html('');
                 $('#selectPackageBtn').removeClass('hide');
                 $('#filePlaceHolder').modal('hide');
-                toastr.error('Package deployment failed')
+                toastr.error('Package deployment failed');
             }
         });
     };

@@ -11,7 +11,7 @@
             contentType: 'application/json'
         }).done(function (data) {
             $.each(data, function (i, d) {
-                var inst = ko.mapping.fromJS(d)
+                var inst = ko.mapping.fromJS(d);
                 self.environments.push(inst);
             });
             $('#agents li:nth-child(4n+1)').css('margin-left', '0');

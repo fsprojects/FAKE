@@ -13,7 +13,7 @@
             cache: false
         }).done(function (data) {
             $.each(data, function (i, d) {
-                var inst = ko.mapping.fromJS(d)
+                var inst = ko.mapping.fromJS(d);
                 self.environments.push(inst);
             });
         }).fail(function (msg) {
@@ -36,7 +36,7 @@
             dataType: 'json',
             data: jsonStr,
             contentType: 'application/json'
-        }).done(function (data) {
+        }).done(function (d) {
             toastr.info('Environment saved', 'Info');
             self.getEnvironments();
         }).fail(function (msg) {
@@ -52,7 +52,7 @@
             url: '/api/v1/environment/' + data.Id(),
             dataType: 'json',
             contentType: 'application/json'
-        }).done(function (data) {
+        }).done(function (d) {
             toastr.info('Successfully deleted agent');
             self.getEnvironments();
         }).fail(function (msg) {

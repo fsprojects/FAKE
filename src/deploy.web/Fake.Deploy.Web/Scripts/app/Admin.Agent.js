@@ -13,7 +13,7 @@
 	        contentType: 'application/json'
 	    }).done(function (data) {
 	        $.each(data, function (i, d) {
-	            var inst = ko.mapping.fromJS(d)
+	            var inst = ko.mapping.fromJS(d);
 	            self.environments.push(inst);
 	        });
 	    }).fail(function (msg) {
@@ -31,7 +31,7 @@
             nocache: true
 	    }).done(function (data) {
 	        $.each(data, function (i, d) {
-	            var inst = ko.mapping.fromJS(d)
+	            var inst = ko.mapping.fromJS(d);
 	            self.agents.push(inst);
 	        });
 	    }).fail(function (msg) {
@@ -65,7 +65,7 @@
 	        url: '/api/v1/agent/'+data.Id(),
 	        dataType: 'json',
 	        contentType: 'application/json'
-	    }).done(function (data) {
+	    }).done(function (d) {
 	        toastr.info('Successfully deleted agent');
 	        self.getAgents();
 	    }).fail(function (msg) {
