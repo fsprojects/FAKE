@@ -1,5 +1,4 @@
 @echo off
 cls
-SET FSI=..\..\tools\FSharp\Fsi.exe
-"..\..\tools\FAKE\Fake.exe" deploy.fsx
+"tools\FAKE\tools\Fake.exe" deploy.fsx
 pause

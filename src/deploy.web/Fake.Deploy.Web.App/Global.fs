@@ -49,4 +49,4 @@ type Global() =
         GlobalConfiguration.Configuration.Formatters.Add(new JsonNetFormatter(jsonSettings))
         Global.RegisterGlobalFilters(GlobalFilters.Filters)
         Global.RegisterRoutes(RouteTable.Routes) |> ignore
-        Model.Init()
+        InitialData.Init()

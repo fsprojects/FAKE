@@ -8,7 +8,6 @@ module Model =
     open System.Runtime.Serialization
     open Raven.Imports.Newtonsoft.Json
     open Raven.Client.Embedded
-    open Raven.Client.Indexes
     open Microsoft.FSharp.Reflection
     open System.ComponentModel.DataAnnotations
     open System.ComponentModel.Composition
@@ -52,16 +51,11 @@ module Model =
             member x.AddAgents(agents : seq<Agent>) = 
                     x.Agents <- Seq.append (agents |> Seq.map (fun a -> a.Ref)) x.Agents
 
-    let private documentStore = 
-        let ds = new EmbeddableDocumentStore(ConnectionStringName = "RavenDB")
+    let documentStore = 
+        let ds = new EmbeddableDocumentStore(ConnectionStringName = "RavenDB", UseEmbeddedHttpServer = true)
         ds.Conventions.IdentityPartsSeparator <- "-"
         ds.Conventions.CustomizeJsonSerializer <- new Action<_>(fun s -> s.Converters.Add(new Helpers.RavenUnionTypeConverter()))
         ds.Initialize()
-    
-    let private createIndexes (assems : seq<Reflection.Assembly>) =
-        assems |> Seq.iter (fun ass -> IndexCreation.CreateIndexes(ass, documentStore)) 
-
-    let Init() = createIndexes [Reflection.Assembly.GetExecutingAssembly()]
 
     let getEnvironment (id : string) = 
         match id with
@@ -73,6 +67,15 @@ module Model =
     let saveEnvironment (env : Environment) = 
         use session = documentStore.OpenSession()
         session.Store(env)
+        session.SaveChanges()
+
+    let Save (instances : seq<_>) =
+        use session = documentStore.OpenSession()
+        let count = ref 0
+        for inst in instances do
+            session.Store(inst)
+            incr(count)
+            if !count > 29 then session.SaveChanges()
         session.SaveChanges()
        
     let deleteEnvironment (id : string) =
