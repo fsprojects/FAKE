@@ -105,7 +105,7 @@ function AgentViewModel() {
                 url: self.agent().Address() + '/fake/deployments/' + data.Id() + '?version=HEAD~1',
                 dataType: 'json',
                 contentType: 'application/json'
-            }).done(function (data) {
+            }).done(function (d) {
                 toastr.info('Rollback succeeded', 'Info');
                 $('#rollbackDialog').modal('hide');
                 self.refreshDeploymentsForAgent();
