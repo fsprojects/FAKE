@@ -8,3 +8,6 @@ open Fake.IISHelper
   (Site "Fake.Deploy.Web" "http" ":8081:" @"D:\PublishedSites\Fake.Web.Deploy")
   (ApplicationPool "Fake.Deploy.Pool")
   None)
+
+deleteSite "Fake.Deploy.Web"
+deleteApplicationPool "Fake.Deploy.Pool"
