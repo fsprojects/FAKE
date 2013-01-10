@@ -6,6 +6,7 @@ open System.Web.Mvc
 open System.Web.Routing
 open System.Web.Http
 open Newtonsoft.Json
+open log4net.Config
 
 type MapHttpActionRouteSettings = {  controller : string; action : string;  id : RouteParameter }
 type MapHttpRouteSettings = { id : RouteParameter }
@@ -44,6 +45,7 @@ type Global() =
         |> uiRoutes
 
     member this.Start() =
+        XmlConfigurator.Configure() |> ignore
         AreaRegistration.RegisterAllAreas()
         GlobalConfiguration.Configuration.Formatters.Clear()
         GlobalConfiguration.Configuration.Formatters.Add(new JsonNetFormatter(jsonSettings))

@@ -9,7 +9,7 @@ function AgentViewModel() {
     var self = this;
 
     self.agent = ko.observable();
-    self.agentStatus = ko.observable();
+    self.agentStatus = ko.observable(new AgentStatusModel(false, 'Offline / Unreachable'));
     self.deployments = ko.observableArray();
     self.agentDetails = ko.observable();
 
@@ -22,30 +22,33 @@ function AgentViewModel() {
         }).done(function (data) {
             var a = ko.mapping.fromJS(data)
             self.agentDetails(a);
+            self.agentStatus(new AgentStatusModel(true, 'Online'));
+            self.refreshDeploymentsForAgent();
         }).fail(function (msg) {
-            toastr.error('Failed to get details for agent ' + self.agent().Name(), 'Error');
+            self.agentStatus(new AgentStatusModel(false, 'Offline / Unreachable'));
         });
     };
 
     self.refreshDeploymentsForAgent = function () {
-        $.ajax({
-            type: "GET",
-            url: self.agent().Address() + 'fake/deployments?status=active',
-            dataType: 'json',
-            contentType: 'application/json'
-        }).done(function (data) {
-            self.deployments([]);
-            $.each(data.values, function (i, d) {
-                $.each(d, function (i2, dep) {
-                    var deployment = ko.mapping.fromJS(dep);
-                    self.deployments.push(deployment);
+        if (self.agentStatus().available()) {
+            $.ajax({
+                type: "GET",
+                url: self.agent().Address() + 'fake/deployments?status=active',
+                dataType: 'json',
+                contentType: 'application/json'
+            }).done(function (data) {
+                self.deployments([]);
+                $.each(data.values, function (i, d) {
+                    $.each(d, function (i2, dep) {
+                        var deployment = ko.mapping.fromJS(dep);
+                        self.deployments.push(deployment);
+                    });
                 });
+                
+            }).fail(function (msg) {
+                toastr.error('Failed to get active deployments for agent ' + self.agent().Name(), 'Error');
             });
-            self.agentStatus(new AgentStatusModel(true, 'Online'));
-        }).fail(function (msg) {
-            toastr.error('Failed to get active deployments for agent ' + self.agent().Name(), 'Error');
-            self.agentStatus(new AgentStatusModel(false, 'Offline / Unreachable'));
-        });
+        }
     };
 
     self.build = function (agentId) {
@@ -57,7 +60,6 @@ function AgentViewModel() {
         }).done(function (data) {
             var a = ko.mapping.fromJS(data);
             self.agent(a);
-            self.refreshDeploymentsForAgent();
             self.getAgentDetails();
         }).fail(function (msg) {
             toastr.error('Failed to get agent ' + agentId, 'Error');
@@ -96,13 +98,16 @@ function AgentViewModel() {
                 toastr.error('Package deployment failed');
             }
         });
+
+        setInterval(function () { self.getAgentDetails(); }, 10000);
     };
 
     self.rollbackDeployment = function (data) {
+        if (self.agentStatus().available()) {
             $('#rollbackDialog').modal('show');
             $.ajax({
                 type: "PUT",
-                url: self.agent().Address() + '/fake/deployments/' + data.Id() + '?version=HEAD~1',
+                url: self.agent().Address() + 'fake/deployments/' + data.Id() + '?version=HEAD~1',
                 dataType: 'json',
                 contentType: 'application/json'
             }).done(function (d) {
@@ -110,9 +115,10 @@ function AgentViewModel() {
                 $('#rollbackDialog').modal('hide');
                 self.refreshDeploymentsForAgent();
             }).fail(function (msg) {
-                toastr.error('Failed to rollback ' + self.agent().Name() + ' - ' + data.Id(), 'Error');
+                toastr.error('Failed to rollback ' + self.agent().Name() + ' - ' + data.Id() + ' ' + msg.statusText, 'Error');
                 $('#rollbackDialog').modal('hide');
                 console.log(msg.responseText);
             });
+        } 
     };
 }

@@ -32,6 +32,10 @@
     <DocumentationFile>bin\Release\Fake.Deploy.Web.App.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <Private>True</Private>
     </Reference>
@@ -98,6 +102,7 @@
     <Compile Include="Controllers.fs" />
     <Compile Include="Global.fs" />
     <None Include="packages.config" />
+    <Compile Include="AssemblyInfo.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\app\FakeLib\FakeLib.fsproj">

@@ -17,7 +17,7 @@
 	            self.environments.push(inst);
 	        });
 	    }).fail(function (msg) {
-	        toastr.error('Failed to get environments', 'Error');
+	        toastr.error('Failed to get environments ' + msg.statusText, 'Error');
 	    });
 	};
 
@@ -35,7 +35,7 @@
 	            self.agents.push(inst);
 	        });
 	    }).fail(function (msg) {
-	        toastr.error('Failed to get agents', 'Error');
+	        toastr.error('Failed to get agents ' + msg.statusText, 'Error');
 	    });
 	};
 
@@ -55,7 +55,7 @@
 		    toastr.info('Successfully registered agent');
 		    self.getAgents();
 		}).fail(function (msg) {
-			toastr.error('Failed to register agent', 'Error');
+		    toastr.error('Failed to register agent ' + msg.statusText, 'Error');
 		});
 	}
 
@@ -69,7 +69,7 @@
 	        toastr.info('Successfully deleted agent');
 	        self.getAgents();
 	    }).fail(function (msg) {
-	        toastr.error('Failed to delete agent', 'Error');
+	        toastr.error('Failed to delete agent ' + msg.statusText, 'Error');
 	    });
 	}
 }
