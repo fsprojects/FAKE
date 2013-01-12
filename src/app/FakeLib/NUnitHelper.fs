@@ -42,7 +42,7 @@ type TestSuite =
     member x.NotRun = x.TestCases  |> Seq.filter (fun test -> not test.Executed) |> Seq.length
     member x.Ignored = x.TestCases |> Seq.filter (fun test -> test.Ignored) |> Seq.length
     member x.Skipped = x.TestCases |> Seq.filter (fun test -> test.Skipped) |> Seq.length
-    member x.Runtime = x.TestCases |> List.sumBy (fun test -> test.RunTime)         
+    member x.Runtime = x.TestCases |> List.sumBy (fun test -> test.RunTime)
 
 /// NUnit default params  
 let NUnitDefaults =
@@ -69,17 +69,17 @@ let NUnit setParams (assemblies: string seq) =
     let assemblies =  assemblies |> Seq.toArray
     let commandLineBuilder =
         new StringBuilder()
-          |> append "/nologo"
-          |> appendIfTrue parameters.DisableShadowCopy "/noshadow" 
-          |> appendIfTrue parameters.ShowLabels "/labels" 
-          |> appendIfTrue parameters.TestInNewThread "/thread" 
+          |> append "-nologo"
+          |> appendIfTrue parameters.DisableShadowCopy "-noshadow" 
+          |> appendIfTrue parameters.ShowLabels "-labels" 
+          |> appendIfTrue parameters.TestInNewThread "-thread" 
           |> appendFileNamesIfNotNull assemblies
-          |> appendIfNotNull parameters.IncludeCategory "/include:"
-          |> appendIfNotNull parameters.ExcludeCategory "/exclude:"
-          |> appendIfNotNull parameters.XsltTransformFile "/transform:"
-          |> appendIfNotNull parameters.OutputFile  "/xml:"
-          |> appendIfNotNull parameters.Framework  "/framework:"
-          |> appendIfNotNull parameters.ErrorOutputFile "/err:"
+          |> appendIfNotNull parameters.IncludeCategory "-include:"
+          |> appendIfNotNull parameters.ExcludeCategory "-exclude:"
+          |> appendIfNotNull parameters.XsltTransformFile "-transform:"
+          |> appendIfNotNull parameters.OutputFile  "-xml:"
+          |> appendIfNotNull parameters.Framework  "-framework:"
+          |> appendIfNotNull parameters.ErrorOutputFile "-err:"
 
     let tool = parameters.ToolPath @@ parameters.ToolName
 
@@ -91,7 +91,8 @@ let NUnit setParams (assemblies: string seq) =
             info.WorkingDirectory <- parameters.WorkingDir
             info.Arguments <- args) parameters.TimeOut
 
-    sendTeamCityNUnitImport parameters.OutputFile
+    let workingDir = Seq.find (fun s -> s <> null && s <> "") [parameters.WorkingDir; environVar("teamcity.build.workingDir"); "."]
+    sendTeamCityNUnitImport (workingDir @@ parameters.OutputFile)
     if result = 0 then          
         traceEndTask "NUnit" details
     else

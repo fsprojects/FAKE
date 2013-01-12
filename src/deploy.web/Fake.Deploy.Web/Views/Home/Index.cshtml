@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Summary";
+}
+
+@section scripts {
+    <script src="@Url.Content("~/Scripts/app/Home.Index.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            var vm = new IndexViewModel()
+            vm.build();
+            ko.applyBindings(vm);
+        });
+    </script>
+}
+
+<div class="tabbable tabs-left">
+    <ul id="envTabs" class="nav nav-tabs" data-bind="foreach: environments">
+        <li><a data-bind="attr: { href: '#' + Id(), title: Description }, text: Name" data-toggle="tab"></a></li>
+    </ul>
+    <div class="tab-content span10" data-bind="foreach: environments">
+        <div class="tab-pane" data-bind="attr: { id: Id }">
+            <h3 data-bind="text: Description"></h3>
+            <ul id="agents" class="thumbnails" data-bind="foreach: Agents">
+                <li class="span3">
+                    <a class="thumbnail" style="cursor: pointer" data-bind="attr: { href: '/Home/Agent?agentId=' + Id(), Description: Id }">
+                        <img src="@Url.Content("~/Images/server.png")" width="64" />
+                        <h4 data-bind="text: Name" style="text-align: center"></h4>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+

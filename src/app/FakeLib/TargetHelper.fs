@@ -142,10 +142,12 @@ let targetError targetName (exn:System.Exception) =
     errors <- BuildError(targetName, exn.ToString()) :: errors
     let msg = 
         if PrintStackTraceOnError then exn.ToString() else
-        sprintf "%s%s" exn.Message (if exn.InnerException <> null then "\n" + exn.InnerException.Message else "")
+        sprintf "%O%s" exn (if exn.InnerException <> null then "\n" + (exn.InnerException.ToString()) else "")
             
     traceError <| sprintf "Running build failed.\nError:\n%s" msg
-    sendTeamCityError msg        
+
+    let tcMsg = sprintf "%s" exn.Message
+    sendTeamCityError tcMsg        
  
 let addExecutedTarget target time =
     ExecutedTargets.Add target |> ignore
@@ -191,22 +193,25 @@ let PrintDependencyGraph verbose target =
 /// <param name="total">The total runtime.</param>
 let WriteTaskTimeSummary total =    
     traceHeader "Build Time Report"
-    let width = 
-        ExecutedTargetTimes 
-          |> Seq.map (fun (a,b) -> a.Length) 
-          |> Seq.max
-          |> max 8
+    if ExecutedTargets.Count > 0 then
+        let width = 
+            ExecutedTargetTimes 
+              |> Seq.map (fun (a,b) -> a.Length) 
+              |> Seq.max
+              |> max 8
 
-    let aligned (name:string) duration = tracefn "%s   %O" (name.PadRight width) duration
-    let alignedError (name:string) duration = sprintf "%s   %O" (name.PadRight width) duration |> traceError
+        let aligned (name:string) duration = tracefn "%s   %O" (name.PadRight width) duration
+        let alignedError (name:string) duration = sprintf "%s   %O" (name.PadRight width) duration |> traceError
 
-    aligned "Target" "Duration"
-    aligned "------" "--------"
-    ExecutedTargetTimes
-      |> Seq.iter (fun (name,time) -> aligned name time)
+        aligned "Target" "Duration"
+        aligned "------" "--------"
+        ExecutedTargetTimes
+          |> Seq.iter (fun (name,time) -> aligned name time)
 
-    aligned "Total:" total
-    if errors = [] then aligned "Status:" "Ok" else alignedError "Status:" "Failure"
+        aligned "Total:" total
+        if errors = [] then aligned "Status:" "Ok" else alignedError "Status:" "Failure"
+    else 
+        traceError "No one target was successfully completed"
     traceLine()
 
 let private changeExitCodeIfErrorOccured() = if errors <> [] then exit 42 

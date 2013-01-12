@@ -15,6 +15,7 @@ type NuGetParams =
       OutputPath: string;
       PublishUrl: string;
       AccessKey:string;
+      NoPackageAnalysis: bool;
       ProjectFile:string;
       Dependencies: (string*string) list;
       PublishTrials: int;
@@ -34,15 +35,16 @@ let NuGetDefaults() =
       OutputPath = currentDirectory @@ "NuGet";
       PublishUrl = null;
       AccessKey = null;
+      NoPackageAnalysis = false;
       PublishTrials = 5;
       Publish = false}
 
 let RequireExactly version = sprintf "[%s]" version
 
-/// Gets the version no. for a given package in the packages folder
-let GetPackageVersion packagesDir package = 
+/// Gets the version no. for a given package in the deployments folder
+let GetPackageVersion deploymentsDir package = 
     let version = 
-        Directory.GetDirectories(packagesDir, sprintf "%s.*" package) 
+        Directory.GetDirectories(deploymentsDir, sprintf "%s.*" package) 
         |> Seq.head
         |> fun full -> full.Substring (full.LastIndexOf package + package.Length + 1)
 
@@ -52,12 +54,11 @@ let GetPackageVersion packagesDir package =
 let private replaceAccessKey key (s:string) = s.Replace(key,"PRIVATEKEY")
 
 let private runNuget parameters nuSpec =
-    let version = NormalizeVersion parameters.Version
     // create .nuspec file
     CopyFile parameters.OutputPath nuSpec
 
     let specFile = parameters.OutputPath @@ (nuSpec |> Path.GetFileName)
-    let packageFile = sprintf "%s.%s.nupkg" parameters.Project version
+    let packageFile = sprintf "%s.%s.nupkg" parameters.Project parameters.Version
     let dependencies =
         if parameters.Dependencies = [] then "" else
         parameters.Dependencies
@@ -66,7 +67,7 @@ let private runNuget parameters nuSpec =
           |> fun s -> sprintf "<dependencies>\r\n%s\r\n</dependencies>" s
 
     let replacements =
-        ["@build.number@",version
+        ["@build.number@",parameters.Version
          "@authors@",parameters.Authors |> separated ", "
          "@project@",parameters.Project
          "@summary@",if isNullOrEmpty parameters.Summary then "" else parameters.Summary
@@ -88,7 +89,7 @@ let private runNuget parameters nuSpec =
         parameters.OutputPath @@ packageFile |> DeleteFile
 
     // create package
-    let args = sprintf "pack %s" (Path.GetFileName specFile)
+    let args = sprintf "pack %s %s" (Path.GetFileName specFile) (if parameters.NoPackageAnalysis then "-NoPackageAnalysis" else "")
     let result = 
         ExecProcess (fun info ->
             info.FileName <- parameters.ToolPath
@@ -161,3 +162,119 @@ let NuGet setParams nuSpec =
           |> failwith
 
     traceEndTask "NuGet" nuSpec
+
+
+type NuSpecPackage = {
+    Id : string
+    Version : string
+    Authors : string
+    Owners : string
+    Url: string
+    IsLatestVersion: bool
+    Created: DateTime
+    Published: DateTime
+    PackageHash: string
+    PackageHashAlgorithm: string
+    LicenseUrl : string
+    ProjectUrl : string
+    RequireLicenseAcceptance : bool
+    Description : string
+    Language : string
+    Tags : string
+}
+with
+    member x.Name = sprintf "%s %s" x.Id x.Version
+    override x.ToString() = x.Name
+    member x.DirectoryName = sprintf "%s.%s" x.Id x.Version
+    member x.FileName = sprintf "%s.%s.nupkg" x.Id x.Version
+
+let getNuspecProperties (nuspec : string) =
+    let doc = XMLDoc nuspec
+    let namespaces = ["x","http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"]
+    let getValue name = 
+        try
+            doc
+            |> XPathValue ("x:metadata/x:" + name) namespaces
+        with
+        | exn -> String.Empty
+
+    {
+       Id = getValue "id"
+       Version = getValue "version"
+       Authors = getValue "authors"
+       Owners = getValue "owners"
+       LicenseUrl = getValue "licenseUrl"
+       ProjectUrl = getValue "projectUrl"
+       RequireLicenseAcceptance = (getValue "requireLicenseAcceptance").ToLower() = "true" 
+       Description = getValue "description" 
+       Language = getValue "language"
+       Tags = getValue "tags"
+       Url = String.Empty
+       IsLatestVersion = false
+       Created = DateTime.MinValue
+       Published = DateTime.MinValue
+       PackageHash = String.Empty
+       PackageHashAlgorithm = String.Empty
+    }
+    
+
+let feedUrl = "http://go.microsoft.com/fwlink/?LinkID=206669"
+
+let private webClient = new System.Net.WebClient()
+
+let discoverRepoUrl = 
+    lazy (     
+        let resp = webClient.DownloadString(feedUrl)
+        let doc = XMLDoc resp
+
+        doc.["service"].GetAttribute("xml:base"))
+
+let getRepoUrl() = discoverRepoUrl.Force()      
+
+let extractFeedPackageFromXml (entry:Xml.XmlNode) =
+    let properties = entry.["m:properties"]
+    let property name = properties.["d:" + name].InnerText
+    let boolProperty name = (property name).ToLower() = "true"
+    let dateTimeProperty name = DateTime.Parse(property name)
+
+    { Id = property "Id"
+      Version = property "Version"
+      Description = property "Description"
+      IsLatestVersion = boolProperty "IsLatestVersion"
+      Authors = property "Authors"
+      Owners = property "Authors"
+      Language = property "Language"
+      Tags = property "Tags"
+      ProjectUrl = property "ProjectUrl"
+      LicenseUrl = property "LicenseUrl"
+      RequireLicenseAcceptance = boolProperty "RequireLicenseAcceptance"
+      PackageHash = property "PackageHash"
+      PackageHashAlgorithm = property "PackageHashAlgorithm"
+      Created = dateTimeProperty "Created"
+      Published = dateTimeProperty "Published"
+      Url = entry.["content"].GetAttribute("src")}
+
+let getPackage repoUrl packageName version =
+    let url:string = repoUrl + "Packages(Id='" + packageName + "',Version='" + version + "')"
+    let resp = webClient.DownloadString(url)
+    let doc = XMLDoc resp
+   
+    extractFeedPackageFromXml doc.["entry"]
+
+let getFeedPackagesFromUrl (url:string) =
+    let resp = webClient.DownloadString(url)
+    let doc = XMLDoc resp
+   
+    [for entry in doc.["feed"].GetElementsByTagName("entry") -> extractFeedPackageFromXml entry]
+
+let getLatestPackage repoUrl packageName =
+    repoUrl + "Packages()?$filter=(Id%20eq%20'" + packageName + "')%20and%20IsLatestVersion"
+    |> getFeedPackagesFromUrl
+    |> Seq.head
+
+let downloadPackage targetDir (package:NuSpecPackage) =
+    ensureDirectory targetDir    
+    let targetFileName = targetDir @@ package.FileName
+    tracefn "Downloading package %s %s from %s and saving it to %s" package.Id package.Version package.Url targetFileName
+    webClient.DownloadFile(package.Url,targetFileName)
+    targetFileName

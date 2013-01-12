@@ -4,6 +4,12 @@ module Fake.EnvironmentHelper
 open System
 open System.IO
 open System.Configuration
+open System.Diagnostics
+open System.Collections.Generic
+open System.Linq
+open System.Text
+open System.Text.RegularExpressions
+open Microsoft.Win32
 
 type EnvironTarget = EnvironmentVariableTarget
 
@@ -30,6 +36,11 @@ let environVarOrDefault name defaultValue =
     let var = environVar name
     if isNullOrEmpty var  then defaultValue else var
 
+/// Retrieves the environment variable or None
+let environVarOrNone name =
+    let var = environVar name
+    if isNullOrEmpty var  then None else Some var
+
 /// Retrieves a ApplicationSettings variable
 let appSetting (name:string) = ConfigurationManager.AppSettings.[name]
 
@@ -46,23 +57,99 @@ let inline getBuildParamOrDefault name defaultParam = if hasBuildParam name then
 let ProgramFiles = Environment.GetFolderPath Environment.SpecialFolder.ProgramFiles
 
 /// The path of Program Files (x86)
+/// I think this covers all cases where PROCESSOR_ARCHITECTURE may misreport and the case where the other variable 
+/// PROCESSOR_ARCHITEW6432 can be null
 let ProgramFilesX86 =
-    let a = environVar "PROCESSOR_ARCHITEW6432"
-    if 8 = IntPtr.Size || (a <> null && a <> "") then
+    let wow64 = (environVar "PROCESSOR_ARCHITEW6432")
+    let globalArch = (environVar "PROCESSOR_ARCHITECTURE")
+    match wow64, globalArch with
+    | "AMD64", "AMD64" | null, "AMD64" | "x86", "AMD64" ->
         environVar "ProgramFiles(x86)"
-    else
+    | _ ->
         environVar "ProgramFiles"
 
-let mutable TargetPlatformPrefix = @"C:\Windows\Microsoft.NET\Framework"
+/// System root environment variable. Typically "C:\Windows"
+let SystemRoot = environVar "SystemRoot"
+
+/// Detemernines if the current system is Unix system
+let isUnix = Environment.OSVersion.Platform = PlatformID.Unix
+
+let platformInfoAction (psi:ProcessStartInfo) =
+    if isUnix && psi.FileName.EndsWith ".exe" then
+        psi.Arguments <- psi.FileName + " " + psi.Arguments
+        psi.FileName <- "mono"  
+
+/// The path of the current target platform
+let mutable TargetPlatformPrefix =
+    match environVarOrNone "FrameworkDir32" with
+    | Some path -> path
+    | _ ->
+        if not (isNullOrEmpty SystemRoot) then SystemRoot @@ @"Microsoft.NET\Framework" else
+        if isUnix then "/usr/lib/mono" else 
+        @"C:\Windows\Microsoft.NET\Framework" 
 
 /// Gets the local directory for the given target platform
 let getTargetPlatformDir platformVersion = 
     if Directory.Exists(TargetPlatformPrefix + "64") then 
-        Path.Combine(TargetPlatformPrefix + "64",platformVersion) 
+        (TargetPlatformPrefix + "64") @@ platformVersion
     else 
-        Path.Combine(TargetPlatformPrefix,platformVersion)
+        TargetPlatformPrefix @@ platformVersion
 
 /// The path to the personal documents
 let documentsFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
 
-let isUnix = System.Environment.OSVersion.Platform = System.PlatformID.Unix
+/// Convert the given windows path to a path in the current system
+let convertWindowsToCurrentPath (w:string) = 
+    if (w.Length > 2 && w.[1] = ':' && w.[2] = '\\') then
+        w
+    else
+        replace @"\" directorySeparator w
+
+
+let getInstalledDotNetFrameworks() = 
+    let frameworks = new ResizeArray<_>()
+    try
+        let matches = 
+            Registry.LocalMachine
+                    .OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP")
+                    .GetSubKeyNames()
+            |> Seq.filter (fun keyname -> Regex.IsMatch(keyname, @"^v\d"))
+
+        for item in matches do
+            match item with
+            | "v4.0" -> ()
+            | "v4" ->
+                let key = @"SOFTWARE\Microsoft\NET Framework Setup\NDP\" + item
+                Registry.LocalMachine.OpenSubKey(key).GetSubKeyNames()
+                |> Seq.iter (fun subkey -> 
+                                let key = @"SOFTWARE\Microsoft\NET Framework Setup\NDP\" + item + @"\" + subkey
+                                let version = Registry.LocalMachine.OpenSubKey(key).GetValue("Version").ToString();
+                                frameworks.Add(String.Format("{0} ({1})", version, subkey)))
+            | "v1.1.4322" -> frameworks.Add item
+            | _ ->
+                    let key = @"SOFTWARE\Microsoft\NET Framework Setup\NDP\" + item;
+                    frameworks.Add(Registry.LocalMachine.OpenSubKey(key).GetValue("Version").ToString());
+        frameworks.AsEnumerable()
+    with e ->
+         frameworks.AsEnumerable() //Probably a new unrecognisable version
+
+type MachineDetails = {
+    ProcessorCount : int
+    Is64bit : bool
+    OperatingSystem : string
+    MachineName : string
+    NETFrameworks : seq<string>
+    UserDomainName : string
+
+}
+
+let getMachineEnvironment() = 
+     {
+        ProcessorCount = Environment.ProcessorCount
+        Is64bit = Environment.Is64BitOperatingSystem
+        OperatingSystem = Environment.OSVersion.ToString()
+        MachineName = Environment.MachineName
+        NETFrameworks = getInstalledDotNetFrameworks()
+        UserDomainName = Environment.UserDomainName
+     }  
+     

@@ -1,5 +1,4 @@
-#I @"tools\FAKE"
-#r "FakeLib.dll"
+#r @"tools\FAKE\tools\FakeLib.dll"
 
 open Fake
  
@@ -7,11 +6,11 @@ open Fake
 let projectName = "FAKE"
 let projectSummary = "FAKE - F# Make - Get rid of the noise in your build scripts."
 let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. Tasks and dependencies are specified in a DSL which is integrated in F#."
-let authors = ["Steffen Forkmann"; "Mauricio Scheffer"]
+let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"]
 let mail = "forkmann@gmx.de"
 let homepage = "http://github.com/forki/fake"
 
-TraceEnvironmentVariables()  
+TraceEnvironmentVariables()
   
 let buildDir = @".\build\"
 let testDir = @".\test\"
@@ -23,16 +22,13 @@ let reportDir = @".\report\"
 let deployZip = deployDir @@ sprintf "%s-%s.zip" projectName buildVersion
 let packagesDir = @".\packages\"
 
-// tools
-let templatesSrcDir = @".\tools\Docu\templates\"
-let MSpecVersion = GetPackageVersion packagesDir "Machine.Specifications"
-let mspecTool = sprintf @"%sMachine.Specifications.%s\tools\mspec-clr4.exe" packagesDir MSpecVersion
-
 // files
 let appReferences  = !! @"src\app\**\*.*sproj"
 let testReferences = !! @"src\test\**\*.*sproj"
 
 // Targets
+Target "RestorePackages" RestorePackages
+
 Target "Clean" (fun _ ->
     CleanDirs [buildDir; testDir; deployDir; docsDir; metricsDir; nugetDir; reportDir]
 
@@ -50,7 +46,34 @@ Target "SetAssemblyInfo" (fun _ ->
             AssemblyTitle = "FAKE - F# Make Command line tool";
             Guid = "fb2b540f-d97a-4660-972f-5eeff8120fba";
             OutputFileName = @".\src\app\FAKE\AssemblyInfo.fs"})
-                   
+
+    AssemblyInfo 
+        (fun p -> 
+        {p with
+            CodeLanguage = FSharp;
+            AssemblyVersion = buildVersion;
+            AssemblyTitle = "FAKE - F# Make Deploy tool";
+            Guid = "413E2050-BECC-4FA6-87AA-5A74ACE9B8E1";
+            OutputFileName = @".\src\app\Fake.Deploy\AssemblyInfo.fs"})
+
+    AssemblyInfo 
+        (fun p -> 
+        {p with
+            CodeLanguage = FSharp;
+            AssemblyVersion = buildVersion;
+            AssemblyTitle = "FAKE - F# Make Deploy Web App";
+            Guid = "2B684E7B-572B-41C1-86C9-F6A11355570E";
+            OutputFileName = @".\src\deploy.web\Fake.Deploy.Web.App\AssemblyInfo.fs"})
+
+    AssemblyInfo 
+        (fun p -> 
+        {p with
+            CodeLanguage = CSharp;
+            AssemblyVersion = buildVersion;
+            AssemblyTitle = "FAKE - F# Make Deploy Web";
+            Guid = "27BA7705-3F57-47BE-B607-8A46B27AE876";
+            OutputFileName = @".\src\deploy.web\Fake.Deploy.Web\AssemblyInfo.cs"})
+                              
     AssemblyInfo 
         (fun p -> 
         {p with
@@ -80,7 +103,7 @@ Target "GenerateDocumentation" (fun _ ->
     |> Docu (fun p ->
         {p with
             ToolPath = buildDir @@ "docu.exe"
-            TemplatesPath = templatesSrcDir
+            TemplatesPath = @".\tools\Docu\templates\"
             OutputPath = docsDir })
 )
 
@@ -110,24 +133,16 @@ Target "BuildTest" (fun _ ->
         |> Log "TestBuild-Output: "
 )
 
-Target "Test" (fun _ ->  
+Target "Test" (fun _ ->
+    let MSpecVersion = GetPackageVersion packagesDir "Machine.Specifications"
+    let mspecTool = sprintf @"%sMachine.Specifications.%s\tools\mspec-clr4.exe" packagesDir MSpecVersion
+
     !! (testDir @@ "Test.*.dll") 
       |> MSpec (fun p -> 
             {p with
                 ToolPath = mspecTool
+                ExcludeTags = ["HTTP"]
                 HtmlOutputDir = reportDir}) 
-)
-
-Target "ZipCalculatorSample" (fun _ ->
-    !! (buildDir + "\**\*.*") 
-      |> CopyTo "./Samples/Calculator/tools/FAKE/"
-        
-    !+ @"Samples\Calculator\**\*.*" 
-        -- "**\*Resharper*\**"
-        -- "**\bin\**\**"
-        -- "**\obj\**\**"
-        |> Scan
-        |> Zip @".\Samples\Calculator" (deployDir @@ sprintf "CalculatorSample-%s.zip" buildVersion)
 )
 
 Target "ZipDocumentation" (fun _ ->    
@@ -141,6 +156,8 @@ Target "CreateNuGet" (fun _ ->
 
     XCopy docsDir nugetDocsDir
     XCopy buildDir nugetToolsDir
+    XCopy @".\lib\fsi" nugetToolsDir
+    DeleteFile (nugetToolsDir @@ "Gallio.dll")
 
     NuGet (fun p -> 
         {p with               
@@ -155,13 +172,14 @@ Target "CreateNuGet" (fun _ ->
 Target "Default" DoNothing
 
 // Dependencies
-"Clean"
+"RestorePackages"
+    ==> "Clean"
     ==> "BuildApp" <=> "BuildTest"
     ==> "Test"
     ==> "CopyLicense" <=> "CopyDocu"
     ==> "BuildZip"
     ==> "GenerateDocumentation"
-    ==> "ZipDocumentation" <=> "ZipCalculatorSample"
+    ==> "ZipDocumentation"
     ==> "CreateNuGet"
     ==> "Default"
   

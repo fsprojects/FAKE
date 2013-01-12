@@ -77,6 +77,8 @@ type GallioParams =
       ReportArchive: ReportArchiveMode option
       }
 
+
+/// Default Gallio parameters
 let GallioDefaults = 
     { DoNotRun = false
       EchoResults = true
@@ -196,6 +198,12 @@ let private createLauncher param =
                    )
     launcher
 
+/// <summary>
+/// Runs tests through Gallio.
+/// </summary>
+/// <param name="setParam">Function that modifies the default parameters</param>
+/// <param name="assemblies">List of test assemblies</param>
+/// <user/>
 let Run (setParam: GallioParams -> GallioParams) assemblies =
     let param = setParam GallioDefaults
     let launcher = createLauncher param

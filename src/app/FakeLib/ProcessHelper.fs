@@ -16,6 +16,7 @@ let ExecProcessWithLambdas infoAction (timeOut:TimeSpan) silent errorF messageF 
     use p = new Process()
     p.StartInfo.UseShellExecute <- false
     infoAction p.StartInfo
+    platformInfoAction p.StartInfo
     if silent then
         p.StartInfo.RedirectStandardOutput <- true
         p.StartInfo.RedirectStandardError <- true
@@ -24,7 +25,7 @@ let ExecProcessWithLambdas infoAction (timeOut:TimeSpan) silent errorF messageF 
         p.OutputDataReceived.Add (fun d -> if d.Data <> null then messageF d.Data)
     try
         if enableProcessTracing && (not <| p.StartInfo.FileName.EndsWith "fsi.exe" ) then 
-            tracefn "%s %s" p.StartInfo.FileName p.StartInfo.Arguments
+          tracefn "%s %s" p.StartInfo.FileName p.StartInfo.Arguments
 
         p.Start() |> ignore
     with
@@ -81,6 +82,13 @@ let setEnvironmentVariables (startInfo:ProcessStartInfo) environmentSettings =
 /// returns true if the exit code was 0
 let execProcess infoAction timeOut = ExecProcess infoAction timeOut = 0    
 
+/// Starts the given process and forgets about it
+let StartProcess infoAction =
+   use p = new Process()
+   p.StartInfo.UseShellExecute <- false
+   infoAction p.StartInfo
+   p.Start() |> ignore
+
 /// Adds quotes around the string
 let quote str = "\"" + str + "\""
 
@@ -130,6 +138,7 @@ let tryFindFile dirs file =
                      path
                        |> replace "[ProgramFiles]" ProgramFiles
                        |> replace "[ProgramFilesX86]" ProgramFilesX86
+                       |> replace "[SystemRoot]" SystemRoot
                        |> directoryInfo
                    if not dir.Exists then "" else
                    let fi = dir.FullName @@ file |> fileInfo
@@ -156,9 +165,13 @@ let appSettings (key:string) =
     | exn -> [||]
 
 /// Tries to find the tool via AppSettings. If no path has the right tool we are trying the PATH system variable. 
-let findPath settingsName tool = 
+let tryFindPath settingsName tool = 
     let paths = appSettings settingsName
-    match tryFindFile paths tool with
+    tryFindFile paths tool
+
+/// Tries to find the tool via AppSettings. If no path has the right tool we are trying the PATH system variable. 
+let findPath settingsName tool =
+    match tryFindPath settingsName tool with
     | Some file -> file
     | None -> tool
 

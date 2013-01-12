@@ -37,7 +37,7 @@ let internal getReferenceElements elementName projectFileName (doc:XDocument) =
       .Descendants(xname elementName)
         |> Seq.map(fun e -> 
             let a = e.Attribute(XName.Get "Include")
-            let value = a.Value
+            let value = convertWindowsToCurrentPath a.Value
             let fileName =
                 if value.StartsWith(".." + directorySeparator) || (not <| value.Contains directorySeparator) then
                     fi.Directory.FullName @@ value
@@ -67,28 +67,44 @@ let rec getProjectReferences (projectFileName:string) =
       |> Set.ofSeq
 
 type MSBuildVerbosity = Quiet | Minimal | Normal | Detailed | Diagnostic
+type MSBuildLogParameter = Append | PerformanceSummary | Summary | NoSummary | ErrorsOnly | WarningsOnly | NoItemAndPropertyList | ShowCommandLine | ShowTimestamp | ShowEventId | ForceNoAlign  | DisableConsoleColor | DisableMPLogging | EnableMPLogging
+
+type MSBuildFileLoggerConfig =
+    { Number : int
+      Filename : string option
+      Verbosity : MSBuildVerbosity option
+      Parameters : MSBuildLogParameter list option }
 
 type MSBuildParams = 
     { Targets: string list
       Properties: (string * string) list
       MaxCpuCount: int option option
       ToolsVersion: string option
-      Verbosity: MSBuildVerbosity option }
+      Verbosity: MSBuildVerbosity option
+      FileLoggers: MSBuildFileLoggerConfig list option }
 
 let MSBuildDefaults = 
     { Targets = []
       Properties = []
       MaxCpuCount = Some None
       ToolsVersion = None
-      Verbosity = None }
+      Verbosity = None
+      FileLoggers = None }
 
-let getAllParameters targets maxcpu tools verbosity properties =
+let getAllParameters targets maxcpu tools verbosity fileLoggers properties =
     if isUnix then
-        [targets; tools; verbosity] @ properties
+        [targets; tools; verbosity] @ fileLoggers @ properties
     else
-        [targets; maxcpu; tools; verbosity] @ properties
+        [targets; maxcpu; tools; verbosity] @ fileLoggers @ properties
 
 let serializeMSBuildParams (p: MSBuildParams) = 
+    let verbosityName v =
+        match v with
+        | Quiet -> "q"
+        | Minimal -> "m"
+        | Normal -> "n"
+        | Detailed -> "d"
+        | Diagnostic -> "diag"
     let targets = 
         match p.Targets with
         | [] -> None
@@ -107,15 +123,34 @@ let serializeMSBuildParams (p: MSBuildParams) =
         match p.Verbosity with
         | None -> None
         | Some v -> 
-            let level = 
-                match v with
-                | Quiet -> "q"
-                | Minimal -> "m"
-                | Normal -> "n"
-                | Detailed -> "d"
-                | Diagnostic -> "diag"
-            Some ("v", level)
-    let allParameters = getAllParameters targets maxcpu tools verbosity properties
+            Some ("v", verbosityName v)
+    let fileLoggers =
+        let logParams param =
+            match param with
+            | Append -> "Append"
+            | PerformanceSummary -> "PerformanceSummary"
+            | Summary -> "Summary"
+            | NoSummary -> "NoSummary"
+            | ErrorsOnly -> "ErrorsOnly"
+            | WarningsOnly -> "WarningsOnly"
+            | NoItemAndPropertyList -> "NoItemAndPropertyList"
+            | ShowCommandLine -> "ShowCommandLine"
+            | ShowTimestamp -> "ShowTimestamp"
+            | ShowEventId -> "ShowEventId"
+            | ForceNoAlign -> "ForceNoAlign"
+            | DisableConsoleColor -> "DisableConsoleColor"
+            | DisableMPLogging -> "DisableMPLogging"
+            | EnableMPLogging -> "EnableMPLogging"
+        match p.FileLoggers with
+        | None -> []
+        | Some fls ->
+            fls |> List.map (fun fl -> 
+                    Some("flp" + (string fl.Number), 
+                        sprintf "%s%s%s"
+                            (match fl.Filename with | None -> "" | Some f -> sprintf "logfile=%s;" f)
+                            (match fl.Verbosity with | None -> "" | Some v -> sprintf "Verbosity=%s;" (verbosityName v))
+                            (match fl.Parameters with | None -> "" | Some ps -> ps |> List.map (fun p -> logParams p |> sprintf "%s;") |> String.concat "")))
+    let allParameters = getAllParameters targets maxcpu tools verbosity fileLoggers properties
     allParameters
     |> Seq.map (function
                     | None -> ""
@@ -134,8 +169,9 @@ let build setParams project =
     then failwithf "Building %s project failed." project
     traceEndTask "MSBuild" project
 
-/// Builds the given project files and collects the output files
-let MSBuild outputPath (targets: string) (properties: (string*string) list) projects = 
+/// Builds the given project files and collects the output files.
+/// Properties are parameterized by project name.
+let MSBuildWithProjectProperties outputPath (targets: string) (properties: string -> (string*string) list) projects = 
     let projects = projects |> Seq.toList
     let output = 
         if isNullOrEmpty outputPath then "" else
@@ -143,23 +179,29 @@ let MSBuild outputPath (targets: string) (properties: (string*string) list) proj
           |> FullName
           |> trimSeparator
 
-    let properties = if isNullOrEmpty output then properties else ("OutputPath", output)::properties
+    let properties = 
+        if isNullOrEmpty output 
+            then properties 
+            else fun x -> ("OutputPath", output)::(properties x)
 
     let dependencies =
         projects 
             |> List.map getProjectReferences
             |> Set.unionMany
 
-    let setBuildParam project = 
-        { project with
+    let setBuildParam project projectParams = 
+        { projectParams with
             Targets = targets |> split ';' 
-            Properties = project.Properties @ properties }
+            Properties = projectParams.Properties @ properties project }
 
     projects
       |> List.filter (fun project -> not <| Set.contains project dependencies)
-      |> List.iter (build setBuildParam)
+      |> List.iter (fun project -> build (setBuildParam project) project)
 
     !! (outputPath + "/**/*.*")
+
+/// Builds the given project files and collects the output files
+let MSBuild outputPath targets properties = MSBuildWithProjectProperties outputPath targets (fun _ -> properties)
 
 /// Builds the given project files and collects the output files
 let MSBuildDebug outputPath targets = MSBuild outputPath targets ["Configuration","Debug"]

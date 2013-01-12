@@ -1,3 +1,25 @@
+## 1.72.0.0
+
+* "RestorePackages" allows to restore nuget packages
+
+## 1.70.0.0
+
+* FAKE nuget package comes bundles with a fsi.exe
+* Self build downloads latest FAKE master via nuget
+
+## 1.66.1.0
+
+* Fixed bug where FAKE.Deploy didn't run the deploy scripts where used as a windows service
+* It's possible to add file loggers for MSBuild
+* Fixed path resolution for fsi on *nix
+* BREAKING CHANGE: Removed version normalization from NuGet package creation
+* Fixes for NUNit compatibility on mono 
+* Fixes in ProcessHelper for mono compatibility
+* Fixes in the mono build
+* Improved error reporting in Fake.exe
+* Added a SpecFlow helper
+* Fixed some issues in file helper routines when working with no existing directory chain
+
 ## 1.64.1.0
 
 * Fixed bug where FAKE didn't run the correct build script

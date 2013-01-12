@@ -115,3 +115,13 @@ let traceEndTask task  description =
     closeTag "task"
 
     ReportProgressFinish <| sprintf "Task: %s %s" task description
+
+let console = new ConsoleTraceListener(false, colorMap) :> ITraceListener
+
+let logToConsole(msg, eventLogEntry : System.Diagnostics.EventLogEntryType) = 
+    match eventLogEntry with
+    | System.Diagnostics.EventLogEntryType.Error -> ErrorMessage msg
+    | System.Diagnostics.EventLogEntryType.Information -> TraceMessage (msg, true)
+    | System.Diagnostics.EventLogEntryType.Warning -> ImportantMessage msg
+    | _ -> LogMessage (msg, true)
+    |> console.Write    
