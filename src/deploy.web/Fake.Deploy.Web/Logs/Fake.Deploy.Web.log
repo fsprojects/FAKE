@@ -1,0 +1,1448 @@
+2013-01-12 13:39:47,040 Raven.Database.Impl.DocumentCacher [1] INFO  - MemoryCache Settings:
+  PhysicalMemoryLimit = 99
+  CacheMemoryLimit    = 3160408064
+  PollingInterval     = 00:02:00
+2013-01-12 13:39:47,069 Raven.Storage.Esent.TransactionalStorage [1] INFO  - Esent Settings:
+  MaxVerPages      = 32768
+  CacheSizeMax     = 65536
+  DatabasePageSize = 4096
+2013-01-12 13:39:47,709 Raven.Database.Storage.IndexDefinitionStorage [1] INFO  - New index Raven%2fDocumentsByEntityName:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+Compiled to:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+2013-01-12 13:42:56,244 Raven.Database.Impl.DocumentCacher [1] INFO  - MemoryCache Settings:
+  PhysicalMemoryLimit = 99
+  CacheMemoryLimit    = 3160408064
+  PollingInterval     = 00:02:00
+2013-01-12 13:42:56,271 Raven.Storage.Esent.TransactionalStorage [1] INFO  - Esent Settings:
+  MaxVerPages      = 32768
+  CacheSizeMax     = 65536
+  DatabasePageSize = 4096
+2013-01-12 13:42:56,875 Raven.Database.Storage.IndexDefinitionStorage [1] INFO  - New index Raven%2fDocumentsByEntityName:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+Compiled to:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+2013-01-12 13:48:24,809 Raven.Database.Impl.DocumentCacher [1] INFO  - MemoryCache Settings:
+  PhysicalMemoryLimit = 99
+  CacheMemoryLimit    = 3160408064
+  PollingInterval     = 00:02:00
+2013-01-12 13:48:24,836 Raven.Storage.Esent.TransactionalStorage [1] INFO  - Esent Settings:
+  MaxVerPages      = 32768
+  CacheSizeMax     = 65536
+  DatabasePageSize = 4096
+2013-01-12 13:48:25,422 Raven.Database.Storage.IndexDefinitionStorage [1] INFO  - New index Raven%2fDocumentsByEntityName:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+Compiled to:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+2013-01-12 13:48:26,459 Raven.Database.Impl.DocumentCacher [7] INFO  - MemoryCache Settings:
+  PhysicalMemoryLimit = 99
+  CacheMemoryLimit    = 3160408064
+  PollingInterval     = 00:02:00
+2013-01-12 13:48:26,459 Raven.Storage.Esent.TransactionalStorage [7] INFO  - Esent Settings:
+  MaxVerPages      = 32768
+  CacheSizeMax     = 65536
+  DatabasePageSize = 4096
+2013-01-12 13:52:37,830 Raven.Database.Impl.DocumentCacher [1] INFO  - MemoryCache Settings:
+  PhysicalMemoryLimit = 99
+  CacheMemoryLimit    = 3160408064
+  PollingInterval     = 00:02:00
+2013-01-12 13:52:37,856 Raven.Storage.Esent.TransactionalStorage [1] INFO  - Esent Settings:
+  MaxVerPages      = 32768
+  CacheSizeMax     = 65536
+  DatabasePageSize = 4096
+2013-01-12 13:52:38,362 Raven.Database.Storage.IndexDefinitionStorage [1] INFO  - New index Raven%2fDocumentsByEntityName:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+Compiled to:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+2013-01-12 13:53:21,602 Raven.Database.Impl.DocumentCacher [13] INFO  - MemoryCache Settings:
+  PhysicalMemoryLimit = 99
+  CacheMemoryLimit    = 3160408064
+  PollingInterval     = 00:02:00
+2013-01-12 13:53:21,625 Raven.Storage.Esent.TransactionalStorage [13] INFO  - Esent Settings:
+  MaxVerPages      = 32768
+  CacheSizeMax     = 65536
+  DatabasePageSize = 4096
+2013-01-12 13:53:22,119 Raven.Database.Storage.IndexDefinitionStorage [13] INFO  - New index Raven%2fDocumentsByEntityName:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+Compiled to:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+2013-01-12 13:53:40,456 Raven.Database.Impl.DocumentCacher [1] INFO  - MemoryCache Settings:
+  PhysicalMemoryLimit = 99
+  CacheMemoryLimit    = 3160408064
+  PollingInterval     = 00:02:00
+2013-01-12 13:53:40,480 Raven.Storage.Esent.TransactionalStorage [1] INFO  - Esent Settings:
+  MaxVerPages      = 32768
+  CacheSizeMax     = 65536
+  DatabasePageSize = 4096
+2013-01-12 13:53:40,981 Raven.Database.Storage.IndexDefinitionStorage [1] INFO  - New index Raven%2fDocumentsByEntityName:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+Compiled to:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+2013-01-12 13:55:06,729 Raven.Database.Impl.DocumentCacher [1] INFO  - MemoryCache Settings:
+  PhysicalMemoryLimit = 99
+  CacheMemoryLimit    = 3160408064
+  PollingInterval     = 00:02:00
+2013-01-12 13:55:06,754 Raven.Storage.Esent.TransactionalStorage [1] INFO  - Esent Settings:
+  MaxVerPages      = 32768
+  CacheSizeMax     = 65536
+  DatabasePageSize = 4096
+2013-01-12 13:55:07,588 Raven.Database.Storage.IndexDefinitionStorage [1] INFO  - New index Raven%2fDocumentsByEntityName:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+Compiled to:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+2013-01-12 13:59:24,791 Raven.Database.Impl.DocumentCacher [1] INFO  - MemoryCache Settings:
+  PhysicalMemoryLimit = 99
+  CacheMemoryLimit    = 3160408064
+  PollingInterval     = 00:02:00
+2013-01-12 13:59:24,817 Raven.Storage.Esent.TransactionalStorage [1] INFO  - Esent Settings:
+  MaxVerPages      = 32768
+  CacheSizeMax     = 65536
+  DatabasePageSize = 4096
+2013-01-12 13:59:25,325 Raven.Database.Storage.IndexDefinitionStorage [1] INFO  - New index Raven%2fDocumentsByEntityName:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+Compiled to:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+2013-01-12 14:04:55,296 Raven.Database.Impl.DocumentCacher [1] INFO  - MemoryCache Settings:
+  PhysicalMemoryLimit = 99
+  CacheMemoryLimit    = 3160408064
+  PollingInterval     = 00:02:00
+2013-01-12 14:04:55,320 Raven.Storage.Esent.TransactionalStorage [1] INFO  - Esent Settings:
+  MaxVerPages      = 32768
+  CacheSizeMax     = 65536
+  DatabasePageSize = 4096
+2013-01-12 14:04:56,202 Raven.Database.Storage.IndexDefinitionStorage [1] INFO  - New index Raven%2fDocumentsByEntityName:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+Compiled to:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+2013-01-12 14:08:11,617 Raven.Database.Impl.DocumentCacher [1] INFO  - MemoryCache Settings:
+  PhysicalMemoryLimit = 99
+  CacheMemoryLimit    = 3160408064
+  PollingInterval     = 00:02:00
+2013-01-12 14:08:11,642 Raven.Storage.Esent.TransactionalStorage [1] INFO  - Esent Settings:
+  MaxVerPages      = 32768
+  CacheSizeMax     = 65536
+  DatabasePageSize = 4096
+2013-01-12 14:08:12,548 Raven.Database.Storage.IndexDefinitionStorage [1] INFO  - New index Raven%2fDocumentsByEntityName:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+Compiled to:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+2013-01-12 14:30:43,993 Raven.Database.Impl.DocumentCacher [1] INFO  - MemoryCache Settings:
+  PhysicalMemoryLimit = 99
+  CacheMemoryLimit    = 3160408064
+  PollingInterval     = 00:02:00
+2013-01-12 14:30:44,018 Raven.Storage.Esent.TransactionalStorage [1] INFO  - Esent Settings:
+  MaxVerPages      = 32768
+  CacheSizeMax     = 65536
+  DatabasePageSize = 4096
+2013-01-12 14:30:44,884 Raven.Database.Storage.IndexDefinitionStorage [1] INFO  - New index Raven%2fDocumentsByEntityName:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+Compiled to:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+2013-01-12 14:34:12,849 Raven.Database.Impl.DocumentCacher [1] INFO  - MemoryCache Settings:
+  PhysicalMemoryLimit = 99
+  CacheMemoryLimit    = 3160408064
+  PollingInterval     = 00:02:00
+2013-01-12 14:34:12,873 Raven.Storage.Esent.TransactionalStorage [1] INFO  - Esent Settings:
+  MaxVerPages      = 32768
+  CacheSizeMax     = 65536
+  DatabasePageSize = 4096
+2013-01-12 14:34:13,747 Raven.Database.Storage.IndexDefinitionStorage [1] INFO  - New index Raven%2fDocumentsByEntityName:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+Compiled to:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+2013-01-12 14:50:28,878 Raven.Database.Impl.DocumentCacher [1] INFO  - MemoryCache Settings:
+  PhysicalMemoryLimit = 99
+  CacheMemoryLimit    = 3160408064
+  PollingInterval     = 00:02:00
+2013-01-12 14:50:28,903 Raven.Storage.Esent.TransactionalStorage [1] INFO  - Esent Settings:
+  MaxVerPages      = 32768
+  CacheSizeMax     = 65536
+  DatabasePageSize = 4096
+2013-01-12 14:50:29,397 Raven.Database.Storage.IndexDefinitionStorage [1] INFO  - New index Raven%2fDocumentsByEntityName:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+Compiled to:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+2013-01-12 14:50:35,974 Raven.Database.Impl.DocumentCacher [18] INFO  - MemoryCache Settings:
+  PhysicalMemoryLimit = 99
+  CacheMemoryLimit    = 3160408064
+  PollingInterval     = 00:02:00
+2013-01-12 14:50:35,996 Raven.Storage.Esent.TransactionalStorage [18] INFO  - Esent Settings:
+  MaxVerPages      = 32768
+  CacheSizeMax     = 65536
+  DatabasePageSize = 4096
+2013-01-12 14:50:36,468 Raven.Database.Storage.IndexDefinitionStorage [18] INFO  - New index Raven%2fDocumentsByEntityName:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+Compiled to:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+2013-01-12 15:10:11,248 Raven.Database.Impl.DocumentCacher [1] INFO  - MemoryCache Settings:
+  PhysicalMemoryLimit = 99
+  CacheMemoryLimit    = 3160408064
+  PollingInterval     = 00:02:00
+2013-01-12 15:10:11,271 Raven.Storage.Esent.TransactionalStorage [1] INFO  - Esent Settings:
+  MaxVerPages      = 32768
+  CacheSizeMax     = 65536
+  DatabasePageSize = 4096
+2013-01-12 15:10:11,792 Raven.Database.Storage.IndexDefinitionStorage [1] INFO  - New index Raven%2fDocumentsByEntityName:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+Compiled to:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+2013-01-12 15:23:02,324 Raven.Database.Impl.DocumentCacher [1] INFO  - MemoryCache Settings:
+  PhysicalMemoryLimit = 99
+  CacheMemoryLimit    = 3160408064
+  PollingInterval     = 00:02:00
+2013-01-12 15:23:02,349 Raven.Storage.Esent.TransactionalStorage [1] INFO  - Esent Settings:
+  MaxVerPages      = 32768
+  CacheSizeMax     = 65536
+  DatabasePageSize = 4096
+2013-01-12 15:23:02,856 Raven.Database.Storage.IndexDefinitionStorage [1] INFO  - New index Raven%2fDocumentsByEntityName:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+Compiled to:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+2013-01-12 15:23:39,732 Raven.Database.Impl.DocumentCacher [18] INFO  - MemoryCache Settings:
+  PhysicalMemoryLimit = 99
+  CacheMemoryLimit    = 3160408064
+  PollingInterval     = 00:02:00
+2013-01-12 15:23:39,757 Raven.Storage.Esent.TransactionalStorage [18] INFO  - Esent Settings:
+  MaxVerPages      = 32768
+  CacheSizeMax     = 65536
+  DatabasePageSize = 4096
+2013-01-12 15:23:40,302 Raven.Database.Storage.IndexDefinitionStorage [18] INFO  - New index Raven%2fDocumentsByEntityName:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+Compiled to:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+2013-01-12 15:26:27,454 Raven.Database.Impl.DocumentCacher [1] INFO  - MemoryCache Settings:
+  PhysicalMemoryLimit = 99
+  CacheMemoryLimit    = 3160408064
+  PollingInterval     = 00:02:00
+2013-01-12 15:26:27,479 Raven.Storage.Esent.TransactionalStorage [1] INFO  - Esent Settings:
+  MaxVerPages      = 32768
+  CacheSizeMax     = 65536
+  DatabasePageSize = 4096
+2013-01-12 15:26:28,050 Raven.Database.Storage.IndexDefinitionStorage [1] INFO  - New index Raven%2fDocumentsByEntityName:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+
+Compiled to:
+using Raven.Abstractions;
+using Raven.Database.Linq;
+using System.Linq;
+using System.Collections.Generic;
+using System.Collections;
+using System;
+using Raven.Database.Linq.PrivateExtensions;
+using Lucene.Net.Documents;
+using System.Globalization;
+using Raven.Database.Indexing;
+
+
+public class Index_Raven_2fDocumentsByEntityName : Raven.Database.Linq.AbstractViewGenerator
+{
+	public Index_Raven_2fDocumentsByEntityName()
+	{
+		this.ViewText = @"from doc in docs 
+let Tag = doc[""@metadata""][""Raven-Entity-Name""]
+select new { Tag, LastModified = (DateTime)doc[""@metadata""][""Last-Modified""] };";
+		this.AddMapDefinition(docs => 
+			from doc in docs
+			let Tag = doc["@metadata"]["Raven-Entity-Name"]
+			select new {
+				Tag,
+				LastModified = (DateTime)doc["@metadata"]["Last-Modified"],
+				__document_id = doc.__document_id
+			});
+		this.AddField("LastModified");
+		this.AddField("__document_id");
+		this.AddField("Tag");
+		this.AddQueryParameterForMap("__document_id");
+		this.AddQueryParameterForReduce("__document_id");
+	}
+}
+

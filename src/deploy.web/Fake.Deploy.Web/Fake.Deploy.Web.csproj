@@ -70,6 +70,9 @@
     <Reference Include="Raven.Database">
       <HintPath>..\..\..\packages\RavenDB.Database.2.0.2230\lib\net40\Raven.Database.dll</HintPath>
     </Reference>
+    <Reference Include="RavenDBMembership">
+      <HintPath>..\..\..\lib\RavenDBMembership.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
@@ -187,6 +190,18 @@
     <Content Include="Views\Admin\Agent.cshtml" />
     <Content Include="Views\Admin\Environment.cshtml" />
     <Content Include="Views\Home\Agent.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />
+    <Content Include="Views\Account\EditUser.cshtml" />
+    <Content Include="Views\Account\LogOn.cshtml" />
+    <Content Include="Views\Account\ManageRoles.cshtml" />
+    <Content Include="Views\Account\ManageUsers.cshtml" />
+    <Content Include="Views\Account\Register.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Package_Temp\" />

@@ -3,12 +3,15 @@
 open System
 open Fake.Deploy.Web.Model
 open Raven.Client.Indexes
-
+open RavenDBMembership.Provider
 
 let private createIndexes (assems : seq<Reflection.Assembly>) =
     assems |> Seq.iter (fun ass -> IndexCreation.CreateIndexes(ass, documentStore))
 
 let Init() = 
+    RavenDBMembershipProvider.DocumentStore <- documentStore
+    RavenDBRoleProvider.DocumentStore <- documentStore
+
     createIndexes [Reflection.Assembly.GetExecutingAssembly()]
 
     let agent1 = Agent.Create("http://localhost:8080","localhost")

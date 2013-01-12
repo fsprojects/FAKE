@@ -1,0 +1,100 @@
+﻿@model RavenDBMembership.MVC.Models.RegisterModel
+
+@{
+    ViewBag.Title = "Register User";    
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Register</title>
+</head>
+<body>
+
+    @using (Html.BeginForm("DoRegister", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        @Html.ValidationSummary(true)
+        <fieldset>
+            <legend>Register</legend>
+
+            <div class="control-group">
+                <label class="control-label">Username</label>
+                <div class="controls">
+                    @Html.EditorFor(model => model.UserName)
+                    @Html.ValidationMessageFor(model => model.UserName)
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">First Name</label>
+                <div class="controls">
+                    @Html.EditorFor(model => model.FirstName)
+                    @Html.ValidationMessageFor(model => model.FirstName)
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Last Name</label>
+                <div class="controls">
+                    @Html.EditorFor(model => model.LastName)
+                    @Html.ValidationMessageFor(model => model.LastName)
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">E-mail</label>
+                <div class="controls">
+                    @Html.EditorFor(model => model.Email)
+                    @Html.ValidationMessageFor(model => model.Email)
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Password</label>
+                <div class="controls">
+                    @Html.EditorFor(model => model.Password)
+                    @Html.ValidationMessageFor(model => model.Password)
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Confirm Password</label>
+                <div class="controls">
+                    @Html.EditorFor(model => model.ConfirmPassword)
+                    @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Secret Question</label>
+                <div class="controls">
+                    @Html.EditorFor(model => model.PasswordQuestion)
+                    @Html.ValidationMessageFor(model => model.PasswordQuestion)
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Answer</label>
+                <div class="controls">
+                    @Html.EditorFor(model => model.PasswordQuestionAnswer)
+                    @Html.ValidationMessageFor(model => model.PasswordQuestionAnswer)
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Confirm Answer</label>
+                <div class="controls">
+                    @Html.EditorFor(model => model.ConfirmPasswordQuestionAnswer)
+                    @Html.ValidationMessageFor(model => model.ConfirmPasswordQuestionAnswer)
+                </div>
+            </div>
+
+            <p>
+                <button class="btn btn-primary" type="submit"><i class="icon-ok-circle icon-white"></i>&nbsp;Register</button>
+                <button class="btn btn-danger" type="reset"><i class="icon-remove icon-white"></i>&nbsp;Cancel</button>
+            </p>
+        </fieldset>
+    }
+
+</body>
+</html>

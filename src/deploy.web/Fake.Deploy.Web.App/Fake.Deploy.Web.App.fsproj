@@ -63,7 +63,11 @@
       <HintPath>..\..\..\packages\RavenDB.Database.2.0.2230\lib\net40\Raven.Database.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="RavenDBMembership">
+      <HintPath>..\..\..\lib\RavenDBMembership.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <Private>True</Private>
@@ -83,6 +87,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <Private>True</Private>
     </Reference>
@@ -99,8 +104,8 @@
     <Compile Include="Model.fs" />
     <Compile Include="InitialData.fs" />
     <Compile Include="ApiControllers.fs" />
-    <Compile Include="Controllers.fs" />
     <Compile Include="Global.fs" />
+    <Compile Include="Controllers.fs" />
     <None Include="packages.config" />
     <Compile Include="AssemblyInfo.fs" />
   </ItemGroup>

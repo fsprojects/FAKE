@@ -52,7 +52,7 @@ module Model =
                     x.Agents <- Seq.append (agents |> Seq.map (fun a -> a.Ref)) x.Agents
 
     let documentStore = 
-        let ds = new EmbeddableDocumentStore(ConnectionStringName = "RavenDB", UseEmbeddedHttpServer = true)
+        let ds = new EmbeddableDocumentStore(ConnectionStringName = "RavenDB")
         ds.Conventions.IdentityPartsSeparator <- "-"
         ds.Conventions.CustomizeJsonSerializer <- new Action<_>(fun s -> s.Converters.Add(new Helpers.RavenUnionTypeConverter()))
         ds.Initialize()
