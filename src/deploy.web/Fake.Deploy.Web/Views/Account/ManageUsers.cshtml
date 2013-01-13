@@ -7,10 +7,9 @@
 
 <h2>Manage Users</h2>
 
-<table>
+<table class="table table-bordered">
 	<thead>
 		<tr>
-			<th>Id</th>
 			<th>Username</th>
 			<th>Email</th>
 			<th>Last login date</th>
@@ -20,18 +19,16 @@
 	<tbody>
 		@foreach(MembershipUser user in Model) {
 			<tr>
-				<td>@user.ProviderUserKey</td>
 				<td>@user.UserName</td>
 				<td>@user.Email</td>
 				<td>@user.LastLoginDate</td>
 				<td>
-                    <a href="@Url.Action("EditUser", new { username = user.UserName })" class="btn btn-primary"><i class="icon-pencil icon-white"></i>&nbsp;Edit User</a>
+                    <a href="@Url.Action("EditUser", new { username = user.UserName })" class="btn btn-info" style="margin-left: 10px"><i class="icon-edit icon-white"></i>&nbsp;Edit User</a>
 				</td>
 			</tr>
 		}
 	</tbody>
 </table>
-<p>
+<div style="margin: 10px">
     <a href="@Url.Action("Register")" class="btn btn-primary"><i class="icon-user icon-white"></i>&nbsp;Add user</a>
-    <a href="@Url.Action("ManageRoles")" class="btn btn-primary"><i class="icon-pencil icon-white"></i>&nbsp;Manage Roles</a>
-</p>
+</div>

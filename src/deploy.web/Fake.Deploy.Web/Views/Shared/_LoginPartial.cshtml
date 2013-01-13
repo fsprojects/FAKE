@@ -1,20 +1,24 @@
 ﻿@if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
-    {
-    @Html.AntiForgeryToken()
+
     <ul class="nav pull-right">
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account @("(" + User.Identity.Name + ")")
-      <b class="caret"></b>
+                <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-                <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                <li>@using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                    {
+                    @Html.AntiForgeryToken()
+                    <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+                    }
+                </li>
+                <li>
+                    @Html.ActionLink("Manage Account", "EditUser", "Account", new { username = User.Identity.Name }, null)
+                </li>
             </ul>
         </li>
     </ul>
-            
-    }
 }
 else
 {
@@ -23,7 +27,7 @@ else
             @Html.ActionLink("Log in", "LogOn", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
         </li>
     </ul>
-   
+
 }
 
 

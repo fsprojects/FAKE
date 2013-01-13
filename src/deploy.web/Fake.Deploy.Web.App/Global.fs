@@ -35,6 +35,7 @@ type Global() =
 
     static member RegisterGlobalFilters(filters:GlobalFilterCollection) =
         filters.Add(new HandleErrorAttribute())
+        
 
     static member RegisterRoutes(routes:RouteCollection) =
         routes.IgnoreRoute("{resource}.axd/{*pathInfo}")
@@ -52,3 +53,6 @@ type Global() =
         Global.RegisterGlobalFilters(GlobalFilters.Filters)
         Global.RegisterRoutes(RouteTable.Routes) |> ignore
         InitialData.Init()
+
+    member this.End() = 
+        Fake.Deploy.Web.Model.documentStore.Dispose();

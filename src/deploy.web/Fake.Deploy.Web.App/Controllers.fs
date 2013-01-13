@@ -19,19 +19,25 @@ open Fake.Deploy.Web.Model
 open Fake.HttpClientHelper
 
 [<HandleError>]
+[<Authorize>]
 type AdminController() = 
     inherit Controller()
 
+    [<Authorize(Roles="Administrator")>]
     member this.Agent() = this.View() :> ActionResult
 
+    [<Authorize(Roles="Administrator")>]
     member this.Environment() = this.View() :> ActionResult
 
 [<HandleError>]
+[<Authorize>]
 type HomeController() = 
     inherit Controller()
 
+    [<Authorize>]
     member this.Index() = this.View() :> ActionResult
 
+    [<Authorize>]
     member this.Agent(agentId : string) = this.View("Agent", agentId |> box) :> ActionResult
 
 
@@ -40,7 +46,7 @@ type ResetPasswordQuestionAndAnswerRouteValues = {
 }
 
 [<HandleError>]
-type AccountController() as self =
+type AccountController() =
     inherit Controller()
    
     member val FormsService = new FormsAuthenticationService() :> IFormsAuthenticationService with get, set
@@ -130,20 +136,7 @@ type AccountController() as self =
 
         member this.ManageUsers() = 
             this.View(this.MembershipService.GetAllUsers()) :> ActionResult
-        
-        member this.ManageRoles() =
-            this.View(this.MembershipService.GetAllRoles()) :> ActionResult
-
-        [<HttpPost>]
-        member this.DoManageRoles(roleName : string) =
-            if (String.IsNullOrEmpty(roleName))
-            then
-                this.ModelState.AddModelError("roleName", "Name is required");
-                this.ManageRoles();
-            else
-                this.MembershipService.AddRole(roleName);
-                this.RedirectToAction("ManageRoles") :> ActionResult
-
+       
         member this.EditUser(username : string) =
             let user = this.MembershipService.GetUser(username)
             let roles = this.MembershipService.GetAllRoles()
@@ -157,12 +150,6 @@ type AccountController() as self =
             this.MembershipService.UpdateUser(user, model.UserRoles);            
             this.RedirectToAction("ManageUsers") :> ActionResult
             
-
-        [<HttpPost>]
-        member this.DeleteRole(roleName : string) =
-            this.MembershipService.DeleteRole(roleName);
-            this.RedirectToAction("ManageRoles") :> ActionResult
-
         //enablePasswordReset must be set to true in the web.config for this action
         member this.ResetPassword() = this.View() :> ActionResult
 
