@@ -1,16 +1,27 @@
-﻿@model RavenDBMembership.MVC.Models.RegisterModel
-
-@{
-    ViewBag.Title = "Register User";    
+﻿@{
+    ViewBag.Title = "Manage Users";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div>
-    @using (Html.BeginForm("DoRegister", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
-    {
-        @Html.ValidationSummary(true)
-        <fieldset>
-            <legend>Register</legend>
+@section scripts {
+    <script src="@Url.Content("~/Scripts/app/Admin.User.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            var vm = new UserAdminViewModel();
+            vm.build();
+            ko.applyBindings(vm);
+        });
+    </script>
+}
 
+<h2>Manage Users</h2>
+
+<div class="row" style="margin-left: 30px">
+    <div class="span6">
+        <form class="form-horizontal" data-bind="submit: $root.registerUser">
+            <fieldset>
+                <legend>Create User</legend>
+            </fieldset>
             <div class="control-group">
                 <label class="control-label">Username</label>
                 <div class="controls">
@@ -52,35 +63,34 @@
                     <input type="password" id="ConfirmPassword" name="ConfirmPassword"/>
                 </div>
             </div>
-
-            <div class="control-group">
-                <label class="control-label">Secret Question</label>
-                <div class="controls">
-                    @Html.EditorFor(model => model.PasswordQuestion)
-                    @Html.ValidationMessageFor(model => model.PasswordQuestion)
-                </div>
-            </div>
-
-            <div class="control-group">
-                <label class="control-label">Answer</label>
-                <div class="controls">
-                    @Html.EditorFor(model => model.PasswordQuestionAnswer)
-                    @Html.ValidationMessageFor(model => model.PasswordQuestionAnswer)
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label">Confirm Answer</label>
-                <div class="controls">
-                    @Html.EditorFor(model => model.ConfirmPasswordQuestionAnswer)
-                    @Html.ValidationMessageFor(model => model.ConfirmPasswordQuestionAnswer)
-                </div>
-            </div>
-
+            
             <p>
                 <button class="btn btn-primary" type="submit"><i class="icon-ok-circle icon-white"></i>&nbsp;Register</button>
                 <button class="btn btn-danger" type="reset"><i class="icon-remove icon-white"></i>&nbsp;Cancel</button>
             </p>
-        </fieldset>
-    }
 
+        </form>
+    </div>
+    <div class="span6">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Last login date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: users">
+                    <tr>
+                        <td data-bind="text: UserName"></td>
+                        <td data-bind="text: Email"></td>
+                        <td data-bind="text: LastLoginDate"></td>
+                        <td>
+                            <button data-bind="click: $root.deleteUser" class="btn btn-danger" style="margin-left: 10px"><i class="icon-trash icon-white"></i>&nbsp;Delete User</button>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

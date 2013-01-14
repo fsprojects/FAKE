@@ -1,47 +1,38 @@
 ﻿@model RavenDBMembership.MVC.Models.LogOnModel
 
 @{
-    ViewBag.Title = "Log On";
+    ViewBag.Title = "Sign In";
 }
+<div class="hero-unit span4 offset4">
+    <h2>Sign In</h2>
+    @Html.ValidationSummary(true, "Login was unsuccessful. Please correct the errors and try again.")
 
-<h2>Log On</h2>
-<p>
-    Please enter your username and password. @Html.ActionLink("Register", "Register") if you don't have an account.
-</p>
-@Html.ValidationSummary(true, "Login was unsuccessful. Please correct the errors and try again.")
-
-@using (Html.BeginForm("DoLogOn", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
-{
-    <div>
-        <fieldset>
-            <legend>Account Information</legend>
-
-            <div class="control-group">
-                <label class="control-label">Username</label>
-                <div class="controls">
-                    @Html.TextBoxFor(m => m.UserName)
+    @using (Html.BeginForm("DoLogOn", "Account", null, FormMethod.Post, new { @class = "form" }))
+    {
+                <div class="control-group">
+                    <label class="control-label">Username</label>
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.UserName)
+                    </div>
                 </div>
-            </div>
 
-            <div class="control-group">
-                <label class="control-label">Password</label>
-                <div class="controls">
-                    @Html.PasswordFor(m => m.Password)
-                    @Html.ValidationMessageFor(m => m.Password)
+                <div class="control-group">
+                    <label class="control-label">Password (<a href="@Url.Action("ResetPassword")">Forgot Password?</a>)</label>
+                    <div class="controls">
+                        @Html.PasswordFor(m => m.Password)
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </div>
                 </div>
-            </div>
 
-            <div class="control-group">
-                <label class="control-label">Remember Me?</label>
-                <div class="controls">
-                    @Html.CheckBoxFor(m => m.RememberMe)
+                <div class="control-group">
+                    <label class="checkbox">
+                        Remember Me?
+                        @Html.CheckBoxFor(m => m.RememberMe)
+                    </label>
                 </div>
-            </div>
-            <p>
-                <button class="btn btn-primary" type="submit"><i class="icon-ok-circle icon-white"></i>&nbsp;Log on</button>
-                <button class="btn btn-danger" type="reset"><i class="icon-remove icon-white"></i>&nbsp;Cancel</button>
-                <a href="@Url.Action("ResetPassword")" class="btn btn-warning offset1"><i class="icon-refresh icon-white"></i>&nbsp;Forgot Password</a>
-            </p>
-        </fieldset>
-    </div>
-}
+
+                <p>
+                    <button class="btn btn-large btn-success" type="submit">Log on</button>
+                </p>
+    }
+</div>

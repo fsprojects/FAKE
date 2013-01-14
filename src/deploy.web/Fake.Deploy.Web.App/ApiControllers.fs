@@ -9,7 +9,49 @@ open System.Net.Http
 open Fake.Deploy.Web
 open Fake.Deploy.Web.Model
 open Fake.HttpClientHelper
+open RavenDBMembership.MVC.Models
+open System.Web.Security
 open log4net
+
+type UserController() =
+    inherit ApiController()
+
+    let logger = LogManager.GetLogger("UserController")
+    member val MembershipService = new AccountMembershipService() :> IMembershipService with get, set
+
+    member this.Get() = 
+        try
+            this.Request.CreateResponse(HttpStatusCode.OK, this.MembershipService.GetAllUsers())
+        with e ->
+            logger.Error("An error occured retrieving users" ,e)
+            this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e)
+
+    member this.Get(id : string) = 
+        try
+            match this.MembershipService.GetUser(id) with
+            | null -> this.Request.CreateResponse(HttpStatusCode.NotFound)
+            | user -> this.Request.CreateResponse(HttpStatusCode.OK, user)
+        with e ->
+            logger.Error(sprintf "An error occured retrieving user %s" id,e)
+            this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e)
+
+    member this.Post(model : RavenDBMembership.MVC.Models.RegisterModel) = 
+        async {
+            if model.Password = model.ConfirmPassword then
+                match this.MembershipService.CreateUser(model.UserName, model.Password, model.Email, "", "") with
+                | MembershipCreateStatus.Success -> return this.Request.CreateResponse(HttpStatusCode.Created)
+                | s -> return this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, AccountValidation.ErrorCodeToString(s));
+            else return this.Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Data is invalid");
+        } |> Async.toTask
+
+    member this.Delete(id : string) = 
+        try
+            if this.MembershipService.DeleteUser(id)
+            then this.Request.CreateResponse(HttpStatusCode.OK)
+            else this.Request.CreateErrorResponse(HttpStatusCode.NotFound, sprintf "Could not find user %s" id)
+        with e ->
+            logger.Error(sprintf "An error occured deleting user %s" id,e)
+            this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e)
 
 type EnvironmentController() =
     inherit ApiController()

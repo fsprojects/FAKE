@@ -58,11 +58,11 @@ module Model =
         ds.Initialize()
 
     let getEnvironment (id : string) = 
-        match id with
-        | null -> { Id = id; Name = null; Description = null; Agents = Seq.empty }
-        | _ ->
-            use session = documentStore.OpenSession()
-            session.Load<Environment>(id)
+        use session = documentStore.OpenSession()   
+        match session.Load<Environment>(id) |> box with
+        | null -> None
+        | env -> Some(env |> unbox<Environment>)
+            
 
     let saveEnvironment (env : Environment) = 
         use session = documentStore.OpenSession()
@@ -117,11 +117,10 @@ module Model =
         session.SaveChanges()
 
     let getAgent (id : string) =
-        match id with
-        | null -> { Id = id; Name = null; Address = null }
-        | _ ->
-            use session = documentStore.OpenSession()
-            session.Load<Agent>(id)
+        use session = documentStore.OpenSession()   
+        match session.Load<Agent>(id) |> box with
+        | null -> None
+        | env -> Some(env |> unbox<Agent>)
      
 
 
