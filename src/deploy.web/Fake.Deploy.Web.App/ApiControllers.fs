@@ -154,11 +154,12 @@ type PackageController() =
 
                 match postDeploymentPackage (agentUrl.Trim('/') + "/fake/") filePath with
                 | Failure(err) -> 
-                    return raise(err :?> System.Exception)
-                | Success -> 
+                    return this.Request.CreateResponse(HttpStatusCode.InternalServerError, err)
+                | Success a -> 
                     if File.Exists(filePath) then File.Delete(filePath)
-                    return created (sprintf "Successfully deployed package to %s" agentUrl) this
-                | _ -> return this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Unexpected response")
+                    return created a this
+                | _ -> 
+                    return this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Unexpected response")
             with e ->
                 logger.Error("An error occured deploying package",e)
                 return this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e)

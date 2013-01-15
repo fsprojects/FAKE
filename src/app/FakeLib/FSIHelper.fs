@@ -1,6 +1,9 @@
 ﻿[<AutoOpen>]
 module Fake.FSIHelper
-   
+
+open System.Linq
+open System.Diagnostics
+
 /// The Path to the F# interactive tool
 let fsiPath = 
     let ev = environVar "FSI"
@@ -20,15 +23,13 @@ let fsiPath =
         let fi = fileInfo (System.IO.Path.Combine(dir,"fsi.exe"))
         if fi.Exists then fi.FullName else
         findPath "FSIPath" "fsi.exe"
-      
-/// Run the given buildscript with fsi.exe
-let runBuildScriptAt workingDirectory printDetails script args =
-    if printDetails then traceFAKE "Running Buildscript: %s" script
-    
-    let result = execProcess (fun info ->  
+
+let fsiStartInfo script workingDirectory args = 
+    (fun (info : ProcessStartInfo) ->  
         info.FileName <- fsiPath
         info.Arguments <- script
         info.WorkingDirectory <- workingDirectory
+        
             
         let setVar (k,v) =
             if info.EnvironmentVariables.ContainsKey k then
@@ -40,9 +41,23 @@ let runBuildScriptAt workingDirectory printDetails script args =
 
         setVar("MSBuild",msBuildExe)
         setVar("GIT",Git.CommandHelper.gitPath)
-        setVar("FSI",fsiPath)) System.TimeSpan.MaxValue
+        setVar("FSI",fsiPath))
+      
+/// Run the given buildscript with fsi.exe
+let executeFSI workingDirectory script args =
+   
+    let (result, messages) = 
+        ExecProcessRedirected  
+            (fsiStartInfo script workingDirectory args)
+            System.TimeSpan.MaxValue
     
     System.Threading.Thread.Sleep 1000
+    (result, messages)
+      
+/// Run the given buildscript with fsi.exe
+let runBuildScriptAt workingDirectory printDetails script args =
+    if printDetails then traceFAKE "Running Buildscript: %s" script
+    let (result, _) = executeFSI workingDirectory script args
     result
 
 let runBuildScript printDetails script args =

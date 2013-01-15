@@ -53,6 +53,19 @@ let ExecProcessAndReturnMessages infoAction timeOut =
     let exitCode = ExecProcessWithLambdas infoAction timeOut true (errors.Add) (messages.Add)    
     exitCode = 0,messages,errors
 
+type ConsoleMessage = {
+    IsError : bool
+    Message : string
+    Timestamp : DateTimeOffset
+}
+
+let ExecProcessRedirected infoAction timeOut = 
+    let messages = ref []
+    let appendMessage isError msg = 
+        messages := { IsError = isError; Message = msg; Timestamp = DateTimeOffset.UtcNow } :: !messages
+    let exitCode = ExecProcessWithLambdas infoAction timeOut true (appendMessage true) (appendMessage false)    
+    exitCode = 0, (!messages |> List.rev |> Seq.ofList)
+ 
 /// Runs the given process
 /// returns the exit code
 let execProcess2 infoAction timeOut silent = ExecProcessWithLambdas infoAction timeOut silent traceError trace  

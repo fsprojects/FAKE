@@ -191,15 +191,8 @@
     <Content Include="Views\Admin\Agent.cshtml" />
     <Content Include="Views\Admin\Environment.cshtml" />
     <Content Include="Views\Home\Agent.cshtml" />
-    <Content Include="Views\Account\ChangePassword.cshtml">
-      <SubType>Code</SubType>
-    </Content>
-    <Content Include="Views\Account\ChangePasswordSuccess.cshtml" />
     <Content Include="Views\Account\LogOn.cshtml" />
     <Content Include="Views\Admin\Users.cshtml" />
-    <Content Include="Views\Account\Register.cshtml">
-      <SubType>Code</SubType>
-    </Content>
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
