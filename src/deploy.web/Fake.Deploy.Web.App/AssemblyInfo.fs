@@ -1,4 +1,4 @@
-module Fake.Deploy.Web.AssemblyInfo
+module Fake.Deploy.Web.App.AssemblyInfo
 #nowarn "49" // uppercase argument names
 #nowarn "67" // this type test or downcast will always hold
 #nowarn "66" // tis upast is unnecessary - the types are identical
@@ -9,22 +9,22 @@ open System
 open System.Reflection
 open System.Runtime.CompilerServices
 open System.Runtime.InteropServices
-exception ReturnExceptionC13B96D57CC849C9B899AC8DEEF5167D of obj
-exception ReturnNoneExceptionC13B96D57CC849C9B899AC8DEEF5167D
+exception ReturnException183c26a427ae489c8fd92ec21a0c9a59 of obj
+exception ReturnNoneException183c26a427ae489c8fd92ec21a0c9a59
 
 [<assembly: ComVisible (false)>]
 
 [<assembly: CLSCompliant (false)>]
 
-[<assembly: Guid ("C13B96D5-7CC8-49C9-B899-AC8DEEF5167D")>]
+[<assembly: Guid ("2B684E7B-572B-41C1-86C9-F6A11355570E")>]
 
-[<assembly: AssemblyTitle ("Fake.Deploy.Web")>]
+[<assembly: AssemblyTitle ("FAKE - F# Make Deploy Web App")>]
 
-[<assembly: AssemblyProduct ("Fake.Deploy.Web")>]
+[<assembly: AssemblyProduct ("FAKE - F# Make Deploy Web App")>]
 
-[<assembly: AssemblyVersion ("0.0.1")>]
+[<assembly: AssemblyVersion ("LocalBuild")>]
 
-[<assembly: AssemblyFileVersion ("0.0.1")>]
+[<assembly: AssemblyFileVersion ("LocalBuild")>]
 
 [<assembly: AssemblyDelaySign (false)>]
 

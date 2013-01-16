@@ -55,7 +55,25 @@ Target "SetAssemblyInfo" (fun _ ->
             AssemblyTitle = "FAKE - F# Make Deploy tool";
             Guid = "413E2050-BECC-4FA6-87AA-5A74ACE9B8E1";
             OutputFileName = @".\src\app\Fake.Deploy\AssemblyInfo.fs"})
-                   
+
+    AssemblyInfo 
+        (fun p -> 
+        {p with
+            CodeLanguage = FSharp;
+            AssemblyVersion = buildVersion;
+            AssemblyTitle = "FAKE - F# Make Deploy Web App";
+            Guid = "2B684E7B-572B-41C1-86C9-F6A11355570E";
+            OutputFileName = @".\src\deploy.web\Fake.Deploy.Web.App\AssemblyInfo.fs"})
+
+    AssemblyInfo 
+        (fun p -> 
+        {p with
+            CodeLanguage = CSharp;
+            AssemblyVersion = buildVersion;
+            AssemblyTitle = "FAKE - F# Make Deploy Web";
+            Guid = "27BA7705-3F57-47BE-B607-8A46B27AE876";
+            OutputFileName = @".\src\deploy.web\Fake.Deploy.Web\AssemblyInfo.cs"})
+                              
     AssemblyInfo 
         (fun p -> 
         {p with

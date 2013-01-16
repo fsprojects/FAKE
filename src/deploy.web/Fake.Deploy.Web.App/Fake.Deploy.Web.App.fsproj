@@ -99,6 +99,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyInfo.fs" />  
     <Compile Include="UnionTypeConverter.fs" />
     <Compile Include="ApiHelpers.fs" />
     <Compile Include="Model.fs" />
@@ -107,7 +108,6 @@
     <Compile Include="Global.fs" />
     <Compile Include="Controllers.fs" />
     <None Include="packages.config" />
-    <Compile Include="AssemblyInfo.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\app\FakeLib\FakeLib.fsproj">
