@@ -1,0 +1,38 @@
+﻿@model RavenDBMembership.MVC.Models.LogOnModel
+
+@{
+    ViewBag.Title = "Sign In";
+}
+<div class="hero-unit span4 offset4">
+    <h2>Sign In</h2>
+    @Html.ValidationSummary(true, "Login was unsuccessful. Please correct the errors and try again.")
+
+    @using (Html.BeginForm("DoLogOn", "Account", null, FormMethod.Post, new { @class = "form" }))
+    {
+                <div class="control-group">
+                    <label class="control-label">Username</label>
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.UserName)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Password</label>
+                    <div class="controls">
+                        @Html.PasswordFor(m => m.Password)
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="checkbox">
+                        Remember Me?
+                        @Html.CheckBoxFor(m => m.RememberMe)
+                    </label>
+                </div>
+
+                <p>
+                    <button class="btn btn-large btn-success" type="submit">Log on</button>
+                </p>
+    }
+</div>
