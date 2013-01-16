@@ -29,7 +29,7 @@
     <div class="row" style="margin-left: 30px">
         <div class="span12">
             <div class="row">
-                <form id="fileupload" class="span12" action="/api/v1/package" method="POST" enctype="multipart/form-data">
+                <form id="fileupload" class="span12" action="/api/v1/package/deploy" method="POST" enctype="multipart/form-data">
                     <div id="selectPackageBtn" class="btn btn-success fileinput-button">
                         <i class="icon-plus icon-white"></i>
                         <span>Deploy Package</span>
@@ -54,33 +54,36 @@
 
             <div class="row">
                 <div class="span6">
-                    <table class="table table-bordered" data-bind="visible: recentMessages().length > 0">
-                        <thead>
-                            <tr>
-                                <td>Timestamp</td>
-                                <td></td>
-                            </tr>
-                        </thead>
-                        <tbody data-bind="foreach: recentMessages">
-                            <tr data-bind="css: { error: IsError }">
-                                <td data-bind="text: Timestamp"></td>
-                                <td data-bind="text: Message"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="span6">
                     <div class="tabbable tabs-left">
                         <!-- Only required for left/right tabs -->
                         <ul class="nav nav-tabs">
-                            <li class="active"><a href="#details" data-toggle="tab">Agent Details</a></li>
-                            <li><a href="#deployments" data-toggle="tab">Deployments</a></li>
+                            <li class="active">
+                                <a href="#deployments" data-toggle="tab">Deployments</a>
+                            </li>
+                            <li><a href="#details" data-toggle="tab">Agent Details</a></li>
                         </ul>
                         <div class="tab-content">
-                            <div class="tab-pane active" id="details">
+                            <div class="tab-pane active" id="deployments">
+                                <div class="well" data-bind="foreach: deployments">
+                                    <div>
+                                        <h4 data-bind="text: Name"></h4>
+                                        <p>
+                                            <span data-bind="text: Description"></span>
+                                        </p>
+                                        <div data-bind="if: $root.agentStatus().available">
+                                            <form data-bind="submit: $root.rollbackDeployment">
+                                                <input type="hidden" name="agentUrl" data-bind="value: $root.agent().Address" />
+                                                <input type="hidden" name="appName" data-bind="value: Id" />
+                                                <input type="hidden" name="version" value="HEAD~1" />
+                                                <button class="btn btn-primary" type="submit">Rollback to Previous</button>
+                                            </form>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="details">
                                 <div data-bind="with: agentDetails">
-                                    <h3>Agent Details</h3>
-
                                     <div class="well">
                                         <dl class="dl-horizontal">
                                             <dt>Machine Name:</dt>
@@ -103,22 +106,24 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane" id="deployments">
-                                <h3>Current deployments</h3>
+                            
 
-                                <div class="well" data-bind="foreach: deployments">
-                                    <div>
-                                        <h4 data-bind="text: Name"></h4>
-                                        <p>
-                                            <span data-bind="text: Description"></span>
-                                        </p>
-                                        <div>
-                                            <button class="btn btn-primary" data-bind="click: $root.rollbackDeployment">Rollback to Previous</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
+                    </div>
+                </div>
+                <div class="span6">
+                    <div style="height: 400px; overflow: auto; padding:5px; background-color: #f5f5f5">
+                        <!-- ko if: recentMessages().length > 0 -->
+                        <div id="messages" data-bind="foreach: recentMessages">
+                        <p>
+                            <span class="muted" data-bind="date: Timestamp"></span>&nbsp;&nbsp;
+                            <span data-bind="css: { 'text-error': IsError,  'text-success': !IsError}, text: Message"></span>
+                        </p>
+                        </div>
+                        <!-- /ko -->
+                        <!-- ko ifnot: recentMessages().length > 0 -->
+                        <h3 class="muted" style="text-align:center">No Messages</h3>
+                        <!-- /ko -->
                     </div>
                 </div>
             </div>
