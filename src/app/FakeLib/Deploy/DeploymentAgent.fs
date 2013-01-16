@@ -18,8 +18,8 @@ let private runDeployment workDir args (ctx : HttpListenerContext) =
     let response = doDeployment package.Name scriptFile
     
     match response with
-    | HttpClientHelper.Success -> logger (sprintf "Successfully deployed %s %s" package.Id package.Version, EventLogEntryType.Information)
-    | response -> logger (sprintf "Deployment failed of %s %s failed" package.Id package.Version, EventLogEntryType.Information)
+    | HttpClientHelper.Success _ -> logger (sprintf "Successfully deployed %s %s" package.Id package.Version, EventLogEntryType.Information)
+    | response -> logger (sprintf "Deployment failed of %s %s failed\r\nDetails:\r\n%A" package.Id package.Version response, EventLogEntryType.Information)
 
     response
     |> Json.serialize

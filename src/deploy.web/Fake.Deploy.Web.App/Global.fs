@@ -26,8 +26,7 @@ type Global() =
         routes.MapRoute("Default", 
                         "{controller}/{action}/{oid}", 
                         { controller = "Home"; action = "Index"
-                          oid = UrlParameter.Optional },
-                        [|"Fake.Deploy.Web"|]) |> ignore
+                          oid = UrlParameter.Optional }) |> ignore
         routes           
 
     static member Version = 
@@ -35,6 +34,8 @@ type Global() =
 
     static member RegisterGlobalFilters(filters:GlobalFilterCollection) =
         filters.Add(new HandleErrorAttribute())
+        filters.Add(new System.Web.Mvc.AuthorizeAttribute())
+        
 
     static member RegisterRoutes(routes:RouteCollection) =
         routes.IgnoreRoute("{resource}.axd/{*pathInfo}")
@@ -52,3 +53,6 @@ type Global() =
         Global.RegisterGlobalFilters(GlobalFilters.Filters)
         Global.RegisterRoutes(RouteTable.Routes) |> ignore
         InitialData.Init()
+
+    member this.End() = 
+        Fake.Deploy.Web.Model.documentStore.Dispose();

@@ -70,6 +70,9 @@
     <Reference Include="Raven.Database">
       <HintPath>..\..\..\packages\RavenDB.Database.2.0.2230\lib\net40\Raven.Database.dll</HintPath>
     </Reference>
+    <Reference Include="RavenDBMembership">
+      <HintPath>..\..\..\lib\RavenDBMembership.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
@@ -153,6 +156,7 @@
     <Content Include="Scripts\app\Admin.Agent.js" />
     <None Include="Scripts\jquery-1.8.3.intellisense.js" />
     <Content Include="Images\server.png" />
+    <Content Include="Scripts\app\Admin.User.js" />
     <Content Include="Scripts\app\Home.Agent.js" />
     <Content Include="Scripts\app\Admin.Environment.js" />
     <Content Include="Scripts\app\Home.Index.js" />
@@ -187,6 +191,9 @@
     <Content Include="Views\Admin\Agent.cshtml" />
     <Content Include="Views\Admin\Environment.cshtml" />
     <Content Include="Views\Home\Agent.cshtml" />
+    <Content Include="Views\Account\LogOn.cshtml" />
+    <Content Include="Views\Admin\Users.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\Package_Temp\" />
@@ -217,9 +224,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>5094</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:3602/</IISUrl>
+          <IISUrl>http://localhost:5094/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

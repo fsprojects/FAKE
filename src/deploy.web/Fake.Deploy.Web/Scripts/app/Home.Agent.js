@@ -13,6 +13,8 @@ function AgentViewModel() {
     self.deployments = ko.observableArray();
     self.agentDetails = ko.observable();
 
+    self.recentMessages = ko.observableArray();
+
     self.getAgentDetails = function () {
         $.ajax({
             type: "GET",
@@ -58,7 +60,7 @@ function AgentViewModel() {
             dataType: 'json',
             contentType: 'application/json'
         }).done(function (data) {
-            var a = ko.mapping.fromJS(data);
+            var a = ko.mapping.fromJS(data.values[0]);
             self.agent(a);
             self.getAgentDetails();
         }).fail(function (msg) {
@@ -89,6 +91,13 @@ function AgentViewModel() {
                 $('#filePlaceHolder').modal('hide');
                 $('#selectPackageBtn').removeClass('hide');
                 toastr.info('Package deployed');
+
+                if (data != null) {
+                    $.each(data.result.Messages, function (i, msg) {
+                        self.recentMessages.push(msg)
+                    });
+                }
+
                 self.refreshDeploymentsForAgent();
             },
             fail: function (e, data) {
@@ -96,6 +105,12 @@ function AgentViewModel() {
                 $('#selectPackageBtn').removeClass('hide');
                 $('#filePlaceHolder').modal('hide');
                 toastr.error('Package deployment failed');
+
+                if (data != null) {
+                    $.each(data.result.Messages, function (i, msg) {
+                        self.recentMessages.push(msg)
+                    });
+                }
             }
         });
 
@@ -113,6 +128,11 @@ function AgentViewModel() {
             }).done(function (d) {
                 toastr.info('Rollback succeeded', 'Info');
                 $('#rollbackDialog').modal('hide');
+                if (d != null) {
+                    $.each(d.Messages, function (i, msg) {
+                        self.recentMessages.push(msg)
+                    });
+                }
                 self.refreshDeploymentsForAgent();
             }).fail(function (msg) {
                 toastr.error('Failed to rollback ' + self.agent().Name() + ' - ' + data.Id() + ' ' + msg.statusText, 'Error');

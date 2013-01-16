@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = "Manage Users";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts {
+    <script src="@Url.Content("~/Scripts/app/Admin.User.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            var vm = new UserAdminViewModel();
+            vm.build();
+            ko.applyBindings(vm);
+        });
+    </script>
+}
+
+<h2>Manage Users</h2>
+
+<div class="row" style="margin-left: 30px">
+    <div class="span6">
+        <form class="form-horizontal" data-bind="submit: $root.registerUser">
+            <fieldset>
+                <legend>Create User</legend>
+            </fieldset>
+            <div class="control-group">
+                <label class="control-label">Username</label>
+                <div class="controls">
+                   <input type="text" id="UserName" name="UserName"/>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">First Name</label>
+                <div class="controls">
+                   <input type="text" id="FirstName" name="FirstName"/>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Last Name</label>
+                <div class="controls">
+                    <input type="text" id="LastName" name="LastName"/>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">E-mail</label>
+                <div class="controls">
+                    <input type="text" id="Email" name="Email"/>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Password</label>
+                <div class="controls">
+                    <input type="password" id="Password" name="Password"/>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Confirm Password</label>
+                <div class="controls">
+                    <input type="password" id="ConfirmPassword" name="ConfirmPassword"/>
+                </div>
+            </div>
+            
+            <p>
+                <button class="btn btn-primary" type="submit"><i class="icon-ok-circle icon-white"></i>&nbsp;Register</button>
+                <button class="btn btn-danger" type="reset"><i class="icon-remove icon-white"></i>&nbsp;Cancel</button>
+            </p>
+
+        </form>
+    </div>
+    <div class="span6">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Last login date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: users">
+                    <tr>
+                        <td data-bind="text: UserName"></td>
+                        <td data-bind="text: Email"></td>
+                        <td data-bind="text: LastLoginDate"></td>
+                        <td>
+                            <button data-bind="click: $root.deleteUser" class="btn btn-danger" style="margin-left: 10px"><i class="icon-trash icon-white"></i>&nbsp;Delete User</button>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

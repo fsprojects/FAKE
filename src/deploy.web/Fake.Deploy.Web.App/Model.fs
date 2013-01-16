@@ -52,17 +52,17 @@ module Model =
                     x.Agents <- Seq.append (agents |> Seq.map (fun a -> a.Ref)) x.Agents
 
     let documentStore = 
-        let ds = new EmbeddableDocumentStore(ConnectionStringName = "RavenDB", UseEmbeddedHttpServer = true)
+        let ds = new EmbeddableDocumentStore(ConnectionStringName = "RavenDB")
         ds.Conventions.IdentityPartsSeparator <- "-"
         ds.Conventions.CustomizeJsonSerializer <- new Action<_>(fun s -> s.Converters.Add(new Helpers.RavenUnionTypeConverter()))
         ds.Initialize()
 
     let getEnvironment (id : string) = 
-        match id with
-        | null -> { Id = id; Name = null; Description = null; Agents = Seq.empty }
-        | _ ->
-            use session = documentStore.OpenSession()
-            session.Load<Environment>(id)
+        use session = documentStore.OpenSession()   
+        match session.Load<Environment>(id) |> box with
+        | null -> None
+        | env -> Some(env |> unbox<Environment>)
+            
 
     let saveEnvironment (env : Environment) = 
         use session = documentStore.OpenSession()
@@ -117,11 +117,10 @@ module Model =
         session.SaveChanges()
 
     let getAgent (id : string) =
-        match id with
-        | null -> { Id = id; Name = null; Address = null }
-        | _ ->
-            use session = documentStore.OpenSession()
-            session.Load<Agent>(id)
+        use session = documentStore.OpenSession()   
+        match session.Load<Agent>(id) |> box with
+        | null -> None
+        | env -> Some(env |> unbox<Agent>)
      
 
 
