@@ -132,7 +132,12 @@ type AgentController() =
         with e ->
             logger.Error(sprintf "An error occured retrieving agent %s" id,e)
             this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e)
-        
+     
+type RollbackRequest = {
+    agentUrl : string
+    version : string
+    appName : string
+}   
 
 type PackageController() =
     inherit ApiController()
@@ -144,7 +149,26 @@ type PackageController() =
         if not <| dir.Exists then dir.Create()
         dir
 
-    member this.Post() =
+    [<HttpPost>]
+    member this.Rollback(body : RollbackRequest) =
+        async {
+            try
+               match rollbackTo (body.agentUrl.Trim('/') + "/fake/") body.appName body.version with
+               | Failure(err) -> 
+                   return this.Request.CreateResponse(HttpStatusCode.InternalServerError, err)
+               | Success a -> 
+                   let msg = this.Request.CreateResponse(HttpStatusCode.OK, a)
+                   msg.Headers.Location <- this.Request.Headers.Referrer
+                   return msg
+               | _ -> 
+                   return this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Unexpected response")
+            with e ->
+                logger.Error("An error occured rolling back package",e)
+                return this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e)
+        } |> Async.toTask
+
+    [<HttpPost>]
+    member this.Deploy() =
         async {
             try
                 let! result = savePostedFiles packageTemp.FullName this

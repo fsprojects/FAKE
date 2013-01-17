@@ -17,9 +17,12 @@ type Global() =
     inherit System.Web.HttpApplication() 
 
     static let v1ApiRoutes (routes:RouteCollection) = 
+        routes.MapHttpRoute("PackageApi", 
+                "api/v1/package/{action}/{id}", 
+                { controller = "Package"; action="Rollback"; id = RouteParameter.Optional }) |> ignore 
         routes.MapHttpRoute("DefaultApi", 
                     "api/v1/{controller}/{id}", 
-                    { id = RouteParameter.Optional }) |> ignore 
+                    { id = RouteParameter.Optional }) |> ignore
         routes
     
     static let uiRoutes (routes:RouteCollection) =

@@ -160,6 +160,7 @@
     <Content Include="Scripts\app\Home.Agent.js" />
     <Content Include="Scripts\app\Admin.Environment.js" />
     <Content Include="Scripts\app\Home.Index.js" />
+    <Content Include="Scripts\extensions.js" />
     <Content Include="Scripts\jquery-1.8.3.js" />
     <Content Include="Scripts\jquery-1.8.3.min.js" />
     <Content Include="Scripts\jquery.fileupload.js" />
