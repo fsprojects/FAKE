@@ -57,7 +57,8 @@ let executeFSI workingDirectory script args =
 /// Run the given buildscript with fsi.exe
 let runBuildScriptAt workingDirectory printDetails script args =
     if printDetails then traceFAKE "Running Buildscript: %s" script
-    let (result, _) = executeFSI workingDirectory script args
+    let result = execProcess2 (fsiStartInfo script workingDirectory args) System.TimeSpan.MaxValue false
+    (System.Threading.Thread.Sleep 1000)
     result
 
 let runBuildScript printDetails script args =
