@@ -4,10 +4,16 @@
 #load "IISHelper.fs"
 open Fake.IISHelper
 
-(IIS
-  (Site "Fake.Deploy.Web" "http" ":8081:" @"D:\PublishedSites\Fake.Web.Deploy")
-  (ApplicationPool "Fake.Deploy.Pool")
-  None)
+let siteName = "fake.site"
+let appPool = "fake.appPool"
+let port = ":8081:"
+let vdir = "/fakevdir"
+let appDir = @"C:\work\subversion\Sunshine\trunk\SunshineGUI\src\Sunshine.Web"
 
-deleteSite "Fake.Deploy.Web"
-deleteApplicationPool "Fake.Deploy.Pool"
+deleteSite siteName
+deleteApplicationPool appPool
+
+(IIS
+  (Site siteName "http" port @"C:\inetpub\wwwroot" appPool)
+  (ApplicationPool appPool)
+  (Some(Application vdir appDir)))
