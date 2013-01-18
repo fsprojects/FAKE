@@ -7,8 +7,10 @@ module Fake.IISHelper
     let private bindApplicationPool (appPool : ApplicationPool) (app : Application) =
         app.ApplicationPoolName <- appPool.Name
 
-    let Site (name : string) (protocol : string) (binding : string) (physicalPath : string) (mgr : ServerManager) = 
-        mgr.Sites.Add(name, protocol, binding, physicalPath)
+    let Site (name : string) (protocol : string) (binding : string) (physicalPath : string) (appPool : string) (mgr : ServerManager) = 
+        let site = mgr.Sites.Add(name, protocol, binding, physicalPath)
+        site.ApplicationDefaults.ApplicationPoolName <- appPool
+        site
 
     let ApplicationPool (name : string) (mgr : ServerManager) = 
         mgr.ApplicationPools.Add(name)
@@ -25,24 +27,27 @@ module Fake.IISHelper
         requiresAdmin (fun _ -> 
                             match app with
                             | Some(app) -> bindApplicationPool (appPool mgr) (app (site mgr) mgr); 
-                            | None -> (site mgr).Applications.[0].ApplicationPoolName <- (appPool mgr).Name
+                            | None -> bindApplicationPool (appPool mgr) (site mgr).Applications.[0]
                             commit mgr
                       )
 
     let deleteSite (name : string) = 
         use mgr = new ServerManager()
-        mgr.Sites.[name].Delete()
-        commit mgr 
+        let site = mgr.Sites.[name]
+        if (site <> null) then
+            site.Delete()
+            commit mgr 
 
     let deleteApp (name : string) (site : Site) = 
         use mgr = new ServerManager()
-        site.Applications.[name].Delete()
-        commit mgr
+        let app = site.Applications.[name]
+        if (app <> null) then
+            app.Delete()
+            commit mgr
 
     let deleteApplicationPool (name : string) = 
         use mgr = new ServerManager()
-        mgr.ApplicationPools.[name].Delete()
-        commit mgr
-        
-        
-
+        let appPool = mgr.ApplicationPools.[name]
+        if (appPool <> null) then
+            appPool.Delete()
+            commit mgr
