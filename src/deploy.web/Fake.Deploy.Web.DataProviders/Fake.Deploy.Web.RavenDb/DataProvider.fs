@@ -75,28 +75,55 @@ module internal Provider =
     let getAgent ids =
         load<Agent> ids
 
-type RavenDbDataProvider() = 
+type RavenDbDataProvider(?inMemory : bool) = 
 
-    let mutable documentStore : IDocumentStore = 
-       
+    let mutable documentStore : IDocumentStore = null
+
+    let assertDocStore() =
+        if documentStore = null
+        then invalidOp "RavenDbDataProvider not initialized, please call IDataProvider.Initialize"
+    
+    new() = 
+        new RavenDbDataProvider(false)    
 
     interface IDataProvider with
-        member x.Initialize() =
+        member x.Initialize(connectionStringName) =
             documentStore <- 
-                 let ds = new EmbeddableDocumentStore(ConnectionStringName = "RavenDB")
+                 let ds = new EmbeddableDocumentStore(ConnectionStringName = connectionStringName, RunInMemory = defaultArg inMemory false)
                  ds.Conventions.IdentityPartsSeparator <- "-"
                  ds.Conventions.CustomizeJsonSerializer <- new Action<_>(fun s -> s.Converters.Add(new RavenUnionTypeConverter()))
                  ds.Initialize()
                 
         member x.GetEnvironments(ids) =
+            assertDocStore()
             match ids |> Seq.toList with
-            | [] -> Provider.getEnvironments()
-            | a -> Provider.getEnvironment ids
-        member x.SaveEnvironments(envs) = Provider.save envs
-        member x.DeleteEnvironment(id) = Provider.deleteEnvironment id
+            | [] -> Provider.getEnvironments documentStore
+            | a -> Provider.getEnvironment ids documentStore
+
+        member x.SaveEnvironments(envs) = 
+            assertDocStore()
+            Provider.save envs documentStore
+
+        member x.DeleteEnvironment(id) = 
+            assertDocStore()
+            Provider.deleteEnvironment id documentStore
+
         member x.GetAgents(ids) =
+            assertDocStore()
+
             match ids |> Seq.toList with
-            | [] -> Provider.getAgents()
-            | a -> Provider.getAgent ids
-        member x.SaveAgents(agents) = Provider.save agents
-        member x.DeleteAgent(id) = Provider.deleteAgent id
+            | [] -> Provider.getAgents documentStore
+            | a -> Provider.getAgent ids documentStore
+
+        member x.SaveAgents(agents) = 
+            assertDocStore()
+            Provider.save agents documentStore
+
+        member x.DeleteAgent(id) = 
+            assertDocStore()
+            Provider.deleteAgent id documentStore
+
+        member x.Dispose() = 
+            if documentStore <> null
+            then documentStore.Dispose()
+            documentStore <- null

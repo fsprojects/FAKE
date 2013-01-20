@@ -43,7 +43,8 @@ type Environment = {
                 x.Agents <- Seq.append (agents |> Seq.map (fun a -> a.Ref)) x.Agents
 
 type IDataProvider = 
-    abstract member Initialize : unit -> unit
+    inherit IDisposable
+    abstract member Initialize : string -> unit
     abstract member GetEnvironments : seq<string> -> Environment[]
     abstract member SaveEnvironments : seq<Environment> -> unit
     abstract member DeleteEnvironment : string -> unit

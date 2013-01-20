@@ -11,7 +11,7 @@ open Fake.HttpClientHelper
 open System.Web.Security
 open log4net
 
-module internal ApiModels =
+module ApiModels =
 
     type CreateUserModel = {
         UserName : string

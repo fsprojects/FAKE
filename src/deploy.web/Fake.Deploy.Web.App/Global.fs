@@ -55,7 +55,7 @@ type Global() =
         GlobalConfiguration.Configuration.Formatters.Add(new JsonNetFormatter(jsonSettings))
         Global.RegisterGlobalFilters(GlobalFilters.Filters)
         Global.RegisterRoutes(RouteTable.Routes) |> ignore
-        InitialData.Init()
+        Fake.Deploy.Web.Data.init()
 
     member this.End() = 
-        Fake.Deploy.Web.Model.documentStore.Dispose();
+        Fake.Deploy.Web.Data.dispose()
