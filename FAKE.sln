@@ -35,6 +35,9 @@ EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Deploy", "src\app\Fake.Deploy\Fake.Deploy.fsproj", "{ED164049-BCFD-4837-96F4-9A5FA417931D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy.Web", "Deploy.Web", "{B0DDEAC8-E18F-4DCA-A089-461267507EF8}"
+	ProjectSection(SolutionItems) = preProject
+		src\deploy.web\README.markdown = src\deploy.web\README.markdown
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fake.Deploy.Web", "src\deploy.web\Fake.Deploy.Web\Fake.Deploy.Web.csproj", "{EEF3977A-A553-4F31-972C-F5F4171A0184}"
 EndProject
