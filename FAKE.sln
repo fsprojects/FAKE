@@ -48,6 +48,11 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Deploy.Web.RavenDb", "
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Deploy.Web.Abstractions", "src\deploy.web\Fake.Deploy.Web.Abstractions\Fake.Deploy.Web.Abstractions.fsproj", "{B58D394B-DEAC-4C34-8C2B-CC422D408AE5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4A02B2CD-BBE1-4E4F-A490-95C6CF5BF672}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

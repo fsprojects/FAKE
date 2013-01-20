@@ -15,16 +15,16 @@ let private createUser (name : string) password email roles =
         | a when a <> null ->  
             Roles.AddUserToRoles(a.UserName, roles)
         | _ -> 
-            match Membership.CreateUser(name, password, email, "", "", true) with
+            match Membership.CreateUser(name, password, email, null, null, true) with
             | a, MembershipCreateStatus.Success -> Roles.AddUserToRoles(a.UserName, roles)
-            | s -> failwithf "Could not create user %s" (s.ToString())
+            | _,s -> failwithf "Could not create user %s" (s.ToString())
 
 let Init(dataProvider : IDataProvider) =
     
     createRole "Administrator"
     createUser "Admin" "admin" "fake.deploy@gmail.com" [|"Administrator"|]
     
-    let agent1 = Agent.Create("http://localhost:8080","localhost")
+    let agent1 = Agent.Create("http://localhost:8081","localhost")
     let agents = [agent1]
 
     let environments = 

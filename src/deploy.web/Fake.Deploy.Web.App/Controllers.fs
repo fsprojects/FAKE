@@ -38,6 +38,7 @@ type ResetPasswordQuestionAndAnswerRouteValues = {
     username : string
 }
 
+[<CLIMutable>]
 type LogOnModel = {
    UserName : string
    Password : string
