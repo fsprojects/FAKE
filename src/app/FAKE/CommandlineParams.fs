@@ -2,19 +2,17 @@
 
 open Fake
 
-let printAllParams() = printfn "FAKE.exe [buildScript] [Target] Variable1=Value1 Variable2=Value2 ... "
+let printAllParams() = printfn "FAKE.exe [buildScript]"
 let parseArgs cmdArgs =
     let splitter = [|'='|]
     cmdArgs 
         |> Seq.skip 1
-        |> Seq.mapi (fun (i:int) (arg:string) ->
-                if arg.Contains "=" then
-                    let s = arg.Split splitter
+        |> Seq.map (fun (a:string) ->
+                if a.Contains "=" then
+                    let s = a.Split splitter
                     if s.[0] = "logfile" then
                         addXmlListener s.[1]
                     s.[0], s.[1]
-                else if (i=0) then
-                    "Target", arg
                 else
-                    arg, "")
+                    a,"1")
         |> Seq.toList
