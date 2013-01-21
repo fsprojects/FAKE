@@ -171,6 +171,7 @@ let build setParams project =
 
 /// Builds the given project files and collects the output files.
 /// Properties are parameterized by project name.
+/// If the outputpath is null or empty then the project settings are used.>
 let MSBuildWithProjectProperties outputPath (targets: string) (properties: string -> (string*string) list) projects = 
     let projects = projects |> Seq.toList
     let output = 
@@ -201,10 +202,13 @@ let MSBuildWithProjectProperties outputPath (targets: string) (properties: strin
     !! (outputPath + "/**/*.*")
 
 /// Builds the given project files and collects the output files
+/// If the outputpath is null or empty then the project settings are used.>
 let MSBuild outputPath targets properties = MSBuildWithProjectProperties outputPath targets (fun _ -> properties)
 
 /// Builds the given project files and collects the output files
+/// If the outputpath is null or empty then the project settings are used.>
 let MSBuildDebug outputPath targets = MSBuild outputPath targets ["Configuration","Debug"]
 
 /// Builds the given project files and collects the output files
+/// If the outputpath is null or empty then the project settings are used.>
 let MSBuildRelease outputPath targets = MSBuild outputPath targets ["Configuration","Release"]
