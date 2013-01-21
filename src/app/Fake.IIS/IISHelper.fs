@@ -7,17 +7,26 @@ module Fake.IISHelper
     let private bindApplicationPool (appPool : ApplicationPool) (app : Application) =
         app.ApplicationPoolName <- appPool.Name
 
-    let Site (name : string) (protocol : string) (binding : string) (physicalPath : string) (appPool : string) (mgr : ServerManager) = 
-        let site = mgr.Sites.Add(name, protocol, binding, physicalPath)
+    let Site (name : string) (protocol : string) (binding : string) (physicalPath : string) (appPool : string) (mgr : ServerManager) =
+        let mutable site = mgr.Sites.[name] 
+        match (site) with
+        | null -> site <- mgr.Sites.Add(name, protocol, binding, physicalPath)
+        | _ -> ()
         site.ApplicationDefaults.ApplicationPoolName <- appPool
         site
 
     let ApplicationPool (name : string) (mgr : ServerManager) = 
-        mgr.ApplicationPools.Add(name)
+        let appPool = mgr.ApplicationPools.[name]
+        match (appPool) with
+        | null -> mgr.ApplicationPools.Add(name)
+        | _ -> appPool
 
     let Application (virtualPath : string) (physicalPath : string) (site : Site) (mgr : ServerManager) =
-        site.Applications.Add(virtualPath, physicalPath)
-
+        let app = site.Applications.[virtualPath]
+        match (app) with
+        | null -> site.Applications.Add(virtualPath, physicalPath)
+        | _ -> app.VirtualDirectories.[0].PhysicalPath <- physicalPath; app;
+        
     let commit (mgr : ServerManager) = mgr.CommitChanges();
 
     let IIS (site : ServerManager -> Site) 
