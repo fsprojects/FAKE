@@ -8,12 +8,17 @@ let siteName = "fake.site"
 let appPool = "fake.appPool"
 let port = ":8081:"
 let vdir = "/fakevdir"
-let appDir = @"C:\work\subversion\Sunshine\trunk\SunshineGUI\src\Sunshine.Web"
-
-deleteSite siteName
-deleteApplicationPool appPool
+let appDir = @"C:\Users"
 
 (IIS
   (Site siteName "http" port @"C:\inetpub\wwwroot" appPool)
   (ApplicationPool appPool)
   (Some(Application vdir appDir)))
+
+(IIS
+  (Site siteName "http" port @"C:\inetpub\wwwroot" appPool)
+  (ApplicationPool appPool)
+  (Some(Application "/vdir2" @"C:\temp")))
+
+deleteSite siteName
+deleteApplicationPool appPool
