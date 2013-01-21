@@ -201,17 +201,17 @@ let MSBuildWithProjectProperties outputPath (targets: string) (properties: strin
 
     !! (outputPath + "/**/*.*")
 
-/// Builds the given project files and collects the output files
-/// If the outputpath is null or empty then the project settings are used.>
+/// Builds the given project files or solution files and collects the output files
+/// If the outputpath is null or empty then the project settings are used.
 let MSBuild outputPath targets properties = MSBuildWithProjectProperties outputPath targets (fun _ -> properties)
 
-/// Builds the given project files and collects the output files
-/// If the outputpath is null or empty then the project settings are used.>
+/// Builds the given project files or solution files and collects the output files
+/// If the outputpath is null or empty then the project settings are used.
 let MSBuildDebug outputPath targets = MSBuild outputPath targets ["Configuration","Debug"]
 
-/// Builds the given project files and collects the output files
-/// If the outputpath is null or empty then the project settings are used.>
+/// Builds the given project files or solution files and collects the output files
+/// If the outputpath is null or empty then the project settings are used.
 let MSBuildRelease outputPath targets = MSBuild outputPath targets ["Configuration","Release"]
 
-/// Builds the "Build" target in the given solution in Release mode and uses the default outputpath
-let MSBuildSolution solution = MSBuild null "Build" ["Configuration","Release"] [solution]
+/// Builds the given project files or solution files in release mode to the default outputs.
+let MSBuildWithDefaults targets = MSBuild null targets ["Configuration","Release"]
