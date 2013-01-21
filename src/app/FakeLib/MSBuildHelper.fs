@@ -212,3 +212,6 @@ let MSBuildDebug outputPath targets = MSBuild outputPath targets ["Configuration
 /// Builds the given project files and collects the output files
 /// If the outputpath is null or empty then the project settings are used.>
 let MSBuildRelease outputPath targets = MSBuild outputPath targets ["Configuration","Release"]
+
+/// Builds the "Build" target in the given solution in Release mode and uses the default outputpath
+let MSBuildSolution solution = MSBuild null "Build" ["Configuration","Release"] [solution]
