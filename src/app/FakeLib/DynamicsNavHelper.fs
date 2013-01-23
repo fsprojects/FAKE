@@ -1,6 +1,7 @@
 ﻿module Fake.DynamicsNav
 
 open System
+open System.Diagnostics
 open System.Text
 open System.IO
 
@@ -119,3 +120,11 @@ let CompileAll connectionInfo =
         reportError "CompileAll failed" connectionInfo.TempLogFile
                   
     traceEndTask "CompileAll" details
+
+/// Opens a page with the RTC client
+let OpenPage server port serviceTierName company pageNo =
+    let protocol = sprintf @"dynamicsnav://%s:%s/%s/%s/runpage?page=%d" server port serviceTierName company pageNo
+
+    let p = new Process()
+    p.StartInfo <- new ProcessStartInfo(protocol)
+    p.Start()
