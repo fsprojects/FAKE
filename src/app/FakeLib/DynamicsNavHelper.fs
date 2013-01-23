@@ -56,6 +56,10 @@ let private analyzeLogFile fileName =
     DeleteFile fileName
     lines.Length
 
+let private reportError text logFile =
+    let errors = analyzeLogFile logFile
+    failwith (text + (if errors = 1 then " with 1 error." else sprintf " with %d errors." errors))
+
 /// Imports the given txt or fob file into the Dynamics NAV client
 let ImportFile connectionInfo fileName =
     let details = fileName
@@ -70,8 +74,7 @@ let ImportFile connectionInfo fileName =
         info.WorkingDirectory <- connectionInfo.WorkingDir
         info.Arguments <- args) connectionInfo.TimeOut)
     then
-        analyzeLogFile connectionInfo.TempLogFile
-        |> failwithf "ImportFile failed with %d errors."
+        reportError "ImportFile failed" connectionInfo.TempLogFile
                   
     traceEndTask "ImportFile" details
 
@@ -98,7 +101,6 @@ let CompileAll connectionInfo =
         info.WorkingDirectory <- connectionInfo.WorkingDir
         info.Arguments <- args) connectionInfo.TimeOut)
     then
-        analyzeLogFile connectionInfo.TempLogFile
-        |> failwithf "CompileAll failed with %d errors."
+        reportError "CompileAll failed" connectionInfo.TempLogFile
                   
     traceEndTask "CompileAll" details
