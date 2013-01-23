@@ -1,6 +1,7 @@
 ﻿module Fake.DynamicsNav
 
 open System
+open System.Diagnostics
 open System.Text
 open System.IO
 
@@ -32,7 +33,22 @@ let createConnectionInfo navClientVersion serverMode serverName targetDatabase =
         getRegistryValue HKEYLocalMachine subKey "Path"
 
     let navPath = (directoryInfo navClassicPath).Parent.FullName
-    let navServicePath = navPath @@ "Service"
+    let navServicePath = 
+            try
+                let navServiceRootPath =
+                    let subKey = 
+                        match navClientVersion with
+                        | "601"
+                        | "602" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\60\Classic Client\W1 6.0"
+                        | "700" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\70\Service"
+                        | _     -> failwithf "Unknown NAV-Version %s" navClientVersion
+
+                    getRegistryValue HKEYLocalMachine subKey "Path"
+
+                (directoryInfo navServiceRootPath).Parent.FullName @@ "Service"    
+            with
+            | exn -> @"C:\Program Files\Navision700\70\Service"
+
     let navRTCPath = navPath @@ "RoleTailored Client"
 
     let clientExe = 
@@ -56,6 +72,10 @@ let private analyzeLogFile fileName =
     DeleteFile fileName
     lines.Length
 
+let private reportError text logFile =
+    let errors = analyzeLogFile logFile
+    failwith (text + (if errors = 1 then " with 1 error." else sprintf " with %d errors." errors))
+
 /// Imports the given txt or fob file into the Dynamics NAV client
 let ImportFile connectionInfo fileName =
     let details = fileName
@@ -70,8 +90,7 @@ let ImportFile connectionInfo fileName =
         info.WorkingDirectory <- connectionInfo.WorkingDir
         info.Arguments <- args) connectionInfo.TimeOut)
     then
-        analyzeLogFile connectionInfo.TempLogFile
-        |> failwithf "ImportFile failed with %d errors."
+        reportError "ImportFile failed" connectionInfo.TempLogFile
                   
     traceEndTask "ImportFile" details
 
@@ -98,7 +117,14 @@ let CompileAll connectionInfo =
         info.WorkingDirectory <- connectionInfo.WorkingDir
         info.Arguments <- args) connectionInfo.TimeOut)
     then
-        analyzeLogFile connectionInfo.TempLogFile
-        |> failwithf "CompileAll failed with %d errors."
+        reportError "CompileAll failed" connectionInfo.TempLogFile
                   
     traceEndTask "CompileAll" details
+
+/// Opens a page with the RTC client
+let OpenPage server port serviceTierName company pageNo =
+    let protocol = sprintf @"dynamicsnav://%s:%s/%s/%s/runpage?page=%d" server port serviceTierName company pageNo
+
+    let p = new Process()
+    p.StartInfo <- new ProcessStartInfo(protocol)
+    p.Start()
