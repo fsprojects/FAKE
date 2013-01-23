@@ -76,7 +76,7 @@ let ImportFile connectionInfo fileName =
     traceEndTask "ImportFile" details
 
 /// Creates an importfile from the given files
-let CreateImportFile connectionInfo importFileName files =
+let CreateImportFile importFileName files =
     files
         |> Seq.toList
         |> List.sortBy (fun name -> 
