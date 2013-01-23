@@ -10,6 +10,8 @@ let port = ":8081:"
 let vdir = "/fakevdir"
 let appDir = @"C:\Users"
 
+UnlockSection "system.webServer/security/authentication/anonymousauthentication"
+
 (IIS
   (Site siteName "http" port @"C:\inetpub\wwwroot" appPool)
   (ApplicationPool appPool)

@@ -3,6 +3,7 @@ module Fake.IISHelper
 
     open Microsoft.Web.Administration
     open Fake.PermissionsHelper
+    open Fake.ProcessHelper
 
     let private bindApplicationPool (appPool : ApplicationPool) (app : Application) =
         app.ApplicationPoolName <- appPool.Name
@@ -26,7 +27,7 @@ module Fake.IISHelper
         match (app) with
         | null -> site.Applications.Add(virtualPath, physicalPath)
         | _ -> app.VirtualDirectories.[0].PhysicalPath <- physicalPath; app;
-        
+
     let commit (mgr : ServerManager) = mgr.CommitChanges();
 
     let IIS (site : ServerManager -> Site) 
@@ -34,11 +35,22 @@ module Fake.IISHelper
             (app : (Site -> ServerManager -> Application) option) =
         use mgr = new ServerManager()
         requiresAdmin (fun _ -> 
-                            match app with
-                            | Some(app) -> bindApplicationPool (appPool mgr) (app (site mgr) mgr); 
-                            | None -> bindApplicationPool (appPool mgr) (site mgr).Applications.[0]
-                            commit mgr
-                      )
+            match app with
+            | Some(app) -> bindApplicationPool (appPool mgr) (app (site mgr) mgr); 
+            | None -> bindApplicationPool (appPool mgr) (site mgr).Applications.[0]
+            commit mgr
+        )
+
+    let AppCmd (command : string) = 
+        System.Console.WriteLine("Applying {0} via appcmd.exe", command)
+        if not (execProcess3 (fun info ->  
+            info.FileName <- @"c:\windows\system32\inetsrv\appcmd.exe"
+            info.Arguments <- command) (System.TimeSpan.FromSeconds(30.)))
+        then failwithf "AppCmd.exe failed."
+        ()
+
+    let UnlockSection (configPath : string) =
+        requiresAdmin (fun _ -> AppCmd (sprintf "unlock config -section:%s" configPath))
 
     let deleteSite (name : string) = 
         use mgr = new ServerManager()
