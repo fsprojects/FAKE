@@ -123,12 +123,13 @@ let CompileAll connectionInfo =
 
 /// Opens a page with the RTC client
 let OpenPage server port serviceTierName company pageNo =
-    traceStartTask "OpenPage" pageNo
+    let details = sprintf "%d" pageNo
+    traceStartTask "OpenPage" details
     let protocol = sprintf @"dynamicsnav://%s:%s/%s/%s/runpage?page=%d" server port serviceTierName company pageNo
 
     let p = new Process()
     p.StartInfo <- new ProcessStartInfo(protocol)
     let result = p.Start()
 
-    traceEndTask "OpenPage" pageNo
+    traceEndTask "OpenPage" details
     result
