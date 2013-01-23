@@ -31,18 +31,23 @@ let createConnectionInfo navClientVersion serverMode serverName targetDatabase =
 
         getRegistryValue HKEYLocalMachine subKey "Path"
 
-    let navServiceRootPath =
-        let subKey = 
-            match navClientVersion with
-            | "601"
-            | "602" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\60\Classic Client\W1 6.0"
-            | "700" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\70\Service"
-            | _     -> failwithf "Unknown NAV-Version %s" navClientVersion
-
-        getRegistryValue HKEYLocalMachine subKey "Path"
-
     let navPath = (directoryInfo navClassicPath).Parent.FullName
-    let navServicePath = (directoryInfo navServiceRootPath).Parent.FullName @@ "Service"    
+    let navServicePath = 
+            try
+                let navServiceRootPath =
+                    let subKey = 
+                        match navClientVersion with
+                        | "601"
+                        | "602" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\60\Classic Client\W1 6.0"
+                        | "700" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\70\Service"
+                        | _     -> failwithf "Unknown NAV-Version %s" navClientVersion
+
+                    getRegistryValue HKEYLocalMachine subKey "Path"
+
+                (directoryInfo navServiceRootPath).Parent.FullName @@ "Service"    
+            with
+            | exn -> @"C:\Program Files\Navision700\70\Service"
+
     let navRTCPath = navPath @@ "RoleTailored Client"
 
     let clientExe = 
