@@ -75,6 +75,15 @@ let ImportFile connectionInfo fileName =
                   
     traceEndTask "ImportFile" details
 
+/// Creates an importfile from the given files
+let CreateImportFile connectionInfo importFileName files =
+    files
+        |> Seq.toList
+        |> List.sortBy (fun name -> 
+              let firstLine = (ReadFile name |> Seq.head).Split(' ')
+              firstLine.[3],firstLine.[2])
+        |> AppendTextFiles importFileName 
+
 /// Compiles all uncompiled objects in the Dynamics NAV client
 let CompileAll connectionInfo =
     let details = ""
