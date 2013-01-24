@@ -3,8 +3,8 @@
 open System
 open Fake.Deploy.Web
 open Raven.Imports.Newtonsoft.Json
-open Raven.Client.Embedded
 open Raven.Client
+open Raven.Client.Document
 
 module internal Provider = 
         
@@ -77,19 +77,19 @@ module internal Provider =
 
 type RavenDbDataProvider(?inMemory : bool) = 
 
-    let mutable documentStore : IDocumentStore = null
-
     let assertDocStore() =
-        if documentStore = null
+        if RavenDbDataProvider.DocumentStore = null
         then invalidOp "RavenDbDataProvider not initialized, please call IDataProvider.Initialize"
     
     new() = 
         new RavenDbDataProvider(false)    
+    
+    static member val DocumentStore : IDocumentStore = null with get, set
 
     interface IDataProvider with
         member x.Initialize(connectionStringName) =
-            documentStore <- 
-                 let ds = new EmbeddableDocumentStore(ConnectionStringName = connectionStringName, RunInMemory = defaultArg inMemory false)
+            RavenDbDataProvider.DocumentStore <- 
+                 let ds = new DocumentStore(ConnectionStringName = connectionStringName)
                  ds.Conventions.IdentityPartsSeparator <- "-"
                  ds.Conventions.CustomizeJsonSerializer <- new Action<_>(fun s -> s.Converters.Add(new RavenUnionTypeConverter()))
                  ds.Initialize()
@@ -97,33 +97,33 @@ type RavenDbDataProvider(?inMemory : bool) =
         member x.GetEnvironments(ids) =
             assertDocStore()
             match ids |> Seq.toList with
-            | [] -> Provider.getEnvironments documentStore
-            | a -> Provider.getEnvironment ids documentStore
+            | [] -> Provider.getEnvironments RavenDbDataProvider.DocumentStore
+            | a -> Provider.getEnvironment ids RavenDbDataProvider.DocumentStore
 
         member x.SaveEnvironments(envs) = 
             assertDocStore()
-            Provider.save envs documentStore
+            Provider.save envs RavenDbDataProvider.DocumentStore
 
         member x.DeleteEnvironment(id) = 
             assertDocStore()
-            Provider.deleteEnvironment id documentStore
+            Provider.deleteEnvironment id RavenDbDataProvider.DocumentStore
 
         member x.GetAgents(ids) =
             assertDocStore()
 
             match ids |> Seq.toList with
-            | [] -> Provider.getAgents documentStore
-            | a -> Provider.getAgent ids documentStore
+            | [] -> Provider.getAgents RavenDbDataProvider.DocumentStore
+            | a -> Provider.getAgent ids RavenDbDataProvider.DocumentStore
 
         member x.SaveAgents(agents) = 
             assertDocStore()
-            Provider.save agents documentStore
+            Provider.save agents RavenDbDataProvider.DocumentStore
 
         member x.DeleteAgent(id) = 
             assertDocStore()
-            Provider.deleteAgent id documentStore
+            Provider.deleteAgent id RavenDbDataProvider.DocumentStore
 
         member x.Dispose() = 
-            if documentStore <> null
-            then documentStore.Dispose()
-            documentStore <- null
+            if RavenDbDataProvider.DocumentStore <> null
+            then RavenDbDataProvider.DocumentStore.Dispose()
+            RavenDbDataProvider.DocumentStore <- null

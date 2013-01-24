@@ -6,6 +6,17 @@
   * Environment Management
   * User Management
   * Action Auditing
+
+## Application Setup
+
+When the application is first started it will go to a one time setup view. 
+
+Here you will be asked for the Admin account credentials and also which provider you wish to use (currently only raven db provider)
+
+As an xample to setup the RavenDB provider you would need to enter the following
+
+ProviderName -> Fake.Deploy.Web.RavenDb.RavenDbDataProvider, Fake.Deploy.Web.RavenDb
+ConnectionString -> Url=http://localhost:8080 (depends on the raven instance you wish to connect to)
   
 ## Debugging FAKE.Deploy ##
 
@@ -19,7 +30,5 @@ Go to the solution property page and configure Visual Studio to start multiple p
 The RavenDB data provider requires a running instance of raven. If you restore the nuget packages, this should also bring down
 the Raven.Server package. 
 
-Additionally for the RavenDBMembership provider to run it will need to be copied to the bin folder of web app, so it can be
-resolved. 
 
 ## Building ##

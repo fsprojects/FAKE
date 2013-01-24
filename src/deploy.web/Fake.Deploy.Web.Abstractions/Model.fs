@@ -42,6 +42,16 @@ type Environment = {
         member x.AddAgents(agents : seq<Agent>) = 
                 x.Agents <- Seq.append (agents |> Seq.map (fun a -> a.Ref)) x.Agents
 
+[<CLIMutable>]
+type SetupInfo = {
+    AdministratorUserName : string
+    AdministratorEmail : string
+    AdministratorPassword : string
+    ConfirmAdministratorPassword : string
+    DataProvider : string
+    DataProviderConnectionString : string
+}
+
 type IDataProvider = 
     inherit IDisposable
     abstract member Initialize : string -> unit

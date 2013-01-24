@@ -2,6 +2,7 @@
 
 open System
 open System.Web
+open System.Web.Configuration
 open System.Web.Mvc
 open System.Web.Routing
 open System.Web.Http
@@ -13,7 +14,20 @@ type MapHttpRouteSettings = { id : RouteParameter }
 type FaviconRoute = { favicon : string }
 type Route = { controller : string; action : string; oid : UrlParameter }
 
-type Global() =
+
+type FakeDeployControllerFactory() = 
+    inherit DefaultControllerFactory()
+
+    override this.CreateController(requestContext : RequestContext,  controllerName) =
+        if WebConfigurationManager.AppSettings.["ApplicationInitialized"].ToLower() = "false"
+        then 
+            requestContext.RouteData.Values.["controller"] <- "Setup"
+            if controllerName.ToLower() <> "setup"
+            then requestContext.RouteData.Values.["action"] <- "Index"
+            base.CreateController(requestContext, "Setup")
+        else base.CreateController(requestContext, controllerName)
+
+and Global() =
     inherit System.Web.HttpApplication() 
 
     static let v1ApiRoutes (routes:RouteCollection) = 
@@ -28,8 +42,7 @@ type Global() =
     static let uiRoutes (routes:RouteCollection) =
         routes.MapRoute("Default", 
                         "{controller}/{action}/{oid}", 
-                        { controller = "Home"; action = "Index"
-                          oid = UrlParameter.Optional }) |> ignore
+                        { controller = "Home"; action = "Index"; oid = UrlParameter.Optional }) |> ignore
         routes           
 
     static member Version = 
@@ -47,15 +60,17 @@ type Global() =
         routes
         |> v1ApiRoutes
         |> uiRoutes
+    
 
     member this.Start() =
         XmlConfigurator.Configure() |> ignore
+        
         AreaRegistration.RegisterAllAreas()
         GlobalConfiguration.Configuration.Formatters.Clear()
         GlobalConfiguration.Configuration.Formatters.Add(new JsonNetFormatter(jsonSettings))
         Global.RegisterGlobalFilters(GlobalFilters.Filters)
         Global.RegisterRoutes(RouteTable.Routes) |> ignore
-        Fake.Deploy.Web.Data.init()
+        ControllerBuilder.Current.SetControllerFactory(new FakeDeployControllerFactory())
 
     member this.End() = 
         Fake.Deploy.Web.Data.dispose()

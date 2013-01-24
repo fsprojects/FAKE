@@ -40,11 +40,13 @@
     </style>
 }
 <div class="form-signin">
-    <h2>Sign In</h2>
+
     @Html.ValidationSummary(true, "Login was unsuccessful. Please correct the errors and try again.")
 
     @using (Html.BeginForm("DoLogOn", "Account", null, FormMethod.Post, new { @class = "form" }))
     {
+        <fieldset>
+                <legend>Sign In</legend>
                 <div class="control-group">
                     <label class="control-label">Username</label>
                     <div class="controls">
@@ -70,5 +72,6 @@
                 <p>
                     <button class="btn btn-large btn-success" type="submit">Log on</button>
                 </p>
+            </fieldset>
     }
 </div>

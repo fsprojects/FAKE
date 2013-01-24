@@ -19,10 +19,10 @@ let private createUser (name : string) password email roles =
             | a, MembershipCreateStatus.Success -> Roles.AddUserToRoles(a.UserName, roles)
             | _,s -> failwithf "Could not create user %s" (s.ToString())
 
-let Init(dataProvider : IDataProvider) =
+let Init(adminUsername, adminPassword, adminEmail, dataProvider : IDataProvider) =
     
     createRole "Administrator"
-    createUser "Admin" "admin" "fake.deploy@gmail.com" [|"Administrator"|]
+    createUser adminUsername adminPassword adminEmail [|"Administrator"|]
     
     let agent1 = Agent.Create("http://localhost:8081","localhost")
     let agents = [agent1]

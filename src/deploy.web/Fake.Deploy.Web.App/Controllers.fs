@@ -14,6 +14,41 @@ open System.Net.Mail
 open Fake.Deploy.Web
 open Fake.HttpClientHelper
 
+type InitStatus = {
+    Complete : bool
+}
+
+[<HandleError>]
+type SetupController() =
+    inherit Controller()
+
+    let isInit = ref false // Quick and dirty POC
+
+    [<System.Web.Mvc.AllowAnonymous>]
+    member this.Index() = 
+        this.View() :> ActionResult
+
+    [<System.Web.Mvc.AllowAnonymous>]
+    member this.InitStatus() = 
+        this.Json({ Complete = !isInit }, JsonRequestBehavior.AllowGet)
+
+    [<System.Web.Mvc.AllowAnonymous>]
+    member this.Initialising(info : SetupInfo) = 
+        async {
+            do Data.init(info)
+            do isInit := true
+        } |> Async.Start
+
+        this.View() :> ActionResult
+
+    [<HttpPost>]
+    [<System.Web.Mvc.AllowAnonymous>]
+    member this.SaveSetupInformation(info : SetupInfo) =
+        Data.configure info
+        let routeValues = new RouteValueDictionary(dict ["info", info])
+        this.RedirectToAction("Initialising", "Setup", routeValues);
+        
+
 [<HandleError>]
 [<System.Web.Mvc.Authorize(Roles="Administrator")>]
 type AdminController() = 
