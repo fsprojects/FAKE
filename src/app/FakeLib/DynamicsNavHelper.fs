@@ -133,3 +133,22 @@ let OpenPage server port serviceTierName company pageNo =
 
     traceEndTask "OpenPage" details
     result
+
+/// Closes all running Dynamics NAV instances
+let CloseAllNavProcesses raiseExceptionIfNotFound =
+    let details = ""
+    traceStartTask "CloseNAV" details
+    let closedProcesses =
+        Process.GetProcesses()
+          |> Seq.filter(fun p -> 
+                p.ProcessName.StartsWith("fin") || 
+                p.ProcessName = "finsql" || 
+                p.ProcessName.StartsWith("slave") || 
+                p.ProcessName.StartsWith("Microsoft.Dynamics.Nav.Client"))
+          |> Seq.map(fun p -> p.Kill())
+          |> Seq.toList
+
+    if closedProcesses = [] && raiseExceptionIfNotFound then
+        failwith "Could not kill NAV processes"
+
+    traceEndTask "CloseNAV" details
