@@ -85,6 +85,7 @@
     <Compile Include="NuGetHelper.fs" />
     <Compile Include="RestorePackageHelper.fs" />
     <Compile Include="VSSHelper.fs" />
+    <Compile Include="DynamicsNavHelper.fs" />
     <Compile Include="SCPHelper.fs" />
     <Compile Include="XCopyHelper.fs" />
     <Compile Include="MSBuild\SpecsRemovement.fs" />
@@ -114,6 +115,7 @@
     <Compile Include="PermissionsHelper.fs" />
     <Compile Include="ServiceControllerHelper.fs" />
     <Compile Include="SpecFlowHelper.fs" />
+    <None Include="packages.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

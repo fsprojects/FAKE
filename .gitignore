@@ -42,3 +42,4 @@ Samples/Calculator/tools/FAKE/
 *.orig
 deploy/
 Samples/ContinuousDeploymentWebsite/tools/
+src/deploy.web/Fake.Deploy.Web/Logs/Fake.Deploy.Web.log

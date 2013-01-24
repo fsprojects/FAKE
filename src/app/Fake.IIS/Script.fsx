@@ -4,10 +4,23 @@
 #load "IISHelper.fs"
 open Fake.IISHelper
 
-(IIS
-  (Site "Fake.Deploy.Web" "http" ":8081:" @"D:\PublishedSites\Fake.Web.Deploy")
-  (ApplicationPool "Fake.Deploy.Pool")
-  None)
+let siteName = "fake.site"
+let appPool = "fake.appPool"
+let port = ":8081:"
+let vdir = "/fakevdir"
+let appDir = @"C:\Users"
 
-deleteSite "Fake.Deploy.Web"
-deleteApplicationPool "Fake.Deploy.Pool"
+UnlockSection "system.webServer/security/authentication/anonymousauthentication"
+
+(IIS
+  (Site siteName "http" port @"C:\inetpub\wwwroot" appPool)
+  (ApplicationPool appPool)
+  (Some(Application vdir appDir)))
+
+(IIS
+  (Site siteName "http" port @"C:\inetpub\wwwroot" appPool)
+  (ApplicationPool appPool)
+  (Some(Application "/vdir2" @"C:\temp")))
+
+deleteSite siteName
+deleteApplicationPool appPool
