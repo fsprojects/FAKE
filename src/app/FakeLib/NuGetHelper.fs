@@ -181,7 +181,7 @@ let NuGetPublish setParams  =
     traceStartTask "NuGet-Push" (packageFileName parameters)
     publish parameters
 
-    traceEndTask "NuGet-Pus" (packageFileName parameters)
+    traceEndTask "NuGet-Push" (packageFileName parameters)
 
 
 /// Creates a new NuGet package   
