@@ -53,6 +53,29 @@ let GetPackageVersion deploymentsDir package =
 
 let private replaceAccessKey key (s:string) = s.Replace(key,"PRIVATEKEY")
 
+// push package (and try again if something fails)
+let rec publish trials parameters packageFile =
+    let tracing = enableProcessTracing
+    enableProcessTracing <- false
+    let source = if isNullOrEmpty parameters.PublishUrl then "" else sprintf "-s %s" parameters.PublishUrl
+    let args = sprintf "push \"%s\" %s %s" packageFile parameters.AccessKey source
+
+    if tracing then 
+        args
+            |> replaceAccessKey parameters.AccessKey
+            |> tracefn "%s %s" parameters.ToolPath 
+
+    let result = 
+        ExecProcess (fun info ->
+            info.FileName <- parameters.ToolPath
+            info.WorkingDirectory <- parameters.OutputPath |> FullName
+            info.Arguments <- args) parameters.TimeOut
+        
+    enableProcessTracing <- tracing
+    if result <> 0 then 
+        if trials > 0 then publish (trials - 1) parameters packageFile else
+        failwithf "Error during NuGet push. %s %s" parameters.ToolPath args
+
 let private runNuget parameters nuSpec =
     // create .nuspec file
     CopyFile parameters.OutputPath nuSpec
@@ -97,29 +120,6 @@ let private runNuget parameters nuSpec =
             info.Arguments <- args) parameters.TimeOut
                
     if result <> 0 then failwithf "Error during NuGet creation. %s %s" parameters.ToolPath args
-
-    // push package (and try again if something fails)
-    let rec publish trials =
-        let tracing = enableProcessTracing
-        enableProcessTracing <- false
-        let source = if isNullOrEmpty parameters.PublishUrl then "" else sprintf "-s %s" parameters.PublishUrl
-        let args = sprintf "push \"%s\" %s %s" packageFile parameters.AccessKey source
-
-        if tracing then 
-            args
-                |> replaceAccessKey parameters.AccessKey
-                |> tracefn "%s %s" parameters.ToolPath 
-
-        let result = 
-            ExecProcess (fun info ->
-                info.FileName <- parameters.ToolPath
-                info.WorkingDirectory <- parameters.OutputPath |> FullName
-                info.Arguments <- args) parameters.TimeOut
-        
-        enableProcessTracing <- tracing
-        if result <> 0 then 
-            if trials > 0 then publish (trials - 1) else
-            failwithf "Error during NuGet push. %s %s" parameters.ToolPath args
             
     let symbolsPackage = packageFile.Replace(".nupkg",".symbols.nupkg")
 
@@ -146,7 +146,7 @@ let private runNuget parameters nuSpec =
             failwithf "Error during NuGet symbol push. %s %s" parameters.ToolPath args                            
             
     if parameters.Publish then 
-        publish parameters.PublishTrials
+        publish parameters.PublishTrials parameters packageFile 
         if parameters.ProjectFile <> null then publishSymbols parameters.PublishTrials
         
 /// Creates a new NuGet package   
