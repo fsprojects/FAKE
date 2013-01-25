@@ -55,7 +55,6 @@ let createConnectionInfo navClientVersion serverMode serverName targetDatabase =
         match serverMode with
         | NavisionServerType.SqlServer -> "finsql.exe"
         | NavisionServerType.NativeServer -> "fin.exe"
-        | _ -> failwithf "Unknown ServerType %A" serverMode
 
     let finExe = navClassicPath @@ clientExe
 
