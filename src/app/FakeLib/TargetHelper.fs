@@ -37,8 +37,8 @@ let ExecutedTargets = new HashSet<_>()
 let ExecutedTargetTimes = new List<_>()
 
 /// Gets a target with the given name from the target dictionary
-let getTarget (name:string) = 
-    match TargetDict.TryGetValue (name.ToLower()) with
+let getTarget name = 
+    match TargetDict.TryGetValue (toLower name) with
     | true, target -> target
     | _  -> failwithf "Target \"%s\" is not defined." name
 
@@ -64,7 +64,7 @@ let checkIfDependencyCanBeAdded targetName dependentTargetName =
     let rec checkDependencies dependentTarget =
         dependentTarget.Dependencies 
           |> List.iter (fun dep ->
-               if dep = targetName then 
+               if toLower dep = toLower targetName then 
                   failwithf "Cyclic dependency between %s and %s" targetName dependentTarget.Name
                checkDependencies (getTarget dep))
       
@@ -75,13 +75,13 @@ let checkIfDependencyCanBeAdded targetName dependentTargetName =
 let dependencyAtFront targetName dependentTargetName =
     let target,dependentTarget = checkIfDependencyCanBeAdded targetName dependentTargetName
     
-    TargetDict.[targetName.ToLower()] <- { target with Dependencies = dependentTargetName :: target.Dependencies }
+    TargetDict.[toLower targetName] <- { target with Dependencies = dependentTargetName :: target.Dependencies }
   
 /// Appends the dependency to the list of dependencies
 let dependencyAtEnd targetName dependentTargetName =
     let target,dependentTarget = checkIfDependencyCanBeAdded targetName dependentTargetName
     
-    TargetDict.[targetName.ToLower()] <- { target with Dependencies = target.Dependencies @ [dependentTargetName] }
+    TargetDict.[toLower targetName] <- { target with Dependencies = target.Dependencies @ [dependentTargetName] }
 
 /// Adds the dependency to the list of dependencies
 let dependency = dependencyAtEnd
@@ -104,8 +104,8 @@ let TargetsDependOn target targets =
 let AllTargetsDependOn target = getAllTargetsNames() |> TargetsDependOn target
   
 /// Creates a target from template
-let targetFromTemplate template (name:string) parameters =    
-    TargetDict.Add(name.ToLower(),
+let targetFromTemplate template name parameters =    
+    TargetDict.Add(toLower name,
       { Name = name; 
         Dependencies = [];
         Description = template.Description;
@@ -150,8 +150,8 @@ let targetError targetName (exn:System.Exception) =
     sendTeamCityError tcMsg        
  
 let addExecutedTarget target time =
-    ExecutedTargets.Add target |> ignore
-    ExecutedTargetTimes.Add(target,time) |> ignore
+    ExecutedTargets.Add (toLower target) |> ignore
+    ExecutedTargetTimes.Add(toLower target,time) |> ignore
 
 /// Runs all activated final targets (in alphabetically order)
 let runFinalTargets() =
@@ -163,7 +163,7 @@ let runFinalTargets() =
                let watch = new System.Diagnostics.Stopwatch()
                watch.Start()
                tracefn "Starting Finaltarget: %s" name
-               TargetDict.[name.ToLower()].Function()
+               TargetDict.[toLower name].Function()
                addExecutedTarget name watch.Elapsed
            with
            | exn -> targetError name exn)
@@ -175,14 +175,14 @@ let PrintDependencyGraph verbose target =
     logfn "%sDependencyGraph for Target %s:" (if verbose then String.Empty else "Shortened ") target 
     let printed = new HashSet<_>()
     let order = new List<_>()
-    let rec printDependencies indent (act:string) =
-        let target = TargetDict.[act.ToLower()]
-        let addToOrder = not (printed.Contains act)
-        printed.Add act |> ignore
+    let rec printDependencies indent act =
+        let target = TargetDict.[toLower act]
+        let addToOrder = not (printed.Contains (toLower act))
+        printed.Add (toLower act) |> ignore
     
         if addToOrder || verbose then log <| (sprintf "<== %s" act).PadLeft(3 * indent)
         Seq.iter (printDependencies (indent+1)) target.Dependencies
-        if addToOrder then order.Add act
+        if addToOrder then order.Add (toLower act)
         
     printDependencies 0 target
     log ""
@@ -261,9 +261,9 @@ let run targetName =
 /// Registers a final target (not activated)
 let FinalTarget name body = 
     Target name body
-    FinalTargets.Add(name,false)
+    FinalTargets.Add(toLower name,false)
 
 /// Activates the FinalTarget
 let ActivateFinalTarget name = 
     let t = getTarget name // test if target is defined
-    FinalTargets.[name] <- true
+    FinalTargets.[toLower name] <- true

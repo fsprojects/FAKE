@@ -249,6 +249,8 @@ let (>**) pattern text = (getRegEx pattern).IsMatch text
 /// Checks wether the given char is a german umlaut.
 let isUmlaut c = Seq.contains c ['ä'; 'ö'; 'ü'; 'Ä'; 'Ö'; 'Ü'; 'ß']
 
+let inline toLower (s:string) = s.ToLower()
+
 /// Returns all standard chars and digits.
 let charsAndDigits = ['a'..'z'] @ ['A'..'Z'] @ ['0'..'9'] 
 
