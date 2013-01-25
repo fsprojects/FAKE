@@ -33,7 +33,7 @@ try
         
         let buildScriptArg = if cmdArgs.Length > 1 && cmdArgs.[1].EndsWith ".fsx" then cmdArgs.[1] else Seq.head buildScripts
         
-        let args = CommandlineParams.parseArgs (cmdArgs |> Seq.filter buildScriptArg)
+        let args = CommandlineParams.parseArgs (cmdArgs |> Seq.filter ((<>) buildScriptArg))
         
         traceStartBuild()
         if printDetails then printEnvironment cmdArgs args
