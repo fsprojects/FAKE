@@ -36,7 +36,8 @@ try
         let args = CommandlineParams.parseArgs (cmdArgs |> Seq.filter ((<>) buildScriptArg))
         
         traceStartBuild()
-        if printDetails then printEnvironment cmdArgs args
+        if printDetails then 
+            printEnvironment cmdArgs args
 
         if not (runBuildScript printDetails buildScriptArg args) then
             Environment.ExitCode <- 1
