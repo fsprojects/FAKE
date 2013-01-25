@@ -12,6 +12,7 @@ type NuGetParams =
       Project: string;
       Summary: string;
       Description: string;                               
+      WorkingDir: string;
       OutputPath: string;
       PublishUrl: string;
       AccessKey:string;
@@ -26,20 +27,21 @@ type NuGetParams =
 
 /// NuGet default params  
 let NuGetDefaults() =
-    { ToolPath = currentDirectory @@ "tools" @@ "NuGet" @@ "NuGet.exe"
+    { ToolPath = currentDirectory @@ "tools/NuGet/NuGet.exe"
       TimeOut = TimeSpan.FromMinutes 5.
       Version = if not isLocalBuild then buildVersion else "0.1.0.0"
       Authors = []
-      Project = "";
-      Summary = null;
-      ProjectFile = null;
-      Description = null;
-      Dependencies = [];
-      OutputPath = currentDirectory @@ "NuGet";
-      PublishUrl = null;
-      AccessKey = null;
-      NoPackageAnalysis = false;
-      PublishTrials = 5;
+      Project = ""
+      Summary = null
+      ProjectFile = null
+      Description = null
+      Dependencies = []
+      OutputPath = currentDirectory @@ "NuGet"
+      WorkingDir = currentDirectory @@ "NuGet"
+      PublishUrl = null
+      AccessKey = null
+      NoPackageAnalysis = false
+      PublishTrials = 5
       Publish = false}
 
 let RequireExactly version = sprintf "[%s]" version
@@ -82,16 +84,17 @@ let private createNuspecFile parameters nuSpec =
 
 // create symbols package
 let private packSymbols parameters =
-    // create symbols package
+    if isNullOrEmpty parameters.ProjectFile then () else
     let args = 
-        sprintf "pack -sym -Version %s \"%s\""
+        sprintf "pack -sym -Version %s -OutputDirectory \"%s\" \"%s\""
             parameters.Version
-            (parameters.ProjectFile |> FullName)
+            (FullName parameters.OutputPath)
+            (FullName parameters.ProjectFile)
 
     let result = 
         ExecProcess (fun info ->
             info.FileName <- parameters.ToolPath
-            info.WorkingDirectory <- parameters.OutputPath |> FullName
+            info.WorkingDirectory <- FullName parameters.WorkingDir
             info.Arguments <- args) parameters.TimeOut
                
     if result <> 0 then failwithf "Error during NuGet symbols creation. %s %s" parameters.ToolPath args
@@ -100,15 +103,16 @@ let private packSymbols parameters =
 // create package
 let private pack parameters nuspecFile =    
     let args = 
-        sprintf "pack %s -Version %s %s" 
+        sprintf "pack %s -Version %s -OutputDirectory \"%s\" %s" 
             (Path.GetFileName nuspecFile)
             parameters.Version
+            (FullName parameters.WorkingDir)
             (if parameters.NoPackageAnalysis then "-NoPackageAnalysis" else "")
 
     let result = 
         ExecProcess (fun info ->
             info.FileName <- parameters.ToolPath
-            info.WorkingDirectory <- parameters.OutputPath |> FullName
+            info.WorkingDirectory <- FullName parameters.OutputPath
             info.Arguments <- args) parameters.TimeOut
                
     if result <> 0 then failwithf "Error during NuGet creation. %s %s" parameters.ToolPath args
@@ -178,9 +182,7 @@ let NuGet setParams nuSpec =
     try    
         let nuspecFile = createNuspecFile parameters nuSpec
 
-        if parameters.ProjectFile <> null then
-            packSymbols parameters
-
+        packSymbols parameters
         pack parameters nuspecFile
                
         if parameters.Publish then 
