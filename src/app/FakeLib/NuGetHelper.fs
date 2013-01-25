@@ -20,6 +20,9 @@ type NuGetParams =
       Dependencies: (string*string) list;
       PublishTrials: int;
       Publish:bool }
+    with
+        member this.PackageFileName with get() = sprintf "%s.%s.nupkg" this.Project this.Version
+        member this.SymbolsPackageFileName with get() = sprintf "%s.%s.symbols.nupkg" this.Project this.Version
 
 /// NuGet default params  
 let NuGetDefaults() =
@@ -53,12 +56,11 @@ let GetPackageVersion deploymentsDir package =
 
 let private replaceAccessKey key (s:string) = s.Replace(key,"PRIVATEKEY")
 
-let private runNuget parameters nuSpec =
+let private createNuspecFile parameters nuSpec =
     // create .nuspec file
     CopyFile parameters.OutputPath nuSpec
+    let specFile = parameters.OutputPath @@ (Path.GetFileName nuSpec)    
 
-    let specFile = parameters.OutputPath @@ (nuSpec |> Path.GetFileName)
-    let packageFile = sprintf "%s.%s.nupkg" parameters.Project parameters.Version
     let dependencies =
         if parameters.Dependencies = [] then "" else
         parameters.Dependencies
@@ -74,22 +76,35 @@ let private runNuget parameters nuSpec =
          "@dependencies@",dependencies
          "@description@",parameters.Description]
 
-    processTemplates replacements [specFile]
+    processTemplates replacements [specFile]   
 
-    if parameters.ProjectFile <> null then
-        // create symbols package
-        let args = sprintf "pack -sym \"%s\"" (parameters.ProjectFile |> FullName)
-        let result = 
-            ExecProcess (fun info ->
-                info.FileName <- parameters.ToolPath
-                info.WorkingDirectory <- parameters.OutputPath |> FullName
-                info.Arguments <- args) parameters.TimeOut
+    specFile
+
+// create symbols package
+let private packSymbols parameters =
+    // create symbols package
+    let args = 
+        sprintf "pack -sym -Version %s \"%s\""
+            parameters.Version
+            (parameters.ProjectFile |> FullName)
+
+    let result = 
+        ExecProcess (fun info ->
+            info.FileName <- parameters.ToolPath
+            info.WorkingDirectory <- parameters.OutputPath |> FullName
+            info.Arguments <- args) parameters.TimeOut
                
-        if result <> 0 then failwithf "Error during NuGet symbols creation. %s %s" parameters.ToolPath args
-        parameters.OutputPath @@ packageFile |> DeleteFile
+    if result <> 0 then failwithf "Error during NuGet symbols creation. %s %s" parameters.ToolPath args
+    parameters.OutputPath @@ parameters.PackageFileName |> DeleteFile
 
-    // create package
-    let args = sprintf "pack %s %s" (Path.GetFileName specFile) (if parameters.NoPackageAnalysis then "-NoPackageAnalysis" else "")
+// create package
+let private pack parameters nuspecFile =    
+    let args = 
+        sprintf "pack %s -Version %s %s" 
+            (Path.GetFileName nuspecFile)
+            parameters.Version
+            (if parameters.NoPackageAnalysis then "-NoPackageAnalysis" else "")
+
     let result = 
         ExecProcess (fun info ->
             info.FileName <- parameters.ToolPath
@@ -98,63 +113,80 @@ let private runNuget parameters nuSpec =
                
     if result <> 0 then failwithf "Error during NuGet creation. %s %s" parameters.ToolPath args
 
-    // push package (and try again if something fails)
-    let rec publish trials =
-        let tracing = enableProcessTracing
-        enableProcessTracing <- false
-        let source = if isNullOrEmpty parameters.PublishUrl then "" else sprintf "-s %s" parameters.PublishUrl
-        let args = sprintf "push \"%s\" %s %s" packageFile parameters.AccessKey source
+// push package (and try again if something fails)
+let rec private publish parameters =
+    let tracing = enableProcessTracing
+    enableProcessTracing <- false
+    let source = if isNullOrEmpty parameters.PublishUrl then "" else sprintf "-s %s" parameters.PublishUrl
+    let args = sprintf "push \"%s\" %s %s" parameters.PackageFileName parameters.AccessKey source
 
-        if tracing then 
-            args
-                |> replaceAccessKey parameters.AccessKey
-                |> tracefn "%s %s" parameters.ToolPath 
+    if tracing then 
+        args
+            |> replaceAccessKey parameters.AccessKey
+            |> tracefn "%s %s" parameters.ToolPath 
 
-        let result = 
-            ExecProcess (fun info ->
-                info.FileName <- parameters.ToolPath
-                info.WorkingDirectory <- parameters.OutputPath |> FullName
-                info.Arguments <- args) parameters.TimeOut
+    let result = 
+        ExecProcess (fun info ->
+            info.FileName <- parameters.ToolPath
+            info.WorkingDirectory <- parameters.OutputPath |> FullName
+            info.Arguments <- args) parameters.TimeOut
         
-        enableProcessTracing <- tracing
-        if result <> 0 then 
-            if trials > 0 then publish (trials - 1) else
+    enableProcessTracing <- tracing
+    if result <> 0 then 
+        if parameters.PublishTrials > 0 then 
+            publish { parameters with PublishTrials = parameters.PublishTrials - 1 } 
+        else
             failwithf "Error during NuGet push. %s %s" parameters.ToolPath args
-            
-    let symbolsPackage = packageFile.Replace(".nupkg",".symbols.nupkg")
 
-    // push package to symbol server (and try again if something fails)
-    let rec publishSymbols trials =
-        let tracing = enableProcessTracing
-        enableProcessTracing <- false
-        let args = sprintf "push -source %s \"%s\" %s" parameters.PublishUrl symbolsPackage parameters.AccessKey
+// push package to symbol server (and try again if something fails)
+let rec private publishSymbols parameters =
+    let tracing = enableProcessTracing
+    enableProcessTracing <- false
+    let args = sprintf "push -source %s \"%s\" %s" parameters.PublishUrl parameters.PackageFileName parameters.AccessKey
 
-        if tracing then 
-            args
-                |> replaceAccessKey parameters.AccessKey
-                |> tracefn "%s %s" parameters.ToolPath 
+    if tracing then 
+        args
+            |> replaceAccessKey parameters.AccessKey
+            |> tracefn "%s %s" parameters.ToolPath 
 
-        let result = 
-            ExecProcess (fun info ->
-                info.FileName <- parameters.ToolPath
-                info.WorkingDirectory <- parameters.OutputPath |> FullName
-                info.Arguments <- args) parameters.TimeOut
+    let result = 
+        ExecProcess (fun info ->
+            info.FileName <- parameters.ToolPath
+            info.WorkingDirectory <- parameters.OutputPath |> FullName
+            info.Arguments <- args) parameters.TimeOut
         
-        enableProcessTracing <- tracing
-        if result <> 0 then 
-            if trials > 0 then publishSymbols (trials - 1) else
-            failwithf "Error during NuGet symbol push. %s %s" parameters.ToolPath args                            
-            
-    if parameters.Publish then 
-        publish parameters.PublishTrials
-        if parameters.ProjectFile <> null then publishSymbols parameters.PublishTrials
-        
+    enableProcessTracing <- tracing
+    if result <> 0 then 
+        if parameters.PublishTrials > 0 then 
+            publishSymbols { parameters with PublishTrials = parameters.PublishTrials - 1 }
+        else
+            failwithf "Error during NuGet symbol push. %s %s" parameters.ToolPath args     
+
+/// Creates a new NuGet package   
+let Pack setParams nuspecFile =
+    traceStartTask "NuGet-Pack" nuspecFile
+    let parameters = NuGetDefaults() |> setParams
+    pack parameters nuspecFile
+
+    traceEndTask "NuGet-Pack" nuspecFile
+
+
 /// Creates a new NuGet package   
 let NuGet setParams nuSpec =
     traceStartTask "NuGet" nuSpec
     let parameters = NuGetDefaults() |> setParams
     try    
-        runNuget parameters nuSpec
+        let nuspecFile = createNuspecFile parameters nuSpec
+
+        if parameters.ProjectFile <> null then
+            packSymbols parameters
+
+        pack parameters nuspecFile
+               
+        if parameters.Publish then 
+            publish parameters 
+            if parameters.ProjectFile <> null then 
+                publishSymbols parameters
     with
     | exn -> 
         exn.Message
