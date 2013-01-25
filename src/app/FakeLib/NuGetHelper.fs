@@ -21,9 +21,6 @@ type NuGetParams =
       Dependencies: (string*string) list;
       PublishTrials: int;
       Publish:bool }
-    with
-        member this.PackageFileName with get() = sprintf "%s.%s.nupkg" this.Project this.Version
-        member this.SymbolsPackageFileName with get() = sprintf "%s.%s.symbols.nupkg" this.Project this.Version
 
 /// NuGet default params  
 let NuGetDefaults() =
@@ -45,6 +42,10 @@ let NuGetDefaults() =
       Publish = false}
 
 let RequireExactly version = sprintf "[%s]" version
+
+let private packageFileName parameters = sprintf "%s.%s.nupkg" parameters.Project parameters.Version
+
+let private symbolsPackageFileName parameters = sprintf "%s.%s.symbols.nupkg" parameters.Project parameters.Version
 
 /// Gets the version no. for a given package in the deployments folder
 let GetPackageVersion deploymentsDir package = 
@@ -98,7 +99,7 @@ let private packSymbols parameters =
             info.Arguments <- args) parameters.TimeOut
                
     if result <> 0 then failwithf "Error during NuGet symbols creation. %s %s" parameters.ToolPath args
-    parameters.OutputPath @@ parameters.PackageFileName |> DeleteFile
+    parameters.OutputPath @@ (symbolsPackageFileName parameters) |> DeleteFile
 
 // create package
 let private pack parameters nuspecFile =    
@@ -122,7 +123,7 @@ let rec private publish parameters =
     let tracing = enableProcessTracing
     enableProcessTracing <- false
     let source = if isNullOrEmpty parameters.PublishUrl then "" else sprintf "-s %s" parameters.PublishUrl
-    let args = sprintf "push \"%s\" %s %s" parameters.PackageFileName parameters.AccessKey source
+    let args = sprintf "push \"%s\" %s %s" (packageFileName parameters) parameters.AccessKey source
 
     if tracing then 
         args
@@ -146,7 +147,7 @@ let rec private publish parameters =
 let rec private publishSymbols parameters =
     let tracing = enableProcessTracing
     enableProcessTracing <- false
-    let args = sprintf "push -source %s \"%s\" %s" parameters.PublishUrl parameters.PackageFileName parameters.AccessKey
+    let args = sprintf "push -source %s \"%s\" %s" parameters.PublishUrl (packageFileName parameters) parameters.AccessKey
 
     if tracing then 
         args
