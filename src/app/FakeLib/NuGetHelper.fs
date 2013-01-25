@@ -20,6 +20,9 @@ type NuGetParams =
       Dependencies: (string*string) list;
       PublishTrials: int;
       Publish:bool }
+    with
+        member this.PackageFileName with get() = sprintf "%s.%s.nupkg" this.Project this.Version
+        member this.SymbolsPackageFileName with get() = sprintf "%s.%s.symbols.nupkg" this.Project this.Version
 
 /// NuGet default params  
 let NuGetDefaults() =
@@ -75,7 +78,6 @@ let private createNuspecFile parameters nuSpec =
 
     processTemplates replacements [specFile]
 
-    let packageFile = sprintf "%s.%s.nupkg" parameters.Project parameters.Version
     if parameters.ProjectFile <> null then
         // create symbols package
         let args = sprintf "pack -sym \"%s\"" (parameters.ProjectFile |> FullName)
@@ -86,7 +88,7 @@ let private createNuspecFile parameters nuSpec =
                 info.Arguments <- args) parameters.TimeOut
                
         if result <> 0 then failwithf "Error during NuGet symbols creation. %s %s" parameters.ToolPath args
-        parameters.OutputPath @@ packageFile |> DeleteFile
+        parameters.OutputPath @@ parameters.PackageFileName |> DeleteFile
 
     specFile
 
@@ -102,12 +104,11 @@ let private pack parameters specFile =
     if result <> 0 then failwithf "Error during NuGet creation. %s %s" parameters.ToolPath args
 
 // push package (and try again if something fails)
-let rec private publish trials parameters =
-    let packageFile = sprintf "%s.%s.nupkg" parameters.Project parameters.Version
+let rec private publish parameters =
     let tracing = enableProcessTracing
     enableProcessTracing <- false
     let source = if isNullOrEmpty parameters.PublishUrl then "" else sprintf "-s %s" parameters.PublishUrl
-    let args = sprintf "push \"%s\" %s %s" packageFile parameters.AccessKey source
+    let args = sprintf "push \"%s\" %s %s" parameters.PackageFileName parameters.AccessKey source
 
     if tracing then 
         args
@@ -122,15 +123,16 @@ let rec private publish trials parameters =
         
     enableProcessTracing <- tracing
     if result <> 0 then 
-        if trials > 0 then publish (trials - 1) parameters else
-        failwithf "Error during NuGet push. %s %s" parameters.ToolPath args
+        if parameters.PublishTrials > 0 then 
+            publish { parameters with PublishTrials = parameters.PublishTrials - 1 } 
+        else
+            failwithf "Error during NuGet push. %s %s" parameters.ToolPath args
 
 // push package to symbol server (and try again if something fails)
-let rec private publishSymbols trials parameters =
-    let packageFile = sprintf "%s.%s.symbols.nupkg" parameters.Project parameters.Version
+let rec private publishSymbols parameters =
     let tracing = enableProcessTracing
     enableProcessTracing <- false
-    let args = sprintf "push -source %s \"%s\" %s" parameters.PublishUrl packageFile parameters.AccessKey
+    let args = sprintf "push -source %s \"%s\" %s" parameters.PublishUrl parameters.PackageFileName parameters.AccessKey
 
     if tracing then 
         args
@@ -145,24 +147,24 @@ let rec private publishSymbols trials parameters =
         
     enableProcessTracing <- tracing
     if result <> 0 then 
-        if trials > 0 then publishSymbols (trials - 1) parameters else
-        failwithf "Error during NuGet symbol push. %s %s" parameters.ToolPath args     
-
-let private runNuget parameters nuSpec =
-    createNuspecFile parameters nuSpec
-    |> pack parameters
-               
-    if parameters.Publish then 
-        publish parameters.PublishTrials parameters 
-        if parameters.ProjectFile <> null then 
-            publishSymbols parameters.PublishTrials parameters
+        if parameters.PublishTrials > 0 then 
+            publishSymbols { parameters with PublishTrials = parameters.PublishTrials - 1 }
+        else
+            failwithf "Error during NuGet symbol push. %s %s" parameters.ToolPath args     
 
 /// Creates a new NuGet package   
 let NuGet setParams nuSpec =
     traceStartTask "NuGet" nuSpec
     let parameters = NuGetDefaults() |> setParams
     try    
-        runNuget parameters nuSpec
+        nuSpec
+        |> createNuspecFile parameters 
+        |> pack parameters
+               
+        if parameters.Publish then 
+            publish parameters 
+            if parameters.ProjectFile <> null then 
+                publishSymbols parameters
     with
     | exn -> 
         exn.Message
