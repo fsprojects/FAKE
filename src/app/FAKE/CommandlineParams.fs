@@ -14,7 +14,7 @@ let parseArgs cmdArgs =
                         addXmlListener s.[1]
                     s.[0], s.[1]
                 else
-                    if i = 1 then
+                    if i = 0 then
                         "Target", arg
                     else
                         arg, "")
