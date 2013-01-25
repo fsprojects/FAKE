@@ -175,6 +175,15 @@ let NuGetPack setParams nuspecFile =
 
     traceEndTask "NuGet-Pack" nuspecFile
 
+/// Publishes a NuGet package to the nuget server
+let NuGetPublish setParams  =
+    let parameters = NuGetDefaults() |> setParams
+    traceStartTask "NuGet-Push" (packageFileName parameters)
+    publish parameters
+
+    traceEndTask "NuGet-Pus" (packageFileName parameters)
+
+
 /// Creates a new NuGet package   
 let NuGet setParams nuSpec =
     traceStartTask "NuGet" nuSpec
