@@ -168,13 +168,12 @@ let rec private publishSymbols parameters =
             failwithf "Error during NuGet symbol push. %s %s" parameters.ToolPath args     
 
 /// Creates a new NuGet package based on the nuspecFile
-let Pack setParams nuspecFile =
+let NuGetPack setParams nuspecFile =
     traceStartTask "NuGet-Pack" nuspecFile
     let parameters = NuGetDefaults() |> setParams
     pack parameters nuspecFile
 
     traceEndTask "NuGet-Pack" nuspecFile
-
 
 /// Creates a new NuGet package   
 let NuGet setParams nuSpec =
