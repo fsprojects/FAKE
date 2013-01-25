@@ -206,7 +206,9 @@ let WriteTaskTimeSummary total =
         aligned "Target" "Duration"
         aligned "------" "--------"
         ExecutedTargetTimes
-          |> Seq.iter (fun (name,time) -> aligned name time)
+          |> Seq.iter (fun (name,time) -> 
+                let t = getTarget name
+                aligned t.Name time)
 
         aligned "Total:" total
         if errors = [] then aligned "Status:" "Ok" else alignedError "Status:" "Failure"
