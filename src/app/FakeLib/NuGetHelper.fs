@@ -76,25 +76,35 @@ let private createNuspecFile parameters nuSpec =
          "@dependencies@",dependencies
          "@description@",parameters.Description]
 
-    processTemplates replacements [specFile]
-
-    if parameters.ProjectFile <> null then
-        // create symbols package
-        let args = sprintf "pack -sym \"%s\"" (parameters.ProjectFile |> FullName)
-        let result = 
-            ExecProcess (fun info ->
-                info.FileName <- parameters.ToolPath
-                info.WorkingDirectory <- parameters.OutputPath |> FullName
-                info.Arguments <- args) parameters.TimeOut
-               
-        if result <> 0 then failwithf "Error during NuGet symbols creation. %s %s" parameters.ToolPath args
-        parameters.OutputPath @@ parameters.PackageFileName |> DeleteFile
+    processTemplates replacements [specFile]   
 
     specFile
 
+// create symbols package
+let private packSymbols parameters =
+    // create symbols package
+    let args = 
+        sprintf "pack -sym -Version %s \"%s\""
+            parameters.Version
+            (parameters.ProjectFile |> FullName)
+
+    let result = 
+        ExecProcess (fun info ->
+            info.FileName <- parameters.ToolPath
+            info.WorkingDirectory <- parameters.OutputPath |> FullName
+            info.Arguments <- args) parameters.TimeOut
+               
+    if result <> 0 then failwithf "Error during NuGet symbols creation. %s %s" parameters.ToolPath args
+    parameters.OutputPath @@ parameters.PackageFileName |> DeleteFile
+
 // create package
-let private pack parameters specFile =    
-    let args = sprintf "pack %s %s" (Path.GetFileName specFile) (if parameters.NoPackageAnalysis then "-NoPackageAnalysis" else "")
+let private pack parameters nuspecFile =    
+    let args = 
+        sprintf "pack %s -Version %s %s" 
+            (Path.GetFileName nuspecFile)
+            parameters.Version
+            (if parameters.NoPackageAnalysis then "-NoPackageAnalysis" else "")
+
     let result = 
         ExecProcess (fun info ->
             info.FileName <- parameters.ToolPath
@@ -153,13 +163,25 @@ let rec private publishSymbols parameters =
             failwithf "Error during NuGet symbol push. %s %s" parameters.ToolPath args     
 
 /// Creates a new NuGet package   
+let Pack setParams nuspecFile =
+    traceStartTask "NuGet-Pack" nuspecFile
+    let parameters = NuGetDefaults() |> setParams
+    pack parameters nuspecFile
+
+    traceEndTask "NuGet-Pack" nuspecFile
+
+
+/// Creates a new NuGet package   
 let NuGet setParams nuSpec =
     traceStartTask "NuGet" nuSpec
     let parameters = NuGetDefaults() |> setParams
     try    
-        nuSpec
-        |> createNuspecFile parameters 
-        |> pack parameters
+        let nuspecFile = createNuspecFile parameters nuSpec
+
+        if parameters.ProjectFile <> null then
+            packSymbols parameters
+
+        pack parameters nuspecFile
                
         if parameters.Publish then 
             publish parameters 
