@@ -211,7 +211,7 @@ let WriteTaskTimeSummary total =
         aligned "Total:" total
         if errors = [] then aligned "Status:" "Ok" else alignedError "Status:" "Failure"
     else 
-        traceError "No one target was successfully completed"
+        traceError "No target was successfully completed"
     traceLine()
 
 let private changeExitCodeIfErrorOccured() = if errors <> [] then exit 42 
