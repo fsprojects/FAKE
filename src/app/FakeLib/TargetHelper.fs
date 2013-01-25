@@ -37,8 +37,8 @@ let ExecutedTargets = new HashSet<_>()
 let ExecutedTargetTimes = new List<_>()
 
 /// Gets a target with the given name from the target dictionary
-let getTarget name = 
-    match TargetDict.TryGetValue name with
+let getTarget (name:string) = 
+    match TargetDict.TryGetValue (name.ToLower()) with
     | true, target -> target
     | _  -> failwithf "Target \"%s\" is not defined." name
 
@@ -75,13 +75,13 @@ let checkIfDependencyCanBeAdded targetName dependentTargetName =
 let dependencyAtFront targetName dependentTargetName =
     let target,dependentTarget = checkIfDependencyCanBeAdded targetName dependentTargetName
     
-    TargetDict.[targetName] <- { target with Dependencies = dependentTargetName :: target.Dependencies }
+    TargetDict.[targetName.ToLower()] <- { target with Dependencies = dependentTargetName :: target.Dependencies }
   
 /// Appends the dependency to the list of dependencies
 let dependencyAtEnd targetName dependentTargetName =
     let target,dependentTarget = checkIfDependencyCanBeAdded targetName dependentTargetName
     
-    TargetDict.[targetName] <- { target with Dependencies = target.Dependencies @ [dependentTargetName] }
+    TargetDict.[targetName.ToLower()] <- { target with Dependencies = target.Dependencies @ [dependentTargetName] }
 
 /// Adds the dependency to the list of dependencies
 let dependency = dependencyAtEnd
@@ -104,8 +104,8 @@ let TargetsDependOn target targets =
 let AllTargetsDependOn target = getAllTargetsNames() |> TargetsDependOn target
   
 /// Creates a target from template
-let targetFromTemplate template name parameters =    
-    TargetDict.Add(name,
+let targetFromTemplate template (name:string) parameters =    
+    TargetDict.Add(name.ToLower(),
       { Name = name; 
         Dependencies = [];
         Description = template.Description;
@@ -163,7 +163,7 @@ let runFinalTargets() =
                let watch = new System.Diagnostics.Stopwatch()
                watch.Start()
                tracefn "Starting Finaltarget: %s" name
-               TargetDict.[name].Function()
+               TargetDict.[name.ToLower()].Function()
                addExecutedTarget name watch.Elapsed
            with
            | exn -> targetError name exn)
@@ -175,8 +175,8 @@ let PrintDependencyGraph verbose target =
     logfn "%sDependencyGraph for Target %s:" (if verbose then String.Empty else "Shortened ") target 
     let printed = new HashSet<_>()
     let order = new List<_>()
-    let rec printDependencies indent act =
-        let target = TargetDict.[act]
+    let rec printDependencies indent (act:string) =
+        let target = TargetDict.[act.ToLower()]
         let addToOrder = not (printed.Contains act)
         printed.Add act |> ignore
     
