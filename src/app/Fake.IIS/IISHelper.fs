@@ -26,9 +26,9 @@ module Fake.IISHelper
         let app = site.Applications.[virtualPath]
         match (app) with
         | null -> site.Applications.Add(virtualPath, physicalPath)
-        | _ -> app.VirtualDirectories.[0].PhysicalPath <- physicalPath; app;
+        | _ -> app.VirtualDirectories.[0].PhysicalPath <- physicalPath; app
 
-    let commit (mgr : ServerManager) = mgr.CommitChanges();
+    let commit (mgr : ServerManager) = mgr.CommitChanges()
 
     let IIS (site : ServerManager -> Site) 
             (appPool : ServerManager -> ApplicationPool) 
@@ -36,7 +36,7 @@ module Fake.IISHelper
         use mgr = new ServerManager()
         requiresAdmin (fun _ -> 
             match app with
-            | Some(app) -> bindApplicationPool (appPool mgr) (app (site mgr) mgr); 
+            | Some(app) -> bindApplicationPool (appPool mgr) (app (site mgr) mgr)
             | None -> bindApplicationPool (appPool mgr) (site mgr).Applications.[0]
             commit mgr
         )
@@ -55,20 +55,20 @@ module Fake.IISHelper
     let deleteSite (name : string) = 
         use mgr = new ServerManager()
         let site = mgr.Sites.[name]
-        if (site <> null) then
+        if site <> null then
             site.Delete()
             commit mgr 
 
     let deleteApp (name : string) (site : Site) = 
         use mgr = new ServerManager()
         let app = site.Applications.[name]
-        if (app <> null) then
+        if app <> null then
             app.Delete()
             commit mgr
 
     let deleteApplicationPool (name : string) = 
         use mgr = new ServerManager()
         let appPool = mgr.ApplicationPools.[name]
-        if (appPool <> null) then
+        if appPool <> null then
             appPool.Delete()
             commit mgr
