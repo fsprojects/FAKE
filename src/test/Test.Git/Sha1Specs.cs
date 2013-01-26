@@ -35,10 +35,6 @@ namespace Test.Git
             () => SHA1.calcGitSHA1("foobar\n")
                       .ShouldEqual("323fae03f4606ea9991df8befbb2fca795e648fa");
 
-        It should_calculate_the_sha1_of_small_umlaut =
-            () => SHA1.calcGitSHA1("ü")
-                      .ShouldEqual("0f0f3e3b1ff2bc6722afc3e3812e6b782683896f");
-
         It should_calculate_the_sha1_of_small_umlaut_as_two_chars =
             () => SHA1.calcGitSHA1("ue")
                       .ShouldEqual("08e195cdf64898fc8c62dcd024f863dad66d15a2");
