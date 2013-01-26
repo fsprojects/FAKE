@@ -165,4 +165,4 @@ Target "Default" DoNothing
     ==> "Default"
 
 // start build
-Run "Default"
+RunTargetOrDefault "Default"
