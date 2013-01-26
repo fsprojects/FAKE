@@ -49,7 +49,7 @@ Target "SetAssemblyInfo" (fun _ ->
             AssemblyVersion = buildVersion;
             AssemblyTitle = "FAKE - F# Make Deploy tool";
             Guid = "413E2050-BECC-4FA6-87AA-5A74ACE9B8E1";
-            OutputFileName = @".\src\app\Fake.Deploy\AssemblyInfo.fs"})
+            OutputFileName = @"./src/app/Fake.Deploy/AssemblyInfo.fs"})
 
     AssemblyInfo 
         (fun p -> 
