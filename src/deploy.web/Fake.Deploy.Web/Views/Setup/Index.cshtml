@@ -90,13 +90,29 @@
     </div>
 
     <div class="control-group">
-        <label class="control-label" for="agentName">Data Provider Connection String</label>
+        <label class="control-label" for="agentName">Data Provider Parameters</label>
         <div class="controls">
-            @Html.EditorFor(model => model.DataProviderConnectionString)
-            @Html.ValidationMessageFor(model => model.DataProviderConnectionString)
+            @Html.EditorFor(model => model.DataProviderParameters)
+            @Html.ValidationMessageFor(model => model.DataProviderParameters)
         </div>
     </div>
 
+    
+    <div class="control-group">
+        <label class="control-label" for="agentName">Membership Provider</label>
+        <div class="controls">
+            @Html.EditorFor(model => model.MembershipProvider)
+            @Html.ValidationMessageFor(model => model.MembershipProvider)
+        </div>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="agentName">Membership Provider Parameters</label>
+        <div class="controls">
+            @Html.EditorFor(model => model.MembershipProviderParameters)
+            @Html.ValidationMessageFor(model => model.MembershipProviderParameters)
+        </div>
+    </div>
 
     <p>
         <button type="submit" class="btn btn-primary"><i class="icon-hdd icon-white"></i>&nbsp;Save Changes</button>

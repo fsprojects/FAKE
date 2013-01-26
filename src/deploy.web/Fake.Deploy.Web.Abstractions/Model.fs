@@ -1,7 +1,10 @@
 ﻿namespace Fake.Deploy.Web
 
 open System
+open System.Collections.Generic
 open System.Runtime.Serialization
+open System.ComponentModel.Composition
+open System.Web.Security
 
 [<CLIMutable>]
 [<DataContract>]
@@ -49,15 +52,35 @@ type SetupInfo = {
     AdministratorPassword : string
     ConfirmAdministratorPassword : string
     DataProvider : string
-    DataProviderConnectionString : string
+    DataProviderParameters : string
+    MembershipProvider : string
+    MembershipProviderParameters : string
 }
 
+[<InheritedExport>]
 type IDataProvider = 
     inherit IDisposable
-    abstract member Initialize : string -> unit
+    abstract member Id : string with get
+    abstract member Initialize : IDictionary<string, string> -> unit
     abstract member GetEnvironments : seq<string> -> Environment[]
     abstract member SaveEnvironments : seq<Environment> -> unit
     abstract member DeleteEnvironment : string -> unit
     abstract member GetAgents : seq<string> -> Agent[]
     abstract member SaveAgents : seq<Agent> -> unit
     abstract member DeleteAgent : string -> unit
+
+[<InheritedExport>]
+type IMembershipProvider = 
+    inherit IDisposable
+    abstract member Id : string with get
+    abstract member Initialize : IDictionary<string, string> -> unit
+    abstract member Login : string * string * bool -> bool
+    abstract member Logout : unit -> unit
+    abstract member GetUser : string -> User option
+    abstract member GetUsers : unit -> User[]
+    abstract member CreateUser : string * string * string -> MembershipCreateStatus * User
+    abstract member DeleteUser : string -> bool
+    abstract member CreateRole : string -> unit
+    abstract member AddUserToRoles : string * seq<string> -> unit
+    abstract member RemoveUserFromRoles : string * seq<string> -> unit
+    abstract member GetAllRoles : unit -> string[]

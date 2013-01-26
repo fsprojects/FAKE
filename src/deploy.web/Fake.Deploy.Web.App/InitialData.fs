@@ -5,24 +5,23 @@ open System.Web.Security
 open System.Linq
 open Fake.Deploy.Web
 
-let private createRole (name : string) = 
-        match Roles.GetAllRoles() |> Seq.tryFind (fun r -> r.ToLower() = name.ToLower()) with
+let private createRole (name : string) (provider : IMembershipProvider) = 
+        match provider.GetAllRoles() |> Seq.tryFind (fun r -> r.ToLower() = name.ToLower()) with
         | Some(role) -> ()
-        | None -> Roles.CreateRole(name)
+        | None -> provider.CreateRole(name)
 
-let private createUser (name : string) password email roles = 
-        match Membership.GetUser(name) with
-        | a when a <> null ->  
-            Roles.AddUserToRoles(a.UserName, roles)
+let private createUser (name : string) password email roles (provider : IMembershipProvider) = 
+        match provider.GetUser(name) with
+        | Some(a) ->  
+            provider.AddUserToRoles(a.Username, roles)
         | _ -> 
-            match Membership.CreateUser(name, password, email, null, null, true) with
-            | a, MembershipCreateStatus.Success -> Roles.AddUserToRoles(a.UserName, roles)
+            match provider.CreateUser(name, password, email) with
+            | MembershipCreateStatus.Success, a -> provider.AddUserToRoles(a.Username, roles)
             | _,s -> failwithf "Could not create user %s" (s.ToString())
 
-let Init(adminUsername, adminPassword, adminEmail, dataProvider : IDataProvider) =
-    
-    createRole "Administrator"
-    createUser adminUsername adminPassword adminEmail [|"Administrator"|]
+let Init(adminUsername, adminPassword, adminEmail, dataProvider : IDataProvider, memberProvider : IMembershipProvider) =
+    createRole "Administrator" memberProvider
+    createUser adminUsername adminPassword adminEmail [|"Administrator"|] memberProvider
     
     let agent1 = Agent.Create("http://localhost:8081","localhost")
     let agents = [agent1]

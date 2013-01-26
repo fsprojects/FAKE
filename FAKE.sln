@@ -41,7 +41,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy.Web", "Deploy.Web", 
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.IIS", "src\app\Fake.IIS\Fake.IIS.fsproj", "{6C2097C0-C2EA-410F-B4BB-A58C63A08709}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataProviders", "DataProviders", "{909C4837-F32A-4CAE-952E-7DCB8AAF3C28}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Providers", "Providers", "{909C4837-F32A-4CAE-952E-7DCB8AAF3C28}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Deploy.Web.RavenDb", "src\deploy.web\Fake.Deploy.Web.DataProviders\Fake.Deploy.Web.RavenDb\Fake.Deploy.Web.RavenDb.fsproj", "{74688080-3591-4A82-AEB7-E94FB7A5C41A}"
 EndProject
@@ -54,7 +54,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4A02B2
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Deploy.Web.App", "src\deploy.web\Fake.Deploy.Web.App\Fake.Deploy.Web.App.fsproj", "{65BD7FD0-6C61-4C72-B242-65ED2D390B5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fake.Deploy.Web", "src\deploy.web\Fake.Deploy.Web\Fake.Deploy.Web.csproj", "{EEF3977A-A553-4F31-972C-F5F4171A0184}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fake.Deploy.Web", "src\deploy.web\Fake.Deploy.Web\Fake.Deploy.Web.csproj", "{2446B465-44A3-45A4-B61D-1C911F35B3B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -177,16 +177,16 @@ Global
 		{65BD7FD0-6C61-4C72-B242-65ED2D390B5A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{65BD7FD0-6C61-4C72-B242-65ED2D390B5A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{65BD7FD0-6C61-4C72-B242-65ED2D390B5A}.Release|x86.ActiveCfg = Release|Any CPU
-		{EEF3977A-A553-4F31-972C-F5F4171A0184}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EEF3977A-A553-4F31-972C-F5F4171A0184}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EEF3977A-A553-4F31-972C-F5F4171A0184}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{EEF3977A-A553-4F31-972C-F5F4171A0184}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{EEF3977A-A553-4F31-972C-F5F4171A0184}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{EEF3977A-A553-4F31-972C-F5F4171A0184}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EEF3977A-A553-4F31-972C-F5F4171A0184}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EEF3977A-A553-4F31-972C-F5F4171A0184}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{EEF3977A-A553-4F31-972C-F5F4171A0184}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{EEF3977A-A553-4F31-972C-F5F4171A0184}.Release|x86.ActiveCfg = Release|Any CPU
+		{2446B465-44A3-45A4-B61D-1C911F35B3B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2446B465-44A3-45A4-B61D-1C911F35B3B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2446B465-44A3-45A4-B61D-1C911F35B3B1}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{2446B465-44A3-45A4-B61D-1C911F35B3B1}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{2446B465-44A3-45A4-B61D-1C911F35B3B1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2446B465-44A3-45A4-B61D-1C911F35B3B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2446B465-44A3-45A4-B61D-1C911F35B3B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2446B465-44A3-45A4-B61D-1C911F35B3B1}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2446B465-44A3-45A4-B61D-1C911F35B3B1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{2446B465-44A3-45A4-B61D-1C911F35B3B1}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -205,7 +205,7 @@ Global
 		{909C4837-F32A-4CAE-952E-7DCB8AAF3C28} = {B0DDEAC8-E18F-4DCA-A089-461267507EF8}
 		{B58D394B-DEAC-4C34-8C2B-CC422D408AE5} = {B0DDEAC8-E18F-4DCA-A089-461267507EF8}
 		{65BD7FD0-6C61-4C72-B242-65ED2D390B5A} = {B0DDEAC8-E18F-4DCA-A089-461267507EF8}
-		{EEF3977A-A553-4F31-972C-F5F4171A0184} = {B0DDEAC8-E18F-4DCA-A089-461267507EF8}
+		{2446B465-44A3-45A4-B61D-1C911F35B3B1} = {B0DDEAC8-E18F-4DCA-A089-461267507EF8}
 		{74688080-3591-4A82-AEB7-E94FB7A5C41A} = {909C4837-F32A-4CAE-952E-7DCB8AAF3C28}
 	EndGlobalSection
 EndGlobal

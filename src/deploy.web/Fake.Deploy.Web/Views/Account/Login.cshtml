@@ -46,6 +46,7 @@
     @using (Html.BeginForm("DoLogOn", "Account", null, FormMethod.Post, new { @class = "form" }))
     {
         <fieldset>
+                @Html.AntiForgeryToken()
                 <legend>Sign In</legend>
                 <div class="control-group">
                     <label class="control-label">Username</label>

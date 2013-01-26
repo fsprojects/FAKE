@@ -14,10 +14,6 @@ open System.Net.Mail
 open Fake.Deploy.Web
 open Fake.HttpClientHelper
 
-type InitStatus = {
-    Complete : bool
-}
-
 [<HandleError>]
 type SetupController() =
     inherit Controller()
@@ -28,25 +24,13 @@ type SetupController() =
     member this.Index() = 
         this.View() :> ActionResult
 
-    [<System.Web.Mvc.AllowAnonymous>]
-    member this.InitStatus() = 
-        this.Json({ Complete = !isInit }, JsonRequestBehavior.AllowGet)
-
-    [<System.Web.Mvc.AllowAnonymous>]
-    member this.Initialising(info : SetupInfo) = 
-        async {
-            do Data.init(info)
-            do isInit := true
-        } |> Async.Start
-
-        this.View() :> ActionResult
-
     [<HttpPost>]
     [<System.Web.Mvc.AllowAnonymous>]
     member this.SaveSetupInformation(info : SetupInfo) =
-        Data.configure info
-        let routeValues = new RouteValueDictionary(dict ["info", info])
-        this.RedirectToAction("Initialising", "Setup", routeValues);
+        Data.init(info)
+        Data.saveSetupInfo info
+
+        this.RedirectToAction("Index", "Home");
         
 
 [<HandleError>]
@@ -85,24 +69,24 @@ type AccountController() =
     inherit Controller()
   
     [<System.Web.Mvc.AllowAnonymous>]
-    member this.LogOn() = this.View() :> ActionResult
+    member this.Login() = this.View() :> ActionResult
 
     [<HttpPost>]
     [<System.Web.Mvc.AllowAnonymous>]
+    [<ValidateAntiForgeryToken>]
     member this.DoLogOn(model : LogOnModel, returnUrl : string) =
         if this.ModelState.IsValid
         then 
-            if Membership.ValidateUser(model.UserName, model.Password)
+            if Data.logon model.UserName model.Password model.RememberMe
             then
-                FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe)
                 if this.Url.IsLocalUrl(returnUrl) 
                 then this.Redirect(returnUrl) :> ActionResult
                 else this.RedirectToAction("Index", "Home") :> ActionResult
             else 
                 this.ModelState.AddModelError("", "The user name or password provided is incorrect.");
-                this.View("LogOn", model) :> ActionResult
-        else this.View("LogOn", model) :> ActionResult
+                this.View("Login", model) :> ActionResult
+        else this.View("Login", model) :> ActionResult
 
     member this.LogOff() =
-        FormsAuthentication.SignOut()
-        this.RedirectToAction("LogOn", "Account");
+        Data.logoff()
+        this.RedirectToAction("Login", "Account");

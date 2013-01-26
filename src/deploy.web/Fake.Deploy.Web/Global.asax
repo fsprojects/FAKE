@@ -5,6 +5,11 @@
       base.Start(); 
   }
 
+  protected void Application_AuthenticateRequest(Object sender, EventArgs e)
+  {
+      base.AuthenticateRequest();
+  }
+
   protected void Application_End(Object sender, EventArgs e)
   {
       base.End();
