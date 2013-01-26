@@ -16,7 +16,7 @@ namespace Test.FAKECore.FileHandling
         It should_have_copied_the_subfolder =
             () => Directory.GetDirectories(Target, "*", SearchOption.AllDirectories).Length.ShouldEqual(1);
 
-        private static readonly string Target = string.Format("{0}\\CopyTo", TestData.TestDir);
+        private static readonly string Target = Path.Combine(TestData.TestDir, "CopyTo");
     }
 
     public class when_copying_directory_but_without_filter : BaseFunctions
@@ -31,6 +31,6 @@ namespace Test.FAKECore.FileHandling
         It should_not_have_copied_a_subfolder =
             () => Directory.GetDirectories(Target, "*", SearchOption.AllDirectories).ShouldBeEmpty();
 
-        private static readonly string Target = string.Format("{0}\\CopyTo", TestData.TestDir);
+        private static readonly string Target = Path.Combine(TestData.TestDir, "CopyTo");
     }
 }
