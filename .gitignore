@@ -9,6 +9,7 @@ test/
 !Samples/ContinuousDeploymentWebsite/src/test/
 obj/
 build/
+build-bundles/
 nuget/
 helpBuild/
 Publish/
