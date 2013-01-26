@@ -8,7 +8,7 @@ namespace Test.FAKECore.PackageMgt
     {
         static NuGetHelper.NuSpecPackage _package;
         static string _text;
-        Establish context = () => _text = File.ReadAllText(TestData.TestDataDir + "fake.nuspec");
+        Establish context = () => _text = File.ReadAllText(Path.Combine(TestData.TestDataDir, "fake.nuspec"));
         Because of = () => _package = NuGetHelper.getNuspecProperties(_text);
 
         It should_build_the_DirectoryName_from_id_and_version =

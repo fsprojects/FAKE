@@ -6,20 +6,20 @@ namespace Test.FAKECore
     public static class TestData
     {
         public static readonly string SideBySideFolder =
-            new DirectoryInfo(Environment.CurrentDirectory + @"\SideBySideSpecification\").FullName;
+            new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, "SideBySideSpecification")).FullName;
 
         static TestData()
         {
             BaseDir = Directory.GetCurrentDirectory();
-            TestDir = String.Format("{0}\\Test", BaseDir);
+            TestDir = Path.Combine(BaseDir, "Test");
             CreateDir(TestDir);
 
-            TestDir2 = String.Format("{0}\\Test2", BaseDir);
+            TestDir2 = Path.Combine( BaseDir, "Test2");
             CreateDir(TestDir2);
 
-            SubDir1 = String.Format("{0}\\Dir1", TestDir);
-            SubDir7 = String.Format("{0}\\Dir7", TestDir);
-            TestDataDir = "TestData\\";
+            SubDir1 = Path.Combine( TestDir, "Dir1");
+            SubDir7 = Path.Combine(TestDir, "SubDir7");
+            TestDataDir = "TestData";
         }
 
         public static string TestDir { get; set; }
