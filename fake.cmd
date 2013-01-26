@@ -1,3 +1,3 @@
 @echo off
-"tools\FAKE\tools\Fake.exe" "build.fsx" "%1"
+"tools\FAKE\tools\Fake.exe" "%1"
 exit /b %errorlevel%
