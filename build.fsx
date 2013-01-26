@@ -27,11 +27,11 @@ let appReferences  = !! @"src\app\**\*.*sproj"
 let testReferences = !! @"src\test\**\*.*sproj"
 
 // Targets
+Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; deployDir; docsDir; metricsDir; nugetDir; reportDir])
+
 Target "RestorePackages" RestorePackages
 
-Target "Clean" (fun _ ->
-    CleanDirs [buildDir; testDir; deployDir; docsDir; metricsDir; nugetDir; reportDir]
-
+Target "CopyFSharpFiles" (fun _ ->
     ["./tools/FSharp/FSharp.Core.optdata"
      "./tools/FSharp/FSharp.Core.sigdata"]
       |> CopyTo buildDir
@@ -154,8 +154,9 @@ Target "CreateNuGet" (fun _ ->
 Target "Default" DoNothing
 
 // Dependencies
-"RestorePackages"
-    ==> "Clean"
+"Clean"
+    ==> "RestorePackages"
+    ==> "CopyFSharpFiles"
     ==> "BuildApp" <=> "BuildTest"
     ==> "Test"
     ==> "CopyLicense" <=> "CopyDocu"
