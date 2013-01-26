@@ -10,15 +10,15 @@ let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"]
 let mail = "forkmann@gmx.de"
 let homepage = "http://github.com/forki/fake"
   
-let buildDir = currentDirectory @@ "build"
-let testDir = currentDirectory @@ "test"
-let metricsDir = currentDirectory @@ "BuildMetrics"
-let deployDir = currentDirectory @@ "Publish"
-let docsDir = currentDirectory @@ "docs" 
-let nugetDir = currentDirectory @@ "nuget" 
-let reportDir = currentDirectory @@ "report" 
+let buildDir = "./build"
+let testDir = "./test"
+let metricsDir = "./BuildMetrics"
+let deployDir = "./Publish"
+let docsDir = "./docs" 
+let nugetDir = "./nuget" 
+let reportDir = "./report" 
 let deployZip = deployDir @@ sprintf "%s-%s.zip" projectName buildVersion
-let packagesDir = currentDirectory @@ "packages"
+let packagesDir = "./packages"
 
 
 // Targets
