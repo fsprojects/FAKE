@@ -45,14 +45,5 @@ namespace Test.Git
         It should_calculate_the_sha1_of_foo =
             () => SHA1.calcGitSHA1(File.ReadAllText("./testfiles/foo.txt"))
                       .ShouldEqual("74347b6a967594ae0c820171a2bc9542955a4c7f");
-
-
-        It should_calculate_the_small_oe_encoded =
-            () => SHA1.calcGitSHA1(File.ReadAllText("./testfiles/oe.txt", Encoding.Default))
-                      .ShouldEqual("16e45d390712388410556b522c74a11637716844");
-
-        It should_calculate_the_small_ue =
-            () => SHA1.calcGitSHA1(File.ReadAllText("./testfiles/ue.txt", Encoding.Default))
-                      .ShouldEqual("0f0f3e3b1ff2bc6722afc3e3812e6b782683896f");
     }
 }
