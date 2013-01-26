@@ -5,6 +5,11 @@ open System
 open System.IO
 open System.Configuration
 open System.Diagnostics
+open System.Collections.Generic
+open System.Linq
+open System.Text
+open System.Text.RegularExpressions
+open Microsoft.Win32
 
 type EnvironTarget = EnvironmentVariableTarget
 
@@ -66,31 +71,29 @@ let ProgramFilesX86 =
 /// System root environment variable. Typically "C:\Windows"
 let SystemRoot = environVar "SystemRoot"
 
-let isUnix = System.Environment.OSVersion.Platform = System.PlatformID.Unix
+/// Detemernines if the current system is Unix system
+let isUnix = Environment.OSVersion.Platform = PlatformID.Unix
 
 let platformInfoAction (psi:ProcessStartInfo) =
     if isUnix && psi.FileName.EndsWith ".exe" then
-      psi.Arguments <- psi.FileName + " " + psi.Arguments
-      psi.FileName <- "mono"  
+        psi.Arguments <- psi.FileName + " " + psi.Arguments
+        psi.FileName <- "mono"  
 
-let mutable TargetPlatformPrefix = 
-    let (<|>) a b = match a with None -> b | _ -> a
-    environVarOrNone "FrameworkDir32"
-    <|> 
-        if (isNullOrEmpty SystemRoot) then None
-        else Some (SystemRoot @@ @"Microsoft.NET\Framework")
-    <|> 
-        if (isUnix) then Some "/usr/lib/mono"
-        else Some @"C:\Windows\Microsoft.NET\Framework"
-    |> Option.get
-    
+/// The path of the current target platform
+let mutable TargetPlatformPrefix =
+    match environVarOrNone "FrameworkDir32" with
+    | Some path -> path
+    | _ ->
+        if not (isNullOrEmpty SystemRoot) then SystemRoot @@ @"Microsoft.NET\Framework" else
+        if isUnix then "/usr/lib/mono" else 
+        @"C:\Windows\Microsoft.NET\Framework" 
 
 /// Gets the local directory for the given target platform
 let getTargetPlatformDir platformVersion = 
     if Directory.Exists(TargetPlatformPrefix + "64") then 
-        Path.Combine(TargetPlatformPrefix + "64",platformVersion) 
+        (TargetPlatformPrefix + "64") @@ platformVersion
     else 
-        Path.Combine(TargetPlatformPrefix,platformVersion)
+        TargetPlatformPrefix @@ platformVersion
 
 /// The path to the personal documents
 let documentsFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
@@ -100,4 +103,53 @@ let convertWindowsToCurrentPath (w:string) =
     if (w.Length > 2 && w.[1] = ':' && w.[2] = '\\') then
         w
     else
-        replace @"\" directorySeparator w        
+        replace @"\" directorySeparator w
+
+
+let getInstalledDotNetFrameworks() = 
+    let frameworks = new ResizeArray<_>()
+    try
+        let matches = 
+            Registry.LocalMachine
+                    .OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP")
+                    .GetSubKeyNames()
+            |> Seq.filter (fun keyname -> Regex.IsMatch(keyname, @"^v\d"))
+
+        for item in matches do
+            match item with
+            | "v4.0" -> ()
+            | "v4" ->
+                let key = @"SOFTWARE\Microsoft\NET Framework Setup\NDP\" + item
+                Registry.LocalMachine.OpenSubKey(key).GetSubKeyNames()
+                |> Seq.iter (fun subkey -> 
+                                let key = @"SOFTWARE\Microsoft\NET Framework Setup\NDP\" + item + @"\" + subkey
+                                let version = Registry.LocalMachine.OpenSubKey(key).GetValue("Version").ToString();
+                                frameworks.Add(String.Format("{0} ({1})", version, subkey)))
+            | "v1.1.4322" -> frameworks.Add item
+            | _ ->
+                    let key = @"SOFTWARE\Microsoft\NET Framework Setup\NDP\" + item;
+                    frameworks.Add(Registry.LocalMachine.OpenSubKey(key).GetValue("Version").ToString());
+        frameworks.AsEnumerable()
+    with e ->
+         frameworks.AsEnumerable() //Probably a new unrecognisable version
+
+type MachineDetails = {
+    ProcessorCount : int
+    Is64bit : bool
+    OperatingSystem : string
+    MachineName : string
+    NETFrameworks : seq<string>
+    UserDomainName : string
+
+}
+
+let getMachineEnvironment() = 
+     {
+        ProcessorCount = Environment.ProcessorCount
+        Is64bit = Environment.Is64BitOperatingSystem
+        OperatingSystem = Environment.OSVersion.ToString()
+        MachineName = Environment.MachineName
+        NETFrameworks = getInstalledDotNetFrameworks()
+        UserDomainName = Environment.UserDomainName
+     }  
+     

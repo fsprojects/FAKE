@@ -30,6 +30,9 @@ let private writeResponse (ctx : HttpListenerContext) (str : string) =
     let response = Text.Encoding.UTF8.GetBytes(str)
     ctx.Response.ContentLength64 <- response.Length |> int64
     ctx.Response.ContentEncoding <- Text.Encoding.UTF8
+    ctx.Response.AddHeader("access-control-allow-origin", "*")
+    ctx.Response.AddHeader("access-control-allow-methods", "GET, POST, PUT, DELETE, OPTIONS")
+    ctx.Response.AddHeader("access-control-allow-headers", "content-type, accept")
     ctx.Response.Close(response, true)
 
 let placeholderRegex = new Regex("{([^}]+)}",RegexOptions.Compiled)
@@ -147,7 +150,7 @@ let start log serverName port requestMap =
     let listenerLoop = 
         async {
             try 
-                log (sprintf "Trying to start Fake Deploy server @ %s port %s" serverName usedPort, EventLogEntryType.Information)
+                log (sprintf "Trying to start Fake Deploy server @ %s on port %s" serverName usedPort, EventLogEntryType.Information)
                 use l = listener serverName usedPort
                 let prefixes = l.Prefixes |> separated ","
                 log (sprintf "Fake Deploy now listening @ %s" prefixes, EventLogEntryType.Information)

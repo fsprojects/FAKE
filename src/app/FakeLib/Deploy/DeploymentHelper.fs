@@ -43,6 +43,9 @@ let getAllReleasesFor dir (app : string) =
     !! (dir @@ deploymentRootDir + app + "/**/*.nupkg") 
       |> Seq.map extractNuspecFromPackageFile
 
+let getStatistics() = 
+    getMachineEnvironment()
+
 let getBackupFor dir (app : string) (version : string) =
     let backupFileName =  app + "." + version + ".nupkg"
     dir @@ deploymentRootDir @@ app @@ "backups"
@@ -78,37 +81,40 @@ let unpack workDir isRollback packageBytes =
 let doDeployment packageName script =
     try
         let workingDirectory = DirectoryName script
-        
-        if FSIHelper.runBuildScriptAt workingDirectory true (FullName script) Seq.empty then 
-            Success
+        let (result, messages) = FSIHelper.executeFSI workingDirectory (FullName script) Seq.empty 
+        if result then 
+            Success { Messages = messages; IsError = false; Exception = null }
         else 
-            Failure(Exception "Deployment script didn't run successfully")
-    with e -> Failure e
+            Failure { Messages = messages; IsError = true; Exception = (Exception "Deployment script didn't run successfully") }
+    with e ->
+        Failure { Messages = Seq.empty; IsError = true; Exception = e }
               
 let runDeploymentFromPackageFile workDir packageFileName =
     try
       let packageBytes =  ReadFileAsBytes packageFileName
       let package,scriptFile = unpack workDir false packageBytes
       doDeployment package.Name scriptFile        
-    with e -> Failure e
+    with e ->
+       Failure { Messages = Seq.empty; IsError = true; Exception = e }
 
-let rollback dir workDir (app : string) (version : string) =
+let rollback workDir (app : string) (version : string) =
     try 
         let currentPackageFileName = 
-            !! (dir @@ deploymentRootDir + app + "/active/*.nupkg") 
+            !! (workDir @@ deploymentRootDir + app + "/active/*.nupkg") 
             |> Seq.head
 
-        let backupPackageFileName = getBackupFor dir app version
-        if currentPackageFileName = backupPackageFileName then 
-            Failure "Cannot rollback to currently active version"
+        let backupPackageFileName = getBackupFor workDir app version
+        if currentPackageFileName = backupPackageFileName 
+        then Failure { Messages = Seq.empty; IsError = true; Exception = (Exception "Cannot rollback to currently active version") }
         else 
             let package,scriptFile = unpack workDir true (backupPackageFileName |> ReadFileAsBytes)
-            match doDeployment package.Name scriptFile with
-            | Success -> RolledBack
-            | x -> x
+            doDeployment package.Name scriptFile
     with
-        | :? FileNotFoundException as e -> Failure (sprintf "Failed to rollback to %s %s could not find package file or deployment script file ensure the version is within the backup directory and the deployment script is in the root directory of the *.nupkg file" app version)
-        | _ as e -> Failure("Rollback failed: " + e.Message)
+        | :? FileNotFoundException as e ->
+            let msg = sprintf "Failed to rollback to %s %s could not find package file or deployment script file ensure the version is within the backup directory and the deployment script is in the root directory of the *.nupkg file" app version
+            Failure { Messages = [{ IsError = true; Message = "Rollback failed: File not found"; Timestamp = DateTimeOffset.UtcNow }]; IsError = true; Exception = (Exception msg) }
+        | _ as e -> 
+            Failure { Messages = [{ IsError = true; Message = "Rollback failed"; Timestamp = DateTimeOffset.UtcNow }]; IsError = true; Exception = e }
 
 let getVersionFromNugetFileName (app:string) (fileName:string) = 
     Path.GetFileName(fileName).ToLower().Replace(".nupkg","").Replace(app.ToLower() + ".","")
@@ -131,10 +137,13 @@ let getPreviousPackageVersionFromBackup dir app versions =
         |> Seq.skip (versions - 1)
         |> Seq.head
 
-let rollbackTo dir app version =
-    let newVersion =
-        match VersionInfo.Parse version with
-        | Specific version -> version
-        | Predecessor p -> getPreviousPackageVersionFromBackup dir app p
+let rollbackTo workDir app version =
+    try
+        let newVersion =
+            match VersionInfo.Parse version with
+            | Specific version -> version
+            | Predecessor p -> getPreviousPackageVersionFromBackup workDir app p
 
-    rollback dir app newVersion
+        rollback workDir app newVersion
+    with e ->
+        Failure { Messages = [{ IsError = true; Message = sprintf "Rollback to version (%s-%s) failed" app version; Timestamp = DateTimeOffset.UtcNow }]; IsError = true; Exception = e }

@@ -58,11 +58,8 @@ module Main =
         |> register
 
     let traceDeploymentResult server fileName = function        
-        | HttpClientHelper.Success -> tracefn "Deployment of %s to %s successful" fileName server
+        | HttpClientHelper.Success _ -> tracefn "Deployment of %s to %s successful" fileName server
         | HttpClientHelper.Failure exn -> traceError <| sprintf "Deployment of %s to %s failed\r\n%O" fileName server exn 
-        | HttpClientHelper.Cancelled -> tracefn "Deployment of %s to %s cancelled" fileName server
-        | HttpClientHelper.RolledBack -> tracefn "Deployment of %s to %s rolled back" fileName server
-        | HttpClientHelper.Unknown -> traceError <| sprintf  "Deployment of %s to %s failed\r\nCould not derive reason sorry!!!" fileName server
         | HttpClientHelper.QueryResult result -> tracefn "Query Result for %s %s\n\t%s" server fileName (System.String.Join("\n\t", result |> Seq.map (fun r -> r.Name) |> Seq.toArray))
 
     { Name = "activereleases"
