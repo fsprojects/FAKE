@@ -21,7 +21,7 @@ let localBuildLabel = "LocalBuild"
 
 /// Definces the XML output file
 /// Used for BuildServers like CruiseControl.NET
-let mutable xmlOutputFile = getBuildParamOrDefault "logfile" @".\output\Results.xml"
+let mutable xmlOutputFile = getBuildParamOrDefault "logfile" "./output/Results.xml"
 
 /// Build number retrieved from TeamCity
 let tcBuildNumber = environVar "BUILD_NUMBER"
