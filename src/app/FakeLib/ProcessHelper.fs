@@ -81,6 +81,18 @@ let execProcess3 infoAction timeOut = execProcessAndReturnExitCode infoAction ti
 /// Runs the given process
 /// returns the exit code
 let ExecProcess infoAction timeOut = execProcess2 infoAction timeOut redirectOutputToTrace
+
+///Runs the given process in an elevated context
+///returns the exit code
+let ExecProcessElevated cmd args timeOut = 
+    ExecProcess (fun si -> 
+                       si.Verb <- "runas"
+                       si.Arguments <- args
+                       si.FileName <- cmd
+                       si.UseShellExecute <- true
+                ) timeOut
+
+    
   
 /// sets the environment Settings for the given startInfo
 /// existing values will be overrriden

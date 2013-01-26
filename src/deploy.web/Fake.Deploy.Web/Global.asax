@@ -5,4 +5,9 @@
       base.Start(); 
   }
 
+  protected void Application_End(Object sender, EventArgs e)
+  {
+      base.End();
+  }
+
 </script>

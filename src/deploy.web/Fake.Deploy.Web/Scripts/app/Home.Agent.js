@@ -60,7 +60,7 @@ function AgentViewModel() {
             dataType: 'json',
             contentType: 'application/json'
         }).done(function (data) {
-            var a = ko.mapping.fromJS(data.values[0]);
+            var a = ko.mapping.fromJS(data);
             self.agent(a);
             self.getAgentDetails();
         }).fail(function (msg) {

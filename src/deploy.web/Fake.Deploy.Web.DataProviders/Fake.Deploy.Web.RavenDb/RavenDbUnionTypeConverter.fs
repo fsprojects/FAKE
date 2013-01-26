@@ -1,16 +1,13 @@
-﻿namespace Fake.Deploy.Web.Helpers
+﻿namespace Fake.Deploy.Web.RavenDb
 
 open System
-open System.IO
-open System.Web
-open System.Runtime.Serialization
 open Microsoft.FSharp.Reflection
-open Newtonsoft.Json
+open Raven.Imports.Newtonsoft.Json
 
-type internal NewtonsoftUnionTypeConverter() =
-    inherit Newtonsoft.Json.JsonConverter()
+type internal RavenUnionTypeConverter() =
+    inherit Raven.Imports.Newtonsoft.Json.JsonConverter()
 
-    let doRead pos (reader: JsonReader) = 
+    let doRead pos (reader: Raven.Imports.Newtonsoft.Json.JsonReader) = 
         reader.Read() |> ignore 
 
     override x.CanConvert(typ:Type) =
@@ -19,7 +16,7 @@ type internal NewtonsoftUnionTypeConverter() =
             && FSharpType.IsUnion typ)
         result
 
-    override x.WriteJson(writer: JsonWriter, value: obj, serializer: JsonSerializer) =
+    override x.WriteJson(writer: Raven.Imports.Newtonsoft.Json.JsonWriter, value: obj, serializer: Raven.Imports.Newtonsoft.Json.JsonSerializer) =
         let t = value.GetType()
         let write (name : string) (fields : obj []) = 
             writer.WriteStartObject()
@@ -32,9 +29,9 @@ type internal NewtonsoftUnionTypeConverter() =
         let (info, fields) = FSharpValue.GetUnionFields(value, t)
         write info.Name fields
 
-    override x.ReadJson(reader: JsonReader, objectType: Type, existingValue: obj, serializer: JsonSerializer) =      
+    override x.ReadJson(reader: Raven.Imports.Newtonsoft.Json.JsonReader, objectType: Type, existingValue: obj, serializer: Raven.Imports.Newtonsoft.Json.JsonSerializer) =      
          let cases = FSharpType.GetUnionCases(objectType)
-         if reader.TokenType <> JsonToken.Null  
+         if reader.TokenType <> Raven.Imports.Newtonsoft.Json.JsonToken.Null  
          then 
             doRead "1" reader
             doRead "2" reader
@@ -49,12 +46,9 @@ type internal NewtonsoftUnionTypeConverter() =
                        yield result
              |] 
             let result = FSharpValue.MakeUnion(case, fields)
-            while reader.TokenType <> JsonToken.EndObject do
+            while reader.TokenType <> Raven.Imports.Newtonsoft.Json.JsonToken.EndObject do
                 doRead "6" reader         
             result
          else
             FSharpValue.MakeUnion(cases.[0], [||]) 
-
-
-
 

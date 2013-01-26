@@ -7,6 +7,7 @@ open System.Net.NetworkInformation
 open System.Threading
 open System.Diagnostics
 open System.Text.RegularExpressions
+open System.Security.Principal
 
 type Route = {
         Verb : string
@@ -19,10 +20,12 @@ type Route = {
 type RouteResult =
     { Route:Route
       Parameters: Map<string,string> }
-        
-let private listener serverName port = 
+
+
+     
+let private listener port = 
     let listener = new HttpListener()
-    listener.Prefixes.Add(sprintf "http://%s:%s/fake/" serverName port)
+    listener.Prefixes.Add(sprintf "http://+:%s/fake/" port)
     listener.Start()
     listener
 
@@ -144,14 +147,43 @@ let emptyListener = {
     Port = ""
     CancelF = id }
 
+let getSetUrlAclArgs port = 
+    if Environment.OSVersion.Version.Major > 5
+    then "netsh",
+         String.Format(@"http add urlacl url=http://+:{0}/ user=""{1}""", port, WindowsIdentity.GetCurrent().Name);
+    else "httpcfg",
+         String.Format(@"set urlacl /u http://+:{0}/ /a D:(A;;GX;;;""{1}"")", port, WindowsIdentity.GetCurrent().User);
+
+let canListen port = 
+    try
+        let httpListener = new HttpListener()
+        httpListener.Prefixes.Add("http://+:" + port + "/")
+        httpListener.Start()
+        httpListener.Stop()
+        true
+    with
+    | :? HttpListenerException as e ->
+        if e.ErrorCode <> 5
+        then raise(InvalidOperationException("Could not listen to port " + port, e))
+        false
+
+let ensureCanBindHttpPort port =
+    if not <| canListen port
+    then
+       let cmd, args = getSetUrlAclArgs port
+       match ProcessHelper.ExecProcessElevated cmd args (TimeSpan.FromSeconds(5.)) with
+       | 0 -> ()
+       | a -> failwithf "Failed to grant rights for listening to http, exit code: %d" a
+
 let start log serverName port requestMap =
     let cts = new CancellationTokenSource()
     let usedPort = getPort port
     let listenerLoop = 
         async {
-            try 
+            try
                 log (sprintf "Trying to start Fake Deploy server @ %s on port %s" serverName usedPort, EventLogEntryType.Information)
-                use l = listener serverName usedPort
+                ensureCanBindHttpPort usedPort
+                use l = listener usedPort
                 let prefixes = l.Prefixes |> separated ","
                 log (sprintf "Fake Deploy now listening @ %s" prefixes, EventLogEntryType.Information)
                 while true do

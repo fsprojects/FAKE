@@ -36,35 +36,16 @@
       <HintPath>..\..\..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>$(SolutionDir)\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <Private>True</Private>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="FSharp.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <Private>True</Private>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Raven.Abstractions">
-      <HintPath>..\..\..\packages\RavenDB.Client.2.0.2230\lib\net40\Raven.Abstractions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Raven.Client.Embedded">
-      <HintPath>..\..\..\packages\RavenDB.Embedded.2.0.2230\lib\net40\Raven.Client.Embedded.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Raven.Client.Lightweight">
-      <HintPath>..\..\..\packages\RavenDB.Client.2.0.2230\lib\net40\Raven.Client.Lightweight.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Raven.Database">
-      <HintPath>..\..\..\packages\RavenDB.Database.2.0.2230\lib\net40\Raven.Database.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="RavenDBMembership">
-      <HintPath>..\..\..\lib\RavenDBMembership.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -73,7 +54,6 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Numerics" />
-    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -102,8 +82,8 @@
     <Compile Include="AssemblyInfo.fs" />  
     <Compile Include="UnionTypeConverter.fs" />
     <Compile Include="ApiHelpers.fs" />
-    <Compile Include="Model.fs" />
     <Compile Include="InitialData.fs" />
+    <Compile Include="Data.fs" />
     <Compile Include="ApiControllers.fs" />
     <Compile Include="Global.fs" />
     <Compile Include="Controllers.fs" />
@@ -113,6 +93,11 @@
     <ProjectReference Include="..\..\app\FakeLib\FakeLib.fsproj">
       <Name>FakeLib</Name>
       <Project>{13d56521-772a-41db-9772-1da1a4aa8e3a}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Fake.Deploy.Web.Abstractions\Fake.Deploy.Web.Abstractions.fsproj">
+      <Name>Fake.Deploy.Web.Abstractions</Name>
+      <Project>{b58d394b-deac-4c34-8c2b-cc422d408ae5}</Project>
       <Private>True</Private>
     </ProjectReference>
   </ItemGroup>

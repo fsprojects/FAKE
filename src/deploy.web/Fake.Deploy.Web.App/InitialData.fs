@@ -1,46 +1,30 @@
 ﻿module Fake.Deploy.Web.InitialData
 
 open System
-open Fake.Deploy.Web.Model
-open Raven.Client.Indexes
-open RavenDBMembership.Provider
-open RavenDBMembership.MVC.Models
+open System.Web.Security
 open System.Linq
+open Fake.Deploy.Web
 
-let private createIndexes (assems : seq<Reflection.Assembly>) =
-    assems |> Seq.iter (fun ass -> IndexCreation.CreateIndexes(ass, documentStore))
-
-let private createRole (name : string) (provider : IMembershipService) = 
-        match provider.GetAllRoles() |> Seq.tryFind (fun r -> r.ToLower() = name.ToLower()) with
+let private createRole (name : string) = 
+        match Roles.GetAllRoles() |> Seq.tryFind (fun r -> r.ToLower() = name.ToLower()) with
         | Some(role) -> ()
-        | None -> provider.AddRole(name)
-        provider
+        | None -> Roles.CreateRole(name)
 
-let private createUser (name : string) password email roles (provider : IMembershipService) = 
-        match provider.GetUser(name) with
+let private createUser (name : string) password email roles = 
+        match Membership.GetUser(name) with
         | a when a <> null ->  
-            provider.UpdateUser(a, roles)
+            Roles.AddUserToRoles(a.UserName, roles)
         | _ -> 
-            if provider.CreateUser(name, password, email) = Web.Security.MembershipCreateStatus.Success
-            then
-                Threading.Thread.Sleep(1000) //This is crap but it deals with the stale query from raven, needs sorting properly
-                let user = provider.GetUser(name)
-                provider.UpdateUser(user, roles)
-        provider
+            match Membership.CreateUser(name, password, email, null, null, true) with
+            | a, MembershipCreateStatus.Success -> Roles.AddUserToRoles(a.UserName, roles)
+            | _,s -> failwithf "Could not create user %s" (s.ToString())
 
-let Init() = 
-    RavenDBMembershipProvider.DocumentStore <- documentStore
-    RavenDBRoleProvider.DocumentStore <- documentStore
-    createIndexes [Reflection.Assembly.GetExecutingAssembly()]
-
-    let provider = new AccountMembershipService()
-
-    provider
-    |> createRole "Administrator"
-    |> createUser "Admin" "admin" "fake.deploy@gmail.com" [|"Administrator"|]
-    |> ignore
-
-    let agent1 = Agent.Create("http://localhost:8080","localhost")
+let Init(adminUsername, adminPassword, adminEmail, dataProvider : IDataProvider) =
+    
+    createRole "Administrator"
+    createUser adminUsername adminPassword adminEmail [|"Administrator"|]
+    
+    let agent1 = Agent.Create("http://localhost:8081","localhost")
     let agents = [agent1]
 
     let environments = 
@@ -61,5 +45,5 @@ let Init() =
             Description = "Production environment";
             Agents = [] } ]
 
-    Save agents
-    Save environments
+    dataProvider.SaveAgents agents
+    dataProvider.SaveEnvironments environments
