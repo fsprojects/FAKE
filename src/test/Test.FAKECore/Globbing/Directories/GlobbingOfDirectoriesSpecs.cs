@@ -37,7 +37,7 @@ namespace Test.FAKECore.Globbing.Directories
 
     public class when_scanning_in_zip : when_extracting_zip
     {
-        private Because of = () => Files = Globbing("*", "SampleApp/bin/");
+        private Because of = () => Files = Globbing("*", "SampleApp/bin");
 
         It should_match_3_files = () => Files.Length.ShouldEqual(3);
         It should_find_ilmerge = () => Files[0].ShouldEndWith("ilmerge.exclude");
