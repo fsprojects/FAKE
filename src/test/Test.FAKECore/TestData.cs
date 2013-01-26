@@ -14,11 +14,11 @@ namespace Test.FAKECore
             TestDir = Path.Combine(BaseDir, "Test");
             CreateDir(TestDir);
 
-            TestDir2 = Path.Combine( BaseDir, "Test2");
+            TestDir2 = Path.Combine(BaseDir, "Test2");
             CreateDir(TestDir2);
 
-            SubDir1 = Path.Combine( TestDir, "Dir1");
-            SubDir7 = Path.Combine(TestDir, "SubDir7");
+            SubDir1 = Path.Combine(TestDir, "Dir1");
+            SubDir7 = Path.Combine(TestDir, "Dir7");
             TestDataDir = "TestData";
         }
 
