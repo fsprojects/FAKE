@@ -242,7 +242,7 @@ let run targetName =
     if LastDescription <> null then failwithf "You set a task description (%A) but didn't specify a task." LastDescription
     let rec runTarget targetName =
         try      
-            if errors = [] && ExecutedTargets.Contains targetName |> not then
+            if errors = [] && ExecutedTargets.Contains (toLower targetName) |> not then
                 let target = getTarget targetName      
                 traceStartTarget target.Name target.Description (dependencyString target)
       
