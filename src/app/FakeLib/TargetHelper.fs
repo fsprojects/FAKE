@@ -178,23 +178,25 @@ let PrintTargets() =
 /// <param name="verbose">Whether to print verbose output or not.</param>
 /// <param name="target">The target for which the dependencies should be printed.</param>
 let PrintDependencyGraph verbose target =
-    if TargetDict.ContainsKey (toLower target) |> not then PrintTargets() else 
-    logfn "%sDependencyGraph for Target %s:" (if verbose then String.Empty else "Shortened ") target 
-    let printed = new HashSet<_>()
-    let order = new List<_>()
-    let rec printDependencies indent act =
-        let target = TargetDict.[toLower act]
-        let addToOrder = not (printed.Contains (toLower act))
-        printed.Add (toLower act) |> ignore
+    match TargetDict.TryGetValue (toLower target) with
+    | false,_ -> PrintTargets()
+    | true,target ->
+        logfn "%sDependencyGraph for Target %s:" (if verbose then String.Empty else "Shortened ") target.Name
+        let printed = new HashSet<_>()
+        let order = new List<_>()
+        let rec printDependencies indent act =
+            let target = TargetDict.[toLower act]
+            let addToOrder = not (printed.Contains act)
+            printed.Add (toLower act) |> ignore
     
-        if addToOrder || verbose then log <| (sprintf "<== %s" act).PadLeft(3 * indent)
-        Seq.iter (printDependencies (indent+1)) target.Dependencies
-        if addToOrder then order.Add (toLower act)
+            if addToOrder || verbose then log <| (sprintf "<== %s" act).PadLeft(3 * indent)
+            Seq.iter (printDependencies (indent+1)) target.Dependencies
+            if addToOrder then order.Add act
         
-    printDependencies 0 target
-    log ""
-    log "The resulting target order is:"
-    Seq.iter (logfn " - %s") order
+        printDependencies 0 target.Name
+        log ""
+        log "The resulting target order is:"
+        Seq.iter (logfn " - %s") order
 
 /// <summary>Writes a build time report.</summary>
 /// <param name="total">The total runtime.</param>
