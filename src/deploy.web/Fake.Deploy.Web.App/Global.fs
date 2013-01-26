@@ -63,7 +63,7 @@ and Global() =
         |> uiRoutes
     
     member this.AuthenticateRequest() = 
-        if this.Request.IsAuthenticated
+        if this.Request.IsAuthenticated && Data.isInitialized()
         then 
             Data.getUser this.User.Identity.Name
             |> Option.iter 

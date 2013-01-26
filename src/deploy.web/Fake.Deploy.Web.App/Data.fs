@@ -9,9 +9,12 @@
     open System.Web.Configuration
     open System.ComponentModel.Composition
     
+    let appdata = HttpContext.Current.Server.MapPath("~/App_Data")
+    let providerPath = Path.Combine(appdata, "Providers\\")
+
     do
-        if not <| Directory.Exists("bin")
-        then Directory.CreateDirectory("bin") |> ignore
+        if not <| Directory.Exists(providerPath)
+        then Directory.CreateDirectory(providerPath) |> ignore
     
     type AppInfo = {
         DataProvider : string
@@ -56,10 +59,8 @@
     let private started = ref false
 
     let private container = 
-       
         let catalog = new Hosting.AggregateCatalog()
-        catalog.Catalogs.Add(new Hosting.DirectoryCatalog("bin"))
-
+        catalog.Catalogs.Add(new Hosting.DirectoryCatalog(providerPath))
         new Hosting.CompositionContainer(catalog)
     
     let private parametersToMap (str : string) = 
@@ -71,7 +72,7 @@
                    )
         |> dict
 
-    let setupInfoPath = Path.Combine(HttpContext.Current.Server.MapPath("~/App_Data"), "SetupInfo.json")
+    let setupInfoPath = Path.Combine(appdata, "SetupInfo.json")
 
     let isInitialized() = 
         File.Exists(setupInfoPath)
@@ -87,8 +88,6 @@
         File.WriteAllText(setupInfoPath, Newtonsoft.Json.JsonConvert.SerializeObject(info))
 
     let private doInit(info : AppInfo) = 
-        container.SatisfyImportsOnce(config) |> ignore
-
         config.SetDataProvider(info.DataProvider)
         config.Data.Initialize(parametersToMap info.DataProviderParameters)
         config.SetMembershipProvider(info.MembershipProvider)
@@ -110,8 +109,15 @@
     let start() = 
         if (not <| !started) && isInitialized()
         then 
-            let si = Newtonsoft.Json.JsonConvert.DeserializeObject<AppInfo>( File.ReadAllText(setupInfoPath))
+            let si = Newtonsoft.Json.JsonConvert.DeserializeObject<AppInfo>(File.ReadAllText(setupInfoPath))
             doInit si
+        else 
+            //Unzip bundles and copy to Providers
+//            let bundles = HttpContext.Current.Server.MapPath("Bundles")
+//            for bundle in Directory.GetDirectories(bundles) do
+//                Fake.ZipHelper.Unzip providerPath bundle
+            
+            container.SatisfyImportsOnce(config) |> ignore
 
     let dispose() =
         (config :> IDisposable).Dispose()

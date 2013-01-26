@@ -18,11 +18,13 @@ open Fake.HttpClientHelper
 type SetupController() =
     inherit Controller()
 
-    let isInit = ref false // Quick and dirty POC
-
     [<System.Web.Mvc.AllowAnonymous>]
     member this.Index() = 
-        this.View() :> ActionResult
+        if this.Request.IsAuthenticated
+        then
+            FormsAuthentication.SignOut() //Kick the user out
+            this.RedirectToAction("Index") :> ActionResult //Remake the request now the user has been signed out
+        else this.View() :> ActionResult
 
     [<HttpPost>]
     [<System.Web.Mvc.AllowAnonymous>]

@@ -35,6 +35,7 @@ Samples/ContinuousDeploymentWebsite/deployments
 tools/FAKE/
 src/deploy.web/Fake.Deploy.Web/App_Data/RavenDB/*
 src/deploy.web/Fake.Deploy.Web/App_Data/Package_Temp/*
+src/deploy.web/Fake.Deploy.Web/App_Data/Providers/*
 src/deploy.web/Fake.Deploy.Web/Logs/*
 tools/FAKE/deployments/*
 packages/

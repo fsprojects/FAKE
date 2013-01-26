@@ -17,7 +17,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <Tailcalls>false</Tailcalls>
-    <OutputPath>..\..\Fake.Deploy.Web\bin</OutputPath>
+    <OutputPath>..\..\Fake.Deploy.Web\App_Data\Providers\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
     <DocumentationFile>bin\Debug\Fake.Deploy.Web.RavenDb.XML</DocumentationFile>
