@@ -114,7 +114,7 @@ Target "BuildTest" (fun _ ->
 
 Target "Test" (fun _ ->
     let MSpecVersion = GetPackageVersion packagesDir "Machine.Specifications"
-    let mspecTool = sprintf @"%sMachine.Specifications.%s/tools/mspec-clr4.exe" packagesDir MSpecVersion
+    let mspecTool = sprintf @"%s/Machine.Specifications.%s/tools/mspec-clr4.exe" packagesDir MSpecVersion
 
     !! (testDir @@ "Test.*.dll") 
       |> MSpec (fun p -> 
