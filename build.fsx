@@ -20,9 +20,6 @@ let reportDir = @".\report\"
 let deployZip = deployDir @@ sprintf "%s-%s.zip" projectName buildVersion
 let packagesDir = @".\packages\"
 
-// files
-let appReferences  = !! @"src\app\**\*.*sproj"
-let testReferences = !! @"src\test\**\*.*sproj"
 
 // Targets
 Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; deployDir; docsDir; metricsDir; nugetDir; reportDir])
@@ -73,9 +70,10 @@ Target "SetAssemblyInfo" (fun _ ->
             OutputFileName = @".\src\app\Fake.SQL\AssemblyInfo.fs"})
 )
 
-Target "BuildApp" (fun _ ->                     
-    MSBuildRelease buildDir "Build" appReferences
-        |> Log "AppBuild-Output: "
+Target "BuildApp" (fun _ ->        
+    !! @"src\app\**\*.*sproj"             
+    |> MSBuildRelease buildDir "Build"
+    |> Log "AppBuild-Output: "
 )
 
 Target "GenerateDocumentation" (fun _ ->
@@ -109,8 +107,9 @@ Target "BuildZip" (fun _ ->
 )
 
 Target "BuildTest" (fun _ -> 
-    MSBuildDebug testDir "Build" testReferences
-        |> Log "TestBuild-Output: "
+   !! @"src\test\**\*.*sproj"
+   |> MSBuildDebug testDir "Build"
+   |> Log "TestBuild-Output: "
 )
 
 Target "Test" (fun _ ->
@@ -155,6 +154,7 @@ Target "Default" DoNothing
 "Clean"
     ==> "RestorePackages"
     ==> "CopyFSharpFiles"
+    =?> ("SetAssemblyInfo",not isLocalBuild ) 
     ==> "BuildApp" <=> "BuildTest"
     ==> "Test"
     ==> "CopyLicense" <=> "CopyDocu"
@@ -163,9 +163,6 @@ Target "Default" DoNothing
     ==> "ZipDocumentation"
     ==> "CreateNuGet"
     ==> "Default"
-  
-if not isLocalBuild then
-    "Clean" ==> "SetAssemblyInfo" ==> "BuildApp" |> ignore
 
 // start build
 RunParameterTargetOrDefault "target" "Default"
