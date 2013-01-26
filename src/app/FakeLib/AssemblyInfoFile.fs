@@ -32,6 +32,7 @@ let private writeToFile outputFileName (lines: seq<string>) =
 
     use writer = new System.IO.StreamWriter(outputFileName,false,System.Text.Encoding.UTF8) 
     lines |> Seq.iter writer.WriteLine
+    tracefn "Created AssemblyInfo file \"%s\"." outputFileName
 
 let private getDependencies attributes =
     attributes
@@ -40,16 +41,24 @@ let private getDependencies attributes =
  
 /// Creates a C# AssemblyInfo file with the given attributes
 let CreateCSharpAssemblyInfo outputFileName attributes =
+    traceStartTask "AssemblyInfo" outputFileName
+
     attributes
     |> Seq.map (fun (attr:Attribute) -> sprintf "[assembly: %sAttribute(%s)]" attr.Name attr.Value)
     |> Seq.append [""]    
     |> Seq.append (getDependencies attributes |> Seq.map (sprintf "using %s;"))
     |> writeToFile outputFileName
+    
+    traceEndTask "AssemblyInfo" outputFileName
 
 /// Creates a F# AssemblyInfo file with the given attributes
 let CreateFSharpAssemblyInfo outputFileName attributes =
+    traceStartTask "AssemblyInfo" outputFileName
+
     attributes
     |> Seq.map (fun (attr:Attribute) -> sprintf "[<assembly: %sAttribute(%s)>]" attr.Name attr.Value)
     |> Seq.append [""]    
     |> Seq.append (getDependencies attributes |> Seq.map (sprintf "open %s"))
     |> writeToFile outputFileName
+
+    traceEndTask "AssemblyInfo" outputFileName
