@@ -133,13 +133,13 @@ Target "CreateNuGet" (fun _ ->
     let nugetDocsDir = nugetDir @@ "docs"
     let nugetToolsDir = nugetDir @@ "tools"
 
-    XCopy docsDir nugetDocsDir
-    XCopy buildDir nugetToolsDir
-    XCopy @".\lib\fsi" nugetToolsDir
+    CopyDir nugetDocsDir docsDir allFiles  
+    CopyDir nugetToolsDir buildDir allFiles
+    CopyDir nugetToolsDir @"./lib/fsi" allFiles
     DeleteFile (nugetToolsDir @@ "Gallio.dll")
 
     NuGet (fun p -> 
-        {p with               
+        {p with
             Authors = authors
             Project = projectName
             Description = projectDescription                               
