@@ -65,6 +65,7 @@
     <Compile Include="TeamCityHelper.fs" />
     <Compile Include="TeamCityRESTHelper.fs" />
     <Compile Include="TraceHelper.fs" />
+    <Compile Include="AssemblyInfoFile.fs" />
     <Compile Include="AssemblyInfoHelper.fs" />
     <Compile Include="ProcessHelper.fs" />
     <Compile Include="FXCopHelper.fs" />
