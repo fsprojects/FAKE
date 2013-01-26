@@ -2,9 +2,12 @@
 open Fake
 open System.IO
 
-let printEnvironment cmdArgs args =
+let printVersion() =
     traceFAKE "FakePath: %s" fakePath
     traceFAKE "%s" fakeVersionStr
+
+let printEnvironment cmdArgs args =
+    printVersion()
 
     if buildServer = LocalBuild then
         trace localBuildLabel
@@ -27,8 +30,10 @@ try
     try            
         AutoCloseXmlWriter <- true            
         let cmdArgs = System.Environment.GetCommandLineArgs()                
-        let printDetails = cmdArgs |> Seq.map (fun (a:string) -> a.ToLower()) |> Seq.exists ((=) "details")
+        
+        if cmdArgs |> Seq.map (fun (a:string) -> a.ToLower()) |> Seq.exists ((=) "version") then printVersion() else
 
+        let printDetails = cmdArgs |> Seq.map (fun (a:string) -> a.ToLower()) |> Seq.exists ((=) "details")
         if (cmdArgs.Length = 2 && cmdArgs.[1].ToLower() = "help") || (cmdArgs.Length = 1 && List.length buildScripts = 0) then CommandlineParams.printAllParams() else
         
         let buildScriptArg = if cmdArgs.Length > 1 && cmdArgs.[1].EndsWith ".fsx" then cmdArgs.[1] else Seq.head buildScripts
