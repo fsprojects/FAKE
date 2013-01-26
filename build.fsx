@@ -9,8 +9,6 @@ let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. 
 let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"]
 let mail = "forkmann@gmx.de"
 let homepage = "http://github.com/forki/fake"
-
-TraceEnvironmentVariables()
   
 let buildDir = @".\build\"
 let testDir = @".\test\"
