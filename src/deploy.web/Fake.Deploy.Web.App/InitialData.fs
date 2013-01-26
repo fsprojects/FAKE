@@ -12,11 +12,11 @@ let private createRole (name : string) (provider : IMembershipProvider) =
 
 let private createUser (name : string) password email roles (provider : IMembershipProvider) = 
         match provider.GetUser(name) with
-        | a ->  
+        | Some(a) ->  
             provider.AddUserToRoles(a.Username, roles)
         | _ -> 
             match provider.CreateUser(name, password, email) with
-            | MembershipCreateStatus.Success, a -> Roles.AddUserToRoles(a.Username, roles)
+            | MembershipCreateStatus.Success, a -> provider.AddUserToRoles(a.Username, roles)
             | _,s -> failwithf "Could not create user %s" (s.ToString())
 
 let Init(adminUsername, adminPassword, adminEmail, dataProvider : IDataProvider, memberProvider : IMembershipProvider) =

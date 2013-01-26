@@ -76,7 +76,7 @@ type IMembershipProvider =
     abstract member Initialize : IDictionary<string, string> -> unit
     abstract member Login : string * string * bool -> bool
     abstract member Logout : unit -> unit
-    abstract member GetUser : string -> User
+    abstract member GetUser : string -> User option
     abstract member GetUsers : unit -> User[]
     abstract member CreateUser : string * string * string -> MembershipCreateStatus * User
     abstract member DeleteUser : string -> bool

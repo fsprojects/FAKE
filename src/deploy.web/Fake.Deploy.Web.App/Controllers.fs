@@ -14,10 +14,6 @@ open System.Net.Mail
 open Fake.Deploy.Web
 open Fake.HttpClientHelper
 
-type InitStatus = {
-    Complete : bool
-}
-
 [<HandleError>]
 type SetupController() =
     inherit Controller()
@@ -28,14 +24,12 @@ type SetupController() =
     member this.Index() = 
         this.View() :> ActionResult
 
-    [<System.Web.Mvc.AllowAnonymous>]
-    member this.InitStatus() = 
-        this.Json({ Complete = !isInit }, JsonRequestBehavior.AllowGet)
-
     [<HttpPost>]
     [<System.Web.Mvc.AllowAnonymous>]
     member this.SaveSetupInformation(info : SetupInfo) =
-        Data.init info
+        Data.init(info)
+        Data.saveSetupInfo info
+
         this.RedirectToAction("Index", "Home");
         
 
@@ -75,7 +69,7 @@ type AccountController() =
     inherit Controller()
   
     [<System.Web.Mvc.AllowAnonymous>]
-    member this.LogOn() = this.View() :> ActionResult
+    member this.Login() = this.View() :> ActionResult
 
     [<HttpPost>]
     [<System.Web.Mvc.AllowAnonymous>]
@@ -90,9 +84,9 @@ type AccountController() =
                 else this.RedirectToAction("Index", "Home") :> ActionResult
             else 
                 this.ModelState.AddModelError("", "The user name or password provided is incorrect.");
-                this.View("LogOn", model) :> ActionResult
-        else this.View("LogOn", model) :> ActionResult
+                this.View("Login", model) :> ActionResult
+        else this.View("Login", model) :> ActionResult
 
     member this.LogOff() =
         Data.logoff()
-        this.RedirectToAction("LogOn", "Account");
+        this.RedirectToAction("Login", "Account");

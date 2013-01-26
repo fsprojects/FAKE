@@ -9,6 +9,17 @@
     open System.Web.Configuration
     open System.ComponentModel.Composition
     
+    do
+        if not <| Directory.Exists("bin")
+        then Directory.CreateDirectory("bin") |> ignore
+    
+    type AppInfo = {
+        DataProvider : string
+        DataProviderParameters : string
+        MembershipProvider : string
+        MembershipProviderParameters : string
+    }
+
     type Configuration internal() =
         
         let mutable membership : IMembershipProvider = Unchecked.defaultof<_> 
@@ -38,17 +49,16 @@
 
         interface IDisposable with
             member x.Dispose() = 
-                x.Data.Dispose()
-                x.Membership.Dispose()
-                
+                if box(x.Data) <> null then x.Data.Dispose()
+                if box(x.Membership) <> null then x.Membership.Dispose()
+               
     let private config = new Configuration()
+    let private started = ref false
 
     let private container = 
-        if not <| Directory.Exists("Plugins")
-        then Directory.CreateDirectory("Plugins") |> ignore
-        
+       
         let catalog = new Hosting.AggregateCatalog()
-        catalog.Catalogs.Add(new Hosting.DirectoryCatalog("Plugins"))
+        catalog.Catalogs.Add(new Hosting.DirectoryCatalog("bin"))
 
         new Hosting.CompositionContainer(catalog)
     
@@ -56,29 +66,52 @@
         str.Split([|';'|], StringSplitOptions.RemoveEmptyEntries)
         |> Seq.map (fun s -> 
                         match s.Split([|'='|], StringSplitOptions.None) with
-                        | [|key;value|] -> key, value
+                        | [|key;value|] -> key.ToLower(), value
                         | _ -> failwithf "Unable to parse parameter %s parameters should be seperated with a ; and key value pairs seperated with =" s
                    )
         |> dict
 
-    let setInitialized(info : SetupInfo) = 
-        let configFile = WebConfigurationManager.OpenWebConfiguration("~")
-        let appSettings = configFile.GetSection("appSettings") :?> AppSettingsSection
-        appSettings.Settings.["ApplicationInitialized"].Value <- "true"
-        configFile.Save()
+    let setupInfoPath = Path.Combine(HttpContext.Current.Server.MapPath("~/App_Data"), "SetupInfo.json")
 
-        let path = Path.Combine(HttpContext.Current.Server.MapPath("~/App_Data"), "SetupInfo.json")
-        File.WriteAllText(path, Newtonsoft.Json.JsonConvert.SerializeObject info)
+    let isInitialized() = 
+        File.Exists(setupInfoPath)
 
-    let init(info : SetupInfo) =
+    let saveSetupInfo(info : SetupInfo) =
+        let info = 
+            { 
+                DataProvider = info.DataProvider;
+                DataProviderParameters = info.DataProviderParameters
+                MembershipProvider = info.MembershipProvider
+                MembershipProviderParameters = info.MembershipProviderParameters
+            }
+        File.WriteAllText(setupInfoPath, Newtonsoft.Json.JsonConvert.SerializeObject(info))
+
+    let private doInit(info : AppInfo) = 
         container.SatisfyImportsOnce(config) |> ignore
 
         config.SetDataProvider(info.DataProvider)
         config.Data.Initialize(parametersToMap info.DataProviderParameters)
         config.SetMembershipProvider(info.MembershipProvider)
         config.Membership.Initialize(parametersToMap info.MembershipProviderParameters)
+        started := true
 
+    let init(info : SetupInfo) =
+        let appInfo = 
+            { 
+                DataProvider = info.DataProvider;
+                DataProviderParameters = info.DataProviderParameters
+                MembershipProvider = info.MembershipProvider
+                MembershipProviderParameters = info.MembershipProviderParameters
+            }
+
+        doInit appInfo
         InitialData.Init(info.AdministratorUserName, info.AdministratorPassword, info.AdministratorEmail, config.Data, config.Membership)
+    
+    let start() = 
+        if (not <| !started) && isInitialized()
+        then 
+            let si = Newtonsoft.Json.JsonConvert.DeserializeObject<AppInfo>( File.ReadAllText(setupInfoPath))
+            doInit si
 
     let dispose() =
         (config :> IDisposable).Dispose()

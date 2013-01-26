@@ -41,6 +41,6 @@ type User = {
     [<DataMember>]Username : string
     [<DataMember>]Email : string
     [<DataMember>]Roles : ResizeArray<string>
-    [<IgnoreDataMember>]Password : byte[]
+    [<DataMember>]Password : byte[]
 }
 

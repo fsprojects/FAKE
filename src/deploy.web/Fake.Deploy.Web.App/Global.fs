@@ -6,6 +6,7 @@ open System.Web.Configuration
 open System.Web.Mvc
 open System.Web.Routing
 open System.Web.Http
+open System.Security.Principal
 open Newtonsoft.Json
 open log4net.Config
 
@@ -19,7 +20,7 @@ type FakeDeployControllerFactory() =
     inherit DefaultControllerFactory()
 
     override this.CreateController(requestContext : RequestContext,  controllerName) =
-        if WebConfigurationManager.AppSettings.["ApplicationInitialized"].ToLower() = "false"
+        if not <| Data.isInitialized()
         then 
             requestContext.RouteData.Values.["controller"] <- "Setup"
             if controllerName.ToLower() <> "setup"
@@ -61,6 +62,15 @@ and Global() =
         |> v1ApiRoutes
         |> uiRoutes
     
+    member this.AuthenticateRequest() = 
+        if this.Request.IsAuthenticated
+        then 
+            Data.getUser this.User.Identity.Name
+            |> Option.iter 
+                (fun user -> 
+                    HttpContext.Current.User <- new GenericPrincipal(this.User.Identity, user.Roles.ToArray())
+                )
+
 
     member this.Start() =
         XmlConfigurator.Configure() |> ignore
@@ -71,6 +81,7 @@ and Global() =
         Global.RegisterGlobalFilters(GlobalFilters.Filters)
         Global.RegisterRoutes(RouteTable.Routes) |> ignore
         ControllerBuilder.Current.SetControllerFactory(new FakeDeployControllerFactory())
+        Data.start()
 
     member this.End() = 
         Fake.Deploy.Web.Data.dispose()

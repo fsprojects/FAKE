@@ -61,13 +61,14 @@ type RavenDbMembershipProvider() =
 
         member x.GetAllRoles() = Provider.getRoles() |> Array.map (fun r -> r.Id)
 
-        member x.GetUser(username) = Provider.getUsers [username] |> Seq.head
+        member x.GetUser(username) = Provider.tryGetUser username
 
         member x.Login(username, password, rememberme) =
                match Provider.tryGetUser username with
                | Some(user) -> 
                     if validatePassword user.Password password
-                    then FormsAuthentication.SetAuthCookie(username, rememberme); true
+                    then
+                        FormsAuthentication.SetAuthCookie(username, rememberme); true
                     else false
                | None -> false
 

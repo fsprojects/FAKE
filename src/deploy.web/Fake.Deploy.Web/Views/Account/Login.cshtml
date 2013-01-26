@@ -46,6 +46,7 @@
     @using (Html.BeginForm("DoLogOn", "Account", null, FormMethod.Post, new { @class = "form" }))
     {
         <fieldset>
+                @Html.AntiForgeryToken()
                 <legend>Sign In</legend>
                 <div class="control-group">
                     <label class="control-label">Username</label>
@@ -74,9 +75,4 @@
                 </p>
             </fieldset>
     }
-</div>
-
-<div class="social" id="socialLoginForm">
-    <h2>Use another service to log in.</h2>
-    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
 </div>
