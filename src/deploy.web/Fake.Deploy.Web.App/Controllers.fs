@@ -32,21 +32,11 @@ type SetupController() =
     member this.InitStatus() = 
         this.Json({ Complete = !isInit }, JsonRequestBehavior.AllowGet)
 
-    [<System.Web.Mvc.AllowAnonymous>]
-    member this.Initialising(info : SetupInfo) = 
-        async {
-            do Data.init(info)
-            do isInit := true
-        } |> Async.Start
-
-        this.View() :> ActionResult
-
     [<HttpPost>]
     [<System.Web.Mvc.AllowAnonymous>]
     member this.SaveSetupInformation(info : SetupInfo) =
-        Data.configure info
-        let routeValues = new RouteValueDictionary(dict ["info", info])
-        this.RedirectToAction("Initialising", "Setup", routeValues);
+        Data.init info
+        this.RedirectToAction("Index", "Home");
         
 
 [<HandleError>]
@@ -89,12 +79,12 @@ type AccountController() =
 
     [<HttpPost>]
     [<System.Web.Mvc.AllowAnonymous>]
+    [<ValidateAntiForgeryToken>]
     member this.DoLogOn(model : LogOnModel, returnUrl : string) =
         if this.ModelState.IsValid
         then 
-            if Membership.ValidateUser(model.UserName, model.Password)
+            if Data.logon model.UserName model.Password model.RememberMe
             then
-                FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe)
                 if this.Url.IsLocalUrl(returnUrl) 
                 then this.Redirect(returnUrl) :> ActionResult
                 else this.RedirectToAction("Index", "Home") :> ActionResult
@@ -104,5 +94,5 @@ type AccountController() =
         else this.View("LogOn", model) :> ActionResult
 
     member this.LogOff() =
-        FormsAuthentication.SignOut()
+        Data.logoff()
         this.RedirectToAction("LogOn", "Account");

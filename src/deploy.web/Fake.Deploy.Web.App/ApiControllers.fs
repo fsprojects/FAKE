@@ -34,9 +34,7 @@ type UserController() =
 
     member this.Get(id : string) = 
         try
-            match Membership.GetUser(id) with
-            | null -> this.Request.CreateResponse(HttpStatusCode.NotFound)
-            | user -> this.Request.CreateResponse(HttpStatusCode.OK, user)
+            this.Request.CreateResponse(HttpStatusCode.OK, Data.getUser id)
         with e ->
             logger.Error(sprintf "An error occured retrieving user %s" id,e)
             this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e)
@@ -45,8 +43,8 @@ type UserController() =
         async {
             try
                 if model.Password = model.ConfirmPassword then
-                    match Membership.CreateUser(model.UserName, model.Password, model.Email, "", "", true) with
-                    | user, MembershipCreateStatus.Success -> return this.Request.CreateResponse(HttpStatusCode.Created)
+                    match Data.registerUser model.UserName model.Password model.Email with
+                    | MembershipCreateStatus.Success, user -> return this.Request.CreateResponse(HttpStatusCode.Created)
                     | _,s -> return this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, sprintf "User not created %s" (s.ToString()));
                 else return this.Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Passwords do not match");
             with e -> 
@@ -55,7 +53,7 @@ type UserController() =
 
     member this.Delete(id : string) = 
         try
-            if Membership.DeleteUser(id, true)
+            if Data.deleteUser id
             then this.Request.CreateResponse(HttpStatusCode.OK)
             else this.Request.CreateErrorResponse(HttpStatusCode.NotFound, sprintf "Could not find user %s" id)
         with e ->
