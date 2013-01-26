@@ -167,11 +167,18 @@ let runFinalTargets() =
                addExecutedTarget name watch.Elapsed
            with
            | exn -> targetError name exn)
+
+/// Prints all targets
+let PrintTargets() =
+    log "The following targets are available:"
+    for t in TargetDict.Values do
+        logfn "   %s%s" t.Name (if isNullOrEmpty t.Description then "" else sprintf " - %s" t.Description)
               
 /// <summary>Writes a dependency graph.</summary>
 /// <param name="verbose">Whether to print verbose output or not.</param>
 /// <param name="target">The target for which the dependencies should be printed.</param>
 let PrintDependencyGraph verbose target =
+    if TargetDict.ContainsKey (toLower target) |> not then PrintTargets() else 
     logfn "%sDependencyGraph for Target %s:" (if verbose then String.Empty else "Shortened ") target 
     let printed = new HashSet<_>()
     let order = new List<_>()
@@ -214,6 +221,7 @@ let WriteTaskTimeSummary total =
         if errors = [] then aligned "Status:" "Ok" else alignedError "Status:" "Failure"
     else 
         traceError "No target was successfully completed"
+
     traceLine()
 
 let private changeExitCodeIfErrorOccured() = if errors <> [] then exit 42 
