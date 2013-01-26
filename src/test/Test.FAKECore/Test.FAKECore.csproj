@@ -79,7 +79,6 @@
     <Compile Include="FSharp.Testing.cs" />
     <Compile Include="FileHandling\BaseFunctions.cs" />
     <Compile Include="FileHandling\FileComparisonSpecs.cs" />
-    <Compile Include="FileHandling\CopyDirectorySpec.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Globbing\Directories\GlobbingOfDirectoriesSpecs.cs" />
     <Compile Include="ILMerge\ILMergeSpecs.cs" />
