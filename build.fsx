@@ -36,26 +36,6 @@ Target "CopyFSharpFiles" (fun _ ->
 open Fake.AssemblyInfoFile
 
 Target "SetAssemblyInfo" (fun _ ->
-
-
-    AssemblyInfo 
-        (fun p -> 
-        {p with
-            CodeLanguage = FSharp;
-            AssemblyVersion = buildVersion;
-            AssemblyTitle = "FAKE - F# Make Deploy Web App";
-            Guid = "2B684E7B-572B-41C1-86C9-F6A11355570E";
-            OutputFileName = @"./src/deploy.web/Fake.Deploy.Web.App/AssemblyInfo.fs"})
-
-    AssemblyInfo 
-        (fun p -> 
-        {p with
-            CodeLanguage = CSharp;
-            AssemblyVersion = buildVersion;
-            AssemblyTitle = "FAKE - F# Make Deploy Web";
-            Guid = "27BA7705-3F57-47BE-B607-8A46B27AE876";
-            OutputFileName = @"./src/deploy.web/Fake.Deploy.Web/AssemblyInfo.cs"})
-
     CreateFSharpAssemblyInfo "./src/app/FAKE/AssemblyInfo.fs"
         [Attribute.Title "FAKE - F# Make Command line tool"
          Attribute.Guid "fb2b540f-d97a-4660-972f-5eeff8120fba"
@@ -66,6 +46,20 @@ Target "SetAssemblyInfo" (fun _ ->
     CreateFSharpAssemblyInfo "./src/app/Fake.Deploy/AssemblyInfo.fs"
         [Attribute.Title "FAKE - F# Make Deploy tool"
          Attribute.Guid "413E2050-BECC-4FA6-87AA-5A74ACE9B8E1"
+         Attribute.Product "FAKE - F# Make"
+         Attribute.Version buildVersion
+         Attribute.FileVersion buildVersion]
+
+    CreateFSharpAssemblyInfo "./src/deploy.web/Fake.Deploy.Web.App/AssemblyInfo.fs"
+        [Attribute.Title "FAKE - F# Make Deploy Web App"
+         Attribute.Guid "2B684E7B-572B-41C1-86C9-F6A11355570E"
+         Attribute.Product "FAKE - F# Make"
+         Attribute.Version buildVersion
+         Attribute.FileVersion buildVersion]
+
+    CreateFSharpAssemblyInfo "./src/deploy.web/Fake.Deploy.Web/AssemblyInfo.cs"
+        [Attribute.Title "FAKE - F# Make Deploy Web"
+         Attribute.Guid "27BA7705-3F57-47BE-B607-8A46B27AE876"
          Attribute.Product "FAKE - F# Make"
          Attribute.Version buildVersion
          Attribute.FileVersion buildVersion]
