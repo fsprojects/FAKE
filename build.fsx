@@ -32,24 +32,11 @@ Target "CopyFSharpFiles" (fun _ ->
       |> CopyTo buildDir
 )
 
-Target "SetAssemblyInfo" (fun _ ->
-    AssemblyInfo 
-        (fun p -> 
-        {p with
-            CodeLanguage = FSharp;
-            AssemblyVersion = buildVersion;
-            AssemblyTitle = "FAKE - F# Make Command line tool";
-            Guid = "fb2b540f-d97a-4660-972f-5eeff8120fba";
-            OutputFileName = @"./src/app/FAKE/AssemblyInfo.fs"})
 
-    AssemblyInfo 
-        (fun p -> 
-        {p with
-            CodeLanguage = FSharp;
-            AssemblyVersion = buildVersion;
-            AssemblyTitle = "FAKE - F# Make Deploy tool";
-            Guid = "413E2050-BECC-4FA6-87AA-5A74ACE9B8E1";
-            OutputFileName = @"./src/app/Fake.Deploy/AssemblyInfo.fs"})
+open Fake.AssemblyInfoFile
+
+Target "SetAssemblyInfo" (fun _ ->
+
 
     AssemblyInfo 
         (fun p -> 
@@ -68,24 +55,34 @@ Target "SetAssemblyInfo" (fun _ ->
             AssemblyTitle = "FAKE - F# Make Deploy Web";
             Guid = "27BA7705-3F57-47BE-B607-8A46B27AE876";
             OutputFileName = @"./src/deploy.web/Fake.Deploy.Web/AssemblyInfo.cs"})
-                              
-    AssemblyInfo 
-        (fun p -> 
-        {p with
-            CodeLanguage = FSharp;
-            AssemblyVersion = buildVersion;
-            AssemblyTitle = "FAKE - F# Make Lib";
-            Guid = "d6dd5aec-636d-4354-88d6-d66e094dadb5";
-            OutputFileName = @"./src/app/FakeLib/AssemblyInfo.fs"})
 
-    AssemblyInfo 
-        (fun p -> 
-        {p with
-            CodeLanguage = FSharp;
-            AssemblyVersion = buildVersion;
-            AssemblyTitle = "FAKE - F# Make SQL Lib";
-            Guid = "A161EAAF-EFDA-4EF2-BD5A-4AD97439F1BE";
-            OutputFileName = @"./src/app/Fake.SQL/AssemblyInfo.fs"})
+    CreateFSharpAssemblyInfo "./src/app/FAKE/AssemblyInfo.fs"
+        [Attribute.Title "FAKE - F# Make Command line tool"
+         Attribute.Guid "fb2b540f-d97a-4660-972f-5eeff8120fba"
+         Attribute.Product "FAKE - F# Make"
+         Attribute.Version buildVersion
+         Attribute.FileVersion buildVersion]
+
+    CreateFSharpAssemblyInfo "./src/app/Fake.Deploy/AssemblyInfo.fs"
+        [Attribute.Title "FAKE - F# Make Deploy tool"
+         Attribute.Guid "413E2050-BECC-4FA6-87AA-5A74ACE9B8E1"
+         Attribute.Product "FAKE - F# Make"
+         Attribute.Version buildVersion
+         Attribute.FileVersion buildVersion]
+
+    CreateFSharpAssemblyInfo "./src/app/FakeLib/AssemblyInfo.fs"
+        [Attribute.Title "FAKE - F# Make Lib"
+         Attribute.Guid "d6dd5aec-636d-4354-88d6-d66e094dadb5"
+         Attribute.Product "FAKE - F# Make"
+         Attribute.Version buildVersion
+         Attribute.FileVersion buildVersion]
+
+    CreateFSharpAssemblyInfo "./src/app/Fake.SQL/AssemblyInfo.fs"
+        [Attribute.Title "FAKE - F# Make SQL Lib"
+         Attribute.Guid "A161EAAF-EFDA-4EF2-BD5A-4AD97439F1BE"
+         Attribute.Product "FAKE - F# Make"
+         Attribute.Version buildVersion
+         Attribute.FileVersion buildVersion]
 )
 
 Target "BuildApp" (fun _ ->        
