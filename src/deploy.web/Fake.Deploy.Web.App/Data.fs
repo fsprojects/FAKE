@@ -110,6 +110,7 @@
         if (not <| !started) && isInitialized()
         then 
             let si = Newtonsoft.Json.JsonConvert.DeserializeObject<AppInfo>(File.ReadAllText(setupInfoPath))
+            container.SatisfyImportsOnce(config) |> ignore
             doInit si
         else 
             //Unzip bundles and copy to Providers
@@ -143,11 +144,11 @@
     let getAgents() = 
         config.Data.GetAgents([])
 
-    let deleteAgent (id : string) =
-        config.Data.DeleteAgent(id)
-
     let getAgent (id : string) =
         config.Data.GetAgents [id] |> Seq.head
+
+    let deleteAgent (id : string) =
+        config.Data.DeleteAgent(id)
 
     let logon username password rememberMe = 
         config.Membership.Login(username, password, rememberMe)
@@ -160,6 +161,9 @@
 
     let deleteUser id =
         config.Membership.DeleteUser id
+
+    let getAllUsers() =
+        config.Membership.GetUsers()
 
     let getUser id = 
         config.Membership.GetUser id

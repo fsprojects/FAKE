@@ -29,20 +29,6 @@
             </div>
 
             <div class="control-group">
-                <label class="control-label">First Name</label>
-                <div class="controls">
-                   <input type="text" id="FirstName" name="FirstName"/>
-                </div>
-            </div>
-
-            <div class="control-group">
-                <label class="control-label">Last Name</label>
-                <div class="controls">
-                    <input type="text" id="LastName" name="LastName"/>
-                </div>
-            </div>
-
-            <div class="control-group">
                 <label class="control-label">E-mail</label>
                 <div class="controls">
                     <input type="text" id="Email" name="Email"/>
@@ -63,10 +49,10 @@
                 </div>
             </div>
             
-            <p>
-                <button class="btn btn-primary" type="submit"><i class="icon-ok-circle icon-white"></i>&nbsp;Register</button>
-                <button class="btn btn-danger" type="reset"><i class="icon-remove icon-white"></i>&nbsp;Cancel</button>
-            </p>
+            <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="reset" class="btn">Cancel</button>
+                </div>
 
         </form>
     </div>
@@ -76,16 +62,14 @@
                 <tr>
                     <th>Username</th>
                     <th>Email</th>
-                    <th>Last login date</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody data-bind="foreach: users">
                     <tr>
-                        <td data-bind="text: UserName"></td>
+                        <td data-bind="text: Username"></td>
                         <td data-bind="text: Email"></td>
-                        <td data-bind="text: LastLoginDate"></td>
-                        <td>
+                        <td data-bind="if: $root.users().length > 1">
                             <button data-bind="click: $root.deleteUser" class="btn btn-danger" style="margin-left: 10px"><i class="icon-trash icon-white"></i>&nbsp;Delete User</button>
                         </td>
                     </tr>

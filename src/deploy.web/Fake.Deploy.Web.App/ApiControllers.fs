@@ -27,7 +27,7 @@ type UserController() =
 
     member this.Get() = 
         try
-            this.Request.CreateResponse(HttpStatusCode.OK, Membership.GetAllUsers())
+            this.Request.CreateResponse(HttpStatusCode.OK, Data.getAllUsers())
         with e ->
             logger.Error("An error occured retrieving users" ,e)
             this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e)

@@ -19,14 +19,16 @@ type Agent = {
     [<DataMember>] mutable Id : string
     [<DataMember>]Name : string
     [<DataMember>]Address : Uri
+    [<DataMember>]EnvironmentId : string
     }
     with
-        static member Create(url : string, ?name : string) =
+        static member Create(url : string, environmentId : string, ?name : string) =
             let url = Uri(url)
             {
                 Id = url.Host + "-" + (url.Port.ToString())
                 Name = defaultArg name url.Host
                 Address = url
+                EnvironmentId = environmentId
             }
         member x.Ref with get() : AgentRef = { Id = x.Id; Name = x.Name }
 
@@ -44,6 +46,14 @@ type Environment = {
                { Id = null; Name = name; Description = desc; Agents = agents }
         member x.AddAgents(agents : seq<Agent>) = 
                 x.Agents <- Seq.append (agents |> Seq.map (fun a -> a.Ref)) x.Agents
+        member x.RemoveAgents(agents : seq<Agent>) =
+               x.Agents <- Seq.filter (fun a -> 
+                                          agents 
+                                          |> Seq.map (fun a -> a.Ref) 
+                                          |> Seq.exists (fun b -> a = b)
+                                          |> not
+                                      ) x.Agents
+
 
 [<CLIMutable>]
 type SetupInfo = {

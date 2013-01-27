@@ -93,7 +93,13 @@ module internal Provider =
         |> Seq.toArray
 
     let deleteAgent (id : string) =
-        delete<Agent> [id]
+        use session = store.OpenSession()
+        let agent = session.Load<Agent>(id)
+        let env = session.Load<Environment>(agent.EnvironmentId)
+        env.RemoveAgents [agent]
+        session.Store(env)
+        session.Delete(agent)
+        session.SaveChanges()
 
     let getAgent ids =
         load<Agent> ids

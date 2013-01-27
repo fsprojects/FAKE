@@ -23,7 +23,7 @@ let Init(adminUsername, adminPassword, adminEmail, dataProvider : IDataProvider,
     createRole "Administrator" memberProvider
     createUser adminUsername adminPassword adminEmail [|"Administrator"|] memberProvider
     
-    let agent1 = Agent.Create("http://localhost:8081","localhost")
+    let agent1 = Agent.Create("http://localhost:8080", "environments-1", "localhost")
     let agents = [agent1]
 
     let environments = 

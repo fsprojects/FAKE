@@ -33,9 +33,7 @@ Samples/ContinuousDeploymentWebsite/src/app/Fake_WebSite/Properties/AssemblyInfo
 *.ncrunchsolution
 Samples/ContinuousDeploymentWebsite/deployments
 tools/FAKE/
-src/deploy.web/Fake.Deploy.Web/App_Data/RavenDB/*
-src/deploy.web/Fake.Deploy.Web/App_Data/Package_Temp/*
-src/deploy.web/Fake.Deploy.Web/App_Data/Providers/*
+src/deploy.web/Fake.Deploy.Web/App_Data/*
 src/deploy.web/Fake.Deploy.Web/Logs/*
 tools/FAKE/deployments/*
 packages/
@@ -45,3 +43,4 @@ Samples/Calculator/tools/FAKE/
 deploy/
 Samples/ContinuousDeploymentWebsite/tools/
 src/deploy.web/Fake.Deploy.Web/Logs/Fake.Deploy.Web.log
+
