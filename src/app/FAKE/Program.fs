@@ -2,9 +2,12 @@
 open Fake
 open System.IO
 
-let printEnvironment cmdArgs args =
+let printVersion() =
     traceFAKE "FakePath: %s" fakePath
     traceFAKE "%s" fakeVersionStr
+
+let printEnvironment cmdArgs args =
+    printVersion()
 
     if buildServer = LocalBuild then
         trace localBuildLabel
@@ -20,6 +23,8 @@ let printEnvironment cmdArgs args =
     log ""
     traceFAKE "FSI-Path: %s" fsiPath
     traceFAKE "MSBuild-Path: %s" msBuildExe
+
+let containsParam param = Seq.map toLower >> Seq.exists ((=) (toLower param))
       
 let buildScripts = !! "*.fsx" |> Seq.toList
 
@@ -27,16 +32,21 @@ try
     try            
         AutoCloseXmlWriter <- true            
         let cmdArgs = System.Environment.GetCommandLineArgs()                
-        let printDetails = cmdArgs |> Seq.map (fun (a:string) -> a.ToLower()) |> Seq.exists ((=) "details")
-
+        
+        if containsParam "version" cmdArgs then printVersion() else
+        
         if (cmdArgs.Length = 2 && cmdArgs.[1].ToLower() = "help") || (cmdArgs.Length = 1 && List.length buildScripts = 0) then CommandlineParams.printAllParams() else
         
         let buildScriptArg = if cmdArgs.Length > 1 && cmdArgs.[1].EndsWith ".fsx" then cmdArgs.[1] else Seq.head buildScripts
         
-        let args = CommandlineParams.parseArgs cmdArgs
-        
+        let args = CommandlineParams.parseArgs (cmdArgs |> Seq.filter ((<>) buildScriptArg) |> Seq.filter ((<>) "details"))
+
         traceStartBuild()
-        if printDetails then printEnvironment cmdArgs args
+
+        let printDetails = containsParam "details" cmdArgs
+                
+        if printDetails then 
+            printEnvironment cmdArgs args
 
         if not (runBuildScript printDetails buildScriptArg args) then
             Environment.ExitCode <- 1

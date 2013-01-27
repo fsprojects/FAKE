@@ -52,8 +52,8 @@ namespace Test.FAKECore.XMLHandling
         Because of = () => XMLHelper.XmlPoke(FileName, XPath, "1515");
 
         It should_equal_the_target_text =
-            () => StringHelper.ReadFileAsString(FileName).Replace("\r\n", "")
-                      .ShouldEqual(TargetText.Replace("\r\n", ""));
+            () => StringHelper.ReadFileAsString(FileName).Replace("\r", "").Replace("\n", "")
+                      .ShouldEqual(TargetText.Replace("\r", "").Replace("\n", ""));
     }
 
     public class when_modifying_xml_with_xpath

@@ -1,4 +1,4 @@
-#r @"tools\FAKE\tools\FakeLib.dll"
+#r @"tools/FAKE/tools/FakeLib.dll"
 
 open Fake
  
@@ -9,97 +9,83 @@ let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. 
 let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"]
 let mail = "forkmann@gmx.de"
 let homepage = "http://github.com/forki/fake"
-
-TraceEnvironmentVariables()
   
-let buildDir = @".\build\"
-let testDir = @".\test\"
-let metricsDir = @".\BuildMetrics\"
-let deployDir = @".\Publish\"
-let docsDir = @".\docs\" 
-let nugetDir = @".\nuget\" 
-let reportDir = @".\report\" 
+let buildDir = "./build"
+let testDir = "./test"
+let metricsDir = "./BuildMetrics"
+let deployDir = "./Publish"
+let docsDir = "./docs" 
+let nugetDir = "./nuget" 
+let reportDir = "./report" 
 let deployZip = deployDir @@ sprintf "%s-%s.zip" projectName buildVersion
-let packagesDir = @".\packages\"
+let packagesDir = "./packages"
 
-// files
-let appReferences  = !! @"src\app\**\*.*sproj"
-let testReferences = !! @"src\test\**\*.*sproj"
 
 // Targets
+Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; deployDir; docsDir; metricsDir; nugetDir; reportDir])
+
 Target "RestorePackages" RestorePackages
 
-Target "Clean" (fun _ ->
-    CleanDirs [buildDir; testDir; deployDir; docsDir; metricsDir; nugetDir; reportDir]
-
+Target "CopyFSharpFiles" (fun _ ->
     ["./tools/FSharp/FSharp.Core.optdata"
      "./tools/FSharp/FSharp.Core.sigdata"]
       |> CopyTo buildDir
 )
 
+
+open Fake.AssemblyInfoFile
+
 Target "SetAssemblyInfo" (fun _ ->
-    AssemblyInfo 
-        (fun p -> 
-        {p with
-            CodeLanguage = FSharp;
-            AssemblyVersion = buildVersion;
-            AssemblyTitle = "FAKE - F# Make Command line tool";
-            Guid = "fb2b540f-d97a-4660-972f-5eeff8120fba";
-            OutputFileName = @".\src\app\FAKE\AssemblyInfo.fs"})
+    CreateFSharpAssemblyInfo "./src/app/FAKE/AssemblyInfo.fs"
+        [Attribute.Title "FAKE - F# Make Command line tool"
+         Attribute.Guid "fb2b540f-d97a-4660-972f-5eeff8120fba"
+         Attribute.Product "FAKE - F# Make"
+         Attribute.Version buildVersion
+         Attribute.FileVersion buildVersion]
 
-    AssemblyInfo 
-        (fun p -> 
-        {p with
-            CodeLanguage = FSharp;
-            AssemblyVersion = buildVersion;
-            AssemblyTitle = "FAKE - F# Make Deploy tool";
-            Guid = "413E2050-BECC-4FA6-87AA-5A74ACE9B8E1";
-            OutputFileName = @".\src\app\Fake.Deploy\AssemblyInfo.fs"})
+    CreateFSharpAssemblyInfo "./src/app/Fake.Deploy/AssemblyInfo.fs"
+        [Attribute.Title "FAKE - F# Make Deploy tool"
+         Attribute.Guid "413E2050-BECC-4FA6-87AA-5A74ACE9B8E1"
+         Attribute.Product "FAKE - F# Make"
+         Attribute.Version buildVersion
+         Attribute.FileVersion buildVersion]
 
-    AssemblyInfo 
-        (fun p -> 
-        {p with
-            CodeLanguage = FSharp;
-            AssemblyVersion = buildVersion;
-            AssemblyTitle = "FAKE - F# Make Deploy Web App";
-            Guid = "2B684E7B-572B-41C1-86C9-F6A11355570E";
-            OutputFileName = @".\src\deploy.web\Fake.Deploy.Web.App\AssemblyInfo.fs"})
+    CreateFSharpAssemblyInfo "./src/deploy.web/Fake.Deploy.Web.App/AssemblyInfo.fs"
+        [Attribute.Title "FAKE - F# Make Deploy Web App"
+         Attribute.Guid "2B684E7B-572B-41C1-86C9-F6A11355570E"
+         Attribute.Product "FAKE - F# Make"
+         Attribute.Version buildVersion
+         Attribute.FileVersion buildVersion]
 
-    AssemblyInfo 
-        (fun p -> 
-        {p with
-            CodeLanguage = CSharp;
-            AssemblyVersion = buildVersion;
-            AssemblyTitle = "FAKE - F# Make Deploy Web";
-            Guid = "27BA7705-3F57-47BE-B607-8A46B27AE876";
-            OutputFileName = @".\src\deploy.web\Fake.Deploy.Web\AssemblyInfo.cs"})
-                              
-    AssemblyInfo 
-        (fun p -> 
-        {p with
-            CodeLanguage = FSharp;
-            AssemblyVersion = buildVersion;
-            AssemblyTitle = "FAKE - F# Make Lib";
-            Guid = "d6dd5aec-636d-4354-88d6-d66e094dadb5";
-            OutputFileName = @".\src\app\FakeLib\AssemblyInfo.fs"})
+    CreateFSharpAssemblyInfo "./src/deploy.web/Fake.Deploy.Web/AssemblyInfo.cs"
+        [Attribute.Title "FAKE - F# Make Deploy Web"
+         Attribute.Guid "27BA7705-3F57-47BE-B607-8A46B27AE876"
+         Attribute.Product "FAKE - F# Make"
+         Attribute.Version buildVersion
+         Attribute.FileVersion buildVersion]
 
-    AssemblyInfo 
-        (fun p -> 
-        {p with
-            CodeLanguage = FSharp;
-            AssemblyVersion = buildVersion;
-            AssemblyTitle = "FAKE - F# Make SQL Lib";
-            Guid = "A161EAAF-EFDA-4EF2-BD5A-4AD97439F1BE";
-            OutputFileName = @".\src\app\Fake.SQL\AssemblyInfo.fs"})
+    CreateFSharpAssemblyInfo "./src/app/FakeLib/AssemblyInfo.fs"
+        [Attribute.Title "FAKE - F# Make Lib"
+         Attribute.Guid "d6dd5aec-636d-4354-88d6-d66e094dadb5"
+         Attribute.Product "FAKE - F# Make"
+         Attribute.Version buildVersion
+         Attribute.FileVersion buildVersion]
+
+    CreateFSharpAssemblyInfo "./src/app/Fake.SQL/AssemblyInfo.fs"
+        [Attribute.Title "FAKE - F# Make SQL Lib"
+         Attribute.Guid "A161EAAF-EFDA-4EF2-BD5A-4AD97439F1BE"
+         Attribute.Product "FAKE - F# Make"
+         Attribute.Version buildVersion
+         Attribute.FileVersion buildVersion]
 )
 
-Target "BuildApp" (fun _ ->                     
-    MSBuildRelease buildDir "Build" appReferences
-        |> Log "AppBuild-Output: "
+Target "BuildSolution" (fun _ ->        
+    MSBuildWithDefaults "Build" ["./FAKE.sln"]
+    |> Log "AppBuild-Output: "
 )
 
 Target "GenerateDocumentation" (fun _ ->
-    !! (buildDir + "Fake*.dll")
+    !! (buildDir @@ "Fake*.dll")
     |> Docu (fun p ->
         {p with
             ToolPath = buildDir @@ "docu.exe"
@@ -121,21 +107,16 @@ Target "CopyLicense" (fun _ ->
 )
 
 Target "BuildZip" (fun _ ->     
-    !+ (buildDir + @"\**\*.*") 
+    !+ (buildDir @@ @"**/*.*") 
     -- "*.zip" 
     -- "**/*.pdb"
       |> Scan
       |> Zip buildDir deployZip
 )
 
-Target "BuildTest" (fun _ -> 
-    MSBuildDebug testDir "Build" testReferences
-        |> Log "TestBuild-Output: "
-)
-
 Target "Test" (fun _ ->
     let MSpecVersion = GetPackageVersion packagesDir "Machine.Specifications"
-    let mspecTool = sprintf @"%sMachine.Specifications.%s\tools\mspec-clr4.exe" packagesDir MSpecVersion
+    let mspecTool = sprintf @"%s/Machine.Specifications.%s/tools/mspec-clr4.exe" packagesDir MSpecVersion
 
     !! (testDir @@ "Test.*.dll") 
       |> MSpec (fun p -> 
@@ -146,21 +127,21 @@ Target "Test" (fun _ ->
 )
 
 Target "ZipDocumentation" (fun _ ->    
-    !! (docsDir + @"\**\*.*")  
+    !! (docsDir @@ @"**/*.*")  
       |> Zip docsDir (deployDir @@ sprintf "Documentation-%s.zip" buildVersion)
 )
 
 Target "CreateNuGet" (fun _ -> 
-    let nugetDocsDir = nugetDir @@ "docs/"
-    let nugetToolsDir = nugetDir @@ "tools/"
+    let nugetDocsDir = nugetDir @@ "docs"
+    let nugetToolsDir = nugetDir @@ "tools"
 
-    XCopy docsDir nugetDocsDir
-    XCopy buildDir nugetToolsDir
-    XCopy @".\lib\fsi" nugetToolsDir
+    CopyDir nugetDocsDir docsDir allFiles  
+    CopyDir nugetToolsDir buildDir allFiles
+    CopyDir nugetToolsDir @"./lib/fsi" allFiles
     DeleteFile (nugetToolsDir @@ "Gallio.dll")
 
     NuGet (fun p -> 
-        {p with               
+        {p with
             Authors = authors
             Project = projectName
             Description = projectDescription                               
@@ -172,9 +153,11 @@ Target "CreateNuGet" (fun _ ->
 Target "Default" DoNothing
 
 // Dependencies
-"RestorePackages"
-    ==> "Clean"
-    ==> "BuildApp" <=> "BuildTest"
+"Clean"
+    ==> "RestorePackages"
+    ==> "CopyFSharpFiles"
+    =?> ("SetAssemblyInfo",not isLocalBuild ) 
+    ==> "BuildSolution"
     ==> "Test"
     ==> "CopyLicense" <=> "CopyDocu"
     ==> "BuildZip"
@@ -182,9 +165,6 @@ Target "Default" DoNothing
     ==> "ZipDocumentation"
     ==> "CreateNuGet"
     ==> "Default"
-  
-if not isLocalBuild then
-    "Clean" ==> "SetAssemblyInfo" ==> "BuildApp" |> ignore
 
 // start build
-RunParameterTargetOrDefault "target" "Default"
+RunTargetOrDefault "Default"

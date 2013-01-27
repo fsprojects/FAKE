@@ -55,7 +55,6 @@ let createConnectionInfo navClientVersion serverMode serverName targetDatabase =
         match serverMode with
         | NavisionServerType.SqlServer -> "finsql.exe"
         | NavisionServerType.NativeServer -> "fin.exe"
-        | _ -> failwithf "Unknown ServerType %A" serverMode
 
     let finExe = navClassicPath @@ clientExe
 
@@ -123,8 +122,32 @@ let CompileAll connectionInfo =
 
 /// Opens a page with the RTC client
 let OpenPage server port serviceTierName company pageNo =
+    let details = sprintf "%d" pageNo
+    traceStartTask "OpenPage" details
     let protocol = sprintf @"dynamicsnav://%s:%s/%s/%s/runpage?page=%d" server port serviceTierName company pageNo
 
     let p = new Process()
     p.StartInfo <- new ProcessStartInfo(protocol)
-    p.Start()
+    let result = p.Start()
+
+    traceEndTask "OpenPage" details
+    result
+
+/// Closes all running Dynamics NAV instances
+let CloseAllNavProcesses raiseExceptionIfNotFound =
+    let details = ""
+    traceStartTask "CloseNAV" details
+    let closedProcesses =
+        Process.GetProcesses()
+          |> Seq.filter(fun p -> 
+                p.ProcessName.StartsWith("fin") || 
+                p.ProcessName = "finsql" || 
+                p.ProcessName.StartsWith("slave") || 
+                p.ProcessName.StartsWith("Microsoft.Dynamics.Nav.Client"))
+          |> Seq.map(fun p -> p.Kill())
+          |> Seq.toList
+
+    if closedProcesses = [] && raiseExceptionIfNotFound then
+        failwith "Could not kill NAV processes"
+
+    traceEndTask "CloseNAV" details

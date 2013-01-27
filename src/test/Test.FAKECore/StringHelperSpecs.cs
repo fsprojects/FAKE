@@ -33,7 +33,7 @@ namespace Test.FAKECore
                       .ShouldBeEmpty();
 
         It should_read_the_test_file =
-            () => StringHelper.ReadFile(@"TestData\AllObjects.txt")
+            () => StringHelper.ReadFile("TestData/AllObjects.txt")
                       .Count().ShouldEqual(3578);
 
         It should_separate_one_line =

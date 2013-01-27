@@ -56,7 +56,7 @@ let TraceEnvironmentVariables() =
         environVars mode |> Seq.iter (tracefn "  %A"))        
  
 /// Gets the FAKE Version string
-let fakeVersionStr = sprintf "FAKE - F# Make - Version %s" <| fakeVersion.ToString()
+let fakeVersionStr = sprintf "FAKE - F# Make %A" fakeVersion
 
 /// Traces a line
 let traceLine() = trace "---------------------------------------------------------------------"
