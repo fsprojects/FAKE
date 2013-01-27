@@ -79,9 +79,8 @@ Target "SetAssemblyInfo" (fun _ ->
          Attribute.FileVersion buildVersion]
 )
 
-Target "BuildApp" (fun _ ->        
-    !! @"src/app/**/*.*sproj"             
-    |> MSBuildRelease buildDir "Build"
+Target "BuildSolution" (fun _ ->        
+    MSBuildWithDefaults "Build" ["./FAKE.sln"]
     |> Log "AppBuild-Output: "
 )
 
@@ -113,12 +112,6 @@ Target "BuildZip" (fun _ ->
     -- "**/*.pdb"
       |> Scan
       |> Zip buildDir deployZip
-)
-
-Target "BuildTest" (fun _ -> 
-   !! @"src/test/**/*.*sproj"
-   |> MSBuildDebug testDir "Build"
-   |> Log "TestBuild-Output: "
 )
 
 Target "Test" (fun _ ->
@@ -164,7 +157,7 @@ Target "Default" DoNothing
     ==> "RestorePackages"
     ==> "CopyFSharpFiles"
     =?> ("SetAssemblyInfo",not isLocalBuild ) 
-    ==> "BuildApp" <=> "BuildTest"
+    ==> "BuildSolution"
     ==> "Test"
     ==> "CopyLicense" <=> "CopyDocu"
     ==> "BuildZip"
