@@ -24,7 +24,7 @@ type NuGetParams =
 
 /// NuGet default params  
 let NuGetDefaults() =
-    { ToolPath = currentDirectory @@ "tools/NuGet/NuGet.exe"
+    { ToolPath = "./tools/NuGet/NuGet.exe"
       TimeOut = TimeSpan.FromMinutes 5.
       Version = if not isLocalBuild then buildVersion else "0.1.0.0"
       Authors = []
@@ -33,8 +33,8 @@ let NuGetDefaults() =
       ProjectFile = null
       Description = null
       Dependencies = []
-      OutputPath = currentDirectory @@ "NuGet"
-      WorkingDir = currentDirectory @@ "NuGet"
+      OutputPath = "./NuGet"
+      WorkingDir = "./NuGet"
       PublishUrl = null
       AccessKey = null
       NoPackageAnalysis = false
@@ -128,12 +128,12 @@ let rec private publish parameters =
     if tracing then 
         args
             |> replaceAccessKey parameters.AccessKey
-            |> tracefn "%s %s" parameters.ToolPath 
+            |> tracefn "%s %s in WorkingDir: %s" parameters.ToolPath (FullName parameters.OutputPath)
 
-    let result = 
+    let result =
         ExecProcess (fun info ->
             info.FileName <- parameters.ToolPath
-            info.WorkingDirectory <- parameters.OutputPath |> FullName
+            info.WorkingDirectory <- FullName parameters.OutputPath
             info.Arguments <- args) parameters.TimeOut
         
     enableProcessTracing <- tracing
