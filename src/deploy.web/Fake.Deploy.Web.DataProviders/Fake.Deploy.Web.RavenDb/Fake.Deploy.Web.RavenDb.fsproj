@@ -56,7 +56,6 @@
     <Compile Include="Provider.fs" />
     <Compile Include="DataProvider.fs" />
     <Compile Include="MembershipProvider.fs" />
-    <None Include="Script.fsx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
