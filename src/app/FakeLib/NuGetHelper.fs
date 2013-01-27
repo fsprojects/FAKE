@@ -126,7 +126,7 @@ let rec private publish parameters =
     let source = if isNullOrEmpty parameters.PublishUrl then "" else sprintf "-s %s" parameters.PublishUrl
     let args = 
         sprintf "push \"%s\" %s %s" 
-            (packageFileName parameters |> FullName) 
+            (parameters.OutputPath @@ packageFileName parameters |> FullName) 
             parameters.AccessKey source
 
     if tracing then         
