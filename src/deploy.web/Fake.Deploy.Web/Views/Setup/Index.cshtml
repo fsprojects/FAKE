@@ -39,11 +39,18 @@
       }
 
     </style>
+    <script src="@Url.Content("~/Scripts/app/Setup.Index.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            var vm = new IndexViewModel()
+            ko.applyBindings(vm);
+        });
+    </script>
 }
 
 <div class="form-setup">
 
-@using (Html.BeginForm("SaveSetupInformation", "Setup", FormMethod.Post, new { @class = "form-horizontal"})) {
+<form class="form-horizontal" data-bind="submit: $root.setup">
 @Html.ValidationSummary(true)
 
 <fieldset>
@@ -118,5 +125,18 @@
         <button type="submit" class="btn btn-primary"><i class="icon-hdd icon-white"></i>&nbsp;Save Changes</button>
     </p>
 </fieldset>
-}
+</form>
     </div>
+
+<div id="initDialog" class="modal hide fade">
+    <div class="modal-header">
+        <span style="padding: 10px">
+            <h4>Initializing Fake Deploy Web</h4>
+        </span>
+    </div>
+    <div class="modal-body">
+        <div class="progress progress-striped active">
+            <div class="bar" style="width: 100%;"></div>
+        </div>
+    </div>
+</div>

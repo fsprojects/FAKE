@@ -151,6 +151,7 @@
     <Content Include="Scripts\app\Admin.User.js" />
     <Content Include="Scripts\app\Home.Agent.js" />
     <Content Include="Scripts\app\Home.Index.js" />
+    <Content Include="Scripts\app\Setup.Index.js" />
     <Content Include="Scripts\extensions.js" />
     <Content Include="Scripts\jquery-1.9.0.js" />
     <Content Include="Scripts\jquery-1.9.0.min.js" />
