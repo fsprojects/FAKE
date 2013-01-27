@@ -79,7 +79,8 @@ let private createNuspecFile parameters nuSpec =
          "@dependencies@",dependencies
          "@description@",parameters.Description]
 
-    processTemplates replacements [specFile]   
+    processTemplates replacements [specFile]
+    tracefn "Created nuspec file %s" specFile
 
     specFile
 
