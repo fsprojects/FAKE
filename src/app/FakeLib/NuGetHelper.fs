@@ -104,10 +104,10 @@ let private packSymbols parameters =
 // create package
 let private pack parameters nuspecFile =    
     let args = 
-        sprintf "pack %s -Version %s -OutputDirectory \"%s\" %s" 
-            (Path.GetFileName nuspecFile)
+        sprintf "pack \"%s\" -Version %s -OutputDirectory \"%s\" %s" 
+            (Path.GetFileName nuspecFile |> FullName)
             parameters.Version
-            (FullName parameters.WorkingDir)
+            (FullName parameters.OutputPath)
             (if parameters.NoPackageAnalysis then "-NoPackageAnalysis" else "")
 
     let result = 
@@ -123,7 +123,10 @@ let rec private publish parameters =
     let tracing = enableProcessTracing
     enableProcessTracing <- false
     let source = if isNullOrEmpty parameters.PublishUrl then "" else sprintf "-s %s" parameters.PublishUrl
-    let args = sprintf "push \"%s\" %s %s" (packageFileName parameters) parameters.AccessKey source
+    let args = 
+        sprintf "push \"%s\" %s %s" 
+            (packageFileName parameters |> FullName) 
+            parameters.AccessKey source
 
     if tracing then         
         tracefn "%s %s in WorkingDir: %s" parameters.ToolPath (replaceAccessKey parameters.AccessKey args) (FullName parameters.WorkingDir)
