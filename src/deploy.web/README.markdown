@@ -11,7 +11,7 @@
 
 When the application is first started it will go to a one time setup view. 
 
-Here you will be asked for the Admin account credentials and also which provider you wish to use (_see below for per provider setup details_)
+Here you will be asked for the Admin account credentials and also which provider you wish to use (see below for per provider setup details)
 
 
 
