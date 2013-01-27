@@ -113,7 +113,7 @@ let private pack parameters nuspecFile =
     let result = 
         ExecProcess (fun info ->
             info.FileName <- parameters.ToolPath
-            info.WorkingDirectory <- FullName parameters.OutputPath
+            info.WorkingDirectory <- FullName parameters.WorkingDir
             info.Arguments <- args) parameters.TimeOut
                
     if result <> 0 then failwithf "Error during NuGet creation. %s %s" parameters.ToolPath args
@@ -125,15 +125,13 @@ let rec private publish parameters =
     let source = if isNullOrEmpty parameters.PublishUrl then "" else sprintf "-s %s" parameters.PublishUrl
     let args = sprintf "push \"%s\" %s %s" (packageFileName parameters) parameters.AccessKey source
 
-    if tracing then 
-        args
-            |> replaceAccessKey parameters.AccessKey
-            |> tracefn "%s %s in WorkingDir: %s" parameters.ToolPath (FullName parameters.OutputPath)
+    if tracing then         
+        tracefn "%s %s in WorkingDir: %s" parameters.ToolPath (replaceAccessKey parameters.AccessKey args) (FullName parameters.WorkingDir)
 
     let result =
         ExecProcess (fun info ->
             info.FileName <- parameters.ToolPath
-            info.WorkingDirectory <- FullName parameters.OutputPath
+            info.WorkingDirectory <- FullName parameters.WorkingDir
             info.Arguments <- args) parameters.TimeOut
         
     enableProcessTracing <- tracing
@@ -157,7 +155,7 @@ let rec private publishSymbols parameters =
     let result = 
         ExecProcess (fun info ->
             info.FileName <- parameters.ToolPath
-            info.WorkingDirectory <- parameters.OutputPath |> FullName
+            info.WorkingDirectory <- FullName parameters.WorkingDir
             info.Arguments <- args) parameters.TimeOut
         
     enableProcessTracing <- tracing
