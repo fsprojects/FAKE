@@ -106,7 +106,7 @@ let private packSymbols parameters =
 let private pack parameters nuspecFile =    
     let args = 
         sprintf "pack \"%s\" -Version %s -OutputDirectory \"%s\" %s" 
-            (Path.GetFileName nuspecFile |> FullName)
+            (FullName nuspecFile)
             parameters.Version
             (FullName parameters.OutputPath)
             (if parameters.NoPackageAnalysis then "-NoPackageAnalysis" else "")
