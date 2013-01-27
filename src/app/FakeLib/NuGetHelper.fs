@@ -108,7 +108,7 @@ let private pack parameters nuspecFile =
         sprintf "pack \"%s\" -Version %s -OutputDirectory \"%s\" %s" 
             (FullName nuspecFile)
             parameters.Version
-            ((FullName parameters.OutputPath).TrimEnd('\\').TrimEnd('/'))
+            (FullName (parameters.OutputPath.TrimEnd('\\').TrimEnd('/')))
             (if parameters.NoPackageAnalysis then "-NoPackageAnalysis" else "")
 
     let result = 
