@@ -146,6 +146,7 @@ let generateFile param (attributes:Dictionary<string, string>) imports (writer:T
     
 
 /// Generates an AssemblyInfo file for projects
+[<Obsolete("Please use the new AssemblyInfoFile tasks")>]
 let AssemblyInfo setParams = 
   let param' = setParams AssemblyInfoDefaults
   traceStartTask "AssemblyInfo" param'.OutputFileName

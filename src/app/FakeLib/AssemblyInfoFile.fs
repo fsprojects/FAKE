@@ -21,7 +21,7 @@ type Attribute(name,value,inNamespace) =
    static member KeyName(value) = Attribute.StringAttribute("AssemblyKeyName",value,"System.Reflection")   
    static member FileVersion(value) = Attribute.StringAttribute("AssemblyFileVersion",value,"System.Reflection")
    static member InformationalVersion(value) = Attribute.StringAttribute("AssemblyInformationalVersion",value,"System.Reflection")
-   static member Guid(value) = Attribute.StringAttribute("CLSCompliant",value,"System.Runtime.InteropServices")
+   static member Guid(value) = Attribute.StringAttribute("Guid",value,"System.Runtime.InteropServices")
    static member ComVisible(?value) = Attribute.BoolAttribute("ComVisible",defaultArg value false,"System.Runtime.InteropServices")
    static member CLSCompliant(?value) = Attribute.BoolAttribute("CLSCompliant",defaultArg value false,"System")
    static member DelaySign(value) = Attribute.BoolAttribute("AssemblyDelaySign",defaultArg value false,"System.Reflection")
@@ -38,15 +38,14 @@ let private getDependencies attributes =
     attributes
     |> Seq.map (fun (attr:Attribute) -> attr.Namespace)
     |> Set.ofSeq
+    |> Seq.toList
  
 /// Creates a C# AssemblyInfo file with the given attributes
 let CreateCSharpAssemblyInfo outputFileName attributes =
     traceStartTask "AssemblyInfo" outputFileName
 
-    attributes
-    |> Seq.map (fun (attr:Attribute) -> sprintf "[assembly: %sAttribute(%s)]" attr.Name attr.Value)
-    |> Seq.append [""]    
-    |> Seq.append (getDependencies attributes |> Seq.map (sprintf "using %s;"))
+    (getDependencies attributes |> List.map (sprintf "using %s;")) @ [""] @
+    (attributes |> Seq.toList |> List.map (fun (attr:Attribute) -> sprintf "[assembly: %sAttribute(%s)]" attr.Name attr.Value))
     |> writeToFile outputFileName
     
     traceEndTask "AssemblyInfo" outputFileName
@@ -55,10 +54,10 @@ let CreateCSharpAssemblyInfo outputFileName attributes =
 let CreateFSharpAssemblyInfo outputFileName attributes =
     traceStartTask "AssemblyInfo" outputFileName
 
-    attributes
-    |> Seq.map (fun (attr:Attribute) -> sprintf "[<assembly: %sAttribute(%s)>]" attr.Name attr.Value)
-    |> Seq.append [""]    
-    |> Seq.append (getDependencies attributes |> Seq.map (sprintf "open %s"))
+    ["module AssemblyInfo"] @
+    (getDependencies attributes |> List.map (sprintf "open %s")) @ [""] @
+    (attributes |> Seq.toList |> List.map (fun (attr:Attribute) -> sprintf "[<assembly: %sAttribute(%s)>]" attr.Name attr.Value)) @ [""] @
+    ["()"]
     |> writeToFile outputFileName
 
     traceEndTask "AssemblyInfo" outputFileName
