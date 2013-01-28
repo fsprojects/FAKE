@@ -37,6 +37,8 @@ let CreateZip workingDir fileName comment level flatten files =
                   info.FullName
         
           let itemSpec = ZipEntry.CleanName itemSpec
+          logfn "Adding File %s" itemSpec
+
           let entry = new ZipEntry(itemSpec)
           entry.DateTime <- info.LastWriteTime
           entry.Size <- info.Length
@@ -50,8 +52,6 @@ let CreateZip workingDir fileName comment level flatten files =
               let count = stream2.Read(buffer, 0, buffer.Length)
               stream.Write(buffer, 0, count)
               length := !length - (int64 count)
-    
-          logfn "File added %s" itemSpec
     
     stream.Finish()
     tracefn "Zip successfully created %s" fileName
