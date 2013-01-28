@@ -10,6 +10,7 @@ let DefaultZipLevel = 7
 
 /// Creates a zip file with the given files
 let CreateZip workingDir fileName comment level flatten files =
+    let files = files |> Seq.toList
     let workingDir =
         let dir = directoryInfo workingDir
         if not dir.Exists then failwithf "Directory not found: %s" dir.FullName
