@@ -4,4 +4,4 @@
 mono tools/NuGet/NuGet.exe install FAKE -OutputDirectory tools -ExcludeVersion -Prerelease
 
 #build FAKE
-mono tools/FAKE/tools/FAKE.exe "$@"
+mono tools/FAKE/tools/FAKE.exe build.fsx
