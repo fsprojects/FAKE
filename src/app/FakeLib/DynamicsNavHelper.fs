@@ -75,14 +75,10 @@ let private reportError text logFile =
     let errors = analyzeLogFile logFile
     failwith (text + (if errors = 1 then " with 1 error." else sprintf " with %d errors." errors))
 
-/// Imports the given txt or fob file into the Dynamics NAV client
-let ImportFile connectionInfo fileName =
-    let details = fileName
-    
-    traceStartTask "ImportFile" details
+let private import connectionInfo fileName =
     let args = 
         sprintf "command=importobjects, file=\"%s\", logfile=\"%s\", servername=\"%s\", database=\"%s\"" 
-          (FullName fileName) (FullName connectionInfo.TempLogFile) connectionInfo.ServerName connectionInfo.Database
+            (FullName fileName) (FullName connectionInfo.TempLogFile) connectionInfo.ServerName connectionInfo.Database
 
     if not (execProcess3 (fun info ->  
         info.FileName <- connectionInfo.ToolPath
@@ -90,17 +86,44 @@ let ImportFile connectionInfo fileName =
         info.Arguments <- args) connectionInfo.TimeOut)
     then
         reportError "ImportFile failed" connectionInfo.TempLogFile
-                  
-    traceEndTask "ImportFile" details
+
+/// Imports the given txt or fob file into the Dynamics NAV client
+let ImportFile connectionInfo fileName =
+    traceStartTask "ImportFile" fileName
+    import connectionInfo fileName                  
+    traceEndTask "ImportFile" fileName
 
 /// Creates an importfile from the given files
 let CreateImportFile importFileName files =
+    let details = importFileName
+    
+    traceStartTask "CreateImportFile" details
     files
         |> Seq.toList
         |> List.sortBy (fun name -> 
               let firstLine = (ReadFile name |> Seq.head).Split(' ')
               firstLine.[3],firstLine.[2])
-        |> AppendTextFiles importFileName 
+        |> AppendTextFiles importFileName
+
+    traceEndTask "CreateImportFile" details
+
+/// Creates an import file from the given files and imports it into the Dynamics NAV client
+/// If the import fails, then every file will be tried alone
+let ImportFiles connectionInfo importFileName files =
+    let details = importFileName
+    
+    traceStartTask "ImportFiles" details
+
+    CreateImportFile importFileName files
+
+    try 
+        ImportFile connectionInfo importFileName
+    with exn ->
+        files
+          |> Seq.iter (fun file -> try ImportFile connectionInfo file with _ -> ())
+        raise exn
+                          
+    traceEndTask "ImportFiles" details
 
 /// Compiles all uncompiled objects in the Dynamics NAV client
 let CompileAll connectionInfo =
