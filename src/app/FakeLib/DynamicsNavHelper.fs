@@ -76,12 +76,12 @@ let private reportError text logFile =
     failwith (text + (if errors = 1 then " with 1 error." else sprintf " with %d errors." errors))
 
 let private import connectionInfo fileName =
-    let fi = fileInfo fileName
-    let fi =
+    let fi = fileInfo fileName     
+    let deleteFile,fi =
         if fi.Extension = ".nav" then
-            fi.CopyTo(Path.Combine(fi.Directory.FullName,fi.Name + ".txt"))
+            true,fi.CopyTo(Path.Combine(fi.Directory.FullName,fi.Name + ".txt"))
         else
-            fi
+            false,fi
 
     let args = 
         sprintf "command=importobjects, file=\"%s\", logfile=\"%s\", servername=\"%s\", database=\"%s\"" 
@@ -92,7 +92,10 @@ let private import connectionInfo fileName =
         info.WorkingDirectory <- connectionInfo.WorkingDir
         info.Arguments <- args) connectionInfo.TimeOut)
     then
+        if deleteFile then fi.Delete()
         reportError "ImportFile failed" connectionInfo.TempLogFile
+
+    if deleteFile then fi.Delete()
 
 /// Imports the given txt or fob file into the Dynamics NAV client
 let ImportFile connectionInfo fileName =
