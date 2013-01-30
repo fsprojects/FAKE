@@ -76,9 +76,16 @@ let private reportError text logFile =
     failwith (text + (if errors = 1 then " with 1 error." else sprintf " with %d errors." errors))
 
 let private import connectionInfo fileName =
+    let fi = fileInfo fileName
+    let fi =
+        if fi.Extension = ".nav" then
+            fi.CopyTo(Path.Combine(fi.Directory.FullName,fi.Name + ".txt"))
+        else
+            fi
+
     let args = 
         sprintf "command=importobjects, file=\"%s\", logfile=\"%s\", servername=\"%s\", database=\"%s\"" 
-            (FullName fileName) (FullName connectionInfo.TempLogFile) connectionInfo.ServerName connectionInfo.Database
+            fi.FullName (FullName connectionInfo.TempLogFile) connectionInfo.ServerName connectionInfo.Database
 
     if not (execProcess3 (fun info ->  
         info.FileName <- connectionInfo.ToolPath
