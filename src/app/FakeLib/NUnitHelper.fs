@@ -276,7 +276,7 @@ let NUnitParallel setParams (assemblies: string seq) =
     // Merge all valid results into single results file
     if Array.Exists(testRunResults, fun r -> r.ReturnCode >= 0)  then
         testRunResults
-        |> Seq.filter (fun r -> r.ReturnCode = 0)
+        |> Seq.filter (fun r -> r.ReturnCode >= 0)
         |> Seq.map (fun result -> result.OutputFile)
         |> Seq.map (fun fileName -> XDocument.Parse(File.ReadAllText(fileName)))
         |> NUnitMerge.FoldDocs
