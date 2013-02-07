@@ -266,10 +266,12 @@ let NUnitParallel setParams (assemblies: string seq) =
                 (fun s -> stdout.Append(s) |> ignore)
         { AssemblyName = name; ErrorOut = errout; StandardOut = stdout; ReturnCode = result; OutputFile = outputFile }
 
+    enableProcessTracing <- false
     let testRunResults =
         assemblies
         |> Seq.map (fun assembly -> assembly, Path.GetTempFileName())
         |> doParallelWithThrottle (Environment.ProcessorCount) (fun (assembly, outputFile) -> runSingleAssembly assembly parameters outputFile)
+    enableProcessTracing <- true
 
     let workingDir = Seq.find (fun s -> s <> null && s <> "") [parameters.WorkingDir; environVar("teamcity.build.workingDir"); "."]
 
