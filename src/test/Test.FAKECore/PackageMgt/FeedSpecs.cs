@@ -57,18 +57,4 @@ namespace Test.FAKECore.PackageMgt
         It should_contain_the_id = () => _package.Id.ShouldEqual("FAKE");
         It should_contain_the_version = () => _package.Version.ShouldEqual("1.56.10");
     }
-
-    public class when_downloading_the_lastest_SignalR_package
-    {
-        static NuGetHelper.NuSpecPackage _package;
-        static string _fileName;
-        Establish context = () => _package = NuGetHelper.getLatestPackage(NuGetHelper.getRepoUrl(), "SignalR.Signed");
-        Because of = () => _fileName = NuGetHelper.downloadPackage(NugetData.OutputDir, _package);
-
-        It should_have_downloaded_the_file = () =>
-        {
-            File.Exists(_fileName).ShouldBeTrue();
-            File.Delete(_fileName);
-        };
-    }
 }
