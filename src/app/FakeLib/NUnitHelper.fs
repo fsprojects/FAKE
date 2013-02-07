@@ -274,7 +274,7 @@ let NUnitParallel setParams (assemblies: string seq) =
     let workingDir = Seq.find (fun s -> s <> null && s <> "") [parameters.WorkingDir; environVar("teamcity.build.workingDir"); "."]
 
     // Merge all valid results into single results file
-    if Array.Exists(testRunResults, fun r -> r.ReturnCode = 0)  then
+    if Array.Exists(testRunResults, fun r -> r.ReturnCode >= 0)  then
         testRunResults
         |> Seq.filter (fun r -> r.ReturnCode = 0)
         |> Seq.map (fun result -> result.OutputFile)
