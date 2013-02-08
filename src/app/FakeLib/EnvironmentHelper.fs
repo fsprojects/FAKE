@@ -6,7 +6,6 @@ open System.IO
 open System.Configuration
 open System.Diagnostics
 open System.Collections.Generic
-open System.Linq
 open System.Text
 open System.Text.RegularExpressions
 open Microsoft.Win32
@@ -129,9 +128,9 @@ let getInstalledDotNetFrameworks() =
             | _ ->
                     let key = @"SOFTWARE\Microsoft\NET Framework Setup\NDP\" + item;
                     frameworks.Add(Registry.LocalMachine.OpenSubKey(key).GetValue("Version").ToString());
-        frameworks.AsEnumerable()
+        frameworks :> seq<_>
     with e ->
-         frameworks.AsEnumerable() //Probably a new unrecognisable version
+        frameworks :> seq<_> //Probably a new unrecognisable version
 
 type MachineDetails = {
     ProcessorCount : int
