@@ -380,3 +380,16 @@ let MoveFile target fileName =
         logVerbosefn "Move %s to %s" fileName targetName
         f.MoveTo(targetName) |> ignore
     | Directory _ -> logVerbosefn "Ignoring %s, because it is no file" fileName
+
+/// Creates a config file with the parameters as key;value lines
+let WriteConfigFile configFileName parameters =
+    if isNullOrEmpty configFileName then () else
+        
+    let fi = fileInfo configFileName
+    if fi.Exists then
+        fi.Delete()
+
+    use streamWriter = fi.CreateText()
+
+    for (key,value) in parameters do
+        streamWriter.WriteLine("{0};{1}", key, value)
