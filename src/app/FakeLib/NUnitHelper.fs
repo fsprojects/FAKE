@@ -18,7 +18,8 @@ type NUnitParams =
       WorkingDir:string; 
       XsltTransformFile:string;
       TimeOut: TimeSpan;
-      DisableShadowCopy:bool}
+      DisableShadowCopy:bool
+      Domain:string}
    
 type TestCase =
     { Name: string;
@@ -58,7 +59,8 @@ let NUnitDefaults =
       ShowLabels = true;
       XsltTransformFile = null;
       TimeOut = TimeSpan.FromMinutes 5.
-      DisableShadowCopy = false}
+      DisableShadowCopy = false;
+      Domain = null}
 
 /// Run NUnit on a group of assemblies.
 let NUnit setParams (assemblies: string seq) =
@@ -80,6 +82,7 @@ let NUnit setParams (assemblies: string seq) =
           |> appendIfNotNull parameters.OutputFile  "-xml:"
           |> appendIfNotNull parameters.Framework  "-framework:"
           |> appendIfNotNull parameters.ErrorOutputFile "-err:"
+          |> appendIfNotNull parameters.Domain "-domain:"
 
     let tool = parameters.ToolPath @@ parameters.ToolName
 
