@@ -173,7 +173,8 @@ type NUnitParams =
       WorkingDir:string; 
       XsltTransformFile:string;
       TimeOut: TimeSpan;
-      DisableShadowCopy:bool}
+      DisableShadowCopy:bool
+      Domain:string}
 
 /// NUnit default params  
 let NUnitDefaults =
@@ -189,7 +190,8 @@ let NUnitDefaults =
       ShowLabels = true;
       XsltTransformFile = null;
       TimeOut = TimeSpan.FromMinutes 5.
-      DisableShadowCopy = false}
+      DisableShadowCopy = false;
+      Domain = null}
 
 let commandLineBuilder parameters assemblies =
     let cl = new StringBuilder()
@@ -204,6 +206,7 @@ let commandLineBuilder parameters assemblies =
               |> appendIfNotNull parameters.OutputFile  "-xml:"
               |> appendIfNotNull parameters.Framework  "-framework:"
               |> appendIfNotNull parameters.ErrorOutputFile "-err:"
+              |> appendIfNotNull parameters.Domain "-domain:"
     cl.ToString()
 
 /// Run NUnit on a group of assemblies.
