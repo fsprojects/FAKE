@@ -63,7 +63,7 @@ let createConnectionInfo navClientVersion serverMode serverName targetDatabase =
       ServerName = serverName
       Database = targetDatabase
       TempLogFile = "./NavErrorMessages.txt"
-      TimeOut = TimeSpan.FromMinutes 5.}
+      TimeOut = TimeSpan.FromMinutes 20.}
 
 let private analyzeLogFile fileName =
     let lines = ReadFile fileName |> Seq.toList
