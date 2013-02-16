@@ -11,7 +11,10 @@ type NuGetParams =
       Authors: string list;
       Project: string;
       Summary: string;
-      Description: string;                               
+      Description: string;
+      Tags: string;
+      ReleaseNotes: string;
+      Copyright: string;
       WorkingDir: string;
       OutputPath: string;
       PublishUrl: string;
@@ -32,6 +35,9 @@ let NuGetDefaults() =
       Summary = null
       ProjectFile = null
       Description = null
+      Tags = null
+      ReleaseNotes = null
+      Copyright = null
       Dependencies = []
       OutputPath = "./NuGet"
       WorkingDir = "./NuGet"
@@ -77,7 +83,10 @@ let private createNuspecFile parameters nuSpec =
          "@project@",parameters.Project
          "@summary@",if isNullOrEmpty parameters.Summary then "" else parameters.Summary
          "@dependencies@",dependencies
-         "@description@",parameters.Description]
+         "@description@",parameters.Description
+         "@tags@",parameters.Tags
+         "@releaseNotes@",parameters.ReleaseNotes
+         "@copyright@",parameters.Copyright]
 
     processTemplates replacements [specFile]
     tracefn "Created nuspec file %s" specFile
