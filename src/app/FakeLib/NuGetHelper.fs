@@ -63,7 +63,9 @@ let GetPackageVersion deploymentsDir package =
     logfn "Version %s found for package %s" version package
     version
 
-let private replaceAccessKey key (s:string) = s.Replace(key,"PRIVATEKEY")
+let private replaceAccessKey key (text:string) = 
+    if isNullOrEmpty key then text else 
+    text.Replace(key,"PRIVATEKEY")
 
 let private createNuspecFile parameters nuSpec =
     // create .nuspec file
@@ -211,7 +213,7 @@ let NuGet setParams nuSpec =
                 publishSymbols parameters
     with
     | exn -> 
-        exn.Message
+        (if exn.InnerException <> null then exn.Message + '\r\n' + exn.InnerException.Message else exn.Message)        
           |> replaceAccessKey parameters.AccessKey
           |> failwith
 
