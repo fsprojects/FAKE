@@ -204,7 +204,7 @@ let NuGet setParams nuSpec =
                 publishSymbols parameters
     with
     | exn -> 
-        (if exn.InnerException <> null then exn.Message + '\r\n' + exn.InnerException.Message else exn.Message)        
+        (if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message else exn.Message)        
           |> replaceAccessKey parameters.AccessKey
           |> failwith
 
