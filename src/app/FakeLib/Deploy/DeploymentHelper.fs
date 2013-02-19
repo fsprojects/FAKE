@@ -114,15 +114,12 @@ let getVersionFromNugetFileName (app:string) (fileName:string) =
     Path.GetFileName(fileName).ToLower().Replace(".nupkg","").Replace(app.ToLower() + ".","")
 
 let getPreviousPackageVersionFromBackup dir app versions = 
-    let rootPath = dir @@ deploymentRootDir + app
     let currentPackageFileName = 
         Files [dir] [deploymentRootDir + app + "/active/*.nupkg"] []
         |> Seq.head 
         |> getVersionFromNugetFileName app
 
-    let backupPath = rootPath + "/backups/"
-
-    Files [dir] [deploymentRootDir +  "/backups/*.nupkg"] []
+    Files [dir] [deploymentRootDir + app + "/backups/*.nupkg"] []
     |> Seq.map (getVersionFromNugetFileName app)
     |> Seq.filter (fun x -> x < currentPackageFileName)
     |> Seq.toList
