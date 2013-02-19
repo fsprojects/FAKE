@@ -186,7 +186,7 @@ let PrintDependencyGraph verbose target =
         let order = new List<_>()
         let rec printDependencies indent act =
             let target = TargetDict.[toLower act]
-            let addToOrder = not (printed.Contains act)
+            let addToOrder = not (printed.Contains (toLower act))
             printed.Add (toLower act) |> ignore
     
             if addToOrder || verbose then log <| (sprintf "<== %s" act).PadLeft(3 * indent)
