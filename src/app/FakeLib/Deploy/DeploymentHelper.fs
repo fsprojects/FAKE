@@ -27,21 +27,21 @@ let private extractNuspecFromPackageFile packageFileName =
 let mutable deploymentRootDir = "deployments/"
 
 let getActiveReleases dir = 
-    !! (dir @@ deploymentRootDir @@ "**/active/*.nupkg")
-      |> Seq.map extractNuspecFromPackageFile
+    Files [dir] [deploymentRootDir @@ "**/active/*.nupkg"] []
+    |> Seq.map extractNuspecFromPackageFile
 
 let getActiveReleaseFor dir (app : string) = 
-    !! (dir @@ deploymentRootDir + app + "/active/*.nupkg") 
-      |> Seq.map extractNuspecFromPackageFile
-      |> Seq.head
+    Files [dir] [deploymentRootDir + app + "/active/*.nupkg"] []
+    |> Seq.map extractNuspecFromPackageFile
+    |> Seq.head
 
 let getAllReleases dir = 
-    !! (dir @@ deploymentRootDir @@ "**/*.nupkg")
-      |> Seq.map extractNuspecFromPackageFile
+    Files [dir] [deploymentRootDir @@ "**/*.nupkg"] [] 
+    |> Seq.map extractNuspecFromPackageFile
 
 let getAllReleasesFor dir (app : string) = 
-    !! (dir @@ deploymentRootDir + app + "/**/*.nupkg") 
-      |> Seq.map extractNuspecFromPackageFile
+    Files [dir] [deploymentRootDir + app + "/**/*.nupkg"] [] 
+    |> Seq.map extractNuspecFromPackageFile
 
 let getStatistics() = 
     getMachineEnvironment()
@@ -100,7 +100,7 @@ let runDeploymentFromPackageFile workDir packageFileName =
 let rollback workDir (app : string) (version : string) =
     try 
         let currentPackageFileName = 
-            !! (workDir @@ deploymentRootDir + app + "/active/*.nupkg") 
+            Files [workDir] [deploymentRootDir + app + "/active/*.nupkg"] []
             |> Seq.head
 
         let backupPackageFileName = getBackupFor workDir app version
@@ -120,22 +120,19 @@ let getVersionFromNugetFileName (app:string) (fileName:string) =
     Path.GetFileName(fileName).ToLower().Replace(".nupkg","").Replace(app.ToLower() + ".","")
 
 let getPreviousPackageVersionFromBackup dir app versions = 
-    let rootPath = dir @@ deploymentRootDir + app
     let currentPackageFileName = 
-        !! (rootPath + "/active/*.nupkg") 
+        Files [dir] [deploymentRootDir + app + "/active/*.nupkg"] []
         |> Seq.head 
         |> getVersionFromNugetFileName app
 
-    let backupPath = rootPath + "/backups/"
-
-    !! (backupPath + "*.nupkg")
-        |> Seq.map (getVersionFromNugetFileName app)
-        |> Seq.filter (fun x -> x < currentPackageFileName)
-        |> Seq.toList
-        |> List.sort
-        |> List.rev
-        |> Seq.skip (versions - 1)
-        |> Seq.head
+    Files [dir] [deploymentRootDir + app + "/backups/*.nupkg"] []
+    |> Seq.map (getVersionFromNugetFileName app)
+    |> Seq.filter (fun x -> x < currentPackageFileName)
+    |> Seq.toList
+    |> List.sort
+    |> List.rev
+    |> Seq.skip (versions - 1)
+    |> Seq.head
 
 let rollbackTo workDir app version =
     try
