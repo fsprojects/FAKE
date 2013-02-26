@@ -45,11 +45,12 @@ let XpkgDefaults() =
         Samples = [];
     }
 
-let private packageFileName parameters = sprintf "%s-%s.xam" parameters.Package parameters.Version
+let private getPackageFileName parameters = sprintf "%s-%s.xam" parameters.Package parameters.Version
 
 /// Creates a new xpkg package based on the packageFileName
-let xpkgPack setParams packageFileName =    
+let xpkgPack setParams =    
     let parameters = XpkgDefaults() |> setParams
+    let packageFileName = getPackageFileName parameters 
     traceStartTask "xpkg" packageFileName
 
     let commandLineBuilder =
