@@ -52,11 +52,12 @@ let xpkgPack setParams =
     let parameters = XpkgDefaults() |> setParams
     let packageFileName = getPackageFileName parameters 
     traceStartTask "xpkg" packageFileName
+    let fullPath = parameters.OutputPath @@ packageFileName
 
     let commandLineBuilder =
         new StringBuilder()
           |> append "create"
-          |> append (sprintf "\"%s\"" parameters.OutputPath @@ packageFileName )
+          |> append (sprintf "\"%s\"" fullPath)
           |> appendQuotedIfNotNull parameters.Project "--name="
           |> appendQuotedIfNotNull parameters.Summary "--summary="
           |> appendQuotedIfNotNull parameters.Publisher "--publisher="
