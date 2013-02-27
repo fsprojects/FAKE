@@ -162,11 +162,11 @@ let inline appendIfNotNull (value : Object) s =
         | _ -> (sprintf "%s%A" s value))
 
 /// Appends a quoted text if the value is not null
-let inline appendQuotedIfNotNull (value : Object) s =    
-    appendIfTrue (value <> null) (
+let inline appendQuotedIfNotNull (value : Object) s (builder:StringBuilder) =    
+    if (value = null) then builder else (
         match value with 
-        | :? String as sv -> (sprintf "%s\"%s\"" s sv)
-        | _ -> (sprintf "%s\"%A\"" s value))
+        | :? String as sv -> builder.Append(sprintf "%s\"%s\" " s sv)
+        | _ -> builder.Append(sprintf "%s\"%A\" " s value))
 
 
 /// Appends a text if the value is not null
