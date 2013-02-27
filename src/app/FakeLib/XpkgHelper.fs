@@ -1,7 +1,8 @@
 ﻿[<AutoOpen>]
-module XpkgHelper
+module Fake.XpkgHelper
 
 open System
+open System.Text
 
 type xpkgParams =
     {
@@ -44,42 +45,45 @@ let XpkgDefaults() =
         Samples = [];
     }
 
-let private packageFileName parameters = sprintf "%s-%s.xam" parameters.Package parameters.Version
+let private getPackageFileName parameters = sprintf "%s-%s.xam" parameters.Package parameters.Version
 
-let xpkgPack setParams =
-    traceStartTask "xpkg" packageFileName
+/// Creates a new xpkg package based on the packageFileName
+let xpkgPack setParams =    
     let parameters = XpkgDefaults() |> setParams
+    let packageFileName = getPackageFileName parameters 
+    traceStartTask "xpkg" packageFileName
+    let fullPath = parameters.OutputPath @@ packageFileName
 
     let commandLineBuilder =
         new StringBuilder()
           |> append "create"
-          |> append sprintf "\"%s\"" OutputPath @@ packageFileName 
-          |> appendIfNotNull parameters.Project sprintf "--name=\"%s\"" parameters.Project 
-          |> appendIfNotNull parameters.Summary sprintf "--summary=\"%s\"" parameters.Summary 
-          |> appendIfNotNull parameters.Publisher sprintf "--publisher=\"%s\"" parameters.Publisher 
-          |> appendIfNotNull parameters.Website sprintf "--website=\"%s\"" parameters.Website 
-          |> appendIfNotNull parameters.Details sprintf "--details=\"%s\"" parameters.Details 
-          |> appendIfNotNull parameters.License sprintf "--license=\"%s\"" parameters.License 
-          |> appendIfNotNull parameters.GettingStarted sprintf "--getting-started=\"%s\"" parameters.GettingStarted 
+          |> append (sprintf "\"%s\"" fullPath)
+          |> appendQuotedIfNotNull parameters.Project "--name="
+          |> appendQuotedIfNotNull parameters.Summary "--summary="
+          |> appendQuotedIfNotNull parameters.Publisher "--publisher="
+          |> appendQuotedIfNotNull parameters.Website "--website="
+          |> appendQuotedIfNotNull parameters.Details "--details=" 
+          |> appendQuotedIfNotNull parameters.License "--license="
+          |> appendQuotedIfNotNull parameters.GettingStarted "--getting-started="
 
-          parameters.Icons
-          |> List.map (fun (icon) -> sprintf "--icon=\"%s\"" icon)
-          |> List.iter (fun x -> commandLineBuilder.Add(x))
+    parameters.Icons
+    |> List.map (fun (icon) -> sprintf " --icon=\"%s\"" icon)
+    |> List.iter (fun x -> commandLineBuilder.Append x |> ignore)
           
-          parameters.Libraries
-          |> List.map (fun (platform, library) -> sprintf "--library=\"%s\":\"%s\"" platform library)
-          |> List.iter (fun x -> commandLineBuilder.Add(x))
+    parameters.Libraries
+    |> List.map (fun (platform, library) -> sprintf " --library=\"%s\":\"%s\"" platform library)
+    |> List.iter (fun x -> commandLineBuilder.Append x |> ignore)
           
-          parameters.Samples
-          |> List.map (fun (sample, solution) -> sprintf "--sample=\"%s\":\"%s\"" sample solution)
-          |> List.iter (fun x -> commandLineBuilder.Add(x))
+    parameters.Samples
+    |> List.map (fun (sample, solution) -> sprintf " --sample=\"%s\":\"%s\"" sample solution)
+    |> List.iter (fun x -> commandLineBuilder.Append x |> ignore)
 
 
     let args = commandLineBuilder.ToString()
     trace (parameters.ToolPath + " " + args)
     let result =
         execProcessAndReturnExitCode (fun info ->  
-            info.FileName <- tool
+            info.FileName <- parameters.ToolPath
             info.WorkingDirectory <- parameters.WorkingDir
             info.Arguments <- args) parameters.TimeOut
 
