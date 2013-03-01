@@ -16,11 +16,13 @@ let Site (name : string) (protocol : string) (binding : string) (physicalPath : 
     site.ApplicationDefaults.ApplicationPoolName <- appPool
     site
 
-let ApplicationPool (name : string) (mgr : ServerManager) = 
-    let appPool = mgr.ApplicationPools.[name]
+let ApplicationPool (name : string) (runtime : string) (mgr : ServerManager) = 
+    let mutable appPool = mgr.ApplicationPools.[name]
     match (appPool) with
-    | null -> mgr.ApplicationPools.Add(name)
-    | _ -> appPool
+    | null -> appPool <- mgr.ApplicationPools.Add(name)
+    | _ -> ()
+    appPool.ManagedRuntimeVersion <- runtime 
+    appPool
 
 let Application (virtualPath : string) (physicalPath : string) (site : Site) (mgr : ServerManager) =
     let app = site.Applications.[virtualPath]
