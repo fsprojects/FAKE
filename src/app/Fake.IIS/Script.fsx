@@ -14,12 +14,12 @@ UnlockSection "system.webServer/security/authentication/anonymousauthentication"
 
 (IIS
   (Site siteName "http" port @"C:\inetpub\wwwroot" appPool)
-  (ApplicationPool appPool)
+  (ApplicationPool appPool "v4.0")
   (Some(Application vdir appDir)))
 
 (IIS
   (Site siteName "http" port @"C:\inetpub\wwwroot" appPool)
-  (ApplicationPool appPool)
+  (ApplicationPool appPool "v4.0")
   (Some(Application "/vdir2" @"C:\temp")))
 
 deleteSite siteName
