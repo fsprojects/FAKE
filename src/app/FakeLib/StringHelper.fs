@@ -128,7 +128,17 @@ let ConvertTextToWindowsLineBreaks text =
     |> replace MacLineBreaks LinuxLineBreaks 
     |> replace LinuxLineBreaks WindowsLineBreaks
 
-let ConvertFileToWindowsLineBreaks fileName = ReplaceInFile ConvertTextToWindowsLineBreaks fileName
+let ConvertFileToWindowsLineBreaks (fileName:string) = 
+    use textReader = new StreamReader(fileName, Encoding.Default)
+
+    let tempFileName = Path.GetTempFileName()
+
+    use writer = new StreamWriter(tempFileName,false,Encoding.Default) 
+    
+    while not textReader.EndOfStream do
+        textReader.ReadLine()
+        |> ConvertTextToWindowsLineBreaks
+        |> writer.WriteLine
 
 let replaceFirst (pattern: string) replacement (text: string) = 
     let pos = text.IndexOf pattern
