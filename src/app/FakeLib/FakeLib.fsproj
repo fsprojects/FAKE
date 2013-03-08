@@ -115,6 +115,7 @@
     <Compile Include="PermissionsHelper.fs" />
     <Compile Include="ServiceControllerHelper.fs" />
     <Compile Include="SpecFlowHelper.fs" />
+    <Compile Include="ConfigurationHelper.fs" />
     <None Include="packages.config" />
     <None Include="packages.config" />
   </ItemGroup>
