@@ -129,16 +129,19 @@ let ConvertTextToWindowsLineBreaks text =
     |> replace LinuxLineBreaks WindowsLineBreaks
 
 let ConvertFileToWindowsLineBreaks (fileName:string) = 
-    use textReader = new StreamReader(fileName, Encoding.Default)
+    use reader = new StreamReader(fileName, Encoding.Default)
 
     let tempFileName = Path.GetTempFileName()
 
     use writer = new StreamWriter(tempFileName,false,Encoding.Default) 
     
-    while not textReader.EndOfStream do
-        textReader.ReadLine()
+    while not reader.EndOfStream do
+        reader.ReadLine()
         |> ConvertTextToWindowsLineBreaks
         |> writer.WriteLine
+
+    reader.Close()
+    writer.Close()
 
     File.Delete(fileName)
     File.Move(tempFileName,fileName)
