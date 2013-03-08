@@ -140,6 +140,9 @@ let ConvertFileToWindowsLineBreaks (fileName:string) =
         |> ConvertTextToWindowsLineBreaks
         |> writer.WriteLine
 
+    File.Delete(fileName)
+    File.Move(tempFileName,fileName)
+
 let replaceFirst (pattern: string) replacement (text: string) = 
     let pos = text.IndexOf pattern
     if pos < 0
