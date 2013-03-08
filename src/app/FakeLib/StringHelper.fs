@@ -128,6 +128,8 @@ let ConvertTextToWindowsLineBreaks text =
     |> replace MacLineBreaks LinuxLineBreaks 
     |> replace LinuxLineBreaks WindowsLineBreaks
 
+/// Reads a file line by line and replaces all line breaks to windows line breaks
+///   - uses a temp file to store the contents in order to prevent OutOfMemory exceptions
 let ConvertFileToWindowsLineBreaks (fileName:string) = 
     use reader = new StreamReader(fileName, Encoding.Default)
 
