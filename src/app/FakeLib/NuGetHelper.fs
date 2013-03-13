@@ -23,7 +23,9 @@ type NuGetParams =
       ProjectFile:string;
       Dependencies: (string*string) list;
       PublishTrials: int;
-      Publish:bool }
+      Publish:bool;
+      Properties: list<string*string>
+       }
 
 /// NuGet default params  
 let NuGetDefaults() =
@@ -45,7 +47,8 @@ let NuGetDefaults() =
       AccessKey = null
       NoPackageAnalysis = false
       PublishTrials = 5
-      Publish = false}
+      Publish = false
+      Properties = [] }
 
 let RequireExactly version = sprintf "[%s]" version
 
@@ -114,14 +117,23 @@ let private packSymbols parameters =
     parameters.OutputPath @@ (symbolsPackageFileName parameters) |> DeleteFile
 
 // create package
-let private pack parameters nuspecFile =    
+let private pack parameters nuspecFile =
+    let properties = 
+        match parameters.Properties with
+            | []    -> ""
+            | lst   -> "-Properties " + 
+                            (lst
+                            |> List.map(fun p -> (fst p) + "=\"" + (snd p) + "\"" )
+                            |> List.fold(fun state p ->  p + ";" + state) ""
+                            |> (fun s -> s.TrimEnd(';')))
     let args = 
-        sprintf "pack \"%s\" -Version %s -OutputDirectory \"%s\" %s" 
+        sprintf "pack \"%s\" -Version %s -OutputDirectory \"%s\" %s %s" 
             (FullName nuspecFile)
             parameters.Version
             (FullName (parameters.OutputPath.TrimEnd('\\').TrimEnd('/')))
             (if parameters.NoPackageAnalysis then "-NoPackageAnalysis" else "")
-
+            properties
+    
     let result = 
         ExecProcess (fun info ->
             info.FileName <- parameters.ToolPath
