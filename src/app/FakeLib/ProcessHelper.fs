@@ -89,25 +89,21 @@ let StartProcess infoAction =
    infoAction p.StartInfo
    p.Start() |> ignore
 
-/// Stops a windows service
-let StopService serviceName =
-    tracefn "stop %s" serviceName
+/// Sends a command to a windows service
+let RunService command serviceName =
+    tracefn "%s %s" command serviceName
     let p = new Process()
     p.StartInfo.FileName <- "sc";
-    p.StartInfo.Arguments <- sprintf "stop %s" serviceName
+    p.StartInfo.Arguments <- sprintf "%s %s" command serviceName
     p.StartInfo.RedirectStandardOutput <- true
     p.StartInfo.UseShellExecute <- false
     p.Start() |> ignore
 
+/// Stops a windows service
+let StopService serviceName = RunService "stop" serviceName
+
 /// Starts a windows service
-let StartService serviceName =
-    tracefn "stop %s" serviceName
-    let p = new Process()
-    p.StartInfo.FileName <- "sc";
-    p.StartInfo.Arguments <- sprintf "start %s" serviceName
-    p.StartInfo.RedirectStandardOutput <- true
-    p.StartInfo.UseShellExecute <- false
-    p.Start() |> ignore
+let StartService serviceName = RunService "start" serviceName
 
 /// Adds quotes around the string
 let quote str = "\"" + str + "\""
