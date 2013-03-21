@@ -12,6 +12,7 @@ type NavisionServerType =
 
 type DynamicsNavParams =
     { ToolPath: string
+      RTC: string
       ServerName: string
       Database: string
       WorkingDir: string
@@ -50,6 +51,7 @@ let createConnectionInfo navClientVersion serverMode serverName targetDatabase =
             | exn -> @"C:\Program Files\Navision700\70\Service"
 
     let navRTCPath = navPath @@ "RoleTailored Client"
+    let rtcExe = navRTCPath @@ "Microsoft.Dynamics.NAV.Client.exe"
 
     let clientExe = 
         match serverMode with
@@ -59,6 +61,7 @@ let createConnectionInfo navClientVersion serverMode serverName targetDatabase =
     let finExe = navClassicPath @@ clientExe
 
     { ToolPath =  finExe
+      RTC =  finExe
       WorkingDir = null
       ServerName = serverName
       Database = targetDatabase
@@ -152,6 +155,7 @@ let CompileAll connectionInfo =
         reportError "CompileAll failed" connectionInfo.TempLogFile
                   
     traceEndTask "CompileAll" details
+
 
 /// Opens a page with the RTC client
 let OpenPage server port serviceTierName company pageNo =
