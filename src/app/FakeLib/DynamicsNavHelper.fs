@@ -61,7 +61,7 @@ let createConnectionInfo navClientVersion serverMode serverName targetDatabase =
     let finExe = navClassicPath @@ clientExe
 
     { ToolPath =  finExe
-      RTC =  finExe
+      RTC =  rtcExe
       WorkingDir = null
       ServerName = serverName
       Database = targetDatabase
