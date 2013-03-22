@@ -18,47 +18,46 @@ type DynamicsNavParams =
       TempLogFile: string
       TimeOut: TimeSpan}
 
-let getNAVPath navClientVersion =
-    let navClassicPath =
-        let subKey = 
-            match navClientVersion with
-            | "601"
-            | "602" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\60\Classic Client\W1 6.0"
-            | "700" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\70\RoleTailored Client"
-            | "501" -> @"software\microsoft\Dynamics Nav\Cside Client\W1 5.0 SP1"
-            | "403" -> @"SOFTWARE\Navision\Microsoft Business Solutions-Navision\W1 4.00"
-            | _     -> failwithf "Unknown NAV-Version %s" navClientVersion
+let getNAVClassicPath navClientVersion =
+    let subKey = 
+        match navClientVersion with
+        | "601"
+        | "602" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\60\Classic Client\W1 6.0"
+        | "700" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\70\RoleTailored Client"
+        | "501" -> @"software\microsoft\Dynamics Nav\Cside Client\W1 5.0 SP1"
+        | "403" -> @"SOFTWARE\Navision\Microsoft Business Solutions-Navision\W1 4.00"
+        | _     -> failwithf "Unknown NAV-Version %s" navClientVersion
 
-        getRegistryValue HKEYLocalMachine subKey "Path"
+    getRegistryValue HKEYLocalMachine subKey "Path"
 
-    (directoryInfo navClassicPath).Parent.FullName
+let getNAVPath navClientVersion = (directoryInfo (getNAVClassicPath navClientVersion)).Parent.FullName
 
 /// Creates the connection information to a Dynamics NAV instance
 let createConnectionInfo navClientVersion serverMode serverName targetDatabase =
     let navServicePath = 
-            try
-                let navServiceRootPath =
-                    let subKey = 
-                        match navClientVersion with
-                        | "601"
-                        | "602" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\60\Classic Client\W1 6.0"
-                        | "700" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\70\Service"
-                        | _     -> failwithf "Unknown NAV-Version %s" navClientVersion
+        try
+            let navServiceRootPath =
+                let subKey = 
+                    match navClientVersion with
+                    | "601"
+                    | "602" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\60\Classic Client\W1 6.0"
+                    | "700" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\70\Service"
+                    | _     -> failwithf "Unknown NAV-Version %s" navClientVersion
 
-                    getRegistryValue HKEYLocalMachine subKey "Path"
+                getRegistryValue HKEYLocalMachine subKey "Path"
 
-                (directoryInfo navServiceRootPath).Parent.FullName @@ "Service"    
-            with
-            | exn -> @"C:\Program Files\Navision700\70\Service"
+            (directoryInfo navServiceRootPath).Parent.FullName @@ "Service"    
+        with
+        | exn -> @"C:\Program Files\Navision700\70\Service"
 
     let clientExe = 
         match serverMode with
         | NavisionServerType.SqlServer -> "finsql.exe"
         | NavisionServerType.NativeServer -> "fin.exe"
 
-    let finExe = getNAVPath navClientVersion @@ clientExe
+    let finExe = getNAVClassicPath navClientVersion @@ clientExe
 
-    { ToolPath =  finExe
+    { ToolPath = finExe
       WorkingDir = null
       ServerName = serverName
       Database = targetDatabase
