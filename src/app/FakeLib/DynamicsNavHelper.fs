@@ -12,15 +12,13 @@ type NavisionServerType =
 
 type DynamicsNavParams =
     { ToolPath: string
-      RTC: string
       ServerName: string
       Database: string
       WorkingDir: string
       TempLogFile: string
       TimeOut: TimeSpan}
 
-/// Creates the connection information to a Dynamics NAV instance
-let createConnectionInfo navClientVersion serverMode serverName targetDatabase =
+let getNAVPath navClientVersion =
     let navClassicPath =
         let subKey = 
             match navClientVersion with
@@ -33,7 +31,10 @@ let createConnectionInfo navClientVersion serverMode serverName targetDatabase =
 
         getRegistryValue HKEYLocalMachine subKey "Path"
 
-    let navPath = (directoryInfo navClassicPath).Parent.FullName
+    (directoryInfo navClassicPath).Parent.FullName
+
+/// Creates the connection information to a Dynamics NAV instance
+let createConnectionInfo navClientVersion serverMode serverName targetDatabase =
     let navServicePath = 
             try
                 let navServiceRootPath =
@@ -50,18 +51,14 @@ let createConnectionInfo navClientVersion serverMode serverName targetDatabase =
             with
             | exn -> @"C:\Program Files\Navision700\70\Service"
 
-    let navRTCPath = navPath @@ "RoleTailored Client"
-    let rtcExe = navRTCPath @@ "Microsoft.Dynamics.NAV.Client.exe"
-
     let clientExe = 
         match serverMode with
         | NavisionServerType.SqlServer -> "finsql.exe"
         | NavisionServerType.NativeServer -> "fin.exe"
 
-    let finExe = navClassicPath @@ clientExe
+    let finExe = getNAVPath navClientVersion @@ clientExe
 
     { ToolPath =  finExe
-      RTC =  rtcExe
       WorkingDir = null
       ServerName = serverName
       Database = targetDatabase
@@ -156,12 +153,56 @@ let CompileAll connectionInfo =
                   
     traceEndTask "CompileAll" details
 
+type RTCParams =
+    { ToolPath: string
+      ServerName: string
+      ServiceTierName: string
+      Company: string
+      Port: int
+      WorkingDir: string
+      TempLogFile: string
+      TimeOut: TimeSpan}
+
+/// Creates the connection information to a Dynamics NAV RTC
+let createRTCConnectionInfo navClientVersion serverName serviceTierName port company =
+    let navRTCPath = getNAVPath navClientVersion @@ "RoleTailored Client"
+    let rtcExe = navRTCPath @@ "Microsoft.Dynamics.NAV.Client.exe"
+
+    { ToolPath = rtcExe
+      ServerName = serverName
+      ServiceTierName = serviceTierName
+      Company = company
+      Port = port
+      WorkingDir = null
+      TempLogFile = "./NavErrorMessages.txt"
+      TimeOut = TimeSpan.FromMinutes 20. }
+
+/// Runs a codeunit with the RTC client
+let RunCodeunit connectionInfo (codeunit:int) =
+    let details = codeunit.ToString()
+    traceStartTask "Running Codeunit" details
+    let args = 
+      sprintf "-consolemode \"DynamicsNAV://%s:%d/%s/%s/runcodeunit?codeunit=%d\" -ShowNavigationPage:0" 
+        connectionInfo.ServerName
+        connectionInfo.Port
+        connectionInfo.ServiceTierName 
+        connectionInfo.Company 
+        codeunit
+
+    if not (execProcess3 (fun info ->  
+        info.FileName <- connectionInfo.ToolPath
+        info.WorkingDirectory <- connectionInfo.WorkingDir
+        info.Arguments <- args) connectionInfo.TimeOut)
+    then
+        failwithf "Running Codeunit failed" connectionInfo.TempLogFile
+                  
+    traceEndTask "Running Codeunit" details
 
 /// Opens a page with the RTC client
-let OpenPage server port serviceTierName company pageNo =
+let OpenPage connectionInfo pageNo =
     let details = sprintf "%d" pageNo
     traceStartTask "OpenPage" details
-    let protocol = sprintf @"dynamicsnav://%s:%s/%s/%s/runpage?page=%d" server port serviceTierName company pageNo
+    let protocol = sprintf @"dynamicsnav://%s:%d/%s/%s/runpage?page=%d" connectionInfo.ServerName connectionInfo.Port connectionInfo.ServiceTierName connectionInfo.Company pageNo
 
     let p = new Process()
     p.StartInfo <- new ProcessStartInfo(protocol)
