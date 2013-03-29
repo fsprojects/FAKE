@@ -1,13 +1,16 @@
 ﻿[<AutoOpen>]
 module Fake.FSIHelper
 
+open System
+open System.IO
 open System.Linq
 open System.Diagnostics
+open System.Threading
 
 /// The Path to the F# interactive tool
-let fsiPath = 
+let fsiPath =
     let ev = environVar "FSI"
-    if not (isNullOrEmpty ev) then ev else 
+    if not (isNullOrEmpty ev) then ev else
     if isUnix then
         let paths = appSettings "FSIPath"
         // The standard name on *nix is "fsharpi"
@@ -17,50 +20,70 @@ let fsiPath =
         // The early F# 2.0 name on *nix was "fsi"
         match tryFindFile paths "fsi" with
         | Some file -> file
-        | None -> "fsharpi" 
+        | None -> "fsharpi"
     else
-        let dir = System.IO.Path.GetDirectoryName fullAssemblyPath
-        let fi = fileInfo (System.IO.Path.Combine(dir,"fsi.exe"))
+        let dir = Path.GetDirectoryName fullAssemblyPath
+        let fi = fileInfo (Path.Combine(dir, "fsi.exe"))
         if fi.Exists then fi.FullName else
         findPath "FSIPath" "fsi.exe"
 
-let fsiStartInfo script workingDirectory args = 
-    (fun (info : ProcessStartInfo) ->  
+type private Stage =
+    | BootStage
+    | RunStage
+
+/// Computes extra command-line arguments to enable bootstrapping FAKE scripts.
+let private BootArgs (stage: Stage) (script: string) : list<string> =
+    let fakeDir = Path.GetDirectoryName(typeof<Stage>.Assembly.Location)
+    let quote (s: string) : string =
+        String.Format(@"""{0}""", s.Replace(@"""", @"\"""))
+    [
+        match stage with
+        | BootStage -> yield "--define:BOOT"
+        | RunStage -> ()
+        yield "-I"
+        yield quote fakeDir
+        yield "-r"
+        yield "FakeLib"
+    ]
+
+let private FsiStartInfo script workingDirectory extraFsiArgs args =
+    (fun (info: ProcessStartInfo) ->
         info.FileName <- fsiPath
-        info.Arguments <- script
+        info.Arguments <- String.concat " " (extraFsiArgs @ [script])
         info.WorkingDirectory <- workingDirectory
-        
-            
-        let setVar (k,v) =
-            if info.EnvironmentVariables.ContainsKey k then
-                info.EnvironmentVariables.[k] <- v
-            else 
-                info.EnvironmentVariables.Add(k,v)
+        let setVar k v =
+            info.EnvironmentVariables.[k] <- v
+        for (k, v) in args do
+            setVar k v
+        setVar "MSBuild"  msBuildExe
+        setVar "GIT" Git.CommandHelper.gitPath
+        setVar "FSI" fsiPath)
 
-        args |> Seq.iter setVar
+let fsiStartInfo script workingDirectory args =
+    FsiStartInfo script workingDirectory [] args
 
-        setVar("MSBuild",msBuildExe)
-        setVar("GIT",Git.CommandHelper.gitPath)
-        setVar("FSI",fsiPath))
-      
 /// Run the given buildscript with fsi.exe
 let executeFSI workingDirectory script args =
-   
-    let (result, messages) = 
-        ExecProcessRedirected  
+    let (result, messages) =
+        ExecProcessRedirected
             (fsiStartInfo script workingDirectory args)
-            System.TimeSpan.MaxValue
-    
-    System.Threading.Thread.Sleep 1000
+            TimeSpan.MaxValue
+    Thread.Sleep 1000
     (result, messages)
-      
+
 /// Run the given buildscript with fsi.exe
 let runBuildScriptAt workingDirectory printDetails script args =
-    if printDetails then traceFAKE "Running Buildscript: %s" script
-    let result = ExecProcess (fsiStartInfo script workingDirectory args) System.TimeSpan.MaxValue
-    (System.Threading.Thread.Sleep 1000)
-    result = 0
+    let fullPath = Path.Combine(workingDirectory, script)
+    let main (extraArgs: list<string>) : bool =
+        if printDetails then traceFAKE "Running Buildscript: %s" script
+        let result = ExecProcess (FsiStartInfo script workingDirectory extraArgs args) TimeSpan.MaxValue
+        Thread.Sleep 1000
+        result = 0
+    if Fake.Boot.IsBootScript script then
+        main (BootArgs BootStage script)
+        && main (BootArgs RunStage script)
+    else
+        main []
 
 let runBuildScript printDetails script args =
     runBuildScriptAt "" printDetails script args
-    
