@@ -209,6 +209,10 @@ let commandLineBuilder parameters assemblies =
               |> appendIfNotNull parameters.Domain "-domain:"
     cl.ToString()
 
+let getWorkingDir parameters =
+    Seq.find (fun s -> s <> null && s <> "") [parameters.WorkingDir; environVar("teamcity.build.workingDir"); "."]
+    |> Path.GetFullPath
+
 /// Run NUnit on a group of assemblies.
 let NUnit setParams (assemblies: string seq) =
     let details = assemblies |> separated ", "
@@ -224,11 +228,10 @@ let NUnit setParams (assemblies: string seq) =
     let result =
         execProcessAndReturnExitCode (fun info ->  
             info.FileName <- tool
-            info.WorkingDirectory <- parameters.WorkingDir
+            info.WorkingDirectory <- getWorkingDir parameters
             info.Arguments <- args) parameters.TimeOut
 
-    let workingDir = Seq.find (fun s -> s <> null && s <> "") [parameters.WorkingDir; environVar("teamcity.build.workingDir"); "."]
-    sendTeamCityNUnitImport (workingDir @@ parameters.OutputFile)
+    sendTeamCityNUnitImport (getWorkingDir parameters @@ parameters.OutputFile)
     if result = 0 then          
         traceEndTask "NUnit" details
     else
@@ -261,7 +264,7 @@ let NUnitParallel setParams (assemblies: string seq) =
         let result =
             ExecProcessWithLambdas (fun info ->  
                 info.FileName <- tool
-                info.WorkingDirectory <- parameters.WorkingDir
+                info.WorkingDirectory <- getWorkingDir parameters
                 info.Arguments <- args) 
                 parameters.TimeOut
                 true
@@ -276,8 +279,6 @@ let NUnitParallel setParams (assemblies: string seq) =
         |> doParallelWithThrottle (Environment.ProcessorCount) (fun (assembly, outputFile) -> runSingleAssembly assembly parameters outputFile)
     enableProcessTracing <- true
 
-    let workingDir = Seq.find (fun s -> s <> null && s <> "") [parameters.WorkingDir; environVar("teamcity.build.workingDir"); "."]
-
     // Merge all valid results into single results file
     if Array.Exists(testRunResults, fun r -> r.ReturnCode >= 0)  then
         testRunResults
@@ -286,8 +287,8 @@ let NUnitParallel setParams (assemblies: string seq) =
         |> Seq.map (fun fileName -> XDocument.Parse(File.ReadAllText(fileName)))
         |> NUnitMerge.FoldDocs
         |> NUnitMerge.CreateMerged
-        |> fun x -> File.WriteAllText(workingDir @@ parameters.OutputFile, x.ToString())
-        sendTeamCityNUnitImport (workingDir @@ parameters.OutputFile)
+        |> fun x -> File.WriteAllText(getWorkingDir parameters @@ parameters.OutputFile, x.ToString())
+        sendTeamCityNUnitImport (getWorkingDir parameters @@ parameters.OutputFile)
 
     // Deal with errors
     let hasFailed = Array.Exists(testRunResults, fun r -> r.ReturnCode <> 0)
