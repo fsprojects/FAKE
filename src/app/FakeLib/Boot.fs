@@ -5,16 +5,12 @@
 /// second stage.
 module Fake.Boot
 
+open System
 open System.IO
 open System.Runtime.Versioning
 open System.Text
 
 let private ( +/ ) a b = Path.Combine(a, b)
-
-/// Checks if the F# script file is a bootstrapping script.
-let IsBootScript (fullPath: string) : bool =
-    File.ReadAllLines(fullPath)
-    |> Array.exists (fun x -> x.StartsWith("#if BOOT"))
 
 /// Specifies which version of the NuGet package to install.
 type NuGetVersion =
@@ -78,9 +74,42 @@ type Config =
             SourceDirectory = sourceDir
         }
 
+/// Stage of execution for a boot system.
+type Stage =
+    | BuildStage
+    | ConfigureStage
+
+/// Abstracts over command-line environment features.
+[<AbstractClass>]
+type CommandEnvironment() =
+    abstract SendMessage : message: string -> unit
+    abstract CurrentDirectory : string
+    abstract FakeDirectory : string
+
+    /// The default environment.
+    static member Default : CommandEnvironment =
+        {
+            new CommandEnvironment() with
+                member this.SendMessage(msg: string) = stdout.WriteLine(msg)
+                member this.CurrentDirectory = Directory.GetCurrentDirectory()
+                member this.FakeDirectory = Path.GetDirectoryName(typeof<Stage>.Assembly.Location)
+        }
+
+/// Represents a command line handler.
+type CommandHandler =
+    {
+        Run : CommandEnvironment -> bool
+    }
+
+    /// Runs the handler with the default environment.
+    member this.Interact() =
+        if this.Run(CommandEnvironment.Default) |> not then
+            Environment.ExitCode <- 1
+
 [<AutoOpen>]
 module private Implementation =
     open NuGet
+    open System
     open System.Collections.Generic
 
     let GetManager (config: Config) =
@@ -221,6 +250,150 @@ module private Implementation =
         if not (Directory.Exists dir) then
             Directory.CreateDirectory dir |> ignore
         File.WriteAllText(config.IncludesFile, GenerateBootScriptText refs, UTF8)
+
+    type Command =
+        | ConfigureAndRun
+        | ConfigureOnly
+        | Init
+        | InitSingle
+        | RunOnly
+
+    let ParseCommand (args: seq<string>) : option<Command> =
+        match Seq.toList args with
+        | [] -> Some RunOnly
+        | ["auto"] -> Some ConfigureAndRun
+        | ["conf"] -> Some ConfigureOnly
+        | ["init"] -> Some Init
+        | ["init"; "one"] -> Some InitSingle
+        | _ -> None
+
+    /// Computes extra command-line arguments to enable bootstrapping FAKE scripts.
+    let FsiArgs (env: CommandEnvironment) (stage: Stage) : list<string> =
+        let quote (s: string) : string =
+            String.Format(@"""{0}""", s.Replace(@"""", @"\"""))
+        [
+            match stage with
+            | BuildStage -> ()
+            | ConfigureStage -> yield "--define:BOOT"
+            yield "-I"
+            yield quote env.FakeDirectory
+            yield "-r"
+            yield "FakeLib"
+        ]
+
+    let Fsi (env: CommandEnvironment) stage script =
+        FSIHelper.executeFSIWithArgs env.CurrentDirectory script
+            (FsiArgs env stage) []
+
+    /// Checks if the F# script file is a bootstrapping script.
+    let IsBootScript (fullPath: string) : bool =
+        File.ReadAllLines(fullPath)
+        |> Array.exists (fun x -> x.StartsWith("#if BOOT"))
+
+    let DoConfigureOnly (env: CommandEnvironment) =
+        let bootScript = env.CurrentDirectory +/ "conf.fsx"
+        let buildScript = env.CurrentDirectory +/ "build.fsx"
+        if File.Exists bootScript then
+            Fsi env ConfigureStage bootScript
+        elif File.Exists buildScript  && IsBootScript buildScript then
+            Fsi env ConfigureStage buildScript
+        else
+            env.SendMessage("Could not find conf.fsx or boot-aware build.fsx")
+            false
+
+    let DoRunOnly (env: CommandEnvironment) =
+        let buildScript = env.CurrentDirectory +/ "build.fsx"
+        if File.Exists buildScript then
+            Fsi env BuildStage buildScript
+        else
+            env.SendMessage("Could not find build.fsx")
+            false
+
+    let DoConfigureAndRun (env: CommandEnvironment) =
+        DoConfigureOnly env && DoRunOnly env
+
+    let DoInit (env: CommandEnvironment) =
+        let bootScript = env.CurrentDirectory +/ "conf.fsx"
+        let buildScript = env.CurrentDirectory +/ "build.fsx"
+        if File.Exists bootScript || File.Exists buildScript then
+            env.SendMessage("Already exists: conf.fsx or build.fsx")
+            false
+        else
+            let bootScriptLines =
+                [
+                    "open Fake"
+                    "module FB = Fake.Boot"
+                    "FB.Prepare {"
+                    "    FB.Config.Default __SOURCE_DIRECTORY__ with"
+                    "        NuGetDependencies ="
+                    "            let ( ! ) x = FB.NuGetDependency.Create x"
+                    "            ["
+                    "            ]"
+                    "}"
+                ]
+            let buildScriptLines =
+                [
+                    @"#load "".build/boot.fsx"""
+                    "open Fake"
+                ]
+            File.WriteAllLines(bootScript, bootScriptLines, UTF8)
+            File.WriteAllLines(buildScript, buildScriptLines, UTF8)
+            env.SendMessage("Generated conf.fsx and build.fsx")
+            true
+
+    let DoInitSingle (env: CommandEnvironment) =
+        let buildScript = env.CurrentDirectory +/ "build.fsx"
+        if File.Exists buildScript then
+            env.SendMessage("Already exists: build.fsx")
+            false
+        else
+            let scriptLines =
+                [
+                    "#if BOOT"
+                    "open Fake"
+                    "module FB = Fake.Boot"
+                    "FB.Prepare {"
+                    "    FB.Config.Default __SOURCE_DIRECTORY__ with"
+                    "        NuGetDependencies ="
+                    "            let ( ! ) x = FB.NuGetDependency.Create x"
+                    "            ["
+                    "            ]"
+                    "}"
+                    "#else"
+                    @"#load "".build/boot.fsx"""
+                    "open Fake"
+                    "#endif"
+                ]
+            File.WriteAllLines(buildScript, scriptLines, UTF8)
+            env.SendMessage("Generated a boot-aware build.fsx")
+            true
+
+    let DoHelp (env: CommandEnvironment) =
+        use w = new StringWriter()
+        w.WriteLine("FAKE boot module: bootstrapping builds. Commands: ")
+        w.WriteLine("   FAKE boot           Runs the normal build stage only")
+        w.WriteLine("   FAKE boot auto      Runs configure and then build stage")
+        w.WriteLine("   FAKE boot conf      Runs configure stage only")
+        w.WriteLine("   FAKE boot init      Inits a boot project in current folder")
+        w.WriteLine("   FAKE boot init one  Inits a single-file boot project here")
+        env.SendMessage (w.ToString())
+        true
+
+    let RunCommandLine (args: list<string>) (env: CommandEnvironment) : bool =
+        match ParseCommand args with
+        | Some ConfigureAndRun -> DoConfigureAndRun env
+        | Some ConfigureOnly -> DoConfigureOnly env
+        | Some Init -> DoInit env
+        | Some InitSingle -> DoInitSingle env
+        | Some RunOnly -> DoRunOnly env
+        | None -> DoHelp env
+
+/// Detects boot-specific commands.
+let ParseCommandLine (args: seq<string>) : option<CommandHandler> =
+    match Seq.toList args with
+    | "boot" :: xs
+    | _ :: "boot" :: xs -> Some { Run = RunCommandLine xs }
+    | _ -> None
 
 /// The main function intended to be executed in the BOOT phase of
 /// boostrapping scripts.

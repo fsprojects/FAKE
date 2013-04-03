@@ -88,7 +88,6 @@
     <Compile Include="SCPHelper.fs" />
     <Compile Include="XCopyHelper.fs" />
     <Compile Include="XpkgHelper.fs" />
-    <Compile Include="Boot.fs" />
     <Compile Include="MSBuild\SpecsRemovement.fs" />
     <Compile Include="Git\CommandHelper.fs" />
     <Compile Include="Git\Sha1.fs" />
@@ -105,6 +104,7 @@
     <Compile Include="Git\CommitMessage.fs" />
     <Compile Include="Git\Staging.fs" />
     <Compile Include="FSIHelper.fs" />
+    <Compile Include="Boot.fs" />
     <Compile Include="MessageHelper.fs" />
     <Compile Include="HTMLHelpWorkShopHelper.fs" />
     <Compile Include="TargetHelper.fs" />

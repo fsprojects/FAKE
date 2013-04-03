@@ -27,25 +27,6 @@ let fsiPath =
         if fi.Exists then fi.FullName else
         findPath "FSIPath" "fsi.exe"
 
-type private Stage =
-    | BootStage
-    | RunStage
-
-/// Computes extra command-line arguments to enable bootstrapping FAKE scripts.
-let private BootArgs (stage: Stage) (script: string) : list<string> =
-    let fakeDir = Path.GetDirectoryName(typeof<Stage>.Assembly.Location)
-    let quote (s: string) : string =
-        String.Format(@"""{0}""", s.Replace(@"""", @"\"""))
-    [
-        match stage with
-        | BootStage -> yield "--define:BOOT"
-        | RunStage -> ()
-        yield "-I"
-        yield quote fakeDir
-        yield "-r"
-        yield "FakeLib"
-    ]
-
 let private FsiStartInfo script workingDirectory extraFsiArgs args =
     (fun (info: ProcessStartInfo) ->
         info.FileName <- fsiPath
@@ -71,19 +52,18 @@ let executeFSI workingDirectory script args =
     Thread.Sleep 1000
     (result, messages)
 
+/// Run the given build script with fsi.exe; allows for extra arguments to FSI.
+let executeFSIWithArgs workingDirectory script extraFsiArgs args =
+    let result = ExecProcess (FsiStartInfo script workingDirectory extraFsiArgs args) TimeSpan.MaxValue
+    Thread.Sleep 1000
+    result = 0
+
 /// Run the given buildscript with fsi.exe
 let runBuildScriptAt workingDirectory printDetails script args =
-    let fullPath = Path.Combine(workingDirectory, script)
-    let main (extraArgs: list<string>) : bool =
-        if printDetails then traceFAKE "Running Buildscript: %s" script
-        let result = ExecProcess (FsiStartInfo script workingDirectory extraArgs args) TimeSpan.MaxValue
-        Thread.Sleep 1000
-        result = 0
-    if Fake.Boot.IsBootScript script then
-        main (BootArgs BootStage script)
-        && main (BootArgs RunStage script)
-    else
-        main []
+    if printDetails then traceFAKE "Running Buildscript: %s" script
+    let result = ExecProcess (fsiStartInfo script workingDirectory args) System.TimeSpan.MaxValue
+    Thread.Sleep 1000
+    result = 0
 
 let runBuildScript printDetails script args =
     runBuildScriptAt "" printDetails script args
