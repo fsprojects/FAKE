@@ -32,7 +32,6 @@ let colorMap = function
 /// <param name="colorMap">A function which maps TracePriorities to ConsoleColors.</param>
 type ConsoleTraceListener(importantMessagesToStdErr,colorMap) =
     let writeText toStdErr color newLine text =
-        let text = if not verbose then shortenCurrentDirectory text else text
         let curColor = Console.ForegroundColor
         if curColor <> color then Console.ForegroundColor <- color
         if toStdErr then 

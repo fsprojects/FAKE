@@ -32,6 +32,17 @@ let getGitResult repositoryDir command =
     let _,msg,_ = runGitCommand repositoryDir command
     msg
 
+/// Starts the given process
+let fireAndForget infoAction =
+    use p = new Process()
+    p.StartInfo.UseShellExecute <- false
+    infoAction p.StartInfo
+  
+    try
+        p.Start() |> ignore
+    with
+    | exn -> failwithf "Start of process %s failed. %s" p.StartInfo.FileName exn.Message
+
 /// Runs the given process and returns the exit code
 let directExec infoAction =
     use p = new Process()
@@ -46,6 +57,13 @@ let directExec infoAction =
     p.WaitForExit()
     
     p.ExitCode = 0
+
+/// Fires the given git command
+let fireAndForgetGitCommand repositoryDir command = 
+    fireAndForget (fun info ->  
+      info.FileName <- gitPath
+      info.WorkingDirectory <- repositoryDir
+      info.Arguments <- command)
 
 let directRunGitCommand repositoryDir command = 
     directExec (fun info ->  
