@@ -6,9 +6,12 @@
 module Fake.Boot
 
 open System
+open System.Collections.Generic
 open System.IO
+open System.Net
 open System.Runtime.Versioning
 open System.Text
+open NuGet
 
 let private ( +/ ) a b = Path.Combine(a, b)
 
@@ -50,6 +53,9 @@ type Config =
         /// Full path to the auto-generated fsx file with include statements.
         IncludesFile : string
 
+        /// The credentials to use when authenticating to NuGet, if any.
+        NuGetCredentials : option<ICredentials>
+
         /// List of automatically installed and NuGet dependencies.
         NuGetDependencies : list<NuGetDependency>
 
@@ -61,6 +67,7 @@ type Config =
 
         /// The full path to the root folder.
         SourceDirectory : string
+
     }
 
     /// The default configuration for a given source directory.
@@ -68,6 +75,7 @@ type Config =
         {
             FrameworkName = FrameworkName(".NETFramework,Version=v4.0")
             IncludesFile = sourceDir +/ ".build" +/ "boot.fsx"
+            NuGetCredentials = None
             NuGetDependencies = []
             NuGetPackagesDirectory = sourceDir +/ "packages"
             NuGetSourceUrl = "http://nuget.org/api/v2/"
@@ -108,12 +116,23 @@ type CommandHandler =
 
 [<AutoOpen>]
 module private Implementation =
-    open NuGet
-    open System
-    open System.Collections.Generic
+
+    [<Sealed>]
+    type CustomHttpClient(uri, cred: option<ICredentials>) =
+        inherit HttpClient(uri)
+
+        interface IHttpClient with
+            override this.InitializeRequest(req) =
+                this.InitializeRequest(req)
+                match cred with
+                | None -> ()
+                | Some c -> req.Credentials <- c
 
     let GetManager (config: Config) =
         let factory = PackageRepositoryFactory.Default
+        let old = factory.HttpClientFactory
+        factory.HttpClientFactory <-
+            fun uri -> CustomHttpClient(uri, config.NuGetCredentials) :> _
         let repo = factory.CreateRepository(config.NuGetSourceUrl)
         PackageManager(repo, config.NuGetPackagesDirectory)
 
@@ -203,8 +222,7 @@ module private Implementation =
             | SemanticVersion v -> SemanticVersion.Parse(v) = pkg.Version)
 
     let IsSupported (config: Config) (frameworks: seq<FrameworkName>) =
-        frameworks
-        |> Seq.exists (fun x -> x = config.FrameworkName)
+        VersionUtility.IsCompatible(config.FrameworkName, frameworks)
 
     let ComputeRefs (config: Config) (mgr: PackageManager) : seq<string> =
         let assemblyRefs = HashSet()
