@@ -297,3 +297,21 @@ let analyzeTestResults fileName =
 
     { SuiteName = suiteName
       Tests = tests }
+
+let reportTestResultsToTeamCity testResults =
+    TeamCityHelper.StartTestSuite testResults.SuiteName
+
+    for test in testResults.Tests do 
+
+        let runtime = System.TimeSpan.FromSeconds 2.
+
+        TeamCityHelper.StartTestCase test.Name
+
+        match test.Status with
+        | Ok -> ()
+        | Failure(msg,details) -> TeamCityHelper.TestFailed test.Name msg details
+        | Ignored(msg,details) -> TeamCityHelper.IgnoreTestCase test.Name msg
+
+        TeamCityHelper.FinishTestCase test.Name test.RunTime
+
+    TeamCityHelper.FinishTestSuite testResults.SuiteName
