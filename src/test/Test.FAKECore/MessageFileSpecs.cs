@@ -68,7 +68,12 @@ namespace Test.FAKECore.XMLHandling
         It should_find_the_second_test = () => 
             _result.Tests[1].Status.ShouldEqual(DynamicsNav.TestStatus.Ok);
 
+        It should_find_the_ignored_test = () =>
+            _result.Tests[2].Status
+            .ShouldEqual(DynamicsNav.TestStatus.NewIgnored("Not implemented", "OK"));
+
         It should_find_last_error = () =>
-            _result.Tests[12].Status.ShouldEqual(DynamicsNav.TestStatus.NewFailure("Test failure","Assert.IsTrue failed. %1"));
+            _result.Tests[12].Status
+            .ShouldEqual(DynamicsNav.TestStatus.NewFailure("Test failure","Assert.IsTrue failed. %1"));
     }
 }

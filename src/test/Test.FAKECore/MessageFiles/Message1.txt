@@ -18,11 +18,11 @@ Success;Test OK: ;
 EndOfTest;
 
 ------------------------------
-Starting TestCase: Test Math TestMin
+Starting TestCase: Test Math 2
 TestSuite;Test Math
-TestCase;TestMin
-Runtime;15
-Success;Test OK: ;
+TestCase;TestGetDate
+Runtime;14
+Ignored;Not implemented;OK;
 EndOfTest;
 
 ------------------------------

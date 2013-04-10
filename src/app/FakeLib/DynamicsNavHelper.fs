@@ -238,6 +238,7 @@ let CloseAllNavProcesses raiseExceptionIfNotFound =
 
 type TestStatus = 
 | Ok
+| Ignored of string * string
 | Failure of string * string
 
 type Test = {
@@ -274,10 +275,13 @@ let analyzeTestResults fileName =
         let testName = findNext "TestCase;" currentMessages
         
         let status = 
-            match currentMessages |> Seq.tryFind (fun x -> x.StartsWith "Error;" ) with
-            | Some error -> 
+            match currentMessages |> Seq.tryFind (fun x -> x.StartsWith "Error;" || x.StartsWith "Ignored;" ) with
+            | Some error when error.StartsWith "Error;"  -> 
                 let msg = error.Replace("Error;","").Split [|';'|]
                 Failure (msg.[0],msg.[1])
+            | Some error when error.StartsWith "Ignored;"  -> 
+                let msg = error.Replace("Ignored;","").Split [|';'|]
+                Ignored (msg.[0],msg.[1])
             | _ -> Ok
 
         let runTime = 
