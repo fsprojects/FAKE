@@ -193,7 +193,7 @@ let RunCodeunit connectionInfo (codeunit:int) =
         info.WorkingDirectory <- connectionInfo.WorkingDir
         info.Arguments <- args) connectionInfo.TimeOut)
     then
-        failwithf "Running Codeunit failed" connectionInfo.TempLogFile
+        reportError "Running Codeunit failed" connectionInfo.TempLogFile
                   
     traceEndTask "Running Codeunit" details
 
