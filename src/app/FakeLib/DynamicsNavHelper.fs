@@ -252,6 +252,10 @@ type TestResults = {
 
 let analyzeTestResults fileName =
     let messages = ReadFile fileName
+
+    if Seq.isEmpty messages then
+        failwithf "Communication error. The message file %s is empty." fileName
+
     let findNext pattern (messages:string seq) =
         messages
         |> Seq.skipWhile (fun x -> x.StartsWith pattern |> not)
