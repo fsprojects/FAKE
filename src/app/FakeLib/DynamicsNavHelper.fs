@@ -238,7 +238,7 @@ let CloseAllNavProcesses raiseExceptionIfNotFound =
 
 type TestStatus = 
 | Ok
-| Failure of string
+| Failure of string * string
 
 type Test = {
     Name:string 
@@ -275,7 +275,9 @@ let analyzeTestResults fileName =
         
         let status = 
             match currentMessages |> Seq.tryFind (fun x -> x.StartsWith "Error;" ) with
-            | Some error -> Failure (error.Replace("Error;Test failure;",""))
+            | Some error -> 
+                let msg = error.Replace("Error;","").Split [|';'|]
+                Failure (msg.[0],msg.[1])
             | _ -> Ok
 
         let runTime = 

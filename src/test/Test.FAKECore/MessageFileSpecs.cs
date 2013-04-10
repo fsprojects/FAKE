@@ -69,6 +69,6 @@ namespace Test.FAKECore.XMLHandling
             _result.Tests[1].Status.ShouldEqual(DynamicsNav.TestStatus.Ok);
 
         It should_find_last_error = () =>
-            _result.Tests[12].Status.ShouldEqual(DynamicsNav.TestStatus.NewFailure("Assert.IsTrue failed. %1"));
+            _result.Tests[12].Status.ShouldEqual(DynamicsNav.TestStatus.NewFailure("Test failure","Assert.IsTrue failed. %1"));
     }
 }
