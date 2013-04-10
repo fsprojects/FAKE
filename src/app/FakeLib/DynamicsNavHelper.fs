@@ -65,12 +65,17 @@ let createConnectionInfo navClientVersion serverMode serverName targetDatabase =
       TimeOut = TimeSpan.FromMinutes 20.}
 
 let private analyzeLogFile fileName =
-    let lines = ReadFile fileName |> Seq.toList
-    lines |> Seq.iter traceError
-    DeleteFile fileName
-    lines.Length
+    try
+        let lines = ReadFile fileName |> Seq.toList
+        lines |> Seq.iter traceError
+        DeleteFile fileName
+        lines.Length
+    with 
+    | exn -> 
+        traceError exn.Message
+        1
 
-let private reportError text logFile =
+let private reportError text logFile =    
     let errors = analyzeLogFile logFile
     failwith (text + (if errors = 1 then " with 1 error." else sprintf " with %d errors." errors))
 
