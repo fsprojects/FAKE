@@ -4,6 +4,7 @@ open System
 open System.Diagnostics
 open System.Text
 open System.IO
+open Fake.UnitTest
 
 [<RequireQualifiedAccess>]
 type NavisionServerType =
@@ -236,20 +237,6 @@ let CloseAllNavProcesses raiseExceptionIfNotFound =
     traceEndTask "CloseNAV" details
 
 
-type TestStatus = 
-| Ok
-| Ignored of string * string
-| Failure of string * string
-
-type Test = {
-    Name:string 
-    RunTime: TimeSpan
-    Status: TestStatus }
-
-type TestResults = {
-    SuiteName : string
-    Tests: Test list  }
-
 let analyzeTestResults fileName =
     let messages = ReadFile fileName
 
@@ -302,21 +289,3 @@ let analyzeTestResults fileName =
     let tests = getTests messages
 
     Some { SuiteName = suiteName; Tests = tests }
-
-let reportTestResultsToTeamCity testResults =
-    TeamCityHelper.StartTestSuite testResults.SuiteName
-
-    for test in testResults.Tests do 
-
-        let runtime = System.TimeSpan.FromSeconds 2.
-
-        TeamCityHelper.StartTestCase test.Name
-
-        match test.Status with
-        | Ok -> ()
-        | Failure(msg,details) -> TeamCityHelper.TestFailed test.Name msg details
-        | Ignored(msg,details) -> TeamCityHelper.IgnoreTestCase test.Name msg
-
-        TeamCityHelper.FinishTestCase test.Name test.RunTime
-
-    TeamCityHelper.FinishTestSuite testResults.SuiteName

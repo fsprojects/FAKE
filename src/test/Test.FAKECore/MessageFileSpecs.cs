@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Fake;
+using Fake.UnitTest;
 using Machine.Specifications;
 
 namespace Test.FAKECore.XMLHandling
@@ -16,7 +17,7 @@ namespace Test.FAKECore.XMLHandling
 
     public class when_getting_the_test_suite
     {
-        static DynamicsNav.TestResults _result;
+        static TestResults _result;
 
         Because of = () => _result = DynamicsNav.analyzeTestResults("./MessageFiles/Message1.txt").Value;
 
@@ -26,7 +27,7 @@ namespace Test.FAKECore.XMLHandling
 
     public class when_getting_the_test_names
     {
-        static DynamicsNav.TestResults _result;
+        static TestResults _result;
 
         Because of = () => _result = DynamicsNav.analyzeTestResults("./MessageFiles/Message1.txt").Value;
 
@@ -42,7 +43,7 @@ namespace Test.FAKECore.XMLHandling
 
     public class when_getting_the_test_runtimes
     {
-        static DynamicsNav.TestResults _result;
+        static TestResults _result;
 
         Because of = () => _result = DynamicsNav.analyzeTestResults("./MessageFiles/Message1.txt").Value;
 
@@ -58,22 +59,22 @@ namespace Test.FAKECore.XMLHandling
 
     public class when_getting_the_test_status
     {
-        static DynamicsNav.TestResults _result;
+        static TestResults _result;
 
         Because of = () => _result = DynamicsNav.analyzeTestResults("./MessageFiles/Message1.txt").Value;
 
         It should_find_the_first_test = () =>
-            _result.Tests[0].Status.ShouldEqual(DynamicsNav.TestStatus.Ok);
+            _result.Tests[0].Status.ShouldEqual(TestStatus.Ok);
 
-        It should_find_the_second_test = () => 
-            _result.Tests[1].Status.ShouldEqual(DynamicsNav.TestStatus.Ok);
+        It should_find_the_second_test = () =>
+            _result.Tests[1].Status.ShouldEqual(TestStatus.Ok);
 
         It should_find_the_ignored_test = () =>
             _result.Tests[2].Status
-            .ShouldEqual(DynamicsNav.TestStatus.NewIgnored("Not implemented", "OK"));
+            .ShouldEqual(TestStatus.NewIgnored("Not implemented", "OK"));
 
         It should_find_last_error = () =>
             _result.Tests[12].Status
-            .ShouldEqual(DynamicsNav.TestStatus.NewFailure("Test failure","Assert.IsTrue failed. %1"));
+            .ShouldEqual(TestStatus.NewFailure("Test failure", "Assert.IsTrue failed. %1"));
     }
 }

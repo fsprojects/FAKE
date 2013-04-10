@@ -61,6 +61,7 @@
     <Compile Include="REST.fs" />
     <Compile Include="BuildServerHelper.fs" />
     <Compile Include="TraceListener.fs" />
+    <Compile Include="UnitTestHelper.fs" />
     <Compile Include="TeamCityHelper.fs" />
     <Compile Include="TeamCityRESTHelper.fs" />
     <Compile Include="TraceHelper.fs" />
