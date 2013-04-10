@@ -30,9 +30,14 @@ namespace Test.FAKECore.XMLHandling
 
         Because of = () => _result = DynamicsNav.analyzeTestResults("./MessageFiles/Message1.txt");
 
-        It should_find_the_first_test = () => _result.Tests[0].Name.ShouldEqual("TestGCD");
-        It should_find_the_second_test = () => _result.Tests[1].Name.ShouldEqual("TestLCM");
-        It should_find_the_last_test = () => _result.Tests.Last().Name.ShouldEqual("TestAddFractions2");
+        It should_find_the_first_test = () =>
+            _result.Tests[0].Name.ShouldEqual("TestGCD");
+
+        It should_find_the_second_test = () => 
+            _result.Tests[1].Name.ShouldEqual("TestLCM");
+
+        It should_find_the_last_test = () =>
+            _result.Tests.Last().Name.ShouldEqual("TestAddFractions2");
     }
 
     public class when_getting_the_test_runtimes
@@ -41,8 +46,29 @@ namespace Test.FAKECore.XMLHandling
 
         Because of = () => _result = DynamicsNav.analyzeTestResults("./MessageFiles/Message1.txt");
 
-        It should_find_the_first_test = () => _result.Tests[0].RunTime.ShouldEqual(TimeSpan.FromMilliseconds(218));
-        It should_find_the_second_test = () => _result.Tests[1].RunTime.ShouldEqual(TimeSpan.FromMilliseconds(8));
-        It should_find_the_last_test = () => _result.Tests.Last().RunTime.ShouldEqual(TimeSpan.FromMilliseconds(11));
+        It should_find_the_first_test = () => 
+            _result.Tests[0].RunTime.ShouldEqual(TimeSpan.FromMilliseconds(218));
+
+        It should_find_the_second_test = () =>
+            _result.Tests[1].RunTime.ShouldEqual(TimeSpan.FromMilliseconds(8));
+
+        It should_find_the_last_test = () => 
+            _result.Tests.Last().RunTime.ShouldEqual(TimeSpan.FromMilliseconds(11));
+    }
+
+    public class when_getting_the_test_status
+    {
+        static DynamicsNav.TestResults _result;
+
+        Because of = () => _result = DynamicsNav.analyzeTestResults("./MessageFiles/Message1.txt");
+
+        It should_find_the_first_test = () =>
+            _result.Tests[0].Status.ShouldEqual(DynamicsNav.TestStatus.Ok);
+
+        It should_find_the_second_test = () => 
+            _result.Tests[1].Status.ShouldEqual(DynamicsNav.TestStatus.Ok);
+
+        It should_find_last_error = () =>
+            _result.Tests[12].Status.ShouldEqual(DynamicsNav.TestStatus.NewFailure("Assert.IsTrue failed. %1"));
     }
 }

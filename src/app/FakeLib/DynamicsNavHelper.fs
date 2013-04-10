@@ -236,7 +236,9 @@ let CloseAllNavProcesses raiseExceptionIfNotFound =
     traceEndTask "CloseNAV" details
 
 
-type TestStatus = Ok 
+type TestStatus = 
+| Ok
+| Failure of string
 
 type Test = {
     Name:string 
@@ -263,17 +265,27 @@ let analyzeTestResults fileName =
             |> Seq.skip 1
             |> Seq.skipWhile (fun x -> x.StartsWith "Starting TestCase" |> not)        
 
+        let currentMessages =
+            messages
+            |> Seq.takeWhile (fun x -> x.StartsWith "EndOfTest;" |> not)
+
         if Seq.isEmpty messages then [] else
 
-        let testName = findNext "TestCase;" messages
+        let testName = findNext "TestCase;" currentMessages
+        
+        let status = 
+            match currentMessages |> Seq.tryFind (fun x -> x.StartsWith "Error;" ) with
+            | Some error -> Failure (error.Replace("Error;Test failure;",""))
+            | _ -> Ok
+
         let runTime = 
-            match Int32.TryParse <| findNext "Runtime;" messages with
+            match Int32.TryParse <| findNext "Runtime;" currentMessages with
             | true,rt -> TimeSpan.FromMilliseconds (float rt)
             | _ -> TimeSpan.Zero
 
         { Name = testName 
           RunTime = runTime
-          Status = TestStatus.Ok } :: getTests messages
+          Status = status } :: getTests messages
 
     let tests = getTests messages
 
