@@ -198,7 +198,7 @@ let RunCodeunit connectionInfo (codeunit:int) =
             info.FileName <- connectionInfo.ToolPath
             info.WorkingDirectory <- connectionInfo.WorkingDir
             info.Arguments <- args) connectionInfo.TimeOut
-    if exitCode <> 0 then
+    if exitCode <> 0 && exitCode <> 255 then
         reportError (sprintf "Running codeunit %d failed with ExitCode %d" codeunit exitCode) connectionInfo.TempLogFile
                   
     traceEndTask "Running Codeunit" details
