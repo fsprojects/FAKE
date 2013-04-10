@@ -238,8 +238,14 @@ let CloseAllNavProcesses raiseExceptionIfNotFound =
 
 type TestStatus = Ok 
 
+type Test = {
+    Name:string 
+    RunTime: TimeSpan
+    Status: TestStatus }
+
 type TestResults = {
-    SuiteName : string }
+    SuiteName : string
+    Tests: Test list  }
 
 let analyzeTestResults fileName =
     let messages = ReadFile fileName
@@ -247,7 +253,29 @@ let analyzeTestResults fileName =
         messages
         |> Seq.skipWhile (fun x -> x.StartsWith pattern |> not)
         |> Seq.head
+        |> replace pattern ""
 
-    let suiteName = (findNext "TestSuite;" messages).Replace("TestSuite;","")
+    let suiteName = findNext "TestSuite;" messages
 
-    { SuiteName = suiteName }
+    let rec getTests (messages:string seq) =
+        let messages =
+            messages
+            |> Seq.skip 1
+            |> Seq.skipWhile (fun x -> x.StartsWith "Starting TestCase" |> not)        
+
+        if Seq.isEmpty messages then [] else
+
+        let testName = findNext "TestCase;" messages
+        let runTime = 
+            match Int32.TryParse <| findNext "Runtime;" messages with
+            | true,rt -> TimeSpan.FromMilliseconds (float rt)
+            | _ -> TimeSpan.Zero
+
+        { Name = testName 
+          RunTime = runTime
+          Status = TestStatus.Ok } :: getTests messages
+
+    let tests = getTests messages
+
+    { SuiteName = suiteName
+      Tests = tests }
