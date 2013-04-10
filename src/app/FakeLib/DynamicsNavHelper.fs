@@ -193,12 +193,13 @@ let RunCodeunit connectionInfo (codeunit:int) =
         connectionInfo.Company 
         codeunit
 
-    if not (execProcess3 (fun info ->  
-        info.FileName <- connectionInfo.ToolPath
-        info.WorkingDirectory <- connectionInfo.WorkingDir
-        info.Arguments <- args) connectionInfo.TimeOut)
-    then
-        reportError "Running Codeunit failed" connectionInfo.TempLogFile
+    let exitCode =
+        execProcessAndReturnExitCode (fun info ->  
+            info.FileName <- connectionInfo.ToolPath
+            info.WorkingDirectory <- connectionInfo.WorkingDir
+            info.Arguments <- args) connectionInfo.TimeOut
+    if exitCode <> 0 then
+        reportError (sprintf "Running codeunit %d failed with ExitCode %d" codeunit exitCode) connectionInfo.TempLogFile
                   
     traceEndTask "Running Codeunit" details
 
