@@ -18,7 +18,7 @@ namespace Test.FAKECore.XMLHandling
     {
         static DynamicsNav.TestResults _result;
 
-        Because of = () => _result = DynamicsNav.analyzeTestResults("./MessageFiles/Message1.txt");
+        Because of = () => _result = DynamicsNav.analyzeTestResults("./MessageFiles/Message1.txt").Value;
 
         It should_find_the_test_suite = () => _result.SuiteName.ShouldEqual("Test Math");
         It should_find_all_tests = () => _result.Tests.Count().ShouldEqual(14);
@@ -28,7 +28,7 @@ namespace Test.FAKECore.XMLHandling
     {
         static DynamicsNav.TestResults _result;
 
-        Because of = () => _result = DynamicsNav.analyzeTestResults("./MessageFiles/Message1.txt");
+        Because of = () => _result = DynamicsNav.analyzeTestResults("./MessageFiles/Message1.txt").Value;
 
         It should_find_the_first_test = () =>
             _result.Tests[0].Name.ShouldEqual("TestGCD");
@@ -44,7 +44,7 @@ namespace Test.FAKECore.XMLHandling
     {
         static DynamicsNav.TestResults _result;
 
-        Because of = () => _result = DynamicsNav.analyzeTestResults("./MessageFiles/Message1.txt");
+        Because of = () => _result = DynamicsNav.analyzeTestResults("./MessageFiles/Message1.txt").Value;
 
         It should_find_the_first_test = () => 
             _result.Tests[0].RunTime.ShouldEqual(TimeSpan.FromMilliseconds(218));
@@ -60,7 +60,7 @@ namespace Test.FAKECore.XMLHandling
     {
         static DynamicsNav.TestResults _result;
 
-        Because of = () => _result = DynamicsNav.analyzeTestResults("./MessageFiles/Message1.txt");
+        Because of = () => _result = DynamicsNav.analyzeTestResults("./MessageFiles/Message1.txt").Value;
 
         It should_find_the_first_test = () =>
             _result.Tests[0].Status.ShouldEqual(DynamicsNav.TestStatus.Ok);

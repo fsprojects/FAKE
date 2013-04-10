@@ -256,6 +256,8 @@ let analyzeTestResults fileName =
     if Seq.isEmpty messages then
         failwithf "Communication error. The message file %s is empty." fileName
 
+    if Seq.head messages = "TestSuiteNotFound;" then None else
+
     let findNext pattern (messages:string seq) =
         messages
         |> Seq.skipWhile (fun x -> x.StartsWith pattern |> not)
@@ -299,8 +301,7 @@ let analyzeTestResults fileName =
 
     let tests = getTests messages
 
-    { SuiteName = suiteName
-      Tests = tests }
+    Some { SuiteName = suiteName; Tests = tests }
 
 let reportTestResultsToTeamCity testResults =
     TeamCityHelper.StartTestSuite testResults.SuiteName
