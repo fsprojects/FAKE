@@ -234,3 +234,20 @@ let CloseAllNavProcesses raiseExceptionIfNotFound =
         failwith "Could not kill NAV processes"
 
     traceEndTask "CloseNAV" details
+
+
+type TestStatus = Ok 
+
+type TestResults = {
+    SuiteName : string }
+
+let analyzeTestResults fileName =
+    let messages = ReadFile fileName
+    let findNext pattern (messages:string seq) =
+        messages
+        |> Seq.skipWhile (fun x -> x.StartsWith pattern |> not)
+        |> Seq.head
+
+    let suiteName = (findNext "TestSuite;" messages).Replace("TestSuite;","")
+
+    { SuiteName = suiteName }
