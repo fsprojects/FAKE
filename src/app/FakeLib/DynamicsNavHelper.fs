@@ -4,6 +4,7 @@ open System
 open System.Diagnostics
 open System.Text
 open System.IO
+open Fake.UnitTest
 
 [<RequireQualifiedAccess>]
 type NavisionServerType =
@@ -65,12 +66,17 @@ let createConnectionInfo navClientVersion serverMode serverName targetDatabase =
       TimeOut = TimeSpan.FromMinutes 20.}
 
 let private analyzeLogFile fileName =
-    let lines = ReadFile fileName |> Seq.toList
-    lines |> Seq.iter traceError
-    DeleteFile fileName
-    lines.Length
+    try
+        let lines = ReadFile fileName |> Seq.toList
+        lines |> Seq.iter traceError
+        DeleteFile fileName
+        lines.Length
+    with 
+    | exn -> 
+        traceError exn.Message
+        1
 
-let private reportError text logFile =
+let private reportError text logFile =    
     let errors = analyzeLogFile logFile
     failwith (text + (if errors = 1 then " with 1 error." else sprintf " with %d errors." errors))
 
@@ -188,12 +194,13 @@ let RunCodeunit connectionInfo (codeunit:int) =
         connectionInfo.Company 
         codeunit
 
-    if not (execProcess3 (fun info ->  
-        info.FileName <- connectionInfo.ToolPath
-        info.WorkingDirectory <- connectionInfo.WorkingDir
-        info.Arguments <- args) connectionInfo.TimeOut)
-    then
-        reportError "Running Codeunit failed" connectionInfo.TempLogFile
+    let exitCode =
+        execProcessAndReturnExitCode (fun info ->  
+            info.FileName <- connectionInfo.ToolPath
+            info.WorkingDirectory <- connectionInfo.WorkingDir
+            info.Arguments <- args) connectionInfo.TimeOut
+    if exitCode <> 0 && exitCode <> 255 then
+        reportError (sprintf "Running codeunit %d failed with ExitCode %d" codeunit exitCode) connectionInfo.TempLogFile
                   
     traceEndTask "Running Codeunit" details
 
@@ -228,3 +235,57 @@ let CloseAllNavProcesses raiseExceptionIfNotFound =
         failwith "Could not kill NAV processes"
 
     traceEndTask "CloseNAV" details
+
+
+let analyzeTestResults fileName =
+    let messages = ReadFile fileName
+
+    if Seq.isEmpty messages then
+        failwithf "Communication error. The message file %s is empty." fileName
+
+    if Seq.head messages = "TestSuiteNotFound;" then None else
+
+    let findNext pattern (messages:string seq) =
+        messages
+        |> Seq.skipWhile (fun x -> x.StartsWith pattern |> not)
+        |> Seq.head
+        |> replace pattern ""
+
+    let suiteName = findNext "TestSuite;" messages
+
+    let rec getTests (messages:string seq) =
+        let messages =
+            messages
+            |> Seq.skip 1
+            |> Seq.skipWhile (fun x -> x.StartsWith "Starting TestCase" |> not)        
+
+        let currentMessages =
+            messages
+            |> Seq.takeWhile (fun x -> x.StartsWith "EndOfTest;" |> not)
+
+        if Seq.isEmpty messages then [] else
+
+        let testName = findNext "TestCase;" currentMessages
+        
+        let status = 
+            match currentMessages |> Seq.tryFind (fun x -> x.StartsWith "Error;" || x.StartsWith "Ignored;" ) with
+            | Some error when error.StartsWith "Error;"  -> 
+                let msg = error.Replace("Error;","").Split [|';'|]
+                Failure (msg.[0],msg.[1])
+            | Some error when error.StartsWith "Ignored;"  -> 
+                let msg = error.Replace("Ignored;","").Split [|';'|]
+                Ignored (msg.[0],msg.[1])
+            | _ -> Ok
+
+        let runTime = 
+            match Int32.TryParse <| findNext "Runtime;" currentMessages with
+            | true,rt -> TimeSpan.FromMilliseconds (float rt)
+            | _ -> TimeSpan.Zero
+
+        { Name = testName 
+          RunTime = runTime
+          Status = status } :: getTests messages
+
+    let tests = getTests messages
+
+    Some { SuiteName = suiteName; Tests = tests }

@@ -1,0 +1,114 @@
+﻿StartingSuite;
+Runtime;103
+
+------------------------------
+Starting TestCase: Test Math TestGCD
+TestSuite;Test Math
+TestCase;TestGCD
+Runtime;218
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Test Math TestLCM
+TestSuite;Test Math
+TestCase;TestLCM
+Runtime;8
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Test Math 2
+TestSuite;Test Math
+TestCase;TestGetDate
+Runtime;14
+Ignored;Not implemented;OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Test Math TestMax
+TestSuite;Test Math
+TestCase;TestMax
+Runtime;12
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Test Math TestFloor
+TestSuite;Test Math
+TestCase;TestFloor
+Runtime;11
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Test Math TestCeiling
+TestSuite;Test Math
+TestCase;TestCeiling
+Runtime;7
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Test Math TestLCM2
+TestSuite;Test Math
+TestCase;TestLCM2
+Runtime;19
+Error;Test failure;Assert.IsTrue failed. %1
+EndOfTest;
+
+------------------------------
+Starting TestCase: Test Math TestAbsBigInt
+TestSuite;Test Math
+TestCase;TestAbsBigInt
+Runtime;5
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Test Math TestGCDBigInt
+TestSuite;Test Math
+TestCase;TestGCDBigInt
+Runtime;8
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Test Math TestCancelFraction
+TestSuite;Test Math
+TestCase;TestCancelFraction
+Runtime;12
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Test Math TestReduceFractions
+TestSuite;Test Math
+TestCase;TestReduceFractions
+Runtime;10
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Test Math TestCancelFractionBigInt
+TestSuite;Test Math
+TestCase;TestCancelFractionBigInt
+Runtime;18
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Test Math TestAddFraction
+TestSuite;Test Math
+TestCase;TestAddFraction
+Runtime;7
+Error;Test failure;Assert.IsTrue failed. %1
+EndOfTest;
+
+------------------------------
+Starting TestCase: Test Math TestAddFractions2
+TestSuite;Test Math
+TestCase;TestAddFractions2
+Runtime;11
+Success;Test OK: ;
+EndOfTest;
