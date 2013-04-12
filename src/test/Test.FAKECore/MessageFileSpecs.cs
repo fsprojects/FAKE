@@ -77,4 +77,22 @@ namespace Test.FAKECore.XMLHandling
             _result.Tests[12].Status
             .ShouldEqual(TestStatus.NewFailure("Test failure", "Assert.IsTrue failed. %1"));
     }
+
+
+    public class when_reading_the_second_message_file
+    {
+        static TestResults _result;
+
+        Because of = () => _result = DynamicsNav.analyzeTestResults("./MessageFiles/Message2.txt").Value;
+
+        It should_find_the_first_test = () =>
+            _result.Tests[0].Status.ShouldEqual(TestStatus.Ok);
+
+        It should_find_the_second_test = () =>
+            _result.Tests[1].Status.ShouldEqual(TestStatus.Ok);
+
+        It should_find_last_error = () =>
+            _result.Tests.Last().Status
+            .ShouldEqual(TestStatus.NewIgnored("", ""));
+    }
 }
