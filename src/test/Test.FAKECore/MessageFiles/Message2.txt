@@ -1,0 +1,66 @@
+﻿StartingSuite;
+Runtime;2
+
+------------------------------
+Starting TestCase: Test Archive System TestGeneral
+TestSuite;Test Archive System
+TestCase;TestGeneral
+Runtime;358
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Test Archive System TestIndexFieldsFillFromTable
+TestSuite;Test Archive System
+TestCase;TestIndexFieldsFillFromTable
+Runtime;1931
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Test Archive System TestIndexDelete
+TestSuite;Test Archive System
+TestCase;TestIndexDelete
+Runtime;1929
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Test Archive System TestIndexRename
+TestSuite;Test Archive System
+TestCase;TestIndexRename
+Runtime;3491
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Test Archive System TestSetupArchivingJobAndSearch
+TestSuite;Test Archive System
+TestCase;TestSetupArchivingJobAndSearch
+Runtime;8
+Ignored;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Test Archive System TestParseString
+TestSuite;Test Archive System
+TestCase;TestParseString
+Runtime;2862
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Test Archive System TestAddReport
+TestSuite;Test Archive System
+TestCase;TestAddReport
+Runtime;2410
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Test Archive System TestAddExternalDocument
+TestSuite;Test Archive System
+TestCase;TestAddExternalDocument
+Runtime;32
+Ignored;
+EndOfTest;
