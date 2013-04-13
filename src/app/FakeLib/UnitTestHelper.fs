@@ -25,20 +25,24 @@ type TestResults = {
 
         member this.GetTestCount() = List.length this.Tests
 
-let reportTestResults testResults =
-    StartTestSuite testResults.SuiteName
+open Fake.TeamCityHelper
 
-    for test in testResults.Tests do 
+module UnitTestHelper =
 
-        let runtime = System.TimeSpan.FromSeconds 2.
+    let reportTestResults testResults =
+        StartTestSuite testResults.SuiteName
 
-        StartTestCase test.Name
+        for test in testResults.Tests do 
 
-        match test.Status with
-        | Ok -> ()
-        | Failure(msg,details) -> TestFailed test.Name msg details
-        | Ignored(msg,details) -> IgnoreTestCase test.Name msg
+            let runtime = System.TimeSpan.FromSeconds 2.
 
-        FinishTestCase test.Name test.RunTime
+            StartTestCase test.Name
 
-    FinishTestSuite testResults.SuiteName
+            match test.Status with
+            | Ok -> ()
+            | Failure(msg,details) -> TestFailed test.Name msg details
+            | Ignored(msg,details) -> IgnoreTestCase test.Name msg
+
+            FinishTestCase test.Name test.RunTime
+
+        FinishTestSuite testResults.SuiteName
