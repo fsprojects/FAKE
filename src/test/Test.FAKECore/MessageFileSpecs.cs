@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using Fake;
-using Fake.UnitTest;
 using Machine.Specifications;
 
 namespace Test.FAKECore.XMLHandling
@@ -17,7 +16,7 @@ namespace Test.FAKECore.XMLHandling
 
     public class when_getting_the_test_suite
     {
-        static TestResults _result;
+        static UnitTestHelper.TestResults _result;
 
         Because of = () => _result = DynamicsNav.analyzeTestResults("./MessageFiles/Message1.txt").Value;
 
@@ -27,7 +26,7 @@ namespace Test.FAKECore.XMLHandling
 
     public class when_getting_the_test_names
     {
-        static TestResults _result;
+        static UnitTestHelper.TestResults _result;
 
         Because of = () => _result = DynamicsNav.analyzeTestResults("./MessageFiles/Message1.txt").Value;
 
@@ -43,7 +42,7 @@ namespace Test.FAKECore.XMLHandling
 
     public class when_getting_the_test_runtimes
     {
-        static TestResults _result;
+        static UnitTestHelper.TestResults _result;
 
         Because of = () => _result = DynamicsNav.analyzeTestResults("./MessageFiles/Message1.txt").Value;
 
@@ -59,40 +58,55 @@ namespace Test.FAKECore.XMLHandling
 
     public class when_getting_the_test_status
     {
-        static TestResults _result;
+        static UnitTestHelper.TestResults _result;
 
         Because of = () => _result = DynamicsNav.analyzeTestResults("./MessageFiles/Message1.txt").Value;
 
         It should_find_the_first_test = () =>
-            _result.Tests[0].Status.ShouldEqual(TestStatus.Ok);
+            _result.Tests[0].Status.ShouldEqual(UnitTestHelper.TestStatus.Ok);
 
         It should_find_the_second_test = () =>
-            _result.Tests[1].Status.ShouldEqual(TestStatus.Ok);
+            _result.Tests[1].Status.ShouldEqual(UnitTestHelper.TestStatus.Ok);
 
         It should_find_the_ignored_test = () =>
             _result.Tests[2].Status
-            .ShouldEqual(TestStatus.NewIgnored("Not implemented", "OK"));
+            .ShouldEqual(UnitTestHelper.TestStatus.NewIgnored("Not implemented", "OK"));
 
         It should_find_last_error = () =>
             _result.Tests[12].Status
-            .ShouldEqual(TestStatus.NewFailure("Test failure", "Assert.IsTrue failed. %1"));
+            .ShouldEqual(UnitTestHelper.TestStatus.NewFailure("Test failure", "Assert.IsTrue failed. %1"));
     }
 
 
     public class when_reading_the_second_message_file
     {
-        static TestResults _result;
+        static UnitTestHelper.TestResults _result;
 
         Because of = () => _result = DynamicsNav.analyzeTestResults("./MessageFiles/Message2.txt").Value;
 
         It should_find_the_first_test = () =>
-            _result.Tests[0].Status.ShouldEqual(TestStatus.Ok);
+            _result.Tests[0].Status.ShouldEqual(UnitTestHelper.TestStatus.Ok);
 
         It should_find_the_second_test = () =>
-            _result.Tests[1].Status.ShouldEqual(TestStatus.Ok);
+            _result.Tests[1].Status.ShouldEqual(UnitTestHelper.TestStatus.Ok);
 
         It should_find_last_error = () =>
             _result.Tests.Last().Status
-            .ShouldEqual(TestStatus.NewIgnored("", ""));
+            .ShouldEqual(UnitTestHelper.TestStatus.NewIgnored("", ""));
+    }
+
+
+    public class when_reading_the_third_message_file
+    {
+        static UnitTestHelper.TestResults _result;
+
+        Because of = () => _result = DynamicsNav.analyzeTestResults("./MessageFiles/Message3.txt").Value;
+
+        It should_find_the_runtime_in_the_first_test = () =>
+            _result.Tests[0].RunTime.ShouldEqual(TimeSpan.FromMilliseconds(2));
+
+        It should_find_the_runtime_in_the_last_test = () =>
+            _result.Tests.Last().RunTime
+            .ShouldEqual(TimeSpan.Zero);
     }
 }

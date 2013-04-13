@@ -1,0 +1,47 @@
+﻿StartingSuite;
+Runtime;0
+
+------------------------------
+Starting TestCase: Test Initialize InitCompanyProfile
+TestSuite;Test Initialize
+TestCase;InitCompanyProfile
+Runtime;2
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Test Initialize TestInitialization
+TestSuite;Test Initialize
+TestCase;TestInitialization
+Runtime;10011
+Error;Test failure;Der Vorgang konnte nicht abgeschlossen werden, da ein Datensatz in der Tabelle Abrechnung Einrichtung durch einen anderen Benutzer gesperrt wurde. Fhren Sie die Aktion erneut aus.
+EndOfTest;
+
+------------------------------
+Starting TestCase: Test Initialize TestInitialization2
+TestSuite;Test Initialize
+TestCase;TestInitialization2
+Runtime;10017
+Error;Test failure;Der Vorgang konnte nicht abgeschlossen werden, da ein Datensatz in der Tabelle Abrechnung Einrichtung durch einen anderen Benutzer gesperrt wurde. Fhren Sie die Aktion erneut aus.
+EndOfTest;
+
+------------------------------
+Starting TestCase: Test Initialize TestInitialization3
+TestSuite;Test Initialize
+TestCase;TestInitialization3
+Runtime;10006
+Error;Test failure;Der Vorgang konnte nicht abgeschlossen werden, da ein Datensatz in der Tabelle Abrechnung Einrichtung durch einen anderen Benutzer gesperrt wurde. Fhren Sie die Aktion erneut aus.
+EndOfTest;
+
+------------------------------
+Starting TestCase: Test Initialize TestInitialization4
+TestSuite;Test Initialize
+TestCase;TestInitialization4
+Runtime;10006
+Error;Test failure;Der Vorgang konnte nicht abgeschlossen werden, da ein Datensatz in der Tabelle Abrechnung Einrichtung durch einen anderen Benutzer gesperrt wurde. Fhren Sie die Aktion erneut aus.
+EndOfTest;
+
+------------------------------
+Starting TestCase: Test Initialize TestInitialization5
+TestSuite;Test Initialize
+TestCase;TestInitialization5

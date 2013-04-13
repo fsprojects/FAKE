@@ -4,7 +4,7 @@ open System
 open System.Diagnostics
 open System.Text
 open System.IO
-open Fake.UnitTest
+open Fake.UnitTestHelper
 
 [<RequireQualifiedAccess>]
 type NavisionServerType =
@@ -251,6 +251,12 @@ let analyzeTestResults fileName =
         |> Seq.head
         |> replace pattern ""
 
+    let tryFindNext pattern (messages:string seq) =
+        try
+           Some (findNext pattern messages)
+        with 
+        | _ -> None 
+
     let suiteName = findNext "TestSuite;" messages
 
     let rec getTests (messages:string seq) =
@@ -278,9 +284,12 @@ let analyzeTestResults fileName =
             | _ -> Ok
 
         let runTime = 
-            match Int32.TryParse <| findNext "Runtime;" currentMessages with
-            | true,rt -> TimeSpan.FromMilliseconds (float rt)
-            | _ -> TimeSpan.Zero
+            match tryFindNext "Runtime;" currentMessages with
+            | None -> TimeSpan.Zero
+            | Some time ->
+                match Int32.TryParse time with
+                | true,rt -> TimeSpan.FromMilliseconds (float rt)
+                | _ -> TimeSpan.Zero
 
         { Name = testName 
           RunTime = runTime
