@@ -243,8 +243,6 @@ let analyzeTestResults fileName =
     if Seq.isEmpty messages then
         failwithf "Communication error. The message file %s is empty." fileName
 
-    if Seq.head messages = "TestSuiteNotFound;" then None else
-
     let findNext pattern (messages:string seq) =
         messages
         |> Seq.skipWhile (fun x -> x.StartsWith pattern |> not)
@@ -256,6 +254,8 @@ let analyzeTestResults fileName =
            Some (findNext pattern messages)
         with 
         | _ -> None 
+
+    if tryFindNext "TestSuiteNotFound;" messages <> None then None else
 
     let suiteName = findNext "TestSuite;" messages
 

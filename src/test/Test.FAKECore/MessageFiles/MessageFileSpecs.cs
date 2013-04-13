@@ -14,6 +14,18 @@ namespace Test.FAKECore.XMLHandling
         It should_not_be_empty = () => _text.ShouldNotBeEmpty();
     }
 
+    public class when_reading_message_file_without_testsuite
+    {
+        It should_not_find_a_suite = 
+            () => DynamicsNav.analyzeTestResults("./MessageFiles/TestSuiteNotFound1.txt").ShouldBeNull();
+    }
+
+    public class when_reading_message_file_without_testsuite_but_with_traces
+    {
+        It should_not_find_a_suite =
+            () => DynamicsNav.analyzeTestResults("./MessageFiles/TestSuiteNotFound2.txt").ShouldBeNull();
+    }
+
     public class when_getting_the_test_suite
     {
         static UnitTestHelper.TestResults _result;
