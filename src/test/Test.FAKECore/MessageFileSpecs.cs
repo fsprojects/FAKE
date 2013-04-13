@@ -95,4 +95,19 @@ namespace Test.FAKECore.XMLHandling
             _result.Tests.Last().Status
             .ShouldEqual(TestStatus.NewIgnored("", ""));
     }
+
+
+    public class when_reading_the_third_message_file
+    {
+        static TestResults _result;
+
+        Because of = () => _result = DynamicsNav.analyzeTestResults("./MessageFiles/Message3.txt").Value;
+
+        It should_find_the_runtime_in_the_first_test = () =>
+            _result.Tests[0].RunTime.ShouldEqual(TimeSpan.FromMilliseconds(2));
+
+        It should_find_the_runtime_in_the_last_test = () =>
+            _result.Tests.Last().RunTime
+            .ShouldEqual(TimeSpan.Zero);
+    }
 }
