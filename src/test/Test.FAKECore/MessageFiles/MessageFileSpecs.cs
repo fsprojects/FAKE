@@ -121,4 +121,16 @@ namespace Test.FAKECore.XMLHandling
 
         It should_find_all_tests = () => _result.Tests.Count().ShouldEqual(3);
     }
+
+    public class when_reading_the_minesweeper_message_file
+    {
+        static UnitTestHelper.TestResults _result;
+
+        Because of = () => _result = DynamicsNav.analyzeTestResults("./MessageFiles/Message5.txt").Value;
+
+        It should_find_the_runtime_in_the_first_test = () =>
+            _result.Tests[0].RunTime.ShouldEqual(TimeSpan.FromMilliseconds(1));
+
+        It should_find_all_tests = () => _result.Tests.Count().ShouldEqual(42);
+    }
 }
