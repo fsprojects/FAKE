@@ -271,29 +271,31 @@ let analyzeTestResults fileName =
 
         if Seq.isEmpty messages then [] else
 
-        let testName = findNext "TestCase;" currentMessages
         
-        let status = 
-            match currentMessages |> Seq.tryFind (fun x -> x.StartsWith "Error;" || x.StartsWith "Ignored;" ) with
-            | Some error when error.StartsWith "Error;"  -> 
-                let msg = error.Replace("Error;","").Split [|';'|]
-                Failure (msg.[0],msg.[1])
-            | Some error when error.StartsWith "Ignored;"  -> 
-                let msg = error.Replace("Ignored;","").Split [|';'|]
-                if msg.Length > 2 then Ignored (msg.[0],msg.[1]) else Ignored("","")
-            | _ -> Ok
+        match tryFindNext "TestCase;" currentMessages with
+        | None -> getTests messages
+        | Some testName -> 
+            let status = 
+                match currentMessages |> Seq.tryFind (fun x -> x.StartsWith "Error;" || x.StartsWith "Ignored;" ) with
+                | Some error when error.StartsWith "Error;"  -> 
+                    let msg = error.Replace("Error;","").Split [|';'|]
+                    Failure (msg.[0],msg.[1])
+                | Some error when error.StartsWith "Ignored;"  -> 
+                    let msg = error.Replace("Ignored;","").Split [|';'|]
+                    if msg.Length > 2 then Ignored (msg.[0],msg.[1]) else Ignored("","")
+                | _ -> Ok
 
-        let runTime = 
-            match tryFindNext "Runtime;" currentMessages with
-            | None -> TimeSpan.Zero
-            | Some time ->
-                match Int32.TryParse time with
-                | true,rt -> TimeSpan.FromMilliseconds (float rt)
-                | _ -> TimeSpan.Zero
+            let runTime = 
+                match tryFindNext "Runtime;" currentMessages with
+                | None -> TimeSpan.Zero
+                | Some time ->
+                    match Int32.TryParse time with
+                    | true,rt -> TimeSpan.FromMilliseconds (float rt)
+                    | _ -> TimeSpan.Zero
 
-        { Name = testName 
-          RunTime = runTime
-          Status = status } :: getTests messages
+            { Name = testName 
+              RunTime = runTime
+              Status = status } :: getTests messages
 
     let tests = getTests messages
 

@@ -1,0 +1,31 @@
+﻿
+------------------------------
+Starting TestCase: 1 1
+TestSuite;Test MeteringPoint
+TestCase;TestMeteringPoint1
+Runtime;2
+Success;Test OK. Error was <Der Z„hlpunktcode muss 33 Zeichen lang sein.>;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 1 2
+TestSuite;Test MeteringPoint
+TestCase;TestMeteringPoint2
+Runtime;4
+Success;Test OK. Error was <Der im Z„hlpunktcode enthaltene L„ndercode existiert nicht in ihrem System.>;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 1 3
+TestSuite;Test MeteringPoint
+TestCase;TestMeteringPoint2
+Runtime;1
+Success;Test OK. Error was <Der im Z„hlpunktcode enthaltene L„ndercode existiert nicht in ihrem System.>;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 1 4
+TestSuite;Test MeteringPoint
+Runtime;0
+Error;Test failure;TestCaseNotFound;
+EndOfTest;
