@@ -1,8 +1,6 @@
 ﻿[<AutoOpen>]
 module Fake.TeamCityHelper
 
-open Fake.UnitTest
-
 /// Encapsulates special chars
 let inline EncapsulateSpecialChars text = 
     text
