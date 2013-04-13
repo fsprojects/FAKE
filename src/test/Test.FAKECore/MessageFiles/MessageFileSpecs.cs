@@ -146,4 +146,19 @@ namespace Test.FAKECore.XMLHandling
 
         It should_find_all_tests = () => _result.Tests.Count().ShouldEqual(8);
     }
+
+    public class when_reading_the_math_message_file
+    {
+        static UnitTestHelper.TestResults _result;
+
+        Because of = () => _result = DynamicsNav.analyzeTestResults("./MessageFiles/Message7.txt").Value;
+
+        It should_parse_the_suite_name =
+            () => _result.SuiteName.ShouldEqual("Test CodeCompression");
+
+        It should_parse_the_first_test_name = 
+            () =>_result.Tests[0].Name.ShouldEqual("BinaryAddition 1 (8 Bit + 8 Bit)");
+
+        It should_find_all_tests = () => _result.Tests.Count().ShouldEqual(99);
+    }
 }

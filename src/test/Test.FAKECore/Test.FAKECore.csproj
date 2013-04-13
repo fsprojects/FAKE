@@ -125,6 +125,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="MessageFiles\Message7.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="MessageFiles\Message6.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
