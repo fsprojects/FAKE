@@ -63,8 +63,8 @@
     <Compile Include="TraceListener.fs" />
     <Compile Include="TeamCityHelper.fs" />
     <Compile Include="TeamCityRESTHelper.fs" />
-    <Compile Include="UnitTestHelper.fs" />
     <Compile Include="TraceHelper.fs" />
+    <Compile Include="UnitTestHelper.fs" />
     <Compile Include="AssemblyInfoFile.fs" />
     <Compile Include="AssemblyInfoHelper.fs" />
     <Compile Include="ProcessHelper.fs" />

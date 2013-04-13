@@ -1,6 +1,8 @@
 ﻿namespace Fake.UnitTest
 
 open System
+open Fake
+
 
 type TestStatus = 
 | Ok
@@ -25,11 +27,8 @@ type TestResults = {
 
         member this.GetTestCount() = List.length this.Tests
 
-open Fake.TeamCityHelper
-
 module UnitTestHelper =
-
-    let reportTestResults testResults =
+    let reportToTeamCity testResults =
         StartTestSuite testResults.SuiteName
 
         for test in testResults.Tests do 
@@ -46,3 +45,21 @@ module UnitTestHelper =
             FinishTestCase test.Name test.RunTime
 
         FinishTestSuite testResults.SuiteName
+
+    let reportTestResults testResults =
+        match buildServer with
+        | TeamCity -> reportToTeamCity testResults
+        | _ ->
+            tracefn "TestSuite: %s" testResults.SuiteName
+
+            for test in testResults.Tests do
+                let runtime = System.TimeSpan.FromSeconds 2.
+
+                tracef "Test: %s ==> " test.Name
+
+                match test.Status with
+                | Ok -> tracefn "OK"
+                | Failure(msg,details) -> tracef "failed with %s %s" msg details
+                | Ignored(msg,details) -> tracef "ignored with %s %s" test.Name msg
+
+                FinishTestCase test.Name test.RunTime
