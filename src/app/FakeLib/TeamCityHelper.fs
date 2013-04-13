@@ -138,21 +138,3 @@ let getRecentlyFailedTests() =
 let getChangedFilesInCurrentBuild() =
     appSetting "teamcity.build.changedFiles.file"
       |> ReadFile
-
-let reportTestResults testResults =
-    StartTestSuite testResults.SuiteName
-
-    for test in testResults.Tests do 
-
-        let runtime = System.TimeSpan.FromSeconds 2.
-
-        StartTestCase test.Name
-
-        match test.Status with
-        | Ok -> ()
-        | Failure(msg,details) -> TestFailed test.Name msg details
-        | Ignored(msg,details) -> IgnoreTestCase test.Name msg
-
-        FinishTestCase test.Name test.RunTime
-
-    FinishTestSuite testResults.SuiteName
