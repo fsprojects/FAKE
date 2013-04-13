@@ -133,4 +133,17 @@ namespace Test.FAKECore.XMLHandling
 
         It should_find_all_tests = () => _result.Tests.Count().ShouldEqual(42);
     }
+
+    public class when_reading_a_message_file_with_errors
+    {
+        static UnitTestHelper.TestResults _result;
+
+        Because of = () => _result = DynamicsNav.analyzeTestResults("./MessageFiles/Message6.txt").Value;
+
+        It should_parse_the_error = () =>
+            _result.Tests[5].Status
+            .ShouldEqual(UnitTestHelper.TestStatus.NewFailure("Test failure", "Error: Values are not equal. Expected: <aaaaaaaaaaaa...   ...[996]aaaaaaaaaaaaaaaaaaaaaaaaaaaaa> - Actual: <aaaaaaaaaaaa...   ...[996]aaaaa>"));
+
+        It should_find_all_tests = () => _result.Tests.Count().ShouldEqual(8);
+    }
 }

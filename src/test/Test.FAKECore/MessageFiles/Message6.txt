@@ -1,0 +1,71 @@
+﻿
+------------------------------
+Starting TestCase: 5 1
+TestSuite;Test GetTextBuffer
+TestCase;TestGetCurrentTextBufferGroup
+Runtime;13
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 5 2
+TestSuite;Test GetTextBuffer
+TestCase;TestGetDate
+Runtime;14
+Ignored;Not implemented;OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 5 3
+TestSuite;Test GetTextBuffer
+TestCase;TestGetBool
+Runtime;13
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 5 4
+TestSuite;Test GetTextBuffer
+TestCase;TestGetInt
+Runtime;14
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 5 5
+TestSuite;Test GetTextBuffer
+TestCase;TestGetDecimal
+Runtime;12
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 5 6
+TestSuite;Test GetTextBuffer
+TestCase;TestGetText
+Runtime;6
+Error;Test failure;Error: Values are not equal. Expected: <aaaaaaaaaaaa...   ...[996]aaaaaaaaaaaaaaaaaaaaaaaaaaaaa> - Actual: <aaaaaaaaaaaa...   ...[996]aaaaa>
+EndOfTest;
+
+------------------------------
+Starting TestCase: 5 7
+TestSuite;Test GetTextBuffer
+TestCase;TestGetCode
+Runtime;10
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 5 8
+TestSuite;Test GetTextBuffer
+TestCase;TestGetText
+Runtime;6
+Error;Test failure;Error: Values are not equal.
+EndOfTest;
+
+------------------------------
+Starting TestCase: 5 9
+TestSuite;Test GetTextBuffer
+Runtime;3
+Error;Test failure;TestCaseNotFound;
+EndOfTest;
