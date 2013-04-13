@@ -4,7 +4,7 @@ open System
 open System.Diagnostics
 open System.Text
 open System.IO
-open Fake.UnitTest
+open Fake.UnitTestHelper
 
 [<RequireQualifiedAccess>]
 type NavisionServerType =
