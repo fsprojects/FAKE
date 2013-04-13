@@ -187,7 +187,7 @@ let RunCodeunit connectionInfo (codeunit:int) =
     let details = codeunit.ToString()
     traceStartTask "Running Codeunit" details
     let args = 
-      sprintf "\"DynamicsNAV://%s:%d/%s/%s/runcodeunit?codeunit=%d\" -ShowNavigationPage:0" 
+      sprintf "-consolemode \"DynamicsNAV://%s:%d/%s/%s/runcodeunit?codeunit=%d\" -ShowNavigationPage:0" 
         connectionInfo.ServerName
         connectionInfo.Port
         connectionInfo.ServiceTierName 
