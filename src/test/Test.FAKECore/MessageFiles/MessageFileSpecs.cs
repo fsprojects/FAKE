@@ -32,6 +32,12 @@ namespace Test.FAKECore.XMLHandling
             () => DynamicsNav.analyzeTestResults("./MessageFiles/SkippedTestSuite.txt").ShouldBeNull();
     }
 
+    public class when_reading_message_file_with_finished_all_message
+    {
+        It should_not_find_a_suite =
+            () => DynamicsNav.analyzeTestResults("./MessageFiles/FinishedAll.txt").ShouldBeNull();
+    }
+
     public class when_getting_the_test_suite
     {
         static UnitTestHelper.TestResults _result;
