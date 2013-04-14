@@ -1,0 +1,339 @@
+﻿AutoTest started with RootPath (Ja): D:\UEN\0600\Native\ (D:\UEN\0600\Native\)
+TestBatchPath: D:\UEN\0600\Native\build\config.txt
+Runtime;1
+
+------------------------------
+Starting TestCase: Kata.MineSweeper NotImplementedTest
+TestSuite;Kata.MineSweeper
+TestCase;NotImplementedTest
+Runtime;1
+Ignored;This should be ignored
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper CanHandleNoLine
+TestSuite;Kata.MineSweeper
+TestCase;CanHandleNoLine
+Runtime;1
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper ClearsOutVars
+TestSuite;Kata.MineSweeper
+TestCase;ClearsOutVars
+Runtime;0
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper CanGetLastLine
+TestSuite;Kata.MineSweeper
+TestCase;CanGetLastLine
+Runtime;0
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper CanGetEmptyLine
+TestSuite;Kata.MineSweeper
+TestCase;CanGetEmptyLine
+Runtime;1
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper CanGetSingleLine
+TestSuite;Kata.MineSweeper
+TestCase;CanGetSingleLine
+Runtime;1
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper CanParseBoardSize_4_7
+TestSuite;Kata.MineSweeper
+TestCase;CanParseBoardSize_4_7
+Runtime;0
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper CanParseBoardSize_51_32
+TestSuite;Kata.MineSweeper
+TestCase;CanParseBoardSize_51_32
+Runtime;1
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper CanInit3x3LineWithoutMine
+TestSuite;Kata.MineSweeper
+TestCase;CanInit3x3LineWithoutMine
+Runtime;1
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper CanInit3x3LineWithMine
+TestSuite;Kata.MineSweeper
+TestCase;CanInit3x3LineWithMine
+Runtime;0
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper CanCreate1x1Board
+TestSuite;Kata.MineSweeper
+TestCase;CanCreate1x1Board
+Runtime;1
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper CanCreate5x2Board
+TestSuite;Kata.MineSweeper
+TestCase;CanCreate5x2Board
+Runtime;1
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper CanSetMine
+TestSuite;Kata.MineSweeper
+TestCase;CanSetMine
+Runtime;1
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper NewFieldHasNoMine
+TestSuite;Kata.MineSweeper
+TestCase;NewFieldHasNoMine
+Runtime;1
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper CanSetValueIn3x3
+TestSuite;Kata.MineSweeper
+TestCase;CanSetValueIn3x3
+Runtime;0
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper FailIfValueIsSetValOutOfBounds
+TestSuite;Kata.MineSweeper
+TestCase;FailIfValueIsSetValOutOfBounds
+Runtime;1
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper FailIfValueIsGetValOutOfBounds
+TestSuite;Kata.MineSweeper
+TestCase;FailIfValueIsGetValOutOfBounds
+Runtime;2
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper ValuesAreInitializedWithZero
+TestSuite;Kata.MineSweeper
+TestCase;ValuesAreInitializedWithZero
+Runtime;1
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper CanAnalyze1x1BoardWithNoMine
+TestSuite;Kata.MineSweeper
+TestCase;CanAnalyze1x1BoardWithNoMine
+Runtime;1
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper CanAnalyze1x1BoardWithMine
+TestSuite;Kata.MineSweeper
+TestCase;CanAnalyze1x1BoardWithMine
+Runtime;1
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper AnalyzeShouldKeepBoardSizes
+TestSuite;Kata.MineSweeper
+TestCase;AnalyzeShouldKeepBoardSizes
+Runtime;21
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper AnalyzeShouldCreateNewBoard
+TestSuite;Kata.MineSweeper
+TestCase;AnalyzeShouldCreateNewBoard
+Runtime;21
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper CanAnalyze3x2BoardWithNoMines
+TestSuite;Kata.MineSweeper
+TestCase;CanAnalyze3x2BoardWithNoMines
+Runtime;1
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper CanAnalyze3x2BoardWithAllMines
+TestSuite;Kata.MineSweeper
+TestCase;CanAnalyze3x2BoardWithAllMines
+Runtime;2
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper CanAnalyze3x3Board_UpperLeft
+TestSuite;Kata.MineSweeper
+TestCase;CanAnalyze3x3Board_UpperLeft
+Runtime;1
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper CanAnalyze3x3Board_LowerLeft
+TestSuite;Kata.MineSweeper
+TestCase;CanAnalyze3x3Board_LowerLeft
+Runtime;1
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper CanAnalyze3x3Board_LowerRight
+TestSuite;Kata.MineSweeper
+TestCase;CanAnalyze3x3Board_LowerRight
+Runtime;1
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper CanAnalyze3x3Board_UpperRight
+TestSuite;Kata.MineSweeper
+TestCase;CanAnalyze3x3Board_UpperRight
+Runtime;1
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper CanAnalyze3x3Board_MiddleAll
+TestSuite;Kata.MineSweeper
+TestCase;CanAnalyze3x3Board_MiddleAll
+Runtime;1
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper CanAnalyzeFirstAccepTestBoard
+TestSuite;Kata.MineSweeper
+TestCase;CanAnalyzeFirstAccepTestBoard
+Runtime;1
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper CanAnalyzeSecondAccepTestBoard
+TestSuite;Kata.MineSweeper
+TestCase;CanAnalyzeSecondAccepTestBoard
+Runtime;2
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper CanOutput1x1BoardNoMine
+TestSuite;Kata.MineSweeper
+TestCase;CanOutput1x1BoardNoMine
+Runtime;1
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper CanOutput1x1BoardWithMine
+TestSuite;Kata.MineSweeper
+TestCase;CanOutput1x1BoardWithMine
+Runtime;1
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper CanOutput2x2BoardNoMine
+TestSuite;Kata.MineSweeper
+TestCase;CanOutput2x2BoardNoMine
+Runtime;1
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper CanOutput3x3Board_MiddleAll
+TestSuite;Kata.MineSweeper
+TestCase;CanOutput3x3Board_MiddleAll
+Runtime;1
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper TwoFieldsWithGivenInputs
+TestSuite;Kata.MineSweeper
+TestCase;TwoFieldsWithGivenInputs
+Runtime;3
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper EmptyInputFile
+TestSuite;Kata.MineSweeper
+TestCase;EmptyInputFile
+Runtime;1
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper Single1x1Field
+TestSuite;Kata.MineSweeper
+TestCase;Single1x1Field
+Runtime;1
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper Single1x1FieldWithMine
+TestSuite;Kata.MineSweeper
+TestCase;Single1x1FieldWithMine
+Runtime;1
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper Single3x3FieldWithMine
+TestSuite;Kata.MineSweeper
+TestCase;Single3x3FieldWithMine
+Runtime;1
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper OnlyFirstBoardOfAcceptTest
+TestSuite;Kata.MineSweeper
+TestCase;OnlyFirstBoardOfAcceptTest
+Runtime;2
+Success;Test OK: ;
+EndOfTest;
+
+------------------------------
+Starting TestCase: Kata.MineSweeper OnlySecondBoardOfAcceptTest
+TestSuite;Kata.MineSweeper
+TestCase;OnlySecondBoardOfAcceptTest
+Runtime;2
+Success;Test OK: ;
+EndOfTest;
