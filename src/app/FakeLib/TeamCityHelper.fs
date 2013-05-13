@@ -4,9 +4,11 @@ module Fake.TeamCityHelper
 /// Encapsulates special chars
 let inline EncapsulateSpecialChars text = 
     text
-      |> replace "'" "|'" 
-      |> replace "\n" "|n" 
       |> replace "|" "||" 
+      |> replace "'" "|'" 
+      |> replace "\n" "|n"
+      |> replace "\r" "|r"
+      |> replace "[" "|[" 
       |> replace "]" "|]" 
 
 /// Send message to TeamCity
