@@ -27,7 +27,7 @@ let sendStrToTeamCity s =
   
 /// Sends an error to TeamCity
 let sendTeamCityError error =
-    sendToTeamCity "##teamcity[buildStatus status='FAILURE' text='{build.status.text} %s']" error
+    sendToTeamCity "##teamcity[buildStatus status='FAILURE' text='%s']" error
 
 /// Sends an NUnit results filename to TeamCity
 let sendTeamCityNUnitImport path =  
