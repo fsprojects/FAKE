@@ -157,11 +157,15 @@ let serializeMSBuildParams (p: MSBuildParams) =
                     | Some (k,v) -> "/" + k + (if isNullOrEmpty v then "" else ":" + v))
     |> separated " "
 
+let private errorLoggerParam = 
+    let pathToLogger = (Uri(typedefof<MSBuildParams>.Assembly.CodeBase)).LocalPath
+    sprintf "/logger:\"%s\"" pathToLogger
+
 /// Runs a msbuild project
 let build setParams project =
     traceStartTask "MSBuild" project
     let args = MSBuildDefaults |> setParams |> serializeMSBuildParams        
-    let args = toParam project + " " + args
+    let args = toParam project + " " + args + " " + errorLoggerParam
     tracefn "Building project: %s\n  %s %s" project msBuildExe args
     if not (execProcess3 (fun info ->  
         info.FileName <- msBuildExe
