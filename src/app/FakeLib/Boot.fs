@@ -1,4 +1,4 @@
-﻿/// Implements support for boostrapping FAKE scripts.  A bootstrapping
+/// Implements support for boostrapping FAKE scripts.  A bootstrapping
 /// `build.fsx` script executes twice (in two stages), allowing to
 /// download dependencies with NuGet and do other preparatory work in
 /// the first stage, and have these dependencies available in the
@@ -256,6 +256,7 @@ module private Implementation =
             w.Write("#r ")
             writeString path
             w.WriteLine()
+        writeRef (fakeDir +/ "NuGet.Core.dll")
         writeRef (fakeDir +/ "FakeLib.dll")
         for r in refs do
             writeRef r
