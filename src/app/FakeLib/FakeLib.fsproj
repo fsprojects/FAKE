@@ -73,6 +73,7 @@
     <Compile Include="XUnitHelper.fs" />
     <Compile Include="MSpecHelper.fs" />
     <Compile Include="FileSet.fs" />
+    <Compile Include="MsBuildLogger.fs" />
     <Compile Include="MSBuildHelper.fs" />
     <Compile Include="ZipHelper.fs" />
     <Compile Include="FileHelper.fs" />
@@ -128,6 +129,7 @@
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\..\..\lib\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Mono.Cecil">
       <HintPath>..\..\..\packages\Mono.Cecil.0.9.5.4\lib\net40\Mono.Cecil.dll</HintPath>
       <Private>True</Private>
