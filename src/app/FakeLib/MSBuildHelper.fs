@@ -159,7 +159,12 @@ let serializeMSBuildParams (p: MSBuildParams) =
 
 let private errorLoggerParam = 
     let pathToLogger = (Uri(typedefof<MSBuildParams>.Assembly.CodeBase)).LocalPath
-    sprintf "/logger:\"%s\"" pathToLogger
+    [
+        typedefof<Fake.MsBuildLogger.TeamCityLogger>.Name
+        typedefof<Fake.MsBuildLogger.ErrorLogger>.Name
+    ]
+    |> List.map(fun a -> sprintf "/logger:%s,\"%s\"" a pathToLogger)
+    |> fun lst -> String.Join(" ", lst)
 
 /// Runs a msbuild project
 let build setParams project =
@@ -170,7 +175,11 @@ let build setParams project =
     if not (execProcess3 (fun info ->  
         info.FileName <- msBuildExe
         info.Arguments <- args) TimeSpan.MaxValue)
-    then failwithf "Building %s project failed." project
+    then
+        if Diagnostics.Debugger.IsAttached then Diagnostics.Debugger.Break()
+        let errors = File.ReadAllLines(MsBuildLogger.ErrorLoggerFile) |> List.ofArray
+        let errorMessage = sprintf "Building %s project failed." project
+        raise (BuildException(errorMessage, errors))
     traceEndTask "MSBuild" project
 
 /// Builds the given project files and collects the output files.
