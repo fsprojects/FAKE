@@ -130,24 +130,28 @@ let TargetTemplate body = TargetTemplateWithDependecies [] body
 /// Creates a Target
 let Target name body = TargetTemplate body name ()  
 
-type private BuildError(target, msg) =
-    inherit System.Exception(sprintf "Stopped build! Error occured in target \"%s\"." target)
-    member e.Target = target
-    new (msg : string) = BuildError("[Unknown]", msg)
+type BuildError = { Target:string; Message:string }
 
 let mutable private errors = []   
  
 let targetError targetName (exn:System.Exception) =
     closeAllOpenTags()
-    errors <- BuildError(targetName, exn.ToString()) :: errors
-    let msg = 
-        if PrintStackTraceOnError then exn.ToString() else
-        sprintf "%O%s" exn (if exn.InnerException <> null then "\n" + (exn.InnerException.ToString()) else "")
+    errors <- 
+        match exn with
+            | BuildException(msg, errs) -> 
+                let errMsgs = errs |> List.map(fun e -> { Target = targetName; Message = e }) 
+                { Target = targetName; Message = msg } :: (errMsgs @ errors)
+            | _ -> { Target = targetName; Message = exn.ToString() } :: errors
+    let error e =
+        match e with
+            | BuildException(msg, errs) -> msg, msg + Environment.NewLine + e.StackTrace.ToString()
+            | _ -> exn.Message, exn.ToString()
+    let msg =
+        if PrintStackTraceOnError then error exn |> snd else
+        sprintf "%s%s" (error exn |> snd) (if exn.InnerException <> null then "\n" + (exn.InnerException |> error |> snd ) else "")
             
     traceError <| sprintf "Running build failed.\nError:\n%s" msg
-
-    let tcMsg = sprintf "%s" exn.Message
-    sendTeamCityError tcMsg        
+    sendTeamCityError (error exn |> snd)        
  
 let addExecutedTarget target time =
     ExecutedTargets.Add (toLower target) |> ignore
@@ -198,6 +202,13 @@ let PrintDependencyGraph verbose target =
         log "The resulting target order is:"
         Seq.iter (logfn " - %s") order
 
+/// <summary>Writes a summary of errors reported during build</summary> 
+let WriteErrors () =
+    traceLine()
+    errors
+    |> Seq.mapi(fun i e -> sprintf "%3d) %s" (i + 1) e.Message)
+    |> Seq.iter(fun s -> traceError s)
+
 /// <summary>Writes a build time report.</summary>
 /// <param name="total">The total runtime.</param>
 let WriteTaskTimeSummary total =    
@@ -220,7 +231,10 @@ let WriteTaskTimeSummary total =
                 aligned t.Name time)
 
         aligned "Total:" total
-        if errors = [] then aligned "Status:" "Ok" else alignedError "Status:" "Failure"
+        if errors = [] then aligned "Status:" "Ok" 
+        else 
+            alignedError "Status:" "Failure"
+            WriteErrors()
     else 
         traceError "No target was successfully completed"
 
