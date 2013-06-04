@@ -14,7 +14,7 @@ type MSBuildLogger () =
     default t.RegisterEvents e = ()
 
     member this.errToStr (a:BuildErrorEventArgs) = 
-        sprintf "%s: %s(%d,%d): %s [%s]" a.Code a.File a.LineNumber a.ColumnNumber a.Message a.ProjectFile
+        sprintf "%s: %s(%d,%d): %s" a.Code a.File a.LineNumber a.ColumnNumber a.Message
 
     interface ILogger with
         member this.Parameters with get() = Parameters and set(value) = Parameters <- value
