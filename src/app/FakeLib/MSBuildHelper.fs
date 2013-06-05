@@ -157,12 +157,12 @@ let serializeMSBuildParams (p: MSBuildParams) =
                     | Some (k,v) -> "/" + k + (if isNullOrEmpty v then "" else ":" + v))
     |> separated " "
 
+let TeamCityLoggerName = typedefof<Fake.MsBuildLogger.TeamCityLogger>.FullName
+let ErrorLoggerName = typedefof<Fake.MsBuildLogger.ErrorLogger>.FullName
+
 let private errorLoggerParam = 
     let pathToLogger = (Uri(typedefof<MSBuildParams>.Assembly.CodeBase)).LocalPath
-    [
-        typedefof<Fake.MsBuildLogger.TeamCityLogger>.AssemblyQualifiedName
-        typedefof<Fake.MsBuildLogger.ErrorLogger>.AssemblyQualifiedName
-    ]
+    [ TeamCityLoggerName; ErrorLoggerName ]
     |> List.map(fun a -> sprintf "/logger:%s,\"%s\"" a pathToLogger)
     |> fun lst -> String.Join(" ", lst)
 
