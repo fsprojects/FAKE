@@ -87,6 +87,7 @@
     <Compile Include="FileHandling\FileComparisonSpecs.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Globbing\Directories\GlobbingOfDirectoriesSpecs.cs" />
+    <Compile Include="Globbing\Excludes\GlobbingOfDirectoriesSpecs.cs" />
     <Compile Include="ILMerge\ILMergeSpecs.cs" />
     <Compile Include="PackageMgt\VersioningSpecs.cs" />
     <Compile Include="PackageMgt\RollbackSpecs.cs" />
@@ -196,6 +197,9 @@
     </None>
     <None Include="app.config" />
     <None Include="Globbing\Directories\SampleApp.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Globbing\Excludes\TFSSample.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
