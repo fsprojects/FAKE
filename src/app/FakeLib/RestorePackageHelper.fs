@@ -45,7 +45,13 @@ let runNuGet toolPath timeOut args failWith =
 
 let buildNuGetArgs setParams packageId = 
     let parameters = RestoreSinglePackageDefaults |> setParams
-    let args = " \"install\" \"" + packageId + "\" \"-OutputDirectory\" \"" + (parameters.OutputPath |> FullName) + "\""
+    let sources =
+        parameters.Sources
+        |> List.map (fun source -> " \"-Source\" \"" + source + "\"")
+        |> separated ""
+
+    let args = " \"install\" \"" + packageId + "\" \"-OutputDirectory\" \"" + (parameters.OutputPath |> FullName) + "\"" + sources
+
     match (parameters.ExcludeVersion, parameters.IncludePreRelease, parameters.Version) with
         | (true, false, Some(v))  -> args + " \"-ExcludeVersion\" \"-Version\" \"" + v.ToString() + "\""
         | (true, false, None)     -> args + " \"-ExcludeVersion\""
@@ -57,12 +63,8 @@ let buildNuGetArgs setParams packageId =
 let RestorePackageId setParams packageId = 
     traceStartTask "RestorePackageId" packageId
     let parameters = RestoreSinglePackageDefaults |> setParams
-    let sources =
-        parameters.Sources
-        |> List.map (fun source -> " \"-Source\" \"" + source + "\"")
-        |> String.Concat
 
-    let args = buildNuGetArgs setParams packageId + sources
+    let args = buildNuGetArgs setParams packageId
     runNuGet parameters.ToolPath parameters.TimeOut args (fun () -> failwithf "Package installation of package %s failed." packageId)
   
     traceEndTask "RestorePackageId" packageId
@@ -75,7 +77,8 @@ let RestorePackage setParams package =
     let sources =
         parameters.Sources
         |> List.map (fun source -> " \"-Source\" \"" + source + "\"")
-        |> String.Concat
+        |> separated ""
+
     let args =
         " \"install\" \"" + (package |> FullName) + "\"" +
         " \"-OutputDirectory\" \"" + (parameters.OutputPath |> FullName) + "\"" +
