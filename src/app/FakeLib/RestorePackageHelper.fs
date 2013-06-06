@@ -81,8 +81,7 @@ let RestorePackage setParams package =
 
     let args =
         " \"install\" \"" + (package |> FullName) + "\"" +
-        " \"-OutputDirectory\" \"" + (parameters.OutputPath |> FullName) + "\"" +
-        sources
+        " \"-OutputDirectory\" \"" + (parameters.OutputPath |> FullName) + "\"" + sources
 
     runNuGet parameters.ToolPath parameters.TimeOut args (fun () -> failwithf "Package installation of %s generation failed." package)
                     
