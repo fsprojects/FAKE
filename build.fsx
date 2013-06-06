@@ -71,12 +71,13 @@ Target "BuildSolution" (fun _ ->
 )
 
 Target "GenerateDocumentation" (fun _ ->
-    !! (buildDir @@ "Fake*.dll")
-    |> Docu (fun p ->
-        {p with
-            ToolPath = buildDir @@ "docu.exe"
-            TemplatesPath = @".\tools\Docu\templates\"
-            OutputPath = docsDir })
+//    !! (buildDir @@ "Fake*.dll")
+//    |> Docu (fun p ->
+//        {p with
+//            ToolPath = buildDir @@ "docu.exe"
+//            TemplatesPath = @".\tools\Docu\templates\"
+//            OutputPath = docsDir })
+   ()
 )
 
 Target "CopyDocu" (fun _ -> 
