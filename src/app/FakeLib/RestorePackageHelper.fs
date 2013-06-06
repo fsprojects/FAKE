@@ -24,12 +24,11 @@ let RestorePackage setParams package =
     let sources =
         parameters.Sources
         |> List.map (fun source -> " \"-Source\" \"" + source + "\"")
-        |> String.Concat
+        |> separated ""
 
     let args =
         " \"install\" \"" + (package |> FullName) + "\"" +
-        " \"-OutputDirectory\" \"" + (parameters.OutputPath |> FullName) + "\"" +
-        sources
+        " \"-OutputDirectory\" \"" + (parameters.OutputPath |> FullName) + "\"" + sources
 
     if not (execProcess3 (fun info ->  
         info.FileName <- parameters.ToolPath |> FullName                 
