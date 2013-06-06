@@ -1,6 +1,7 @@
 ﻿using System;
 using Fake;
 using Machine.Specifications;
+using Microsoft.FSharp.Collections;
 using Microsoft.FSharp.Core;
 
 
@@ -16,7 +17,7 @@ namespace Test.FAKECore
             return result;
         }
 
-        private static TimeSpan oneMinute = new TimeSpan(0, 1, 0);
+        private static readonly TimeSpan OneMinute = new TimeSpan(0, 1, 0);
 
         It should_restore_package_by_package_id_with_defaults =
             () =>
@@ -32,7 +33,8 @@ namespace Test.FAKECore
             {
                 var packageParams = new RestorePackageHelper.RestoreSinglePackageParams(
                     "NuGet.exe",
-                    oneMinute,
+                    FSharpList<string>.Empty,
+                    OneMinute,
                     @".\myPackageFolder\",
                     null,
                     true,
@@ -47,7 +49,8 @@ namespace Test.FAKECore
             {
                 var packageParams = new RestorePackageHelper.RestoreSinglePackageParams(
                     "NuGet.exe",
-                    oneMinute,
+                    FSharpList<string>.Empty,
+                    OneMinute,
                     @".\myPackageFolder\",
                     new FSharpOption<Version>(new Version("1.2.3.4")),
                     false,
@@ -62,7 +65,8 @@ namespace Test.FAKECore
             {
                 var packageParams = new RestorePackageHelper.RestoreSinglePackageParams(
                     "NuGet.exe",
-                    oneMinute,
+                    FSharpList<string>.Empty,
+                    OneMinute,
                     @".\myPackageFolder\",
                     new FSharpOption<Version>(new Version("1.2.3.4")),
                     true,
@@ -77,7 +81,8 @@ namespace Test.FAKECore
             {
                 var packageParams = new RestorePackageHelper.RestoreSinglePackageParams(
                     "NuGet.exe",
-                    oneMinute,
+                    FSharpList<string>.Empty,
+                    OneMinute,
                     @".\myPackageFolder\",
                     null,
                     false,
@@ -92,14 +97,13 @@ namespace Test.FAKECore
             {
                 var packageParams = new RestorePackageHelper.RestoreSinglePackageParams(
                     "NuGet.exe",
-                    oneMinute,
+                    FSharpList<string>.Empty,
+                    OneMinute,
                     @".\myPackageFolder\",
                     new FSharpOption<Version>(new Version("1.2.3.4")),
                     true,
                     true);
                 var result = Run(packageParams);
-                //var expected = " \"install\" \"thePackage\" \"-OutputDirectory\" \".*\\test\\myPackageFolder\\\" \"-ExcludeVersion\" \"-IncludePreRelease\"$";
-                //result.ShouldMatch(expected);
                 result.ShouldStartWith(" \"install\" \"thePackage\" \"-OutputDirectory\" \"");
                 result.ShouldEndWith("\\test\\myPackageFolder\\\" \"-ExcludeVersion\" \"-IncludePreRelease\"");
             };
