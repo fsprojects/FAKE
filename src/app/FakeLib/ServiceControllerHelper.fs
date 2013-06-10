@@ -11,7 +11,7 @@ let getService name = ServiceController.GetServices() |> Seq.tryFind (isService 
 let checkServiceExists name = ServiceController.GetServices() |> Seq.exists (isService name)
 let getServiceStatus name =
     match getService name with
-    | Some sc -> sc.Refresh(); sc.Status
+    | Some sc -> sc.Status
     | None -> 
         ServiceController.GetServices()
         |> Seq.map (fun s -> s.ServiceName)
@@ -28,9 +28,9 @@ let stopService name =
 
 let ensureServiceHasStarted name timeout =
     let endTime = DateTime.Now.Add timeout
-    tracefn "Waiting for %s to start (Timeout: %A secs)" name timeout.TotalSeconds
+    tracefn "Waiting for %s to start (Timeout: %As)" name timeout.TotalSeconds
 
-    while DateTime.Now < endTime && (getServiceStatus name <> ServiceControllerStatus.Running) do
+    while DateTime.Now <= endTime && (getServiceStatus name <> ServiceControllerStatus.Running) do
         Thread.Sleep 1000
 
     if getServiceStatus name <> ServiceControllerStatus.Running then 
@@ -39,9 +39,9 @@ let ensureServiceHasStarted name timeout =
 
 let ensureServiceHasStopped name timeout =
     let endTime = DateTime.Now.Add timeout
-    tracefn "Waiting for %s to stop (Timeout: %A secs)" name timeout.TotalSeconds
+    tracefn "Waiting for %s to stop (Timeout: %As)" name timeout.TotalSeconds
 
-    while DateTime.Now < endTime && (getServiceStatus name <> ServiceControllerStatus.Stopped) do
+    while DateTime.Now <= endTime && (getServiceStatus name <> ServiceControllerStatus.Stopped) do
         Thread.Sleep 1000
 
     if getServiceStatus name <> ServiceControllerStatus.Stopped then 
