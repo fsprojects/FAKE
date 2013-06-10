@@ -24,8 +24,8 @@ let ensureServiceHasStarted name timeout =
 
     let checkStatus() = 
         match getService name with
-        | Some sc -> sc.Status = ServiceControllerStatus.Running
-        | None -> failwith "Could not find service %s" name
+        | Some sc -> sc.Refresh(); sc.Status = ServiceControllerStatus.Running
+        | None -> failwithf "Could not find service %s" name
 
     while DateTime.Now < endTime && continueLooping do
         continueLooping <- not (checkStatus())
@@ -42,7 +42,7 @@ let ensureServiceHasStopped name timeout =
 
     let checkStatus() = 
         match getService name with
-        | Some sc -> sc.Status = ServiceControllerStatus.Stopped
+        | Some sc -> sc.Refresh(); sc.Status = ServiceControllerStatus.Stopped
         | None -> true
 
     while DateTime.Now < endTime && continueLooping do
