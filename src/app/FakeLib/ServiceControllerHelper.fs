@@ -19,7 +19,7 @@ module ServiceControllerHelpers =
         let endTime = startTime.Add(timeout)
         let mutable result = false
         let mutable continueLooping = true
-        printfn "Waiting for %s to start (Timeout: %A secs)" name timeout.TotalSeconds
+        tracefn "Waiting for %s to start (Timeout: %A secs)" name timeout.TotalSeconds
         while DateTime.Now < endTime && continueLooping do
             
             let service = ServiceController.GetServices() 
@@ -32,3 +32,22 @@ module ServiceControllerHelpers =
         if result then ()
         else failwithf "The service %s has not been started (check the logs for errors)" name
 
+
+    let ensureServiceHasStopped name timeout =
+        let startTime = DateTime.Now 
+        let endTime = startTime.Add(timeout)
+        let mutable result = false
+        let mutable continueLooping = true
+        tracefn "Waiting for %s to stop (Timeout: %A secs)" name timeout.TotalSeconds
+        while DateTime.Now < endTime && continueLooping do
+            
+            let service = ServiceController.GetServices() 
+                          |> Seq.tryFind (fun s -> s.DisplayName = name)
+            result <- match service with
+                      | Some(sc) -> sc.Status = ServiceControllerStatus.Stopped
+                      | None -> true
+            continueLooping <- not(result) 
+            System.Threading.Thread.Sleep(1000)
+
+        if result then ()
+        else failwithf "The service %s has not stopped (check the logs for errors)" name

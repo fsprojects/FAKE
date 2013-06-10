@@ -100,10 +100,14 @@ let RunService command serviceName =
     p.Start() |> ignore
 
 /// Stops a windows service
-let StopService serviceName = RunService "stop" serviceName
+let StopService serviceName = 
+    RunService "stop" serviceName
+    ensureServiceHasStopped serviceName (TimeSpan.FromMinutes 2.)
 
 /// Starts a windows service
-let StartService serviceName = RunService "start" serviceName
+let StartService serviceName = 
+    RunService "start" serviceName    
+    ensureServiceHasStarted serviceName (TimeSpan.FromMinutes 2.)
 
 /// Adds quotes around the string
 let quote str = "\"" + str + "\""
