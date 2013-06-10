@@ -5,14 +5,18 @@ open System
 open System.ServiceProcess
 open System.Threading
 
-let getServices name = ServiceController.GetServices() |> Seq.filter (fun s -> s.DisplayName = name)
-let getService name = ServiceController.GetServices() |> Seq.tryFind (fun s -> s.DisplayName = name)     
-let checkServiceExists name = ServiceController.GetServices() |> Seq.exists (fun s -> s.DisplayName = name)
+let isService name (s:ServiceController) = s.DisplayName = name || s.ServiceName = name
+let getServices name = ServiceController.GetServices() |> Seq.filter (isService name)
+let getService name = ServiceController.GetServices() |> Seq.tryFind (isService name)     
+let checkServiceExists name = ServiceController.GetServices() |> Seq.exists (isService name)
 let getServiceStatus name =
     match getService name with
     | Some sc -> sc.Refresh(); sc.Status
-    | None -> failwithf "Could not find service %s" name
-
+    | None -> 
+        ServiceController.GetServices()
+        |> Seq.map (fun s -> s.ServiceName)
+        |> separated "\r\n"
+        |> failwithf "Could not find service %s. The following services are available:\r\n" name
 
 let startService name =
     getServices name
