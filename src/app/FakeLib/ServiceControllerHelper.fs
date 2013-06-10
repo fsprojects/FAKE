@@ -16,7 +16,7 @@ let getServiceStatus name =
         ServiceController.GetServices()
         |> Seq.map (fun s -> s.ServiceName)
         |> separated "\r\n"
-        |> failwithf "Could not find service %s. The following services are available:\r\n" name
+        |> failwithf "Could not find service %s. The following services are available:\r\n%s" name
 
 let startService name =
     getServices name
