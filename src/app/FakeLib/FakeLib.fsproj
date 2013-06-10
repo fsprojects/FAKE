@@ -67,6 +67,7 @@
     <Compile Include="UnitTestHelper.fs" />
     <Compile Include="AssemblyInfoFile.fs" />
     <Compile Include="AssemblyInfoHelper.fs" />
+    <Compile Include="ServiceControllerHelper.fs" />
     <Compile Include="ProcessHelper.fs" />
     <Compile Include="FXCopHelper.fs" />
     <Compile Include="NCoverHelper.fs" />
@@ -117,7 +118,6 @@
     <Compile Include="Deploy\DeploymentHelper.fs" />
     <Compile Include="Deploy\DeploymentAgent.fs" />
     <Compile Include="PermissionsHelper.fs" />
-    <Compile Include="ServiceControllerHelper.fs" />
     <Compile Include="SpecFlowHelper.fs" />
     <Compile Include="ConfigurationHelper.fs" />
     <None Include="packages.config" />
