@@ -126,12 +126,12 @@ let RunService command serviceName =
 
 /// Stops a windows service
 let StopService serviceName = 
-    RunService "stop" serviceName
+    stopService serviceName
     ensureServiceHasStopped serviceName (TimeSpan.FromMinutes 2.)
 
 /// Starts a windows service
 let StartService serviceName = 
-    RunService "start" serviceName    
+    startService serviceName
     ensureServiceHasStarted serviceName (TimeSpan.FromMinutes 2.)
 
 /// Adds quotes around the string
