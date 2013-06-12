@@ -59,8 +59,11 @@ let private symbolsPackageFileName parameters = sprintf "%s.%s.symbols.nupkg" pa
 /// Gets the version no. for a given package in the deployments folder
 let GetPackageVersion deploymentsDir package = 
     let version = 
-        Directory.GetDirectories(deploymentsDir, sprintf "%s.*" package) 
-        |> Seq.head
+        let files = Directory.GetDirectories(deploymentsDir, sprintf "%s.*" package) 
+        if Seq.isEmpty files then
+            failwithf "Package %s was not found." package
+
+        Seq.head files
         |> fun full -> full.Substring (full.LastIndexOf package + package.Length + 1)
 
     logfn "Version %s found for package %s" version package
