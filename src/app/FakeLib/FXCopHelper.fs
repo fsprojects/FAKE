@@ -23,6 +23,7 @@ type FxCopParams =
    ImportFiles: string seq;
    RuleLibraries: string seq;
    Rules: string seq;
+   CustomRuleset: string;
    ConsoleXslFileName: string;
    ReportFileName: string;
    OutputXslFileName: string;
@@ -58,6 +59,7 @@ let FxCopDefaults =
     ImportFiles  = Seq.empty;
     RuleLibraries = Seq.empty;
     Rules = Seq.empty;
+    CustomRuleset = String.Empty;
     ConsoleXslFileName = String.Empty;
     ReportFileName = currentDirectory @@ "FXCopResults.html";
     OutputXslFileName = String.Empty;
@@ -104,6 +106,7 @@ let FxCop setParams (assemblies: string seq) =
     appendFormat "/oXsl:\"{0}\" " param.OutputXslFileName  
     appendFormat "/plat:\"{0}\" " param.PlatformDirectory  
     appendFormat "/p:\"{0}\" " param.ProjectFile
+    appendFormat "/ruleset:=\"{0}\" " param.CustomRuleset
  
     for item in param.RuleLibraries do      
       appendFormat "/r:\"{0}\" " (param.ToolPath @@ "Rules" @@ item)
