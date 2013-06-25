@@ -116,15 +116,20 @@ Target "BuildZip" (fun _ ->
 )
 
 Target "Test" (fun _ ->
-    let MSpecVersion = GetPackageVersion packagesDir "Machine.Specifications"
-    let mspecTool = sprintf @"%s/Machine.Specifications.%s/tools/mspec-clr4.exe" packagesDir MSpecVersion
+    (* Temporary disable tests on *nix, bug # 122 *)
+    let isLinux =
+        int System.Environment.OSVersion.Platform |> fun p ->
+            (p = 4) || (p = 6) || (p = 128)
+    if not isLinux then
+        let MSpecVersion = GetPackageVersion packagesDir "Machine.Specifications"
+        let mspecTool = sprintf @"%s/Machine.Specifications.%s/tools/mspec-clr4.exe" packagesDir MSpecVersion
 
-    !! (testDir @@ "Test.*.dll") 
-      |> MSpec (fun p -> 
-            {p with
-                ToolPath = mspecTool
-                ExcludeTags = ["HTTP"]
-                HtmlOutputDir = reportDir}) 
+        !! (testDir @@ "Test.*.dll") 
+        |> MSpec (fun p -> 
+                {p with
+                    ToolPath = mspecTool
+                    ExcludeTags = ["HTTP"]
+                    HtmlOutputDir = reportDir})
 )
 
 Target "ZipDocumentation" (fun _ ->    
