@@ -12,6 +12,7 @@
     <FileAlignment>512</FileAlignment>
     <Name>FakeLib</Name>
     <FscToolPath>..\..\..\tools\FSharp\</FscToolPath>
+    <FscToolExe>Fsc.exe</FscToolExe>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -57,7 +58,7 @@
     <Compile Include="TimeoutHelper.fs" />
     <Compile Include="CacheHelper.fs" />
     <Compile Include="XMLHelper.fs" />
-    <Compile Include="JSON.fs" />
+    <Compile Include="Json.fs" />
     <Compile Include="REST.fs" />
     <Compile Include="BuildServerHelper.fs" />
     <Compile Include="TraceListener.fs" />
