@@ -33,9 +33,15 @@ let XMLRead failOnError (xmlFileName:string) nameSpace prefix xPath =
 /// Reads a value from a XML document using a XPath
 /// returns if the value is an int and the value
 let XMLRead_Int failOnError xmlFileName nameSpace prefix xPath =
-    XMLRead failOnError xmlFileName nameSpace prefix xPath 
-      |> Seq.head
-      |> Int32.TryParse
+    let headOrDefault def seq =
+        if Seq.isEmpty seq then
+            def
+        else
+            Seq.head seq
+    XMLRead failOnError xmlFileName nameSpace prefix xPath
+    |> Seq.map Int32.TryParse
+    |> (fun seq -> if failOnError then Seq.head seq else headOrDefault (false, 0) seq)
+
   
 /// Generates an XmlWriter    
 let XmlWriter (fileName:string) = 
