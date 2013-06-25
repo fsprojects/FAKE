@@ -21,6 +21,9 @@ let reportDir = "./report"
 let deployZip = deployDir @@ sprintf "%s-%s.zip" projectName buildVersion
 let packagesDir = "./packages"
 
+let isLinux =
+    int System.Environment.OSVersion.Platform |> fun p ->
+        (p = 4) || (p = 6) || (p = 128)
 
 // Targets
 Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; deployDir; docsDir; metricsDir; nugetDir; reportDir])
@@ -86,23 +89,25 @@ Target "BuildSolution" (fun _ ->
 )
 
 Target "GenerateDocumentation" (fun _ ->
-    !! (buildDir @@ "Fake*.dll")
-    |> Docu (fun p ->
-        {p with
-            ToolPath = buildDir @@ "docu.exe"
-            TemplatesPath = @".\tools\Docu\templates\"
-            OutputPath = docsDir })
+    (* Temporary disable tests on *nix, bug # 122 *)
+    if not isLinux then
+        !! (buildDir @@ "Fake*.dll")
+        |> Docu (fun p ->
+            {p with
+                ToolPath = buildDir @@ "docu.exe"
+                TemplatesPath = @".\tools\docu\templates\"
+                OutputPath = docsDir })
 )
 
 Target "CopyDocu" (fun _ -> 
-    ["./tools/Docu/docu.exe"
-     "./tools/Docu/DocuLicense.txt"]
+    ["./tools/docu/docu.exe"
+     "./tools/docu/DocuLicense.txt"]
        |> CopyTo buildDir
 )
 
 Target "CopyLicense" (fun _ -> 
     ["License.txt"
-     "readme.markdown"
+     "README.markdown"
      "changelog.markdown"]
        |> CopyTo buildDir
 )
@@ -116,39 +121,45 @@ Target "BuildZip" (fun _ ->
 )
 
 Target "Test" (fun _ ->
-    let MSpecVersion = GetPackageVersion packagesDir "Machine.Specifications"
-    let mspecTool = sprintf @"%s/Machine.Specifications.%s/tools/mspec-clr4.exe" packagesDir MSpecVersion
+    (* Temporary disable tests on *nix, bug # 122 *)
+    if not isLinux then
+        let MSpecVersion = GetPackageVersion packagesDir "Machine.Specifications"
+        let mspecTool = sprintf @"%s/Machine.Specifications.%s/tools/mspec-clr4.exe" packagesDir MSpecVersion
 
-    !! (testDir @@ "Test.*.dll") 
-      |> MSpec (fun p -> 
-            {p with
-                ToolPath = mspecTool
-                ExcludeTags = ["HTTP"]
-                HtmlOutputDir = reportDir}) 
+        !! (testDir @@ "Test.*.dll") 
+        |> MSpec (fun p -> 
+                {p with
+                    ToolPath = mspecTool
+                    ExcludeTags = ["HTTP"]
+                    HtmlOutputDir = reportDir})
 )
 
-Target "ZipDocumentation" (fun _ ->    
-    !! (docsDir @@ @"**/*.*")  
-      |> Zip docsDir (deployDir @@ sprintf "Documentation-%s.zip" buildVersion)
+Target "ZipDocumentation" (fun _ -> 
+    (* Temporary disable tests on *nix, bug # 122 *)
+    if not isLinux then
+        !! (docsDir @@ @"**/*.*")  
+           |> Zip docsDir (deployDir @@ sprintf "Documentation-%s.zip" buildVersion)
 )
 
 Target "CreateNuGet" (fun _ -> 
-    let nugetDocsDir = nugetDir @@ "docs"
-    let nugetToolsDir = nugetDir @@ "tools"
+    (* Temporary disable tests on *nix, bug # 122 *)
+    if not isLinux then
+        let nugetDocsDir = nugetDir @@ "docs"
+        let nugetToolsDir = nugetDir @@ "tools"
 
-    CopyDir nugetDocsDir docsDir allFiles  
-    CopyDir nugetToolsDir buildDir allFiles
-    CopyDir nugetToolsDir @"./lib/fsi" allFiles
-    DeleteFile (nugetToolsDir @@ "Gallio.dll")
+        CopyDir nugetDocsDir docsDir allFiles  
+        CopyDir nugetToolsDir buildDir allFiles
+        CopyDir nugetToolsDir @"./lib/fsi" allFiles
+        DeleteFile (nugetToolsDir @@ "Gallio.dll")
 
-    NuGet (fun p -> 
-        {p with
-            Authors = authors
-            Project = projectName
-            Description = projectDescription                               
-            OutputPath = nugetDir
-            AccessKey = getBuildParamOrDefault "nugetkey" ""
-            Publish = hasBuildParam "nugetkey" }) "fake.nuspec"
+        NuGet (fun p -> 
+            {p with
+                Authors = authors
+                Project = projectName
+                Description = projectDescription                               
+                OutputPath = nugetDir
+                AccessKey = getBuildParamOrDefault "nugetkey" ""
+                Publish = hasBuildParam "nugetkey" }) "fake.nuspec"
 )
 
 Target "Default" DoNothing
