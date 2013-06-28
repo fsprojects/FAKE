@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using Fake;
@@ -81,5 +83,39 @@ namespace Test.FAKECore.XMLHandling
 
         It should_equal_the_target_text =
             () => _resultDoc.OuterXml.ShouldEqual(_targetText);
+    }
+
+    public class when_modifying_xml_with_xpath_and_ns
+    {
+        const string OriginalText =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+            "  <asmv1:assembly manifestVersion='1.0' xmlns='urn:schemas-microsoft-com:asm.v1' xmlns:asmv1='urn:schemas-microsoft-com:asm.v1' xmlns:asmv2='urn:schemas-microsoft-com:asm.v2' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>" +
+            "  <assemblyIdentity version='0.1.0.0' name='MyApplication' />" +
+            "</asmv1:assembly>";
+
+        const string XPath = "/asmv1:assembly/assemblyIdentity/@version";
+
+        static XmlDocument _doc;
+        static XmlDocument _resultDoc;
+        static string _targetText;
+        static List<Tuple<string, string>> _nsdecl;
+
+        Establish context = () =>
+        {
+            _doc = new XmlDocument();
+            _doc.LoadXml(OriginalText);
+            _targetText = _doc.OuterXml.Replace("0.1.0.0", "1.1.0.0");
+            _nsdecl = new List<Tuple<string, string>>();
+            _nsdecl.Add(new Tuple<string, string>("", "urn:schemas-microsoft-com:asm.v1"));
+            _nsdecl.Add(new Tuple<string, string>("asmv1", "urn:schemas-microsoft-com:asm.v1"));
+            _nsdecl.Add(new Tuple<string, string>("asmv2", "urn:schemas-microsoft-com:asm.v2"));
+            _nsdecl.Add(new Tuple<string, string>("xsi", "http://www.w3.org/2001/XMLSchema-instance"));
+        };
+
+        Because of = () => _resultDoc = XMLHelper.XPathReplaceNS(XPath, "0.1.0.0", _nsdecl, _doc);
+
+        It should_equal_the_target_text =
+            () => _resultDoc.OuterXml.ShouldEqual(_targetText);
+
     }
 }
