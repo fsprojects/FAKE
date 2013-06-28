@@ -1,17 +1,29 @@
 ﻿module Fake.Deploy.Web.InitialData
 
 open System
-open Fake.Deploy.Web.Model
-open Raven.Client.Indexes
+open System.Web.Security
+open System.Linq
+open Fake.Deploy.Web
 
+let private createRole (name : string) (provider : IMembershipProvider) = 
+        match provider.GetAllRoles() |> Seq.tryFind (fun r -> r.ToLower() = name.ToLower()) with
+        | Some(role) -> ()
+        | None -> provider.CreateRole(name)
 
-let private createIndexes (assems : seq<Reflection.Assembly>) =
-    assems |> Seq.iter (fun ass -> IndexCreation.CreateIndexes(ass, documentStore))
+let private createUser (name : string) password email roles (provider : IMembershipProvider) = 
+        match provider.GetUser(name) with
+        | Some(a) ->  
+            provider.AddUserToRoles(a.Username, roles)
+        | _ -> 
+            match provider.CreateUser(name, password, email) with
+            | MembershipCreateStatus.Success, a -> provider.AddUserToRoles(a.Username, roles)
+            | _,s -> failwithf "Could not create user %s" (s.ToString())
 
-let Init() = 
-    createIndexes [Reflection.Assembly.GetExecutingAssembly()]
-
-    let agent1 = Agent.Create("http://localhost:8080","localhost")
+let Init(adminUsername, adminPassword, adminEmail, dataProvider : IDataProvider, memberProvider : IMembershipProvider) =
+    createRole "Administrator" memberProvider
+    createUser adminUsername adminPassword adminEmail [|"Administrator"|] memberProvider
+    
+    let agent1 = Agent.Create("http://localhost:8080", "environments-1", "localhost")
     let agents = [agent1]
 
     let environments = 
@@ -32,5 +44,5 @@ let Init() =
             Description = "Production environment";
             Agents = [] } ]
 
-    Save agents
-    Save environments
+    dataProvider.SaveAgents agents
+    dataProvider.SaveEnvironments environments

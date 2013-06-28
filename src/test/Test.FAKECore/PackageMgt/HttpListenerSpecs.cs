@@ -4,6 +4,7 @@ using Machine.Specifications;
 
 namespace Test.FAKECore.PackageMgt
 {
+    [Tags("HTTP")]
     public class when_searching_for_an_free_port
     {
         static string _port;

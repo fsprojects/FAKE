@@ -4,13 +4,16 @@ open System
 open System.IO
 open System.Net
 
+type Response = {
+    Messages : seq<ConsoleMessage>
+    Exception : obj
+    IsError : bool
+}
+
 type DeploymentResponse =
-| Success
-| Failure of obj
-| RolledBack
-| Cancelled
-| Unknown
-| QueryResult of seq<NuSpecPackage> 
+| Success of Response
+| Failure of Response
+| QueryResult of seq<NuSpecPackage>
 
 let get f url = 
     let uri = new Uri(url, UriKind.Absolute)
@@ -62,13 +65,12 @@ let postDeploymentPackage url packageFileName = post url (ReadFileAsBytes packag
 
 let PostDeploymentPackage url packageFileName = 
     match postDeploymentPackage url packageFileName with
-    | Success -> tracefn "Deployment of %s successful" packageFileName
-    | Failure exn -> failwithf "Deployment of %A failed\r\n%A" packageFileName exn
+    | Success _ -> tracefn "Deployment of %s successful" packageFileName
+    | Failure exn -> failwithf "Deployment of %A failed\r\n%A" packageFileName exn.Exception
     | response -> failwithf "Deployment of %A failed\r\n%A" packageFileName response
 
 let RollbackPackage url appName version = 
     match rollbackTo url appName version with
-    | Success -> tracefn "Rollback of %s to %s successful" appName version
-    | RolledBack -> tracefn "Rollback of %s to %s successful" appName version
-    | Failure exn -> failwithf "Deployment of %s to %s failed\r\n%A" appName version exn
+    | Success _ -> tracefn "Rollback of %s to %s successful" appName version
+    | Failure exn -> failwithf "Deployment of %s to %s failed\r\n%A" appName version exn.Exception
     | response -> failwithf "Deployment of %s to %s failed\r\n%A" appName version response

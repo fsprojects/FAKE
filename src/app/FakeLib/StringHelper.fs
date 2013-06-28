@@ -128,7 +128,25 @@ let ConvertTextToWindowsLineBreaks text =
     |> replace MacLineBreaks LinuxLineBreaks 
     |> replace LinuxLineBreaks WindowsLineBreaks
 
-let ConvertFileToWindowsLineBreaks fileName = ReplaceInFile ConvertTextToWindowsLineBreaks fileName
+/// Reads a file line by line and replaces all line breaks to windows line breaks
+///   - uses a temp file to store the contents in order to prevent OutOfMemory exceptions
+let ConvertFileToWindowsLineBreaks (fileName:string) = 
+    use reader = new StreamReader(fileName, Encoding.Default)
+
+    let tempFileName = Path.GetTempFileName()
+
+    use writer = new StreamWriter(tempFileName,false,Encoding.Default) 
+    
+    while not reader.EndOfStream do
+        reader.ReadLine()
+        |> ConvertTextToWindowsLineBreaks
+        |> writer.WriteLine
+
+    reader.Close()
+    writer.Close()
+
+    File.Delete(fileName)
+    File.Move(tempFileName,fileName)
 
 let replaceFirst (pattern: string) replacement (text: string) = 
     let pos = text.IndexOf pattern
@@ -160,6 +178,14 @@ let inline appendIfNotNull (value : Object) s =
         match value with 
         | :? String as sv -> (sprintf "%s%s" s sv)
         | _ -> (sprintf "%s%A" s value))
+
+/// Appends a quoted text if the value is not null
+let inline appendQuotedIfNotNull (value : Object) s (builder:StringBuilder) =    
+    if (value = null) then builder else (
+        match value with 
+        | :? String as sv -> builder.Append(sprintf "%s\"%s\" " s sv)
+        | _ -> builder.Append(sprintf "%s\"%A\" " s value))
+
 
 /// Appends a text if the value is not null
 let inline appendStringIfValueIsNotNull value = appendIfTrue (value <> null)
@@ -248,6 +274,8 @@ let (>**) pattern text = (getRegEx pattern).IsMatch text
 
 /// Checks wether the given char is a german umlaut.
 let isUmlaut c = Seq.contains c ['ä'; 'ö'; 'ü'; 'Ä'; 'Ö'; 'Ü'; 'ß']
+
+let inline toLower (s:string) = s.ToLower()
 
 /// Returns all standard chars and digits.
 let charsAndDigits = ['a'..'z'] @ ['A'..'Z'] @ ['0'..'9'] 

@@ -53,6 +53,19 @@ let ExecProcessAndReturnMessages infoAction timeOut =
     let exitCode = ExecProcessWithLambdas infoAction timeOut true (errors.Add) (messages.Add)    
     exitCode = 0,messages,errors
 
+type ConsoleMessage = {
+    IsError : bool
+    Message : string
+    Timestamp : DateTimeOffset
+}
+
+let ExecProcessRedirected infoAction timeOut = 
+    let messages = ref []
+    let appendMessage isError msg = 
+        messages := { IsError = isError; Message = msg; Timestamp = DateTimeOffset.UtcNow } :: !messages
+    let exitCode = ExecProcessWithLambdas infoAction timeOut true (appendMessage true) (appendMessage false)    
+    exitCode = 0, (!messages |> List.rev |> Seq.ofList)
+ 
 /// Runs the given process
 /// returns the exit code
 let execProcess2 infoAction timeOut silent = ExecProcessWithLambdas infoAction timeOut silent traceError trace  
@@ -68,6 +81,18 @@ let execProcess3 infoAction timeOut = execProcessAndReturnExitCode infoAction ti
 /// Runs the given process
 /// returns the exit code
 let ExecProcess infoAction timeOut = execProcess2 infoAction timeOut redirectOutputToTrace
+
+///Runs the given process in an elevated context
+///returns the exit code
+let ExecProcessElevated cmd args timeOut = 
+    ExecProcess (fun si -> 
+                       si.Verb <- "runas"
+                       si.Arguments <- args
+                       si.FileName <- cmd
+                       si.UseShellExecute <- true
+                ) timeOut
+
+    
   
 /// sets the environment Settings for the given startInfo
 /// existing values will be overrriden
@@ -88,6 +113,26 @@ let StartProcess infoAction =
    p.StartInfo.UseShellExecute <- false
    infoAction p.StartInfo
    p.Start() |> ignore
+
+/// Sends a command to a windows service
+let RunService command serviceName =
+    tracefn "%s %s" command serviceName
+    let p = new Process()
+    p.StartInfo.FileName <- "sc";
+    p.StartInfo.Arguments <- sprintf "%s %s" command serviceName
+    p.StartInfo.RedirectStandardOutput <- true
+    p.StartInfo.UseShellExecute <- false
+    p.Start() |> ignore
+
+/// Stops a windows service
+let StopService serviceName = 
+    stopService serviceName
+    ensureServiceHasStopped serviceName (TimeSpan.FromMinutes 2.)
+
+/// Starts a windows service
+let StartService serviceName = 
+    startService serviceName
+    ensureServiceHasStarted serviceName (TimeSpan.FromMinutes 2.)
 
 /// Adds quotes around the string
 let quote str = "\"" + str + "\""

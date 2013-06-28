@@ -1,16 +1,11 @@
-﻿namespace Fake
+﻿[<AutoOpen>]
+module Fake.PermissionsHelper
 
-[<AutoOpen>]
-module PermissionsHelper =
+open System.Security.Principal
 
-    open System.Security.Principal
-
-    let requiresAdmin f = 
-       let principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
-       if (principal.IsInRole(WindowsBuiltInRole.Administrator)) = false
-       then invalidOp "Administrator privledges are required to run this installer"
-       else f()
-
-
-    
-
+let requiresAdmin installerF = 
+    let principal = new WindowsPrincipal(WindowsIdentity.GetCurrent())
+    if principal.IsInRole WindowsBuiltInRole.Administrator then
+        installerF()
+    else
+        invalidOp "Administrator privileges are required to run this installer"

@@ -33,7 +33,6 @@
         $.ajax({
             type: "POST",
             url: '/api/v1/environment',
-            dataType: 'json',
             data: jsonStr,
             contentType: 'application/json'
         }).done(function (d) {
@@ -50,13 +49,12 @@
         $.ajax({
             type: "DELETE",
             url: '/api/v1/environment/' + data.Id(),
-            dataType: 'json',
             contentType: 'application/json'
         }).done(function (d) {
-            toastr.info('Successfully deleted agent');
+            toastr.info('Successfully deleted environment');
             self.getEnvironments();
         }).fail(function (msg) {
-            toastr.error('Failed to delete agent', 'Error');
+            toastr.error('Failed to delete environment', 'Error');
         });
     }
 }

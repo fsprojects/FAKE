@@ -46,9 +46,8 @@
 
 	self.registerAgent = function (form) {
 		$.ajax({
-			type: "POST",
+			method: "POST",
 			url: '/api/v1/agent/',
-			dataType: 'json',
 			data: $(form).serialize(),
 			contentType: 'application/x-www-form-urlencoded'
 		}).done(function (data) {
@@ -61,9 +60,8 @@
 
 	self.deleteAgent = function (data) {
 	    $.ajax({
-	        type: "DELETE",
+	        method: "DELETE",
 	        url: '/api/v1/agent/'+data.Id(),
-	        dataType: 'json',
 	        contentType: 'application/json'
 	    }).done(function (d) {
 	        toastr.info('Successfully deleted agent');

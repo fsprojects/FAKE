@@ -1,0 +1,799 @@
+﻿
+------------------------------
+Starting TestCase: 23 1
+TestSuite;Test CodeCompression
+TestCase;BinaryAddition 1 (8 Bit + 8 Bit)
+Runtime;18
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 2
+TestSuite;Test CodeCompression
+TestCase;BinaryAddition 2 (1023 Bit + 1023 Bit)
+Runtime;5
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 3
+TestSuite;Test CodeCompression
+TestCase;BinaryAddition 3 (8 Bit + 1023 Bit)
+Runtime;1
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 4
+TestSuite;Test CodeCompression
+TestCase;BinaryAddition 4 (1023 Bit + 8 Bit)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 5
+TestSuite;Test CodeCompression
+TestCase;BinaryAddition 5 (0 + 0)
+Runtime;3
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 6
+TestSuite;Test CodeCompression
+TestCase;BinaryAddition 6 (0 + 1)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 7
+TestSuite;Test CodeCompression
+TestCase;BinaryAddition 7 (1 + 0)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 8
+TestSuite;Test CodeCompression
+TestCase;BinaryAddition 8 (8 Bit + 1)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 9
+TestSuite;Test CodeCompression
+TestCase;BinaryAddition 9 ('' + 0)
+Runtime;3
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 10
+TestSuite;Test CodeCompression
+TestCase;BinaryAddition 10 (0 + '')
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 11
+TestSuite;Test CodeCompression
+TestCase;BinarySubtraction 1 (8 Bit - 8 Bit)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 12
+TestSuite;Test CodeCompression
+TestCase;BinarySubtraction 2 (1024 Bit - 1024 Bit)
+Runtime;6
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 13
+TestSuite;Test CodeCompression
+TestCase;BinarySubtraction 3 (A - B(1024 Bit) = B - A(1024 Bit))
+Runtime;9
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 14
+TestSuite;Test CodeCompression
+TestCase;BinarySubtraction 4 (8 Bit - 1024 Bit)
+Runtime;3
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 15
+TestSuite;Test CodeCompression
+TestCase;BinarySubtraction 5 (1024 Bit - 8 Bit)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 16
+TestSuite;Test CodeCompression
+TestCase;BinarySubtraction 6 (0 - 0)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 17
+TestSuite;Test CodeCompression
+TestCase;BinarySubtraction 7 (0 - 1)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 18
+TestSuite;Test CodeCompression
+TestCase;BinarySubtraction 8 (1 - 0)
+Runtime;1
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 19
+TestSuite;Test CodeCompression
+TestCase;BinarySubtraction 9 (8 Bit - 1)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 20
+TestSuite;Test CodeCompression
+TestCase;BinarySubtraction 10 ('' - 0)
+Runtime;3
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 21
+TestSuite;Test CodeCompression
+TestCase;BinarySubtraction 11 (A: 8 Bit - A: 8 Bit)
+Runtime;3
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 22
+TestSuite;Test CodeCompression
+TestCase;BinaryMultiplication 1 (8 Bit * 8 Bit)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 23
+TestSuite;Test CodeCompression
+TestCase;BinaryMultiplication 2 (512 Bit * 512 Bit)
+Runtime;221
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 24
+TestSuite;Test CodeCompression
+TestCase;BinaryMultiplication 3 (8 Bit * 512 Bit)
+Runtime;9
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 25
+TestSuite;Test CodeCompression
+TestCase;BinaryMultiplication 4 (512 Bit * 8 Bit)
+Runtime;8
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 26
+TestSuite;Test CodeCompression
+TestCase;BinaryMultiplication 5 (0 * 0)
+Runtime;3
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 27
+TestSuite;Test CodeCompression
+TestCase;BinaryMultiplication 6 (0 * 1)
+Runtime;3
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 28
+TestSuite;Test CodeCompression
+TestCase;BinaryMultiplication 7 (1 * 0)
+Runtime;3
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 29
+TestSuite;Test CodeCompression
+TestCase;BinaryMultiplication 8 (1 * '')
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 30
+TestSuite;Test CodeCompression
+TestCase;BinaryMultiplication 9 (1 * 8 Bit)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 31
+TestSuite;Test CodeCompression
+TestCase;BinaryMultiplication 10(8 Bit * 0)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 32
+TestSuite;Test CodeCompression
+TestCase;BinaryMultiplication 11 (0 * 8 Bit)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 33
+TestSuite;Test CodeCompression
+TestCase;BinaryLeftShift 1 (8 Bit << 0)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 34
+TestSuite;Test CodeCompression
+TestCase;BinaryLeftShift 2 (8 Bit << 1)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 35
+TestSuite;Test CodeCompression
+TestCase;BinaryLeftShift 3 (8 Bit << 1016)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 36
+TestSuite;Test CodeCompression
+TestCase;BinaryLeftShift 4 ('' << 1)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 37
+TestSuite;Test CodeCompression
+TestCase;BinaryLeftShift 5 (0 << 8)
+Runtime;1
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 38
+TestSuite;Test CodeCompression
+TestCase;BinaryMatchLength 1 (2 Bit to 8 Bit)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 39
+TestSuite;Test CodeCompression
+TestCase;BinaryMatchLength 2 ('' to 8 Bit)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 40
+TestSuite;Test CodeCompression
+TestCase;BinaryMatchLength 3 (0 to 8 Bit)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 41
+TestSuite;Test CodeCompression
+TestCase;BinaryMatchLength 4 (1 Bit to 1024 Bit)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 42
+TestSuite;Test CodeCompression
+TestCase;BinaryMatchLength 5 (0 Bit to 0 Bit)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 43
+TestSuite;Test CodeCompression
+TestCase;BinaryMatchLength 6 (1024 Bit to 1024 Bit)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 44
+TestSuite;Test CodeCompression
+TestCase;BinaryIsBiggerOrEqual 1 (1024 Bit vs 1024 Bit. Difference in Bit 1)
+Runtime;3
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 45
+TestSuite;Test CodeCompression
+TestCase;BinaryIsBiggerOrEqual 2 (1024 Bit vs 1024 Bit. Difference in Bit 1024)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 46
+TestSuite;Test CodeCompression
+TestCase;BinaryIsBiggerOrEqual 3 (1024 Bit vs 1024 Bit. Some Differences)
+Runtime;4
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 47
+TestSuite;Test CodeCompression
+TestCase;BinaryIsBiggerOrEqual 4 (8 Bit vs 8 Bit)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 48
+TestSuite;Test CodeCompression
+TestCase;BinaryIsBiggerOrEqual 5 (8 Bit vs 8 Bit. Leading Zeros)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 49
+TestSuite;Test CodeCompression
+TestCase;BinaryIsBiggerOrEqual 6 (0 vs 1)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 50
+TestSuite;Test CodeCompression
+TestCase;BinaryIsBiggerOrEqual 7 ('' vs 1)
+Runtime;1
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 51
+TestSuite;Test CodeCompression
+TestCase;BinaryIsBiggerOrEqual 8 ('' vs 0)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 52
+TestSuite;Test CodeCompression
+TestCase;BinaryExchange 1 (8 Bit vs 8 Bit)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 53
+TestSuite;Test CodeCompression
+TestCase;BinaryExchange 2 (0 vs 1)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 54
+TestSuite;Test CodeCompression
+TestCase;BinaryExchange 3 (11 vs '')
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 55
+TestSuite;Test CodeCompression
+TestCase;BinaryExchange 4 (8 Bit vs 2 Bit)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 56
+TestSuite;Test CodeCompression
+TestCase;BinaryExchange 5 (8 Bit vs 8 Bit. Leading Zeros)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 57
+TestSuite;Test CodeCompression
+TestCase;BinaryExchange 6 (1024 Bit vs 1024 Bit)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 58
+TestSuite;Test CodeCompression
+TestCase;BinaryKillLeadingZeros 1 (8 Bit to 4 Bit)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 59
+TestSuite;Test CodeCompression
+TestCase;BinaryKillLeadingZeros 2 (8 Bit to 1 Bit)
+Runtime;3
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 60
+TestSuite;Test CodeCompression
+TestCase;BinaryKillLeadingZeros 3 ('' to 1 Bit)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 61
+TestSuite;Test CodeCompression
+TestCase;BinaryKillLeadingZeros 4 (1024 Bit to 1024 Bit)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 62
+TestSuite;Test CodeCompression
+TestCase;BinaryBinaryPower 1 (2^4)
+Runtime;4
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 63
+TestSuite;Test CodeCompression
+TestCase;BinaryBinaryPower 3 (4 Bit ^ 1)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 64
+TestSuite;Test CodeCompression
+TestCase;BinaryBinaryPower 4 (4 Bit ^ 0)
+Runtime;1
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 65
+TestSuite;Test CodeCompression
+TestCase;BinaryBinaryPower 5 (1^12345)
+Runtime;584
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 66
+TestSuite;Test CodeCompression
+TestCase;BinaryBinaryPower 6 (0^12345)
+Runtime;512
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 67
+TestSuite;Test CodeCompression
+TestCase;BinaryBinaryPower 7 ('^4)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 68
+TestSuite;Test CodeCompression
+TestCase;BinaryBinaryPower 8 (2^4. Leading Zeros)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 69
+TestSuite;Test CodeCompression
+TestCase;BinaryBinaryPower 9 (0^0)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 70
+TestSuite;Test CodeCompression
+TestCase;BinaryBinaryPower 10 ((2^32-1)^32. Max Value)
+Runtime;519
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 71
+TestSuite;Test CodeCompression
+TestCase;ByteToBinary 1 (0 -> 0)
+Runtime;4
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 72
+TestSuite;Test CodeCompression
+TestCase;ByteToBinary 2 (125 -> 1111101)
+Runtime;3
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 73
+TestSuite;Test CodeCompression
+TestCase;ByteToBinary 3 (255 -> 11111111)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 74
+TestSuite;Test CodeCompression
+TestCase;IntToBinary 1 (0)
+Runtime;1
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 75
+TestSuite;Test CodeCompression
+TestCase;IntToBinary 2 (1433971)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 76
+TestSuite;Test CodeCompression
+TestCase;IntToBinary 3 (2147483647 Max Value)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 77
+TestSuite;Test CodeCompression
+TestCase;TextToBinaryToText 1 ("Hallo Welt!")
+Runtime;36
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 78
+TestSuite;Test CodeCompression
+TestCase;TextToBinaryToText 2 (Long Text)
+Runtime;4083
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 79
+TestSuite;Test CodeCompression
+TestCase;TextToBinaryToText 3 (" ")
+Runtime;7
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 80
+TestSuite;Test CodeCompression
+TestCase;TextToBinaryToText 4 ("")
+Runtime;6
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 81
+TestSuite;Test CodeCompression
+TestCase;TextToBinaryToText 5 (Full Text Codeset)
+Runtime;979
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 82
+TestSuite;Test CodeCompression
+TestCase;GUIDToCodeToGUID 1 (Fix GUID)
+Runtime;75
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 83
+TestSuite;Test CodeCompression
+TestCase;GUIDToCodeToGUID 2 (Null GUID)
+Runtime;73
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 84
+TestSuite;Test CodeCompression
+TestCase;GUIDToCodeToGUID 3 (10 random GUIDs)
+Runtime;1672
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 85
+TestSuite;Test CodeCompression
+TestCase;GUIDToCodeToGUID 4 (Check Code Invariance)
+Runtime;214
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 86
+TestSuite;Test CodeCompression
+TestCase;CompressExtended 1 (Long String - Big Base - Leading Zeros)
+Runtime;1524
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 87
+TestSuite;Test CodeCompression
+TestCase;CompressExtended 2 (Short String - Base 4 - Leading Zeros)
+Runtime;35
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 88
+TestSuite;Test CodeCompression
+TestCase;CompressExtended 3 (Empty)
+Runtime;2
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 89
+TestSuite;Test CodeCompression
+TestCase;CompressExtended 4 (Long String - Base 2 - Type: Code - Leading Zeros)
+Runtime;206
+Success;Test OK: OK;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 90
+TestSuite;Test CodeCompression
+TestCase;Error 1 (Intersection)
+Runtime;1
+Success;Test OK. Error was <Fehler: Code ist nicht šberschneidungsfrei! Element 3: C = Element 8: C!>;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 91
+TestSuite;Test CodeCompression
+TestCase;Error 2 (Invalid Char)
+Runtime;1
+Success;Test OK. Error was <Fehler: Im Text wurde ein Zeichen gefunden das nicht zum Code geh”rt! Element 9: e Code: H, aloTst!>;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 92
+TestSuite;Test CodeCompression
+TestCase;Error 3 (Shifts to far)
+Runtime;1
+Success;Test OK. Error was <Fehler: šberlauf - 1024Bit wurden berschritten!>;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 93
+TestSuite;Test CodeCompression
+TestCase;Error 4 (The number is bigger than the chosen limit of bits)
+Runtime;1
+Success;Test OK. Error was <Fehler: Der Wert 123456 ist gr”áer als der gesetzte Maximalwert 2047!>;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 94
+TestSuite;Test CodeCompression
+TestCase;Error 5 (Addition: invalid binary)
+Runtime;1
+Success;Test OK. Error was <Fehler: Im bin„ren String befinden sich unzul„ssige Zeichen!>;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 95
+TestSuite;Test CodeCompression
+TestCase;Error 6 (Subtraction: invalid binary)
+Runtime;2
+Success;Test OK. Error was <Fehler: Im bin„ren String befinden sich unzul„ssige Zeichen!>;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 96
+TestSuite;Test CodeCompression
+TestCase;Error 7 (Mutliplication: invalid binary)
+Runtime;1
+Success;Test OK. Error was <Fehler: Im bin„ren String befinden sich unzul„ssige Zeichen!>;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 97
+TestSuite;Test CodeCompression
+TestCase;Error 8 (1024 Bit Overflow)
+Runtime;1
+Success;Test OK. Error was <Fehler: šberlauf - 1024Bit wurden berschritten!>;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 98
+TestSuite;Test CodeCompression
+TestCase;Error 9 (1024 Bit Overflow)
+Runtime;6
+Success;Test OK. Error was <Fehler: šberlauf - 1024Bit wurden berschritten!>;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 99
+TestSuite;Test CodeCompression
+TestCase;Error 10 (Codeset extension failed)
+Runtime;12
+Success;Test OK. Error was <Fehler: Es konnte kein zus„tzlicher Char gefunden werden! Es muss daher mit fester L„nge codiert werden!>;
+EndOfTest;
+
+------------------------------
+Starting TestCase: 23 100
+TestSuite;Test CodeCompression
+Runtime;0
+Error;Test failure;TestCaseNotFound;
+EndOfTest;

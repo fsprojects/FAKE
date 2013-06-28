@@ -37,7 +37,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\..\test\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -47,11 +47,14 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\..\test\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>MessageFiles\Message2.txt</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core">
@@ -79,10 +82,11 @@
     <Compile Include="FSharp.Testing.cs" />
     <Compile Include="FileHandling\BaseFunctions.cs" />
     <Compile Include="FileHandling\FileComparisonSpecs.cs" />
-    <Compile Include="FileHandling\CopyDirectorySpec.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Globbing\Directories\GlobbingOfDirectoriesSpecs.cs" />
+    <Compile Include="Globbing\Excludes\GlobbingOfDirectoriesSpecs.cs" />
     <Compile Include="ILMerge\ILMergeSpecs.cs" />
+    <Compile Include="MSBuild\FileExtractionSpecs.cs" />
     <Compile Include="PackageMgt\VersioningSpecs.cs" />
     <Compile Include="PackageMgt\RollbackSpecs.cs" />
     <Compile Include="PackageMgt\RoutingSpecs.cs" />
@@ -91,10 +95,11 @@
     <Compile Include="PackageMgt\FeedSpecs.cs" />
     <Compile Include="PackageMgt\NugetData.cs" />
     <Compile Include="PackageMgt\NuSpecFileSpecs.cs" />
+    <Compile Include="RestorePackageHelperSpecs.cs" />
     <Compile Include="SideBySideSpecification\ReferencesScanningSpecs.cs" />
     <Compile Include="SideBySideSpecification\SpecsRemovementSpecs.cs" />
     <Compile Include="StringHelperSpecs.cs" />
-    <Compile Include="RelativePathsSpecs.cs" />
+    <Compile Include="MessageFiles\MessageFileSpecs.cs" />
     <Compile Include="XmlSpecs.cs" />
     <Compile Include="TestData.cs" />
     <Compile Include="FileHandling\CleanDirectorySpecs.cs" />
@@ -120,6 +125,36 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="MessageFiles\FinishedAll.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MessageFiles\SkippedTestSuite.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MessageFiles\TestSuiteNotFound2.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MessageFiles\TestSuiteNotFound1.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MessageFiles\Message7.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MessageFiles\Message6.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MessageFiles\Message5.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MessageFiles\Message4.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MessageFiles\Message3.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MessageFiles\Message2.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="SideBySideSpecification\Project1.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -150,6 +185,9 @@
     <Content Include="TestData\AllObjects_2.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="MessageFiles\Message1.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\fake.nuspec">
@@ -157,6 +195,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Globbing\Directories\SampleApp.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Globbing\Excludes\TFSSample.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />

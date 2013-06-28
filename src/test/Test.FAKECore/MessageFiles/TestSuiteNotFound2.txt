@@ -1,0 +1,3 @@
+﻿AutoTest started with RootPath (Ja): D:\UEN\0600\Native\ (D:\UEN\0600\Native\)
+TestBatchPath: D:\UEN\0600\Native\build\config.txt
+TestSuiteNotFound;

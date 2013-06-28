@@ -157,20 +157,34 @@ let serializeMSBuildParams (p: MSBuildParams) =
                     | Some (k,v) -> "/" + k + (if isNullOrEmpty v then "" else ":" + v))
     |> separated " "
 
+let TeamCityLoggerName = typedefof<Fake.MsBuildLogger.TeamCityLogger>.FullName
+let ErrorLoggerName = typedefof<Fake.MsBuildLogger.ErrorLogger>.FullName
+
+let private errorLoggerParam = 
+    let pathToLogger = (Uri(typedefof<MSBuildParams>.Assembly.CodeBase)).LocalPath
+    [ TeamCityLoggerName; ErrorLoggerName ]
+    |> List.map(fun a -> sprintf "/logger:%s,\"%s\"" a pathToLogger)
+    |> fun lst -> String.Join(" ", lst)
+
 /// Runs a msbuild project
 let build setParams project =
     traceStartTask "MSBuild" project
     let args = MSBuildDefaults |> setParams |> serializeMSBuildParams        
-    let args = toParam project + " " + args
+    let args = toParam project + " " + args + " " + errorLoggerParam
     tracefn "Building project: %s\n  %s %s" project msBuildExe args
     if not (execProcess3 (fun info ->  
         info.FileName <- msBuildExe
         info.Arguments <- args) TimeSpan.MaxValue)
-    then failwithf "Building %s project failed." project
+    then
+        if Diagnostics.Debugger.IsAttached then Diagnostics.Debugger.Break()
+        let errors = File.ReadAllLines(MsBuildLogger.ErrorLoggerFile) |> List.ofArray
+        let errorMessage = sprintf "Building %s project failed." project
+        raise (BuildException(errorMessage, errors))
     traceEndTask "MSBuild" project
 
 /// Builds the given project files and collects the output files.
 /// Properties are parameterized by project name.
+/// If the outputpath is null or empty then the project settings are used.>
 let MSBuildWithProjectProperties outputPath (targets: string) (properties: string -> (string*string) list) projects = 
     let projects = projects |> Seq.toList
     let output = 
@@ -200,20 +214,21 @@ let MSBuildWithProjectProperties outputPath (targets: string) (properties: strin
 
     !! (outputPath + "/**/*.*")
 
-/// Builds the given project files and collects the output files
+/// Builds the given project files or solution files and collects the output files
+/// If the outputpath is null or empty then the project settings are used.
 let MSBuild outputPath targets properties = MSBuildWithProjectProperties outputPath targets (fun _ -> properties)
 
-/// Builds the given project files and collects the output files
+/// Builds the given project files or solution files and collects the output files
+/// If the outputpath is null or empty then the project settings are used.
 let MSBuildDebug outputPath targets = MSBuild outputPath targets ["Configuration","Debug"]
 
-let MSBuildDebugExt outputPath properties targets = 
-    let properties = ("Configuration", "Debug") :: properties; 
-    MSBuild outputPath targets properties
-
-/// Builds the given project files and collects the output files
+/// Builds the given project files or solution files and collects the output files
+/// If the outputpath is null or empty then the project settings are used.
 let MSBuildRelease outputPath targets = MSBuild outputPath targets ["Configuration","Release"]
+
+/// Builds the given project files or solution files in release mode to the default outputs.
+let MSBuildWithDefaults targets = MSBuild null targets ["Configuration","Release"]
 
 let MSBuildReleaseExt outputPath properties targets = 
     let properties = ("Configuration", "Release") :: properties; 
     MSBuild outputPath targets properties
-

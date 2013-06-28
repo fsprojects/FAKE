@@ -327,18 +327,13 @@ let TestDir path =
 /// <param name="srcFiles">The source files</param>
 /// <param name="findOldFileF">A function which finds the old file</param>
 let GeneratePatchWithFindOldFileFunction lastReleaseDir patchDir srcFiles findOldFileF =
-    srcFiles
-    |> Seq.map (fun file -> 
-        async {
-            let newFile = toRelativePath file
-            let oldFile = findOldFileF newFile (lastReleaseDir + newFile.TrimStart('.'))
-            let fi = fileInfo oldFile
-            if not fi.Exists then logVerbosefn "LastRelease has no file like %s" fi.FullName
-            if CompareFiles false oldFile newFile |> not then
-                CopyFileIntoSubFolder patchDir newFile })
-    |> Async.Parallel
-    |> Async.RunSynchronously
-    |> ignore
+    for file in srcFiles do
+        let newFile = toRelativePath file
+        let oldFile = findOldFileF newFile (lastReleaseDir + newFile.TrimStart('.'))
+        let fi = fileInfo oldFile
+        if not fi.Exists then logVerbosefn "LastRelease has no file like %s" fi.FullName
+        if CompareFiles false oldFile newFile |> not then
+            CopyFileIntoSubFolder patchDir newFile
 
 /// <summary>Checks the srcFiles for changes to the last release.</summary>
 /// <param name="lastReleaseDir">The directory of the last release.</param>
@@ -385,3 +380,16 @@ let MoveFile target fileName =
         logVerbosefn "Move %s to %s" fileName targetName
         f.MoveTo(targetName) |> ignore
     | Directory _ -> logVerbosefn "Ignoring %s, because it is no file" fileName
+
+/// Creates a config file with the parameters as key;value lines
+let WriteConfigFile configFileName parameters =
+    if isNullOrEmpty configFileName then () else
+        
+    let fi = fileInfo configFileName
+    if fi.Exists then
+        fi.Delete()
+
+    use streamWriter = fi.CreateText()
+
+    for (key,value) in parameters do
+        streamWriter.WriteLine("{0};{1}", key, value)

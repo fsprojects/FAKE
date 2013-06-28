@@ -23,6 +23,7 @@ type FxCopParams =
    ImportFiles: string seq;
    RuleLibraries: string seq;
    Rules: string seq;
+   CustomRuleset: string;
    ConsoleXslFileName: string;
    ReportFileName: string;
    OutputXslFileName: string;
@@ -35,7 +36,8 @@ type FxCopParams =
    Verbose: bool;
    FailOnError: FxCopErrorLevel;
    TimeOut: TimeSpan;
-   ToolPath:string}
+   ToolPath:string;
+   ForceOutput: bool}
  
 let checkForErrors resultFile =
   // This version checks the result file with some Xml queries see
@@ -58,6 +60,7 @@ let FxCopDefaults =
     ImportFiles  = Seq.empty;
     RuleLibraries = Seq.empty;
     Rules = Seq.empty;
+    CustomRuleset = String.Empty;
     ConsoleXslFileName = String.Empty;
     ReportFileName = currentDirectory @@ "FXCopResults.html";
     OutputXslFileName = String.Empty;
@@ -70,7 +73,8 @@ let FxCopDefaults =
     Verbose = true;
     FailOnError = FxCopErrorLevel.DontFailBuild;
     TimeOut = TimeSpan.FromMinutes 5.
-    ToolPath = ProgramFilesX86 @@ @"Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\FxCopCmd.exe" }
+    ToolPath = ProgramFilesX86 @@ @"Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\FxCopCmd.exe"
+    ForceOutput = false }
         
 /// Run FxCop on a group of assemblies.
 let FxCop setParams (assemblies: string seq) =
@@ -95,6 +99,7 @@ let FxCop setParams (assemblies: string seq) =
     
     append param.ApplyOutXsl "/aXsl "
     append param.DirectOutputToConsole "/c "
+    append param.ForceOutput "/fo "
       
     appendFormat "/cXsl:\"{0}\" " param.ConsoleXslFileName      
     appendItems "/d:\"{0}\" " param.DependencyDirectories      
@@ -104,6 +109,7 @@ let FxCop setParams (assemblies: string seq) =
     appendFormat "/oXsl:\"{0}\" " param.OutputXslFileName  
     appendFormat "/plat:\"{0}\" " param.PlatformDirectory  
     appendFormat "/p:\"{0}\" " param.ProjectFile
+    appendFormat "/ruleset:=\"{0}\" " param.CustomRuleset
  
     for item in param.RuleLibraries do      
       appendFormat "/r:\"{0}\" " (param.ToolPath @@ "Rules" @@ item)

@@ -24,6 +24,12 @@ let Run = run
 /// Runs the target given by the build script parameter or the given default target
 let RunParameterTargetOrDefault parameterName defaultTarget = getBuildParamOrDefault parameterName defaultTarget |> Run
 
+/// Runs the target given by the target parameter or the given default target
+let RunTargetOrDefault defaultTarget = getBuildParamOrDefault "target" defaultTarget |> Run
+
+/// Runs the target given by the target parameter
+let RunTarget() = getBuildParam "target" |> Run
+
 /// Stores which targets are on the same level
 let private sameLevels = new Dictionary<_,_>()
 
