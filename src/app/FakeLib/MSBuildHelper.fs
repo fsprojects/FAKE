@@ -228,3 +228,7 @@ let MSBuildRelease outputPath targets = MSBuild outputPath targets ["Configurati
 
 /// Builds the given project files or solution files in release mode to the default outputs.
 let MSBuildWithDefaults targets = MSBuild null targets ["Configuration","Release"]
+
+let MSBuildReleaseExt outputPath properties targets = 
+    let properties = ("Configuration", "Release") :: properties; 
+    MSBuild outputPath targets properties
