@@ -60,7 +60,7 @@ let ReplaceFile fileName text =
     if fi.Exists then
         fi.IsReadOnly <- false
         fi.Delete()
-    WriteStringToFile false fileName text
+    File.WriteAllText (fileName, text)
 
 let Colon = ','
 
