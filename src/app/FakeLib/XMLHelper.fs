@@ -135,6 +135,7 @@ let XPathReplaceNS xpath value (namespaces:#seq<string * string>) (doc:XmlDocume
     let nsmgr = XmlNamespaceManager(doc.NameTable)
     namespaces |> Seq.iter nsmgr.AddNamespace
     let node = doc.SelectSingleNode(xpath, nsmgr)
+    if node = null then failwithf "XML node '%s' not found" xpath else
 
     node.Value <- value
     doc
