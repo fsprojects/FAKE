@@ -17,12 +17,17 @@ let ExecProcessWithLambdas infoAction (timeOut:TimeSpan) silent errorF messageF 
     p.StartInfo.UseShellExecute <- false
     infoAction p.StartInfo
     platformInfoAction p.StartInfo
+    if isNullOrEmpty p.StartInfo.WorkingDirectory |> not then
+        if Directory.Exists p.StartInfo.WorkingDirectory |> not then
+            failwithf "Start of process %s failed. WorkingDir %s does not exist." p.StartInfo.FileName p.StartInfo.WorkingDirectory
+
     if silent then
         p.StartInfo.RedirectStandardOutput <- true
         p.StartInfo.RedirectStandardError <- true
 
         p.ErrorDataReceived.Add (fun d -> if d.Data <> null then errorF d.Data)
         p.OutputDataReceived.Add (fun d -> if d.Data <> null then messageF d.Data)
+
     try
         if enableProcessTracing && (not <| p.StartInfo.FileName.EndsWith "fsi.exe" ) then 
           tracefn "%s %s" p.StartInfo.FileName p.StartInfo.Arguments
