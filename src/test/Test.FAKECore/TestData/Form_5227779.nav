@@ -1,0 +1,372 @@
+OBJECT Form 5227779 MCN Process Template Line Sf
+{
+  OBJECT-PROPERTIES
+  {
+    Date=01.01.10;
+    Time=12:00:00;
+    Version List=MCN,UEN,MOD;
+  }
+  PROPERTIES
+  {
+    Width=16610;
+    Height=2860;
+    CaptionML=[DEU=Prozessvorlagenzeile Sf;
+               ENU=MCN Process Template Line Sf];
+    TableBoxID=1;
+    SourceTable=Table5227753;
+    AutoSplitKey=Yes;
+    UpdateOnActivate=Yes;
+    DelayedInsert=Yes;
+    OnOpenForm=BEGIN
+                 SetRoleFilter;
+               END;
+
+  }
+  CONTROLS
+  {
+    { 1   ;TableBox     ;0    ;0    ;16610;2860 ;HorzGlue=Both;
+                                                 VertGlue=Both }
+    { 1000000050;TextBox;0    ;220  ;1700 ;440  ;Editable=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Line No." }
+    { 1000000051;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000050;
+                                                 InColumnHeading=Yes }
+    { 1000000002;TextBox;0    ;110  ;1990 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr=Type }
+    { 1000000003;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000002;
+                                                 InColumnHeading=Yes }
+    { 1000000000;TextBox;4393 ;220  ;6380 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr=Description;
+                                                 OnFormat=BEGIN
+                                                            CurrForm.Description.UPDATEINDENT("Hor. Position"*220);
+                                                          END;
+                                                           }
+    { 1000000001;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000000;
+                                                 InColumnHeading=Yes }
+    { 1000000052;CheckBox;21696;220 ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 ShowCaption=No;
+                                                 SourceExpr="Process Start" }
+    { 1000000053;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000052;
+                                                 InColumnHeading=Yes }
+    { 1000000018;CheckBox;20585;220 ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 ShowCaption=No;
+                                                 SourceExpr="Process End" }
+    { 1000000019;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000018;
+                                                 InColumnHeading=Yes }
+    { 1000000028;TextBox;25295;220  ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Next Step" }
+    { 1000000029;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000028;
+                                                 InColumnHeading=Yes }
+    { 1000000058;CheckBox;43895;220 ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 ShowCaption=No;
+                                                 SourceExpr=Decision }
+    { 1000000059;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000058;
+                                                 InColumnHeading=Yes }
+    { 1000000012;TextBox;44027;220  ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Option for Line No." }
+    { 1000000013;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000012;
+                                                 InColumnHeading=Yes }
+    { 1000000032;CheckBox;28695;220 ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 ShowCaption=No;
+                                                 SourceExpr="Confirmation(positiv)" }
+    { 1000000033;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000032;
+                                                 InColumnHeading=Yes }
+    { 1000000008;CheckBox;27755;220 ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 ShowCaption=No;
+                                                 SourceExpr=Correction }
+    { 1000000009;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000008;
+                                                 InColumnHeading=Yes }
+    { 1000000048;TextBox;15320;110  ;550  ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr=Direction }
+    { 1000000049;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000048;
+                                                 InColumnHeading=Yes }
+    { 1000000014;TextBox;16147;220  ;550  ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr=Programmtype }
+    { 1000000015;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000014;
+                                                 InColumnHeading=Yes }
+    { 1000000016;TextBox;16697;220  ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Programm ID" }
+    { 1000000017;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000016;
+                                                 InColumnHeading=Yes }
+    { 1000000020;TextBox;19924;110  ;550  ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr=Parameter }
+    { 1000000021;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000020;
+                                                 InColumnHeading=Yes }
+    { 1000000022;TextBox;22675;110  ;550  ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Closed Type" }
+    { 1000000023;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000022;
+                                                 InColumnHeading=Yes }
+    { 1000000024;TextBox;25162;110  ;550  ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Closed By Outbound State" }
+    { 1000000025;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000024;
+                                                 InColumnHeading=Yes }
+    { 5128504;CheckBox  ;50827;220  ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 ShowCaption=No;
+                                                 SourceExpr=automatic }
+    { 5128505;Label     ;0    ;0    ;0    ;0    ;ParentControl=5128504;
+                                                 InColumnHeading=Yes }
+    { 1000000040;TextBox;29475;110  ;550  ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="New State" }
+    { 1000000041;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000040;
+                                                 InColumnHeading=Yes }
+    { 1000000042;TextBox;29316;220  ;550  ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr=Programm }
+    { 1000000043;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000042;
+                                                 InColumnHeading=Yes }
+    { 1000000056;CheckBox;32888;110 ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 ShowCaption=No;
+                                                 SourceExpr="Old Contract" }
+    { 1000000057;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000056;
+                                                 InColumnHeading=Yes }
+    { 1000000044;TextBox;29866;220  ;550  ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 Description=MDH01;
+                                                 SourceExpr=Vorgangsart }
+    { 1000000045;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000044;
+                                                 InColumnHeading=Yes }
+    { 5128502;TextBox   ;34026;220  ;3080 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 Description=MDH01;
+                                                 SourceExpr="Systemvorgangs ID Filter" }
+    { 5128503;Label     ;0    ;0    ;0    ;0    ;ParentControl=5128502;
+                                                 InColumnHeading=Yes }
+    { 1000000010;TextBox;4657 ;220  ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Message Number" }
+    { 1000000011;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000010;
+                                                 InColumnHeading=Yes }
+    { 1000000030;TextBox;26995;220  ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Answer For Message" }
+    { 1000000031;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000030;
+                                                 InColumnHeading=Yes }
+    { 1000000026;TextBox;13335;110  ;2086 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr=Messagetype }
+    { 1000000027;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000026;
+                                                 InColumnHeading=Yes }
+    { 1000000034;TextBox;30772;220  ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="UTILMD Kategorie" }
+    { 1000000035;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000034;
+                                                 InColumnHeading=Yes }
+    { 1000000036;TextBox;32472;220  ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="UTILMD Transaktionsart" }
+    { 1000000037;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000036;
+                                                 InColumnHeading=Yes }
+    { 1000000038;TextBox;34172;220  ;1800 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="MSCONS Auspr„gung" }
+    { 1000000039;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000038;
+                                                 InColumnHeading=Yes }
+    { 1000000062;TextBox;8652 ;110  ;1800 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="MSCONS Reading Type" }
+    { 1000000063;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000062;
+                                                 InColumnHeading=Yes }
+    { 1000000046;CheckBox;9578;110  ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 ShowCaption=No;
+                                                 SourceExpr=Cancelation }
+    { 1000000047;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000046;
+                                                 InColumnHeading=Yes }
+    { 5128500;TextBox   ;10134;110  ;550  ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="message for" }
+    { 5128501;Label     ;0    ;0    ;0    ;0    ;ParentControl=5128500;
+                                                 InColumnHeading=Yes }
+    { 1000000054;TextBox;44027;220  ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Vorg.-Blatt Vorlagenname" }
+    { 1000000055;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000054;
+                                                 InColumnHeading=Yes }
+    { 1000000060;TextBox;45727;220  ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Vorg.-Blatt Name" }
+    { 1000000061;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000060;
+                                                 InColumnHeading=Yes }
+    { 1000000004;TextBox;6562 ;110  ;2285 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr=from }
+    { 1000000005;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000004;
+                                                 InColumnHeading=Yes }
+    { 1000000006;TextBox;10962;110  ;2285 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr=Till }
+    { 1000000007;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000006;
+                                                 InColumnHeading=Yes }
+    { 5128506;TextBox   ;53473;110  ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Step out of time" }
+    { 5128507;Label     ;0    ;0    ;0    ;0    ;ParentControl=5128506;
+                                                 InColumnHeading=Yes }
+    { 5227735;TextBox   ;7197 ;220  ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Identification Level" }
+    { 5227736;Label     ;0    ;0    ;0    ;0    ;ParentControl=5227735;
+                                                 InColumnHeading=Yes }
+    { 5227727;TextBox   ;59611;220  ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Scope Of Services Market Part." }
+    { 5227728;Label     ;0    ;0    ;0    ;0    ;ParentControl=5227727;
+                                                 InColumnHeading=Yes }
+    { 5227733;TextBox   ;60140;220  ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="APERAK Error Type" }
+    { 5227734;Label     ;0    ;0    ;0    ;0    ;ParentControl=5227733;
+                                                 InColumnHeading=Yes }
+    { 5128510;TextBox   ;59347;110  ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="ORDERS Type of Requirement" }
+    { 5128511;Label     ;0    ;0    ;0    ;0    ;ParentControl=5128510;
+                                                 InColumnHeading=Yes }
+    { 5227729;TextBox   ;72708;110  ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="ORDERS Document Code" }
+    { 5227730;Label     ;0    ;0    ;0    ;0    ;ParentControl=5227729;
+                                                 InColumnHeading=Yes }
+    { 5227723;TextBox   ;67787;220  ;1256 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="ORDERS Reason for Readout" }
+    { 5227724;Label     ;0    ;0    ;0    ;0    ;ParentControl=5227723;
+                                                 InColumnHeading=Yes }
+    { 5128512;TextBox   ;61047;110  ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="IFTSTA Document Type" }
+    { 5128513;Label     ;0    ;0    ;0    ;0    ;ParentControl=5128512;
+                                                 InColumnHeading=Yes }
+    { 5227731;TextBox   ;73660;110  ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="IFTSTA Mark" }
+    { 5227732;Label     ;0    ;0    ;0    ;0    ;ParentControl=5227731;
+                                                 InColumnHeading=Yes }
+    { 5128508;TextBox   ;54796;220  ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr=Prozesstemplate }
+    { 5128509;Label     ;0    ;0    ;0    ;0    ;ParentControl=5128508;
+                                                 InColumnHeading=Yes }
+    { 5128514;TextBox   ;62747;110  ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="ORDRSP Document Type" }
+    { 5128515;Label     ;0    ;0    ;0    ;0    ;ParentControl=5128514;
+                                                 InColumnHeading=Yes }
+    { 5128516;TextBox   ;64447;110  ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="ORDRSP Answer Category" }
+    { 5128517;Label     ;0    ;0    ;0    ;0    ;ParentControl=5128516;
+                                                 InColumnHeading=Yes }
+    { 5227725;TextBox   ;69004;220  ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="ORDRSP Service Description" }
+    { 5227726;Label     ;0    ;0    ;0    ;0    ;ParentControl=5227725;
+                                                 InColumnHeading=Yes }
+    { 5128518;TextBox   ;66147;110  ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="QUOTES Service Description" }
+    { 5128519;Label     ;0    ;0    ;0    ;0    ;ParentControl=5128518;
+                                                 InColumnHeading=Yes }
+    { 5227737;TextBox   ;80487;220  ;1700 ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Creation Date" }
+    { 5227738;Label     ;0    ;0    ;0    ;0    ;ParentControl=5227737;
+                                                 InColumnHeading=Yes }
+    { 5227739;TextBox   ;82187;220  ;1700 ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Creation Time" }
+    { 5227740;Label     ;0    ;0    ;0    ;0    ;ParentControl=5227739;
+                                                 InColumnHeading=Yes }
+    { 5227741;TextBox   ;83887;220  ;1700 ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Creation User ID" }
+    { 5227742;Label     ;0    ;0    ;0    ;0    ;ParentControl=5227741;
+                                                 InColumnHeading=Yes }
+    { 5227743;TextBox   ;85587;220  ;1700 ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Changing Date" }
+    { 5227744;Label     ;0    ;0    ;0    ;0    ;ParentControl=5227743;
+                                                 InColumnHeading=Yes }
+    { 5227745;TextBox   ;87287;220  ;1700 ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Changing Time" }
+    { 5227746;Label     ;0    ;0    ;0    ;0    ;ParentControl=5227745;
+                                                 InColumnHeading=Yes }
+    { 5227747;TextBox   ;88987;220  ;1700 ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Changing User ID" }
+    { 5227748;Label     ;0    ;0    ;0    ;0    ;ParentControl=5227747;
+                                                 InColumnHeading=Yes }
+  }
+  CODE
+  {
+    VAR
+      g_Ebenenfilter@1000000000 : Integer;
+
+    PROCEDURE ZeileEinrcken@1000000000(I@1106300000 : Integer);
+    BEGIN
+      Rec.EinrckenZeile(I);
+      CurrForm.UPDATECONTROLS;
+    END;
+
+    PROCEDURE EbenenFilter@1000000001(l@1000000000 : Integer);
+    BEGIN
+      IF (l=-1) AND (g_Ebenenfilter>0) THEN g_Ebenenfilter:=g_Ebenenfilter-1;
+      IF (l=1) THEN g_Ebenenfilter:=g_Ebenenfilter+1;
+
+      SETFILTER("Hor. Position",'<=%1',g_Ebenenfilter);
+      CurrForm.UPDATECONTROLS;
+    END;
+
+    PROCEDURE SetRoleFilter@5227728();
+    VAR
+      l_MCNSetup@5227724 : Record 5227723;
+      l_UserSetup@5227723 : Record 91;
+    BEGIN
+      FILTERGROUP(2);
+      l_MCNSetup.GET();
+      IF l_MCNSetup."Roles activ" THEN BEGIN
+        IF l_UserSetup.GET(USERID) THEN BEGIN
+          SETFILTER (Rolle,FORMAT(l_UserSetup."MCN Role"));
+        END;
+      END;
+      FILTERGROUP(0);
+    END;
+
+    BEGIN
+    {
+      msu solutions GmbH
+      ------------------
+      MDH01 - MSU,UEN, Detlef Hans - 02.12.2011,
+        I00018065 - Nachrichtentyp ORDERS - Hier mussten Korrektur für Anfrage Z14 vorgenommen
+      msu solutions GmbH - Ende
+      -------------------------
+    }
+    END.
+  }
+}

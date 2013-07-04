@@ -220,6 +220,9 @@
     <None Include="TestData\deployments\SignalR\backups\SignalR.0.2.nupkg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="TestData\Form_5227779.nav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\app\FakeLib\FakeLib.fsproj">
