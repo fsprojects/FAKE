@@ -92,7 +92,6 @@
     <Compile Include="PackageMgt\VersioningSpecs.cs" />
     <Compile Include="PackageMgt\RollbackSpecs.cs" />
     <Compile Include="PackageMgt\RoutingSpecs.cs" />
-    <Compile Include="PackageMgt\HttpListenerSpecs.cs" />
     <Compile Include="PackageMgt\ReleaseDiscoveringSpecs.cs" />
     <Compile Include="PackageMgt\FeedSpecs.cs" />
     <Compile Include="PackageMgt\NugetData.cs" />
