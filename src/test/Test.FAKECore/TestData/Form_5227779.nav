@@ -360,11 +360,6 @@ OBJECT Form 5227779 MCN Process Template Line Sf
 
     BEGIN
     {
-      msu solutions GmbH
-      ------------------
-      MDH01 - MSU,UEN, Detlef Hans - 02.12.2011,
-        I00018065 - Nachrichtentyp ORDERS - Hier mussten Korrektur für Anfrage Z14 vorgenommen
-      msu solutions GmbH - Ende
       -------------------------
     }
     END.
