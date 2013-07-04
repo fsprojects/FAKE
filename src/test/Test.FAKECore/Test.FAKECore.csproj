@@ -79,6 +79,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileHandling\FileReplacementSpecs.cs" />
     <Compile Include="FSharp.Testing.cs" />
     <Compile Include="FileHandling\BaseFunctions.cs" />
     <Compile Include="FileHandling\FileComparisonSpecs.cs" />
@@ -90,7 +91,6 @@
     <Compile Include="PackageMgt\VersioningSpecs.cs" />
     <Compile Include="PackageMgt\RollbackSpecs.cs" />
     <Compile Include="PackageMgt\RoutingSpecs.cs" />
-    <Compile Include="PackageMgt\HttpListenerSpecs.cs" />
     <Compile Include="PackageMgt\ReleaseDiscoveringSpecs.cs" />
     <Compile Include="PackageMgt\FeedSpecs.cs" />
     <Compile Include="PackageMgt\NugetData.cs" />
@@ -217,6 +217,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="TestData\deployments\SignalR\backups\SignalR.0.2.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\Form_5227779.nav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
