@@ -49,9 +49,13 @@ let rec NormalizeVersion(version:string) =
 /// <user/>
 let WriteBytesToFile file bytes = File.WriteAllBytes(file,bytes)
 
-/// <summary>Writes string to a file</summary>
+/// <summary>Writes a string to a file</summary>
 /// <user/>
-let WriteStringToFile append file text = WriteToFile append file [text]
+let WriteStringToFile append fileName (text:string) =
+    let fi = fileInfo fileName
+
+    use writer = new StreamWriter(fileName,append && fi.Exists,Encoding.Default) 
+    writer.Write text
 
 /// <summary>Replaces the file with the given string</summary>
 /// <user/>
