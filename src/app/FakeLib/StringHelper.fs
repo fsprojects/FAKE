@@ -23,6 +23,12 @@ let ReadFile (file:string) =
          while not textReader.EndOfStream do
              yield textReader.ReadLine()}
 
+/// <summary>Reads the first line of a file. This can be helpful to read a password from file.</summary>
+/// <user/>
+let ReadLine (file:string) =   
+  use sr = new StreamReader(file, Encoding.Default)
+  sr.ReadLine()
+
 /// <summary>Writes a file line by line</summary>
 /// <user/>
 let WriteToFile append fileName (lines: seq<string>) =    
