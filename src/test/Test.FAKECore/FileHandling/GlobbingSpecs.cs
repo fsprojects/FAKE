@@ -23,7 +23,7 @@ namespace Test.FAKECore.FileHandling
     {
         Establish context = CreateTestFileStructure;
         It should_find_all_files_in_test_folder = () => ScanCount("Test/*.*").ShouldEqual(5);
-        It should_find_every_nav_file_in_every_folder = () => ScanCount("**/*.nav").ShouldEqual(7);
+        It should_find_every_nav_file_in_every_folder = () => ScanCount("**/*.nav").ShouldEqual(8);
 
         It should_find_file1 = () => ScanCount("**/file1.nav").ShouldEqual(3);
         It should_find_file1_with_every_extension = () => ScanCount("**/file1.*").ShouldEqual(5);
