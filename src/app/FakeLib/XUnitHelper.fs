@@ -25,7 +25,7 @@ let XUnitDefaults =
       NUnitXmlOutput = false;
       WorkingDir = null;
       ShadowCopy = true;
-      Verbose = false;
+      Verbose = true;
       XmlOutput = false;
       TimeOut = TimeSpan.FromMinutes 5.
       OutputDir = null}
@@ -52,9 +52,10 @@ let xUnit setParams assemblies =
                 |> appendFileNamesIfNotNull [assembly]
                 |> appendIfFalse parameters.ShadowCopy "/noshadow"
                 |> appendIfTrue (buildServer = TeamCity) "/teamcity"
+                |> appendIfFalse parameters.Verbose "/silent" 
                 |> appendIfTrue parameters.XmlOutput (sprintf "/xml\" \"%s%s.xml" dir name) 
                 |> appendIfTrue parameters.HtmlOutput (sprintf "/html\" \"%s%s.html" dir name) 
-                |> appendIfTrue parameters.NUnitXmlOutput (sprintf "/nunit\" \"%s%s.xml" dir name) 
+                |> appendIfTrue parameters.NUnitXmlOutput (sprintf "/nunit\" \"%s%s.xml" dir name)                                
       
           if not (execProcess3 (fun info ->  
               info.FileName <- parameters.ToolPath
