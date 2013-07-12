@@ -7,6 +7,7 @@ open System.IO
 ///   The signtool will be search in the toolPath.</summary>
 /// <user/>
 let SignTool toolsPath certFile passFile filesToSign =
+  traceStartTask "Sign-Tool" certFile
   if File.Exists certFile then
     let signPath = toolsPath @@ "signtool"
     let password = ReadLine passFile
@@ -19,3 +20,4 @@ let SignTool toolsPath certFile passFile filesToSign =
           info.FileName <- signPath
           info.Arguments <- args) System.TimeSpan.MaxValue
       if result <> 0 then failwithf "Error during sign call " )
+  traceEndTask "Sign-Tool" certFile

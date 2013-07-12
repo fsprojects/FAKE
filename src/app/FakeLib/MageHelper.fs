@@ -135,7 +135,9 @@ let MageSignDeploy (mp : MageParams) =
   mageCall SignDeploy mp
 
 let MageRun (mp : MageParams) =
+  traceStartTask "Mage-Tool" mp.ApplicationFile
   MageCreateApp mp
   MageSignManifest mp
   MageDeployApp mp
   MageSignDeploy mp
+  traceEndTask "Mage-Tool" mp.ApplicationFile
