@@ -89,6 +89,11 @@ let rec isSubfolderOf (dir2:DirectoryInfo) (dir1:DirectoryInfo) =
     dir1.Parent
     |> isSubfolderOf dir2    
 
+/// <summary>Checks if the file is in a subfolder of the dir.</summary>
+/// <user />
+let isInFolder (dir:DirectoryInfo) (fileInfo:FileInfo) = isSubfolderOf dir fileInfo.Directory
+
+
 /// <summary>Checks if the directory exists on disk.</summary>
 /// <user/>
 let directoryExists = Directory.Exists
