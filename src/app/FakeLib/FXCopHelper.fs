@@ -139,7 +139,7 @@ let FxCop setParams (assemblies: string seq) =
     let criticalErrors,errors,criticalWarnings,warnings = checkForErrors param.ReportFileName
     if criticalErrors <> 0 && param.FailOnError >= FxCopErrorLevel.CriticalError then
       failwithf "FxCop found %d critical errors." criticalErrors
-    if criticalErrors <> 0 && param.FailOnError >= FxCopErrorLevel.Error then
+    if errors <> 0 && param.FailOnError >= FxCopErrorLevel.Error then
       failwithf "FxCop found %d errors." errors      
     if criticalWarnings <> 0 && param.FailOnError >= FxCopErrorLevel.CriticalWarning then
       failwithf "FxCop found %d critical warnings." criticalWarnings
