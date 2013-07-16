@@ -80,6 +80,7 @@ let rec normalizeFileName (fileName:string) =
       .Replace("\\", Path.DirectorySeparatorChar.ToString())
       .Replace("/", Path.DirectorySeparatorChar.ToString())
       .TrimEnd(Path.DirectorySeparatorChar)
+      .ToLower()
 
 /// <summary>Checks if dir1 is a subfolder of dir2. If dir1 equals dir2 the function returns also true.</summary>
 /// <user />

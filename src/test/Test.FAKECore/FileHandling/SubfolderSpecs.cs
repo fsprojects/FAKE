@@ -19,6 +19,8 @@ namespace Test.FAKECore.FileHandling
         It should_detect_same_dir_slashes = () => FileSystemHelper.isInFolder(new DirectoryInfo("C:\\sub\\"), new FileInfo("C:/sub/file.txt")).ShouldBeTrue();
         It should_detect_1_level = () => FileSystemHelper.isInFolder(new DirectoryInfo("C:/sub"), new FileInfo("C:\\sub\\sub1\\file.txt")).ShouldBeTrue();
         It should_detect_2_levels = () => FileSystemHelper.isInFolder(new DirectoryInfo("C:/sub"), new FileInfo("C:\\sub\\sub1\\sub2\\file.txt")).ShouldBeTrue();
+        It should_detect_caseinsensitive = () =>
+            FileSystemHelper.isInFolder(new DirectoryInfo("C:\\code\\uen\\data"), new FileInfo("C:\\code\\uen\\Data\\Demo\\Prozessvorlagen\\4000004.XML")).ShouldBeTrue();
         It should_detect_if_not_sub = () => FileSystemHelper.isInFolder(new DirectoryInfo("C:/sub"), new FileInfo("C:\\main\\sub\\sub2\\file.txt")).ShouldBeFalse();
     }
 }
