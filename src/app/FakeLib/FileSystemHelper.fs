@@ -73,6 +73,22 @@ let checkFileExists fileName =
 /// <user />
 let allFilesExist files = Seq.forall fileExists files
 
+/// <summary>Normalizes a filename.</summary>
+/// <user />
+let rec normalizeFileName (fileName:string) = 
+    fileName
+      .Replace("\\", Path.DirectorySeparatorChar.ToString())
+      .Replace("/", Path.DirectorySeparatorChar.ToString())
+      .TrimEnd(Path.DirectorySeparatorChar)
+
+/// <summary>Checks if dir1 is a subfolder of dir2. If dir1 equals dir2 the function returns also true.</summary>
+/// <user />
+let rec isSubfolderOf (dir2:DirectoryInfo) (dir1:DirectoryInfo) = 
+    if normalizeFileName dir1.FullName = normalizeFileName dir2.FullName then true else
+    if dir1.Parent = null then false else
+    dir1.Parent
+    |> isSubfolderOf dir2    
+
 /// <summary>Checks if the directory exists on disk.</summary>
 /// <user/>
 let directoryExists = Directory.Exists
