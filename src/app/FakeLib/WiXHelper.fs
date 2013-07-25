@@ -51,12 +51,17 @@ open System
 
 type WiXParams = 
     { ToolDirectory: string;
-      TimeOut: TimeSpan }
+      TimeOut: TimeSpan;
+      AdditionalCandleArgs: string list;
+      AdditionalLightArgs: string list;
+       }
 
 /// WiX default params  
 let WiXDefaults : WiXParams = 
     { ToolDirectory = currentDirectory @@ "tools" @@ "Wix";
-      TimeOut = TimeSpan.FromMinutes 5.0 }
+      TimeOut = TimeSpan.FromMinutes 5.0;
+      AdditionalCandleArgs = [ "-ext WiXNetFxExtension" ];
+      AdditionalLightArgs = [ "-ext WiXNetFxExtension"; "-ext WixUIExtension.dll"; "-ext WixUtilExtension.dll" ] }
    
 let Candle (parameters:WiXParams) wixScript = 
     traceStartTask "Candle" wixScript  
@@ -66,9 +71,10 @@ let Candle (parameters:WiXParams) wixScript =
 
     let tool = parameters.ToolDirectory @@ "candle.exe"
     let args = 
-        sprintf "-out \"%s\" \"%s\" -ext WiXNetFxExtension" 
+        sprintf "-out \"%s\" \"%s\" %s" 
             wixObj
             (wixScript |> FullName)
+            (separated " " parameters.AdditionalCandleArgs)
 
     tracefn "%s %s" parameters.ToolDirectory args
     if not (execProcess3 (fun info ->  
@@ -87,9 +93,10 @@ let Light (parameters:WiXParams) outputFile wixObj =
 
     let tool = parameters.ToolDirectory @@ "light.exe"
     let args = 
-            sprintf "\"%s\" -spdb -dcl:high -out \"%s\" -ext WiXNetFxExtension -ext WixUIExtension.dll -ext WixUtilExtension.dll" 
+            sprintf "\"%s\" -spdb -dcl:high -out \"%s\" %s" 
                 (wixObj |> FullName)
                 (outputFile |> FullName)
+                (separated " " parameters.AdditionalLightArgs)
 
     tracefn "%s %s" parameters.ToolDirectory args
     if not (execProcess3 (fun info ->  
