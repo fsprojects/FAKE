@@ -310,21 +310,13 @@ let findVersionTagListInString text =
     if VersionRegex.IsMatch text then VersionRegex.Match(text).Groups.["VersionList"].Value else ""
 
 let replaceInVersionTag (text:string) (versionTag:string) (newVersion:string) =
-    let oldTags = text.Split(Colon)
-
-    let newTags = new StringBuilder()
-    
-    oldTags
-    |> Seq.iteri (fun i tag ->
-        if i > 0 then newTags.Append Colon |> ignore
-
-        if tag.ToUpper().StartsWith(versionTag.ToUpper()) then
-            newTags.Append(versionTag.ToUpper()) |> ignore
-            newTags.Append newVersion |> ignore
-        else
-            newTags.Append tag |> ignore)
-
-    newTags.ToString()
+    text.Split Colon
+    |> Seq.map (fun tag ->
+          if tag.ToUpper().StartsWith(versionTag.ToUpper()) then
+              versionTag.ToUpper() + newVersion
+          else
+              tag)
+    |> separated (Colon.ToString())
 
 let replaceVersionTag versionTag (newVersion:string) sourceCode =
     let tagList = findVersionTagListInString sourceCode
