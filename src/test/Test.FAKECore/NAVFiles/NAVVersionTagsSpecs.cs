@@ -69,4 +69,17 @@ namespace Test.FAKECore.NAVFiles
         It should_find_the_double_replaced_tag = () => _result.ShouldNotContain("NIWNIW01.01");
         It should_find_the_tag = () => _result.ShouldContain("NIW01.01");
     }
+
+    public class CanAddMissingTag
+    {
+        static string _navisionObject;
+        static string _result;
+
+        Establish context = () => _navisionObject = File.ReadAllText(@"NAVFiles\Report_1095_with_weird_version.txt");
+
+        Because of = () => _result = DynamicsNav.replaceVersionTag("LEH", "LEH01.01", _navisionObject);
+        
+        It should_find_the__new_tag = () => _result.ShouldContain("LEH01.01");
+    }
+
 }
