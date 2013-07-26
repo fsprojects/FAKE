@@ -301,3 +301,34 @@ let analyzeTestResults fileName =
         let tests = getTests messages
 
         Some { SuiteName = suiteName; Tests = tests }
+
+open System.Text.RegularExpressions
+
+let VersionRegex = new Regex(@"\n\s\s\s\sVersion List\=(?<VersionList>[^;\s]*);", RegexOptions.Compiled)
+
+let findVersionTagListInString text =
+    if VersionRegex.IsMatch text then VersionRegex.Match(text).Groups.["VersionList"].Value else ""
+
+let replaceInVersionTag (text:string) (versionTag:string) (newVersion:string) =
+    let oldTags = text.Split(Colon)
+
+    let newTags = new StringBuilder()
+    let i = ref 0
+    for tag in oldTags do
+        if !i > 0 then newTags.Append(Colon) |> ignore
+
+        if tag.ToUpper().StartsWith(versionTag.ToUpper()) then
+            newTags.Append(versionTag.ToUpper()) |> ignore
+            newTags.Append(newVersion) |> ignore
+        else
+            newTags.Append(tag) |> ignore
+        i := !i + 1
+
+    newTags.ToString()
+
+let replaceVersionTag versionTag (newVersion:string) sourceCode =
+    let tagList = findVersionTagListInString sourceCode
+
+    let newTags = replaceInVersionTag tagList versionTag (newVersion.Replace(versionTag,""))
+
+    VersionRegex.Replace(sourceCode, String.Format("\n    Version List={0};", newTags))
