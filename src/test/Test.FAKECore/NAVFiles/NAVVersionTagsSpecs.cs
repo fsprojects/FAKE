@@ -57,17 +57,12 @@ namespace Test.FAKECore.NAVFiles
     }
 
 
-    public class CanFindTagInReport1095
+    public class DoesNotReplaceTwice
     {
         static string _navisionObject;
-        static string _expectedObject;
         static string _result;
 
-        Establish context = () =>
-        {
-            _navisionObject = File.ReadAllText(@"NAVFiles\Report_1095_with_weird_version.txt");
-            _expectedObject = File.ReadAllText(@"NAVFiles\Report_1095_with_weird_version.txt");
-        };
+        Establish context = () => _navisionObject = File.ReadAllText(@"NAVFiles\Report_1095_with_weird_version.txt");
 
         Because of = () => _result = DynamicsNav.replaceVersionTag("NIW", "NIW01.01", _navisionObject);
 
