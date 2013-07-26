@@ -117,6 +117,7 @@
     <Compile Include="Deploy\DeploymentAgent.fs" />
     <Compile Include="PermissionsHelper.fs" />
     <Compile Include="SpecFlowHelper.fs" />
+    <Compile Include="OctoTools.fs" />
     <None Include="packages.config" />
     <None Include="packages.config" />
   </ItemGroup>
