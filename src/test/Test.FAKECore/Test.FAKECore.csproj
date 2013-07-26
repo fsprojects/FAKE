@@ -82,7 +82,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileHandling\PathDetectionSpecs.cs" />
     <Compile Include="FileHandling\SubfolderSpecs.cs" />
     <Compile Include="FileHandling\FileReplacementSpecs.cs" />
     <Compile Include="FSharp.Testing.cs" />
