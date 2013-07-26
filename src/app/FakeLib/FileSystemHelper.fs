@@ -108,3 +108,11 @@ let inline ensureDirExists (dir : DirectoryInfo) =
 /// <user/>
 let inline ensureDirectory dir = 
     directoryInfo dir |> ensureDirExists
+
+/// <summary>Detects whether it the given path is a file</summary>
+/// <user/>
+let isFile path = Path.HasExtension path
+
+/// <summary>Detects whether it the given path is a directory</summary>
+/// <user/>
+let isDirectory path = isFile path |> not
