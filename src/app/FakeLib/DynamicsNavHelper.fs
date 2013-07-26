@@ -313,16 +313,16 @@ let replaceInVersionTag (text:string) (versionTag:string) (newVersion:string) =
     let oldTags = text.Split(Colon)
 
     let newTags = new StringBuilder()
-    let i = ref 0
-    for tag in oldTags do
-        if !i > 0 then newTags.Append(Colon) |> ignore
+    
+    oldTags
+    |> Seq.iteri (fun i tag ->
+        if i > 0 then newTags.Append Colon |> ignore
 
         if tag.ToUpper().StartsWith(versionTag.ToUpper()) then
             newTags.Append(versionTag.ToUpper()) |> ignore
-            newTags.Append(newVersion) |> ignore
+            newTags.Append newVersion |> ignore
         else
-            newTags.Append(tag) |> ignore
-        i := !i + 1
+            newTags.Append tag |> ignore)
 
     newTags.ToString()
 
