@@ -340,3 +340,30 @@ let getInvalidTags invalidTags versionTags =
     invalidTags
         |> Seq.map (fun (iTag:string) -> iTag.ToUpper())
         |> Seq.filter (fun iTag -> versionTags |> Seq.exists (fun (tag:string) -> tag.StartsWith iTag))
+
+let checkTagsInObjectString requiredTags acceptPreTagged invalidTags objectString name =
+    try
+        let tagList = findVersionTagListInString objectString
+        let versionTags = tagList.ToUpper().Split Colon
+
+        let isPreTagged = versionTags |> Seq.exists ((=) "PRE")
+
+        let sb = new StringBuilder()
+        for tag in getMissingRequiredTags requiredTags versionTags do
+            if not (acceptPreTagged && isPreTagged) then
+                sb.AppendFormat("Required VersionTag {0} not found in {1}.", tag, name) |> ignore
+
+        for invalidTag in getInvalidTags invalidTags versionTags do
+            sb.AppendFormat("Invalid VersionTag {0} found in {1}.", invalidTag, name) |> ignore
+
+        if sb.Length > 0 then
+            failwith (sb.ToString())
+
+        objectString, tagList
+    with
+    | ex ->
+        let s = 
+            if ex.InnerException = null then ex.Message else
+            sprintf "%s\r\n - %s" ex.Message ex.InnerException.Message
+
+        failwithf "Error during VersionTag check in %s.\r\nError: %s" name s

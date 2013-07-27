@@ -126,4 +126,29 @@ namespace Test.FAKECore.NAVFiles
 
         It should_find_the__new_tag = () => _result.ShouldContain("LEH01.01");
     }
+
+    public class CanCheckTagsInObjectString
+    {
+        static string _navisionObject;
+
+        Establish context = () =>
+            _navisionObject = File.ReadAllText(@"NAVFiles\Form_with_VersionTag_in_DocuTrigger.txt");
+
+        It should_find_invalid_MCN_tag = () =>
+            Catch.Exception(() => DynamicsNav.checkTagsInObjectString(new string[0], false, new[] {"MCN"}, _navisionObject, "test")).Message
+                .ShouldContain("Invalid VersionTag MCN found");
+
+
+        It should_find_required_MCN_tag = () =>
+            DynamicsNav.checkTagsInObjectString(new[] {"MCN"}, false, new string[0], _navisionObject, "test")
+                .ShouldNotBeNull();
+
+        It should_not_find_invalid_UEN_tag = () =>
+            DynamicsNav.checkTagsInObjectString(new string[0], false, new[] {"UEN"}, _navisionObject, "test")
+                .ShouldNotBeNull();
+
+        It should_not_find_required_UEN_tag = () =>
+            Catch.Exception(() => DynamicsNav.checkTagsInObjectString(new[] {"UEN"}, false, new string[0], _navisionObject, "test")).Message
+                .ShouldContain("Required VersionTag UEN not found");
+    }
 }
