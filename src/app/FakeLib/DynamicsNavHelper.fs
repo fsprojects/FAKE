@@ -331,7 +331,7 @@ let replaceVersionTag versionTag (newVersion:string) sourceCode =
 
     VersionRegex.Replace(sourceCode, String.Format("\n    Version List={0};", newTags))
 
-let getMissingRequiredTags versionTags requiredTags =
+let getMissingRequiredTags requiredTags versionTags =
     requiredTags
         |> Seq.map (fun (rTag:string) -> rTag.ToUpper())
         |> Seq.filter (fun rTag -> versionTags |> Seq.exists (fun (tag:string) -> tag.StartsWith rTag) |> not)

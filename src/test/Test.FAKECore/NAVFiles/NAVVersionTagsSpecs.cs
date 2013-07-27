@@ -24,7 +24,7 @@ namespace Test.FAKECore.NAVFiles
 
         static IEnumerable<string> GetMissingRequiredTags(IEnumerable<string> requiredTags, string tagList)
         {
-            return DynamicsNav.getMissingRequiredTags(DynamicsNav.splitVersionTags(tagList), requiredTags);
+            return DynamicsNav.getMissingRequiredTags(requiredTags, DynamicsNav.splitVersionTags(tagList));
         }
     }
 
