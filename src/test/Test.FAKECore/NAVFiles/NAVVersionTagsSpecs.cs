@@ -155,10 +155,10 @@ namespace Test.FAKECore.NAVFiles
             Catch.Exception(() => DynamicsNav.checkTagsInObjectString(new[] { "UEN" }, false, new string[0], _navisionObject, "test")).Message
                 .ShouldContain("Required VersionTag UEN not found");
 
-        It should_accept_PRE_tag_if_allows = () =>
+        It should_accept_PRE_tag_if_allowed = () =>
             DynamicsNav.checkTagsInObjectString(new[] { "UEN" }, true, new string[0], _navisionObject2, "test");
 
-        It should_not_accept_PRE_tag_if_allows = () =>
+        It should_not_accept_PRE_tag_if_not_allowed = () =>
             Catch.Exception(() => DynamicsNav.checkTagsInObjectString(new[] { "UEN" }, false, new string[0], _navisionObject2, "test")).Message
                 .ShouldContain("Required VersionTag UEN not found");
     }
