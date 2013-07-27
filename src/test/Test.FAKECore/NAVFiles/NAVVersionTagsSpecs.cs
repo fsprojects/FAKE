@@ -130,25 +130,36 @@ namespace Test.FAKECore.NAVFiles
     public class CanCheckTagsInObjectString
     {
         static string _navisionObject;
+        static string _navisionObject2;
 
         Establish context = () =>
+        {
             _navisionObject = File.ReadAllText(@"NAVFiles\Form_with_VersionTag_in_DocuTrigger.txt");
+            _navisionObject2 = File.ReadAllText(@"NAVFiles\PRETaggedReport_1095.txt");
+        };
 
         It should_find_invalid_MCN_tag = () =>
-            Catch.Exception(() => DynamicsNav.checkTagsInObjectString(new string[0], false, new[] {"MCN"}, _navisionObject, "test")).Message
+            Catch.Exception(() => DynamicsNav.checkTagsInObjectString(new string[0], false, new[] { "MCN" }, _navisionObject, "test")).Message
                 .ShouldContain("Invalid VersionTag MCN found");
 
 
         It should_find_required_MCN_tag = () =>
-            DynamicsNav.checkTagsInObjectString(new[] {"MCN"}, false, new string[0], _navisionObject, "test")
+            DynamicsNav.checkTagsInObjectString(new[] { "MCN" }, false, new string[0], _navisionObject, "test")
                 .ShouldNotBeNull();
 
         It should_not_find_invalid_UEN_tag = () =>
-            DynamicsNav.checkTagsInObjectString(new string[0], false, new[] {"UEN"}, _navisionObject, "test")
+            DynamicsNav.checkTagsInObjectString(new string[0], false, new[] { "UEN" }, _navisionObject, "test")
                 .ShouldNotBeNull();
 
         It should_not_find_required_UEN_tag = () =>
-            Catch.Exception(() => DynamicsNav.checkTagsInObjectString(new[] {"UEN"}, false, new string[0], _navisionObject, "test")).Message
+            Catch.Exception(() => DynamicsNav.checkTagsInObjectString(new[] { "UEN" }, false, new string[0], _navisionObject, "test")).Message
+                .ShouldContain("Required VersionTag UEN not found");
+
+        It should_accept_PRE_tag_if_allows = () =>
+            DynamicsNav.checkTagsInObjectString(new[] { "UEN" }, true, new string[0], _navisionObject2, "test");
+
+        It should_not_accept_PRE_tag_if_allows = () =>
+            Catch.Exception(() => DynamicsNav.checkTagsInObjectString(new[] { "UEN" }, false, new string[0], _navisionObject2, "test")).Message
                 .ShouldContain("Required VersionTag UEN not found");
     }
 }

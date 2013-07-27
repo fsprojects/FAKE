@@ -1,0 +1,397 @@
+﻿OBJECT Report 1095 Update Job Item Cost
+{
+  OBJECT-PROPERTIES
+  {
+    Date=01.01.10;
+    Time=12:00:00;
+    Version List=NAVW16.00.01,MCND_06.00.01.00.565,PRE;
+  }
+  PROPERTIES
+  {
+    Permissions=TableData 169=rm;
+    CaptionML=[DEU=Projektartikelpreise aktualisieren;
+               ENU=Update Job Item Cost];
+    ProcessingOnly=Yes;
+  }
+  DATAITEMS
+  {
+    { PROPERTIES
+      {
+        DataItemTable=Table167;
+        DataItemTableView=WHERE(Status=FILTER(<>Completed));
+        OnPreDataItem=BEGIN
+                        NoOfJobLedgEntry := 0;
+                        Job.LOCKTABLE;
+                      END;
+
+        OnPostDataItem=BEGIN
+                         IF HideResult = FALSE THEN BEGIN
+                           IF NoOfJobLedgEntry <> 0 THEN
+                             MESSAGE(Text001 + STRSUBSTNO(Text002,NoOfJobLedgEntry))
+                           ELSE
+                             MESSAGE(Text003);
+                         END;
+                       END;
+
+        ReqFilterFields=No.;
+      }
+      SECTIONS
+      {
+        { PROPERTIES
+          {
+            SectionType=Body;
+            SectionWidth=12000;
+            SectionHeight=846;
+          }
+          CONTROLS
+          {
+          }
+           }
+      }
+       }
+    { PROPERTIES
+      {
+        DataItemIndent=1;
+        DataItemTable=Table169;
+        DataItemTableView=SORTING(Type,Entry Type,Country/Region Code,Source Code,Posting Date)
+                          WHERE(Type=FILTER(=Item),
+                                Entry Type=FILTER(=Usage));
+        OnPreDataItem=BEGIN
+                        "Job Ledger Entry".LOCKTABLE;
+                      END;
+
+        ReqFilterFields=Posting Date;
+        DataItemLink=Job No.=FIELD(No.);
+      }
+      SECTIONS
+      {
+        { PROPERTIES
+          {
+            SectionType=Body;
+            SectionWidth=12000;
+            SectionHeight=846;
+          }
+          CONTROLS
+          {
+          }
+           }
+      }
+       }
+    { PROPERTIES
+      {
+        DataItemIndent=2;
+        DataItemTable=Table32;
+        OnPreDataItem=BEGIN
+                        "Item Ledger Entry".LOCKTABLE;
+                      END;
+
+        OnAfterGetRecord=VAR
+                           AddCurrencyFactor@1000 : Decimal;
+                           JobLedgerEntryCostValue@1001 : Decimal;
+                           JobLedgerEntryCostValueACY@1002 : Decimal;
+                           ValueEntry@1003 : Record 5802;
+                           ValueEntry2@1004 : Record 5802;
+                           l_JobManagement@5128500 : Codeunit 5180014;
+                         BEGIN
+                           ValueEntry.SETCURRENTKEY("Job No.","Job Task No.","Document No.");
+                           ValueEntry.SETRANGE("Job No.","Job Ledger Entry"."Job No.");
+                           ValueEntry.SETRANGE("Job Task No.","Job Ledger Entry"."Job Task No.");
+                           ValueEntry.SETRANGE("Job Ledger Entry No.","Job Ledger Entry"."Entry No.");
+                           ValueEntry.SETRANGE("Item Ledger Entry No.","Item Ledger Entry"."Entry No.");
+                           ValueEntry.SETRANGE("Item Ledger Entry Type",ValueEntry."Item Ledger Entry Type"::"Negative Adjmt.");
+                           ValueEntry.SETRANGE("Document Type",ValueEntry."Document Type"::"Purchase Invoice");
+
+                           IF NOT ValueEntry.FINDFIRST THEN BEGIN
+                             "Item Ledger Entry".CALCFIELDS("Cost Amount (Expected)","Cost Amount (Expected) (ACY)",
+                               "Cost Amount (Actual)", "Cost Amount (Actual) (ACY)");
+                             JobLedgerEntryCostValue := "Cost Amount (Expected)" + "Cost Amount (Actual)";
+                             JobLedgerEntryCostValueACY := "Cost Amount (Expected) (ACY)" + "Cost Amount (Actual) (ACY)";
+                             IF "Job Ledger Entry"."Total Cost (LCY)" <> -JobLedgerEntryCostValue THEN BEGIN
+
+                               //Update Total Costs
+                               "Job Ledger Entry"."Total Cost (LCY)" := -JobLedgerEntryCostValue;
+                               IF "Job Ledger Entry"."Currency Code" = '' THEN
+                                 "Job Ledger Entry"."Total Cost" := -JobLedgerEntryCostValue
+                               ELSE
+                                 "Job Ledger Entry"."Total Cost" := -JobLedgerEntryCostValue *
+                                 "Job Ledger Entry"."Currency Factor";
+                               IF JobLedgerEntryCostValueACY <> 0 THEN
+                                 "Job Ledger Entry"."Additional-Currency Total Cost" := -JobLedgerEntryCostValueACY;
+
+                               //Update Unit Costs
+                               "Job Ledger Entry"."Unit Cost (LCY)" :=
+                                 "Job Ledger Entry"."Total Cost (LCY)"/"Job Ledger Entry".Quantity;
+                               "Job Ledger Entry"."Unit Cost" :=
+                                 "Job Ledger Entry"."Total Cost"/"Job Ledger Entry".Quantity;
+
+                               "Job Ledger Entry".Adjusted := TRUE;
+                               "Job Ledger Entry"."DateTime Adjusted" := CURRENTDATETIME;
+                               "Job Ledger Entry".MODIFY;
+
+                               // MDE02 MSUWW Start
+                               UpdateJobLedgerIndCosts("Job Ledger Entry");
+                               // MDE02 MSUWW End
+                               // MDE01 UEN Start
+                               UpdateJobPlanningLines("Item Ledger Entry","Job Ledger Entry");
+                               // MDE01 UEN End
+                               // MDE03 MSUWW Start
+                               l_JobManagement.InsertJLETracking("Job Ledger Entry");
+                               // MDE03 MSUWW End
+
+                               NoOfJobLedgEntry := NoOfJobLedgEntry + 1;
+                             END;
+                           END ELSE BEGIN
+                             ValueEntry.SETRANGE(Adjustment,FALSE);
+                             IF ValueEntry.FINDFIRST THEN BEGIN
+                               JobLedgerEntryCostValue := ValueEntry."Cost Amount (Actual)";
+                               JobLedgerEntryCostValueACY := ValueEntry."Cost Amount (Actual) (ACY)";
+
+                               ValueEntry2.SETCURRENTKEY("Item Ledger Entry No.","Entry Type");
+                               ValueEntry2.SETRANGE("Item Ledger Entry No.","Item Ledger Entry"."Entry No.");
+                               ValueEntry2.SETRANGE("Document No.",ValueEntry."Document No.");
+                               ValueEntry2.SETRANGE("Item Ledger Entry Type",ValueEntry."Item Ledger Entry Type"::"Negative Adjmt.");
+                               ValueEntry2.SETRANGE("Document Type",ValueEntry."Document Type"::"Purchase Invoice");
+                               ValueEntry2.SETRANGE(Adjustment,TRUE);
+                               IF ValueEntry2.FINDSET THEN BEGIN
+                                 REPEAT
+                                   JobLedgerEntryCostValue := JobLedgerEntryCostValue + ValueEntry2."Cost Amount (Actual)";
+                                   JobLedgerEntryCostValueACY := JobLedgerEntryCostValueACY + ValueEntry2."Cost Amount (Actual) (ACY)";
+                                   IF ValueEntry2."Job Ledger Entry No." = 0 THEN BEGIN
+                                     ValueEntry2."Job No." := ValueEntry."Job No.";
+                                     ValueEntry2."Job Task No." := ValueEntry."Job Task No.";
+                                     ValueEntry2."Job Ledger Entry No." := ValueEntry."Job Ledger Entry No.";
+                                     ValueEntry2.MODIFY;
+                                   END;
+                                 UNTIL ValueEntry2.NEXT = 0;
+
+                                 IF "Job Ledger Entry"."Total Cost (LCY)" <> -JobLedgerEntryCostValue THEN BEGIN
+                                   //Update Total Costs
+                                   "Job Ledger Entry"."Total Cost (LCY)" := -JobLedgerEntryCostValue;
+                                   IF "Job Ledger Entry"."Currency Code" = '' THEN
+                                     "Job Ledger Entry"."Total Cost" := -JobLedgerEntryCostValue
+                                   ELSE
+                                     "Job Ledger Entry"."Total Cost" := -JobLedgerEntryCostValue *
+                                     "Job Ledger Entry"."Currency Factor";
+                                   IF JobLedgerEntryCostValueACY <> 0 THEN
+                                     "Job Ledger Entry"."Additional-Currency Total Cost" := -JobLedgerEntryCostValueACY;
+
+                                   //Update Unit Costs
+                                   "Job Ledger Entry"."Unit Cost (LCY)" :=
+                                     "Job Ledger Entry"."Total Cost (LCY)"/"Job Ledger Entry".Quantity;
+                                   "Job Ledger Entry"."Unit Cost" :=
+                                     "Job Ledger Entry"."Total Cost"/"Job Ledger Entry".Quantity;
+
+                                   "Job Ledger Entry".Adjusted := TRUE;
+                                   "Job Ledger Entry"."DateTime Adjusted" := CURRENTDATETIME;
+
+                                   "Job Ledger Entry".MODIFY;
+
+                                   // MDE02 MSUWW Start
+                                   UpdateJobLedgerIndCosts("Job Ledger Entry");
+                                   // MDE02 MSUWW End
+                                   // MDE01 UEN Start
+                                   UpdateJobPlanningLines("Item Ledger Entry","Job Ledger Entry");
+                                   // MDE01 UEN End
+                                   // MDE03 MSUWW Start
+                                   l_JobManagement.InsertJLETracking("Job Ledger Entry");
+                                   // MDE03 MSUWW End
+
+                                   NoOfJobLedgEntry := NoOfJobLedgEntry + 1;
+                                 END;
+                               END;
+                             END;
+                           END;
+                         END;
+
+        DataItemLink=Entry No.=FIELD(Ledger Entry No.);
+      }
+      SECTIONS
+      {
+        { PROPERTIES
+          {
+            SectionType=Body;
+            SectionWidth=12000;
+            SectionHeight=846;
+          }
+          CONTROLS
+          {
+          }
+           }
+      }
+       }
+  }
+  REQUESTFORM
+  {
+    PROPERTIES
+    {
+      Width=9020;
+      Height=3410;
+    }
+    CONTROLS
+    {
+    }
+  }
+  CODE
+  {
+    VAR
+      Text001@1000 : TextConst 'DEU=Die Projektposten-Artikelkosten wurden jetzt aktualisiert, damit sie den verkn�pften Artikelposten-Istkosten entsprechen.;ENU=The Job Ledger Entry item costs have now been updated to equal the related item ledger entry actual costs.';
+      NoOfJobLedgEntry@1002 : Integer;
+      Text002@1003 : TextConst 'DEU="\\Anzahl der ge�nderten Projektposten = %1.";ENU="\\Number of Job Ledger Entries modified = %1."';
+      Text003@1001 : TextConst 'DEU=Es waren keine Projektposten vorhanden, die aktualisiert werden mussten.;ENU=There were no job ledger entries that needed to be updated.';
+      HideResult@1004 : Boolean;
+      g_msu_NoOfJobPlanningLines@5128500 : Integer;
+
+    PROCEDURE SetProperties@1(SuppressSummary@1000 : Boolean);
+    BEGIN
+      HideResult := SuppressSummary;
+    END;
+
+    PROCEDURE UpdateJobLedgerIndCosts@5128501(VAR v_JobLedgerEntry@5128501 : Record 169);
+    VAR
+      l_JobsSetup@5128500 : Record 315;
+      l_ProjectCalculationSetup@5128503 : Record 5180014;
+      l_IndUnitCost@5128502 : Decimal;
+      l_JobCalcManagement@5128504 : Codeunit 5180011;
+      l_JobTask@5128505 : Record 1001;
+      l_CurrExchRate@5128506 : Record 330;
+      l_Currency@5128508 : Record 4;
+    BEGIN
+      // MDE02 MSUWW Start
+      l_JobsSetup.GET;
+      l_JobTask.GET(v_JobLedgerEntry."Job No.",v_JobLedgerEntry."Job Task No.");
+
+      IF l_JobTask."Currency Code" = '' THEN
+        l_Currency.GET(Job."Currency Code")
+      ELSE
+        l_Currency.GET(l_JobTask."Currency Code");
+
+      l_JobCalcManagement.GetProjectCalcSetup(
+        v_JobLedgerEntry."Job No.",
+        v_JobLedgerEntry."Job Task No.",
+        v_JobLedgerEntry."Project Ledger Entry Type Code",
+        l_ProjectCalculationSetup);
+
+      l_IndUnitCost :=
+        ROUND(v_JobLedgerEntry."Unit Cost" * v_JobLedgerEntry."Ind. Costs %"/100,l_JobsSetup."Ind. Unit Cost Rounding Prec.");
+
+      v_JobLedgerEntry."Total Ind. Cost" :=
+        ROUND(l_IndUnitCost * v_JobLedgerEntry.Quantity,l_JobsSetup."Ind. Unit Cost Rounding Prec.");
+
+      v_JobLedgerEntry."Unit Price" :=
+        l_JobCalcManagement.GetCalcIndCost(
+          l_ProjectCalculationSetup,
+          l_JobTask,
+          v_JobLedgerEntry."Unit Cost",
+          v_JobLedgerEntry.Quantity,
+          v_JobLedgerEntry."Ind. Costs %");
+
+      v_JobLedgerEntry."Unit Price (LCY)" := ROUND(
+          l_CurrExchRate.ExchangeAmtFCYToLCY(
+            v_JobLedgerEntry."Posting Date",v_JobLedgerEntry."Currency Code",
+            v_JobLedgerEntry."Unit Price",v_JobLedgerEntry."Currency Factor"),
+          l_JobCalcManagement.GetUnitAmountRoundingPrecByJLE(v_JobLedgerEntry,1));
+
+      v_JobLedgerEntry."Total Price" := ROUND(
+        v_JobLedgerEntry.Quantity * v_JobLedgerEntry."Unit Price",
+          l_JobCalcManagement.GetUnitAmountRoundingPrecByJLE(v_JobLedgerEntry,2));
+
+      v_JobLedgerEntry."Total Price (LCY)" := ROUND(
+          l_CurrExchRate.ExchangeAmtFCYToLCY(
+            v_JobLedgerEntry."Posting Date",v_JobLedgerEntry."Currency Code",
+            v_JobLedgerEntry."Total Price",v_JobLedgerEntry."Currency Factor"),
+          l_JobCalcManagement.GetUnitAmountRoundingPrecByJLE(v_JobLedgerEntry,2));
+
+      v_JobLedgerEntry."Line Discount Amount" := ROUND(
+        v_JobLedgerEntry."Total Price" * v_JobLedgerEntry."Line Discount %" / 100,
+          l_JobCalcManagement.GetUnitAmountRoundingPrecByJLE(v_JobLedgerEntry,2));
+
+      v_JobLedgerEntry."Line Amount" := v_JobLedgerEntry."Total Price" - v_JobLedgerEntry."Line Discount Amount";
+
+      v_JobLedgerEntry."Line Discount Amount (LCY)" := ROUND(
+          l_CurrExchRate.ExchangeAmtFCYToLCY(
+            v_JobLedgerEntry."Posting Date",v_JobLedgerEntry."Currency Code",
+            v_JobLedgerEntry."Line Discount Amount",v_JobLedgerEntry."Currency Factor"),
+          l_JobCalcManagement.GetUnitAmountRoundingPrecByJLE(v_JobLedgerEntry,2));
+
+      v_JobLedgerEntry."Line Amount (LCY)" := v_JobLedgerEntry."Total Price (LCY)" - v_JobLedgerEntry."Line Discount Amount (LCY)";
+
+      v_JobLedgerEntry."Add.-Currency Total Price" :=
+        ROUND(
+          l_CurrExchRate.ExchangeAmtLCYToFCY(
+            v_JobLedgerEntry."Posting Date",
+            l_Currency.Code,
+            v_JobLedgerEntry."Total Price (LCY)",
+            l_CurrExchRate.ExchangeRate(
+              v_JobLedgerEntry."Posting Date",
+              l_Currency.Code)),
+          l_Currency."Amount Rounding Precision");
+
+      v_JobLedgerEntry."Add.-Currency Line Amount" :=
+        ROUND(
+          l_CurrExchRate.ExchangeAmtLCYToFCY(
+            v_JobLedgerEntry."Posting Date",
+            l_Currency.Code,
+            v_JobLedgerEntry."Line Amount (LCY)",
+            l_CurrExchRate.ExchangeRate(
+              v_JobLedgerEntry."Posting Date",
+              l_Currency.Code)),
+          l_Currency."Amount Rounding Precision");
+
+      v_JobLedgerEntry."Original Total Cost (ACY)" := v_JobLedgerEntry."Additional-Currency Total Cost";
+
+      v_JobLedgerEntry.MODIFY;
+      // MDE02 MSUWW End
+    END;
+
+    PROCEDURE UpdateJobPlanningLines@5128500(VAR v_ItemLedgerEntry@5128501 : Record 32;VAR v_JobLedgerEntry@5128503 : Record 169);
+    VAR
+      l_JobPlanningLine@5128500 : Record 1003;
+    BEGIN
+      // MDE01 UEN Start
+      l_JobPlanningLine.SETRANGE("Job No.",v_ItemLedgerEntry."Job No.");
+      l_JobPlanningLine.SETRANGE("Job Task No.",v_ItemLedgerEntry."Job Task No.");
+      l_JobPlanningLine.SETRANGE("Ledger Entry Type",l_JobPlanningLine."Ledger Entry Type"::Item);
+      l_JobPlanningLine.SETRANGE("Ledger Entry No.",v_ItemLedgerEntry."Entry No.");
+      l_JobPlanningLine.SETRANGE(Invoiced,FALSE);
+      l_JobPlanningLine.SETRANGE("Line Type",l_JobPlanningLine."Line Type"::Contract);
+
+      IF l_JobPlanningLine.FINDFIRST THEN
+        REPEAT
+          l_JobPlanningLine."Unit Cost (LCY)" := v_JobLedgerEntry."Unit Cost (LCY)";
+          l_JobPlanningLine."Unit Cost" := v_JobLedgerEntry."Unit Cost";
+          l_JobPlanningLine."Total Cost (LCY)" := v_JobLedgerEntry."Total Cost (LCY)";
+          l_JobPlanningLine."Total Cost" := v_JobLedgerEntry."Total Cost";
+
+          l_JobPlanningLine."Unit Price" := v_JobLedgerEntry."Unit Price";
+          l_JobPlanningLine."Unit Price (LCY)" := v_JobLedgerEntry."Unit Price (LCY)";
+          l_JobPlanningLine."Total Price" := v_JobLedgerEntry."Total Price";
+          l_JobPlanningLine."Total Price (LCY)" := v_JobLedgerEntry."Total Price (LCY)";
+
+          l_JobPlanningLine."Line Amount" := v_JobLedgerEntry."Line Amount";
+          l_JobPlanningLine."Line Discount Amount" := v_JobLedgerEntry."Line Discount Amount";
+          l_JobPlanningLine."Line Amount (LCY)" := v_JobLedgerEntry."Line Amount (LCY)";
+          l_JobPlanningLine."Line Discount Amount (LCY)" := v_JobLedgerEntry."Line Discount Amount (LCY)";
+
+          l_JobPlanningLine.Adjustment := TRUE;
+          l_JobPlanningLine."DateTime Adjusted" := CURRENTDATETIME;
+          l_JobPlanningLine.MODIFY;
+
+          l_JobPlanningLine.MODIFY;
+
+          g_msu_NoOfJobPlanningLines := g_msu_NoOfJobPlanningLines + 1;
+        UNTIL l_JobPlanningLine.NEXT = 0;
+      // MDE01 UEN End
+    END;
+
+    BEGIN
+    {
+      MDE01 - MSU,UEN, Daniel Erling - 27.08.2010,
+        I00014124 - Report "Update Job Item Cost" so anpassen, dass er die Neuberechnung in die Planzeilen �bertr�gt
+      MDE02 - MSU,MSUWW, Daniel Erling - 31.08.2010,
+        I00014146 - Neuberechnung von GMK und VK-Preisen bei Projektposten-Regulierung
+      MDE03 - MSU,MSUWW, Daniel Erling - 31.08.2010,
+        I00014147 - Gemeinkosten-Sachkontenbuchungen
+    }
+    END.
+  }
+}
