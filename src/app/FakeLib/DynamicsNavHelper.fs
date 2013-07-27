@@ -309,20 +309,20 @@ let VersionRegex = new Regex(@"\n\s\s\s\sVersion List\=(?<VersionList>[^;\s]*);"
 let findVersionTagListInString text =
     if VersionRegex.IsMatch text then VersionRegex.Match(text).Groups.["VersionList"].Value else ""
 
+let splitVersionTags (tagList:string) = tagList.ToUpper().Split Colon
+
 let replaceInVersionTag (text:string) (versionTag:string) (newVersion:string) =
-    if text.Contains versionTag then
-        text.Split Colon
+    let versionTag = versionTag.ToUpper()
+    if text.ToUpper().Contains versionTag then
+        splitVersionTags text
         |> Seq.map (fun tag ->
-              if tag.ToUpper().StartsWith(versionTag.ToUpper()) then
-                  versionTag.ToUpper() + newVersion
+              if tag.StartsWith versionTag then
+                  versionTag + newVersion
               else
                   tag)
         |> separated (Colon.ToString())
     else
-        text + Colon.ToString() + versionTag.ToUpper() + newVersion
-        
-
-let splitVersionTags (tagList:string) = tagList.ToUpper().Split(',')
+        text + Colon.ToString() + versionTag + newVersion        
 
 let replaceVersionTag versionTag (newVersion:string) sourceCode =
     let tagList = findVersionTagListInString sourceCode
@@ -330,7 +330,6 @@ let replaceVersionTag versionTag (newVersion:string) sourceCode =
     let newTags = replaceInVersionTag tagList versionTag (newVersion.Replace(versionTag,""))
 
     VersionRegex.Replace(sourceCode, String.Format("\n    Version List={0};", newTags))
-
 
 let getMissingRequiredTags versionTags requiredTags =
     requiredTags
