@@ -28,6 +28,26 @@ namespace Test.FAKECore.NAVFiles
         }
     }
 
+    public class CanDetectInvalidTags
+    {
+        It should_find_invalid_IssueNo = () =>
+            GetInvalidTags(new[] {"P0", "I00"}, "MCN,MSUWW001,I0001,foo").ShouldNotBeEmpty();
+
+
+        It should_find_invalid_project_tag = () =>
+            GetInvalidTags(new[] {"P0"}, "P0001,foo").ShouldNotBeEmpty();
+
+
+        It should_not_complain_project_suffix = () =>
+            GetInvalidTags(new[] {"P0"}, "MCNP000,foo").ShouldBeEmpty();
+
+
+        static IEnumerable<string> GetInvalidTags(IEnumerable<string> invalidTags, string tagList)
+        {
+            return DynamicsNav.getInvalidTags(invalidTags, DynamicsNav.splitVersionTags(tagList));
+        }
+    }
+
 
     public class CanReplaceVersionInCodeunit1
     {

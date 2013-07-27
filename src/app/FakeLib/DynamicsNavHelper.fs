@@ -335,3 +335,8 @@ let getMissingRequiredTags requiredTags versionTags =
     requiredTags
         |> Seq.map (fun (rTag:string) -> rTag.ToUpper())
         |> Seq.filter (fun rTag -> versionTags |> Seq.exists (fun (tag:string) -> tag.StartsWith rTag) |> not)
+
+let getInvalidTags invalidTags versionTags =
+    invalidTags
+        |> Seq.map (fun (iTag:string) -> iTag.ToUpper())
+        |> Seq.filter (fun iTag -> versionTags |> Seq.exists (fun (tag:string) -> tag.StartsWith iTag))
