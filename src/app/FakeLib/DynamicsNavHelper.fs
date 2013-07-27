@@ -322,9 +322,17 @@ let replaceInVersionTag (text:string) (versionTag:string) (newVersion:string) =
         text + Colon.ToString() + versionTag.ToUpper() + newVersion
         
 
+let splitVersionTags (tagList:string) = tagList.ToUpper().Split(',')
+
 let replaceVersionTag versionTag (newVersion:string) sourceCode =
     let tagList = findVersionTagListInString sourceCode
 
     let newTags = replaceInVersionTag tagList versionTag (newVersion.Replace(versionTag,""))
 
     VersionRegex.Replace(sourceCode, String.Format("\n    Version List={0};", newTags))
+
+
+let getMissingRequiredTags versionTags requiredTags =
+    requiredTags
+        |> Seq.map (fun (rTag:string) -> rTag.ToUpper())
+        |> Seq.filter (fun rTag -> versionTags |> Seq.exists (fun (tag:string) -> tag.StartsWith rTag) |> not)

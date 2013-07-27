@@ -1,9 +1,34 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using Fake;
 using Machine.Specifications;
 
 namespace Test.FAKECore.NAVFiles
 {
+    public class CanDetectRequiredTags
+    {
+        It should_find_MCN_Tag = () =>
+            GetMissingRequiredTags(new[] {"MCN"}, "MCN000,foo").ShouldBeEmpty();
+
+
+        It should_find_MSUWW_in_tags = () =>
+            GetMissingRequiredTags(new[] {"MSUWW"}, "TEST1,MSUWW3").ShouldBeEmpty();
+
+
+        It should_find_missing_MSUWW = () =>
+            GetMissingRequiredTags(new[] {"TEST", "MCN", "MSUWW"}, "TEST1,MCN000,foo")
+                .ShouldNotBeEmpty();
+
+        It should_find_missing_comma = () =>
+            GetMissingRequiredTags(new[] {"MSUWW"}, "TEST1MSUWW3").ShouldNotBeEmpty();
+
+        static IEnumerable<string> GetMissingRequiredTags(IEnumerable<string> requiredTags, string tagList)
+        {
+            return DynamicsNav.getMissingRequiredTags(DynamicsNav.splitVersionTags(tagList), requiredTags);
+        }
+    }
+
+
     public class CanReplaceVersionInCodeunit1
     {
         static string _navisionObject;
@@ -78,8 +103,7 @@ namespace Test.FAKECore.NAVFiles
         Establish context = () => _navisionObject = File.ReadAllText(@"NAVFiles\Report_1095_with_weird_version.txt");
 
         Because of = () => _result = DynamicsNav.replaceVersionTag("LEH", "LEH01.01", _navisionObject);
-        
+
         It should_find_the__new_tag = () => _result.ShouldContain("LEH01.01");
     }
-
 }
