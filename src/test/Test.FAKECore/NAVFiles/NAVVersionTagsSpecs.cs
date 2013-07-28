@@ -2,25 +2,26 @@
 using System.IO;
 using Fake;
 using Machine.Specifications;
+using System;
 
 namespace Test.FAKECore.NAVFiles
 {
     public class CanDetectRequiredTags
     {
         It should_find_MCN_Tag = () =>
-            GetMissingRequiredTags(new[] {"MCN"}, "MCN000,foo").ShouldBeEmpty();
+            GetMissingRequiredTags(new[] { "MCN" }, "MCN000,foo").ShouldBeEmpty();
 
 
         It should_find_MSUWW_in_tags = () =>
-            GetMissingRequiredTags(new[] {"MSUWW"}, "TEST1,MSUWW3").ShouldBeEmpty();
+            GetMissingRequiredTags(new[] { "MSUWW" }, "TEST1,MSUWW3").ShouldBeEmpty();
 
 
         It should_find_missing_MSUWW = () =>
-            GetMissingRequiredTags(new[] {"TEST", "MCN", "MSUWW"}, "TEST1,MCN000,foo")
+            GetMissingRequiredTags(new[] { "TEST", "MCN", "MSUWW" }, "TEST1,MCN000,foo")
                 .ShouldNotBeEmpty();
 
         It should_find_missing_comma = () =>
-            GetMissingRequiredTags(new[] {"MSUWW"}, "TEST1MSUWW3").ShouldNotBeEmpty();
+            GetMissingRequiredTags(new[] { "MSUWW" }, "TEST1MSUWW3").ShouldNotBeEmpty();
 
         static IEnumerable<string> GetMissingRequiredTags(IEnumerable<string> requiredTags, string tagList)
         {
@@ -31,15 +32,15 @@ namespace Test.FAKECore.NAVFiles
     public class CanDetectInvalidTags
     {
         It should_find_invalid_IssueNo = () =>
-            GetInvalidTags(new[] {"P0", "I00"}, "MCN,MSUWW001,I0001,foo").ShouldNotBeEmpty();
+            GetInvalidTags(new[] { "P0", "I00" }, "MCN,MSUWW001,I0001,foo").ShouldNotBeEmpty();
 
 
         It should_find_invalid_project_tag = () =>
-            GetInvalidTags(new[] {"P0"}, "P0001,foo").ShouldNotBeEmpty();
+            GetInvalidTags(new[] { "P0" }, "P0001,foo").ShouldNotBeEmpty();
 
 
         It should_not_complain_project_suffix = () =>
-            GetInvalidTags(new[] {"P0"}, "MCNP000,foo").ShouldBeEmpty();
+            GetInvalidTags(new[] { "P0" }, "MCNP000,foo").ShouldBeEmpty();
 
 
         static IEnumerable<string> GetInvalidTags(IEnumerable<string> invalidTags, string tagList)
@@ -172,5 +173,27 @@ namespace Test.FAKECore.NAVFiles
         It should_find_required_MCN_tag = () =>
             DynamicsNav.checkTagsInFile(new[] { "MCN" }, false, new string[0], @"NAVFiles\Form_with_VersionTag_in_DocuTrigger.txt")
                 .ShouldNotBeNull();
+    }
+
+    public class CanReplaceDate
+    {
+        static string _navisionObject;
+        static string _expectedObject;
+        static string _result;
+
+        Establish context = () =>
+        {
+            string result = @"NAVFiles\Codeunit_1_with_Date_changed.txt";
+            string original = @"NAVFiles\Codeunit_1.txt";
+
+            _navisionObject = File.ReadAllText(original);
+            _expectedObject = File.ReadAllText(result);
+
+        };
+
+        Because of = () =>
+           _result = DynamicsNav.replaceDateTimeInString(new DateTime(2010, 1, 1, 12, 0, 0), _navisionObject);
+
+        It should_replace_the_date = () => _result.ShouldEqual(_expectedObject);
     }
 }
