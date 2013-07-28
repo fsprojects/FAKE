@@ -211,7 +211,7 @@ namespace Test.FAKECore.NAVFiles
             _expectedObject = File.ReadAllText(result);
         };
 
-        It should_remove_the_modified_flag = () => DynamicsNav.ModifiedRegex.Replace(_navisionObject, String.Empty)
+        It should_remove_the_modified_flag = () => DynamicsNav.removeModifiedFlag(_navisionObject)
             .ShouldEqual(_expectedObject);
     }
 }

@@ -316,6 +316,8 @@ let replaceDateTimeInString (dateTime:DateTime) text =
     let t1 = DateRegex.Replace(text, String.Format("\r\n    Date={0};\r\n", dateTime.Date.ToString("dd.MM.yy")))
     TimeRegex.Replace(t1, String.Format("\r\n    Time={0};\r\n", dateTime.ToString("HH:mm:ss")))
 
+let removeModifiedFlag text = ModifiedRegex.Replace(text, String.Empty)
+
 let findVersionTagListInString text =
     if VersionRegex.IsMatch text then VersionRegex.Match(text).Groups.["VersionList"].Value else ""
 
@@ -383,7 +385,7 @@ let checkTagsInObjectString requiredTags acceptPreTagged invalidTags objectStrin
 let checkTagsInFile requiredTags acceptPreTagged invalidTags fileName =
     checkTagsInObjectString requiredTags acceptPreTagged invalidTags (ReadFileAsString fileName) fileName
 
-let modifyNavisionFiles requiredTags acceptPreTagged invalidTags versionTag newVersion removeModifiedFlag newDateTime fileNames =
+let modifyNavisionFiles requiredTags acceptPreTagged invalidTags versionTag newVersion removeModified newDateTime fileNames =
     let errors = new System.Collections.Generic.List<string>()
     for fileName in fileNames do   
         try
@@ -394,7 +396,7 @@ let modifyNavisionFiles requiredTags acceptPreTagged invalidTags versionTag newV
                     objectString
                     (replaceInVersionTag versionTag newVersion tagList)
 
-            let text = if removeModifiedFlag then ModifiedRegex.Replace(text, String.Empty) else text
+            let text = if removeModified then removeModifiedFlag text else text
             let text = if newDateTime <> DateTime.MinValue then replaceDateTimeInString newDateTime text else text
 
             ReplaceFile fileName text
