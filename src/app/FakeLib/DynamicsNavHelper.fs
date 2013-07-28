@@ -411,3 +411,13 @@ let modifyNavisionFiles requiredTags acceptPreTagged invalidTags versionTag newV
         errors 
         |> separated "\r\n"
         |> failwithf "Error occured during ModifyVersionTags:%s"
+
+let setVersionTags requiredTags acceptPreTagged invalidTags versionTag newVersion removeModifiedFlag newDateTime fileNames =
+    trace "Setting VersionTags."
+    tracefn "  - Required: %A" requiredTags
+    tracefn "  - Invalid:  %A" invalidTags
+    if removeModifiedFlag then
+        trace "Removing Modified flag."
+    if DateTime.MinValue <> newDateTime then
+        tracefn "Setting DateTime to %A" (newDateTime.ToString())
+    modifyNavisionFiles requiredTags acceptPreTagged invalidTags versionTag newVersion removeModifiedFlag newDateTime fileNames
