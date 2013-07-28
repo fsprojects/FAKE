@@ -90,6 +90,7 @@
     <Compile Include="RestorePackageHelper.fs" />
     <Compile Include="VSSHelper.fs" />
     <Compile Include="DynamicsNavHelper.fs" />
+    <Compile Include="DynamicsNavFile.fs" />
     <Compile Include="SCPHelper.fs" />
     <Compile Include="XCopyHelper.fs" />
     <Compile Include="XpkgHelper.fs" />

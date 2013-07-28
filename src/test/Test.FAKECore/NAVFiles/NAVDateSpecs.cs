@@ -22,7 +22,7 @@ namespace Test.FAKECore.NAVFiles
         };
 
         Because of = () =>
-           _result = DynamicsNav.replaceDateTimeInString(new DateTime(2010, 1, 1, 12, 0, 0), _navisionObject);
+           _result = DynamicsNavFile.replaceDateTimeInString(new DateTime(2010, 1, 1, 12, 0, 0), _navisionObject);
 
         It should_replace_the_date = () => _result.ShouldEqual(_expectedObject);
     }
