@@ -1,0 +1,381 @@
+OBJECT Form 119 User Setup
+{
+  OBJECT-PROPERTIES
+  {
+    Date=01.01.10;
+    Time=12:00:00;
+    Version List=BAV4.00.3.00,IH9.1.02,SP9.1.00,OEB9.1,MCN01.02,MZG;
+  }
+  PROPERTIES
+  {
+    Permissions=TableData 5006721=rimd;
+    Width=13090;
+    Height=6710;
+    CaptionML=[DEU=Benutzer Einrichtung;
+               ENU=User Setup];
+    TableBoxID=1;
+    SourceTable=Table91;
+    OnOpenForm=VAR
+                 VuEinrichtung@1106300000 : Record 5006721;
+               BEGIN
+                 //< <<<<<generated code<<<<<
+                 SETPERMISSIONFILTER;
+                 //> >>>>>generated code>>>>>
+                 //< <<<<<generated code<<<<<
+                 SETPERMISSIONFILTER;
+                 //> >>>>>generated code>>>>>
+                 //> 20.05.2005 MBEC/NTS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                 VuEinrichtung.GET;
+                 IF NOT VuEinrichtung."Umlagenabrechnung aktiv" THEN BEGIN
+                   CurrForm."Allow UA Processes from".VISIBLE(FALSE);
+                   CurrForm."Allow UA Processes from".ENABLED(FALSE);
+                   CurrForm."Allow UA Processes to".VISIBLE(FALSE);
+                   CurrForm."Allow UA Processes to".ENABLED(FALSE);
+                 END;
+                 //< 20.05.2005 MBEC/NTS <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+               END;
+
+  }
+  CONTROLS
+  {
+    { 1   ;TableBox     ;220  ;220  ;12650;5500 ;HorzGlue=Both;
+                                                 VertGlue=Both }
+    { 2   ;TextBox      ;0    ;0    ;1650 ;0    ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="User ID" }
+    { 3   ;Label        ;0    ;0    ;0    ;0    ;ParentControl=2;
+                                                 InColumnHeading=Yes }
+    { 4   ;TextBox      ;0    ;0    ;1650 ;0    ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Allow Posting From" }
+    { 5   ;Label        ;0    ;0    ;0    ;0    ;ParentControl=4;
+                                                 InColumnHeading=Yes }
+    { 6   ;TextBox      ;0    ;0    ;1650 ;0    ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Allow Posting To" }
+    { 7   ;Label        ;0    ;0    ;0    ;0    ;ParentControl=6;
+                                                 InColumnHeading=Yes }
+    { 1000000000;TextBox;3651 ;440  ;1700 ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Allow UA Processes from" }
+    { 1000000001;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000000;
+                                                 InColumnHeading=Yes }
+    { 1000000002;TextBox;5351 ;440  ;1700 ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Allow UA Processes to" }
+    { 1000000003;Label  ;0    ;0    ;0    ;0    ;ParentControl=1000000002;
+                                                 InColumnHeading=Yes }
+    { 1106300000;TextBox;3863 ;1210 ;1700 ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Allow VU Processes from" }
+    { 1106300001;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300000;
+                                                 InColumnHeading=Yes }
+    { 1106300024;TextBox;9313 ;550  ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Participant 2V1M" }
+    { 1106300027;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300024;
+                                                 InColumnHeading=Yes }
+    { 1106300116;TextBox;7197 ;440  ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Allow ADT Processes from" }
+    { 1106300117;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300116;
+                                                 InColumnHeading=Yes }
+    { 1106300118;TextBox;8897 ;440  ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Allow ADT Processes to" }
+    { 1106300119;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300118;
+                                                 InColumnHeading=Yes }
+    { 1106300040;CheckBox;15584;770 ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 ShowCaption=No;
+                                                 SourceExpr="Open DLQ" }
+    { 1106300041;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300040;
+                                                 InColumnHeading=Yes }
+    { 1106300934;CheckBox;14658;440 ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 ShowCaption=No;
+                                                 SourceExpr="NAS/JBOSS Check" }
+    { 1106300935;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300934;
+                                                 InColumnHeading=Yes }
+    { 1106300002;TextBox;6112 ;1320 ;1700 ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Allow VU Processes to" }
+    { 1106300003;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300002;
+                                                 InColumnHeading=Yes }
+    { 1106300004;CheckBox;7567;1760 ;556  ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 ShowCaption=No;
+                                                 SourceExpr="Tariff Maintenance" }
+    { 1106300005;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300004;
+                                                 InColumnHeading=Yes }
+    { 1106300032;CheckBox;16854;330 ;550  ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 ShowCaption=No;
+                                                 SourceExpr="Delete tariff User" }
+    { 1106300033;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300032;
+                                                 InColumnHeading=Yes }
+    { 1106300030;CheckBox;16775;440 ;550  ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 ShowCaption=No;
+                                                 SourceExpr="Special customer tariff User" }
+    { 1106300031;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300030;
+                                                 InColumnHeading=Yes }
+    { 1106300006;CheckBox;9313;1980 ;550  ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 ShowCaption=No;
+                                                 SourceExpr="Counter Correction after Acc" }
+    { 1106300007;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300006;
+                                                 InColumnHeading=Yes }
+    { 1106300008;CheckBox;10980;1540;550  ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 ShowCaption=No;
+                                                 SourceExpr="Document Adaption Iss. Invoice" }
+    { 1106300009;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300008;
+                                                 InColumnHeading=Yes }
+    { 1106300010;CheckBox;12674;1760;550  ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 ShowCaption=No;
+                                                 SourceExpr="Print-Reset for Issued Invoice" }
+    { 1106300011;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300010;
+                                                 InColumnHeading=Yes }
+    { 1106300018;CheckBox;16722;440 ;550  ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 ShowCaption=No;
+                                                 SourceExpr="Document Adaption Iss. Corre." }
+    { 1106300019;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300018;
+                                                 InColumnHeading=Yes }
+    { 1106300020;CheckBox;18422;440 ;550  ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 ShowCaption=No;
+                                                 SourceExpr="Print-Reset for Issued Corre." }
+    { 1106300021;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300020;
+                                                 InColumnHeading=Yes }
+    { 1106300012;CheckBox;7197;1980 ;550  ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 ShowCaption=No;
+                                                 SourceExpr="Device Metering Code Adaption" }
+    { 1106300013;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300012;
+                                                 InColumnHeading=Yes }
+    { 1106300932;CheckBox;21114;440 ;550  ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 ShowCaption=No;
+                                                 SourceExpr="ULA Doc. Adaption Iss. Invoice" }
+    { 1106300933;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300932;
+                                                 InColumnHeading=Yes }
+    { 1106300950;CheckBox;22814;440 ;504  ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 ShowCaption=No;
+                                                 SourceExpr="ULA Print-Reset for Iss. Inv." }
+    { 1106300951;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300950;
+                                                 InColumnHeading=Yes }
+    { 1106300936;CheckBox;24514;440 ;550  ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 ShowCaption=No;
+                                                 SourceExpr="ULA Doc. Adaption Iss. Corre." }
+    { 1106300937;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300936;
+                                                 InColumnHeading=Yes }
+    { 1106300938;CheckBox;26214;440 ;550  ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 ShowCaption=No;
+                                                 SourceExpr="ULA Print-Reset for Iss. Corre" }
+    { 1106300939;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300938;
+                                                 InColumnHeading=Yes }
+    { 8   ;CheckBox     ;0    ;0    ;1650 ;0    ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Register Time" }
+    { 9   ;Label        ;0    ;0    ;0    ;0    ;ParentControl=8;
+                                                 InColumnHeading=Yes }
+    { 15  ;TextBox      ;7752 ;330  ;1650 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Sales Resp. Ctr. Filter" }
+    { 16  ;Label        ;0    ;0    ;0    ;0    ;ParentControl=15;
+                                                 InColumnHeading=Yes }
+    { 17  ;TextBox      ;8705 ;440  ;1650 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Purchase Resp. Ctr. Filter" }
+    { 18  ;Label        ;0    ;0    ;0    ;0    ;ParentControl=17;
+                                                 InColumnHeading=Yes }
+    { 21  ;TextBox      ;11986;770  ;1650 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Service Resp. Ctr. Filter" }
+    { 22  ;Label        ;0    ;0    ;0    ;0    ;ParentControl=21;
+                                                 InColumnHeading=Yes }
+    { 1106300014;TextBox;22066;1760 ;1700 ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="VU Billing Resp. Ctr. Filter" }
+    { 1106300015;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300014;
+                                                 InColumnHeading=Yes }
+    { 1106300016;CheckBox;21405;330 ;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 ShowCaption=No;
+                                                 SourceExpr=Distribution }
+    { 1106300017;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300016;
+                                                 InColumnHeading=Yes }
+    { 1106300330;CheckBox;30163;1430;1700 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 ShowCaption=No;
+                                                 SourceExpr="NTS.operations SP User" }
+    { 1106300331;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300330;
+                                                 InColumnHeading=Yes }
+    { 1106300028;TextBox;28311;330  ;4400 ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Citrix Name" }
+    { 1106300029;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300028;
+                                                 InColumnHeading=Yes }
+    { 1106300218;TextBox;26062;1980 ;1700 ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr=Signatur }
+    { 1106300219;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300218;
+                                                 InColumnHeading=Yes }
+    { 1106300025;PictureBox;29660;2970;3740;3740;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr=Signatur }
+    { 1106300026;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300025;
+                                                 InColumnHeading=Yes }
+    { 1106300034;TextBox;39582;3080 ;1700 ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="Date Proposal Name" }
+    { 1106300035;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300034;
+                                                 InColumnHeading=Yes }
+    { 1106300036;TextBox;43472;330  ;1700 ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="AM Sector" }
+    { 1106300037;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300036;
+                                                 InColumnHeading=Yes }
+    { 1106300038;CheckBox;11721;440 ;1700 ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 ShowCaption=No;
+                                                 SourceExpr="Open Date Proposals" }
+    { 1106300039;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300038;
+                                                 InColumnHeading=Yes }
+    { 1106300042;CheckBox;51832;1430;1700 ;440  ;Visible=No;
+                                                 ParentControl=1;
+                                                 InColumn=Yes;
+                                                 ShowCaption=No;
+                                                 SourceExpr="manually Date Proposal" }
+    { 1106300043;Label  ;0    ;0    ;0    ;0    ;ParentControl=1106300042;
+                                                 InColumnHeading=Yes }
+    { 5227723;TextBox   ;55695;550  ;1750 ;440  ;ParentControl=1;
+                                                 InColumn=Yes;
+                                                 SourceExpr="MCN Role" }
+    { 5227724;Label     ;0    ;0    ;0    ;0    ;ParentControl=5227723;
+                                                 InColumnHeading=Yes }
+    { 12  ;CommandButton;3410 ;5940 ;2200 ;550  ;HorzGlue=Right;
+                                                 VertGlue=Bottom;
+                                                 Default=Yes;
+                                                 PushAction=LookupOK;
+                                                 InvalidActionAppearance=Hide }
+    { 13  ;CommandButton;5830 ;5940 ;2200 ;550  ;HorzGlue=Right;
+                                                 VertGlue=Bottom;
+                                                 Cancel=Yes;
+                                                 PushAction=LookupCancel;
+                                                 InvalidActionAppearance=Hide }
+    { 14  ;CommandButton;10670;5940 ;2200 ;550  ;HorzGlue=Right;
+                                                 VertGlue=Bottom;
+                                                 PushAction=FormHelp }
+    { 1106300022;MenuButton;8250;5940;2200;550  ;HorzGlue=Right;
+                                                 VertGlue=Bottom;
+                                                 CaptionML=[DEU=Import;
+                                                            ENU=Import];
+                                                 Menu=MENUITEMS
+                                                 {
+                                                   { ID=1106300023;
+                                                     CaptionML=DEU=Bitmap Unterschrift;
+                                                     OnPush=BEGIN
+                                                              IF Signatur.IMPORT('*.bmp',TRUE) = '' THEN
+                                                                EXIT;
+                                                              CurrForm.SAVERECORD;
+                                                            END;
+                                                             }
+                                                 }
+                                                  }
+  }
+  CODE
+  {
+
+    BEGIN
+    {
+      msu solutions GmbH
+      ------------------
+       $Modtime: 27.09.10 13:38 $
+       $Revision: 2 $
+       $Author: Dhans $
+       $Archive: Quellen/Projekte/Energie_Netz/MZG/Form/Form_119.nav $
+
+       Original Version List=NAVW14.00,VA9.1.00,ADT3.70.1.03,BAV4.00.3.00,IH9.1.02,SP9.1.00,OEB9.1
+
+      msu solutions GmbH - Ende
+      -------------------------
+      NAVW14.00,VA9.1.#00,ADT3.70.1.03,BAV4.00.3.00,IH8.2.00,OEB8.2.00,SP9.1.#00,EW1896
+
+      VU Application
+      ------------------------------------------------------------------------------
+      Additional Controls for the Table Fields 5006700 - 5006706, 5006770
+      ------------------------------------------------------------------------------
+      --------------------------------------------------------------------------------
+      Ben. Name                 Firma  eMail Adresse
+      --------------------------------------------------------------------------------
+      STWI Simon Twilfer        NTS    simon.twilfer@neutrasoft.de
+      MBEC Martina Beccard      NTS    martina.beccard@neutrasoft.de
+      DBAJ David Bajrami        NTS    david.bajrami@neutrasoft.de
+      KM KM               NTS    km@neutrasoft.de
+      UHER Ulf Herzog           NTS    ulf.herzog@netrasoft.de
+      THEY Tobias Heyermann     NTS    tobias.heyermann@neutrasoft.de
+      KM KM               NTS    km@neutrasoft.de
+      --------------------------------------------------------------------------------
+      SWA-NR   Datum    Ben. Bemerkung
+      --------------------------------------------------------------------------------
+      EW003233 03.02.10 UHER Added New "manually Date Proposal"
+      EW002881 14.03.09 DBAJ Neues Feld "Open DLQ" eingebaut.
+      EW001896 06.11.08 STWI ULA Fields added
+      OEB      07.10.08 IDRA Permissions generically changed for Permission Concept
+               26.05.08 IDRA Permissions generically changed for Permission Concept
+      EW002004 20.02.08 THEY Added Field "AM Sector"
+      EW002090 11.01.08 STWI Field "NAS/JBOSS Check" added
+      EW001942 25.10.07 STWI Field "Delete tariff User" added
+      EW001903 08.10.07 GMUS Added Field "Date Proposal Name"
+      EW001627 18.07.07 STWI Field "Special customer tariff User" added
+      EW001426 13.02.07 DBAJ New Field "NTS.operations SP User" added
+      EW001312 08.12.06 MBEC New element "Participant 2V1M" added
+      EW001123 22.09.06 STWI Field "Citrix Name" added
+      EW000682 29.05.06 STWI New Fields added:
+                             - 5006707 Document Adaption Iss. Corre.
+                             - 5006708 Print-Reset for Issued Corre.
+      EW000609 11.05.06 UHER neues Feld 5096370 und Button "Import" hinzugefgt
+               07.07.05 STWI Field "Distribution" added
+      E0044    20.05.05 MBEC RB Client only visible/enabled in case of "Umlagenabrechnung aktiv"
+               01.02.05 DBAJ New Elements added:
+                               * Allow EAI Processes from
+                               * Allow EAI Processes to
+               28.01.04 STWI Die Felder Allow UA Processes from und Allow UA Processes to
+                             hinzugefgt (VISIBLE = FALSE)
+      --------------------------------------------------------------------------------
+      NTS/dbajrami 03.08.07 - Permissions generically changed for Permission Concept
+    }
+    END.
+  }
+}
+
