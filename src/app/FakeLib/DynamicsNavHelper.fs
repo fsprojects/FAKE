@@ -406,6 +406,6 @@ let modifyNavisionFiles requiredTags acceptPreTagged invalidTags versionTag newV
                 errors.Add("   - Inner: " + ex.InnerException.Message)
    
     if errors.Count <> 0 then
-        let s = 
-            errors |> separated "\r\n"
-        failwithf "Error occured during ModifyVersionTags:%s" s
+        errors 
+        |> separated "\r\n"
+        |> failwithf "Error occured during ModifyVersionTags:%s"
