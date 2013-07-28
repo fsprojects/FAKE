@@ -174,25 +174,4 @@ namespace Test.FAKECore.NAVFiles
             DynamicsNav.checkTagsInFile(new[] { "MCN" }, false, new string[0], @"NAVFiles\Form_with_VersionTag_in_DocuTrigger.txt")
                 .ShouldNotBeNull();
     }
-
-    public class CanReplaceDate
-    {
-        static string _navisionObject;
-        static string _expectedObject;
-        static string _result;
-
-        Establish context = () =>
-        {
-            string result = @"NAVFiles\Codeunit_1_with_Date_changed.txt";
-            string original = @"NAVFiles\Codeunit_1.txt";
-
-            _navisionObject = File.ReadAllText(original);
-            _expectedObject = File.ReadAllText(result);
-        };
-
-        Because of = () =>
-           _result = DynamicsNav.replaceDateTimeInString(new DateTime(2010, 1, 1, 12, 0, 0), _navisionObject);
-
-        It should_replace_the_date = () => _result.ShouldEqual(_expectedObject);
-    }
 }

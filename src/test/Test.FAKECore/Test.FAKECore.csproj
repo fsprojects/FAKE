@@ -91,6 +91,7 @@
     <Compile Include="Globbing\Directories\GlobbingOfDirectoriesSpecs.cs" />
     <Compile Include="Globbing\Excludes\GlobbingOfDirectoriesSpecs.cs" />
     <Compile Include="ILMerge\ILMergeSpecs.cs" />
+    <Compile Include="NAVFiles\NAVDateSpecs.cs" />
     <Compile Include="NAVFiles\NAVModifySpecs.cs" />
     <Compile Include="NAVFiles\NAVVersionTagsSpecs.cs" />
     <Compile Include="PackageMgt\VersioningSpecs.cs" />
