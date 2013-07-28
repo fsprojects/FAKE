@@ -367,3 +367,6 @@ let checkTagsInObjectString requiredTags acceptPreTagged invalidTags objectStrin
             sprintf "%s\r\n - %s" ex.Message ex.InnerException.Message
 
         failwithf "Error during VersionTag check in %s.\r\nError: %s" name s
+
+let checkTagsInFile requiredTags acceptPreTagged invalidTags fileName =
+    checkTagsInObjectString requiredTags acceptPreTagged invalidTags (ReadFileAsString fileName) fileName
