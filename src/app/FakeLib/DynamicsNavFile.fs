@@ -9,14 +9,14 @@ let ModifiedRegex = new Regex(@"\s\s\s\sModified\=Yes;(?:\r\n|\r|\n)", RegexOpti
 
 let VersionRegex = new Regex(@"\n\s\s\s\sVersion List\=(?<VersionList>[^;\s]*);", RegexOptions.Compiled)
 
-let DateRegex = new Regex(@"\r\n\s\s\s\sDate\=(?<Date>[^;]*);", RegexOptions.Compiled)
+let DateRegex = new Regex(@"\n\s\s\s\sDate\=(?<Date>[^;]*);", RegexOptions.Compiled)
 
-let TimeRegex = new Regex(@"\r\n\s\s\s\sTime\=(?<Time>[^;]*);", RegexOptions.Compiled)
+let TimeRegex = new Regex(@"\n\s\s\s\sTime\=(?<Time>[^;]*);", RegexOptions.Compiled)
 
 /// Replaces the timestamp in a Dynamics NAV object
 let replaceDateTimeInString (dateTime:DateTime) text = 
-    let t1 = DateRegex.Replace(text, String.Format("\r\n    Date={0};", dateTime.Date.ToString("dd.MM.yy")))
-    TimeRegex.Replace(t1, String.Format("\r\n    Time={0};", dateTime.ToString("HH:mm:ss")))
+    let t1 = DateRegex.Replace(text, String.Format("\n    Date={0};", dateTime.Date.ToString("dd.MM.yy")))
+    TimeRegex.Replace(t1, String.Format("\n    Time={0};", dateTime.ToString("HH:mm:ss")))
 
 /// Removes the modified flag from a Dynamics NAV object
 let removeModifiedFlag text = ModifiedRegex.Replace(text, String.Empty)
