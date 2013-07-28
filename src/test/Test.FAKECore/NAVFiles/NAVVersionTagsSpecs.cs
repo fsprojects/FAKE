@@ -25,7 +25,7 @@ namespace Test.FAKECore.NAVFiles
 
         static IEnumerable<string> GetMissingRequiredTags(IEnumerable<string> requiredTags, string tagList)
         {
-            return DynamicsNav.getMissingRequiredTags(requiredTags, DynamicsNav.splitVersionTags(tagList));
+            return DynamicsNavFile.getMissingRequiredTags(requiredTags, DynamicsNavFile.splitVersionTags(tagList));
         }
     }
 
@@ -45,7 +45,7 @@ namespace Test.FAKECore.NAVFiles
 
         static IEnumerable<string> GetInvalidTags(IEnumerable<string> invalidTags, string tagList)
         {
-            return DynamicsNav.getInvalidTags(invalidTags, DynamicsNav.splitVersionTags(tagList));
+            return DynamicsNavFile.getInvalidTags(invalidTags, DynamicsNavFile.splitVersionTags(tagList));
         }
     }
 
@@ -62,7 +62,7 @@ namespace Test.FAKECore.NAVFiles
             _expectedObject = File.ReadAllText(@"NAVFiles\Codeunit_1_with_trimmed_MSUWW.txt");
         };
 
-        Because of = () => _result = DynamicsNav.replaceVersionTag("MSUWW", "01.01", _navisionObject);
+        Because of = () => _result = DynamicsNavFile.replaceVersionTag("MSUWW", "01.01", _navisionObject);
 
         It should_replace_the_tag = () => _result.ShouldEqual(_expectedObject);
     }
@@ -80,7 +80,7 @@ namespace Test.FAKECore.NAVFiles
             _expectedObject = File.ReadAllText(@"NAVFiles\Report_1095_with_trimmed_UEN.txt");
         };
 
-        Because of = () => _result = DynamicsNav.replaceVersionTag("UEN", "", _navisionObject);
+        Because of = () => _result = DynamicsNavFile.replaceVersionTag("UEN", "", _navisionObject);
 
         It should_replace_the_tag = () => _result.ShouldEqual(_expectedObject);
     }
@@ -97,7 +97,7 @@ namespace Test.FAKECore.NAVFiles
             _expectedObject = File.ReadAllText(@"NAVFiles\Form_with_VersionTag_in_DocuTrigger_After.txt");
         };
 
-        Because of = () => _result = DynamicsNav.replaceVersionTag("MCN", "01.02", _navisionObject);
+        Because of = () => _result = DynamicsNavFile.replaceVersionTag("MCN", "01.02", _navisionObject);
 
         It should_replace_the_tag = () => _result.ShouldEqual(_expectedObject);
     }
@@ -110,7 +110,7 @@ namespace Test.FAKECore.NAVFiles
 
         Establish context = () => _navisionObject = File.ReadAllText(@"NAVFiles\Report_1095_with_weird_version.txt");
 
-        Because of = () => _result = DynamicsNav.replaceVersionTag("NIW", "NIW01.01", _navisionObject);
+        Because of = () => _result = DynamicsNavFile.replaceVersionTag("NIW", "NIW01.01", _navisionObject);
 
         It should_find_the_double_replaced_tag = () => _result.ShouldNotContain("NIWNIW01.01");
         It should_find_the_tag = () => _result.ShouldContain("NIW01.01");
@@ -123,7 +123,7 @@ namespace Test.FAKECore.NAVFiles
 
         Establish context = () => _navisionObject = File.ReadAllText(@"NAVFiles\Report_1095_with_weird_version.txt");
 
-        Because of = () => _result = DynamicsNav.replaceVersionTag("LEH", "LEH01.01", _navisionObject);
+        Because of = () => _result = DynamicsNavFile.replaceVersionTag("LEH", "LEH01.01", _navisionObject);
 
         It should_find_the__new_tag = () => _result.ShouldContain("LEH01.01");
     }
@@ -140,38 +140,38 @@ namespace Test.FAKECore.NAVFiles
         };
 
         It should_find_invalid_MCN_tag = () =>
-            Catch.Exception(() => DynamicsNav.checkTagsInObjectString(new string[0], false, new[] { "MCN" }, _navisionObject, "test")).Message
+            Catch.Exception(() => DynamicsNavFile.checkTagsInObjectString(new string[0], false, new[] { "MCN" }, _navisionObject, "test")).Message
                 .ShouldContain("Invalid VersionTag MCN found");
 
 
         It should_find_required_MCN_tag = () =>
-            DynamicsNav.checkTagsInObjectString(new[] { "MCN" }, false, new string[0], _navisionObject, "test")
+            DynamicsNavFile.checkTagsInObjectString(new[] { "MCN" }, false, new string[0], _navisionObject, "test")
                 .ShouldNotBeNull();
 
         It should_not_find_invalid_UEN_tag = () =>
-            DynamicsNav.checkTagsInObjectString(new string[0], false, new[] { "UEN" }, _navisionObject, "test")
+            DynamicsNavFile.checkTagsInObjectString(new string[0], false, new[] { "UEN" }, _navisionObject, "test")
                 .ShouldNotBeNull();
 
         It should_not_find_required_UEN_tag = () =>
-            Catch.Exception(() => DynamicsNav.checkTagsInObjectString(new[] { "UEN" }, false, new string[0], _navisionObject, "test")).Message
+            Catch.Exception(() => DynamicsNavFile.checkTagsInObjectString(new[] { "UEN" }, false, new string[0], _navisionObject, "test")).Message
                 .ShouldContain("Required VersionTag UEN not found");
 
         It should_accept_PRE_tag_if_allowed = () =>
-            DynamicsNav.checkTagsInObjectString(new[] { "UEN" }, true, new string[0], _navisionObject2, "test");
+            DynamicsNavFile.checkTagsInObjectString(new[] { "UEN" }, true, new string[0], _navisionObject2, "test");
 
         It should_not_accept_PRE_tag_if_not_allowed = () =>
-            Catch.Exception(() => DynamicsNav.checkTagsInObjectString(new[] { "UEN" }, false, new string[0], _navisionObject2, "test")).Message
+            Catch.Exception(() => DynamicsNavFile.checkTagsInObjectString(new[] { "UEN" }, false, new string[0], _navisionObject2, "test")).Message
                 .ShouldContain("Required VersionTag UEN not found");
     }
 
     public class CanCheckTagsInFile
     {
         It should_find_invalid_MCN_tag = () =>
-            Catch.Exception(() => DynamicsNav.checkTagsInFile(new string[0], false, new[] { "MCN" }, @"NAVFiles\Form_with_VersionTag_in_DocuTrigger.txt")).Message
+            Catch.Exception(() => DynamicsNavFile.checkTagsInFile(new string[0], false, new[] { "MCN" }, @"NAVFiles\Form_with_VersionTag_in_DocuTrigger.txt")).Message
                 .ShouldContain("Invalid VersionTag MCN found");
 
         It should_find_required_MCN_tag = () =>
-            DynamicsNav.checkTagsInFile(new[] { "MCN" }, false, new string[0], @"NAVFiles\Form_with_VersionTag_in_DocuTrigger.txt")
+            DynamicsNavFile.checkTagsInFile(new[] { "MCN" }, false, new string[0], @"NAVFiles\Form_with_VersionTag_in_DocuTrigger.txt")
                 .ShouldNotBeNull();
     }
 }
