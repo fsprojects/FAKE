@@ -304,17 +304,17 @@ let analyzeTestResults fileName =
 
 open System.Text.RegularExpressions
 
-let ModifiedRegex = new Regex(@"\s\s\s\sModified\=Yes;\r\n", RegexOptions.Compiled)
+let ModifiedRegex = new Regex(@"\s\s\s\sModified\=Yes;(?:\r\n|\r|\n)", RegexOptions.Compiled)
 
 let VersionRegex = new Regex(@"\n\s\s\s\sVersion List\=(?<VersionList>[^;\s]*);", RegexOptions.Compiled)
 
-let DateRegex = new Regex(@"\r\n\s\s\s\sDate\=(?<Date>[^;]*);\r\n", RegexOptions.Compiled)
+let DateRegex = new Regex(@"\r\n\s\s\s\sDate\=(?<Date>[^;]*);(?:\r\n|\r|\n)", RegexOptions.Compiled)
 
-let TimeRegex = new Regex(@"\r\n\s\s\s\sTime\=(?<Time>[^;]*);\r\n", RegexOptions.Compiled)
+let TimeRegex = new Regex(@"\r\n\s\s\s\sTime\=(?<Time>[^;]*);(?:\r\n|\r|\n)", RegexOptions.Compiled)
 
 let replaceDateTimeInString (dateTime:DateTime) text = 
-    let t1 = DateRegex.Replace(text, String.Format("\r\n    Date={0};\r\n", dateTime.Date.ToString("dd.MM.yy")))
-    TimeRegex.Replace(t1, String.Format("\r\n    Time={0};\r\n", dateTime.ToString("HH:mm:ss")))
+    let t1 = DateRegex.Replace(text, String.Format("\r\n    Date={0};(?:\r\n|\r|\n)", dateTime.Date.ToString("dd.MM.yy")))
+    TimeRegex.Replace(t1, String.Format("\r\n    Time={0};(?:\r\n|\r|\n)", dateTime.ToString("HH:mm:ss")))
 
 let removeModifiedFlag text = ModifiedRegex.Replace(text, String.Empty)
 
