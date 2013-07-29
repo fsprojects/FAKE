@@ -27,10 +27,10 @@ let getVersionTagList text =
 
 let splitVersionTags (tagList:string) = tagList.ToUpper().Split Colon
 
-let replaceInVersionTag (text:string) (versionTag:string) (newVersion:string) =
+let replaceInVersionTag (versionTag:string) (newVersion:string) (tagList:string) =
     let versionTag = versionTag.ToUpper()
-    if text.ToUpper().Contains versionTag then
-        splitVersionTags text
+    if tagList.ToUpper().Contains versionTag then
+        splitVersionTags tagList
         |> Seq.map (fun tag ->
               if tag.StartsWith versionTag then
                   versionTag + newVersion
@@ -38,7 +38,7 @@ let replaceInVersionTag (text:string) (versionTag:string) (newVersion:string) =
                   tag)
         |> separated (Colon.ToString())
     else
-        text + Colon.ToString() + versionTag + newVersion        
+        tagList + Colon.ToString() + versionTag + newVersion        
 
 let replaceVersionTagList (text:string) (newTags:string) =
     VersionRegex.Replace(text, String.Format("\n    Version List={0};", newTags))
@@ -46,7 +46,8 @@ let replaceVersionTagList (text:string) (newTags:string) =
 let replaceVersionTag versionTag (newVersion:string) sourceCode =
     let tagList = getVersionTagList sourceCode
 
-    replaceInVersionTag tagList versionTag (newVersion.Replace(versionTag,""))
+    tagList
+    |> replaceInVersionTag versionTag (newVersion.Replace(versionTag,""))
     |> replaceVersionTagList sourceCode
 
 let getMissingRequiredTags requiredTags versionTags =
@@ -94,11 +95,9 @@ let modifyNavisionFiles requiredTags acceptPreTagged invalidTags versionTag newV
     for fileName in fileNames do   
         try
             let objectString,tagList = checkTagsInFile requiredTags acceptPreTagged invalidTags fileName
+            let newTags = replaceInVersionTag versionTag newVersion tagList
 
-            let text =
-                replaceVersionTagList
-                    objectString
-                    (replaceInVersionTag versionTag newVersion tagList)
+            let text = replaceVersionTagList objectString newTags
 
             let text = if removeModified then removeModifiedFlag text else text
             let text = if newDateTime <> DateTime.MinValue then replaceDateTimeInString newDateTime text else text

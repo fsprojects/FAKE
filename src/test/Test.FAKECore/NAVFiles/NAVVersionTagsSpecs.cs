@@ -123,7 +123,7 @@ namespace Test.FAKECore.NAVFiles
 
         Establish context = () => _navisionObject = File.ReadAllText(@"NAVFiles\Report_1095_with_weird_version.txt");
 
-        Because of = () => _result = DynamicsNavFile.replaceVersionTag("AUS", "AUS01", _navisionObject);
+        Because of = () => _result = DynamicsNavFile.replaceVersionTag("AUS", "01", _navisionObject);
 
         It should_find_the_new_tag = () => _result.ShouldContain("VU2.40.03,NTI.Nienburg,ARC5.10,MCN,NIW,PRE,AUS01");
     }
@@ -135,7 +135,7 @@ namespace Test.FAKECore.NAVFiles
 
         Establish context = () => _navisionObject = File.ReadAllText(@"NAVFiles\Codeunit_419.txt");
 
-        Because of = () => _result = DynamicsNavFile.replaceVersionTag("AUS", "AUS01", _navisionObject);
+        Because of = () => _result = DynamicsNavFile.replaceVersionTag("AUS", "01", _navisionObject);
 
         It should_find_the_new_tag = () => _result.ShouldContain("NAVW16.00.01,NAVCH6.00.01,UEN,AUS01");
     }
@@ -202,8 +202,8 @@ namespace Test.FAKECore.NAVFiles
             }
         };
 
-        Because of = () => DynamicsNavFile.setVersionTags(new string[0], true, new string[0], "AUS", "AUS01", false, DateTime.MinValue, Directory.EnumerateFiles(_tempFolder));
+        Because of = () => DynamicsNavFile.setVersionTags(new string[0], true, new string[0], "AUS", "01", false, DateTime.MinValue, Directory.EnumerateFiles(_tempFolder));
 
-        It should_find_the__new_tag = () => File.ReadAllText(@"tempData/Codeunit_419.txt").ShouldContain("NAVW16.00.01,NAVCH6.00.01,UEN,AUS01");
+        It should_find_the__new_tag = () => File.ReadAllText(@"tempData/Codeunit_419.txt").ShouldContain("Version List=NAVW16.00.01,NAVCH6.00.01,UEN,AUS01;");
     }
 }
