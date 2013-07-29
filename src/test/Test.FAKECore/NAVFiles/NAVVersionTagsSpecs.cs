@@ -1,27 +1,27 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Fake;
 using Machine.Specifications;
-using System;
 
 namespace Test.FAKECore.NAVFiles
 {
     public class CanDetectRequiredTags
     {
         It should_find_MCN_Tag = () =>
-            GetMissingRequiredTags(new[] { "MCN" }, "MCN000,foo").ShouldBeEmpty();
+            GetMissingRequiredTags(new[] {"MCN"}, "MCN000,foo").ShouldBeEmpty();
 
 
         It should_find_MSUWW_in_tags = () =>
-            GetMissingRequiredTags(new[] { "MSUWW" }, "TEST1,MSUWW3").ShouldBeEmpty();
+            GetMissingRequiredTags(new[] {"MSUWW"}, "TEST1,MSUWW3").ShouldBeEmpty();
 
 
         It should_find_missing_MSUWW = () =>
-            GetMissingRequiredTags(new[] { "TEST", "MCN", "MSUWW" }, "TEST1,MCN000,foo")
+            GetMissingRequiredTags(new[] {"TEST", "MCN", "MSUWW"}, "TEST1,MCN000,foo")
                 .ShouldNotBeEmpty();
 
         It should_find_missing_comma = () =>
-            GetMissingRequiredTags(new[] { "MSUWW" }, "TEST1MSUWW3").ShouldNotBeEmpty();
+            GetMissingRequiredTags(new[] {"MSUWW"}, "TEST1MSUWW3").ShouldNotBeEmpty();
 
         static IEnumerable<string> GetMissingRequiredTags(IEnumerable<string> requiredTags, string tagList)
         {
@@ -32,15 +32,15 @@ namespace Test.FAKECore.NAVFiles
     public class CanDetectInvalidTags
     {
         It should_find_invalid_IssueNo = () =>
-            GetInvalidTags(new[] { "P0", "I00" }, "MCN,MSUWW001,I0001,foo").ShouldNotBeEmpty();
+            GetInvalidTags(new[] {"P0", "I00"}, "MCN,MSUWW001,I0001,foo").ShouldNotBeEmpty();
 
 
         It should_find_invalid_project_tag = () =>
-            GetInvalidTags(new[] { "P0" }, "P0001,foo").ShouldNotBeEmpty();
+            GetInvalidTags(new[] {"P0"}, "P0001,foo").ShouldNotBeEmpty();
 
 
         It should_not_complain_project_suffix = () =>
-            GetInvalidTags(new[] { "P0" }, "MCNP000,foo").ShouldBeEmpty();
+            GetInvalidTags(new[] {"P0"}, "MCNP000,foo").ShouldBeEmpty();
 
 
         static IEnumerable<string> GetInvalidTags(IEnumerable<string> invalidTags, string tagList)
@@ -151,39 +151,39 @@ namespace Test.FAKECore.NAVFiles
             _navisionObject2 = File.ReadAllText(@"NAVFiles\PRETaggedReport_1095.txt");
         };
 
+        It should_accept_PRE_tag_if_allowed = () =>
+            DynamicsNavFile.checkTagsInObjectString(new[] {"UEN"}, true, new string[0], _navisionObject2, "test");
+
         It should_find_invalid_MCN_tag = () =>
-            Catch.Exception(() => DynamicsNavFile.checkTagsInObjectString(new string[0], false, new[] { "MCN" }, _navisionObject, "test")).Message
+            Catch.Exception(() => DynamicsNavFile.checkTagsInObjectString(new string[0], false, new[] {"MCN"}, _navisionObject, "test")).Message
                 .ShouldContain("Invalid VersionTag MCN found");
 
 
         It should_find_required_MCN_tag = () =>
-            DynamicsNavFile.checkTagsInObjectString(new[] { "MCN" }, false, new string[0], _navisionObject, "test")
+            DynamicsNavFile.checkTagsInObjectString(new[] {"MCN"}, false, new string[0], _navisionObject, "test")
                 .ShouldNotBeNull();
 
+        It should_not_accept_PRE_tag_if_not_allowed = () =>
+            Catch.Exception(() => DynamicsNavFile.checkTagsInObjectString(new[] {"UEN"}, false, new string[0], _navisionObject2, "test")).Message
+                .ShouldContain("Required VersionTag UEN not found");
+
         It should_not_find_invalid_UEN_tag = () =>
-            DynamicsNavFile.checkTagsInObjectString(new string[0], false, new[] { "UEN" }, _navisionObject, "test")
+            DynamicsNavFile.checkTagsInObjectString(new string[0], false, new[] {"UEN"}, _navisionObject, "test")
                 .ShouldNotBeNull();
 
         It should_not_find_required_UEN_tag = () =>
-            Catch.Exception(() => DynamicsNavFile.checkTagsInObjectString(new[] { "UEN" }, false, new string[0], _navisionObject, "test")).Message
-                .ShouldContain("Required VersionTag UEN not found");
-
-        It should_accept_PRE_tag_if_allowed = () =>
-            DynamicsNavFile.checkTagsInObjectString(new[] { "UEN" }, true, new string[0], _navisionObject2, "test");
-
-        It should_not_accept_PRE_tag_if_not_allowed = () =>
-            Catch.Exception(() => DynamicsNavFile.checkTagsInObjectString(new[] { "UEN" }, false, new string[0], _navisionObject2, "test")).Message
+            Catch.Exception(() => DynamicsNavFile.checkTagsInObjectString(new[] {"UEN"}, false, new string[0], _navisionObject, "test")).Message
                 .ShouldContain("Required VersionTag UEN not found");
     }
 
     public class CanCheckTagsInFile
     {
         It should_find_invalid_MCN_tag = () =>
-            Catch.Exception(() => DynamicsNavFile.checkTagsInFile(new string[0], false, new[] { "MCN" }, @"NAVFiles\Form_with_VersionTag_in_DocuTrigger.txt")).Message
+            Catch.Exception(() => DynamicsNavFile.checkTagsInFile(new string[0], false, new[] {"MCN"}, @"NAVFiles\Form_with_VersionTag_in_DocuTrigger.txt")).Message
                 .ShouldContain("Invalid VersionTag MCN found");
 
         It should_find_required_MCN_tag = () =>
-            DynamicsNavFile.checkTagsInFile(new[] { "MCN" }, false, new string[0], @"NAVFiles\Form_with_VersionTag_in_DocuTrigger.txt")
+            DynamicsNavFile.checkTagsInFile(new[] {"MCN"}, false, new string[0], @"NAVFiles\Form_with_VersionTag_in_DocuTrigger.txt")
                 .ShouldNotBeNull();
     }
 
