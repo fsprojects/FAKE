@@ -123,9 +123,9 @@ namespace Test.FAKECore.NAVFiles
 
         Establish context = () => _navisionObject = File.ReadAllText(@"NAVFiles\Report_1095_with_weird_version.txt");
 
-        Because of = () => _result = DynamicsNavFile.replaceVersionTag("LEH", "LEH01.01", _navisionObject);
+        Because of = () => _result = DynamicsNavFile.replaceVersionTag("AUS", "AUS01", _navisionObject);
 
-        It should_find_the__new_tag = () => _result.ShouldContain("LEH01.01");
+        It should_find_the__new_tag = () => _result.ShouldContain("VU2.40.03,NTI.Nienburg,ARC5.10,MCN,NIW,PRE,AUS01");
     }
 
     public class CanCheckTagsInObjectString
