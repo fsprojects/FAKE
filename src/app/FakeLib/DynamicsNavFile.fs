@@ -95,10 +95,8 @@ let modifyNavisionFiles requiredTags acceptPreTagged invalidTags versionTag newV
     for fileName in fileNames do   
         try
             let objectString,tagList = checkTagsInFile requiredTags acceptPreTagged invalidTags fileName
-            let newTags = replaceInVersionTag versionTag newVersion tagList
 
-            let text = replaceVersionTagList objectString newTags
-
+            let text = replaceVersionTag versionTag newVersion objectString
             let text = if removeModified then removeModifiedFlag text else text
             let text = if newDateTime <> DateTime.MinValue then replaceDateTimeInString newDateTime text else text
 

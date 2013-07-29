@@ -202,7 +202,7 @@ namespace Test.FAKECore.NAVFiles
             }
         };
 
-        Because of = () => DynamicsNavFile.setVersionTags(new string[0], true, new string[0], "AUS", "01", false, DateTime.MinValue, Directory.EnumerateFiles(_tempFolder));
+        Because of = () => DynamicsNavFile.setVersionTags(new string[0], true, new string[0], "AUS", "AUS01", false, DateTime.MinValue, Directory.EnumerateFiles(_tempFolder));
 
         It should_find_the__new_tag = () => File.ReadAllText(@"tempData/Codeunit_419.txt").ShouldContain("Version List=NAVW16.00.01,NAVCH6.00.01,UEN,AUS01;");
     }
