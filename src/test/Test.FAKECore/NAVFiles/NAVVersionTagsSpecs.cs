@@ -125,7 +125,7 @@ namespace Test.FAKECore.NAVFiles
 
         Because of = () => _result = DynamicsNavFile.replaceVersionTag("AUS", "AUS01", _navisionObject);
 
-        It should_find_the__new_tag = () => _result.ShouldContain("VU2.40.03,NTI.Nienburg,ARC5.10,MCN,NIW,PRE,AUS01");
+        It should_find_the_new_tag = () => _result.ShouldContain("VU2.40.03,NTI.Nienburg,ARC5.10,MCN,NIW,PRE,AUS01");
     }
 
     public class CanAddMissingTagInCodeunit
@@ -137,7 +137,7 @@ namespace Test.FAKECore.NAVFiles
 
         Because of = () => _result = DynamicsNavFile.replaceVersionTag("AUS", "AUS01", _navisionObject);
 
-        It should_find_the__new_tag = () => _result.ShouldContain("NAVW16.00.01,NAVCH6.00.01,UEN,AUS01");
+        It should_find_the_new_tag = () => _result.ShouldContain("NAVW16.00.01,NAVCH6.00.01,UEN,AUS01");
     }
 
     public class CanCheckTagsInObjectString
@@ -185,5 +185,25 @@ namespace Test.FAKECore.NAVFiles
         It should_find_required_MCN_tag = () =>
             DynamicsNavFile.checkTagsInFile(new[] { "MCN" }, false, new string[0], @"NAVFiles\Form_with_VersionTag_in_DocuTrigger.txt")
                 .ShouldNotBeNull();
+    }
+
+    public class CanSetVersionTagsInFolder
+    {
+        static string _tempFolder;
+
+        Establish context = () =>
+        {
+            _tempFolder = "./tempData";
+            FileHelper.CleanDir(_tempFolder);
+            foreach (var file in Directory.EnumerateFiles("NAVFiles"))
+            {
+                var fi = new FileInfo(file);
+                fi.CopyTo(Path.Combine(_tempFolder, fi.Name));
+            }
+        };
+
+        Because of = () => DynamicsNavFile.setVersionTags(new string[0], true, new string[0], "AUS", "AUS01", false, DateTime.MinValue, Directory.EnumerateFiles(_tempFolder));
+
+        It should_find_the__new_tag = () => File.ReadAllText(@"tempData/Codeunit_419.txt").ShouldContain("NAVW16.00.01,NAVCH6.00.01,UEN,AUS01");
     }
 }
