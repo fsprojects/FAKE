@@ -1,0 +1,404 @@
+OBJECT Codeunit 419 3-Tier Automation Mgt.
+{
+  OBJECT-PROPERTIES
+  {
+    Date=01.01.10;
+    Time=12:00:00;
+    Version List=NAVW16.00.01,NAVCH6.00.01,UEN;
+  }
+  PROPERTIES
+  {
+    OnRun=BEGIN
+          END;
+
+  }
+  CODE
+  {
+    VAR
+      Text001@1004 : TextConst 'DEU=Standard;ENU=Default';
+      Text004@1007 : TextConst 'DEU=Die Datei %1 ist nicht vorhanden.;ENU=The file %1 does not exist.';
+      Text006@1003 : TextConst 'DEU=Exportieren;ENU=Export';
+      Text007@1002 : TextConst 'DEU=Importieren;ENU=Import';
+      Text009@1000 : TextConst 'DEU=Alle Dateien (*.*)|*.*;ENU=All Files (*.*)|*.*';
+      CommonDialogMgnt@1005 : Codeunit 412;
+      ClientTempPath@1006 : Text[1024];
+      FileObject@1140000 : Automation "{F935DC20-1CF0-11D0-ADB9-00C04FD58A0B} 1.0:{0D43FE01-F093-11CF-8940-00A0C9054228}:'Windows Script Host Object Model'.FileSystemObject";
+      Text010@1008 : TextConst 'DEU=Die Datei ''%1'' wurde nicht hochgeladen.;ENU=The file %1 has not been uploaded.';
+      "--- MSU TEXT ---"@5128501 : TextConst;
+      Text5128500@5128500 : TextConst 'DEU=Sie haben keinen Dateisystem-Ordner gew„hlt.;ENU=You have choosen no file system folder.';
+
+    PROCEDURE BLOBImport@3(VAR BLOBRef@1000 : TEMPORARY Record 99008535;Name@1002 : Text[1024];CommonDialog@1003 : Boolean) : Text[1024];
+    VAR
+      NVInStream@1001 : InStream;
+      NVOutStream@1004 : OutStream;
+    BEGIN
+      IF NOT ISSERVICETIER THEN BEGIN
+        IF CommonDialog THEN BEGIN
+          Name := CommonDialogMgnt.OpenFileWithName(Name);
+          IF STRPOS(Name,'*') > 0 THEN
+            EXIT('');
+        END;
+        BLOBRef.Blob.IMPORT(Name,FALSE);
+        EXIT(Name);
+      END
+      ELSE BEGIN
+        IF UPLOADINTOSTREAM(Text007,'',Text009,Name,NVInStream) THEN BEGIN
+          BLOBRef.Blob.CREATEOUTSTREAM(NVOutStream);
+          COPYSTREAM(NVOutStream,NVInStream);
+          EXIT(Name);
+        END;
+        EXIT('');
+      END
+    END;
+
+    PROCEDURE BLOBExport@4(VAR BLOBRef@1002 : TEMPORARY Record 99008535;Name@1001 : Text[1024];CommonDialog@1000 : Boolean) : Text[1024];
+    VAR
+      NVInStream@1003 : InStream;
+      ToFile@1004 : Text[1024];
+      p@1005 : Integer;
+      Path@1006 : Text[1024];
+    BEGIN
+      IF NOT ISSERVICETIER THEN
+        EXIT(BLOBRef.Blob.EXPORT(Name,CommonDialog))
+      ELSE BEGIN
+        BLOBRef.Blob.CREATEINSTREAM(NVInStream);
+        IF STRPOS(Name,'*') = 0 THEN
+          ToFile := Name
+        ELSE BEGIN
+          ToFile := INSSTR(Name,Text001,1);
+          ToFile := DELCHR(ToFile,'=','*');
+        END;
+        WHILE STRPOS(ToFile,'\')<>0 DO BEGIN
+          p := STRPOS(ToFile,'\');
+          ToFile := COPYSTR(ToFile, p+1);
+        END;
+        Path := 'C:\TEMP';
+        IF NOT CommonDialog THEN
+          Path := Magicpath;
+        DOWNLOADFROMSTREAM(NVInStream,Text006,Path,Text009,ToFile);
+        EXIT(ToFile);
+      END
+    END;
+
+    PROCEDURE EnvironFileName@1(PassedString@1001 : Text[250];FileExtension@1002 : Text[250]) FileName : Text[1024];
+    BEGIN
+      IF NOT ISSERVICETIER THEN BEGIN
+        IF STRPOS(PassedString,'%1') = 0 THEN
+          FileName := ENVIRON('TEMP') + PassedString + FileExtension
+        ELSE
+          FileName := STRSUBSTNO(ENVIRON('TEMP') + PassedString,FileExtension)
+      END ELSE
+        EXIT(ServerTempFileName(PassedString,FileExtension));
+    END;
+
+    PROCEDURE ServerTempFileName@5(PassedString@1001 : Text[250];FileExtension@1002 : Text[250]) FileName : Text[1024];
+    VAR
+      TempFile@1000 : File;
+    BEGIN
+      TempFile.CREATETEMPFILE;
+      FileName := TempFile.NAME + '.' + FileExtension;
+      TempFile.CLOSE;
+    END;
+
+    PROCEDURE ClientTempFileName@6(PassedString@1001 : Text[250];FileExtension@1002 : Text[250]) ClientFileName : Text[1024];
+    VAR
+      TempFile@1004 : File;
+    BEGIN
+      IF ISSERVICETIER THEN BEGIN
+        IF ClientTempPath = '' THEN BEGIN
+          TempFile.CREATETEMPFILE;
+          ClientFileName := TempFile.NAME + '.' + FileExtension;
+          TempFile.CLOSE;
+          TempFile.CREATE(ClientFileName);
+          TempFile.CLOSE;
+          ClientTempPath := Path(DownloadTempFile(ClientFileName));
+        END;
+        ClientFileName := ClientTempPath + '\' + FORMAT(CREATEGUID) + '.' + FileExtension;
+      END ELSE
+        ClientFileName := ServerTempFileName(PassedString, FileExtension);
+    END;
+
+    PROCEDURE DownloadTempFile@7(ServerFileName@1001 : Text[1024]) : Text[1024];
+    VAR
+      FileName@1102601003 : Text[1024];
+      Path@1102601004 : Text[1024];
+    BEGIN
+      IF NOT ISSERVICETIER THEN
+        EXIT(ServerFileName);
+
+      FileName := ServerFileName;
+      Path := Magicpath;
+      DOWNLOAD(ServerFileName,'',Path,Text009,FileName);
+      EXIT(FileName);
+    END;
+
+    PROCEDURE Path@8(Filename@1102601000 : Text[1024]) Path : Text[1024];
+    BEGIN
+      Filename := DELCHR(Filename,'<');
+      Path := Filename;
+      WHILE STRPOS(Filename,'\')<>0 DO BEGIN
+        Filename := COPYSTR(Filename, STRPOS(Filename,'\')+1);
+      END;
+      IF STRLEN(Path) > STRLEN(Filename) THEN
+        EXIT(COPYSTR(Path,1,STRLEN(Path)-STRLEN(Filename)))
+      ELSE
+        EXIT('');
+    END;
+
+    PROCEDURE Magicpath@9() : Text[1024];
+    BEGIN
+      EXIT('<TEMP>');   // MAGIC PATH makes sure we don't get a prompt
+    END;
+
+    PROCEDURE SilentUpload@1140000(ClientFilePath@1140000 : Text[1024];VAR ServerFilePath@1140001 : Text[1024]) Status : Boolean;
+    VAR
+      ClientTempFilePath@1140002 : Text[1024];
+      ClientTempFile@1140003 : Text[1024];
+      Ext@1140004 : Text[1024];
+      TierMgt@1140005 : Codeunit 419;
+    BEGIN
+      IF ISCLEAR(FileObject) THEN
+        CREATE(FileObject, TRUE, TRUE);
+
+      Ext := FileObject.GetExtensionName(ClientFilePath);
+      ClientTempFilePath := ClientTempFileName('',Ext);
+      ClientTempFile := FileObject.GetFileName(ClientTempFilePath);
+      FileObject.CopyFile(ClientFilePath,ClientTempFilePath,TRUE);
+
+      ServerFilePath := ServerTempFileName('',Ext);
+
+      Status := UPLOAD('',Magicpath,'',ClientTempFile,ServerFilePath);
+
+      EXIT(Status);
+    END;
+
+    PROCEDURE DownloadToFile@1140001(TempFileName@1140000 : Text[1024];FileName@1140001 : Text[1024]);
+    BEGIN
+      TempFileName := DownloadTempFile(TempFileName);
+      IF ISCLEAR(FileObject) THEN
+        CREATE(FileObject, TRUE, TRUE);
+      IF FileObject.FileExists(FileName) THEN
+        FileObject.DeleteFile(FileName, TRUE);
+
+      // MAB01 UEN Start Deletion
+      // FileObject.MoveFile(TempFileName,FileName);
+      // MAB01 UEN End Deletion
+
+      // MAB01 UEN Start
+      // das Kopieren nutzt die Berechtigungen des Zielverzeichnisses
+      FileObject.CopyFile(TempFileName,FileName);
+      FileObject.DeleteFile(TempFileName,TRUE);
+      // MAB01 UEN End
+    END;
+
+    PROCEDURE IsValidUNC@1150000(Path@1150000 : Text[1024]) : Boolean;
+    VAR
+      Cursor@1150001 : Integer;
+    BEGIN
+      Path := CONVERTSTR(Path,'/', '\');
+
+      Cursor := STRPOS(Path,'\\');
+      IF Cursor <> 1 THEN
+        EXIT(FALSE);
+
+      Cursor := Cursor + 2;
+      Path := COPYSTR(Path, Cursor);
+
+      Cursor := STRPOS(Path, '\');
+      IF Cursor < 2 THEN
+        EXIT(FALSE);
+
+      Cursor := Cursor + 1;
+      Path := COPYSTR(Path,Cursor);
+
+      REPEAT
+        Cursor := STRPOS(Path, '\');
+        IF Cursor < 2 THEN
+          EXIT(FALSE);
+
+        Cursor := Cursor + 1;
+        Path := COPYSTR(Path,Cursor);
+      UNTIL STRLEN(Path) = 0;
+
+      EXIT(TRUE);
+    END;
+
+    PROCEDURE "--- MSU FUNCTIONS ---"@5128501();
+    BEGIN
+      // MAB03 UWW Start
+      // Produktbergeifende Dialog-Funktionalit„t
+      // MAB03 UWW end
+    END;
+
+    PROCEDURE BrowseForFolder@1000000006(p_Prompt@5128500 : Text[1024]) : Text[260];
+    VAR
+      l_ShellApp@1000000001 : Automation "{50A7E9B0-70EF-11D1-B75A-00A0C90564FE} 1.0:{13709620-C279-11CE-A49E-444553540000}:'Microsoft Shell Controls And Automation'.Shell";
+    BEGIN
+      // l„sst den Nutzer einen Ordner auf dem gesamten Rechner ausw„hlen (Desktop ist die Auswahlwurzel)
+
+      // MMS01 MCN Start
+      // MMS02 UEN Start
+      CREATE(l_ShellApp,FALSE,TRUE);
+      // MMS02 UEN End
+      EXIT(ParseFolder(l_ShellApp.BrowseForFolder(0,p_Prompt,0)));
+      // MMS01 MCN End
+    END;
+
+    PROCEDURE BrowseForFolderWithRoot@5128668(p_Prompt@1000000000 : Text[1024];p_RootPath@5128500 : Text[260]) : Text[260];
+    VAR
+      l_ShellApp@1000000001 : Automation "{50A7E9B0-70EF-11D1-B75A-00A0C90564FE} 1.0:{13709620-C279-11CE-A49E-444553540000}:'Microsoft Shell Controls And Automation'.Shell";
+    BEGIN
+      // l„sst den Nutzer einen Ordner in einem bestimmten Ordner ausw„hlen
+
+      // MMS01 MCN Start
+      // MMS02 UEN Start
+      CREATE(l_ShellApp,FALSE,TRUE);
+      // MMS02 UEN End
+      EXIT(ParseFolder(l_ShellApp.BrowseForFolder(0,p_Prompt,0,p_RootPath)));
+      // MMS01 MCN End
+    END;
+
+    PROCEDURE BrowseForFolderWithSpecialRoot@5128669(p_Prompt@1000000000 : Text[1024];p_SpecialFolderRoot@5128500 : Integer) : Text[260];
+    VAR
+      l_ShellApp@1000000001 : Automation "{50A7E9B0-70EF-11D1-B75A-00A0C90564FE} 1.0:{13709620-C279-11CE-A49E-444553540000}:'Microsoft Shell Controls And Automation'.Shell";
+    BEGIN
+      // l„sst den Nutzer einen Ordner in einem speziellen Ordner ausw„hlen
+      // Konstanten: http://msdn.microsoft.com/en-us/library/bb774096(VS.85).aspx
+
+      // MMS01 MCN Start
+      // MMS02 UEN Start
+      CREATE(l_ShellApp,FALSE,TRUE);
+      // MMS02 UEN End
+      EXIT(ParseFolder(l_ShellApp.BrowseForFolder(0,p_Prompt,0,p_SpecialFolderRoot)));
+      // MMS01 MCN End
+    END;
+
+    LOCAL PROCEDURE ParseFolder@5128500(p_ShellFolder@5128500 : Automation "{50A7E9B0-70EF-11D1-B75A-00A0C90564FE} 1.0:{BBCBDE60-C3FF-11CE-8350-444553540000}:'Microsoft Shell Controls And Automation'.Folder") r_Folder : Text[260];
+    VAR
+      l_ShellApp@5128502 : Automation "{50A7E9B0-70EF-11D1-B75A-00A0C90564FE} 1.0:{13709620-C279-11CE-A49E-444553540000}:'Microsoft Shell Controls And Automation'.Shell";
+      l_FolderItem@5128501 : Automation "{50A7E9B0-70EF-11D1-B75A-00A0C90564FE} 1.0:{EDC817AA-92B8-11D1-B075-00C04FC33AA5}:'Microsoft Shell Controls And Automation'.FolderItem2";
+    BEGIN
+      // MMS01 MCN Start
+      IF ISCLEAR(p_ShellFolder) THEN
+        EXIT('');
+      l_FolderItem := p_ShellFolder.Items.Item;
+      // wenn der Ordner leer ist, wurde der Desktop-Ordner gew„hlt
+      IF ISCLEAR(l_FolderItem) THEN BEGIN
+        // MMS02 UEN Start
+        CREATE(l_ShellApp,FALSE,TRUE);
+        // MMS02 UEN End
+        l_FolderItem := l_ShellApp.NameSpace(16).Items.Item;
+      END;
+      r_Folder := l_FolderItem.Path;
+      // bei einem virtuellen Ordner Fehler werfen (man k”nnte diese bei Shell.BrowseForFolder auch durch den
+      // dritten Parameter ausschlieáen, aber man kann bei Nav offenbar keine Structs als Parameter bergeben)
+      IF (r_Folder[1] = 58) AND (r_Folder[2] = 58) THEN
+        ERROR(Text5128500);
+      // MMS01 MCN End
+    END;
+
+    PROCEDURE UploadFileSilent2@5128502(p_ClientFilePath@5128501 : Text[1024]) : Text[1024];
+    VAR
+      l_FileObject@5128500 : Automation "{F935DC20-1CF0-11D0-ADB9-00C04FD58A0B} 1.0:{0D43FE01-F093-11CF-8940-00A0C9054228}:'Windows Script Host Object Model'.FileSystemObject";
+      l_ServerFileName@5128502 : Text[1024];
+      l_FileName@5128503 : Text[1024];
+      l_FileExtension@5128504 : Text[1024];
+      l_TempClientFile@5128505 : Text[1024];
+      l_PathManagment@5128506 : Codeunit 5128615;
+    BEGIN
+      // MAB04 UWW Start
+      // wird nur lokal (clientseitig) verwendet
+      // bringt ggf. das Warnfenster fr COM-Controls, dass sich permanent abschalten l„sst
+      // im Gegensatz zum .NET-Warnfenster
+
+      CREATE(l_FileObject, TRUE, TRUE);
+
+      IF NOT l_FileObject.FileExists(p_ClientFilePath) THEN
+        ERROR(Text004,p_ClientFilePath);
+
+      l_FileName := l_PathManagment.GetFileName(p_ClientFilePath);
+      l_FileExtension := l_PathManagment.GetFileExtension(l_FileName,TRUE);
+
+      l_TempClientFile := ClientTempFileName(l_FileExtension,l_FileExtension);  // Nav6 mit zus„tzlichem Parameter
+      l_FileObject.CopyFile(p_ClientFilePath,l_TempClientFile,TRUE);
+
+      l_ServerFileName := ServerTempFileName(l_FileExtension,l_FileExtension);  // Nav6 mit zus„tzlichem Parameter
+
+      IF NOT UPLOAD('',Magicpath,Text009,l_PathManagment.GetFileName(l_TempClientFile),l_ServerFileName) THEN
+        ERROR(Text010,p_ClientFilePath);
+
+      l_FileObject.DeleteFile(l_TempClientFile);
+
+      CLEAR(l_FileObject);
+
+      EXIT(l_ServerFileName);
+
+      // MAB04 UWW End
+    END;
+
+    PROCEDURE DownloadToFile2@5128503(p_ServerFileName@5128500 : Text[1024];p_ClientFileName@5128501 : Text[1024]);
+    VAR
+      l_TempClientFileName@5128502 : Text[1024];
+    BEGIN
+      // MAB04 UWW Start
+      // wird nur lokal (clientseitig) verwendet -> COM statt .NET Warnfenster
+
+      // ValidateFileNames(p_ServerFileName,p_ClientFileName);  // nicht in Nav6 verfgbar
+      l_TempClientFileName := DownloadTempFile(p_ServerFileName);
+      MoveClientFile2(l_TempClientFileName,p_ClientFileName);
+
+      // MAB04 UWW End
+    END;
+
+    PROCEDURE MoveClientFile2@5128504(p_SourceFileName@5128500 : Text[1024];p_TargetFileName@5128501 : Text[1024]);
+    VAR
+      l_FileObject@5128502 : Automation "{F935DC20-1CF0-11D0-ADB9-00C04FD58A0B} 1.0:{0D43FE01-F093-11CF-8940-00A0C9054228}:'Windows Script Host Object Model'.FileSystemObject";
+    BEGIN
+      // MAB04 UWW Start
+      // wird nur lokal (clientseitig) verwendet -> COM statt .NET Warnfenster
+
+      CREATE(l_FileObject, TRUE, TRUE);
+
+      IF NOT l_FileObject.FileExists(p_SourceFileName) THEN
+        ERROR(Text004,p_SourceFileName);
+
+      DeleteClientFile2(p_TargetFileName);
+      l_FileObject.CopyFile(p_SourceFileName,p_TargetFileName);
+      l_FileObject.DeleteFile(p_SourceFileName);
+
+      CLEAR(l_FileObject);
+      // MAB04 UWW End
+    END;
+
+    PROCEDURE DeleteClientFile2@5128505(p_FilePath@5128500 : Text[1024]) : Boolean;
+    VAR
+      l_FileObject@5128501 : Automation "{F935DC20-1CF0-11D0-ADB9-00C04FD58A0B} 1.0:{0D43FE01-F093-11CF-8940-00A0C9054228}:'Windows Script Host Object Model'.FileSystemObject";
+    BEGIN
+      // MAB04 UWW Start
+      // wird nur lokal (clientseitig) verwendet -> COM statt .NET Warnfenster
+
+      CREATE(l_FileObject, TRUE, TRUE);
+
+      IF NOT l_FileObject.FileExists(p_FilePath) THEN
+        EXIT(FALSE);
+
+      l_FileObject.DeleteFile(p_FilePath);
+      EXIT(TRUE);
+
+      // MAB04 UWW End
+    END;
+
+    BEGIN
+    {
+      msu solutions GmbH
+      ------------------
+
+      MAB01 - MSU,UEN, ABLOSS - 08.11.2011,
+        I00017887 - Das Dateiverschieben muss die Berechtigungen mitnehmen
+
+      msu solutions GmbH - Ende
+      -------------------------
+    }
+    END.
+  }
+}

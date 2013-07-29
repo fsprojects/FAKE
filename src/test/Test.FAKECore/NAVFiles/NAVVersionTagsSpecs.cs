@@ -128,6 +128,18 @@ namespace Test.FAKECore.NAVFiles
         It should_find_the__new_tag = () => _result.ShouldContain("VU2.40.03,NTI.Nienburg,ARC5.10,MCN,NIW,PRE,AUS01");
     }
 
+    public class CanAddMissingTagInCodeunit
+    {
+        static string _navisionObject;
+        static string _result;
+
+        Establish context = () => _navisionObject = File.ReadAllText(@"NAVFiles\Codeunit_419.txt");
+
+        Because of = () => _result = DynamicsNavFile.replaceVersionTag("AUS", "AUS01", _navisionObject);
+
+        It should_find_the__new_tag = () => _result.ShouldContain("NAVW16.00.01,NAVCH6.00.01,UEN,AUS01");
+    }
+
     public class CanCheckTagsInObjectString
     {
         static string _navisionObject;
