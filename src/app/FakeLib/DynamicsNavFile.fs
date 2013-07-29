@@ -14,22 +14,22 @@ let DateRegex = new Regex(@"\n\s\s\s\sDate\=(?<Date>[^;]*);", RegexOptions.Compi
 let TimeRegex = new Regex(@"\n\s\s\s\sTime\=(?<Time>[^;]*);", RegexOptions.Compiled)
 
 /// Replaces the timestamp in a Dynamics NAV object
-let replaceDateTimeInString (dateTime:DateTime) sourceCode = 
-    let t1 = DateRegex.Replace(sourceCode, String.Format("\n    Date={0};", dateTime.Date.ToString("dd.MM.yy")))
+let replaceDateTimeInString (dateTime:DateTime) text = 
+    let t1 = DateRegex.Replace(text, String.Format("\n    Date={0};", dateTime.Date.ToString("dd.MM.yy")))
     TimeRegex.Replace(t1, String.Format("\n    Time={0};", dateTime.ToString("HH:mm:ss")))
 
 /// Removes the modified flag from a Dynamics NAV object
-let removeModifiedFlag sourceCode = ModifiedRegex.Replace(sourceCode, String.Empty)
+let removeModifiedFlag text = ModifiedRegex.Replace(text, String.Empty)
 
 /// Returns the version tag list from Dynamics NAV object
-let getVersionTagList sourceCode =
-    if VersionRegex.IsMatch sourceCode then VersionRegex.Match(sourceCode).Groups.["VersionList"].Value else ""
+let getVersionTagList text =
+    if VersionRegex.IsMatch text then VersionRegex.Match(text).Groups.["VersionList"].Value else ""
 
 /// Splits a version tag list from Dynamics NAV object into single tags
 let splitVersionTags (tagList:string) = tagList.ToUpper().Split Colon
 
 /// Replaces a version tag in a version tag list from Dynamics NAV object
-let replaceInVersionTag (tagList:string) (versionTag:string) (newVersion:string) =
+let replaceInVersionTag (versionTag:string) (newVersion:string) (tagList:string) =
     let versionTag = versionTag.ToUpper()
     if tagList.ToUpper().Contains versionTag then
         splitVersionTags tagList
@@ -42,16 +42,16 @@ let replaceInVersionTag (tagList:string) (versionTag:string) (newVersion:string)
     else
         tagList + Colon.ToString() + versionTag + newVersion        
 
-        
 /// Replaces a version tag list from complete Dynamics NAV object with a new one
-let replaceVersionTagList (sourceCode:string) (newTags:string) =
-    VersionRegex.Replace(sourceCode, String.Format("\n    Version List={0};", newTags))
+let replaceVersionTagList (text:string) (newTags:string) =
+    VersionRegex.Replace(text, String.Format("\n    Version List={0};", newTags))
 
 /// Splits a version tag list from Dynamics NAV object into single tags
 let replaceVersionTag versionTag (newVersion:string) sourceCode =
     let tagList = getVersionTagList sourceCode
 
-    replaceInVersionTag tagList versionTag (newVersion.Replace(versionTag,""))
+    tagList
+    |> replaceInVersionTag versionTag (newVersion.Replace(versionTag,""))
     |> replaceVersionTagList sourceCode
 
 /// Get all missing required tags from a Dynamics NAV version tag list
@@ -105,11 +105,9 @@ let modifyNavisionFiles requiredTags acceptPreTagged invalidTags versionTag newV
     for fileName in fileNames do   
         try
             let objectString,tagList = checkTagsInFile requiredTags acceptPreTagged invalidTags fileName
+            let newTags = replaceInVersionTag versionTag newVersion tagList
 
-            let text =
-                replaceVersionTagList
-                    objectString
-                    (replaceInVersionTag versionTag newVersion tagList)
+            let text = replaceVersionTagList objectString newTags
 
             let text = if removeModified then removeModifiedFlag text else text
             let text = if newDateTime <> DateTime.MinValue then replaceDateTimeInString newDateTime text else text
@@ -129,7 +127,7 @@ let modifyNavisionFiles requiredTags acceptPreTagged invalidTags versionTag newV
 
 /// Checks a Dynamics NAV object for missing required and invalid tags and raises this as errors.
 /// It also changes the given tag, resets the modified flag and time stamp.
-let SetVersionTags requiredTags acceptPreTagged invalidTags versionTag newVersion removeModifiedFlag newDateTime fileNames =
+let setVersionTags requiredTags acceptPreTagged invalidTags versionTag newVersion removeModifiedFlag newDateTime fileNames =
     trace "Setting VersionTags."
     tracefn "  - Required: %A" requiredTags
     tracefn "  - Invalid:  %A" invalidTags
