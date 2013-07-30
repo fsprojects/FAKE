@@ -71,4 +71,16 @@ namespace Test.FAKECore
             () => StringHelper.ConvertTextToWindowsLineBreaks("This is my text\r\nI love it\r\n\r\nreally.\r\n")
                       .ShouldEqual("This is my text\r\nI love it\r\n\r\nreally.\r\n");
     }
+
+    public class when_checking_strings
+    {
+        It should_detect_whitespace_string =
+            () => StringHelper.isNullOrWhiteSpace("\n \r  ").ShouldBeTrue();
+
+        It should_detect_non_whitespace_string =
+            () => StringHelper.isNullOrWhiteSpace("\n \r s ").ShouldBeFalse();
+
+        It should_detect_empty_string_as_whitespace_string =
+            () => StringHelper.isNullOrWhiteSpace("").ShouldBeTrue();
+    }
 }

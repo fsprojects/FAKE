@@ -10,11 +10,15 @@ let productName() = "FAKE"
 
 /// <summary>Returns if the string is null or empty</summary>
 /// <user/>
-let isNullOrEmpty = String.IsNullOrEmpty
+let inline isNullOrEmpty value = String.IsNullOrEmpty value
 
 /// <summary>Returns if the string is not null or empty</summary>
 /// <user/>
-let isNotNullOrEmpty = String.IsNullOrEmpty >> not
+let inline isNotNullOrEmpty value = String.IsNullOrEmpty value |> not
+
+/// <summary>Returns if the string is null or empty or completely whitespace</summary>
+/// <user/>
+let inline isNullOrWhiteSpace value = isNullOrEmpty value || value |> Seq.forall Char.IsWhiteSpace
 
 /// <summary>Reads a file line by line</summary>
 /// <user/>
