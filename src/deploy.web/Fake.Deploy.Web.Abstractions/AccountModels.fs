@@ -3,8 +3,7 @@
 open System
 open System.Collections.Generic
 open System.ComponentModel.DataAnnotations
-open System.Data.Entity
-open System.Globalization;
+open System.Globalization
 open System.Runtime.Serialization
 
 [<CLIMutable>]
@@ -31,6 +30,7 @@ type Registration = {
 [<CLIMutable>]
 [<DataContract>]
 type Role = {
+    [<Required;DataMember>]
     Id : string
 }
 
