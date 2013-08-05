@@ -3,9 +3,6 @@ module Fake.OctoTools
 
     open Fake
     open System
-    open System.Reflection
-    open Microsoft.FSharp.Reflection
-
 
     // ************************************************************************
     // TYPES
@@ -91,28 +88,64 @@ module Fake.OctoTools
     // ************************************************************************
     // HELPER FUNCTIONS
 
-    let private commandLine opts =     
-        let recordValueAsString opts field = 
-            if Reflection.FSharpValue.GetRecordField(opts, field) = null then ""
-            else Reflection.FSharpValue.GetRecordField(opts, field).ToString()     
-           
-        Reflection.FSharpType.GetRecordFields(opts.GetType())
-        |> Array.map (fun field -> field.Name, recordValueAsString opts field)
-        |> Array.fold (fun s (o, v) -> 
-            if isNullOrEmpty v then s
-            else s + (sprintf " --%s=\"%s\"" (o.ToLower()) v)
-        ) ""
+    let optionalStringParam p o = 
+        match o with
+        | Some s -> sprintf " --%s=\"%s\"" p s
+        | None -> ""
 
-    let private commandString command =       
+    let optionalObjParam p o = 
+        match o with
+        | Some x -> sprintf " --%s=\"%s\"" p (x.ToString())
+        | None -> ""    
+    
+    let liftString x = 
+        if String.IsNullOrEmpty x then None
+        else Some x      
+
+    let flag p b = if b then sprintf " --%s" p else ""
+    
+    let releaseCommandLine (opts:CreateReleaseOptions) =
+        [ (optionalStringParam "projects" (liftString opts.Project))
+          (optionalStringParam "version" (liftString opts.Version))
+          (optionalStringParam "packageversion" (liftString opts.PackageVersion))
+          (optionalStringParam "packageversionoverride" opts.PackageVersionOverride)
+          (optionalStringParam "packagesfolder" opts.PackagesFolder)
+          (optionalStringParam "releasenotes" (liftString opts.ReleaseNotes))
+          (optionalStringParam "releasenotesfile" (liftString opts.ReleaseNotesFile)) ] 
+        |> List.fold (+) ""
+
+    let deployCommandLine (opts:DeployReleaseOptions) = 
+        [ (optionalStringParam "project" (liftString opts.Project))
+          (optionalStringParam "deployto" (liftString opts.DeployTo))
+          (optionalStringParam "version" (liftString opts.Version))
+          (flag "force" opts.Force)
+          (flag "waitfordeployment" opts.WaitForDeployment)
+          (optionalObjParam "deploymenttimeout" opts.DeploymentTimeout)
+          (optionalObjParam "deploymentchecksleepcycle" opts.DeploymentCheckSleepCycle) ] 
+        |> List.fold (+) ""
+
+    let deleteCommandLine (opts:DeleteReleaseOptions) =
+        [ (optionalStringParam "project" (liftString opts.Project))
+          (optionalStringParam "minversion" (liftString opts.MinVersion))
+          (optionalStringParam "maxversion" (liftString opts.MaxVersion)) ] 
+        |> List.fold (+) ""
+
+    let serverCommandLine (opts:OctoServerOptions) = 
+        [ (optionalStringParam "server=\"%s\"" (liftString opts.Server))
+          (optionalStringParam "apikey=\"%s\"" (liftString opts.ApiKey)) ] 
+        |> List.fold (+) ""
+
+    /// Maps an command to string input for the octopus tools cli.
+    let commandLine command =       
         match command with
-        | CreateRelease (releaseOpts, None) ->        
-            releaseOpts |> commandLine |> (sprintf " create-release%s")
-        | CreateRelease (releaseOpts, Some (deployOpts)) ->
-            ((releaseOpts |> commandLine) + (deployOpts |> commandLine)) |> (sprintf " create-release%s")
+        | CreateRelease (opts, None) ->        
+            sprintf " create-release%s" (releaseCommandLine opts)
+        | CreateRelease (opts, Some (dopts)) ->
+            sprintf " create-release%s%s" (releaseCommandLine opts) (deployCommandLine dopts)
         | DeployRelease opts ->
-            opts |> commandLine |> (sprintf " deploy-release%s")
+            sprintf " deploy-release%s" (deployCommandLine opts)
         | DeleteRelease opts ->
-            opts |> commandLine |> (sprintf " delete-releases%s")
+            sprintf " delete-releases%s" (deleteCommandLine opts)
         | ListEnvironments -> 
             " list-environments"
 
@@ -125,7 +158,7 @@ module Fake.OctoTools
         let octoParams = setParams(octoParams)
         let command = (octoParams.Command.ToString())
         let tool = octoParams.ToolPath @@ octoParams.ToolName
-        let args = (commandString octoParams.Command) + (commandLine octoParams.Server)    
+        let args = commandLine octoParams.Command |>(+)<| serverCommandLine octoParams.Server
 
         traceStartTask "Octo " command       
         trace (tool + args)
