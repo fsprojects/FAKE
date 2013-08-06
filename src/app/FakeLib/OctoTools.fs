@@ -1,5 +1,4 @@
-﻿[<AutoOpen>]
-module Fake.OctoTools
+﻿module Fake.OctoTools
 
 open Fake
 open System
