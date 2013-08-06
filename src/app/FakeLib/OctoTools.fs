@@ -98,14 +98,12 @@ module Fake.OctoTools
         | Some x -> sprintf " --%s=\"%s\"" p (x.ToString())
         | None -> ""    
     
-    let liftString x = 
-        if String.IsNullOrEmpty x then None
-        else Some x      
+    let liftString x = if String.IsNullOrEmpty x then None else Some x      
 
     let flag p b = if b then sprintf " --%s" p else ""
     
     let releaseCommandLine (opts:CreateReleaseOptions) =
-        [ (optionalStringParam "projects" (liftString opts.Project))
+        [ (optionalStringParam "project" (liftString opts.Project))
           (optionalStringParam "version" (liftString opts.Version))
           (optionalStringParam "packageversion" (liftString opts.PackageVersion))
           (optionalStringParam "packageversionoverride" opts.PackageVersionOverride)
@@ -131,8 +129,8 @@ module Fake.OctoTools
         |> List.fold (+) ""
 
     let serverCommandLine (opts:OctoServerOptions) = 
-        [ (optionalStringParam "server=\"%s\"" (liftString opts.Server))
-          (optionalStringParam "apikey=\"%s\"" (liftString opts.ApiKey)) ] 
+        [ (optionalStringParam "server" (liftString opts.Server))
+          (optionalStringParam "apikey" (liftString opts.ApiKey)) ] 
         |> List.fold (+) ""
 
     /// Maps an command to string input for the octopus tools cli.
