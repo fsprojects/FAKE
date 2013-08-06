@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Fake;
 using Machine.Specifications;
 using Microsoft.FSharp.Collections;
@@ -89,7 +89,7 @@ namespace Test.FAKECore
                     true);
                 var result = Run(packageParams);
                 result.ShouldStartWith(" \"install\" \"thePackage\" \"-OutputDirectory\" \"");
-                result.ShouldEndWith("\\test\\myPackageFolder\\\" \"-IncludePreRelease\"");
+                result.ShouldEndWith("\\test\\myPackageFolder\\\" \"-PreRelease\"");
             };
 
         It should_restore_package_by_package_id_with_ExcludeVersion_and_PreReleasePackage =
@@ -105,7 +105,7 @@ namespace Test.FAKECore
                     true);
                 var result = Run(packageParams);
                 result.ShouldStartWith(" \"install\" \"thePackage\" \"-OutputDirectory\" \"");
-                result.ShouldEndWith("\\test\\myPackageFolder\\\" \"-ExcludeVersion\" \"-IncludePreRelease\"");
+                result.ShouldEndWith("\\test\\myPackageFolder\\\" \"-ExcludeVersion\" \"-PreRelease\"");
             };
     }
 }

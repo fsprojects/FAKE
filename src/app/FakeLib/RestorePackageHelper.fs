@@ -57,8 +57,8 @@ let buildNuGetArgs setParams packageId =
         | (true, false, None)     -> args + " \"-ExcludeVersion\""
         | (false, _, Some(v))     -> args + " \"-Version\" \"" + v.ToString() + "\""
         | (false, false, None)    -> args
-        | (false, true, _)        -> args + " \"-IncludePreRelease\""
-        | (true, true, _)         -> args + " \"-ExcludeVersion\" \"-IncludePreRelease\""
+        | (false, true, _)        -> args + " \"-PreRelease\""
+        | (true, true, _)         -> args + " \"-ExcludeVersion\" \"-PreRelease\""
 
 let RestorePackageId setParams packageId = 
     traceStartTask "RestorePackageId" packageId
