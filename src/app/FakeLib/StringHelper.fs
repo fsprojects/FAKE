@@ -305,3 +305,6 @@ let DecodeBase64Utf8String (text:string) =
   text
   |> Convert.FromBase64String
   |> Encoding.UTF8.GetString
+    
+/// Lifts a string to an option
+let liftString x = if isNullOrEmpty x then None else Some x

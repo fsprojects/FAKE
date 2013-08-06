@@ -96,9 +96,7 @@ module Fake.OctoTools
     let optionalObjParam p o = 
         match o with
         | Some x -> sprintf " --%s=\"%s\"" p (x.ToString())
-        | None -> ""    
-    
-    let liftString x = if String.IsNullOrEmpty x then None else Some x      
+        | None -> ""     
 
     let flag p b = if b then sprintf " --%s" p else ""
     
