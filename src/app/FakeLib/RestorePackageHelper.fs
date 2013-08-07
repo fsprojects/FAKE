@@ -52,14 +52,15 @@ let buildNuGetArgs setParams packageId =
 
     let args = " \"install\" \"" + packageId + "\" \"-OutputDirectory\" \"" + (parameters.OutputPath |> FullName) + "\"" + sources
 
-    match (parameters.ExcludeVersion, parameters.IncludePreRelease, parameters.Version) with
-        | (true, false, Some(v))  -> args + " \"-ExcludeVersion\" \"-Version\" \"" + v.ToString() + "\""
-        | (true, false, None)     -> args + " \"-ExcludeVersion\""
-        | (false, _, Some(v))     -> args + " \"-Version\" \"" + v.ToString() + "\""
-        | (false, false, None)    -> args
-        | (false, true, _)        -> args + " \"-PreRelease\""
-        | (true, true, _)         -> args + " \"-ExcludeVersion\" \"-PreRelease\""
+    match parameters.ExcludeVersion, parameters.IncludePreRelease, parameters.Version with
+    | (true, false, Some(v))  -> args + " \"-ExcludeVersion\" \"-Version\" \"" + v.ToString() + "\""
+    | (true, false, None)     -> args + " \"-ExcludeVersion\""
+    | (false, _, Some(v))     -> args + " \"-Version\" \"" + v.ToString() + "\""
+    | (false, false, None)    -> args
+    | (false, true, _)        -> args + " \"-PreRelease\""
+    | (true, true, _)         -> args + " \"-ExcludeVersion\" \"-PreRelease\""
 
+/// Restores the given package from NuGet
 let RestorePackageId setParams packageId = 
     traceStartTask "RestorePackageId" packageId
     let parameters = RestoreSinglePackageDefaults |> setParams
@@ -69,7 +70,7 @@ let RestorePackageId setParams packageId =
   
     traceEndTask "RestorePackageId" packageId
 
-           
+/// Restores the given package from NuGet
 let RestorePackage setParams package = 
     traceStartTask "RestorePackage" package
     let (parameters:RestorePackageParams) = RestorePackageDefaults |> setParams
@@ -87,6 +88,7 @@ let RestorePackage setParams package =
                     
     traceEndTask "RestorePackage" package
 
+/// Restores all packages from NuGet to the default directories
 let RestorePackages() = 
-  !! "./**/packages.config"
-  |> Seq.iter (RestorePackage id)
+    !! "./**/packages.config"
+    |> Seq.iter (RestorePackage id)
