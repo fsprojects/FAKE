@@ -376,7 +376,9 @@ let MoveFile target fileName =
     match fi with
     | File f ->
         let targetName = target @@ fi.Name
-        DeleteFile targetName
+        let targetInfo = fileInfo targetName
+        if targetInfo.Exists then
+            targetInfo.Delete()
         logVerbosefn "Move %s to %s" fileName targetName
         f.MoveTo(targetName) |> ignore
     | Directory _ -> logVerbosefn "Ignoring %s, because it is no file" fileName
