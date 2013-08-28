@@ -26,8 +26,7 @@
     <WarningLevel>3</WarningLevel>
     <StartAction>Project</StartAction>
     <StartProgram>C:\sources\FAKE\tools\FAKE\FAKE.exe</StartProgram>
-    <StartWorkingDirectory>
-    </StartWorkingDirectory>
+    <StartWorkingDirectory>C:\code\github\TeamCityTest</StartWorkingDirectory>
     <StartArguments>build.fsx</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
