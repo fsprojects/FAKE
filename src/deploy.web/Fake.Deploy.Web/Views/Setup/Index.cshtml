@@ -1,4 +1,5 @@
-﻿@model Fake.Deploy.Web.SetupInfo
+﻿@using System.Linq
+@model Fake.Deploy.Web.SetupInfo
 
 @{
     ViewBag.Title = "Index";
@@ -7,42 +8,47 @@
 
 @section scripts {
         <style type="text/css">
-      body {
-        padding-top: 40px;
-        padding-bottom: 40px;
-        background-color: #f5f5f5;
-      }
+            body
+            {
+                padding-top: 40px;
+                padding-bottom: 40px;
+                background-color: #f5f5f5;
+            }
 
-      .form-setup {
-        max-width: 450px;
-        padding: 19px 29px 29px;
-        margin: 0 auto 20px;
-        background-color: #fff;
-        border: 1px solid #e5e5e5;
-        -webkit-border-radius: 5px;
-           -moz-border-radius: 5px;
+            .form-setup
+            {
+                max-width: 450px;
+                padding: 19px 29px 29px;
+                margin: 0 auto 20px;
+                background-color: #fff;
+                border: 1px solid #e5e5e5;
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
                 border-radius: 5px;
-        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
                 box-shadow: 0 1px 2px rgba(0,0,0,.05);
-      }
-      .form-setup .form-setup-heading,
-      .form-setup .checkbox {
-        margin-bottom: 10px;
-      }
-      .form-setup input[type="text"],
-      .form-setup input[type="password"] {
-        font-size: 16px;
-        height: auto;
-        margin-bottom: 15px;
-        padding: 7px 9px;
-      }
+            }
 
-    </style>
+                .form-setup .form-setup-heading,
+                .form-setup .checkbox
+                {
+                    margin-bottom: 10px;
+                }
+
+                .form-setup input[type="text"],
+                .form-setup input[type="password"]
+                {
+                    font-size: 16px;
+                    height: auto;
+                    margin-bottom: 15px;
+                    padding: 7px 9px;
+                }
+        </style>
     <script src="@Url.Content("~/Scripts/app/Setup.Index.js")" type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
-            var vm = new IndexViewModel()
+            var vm = new IndexViewModel();
             ko.applyBindings(vm);
         });
     </script>
@@ -91,11 +97,15 @@
     <div class="control-group">
         <label class="control-label" for="agentName">Data Provider</label>
         <div class="controls">
-            @Html.EditorFor(model => model.DataProvider)
+            @{
+                var dataProviders = this.Model.AvailableDataProviders
+                    .Select(m => new SelectListItem { Text = m, Value = m, Selected = m == Model.DataProvider });
+            }
+            @Html.DropDownList("DataProvider", dataProviders, @Model.DataProvider)
             @Html.ValidationMessageFor(model => model.DataProvider)
         </div>
     </div>
-
+    
     <div class="control-group">
         <label class="control-label" for="agentName">Data Provider Parameters</label>
         <div class="controls">
@@ -108,7 +118,11 @@
     <div class="control-group">
         <label class="control-label" for="agentName">Membership Provider</label>
         <div class="controls">
-            @Html.EditorFor(model => model.MembershipProvider)
+            @{
+                var membershipProviders = Model.AvailableMembershipProviders
+                    .Select(m => new SelectListItem { Text = m, Value = m, Selected = m == Model.MembershipProvider });
+            }
+            @Html.DropDownList("MembershipProvider", membershipProviders, @Model.MembershipProvider)
             @Html.ValidationMessageFor(model => model.MembershipProvider)
         </div>
     </div>

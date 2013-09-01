@@ -65,6 +65,8 @@ type SetupInfo = {
     DataProviderParameters : string
     MembershipProvider : string
     MembershipProviderParameters : string
+    AvailableDataProviders: string array
+    AvailableMembershipProviders: string array
 }
 
 [<InheritedExport>]
