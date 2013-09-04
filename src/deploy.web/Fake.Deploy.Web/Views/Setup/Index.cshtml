@@ -1,4 +1,6 @@
 ﻿@using System.Linq
+@using Newtonsoft.Json
+
 @model Fake.Deploy.Web.SetupInfo
 
 @{
@@ -45,6 +47,14 @@
                     padding: 7px 9px;
                 }
         </style>
+    <script type="text/javascript">
+        var metaData = {
+            dataProviders : @Html.Raw((JsonConvert.SerializeObject(Model.AvailableDataProviders))),
+            dataProviderParameters: @Html.Raw(JsonConvert.SerializeObject(Model.DataProviderParametersDescription)),
+            membershipProviders : @Html.Raw((JsonConvert.SerializeObject(Model.AvailableDataProviders))),
+            membershipProviderParameters: @Html.Raw(JsonConvert.SerializeObject(Model.MembershipProviderParametersDescription))            
+        };
+    </script>
     <script src="@Url.Content("~/Scripts/app/Setup.Index.js")" type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
@@ -97,19 +107,21 @@
     <div class="control-group">
         <label class="control-label" for="agentName">Data Provider</label>
         <div class="controls">
-            @{
-                var dataProviders = this.Model.AvailableDataProviders
-                    .Select(m => new SelectListItem { Text = m, Value = m, Selected = m == Model.DataProvider });
-            }
-            @Html.DropDownList("DataProvider", dataProviders, @Model.DataProvider)
+            
+            <select id="dataProvider"
+                    data-bind="options: dataProviders,
+                    value: selectedDataProvider,
+                    optionsCaption: 'Choose...'">                
+            </select>
             @Html.ValidationMessageFor(model => model.DataProvider)
+
         </div>
     </div>
     
-    <div class="control-group">
-        <label class="control-label" for="agentName">Data Provider Parameters</label>
+    <div class="control-group" data-bind="foreach: dataProviderParameters">
+        <label class="control-label" for="agentName" data-bind="text: ParameterName, attr: {title: Description}"></label>
         <div class="controls">
-            @Html.EditorFor(model => model.DataProviderParameters)
+            <input type="text" data-bind="attr: { id: 'dataProviderParameter_' + ParameterName, title:Description }"></input>
             @Html.ValidationMessageFor(model => model.DataProviderParameters)
         </div>
     </div>
@@ -118,19 +130,19 @@
     <div class="control-group">
         <label class="control-label" for="agentName">Membership Provider</label>
         <div class="controls">
-            @{
-                var membershipProviders = Model.AvailableMembershipProviders
-                    .Select(m => new SelectListItem { Text = m, Value = m, Selected = m == Model.MembershipProvider });
-            }
-            @Html.DropDownList("MembershipProvider", membershipProviders, @Model.MembershipProvider)
+            <select id="membershipProvider"
+                    data-bind="options: membershipProviders,
+                    value: selectedMembershipProvider,
+                    optionsCaption: 'Choose...'">                
+            </select>
             @Html.ValidationMessageFor(model => model.MembershipProvider)
         </div>
     </div>
 
-    <div class="control-group">
-        <label class="control-label" for="agentName">Membership Provider Parameters</label>
+    <div class="control-group" data-bind="foreach: membershipProviderParameters">
+        <label class="control-label" for="agentName" data-bind="text: ParameterName, attr: {title:Description}"></label>
         <div class="controls">
-            @Html.EditorFor(model => model.MembershipProviderParameters)
+            <input type="text" data-bind="attr: { id: 'membershipProviderParameter_' + ParameterName, title:Description }"></input>
             @Html.ValidationMessageFor(model => model.MembershipProviderParameters)
         </div>
     </div>

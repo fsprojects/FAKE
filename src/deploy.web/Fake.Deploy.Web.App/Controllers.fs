@@ -22,6 +22,7 @@ type SetupController() =
 
     [<System.Web.Mvc.AllowAnonymous>]
     member this.Index() = 
+        
         if this.Request.IsAuthenticated
         then
             FormsAuthentication.SignOut() //Kick the user out
@@ -35,6 +36,14 @@ type SetupController() =
                     MembershipProvider=""; MembershipProviderParameters="";
                     AvailableDataProviders = Data.dataProviders() |> Seq.map(fun p -> p.Id) |> Array.ofSeq
                     AvailableMembershipProviders = Data.membershipProviders() |> Seq.map(fun p -> p.Id) |> Array.ofSeq
+                    DataProviderParametersDescription = 
+                        Data.dataProviders()
+                        |> Seq.map(fun dp -> dp.Id, dp.ParameterDescriptions)
+                        |> dict
+                    MembershipProviderParametersDescription =
+                        Data.membershipProviders()
+                        |> Seq.map(fun dp -> dp.Id, dp.ParameterDescriptions)
+                        |> dict
                 }         
             this.View(appInfo) :> ActionResult
 

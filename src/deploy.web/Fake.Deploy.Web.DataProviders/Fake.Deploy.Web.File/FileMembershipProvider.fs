@@ -34,6 +34,12 @@ type FileMembershipProvider () =
     interface IMembershipProvider with
         member x.Id with get() = "File"
 
+        member x.ParameterDescriptions 
+            with get() =
+                [ { ParameterName = "datafolder"; 
+                    Description = "Path to where you want data to be stored. Ex: C:\\Data" }
+                ] |> Seq.ofList
+
         member x.Initialize(settings) =
               Provider.init settings.["datafolder"]
 
