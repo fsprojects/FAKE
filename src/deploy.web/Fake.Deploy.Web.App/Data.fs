@@ -173,3 +173,8 @@
 
     let removeUserFromRole user role = 
         config.Membership.RemoveUserFromRoles(user, role)
+
+    let dataProviders () =
+        config.DataProviders
+    let membershipProviders () =
+        config.MembershipProviders

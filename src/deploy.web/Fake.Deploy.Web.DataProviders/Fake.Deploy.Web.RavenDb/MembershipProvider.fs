@@ -17,6 +17,12 @@ type RavenDbMembershipProvider() =
     interface IMembershipProvider with
         member x.Id with get() = "RavenDB"
 
+        member x.ParameterDescriptions 
+            with get() = [ 
+                            { ParameterName = "url";
+                              Description = "url to RavenDB. ex: http://localhost:8081" }
+                         ] |> Seq.ofList
+
         member x.Initialize(settings) =
               Provider.init settings.["url"]
 
