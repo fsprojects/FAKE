@@ -22,11 +22,30 @@ type SetupController() =
 
     [<System.Web.Mvc.AllowAnonymous>]
     member this.Index() = 
+        
         if this.Request.IsAuthenticated
         then
             FormsAuthentication.SignOut() //Kick the user out
             this.RedirectToAction("Index") :> ActionResult //Remake the request now the user has been signed out
-        else this.View() :> ActionResult
+        else
+            let appInfo = 
+                {
+                    AdministratorUserName = ""; AdministratorEmail=""; 
+                    AdministratorPassword="";ConfirmAdministratorPassword="";
+                    DataProvider=""; DataProviderParameters="";
+                    MembershipProvider=""; MembershipProviderParameters="";
+                    AvailableDataProviders = Data.dataProviders() |> Seq.map(fun p -> p.Id) |> Array.ofSeq
+                    AvailableMembershipProviders = Data.membershipProviders() |> Seq.map(fun p -> p.Id) |> Array.ofSeq
+                    DataProviderParametersDescription = 
+                        Data.dataProviders()
+                        |> Seq.map(fun dp -> dp.Id, dp.ParameterDescriptions)
+                        |> dict
+                    MembershipProviderParametersDescription =
+                        Data.membershipProviders()
+                        |> Seq.map(fun dp -> dp.Id, dp.ParameterDescriptions)
+                        |> dict
+                }         
+            this.View(appInfo) :> ActionResult
 
     [<HttpPost>]
     [<System.Web.Mvc.AllowAnonymous>]

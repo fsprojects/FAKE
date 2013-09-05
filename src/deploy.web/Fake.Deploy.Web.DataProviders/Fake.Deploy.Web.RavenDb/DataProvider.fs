@@ -8,6 +8,12 @@ type RavenDbDataProvider() =
 
         member x.Initialize(settings) =
               Provider.init settings.["url"]
+
+        member x.ParameterDescriptions 
+            with get() = [ 
+                            { ParameterName = "url";
+                              Description = "url to RavenDB. ex: http://localhost:8081" }
+                         ] |> Seq.ofList
                 
         member x.GetEnvironments(ids) =
             match ids |> Seq.toList with

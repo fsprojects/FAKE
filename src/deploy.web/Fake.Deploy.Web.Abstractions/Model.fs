@@ -56,6 +56,12 @@ type Environment = {
 
 
 [<CLIMutable>]
+type ParameterDescription = { 
+    ParameterName : string
+    Description : string
+}
+
+[<CLIMutable>]
 type SetupInfo = {
     AdministratorUserName : string
     AdministratorEmail : string
@@ -63,14 +69,20 @@ type SetupInfo = {
     ConfirmAdministratorPassword : string
     DataProvider : string
     DataProviderParameters : string
+    AvailableDataProviders: string array
+    DataProviderParametersDescription : IDictionary<string, seq<ParameterDescription>>
+    
     MembershipProvider : string
     MembershipProviderParameters : string
+    AvailableMembershipProviders: string array
+    MembershipProviderParametersDescription : IDictionary<string, seq<ParameterDescription>>
 }
 
 [<InheritedExport>]
 type IDataProvider = 
     inherit IDisposable
     abstract member Id : string with get
+    abstract member ParameterDescriptions : seq<ParameterDescription> with get
     abstract member Initialize : IDictionary<string, string> -> unit
     abstract member GetEnvironments : seq<string> -> Environment[]
     abstract member SaveEnvironments : seq<Environment> -> unit
@@ -83,6 +95,7 @@ type IDataProvider =
 type IMembershipProvider = 
     inherit IDisposable
     abstract member Id : string with get
+    abstract member ParameterDescriptions : seq<ParameterDescription> with get
     abstract member Initialize : IDictionary<string, string> -> unit
     abstract member Login : string * string * bool -> bool
     abstract member Logout : unit -> unit
