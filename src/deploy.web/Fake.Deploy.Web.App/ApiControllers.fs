@@ -123,7 +123,7 @@ type AgentController() =
                     let agentName = formData.Get("agentName")
                     let environmentId = formData.Get("environmentId")
                     try
-                        let agent = Agent.Create(agentUrl, agentName)
+                        let agent = Agent.Create(agentUrl, environmentId, agentName)
                         Data.saveAgent environmentId agent
                         return this.Request.CreateResponse(HttpStatusCode.Created)
                     with e ->
