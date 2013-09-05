@@ -1,6 +1,8 @@
 ﻿namespace Fake.Deploy.Web.File
 open Fake.Deploy.Web
+open Newtonsoft.Json
 open System
+open System.IO
 open System.Runtime.Serialization.Json
 
 module FileIO =
@@ -14,25 +16,26 @@ module Provider =
     let agentsFile() = IO.Path.Combine(dataFolder, "Agents.json")
     let usersFile() = IO.Path.Combine(dataFolder, "Users.json")
     let rolesFile() = IO.Path.Combine(dataFolder, "Roles.json")
-    let environmentSerializer = new DataContractJsonSerializer(typedefof<Fake.Deploy.Web.Environment array>, [typedefof<AgentRef>])
-    let agentSerializer = new DataContractJsonSerializer(typedefof<Agent array>, [typedefof<Uri>])
-    let userSerializer = new DataContractJsonSerializer(typedefof<User array>)
-    let roleSerializer = new DataContractJsonSerializer(typedefof<Role array>)
     
     let init folder =
         dataFolder <- folder
 
-    let write (serializer:DataContractJsonSerializer) fileName data = 
+    let write<'T> fileName (data: 'T) = 
         use file = FileIO.Create(fileName())
-        serializer.WriteObject(file, data)
-        file.Close()
+        use wr = new StreamWriter(file)
+        let json = JsonConvert.SerializeObject(data, Formatting.Indented)
+        wr.Write(json)
+        wr.Flush()
+        wr.Close()
 
-    let read (serializer:DataContractJsonSerializer) fileName =
+    let read<'T> fileName =
         if not (FileIO.Exists (fileName())) then
             None
         else
             use file = FileIO.OpenRead (fileName())
-            let objs = serializer.ReadObject(file)
+            use rd = new StreamReader(file)
+            let json = rd.ReadToEnd()
+            let objs = JsonConvert.DeserializeObject<'T>(json)
             file.Close()
             Some objs
 
@@ -42,63 +45,63 @@ module Provider =
         savedNotInToSave @ toSave' |> Array.ofList
     
     let getEnvironments() =
-        let data = read environmentSerializer environmentsFile
+        let data = read<Fake.Deploy.Web.Environment array> environmentsFile
         match data with
             | None -> [||]
-            | Some x -> x :?> Fake.Deploy.Web.Environment array
+            | Some x -> x
 
     let saveEnvironments(envs: seq<Fake.Deploy.Web.Environment>) =
         envs |> Seq.iter(fun e -> if e.Id = null then e.Id <- Guid.NewGuid().ToString())
         let toSave = getSavedExcept (getEnvironments()) envs (fun x y -> x.Id = y.Id)
-        write environmentSerializer environmentsFile toSave
+        write environmentsFile toSave
         
     let deleteEnvironment id = 
         getEnvironments()
         |> Seq.filter(fun e -> e.Id <> id)
-        |> (fun envs -> write environmentSerializer environmentsFile (envs |> Array.ofSeq))
+        |> (fun envs -> write environmentsFile (envs |> Array.ofSeq))
 
     let getAgents () =
-        let data = read agentSerializer agentsFile
+        let data = read<Agent array> agentsFile
         match data with
             | None -> [||]
-            | Some x -> x :?> Agent array
+            | Some x -> x
 
 
     let saveAgents(agents: seq<Agent>) =
         agents |> Seq.iter(fun x -> if x.Id = null then x.Id <- Guid.NewGuid().ToString())
         let toSave = getSavedExcept (getAgents()) agents (fun x y -> x.Id = y.Id)
-        write agentSerializer agentsFile toSave
+        write agentsFile toSave
 
     let deleteAgent (id:string) =
         getAgents()
         |> Seq.filter(fun a -> a.Id <> id)
-        |> (fun envs -> write agentSerializer agentsFile (envs |> Array.ofSeq))
+        |> (fun envs -> write agentsFile (envs |> Array.ofSeq))
 
     let getRoles () =
-        let data = read roleSerializer rolesFile
+        let data = read<Role array> rolesFile
         match data with
             | None -> [||]
-            | Some x -> x :?> Role array
+            | Some x -> x
 
     let saveRoles roles =
         let toSave = getSavedExcept (getRoles()) roles (fun x y -> x.Id = y.Id)
-        write roleSerializer rolesFile toSave
+        write rolesFile toSave
 
     let getAllUsers () =
-        let data = read userSerializer usersFile
+        let data = read<User array> usersFile
         match data with
             | None -> [||]
-            | Some x -> x :?> User array
+            | Some x -> x
         |> Array.sortBy(fun u -> u.Username)
 
     let saveUsers (users:seq<User>) = 
         let toSave = getSavedExcept (getAllUsers()) users (fun x y -> x.Id = y.Id)
-        write userSerializer usersFile toSave
+        write usersFile toSave
 
     let deleteUser (id : string) =
         getAllUsers() 
         |> Array.filter(fun u -> u.Id <> id)
-        |> (fun envs -> write userSerializer usersFile (envs |> Array.ofSeq))
+        |> (fun envs -> write usersFile (envs |> Array.ofSeq))
 
     let getUsers ids = 
         getAllUsers() 
