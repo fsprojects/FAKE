@@ -22,7 +22,7 @@ function AgentViewModel() {
             dataType: 'json',
             contentType: 'application/json'
         }).done(function (data) {
-            var a = ko.mapping.fromJS(data)
+            var a = ko.mapping.fromJS(data);
             self.agentDetails(a);
             self.agentStatus(new AgentStatusModel(true, 'Online'));
             self.refreshDeploymentsForAgent();

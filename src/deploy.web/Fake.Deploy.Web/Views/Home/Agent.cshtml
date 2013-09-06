@@ -88,6 +88,8 @@
                                         <dl class="dl-horizontal">
                                             <dt>Machine Name:</dt>
                                             <dd data-bind="text: MachineName"></dd>
+                                            <dt>Agent version</dt>
+                                            <dd data-bind="text: AgentVersion"></dd>
                                             <dt>User Name:</dt>
                                             <dd data-bind="text: UserDomainName"></dd>
                                             <dt>64 bit Architecture:</dt>
@@ -99,6 +101,12 @@
                                             <dt>Installed Frameworks:</dt>
                                             <dd>
                                                 <ul data-bind="foreach: NETFrameworks">
+                                                    <li data-bind="text: $data"></li>
+                                                </ul>
+                                            </dd>
+                                            <dt>Drive Info:</dt>
+                                            <dd>
+                                                <ul data-bind="foreach: DriveInfo">
                                                     <li data-bind="text: $data"></li>
                                                 </ul>
                                             </dd>
