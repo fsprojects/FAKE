@@ -169,9 +169,21 @@ type MachineDetails = {
     MachineName : string
     NETFrameworks : seq<string>
     UserDomainName : string
+    AgentVersion: string
+    DriveInfo: seq<string>
 }
 
-/// Retrieves lots of machine specific information like machine name, processor count etc.
+let getDrivesInfo() =
+    Environment.GetLogicalDrives()
+    |> Seq.map(fun d -> IO.DriveInfo(d))
+    |> Seq.filter(fun d -> d.IsReady)
+    |> Seq.map(fun d -> 
+        sprintf "%s has %0.1fGB free of %0.1fGB"
+            (d.Name.Replace(":\\", "")) 
+            (Convert.ToDouble(d.TotalFreeSpace) / (1024.*1024.*1024.))
+            (Convert.ToDouble(d.TotalSize) / (1024.*1024.*1024.))
+    )
+
 let getMachineEnvironment() = 
      {
         ProcessorCount = Environment.ProcessorCount
@@ -180,5 +192,7 @@ let getMachineEnvironment() =
         MachineName = Environment.MachineName
         NETFrameworks = getInstalledDotNetFrameworks()
         UserDomainName = Environment.UserDomainName
+        AgentVersion = sprintf "%A" ((System.Reflection.Assembly.GetAssembly(typedefof<MachineDetails>)).GetName().Version)
+        DriveInfo = getDrivesInfo()
      }  
      
