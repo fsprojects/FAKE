@@ -1,6 +1,19 @@
 ﻿function IndexViewModel() {
     var self = this;
+
+    var getActiveTab = function() {
+        var tab = sessionStorage.getItem('environment_ActiveTab');
+        return tab;
+    };
+
+    var storeActiveTab = function(tab) {
+        sessionStorage.setItem('environment_ActiveTab', tab);
+    };
     
+    self.changedTab = function(tab) {
+        storeActiveTab(tab.Id());
+    };
+
     self.environments = ko.observableArray();
 
     self.build = function() {
@@ -15,10 +28,10 @@
                 self.environments.push(inst);
             });
             $('#agents li:nth-child(4n+1)').css('margin-left', '0');
-            $('#envTabs a:first').tab('show');
+            var tab = getActiveTab() || '#envTabs a:first';
+            $('#tab_' + tab).tab('show');
         }).fail(function (msg) {
             toastr.error('Failed to get environments', 'Error');
         });
     };
-
 }
