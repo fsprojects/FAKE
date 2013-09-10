@@ -22,8 +22,8 @@ function AgentViewModel() {
 
     self.getAgentDetails = function () {
         $.ajax({
-            type: "GET",
-            url: self.agent().Address() + 'fake/statistics',
+            type: 'GET',
+            url: '/api/v1/agent/?agentId=' + self.agent().Id(),
             dataType: 'json',
             contentType: 'application/json'
         }).done(function (data) {

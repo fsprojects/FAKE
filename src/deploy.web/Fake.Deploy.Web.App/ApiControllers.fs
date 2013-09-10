@@ -99,6 +99,15 @@ type AgentController() =
     inherit ApiController()
     
     let logger = LogManager.GetLogger("AgentController")
+     
+    member this.GetStatistics(agentId:string) =
+        let agent = Data.getAgent agentId
+        let url = sprintf "%Afake/statistics" agent.Address
+        let wc = new WebClient()
+        let data = wc.DownloadString(url)
+        let result = new HttpResponseMessage(HttpStatusCode.OK)
+        result.Content <- new StringContent(data)
+        result
 
     member this.Get() = 
         try
@@ -139,7 +148,7 @@ type AgentController() =
         with e ->
             logger.Error(sprintf "An error occured retrieving agent %s" id,e)
             this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e)
-     
+
 type RollbackRequest = {
     agentUrl : string
     version : string
