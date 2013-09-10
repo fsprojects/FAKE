@@ -147,6 +147,8 @@
     <Content Include="Bundles\Fake.Deploy.Web.RavenDb.zip" />
     <Content Include="Bundles\Fake.Deploy.Web.File.zip" />
     <None Include="Scripts\jquery-1.9.0.intellisense.js" />
+    <Content Include="Images\serverOffline.png" />
+    <Content Include="Images\serverOnline.png" />
     <Content Include="Scripts\app\Admin.Agent.js" />
     <Content Include="Scripts\app\Admin.Environment.js" />
     <Content Include="Scripts\app\Admin.User.js" />
