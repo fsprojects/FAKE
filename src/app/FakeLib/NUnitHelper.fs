@@ -12,6 +12,7 @@ type NUnitParams =
       ToolName:string;
       TestInNewThread:bool;
       OutputFile:string;
+      Out: string;
       ErrorOutputFile:string;
       Framework:string;
       ShowLabels: bool;
@@ -53,6 +54,7 @@ let NUnitDefaults =
       ToolName = @"nunit-console.exe";
       TestInNewThread = false;
       OutputFile = currentDirectory @@ "TestResult.xml";
+      Out = null;
       ErrorOutputFile = null;
       WorkingDir = null;
       Framework = null;
@@ -80,6 +82,7 @@ let NUnit setParams (assemblies: string seq) =
           |> appendIfNotNull parameters.ExcludeCategory "-exclude:"
           |> appendIfNotNull parameters.XsltTransformFile "-transform:"
           |> appendIfNotNull parameters.OutputFile  "-xml:"
+          |> appendIfNotNull parameters.Out "-out:"
           |> appendIfNotNull parameters.Framework  "-framework:"
           |> appendIfNotNull parameters.ErrorOutputFile "-err:"
           |> appendIfNotNull parameters.Domain "-domain:"
