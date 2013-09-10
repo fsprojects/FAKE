@@ -15,6 +15,7 @@ type SpecFlowParams = {
     BinFolder:          string
     OutputFile:         string
     XmlTestResultFile:  string
+    TestOutputFile:     string
     Verbose:            bool
     ForceRegeneration:  bool
     XsltFile:           string
@@ -30,6 +31,7 @@ let SpecFlowDefaults = {
     BinFolder =         null
     OutputFile =        null
     XmlTestResultFile = null
+    TestOutputFile =    null
     Verbose =           false
     ForceRegeneration = false
     XsltFile =          null
@@ -52,6 +54,7 @@ let SpecFlow setParams =
             |> appendIfNotNull  parameters.BinFolder "/binFolder:"
             |> appendIfNotNull  parameters.OutputFile "/out:"
             |> appendIfNotNull  parameters.XmlTestResultFile "/xmlTestResult:"
+            |> appendIfNotNull  parameters.TestOutputFile "/testOutput:"
             |> appendIfTrue     parameters.Verbose "/verbose"
             |> appendIfTrue     parameters.ForceRegeneration "/force"
             |> appendIfNotNull  parameters.XsltFile "/xsltFile:"
