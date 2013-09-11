@@ -19,8 +19,7 @@
     self.getAgentStatus = function(agent) {
         $.ajax({
             type: 'GET',
-            url: '/api/v1/agent/?agentId=' + agent.Id(),
-            //url: 'http://localhost:8080/' + 'fake/statistics',
+            url: '/api/v1/agent/details/' + agent.Id(),
             dataType: 'json',
             contentType: 'application/json'
         }).done(function (data) {
@@ -32,8 +31,8 @@
 
     self.build = function() {
         $.ajax({
-            type: "GET",
-            url: 'api/v1/environment/',
+            type: 'GET',
+            url: '/api/v1/environment/',
             dataType: 'json',
             contentType: 'application/json'
         }).done(function (data) {

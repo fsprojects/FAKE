@@ -94,20 +94,36 @@ type EnvironmentController() =
         with e ->
             logger.Error(sprintf "An error occured delete environment %s" id,e)
             this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e)
-    
+
 type AgentController() = 
     inherit ApiController()
     
     let logger = LogManager.GetLogger("AgentController")
+
+    member private this.callAgent (agentId:string) (urlPart:string) =
+        try
+            let agent = Data.getAgent agentId
+            let url = sprintf "%Afake/%s" (agent.Address) urlPart
+            let wc = new WebClient()
+            let data = wc.DownloadString(url)
+            let result = new HttpResponseMessage(HttpStatusCode.OK)
+            result.Content <- new StringContent(data)
+            result
+        with e ->
+            logger.Error("An error occured" ,e)
+            this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e)
      
-    member this.GetStatistics(agentId:string) =
-        let agent = Data.getAgent agentId
-        let url = sprintf "%Afake/statistics" agent.Address
-        let wc = new WebClient()
-        let data = wc.DownloadString(url)
-        let result = new HttpResponseMessage(HttpStatusCode.OK)
-        result.Content <- new StringContent(data)
-        result
+    [<ActionName("details")>]
+    member this.GetDetails(agentId:string) =
+        this.callAgent agentId "statistics"
+
+    [<ActionName("deployments")>]
+    member this.GetActiveDeployments(agentId:string) =
+        this.callAgent agentId "deployments?status=active"
+
+    [<ActionName("deployments")>]
+    member this.GetDeployments(id:string) (status:string) =
+        this.callAgent id (sprintf "deployments?status=%s" status)
 
     member this.Get() = 
         try

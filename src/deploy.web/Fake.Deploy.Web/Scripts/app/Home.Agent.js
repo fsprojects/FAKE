@@ -23,7 +23,7 @@ function AgentViewModel() {
     self.getAgentDetails = function () {
         $.ajax({
             type: 'GET',
-            url: '/api/v1/agent/?agentId=' + self.agent().Id(),
+            url: '/api/v1/agent/details/' + self.agent().Id(),
             dataType: 'json',
             contentType: 'application/json'
         }).done(function (data) {
@@ -40,7 +40,7 @@ function AgentViewModel() {
         if (self.agentStatus().available()) {
             $.ajax({
                 type: "GET",
-                url: self.agent().Address() + 'fake/deployments?status=active',
+                url: '/api/v1/agent/deployments/' + self.agent().Id(),
                 dataType: 'json',
                 contentType: 'application/json'
             }).done(function (data) {
