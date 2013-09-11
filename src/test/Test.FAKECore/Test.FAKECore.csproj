@@ -267,6 +267,10 @@
     <None Include="TestData\deployments\SignalR\backups\SignalR.0.2.nupkg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="TestData\fake_schema_2011_08.nuspec">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
     <None Include="TestData\Form_5227779.nav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
