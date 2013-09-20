@@ -117,15 +117,20 @@ let CopyFileIntoSubFolder target fileName =
     fi.CopyTo(targetName,true) |> ignore    
 
 /// <summary>Copies a single file to the target and overwrites the existing file.</summary>
-/// <param name="target">The target directory.</param>
+/// <param name="target">The target directory or file.</param>
 /// <param name="fileName">The FileName.</param>
 let CopyFile target fileName =
     let fi = fileSystemInfo fileName
     match fi with
-    | File f ->  
-        let targetName = target @@ fi.Name
+    | File f -> 
+        let targetName =
+            match fileSystemInfo target with
+            | Directory _ -> target @@ fi.Name
+            | File f' -> f'.FullName
+
         logVerbosefn "Copy %s to %s" fileName targetName
         f.CopyTo(targetName,true) |> ignore    
+                    
     | Directory _ -> logVerbosefn "Ignoring %s, because it is no file" fileName
   
 /// <summary>Copies the files to the target.</summary>
