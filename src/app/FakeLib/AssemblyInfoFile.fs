@@ -55,7 +55,7 @@ let CreateCSharpAssemblyInfo outputFileName attributes =
 let CreateFSharpAssemblyInfo outputFileName attributes =
     traceStartTask "AssemblyInfo" outputFileName
 
-    ["module AssemblyInfo"] @
+    ["module internal AssemblyInfo"] @
     (getDependencies attributes |> List.map (sprintf "open %s")) @ [""] @
     (attributes |> Seq.toList |> List.map (fun (attr:Attribute) -> sprintf "[<assembly: %sAttribute(%s)>]" attr.Name attr.Value)) @ [""] @
     ["()"]
