@@ -40,4 +40,5 @@ Samples/Calculator/tools/FAKE/
 *.orig
 deploy/
 Samples/ContinuousDeploymentWebsite/tools/
-!tools/NuGet
+gh-pages/
+tools/FSharp.Formatting
