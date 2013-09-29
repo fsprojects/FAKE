@@ -33,7 +33,9 @@ let fullclean repositoryDir =
         let rec deleteDirs actDir =
             let di = directoryInfo actDir
             if di.Name = ".git" then () else
-            Directory.Delete(actDir,true)
+            try
+                Directory.Delete(actDir,true)
+            with exn -> ()
     
         Directory.GetDirectories repositoryDir 
           |> Seq.iter deleteDirs      
