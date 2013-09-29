@@ -22,3 +22,10 @@ the corresponding classes.
 
 * See [Getting Started](GettingStarted.html) for full details and documentation.
 * See the [api docs](api/index.htm) if you are interested in special functions.
+
+## How to contribute code
+
+* Login in github (you need an account)
+* Fork the main repository from [Github](https://github.com/fsharp/FAKE)
+* Push your changes to your fork
+* Send a pull request

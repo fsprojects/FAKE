@@ -37,13 +37,6 @@ We have a Nuget package at http://nuget.org/packages/FAKE. You can install it wi
 
 	install-package FAKE
 
-## How to contribute code
-
-* Login in github (you need an account)
-* Fork the main repository from [Github](https://github.com/forki/FAKE)
-* Push your changes to your fork
-* Send me a pull request
-
 ## Mailing list
 
 The "FAKE - F# Make" mailing list can be found at [http://groups.google.com/group/fsharpMake](http://groups.google.com/group/fsharpMake).

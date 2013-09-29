@@ -14,3 +14,10 @@ See the [project home page](http://fsharp.github.com/FAKE/) for full details and
 # Build the project
 
 I order to build the project and to resolve all nuget packages run build.cmd
+
+## How to contribute code
+
+* Login in github (you need an account)
+* Fork the main repository from [Github](https://github.com/fsharp/FAKE)
+* Push your changes to your fork
+* Send y pull request
