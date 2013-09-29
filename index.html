@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <!-- 
+      The FAKE - F# Make
+ parameters will be replaced with the 
+      document title extracted from the <h1> element or
+      file name, if there is no <h1> heading
+    -->
+    <title>FAKE - F# Make
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FAKE - F# Make">
+    <meta name="author" content="Steffen Forkmann">
+    <script src="http://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="http://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="content/style.css" />
+    <script src="content/tips.js" type="text/javascript"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="https://github.com/fsharp/FAKE">github page</a></li>
+        </ul>
+        <h3 class="muted">FAKE - F# Make</h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          <h1>FAKE - F# Make</h1>
+
+<p>Modern build automation systems are not limited to simply recompile programs if 
+source code has changed. They are supposed to get the latest sources from a source 
+code management system, build test databases, run automatic tests, check guidelines, 
+create documentation files, install setup projects and much more. Some companies are 
+even deploying virtual machines, which are created during a nightly build process. In 
+order to simplify the writing of such build scripts and to provide reusability of common 
+tasks most build automation systems are using a domain-specific language (DSL). These tools 
+can be divided into tools using external DSLs with a custom syntax like make, tools using 
+external DSLs with an XML based syntax like MSBuild or Apache Ant and tools using internal 
+DSLs which are integrated in a host language like Rake, which uses Ruby.</p>
+
+<p>"FAKE - F# Make" is a build automation system, which is intended to combine the advantages 
+of the above mentioned tools but to provide a better tooling support. Due to its integration 
+in F#, all benefits of the .NET Framework and functional programming can be used, including 
+the extensive class library, powerful debuggers and integrated development environments like 
+Visual Studio 2008 or SharpDevelop, which provide syntax highlighting and code completion.</p>
+
+<p>The new language was designed to be succinct, typed, declarative, extensible and easy to use. 
+For instance custom build tasks can be added simply by referencing .NET assemblies and using 
+the corresponding classes.</p>
+
+<p>See the <a href="GettingStarted.html">Getting Started</a> for full details and documentation.</p>
+
+<p>See the <a href="api/index.htm">api docs</a> if you are interested in special functions.</p>
+
+<h1>Build the project</h1>
+
+<p>I order to build the project and to resolve all nuget packages run build.cmd</p>
+
+                    
+        </div>
+        <div class="span3">
+
+          <ul class="nav nav-list" id="menu">
+            <li class="nav-header">FAKE - F# Make</li>
+            <li><a href="../index.html">Home page</a></li>
+            <!--
+
+              Here you can add links to other pages of the documentation 
+              The 'divider' element creates a separator and additional
+              'nav-header' can be used to add sub-headings in the menu:
+
+              * <li class="divider"></li>
+              * <li><a href="...">...</a></li>
+              * <li class="nav-header">Sub-heading</li>
+
+            -->
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="https://github.com/fsharp/FAKE"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
+  </body>
+  </html>
