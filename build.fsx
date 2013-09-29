@@ -180,10 +180,39 @@ Target "CreateNuGet" (fun _ ->
                 Publish = hasBuildParam "nugetkey" }) "fake.nuspec"
 )
 
+///<summary>Cleans a directory by removing all files and sub-directories.</summary>
+///<param name="path">The path of the directory to clean.</param>
+///<user/>
+let CleanGitDir path =
+    let di = directoryInfo path
+    if di.Exists then
+        logfn "Deleting contents of %s" path
+        // delete all files
+        Directory.GetFiles(path, "*.*", SearchOption.AllDirectories)
+          |> Seq.iter (fun file -> 
+                let fi = fileInfo file
+                fi.IsReadOnly <- false
+                fi.Delete())
+    
+        // deletes all subdirectories
+        let rec deleteDirs actDir =
+            let di = directoryInfo actDir
+            if di.Name = ".git" then () else
+            Directory.GetDirectories(actDir) |> Seq.iter deleteDirs
+            Directory.Delete(actDir,true)
+    
+        Directory.GetDirectories path 
+          |> Seq.iter deleteDirs      
+    else
+        CreateDir path
+    
+    // set writeable
+    File.SetAttributes(path,FileAttributes.Normal)        
+
 Target "UpdateDocs" (fun _ ->
     CleanDir "gh-pages"
-    Git.Repository.clone "" "git@github.com:fsharp/FAKE.git" "gh-pages"
-    Git.Branches.checkoutBranch "gh-pages" "gh-pages"
+    Git.CommandHelper.runSimpleGitCommand "" "clone -b gh-pages --single-branch git@github.com:fsharp/FAKE.git" |> printfn "%s"
+    CleanGitDir "gh-pages"
     CopyRecursive "docs" "gh-pages" true |> printfn "%A"
     Git.CommandHelper.runSimpleGitCommand "gh-pages" "add . --all" |> printfn "%s"
     Git.CommandHelper.runSimpleGitCommand "gh-pages" (sprintf """commit -m "Update generated documentation for version %s""" buildVersion) |> printfn "%s"

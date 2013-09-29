@@ -44,5 +44,5 @@ Samples/ContinuousDeploymentWebsite/tools/
 src/deploy.web/Fake.Deploy.Web/Logs/Fake.Deploy.Web.log
 
 src/app/FakeLib/Deploy/DeploymentHelper.fs
-tools/FSharp.Formatting/*
 gh-pages/
+tools/FSharp.Formatting
