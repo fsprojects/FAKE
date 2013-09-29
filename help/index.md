@@ -20,7 +20,8 @@ The new DSL was designed to be succinct, typed, declarative, extensible and easy
 For instance custom build tasks can be added simply by referencing .NET assemblies and using 
 the corresponding classes.
 
-* See [Getting Started](GettingStarted.html) for full details and documentation.
+* See the [overview](overview.html) for more details.
+* See the [getting started guide](gettingstarted.html) for a full sample.
 * See the [api docs](api/index.htm) if you are interested in special functions.
 
 ## How to contribute code
