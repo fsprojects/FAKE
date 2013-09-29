@@ -1,7 +1,15 @@
 #I @"tools/FAKE/tools/"
 #r @"FakeLib.dll"
 
+#I "./tools/FSharp.Formatting/lib/net40"
+#r "System.Web.dll"
+#r "FSharp.Markdown.dll"
+#r "FSharp.CodeFormat.dll"
+#load "./tools/FSharp.Formatting/literate/literate.fsx"
+
+open System.IO
 open Fake
+open FSharp.Literate
  
 // properties 
 let projectName = "FAKE"
@@ -35,7 +43,6 @@ Target "CopyFSharpFiles" (fun _ ->
      "./tools/FSharp/FSharp.Core.sigdata"]
       |> CopyTo buildDir
 )
-
 
 open Fake.AssemblyInfoFile
 
@@ -89,6 +96,18 @@ Target "BuildSolution" (fun _ ->
 )
 
 Target "GenerateDocumentation" (fun _ ->
+    let source = "./help"
+    let template = "./tools/FSharp.Formatting/literate/templates/template-project.html"
+    let projInfo =
+      [ "page-description", "FAKE - F# Make"
+        "page-author", "Steffen Forkmann"
+        "github-link", "https://github.com/fsharp/FAKE"
+        "project-name", "FAKE - F# Make" ]
+
+    Literate.ProcessDirectory (source, template, docsDir, replacements = projInfo)
+
+    CopyDir (docsDir @@ "content") "tools/FSharp.Formatting/literate/content" allFiles  
+
     (* Temporary disable tests on *nix, bug # 122 *)
     if not isLinux then
         !! (buildDir @@ "Fake*.dll")
