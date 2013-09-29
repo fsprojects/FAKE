@@ -114,7 +114,7 @@ Target "GenerateDocumentation" (fun _ ->
             {p with
                 ToolPath = buildDir @@ "docu.exe"
                 TemplatesPath = @".\tools\docu\templates\"
-                OutputPath = docsDir })
+                OutputPath = docsDir @@ "api" })
 )
 
 Target "CopyDocu" (fun _ -> 
