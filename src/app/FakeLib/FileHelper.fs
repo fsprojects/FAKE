@@ -231,14 +231,19 @@ let CleanDir path =
     if di.Exists then
         logfn "Deleting contents of %s" path
         // delete all files
-        Directory.GetFiles(path, "*.*", SearchOption.TopDirectoryOnly)
+        Directory.GetFiles(path, "*.*", SearchOption.AllDirectories)
           |> Seq.iter (fun file -> 
                 let fi = fileInfo file
                 fi.IsReadOnly <- false
                 fi.Delete())
     
+        // deletes all subdirectories
+        let rec deleteDirs actDir =
+            Directory.GetDirectories(actDir) |> Seq.iter deleteDirs
+            Directory.Delete(actDir,true)
+    
         Directory.GetDirectories path 
-          |> Seq.iter (fun actDir -> Directory.Delete(actDir,true))      
+          |> Seq.iter deleteDirs      
     else
         CreateDir path
     
