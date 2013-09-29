@@ -228,7 +228,7 @@ Target "UpdateDocs" (fun _ ->
     CleanGitDir "gh-pages"
     CopyRecursive "docs" "gh-pages" true |> printfn "%A"
     runSimpleGitCommand "gh-pages" "add . --all" |> printfn "%s"
-    runSimpleGitCommand "gh-pages" (sprintf """commit -m "Update generated documentation for version %s""" buildVersion) |> printfn "%s"
+    runSimpleGitCommand "gh-pages" """commit -m "Update generated documentation""" |> printfn "%s"
     Git.Branches.push "gh-pages"    
 )
 
@@ -247,6 +247,7 @@ Target "Default" DoNothing
     ==> "ZipDocumentation"
     ==> "CreateNuGet"
     ==> "Default"
+    ==> "UpdateDocs"
 
 // start build
 RunTargetOrDefault "Default"
