@@ -89,6 +89,7 @@ let showGitCommand repositoryDir command =
 let runSimpleGitCommand repositoryDir command =
     try
         let ok,msg,errors = runGitCommand repositoryDir command
+        if msg.Count = 0 then "" else
         try
             msg.[0]
         with 
