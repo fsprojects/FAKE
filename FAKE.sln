@@ -21,8 +21,6 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FAKE", "src\app\FAKE\FAKE.f
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.FAKECore", "src\test\Test.FAKECore\Test.FAKECore.csproj", "{98944472-E50A-4771-969D-4C0349D085A4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HelpInput", "HelpInput", "{EA6A2A1A-80C9-418F-A835-11758E1AE87E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Git", "src\test\Test.Git\Test.Git.csproj", "{AD03BF13-802D-4E5F-A939-24484299E014}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.SQL", "src\app\Fake.SQL\Fake.SQL.fsproj", "{12319188-8893-4FE4-BF1D-62B85661DEA9}"
@@ -42,7 +40,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4A02B2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "help", "help", "{564BD198-09CB-45D1-87F2-E2153FE6D62F}"
 	ProjectSection(SolutionItems) = preProject
-		help\literate.fsx = help\literate.fsx
+		help\GettingStarted.md = help\GettingStarted.md
 	EndProjectSection
 EndProject
 Global
@@ -141,7 +139,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{EA6A2A1A-80C9-418F-A835-11758E1AE87E} = {0F0488CC-2580-4C07-9E16-3997480F0221}
 		{4609456B-C12B-444C-AE55-AE96E096D7F1} = {0F0488CC-2580-4C07-9E16-3997480F0221}
 		{13D56521-772A-41DB-9772-1DA1A4AA8E3A} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
 		{CA923BCA-C273-4744-9658-7DF7001FF266} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}

@@ -21,7 +21,6 @@ let homepage = "http://github.com/forki/fake"
   
 let buildDir = "./build"
 let testDir = "./test"
-let metricsDir = "./BuildMetrics"
 let deployDir = "./Publish"
 let docsDir = "./docs" 
 let nugetDir = "./nuget" 
@@ -34,7 +33,7 @@ let isLinux =
         (p = 4) || (p = 6) || (p = 128)
 
 // Targets
-Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; deployDir; docsDir; metricsDir; nugetDir; reportDir])
+Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; deployDir; docsDir; nugetDir; reportDir])
 
 Target "RestorePackages" RestorePackages
 
@@ -179,6 +178,16 @@ Target "CreateNuGet" (fun _ ->
                 OutputPath = nugetDir
                 AccessKey = getBuildParamOrDefault "nugetkey" ""
                 Publish = hasBuildParam "nugetkey" }) "fake.nuspec"
+)
+
+Target "UpdateDocs" (fun _ ->
+    CleanDir "gh-pages"
+    Git.Repository.clone "" "git@github.com:fsharp/FAKE.git" "gh-pages"
+    Git.Branches.checkoutBranch "gh-pages" "gh-pages"
+    CopyRecursive "docs" "gh-pages" true |> printfn "%A"
+    Git.CommandHelper.runSimpleGitCommand "gh-pages" "add . --all" |> printfn "%s"
+    Git.CommandHelper.runSimpleGitCommand "gh-pages" (sprintf """commit -m "Update generated documentation for version %s""" buildVersion) |> printfn "%s"
+    Git.Branches.push "gh-pages"
 )
 
 Target "Default" DoNothing
