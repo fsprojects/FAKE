@@ -10,6 +10,7 @@
 open System.IO
 open Fake
 open FSharp.Literate
+open Fake.Git
  
 // properties 
 let projectName = "FAKE"
@@ -180,56 +181,15 @@ Target "CreateNuGet" (fun _ ->
                 Publish = hasBuildParam "nugetkey" }) "fake.nuspec"
 )
 
-///<summary>Cleans a directory by removing all files and sub-directories.</summary>
-///<param name="path">The path of the directory to clean.</param>
-///<user/>
-let CleanGitDir path =
-    let di = directoryInfo path
-    if di.Exists then
-        logfn "Deleting contents of %s" path
-        // delete all files
-        Directory.GetFiles(path, "*.*", SearchOption.TopDirectoryOnly)
-          |> Seq.iter (fun file -> 
-                let fi = fileInfo file
-                fi.IsReadOnly <- false
-                fi.Delete())
-    
-        // deletes all subdirectories
-        let rec deleteDirs actDir =
-            let di = directoryInfo actDir
-            if di.Name = ".git" then () else
-            Directory.Delete(actDir,true)
-    
-        Directory.GetDirectories path 
-          |> Seq.iter deleteDirs      
-    else
-        CreateDir path
-    
-    // set writeable
-    File.SetAttributes(path,FileAttributes.Normal)        
-
-
-/// Runs the git command and returns the first line of the result
-let runSimpleGitCommand repositoryDir command =
-    try
-        let ok,msg,errors = Git.CommandHelper.runGitCommand repositoryDir command
-        if msg.Count = 0 then "" else
-        try
-            msg.[0]
-        with 
-        | exn -> failwithf "Git didn't return a msg.\r\n%s" errors
-    with 
-    | exn -> failwithf "Could not run \"git %s\".\r\nError: %s" command exn.Message
-
 Target "UpdateDocs" (fun _ ->
     CleanDir "gh-pages"
-    Git.CommandHelper.runSimpleGitCommand "" "clone -b gh-pages --single-branch git@github.com:fsharp/FAKE.git gh-pages" |> printfn "%s"
+    CommandHelper.runSimpleGitCommand "" "clone -b gh-pages --single-branch git@github.com:fsharp/FAKE.git gh-pages" |> printfn "%s"
     
-    CleanGitDir "gh-pages"
+    fullclean "gh-pages"
     CopyRecursive "docs" "gh-pages" true |> printfn "%A"
-    runSimpleGitCommand "gh-pages" "add . --all" |> printfn "%s"
-    runSimpleGitCommand "gh-pages" (sprintf "commit -m \"Update generated documentation %s\"" buildVersion) |> printfn "%s"
-    Git.Branches.push "gh-pages"    
+    CommandHelper.runSimpleGitCommand "gh-pages" "add . --all" |> printfn "%s"
+    CommandHelper.runSimpleGitCommand "gh-pages" (sprintf "commit -m \"Update generated documentation %s\"" buildVersion) |> printfn "%s"
+    Branches.push "gh-pages"    
 )
 
 Target "Default" DoNothing
