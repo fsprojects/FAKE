@@ -15,7 +15,7 @@ let parseArgs cmdArgs =
                     s.[0], s.[1]
                 else
                     if i = 0 then
-                        "Target", arg
+                        "target", arg
                     else
                         arg, "true")
         |> Seq.toList
