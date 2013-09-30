@@ -272,9 +272,102 @@ pause</pre>
 
 <p>This means the execution order is: Clean ==> BuildApp ==> Default.</p>
 
+<p><img src="pics/gettingstarted/aftercompile.png" alt="alt text" title="We introduced a Build target" /></p>
+
+<h2>Compiling test projects</h2>
+
+<p>Now our main application will be built automatically and it�s time to build the test project. We use the same concepts as before:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+<span class="l">21: </span>
+<span class="l">22: </span>
+<span class="l">23: </span>
+<span class="l">24: </span>
+<span class="l">25: </span>
+<span class="l">26: </span>
+<span class="l">27: </span>
+<span class="l">28: </span>
+<span class="l">29: </span>
+<span class="l">30: </span>
+<span class="l">31: </span>
+<span class="l">32: </span>
+<span class="l">33: </span>
+<span class="l">34: </span>
+<span class="l">35: </span>
+<span class="l">36: </span>
+<span class="l">37: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="c">// include Fake lib</span>
+# <span class="s">@&quot;</span><span class="s">tools</span><span class="s">\</span><span class="s">FAKE</span><span class="s">\</span><span class="s">tools</span><span class="s">\</span><span class="s">FakeLib</span><span class="s">.</span><span class="s">dll</span><span class="s">&quot;</span>
+<span class="k">open</span> <span class="i">Fake</span>
+
+<span class="c">// Properties</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 6)" onmouseover="showTip(event, 'fs1', 6)" class="i">buildDir</span> <span class="o">=</span> <span class="s">@&quot;</span><span class="s">.</span><span class="s">\</span><span class="s">build</span><span class="s">\</span><span class="s">&quot;</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 7)" onmouseover="showTip(event, 'fs2', 7)" class="i">testDir</span>  <span class="o">=</span> <span class="s">@&quot;</span><span class="s">.</span><span class="s">\</span><span class="s">test</span><span class="s">\</span><span class="s">&quot;</span>
+
+<span class="c">// Targets</span>
+<span class="i">Target</span> <span class="s">&quot;</span><span class="s">Clean</span><span class="s">&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+    <span class="i">CleanDirs</span> [<span onmouseout="hideTip(event, 'fs1', 8)" onmouseover="showTip(event, 'fs1', 8)" class="i">buildDir</span>; <span onmouseout="hideTip(event, 'fs2', 9)" onmouseover="showTip(event, 'fs2', 9)" class="i">testDir</span>]
+)
+
+<span class="i">Target</span> <span class="s">&quot;</span><span class="s">BuildApp</span><span class="s">&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+   <span class="o">!!</span> <span class="s">@&quot;</span><span class="s">src</span><span class="s">\</span><span class="s">app</span><span class="s">\</span><span class="s">*</span><span class="s">*</span><span class="s">\</span><span class="s">*</span><span class="s">.</span><span class="s">csproj</span><span class="s">&quot;</span>
+     <span class="o">|&gt;</span> <span class="i">MSBuildRelease</span> <span onmouseout="hideTip(event, 'fs1', 10)" onmouseover="showTip(event, 'fs1', 10)" class="i">buildDir</span> <span class="s">&quot;</span><span class="s">Build</span><span class="s">&quot;</span>
+     <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;</span><span class="s">AppBuild</span><span class="s">-</span><span class="s">Output</span><span class="s">:</span><span class="s"> </span><span class="s">&quot;</span>
+)
+
+<span class="i">Target</span> <span class="s">&quot;</span><span class="s">BuildTest</span><span class="s">&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+    <span class="o">!!</span> <span class="s">@&quot;</span><span class="s">src</span><span class="s">\</span><span class="s">test</span><span class="s">\</span><span class="s">*</span><span class="s">*</span><span class="s">\</span><span class="s">*</span><span class="s">.</span><span class="s">csproj</span><span class="s">&quot;</span>
+      <span class="o">|&gt;</span> <span class="i">MSBuildDebug</span> <span onmouseout="hideTip(event, 'fs2', 11)" onmouseover="showTip(event, 'fs2', 11)" class="i">testDir</span> <span class="s">&quot;</span><span class="s">Build</span><span class="s">&quot;</span>
+      <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;</span><span class="s">TestBuild</span><span class="s">-</span><span class="s">Output</span><span class="s">:</span><span class="s"> </span><span class="s">&quot;</span>
+)
+
+<span class="i">Target</span> <span class="s">&quot;</span><span class="s">Default</span><span class="s">&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+    <span class="i">trace</span> <span class="s">&quot;</span><span class="s">Hello</span><span class="s"> </span><span class="s">World</span><span class="s"> </span><span class="s">from</span><span class="s"> </span><span class="s">FAKE</span><span class="s">&quot;</span>
+)
+
+<span class="c">// Dependencies</span>
+<span class="s">&quot;</span><span class="s">Clean</span><span class="s">&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;</span><span class="s">BuildApp</span><span class="s">&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;</span><span class="s">BuildTest</span><span class="s">&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;</span><span class="s">Default</span><span class="s">&quot;</span>
+
+<span class="c">// start build</span>
+<span class="i">Run</span> <span class="s">&quot;</span><span class="s">Default</span><span class="s">&quot;</span></pre>
+</td>
+</tr>
+</table>
+
+<p>This time we defined a new target "BuildTest" which compiles all C# projects below <em>src/test/</em> in Debug mode and we put the target into our build order.</p>
+
+<p>If we run build.bat again we get an error like this:</p>
+
 <p>Read the <a href="http://www.navision-blog.de/2009/04/01/getting-started-with-fake-a-f-sharp-make-tool/">full acticle</a>.</p>
 
           <div class="tip" id="fs1">val buildDir : string<br /><br />Full name: gettingstarted.buildDir</div>
+<div class="tip" id="fs2">val testDir : string<br /><br />Full name: gettingstarted.testDir</div>
           
         </div>
         <div class="span3">
