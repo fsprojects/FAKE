@@ -44,7 +44,7 @@ The "FAKE - F# Make" mailing list can be found at [http://groups.google.com/grou
 
 ## Articles
 
-* [Getting started with "FAKE - F# Make"](http://www.navision-blog.de/2009/04/01/getting-started-with-fake-a-f-sharp-make-tool): This tutorial shows you how to build the CalculatorSample project.
+* [Getting started with "FAKE - F# Make"](gettingstarted.html): This tutorial shows you how to build the CalculatorSample project.
 * [Adding FxCop to a "FAKE" build script](http://www.navision-blog.de/2009/04/02/adding-fxcop-to-a-fake-build-script)
 * [Debugging "FAKE - F# Make" build scripts](http://www.navision-blog.de/2009/04/05/debugging-fake-f-make-build-scripts)
 * [Modifying AssemblyInfo and Version via "FAKE - F# Make"](http://www.navision-blog.de/2009/04/04/modifying-assemblyinfo-and-version-via-fake-f-make)

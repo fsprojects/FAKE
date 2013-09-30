@@ -49,7 +49,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pics", "pics", "{75162148-B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gettingstarted", "gettingstarted", "{454066F7-42BF-435E-BDF7-2D11948D53B4}"
 	ProjectSection(SolutionItems) = preProject
+		help\pics\gettingstarted\afterclean.png = help\pics\gettingstarted\afterclean.png
+		help\pics\gettingstarted\aftercompile.png = help\pics\gettingstarted\aftercompile.png
 		help\pics\gettingstarted\afterdownload.png = help\pics\gettingstarted\afterdownload.png
+		help\pics\gettingstarted\compileerror.png = help\pics\gettingstarted\compileerror.png
 	EndProjectSection
 EndProject
 Global

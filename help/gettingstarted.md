@@ -62,7 +62,7 @@ Now open the *build.fsx* in Visual Studio or any text editor. It should look lik
 
 As you can see the code is really simple. The first line includes the FAKE library and is vital for all FAKE build scripts.
 
-After this header the Default target is defined. A target definition contains two important parts. The first is the name of the target (here "Default") and the second is an action (here a simple trace of "Hello world").
+After this header the *Default* target is defined. A target definition contains two important parts. The first is the name of the target (here "Default") and the second is an action (here a simple trace of "Hello world").
 
 The last line runs the "Default" target - which means it executes the defined action of the target.
 
@@ -93,4 +93,257 @@ A typical first step in most build scenarios is to clean the output of the last 
 	// start build
 	Run "Default"
 
-Read the [full acticle](http://www.navision-blog.de/2009/04/01/getting-started-with-fake-a-f-sharp-make-tool/).
+We introduced some new concepts in this snippet. At first we defined a global property called "buildDir" with the relative path of a temporary build folder.
+
+In the *Clean* target we use the CleanDir task to clean up this build directory. This simply deletes all files in the folder or creates the directory if necessary.
+
+In the dependencies section we say that the *Default* target has a dependency on the *Clean* target. In other words *Clean* is a prerequisite of *Default* and will be run before the execution of *Default*:
+
+![alt text](pics/gettingstarted/afterclean.png "We introduced a Clean target")
+
+## Compiling the application
+
+In the next step we want to compile our C# libraries, which means we want to compile all csproj-files under */src/app* with MSBuild:
+
+	// include Fake lib
+	#r @"tools\FAKE\tools\FakeLib.dll"
+	open Fake
+
+	// Properties
+	let buildDir = @".\build\"
+
+	// Targets
+	Target "Clean" (fun _ ->
+		CleanDir buildDir
+	)
+
+	Target "BuildApp" (fun _ ->
+		!! @"src\app\**\*.csproj"
+		  |> MSBuildRelease buildDir "Build"
+		  |> Log "AppBuild-Output: "
+	)
+
+	Target "Default" (fun _ ->
+		trace "Hello World from FAKE"
+	)
+
+	// Dependencies
+	"Clean"
+	  ==> "BuildApp"
+	  ==> "Default"
+
+	// start build
+	Run "Default"
+
+We defined a new build target named "BuildApp" which compiles all csproj-files with the MSBuild task and the build output will be copied to buildDir.
+
+In order to find the right project files FAKEscans the folder *src/app/* and all subfolders with the given pattern. Therefore a similar FileSet definition like in NAnt or MSBuild (see [project page](https://github.com/fsharp/FAKE) for details) is used.
+
+In addition the target dependencies are extended again. Now *Default* is dependent on *BuildApp* and *BuildApp* needs *Clean* as a prerequisite.
+
+This means the execution order is: Clean ==> BuildApp ==> Default.
+
+![alt text](pics/gettingstarted/aftercompile.png "We introduced a Build target")
+
+## Compiling test projects
+
+Now our main application will be built automatically and it's time to build the test project. We use the same concepts as before:
+
+	// include Fake lib
+	#r @"tools\FAKE\tools\FakeLib.dll"
+	open Fake
+
+	// Properties
+	let buildDir = @".\build\"
+	let testDir  = @".\test\"
+
+	// Targets
+	Target "Clean" (fun _ ->
+		CleanDirs [buildDir; testDir]
+	)
+
+	Target "BuildApp" (fun _ ->
+	   !! @"src\app\**\*.csproj"
+		 |> MSBuildRelease buildDir "Build"
+		 |> Log "AppBuild-Output: "
+	)
+
+	Target "BuildTest" (fun _ ->
+		!! @"src\test\**\*.csproj"
+		  |> MSBuildDebug testDir "Build"
+		  |> Log "TestBuild-Output: "
+	)
+
+	Target "Default" (fun _ ->
+		trace "Hello World from FAKE"
+	)
+
+	// Dependencies
+	"Clean"
+	  ==> "BuildApp"
+	  ==> "BuildTest"
+	  ==> "Default"
+
+	// start build
+	Run "Default"
+
+This time we defined a new target "BuildTest" which compiles all C# projects below *src/test/* in Debug mode and we put the target into our build order.
+
+If we run build.bat again we get an error like this:
+
+![alt text](pics/gettingstarted/compileerror.png "Compile error")
+
+The problem is that we didn't download the NUnit package from nuget. So let's fix this in the build script:
+
+	// include Fake lib
+	#r @"tools\FAKE\tools\FakeLib.dll"
+	open Fake
+
+	RestorePackages()
+	// ...
+
+With this simple command FAKE will use nuget.exe to install all the package dependencies.
+
+## Running the tests with NUnit
+
+Now all our projects will be compiled and we can use FAKE's NUnit task in order to let NUnit test our assembly:
+
+	// include Fake lib
+	#r @"tools\FAKE\tools\FakeLib.dll"
+	open Fake
+
+	RestorePackages()
+
+	// Properties
+	let buildDir = @".\build\"
+	let testDir  = @".\test\"
+	let packagesDir = @".\packages"
+
+	// tools
+	let nunitVersion = GetPackageVersion packagesDir "NUnit.Runners"
+	let nunitPath = sprintf @"./packages/NUnit.Runners.%s/tools/" nunitVersion
+
+	// Targets
+	Target "Clean" (fun _ ->
+		CleanDirs [buildDir; testDir]
+	)
+
+	Target "BuildApp" (fun _ ->
+	   !! @"src\app\**\*.csproj"
+		 |> MSBuildRelease buildDir "Build"
+		 |> Log "AppBuild-Output: "
+	)
+
+	Target "BuildTest" (fun _ ->
+		!! @"src\test\**\*.csproj"
+		  |> MSBuildDebug testDir "Build"
+		  |> Log "TestBuild-Output: "
+	)
+
+	Target "Test" (fun _ ->
+		!! (testDir + @"\NUnit.Test.*.dll") 
+		  |> NUnit (fun p ->
+			  {p with
+				 ToolPath = nunitPath;
+				 DisableShadowCopy = true;
+				 OutputFile = testDir + @"TestResults.xml" })
+	)
+
+	Target "Default" (fun _ ->
+		trace "Hello World from FAKE"
+	)
+
+	// Dependencies
+	"Clean"
+	  ==> "BuildApp"
+	  ==> "BuildTest"
+	  ==> "Test"
+	  ==> "Default"
+
+	// start build
+	Run "Default"
+
+Our new *Test* target scans the test directory for test assemblies and runs them with the NUnit runner.
+
+The mysterious part **(fun p -> ...)** simply overrides the default parameters of the NUnit task and allows to specify concrete parameters.
+
+![alt text](pics/gettingstarted/alltestsgreen.png "All tests green")
+
+## Deploying a zip file
+
+Now we want to deploy a *.zip file containing our application:
+
+	// include Fake lib
+	#r @"tools\FAKE\tools\FakeLib.dll"
+	open Fake
+
+	RestorePackages()
+
+	// Properties
+	let buildDir = @".\build\"
+	let testDir  = @".\test\"
+	let deployDir = @".\deploy\"
+	let packagesDir = @".\packages"
+
+	// tools
+	let nunitVersion = GetPackageVersion packagesDir "NUnit.Runners"
+	let nunitPath = sprintf @"./packages/NUnit.Runners.%s/tools/" nunitVersion
+
+	// version info
+	let version = "0.2"  // or retrieve from CI server
+
+	// Targets
+	Target "Clean" (fun _ ->
+		CleanDirs [buildDir; testDir; deployDir]
+	)
+
+	Target "BuildApp" (fun _ ->
+	   !! @"src\app\**\*.csproj"
+		 |> MSBuildRelease buildDir "Build"
+		 |> Log "AppBuild-Output: "
+	)
+
+	Target "BuildTest" (fun _ ->
+		!! @"src\test\**\*.csproj"
+		  |> MSBuildDebug testDir "Build"
+		  |> Log "TestBuild-Output: "
+	)
+
+	Target "Test" (fun _ ->
+		!! (testDir + @"\NUnit.Test.*.dll") 
+		  |> NUnit (fun p ->
+			  {p with
+				 ToolPath = nunitPath;
+				 DisableShadowCopy = true;
+				 OutputFile = testDir + @"TestResults.xml" })
+	)
+
+	Target "Zip" (fun _ ->
+		!+ (buildDir + "\**\*.*") 
+			-- "*.zip" 
+			|> Scan
+			|> Zip buildDir (deployDir + "Calculator." + version + ".zip")
+	)
+
+	Target "Default" (fun _ ->
+		trace "Hello World from FAKE"
+	)
+
+	// Dependencies
+	"Clean"
+	  ==> "BuildApp"
+	  ==> "BuildTest"
+	  ==> "Test"
+	  ==> "Zip"
+	  ==> "Default"
+
+	// start build
+	Run "Default"
+
+The new *Deploy* target scans the build directory for all files. The result will be zipped to */deploy/Calculator.zip* via the Zip task.
+
+## What's next?
+
+Now you are ready to write your own FAKE build scripts. 
+
+In the next article I will show how we can add FxCop to our build in order to check specific naming rules.
