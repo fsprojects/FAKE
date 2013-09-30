@@ -12,7 +12,7 @@
 </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="FAKE - F# Make">
-    <meta name="author" content="Steffen Forkmann">
+    <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
     <script src="http://code.jquery.com/jquery-1.8.0.js"></script>
     <script src="http://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
     <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
@@ -38,7 +38,7 @@
         <div class="span9" id="main">
           <h1>Getting started with FAKE - F# Make</h1>
 
-<p>In this tutorial you will learn how to set up a complete build infrastructure with "FAKE � F# Make". This includes:</p>
+<p>In this tutorial you will learn how to set up a complete build infrastructure with "FAKE - F# Make". This includes:</p>
 
 <ul>
 <li>how to install the latest FAKE version</li>
@@ -50,7 +50,43 @@
 
 <h2>Install F</h2>
 
-<p>�FAKE � F# Make� is completely written in F# and all build scripts will also be written in F#, but this doesn�t imply that you have to learn programming in F#. In fact the "FAKE � F# Make" syntax is hopefully very easy to learn.</p>
+<p>"FAKE - F# Make" is completely written in F# and all build scripts will also be written in F#, but this doesn't imply that you have to learn programming in F#. In fact the "FAKE - F# Make" syntax is hopefully very easy to learn.</p>
+
+<h2>Download Calculator Sample</h2>
+
+<p>Now download the latest <a href="https://github.com/fsharp/FAKE/archive/Calculator.zip">FAKE-Calculator.zip</a> from the <a href="https://github.com/fsharp/FAKE">FAKE project site</a>. This sample includes 3 tiny projects and has basically the following structure:</p>
+
+<ul>
+<li>src\app
+<ul>
+<li>Calculator (command line)</li>
+<li>CalculatorLib (class library)</li>
+</ul></li>
+<li>src\test
+<ul>
+<li>Test.CalculatorLib</li>
+</ul></li>
+<li>tools
+<ul>
+<li>NUnit</li>
+<li>FxCop</li>
+</ul></li>
+<li>build.bat</li>
+<li>build.fsx</li>
+<li>completeBuild.bat</li>
+<li>completeBuild.fsx</li>
+<li>Calculator.sln</li>
+</ul>
+
+<h2>Getting "FAKE - F# Make" started</h2>
+
+<p>In the root of the project you will find a build.bat file:</p>
+
+<pre lang="batchfile">@echo off
+cls
+&quot;tools\nuget\nuget.exe&quot; &quot;install&quot; &quot;FAKE&quot; &quot;-OutputDirectory&quot; &quot;tools&quot; &quot;-ExcludeVersion&quot;
+&quot;tools\FAKE\tools\Fake.exe&quot; build.fsx
+pause</pre>
 
 <p>Read the <a href="http://www.navision-blog.de/2009/04/01/getting-started-with-fake-a-f-sharp-make-tool/">full acticle</a>.</p>
 
