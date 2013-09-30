@@ -106,7 +106,8 @@ Target "GenerateDocs" (fun _ ->
 
     Literate.ProcessDirectory (source, template, docsDir, replacements = projInfo)
 
-    CopyDir (docsDir @@ "content") "tools/FSharp.Formatting/literate/content" allFiles  
+    CopyDir (docsDir @@ "content") "tools/FSharp.Formatting/literate/content" allFiles
+    CopyDir (docsDir @@ "pics") "help/pics" allFiles
 
     (* Temporary disable tests on *nix, bug # 122 *)
     if not isLinux then

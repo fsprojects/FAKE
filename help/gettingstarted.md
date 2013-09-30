@@ -8,7 +8,7 @@ In this tutorial you will learn how to set up a complete build infrastructure wi
 * how to automatically run NUnit tests on your projects
 * how to zip the output to a deployment folder
 
-## Install F#
+## Install the F# compiler
 
 "FAKE - F# Make" is completely written in F# and all build scripts will also be written in F#, but this doesn't imply that you have to learn programming in F#. In fact the "FAKE - F# Make" syntax is hopefully very easy to learn.
 
@@ -40,5 +40,9 @@ In the root of the project you will find a build.bat file:
 	"tools\nuget\nuget.exe" "install" "FAKE" "-OutputDirectory" "tools" "-ExcludeVersion"
 	"tools\FAKE\tools\Fake.exe" build.fsx
 	pause
+
+If you run this batch file from the command line then the latest FAKE version will be [downloaded via nuget](http://nuget.org/packages/FAKE/) and your first FAKE script (build.fsx) will be executed. If everything works fine you will get the following output:
+
+![alt text](pics/gettingstarted/afterdownload.png "Run the batch file")
 
 Read the [full acticle](http://www.navision-blog.de/2009/04/01/getting-started-with-fake-a-f-sharp-make-tool/).
