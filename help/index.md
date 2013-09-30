@@ -1,4 +1,4 @@
-# What is "FAKE - F# Make"?
+# "FAKE - F# Make"
 
 ## Introduction
 
@@ -49,7 +49,7 @@ You can download the latest builds from http://teamcity.codebetter.com. You don'
 
 * [Latest stable build](http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt335&tab=artifacts&guest=1)
 * [Latest development build](http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt166&tab=artifacts&guest=1)
-* [Changelog](http://github.com/forki/FAKE/blob/develop/changelog.markdown)
+* [Changelog](changelog.html)
 
 ## Nuget package
 
