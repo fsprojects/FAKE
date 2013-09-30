@@ -30,3 +30,11 @@ the corresponding classes.
 * Fork the main repository from [Github](https://github.com/fsharp/FAKE)
 * Push your changes to your fork
 * Send a pull request
+
+## Who is using FAKE?
+
+Some of our users are:
+
+* [msu solutions GmbH](http://www.msu-solutions.de/)
+* [fsharpx](https://github.com/fsharp/fsharpx)
+* [Portable.Licensing](https://github.com/dnauck/Portable.Licensing)
