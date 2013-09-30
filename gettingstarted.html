@@ -192,6 +192,86 @@ pause</pre>
 
 <p>In the dependencies section we say that the <em>Default</em> target has a dependency on the <em>Clean</em> target. In other words <em>Clean</em> is a prerequisite of <em>Default</em> and will be run before the execution of <em>Default</em>:</p>
 
+<p><img src="pics/gettingstarted/afterclean.png" alt="alt text" title="We introduced a Clean target" /></p>
+
+<h2>Compiling the application</h2>
+
+<p>In the next step we want to compile our C# libraries, which means we want to compile all csproj-files under <em>/src/app</em> with MSBuild:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+<span class="l">21: </span>
+<span class="l">22: </span>
+<span class="l">23: </span>
+<span class="l">24: </span>
+<span class="l">25: </span>
+<span class="l">26: </span>
+<span class="l">27: </span>
+<span class="l">28: </span>
+<span class="l">29: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="c">// include Fake lib</span>
+# <span class="s">@&quot;</span><span class="s">tools</span><span class="s">\</span><span class="s">FAKE</span><span class="s">\</span><span class="s">tools</span><span class="s">\</span><span class="s">FakeLib</span><span class="s">.</span><span class="s">dll</span><span class="s">&quot;</span>
+<span class="k">open</span> <span class="i">Fake</span>
+
+<span class="c">// Properties</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="i">buildDir</span> <span class="o">=</span> <span class="s">@&quot;</span><span class="s">.</span><span class="s">\</span><span class="s">build</span><span class="s">\</span><span class="s">&quot;</span>
+
+<span class="c">// Targets</span>
+<span class="i">Target</span> <span class="s">&quot;</span><span class="s">Clean</span><span class="s">&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+    <span class="i">CleanDir</span> <span onmouseout="hideTip(event, 'fs1', 4)" onmouseover="showTip(event, 'fs1', 4)" class="i">buildDir</span>
+)
+
+<span class="i">Target</span> <span class="s">&quot;</span><span class="s">BuildApp</span><span class="s">&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+    <span class="o">!!</span> <span class="s">@&quot;</span><span class="s">src</span><span class="s">\</span><span class="s">app</span><span class="s">\</span><span class="s">*</span><span class="s">*</span><span class="s">\</span><span class="s">*</span><span class="s">.</span><span class="s">csproj</span><span class="s">&quot;</span>
+      <span class="o">|&gt;</span> <span class="i">MSBuildRelease</span> <span onmouseout="hideTip(event, 'fs1', 5)" onmouseover="showTip(event, 'fs1', 5)" class="i">buildDir</span> <span class="s">&quot;</span><span class="s">Build</span><span class="s">&quot;</span>
+      <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;</span><span class="s">AppBuild</span><span class="s">-</span><span class="s">Output</span><span class="s">:</span><span class="s"> </span><span class="s">&quot;</span>
+)
+
+<span class="i">Target</span> <span class="s">&quot;</span><span class="s">Default</span><span class="s">&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+    <span class="i">trace</span> <span class="s">&quot;</span><span class="s">Hello</span><span class="s"> </span><span class="s">World</span><span class="s"> </span><span class="s">from</span><span class="s"> </span><span class="s">FAKE</span><span class="s">&quot;</span>
+)
+
+<span class="c">// Dependencies</span>
+<span class="s">&quot;</span><span class="s">Clean</span><span class="s">&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;</span><span class="s">BuildApp</span><span class="s">&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;</span><span class="s">Default</span><span class="s">&quot;</span>
+
+<span class="c">// start build</span>
+<span class="i">Run</span> <span class="s">&quot;</span><span class="s">Default</span><span class="s">&quot;</span></pre>
+</td>
+</tr>
+</table>
+
+<p>We defined a new build target named "BuildApp" which compiles all csproj-files with the MSBuild task and the build output will be copied to buildDir.</p>
+
+<p>In order to find the right project files FAKEscans the folder <em>src/app/</em> and all subfolders with the given pattern. Therefore a similar FileSet definition like in NAnt or MSBuild (see <a href="https://github.com/fsharp/FAKE">project page</a> for details) is used.</p>
+
+<p>In addition the target dependencies are extended again. Now <em>Default</em> is dependent on <em>BuildApp</em> and <em>BuildApp</em> needs <em>Clean</em> as a prerequisite.</p>
+
+<p>This means the execution order is: Clean ==> BuildApp ==> Default.</p>
+
 <p>Read the <a href="http://www.navision-blog.de/2009/04/01/getting-started-with-fake-a-f-sharp-make-tool/">full acticle</a>.</p>
 
           <div class="tip" id="fs1">val buildDir : string<br /><br />Full name: gettingstarted.buildDir</div>
