@@ -48,7 +48,7 @@
 <li>how to zip the output to a deployment folder</li>
 </ul>
 
-<h2>Install F</h2>
+<h2>Install the F# compiler</h2>
 
 <p>"FAKE - F# Make" is completely written in F# and all build scripts will also be written in F#, but this doesn't imply that you have to learn programming in F#. In fact the "FAKE - F# Make" syntax is hopefully very easy to learn.</p>
 
@@ -87,6 +87,10 @@ cls
 &quot;tools\nuget\nuget.exe&quot; &quot;install&quot; &quot;FAKE&quot; &quot;-OutputDirectory&quot; &quot;tools&quot; &quot;-ExcludeVersion&quot;
 &quot;tools\FAKE\tools\Fake.exe&quot; build.fsx
 pause</pre>
+
+<p>If you run this batch file from the command line then the latest FAKE version will be <a href="http://nuget.org/packages/FAKE/">downloaded via nuget</a> and your first FAKE script (build.fsx) will be executed. If everything works fine you will get the following output:</p>
+
+<p><img src="pics/gettingstarted/afterdownload.png" alt="alt text" title="Run the batch file" /></p>
 
 <p>Read the <a href="http://www.navision-blog.de/2009/04/01/getting-started-with-fake-a-f-sharp-make-tool/">full acticle</a>.</p>
 
