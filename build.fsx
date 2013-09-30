@@ -95,12 +95,12 @@ Target "BuildSolution" (fun _ ->
     |> Log "AppBuild-Output: "
 )
 
-Target "GenerateDocumentation" (fun _ ->
+Target "GenerateDocs" (fun _ ->
     let source = "./help"
     let template = "./tools/FSharp.Formatting/literate/templates/template-project.html"
     let projInfo =
       [ "page-description", "FAKE - F# Make"
-        "page-author", "Steffen Forkmann"
+        "page-author", (separated ", " authors)
         "github-link", "https://github.com/fsharp/FAKE"
         "project-name", "FAKE - F# Make" ]
 
@@ -203,7 +203,7 @@ Target "Default" DoNothing
     ==> "Test"
     ==> "CopyLicense" <=> "CopyDocu"
     ==> "BuildZip"
-    ==> "GenerateDocumentation"
+    ==> "GenerateDocs"
     ==> "ZipDocumentation"
     ==> "CreateNuGet"
     ==> "Default"

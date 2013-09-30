@@ -35,6 +35,7 @@ You can download the latest builds from http://teamcity.codebetter.com. You don'
 
 We have a Nuget package at http://nuget.org/packages/FAKE. You can install it with:
 
+    [lang=csharp]
 	install-package FAKE
 
 ## Mailing list
