@@ -126,7 +126,7 @@ pause</pre>
 
 <p>As you can see the code is really simple. The first line includes the FAKE library and is vital for all FAKE build scripts.</p>
 
-<p>After this header the Default target is defined. A target definition contains two important parts. The first is the name of the target (here "Default") and the second is an action (here a simple trace of "Hello world").</p>
+<p>After this header the <em>Default</em> target is defined. A target definition contains two important parts. The first is the name of the target (here "Default") and the second is an action (here a simple trace of "Hello world").</p>
 
 <p>The last line runs the "Default" target - which means it executes the defined action of the target.</p>
 
@@ -185,6 +185,12 @@ pause</pre>
 </td>
 </tr>
 </table>
+
+<p>We introduced some new concepts in this snippet. At first we defined a global property called "buildDir" with the relative path of a temporary build folder.</p>
+
+<p>In the <em>Clean</em> target we use the CleanDir task to clean up this build directory. This simply deletes all files in the folder or creates the directory if necessary.</p>
+
+<p>In the dependencies section we say that the <em>Default</em> target has a dependency on the <em>Clean</em> target. In other words <em>Clean</em> is a prerequisite of <em>Default</em> and will be run before the execution of <em>Default</em>:</p>
 
 <p>Read the <a href="http://www.navision-blog.de/2009/04/01/getting-started-with-fake-a-f-sharp-make-tool/">full acticle</a>.</p>
 
