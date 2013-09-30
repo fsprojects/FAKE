@@ -45,4 +45,52 @@ If you run this batch file from the command line then the latest FAKE version wi
 
 ![alt text](pics/gettingstarted/afterdownload.png "Run the batch file")
 
+Now open the *build.fsx* in Visual Studio or any text editor. It should look like this:
+
+	// include Fake lib
+	#r @"tools\FAKE\tools\FakeLib.dll"
+	open Fake 
+
+	// Default target
+	Target "Default" (fun _ ->
+		trace "Hello World from FAKE"
+	)
+
+	// start build
+	Run "Default"
+
+
+As you can see the code is really simple. The first line includes the FAKE library and is vital for all FAKE build scripts.
+
+After this header the Default target is defined. A target definition contains two important parts. The first is the name of the target (here "Default") and the second is an action (here a simple trace of "Hello world").
+
+The last line runs the "Default" target - which means it executes the defined action of the target.
+
+## Cleaning the last build output
+
+A typical first step in most build scenarios is to clean the output of the last build. We can achieve this by modifying the *build.fsx* to the following:
+
+	// include Fake lib
+	#r @"tools\FAKE\tools\FakeLib.dll"
+	open Fake
+
+	// Properties
+	let buildDir = @".\build\"
+
+	// Targets
+	Target "Clean" (fun _ ->
+		CleanDir buildDir
+	)
+
+	Target "Default" (fun _ ->
+		trace "Hello World from FAKE"
+	)
+
+	// Dependencies
+	"Clean" 
+	  ==> "Default"
+
+	// start build
+	Run "Default"
+
 Read the [full acticle](http://www.navision-blog.de/2009/04/01/getting-started-with-fake-a-f-sharp-make-tool/).
