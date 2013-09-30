@@ -42,7 +42,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "help", "help", "{564BD198-0
 	ProjectSection(SolutionItems) = preProject
 		help\gettingstarted.md = help\gettingstarted.md
 		help\index.md = help\index.md
-		help\overview.md = help\overview.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pics", "pics", "{75162148-B884-4575-8E14-5320DD137760}"
