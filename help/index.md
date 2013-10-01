@@ -25,10 +25,9 @@ For instance custom build tasks can be added simply by referencing .NET assembli
 * [Getting started with "FAKE - F# Make"](gettingstarted.html): This tutorial shows you how to build the CalculatorSample project.
 * [Modifying AssemblyInfo and File Version via "FAKE - F# Make"](assemblyinfo.html)
 * [Running specific targets in "FAKE - F# Make"](specifictargets.html)
+* [Integrating a "FAKE - F# Make" build script into TeamCity](teamcity.html)
 * [Adding FxCop to a "FAKE" build script](http://www.navision-blog.de/2009/04/02/adding-fxcop-to-a-fake-build-script)
-* [Debugging "FAKE - F# Make" build scripts](http://www.navision-blog.de/2009/04/05/debugging-fake-f-make-build-scripts)
 * [Writing custom tasks for "FAKE - F# Make"](http://www.navision-blog.de/2009/04/14/writing-custom-tasks-for-fake-f-make)
-* [Integrating a "FAKE - F# Make" build script into TeamCity](http://www.navision-blog.de/2009/04/15/integrate-a-fake-f-make-build-script-into-teamcity)
 * [Integrating a "FAKE - F# Make" build script into CruiseControl.NET](http://www.navision-blog.de/2009/10/14/integrating-a-fake-f-make-build-script-into-cruisecontrol-net)
 * [Building FAKE scripts with Jenkins](http://www.navision-blog.de/2012/01/16/building-fake-scripts-with-jenkins/)
 * [Fake.Deploy guide](deploy.html) describes how to automate deployments using FAKE.
