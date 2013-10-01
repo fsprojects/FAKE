@@ -1,4 +1,4 @@
-# "FAKE - F# Make"
+# FAKE - F# Make
 
 Modern build automation systems are not limited to simply recompile programs if source code has changed. 
 They are supposed to get the latest sources from a source code management system, build test databases, 
@@ -53,10 +53,17 @@ You can download the latest builds from [http://teamcity.codebetter.com](http://
 * [Latest development build](http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt166&tab=artifacts&guest=1)
 * [Changelog](changelog.html)
 
-We also have a Nuget package at [http://nuget.org/packages/FAKE](http://nuget.org/packages/FAKE). You can install it with:
-
-    [lang=batchfile]
-	install-package FAKE
+<div class="row">
+  <div class="span1"></div>
+  <div class="span6">
+    <div class="well well-small" id="nuget">
+      FAKE is also available <a href="https://nuget.org/packages/FAKE">on NuGet</a>.
+      To install the tool, run the following command in the <a href="http://docs.nuget.org/docs/start-here/using-the-package-manager-console">Package Manager Console</a>:
+      <pre>PM> Install-Package Fake</pre>
+    </div>
+  </div>
+  <div class="span1"></div>
+</div>
 
 ## Mailing list
 
