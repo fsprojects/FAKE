@@ -17,7 +17,7 @@ Open *build.fsx* from your Calculator sample folder and add a new target *FxCop*
 		  {p with 
 			// override default parameters
 			ReportFileName = testDir + "FXCopResults.xml";
-			ToolPath = @"C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\FxCopCmd.exe"})
+			ToolPath = "FxCopCmd.exe"})
 		assemblies 
 	)
 
@@ -52,7 +52,7 @@ If you want to let the build fail in the case that FxCop reports any errors or w
 			// override default parameters
 			ReportFileName = testDir + "FXCopResults.xml";
 			FailOnError = FxCopErrorLevel.CriticalWarning;
-			ToolPath = @"C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\FxCopCmd.exe"})
+			ToolPath = "FxCopCmd.exe"})
 		assemblies 
 
 ![alt text](pics/fxcop/report.png "Fail on FxCop error")
