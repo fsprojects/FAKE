@@ -36,13 +36,6 @@ Some of our users are:
 * [FSharp.DataFrame by BlueMountainCapital](https://github.com/BlueMountainCapital/FSharp.DataFrame)
 * [Portable.Licensing](https://github.com/dnauck/Portable.Licensing)
 
-## How to contribute code
-
-* Login in github (you need an account)
-* Fork the main repository from [Github](https://github.com/fsharp/FAKE)
-* Push your changes to your fork
-* Send a pull request
-
 ## Lastest builds and changelog
 
 You can download the latest builds from http://teamcity.codebetter.com. You don't need to register, a guest login is ok.
@@ -72,7 +65,7 @@ The "FAKE - F# Make" mailing list can be found at [http://groups.google.com/grou
 * [Integrating a "FAKE - F# Make" build script into TeamCity](http://www.navision-blog.de/2009/04/15/integrate-a-fake-f-make-build-script-into-teamcity)
 * [Integrating a "FAKE - F# Make" build script into CruiseControl.NET](http://www.navision-blog.de/2009/10/14/integrating-a-fake-f-make-build-script-into-cruisecontrol-net)
 * [Building FAKE scripts with Jenkins](http://www.navision-blog.de/2012/01/16/building-fake-scripts-with-jenkins/)
-* [Running specific targets in "FAKE – F# Make"](http://www.navision-blog.de/2010/11/03/running-specific-targets-in-fake-f-make/)
+* [Running specific targets in "FAKE - F# Make"](http://www.navision-blog.de/2010/11/03/running-specific-targets-in-fake-f-make/)
 
 ## Main Features
 
