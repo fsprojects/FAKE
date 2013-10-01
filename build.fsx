@@ -106,6 +106,8 @@ Target "GenerateDocs" (fun _ ->
 
     Literate.ProcessDirectory (source, template, docsDir, replacements = projInfo)
 
+    WriteStringToFile false "./docs/.nojekyll" ""
+
     CopyDir (docsDir @@ "content") "help/content" allFiles
     CopyDir (docsDir @@ "pics") "help/pics" allFiles
 
