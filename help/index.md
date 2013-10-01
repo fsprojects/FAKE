@@ -55,38 +55,6 @@ You can download the latest builds from [http://teamcity.codebetter.com](http://
 
 The "FAKE - F# Make" mailing list can be found at [http://groups.google.com/group/fsharpMake](http://groups.google.com/group/fsharpMake).
 
-## Main Features
-
-* Simple build infrastructure
-* Easy systax
-* Full power of .NET Framework
-* Simple [TeamCity](http://www.jetbrains.com/teamcity) integration (see [Integrating a "FAKE - F# Make" build script into TeamCity](http://www.navision-blog.de/2009/04/15/integrate-a-fake-f-make-build-script-into-teamcity))
-* Simple CruiseControl.NET integration (see [Integrating a "FAKE - F# Make" build script into CruiseControl.NET](http://www.navision-blog.de/2009/10/14/integrating-a-fake-f-make-build-script-into-cruisecontrol-net))
-* FinalTarget feature (to release resources even if build fails)
-* Extensible platform - [Write your own tasks](http://www.navision-blog.de/2009/04/14/writing-custom-tasks-for-fake-f-make)
-* Easy debugging
-* Intellisense support (when using Visual Studio)
-
-## Predefined tasks
-
-* Clean task
-* [NUnit](http://www.nunit.org) support
-* [xUnit.net](http://www.codeplex.com/xunit) support
-* [MSpec](https://github.com/machine/machine.specifications) support
-* NCover support
-* FxCop support
-* ExecProcess task (To run tools via the command line)
-* MSBuild task (to compile *.csproj and *.fsproj projects or run MSBuild scripts)
-* XMLRead task
-* VSS task (Get sources from Visual Source Safe)
-* XCopy task
-* Zip task
-* [git](http://git-scm.com/) tasks
-* AssemblyInfo task
-* MSI task (to run msi-setups with msiexec)
-* RegAsm task (to create TLBs from a .dll)
-* ...
-
 # Using FAKE
 
 ## Targets
