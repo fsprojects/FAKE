@@ -209,7 +209,7 @@ This sample script
 * Uses NUnit to test the generated Test.*.dll's
 * Zips all generated files to deploy\MyProject-0.1.zip
   
-You can read [Getting started with FAKE](http://www.navision-blog.de/2009/04/01/getting-started-with-fake-a-f-sharp-make-tool) to build such a script.
+You can read the [getting started guide](gettingstarted.html) to build such a script.
 
     // include Fake libs
     #I "tools\FAKE"
