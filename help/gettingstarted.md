@@ -344,6 +344,4 @@ The new *Deploy* target scans the build directory for all files. The result will
 
 ## What's next?
 
-Now you are ready to write your own FAKE build scripts. 
-
-In the next article I will show how we can add FxCop to our build in order to check specific naming rules.
+If you want you could now [add a FxCop target](fxcop.html) to your build in order to check specific naming rules or framework guidelines.

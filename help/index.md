@@ -27,7 +27,7 @@ For instance custom build tasks can be added simply by referencing .NET assembli
 * [Running specific targets in "FAKE - F# Make"](specifictargets.html)
 * [Integrating a "FAKE - F# Make" build script into TeamCity](teamcity.html)
 * [Writing custom tasks for "FAKE - F# Make"](customtasks.html)
-* [Adding FxCop to a "FAKE" build script](http://www.navision-blog.de/2009/04/02/adding-fxcop-to-a-fake-build-script)
+* [Adding FxCop to a "FAKE" build script](fxcop.html)
 * [Fake.Deploy guide](deploy.html) describes how to automate deployments using FAKE.
 * See the [API docs](api/index.htm) if you are interested in special functions.
 
