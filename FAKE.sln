@@ -40,6 +40,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "help", "help", "{564BD198-09CB-45D1-87F2-E2153FE6D62F}"
 	ProjectSection(SolutionItems) = preProject
 		help\changelog.md = help\changelog.md
+		help\deploy.md = help\deploy.md
 		help\gettingstarted.md = help\gettingstarted.md
 		help\index.md = help\index.md
 	EndProjectSection

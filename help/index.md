@@ -1,7 +1,5 @@
 # "FAKE - F# Make"
 
-## Introduction
-
 Modern build automation systems are not limited to simply recompile programs if source code has changed. 
 They are supposed to get the latest sources from a source code management system, build test databases, 
 run automatic tests, check guidelines, create documentation files, install setup projects and much more. 
@@ -22,7 +20,8 @@ Visual Studio or MonoDevelop, which provide syntax highlighting and code complet
 The new DSL was designed to be succinct, typed, declarative, extensible and easy to use. 
 For instance custom build tasks can be added simply by referencing .NET assemblies and using the corresponding classes.
 
-* See the [getting started guide](gettingstarted.html) for a full sample.
+* See the [getting started guide](gettingstarted.html) to learn how to write build scripts.
+* Read about [Fake.Deploy](deploy.html) to learn how to automate your deployments using FAKE.
 * See the [api docs](api/index.htm) if you are interested in special functions.
 
 ## Who is using FAKE?
@@ -36,24 +35,15 @@ Some of our users are:
 * [FSharp.DataFrame by BlueMountainCapital](https://github.com/BlueMountainCapital/FSharp.DataFrame)
 * [Portable.Licensing](https://github.com/dnauck/Portable.Licensing)
 
-## How to contribute code
+## How to get FAKE
 
-* Login in github (you need an account)
-* Fork the main repository from [Github](https://github.com/fsharp/FAKE)
-* Push your changes to your fork
-* Send a pull request
-
-## Lastest builds and changelog
-
-You can download the latest builds from http://teamcity.codebetter.com. You don't need to register, a guest login is ok.
+You can download the latest builds from [http://teamcity.codebetter.com](http://teamcity.codebetter.com). You don't need to register, a guest login is ok.
 
 * [Latest stable build](http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt335&tab=artifacts&guest=1)
 * [Latest development build](http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt166&tab=artifacts&guest=1)
 * [Changelog](changelog.html)
 
-## Nuget package
-
-We have a Nuget package at http://nuget.org/packages/FAKE. You can install it with:
+We also have a Nuget package at [http://nuget.org/packages/FAKE](http://nuget.org/packages/FAKE). You can install it with:
 
     [lang=csharp]
 	install-package FAKE
@@ -72,7 +62,7 @@ The "FAKE - F# Make" mailing list can be found at [http://groups.google.com/grou
 * [Integrating a "FAKE - F# Make" build script into TeamCity](http://www.navision-blog.de/2009/04/15/integrate-a-fake-f-make-build-script-into-teamcity)
 * [Integrating a "FAKE - F# Make" build script into CruiseControl.NET](http://www.navision-blog.de/2009/10/14/integrating-a-fake-f-make-build-script-into-cruisecontrol-net)
 * [Building FAKE scripts with Jenkins](http://www.navision-blog.de/2012/01/16/building-fake-scripts-with-jenkins/)
-* [Running specific targets in "FAKE – F# Make"](http://www.navision-blog.de/2010/11/03/running-specific-targets-in-fake-f-make/)
+* [Running specific targets in "FAKE - F# Make"](http://www.navision-blog.de/2010/11/03/running-specific-targets-in-fake-f-make/)
 
 ## Main Features
 
@@ -374,96 +364,3 @@ You can read [Getting started with FAKE](http://www.navision-blog.de/2009/04/01/
      
     // start build
     Run "Deploy"
-
-## Deployment using FAKE
-
-    * Assumes Fake.Deploy.exe is available in the current directory or path.
-
-### Introduction
-
-The FAKE deployment tool allows users to deploy applications to remote computers and to run scripts on these remote agents. A typical scenario maybe as follows: 
-
-
-* Build an application -> run tests -> create artifacts and save on build server (Classical FAKE build workflow)
-* Extract artifacts from build server and create a NuGet deployment package
-* Push the NuGet package to the desired computer this will run the package's FAKE script on the remote machine
-
-### Installing Fake deployment services
-
-In order to deploy application to a remote computer a deployment agent needs to be running on that server.
-
-To run an agent in a console, simply run:
-    
-    Fake.Deploy
-
-To install a windows service on that agent:
- 
-   * Open a command prompt with Administrator Priviledges
-   * Run Fake.Deploy /install
-
-By default the service starts a listener on port 8080. This can however be configured by editing the Fake.Deploy.exe.config file
-and changing
-    
-    <add key="ServerName" value="localhost" />
-    <add key="Port" value="8080" />
-
-to the desired value. If you use the asterisk as port no. then Fake.Deploy will assign the first open port behind of 8080.
-
-To ensure the service is running you can navigate to http://{computer}:{port}/fake/ and you should be presented with a page giving the 
-status if the service
-
-### Uninstalling Fake deployment services
-
-To uninstall an agent
-
-   * Open a command prompt with Administrator Priviledges
-   * Run Fake.Deploy /uninstall     
-
-### Running a FAKE Deployment Package
-
-### Getting help
-
-If you want to learn about Fake.Deploy's command line switches then run:
-
-    Fake.Deploy /help
-
-### Creating a Deployment package
-
-Since Fake.Deploy uses Nuget packages for deployment you only need to create one of those and include a .fsx file in the root folder of the package.
-
-Instructions for creating nuget packages can be found [at the NuGet document page](http://docs.nuget.org/docs/creating-packages/creating-and-publishing-a-package)  
-
-### Running deployment
-
-Fake deployment packages can be run manually on the current machine or they can be pushed to an agent on a remote machine.
-
-To run a package on the local machine located at C:\Appdev\MyDeployment.nupkg you would run the following command:
-
-    Fake.Deploy /deploy C:\Appdev\MyDeployment.nupkg
-    
-To run the same package on a remote computer (e.g. integration-1) you can run:
-
-    Fake.Deploy /deployRemote http://integration-1:8080 C:\Appdev\MyDeployment.nupkg 
-
-It's also possible to just make a HTTP-POST with the package to http://integration-1:8080/fake
-
-This will push the directory to the given url. It is worth noting that the port may well be different, as this depends on the configuration of the 
-listening agent (see. Installing Fake deployment service)
-
-### Getting information about the deployments
-
-    The following assumes you have Fake.Deploy running.
-
-It's easy to get information about the deployments. Just make a HTTP request to server with:
-    
-    fake/deployments/                     -> gives all releases
-    fake/deployments?status=active        -> gives all active releases
-    fake/deployments/{app}                -> gives all releases of app
-    fake/deployments/{app}?status=active  -> gives the active release of the app
-
-### Rollback of releases
-
-If you want to perform a rollback of a release so do a HTTP-PUT to:
-
-    fake/deployments/{app}?version={version} -> rolls the app back to the given version
-    fake/deployments/{app}?version=HEAD~2    -> relative rollback of the app (two versions earlier)
