@@ -97,7 +97,7 @@ Target "BuildSolution" (fun _ ->
 
 Target "GenerateDocs" (fun _ ->
     let source = "./help"
-    let template = "./tools/FSharp.Formatting/literate/templates/template-project.html"
+    let template = "./help/templates/template.html"
     let projInfo =
       [ "page-description", "FAKE - F# Make"
         "page-author", (separated ", " authors)
@@ -106,7 +106,7 @@ Target "GenerateDocs" (fun _ ->
 
     Literate.ProcessDirectory (source, template, docsDir, replacements = projInfo)
 
-    CopyDir (docsDir @@ "content") "tools/FSharp.Formatting/literate/content" allFiles
+    CopyDir (docsDir @@ "content") "help/content" allFiles
     CopyDir (docsDir @@ "pics") "help/pics" allFiles
 
     (* Temporary disable tests on *nix, bug # 122 *)
