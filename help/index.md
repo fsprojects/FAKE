@@ -20,9 +20,19 @@ Visual Studio or MonoDevelop, which provide syntax highlighting and code complet
 The new DSL was designed to be succinct, typed, declarative, extensible and easy to use. 
 For instance custom build tasks can be added simply by referencing .NET assemblies and using the corresponding classes.
 
-* See the [getting started guide](gettingstarted.html) to learn how to write build scripts.
-* Read about [Fake.Deploy](deploy.html) to learn how to automate your deployments using FAKE.
-* See the [api docs](api/index.htm) if you are interested in special functions.
+## Articles
+
+* [Getting started with "FAKE - F# Make"](gettingstarted.html): This tutorial shows you how to build the CalculatorSample project.
+* [Modifying AssemblyInfo and File Version via "FAKE - F# Make"](assemblyinfo.html)
+* [Running specific targets in "FAKE - F# Make"](specifictargets.html)
+* [Adding FxCop to a "FAKE" build script](http://www.navision-blog.de/2009/04/02/adding-fxcop-to-a-fake-build-script)
+* [Debugging "FAKE - F# Make" build scripts](http://www.navision-blog.de/2009/04/05/debugging-fake-f-make-build-scripts)
+* [Writing custom tasks for "FAKE - F# Make"](http://www.navision-blog.de/2009/04/14/writing-custom-tasks-for-fake-f-make)
+* [Integrating a "FAKE - F# Make" build script into TeamCity](http://www.navision-blog.de/2009/04/15/integrate-a-fake-f-make-build-script-into-teamcity)
+* [Integrating a "FAKE - F# Make" build script into CruiseControl.NET](http://www.navision-blog.de/2009/10/14/integrating-a-fake-f-make-build-script-into-cruisecontrol-net)
+* [Building FAKE scripts with Jenkins](http://www.navision-blog.de/2012/01/16/building-fake-scripts-with-jenkins/)
+* [Fake.Deploy guide](deploy.html) describes how to automate deployments using FAKE.
+* See the [API docs](api/index.htm) if you are interested in special functions.
 
 ## Who is using FAKE?
 
@@ -45,24 +55,12 @@ You can download the latest builds from [http://teamcity.codebetter.com](http://
 
 We also have a Nuget package at [http://nuget.org/packages/FAKE](http://nuget.org/packages/FAKE). You can install it with:
 
-    [lang=csharp]
+    [lang=batchfile]
 	install-package FAKE
 
 ## Mailing list
 
 The "FAKE - F# Make" mailing list can be found at [http://groups.google.com/group/fsharpMake](http://groups.google.com/group/fsharpMake).
-
-## Articles
-
-* [Getting started with "FAKE - F# Make"](gettingstarted.html): This tutorial shows you how to build the CalculatorSample project.
-* [Adding FxCop to a "FAKE" build script](http://www.navision-blog.de/2009/04/02/adding-fxcop-to-a-fake-build-script)
-* [Debugging "FAKE - F# Make" build scripts](http://www.navision-blog.de/2009/04/05/debugging-fake-f-make-build-scripts)
-* [Modifying AssemblyInfo and Version via "FAKE - F# Make"](http://www.navision-blog.de/2009/04/04/modifying-assemblyinfo-and-version-via-fake-f-make)
-* [Writing custom tasks for "FAKE - F# Make"](http://www.navision-blog.de/2009/04/14/writing-custom-tasks-for-fake-f-make)
-* [Integrating a "FAKE - F# Make" build script into TeamCity](http://www.navision-blog.de/2009/04/15/integrate-a-fake-f-make-build-script-into-teamcity)
-* [Integrating a "FAKE - F# Make" build script into CruiseControl.NET](http://www.navision-blog.de/2009/10/14/integrating-a-fake-f-make-build-script-into-cruisecontrol-net)
-* [Building FAKE scripts with Jenkins](http://www.navision-blog.de/2012/01/16/building-fake-scripts-with-jenkins/)
-* [Running specific targets in "FAKE - F# Make"](http://www.navision-blog.de/2010/11/03/running-specific-targets-in-fake-f-make/)
 
 ## Main Features
 
