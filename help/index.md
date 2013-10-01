@@ -51,10 +51,6 @@ You can download the latest builds from [http://teamcity.codebetter.com](http://
   <div class="span1"></div>
 </div>
 
-## Mailing list
-
-The "FAKE - F# Make" mailing list can be found at [http://groups.google.com/group/fsharpMake](http://groups.google.com/group/fsharpMake).
-
 # Using FAKE
 
 ## Targets

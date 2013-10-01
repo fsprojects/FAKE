@@ -41,6 +41,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "help", "help", "{564BD198-0
 	ProjectSection(SolutionItems) = preProject
 		help\assemblyinfo.md = help\assemblyinfo.md
 		help\changelog.md = help\changelog.md
+		help\contributing.md = help\contributing.md
 		help\customtasks.md = help\customtasks.md
 		help\deploy.md = help\deploy.md
 		help\fxcop.md = help\fxcop.md
