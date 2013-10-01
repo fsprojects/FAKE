@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8">
     <!-- 
-      The Integrating a FAKE build script into TeamCity
+      The Contributing to FAKE
  parameters will be replaced with the 
       document title extracted from the <h1> element or
       file name, if there is no <h1> heading
     -->
-    <title>Integrating a FAKE build script into TeamCity
+    <title>Contributing to FAKE
 </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="FAKE - F# Make">
@@ -36,47 +36,20 @@
       <hr />
       <div class="row">
         <div class="span9" id="main">
-          <h1>Integrating a FAKE build script into TeamCity</h1>
+          <h1>Contributing to FAKE</h1>
 
-<p>Easy <a href="http://www.jetbrains.com/teamcity/">TeamCity</a> integration was one of the major goals for the FAKE build system.</p>
+<p>This page should provide you with some basic information if you're thinking about
+contributing to FAKE.</p>
 
-<p>In this article you will learn how to set up a FAKE build script in TeamCity. We will use the CalculatorSample which you can build from the <a href="gettingstarted.html">getting started guid</a>.</p>
-
-<h2>Installing TeamCity</h2>
-
-<p>You can download the free professional edition of TeamCity from <a href="http://www.jetbrains.com/teamcity/">http://www.jetbrains.com/teamcity/</a>. After the installation process you should be ready to configure your first build.</p>
-
-<h2>Creating a FAKE project on TeamCity</h2>
-
-<p>Now create a new project and add a build configuration:</p>
-
-<p><img src="pics/teamcity/createproject.png" alt="alt text" title="Creating a FAKE project on TeamCity" /></p>
-
-<p>You also need to set the artifacts paths:</p>
-
-<p><img src="pics/teamcity/generalsettings.png" alt="alt text" title="Set the settings" /></p>
-
-<h2>Attach a VCS root</h2>
-
-<p>The next step is to attach a VCS root. For this sample we will use the official FAKE repository at <a href="https://github.com/forki/FAKE/">https://github.com/forki/FAKE/</a>.</p>
-
-<p><img src="pics/teamcity/vcsroot.png" alt="alt text" title="Set up the VCS root" />
-<img src="pics/teamcity/auth.png" alt="alt text" title="Set up the VCS root authentication" />
-<img src="pics/teamcity/checkoutrules.png" alt="alt text" title="Set up the VCS root checkout rules" /></p>
-
-<p>If you want you could also add a build trigger to your build script:</p>
-
-<p><img src="pics/teamcity/trigger.png" alt="alt text" title="Set up the build trigger" /></p>
-
-<h2>Running the build</h2>
-
-<p>Now if everything is configured correctly, you can run your build and the output should look like:</p>
-
-<p><img src="pics/teamcity/output.png" alt="alt text" title="Build output" /></p>
-
-<p>You can also inspect the NUnit results:</p>
-
-<p><img src="pics/teamcity/nunit.png" alt="alt text" title="NUnit results" /></p>
+<ul>
+<li><p>This page can be edited by sending a pull request to the FAKE project on GitHub, so
+if you learn something when playing with FAKE please record your
+<a href="https://github.com/fsharp/Fake/blob/develop/help/contributing.md">findings here</a>!</p></li>
+<li>If you want to discuss a feature (a good idea!), or if you want to look at 
+suggestions how you might contribute, check out the
+<a href="https://github.com/fsharp/Fake/issues">Issue list</a> on GitHub or send
+an email to the <a href="http://groups.google.com/group/fsharpMake">FAKE mailing list</a>.</li>
+</ul>
 
                     
         </div>
