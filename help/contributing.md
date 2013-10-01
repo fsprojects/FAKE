@@ -12,3 +12,18 @@ contributing to FAKE.
    suggestions how you might contribute, check out the
    [Issue list](https://github.com/fsharp/Fake/issues) on GitHub or send
    an email to the [FAKE mailing list](http://groups.google.com/group/fsharpMake).
+
+## Documentation
+
+The documentation for FAKE is automatically generated using the 
+[F# Formatting](https://github.com/tpetricek/FSharp.Formatting) library. It turns 
+`*.md` (Markdown with embedded code snippets) and `*.fsx` files (F# script file with 
+embedded Markdown documentation) to a nice HTML documentation.
+
+ * The code for all the documents can be found in the `help` directory
+   [on GitHub](https://github.com/fsharp/Fake/tree/develop/help). If you 
+   find a bug or add a new feature, make sure you document it!
+
+ * If you want to build the documentation, simply run the build script
+   ([GitHub link](https://github.com/fsharp/Fake/blob/develop/build.fsx)) which
+   builds the documentation.
