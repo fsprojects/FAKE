@@ -1,6 +1,6 @@
 # Deployment using FAKE
 
-    * Assumes Fake.Deploy.exe is available in the current directory or path.
+This introduction assumes Fake.Deploy.exe is available in the current directory or path.
 
 ## Introduction
 
