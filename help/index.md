@@ -20,17 +20,6 @@ Visual Studio or MonoDevelop, which provide syntax highlighting and code complet
 The new DSL was designed to be succinct, typed, declarative, extensible and easy to use. 
 For instance custom build tasks can be added simply by referencing .NET assemblies and using the corresponding classes.
 
-## Articles
-
-* [Getting started with "FAKE - F# Make"](gettingstarted.html): This tutorial shows you how to build the CalculatorSample project.
-* [Modifying AssemblyInfo and File Version via "FAKE - F# Make"](assemblyinfo.html)
-* [Running specific targets in "FAKE - F# Make"](specifictargets.html)
-* [Integrating a "FAKE - F# Make" build script into TeamCity](teamcity.html)
-* [Writing custom tasks for "FAKE - F# Make"](customtasks.html)
-* [Adding FxCop to a "FAKE" build script](fxcop.html)
-* [Fake.Deploy guide](deploy.html) describes how to automate deployments using FAKE.
-* See the [API docs](api/index.htm) if you are interested in special functions.
-
 ## Who is using FAKE?
 
 Some of our users are:
