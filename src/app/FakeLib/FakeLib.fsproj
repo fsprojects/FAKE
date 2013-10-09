@@ -68,13 +68,13 @@
     <Compile Include="AssemblyInfoFile.fs" />
     <Compile Include="AssemblyInfoHelper.fs" />
     <Compile Include="ServiceControllerHelper.fs" />
+    <Compile Include="FileSet.fs" />
     <Compile Include="ProcessHelper.fs" />
     <Compile Include="FXCopHelper.fs" />
     <Compile Include="NCoverHelper.fs" />
     <Compile Include="NUnitHelper.fs" />
     <Compile Include="XUnitHelper.fs" />
     <Compile Include="MSpecHelper.fs" />
-    <Compile Include="FileSet.fs" />
     <Compile Include="MSBuildHelper.fs" />
     <Compile Include="ZipHelper.fs" />
     <Compile Include="FileHelper.fs" />

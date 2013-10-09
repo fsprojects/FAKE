@@ -19,7 +19,7 @@ type XUnitParams =
 
 /// xUnit default params  
 let XUnitDefaults =
-    { ToolPath = currentDirectory @@ "tools" @@ "xUnit" @@ "xunit.console.exe";
+    { ToolPath = findToolInSubPath "xunit.console.exe" (currentDirectory @@ "tools" @@ "xUnit")
       ConfigFile = null;
       HtmlOutput = false;
       NUnitXmlOutput = false;
