@@ -62,7 +62,7 @@ type ILMergeParams = {
 
 /// ILMerge default params  
 let ILMergeDefaults : ILMergeParams =
-    { ToolPath = @".\tools\ILMerge\ilmerge.exe"
+    { ToolPath = findToolInSubPath "ilmerge.exe" (currentDirectory @@ "tools" @@ "ILMerge");
       Version = ""
       TimeOut = TimeSpan.FromMinutes 5.
       Libraries = [] 

@@ -11,7 +11,7 @@ type DocuParams =
 
 /// Docu default params  
 let DocuDefaults =
-    { ToolPath = "./tools/FAKE/docu.exe"
+    { ToolPath = findToolInSubPath "docu.exe" (currentDirectory @@ "tools" @@ "Fake");
       TemplatesPath = "./tools/FAKE/templates"
       TimeOut = TimeSpan.FromMinutes 5.
       OutputPath = "./output" }
