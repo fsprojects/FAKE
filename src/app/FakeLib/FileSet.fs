@@ -371,3 +371,13 @@ let inline (!!) x = !+ x |> Scan
 
 /// Includes a single pattern and scans the files - !! x = AllFilesMatching x
 let AllFilesMatching x = !! x
+
+let findToolInSubPath toolname defaultPath =
+    let tools = !! ("./**/" + toolname) 
+    if tools |> Seq.isEmpty then defaultPath @@ toolname else tools |> Seq.head
+
+let findToolFolderInSubPath toolname defaultPath =
+    let tools = !! ("./**/" + toolname) 
+    if tools |> Seq.isEmpty then defaultPath else 
+    let fi = fileInfo (tools |> Seq.head)
+    fi.Directory.FullName

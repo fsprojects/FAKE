@@ -179,10 +179,12 @@ type NUnitParams =
 
 /// NUnit default params  
 let NUnitDefaults =
+    let toolname = "nunit-console.exe"
+
     { IncludeCategory = null;
       ExcludeCategory = null;
-      ToolPath = currentDirectory @@ "tools" @@ "Nunit";
-      ToolName = @"nunit-console.exe";
+      ToolPath = findToolFolderInSubPath toolname (currentDirectory @@ "tools" @@ "Nunit")
+      ToolName = toolname;
       TestInNewThread = false;
       OutputFile = currentDirectory @@ "TestResult.xml";
       Out = null;
