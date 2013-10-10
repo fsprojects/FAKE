@@ -11,7 +11,7 @@ let productName() = "FAKE"
 /// <summary>Reads a file line by line</summary>
 /// <user/>
 let ReadFile (file:string) =   
-    seq {use textReader = new StreamReader(file, Encoding.Default)
+    seq {use textReader = new StreamReader(file, encoding)
          while not textReader.EndOfStream do
              yield textReader.ReadLine()}
 
@@ -20,7 +20,7 @@ let ReadFile (file:string) =
 let WriteToFile append fileName (lines: seq<string>) =    
     let fi = fileInfo fileName
 
-    use writer = new StreamWriter(fileName,append && fi.Exists,Encoding.Default) 
+    use writer = new StreamWriter(fileName,append && fi.Exists,encoding) 
     lines |> Seq.iter writer.WriteLine
 
 /// <summary>Removes all trailing .0 from a version string</summary>
@@ -46,7 +46,7 @@ let WriteBytesToFile file bytes = File.WriteAllBytes(file,bytes)
 let WriteStringToFile append fileName (text:string) =
     let fi = fileInfo fileName
 
-    use writer = new StreamWriter(fileName,append && fi.Exists,Encoding.Default) 
+    use writer = new StreamWriter(fileName,append && fi.Exists,encoding) 
     writer.Write text
 
 /// <summary>Replaces the file with the given string</summary>
@@ -70,7 +70,7 @@ let AppendToFile file lines = WriteToFile true file lines
 
 /// <summary>Reads a file as one text</summary>
 /// <user/>
-let inline ReadFileAsString file = File.ReadAllText(file,Encoding.Default)
+let inline ReadFileAsString file = File.ReadAllText(file,encoding)
 
 /// <summary>Reads a file as one array of bytes</summary>
 /// <user/>
@@ -102,11 +102,11 @@ let ConvertTextToWindowsLineBreaks text =
 /// Reads a file line by line and replaces all line breaks to windows line breaks
 ///   - uses a temp file to store the contents in order to prevent OutOfMemory exceptions
 let ConvertFileToWindowsLineBreaks (fileName:string) = 
-    use reader = new StreamReader(fileName, Encoding.Default)
+    use reader = new StreamReader(fileName, encoding)
 
     let tempFileName = Path.GetTempFileName()
 
-    use writer = new StreamWriter(tempFileName,false,Encoding.Default) 
+    use writer = new StreamWriter(tempFileName,false,encoding) 
     
     while not reader.EndOfStream do
         reader.ReadLine()
