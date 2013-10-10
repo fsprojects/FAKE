@@ -6,7 +6,7 @@ open System.Text
 
 /// Calculates the SHA1 for a given string
 let calcSHA1 (text:string) =
-    Encoding.Default.GetBytes text
+    Fake.EnvironmentHelper.encoding.GetBytes text
       |> (new SHA1CryptoServiceProvider()).ComputeHash
       |> Array.fold (fun acc e -> 
            let t = System.Convert.ToString(e, 16)

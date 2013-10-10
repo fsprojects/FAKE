@@ -64,7 +64,7 @@ let mutable AutoCloseXmlWriter = false
 /// <summary>Implements a TraceListener which writes NAnt like XML files.</summary>
 /// <param name="xmlOutputFile">Defines the xml output file.</param>
 type NAntXmlTraceListener(xmlOutputFile) =
-    let getXmlWriter() = new IO.StreamWriter(xmlOutputFile,true,Text.Encoding.Default)
+    let getXmlWriter() = new IO.StreamWriter(xmlOutputFile,true,encoding)
     let mutable xmlWriter:IO.StreamWriter = null
 
     let deleteOldFile() = 
