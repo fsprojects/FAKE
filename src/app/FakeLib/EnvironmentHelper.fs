@@ -29,12 +29,12 @@ let setEnvironVar environVar value = Environment.SetEnvironmentVariable(environV
 /// Retrieves the EnvironmentVariable or a default
 let environVarOrDefault name defaultValue =
     let var = environVar name
-    if isNullOrEmpty var  then defaultValue else var
+    if String.IsNullOrEmpty var  then defaultValue else var
 
 /// Retrieves the environment variable or None
 let environVarOrNone name =
     let var = environVar name
-    if isNullOrEmpty var  then None else Some var
+    if String.IsNullOrEmpty var  then None else Some var
 
 /// Retrieves a ApplicationSettings variable
 let appSetting (name:string) = ConfigurationManager.AppSettings.[name]
@@ -77,7 +77,7 @@ let mutable TargetPlatformPrefix =
     let (<|>) a b = match a with None -> b | _ -> a
     environVarOrNone "FrameworkDir32"
     <|> 
-        if (isNullOrEmpty SystemRoot) then None
+        if (String.IsNullOrEmpty SystemRoot) then None
         else Some (SystemRoot @@ @"Microsoft.NET\Framework")
     <|> 
         if (isUnix) then Some "/usr/lib/mono"
@@ -103,7 +103,7 @@ let convertWindowsToCurrentPath (w:string) =
     if (w.Length > 2 && w.[1] = ':' && w.[2] = '\\') then
         w
     else
-        replace @"\" directorySeparator w
+        w.Replace(@"\",directorySeparator)
 
 /// The IO encoding from build parameter
 let encoding =
