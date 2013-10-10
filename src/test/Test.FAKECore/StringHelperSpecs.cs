@@ -28,31 +28,10 @@ namespace Test.FAKECore
 
     public class when_using_string_helper
     {
-        It should_not_separate_empty_text =
-            () => StringHelper.separated("test", new List<string>())
-                      .ShouldBeEmpty();
-
         It should_read_the_test_file =
             () => StringHelper.ReadFile("TestData/AllObjects.txt")
                       .Count().ShouldEqual(3578);
-
-        It should_separate_one_line =
-            () => StringHelper.separated("test", new List<string> {"first"})
-                      .ShouldEqual("first");
-
-        It should_separate_three_lines =
-            () => StringHelper.separated("-", new List<string> {"first", "second", "third"})
-                      .ShouldEqual("first-second-third");
-
-        It should_separate_three_lines_with_line_ends =
-            () => StringHelper.toLines(new List<string> {"first", "second", "third"})
-                      .ShouldEqual("first\r\nsecond\r\nthird");
-
-        It should_separate_two_lines_with_blank =
-            () => StringHelper.separated(" ", new List<string> {"first", "second"})
-                      .ShouldEqual("first second");
     }
-
     public class when_converting_to_windows_line_endings
     {
         It should_convert_linux_text_to_windows_text =
@@ -70,17 +49,5 @@ namespace Test.FAKECore
         It should_convert_window_text_to_windows_text =
             () => StringHelper.ConvertTextToWindowsLineBreaks("This is my text\r\nI love it\r\n\r\nreally.\r\n")
                       .ShouldEqual("This is my text\r\nI love it\r\n\r\nreally.\r\n");
-    }
-
-    public class when_checking_strings
-    {
-        It should_detect_whitespace_string =
-            () => StringHelper.isNullOrWhiteSpace("\n \r  ").ShouldBeTrue();
-
-        It should_detect_non_whitespace_string =
-            () => StringHelper.isNullOrWhiteSpace("\n \r s ").ShouldBeFalse();
-
-        It should_detect_empty_string_as_whitespace_string =
-            () => StringHelper.isNullOrWhiteSpace("").ShouldBeTrue();
     }
 }

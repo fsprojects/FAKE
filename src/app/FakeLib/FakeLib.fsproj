@@ -49,11 +49,12 @@
     <Compile Include="FSharpHelpers\SeqExtensions.fs" />
     <Compile Include="FSharpHelpers\OptionExtensions.fs" />
     <Compile Include="FSharpHelpers\AsyncHelper.fs" />
+    <Compile Include="BasicStringHelper.fs" />
+    <Compile Include="EnvironmentHelper.fs" />
     <Compile Include="RegistryHelper.fs" />
     <Compile Include="FileSystemHelper.fs" />
     <Compile Include="StringHelper.fs" />
     <Compile Include="TemplateHelper.fs" />
-    <Compile Include="EnvironmentHelper.fs" />
     <Compile Include="TimeoutHelper.fs" />
     <Compile Include="CacheHelper.fs" />
     <Compile Include="XMLHelper.fs" />
