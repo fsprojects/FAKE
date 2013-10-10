@@ -95,6 +95,9 @@ let getTargetPlatformDir platformVersion =
 /// The path to the personal documents
 let documentsFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
 
+/// The directory separator string. On most systems / or \
+let directorySeparator = Path.DirectorySeparatorChar.ToString()
+
 /// Convert the given windows path to a path in the current system
 let convertWindowsToCurrentPath (w:string) = 
     if (w.Length > 2 && w.[1] = ':' && w.[2] = '\\') then
