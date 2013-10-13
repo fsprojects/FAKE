@@ -33,12 +33,12 @@ let setEnvironVar environVar value = Environment.SetEnvironmentVariable(environV
 /// Retrieves the EnvironmentVariable or a default
 let environVarOrDefault name defaultValue =
     let var = environVar name
-    if isNullOrEmpty var  then defaultValue else var
+    if String.IsNullOrEmpty var  then defaultValue else var
 
 /// Retrieves the environment variable or None
 let environVarOrNone name =
     let var = environVar name
-    if isNullOrEmpty var  then None else Some var
+    if String.IsNullOrEmpty var  then None else Some var
 
 /// Retrieves a ApplicationSettings variable
 let appSetting (name:string) = ConfigurationManager.AppSettings.[name]
@@ -79,13 +79,17 @@ let platformInfoAction (psi:ProcessStartInfo) =
         psi.FileName <- "mono"  
 
 /// The path of the current target platform
-let mutable TargetPlatformPrefix =
-    match environVarOrNone "FrameworkDir32" with
-    | Some path -> path
-    | _ ->
-        if not (isNullOrEmpty SystemRoot) then SystemRoot @@ @"Microsoft.NET\Framework" else
-        if isUnix then "/usr/lib/mono" else 
-        @"C:\Windows\Microsoft.NET\Framework" 
+let mutable TargetPlatformPrefix = 
+    let (<|>) a b = match a with None -> b | _ -> a
+    environVarOrNone "FrameworkDir32"
+    <|> 
+        if (String.IsNullOrEmpty SystemRoot) then None
+        else Some (SystemRoot @@ @"Microsoft.NET\Framework")
+    <|> 
+        if (isUnix) then Some "/usr/lib/mono"
+        else Some @"C:\Windows\Microsoft.NET\Framework"
+    |> Option.get
+    
 
 /// Gets the local directory for the given target platform
 let getTargetPlatformDir platformVersion = 
@@ -97,12 +101,21 @@ let getTargetPlatformDir platformVersion =
 /// The path to the personal documents
 let documentsFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
 
+/// The directory separator string. On most systems / or \
+let directorySeparator = Path.DirectorySeparatorChar.ToString()
+
 /// Convert the given windows path to a path in the current system
 let convertWindowsToCurrentPath (w:string) = 
     if (w.Length > 2 && w.[1] = ':' && w.[2] = '\\') then
         w
     else
-        replace @"\" directorySeparator w
+        w.Replace(@"\",directorySeparator)
+
+/// The IO encoding from build parameter
+let encoding =
+  match getBuildParamOrDefault "encoding" "default" with
+  | "default" -> Text.Encoding.Default
+  | enc -> Text.Encoding.GetEncoding(enc)
 
 
 let getInstalledDotNetFrameworks() = 
