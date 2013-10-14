@@ -12,7 +12,7 @@
     <FileAlignment>512</FileAlignment>
     <Name>Fake.Deploy.Web.Abstractions</Name>
     <TargetFrameworkProfile />
-    <FscToolPath Condition="'$(MSBuildFrameworkToolsPath)' == ''">..\..\..\..\tools\FSharp\</FscToolPath>
+    <FscToolPath Condition="'$(MSBuildFrameworkToolsPath)' == ''">..\..\..\tools\FSharp\</FscToolPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

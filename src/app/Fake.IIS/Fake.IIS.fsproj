@@ -10,7 +10,7 @@
     <RootNamespace>Fake.IIS</RootNamespace>
     <AssemblyName>Fake.IIS</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FscToolPath Condition="'$(MSBuildFrameworkToolsPath)' == ''">..\..\..\..\tools\FSharp\</FscToolPath>
+    <FscToolPath Condition="'$(MSBuildFrameworkToolsPath)' == ''">..\..\..\tools\FSharp\</FscToolPath>
     <FscToolExe>Fsc.exe</FscToolExe>
     <Name>Fake.IIS</Name>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>

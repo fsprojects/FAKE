@@ -11,7 +11,7 @@
     <AssemblyName>FakeLib</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <Name>FakeLib</Name>
-    <FscToolPath Condition="'$(MSBuildFrameworkToolsPath)' == ''">..\..\..\..\tools\FSharp\</FscToolPath>
+    <FscToolPath Condition="'$(MSBuildFrameworkToolsPath)' == ''">..\..\..\tools\FSharp\</FscToolPath>
     <FscToolExe>Fsc.exe</FscToolExe>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
