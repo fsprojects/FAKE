@@ -26,6 +26,13 @@ The next step is to attach a VCS root. For this sample we will use the official 
 ![alt text](pics/teamcity/auth.png "Set up the VCS root authentication")
 ![alt text](pics/teamcity/checkoutrules.png "Set up the VCS root checkout rules")
 
+## Creating the build step
+
+Now is the time to create two build steps. The first one downloads FAKE via Nuget and the second one runs the build script:
+
+![alt text](pics/teamcity/buildstep1.png "Download FAKE")
+![alt text](pics/teamcity/buildstep2.png "Run FAKE script")
+
 If you want you could also add a build trigger to your build script:
 
 ![alt text](pics/teamcity/trigger.png "Set up the build trigger")

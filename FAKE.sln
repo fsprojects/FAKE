@@ -62,6 +62,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gettingstarted", "gettingst
 		help\pics\gettingstarted\compileerror.png = help\pics\gettingstarted\compileerror.png
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "teamcity", "teamcity", "{853E4C7F-D5AA-4756-BAF3-13F25F460C4E}"
+	ProjectSection(SolutionItems) = preProject
+		help\pics\teamcity\auth.png = help\pics\teamcity\auth.png
+		help\pics\teamcity\buildstep1.png = help\pics\teamcity\buildstep1.png
+		help\pics\teamcity\buildstep2.png = help\pics\teamcity\buildstep2.png
+		help\pics\teamcity\checkoutrules.png = help\pics\teamcity\checkoutrules.png
+		help\pics\teamcity\createproject.png = help\pics\teamcity\createproject.png
+		help\pics\teamcity\generalsettings.png = help\pics\teamcity\generalsettings.png
+		help\pics\teamcity\nunit.png = help\pics\teamcity\nunit.png
+		help\pics\teamcity\output.png = help\pics\teamcity\output.png
+		help\pics\teamcity\trigger.png = help\pics\teamcity\trigger.png
+		help\pics\teamcity\vcsroot.png = help\pics\teamcity\vcsroot.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -169,5 +183,6 @@ Global
 		{AD03BF13-802D-4E5F-A939-24484299E014} = {B774DC6A-F933-4EC3-A61F-E07344EF8ED2}
 		{75162148-B884-4575-8E14-5320DD137760} = {564BD198-09CB-45D1-87F2-E2153FE6D62F}
 		{454066F7-42BF-435E-BDF7-2D11948D53B4} = {75162148-B884-4575-8E14-5320DD137760}
+		{853E4C7F-D5AA-4756-BAF3-13F25F460C4E} = {75162148-B884-4575-8E14-5320DD137760}
 	EndGlobalSection
 EndGlobal
