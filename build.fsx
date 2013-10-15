@@ -5,7 +5,7 @@
 #r "System.Web.dll"
 #r "FSharp.Markdown.dll"
 #r "FSharp.CodeFormat.dll"
-#load "./tools/FSharp.Formatting/literate/literate.fsx"
+#r "FSharp.Literate.dll"
 
 open System.IO
 open Fake
