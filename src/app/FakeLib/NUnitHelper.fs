@@ -160,6 +160,10 @@ let AllSucceeded xDocs =
     |> Seq.map (fun x -> x <> "Failure")
     |> Seq.reduce (&&)
 
+type NUnitErrorLevel =
+    | Error
+    | DontFailBuild
+
 type NUnitParams =
     { IncludeCategory:string;
       ExcludeCategory:string;
@@ -175,7 +179,8 @@ type NUnitParams =
       XsltTransformFile:string;
       TimeOut: TimeSpan;
       DisableShadowCopy:bool
-      Domain:string}
+      Domain:string
+      ErrorLevel:NUnitErrorLevel}
 
 /// NUnit default params  
 let NUnitDefaults =
@@ -193,7 +198,8 @@ let NUnitDefaults =
       XsltTransformFile = null;
       TimeOut = TimeSpan.FromMinutes 5.
       DisableShadowCopy = false;
-      Domain = null}
+      Domain = null;
+      ErrorLevel = Error}
 
 let commandLineBuilder parameters assemblies =
     let cl = new StringBuilder()
@@ -216,6 +222,17 @@ let getWorkingDir parameters =
     Seq.find (fun s -> s <> null && s <> "") [parameters.WorkingDir; environVar("teamcity.build.workingDir"); "."]
     |> Path.GetFullPath
 
+// NUnit console returns negative error codes for errors and sum of failed/ignored/exceptional 
+// tests otherwise. Zero means that all tests passed.
+let (|OK|TestsFailed|FatalError|) = function
+    | 0 -> OK
+    | -1 -> FatalError "InvalidArg"
+    | -2 -> FatalError "FileNotFound"
+    | -3 -> FatalError "FixtureNotFound"
+    | -100 -> FatalError "UnexpectedError"
+    | x when x < 0 -> FatalError "FatalError"
+    | _ -> TestsFailed
+
 /// Run NUnit on a group of assemblies.
 let NUnit setParams (assemblies: string seq) =
     let details = assemblies |> separated ", "
@@ -223,6 +240,9 @@ let NUnit setParams (assemblies: string seq) =
     let parameters = NUnitDefaults |> setParams
               
     let assemblies =  assemblies |> Seq.toArray
+
+    if Array.isEmpty assemblies then
+        failwith "NUnit: cannot run tests (the assembly list is empty)."
 
     let tool = parameters.ToolPath @@ parameters.ToolName
 
@@ -235,12 +255,22 @@ let NUnit setParams (assemblies: string seq) =
             info.Arguments <- args) parameters.TimeOut
 
     sendTeamCityNUnitImport (getWorkingDir parameters @@ parameters.OutputFile)
-    if result = 0 then          
-        traceEndTask "NUnit" details
-    else
-        if result = 2 then
-            failwith "NUnit test failed."
-        failwithf "NUnit test failed. Process finished with exit code %d." result
+
+    let errorDescription error = 
+        match error with
+        | OK -> "OK"
+        | TestsFailed -> sprintf "NUnit test failed (%d)." error
+        | FatalError x -> sprintf "NUnit test failed. Process finished with exit code %s (%d)." x error
+    
+    match parameters.ErrorLevel with
+    | DontFailBuild ->
+        match result with
+        | OK | TestsFailed -> traceEndTask "NUnit" details
+        | _ -> failwith (errorDescription result)
+    | Error ->
+        match result with
+        | OK -> traceEndTask "NUnit" details
+        | _ -> failwith (errorDescription result)
 
 type NUnitParallelResult =
     {
