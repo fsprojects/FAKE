@@ -3,11 +3,13 @@
   <head>
     <meta charset="utf-8">
     <!-- 
-      The changelog parameters will be replaced with the 
+      The NuGet package restore
+ parameters will be replaced with the 
       document title extracted from the <h1> element or
       file name, if there is no <h1> heading
     -->
-    <title>changelog</title>
+    <title>NuGet package restore
+</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="FAKE - F# Make">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -34,143 +36,57 @@
       <hr />
       <div class="row">
         <div class="span9" id="main">
-          <h2>1.72.0.0</h2>
+          <h1>NuGet package restore</h1>
 
-<ul>
-<li>"RestorePackages" allows to restore nuget packages</li>
-</ul>
+<p>If you are using a source control system like <a href="http://git-scm.com/">git</a> you probably don't want to store all binary dependencies in it. 
+With FAKE we can use <a href="http://nuget.codeplex.com/">NuGet</a> to download all dependent packages during the build.</p>
 
-<h2>1.70.0.0</h2>
+<h2>Setting the stage for NuGet</h2>
 
-<ul>
-<li>FAKE nuget package comes bundles with a fsi.exe</li>
-<li>Self build downloads latest FAKE master via nuget</li>
-</ul>
+<p>In order to download the packages during the build we need to add NuGet.exe to our repository. 
+You can download the "NuGet.exe Command Line Tool" from the <a href="http://nuget.codeplex.com/releases">release page</a>.</p>
 
-<h2>1.66.1.0</h2>
+<p><img src="pics/nuget/tools.png" alt="alt text" title="NuGet.exe in the tools folder" /></p>
 
-<ul>
-<li>Fixed bug where FAKE.Deploy didn't run the deploy scripts where used as a windows service</li>
-<li>It's possible to add file loggers for MSBuild</li>
-<li>Fixed path resolution for fsi on *nix</li>
-<li>BREAKING CHANGE: Removed version normalization from NuGet package creation</li>
-<li>Fixes for NUNit compatibility on mono</li>
-<li>Fixes in ProcessHelper for mono compatibility</li>
-<li>Fixes in the mono build</li>
-<li>Improved error reporting in Fake.exe</li>
-<li>Added a SpecFlow helper</li>
-<li>Fixed some issues in file helper routines when working with no existing directory chain</li>
-</ul>
+<h2>Restore packages from the build script</h2>
 
-<h2>1.64.1.0</h2>
+<p>Modify your build script and add <strong>RestorePackages()</strong> near the beginning of the script.
+This will use the following default parameters to retrieve all NuGet packages which are specified in <em>"./</em><em>/packages.config"</em> files:</p>
 
-<ul>
-<li>Fixed bug where FAKE didn't run the correct build script</li>
-</ul>
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">RestorePackageDefaults</span> <span class="o">=</span>
+    { <span class="i">ToolPath</span> <span class="o">=</span> <span class="i">findToolInSubPath</span> <span class="s">&quot;</span><span class="s">nuget</span><span class="s">.</span><span class="s">exe</span><span class="s">&quot;</span> <span class="s">&quot;</span><span class="s">.</span><span class="s">/</span><span class="s">tools</span><span class="s">/</span><span class="s">nuget</span><span class="s">/</span><span class="s">NuGet</span><span class="s">.</span><span class="s">exe</span><span class="s">&quot;</span>
+      <span class="i">Sources</span> <span class="o">=</span> []
+      <span class="i">TimeOut</span> <span class="o">=</span> <span class="i">TimeSpan</span><span class="o">.</span><span class="i">FromMinutes</span> <span class="n">5.</span>
+      <span class="i">OutputPath</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">.</span><span class="s">/</span><span class="s">packages</span><span class="s">&quot;</span> }</pre>
+</td>
+</tr>
+</table>
 
-<h2>1.64.0.0</h2>
+<p>FAKE will scan all subfolders for <em>nuget.exe</em> and defaults to "./tools/nuget/NuGet.exe" if nothing was found.</p>
 
-<ul>
-<li>New conditional dependency operator =?></li>
-<li>BREAKING CHANGE: Some AssemblyInfo task parameters are now option types. See type hints.</li>
-</ul>
+<p>If you need to use different parameters please use the <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/RestorePackageHelper.fs#L18">RestorePackage</a> task directly.</p>
 
-<h2>1.62.0.0</h2>
+<h2>Download latest version of FAKE via NuGet</h2>
 
-<ul>
-<li>New RegAsm task, allows to create TLBs from a dll.</li>
-<li>New MSI task, allows to install or uninstall msi files.</li>
-<li>StringHelper.NormalizeVersion fixed for WiX.</li>
-</ul>
+<p>If you don't want to store FAKE.exe and it components in your repository you can use a batch file which downloads it before the build:</p>
 
-<h2>1.58.9.0</h2>
+<pre lang="batchfile">@echo off
+cls
+&quot;tools\nuget\nuget.exe&quot; &quot;install&quot; &quot;FAKE&quot; &quot;-OutputDirectory&quot; &quot;tools&quot; &quot;-ExcludeVersion&quot;
+&quot;tools\FAKE\tools\Fake.exe&quot; build.fsx
+pause</pre>
 
-<ul>
-<li>Allow to choose specific nunit-console runner.</li>
-</ul>
-
-<h2>1.58.6.0</h2>
-
-<ul>
-<li>Using nuget packages for mspec.</li>
-<li>FAKE tries to kill all MSBuild and FSI processes at the end of a build.</li>
-</ul>
-
-<h2>1.58.1.0</h2>
-
-<ul>
-<li>Removed message system for build output. Back to simpler tracing.</li>
-</ul>
-
-<h2>1.58.0.0</h2>
-
-<ul>
-<li>ReplaceAssemblyInfoVersions task allows to replace version info in AssemblyVersion-files</li>
-<li>New task ConvertFileToWindowsLineBreaks</li>
-</ul>
-
-<h2>1.56.10.0</h2>
-
-<ul>
-<li>Allows to build .sln files</li>
-</ul>
-
-<h2>1.56.0.0</h2>
-
-<ul>
-<li>Allows to publish symbols via nuget.exe</li>
-<li>Autotrim trailing .0 from version in order to fullfill nuget standards.</li>
-</ul>
-
-<h2>1.54.0.0</h2>
-
-<ul>
-<li>If the publishment of a Nuget package fails, then FAKE will try it again.</li>
-<li>Added Changelog.markdown to FAKE deployment</li>
-<li>Added RequireExactly helper function in order to require a specific nuget dependency.</li>
-<li>NugetHelper.GetPackageVersion - Gets the version no. for a given package in the packages folder.</li>
-<li>EnvironmentHelper.getTargetPlatformDir - Gets the directory for the given target platform.</li>
-</ul>
-
-<h2>1.52.0.0</h2>
-
-<ul>
-<li>Some smaller bugfixes</li>
-<li>New dependency syntax with ==> and <=></li>
-<li>Tracing of StackTrace only if TargetHelper.PrintStackTraceOnError was set to true</li>
-</ul>
-
-<h2>1.50.0.0</h2>
-
-<ul>
-<li>New task DeleteDirs allows to delete multiple directories.</li>
-<li>New parameter for NuGet dependencies.</li>
-</ul>
-
-<h2>1.48.0.0</h2>
-
-<ul>
-<li>Bundled with docu.exe compiled against .Net 4.0.</li>
-<li>Fixed docu calls to run with full filenames.</li>
-<li>Added targetplatform, target and log switches for ILMerge task.</li>
-<li>Added Git.Information.getLastTag() which gets the last git tag by calling git describe.</li>
-<li>Added Git.Information.getCurrentHash() which gets the last current sha1.</li>
-</ul>
-
-<h2>1.46.0.0</h2>
-
-<ul>
-<li>Fixed Nuget support and allows automatic push.</li>
-</ul>
-
-<h2>1.44.0.0</h2>
-
-<ul>
-<li>Tracing of all external process starts.</li>
-<li>MSpec support.</li>
-</ul>
-
-                    
+          <div class="tip" id="fs1">val RestorePackageDefaults : obj<br /><br />Full name: nuget.RestorePackageDefaults</div>
+          
         </div>
         <div class="span3">
 
