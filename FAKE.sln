@@ -1,5 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0F0488CC-2580-4C07-9E16-3997480F0221}"
 	ProjectSection(SolutionItems) = preProject
 		build-web-bundles.cmd = build-web-bundles.cmd
@@ -47,6 +49,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "help", "help", "{564BD198-0
 		help\fxcop.md = help\fxcop.md
 		help\gettingstarted.md = help\gettingstarted.md
 		help\index.md = help\index.md
+		help\nuget.md = help\nuget.md
 		help\specifictargets.md = help\specifictargets.md
 		help\teamcity.md = help\teamcity.md
 		help\templates\template.html = help\templates\template.html
@@ -74,6 +77,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "teamcity", "teamcity", "{85
 		help\pics\teamcity\output.png = help\pics\teamcity\output.png
 		help\pics\teamcity\trigger.png = help\pics\teamcity\trigger.png
 		help\pics\teamcity\vcsroot.png = help\pics\teamcity\vcsroot.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget", "nuget", "{1441A6AB-1E5B-484F-AED7-AFEA1716E20A}"
+	ProjectSection(SolutionItems) = preProject
+		help\pics\nuget\tools.png = help\pics\nuget\tools.png
 	EndProjectSection
 EndProject
 Global
@@ -184,5 +192,6 @@ Global
 		{75162148-B884-4575-8E14-5320DD137760} = {564BD198-09CB-45D1-87F2-E2153FE6D62F}
 		{454066F7-42BF-435E-BDF7-2D11948D53B4} = {75162148-B884-4575-8E14-5320DD137760}
 		{853E4C7F-D5AA-4756-BAF3-13F25F460C4E} = {75162148-B884-4575-8E14-5320DD137760}
+		{1441A6AB-1E5B-484F-AED7-AFEA1716E20A} = {75162148-B884-4575-8E14-5320DD137760}
 	EndGlobalSection
 EndGlobal
