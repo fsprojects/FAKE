@@ -27,7 +27,7 @@ type xpkgParams =
 /// xpkg default params  
 let XpkgDefaults() =
     {
-        ToolPath = "./tools/xpkg/xpkg.exe"
+        ToolPath = findToolInSubPath "xpkg.exe" (currentDirectory @@ "tools" @@ "xpkg")
         WorkingDir = "./";
         TimeOut = TimeSpan.FromMinutes 5.
         Package = null

@@ -1,7 +1,16 @@
 #I @"tools/FAKE/tools/"
 #r @"FakeLib.dll"
 
+#I "./tools/FSharp.Formatting/lib/net40"
+#r "System.Web.dll"
+#r "FSharp.Markdown.dll"
+#r "FSharp.CodeFormat.dll"
+#r "FSharp.Literate.dll"
+
+open System.IO
 open Fake
+open FSharp.Literate
+open Fake.Git
  
 // properties 
 let projectName = "FAKE"
@@ -13,7 +22,6 @@ let homepage = "http://github.com/forki/fake"
   
 let buildDir = "./build"
 let testDir = "./test"
-let metricsDir = "./BuildMetrics"
 let deployDir = "./Publish"
 let docsDir = "./docs" 
 let nugetDir = "./nuget" 
@@ -26,7 +34,7 @@ let isLinux =
         (p = 4) || (p = 6) || (p = 128)
 
 // Targets
-Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; deployDir; docsDir; metricsDir; nugetDir; reportDir])
+Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; deployDir; docsDir; nugetDir; reportDir])
 
 Target "RestorePackages" RestorePackages
 
@@ -35,7 +43,6 @@ Target "CopyFSharpFiles" (fun _ ->
      "./tools/FSharp/FSharp.Core.sigdata"]
       |> CopyTo buildDir
 )
-
 
 open Fake.AssemblyInfoFile
 
@@ -88,7 +95,22 @@ Target "BuildSolution" (fun _ ->
     |> Log "AppBuild-Output: "
 )
 
-Target "GenerateDocumentation" (fun _ ->
+Target "GenerateDocs" (fun _ ->
+    let source = "./help"
+    let template = "./help/templates/template.html"
+    let projInfo =
+      [ "page-description", "FAKE - F# Make"
+        "page-author", (separated ", " authors)
+        "github-link", "https://github.com/fsharp/FAKE"
+        "project-name", "FAKE - F# Make" ]
+
+    Literate.ProcessDirectory (source, template, docsDir, replacements = projInfo)
+
+    WriteStringToFile false "./docs/.nojekyll" ""
+
+    CopyDir (docsDir @@ "content") "help/content" allFiles
+    CopyDir (docsDir @@ "pics") "help/pics" allFiles
+
     (* Temporary disable tests on *nix, bug # 122 *)
     if not isLinux then
         !! (buildDir @@ "Fake*.dll")
@@ -96,7 +118,7 @@ Target "GenerateDocumentation" (fun _ ->
             {p with
                 ToolPath = buildDir @@ "docu.exe"
                 TemplatesPath = @".\tools\docu\templates\"
-                OutputPath = docsDir })
+                OutputPath = docsDir @@ "api" })
 )
 
 Target "CopyDocu" (fun _ -> 
@@ -108,7 +130,7 @@ Target "CopyDocu" (fun _ ->
 Target "CopyLicense" (fun _ -> 
     ["License.txt"
      "README.markdown"
-     "changelog.markdown"]
+     "help/changelog.md"]
        |> CopyTo buildDir
 )
 
@@ -162,6 +184,17 @@ Target "CreateNuGet" (fun _ ->
                 Publish = hasBuildParam "nugetkey" }) "fake.nuspec"
 )
 
+Target "UpdateDocs" (fun _ ->
+    CleanDir "gh-pages"
+    CommandHelper.runSimpleGitCommand "" "clone -b gh-pages --single-branch git@github.com:fsharp/FAKE.git gh-pages" |> printfn "%s"
+    
+    fullclean "gh-pages"
+    CopyRecursive "docs" "gh-pages" true |> printfn "%A"
+    CommandHelper.runSimpleGitCommand "gh-pages" "add . --all" |> printfn "%s"
+    CommandHelper.runSimpleGitCommand "gh-pages" (sprintf "commit -m \"Update generated documentation %s\"" buildVersion) |> printfn "%s"
+    Branches.push "gh-pages"    
+)
+
 Target "Default" DoNothing
 
 // Dependencies
@@ -173,10 +206,11 @@ Target "Default" DoNothing
     ==> "Test"
     ==> "CopyLicense" <=> "CopyDocu"
     ==> "BuildZip"
-    ==> "GenerateDocumentation"
+    ==> "GenerateDocs"
     ==> "ZipDocumentation"
     ==> "CreateNuGet"
     ==> "Default"
+    ==> "UpdateDocs"
 
 // start build
 RunTargetOrDefault "Default"

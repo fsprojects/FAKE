@@ -16,7 +16,7 @@ type MSpecParams =
 
 /// MSpec default params  
 let MSpecDefaults =
-    { ToolPath = currentDirectory @@ "tools" @@ "MSpec" @@ "mspec.exe";
+    { ToolPath = findToolInSubPath "mspec.exe" (currentDirectory @@ "tools" @@ "MSpec");
       HtmlOutputDir = null;
       WorkingDir = null;
       Silent = false;

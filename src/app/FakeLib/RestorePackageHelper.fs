@@ -12,7 +12,7 @@ type RestorePackageParams =
 
 /// RestorePackage defaults params  
 let RestorePackageDefaults =
-    { ToolPath = "./tools/NuGet/NuGet.exe"
+    { ToolPath = findToolInSubPath "nuget.exe" (currentDirectory @@ "tools" @@ "NuGet")
       Sources = []
       TimeOut = TimeSpan.FromMinutes 5.
       OutputPath = "./packages" }
