@@ -40,7 +40,7 @@
 
 <p>In this article the AssemblyInfo task is used in order to set a specific version info to .NET assemblies.</p>
 
-<p>If you succed with the <a href="gettingstarted.html">Getting Started tutorial</a>, then you just have to modify your <em>BuildApp</em> target to the following:</p>
+<p>If you succeeded with the <a href="gettingstarted.html">Getting Started tutorial</a>, then you just have to modify your <em>BuildApp</em> target to the following:</p>
 
 <table class="pre"><tr><td class="lines"><pre class="fssnip">
 <span class="l"> 1: </span>
@@ -65,31 +65,27 @@
 <span class="l">20: </span>
 <span class="l">21: </span>
 <span class="l">22: </span>
-<span class="l">23: </span>
-<span class="l">24: </span>
 </pre>
 </td>
 <td class="snippet"><pre class="fssnip">
-<span class="i">Target</span> <span class="s">&quot;</span><span class="s">BuildApp</span><span class="s">&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="i">AssemblyInfo</span> 
-      (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> 
-        {<span class="i">p</span> <span class="k">with</span>
-          <span class="i">CodeLanguage</span> <span class="o">=</span> <span class="i">CSharp</span>;
-          <span class="i">AssemblyVersion</span> <span class="o">=</span> <span class="i">version</span>;
-          <span class="i">AssemblyTitle</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">Calculator</span><span class="s"> </span><span class="s">Command</span><span class="s"> </span><span class="s">line</span><span class="s"> </span><span class="s">tool</span><span class="s">&quot;</span>;
-          <span class="i">AssemblyDescription</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">Sample</span><span class="s"> </span><span class="s">project</span><span class="s"> </span><span class="s">for</span><span class="s"> </span><span class="s">FAKE</span><span class="s"> </span><span class="s">-</span><span class="s"> </span><span class="s">F</span><span class="s">#</span><span class="s"> </span><span class="s">MAKE</span><span class="s">&quot;</span>;
-          <span class="i">Guid</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">A539B42C</span><span class="s">-</span><span class="s">CB9F</span><span class="s">-</span><span class="s">4</span><span class="s">a23</span><span class="s">-</span><span class="s">8</span><span class="s">E57</span><span class="s">-</span><span class="s">AF4E7CEE5BAA</span><span class="s">&quot;</span>;
-          <span class="i">OutputFileName</span> <span class="o">=</span> <span class="s">@&quot;</span><span class="s">.</span><span class="s">\</span><span class="s">src</span><span class="s">\</span><span class="s">app</span><span class="s">\</span><span class="s">Calculator</span><span class="s">\</span><span class="s">Properties</span><span class="s">\</span><span class="s">AssemblyInfo</span><span class="s">.</span><span class="s">cs</span><span class="s">&quot;</span>})
+<span class="k">open</span> <span class="i">Fake</span><span class="o">.</span><span class="i">AssemblyInfoFile</span>
 
-    <span class="i">AssemblyInfo</span> 
-      (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> 
-        {<span class="i">p</span> <span class="k">with</span>
-          <span class="i">CodeLanguage</span> <span class="o">=</span> <span class="i">CSharp</span>;
-          <span class="i">AssemblyVersion</span> <span class="o">=</span> <span class="i">version</span>;
-          <span class="i">AssemblyTitle</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">Calculator</span><span class="s"> </span><span class="s">library</span><span class="s">&quot;</span>;
-          <span class="i">AssemblyDescription</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">Sample</span><span class="s"> </span><span class="s">project</span><span class="s"> </span><span class="s">for</span><span class="s"> </span><span class="s">FAKE</span><span class="s"> </span><span class="s">-</span><span class="s"> </span><span class="s">F</span><span class="s">#</span><span class="s"> </span><span class="s">MAKE</span><span class="s">&quot;</span>;
-          <span class="i">Guid</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">EE5621DB</span><span class="s">-</span><span class="s">B86B</span><span class="s">-</span><span class="s">44</span><span class="s">eb</span><span class="s">-</span><span class="s">987</span><span class="s">F</span><span class="s">-</span><span class="s">9</span><span class="s">C94BCC98441</span><span class="s">&quot;</span>;
-          <span class="i">OutputFileName</span> <span class="o">=</span> <span class="s">@&quot;</span><span class="s">.</span><span class="s">\</span><span class="s">src</span><span class="s">\</span><span class="s">app</span><span class="s">\</span><span class="s">CalculatorLib</span><span class="s">\</span><span class="s">Properties</span><span class="s">\</span><span class="s">AssemblyInfo</span><span class="s">.</span><span class="s">cs</span><span class="s">&quot;</span>})  
+<span class="i">Target</span> <span class="s">&quot;</span><span class="s">BuildApp</span><span class="s">&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+    <span class="i">CreateCSharpAssemblyInfo</span> <span class="s">&quot;</span><span class="s">.</span><span class="s">/</span><span class="s">src</span><span class="s">/</span><span class="s">app</span><span class="s">/</span><span class="s">Calculator</span><span class="s">/</span><span class="s">Properties</span><span class="s">/</span><span class="s">AssemblyInfo</span><span class="s">.</span><span class="s">cs</span><span class="s">&quot;</span>
+        [<span class="i">Attribute</span><span class="o">.</span><span class="i">Title</span> <span class="s">&quot;</span><span class="s">Calculator</span><span class="s"> </span><span class="s">Command</span><span class="s"> </span><span class="s">line</span><span class="s"> </span><span class="s">tool</span><span class="s">&quot;</span>
+         <span class="i">Attribute</span><span class="o">.</span><span class="i">Description</span> <span class="s">&quot;</span><span class="s">Sample</span><span class="s"> </span><span class="s">project</span><span class="s"> </span><span class="s">for</span><span class="s"> </span><span class="s">FAKE</span><span class="s"> </span><span class="s">-</span><span class="s"> </span><span class="s">F</span><span class="s">#</span><span class="s"> </span><span class="s">MAKE</span><span class="s">&quot;</span>
+         <span class="i">Attribute</span><span class="o">.</span><span class="i">Guid</span> <span class="s">&quot;</span><span class="s">A539B42C</span><span class="s">-</span><span class="s">CB9F</span><span class="s">-</span><span class="s">4</span><span class="s">a23</span><span class="s">-</span><span class="s">8</span><span class="s">E57</span><span class="s">-</span><span class="s">AF4E7CEE5BAA</span><span class="s">&quot;</span>
+         <span class="i">Attribute</span><span class="o">.</span><span class="i">Product</span> <span class="s">&quot;</span><span class="s">Calculator</span><span class="s">&quot;</span>
+         <span class="i">Attribute</span><span class="o">.</span><span class="i">Version</span> <span class="i">version</span>
+         <span class="i">Attribute</span><span class="o">.</span><span class="i">FileVersion</span> <span class="i">version</span>]
+
+    <span class="i">CreateCSharpAssemblyInfo</span> <span class="s">&quot;</span><span class="s">.</span><span class="s">/</span><span class="s">src</span><span class="s">/</span><span class="s">app</span><span class="s">/</span><span class="s">CalculatorLib</span><span class="s">/</span><span class="s">Properties</span><span class="s">/</span><span class="s">AssemblyInfo</span><span class="s">.</span><span class="s">cs</span><span class="s">&quot;</span>
+        [<span class="i">Attribute</span><span class="o">.</span><span class="i">Title</span> <span class="s">&quot;</span><span class="s">Calculator</span><span class="s"> </span><span class="s">library</span><span class="s">&quot;</span>
+         <span class="i">Attribute</span><span class="o">.</span><span class="i">Description</span> <span class="s">&quot;</span><span class="s">Sample</span><span class="s"> </span><span class="s">project</span><span class="s"> </span><span class="s">for</span><span class="s"> </span><span class="s">FAKE</span><span class="s"> </span><span class="s">-</span><span class="s"> </span><span class="s">F</span><span class="s">#</span><span class="s"> </span><span class="s">MAKE</span><span class="s">&quot;</span>
+         <span class="i">Attribute</span><span class="o">.</span><span class="i">Guid</span> <span class="s">&quot;</span><span class="s">EE5621DB</span><span class="s">-</span><span class="s">B86B</span><span class="s">-</span><span class="s">44</span><span class="s">eb</span><span class="s">-</span><span class="s">987</span><span class="s">F</span><span class="s">-</span><span class="s">9</span><span class="s">C94BCC98441</span><span class="s">&quot;</span>
+         <span class="i">Attribute</span><span class="o">.</span><span class="i">Product</span> <span class="s">&quot;</span><span class="s">Calculator</span><span class="s">&quot;</span>
+         <span class="i">Attribute</span><span class="o">.</span><span class="i">Version</span> <span class="i">version</span>
+         <span class="i">Attribute</span><span class="o">.</span><span class="i">FileVersion</span> <span class="i">version</span>]
 
     <span class="i">MSBuildRelease</span> <span class="i">buildDir</span> <span class="s">&quot;</span><span class="s">Build</span><span class="s">&quot;</span> <span class="i">appReferences</span>
       <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;</span><span class="s">AppBuild</span><span class="s">-</span><span class="s">Output</span><span class="s">:</span><span class="s"> </span><span class="s">&quot;</span>
