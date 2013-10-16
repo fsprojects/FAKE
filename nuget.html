@@ -46,12 +46,10 @@ With FAKE we can use <a href="http://nuget.codeplex.com/">NuGet</a> to download 
 <p>In order to download the packages during the build we need to add NuGet.exe to our repository. 
 You can download the "NuGet.exe Command Line Tool" from the <a href="http://nuget.codeplex.com/releases">release page</a>.</p>
 
-<p><img src="pics/nuget/tools.png" alt="alt text" title="NuGet.exe in the tools folder" /></p>
-
 <h2>Restore packages from the build script</h2>
 
 <p>Modify your build script and add <strong>RestorePackages()</strong> near the beginning of the script.
-This will use the following default parameters to retrieve all NuGet packages which are specified in <em>"./</em><em>/packages.config"</em> files:</p>
+This will use the following default parameters to retrieve all NuGet packages which are specified in "./**/packages.config" files:</p>
 
 <table class="pre"><tr><td class="lines"><pre class="fssnip">
 <span class="l">1: </span>
@@ -96,7 +94,6 @@ pause</pre>
             <li><a href="https://nuget.org/packages/Fake">Get FAKE via NuGet</a></li>
               <li><a href="https://github.com/fsharp/FAKE">Source Code on GitHub</a></li>              
               <li><a href="https://github.com/fsharp/FAKE/blob/develop/License.txt">License (MS-PL)</a></li>
-              <li><a href="api/index.htm">API docs</a></li>
               <li><a href="changelog.html">Changelog</a></li>
               <li><a href="contributing.html">Contributing to FAKE</a></li>
             <li class="nav-header">Articles</li>
@@ -108,17 +105,9 @@ pause</pre>
               <li><a href="specifictargets.html">Running specific targets</a></li>
               <li><a href="customtasks.html">Creating custom tasks</a></li>
               <li><a href="teamcity.html">TeamCity integration</a></li>
-            <!--
 
-              Here you can add links to other pages of the documentation 
-              The 'divider' element creates a separator and additional
-              'nav-header' can be used to add sub-headings in the menu:
-
-              * <li class="divider"></li>
-              * <li><a href="...">...</a></li>
-              * <li class="nav-header">Sub-heading</li>
-
-            -->
+              <li class="nav-header">Documentation</li>
+              <li><a href="apidocs/index.html">API Reference</a></li>
           </ul>
         </div>
       </div>

@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="http://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="../content/style.css" />
+    <script src="../content/tips.js" type="text/javascript"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <style type="text/css">
+        #main h2 {
+            font-size: 160%;
+            margin-top: 40px;
+        }
+
+        #main h3 {
+            font-size: 130%;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        thead {
+            font-weight: bold;
+        }
+
+        .type-list .type-name, .module-list .module-name {
+            width: 25%;
+            font-weight: bold;
+        }
+
+        .member-list .member-name {
+            width: 35%;
+        }
+
+        #main table .xmldoc h2 {
+            font-size: 120%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="masthead">
+            <ul class="nav nav-pills pull-right">
+                <li><a href="http://fsharp.org">fsharp.org</a></li>
+                <li><a href="http://github.com/fsharp/fake">github page</a></li>
+            </ul>
+            <h3 class="muted">FAKE - F# Make</h3>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="span9" id="main">
+                
+
+
+
+<h1>FileSetHelper</h1>
+<div class="xmldoc">
+</div>
+  <h3>Functions and values</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Function or value</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '400', 400)" onmouseover="showTip(event, '400', 400)">
+            cleanPathBuilder path
+          </code>
+          <div class="tip" id="400">
+            <strong>Signature:</strong>path:string -&gt; StringBuilder<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Patterns can use either / \ as a directory separator.
+cleanPath replaces both of these characters with Path.DirectorySeparatorChar</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '401', 401)" onmouseover="showTip(event, '401', 401)">
+            cleanPath path
+          </code>
+          <div class="tip" id="401">
+            <strong>Signature:</strong>path:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Patterns can use either / \ as a directory separator.
+cleanPath replaces both of these characters with Path.DirectorySeparatorChar</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '402', 402)" onmouseover="showTip(event, '402', 402)">
+            combinePath baseDirectory path
+          </code>
+          <div class="tip" id="402">
+            <strong>Signature:</strong>baseDirectory:string -&gt; path:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '403', 403)" onmouseover="showTip(event, '403', 403)">
+            baseDirectory value
+          </code>
+          <div class="tip" id="403">
+            <strong>Signature:</strong>value:string -&gt; DirectoryInfo<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>The base directory to scan. The default is the 
+<see cref="Environment.CurrentDirectory">current directory</see>.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '404', 404)" onmouseover="showTip(event, '404', 404)">
+            ensureEndsWithSlash value
+          </code>
+          <div class="tip" id="404">
+            <strong>Signature:</strong>value:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Ensures that the last character of the given <see cref="string" />
+matches Path.DirectorySeparatorChar.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '405', 405)" onmouseover="showTip(event, '405', 405)">
+            regexPattern originalPattern
+          </code>
+          <div class="tip" id="405">
+            <strong>Signature:</strong>originalPattern:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Converts search pattern to a regular expression pattern.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '406', 406)" onmouseover="showTip(event, '406', 406)">
+            parseSearchDirectoryAndPattern (...)
+          </code>
+          <div class="tip" id="406">
+            <strong>Signature:</strong>baseDir:DirectoryInfo -&gt; originalPattern:string -&gt; string * bool * bool * string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Given a search pattern returns a search directory and an regex search pattern.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '407', 407)" onmouseover="showTip(event, '407', 407)">
+            convertPatterns baseDir patterns
+          </code>
+          <div class="tip" id="407">
+            <strong>Signature:</strong>baseDir:DirectoryInfo -&gt; patterns:string list -&gt; RegexEntry list * string list<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Parses specified search patterns for search directories and 
+corresponding regex patterns.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '408', 408)" onmouseover="showTip(event, '408', 408)">
+            cachedCaseSensitiveRegexes 
+          </code>
+          <div class="tip" id="408">
+            <strong>Signature:</strong>Dictionary&lt;string,Regex&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '409', 409)" onmouseover="showTip(event, '409', 409)">
+            cachedCaseInsensitiveRegexes 
+          </code>
+          <div class="tip" id="409">
+            <strong>Signature:</strong>Dictionary&lt;string,Regex&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '410', 410)" onmouseover="showTip(event, '410', 410)">
+            testRegex caseSensitive path entry
+          </code>
+          <div class="tip" id="410">
+            <strong>Signature:</strong>caseSensitive:bool -&gt; path:string -&gt; entry:RegexEntry -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '411', 411)" onmouseover="showTip(event, '411', 411)">
+            isPathIncluded (...)
+          </code>
+          <div class="tip" id="411">
+            <strong>Signature:</strong>path:string -&gt; caseSensitive:bool -&gt; compareOptions:CompareOptions -&gt; includeNames:string list -&gt; includedPatterns:RegexEntry list -&gt; excludeNames:string list -&gt; excludedPatterns:RegexEntry list -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '412', 412)" onmouseover="showTip(event, '412', 412)">
+            scanDirectory (...)
+          </code>
+          <div class="tip" id="412">
+            <strong>Signature:</strong>caseSensitive:bool -&gt; includeNames:string list -&gt; includePatterns:RegexEntry list -&gt; excludeNames:string list -&gt; excludePatterns:RegexEntry list -&gt; path:string -&gt; recursivePattern:bool -&gt; seq&lt;string&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Searches a directory recursively for files and directories matching 
+the search criteria.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '413', 413)" onmouseover="showTip(event, '413', 413)">
+            Files baseDirs includes excludes
+          </code>
+          <div class="tip" id="413">
+            <strong>Signature:</strong>baseDirs:seq&lt;string&gt; -&gt; includes:string list -&gt; excludes:string list -&gt; seq&lt;string&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Searches the directories recursively for files and directories matching 
+the search criteria.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '414', 414)" onmouseover="showTip(event, '414', 414)">
+            Log message files
+          </code>
+          <div class="tip" id="414">
+            <strong>Signature:</strong>message:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Logs the given files with the message</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '415', 415)" onmouseover="showTip(event, '415', 415)">
+            DefaultBaseDir 
+          </code>
+          <div class="tip" id="415">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>The default base directory</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '416', 416)" onmouseover="showTip(event, '416', 416)">
+            Include x
+          </code>
+          <div class="tip" id="416">
+            <strong>Signature:</strong>x:string -&gt; FileIncludes<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Include files</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '417', 417)" onmouseover="showTip(event, '417', 417)">
+            Scan includes
+          </code>
+          <div class="tip" id="417">
+            <strong>Signature:</strong>includes:FileIncludes -&gt; LazyFileSet<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Lazy scan for include files
+Will be processed at the time when needed</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '418', 418)" onmouseover="showTip(event, '418', 418)">
+            AddBaseDir dir fileInclude
+          </code>
+          <div class="tip" id="418">
+            <strong>Signature:</strong>dir:string -&gt; fileInclude:FileIncludes -&gt; FileIncludes<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Adds a directory as baseDirectory for fileIncludes</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '419', 419)" onmouseover="showTip(event, '419', 419)">
+            SetBaseDir dir fileInclude
+          </code>
+          <div class="tip" id="419">
+            <strong>Signature:</strong>dir:string -&gt; fileInclude:FileIncludes -&gt; FileIncludes<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Sets a directory as baseDirectory for fileIncludes</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '420', 420)" onmouseover="showTip(event, '420', 420)">
+            ScanImmediately includes
+          </code>
+          <div class="tip" id="420">
+            <strong>Signature:</strong>includes:FileIncludes -&gt; EagerFileSet<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Scans immediately for include files
+Files will be memoized</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '421', 421)" onmouseover="showTip(event, '421', 421)">
+            ( !+ ) x
+          </code>
+          <div class="tip" id="421">
+            <strong>Signature:</strong>x:string -&gt; FileIncludes<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Include prefix operator</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '422', 422)" onmouseover="showTip(event, '422', 422)">
+            ( ++ ) x y
+          </code>
+          <div class="tip" id="422">
+            <strong>Signature:</strong>x:FileIncludes -&gt; y:string -&gt; FileIncludes<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Add Include operator</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '423', 423)" onmouseover="showTip(event, '423', 423)">
+            ( -- ) x y
+          </code>
+          <div class="tip" id="423">
+            <strong>Signature:</strong>x:FileIncludes -&gt; y:string -&gt; FileIncludes<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Exclude operator</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '424', 424)" onmouseover="showTip(event, '424', 424)">
+            ( !! ) x
+          </code>
+          <div class="tip" id="424">
+            <strong>Signature:</strong>x:string -&gt; LazyFileSet<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Includes a single pattern and scans the files - !! x = AllFilesMatching x</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '425', 425)" onmouseover="showTip(event, '425', 425)">
+            AllFilesMatching x
+          </code>
+          <div class="tip" id="425">
+            <strong>Signature:</strong>x:string -&gt; LazyFileSet<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Includes a single pattern and scans the files - !! x = AllFilesMatching x</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '426', 426)" onmouseover="showTip(event, '426', 426)">
+            findToolInSubPath toolname defaultPath
+          </code>
+          <div class="tip" id="426">
+            <strong>Signature:</strong>toolname:string -&gt; defaultPath:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '427', 427)" onmouseover="showTip(event, '427', 427)">
+            findToolFolderInSubPath (...)
+          </code>
+          <div class="tip" id="427">
+            <strong>Signature:</strong>toolname:string -&gt; defaultPath:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+    </tbody>
+  </table>
+
+            </div>
+            <div class="span3">
+
+                <ul class="nav nav-list" id="menu">
+                    <li class="nav-header">FAKE - F# Make</li>
+                    <li><a href="../index.html">Home page</a></li>
+                    <li><a href="../deploy.html">Fake.Deploy</a></li>
+                    <li class="divider"></li>
+                    <li><a href="https://nuget.org/packages/Fake">Get FAKE via NuGet</a></li>
+                    <li><a href="http://github.com/fsharp/fake">Source Code on GitHub</a></li>
+                    <li><a href="https://github.com/fsharp/FAKE/blob/develop/License.txt">License (MS-PL)</a></li>
+                    <li><a href="../changelog.html">Changelog</a></li>
+                    <li><a href="../contributing.html">Contributing to FAKE</a></li>
+                    <li class="nav-header">Articles</li>
+                    <li><a href="../gettingstarted.html">Getting started</a></li>
+                    <li class="divider"></li>
+                    <li><a href="../nuget.html">NuGet package restore</a></li>
+                    <li><a href="../fxcop.html">Using FxCop in a build</a></li>
+                    <li><a href="../assemblyinfo.html">Modifying AssemblyInfo</a></li>
+                    <li><a href="../specifictargets.html">Running specific targets</a></li>
+                    <li><a href="../customtasks.html">Creating custom tasks</a></li>
+                    <li><a href="../teamcity.html">TeamCity integration</a></li>
+
+                    <li class="nav-header">Documentation</li>
+                    <li><a href="../apidocs/index.html">API Reference</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <a href="http://github.com/fsharp/fake"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
+</body>
+</html>
