@@ -60,9 +60,9 @@
 
 
 
-<h1>XUnitHelper</h1>
+<h1>VSSHelper</h1>
 <div class="xmldoc">
-<p>Contains tasks to run <a href="http://xunit.codeplex.com/">xUnit</a> unit tests.</p>
+<p>Contains helper functions for <a href="http://en.wikipedia.org/wiki/Microsoft_Visual_SourceSafe">Microsoft Visual SourceSafe</a></p>
 </div>
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
@@ -73,43 +73,27 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '92', 92)" onmouseover="showTip(event, '92', 92)">
-            XUnitDefaults 
+          <code onmouseout="hideTip(event, '1', 1)" onmouseover="showTip(event, '1', 1)">
+            getVSSProjectWithLabel (...)
           </code>
-          <div class="tip" id="92">
-            <strong>Signature:</strong>XUnitParams<br />
+          <div class="tip" id="1">
+            <strong>Signature:</strong>toolPath:string -&gt; srcSafeIni:string -&gt; username:string -&gt; password:string -&gt; project:string -&gt; localSpec:string -&gt; label:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>xUnit default parameters
-FAKE scans all subfolders to find <em>xunit.console.exe</em></p>
+        <td class="xmldoc"><p>Retrieves the given label of the given project from Microsoft Visual SourceSafe</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '93', 93)" onmouseover="showTip(event, '93', 93)">
-            xUnit setParams assemblies
+          <code onmouseout="hideTip(event, '2', 2)" onmouseover="showTip(event, '2', 2)">
+            getVSSProject (...)
           </code>
-          <div class="tip" id="93">
-            <strong>Signature:</strong>setParams:(XUnitParams -&gt; XUnitParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
+          <div class="tip" id="2">
+            <strong>Signature:</strong>toolPath:string -&gt; srcSafeIni:string -&gt; username:string -&gt; password:string -&gt; project:string -&gt; localSpec:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Runs xUnit unit tests via the given xUnit runner.</p>
-
-<h2>Parameters</h2>
-
-<ul>
-<li><code>setParams</code> - Function used to manipulate the default XUnitParams value.</li>
-<li><code>assemblies</code> - Sequence of one or more assemblies containing xUnit unit tests.</li>
-</ul>
-
-<h2>Sample usage</h2>
-
-<pre><code>Target "Test" (fun _ -&gt;
-    !! (testDir + @"\xUnit.Test.*.dll") 
-      |&gt; xUnit (fun p -&gt; {p with OutputDir = testDir })
-)
-</code></pre>
+        <td class="xmldoc"><p>Retrieves the given project from Microsoft Visual SourceSafe</p>
 </td>
       </tr>
     </tbody>
