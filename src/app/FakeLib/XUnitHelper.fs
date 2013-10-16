@@ -1,10 +1,12 @@
 ﻿[<AutoOpen>]
+/// Contains tasks to run [xUnit](http://xunit.codeplex.com/) unit tests.
 module Fake.XUnitHelper
 
 open System
 open System.IO
 open System.Text
 
+/// xUnit parameter type
 type XUnitParams =
     { ToolPath: string;
       ConfigFile :string;
@@ -17,7 +19,8 @@ type XUnitParams =
       TimeOut: TimeSpan;
       OutputDir: string}
 
-/// xUnit default params  
+/// xUnit default parameters
+/// Fake scans all subfolders to find *xunit.console.exe*
 let XUnitDefaults =
     { ToolPath = findToolInSubPath "xunit.console.exe" (currentDirectory @@ "tools" @@ "xUnit")
       ConfigFile = null;
@@ -30,9 +33,11 @@ let XUnitDefaults =
       TimeOut = TimeSpan.FromMinutes 5.
       OutputDir = null}
 
-///<summary>Runs xUnit unit tests.</summary>
-///<param name="setParams">Function used to create an XUnitParams value.  Called with an XUnitParams value configured with the defaults.</param>
-///<param name="assemblies">Sequence of one or more assemblies containing xUnit unit tests.</param>
+/// Runs xUnit unit tests via the given xUnit runner.
+/// ## Parameters
+/// 
+///  - `setParams` - Function used to create an XUnitParams value.  Called with an XUnitParams value configured with the defaults.
+///  - `assemblies` - Sequence of one or more assemblies containing xUnit unit tests.
 let xUnit setParams assemblies = 
     let details = separated ", " assemblies
     traceStartTask "xUnit" details
