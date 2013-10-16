@@ -72,10 +72,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '272', 272)" onmouseover="showTip(event, '272', 272)">
+          <code onmouseout="hideTip(event, '302', 302)" onmouseover="showTip(event, '302', 302)">
             msBuildExe 
           </code>
-          <div class="tip" id="272">
+          <div class="tip" id="302">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
@@ -85,71 +85,11 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '298', 298)" onmouseover="showTip(event, '298', 298)">
+          <code onmouseout="hideTip(event, '303', 303)" onmouseover="showTip(event, '303', 303)">
             msbuildNamespace 
           </code>
-          <div class="tip" id="298">
-            <strong>Signature:</strong>string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '299', 299)" onmouseover="showTip(event, '299', 299)">
-            xname name
-          </code>
-          <div class="tip" id="299">
-            <strong>Signature:</strong>name:string -&gt; XName<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '300', 300)" onmouseover="showTip(event, '300', 300)">
-            loadProject projectFileName
-          </code>
-          <div class="tip" id="300">
-            <strong>Signature:</strong>projectFileName:string -&gt; MSBuildProject<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '301', 301)" onmouseover="showTip(event, '301', 301)">
-            processReferences (...)
-          </code>
-          <div class="tip" id="301">
-            <strong>Signature:</strong>elementName:string -&gt; f:(string -&gt; string) -&gt; projectFileName:string -&gt; doc:XDocument -&gt; XDocument<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '302', 302)" onmouseover="showTip(event, '302', 302)">
-            getProjectReferences projectFileName
-          </code>
-          <div class="tip" id="302">
-            <strong>Signature:</strong>projectFileName:string -&gt; Set&lt;string&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '303', 303)" onmouseover="showTip(event, '303', 303)">
-            MSBuildDefaults 
-          </code>
           <div class="tip" id="303">
-            <strong>Signature:</strong>MSBuildParams<br />
+            <strong>Signature:</strong>string<br />
                       </div>
         </td>
         <td class="xmldoc"></td>
@@ -158,11 +98,11 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '304', 304)" onmouseover="showTip(event, '304', 304)">
-            getAllParameters (...)
+            xname name
           </code>
           <div class="tip" id="304">
-            <strong>Signature:</strong>targets:&#39;?5821 -&gt; maxcpu:&#39;?5821 -&gt; tools:&#39;?5821 -&gt; verbosity:&#39;?5821 -&gt; fileLoggers:&#39;?5821 list -&gt; properties:&#39;?5821 list -&gt; &#39;?5821 list<br />
-                          <strong>Type parameters:</strong> '?5821          </div>
+            <strong>Signature:</strong>name:string -&gt; XName<br />
+                      </div>
         </td>
         <td class="xmldoc"></td>
       </tr>
@@ -170,10 +110,10 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '305', 305)" onmouseover="showTip(event, '305', 305)">
-            serializeMSBuildParams p
+            loadProject projectFileName
           </code>
           <div class="tip" id="305">
-            <strong>Signature:</strong>p:MSBuildParams -&gt; string<br />
+            <strong>Signature:</strong>projectFileName:string -&gt; MSBuildProject<br />
                       </div>
         </td>
         <td class="xmldoc"></td>
@@ -182,10 +122,10 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '306', 306)" onmouseover="showTip(event, '306', 306)">
-            TeamCityLoggerName 
+            processReferences (...)
           </code>
           <div class="tip" id="306">
-            <strong>Signature:</strong>string<br />
+            <strong>Signature:</strong>elementName:string -&gt; f:(string -&gt; string) -&gt; projectFileName:string -&gt; doc:XDocument -&gt; XDocument<br />
                       </div>
         </td>
         <td class="xmldoc"></td>
@@ -194,10 +134,10 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '307', 307)" onmouseover="showTip(event, '307', 307)">
-            ErrorLoggerName 
+            getProjectReferences projectFileName
           </code>
           <div class="tip" id="307">
-            <strong>Signature:</strong>string<br />
+            <strong>Signature:</strong>projectFileName:string -&gt; Set&lt;string&gt;<br />
                       </div>
         </td>
         <td class="xmldoc"></td>
@@ -206,9 +146,69 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '308', 308)" onmouseover="showTip(event, '308', 308)">
-            build setParams project
+            MSBuildDefaults 
           </code>
           <div class="tip" id="308">
+            <strong>Signature:</strong>MSBuildParams<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '309', 309)" onmouseover="showTip(event, '309', 309)">
+            getAllParameters (...)
+          </code>
+          <div class="tip" id="309">
+            <strong>Signature:</strong>targets:&#39;?5821 -&gt; maxcpu:&#39;?5821 -&gt; tools:&#39;?5821 -&gt; verbosity:&#39;?5821 -&gt; fileLoggers:&#39;?5821 list -&gt; properties:&#39;?5821 list -&gt; &#39;?5821 list<br />
+                          <strong>Type parameters:</strong> '?5821          </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '310', 310)" onmouseover="showTip(event, '310', 310)">
+            serializeMSBuildParams p
+          </code>
+          <div class="tip" id="310">
+            <strong>Signature:</strong>p:MSBuildParams -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '311', 311)" onmouseover="showTip(event, '311', 311)">
+            TeamCityLoggerName 
+          </code>
+          <div class="tip" id="311">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '312', 312)" onmouseover="showTip(event, '312', 312)">
+            ErrorLoggerName 
+          </code>
+          <div class="tip" id="312">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '313', 313)" onmouseover="showTip(event, '313', 313)">
+            build setParams project
+          </code>
+          <div class="tip" id="313">
             <strong>Signature:</strong>setParams:(MSBuildParams -&gt; MSBuildParams) -&gt; project:string -&gt; unit<br />
                       </div>
         </td>
@@ -218,10 +218,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '309', 309)" onmouseover="showTip(event, '309', 309)">
+          <code onmouseout="hideTip(event, '314', 314)" onmouseover="showTip(event, '314', 314)">
             MSBuildWithProjectProperties (...)
           </code>
-          <div class="tip" id="309">
+          <div class="tip" id="314">
             <strong>Signature:</strong>outputPath:string -&gt; targets:string -&gt; properties:(string -&gt; (string * string) list) -&gt; projects:seq&lt;string&gt; -&gt; LazyFileSet<br />
                       </div>
         </td>
@@ -233,10 +233,10 @@ If the outputpath is null or empty then the project settings are used.></p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '310', 310)" onmouseover="showTip(event, '310', 310)">
+          <code onmouseout="hideTip(event, '316', 316)" onmouseover="showTip(event, '316', 316)">
             MSBuild outputPath targets properties
           </code>
-          <div class="tip" id="310">
+          <div class="tip" id="316">
             <strong>Signature:</strong>outputPath:string -&gt; targets:string -&gt; properties:(string * string) list -&gt; seq&lt;string&gt; -&gt; LazyFileSet<br />
                       </div>
         </td>
@@ -247,10 +247,10 @@ If the outputpath is null or empty then the project settings are used.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '311', 311)" onmouseover="showTip(event, '311', 311)">
+          <code onmouseout="hideTip(event, '317', 317)" onmouseover="showTip(event, '317', 317)">
             MSBuildDebug outputPath targets
           </code>
-          <div class="tip" id="311">
+          <div class="tip" id="317">
             <strong>Signature:</strong>outputPath:string -&gt; targets:string -&gt; seq&lt;string&gt; -&gt; LazyFileSet<br />
                       </div>
         </td>
@@ -261,10 +261,10 @@ If the outputpath is null or empty then the project settings are used.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '312', 312)" onmouseover="showTip(event, '312', 312)">
+          <code onmouseout="hideTip(event, '318', 318)" onmouseover="showTip(event, '318', 318)">
             MSBuildRelease outputPath targets
           </code>
-          <div class="tip" id="312">
+          <div class="tip" id="318">
             <strong>Signature:</strong>outputPath:string -&gt; targets:string -&gt; seq&lt;string&gt; -&gt; LazyFileSet<br />
                       </div>
         </td>
@@ -275,10 +275,10 @@ If the outputpath is null or empty then the project settings are used.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '313', 313)" onmouseover="showTip(event, '313', 313)">
+          <code onmouseout="hideTip(event, '319', 319)" onmouseover="showTip(event, '319', 319)">
             MSBuildWithDefaults targets
           </code>
-          <div class="tip" id="313">
+          <div class="tip" id="319">
             <strong>Signature:</strong>targets:string -&gt; seq&lt;string&gt; -&gt; LazyFileSet<br />
                       </div>
         </td>
@@ -288,10 +288,10 @@ If the outputpath is null or empty then the project settings are used.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '314', 314)" onmouseover="showTip(event, '314', 314)">
+          <code onmouseout="hideTip(event, '320', 320)" onmouseover="showTip(event, '320', 320)">
             MSBuildReleaseExt (...)
           </code>
-          <div class="tip" id="314">
+          <div class="tip" id="320">
             <strong>Signature:</strong>outputPath:string -&gt; properties:(string * string) list -&gt; targets:string -&gt; seq&lt;string&gt; -&gt; LazyFileSet<br />
                       </div>
         </td>
