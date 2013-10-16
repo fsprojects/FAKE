@@ -20,12 +20,10 @@ let getKey = function
 | HKEYCurrentConfig -> Registry.CurrentConfig
 | HKEYPerformanceData -> Registry.PerformanceData
 
-/// <summary>Gets a registy key</summary>
-/// <user/>
+/// Gets a registy key
 let getRegistryKey baseKey subKey = (getKey baseKey).OpenSubKey subKey
 
-/// <summary>Gets a registy value as string</summary>
-/// <user/>
+/// Gets a registy value as string
 let getRegistryValue baseKey subKey value =
     use key = getRegistryKey baseKey subKey
     (key.GetValue value).ToString()

@@ -4,27 +4,22 @@ module Fake.FileSystemHelper
 open System
 open System.IO
 
-/// <summary>Creates a DirectoryInfo for the given path</summary>
-/// <user/>
+/// Creates a DirectoryInfo for the given path
 let inline directoryInfo path = new DirectoryInfo(path)
 
-/// <summary>Creates a FileInfo for the given path</summary>
-/// <user/>
+/// Creates a FileInfo for the given path
 let inline fileInfo path = new FileInfo(path)
 
-/// <summary>Creates a FileInfo or a DirectoryInfo for the given path</summary>
-/// <user/>
+/// Creates a FileInfo or a DirectoryInfo for the given path
 let inline fileSystemInfo path : FileSystemInfo =
     if Directory.Exists path
         then upcast directoryInfo path
         else upcast fileInfo path
 
-/// <summary>Converts a filename to it's full file system name</summary>
-/// <user/>
+/// Converts a filename to it's full file system name
 let inline FullName fileName = Path.GetFullPath fileName
 
-/// <summary>Gets the directory part of a filename</summary>
-/// <user/>
+/// Gets the directory part of a filename
 let inline DirectoryName fileName = Path.GetDirectoryName fileName
 
 /// Gets all subdirectories
@@ -52,29 +47,24 @@ let FindFirstMatchingFile pattern dir =
         new FileNotFoundException(sprintf "Could not find file matching %s in %s" pattern dir)
           |> raise
 
-/// <summary>Gets the current directory</summary>
-/// <user/>
+/// Gets the current directory
 let currentDirectory = Path.GetFullPath "."
 
 /// Get the full location of the current assembly
 let fullAssemblyPath = System.Reflection.Assembly.GetAssembly(typeof<RegistryBaseKey>).Location
 
-/// <summary>Checks if the file exists on disk.</summary>
-/// <user/>
+/// Checks if the file exists on disk.
 let fileExists = File.Exists
 
-/// <summary>Raises an exception if the file doesn't exist on disk.</summary>
-/// <user/>
+/// Raises an exception if the file doesn't exist on disk.
 let checkFileExists fileName =
     if not <| fileExists fileName then 
         failwithf "File %s does not exist." fileName
 
-/// <summary>Checks if all given files exist</summary>
-/// <user />
+/// Checks if all given files exist
 let allFilesExist files = Seq.forall fileExists files
 
-/// <summary>Normalizes a filename.</summary>
-/// <user />
+/// Normalizes a filename.
 let rec normalizeFileName (fileName:string) = 
     fileName
       .Replace("\\", Path.DirectorySeparatorChar.ToString())
@@ -82,39 +72,31 @@ let rec normalizeFileName (fileName:string) =
       .TrimEnd(Path.DirectorySeparatorChar)
       .ToLower()
 
-/// <summary>Checks if dir1 is a subfolder of dir2. If dir1 equals dir2 the function returns also true.</summary>
-/// <user />
+/// Checks if dir1 is a subfolder of dir2. If dir1 equals dir2 the function returns also true.
 let rec isSubfolderOf (dir2:DirectoryInfo) (dir1:DirectoryInfo) = 
     if normalizeFileName dir1.FullName = normalizeFileName dir2.FullName then true else
     if dir1.Parent = null then false else
     dir1.Parent
     |> isSubfolderOf dir2    
 
-/// <summary>Checks if the file is in a subfolder of the dir.</summary>
-/// <user />
+/// Checks if the file is in a subfolder of the dir.
 let isInFolder (dir:DirectoryInfo) (fileInfo:FileInfo) = isSubfolderOf dir fileInfo.Directory
 
-
-/// <summary>Checks if the directory exists on disk.</summary>
-/// <user/>
+/// Checks if the directory exists on disk.
 let directoryExists = Directory.Exists
 
-/// <summary>Ensure that directory chain exists. Create necessary directories if necessary.</summary>
-/// <user/>
+/// Ensure that directory chain exists. Create necessary directories if necessary.
 let inline ensureDirExists (dir : DirectoryInfo) =
     if not dir.Exists then dir.Create()
 
-/// <summary>Checks if the given directory exists. If not then this functions creates the directory.</summary>
-/// <user/>
+/// Checks if the given directory exists. If not then this functions creates the directory.
 let inline ensureDirectory dir = 
     directoryInfo dir |> ensureDirExists
 
-/// <summary>Detects whether it the given path is a directory</summary>
-/// <user/>
+/// Detects whether it the given path is a directory
 let isDirectory path =
     let attr = File.GetAttributes path
     attr &&& FileAttributes.Directory = FileAttributes.Directory
 
-/// <summary>Detects whether it the given path is a file</summary>
-/// <user/>
+/// Detects whether it the given path is a file
 let isFile path = isDirectory path |> not
