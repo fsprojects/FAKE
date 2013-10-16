@@ -38,7 +38,7 @@
         <div class="span9" id="main">
           <h1>Running FAKE targets from the command line</h1>
 
-<p>For this short sample we assume you have the latest version of FAKE in <em>./FAKE/tools/</em>. Now consider the following small FAKE script:</p>
+<p>For this short sample we assume you have the latest version of FAKE in <em>./tools/</em>. Now consider the following small FAKE script:</p>
 
 <table class="pre"><tr><td class="lines"><pre class="fssnip">
 <span class="l"> 1: </span>
@@ -81,13 +81,13 @@
 <p>If you are on windows then create this small redirect script:</p>
 
 <pre lang="batchfile">@echo off
-&quot;FAKE\tools\Fake.exe&quot; &quot;%1&quot;
+&quot;tools\Fake.exe&quot; &quot;%1&quot;
 exit /b %errorlevel%</pre>
 
 <p>On mono you can use:</p>
 
 <pre lang="batchfile">#!/bin/bash
-mono ./FAKE/tools/FAKE.exe &quot;$@&quot;</pre>
+mono ./tools/FAKE.exe &quot;$@&quot;</pre>
 
 <p>Now you can run FAKE targets easily from the command line:</p>
 
@@ -114,6 +114,7 @@ mono ./FAKE/tools/FAKE.exe &quot;$@&quot;</pre>
               <li><a href="fxcop.html">Using FxCop in a build</a></li>
               <li><a href="assemblyinfo.html">Modifying AssemblyInfo</a></li>
               <li><a href="specifictargets.html">Running specific targets</a></li>
+              <li><a href="commandline.html">Running FAKE from command line</a></li>
               <li><a href="customtasks.html">Creating custom tasks</a></li>
               <li><a href="teamcity.html">TeamCity integration</a></li>
 
