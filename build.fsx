@@ -120,12 +120,6 @@ Target "GenerateDocs" (fun _ ->
     CopyDir (docsDir @@ "pics") "help/pics" allFiles
 )
 
-Target "CopyDocu" (fun _ -> 
-    ["./tools/docu/docu.exe"
-     "./tools/docu/DocuLicense.txt"]
-       |> CopyTo buildDir
-)
-
 Target "CopyLicense" (fun _ -> 
     ["License.txt"
      "README.markdown"
@@ -203,7 +197,7 @@ Target "Default" DoNothing
     =?> ("SetAssemblyInfo",not isLocalBuild ) 
     ==> "BuildSolution"
     ==> "Test"
-    ==> "CopyLicense" <=> "CopyDocu"
+    ==> "CopyLicense"
     ==> "BuildZip"
     ==> "GenerateDocs"
     ==> "ZipDocumentation"
