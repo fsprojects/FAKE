@@ -1,9 +1,11 @@
 ﻿[<AutoOpen>]
+/// Contains tasks to create packages in [Xamarin's xpkg format](http://components.xamarin.com/)
 module Fake.XpkgHelper
 
 open System
 open System.Text
 
+/// Parameter type for xpkg tasks
 type xpkgParams =
     {
         ToolPath: string;
@@ -24,7 +26,7 @@ type xpkgParams =
         Samples: (string*string) list;
     }
 
-/// xpkg default params  
+/// Creates xpkg default parameters
 let XpkgDefaults() =
     {
         ToolPath = findToolInSubPath "xpkg.exe" (currentDirectory @@ "tools" @@ "xpkg")
@@ -47,7 +49,44 @@ let XpkgDefaults() =
 
 let private getPackageFileName parameters = sprintf "%s-%s.xam" parameters.Package parameters.Version
 
-/// Creates a new xpkg package based on the packageFileName
+/// Creates a new xpkg package based on the package file name
+///
+/// Sample usage:
+///
+///     Target "PackageXamarinDistribution" (fun _ ->
+///          // temp. workaround of an xpkg bug
+///          DeleteFile "./Distribution/lib/portable-net40+sl4+wp7+win8/Portable.Licensing.xml"
+///   
+///          xpkgPack (fun p ->
+///              {p with
+///                  ToolPath = xpkgExecutable;
+///                  Package = "Portable.Licensing";
+///                  Version = assemblyFileVersion;
+///                  OutputPath = publishDir
+///                  Project = "Portable.Licensing"
+///                  Summary = "Portable.Licensing is a cross platform software licensing tool"
+///                  Publisher = "Nauck IT KG"
+///                  Website = "http://dev.nauck-it.de/projects/portable-licensing"
+///                  Details = "./Xamarin/Details.md"
+///                  License = "License.md"
+///                  GettingStarted = "./Xamarin/GettingStarted.md"
+///                  Icons = ["./Xamarin/Portable.Licensing_512x512.png"; "./Xamarin/Portable.Licensing_128x128.png"]
+///                  Libraries = ["mobile", "./Distribution/lib/portable-net40+sl4+wp7+win8/Portable.Licensing.dll"]
+///                  Samples = ["Android Sample.", "./Samples/Android.Sample/Android.Sample.sln";
+///                             "iOS Sample.", "./Samples/iOS.Sample/iOS.Sample.sln"]
+///              }
+///          )
+///   
+///          xpkgValidate (fun p ->
+///              {p with
+///                  ToolPath = xpkgExecutable;
+///                  Package = "Portable.Licensing";
+///                  Version = assemblyFileVersion;
+///                  OutputPath = publishDir
+///                  Project = "Portable.Licensing"
+///              }
+///          )
+///      )
 let xpkgPack setParams =    
     let parameters = XpkgDefaults() |> setParams
     let packageFileName = getPackageFileName parameters 
@@ -92,7 +131,7 @@ let xpkgPack setParams =
     else
         failwithf "Create xpkg package failed. Process finished with exit code %d." result
         
-/// Validates a xpkg package based on the packageFileName
+/// Validates a xpkg package based on the package file name
 let xpkgValidate setParams =    
     let parameters = XpkgDefaults() |> setParams
     let packageFileName = getPackageFileName parameters 
