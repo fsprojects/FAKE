@@ -63,6 +63,44 @@
 <h1>XpkgHelper</h1>
 <div class="xmldoc">
 <p>Contains tasks to create packages in <a href="http://components.xamarin.com/">Xamarin's xpkg format</a></p>
+
+<p>Sample usage:</p>
+
+<pre><code>Target "PackageXamarinDistribution" (fun _ -&gt;
+     // temp. workaround of an xpkg bug
+     DeleteFile "./Distribution/lib/portable-net40+sl4+wp7+win8/Portable.Licensing.xml"
+
+     xpkgPack (fun p -&gt;
+         {p with
+             ToolPath = xpkgExecutable;
+             Package = "Portable.Licensing";
+             Version = assemblyFileVersion;
+             OutputPath = publishDir
+             Project = "Portable.Licensing"
+             Summary = "Portable.Licensing is a cross platform software licensing framework which allows you to implement licensing into your application or library"
+             Publisher = "Nauck IT KG"
+             Website = "http://dev.nauck-it.de/projects/portable-licensing"
+             Details = "./Xamarin/Details.md"
+             License = "License.md"
+             GettingStarted = "./Xamarin/GettingStarted.md"
+             Icons = ["./Xamarin/Portable.Licensing_512x512.png"; "./Xamarin/Portable.Licensing_128x128.png"]
+             Libraries = ["mobile", "./Distribution/lib/portable-net40+sl4+wp7+win8/Portable.Licensing.dll"]
+             Samples = ["Android Sample. A simple sample that validates a trial license.", "./Samples/Android.Sample/Android.Sample.sln";
+                         "iOS Sample. A simple sample that validates a trial license.", "./Samples/iOS.Sample/iOS.Sample.sln"]
+         }
+     )
+
+     xpkgValidate (fun p -&gt;
+         {p with
+             ToolPath = xpkgExecutable;
+             Package = "Portable.Licensing";
+             Version = assemblyFileVersion;
+             OutputPath = publishDir
+             Project = "Portable.Licensing"
+         }
+     )
+ )
+</code></pre>
 </div>
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
@@ -73,10 +111,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '210', 210)" onmouseover="showTip(event, '210', 210)">
+          <code onmouseout="hideTip(event, '117', 117)" onmouseover="showTip(event, '117', 117)">
             XpkgDefaults ()
           </code>
-          <div class="tip" id="210">
+          <div class="tip" id="117">
             <strong>Signature:</strong>unit -&gt; xpkgParams<br />
                       </div>
         </td>
@@ -86,10 +124,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '212', 212)" onmouseover="showTip(event, '212', 212)">
+          <code onmouseout="hideTip(event, '119', 119)" onmouseover="showTip(event, '119', 119)">
             xpkgPack setParams
           </code>
-          <div class="tip" id="212">
+          <div class="tip" id="119">
             <strong>Signature:</strong>setParams:(xpkgParams -&gt; xpkgParams) -&gt; unit<br />
                       </div>
         </td>
@@ -99,10 +137,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '214', 214)" onmouseover="showTip(event, '214', 214)">
+          <code onmouseout="hideTip(event, '120', 120)" onmouseover="showTip(event, '120', 120)">
             xpkgValidate setParams
           </code>
-          <div class="tip" id="214">
+          <div class="tip" id="120">
             <strong>Signature:</strong>setParams:(xpkgParams -&gt; xpkgParams) -&gt; unit<br />
                       </div>
         </td>

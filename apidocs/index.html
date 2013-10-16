@@ -79,6 +79,44 @@
             <a href="fake-xpkghelper.html">XpkgHelper</a>
 		      </td>
           <td class="xmldoc"><p>Contains tasks to create packages in <a href="http://components.xamarin.com/">Xamarin's xpkg format</a></p>
+
+<p>Sample usage:</p>
+
+<pre><code>Target "PackageXamarinDistribution" (fun _ -&gt;
+     // temp. workaround of an xpkg bug
+     DeleteFile "./Distribution/lib/portable-net40+sl4+wp7+win8/Portable.Licensing.xml"
+
+     xpkgPack (fun p -&gt;
+         {p with
+             ToolPath = xpkgExecutable;
+             Package = "Portable.Licensing";
+             Version = assemblyFileVersion;
+             OutputPath = publishDir
+             Project = "Portable.Licensing"
+             Summary = "Portable.Licensing is a cross platform software licensing framework which allows you to implement licensing into your application or library"
+             Publisher = "Nauck IT KG"
+             Website = "http://dev.nauck-it.de/projects/portable-licensing"
+             Details = "./Xamarin/Details.md"
+             License = "License.md"
+             GettingStarted = "./Xamarin/GettingStarted.md"
+             Icons = ["./Xamarin/Portable.Licensing_512x512.png"; "./Xamarin/Portable.Licensing_128x128.png"]
+             Libraries = ["mobile", "./Distribution/lib/portable-net40+sl4+wp7+win8/Portable.Licensing.dll"]
+             Samples = ["Android Sample. A simple sample that validates a trial license.", "./Samples/Android.Sample/Android.Sample.sln";
+                         "iOS Sample. A simple sample that validates a trial license.", "./Samples/iOS.Sample/iOS.Sample.sln"]
+         }
+     )
+
+     xpkgValidate (fun p -&gt;
+         {p with
+             ToolPath = xpkgExecutable;
+             Package = "Portable.Licensing";
+             Version = assemblyFileVersion;
+             OutputPath = publishDir
+             Project = "Portable.Licensing"
+         }
+     )
+ )
+</code></pre>
 </td>
         </tr>
         <tr>
