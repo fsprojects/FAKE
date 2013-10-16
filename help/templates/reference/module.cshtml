@@ -1,0 +1,66 @@
+@using FSharp.MetadataFormat
+@{
+  Layout = "default";
+  Title = "Module";
+}
+
+@{
+  var members = (IEnumerable<Member>)Model.Module.AllMembers;
+  var comment = (Comment)Model.Module.Comment;
+  var byCategory =
+      members.GroupBy(m => m.Category).OrderBy(g => String.IsNullOrEmpty(g.Key) ? "ZZZ" : g.Key)
+             .Select((g, n) => new { Index=n, Group=g, Name=String.IsNullOrEmpty(g.Key) ? "Other module members" : g.Key});
+}
+
+<h1>@Model.Module.Name</h1>
+<div class="xmldoc">
+  @foreach (var sec in comment.Sections) {
+    if (!byCategory.Any(g => g.Group.Key == sec.Key)) {
+      if (sec.Key != "<default>")        {
+        <h2>@sec.Key</h2>
+      }
+      @sec.Value  
+    }
+  }
+</div>
+@if (byCategory.Count() > 1)
+{
+  <h2>Table of contents</h2>
+  <ul>
+    @foreach (var g in byCategory)
+    {
+      <li><a href="@("#section" + g.Index.ToString())">@g.Name</a></li>            
+    }
+  </ul>
+}
+@foreach (var g in byCategory)
+{        
+  if (byCategory.Count() > 1) {
+    <h2>@g.Name<a name="@("section" + g.Index.ToString())">&#160;</a></h2>    
+    var info = comment.Sections.FirstOrDefault(kvp => kvp.Key == g.Group.Key);
+    if (info.Key != null)
+    {
+      <div class="xmldoc">
+        @info.Value
+      </div>
+    }
+  }
+
+  @RenderPart("members", new { 
+      Header = "Functions and values",
+      TableHeader = "Function or value",
+      Members = g.Group.Where(m => m.Kind == MemberKind.ValueOrFunction)
+  })
+
+  @RenderPart("members", new { 
+      Header = "Type extensions",
+      TableHeader = "Type extension",
+      Members = g.Group.Where(m => m.Kind == MemberKind.TypeExtension)
+  })
+
+  @RenderPart("members", new { 
+      Header = "Active patterns",
+      TableHeader = "Active pattern",
+      Members = g.Group.Where(m => m.Kind == MemberKind.ActivePattern)
+  })
+}

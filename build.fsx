@@ -6,11 +6,18 @@
 #r "FSharp.Markdown.dll"
 #r "FSharp.CodeFormat.dll"
 #r "FSharp.Literate.dll"
+#r "FSharp.MetadataFormat.dll"
+#I "./tools/Microsoft.AspNet.Razor/lib/net40"
+#r "System.Web.Razor.dll"
+#I "./tools/RazorEngine/lib/net40"
+#r "RazorEngine.dll"
+
 
 open System.IO
 open Fake
 open FSharp.Literate
 open Fake.Git
+open FSharp.MetadataFormat
  
 // properties 
 let projectName = "FAKE"
@@ -23,7 +30,8 @@ let homepage = "http://github.com/forki/fake"
 let buildDir = "./build"
 let testDir = "./test"
 let deployDir = "./Publish"
-let docsDir = "./docs" 
+let docsDir = "./docs"
+let apidocsDir = "./docs/apidocs/"
 let nugetDir = "./nuget" 
 let reportDir = "./report" 
 let deployZip = deployDir @@ sprintf "%s-%s.zip" projectName buildVersion
@@ -34,7 +42,7 @@ let isLinux =
         (p = 4) || (p = 6) || (p = 128)
 
 // Targets
-Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; deployDir; docsDir; nugetDir; reportDir])
+Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; deployDir; docsDir; apidocsDir; nugetDir; reportDir])
 
 Target "RestorePackages" RestorePackages
 
@@ -97,7 +105,7 @@ Target "BuildSolution" (fun _ ->
 
 Target "GenerateDocs" (fun _ ->
     let source = "./help"
-    let template = "./help/templates/template.html"
+    let template = "./help/templates/template-project.html"
     let projInfo =
       [ "page-description", "FAKE - F# Make"
         "page-author", (separated ", " authors)
@@ -105,6 +113,12 @@ Target "GenerateDocs" (fun _ ->
         "project-name", "FAKE - F# Make" ]
 
     Literate.ProcessDirectory (source, template, docsDir, replacements = projInfo)
+
+    let root = ""
+    MetadataFormat.Generate
+      ( Path.Combine(root, "build/FakeLib.dll"), 
+        apidocsDir,
+        Path.Combine(root, "./help/templates/reference/") )
 
     WriteStringToFile false "./docs/.nojekyll" ""
 
