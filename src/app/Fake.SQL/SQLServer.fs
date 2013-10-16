@@ -131,7 +131,7 @@ let Disconnect serverInfo = serverInfo.Server.ConnectionContext.Disconnect()
 let internal replaceDatabaseFiles connectionString attachOptions copyF =
     connectionString
       |> getServerInfo
-      |> fun si -> if existDBOnServer si (getDBName si) then Detach si else si
+      |> fun si -> if existDBOnServer si (getDBName si) then try Detach si with | exn -> si else si
       |> fun si -> copyF() |> Attach si attachOptions
       |> Disconnect
 
