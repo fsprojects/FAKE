@@ -73,24 +73,24 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '27', 27)" onmouseover="showTip(event, '27', 27)">
+          <code onmouseout="hideTip(event, '2', 2)" onmouseover="showTip(event, '2', 2)">
             XUnitDefaults 
           </code>
-          <div class="tip" id="27">
+          <div class="tip" id="2">
             <strong>Signature:</strong>XUnitParams<br />
                       </div>
         </td>
         <td class="xmldoc"><p>xUnit default parameters
-Fake scans all subfolders to find <em>xunit.console.exe</em></p>
+FAKE scans all subfolders to find <em>xunit.console.exe</em></p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '28', 28)" onmouseover="showTip(event, '28', 28)">
+          <code onmouseout="hideTip(event, '4', 4)" onmouseover="showTip(event, '4', 4)">
             xUnit setParams assemblies
           </code>
-          <div class="tip" id="28">
+          <div class="tip" id="4">
             <strong>Signature:</strong>setParams:(XUnitParams -&gt; XUnitParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -103,7 +103,7 @@ Fake scans all subfolders to find <em>xunit.console.exe</em></p>
 <li><code>assemblies</code> - Sequence of one or more assemblies containing xUnit unit tests.</li>
 </ul>
 
-<p>Sample usage:</p>
+<h2>Sample usage</h2>
 
 <pre><code>Target "Test" (fun _ -&gt;
     !! (testDir + @"\xUnit.Test.*.dll") 
