@@ -63,6 +63,37 @@
 <h1>XpkgHelper</h1>
 <div class="xmldoc">
 <p>Contains tasks to create packages in <a href="http://components.xamarin.com/">Xamarin's xpkg format</a></p>
+</div>
+  <h3>Functions and values</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Function or value</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '136', 136)" onmouseover="showTip(event, '136', 136)">
+            XpkgDefaults ()
+          </code>
+          <div class="tip" id="136">
+            <strong>Signature:</strong>unit -&gt; xpkgParams<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates xpkg default parameters</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '137', 137)" onmouseover="showTip(event, '137', 137)">
+            xpkgPack setParams
+          </code>
+          <div class="tip" id="137">
+            <strong>Signature:</strong>setParams:(xpkgParams -&gt; xpkgParams) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates a new xpkg package based on the package file name</p>
 
 <p>Sample usage:</p>
 
@@ -77,7 +108,7 @@
              Version = assemblyFileVersion;
              OutputPath = publishDir
              Project = "Portable.Licensing"
-             Summary = "Portable.Licensing is a cross platform software licensing framework which allows you to implement licensing into your application or library"
+             Summary = "Portable.Licensing is a cross platform software licensing tool"
              Publisher = "Nauck IT KG"
              Website = "http://dev.nauck-it.de/projects/portable-licensing"
              Details = "./Xamarin/Details.md"
@@ -85,8 +116,8 @@
              GettingStarted = "./Xamarin/GettingStarted.md"
              Icons = ["./Xamarin/Portable.Licensing_512x512.png"; "./Xamarin/Portable.Licensing_128x128.png"]
              Libraries = ["mobile", "./Distribution/lib/portable-net40+sl4+wp7+win8/Portable.Licensing.dll"]
-             Samples = ["Android Sample. A simple sample that validates a trial license.", "./Samples/Android.Sample/Android.Sample.sln";
-                         "iOS Sample. A simple sample that validates a trial license.", "./Samples/iOS.Sample/iOS.Sample.sln"]
+             Samples = ["Android Sample.", "./Samples/Android.Sample/Android.Sample.sln";
+                        "iOS Sample.", "./Samples/iOS.Sample/iOS.Sample.sln"]
          }
      )
 
@@ -101,46 +132,15 @@
      )
  )
 </code></pre>
-</div>
-  <h3>Functions and values</h3>
-  <table class="table table-bordered member-list">
-    <thead>
-      <tr><td>Function or value</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '117', 117)" onmouseover="showTip(event, '117', 117)">
-            XpkgDefaults ()
-          </code>
-          <div class="tip" id="117">
-            <strong>Signature:</strong>unit -&gt; xpkgParams<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Creates xpkg default parameters</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '119', 119)" onmouseover="showTip(event, '119', 119)">
-            xpkgPack setParams
-          </code>
-          <div class="tip" id="119">
-            <strong>Signature:</strong>setParams:(xpkgParams -&gt; xpkgParams) -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Creates a new xpkg package based on the package file name</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '120', 120)" onmouseover="showTip(event, '120', 120)">
+          <code onmouseout="hideTip(event, '138', 138)" onmouseover="showTip(event, '138', 138)">
             xpkgValidate setParams
           </code>
-          <div class="tip" id="120">
+          <div class="tip" id="138">
             <strong>Signature:</strong>setParams:(xpkgParams -&gt; xpkgParams) -&gt; unit<br />
                       </div>
         </td>
