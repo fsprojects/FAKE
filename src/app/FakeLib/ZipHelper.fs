@@ -7,7 +7,7 @@ open ICSharpCode.SharpZipLib.Zip
 open System
 
 /// The default zip level
-let DefaultZipLevel = 7
+let internal DefaultZipLevel = 7
 
 /// Creates a zip file with the given files
 /// ## Parameters
@@ -68,30 +68,30 @@ let CreateZip workingDir fileName comment level flatten files =
 /// Creates a zip file with the given files.
 /// ## Parameters
 ///  - `workingDir` - The relative dir of the zip files. Use this parameter to influence directory structure within zip file.
-///  - `fileName` - The fileName of the resulting zip file.
+///  - `fileName` - The file name of the resulting zip file.
 ///  - `files` - A sequence with files to zip.
 let Zip workingDir fileName = CreateZip workingDir fileName "" DefaultZipLevel false
   
 /// Creates a zip file with the given file.
 /// ## Parameters
-///  - `fileName` - The fileName of the resulting zip file.
+///  - `fileName` - The file name of the resulting zip file.
 ///  - `targetFileName` - The file to zip.
 let ZipFile fileName targetFileName =
     let fi = fileInfo targetFileName    
     CreateZip (fi.Directory.FullName) fileName "" DefaultZipLevel false [fi.FullName]
 
-/// Unzips a file with the given fileName.
+/// Unzips a file with the given file name.
 /// ## Parameters
 ///  - `target` - The target directory.
-///  - `fileName` - The fileName of the zip file.
+///  - `fileName` - The file name of the zip file.
 let Unzip target fileName =  
     let zip = new FastZip()
     zip.ExtractZip (fileName, target, "")
 
-/// Unzips a single file from the archive with the given fileName.
+/// Unzips a single file from the archive with the given file name.
 /// ## Parameters
 ///  - `fileToUnzip` - The file inside the archive.
-///  - `zipFileName` - The FileName of the zip file.
+///  - `zipFileName` - The file name of the zip file.
 let UnzipSingleFileInMemory fileToUnzip (zipFileName:string) =
     use zf = new ZipFile(zipFileName)
     let ze = zf.GetEntry fileToUnzip
@@ -102,10 +102,10 @@ let UnzipSingleFileInMemory fileToUnzip (zipFileName:string) =
     use reader = new StreamReader(stream)
     reader.ReadToEnd()
     
-/// Unzips a single file from the archive with the given fileName.
+/// Unzips a single file from the archive with the given file name.
 /// ## Parameters
 ///  - `predicate` - The predictae for the searched file in the archive.
-///  - `zipFileName` - The FileName of the zip file.
+///  - `zipFileName` - The file name of the zip file.
 let UnzipFirstMatchingFileInMemory predicate (zipFileName:string) =
     use zf = new ZipFile(zipFileName)
 
