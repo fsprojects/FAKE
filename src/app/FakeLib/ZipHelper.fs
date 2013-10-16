@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+/// This module contains helper function to create and extract zip archives.
 module Fake.ZipHelper
 
 open System.IO
@@ -9,6 +10,13 @@ open System
 let DefaultZipLevel = 7
 
 /// Creates a zip file with the given files
+/// ## Parameters
+///  - `workingDir` - The relative dir of the zip files. Use this parameter to influence directory structure within zip file.
+///  - `fileName` - The fileName of the resulting zip file.
+///  - `comment` - A comment for the resulting zip file.
+///  - `level` - The compression level.
+///  - `flatten` - If set to true then all subfolders are merged into the root folder.
+///  - `files` - A sequence with files to zip.
 let CreateZip workingDir fileName comment level flatten files =
     let files = files |> Seq.toList
     let workingDir =
@@ -57,29 +65,33 @@ let CreateZip workingDir fileName comment level flatten files =
     stream.Finish()
     tracefn "Zip successfully created %s" fileName
  
-/// <summary>Creates a zip file with the given files.</summary>
-/// <param name="workingDir">The relative dir of the zip files. Use this parameter to influence directory structure within zip file.</param>
-/// <param name="fileName">The fileName of the resulting zip file.</param>
-/// <param name="files">A sequence with files to zip.</param>
+/// Creates a zip file with the given files.
+/// ## Parameters
+///  - `workingDir` - The relative dir of the zip files. Use this parameter to influence directory structure within zip file.
+///  - `fileName` - The fileName of the resulting zip file.
+///  - `files` - A sequence with files to zip.
 let Zip workingDir fileName = CreateZip workingDir fileName "" DefaultZipLevel false
   
-/// <summary>Creates a zip file with the given file.</summary>
-/// <param name="fileName">The fileName of the resulting zip file.</param>
-/// <param name="targetFileName">The file to zip.</param>
+/// Creates a zip file with the given file.
+/// ## Parameters
+///  - `fileName` - The fileName of the resulting zip file.
+///  - `targetFileName` - The file to zip.
 let ZipFile fileName targetFileName =
     let fi = fileInfo targetFileName    
     CreateZip (fi.Directory.FullName) fileName "" DefaultZipLevel false [fi.FullName]
 
-/// <summary>Unzips a file with the given fileName.</summary>
-/// <param name="target">The target directory.</param>
-/// <param name="fileName">The fileName of the zip file.</param>
+/// Unzips a file with the given fileName.
+/// ## Parameters
+///  - `target` - The target directory.
+///  - `fileName` - The fileName of the zip file.
 let Unzip target fileName =  
     let zip = new FastZip()
     zip.ExtractZip (fileName, target, "")
 
-/// <summary>Unzips a single file from the archive with the given fileName.</summary>
-/// <param name="fileToUnzip">The file inside the archive.</param>
-/// <param name="zipFileName">The FileName of the zip file.</param>
+/// Unzips a single file from the archive with the given fileName.
+/// ## Parameters
+///  - `fileToUnzip` - The file inside the archive.
+///  - `zipFileName` - The FileName of the zip file.
 let UnzipSingleFileInMemory fileToUnzip (zipFileName:string) =
     use zf = new ZipFile(zipFileName)
     let ze = zf.GetEntry fileToUnzip
@@ -90,9 +102,10 @@ let UnzipSingleFileInMemory fileToUnzip (zipFileName:string) =
     use reader = new StreamReader(stream)
     reader.ReadToEnd()
     
-/// <summary>Unzips a single file from the archive with the given fileName.</summary>
-/// <param name="predicate">The predictae for the searched file in the archive.</param>
-/// <param name="zipFileName">The FileName of the zip file.</param>
+/// Unzips a single file from the archive with the given fileName.
+/// ## Parameters
+///  - `predicate` - The predictae for the searched file in the archive.
+///  - `zipFileName` - The FileName of the zip file.
 let UnzipFirstMatchingFileInMemory predicate (zipFileName:string) =
     use zf = new ZipFile(zipFileName)
 
@@ -102,4 +115,4 @@ let UnzipFirstMatchingFileInMemory predicate (zipFileName:string) =
 
     use stream = zf.GetInputStream(ze)
     use reader = new StreamReader(stream)
-    reader.ReadToEnd()         
+    reader.ReadToEnd()
