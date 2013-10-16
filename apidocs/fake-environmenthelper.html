@@ -62,6 +62,7 @@
 
 <h1>EnvironmentHelper</h1>
 <div class="xmldoc">
+<p>This module contains functions which allow to read and write environment variables</p>
 </div>
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
@@ -72,88 +73,88 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '485', 485)" onmouseover="showTip(event, '485', 485)">
-            environVar arg00
+          <code onmouseout="hideTip(event, '447', 447)" onmouseover="showTip(event, '447', 447)">
+            environVar name
           </code>
-          <div class="tip" id="485">
-            <strong>Signature:</strong>arg00:string -&gt; string<br />
+          <div class="tip" id="447">
+            <strong>Signature:</strong>name:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Retrieves the EnvironmentVariable</p>
+        <td class="xmldoc"><p>Retrieves the environment variable with the given name</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '486', 486)" onmouseover="showTip(event, '486', 486)">
+          <code onmouseout="hideTip(event, '448', 448)" onmouseover="showTip(event, '448', 448)">
             combinePaths path1 path2
           </code>
-          <div class="tip" id="486">
+          <div class="tip" id="448">
             <strong>Signature:</strong>path1:string -&gt; path2:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Combines two path strings</p>
+        <td class="xmldoc"><p>Combines two path strings using Path.Combine</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '487', 487)" onmouseover="showTip(event, '487', 487)">
+          <code onmouseout="hideTip(event, '449', 449)" onmouseover="showTip(event, '449', 449)">
             ( @@ ) path1 path2
           </code>
-          <div class="tip" id="487">
+          <div class="tip" id="449">
             <strong>Signature:</strong>path1:string -&gt; path2:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Combines two path strings</p>
+        <td class="xmldoc"><p>Combines two path strings using Path.Combine</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '488', 488)" onmouseover="showTip(event, '488', 488)">
+          <code onmouseout="hideTip(event, '450', 450)" onmouseover="showTip(event, '450', 450)">
             environVars target
           </code>
-          <div class="tip" id="488">
+          <div class="tip" id="450">
             <strong>Signature:</strong>target:EnvironmentVariableTarget -&gt; (obj * obj) list<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Retrieves the EnvironmentVariable</p>
+        <td class="xmldoc"><p>Retrieves all environment variables from the given target</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '489', 489)" onmouseover="showTip(event, '489', 489)">
-            setEnvironVar environVar value
+          <code onmouseout="hideTip(event, '451', 451)" onmouseover="showTip(event, '451', 451)">
+            setEnvironVar name value
           </code>
-          <div class="tip" id="489">
-            <strong>Signature:</strong>environVar:string -&gt; value:string -&gt; unit<br />
+          <div class="tip" id="451">
+            <strong>Signature:</strong>name:string -&gt; value:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Sets the Environment variable</p>
+        <td class="xmldoc"><p>Sets the environment variable with the given name</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '490', 490)" onmouseover="showTip(event, '490', 490)">
+          <code onmouseout="hideTip(event, '452', 452)" onmouseover="showTip(event, '452', 452)">
             environVarOrDefault name defaultValue
           </code>
-          <div class="tip" id="490">
+          <div class="tip" id="452">
             <strong>Signature:</strong>name:string -&gt; defaultValue:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Retrieves the EnvironmentVariable or a default</p>
+        <td class="xmldoc"><p>Retrieves the environment variable with the given name or returns the default if no value was set</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '491', 491)" onmouseover="showTip(event, '491', 491)">
+          <code onmouseout="hideTip(event, '453', 453)" onmouseover="showTip(event, '453', 453)">
             environVarOrNone name
           </code>
-          <div class="tip" id="491">
+          <div class="tip" id="453">
             <strong>Signature:</strong>name:string -&gt; string option<br />
                       </div>
         </td>
@@ -163,128 +164,129 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '492', 492)" onmouseover="showTip(event, '492', 492)">
+          <code onmouseout="hideTip(event, '454', 454)" onmouseover="showTip(event, '454', 454)">
             appSetting name
           </code>
-          <div class="tip" id="492">
+          <div class="tip" id="454">
             <strong>Signature:</strong>name:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Retrieves a ApplicationSettings variable</p>
+        <td class="xmldoc"><p>Retrieves the application settings variable with the given name</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '493', 493)" onmouseover="showTip(event, '493', 493)">
+          <code onmouseout="hideTip(event, '455', 455)" onmouseover="showTip(event, '455', 455)">
             hasBuildParam name
           </code>
-          <div class="tip" id="493">
+          <div class="tip" id="455">
             <strong>Signature:</strong>name:string -&gt; bool<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Returns true if the buildParam is set and otherwise false</p>
+        <td class="xmldoc"><p>Returns if the build parameter with the given name was set</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '494', 494)" onmouseover="showTip(event, '494', 494)">
-            getBuildParam name
-          </code>
-          <div class="tip" id="494">
-            <strong>Signature:</strong>name:string -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Returns the value of the buildParam if it is set and otherwise ""</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '495', 495)" onmouseover="showTip(event, '495', 495)">
+          <code onmouseout="hideTip(event, '456', 456)" onmouseover="showTip(event, '456', 456)">
             getBuildParamOrDefault name defaultParam
           </code>
-          <div class="tip" id="495">
+          <div class="tip" id="456">
             <strong>Signature:</strong>name:string -&gt; defaultParam:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Returns the value of the buildParam if it is set and otherwise the default</p>
+        <td class="xmldoc"><p>Returns the value of the build parameter with the given name was set if it was set and otherwise the given default value</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '496', 496)" onmouseover="showTip(event, '496', 496)">
+          <code onmouseout="hideTip(event, '457', 457)" onmouseover="showTip(event, '457', 457)">
+            getBuildParam name
+          </code>
+          <div class="tip" id="457">
+            <strong>Signature:</strong>name:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Returns the value of the build parameter with the given name if it was set and otherwise an empty string</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '458', 458)" onmouseover="showTip(event, '458', 458)">
             ProgramFiles 
           </code>
-          <div class="tip" id="496">
+          <div class="tip" id="458">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>The path of Program Files - might be x64 on x64 machine</p>
+        <td class="xmldoc"><p>The path of the "Program Files" folder - might be x64 on x64 machine</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '497', 497)" onmouseover="showTip(event, '497', 497)">
+          <code onmouseout="hideTip(event, '459', 459)" onmouseover="showTip(event, '459', 459)">
             ProgramFilesX86 
           </code>
-          <div class="tip" id="497">
+          <div class="tip" id="459">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
         <td class="xmldoc"><p>The path of Program Files (x86)
-I think this covers all cases where PROCESSOR<em>ARCHITECTURE may misreport and the case where the other variable 
+It seems this covers all cases where PROCESSOR<em>ARCHITECTURE may misreport and the case where the other variable 
 PROCESSOR</em>ARCHITEW6432 can be null</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '498', 498)" onmouseover="showTip(event, '498', 498)">
+          <code onmouseout="hideTip(event, '460', 460)" onmouseover="showTip(event, '460', 460)">
             SystemRoot 
           </code>
-          <div class="tip" id="498">
+          <div class="tip" id="460">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>System root environment variable. Typically "C:\Windows"</p>
+        <td class="xmldoc"><p>The system root environment variable. Typically "C:\Windows"</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '499', 499)" onmouseover="showTip(event, '499', 499)">
+          <code onmouseout="hideTip(event, '461', 461)" onmouseover="showTip(event, '461', 461)">
             isUnix 
           </code>
-          <div class="tip" id="499">
+          <div class="tip" id="461">
             <strong>Signature:</strong>bool<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Detemernines if the current system is Unix system</p>
+        <td class="xmldoc"><p>Detemernines if the current system is an Unix system</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '500', 500)" onmouseover="showTip(event, '500', 500)">
+          <code onmouseout="hideTip(event, '462', 462)" onmouseover="showTip(event, '462', 462)">
             platformInfoAction psi
           </code>
-          <div class="tip" id="500">
+          <div class="tip" id="462">
             <strong>Signature:</strong>psi:ProcessStartInfo -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Modifies the ProcessStartInfo according to the platform semantics</p>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '501', 501)" onmouseover="showTip(event, '501', 501)">
+          <code onmouseout="hideTip(event, '463', 463)" onmouseover="showTip(event, '463', 463)">
             TargetPlatformPrefix 
           </code>
-          <div class="tip" id="501">
+          <div class="tip" id="463">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
@@ -294,10 +296,10 @@ PROCESSOR</em>ARCHITEW6432 can be null</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '502', 502)" onmouseover="showTip(event, '502', 502)">
+          <code onmouseout="hideTip(event, '464', 464)" onmouseover="showTip(event, '464', 464)">
             getTargetPlatformDir platformVersion
           </code>
-          <div class="tip" id="502">
+          <div class="tip" id="464">
             <strong>Signature:</strong>platformVersion:string -&gt; string<br />
                       </div>
         </td>
@@ -307,10 +309,10 @@ PROCESSOR</em>ARCHITEW6432 can be null</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '503', 503)" onmouseover="showTip(event, '503', 503)">
+          <code onmouseout="hideTip(event, '465', 465)" onmouseover="showTip(event, '465', 465)">
             documentsFolder 
           </code>
-          <div class="tip" id="503">
+          <div class="tip" id="465">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
@@ -320,10 +322,10 @@ PROCESSOR</em>ARCHITEW6432 can be null</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '504', 504)" onmouseover="showTip(event, '504', 504)">
+          <code onmouseout="hideTip(event, '466', 466)" onmouseover="showTip(event, '466', 466)">
             directorySeparator 
           </code>
-          <div class="tip" id="504">
+          <div class="tip" id="466">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
@@ -333,10 +335,10 @@ PROCESSOR</em>ARCHITEW6432 can be null</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '505', 505)" onmouseover="showTip(event, '505', 505)">
+          <code onmouseout="hideTip(event, '467', 467)" onmouseover="showTip(event, '467', 467)">
             convertWindowsToCurrentPath w
           </code>
-          <div class="tip" id="505">
+          <div class="tip" id="467">
             <strong>Signature:</strong>w:string -&gt; string<br />
                       </div>
         </td>
@@ -346,10 +348,10 @@ PROCESSOR</em>ARCHITEW6432 can be null</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '506', 506)" onmouseover="showTip(event, '506', 506)">
+          <code onmouseout="hideTip(event, '468', 468)" onmouseover="showTip(event, '468', 468)">
             encoding 
           </code>
-          <div class="tip" id="506">
+          <div class="tip" id="468">
             <strong>Signature:</strong>Encoding<br />
                       </div>
         </td>
@@ -359,26 +361,28 @@ PROCESSOR</em>ARCHITEW6432 can be null</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '507', 507)" onmouseover="showTip(event, '507', 507)">
+          <code onmouseout="hideTip(event, '469', 469)" onmouseover="showTip(event, '469', 469)">
             getInstalledDotNetFrameworks ()
           </code>
-          <div class="tip" id="507">
+          <div class="tip" id="469">
             <strong>Signature:</strong>unit -&gt; seq&lt;string&gt;<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Rteurns a sequence with all installed .NET framework versions</p>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '508', 508)" onmouseover="showTip(event, '508', 508)">
+          <code onmouseout="hideTip(event, '470', 470)" onmouseover="showTip(event, '470', 470)">
             getMachineEnvironment ()
           </code>
-          <div class="tip" id="508">
+          <div class="tip" id="470">
             <strong>Signature:</strong>unit -&gt; MachineDetails<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Retrieves lots of machine specific information</p>
+</td>
       </tr>
     </tbody>
   </table>
