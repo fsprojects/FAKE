@@ -62,6 +62,7 @@
 
 <h1>XMLHelper</h1>
 <div class="xmldoc">
+<p>Contains functions to read and write XML files.</p>
 </div>
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
@@ -93,7 +94,7 @@
                       </div>
         </td>
         <td class="xmldoc"><p>Reads a value from a XML document using a XPath
-returns if the value is an int and the value</p>
+Returns if the value is an int and the value</p>
 </td>
       </tr>
       <tr>
@@ -106,7 +107,7 @@ returns if the value is an int and the value</p>
             <strong>Signature:</strong>fileName:string -&gt; XmlTextWriter<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Generates an XmlWriter</p>
+        <td class="xmldoc"><p>Creates a XmlWriter which writes to the given file name</p>
 </td>
       </tr>
       <tr>
@@ -119,7 +120,7 @@ returns if the value is an int and the value</p>
             <strong>Signature:</strong>comment:string -&gt; writer:XmlTextWriter -&gt; XmlTextWriter<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Writes an Xml comment</p>
+        <td class="xmldoc"><p>Writes an XML comment to the given XmlTextWriter</p>
 </td>
       </tr>
       <tr>
@@ -132,7 +133,7 @@ returns if the value is an int and the value</p>
             <strong>Signature:</strong>name:string -&gt; writer:XmlTextWriter -&gt; XmlTextWriter<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Writes an Xml element start</p>
+        <td class="xmldoc"><p>Writes an XML start element to the given XmlTextWriter</p>
 </td>
       </tr>
       <tr>
@@ -145,7 +146,7 @@ returns if the value is an int and the value</p>
             <strong>Signature:</strong>writer:XmlTextWriter -&gt; XmlTextWriter<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Writes an Xml element end</p>
+        <td class="xmldoc"><p>Writes an XML end element to the given XmlTextWriter</p>
 </td>
       </tr>
       <tr>
@@ -158,7 +159,7 @@ returns if the value is an int and the value</p>
             <strong>Signature:</strong>name:string -&gt; value:&#39;?4871 -&gt; writer:XmlTextWriter -&gt; XmlTextWriter<br />
                           <strong>Type parameters:</strong> '?4871          </div>
         </td>
-        <td class="xmldoc"><p>Writes an Xml attribute</p>
+        <td class="xmldoc"><p>Writes an XML attribute to current element of the given XmlTextWriter</p>
 </td>
       </tr>
       <tr>
@@ -171,7 +172,7 @@ returns if the value is an int and the value</p>
             <strong>Signature:</strong>elementName:string -&gt; data:string -&gt; writer:XmlTextWriter -&gt; XmlTextWriter<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Writes an CData element</p>
+        <td class="xmldoc"><p>Writes an CData element to the given XmlTextWriter</p>
 </td>
       </tr>
       <tr>
@@ -184,7 +185,7 @@ returns if the value is an int and the value</p>
             <strong>Signature:</strong>name:string -&gt; node:&#39;?4874 -&gt; string<br />
                           <strong>Type parameters:</strong> '?4874          </div>
         </td>
-        <td class="xmldoc"><p>Gets the attribute with the given name</p>
+        <td class="xmldoc"><p>Gets the attribute with the given name from the given XmlNode</p>
 </td>
       </tr>
       <tr>
@@ -197,20 +198,20 @@ returns if the value is an int and the value</p>
             <strong>Signature:</strong>node:&#39;?4876 -&gt; seq&lt;XmlNode&gt;<br />
                           <strong>Type parameters:</strong> '?4876          </div>
         </td>
-        <td class="xmldoc"><p>Gets the child nodes for the given nodes</p>
+        <td class="xmldoc"><p>Gets a sequence of all child nodes for the given XmlNode</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '23', 23)" onmouseover="showTip(event, '23', 23)">
-            getSubNode name
+            getSubNode name node
           </code>
           <div class="tip" id="23">
-            <strong>Signature:</strong>name:string -&gt; XmlNode -&gt; XmlNode<br />
+            <strong>Signature:</strong>name:string -&gt; node:XmlNode -&gt; XmlNode<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>gets the sub node with the name</p>
+        <td class="xmldoc"><p>Gets the first sub node with the given name from the given XmlNode</p>
 </td>
       </tr>
       <tr>
@@ -223,7 +224,7 @@ returns if the value is an int and the value</p>
             <strong>Signature:</strong>name:string -&gt; f:(&#39;?4879 -&gt; &#39;?4880) -&gt; node:&#39;?4879 -&gt; &#39;?4880<br />
                           <strong>Type parameters:</strong> '?4879, '?4880          </div>
         </td>
-        <td class="xmldoc"><p>parses a node</p>
+        <td class="xmldoc"><p>Parses a XmlNode</p>
 </td>
       </tr>
       <tr>
@@ -236,7 +237,7 @@ returns if the value is an int and the value</p>
             <strong>Signature:</strong>name:string -&gt; f:(XmlNode -&gt; &#39;?4882) -&gt; XmlNode -&gt; &#39;?4882<br />
                           <strong>Type parameters:</strong> '?4882          </div>
         </td>
-        <td class="xmldoc"><p>parses a subnode</p>
+        <td class="xmldoc"><p>Parses a XML subnode</p>
 </td>
       </tr>
       <tr>
@@ -249,7 +250,7 @@ returns if the value is an int and the value</p>
             <strong>Signature:</strong>text:string -&gt; XmlDocument<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Gets the result as xml</p>
+        <td class="xmldoc"><p>Loads the given text into a XmlDocument</p>
 </td>
       </tr>
       <tr>
@@ -275,7 +276,7 @@ returns if the value is an int and the value</p>
             <strong>Signature:</strong>xpath:string -&gt; value:string -&gt; doc:XmlDocument -&gt; XmlDocument<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Replaces text in XML document specified by an XPath expression.</p>
+        <td class="xmldoc"><p>Replaces text in the XML document specified by a XPath expression.</p>
 </td>
       </tr>
       <tr>
@@ -288,7 +289,7 @@ returns if the value is an int and the value</p>
             <strong>Signature:</strong>xpath:string -&gt; namespaces:&#39;?4887 -&gt; doc:XmlDocument -&gt; string<br />
                           <strong>Type parameters:</strong> '?4887          </div>
         </td>
-        <td class="xmldoc"><p>Selects and xml nodes value via xpath from the given document</p>
+        <td class="xmldoc"><p>Selects a xml node value via XPath from the given document</p>
 </td>
       </tr>
       <tr>
@@ -301,7 +302,7 @@ returns if the value is an int and the value</p>
             <strong>Signature:</strong>fileName:string -&gt; xpath:string -&gt; value:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Replaces text in an XML file at the location specified by an XPath expression.</p>
+        <td class="xmldoc"><p>Replaces text in a XML file at the location specified by a XPath expression.</p>
 </td>
       </tr>
       <tr>
@@ -314,7 +315,7 @@ returns if the value is an int and the value</p>
             <strong>Signature:</strong>xpath:string -&gt; value:string -&gt; namespaces:&#39;?4890 -&gt; doc:XmlDocument -&gt; XmlDocument<br />
                           <strong>Type parameters:</strong> '?4890          </div>
         </td>
-        <td class="xmldoc"><p>Replaces text in XML document specified by an XPath expression, with support for namespaces.</p>
+        <td class="xmldoc"><p>Replaces text in a XML document specified by a XPath expression, with support for namespaces.</p>
 </td>
       </tr>
       <tr>
@@ -327,7 +328,7 @@ returns if the value is an int and the value</p>
             <strong>Signature:</strong>fileName:string -&gt; namespaces:seq&lt;string * string&gt; -&gt; xpath:string -&gt; value:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Replaces text in an XML file at the location specified by an XPath expression, with support for namespaces.</p>
+        <td class="xmldoc"><p>Replaces text in a XML file at the location specified by a XPath expression, with support for namespaces.</p>
 </td>
       </tr>
     </tbody>
