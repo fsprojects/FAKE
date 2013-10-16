@@ -8,16 +8,13 @@ open System.Collections.Generic
 
 let productName() = "FAKE"
 
-/// <summary>Returns if the string is null or empty</summary>
-/// <user/>
+/// Returns if the string is null or empty
 let inline isNullOrEmpty value = String.IsNullOrEmpty value
 
-/// <summary>Returns if the string is not null or empty</summary>
-/// <user/>
+/// Returns if the string is not null or empty
 let inline isNotNullOrEmpty value = String.IsNullOrEmpty value |> not
 
-/// <summary>Returns if the string is null or empty or completely whitespace</summary>
-/// <user/>
+/// Returns if the string is null or empty or completely whitespace
 let inline isNullOrWhiteSpace value = isNullOrEmpty value || value |> Seq.forall Char.IsWhiteSpace
 
 /// Replaces the given pattern in the given text with the replacement
@@ -119,23 +116,20 @@ let inline trimSpecialChars (s:string) =
 /// Lifts a string to an option
 let liftString x = if isNullOrEmpty x then None else Some x
 
-/// <summary>Reads a file line by line</summary>
-/// <user/>
+/// Reads a file line by line
 let ReadFile (file:string) =   
     seq {use textReader = new StreamReader(file, encoding)
          while not textReader.EndOfStream do
              yield textReader.ReadLine()}
 
-/// <summary>Writes a file line by line</summary>
-/// <user/>
+/// Writes a file line by line
 let WriteToFile append fileName (lines: seq<string>) =    
     let fi = fileInfo fileName
 
     use writer = new StreamWriter(fileName,append && fi.Exists,encoding) 
     lines |> Seq.iter writer.WriteLine
 
-/// <summary>Removes all trailing .0 from a version string</summary>
-/// <user/>
+/// Removes all trailing .0 from a version string
 let rec NormalizeVersion(version:string) =
     let elements = version.Split [|'.'|]
     let mutable version = ""
@@ -148,20 +142,17 @@ let rec NormalizeVersion(version:string) =
     else 
         version
 
-/// <summary>Writes a byte array to a file</summary>
-/// <user/>
+/// Writes a byte array to a file
 let WriteBytesToFile file bytes = File.WriteAllBytes(file,bytes)
 
-/// <summary>Writes a string to a file</summary>
-/// <user/>
+/// Writes a string to a file
 let WriteStringToFile append fileName (text:string) =
     let fi = fileInfo fileName
 
     use writer = new StreamWriter(fileName,append && fi.Exists,encoding) 
     writer.Write text
 
-/// <summary>Replaces the file with the given string</summary>
-/// <user/>
+/// Replaces the file with the given string
 let ReplaceFile fileName text =
     let fi = fileInfo fileName
     if fi.Exists then
@@ -171,20 +162,16 @@ let ReplaceFile fileName text =
 
 let Colon = ','
 
-/// <summary>Writes a file line by line</summary>
-/// <user/>
+/// Writes a file line by line
 let WriteFile file lines = WriteToFile false file lines
   
-/// <summary>Appends all lines to a file line by line</summary>
-/// <user/>
+/// Appends all lines to a file line by line
 let AppendToFile file lines = WriteToFile true file lines
 
-/// <summary>Reads a file as one text</summary>
-/// <user/>
+/// Reads a file as one text
 let inline ReadFileAsString file = File.ReadAllText(file,encoding)
 
-/// <summary>Reads a file as one array of bytes</summary>
-/// <user/>
+/// Reads a file as one array of bytes
 let ReadFileAsBytes = File.ReadAllBytes
 
 /// Replaces any occurence of the currentDirectory with .
