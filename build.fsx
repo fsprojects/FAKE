@@ -12,8 +12,6 @@
 #I "./tools/RazorEngine/lib/net40"
 #r "RazorEngine.dll"
 
-
-open System.IO
 open Fake
 open FSharp.Literate
 open Fake.Git
@@ -114,25 +112,12 @@ Target "GenerateDocs" (fun _ ->
 
     Literate.ProcessDirectory (source, template, docsDir, replacements = projInfo)
 
-    let root = ""
-    MetadataFormat.Generate
-      ( Path.Combine(root, "build/FakeLib.dll"), 
-        apidocsDir,
-        Path.Combine(root, "./help/templates/reference/") )
+    MetadataFormat.Generate ( "./build/FakeLib.dll", apidocsDir, "./help/templates/reference/")
 
     WriteStringToFile false "./docs/.nojekyll" ""
 
     CopyDir (docsDir @@ "content") "help/content" allFiles
     CopyDir (docsDir @@ "pics") "help/pics" allFiles
-
-    (* Temporary disable tests on *nix, bug # 122 *)
-    if not isLinux then
-        !! (buildDir @@ "Fake*.dll")
-        |> Docu (fun p ->
-            {p with
-                ToolPath = buildDir @@ "docu.exe"
-                TemplatesPath = @".\tools\docu\templates\"
-                OutputPath = docsDir @@ "api" })
 )
 
 Target "CopyDocu" (fun _ -> 

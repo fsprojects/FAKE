@@ -52,7 +52,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "help", "help", "{564BD198-0
 		help\nuget.md = help\nuget.md
 		help\specifictargets.md = help\specifictargets.md
 		help\teamcity.md = help\teamcity.md
-		help\templates\template.html = help\templates\template.html
+		help\templates\template-project.html = help\templates\template-project.html
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pics", "pics", "{75162148-B884-4575-8E14-5320DD137760}"
@@ -79,9 +79,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "teamcity", "teamcity", "{85
 		help\pics\teamcity\vcsroot.png = help\pics\teamcity\vcsroot.png
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget", "nuget", "{1441A6AB-1E5B-484F-AED7-AFEA1716E20A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "apidocs", "apidocs", "{E5A1C705-974C-4377-BAF3-55359A42BEF0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{A338C9EA-391D-405D-B480-D1B67C0C9369}"
 	ProjectSection(SolutionItems) = preProject
-		help\pics\nuget\tools.png = help\pics\nuget\tools.png
+		help\templates\reference\default.cshtml = help\templates\reference\default.cshtml
+		help\templates\reference\members.cshtml = help\templates\reference\members.cshtml
+		help\templates\reference\module.cshtml = help\templates\reference\module.cshtml
+		help\templates\reference\namespaces.cshtml = help\templates\reference\namespaces.cshtml
+		help\templates\reference\type.cshtml = help\templates\reference\type.cshtml
 	EndProjectSection
 EndProject
 Global
@@ -190,8 +196,9 @@ Global
 		{98944472-E50A-4771-969D-4C0349D085A4} = {B774DC6A-F933-4EC3-A61F-E07344EF8ED2}
 		{AD03BF13-802D-4E5F-A939-24484299E014} = {B774DC6A-F933-4EC3-A61F-E07344EF8ED2}
 		{75162148-B884-4575-8E14-5320DD137760} = {564BD198-09CB-45D1-87F2-E2153FE6D62F}
+		{E5A1C705-974C-4377-BAF3-55359A42BEF0} = {564BD198-09CB-45D1-87F2-E2153FE6D62F}
 		{454066F7-42BF-435E-BDF7-2D11948D53B4} = {75162148-B884-4575-8E14-5320DD137760}
 		{853E4C7F-D5AA-4756-BAF3-13F25F460C4E} = {75162148-B884-4575-8E14-5320DD137760}
-		{1441A6AB-1E5B-484F-AED7-AFEA1716E20A} = {75162148-B884-4575-8E14-5320DD137760}
+		{A338C9EA-391D-405D-B480-D1B67C0C9369} = {E5A1C705-974C-4377-BAF3-55359A42BEF0}
 	EndGlobalSection
 EndGlobal

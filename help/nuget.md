@@ -8,12 +8,10 @@ With FAKE we can use [NuGet](http://nuget.codeplex.com/) to download all depende
 In order to download the packages during the build we need to add NuGet.exe to our repository. 
 You can download the "NuGet.exe Command Line Tool" from the [release page](http://nuget.codeplex.com/releases).
 
-![alt text](pics/nuget/tools.png "NuGet.exe in the tools folder")
-
 ## Restore packages from the build script
 
 Modify your build script and add **RestorePackages()** near the beginning of the script.
-This will use the following default parameters to retrieve all NuGet packages which are specified in *"./**/packages.config"* files:
+This will use the following default parameters to retrieve all NuGet packages which are specified in "./\*\*/packages.config" files:
 
 	let RestorePackageDefaults =
 		{ ToolPath = findToolInSubPath "nuget.exe" "./tools/nuget/NuGet.exe"
