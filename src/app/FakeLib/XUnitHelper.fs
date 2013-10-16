@@ -33,7 +33,6 @@ let XUnitDefaults =
 ///<summary>Runs xUnit unit tests.</summary>
 ///<param name="setParams">Function used to create an XUnitParams value.  Called with an XUnitParams value configured with the defaults.</param>
 ///<param name="assemblies">Sequence of one or more assemblies containing xUnit unit tests.</param>
-///<user/>
 let xUnit setParams assemblies = 
     let details = separated ", " assemblies
     traceStartTask "xUnit" details

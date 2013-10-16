@@ -135,7 +135,6 @@ let getArguments outputFile primaryAssembly parameters =
 /// <param name="outputFile">Output file path for the merged assembly.</param>
 /// <param name="primaryAssembly">The assembly you want ILMerge to consider as the primary.</param>
 /// <remarks>ILMerge must be installed for this to work.</remarks>
-/// <user/>
 let ILMerge setParams outputFile primaryAssembly = 
     traceStartTask "ILMerge" primaryAssembly
     let parameters = setParams ILMergeDefaults

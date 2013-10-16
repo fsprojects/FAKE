@@ -5,7 +5,6 @@ open System.IO
 
 /// <summary>Signs all files in filesToSign with the certification file certFile, protected with the password in the file passFile. 
 ///   The signtool will be search in the toolPath.</summary>
-/// <user/>
 let SignTool toolsPath certFile passFile filesToSign =
   traceStartTask "Sign-Tool" certFile
   if File.Exists certFile then

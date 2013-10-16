@@ -17,7 +17,6 @@ let init repositoryDir bare shared =
 
 ///<summary>Cleans a directory by removing all files and sub-directories.</summary>
 ///<param name="path">The path of the directory to clean.</param>
-///<user/>
 let fullclean repositoryDir =
     let di = directoryInfo repositoryDir
     if di.Exists then
