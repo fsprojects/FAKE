@@ -1,9 +1,11 @@
 ﻿[<AutoOpen>]
+/// Contains tasks to create packages in [Xamarin's xpkg format](http://components.xamarin.com/)
 module Fake.XpkgHelper
 
 open System
 open System.Text
 
+/// Parameter type for xpkg tasks
 type xpkgParams =
     {
         ToolPath: string;
@@ -24,7 +26,7 @@ type xpkgParams =
         Samples: (string*string) list;
     }
 
-/// xpkg default params  
+/// Creates xpkg default parameters
 let XpkgDefaults() =
     {
         ToolPath = findToolInSubPath "xpkg.exe" (currentDirectory @@ "tools" @@ "xpkg")
@@ -47,7 +49,7 @@ let XpkgDefaults() =
 
 let private getPackageFileName parameters = sprintf "%s-%s.xam" parameters.Package parameters.Version
 
-/// Creates a new xpkg package based on the packageFileName
+/// Creates a new xpkg package based on the package file name
 let xpkgPack setParams =    
     let parameters = XpkgDefaults() |> setParams
     let packageFileName = getPackageFileName parameters 
@@ -92,7 +94,7 @@ let xpkgPack setParams =
     else
         failwithf "Create xpkg package failed. Process finished with exit code %d." result
         
-/// Validates a xpkg package based on the packageFileName
+/// Validates a xpkg package based on the package file name
 let xpkgValidate setParams =    
     let parameters = XpkgDefaults() |> setParams
     let packageFileName = getPackageFileName parameters 
