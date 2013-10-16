@@ -53,10 +53,7 @@ let private getPackageFileName parameters = sprintf "%s-%s.xam" parameters.Packa
 ///
 /// Sample usage:
 ///
-///     Target "PackageXamarinDistribution" (fun _ ->
-///          // temp. workaround of an xpkg bug
-///          DeleteFile "./Distribution/lib/portable-net40+sl4+wp7+win8/Portable.Licensing.xml"
-///   
+///     Target "PackageXamarinDistribution" (fun _ -> 
 ///          xpkgPack (fun p ->
 ///              {p with
 ///                  ToolPath = xpkgExecutable;
@@ -64,26 +61,17 @@ let private getPackageFileName parameters = sprintf "%s-%s.xam" parameters.Packa
 ///                  Version = assemblyFileVersion;
 ///                  OutputPath = publishDir
 ///                  Project = "Portable.Licensing"
-///                  Summary = "Portable.Licensing is a cross platform software licensing tool"
+///                  Summary = "Portable.Licensing is a cross platform licensing tool"
 ///                  Publisher = "Nauck IT KG"
-///                  Website = "http://dev.nauck-it.de/projects/portable-licensing"
+///                  Website = "http://dev.nauck-it.de"
 ///                  Details = "./Xamarin/Details.md"
 ///                  License = "License.md"
 ///                  GettingStarted = "./Xamarin/GettingStarted.md"
-///                  Icons = ["./Xamarin/Portable.Licensing_512x512.png"; "./Xamarin/Portable.Licensing_128x128.png"]
-///                  Libraries = ["mobile", "./Distribution/lib/portable-net40+sl4+wp7+win8/Portable.Licensing.dll"]
-///                  Samples = ["Android Sample.", "./Samples/Android.Sample/Android.Sample.sln";
-///                             "iOS Sample.", "./Samples/iOS.Sample/iOS.Sample.sln"]
-///              }
-///          )
-///   
-///          xpkgValidate (fun p ->
-///              {p with
-///                  ToolPath = xpkgExecutable;
-///                  Package = "Portable.Licensing";
-///                  Version = assemblyFileVersion;
-///                  OutputPath = publishDir
-///                  Project = "Portable.Licensing"
+///                  Icons = ["./Xamarin/Portable.Licensing_512x512.png"
+///                           "./Xamarin/Portable.Licensing_128x128.png"]
+///                  Libraries = ["mobile", "./Distribution/lib/Portable.Licensing.dll"]
+///                  Samples = ["Android Sample.", "./Samples/Android/Android.Sample.sln"
+///                             "iOS Sample.", "./Samples/iOS/iOS.Sample.sln"]
 ///              }
 ///          )
 ///      )
