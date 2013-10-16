@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+/// This module contains functions which allow to read and write environment variables
 module Fake.EnvironmentHelper
 
 open System
@@ -10,40 +11,41 @@ open System.Text
 open System.Text.RegularExpressions
 open Microsoft.Win32
 
+/// Type alias for System.EnvironmentVariableTarget
 type EnvironTarget = EnvironmentVariableTarget
 
-/// Retrieves the EnvironmentVariable
-let environVar = Environment.GetEnvironmentVariable
+/// Retrieves the environment variable with the given name
+let environVar name = Environment.GetEnvironmentVariable name
 
-/// Combines two path strings
+/// Combines two path strings using Path.Combine
 let inline combinePaths path1 (path2:string) = Path.Combine(path1,path2.TrimStart [|'\\'|])
 
-/// Combines two path strings
+/// Combines two path strings using Path.Combine
 let inline (@@) path1 path2 = combinePaths path1 path2
 
-/// Retrieves the EnvironmentVariable
+/// Retrieves all environment variables from the given target
 let environVars target = 
   [for e in Environment.GetEnvironmentVariables target ->
      let e1 = e :?> Collections.DictionaryEntry
      e1.Key,e1.Value]
 
-/// Sets the Environment variable
-let setEnvironVar environVar value = Environment.SetEnvironmentVariable(environVar,value) 
+/// Sets the environment variable with the given name
+let setEnvironVar name value = Environment.SetEnvironmentVariable(name,value) 
 
-/// Retrieves the EnvironmentVariable or a default
+/// Retrieves the environment variable with the given name or returns the default if no value was set
 let environVarOrDefault name defaultValue =
     let var = environVar name
-    if String.IsNullOrEmpty var  then defaultValue else var
+    if String.IsNullOrEmpty var then defaultValue else var
 
 /// Retrieves the environment variable or None
 let environVarOrNone name =
     let var = environVar name
     if String.IsNullOrEmpty var  then None else Some var
 
-/// Retrieves a ApplicationSettings variable
+/// Retrieves the application settings variable with the given name
 let appSetting (name:string) = ConfigurationManager.AppSettings.[name]
 
-/// Returns true if the buildParam is set and otherwise false
+/// Returns if the build parameter with the given name was set
 let inline hasBuildParam name = environVar name <> null
 
 /// Returns the value of the buildParam if it is set and otherwise "" 
