@@ -7,7 +7,7 @@ open ICSharpCode.SharpZipLib.Zip
 open System
 
 /// The default zip level
-let internal DefaultZipLevel = 7
+let DefaultZipLevel = 7
 
 /// Creates a zip file with the given files
 /// ## Parameters
