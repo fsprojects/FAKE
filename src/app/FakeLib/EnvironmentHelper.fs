@@ -1,5 +1,5 @@
 ﻿[<AutoOpen>]
-/// This module contains functions which allow to read and write environment variables
+/// This module contains functions which allow to read and write environment variables and build parameters
 module Fake.EnvironmentHelper
 
 open System
@@ -72,7 +72,7 @@ let ProgramFilesX86 =
 /// The system root environment variable. Typically "C:\Windows"
 let SystemRoot = environVar "SystemRoot"
 
-/// Detemernines if the current system is an Unix system
+/// Determines if the current system is an Unix system
 let isUnix = Environment.OSVersion.Platform = PlatformID.Unix
 
 /// Modifies the ProcessStartInfo according to the platform semantics
@@ -108,19 +108,19 @@ let documentsFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocu
 let directorySeparator = Path.DirectorySeparatorChar.ToString()
 
 /// Convert the given windows path to a path in the current system
-let convertWindowsToCurrentPath (w:string) = 
-    if (w.Length > 2 && w.[1] = ':' && w.[2] = '\\') then
-        w
+let convertWindowsToCurrentPath (windowsPath:string) = 
+    if (windowsPath.Length > 2 && windowsPath.[1] = ':' && windowsPath.[2] = '\\') then
+        windowsPath
     else
-        w.Replace(@"\",directorySeparator)
+        windowsPath.Replace(@"\",directorySeparator)
 
-/// The IO encoding from build parameter
+/// Contains the IO encoding which is given via build parameter "encoding" or the default encoding if no encoding was specified.
 let encoding =
     match getBuildParamOrDefault "encoding" "default" with
     | "default" -> Text.Encoding.Default
     | enc -> Text.Encoding.GetEncoding(enc)
 
-/// Rteurns a sequence with all installed .NET framework versions
+/// Returns a sequence with all installed .NET framework versions
 let getInstalledDotNetFrameworks() = 
     let frameworks = new ResizeArray<_>()
     try
@@ -149,7 +149,7 @@ let getInstalledDotNetFrameworks() =
     with e ->
         frameworks :> seq<_> //Probably a new unrecognisable version
 
-/// A record which allows to display lots of machine specific information
+/// A record which allows to display lots of machine specific information like machine name, processor count etc.
 type MachineDetails = {
     ProcessorCount : int
     Is64bit : bool
@@ -159,7 +159,7 @@ type MachineDetails = {
     UserDomainName : string
 }
 
-/// Retrieves lots of machine specific information
+/// Retrieves lots of machine specific information like machine name, processor count etc.
 let getMachineEnvironment() = 
      {
         ProcessorCount = Environment.ProcessorCount
