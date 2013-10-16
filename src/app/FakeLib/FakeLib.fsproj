@@ -48,7 +48,6 @@
     <Compile Include="FSharpHelpers\SeqExtensions.fs" />
     <Compile Include="FSharpHelpers\OptionExtensions.fs" />
     <Compile Include="FSharpHelpers\AsyncHelper.fs" />
-    <Compile Include="BuildException.fs" />
     <Compile Include="EnvironmentHelper.fs" />
     <Compile Include="RegistryHelper.fs" />
     <Compile Include="FileSystemHelper.fs" />

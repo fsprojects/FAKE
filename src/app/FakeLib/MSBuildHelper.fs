@@ -10,6 +10,8 @@ open System.Xml.Linq
 
 type MSBuildProject = XDocument
 
+exception BuildException of string*list<string>
+
 /// MSBuild exe fileName
 let msBuildExe =   
     if isUnix then
