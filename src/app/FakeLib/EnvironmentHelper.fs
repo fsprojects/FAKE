@@ -48,17 +48,17 @@ let appSetting (name:string) = ConfigurationManager.AppSettings.[name]
 /// Returns if the build parameter with the given name was set
 let inline hasBuildParam name = environVar name <> null
 
-/// Returns the value of the buildParam if it is set and otherwise "" 
-let inline getBuildParam name = if hasBuildParam name then environVar name else String.Empty
+/// Returns the value of the build parameter with the given name was set if it was set and otherwise the given default value
+let inline getBuildParamOrDefault name defaultParam = if hasBuildParam name then environVar name else defaultParam
 
-/// Returns the value of the buildParam if it is set and otherwise the default
-let inline getBuildParamOrDefault name defaultParam = if hasBuildParam name then getBuildParam name else defaultParam
+/// Returns the value of the build parameter with the given name if it was set and otherwise an empty string
+let inline getBuildParam name = getBuildParamOrDefault name String.Empty
 
-/// The path of Program Files - might be x64 on x64 machine
+/// The path of the "Program Files" folder - might be x64 on x64 machine
 let ProgramFiles = Environment.GetFolderPath Environment.SpecialFolder.ProgramFiles
 
 /// The path of Program Files (x86)
-/// I think this covers all cases where PROCESSOR_ARCHITECTURE may misreport and the case where the other variable 
+/// It seems this covers all cases where PROCESSOR_ARCHITECTURE may misreport and the case where the other variable 
 /// PROCESSOR_ARCHITEW6432 can be null
 let ProgramFilesX86 =
     let wow64 = (environVar "PROCESSOR_ARCHITEW6432")
@@ -69,12 +69,13 @@ let ProgramFilesX86 =
     | _ ->
         environVar "ProgramFiles"
 
-/// System root environment variable. Typically "C:\Windows"
+/// The system root environment variable. Typically "C:\Windows"
 let SystemRoot = environVar "SystemRoot"
 
-/// Detemernines if the current system is Unix system
+/// Detemernines if the current system is an Unix system
 let isUnix = Environment.OSVersion.Platform = PlatformID.Unix
 
+/// Modifies the ProcessStartInfo according to the platform semantics
 let platformInfoAction (psi:ProcessStartInfo) =
     if isUnix && psi.FileName.EndsWith ".exe" then
         psi.Arguments <- psi.FileName + " " + psi.Arguments
@@ -115,18 +116,19 @@ let convertWindowsToCurrentPath (w:string) =
 
 /// The IO encoding from build parameter
 let encoding =
-  match getBuildParamOrDefault "encoding" "default" with
-  | "default" -> Text.Encoding.Default
-  | enc -> Text.Encoding.GetEncoding(enc)
+    match getBuildParamOrDefault "encoding" "default" with
+    | "default" -> Text.Encoding.Default
+    | enc -> Text.Encoding.GetEncoding(enc)
 
-
+/// Rteurns a sequence with all installed .NET framework versions
 let getInstalledDotNetFrameworks() = 
     let frameworks = new ResizeArray<_>()
     try
         let matches = 
-            Registry.LocalMachine
-                    .OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP")
-                    .GetSubKeyNames()
+            Registry
+              .LocalMachine
+              .OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP")
+              .GetSubKeyNames()
             |> Seq.filter (fun keyname -> Regex.IsMatch(keyname, @"^v\d"))
 
         for item in matches do
@@ -147,6 +149,7 @@ let getInstalledDotNetFrameworks() =
     with e ->
         frameworks :> seq<_> //Probably a new unrecognisable version
 
+/// A record which allows to display lots of machine specific information
 type MachineDetails = {
     ProcessorCount : int
     Is64bit : bool
@@ -154,9 +157,9 @@ type MachineDetails = {
     MachineName : string
     NETFrameworks : seq<string>
     UserDomainName : string
-
 }
 
+/// Retrieves lots of machine specific information
 let getMachineEnvironment() = 
      {
         ProcessorCount = Environment.ProcessorCount
