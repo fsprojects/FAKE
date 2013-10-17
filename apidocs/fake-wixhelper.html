@@ -73,111 +73,113 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '131', 131)" onmouseover="showTip(event, '131', 131)">
-            fileCount 
+          <code onmouseout="hideTip(event, '34', 34)" onmouseover="showTip(event, '34', 34)">
+            wixFile fileInfo
           </code>
-          <div class="tip" id="131">
-            <strong>Signature:</strong>int<br />
+          <div class="tip" id="34">
+            <strong>Signature:</strong>fileInfo:FileInfo -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '133', 133)" onmouseover="showTip(event, '133', 133)">
-            wixFile fi
-          </code>
-          <div class="tip" id="133">
-            <strong>Signature:</strong>fi:FileInfo -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '134', 134)" onmouseover="showTip(event, '134', 134)">
-            wixDir fileFilter asSubDir dir
-          </code>
-          <div class="tip" id="134">
-            <strong>Signature:</strong>fileFilter:(FileInfo -&gt; bool) -&gt; asSubDir:bool -&gt; dir:DirectoryInfo -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '135', 135)" onmouseover="showTip(event, '135', 135)">
-            wixComponentRefs dir
-          </code>
-          <div class="tip" id="135">
-            <strong>Signature:</strong>dir:DirectoryInfo -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '136', 136)" onmouseover="showTip(event, '136', 136)">
-            getFilesAsWiXString files
-          </code>
-          <div class="tip" id="136">
-            <strong>Signature:</strong>files:seq&lt;string&gt; -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '137', 137)" onmouseover="showTip(event, '137', 137)">
-            WiXDefaults 
-          </code>
-          <div class="tip" id="137">
-            <strong>Signature:</strong>WiXParams<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>WiX default params</p>
+        <td class="xmldoc"><p>Create a WiX File tag from the given FileInfo</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '138', 138)" onmouseover="showTip(event, '138', 138)">
+          <code onmouseout="hideTip(event, '35', 35)" onmouseover="showTip(event, '35', 35)">
+            getFilesAsWiXString files
+          </code>
+          <div class="tip" id="35">
+            <strong>Signature:</strong>files:seq&lt;string&gt; -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Create WiX File tags from the given files</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '36', 36)" onmouseover="showTip(event, '36', 36)">
+            wixDir fileFilter asSubDir directoryInfo
+          </code>
+          <div class="tip" id="36">
+            <strong>Signature:</strong>fileFilter:(FileInfo -&gt; bool) -&gt; asSubDir:bool -&gt; directoryInfo:DirectoryInfo -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates recursive WiX directory and file tags from the given DirectoryInfo</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '37', 37)" onmouseover="showTip(event, '37', 37)">
+            wixComponentRefs directoryInfo
+          </code>
+          <div class="tip" id="37">
+            <strong>Signature:</strong>directoryInfo:DirectoryInfo -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates WiX ComponentRef tags from the given DirectoryInfo</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '38', 38)" onmouseover="showTip(event, '38', 38)">
+            WiXDefaults 
+          </code>
+          <div class="tip" id="38">
+            <strong>Signature:</strong>WiXParams<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>WiX default parameters</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '39', 39)" onmouseover="showTip(event, '39', 39)">
             Candle parameters wixScript
           </code>
-          <div class="tip" id="138">
+          <div class="tip" id="39">
             <strong>Signature:</strong>parameters:WiXParams -&gt; wixScript:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Runs the <a href="http://wixtoolset.org/documentation/manual/v3/overview/candle.html">Candle tool</a> on the given WiX script with the given parameters</p>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '139', 139)" onmouseover="showTip(event, '139', 139)">
+          <code onmouseout="hideTip(event, '40', 40)" onmouseover="showTip(event, '40', 40)">
             Light parameters outputFile wixObj
           </code>
-          <div class="tip" id="139">
+          <div class="tip" id="40">
             <strong>Signature:</strong>parameters:WiXParams -&gt; outputFile:string -&gt; wixObj:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Runs the <a href="http://wixtoolset.org/documentation/manual/v3/overview/light.html">Light tool</a> on the given WiX script with the given parameters</p>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '140', 140)" onmouseover="showTip(event, '140', 140)">
+          <code onmouseout="hideTip(event, '41', 41)" onmouseover="showTip(event, '41', 41)">
             WiX setParams outputFile wixScript
           </code>
-          <div class="tip" id="140">
+          <div class="tip" id="41">
             <strong>Signature:</strong>setParams:(WiXParams -&gt; WiXParams) -&gt; outputFile:string -&gt; wixScript:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Use the WiX tools Candle and Light to create an msi.</p>
+        <td class="xmldoc"><p>Use the WiX tools <a href="http://wixtoolset.org/documentation/manual/v3/overview/candle.html">Candle</a> and <a href="http://wixtoolset.org/documentation/manual/v3/overview/light.html">Light</a> to create an msi.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>setParams</code> - Function used to create an WiXParams value with your required settings.  Called with an WixParams value configured with the defaults.</li>
+<li><code>outputFile</code> - The msi output file path (given to Light).</li>
+<li><code>wixScript</code> - The path to a WiX script that will be used with Candle.</li>
+</ul>
 </td>
       </tr>
     </tbody>
