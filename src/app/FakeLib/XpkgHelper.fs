@@ -51,7 +51,7 @@ let private getPackageFileName parameters = sprintf "%s-%s.xam" parameters.Packa
 
 /// Creates a new xpkg package based on the package file name
 ///
-/// Sample usage:
+/// ## Sample
 ///
 ///     Target "PackageXamarinDistribution" (fun _ -> 
 ///          xpkgPack (fun p ->
