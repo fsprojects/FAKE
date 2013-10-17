@@ -35,7 +35,7 @@ let private sameLevels = new Dictionary<_,_>()
 
 let targetsAreOnSameLevel x y =
     match sameLevels.TryGetValue y with
-    | true, z -> failwithf "Target %s is already on same level with %s" x z
+    | true, z -> ()
     | _  -> sameLevels.[y] <- x
 
 let rec addDependenciesOnSameLevel target dependency =
