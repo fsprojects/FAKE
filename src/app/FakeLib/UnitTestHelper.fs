@@ -1,19 +1,22 @@
-﻿module Fake.UnitTestHelper
+﻿/// This module contains functions which allow to report unit test results to build servers.
+module Fake.UnitTestHelper
 
 open System
 open Fake
 
-
+/// Basic data type to represent test status
 type TestStatus = 
 | Ok
 | Ignored of string * string
 | Failure of string * string
 
+/// Basic data type to represent tests
 type Test = {
     Name:string 
     RunTime: TimeSpan
     Status: TestStatus }
 
+/// Basic data type to represent test results
 type TestResults = {
     SuiteName : string
     Tests: Test list  }
@@ -27,6 +30,7 @@ type TestResults = {
 
         member this.GetTestCount() = List.length this.Tests
 
+/// Reports the given test results to [TeamCity](http://www.jetbrains.com/teamcity/)
 let reportToTeamCity testResults =
     StartTestSuite testResults.SuiteName
 
@@ -45,6 +49,7 @@ let reportToTeamCity testResults =
 
     FinishTestSuite testResults.SuiteName
 
+/// Reports the given test results to the detected build server
 let reportTestResults testResults =
     match buildServer with
     | TeamCity -> reportToTeamCity testResults
