@@ -1,25 +1,27 @@
 ﻿[<AutoOpen>]
+/// Defines default listeners for build output traces
 module Fake.TraceListener
 
 open System
 
 /// Defines Tracing information for TraceListeners
 type TraceData =
-    | StartMessage
-    | ImportantMessage of string
-    | ErrorMessage  of string
-    | LogMessage of string * bool
-    | TraceMessage of string * bool
-    | FinishedMessage 
-    | OpenTag of string * string
-    | CloseTag of string
+| StartMessage
+| ImportantMessage of string
+| ErrorMessage  of string
+| LogMessage of string * bool
+| TraceMessage of string * bool
+| FinishedMessage 
+| OpenTag of string * string
+| CloseTag of string
 
 /// Defines a TraceListener interface
 type ITraceListener =
     abstract Write: TraceData -> unit
 
-/// Maps TracePriorities to ConsoleColors
-let colorMap = function
+/// A default color map which maps TracePriorities to ConsoleColors
+let colorMap traceData = 
+    match traceData with
     | ImportantMessage _ -> ConsoleColor.Yellow
     | ErrorMessage _     -> ConsoleColor.Red
     | LogMessage _       -> ConsoleColor.Gray
@@ -27,9 +29,10 @@ let colorMap = function
     | FinishedMessage    -> ConsoleColor.White
     | _                  -> ConsoleColor.Gray
 
-/// <summary>Implements a TraceListener for System.Console</summary>
-/// <param name="importantMessagesToStdErr">Defines whether to trace important messages to StdErr.</param>
-/// <param name="colorMap">A function which maps TracePriorities to ConsoleColors.</param>
+/// Implements a TraceListener for System.Console
+/// ## Parameters
+///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
+///  - `colorMap` - A function which maps TracePriorities to ConsoleColors.
 type ConsoleTraceListener(importantMessagesToStdErr,colorMap) =
     let writeText toStdErr color newLine text =
         let curColor = Console.ForegroundColor
@@ -58,10 +61,12 @@ type ConsoleTraceListener(importantMessagesToStdErr,colorMap) =
 /// The default TraceListener for Console
 let defaultConsoleTraceListener = ConsoleTraceListener(buildServer <> CCNet,colorMap)
 
+/// Specifies if the XmlWriter should close tags automatically
 let mutable AutoCloseXmlWriter = false
 
-/// <summary>Implements a TraceListener which writes NAnt like XML files.</summary>
-/// <param name="xmlOutputFile">Defines the xml output file.</param>
+/// Implements a TraceListener which writes NAnt like XML files.
+/// ## Parameters
+///  - `xmlOutputFile` - Defines the xml output file.
 type NAntXmlTraceListener(xmlOutputFile) =
     let getXmlWriter() = new IO.StreamWriter(xmlOutputFile,true,encoding)
     let mutable xmlWriter:IO.StreamWriter = null
@@ -101,11 +106,15 @@ type NAntXmlTraceListener(xmlOutputFile) =
             xmlWriter.Flush()
             if AutoCloseXmlWriter || msg = FinishedMessage then closeWriter()
 
+/// A List with all registered listeners
 let listeners = new Collections.Generic.List<ITraceListener>()
+
+/// Allows to register a new Xml listeners
 let addXmlListener xmlOutputFile = listeners.Add(new NAntXmlTraceListener(xmlOutputFile))
 
 // register listeners
 listeners.Add defaultConsoleTraceListener
 if hasBuildParam "logfile" || buildServer = CCNet then addXmlListener xmlOutputFile
 
+/// Allows to post messages to all trace listeners
 let postMessage x = listeners.ForEach (fun listener -> listener.Write x)
