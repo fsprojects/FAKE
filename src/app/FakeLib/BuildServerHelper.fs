@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+/// Contains functions which allow build scripts to interact with a build server.
 module Fake.BuildServerHelper
 
 /// The BuildServer type.
@@ -16,11 +17,11 @@ type TraceMode =
 /// Trace verbose output
 let mutable verbose = hasBuildParam "verbose"
 
-/// A constant for local builds            
+/// A constant label for local builds            
 let localBuildLabel = "LocalBuild"
 
-/// Definces the XML output file
-/// Used for BuildServers like CruiseControl.NET
+/// Definces the XML output file - used for BuildServers like CruiseControl.NET
+/// This output file can be specified by using the *logfile* build parameters.
 let mutable xmlOutputFile = getBuildParamOrDefault "logfile" "./output/Results.xml"
 
 /// Build number retrieved from TeamCity
@@ -33,7 +34,7 @@ let jenkinsBuildNumber = tcBuildNumber
 let ccBuildLabel = environVar "CCNETLABEL"
 
 /// Determines the current BuildVersion and if it is a local build
-let buildVersion,buildServer =     
+let buildVersion,buildServer =
     let getVersion = getBuildParamOrDefault "buildVersion"
     if hasBuildParam "jenkins_home" then getVersion jenkinsBuildNumber,Jenkins else
     if not (isNullOrEmpty tcBuildNumber) then getVersion tcBuildNumber,TeamCity else
