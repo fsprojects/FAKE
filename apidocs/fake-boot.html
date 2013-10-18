@@ -68,6 +68,61 @@ download dependencies with NuGet and do other preparatory work in
 the first stage, and have these dependencies available in the
 second stage.</p>
 </div>
+
+<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+    <h2>Nested types and modules</h2>
+
+    <table class="table table-bordered type-list">
+        <thead>
+            <tr><td>Type</td><td>Description</td></tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-boot-commandenvironment.html">CommandEnvironment</a>
+                    </td>
+                    <td class="xmldoc"><p>Abstracts over command-line environment features.</p>
+</td>
+                </tr>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-boot-commandhandler.html">CommandHandler</a>
+                    </td>
+                    <td class="xmldoc"><p>Represents a command line handler.</p>
+</td>
+                </tr>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-boot-config.html">Config</a>
+                    </td>
+                    <td class="xmldoc"><p>Configures the boostrapping process.</p>
+</td>
+                </tr>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-boot-nugetdependency.html">NuGetDependency</a>
+                    </td>
+                    <td class="xmldoc"><p>Specifies NuGet package dependencies.</p>
+</td>
+                </tr>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-boot-nugetversion.html">NuGetVersion</a>
+                    </td>
+                    <td class="xmldoc"><p>Specifies which version of the NuGet package to install.</p>
+</td>
+                </tr>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-boot-stage.html">Stage</a>
+                    </td>
+                    <td class="xmldoc"><p>Stage of execution for a boot system.</p>
+</td>
+                </tr>
+        </tbody>
+    </table>
+
+<!-- END TODO -->
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -77,10 +132,10 @@ second stage.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '565', 565)" onmouseover="showTip(event, '565', 565)">
+          <code onmouseout="hideTip(event, '4', 4)" onmouseover="showTip(event, '4', 4)">
             ParseCommandLine args
           </code>
-          <div class="tip" id="565">
+          <div class="tip" id="4">
             <strong>Signature:</strong>args:seq&lt;string&gt; -&gt; CommandHandler option<br />
                       </div>
         </td>
@@ -90,10 +145,10 @@ second stage.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '566', 566)" onmouseover="showTip(event, '566', 566)">
+          <code onmouseout="hideTip(event, '11', 11)" onmouseover="showTip(event, '11', 11)">
             Prepare config
           </code>
-          <div class="tip" id="566">
+          <div class="tip" id="11">
             <strong>Signature:</strong>config:Config -&gt; unit<br />
                       </div>
         </td>

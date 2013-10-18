@@ -63,6 +63,25 @@
 <h1>REST</h1>
 <div class="xmldoc">
 </div>
+
+<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+    <h2>Nested types and modules</h2>
+
+    <table class="table table-bordered type-list">
+        <thead>
+            <tr><td>Type</td><td>Description</td></tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-rest-postmethod.html">PostMethod</a>
+                    </td>
+                    <td class="xmldoc"></td>
+                </tr>
+        </tbody>
+    </table>
+
+<!-- END TODO -->
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -72,10 +91,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '236', 236)" onmouseover="showTip(event, '236', 236)">
+          <code onmouseout="hideTip(event, '370', 370)" onmouseover="showTip(event, '370', 370)">
             ExecuteGetCommand userName password url
           </code>
-          <div class="tip" id="236">
+          <div class="tip" id="370">
             <strong>Signature:</strong>userName:string -&gt; password:string -&gt; url:string -&gt; string<br />
                       </div>
         </td>
@@ -85,28 +104,28 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '237', 237)" onmouseover="showTip(event, '237', 237)">
+          <code onmouseout="hideTip(event, '371', 371)" onmouseover="showTip(event, '371', 371)">
+            ExecutePost url userName
+          </code>
+          <div class="tip" id="371">
+            <strong>Signature:</strong>url:string -&gt; userName:string -&gt; string -&gt; string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '372', 372)" onmouseover="showTip(event, '372', 372)">
             ExecutePostCommand (...)
           </code>
-          <div class="tip" id="237">
+          <div class="tip" id="372">
             <strong>Signature:</strong>headerF:(WebHeaderCollection -&gt; unit) -&gt; url:string -&gt; userName:string -&gt; password:string -&gt; data:string -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc"><p>Executes an HTTP POST command and retrives the information.  <br />
  This function will automatically include a "source" parameter if the "Source" property is set.</p>
 </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '238', 238)" onmouseover="showTip(event, '238', 238)">
-            ExecutePost url userName
-          </code>
-          <div class="tip" id="238">
-            <strong>Signature:</strong>url:string -&gt; userName:string -&gt; string -&gt; string -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
       </tr>
     </tbody>
   </table>

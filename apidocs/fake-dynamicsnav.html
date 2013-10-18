@@ -63,6 +63,37 @@
 <h1>DynamicsNav</h1>
 <div class="xmldoc">
 </div>
+
+<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+    <h2>Nested types and modules</h2>
+
+    <table class="table table-bordered type-list">
+        <thead>
+            <tr><td>Type</td><td>Description</td></tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-dynamicsnav-dynamicsnavparams.html">DynamicsNavParams</a>
+                    </td>
+                    <td class="xmldoc"></td>
+                </tr>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-dynamicsnav-navisionservertype.html">NavisionServerType</a>
+                    </td>
+                    <td class="xmldoc"></td>
+                </tr>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-dynamicsnav-rtcparams.html">RTCParams</a>
+                    </td>
+                    <td class="xmldoc"></td>
+                </tr>
+        </tbody>
+    </table>
+
+<!-- END TODO -->
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -72,11 +103,11 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '502', 502)" onmouseover="showTip(event, '502', 502)">
-            getNAVClassicPath navClientVersion
+          <code onmouseout="hideTip(event, '89', 89)" onmouseover="showTip(event, '89', 89)">
+            analyzeTestResults fileName
           </code>
-          <div class="tip" id="502">
-            <strong>Signature:</strong>navClientVersion:string -&gt; string<br />
+          <div class="tip" id="89">
+            <strong>Signature:</strong>fileName:string -&gt; TestResults option<br />
                       </div>
         </td>
         <td class="xmldoc"></td>
@@ -84,22 +115,36 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '503', 503)" onmouseover="showTip(event, '503', 503)">
-            getNAVPath navClientVersion
+          <code onmouseout="hideTip(event, '107', 107)" onmouseover="showTip(event, '107', 107)">
+            CloseAllNavProcesses (...)
           </code>
-          <div class="tip" id="503">
-            <strong>Signature:</strong>navClientVersion:string -&gt; string<br />
+          <div class="tip" id="107">
+            <strong>Signature:</strong>raiseExceptionIfNotFound:bool -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Closes all running Dynamics NAV instances</p>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '504', 504)" onmouseover="showTip(event, '504', 504)">
+          <code onmouseout="hideTip(event, '108', 108)" onmouseover="showTip(event, '108', 108)">
+            CompileAll connectionInfo
+          </code>
+          <div class="tip" id="108">
+            <strong>Signature:</strong>connectionInfo:DynamicsNavParams -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Compiles all uncompiled objects in the Dynamics NAV client</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '109', 109)" onmouseover="showTip(event, '109', 109)">
             createConnectionInfo (...)
           </code>
-          <div class="tip" id="504">
+          <div class="tip" id="109">
             <strong>Signature:</strong>navClientVersion:string -&gt; serverMode:NavisionServerType -&gt; serverName:string -&gt; targetDatabase:string -&gt; DynamicsNavParams<br />
                       </div>
         </td>
@@ -109,23 +154,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '505', 505)" onmouseover="showTip(event, '505', 505)">
-            ImportFile connectionInfo fileName
-          </code>
-          <div class="tip" id="505">
-            <strong>Signature:</strong>connectionInfo:DynamicsNavParams -&gt; fileName:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Imports the given txt or fob file into the Dynamics NAV client</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '506', 506)" onmouseover="showTip(event, '506', 506)">
+          <code onmouseout="hideTip(event, '110', 110)" onmouseover="showTip(event, '110', 110)">
             CreateImportFile importFileName files
           </code>
-          <div class="tip" id="506">
+          <div class="tip" id="110">
             <strong>Signature:</strong>importFileName:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -135,10 +167,60 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '507', 507)" onmouseover="showTip(event, '507', 507)">
+          <code onmouseout="hideTip(event, '111', 111)" onmouseover="showTip(event, '111', 111)">
+            createRTCConnectionInfo (...)
+          </code>
+          <div class="tip" id="111">
+            <strong>Signature:</strong>navClientVersion:string -&gt; serverName:string -&gt; serviceTierName:string -&gt; port:int -&gt; company:string -&gt; RTCParams<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates the connection information to a Dynamics NAV RTC</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '112', 112)" onmouseover="showTip(event, '112', 112)">
+            getNAVClassicPath navClientVersion
+          </code>
+          <div class="tip" id="112">
+            <strong>Signature:</strong>navClientVersion:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '113', 113)" onmouseover="showTip(event, '113', 113)">
+            getNAVPath navClientVersion
+          </code>
+          <div class="tip" id="113">
+            <strong>Signature:</strong>navClientVersion:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '114', 114)" onmouseover="showTip(event, '114', 114)">
+            ImportFile connectionInfo fileName
+          </code>
+          <div class="tip" id="114">
+            <strong>Signature:</strong>connectionInfo:DynamicsNavParams -&gt; fileName:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Imports the given txt or fob file into the Dynamics NAV client</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '115', 115)" onmouseover="showTip(event, '115', 115)">
             ImportFiles (...)
           </code>
-          <div class="tip" id="507">
+          <div class="tip" id="115">
             <strong>Signature:</strong>connectionInfo:DynamicsNavParams -&gt; importFileName:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -149,49 +231,10 @@ If the import fails, then every file will be tried alone</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '508', 508)" onmouseover="showTip(event, '508', 508)">
-            CompileAll connectionInfo
-          </code>
-          <div class="tip" id="508">
-            <strong>Signature:</strong>connectionInfo:DynamicsNavParams -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Compiles all uncompiled objects in the Dynamics NAV client</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '509', 509)" onmouseover="showTip(event, '509', 509)">
-            createRTCConnectionInfo (...)
-          </code>
-          <div class="tip" id="509">
-            <strong>Signature:</strong>navClientVersion:string -&gt; serverName:string -&gt; serviceTierName:string -&gt; port:int -&gt; company:string -&gt; RTCParams<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Creates the connection information to a Dynamics NAV RTC</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '510', 510)" onmouseover="showTip(event, '510', 510)">
-            RunCodeunit connectionInfo codeunit
-          </code>
-          <div class="tip" id="510">
-            <strong>Signature:</strong>connectionInfo:RTCParams -&gt; codeunit:int -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Runs a codeunit with the RTC client</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '511', 511)" onmouseover="showTip(event, '511', 511)">
+          <code onmouseout="hideTip(event, '116', 116)" onmouseover="showTip(event, '116', 116)">
             OpenPage connectionInfo pageNo
           </code>
-          <div class="tip" id="511">
+          <div class="tip" id="116">
             <strong>Signature:</strong>connectionInfo:RTCParams -&gt; pageNo:int -&gt; bool<br />
                       </div>
         </td>
@@ -201,27 +244,15 @@ If the import fails, then every file will be tried alone</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '512', 512)" onmouseover="showTip(event, '512', 512)">
-            CloseAllNavProcesses (...)
+          <code onmouseout="hideTip(event, '117', 117)" onmouseover="showTip(event, '117', 117)">
+            RunCodeunit connectionInfo codeunit
           </code>
-          <div class="tip" id="512">
-            <strong>Signature:</strong>raiseExceptionIfNotFound:bool -&gt; unit<br />
+          <div class="tip" id="117">
+            <strong>Signature:</strong>connectionInfo:RTCParams -&gt; codeunit:int -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Closes all running Dynamics NAV instances</p>
+        <td class="xmldoc"><p>Runs a codeunit with the RTC client</p>
 </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '513', 513)" onmouseover="showTip(event, '513', 513)">
-            analyzeTestResults fileName
-          </code>
-          <div class="tip" id="513">
-            <strong>Signature:</strong>fileName:string -&gt; TestResults option<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
       </tr>
     </tbody>
   </table>

@@ -63,6 +63,11 @@
 <h1>TemplateHelper</h1>
 <div class="xmldoc">
 </div>
+
+<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+
+
+<!-- END TODO -->
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -72,10 +77,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '87', 87)" onmouseover="showTip(event, '87', 87)">
+          <code onmouseout="hideTip(event, '498', 498)" onmouseover="showTip(event, '498', 498)">
             loadTemplates seq
           </code>
-          <div class="tip" id="87">
+          <div class="tip" id="498">
             <strong>Signature:</strong>seq:seq&lt;string&gt; -&gt; seq&lt;string * seq&lt;string&gt;&gt;<br />
                       </div>
         </td>
@@ -85,10 +90,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '88', 88)" onmouseover="showTip(event, '88', 88)">
+          <code onmouseout="hideTip(event, '526', 526)" onmouseover="showTip(event, '526', 526)">
+            processTemplates replacements files
+          </code>
+          <div class="tip" id="526">
+            <strong>Signature:</strong>replacements:seq&lt;string * string&gt; -&gt; files:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Replaces the templates with the given replacements</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '527', 527)" onmouseover="showTip(event, '527', 527)">
             replaceKeywords replacements
           </code>
-          <div class="tip" id="88">
+          <div class="tip" id="527">
             <strong>Signature:</strong>replacements:seq&lt;string * string&gt; -&gt; seq&lt;&#39;?5028 * &#39;?5029&gt; -&gt; seq&lt;&#39;?5028 * seq&lt;string&gt;&gt;<br />
                           <strong>Type parameters:</strong> '?5028, '?5029          </div>
         </td>
@@ -98,27 +116,14 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '89', 89)" onmouseover="showTip(event, '89', 89)">
+          <code onmouseout="hideTip(event, '528', 528)" onmouseover="showTip(event, '528', 528)">
             saveFiles 
           </code>
-          <div class="tip" id="89">
+          <div class="tip" id="528">
             <strong>Signature:</strong>seq&lt;string * seq&lt;string&gt;&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc"><p>saves all files (lazy - file by file!)</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '90', 90)" onmouseover="showTip(event, '90', 90)">
-            processTemplates replacements files
-          </code>
-          <div class="tip" id="90">
-            <strong>Signature:</strong>replacements:seq&lt;string * string&gt; -&gt; files:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Replaces the templates with the given replacements</p>
 </td>
       </tr>
     </tbody>

@@ -63,6 +63,25 @@
 <h1>Submodule</h1>
 <div class="xmldoc">
 </div>
+
+<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+    <h2>Nested types and modules</h2>
+
+    <table class="table table-bordered type-list">
+        <thead>
+            <tr><td>Type</td><td>Description</td></tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-git-submodule-submodule.html">Submodule</a>
+                    </td>
+                    <td class="xmldoc"></td>
+                </tr>
+        </tbody>
+    </table>
+
+<!-- END TODO -->
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -72,10 +91,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '602', 602)" onmouseover="showTip(event, '602', 602)">
+          <code onmouseout="hideTip(event, '717', 717)" onmouseover="showTip(event, '717', 717)">
+            add (...)
+          </code>
+          <div class="tip" id="717">
+            <strong>Signature:</strong>superRepositoryDir:string -&gt; remotePath:string -&gt; localPath:string -&gt; branch:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Adds a submodule to the current repository.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '718', 718)" onmouseover="showTip(event, '718', 718)">
             getSubModules repositoryDir
           </code>
-          <div class="tip" id="602">
+          <div class="tip" id="718">
             <strong>Signature:</strong>repositoryDir:string -&gt; seq&lt;Submodule&gt;<br />
                       </div>
         </td>
@@ -85,27 +117,14 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '603', 603)" onmouseover="showTip(event, '603', 603)">
+          <code onmouseout="hideTip(event, '719', 719)" onmouseover="showTip(event, '719', 719)">
             init superRepositoryDir name
           </code>
-          <div class="tip" id="603">
+          <div class="tip" id="719">
             <strong>Signature:</strong>superRepositoryDir:string -&gt; name:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc"><p>Inits a submodule</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '604', 604)" onmouseover="showTip(event, '604', 604)">
-            add (...)
-          </code>
-          <div class="tip" id="604">
-            <strong>Signature:</strong>superRepositoryDir:string -&gt; remotePath:string -&gt; localPath:string -&gt; branch:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Adds a submodule to the current repository.</p>
 </td>
       </tr>
     </tbody>

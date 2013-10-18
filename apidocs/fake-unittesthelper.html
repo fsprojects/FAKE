@@ -64,6 +64,40 @@
 <div class="xmldoc">
 <p>This module contains functions which allow to report unit test results to build servers.</p>
 </div>
+
+<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+    <h2>Nested types and modules</h2>
+
+    <table class="table table-bordered type-list">
+        <thead>
+            <tr><td>Type</td><td>Description</td></tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-unittesthelper-test.html">Test</a>
+                    </td>
+                    <td class="xmldoc"><p>Basic data type to represent tests</p>
+</td>
+                </tr>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-unittesthelper-testresults.html">TestResults</a>
+                    </td>
+                    <td class="xmldoc"><p>Basic data type to represent test results</p>
+</td>
+                </tr>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-unittesthelper-teststatus.html">TestStatus</a>
+                    </td>
+                    <td class="xmldoc"><p>Basic data type to represent test status</p>
+</td>
+                </tr>
+        </tbody>
+    </table>
+
+<!-- END TODO -->
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -73,27 +107,27 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '44', 44)" onmouseover="showTip(event, '44', 44)">
-            reportToTeamCity testResults
+          <code onmouseout="hideTip(event, '529', 529)" onmouseover="showTip(event, '529', 529)">
+            reportTestResults testResults
           </code>
-          <div class="tip" id="44">
+          <div class="tip" id="529">
             <strong>Signature:</strong>testResults:TestResults -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Reports the given test results to <a href="http://www.jetbrains.com/teamcity/">TeamCity</a></p>
+        <td class="xmldoc"><p>Reports the given test results to the detected build server</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '46', 46)" onmouseover="showTip(event, '46', 46)">
-            reportTestResults testResults
+          <code onmouseout="hideTip(event, '530', 530)" onmouseover="showTip(event, '530', 530)">
+            reportToTeamCity testResults
           </code>
-          <div class="tip" id="46">
+          <div class="tip" id="530">
             <strong>Signature:</strong>testResults:TestResults -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Reports the given test results to the detected build server</p>
+        <td class="xmldoc"><p>Reports the given test results to <a href="http://www.jetbrains.com/teamcity/">TeamCity</a></p>
 </td>
       </tr>
     </tbody>

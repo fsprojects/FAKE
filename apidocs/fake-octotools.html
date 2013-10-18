@@ -63,6 +63,61 @@
 <h1>OctoTools</h1>
 <div class="xmldoc">
 </div>
+
+<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+    <h2>Nested types and modules</h2>
+
+    <table class="table table-bordered type-list">
+        <thead>
+            <tr><td>Type</td><td>Description</td></tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-octotools-createreleaseoptions.html">CreateReleaseOptions</a>
+                    </td>
+                    <td class="xmldoc"><p>Options for creating a new release</p>
+</td>
+                </tr>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-octotools-deletereleaseoptions.html">DeleteReleaseOptions</a>
+                    </td>
+                    <td class="xmldoc"><p>Options for deleting a range of releases in a project</p>
+</td>
+                </tr>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-octotools-deployreleaseoptions.html">DeployReleaseOptions</a>
+                    </td>
+                    <td class="xmldoc"><p>Options for deploying a release to an environment</p>
+</td>
+                </tr>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-octotools-octocommand.html">OctoCommand</a>
+                    </td>
+                    <td class="xmldoc"><p>DU for selecting one command</p>
+</td>
+                </tr>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-octotools-octoparams.html">OctoParams</a>
+                    </td>
+                    <td class="xmldoc"><p>Complete Octo.exe CLI params</p>
+</td>
+                </tr>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-octotools-octoserveroptions.html">OctoServerOptions</a>
+                    </td>
+                    <td class="xmldoc"><p>Octo.exe server options</p>
+</td>
+                </tr>
+        </tbody>
+    </table>
+
+<!-- END TODO -->
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -72,127 +127,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '275', 275)" onmouseover="showTip(event, '275', 275)">
-            serverOptions 
-          </code>
-          <div class="tip" id="275">
-            <strong>Signature:</strong>OctoServerOptions<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Default server options.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '276', 276)" onmouseover="showTip(event, '276', 276)">
-            releaseOptions 
-          </code>
-          <div class="tip" id="276">
-            <strong>Signature:</strong>CreateReleaseOptions<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Default options for 'CreateRelease'</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '277', 277)" onmouseover="showTip(event, '277', 277)">
-            deployOptions 
-          </code>
-          <div class="tip" id="277">
-            <strong>Signature:</strong>DeployReleaseOptions<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Default options for 'DeployRelease'</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '278', 278)" onmouseover="showTip(event, '278', 278)">
-            deleteOptions 
-          </code>
-          <div class="tip" id="278">
-            <strong>Signature:</strong>DeleteReleaseOptions<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Default options for 'DeleteReleases'</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '279', 279)" onmouseover="showTip(event, '279', 279)">
-            octoParams 
-          </code>
-          <div class="tip" id="279">
-            <strong>Signature:</strong>OctoParams<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Default parameters to call octo.exe.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '280', 280)" onmouseover="showTip(event, '280', 280)">
-            optionalStringParam p o
-          </code>
-          <div class="tip" id="280">
-            <strong>Signature:</strong>p:string -&gt; o:string option -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '281', 281)" onmouseover="showTip(event, '281', 281)">
-            optionalObjParam p o
-          </code>
-          <div class="tip" id="281">
-            <strong>Signature:</strong>p:string -&gt; o:&#39;?5491 option -&gt; string<br />
-                          <strong>Type parameters:</strong> '?5491          </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '282', 282)" onmouseover="showTip(event, '282', 282)">
-            flag p b
-          </code>
-          <div class="tip" id="282">
-            <strong>Signature:</strong>p:string -&gt; b:bool -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '283', 283)" onmouseover="showTip(event, '283', 283)">
-            releaseCommandLine opts
-          </code>
-          <div class="tip" id="283">
-            <strong>Signature:</strong>opts:CreateReleaseOptions -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
           <code onmouseout="hideTip(event, '284', 284)" onmouseover="showTip(event, '284', 284)">
-            deployCommandLine opts
+            commandLine command
           </code>
           <div class="tip" id="284">
-            <strong>Signature:</strong>opts:DeployReleaseOptions -&gt; string<br />
+            <strong>Signature:</strong>command:OctoCommand -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Maps an command to string input for the octopus tools cli.</p>
+</td>
       </tr>
       <tr>
         <td class="member-name">
@@ -210,9 +153,134 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '286', 286)" onmouseover="showTip(event, '286', 286)">
-            serverCommandLine opts
+            deleteOptions 
           </code>
           <div class="tip" id="286">
+            <strong>Signature:</strong>DeleteReleaseOptions<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Default options for 'DeleteReleases'</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '287', 287)" onmouseover="showTip(event, '287', 287)">
+            deployCommandLine opts
+          </code>
+          <div class="tip" id="287">
+            <strong>Signature:</strong>opts:DeployReleaseOptions -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '288', 288)" onmouseover="showTip(event, '288', 288)">
+            deployOptions 
+          </code>
+          <div class="tip" id="288">
+            <strong>Signature:</strong>DeployReleaseOptions<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Default options for 'DeployRelease'</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '289', 289)" onmouseover="showTip(event, '289', 289)">
+            flag p b
+          </code>
+          <div class="tip" id="289">
+            <strong>Signature:</strong>p:string -&gt; b:bool -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '290', 290)" onmouseover="showTip(event, '290', 290)">
+            Octo setParams
+          </code>
+          <div class="tip" id="290">
+            <strong>Signature:</strong>setParams:(OctoParams -&gt; OctoParams) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Calls the Octo.exe CLI.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '291', 291)" onmouseover="showTip(event, '291', 291)">
+            octoParams 
+          </code>
+          <div class="tip" id="291">
+            <strong>Signature:</strong>OctoParams<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Default parameters to call octo.exe.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '292', 292)" onmouseover="showTip(event, '292', 292)">
+            optionalObjParam p o
+          </code>
+          <div class="tip" id="292">
+            <strong>Signature:</strong>p:string -&gt; o:&#39;?5491 option -&gt; string<br />
+                          <strong>Type parameters:</strong> '?5491          </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '293', 293)" onmouseover="showTip(event, '293', 293)">
+            optionalStringParam p o
+          </code>
+          <div class="tip" id="293">
+            <strong>Signature:</strong>p:string -&gt; o:string option -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '294', 294)" onmouseover="showTip(event, '294', 294)">
+            releaseCommandLine opts
+          </code>
+          <div class="tip" id="294">
+            <strong>Signature:</strong>opts:CreateReleaseOptions -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '295', 295)" onmouseover="showTip(event, '295', 295)">
+            releaseOptions 
+          </code>
+          <div class="tip" id="295">
+            <strong>Signature:</strong>CreateReleaseOptions<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Default options for 'CreateRelease'</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '296', 296)" onmouseover="showTip(event, '296', 296)">
+            serverCommandLine opts
+          </code>
+          <div class="tip" id="296">
             <strong>Signature:</strong>opts:OctoServerOptions -&gt; string<br />
                       </div>
         </td>
@@ -221,27 +289,14 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '287', 287)" onmouseover="showTip(event, '287', 287)">
-            commandLine command
+          <code onmouseout="hideTip(event, '297', 297)" onmouseover="showTip(event, '297', 297)">
+            serverOptions 
           </code>
-          <div class="tip" id="287">
-            <strong>Signature:</strong>command:OctoCommand -&gt; string<br />
+          <div class="tip" id="297">
+            <strong>Signature:</strong>OctoServerOptions<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Maps an command to string input for the octopus tools cli.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '288', 288)" onmouseover="showTip(event, '288', 288)">
-            Octo setParams
-          </code>
-          <div class="tip" id="288">
-            <strong>Signature:</strong>setParams:(OctoParams -&gt; OctoParams) -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Calls the Octo.exe CLI.</p>
+        <td class="xmldoc"><p>Default server options.</p>
 </td>
       </tr>
     </tbody>

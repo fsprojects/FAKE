@@ -64,6 +64,11 @@
 <div class="xmldoc">
 <p>This module contains helper function to create and extract zip archives.</p>
 </div>
+
+<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+
+
+<!-- END TODO -->
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -73,23 +78,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3', 3)" onmouseover="showTip(event, '3', 3)">
-            DefaultZipLevel 
-          </code>
-          <div class="tip" id="3">
-            <strong>Signature:</strong>int<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>The default zip level</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '26', 26)" onmouseover="showTip(event, '26', 26)">
+          <code onmouseout="hideTip(event, '654', 654)" onmouseover="showTip(event, '654', 654)">
             CreateZip (...)
           </code>
-          <div class="tip" id="26">
+          <div class="tip" id="654">
             <strong>Signature:</strong>workingDir:string -&gt; fileName:string -&gt; comment:string -&gt; level:int -&gt; flatten:bool -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -110,10 +102,83 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '27', 27)" onmouseover="showTip(event, '27', 27)">
+          <code onmouseout="hideTip(event, '655', 655)" onmouseover="showTip(event, '655', 655)">
+            DefaultZipLevel 
+          </code>
+          <div class="tip" id="655">
+            <strong>Signature:</strong>int<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>The default zip level</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '656', 656)" onmouseover="showTip(event, '656', 656)">
+            Unzip target fileName
+          </code>
+          <div class="tip" id="656">
+            <strong>Signature:</strong>target:string -&gt; fileName:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Unzips a file with the given file name.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>target</code> - The target directory.</li>
+<li><code>fileName</code> - The file name of the zip file.</li>
+</ul>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '657', 657)" onmouseover="showTip(event, '657', 657)">
+            UnzipFirstMatchingFileInMemory (...)
+          </code>
+          <div class="tip" id="657">
+            <strong>Signature:</strong>predicate:(ZipEntry -&gt; bool) -&gt; zipFileName:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Unzips a single file from the archive with the given file name.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>predicate</code> - The predictae for the searched file in the archive.</li>
+<li><code>zipFileName</code> - The file name of the zip file.</li>
+</ul>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '658', 658)" onmouseover="showTip(event, '658', 658)">
+            UnzipSingleFileInMemory (...)
+          </code>
+          <div class="tip" id="658">
+            <strong>Signature:</strong>fileToUnzip:string -&gt; zipFileName:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Unzips a single file from the archive with the given file name.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>fileToUnzip</code> - The file inside the archive.</li>
+<li><code>zipFileName</code> - The file name of the zip file.</li>
+</ul>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '659', 659)" onmouseover="showTip(event, '659', 659)">
             Zip workingDir fileName
           </code>
-          <div class="tip" id="27">
+          <div class="tip" id="659">
             <strong>Signature:</strong>workingDir:string -&gt; fileName:string -&gt; seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -131,10 +196,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '28', 28)" onmouseover="showTip(event, '28', 28)">
+          <code onmouseout="hideTip(event, '660', 660)" onmouseover="showTip(event, '660', 660)">
             ZipFile fileName targetFileName
           </code>
-          <div class="tip" id="28">
+          <div class="tip" id="660">
             <strong>Signature:</strong>fileName:string -&gt; targetFileName:string -&gt; unit<br />
                       </div>
         </td>
@@ -145,66 +210,6 @@
 <ul>
 <li><code>fileName</code> - The file name of the resulting zip file.</li>
 <li><code>targetFileName</code> - The file to zip.</li>
-</ul>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '29', 29)" onmouseover="showTip(event, '29', 29)">
-            Unzip target fileName
-          </code>
-          <div class="tip" id="29">
-            <strong>Signature:</strong>target:string -&gt; fileName:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Unzips a file with the given file name.</p>
-
-<h2>Parameters</h2>
-
-<ul>
-<li><code>target</code> - The target directory.</li>
-<li><code>fileName</code> - The file name of the zip file.</li>
-</ul>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '30', 30)" onmouseover="showTip(event, '30', 30)">
-            UnzipSingleFileInMemory (...)
-          </code>
-          <div class="tip" id="30">
-            <strong>Signature:</strong>fileToUnzip:string -&gt; zipFileName:string -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Unzips a single file from the archive with the given file name.</p>
-
-<h2>Parameters</h2>
-
-<ul>
-<li><code>fileToUnzip</code> - The file inside the archive.</li>
-<li><code>zipFileName</code> - The file name of the zip file.</li>
-</ul>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '31', 31)" onmouseover="showTip(event, '31', 31)">
-            UnzipFirstMatchingFileInMemory (...)
-          </code>
-          <div class="tip" id="31">
-            <strong>Signature:</strong>predicate:(ZipEntry -&gt; bool) -&gt; zipFileName:string -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Unzips a single file from the archive with the given file name.</p>
-
-<h2>Parameters</h2>
-
-<ul>
-<li><code>predicate</code> - The predictae for the searched file in the archive.</li>
-<li><code>zipFileName</code> - The file name of the zip file.</li>
 </ul>
 </td>
       </tr>

@@ -63,6 +63,11 @@
 <h1>Rebase</h1>
 <div class="xmldoc">
 </div>
+
+<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+
+
+<!-- END TODO -->
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -72,23 +77,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '632', 632)" onmouseover="showTip(event, '632', 632)">
-            start repositoryDir onTopOfBranch
-          </code>
-          <div class="tip" id="632">
-            <strong>Signature:</strong>repositoryDir:string -&gt; onTopOfBranch:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Performs a rebase on top of the given branch with the current branch</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '633', 633)" onmouseover="showTip(event, '633', 633)">
+          <code onmouseout="hideTip(event, '631', 631)" onmouseover="showTip(event, '631', 631)">
             abort repositoryDir
           </code>
-          <div class="tip" id="633">
+          <div class="tip" id="631">
             <strong>Signature:</strong>repositoryDir:string -&gt; unit<br />
                       </div>
         </td>
@@ -98,15 +90,41 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '634', 634)" onmouseover="showTip(event, '634', 634)">
+          <code onmouseout="hideTip(event, '632', 632)" onmouseover="showTip(event, '632', 632)">
             continueRebase repositoryDir
           </code>
-          <div class="tip" id="634">
+          <div class="tip" id="632">
             <strong>Signature:</strong>repositoryDir:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc"><p>Restart the rebasing process after having resolved a merge conflict.</p>
 </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '633', 633)" onmouseover="showTip(event, '633', 633)">
+            rebaseOrFallbackOnMerge (...)
+          </code>
+          <div class="tip" id="633">
+            <strong>Signature:</strong>repositoryDir:string -&gt; onTopOfBranch:string -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Tries to rebase on top of the given branch.
+If the rebasing process fails a normal merge will be started.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '634', 634)" onmouseover="showTip(event, '634', 634)">
+            rollBackAndUseMerge (...)
+          </code>
+          <div class="tip" id="634">
+            <strong>Signature:</strong>repositoryDir:string -&gt; onTopOfBranch:string -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
       </tr>
       <tr>
         <td class="member-name">
@@ -125,26 +143,13 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '636', 636)" onmouseover="showTip(event, '636', 636)">
-            rollBackAndUseMerge (...)
+            start repositoryDir onTopOfBranch
           </code>
           <div class="tip" id="636">
-            <strong>Signature:</strong>repositoryDir:string -&gt; onTopOfBranch:string -&gt; bool<br />
+            <strong>Signature:</strong>repositoryDir:string -&gt; onTopOfBranch:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '637', 637)" onmouseover="showTip(event, '637', 637)">
-            rebaseOrFallbackOnMerge (...)
-          </code>
-          <div class="tip" id="637">
-            <strong>Signature:</strong>repositoryDir:string -&gt; onTopOfBranch:string -&gt; bool<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Tries to rebase on top of the given branch.
-If the rebasing process fails a normal merge will be started.</p>
+        <td class="xmldoc"><p>Performs a rebase on top of the given branch with the current branch</p>
 </td>
       </tr>
     </tbody>

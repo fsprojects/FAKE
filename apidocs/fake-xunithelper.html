@@ -64,6 +64,26 @@
 <div class="xmldoc">
 <p>Contains tasks to run <a href="http://xunit.codeplex.com/">xUnit</a> unit tests.</p>
 </div>
+
+<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+    <h2>Nested types and modules</h2>
+
+    <table class="table table-bordered type-list">
+        <thead>
+            <tr><td>Type</td><td>Description</td></tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-xunithelper-xunitparams.html">XUnitParams</a>
+                    </td>
+                    <td class="xmldoc"><p>xUnit parameter type</p>
+</td>
+                </tr>
+        </tbody>
+    </table>
+
+<!-- END TODO -->
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -73,24 +93,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '32', 32)" onmouseover="showTip(event, '32', 32)">
-            XUnitDefaults 
-          </code>
-          <div class="tip" id="32">
-            <strong>Signature:</strong>XUnitParams<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>xUnit default parameters
-FAKE scans all subfolders to find <em>xunit.console.exe</em></p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '33', 33)" onmouseover="showTip(event, '33', 33)">
+          <code onmouseout="hideTip(event, '649', 649)" onmouseover="showTip(event, '649', 649)">
             xUnit setParams assemblies
           </code>
-          <div class="tip" id="33">
+          <div class="tip" id="649">
             <strong>Signature:</strong>setParams:(XUnitParams -&gt; XUnitParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -110,6 +116,20 @@ FAKE scans all subfolders to find <em>xunit.console.exe</em></p>
       |&gt; xUnit (fun p -&gt; {p with OutputDir = testDir })
 )
 </code></pre>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '650', 650)" onmouseover="showTip(event, '650', 650)">
+            XUnitDefaults 
+          </code>
+          <div class="tip" id="650">
+            <strong>Signature:</strong>XUnitParams<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>xUnit default parameters
+FAKE scans all subfolders to find <em>xunit.console.exe</em></p>
 </td>
       </tr>
     </tbody>

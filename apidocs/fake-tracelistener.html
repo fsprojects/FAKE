@@ -64,6 +64,47 @@
 <div class="xmldoc">
 <p>Defines default listeners for build output traces</p>
 </div>
+
+<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+    <h2>Nested types and modules</h2>
+
+    <table class="table table-bordered type-list">
+        <thead>
+            <tr><td>Type</td><td>Description</td></tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-tracelistener-consoletracelistener.html">ConsoleTraceListener</a>
+                    </td>
+                    <td class="xmldoc"><p>Implements a TraceListener for System.Console</p>
+</td>
+                </tr>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-tracelistener-itracelistener.html">ITraceListener</a>
+                    </td>
+                    <td class="xmldoc"><p>Defines a TraceListener interface</p>
+</td>
+                </tr>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-tracelistener-nantxmltracelistener.html">NAntXmlTraceListener</a>
+                    </td>
+                    <td class="xmldoc"><p>Implements a TraceListener which writes NAnt like XML files.</p>
+</td>
+                </tr>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-tracelistener-tracedata.html">TraceData</a>
+                    </td>
+                    <td class="xmldoc"><p>Defines Tracing information for TraceListeners</p>
+</td>
+                </tr>
+        </tbody>
+    </table>
+
+<!-- END TODO -->
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -73,62 +114,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '45', 45)" onmouseover="showTip(event, '45', 45)">
-            colorMap traceData
-          </code>
-          <div class="tip" id="45">
-            <strong>Signature:</strong>traceData:TraceData -&gt; ConsoleColor<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>A default color map which maps TracePriorities to ConsoleColors</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '47', 47)" onmouseover="showTip(event, '47', 47)">
-            defaultConsoleTraceListener 
-          </code>
-          <div class="tip" id="47">
-            <strong>Signature:</strong>ConsoleTraceListener<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>The default TraceListener for Console</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '48', 48)" onmouseover="showTip(event, '48', 48)">
-            AutoCloseXmlWriter 
-          </code>
-          <div class="tip" id="48">
-            <strong>Signature:</strong>bool<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Specifies if the XmlWriter should close tags automatically</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '49', 49)" onmouseover="showTip(event, '49', 49)">
-            listeners 
-          </code>
-          <div class="tip" id="49">
-            <strong>Signature:</strong>List&lt;ITraceListener&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>A List with all registered listeners</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '50', 50)" onmouseover="showTip(event, '50', 50)">
+          <code onmouseout="hideTip(event, '643', 643)" onmouseover="showTip(event, '643', 643)">
             addXmlListener xmlOutputFile
           </code>
-          <div class="tip" id="50">
+          <div class="tip" id="643">
             <strong>Signature:</strong>xmlOutputFile:string -&gt; unit<br />
                       </div>
         </td>
@@ -138,10 +127,62 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '51', 51)" onmouseover="showTip(event, '51', 51)">
+          <code onmouseout="hideTip(event, '644', 644)" onmouseover="showTip(event, '644', 644)">
+            AutoCloseXmlWriter 
+          </code>
+          <div class="tip" id="644">
+            <strong>Signature:</strong>bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Specifies if the XmlWriter should close tags automatically</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '645', 645)" onmouseover="showTip(event, '645', 645)">
+            colorMap traceData
+          </code>
+          <div class="tip" id="645">
+            <strong>Signature:</strong>traceData:TraceData -&gt; ConsoleColor<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>A default color map which maps TracePriorities to ConsoleColors</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '646', 646)" onmouseover="showTip(event, '646', 646)">
+            defaultConsoleTraceListener 
+          </code>
+          <div class="tip" id="646">
+            <strong>Signature:</strong>ConsoleTraceListener<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>The default TraceListener for Console</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '647', 647)" onmouseover="showTip(event, '647', 647)">
+            listeners 
+          </code>
+          <div class="tip" id="647">
+            <strong>Signature:</strong>List&lt;ITraceListener&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>A List with all registered listeners</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '648', 648)" onmouseover="showTip(event, '648', 648)">
             postMessage x
           </code>
-          <div class="tip" id="51">
+          <div class="tip" id="648">
             <strong>Signature:</strong>x:TraceData -&gt; unit<br />
                       </div>
         </td>

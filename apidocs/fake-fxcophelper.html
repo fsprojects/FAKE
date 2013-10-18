@@ -63,6 +63,31 @@
 <h1>FxCopHelper</h1>
 <div class="xmldoc">
 </div>
+
+<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+    <h2>Nested types and modules</h2>
+
+    <table class="table table-bordered type-list">
+        <thead>
+            <tr><td>Type</td><td>Description</td></tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-fxcophelper-fxcoperrorlevel.html">FxCopErrorLevel</a>
+                    </td>
+                    <td class="xmldoc"></td>
+                </tr>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-fxcophelper-fxcopparams.html">FxCopParams</a>
+                    </td>
+                    <td class="xmldoc"></td>
+                </tr>
+        </tbody>
+    </table>
+
+<!-- END TODO -->
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -72,10 +97,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '357', 357)" onmouseover="showTip(event, '357', 357)">
+          <code onmouseout="hideTip(event, '86', 86)" onmouseover="showTip(event, '86', 86)">
             checkForErrors resultFile
           </code>
-          <div class="tip" id="357">
+          <div class="tip" id="86">
             <strong>Signature:</strong>resultFile:string -&gt; int * int * int * int<br />
                       </div>
         </td>
@@ -84,27 +109,27 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '358', 358)" onmouseover="showTip(event, '358', 358)">
-            FxCopDefaults 
+          <code onmouseout="hideTip(event, '87', 87)" onmouseover="showTip(event, '87', 87)">
+            FxCop setParams assemblies
           </code>
-          <div class="tip" id="358">
-            <strong>Signature:</strong>FxCopParams<br />
+          <div class="tip" id="87">
+            <strong>Signature:</strong>setParams:(FxCopParams -&gt; FxCopParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>FxCop Default params</p>
+        <td class="xmldoc"><p>Run FxCop on a group of assemblies.</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '359', 359)" onmouseover="showTip(event, '359', 359)">
-            FxCop setParams assemblies
+          <code onmouseout="hideTip(event, '88', 88)" onmouseover="showTip(event, '88', 88)">
+            FxCopDefaults 
           </code>
-          <div class="tip" id="359">
-            <strong>Signature:</strong>setParams:(FxCopParams -&gt; FxCopParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
+          <div class="tip" id="88">
+            <strong>Signature:</strong>FxCopParams<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Run FxCop on a group of assemblies.</p>
+        <td class="xmldoc"><p>FxCop Default params</p>
 </td>
       </tr>
     </tbody>

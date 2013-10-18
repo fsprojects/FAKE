@@ -63,6 +63,26 @@
 <h1>SCPHelper</h1>
 <div class="xmldoc">
 </div>
+
+<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+    <h2>Nested types and modules</h2>
+
+    <table class="table table-bordered type-list">
+        <thead>
+            <tr><td>Type</td><td>Description</td></tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-scphelper-scpparams.html">SCPParams</a>
+                    </td>
+                    <td class="xmldoc"><p>The SCP parameter type</p>
+</td>
+                </tr>
+        </tbody>
+    </table>
+
+<!-- END TODO -->
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -72,27 +92,27 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '234', 234)" onmouseover="showTip(event, '234', 234)">
-            SCPDefaults 
+          <code onmouseout="hideTip(event, '373', 373)" onmouseover="showTip(event, '373', 373)">
+            SCP setParams source target
           </code>
-          <div class="tip" id="234">
-            <strong>Signature:</strong>SCPParams<br />
+          <div class="tip" id="373">
+            <strong>Signature:</strong>setParams:(SCPParams -&gt; SCPParams) -&gt; source:string -&gt; target:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>The SCP default parameters</p>
+        <td class="xmldoc"><p>Performs a SCP copy from the given source directory to the target directory</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '235', 235)" onmouseover="showTip(event, '235', 235)">
-            SCP setParams source target
+          <code onmouseout="hideTip(event, '374', 374)" onmouseover="showTip(event, '374', 374)">
+            SCPDefaults 
           </code>
-          <div class="tip" id="235">
-            <strong>Signature:</strong>setParams:(SCPParams -&gt; SCPParams) -&gt; source:string -&gt; target:string -&gt; unit<br />
+          <div class="tip" id="374">
+            <strong>Signature:</strong>SCPParams<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Performs a SCP copy from the given source directory to the target directory</p>
+        <td class="xmldoc"><p>The SCP default parameters</p>
 </td>
       </tr>
     </tbody>

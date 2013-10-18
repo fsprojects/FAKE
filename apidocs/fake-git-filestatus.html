@@ -63,6 +63,25 @@
 <h1>FileStatus</h1>
 <div class="xmldoc">
 </div>
+
+<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+    <h2>Nested types and modules</h2>
+
+    <table class="table table-bordered type-list">
+        <thead>
+            <tr><td>Type</td><td>Description</td></tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-git-filestatus-filestatus.html">FileStatus</a>
+                    </td>
+                    <td class="xmldoc"></td>
+                </tr>
+        </tbody>
+    </table>
+
+<!-- END TODO -->
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -72,23 +91,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '653', 653)" onmouseover="showTip(event, '653', 653)">
-            getChangedFiles (...)
+          <code onmouseout="hideTip(event, '684', 684)" onmouseover="showTip(event, '684', 684)">
+            cleanWorkingCopy repositoryDir
           </code>
-          <div class="tip" id="653">
-            <strong>Signature:</strong>repositoryDir:string -&gt; revision1:string -&gt; revision2:string -&gt; seq&lt;FileStatus * string&gt;<br />
+          <div class="tip" id="684">
+            <strong>Signature:</strong>repositoryDir:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Gets the changed files between the given revisions</p>
+        <td class="xmldoc"><p>Cleans the working copy by doing a git reset --hard and a clean -f</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '658', 658)" onmouseover="showTip(event, '658', 658)">
+          <code onmouseout="hideTip(event, '685', 685)" onmouseover="showTip(event, '685', 685)">
             getAllFiles repositoryDir
           </code>
-          <div class="tip" id="658">
+          <div class="tip" id="685">
             <strong>Signature:</strong>repositoryDir:string -&gt; seq&lt;FileStatus * string&gt;<br />
                       </div>
         </td>
@@ -98,10 +117,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '659', 659)" onmouseover="showTip(event, '659', 659)">
+          <code onmouseout="hideTip(event, '686', 686)" onmouseover="showTip(event, '686', 686)">
+            getChangedFiles (...)
+          </code>
+          <div class="tip" id="686">
+            <strong>Signature:</strong>repositoryDir:string -&gt; revision1:string -&gt; revision2:string -&gt; seq&lt;FileStatus * string&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Gets the changed files between the given revisions</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '687', 687)" onmouseover="showTip(event, '687', 687)">
             getChangedFilesInWorkingCopy (...)
           </code>
-          <div class="tip" id="659">
+          <div class="tip" id="687">
             <strong>Signature:</strong>repositoryDir:string -&gt; revision:string -&gt; seq&lt;FileStatus * string&gt;<br />
                       </div>
         </td>
@@ -111,10 +143,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '660', 660)" onmouseover="showTip(event, '660', 660)">
+          <code onmouseout="hideTip(event, '688', 688)" onmouseover="showTip(event, '688', 688)">
             getConflictedFiles repositoryDir
           </code>
-          <div class="tip" id="660">
+          <div class="tip" id="688">
             <strong>Signature:</strong>repositoryDir:string -&gt; string list<br />
                       </div>
         </td>
@@ -124,10 +156,22 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '661', 661)" onmouseover="showTip(event, '661', 661)">
+          <code onmouseout="hideTip(event, '689', 689)" onmouseover="showTip(event, '689', 689)">
+            getRebaseDir repositoryDir
+          </code>
+          <div class="tip" id="689">
+            <strong>Signature:</strong>repositoryDir:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '690', 690)" onmouseover="showTip(event, '690', 690)">
             isInTheMiddleOfConflictedMerge (...)
           </code>
-          <div class="tip" id="661">
+          <div class="tip" id="690">
             <strong>Signature:</strong>repositoryDir:string -&gt; bool<br />
                       </div>
         </td>
@@ -137,34 +181,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '662', 662)" onmouseover="showTip(event, '662', 662)">
-            getRebaseDir repositoryDir
-          </code>
-          <div class="tip" id="662">
-            <strong>Signature:</strong>repositoryDir:string -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '663', 663)" onmouseover="showTip(event, '663', 663)">
-            isInTheMiddleOfRebase repositoryDir
-          </code>
-          <div class="tip" id="663">
-            <strong>Signature:</strong>repositoryDir:string -&gt; bool<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '664', 664)" onmouseover="showTip(event, '664', 664)">
+          <code onmouseout="hideTip(event, '691', 691)" onmouseover="showTip(event, '691', 691)">
             isInTheMiddleOfPatch repositoryDir
           </code>
-          <div class="tip" id="664">
+          <div class="tip" id="691">
             <strong>Signature:</strong>repositoryDir:string -&gt; bool<br />
                       </div>
         </td>
@@ -173,15 +193,14 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '665', 665)" onmouseover="showTip(event, '665', 665)">
-            cleanWorkingCopy repositoryDir
+          <code onmouseout="hideTip(event, '692', 692)" onmouseover="showTip(event, '692', 692)">
+            isInTheMiddleOfRebase repositoryDir
           </code>
-          <div class="tip" id="665">
-            <strong>Signature:</strong>repositoryDir:string -&gt; unit<br />
+          <div class="tip" id="692">
+            <strong>Signature:</strong>repositoryDir:string -&gt; bool<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Cleans the working copy by doing a git reset --hard and a clean -f</p>
-</td>
+        <td class="xmldoc"></td>
       </tr>
     </tbody>
   </table>

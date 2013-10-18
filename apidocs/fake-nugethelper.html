@@ -63,6 +63,31 @@
 <h1>NuGetHelper</h1>
 <div class="xmldoc">
 </div>
+
+<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+    <h2>Nested types and modules</h2>
+
+    <table class="table table-bordered type-list">
+        <thead>
+            <tr><td>Type</td><td>Description</td></tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-nugethelper-nugetparams.html">NuGetParams</a>
+                    </td>
+                    <td class="xmldoc"></td>
+                </tr>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-nugethelper-nuspecpackage.html">NuSpecPackage</a>
+                    </td>
+                    <td class="xmldoc"></td>
+                </tr>
+        </tbody>
+    </table>
+
+<!-- END TODO -->
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -72,24 +97,11 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '295', 295)" onmouseover="showTip(event, '295', 295)">
-            NuGetDefaults ()
+          <code onmouseout="hideTip(event, '299', 299)" onmouseover="showTip(event, '299', 299)">
+            discoverRepoUrl 
           </code>
-          <div class="tip" id="295">
-            <strong>Signature:</strong>unit -&gt; NuGetParams<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>NuGet default params</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '297', 297)" onmouseover="showTip(event, '297', 297)">
-            RequireExactly version
-          </code>
-          <div class="tip" id="297">
-            <strong>Signature:</strong>version:string -&gt; string<br />
+          <div class="tip" id="299">
+            <strong>Signature:</strong>Lazy&lt;string&gt;<br />
                       </div>
         </td>
         <td class="xmldoc"></td>
@@ -97,10 +109,94 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '298', 298)" onmouseover="showTip(event, '298', 298)">
+          <code onmouseout="hideTip(event, '300', 300)" onmouseover="showTip(event, '300', 300)">
+            downloadPackage targetDir package
+          </code>
+          <div class="tip" id="300">
+            <strong>Signature:</strong>targetDir:string -&gt; package:NuSpecPackage -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '301', 301)" onmouseover="showTip(event, '301', 301)">
+            extractFeedPackageFromXml entry
+          </code>
+          <div class="tip" id="301">
+            <strong>Signature:</strong>entry:XmlNode -&gt; NuSpecPackage<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '302', 302)" onmouseover="showTip(event, '302', 302)">
+            feedUrl 
+          </code>
+          <div class="tip" id="302">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '303', 303)" onmouseover="showTip(event, '303', 303)">
+            getFeedPackagesFromUrl url
+          </code>
+          <div class="tip" id="303">
+            <strong>Signature:</strong>url:string -&gt; NuSpecPackage list<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '304', 304)" onmouseover="showTip(event, '304', 304)">
+            getLatestPackage repoUrl packageName
+          </code>
+          <div class="tip" id="304">
+            <strong>Signature:</strong>repoUrl:string -&gt; packageName:string -&gt; NuSpecPackage<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '305', 305)" onmouseover="showTip(event, '305', 305)">
+            getNuspecProperties nuspec
+          </code>
+          <div class="tip" id="305">
+            <strong>Signature:</strong>nuspec:string -&gt; NuSpecPackage<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '306', 306)" onmouseover="showTip(event, '306', 306)">
+            getPackage repoUrl packageName version
+          </code>
+          <div class="tip" id="306">
+            <strong>Signature:</strong>repoUrl:string -&gt; packageName:string -&gt; version:string -&gt; NuSpecPackage<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '307', 307)" onmouseover="showTip(event, '307', 307)">
             GetPackageVersion deploymentsDir package
           </code>
-          <div class="tip" id="298">
+          <div class="tip" id="307">
             <strong>Signature:</strong>deploymentsDir:string -&gt; package:string -&gt; string<br />
                       </div>
         </td>
@@ -110,36 +206,22 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '299', 299)" onmouseover="showTip(event, '299', 299)">
-            NuGetPack setParams nuspecFile
+          <code onmouseout="hideTip(event, '308', 308)" onmouseover="showTip(event, '308', 308)">
+            getRepoUrl ()
           </code>
-          <div class="tip" id="299">
-            <strong>Signature:</strong>setParams:(NuGetParams -&gt; NuGetParams) -&gt; nuspecFile:string -&gt; unit<br />
+          <div class="tip" id="308">
+            <strong>Signature:</strong>unit -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Creates a new NuGet package based on the nuspecFile</p>
-</td>
+        <td class="xmldoc"></td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '300', 300)" onmouseover="showTip(event, '300', 300)">
-            NuGetPublish setParams
-          </code>
-          <div class="tip" id="300">
-            <strong>Signature:</strong>setParams:(NuGetParams -&gt; NuGetParams) -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Publishes a NuGet package to the nuget server</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '301', 301)" onmouseover="showTip(event, '301', 301)">
+          <code onmouseout="hideTip(event, '309', 309)" onmouseover="showTip(event, '309', 309)">
             NuGet setParams nuSpec
           </code>
-          <div class="tip" id="301">
+          <div class="tip" id="309">
             <strong>Signature:</strong>setParams:(NuGetParams -&gt; NuGetParams) -&gt; nuSpec:string -&gt; unit<br />
                       </div>
         </td>
@@ -149,107 +231,50 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '302', 302)" onmouseover="showTip(event, '302', 302)">
-            getNuspecProperties nuspec
-          </code>
-          <div class="tip" id="302">
-            <strong>Signature:</strong>nuspec:string -&gt; NuSpecPackage<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '303', 303)" onmouseover="showTip(event, '303', 303)">
-            feedUrl 
-          </code>
-          <div class="tip" id="303">
-            <strong>Signature:</strong>string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '304', 304)" onmouseover="showTip(event, '304', 304)">
-            discoverRepoUrl 
-          </code>
-          <div class="tip" id="304">
-            <strong>Signature:</strong>Lazy&lt;string&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '305', 305)" onmouseover="showTip(event, '305', 305)">
-            getRepoUrl ()
-          </code>
-          <div class="tip" id="305">
-            <strong>Signature:</strong>unit -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '306', 306)" onmouseover="showTip(event, '306', 306)">
-            extractFeedPackageFromXml entry
-          </code>
-          <div class="tip" id="306">
-            <strong>Signature:</strong>entry:XmlNode -&gt; NuSpecPackage<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '307', 307)" onmouseover="showTip(event, '307', 307)">
-            getPackage repoUrl packageName version
-          </code>
-          <div class="tip" id="307">
-            <strong>Signature:</strong>repoUrl:string -&gt; packageName:string -&gt; version:string -&gt; NuSpecPackage<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '308', 308)" onmouseover="showTip(event, '308', 308)">
-            getFeedPackagesFromUrl url
-          </code>
-          <div class="tip" id="308">
-            <strong>Signature:</strong>url:string -&gt; NuSpecPackage list<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '309', 309)" onmouseover="showTip(event, '309', 309)">
-            getLatestPackage repoUrl packageName
-          </code>
-          <div class="tip" id="309">
-            <strong>Signature:</strong>repoUrl:string -&gt; packageName:string -&gt; NuSpecPackage<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
           <code onmouseout="hideTip(event, '310', 310)" onmouseover="showTip(event, '310', 310)">
-            downloadPackage targetDir package
+            NuGetDefaults ()
           </code>
           <div class="tip" id="310">
-            <strong>Signature:</strong>targetDir:string -&gt; package:NuSpecPackage -&gt; string<br />
+            <strong>Signature:</strong>unit -&gt; NuGetParams<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>NuGet default params</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '311', 311)" onmouseover="showTip(event, '311', 311)">
+            NuGetPack setParams nuspecFile
+          </code>
+          <div class="tip" id="311">
+            <strong>Signature:</strong>setParams:(NuGetParams -&gt; NuGetParams) -&gt; nuspecFile:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates a new NuGet package based on the nuspecFile</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '312', 312)" onmouseover="showTip(event, '312', 312)">
+            NuGetPublish setParams
+          </code>
+          <div class="tip" id="312">
+            <strong>Signature:</strong>setParams:(NuGetParams -&gt; NuGetParams) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Publishes a NuGet package to the nuget server</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '313', 313)" onmouseover="showTip(event, '313', 313)">
+            RequireExactly version
+          </code>
+          <div class="tip" id="313">
+            <strong>Signature:</strong>version:string -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc"></td>

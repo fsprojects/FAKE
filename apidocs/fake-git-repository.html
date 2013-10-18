@@ -63,6 +63,11 @@
 <h1>Repository</h1>
 <div class="xmldoc">
 </div>
+
+<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+
+
+<!-- END TODO -->
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -72,10 +77,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '616', 616)" onmouseover="showTip(event, '616', 616)">
+          <code onmouseout="hideTip(event, '713', 713)" onmouseover="showTip(event, '713', 713)">
             clone workingDir repoUrl toPath
           </code>
-          <div class="tip" id="616">
+          <div class="tip" id="713">
             <strong>Signature:</strong>workingDir:string -&gt; repoUrl:string -&gt; toPath:string -&gt; unit<br />
                       </div>
         </td>
@@ -85,27 +90,27 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '617', 617)" onmouseover="showTip(event, '617', 617)">
-            init repositoryDir bare shared
+          <code onmouseout="hideTip(event, '714', 714)" onmouseover="showTip(event, '714', 714)">
+            fullclean repositoryDir
           </code>
-          <div class="tip" id="617">
-            <strong>Signature:</strong>repositoryDir:string -&gt; bare:bool -&gt; shared:bool -&gt; unit<br />
+          <div class="tip" id="714">
+            <strong>Signature:</strong>repositoryDir:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Inits a git repository</p>
+        <td class="xmldoc"><p>Cleans a directory by removing all files and sub-directories.</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '618', 618)" onmouseover="showTip(event, '618', 618)">
-            fullclean repositoryDir
+          <code onmouseout="hideTip(event, '715', 715)" onmouseover="showTip(event, '715', 715)">
+            init repositoryDir bare shared
           </code>
-          <div class="tip" id="618">
-            <strong>Signature:</strong>repositoryDir:string -&gt; unit<br />
+          <div class="tip" id="715">
+            <strong>Signature:</strong>repositoryDir:string -&gt; bare:bool -&gt; shared:bool -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Cleans a directory by removing all files and sub-directories.</p>
+        <td class="xmldoc"><p>Inits a git repository</p>
 </td>
       </tr>
     </tbody>

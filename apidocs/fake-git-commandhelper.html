@@ -63,6 +63,11 @@
 <h1>CommandHelper</h1>
 <div class="xmldoc">
 </div>
+
+<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+
+
+<!-- END TODO -->
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -72,83 +77,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '638', 638)" onmouseover="showTip(event, '638', 638)">
-            gitTimeOut 
-          </code>
-          <div class="tip" id="638">
-            <strong>Signature:</strong>TimeSpan<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '639', 639)" onmouseover="showTip(event, '639', 639)">
-            gitPath 
-          </code>
-          <div class="tip" id="639">
-            <strong>Signature:</strong>string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '640', 640)" onmouseover="showTip(event, '640', 640)">
-            runGitCommand repositoryDir command
-          </code>
-          <div class="tip" id="640">
-            <strong>Signature:</strong>repositoryDir:string -&gt; command:string -&gt; bool * List&lt;string&gt; * string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '641', 641)" onmouseover="showTip(event, '641', 641)">
-            runGitCommandf fmt
-          </code>
-          <div class="tip" id="641">
-            <strong>Signature:</strong>fmt:StringFormat&lt;&#39;?6087,(string -&gt; bool * List&lt;string&gt; * string)&gt; -&gt; &#39;?6087<br />
-                          <strong>Type parameters:</strong> '?6087          </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '642', 642)" onmouseover="showTip(event, '642', 642)">
-            getGitResult repositoryDir command
-          </code>
-          <div class="tip" id="642">
-            <strong>Signature:</strong>repositoryDir:string -&gt; command:string -&gt; List&lt;string&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '643', 643)" onmouseover="showTip(event, '643', 643)">
-            fireAndForget infoAction
-          </code>
-          <div class="tip" id="643">
-            <strong>Signature:</strong>infoAction:(ProcessStartInfo -&gt; unit) -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Starts the given process</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '644', 644)" onmouseover="showTip(event, '644', 644)">
+          <code onmouseout="hideTip(event, '667', 667)" onmouseover="showTip(event, '667', 667)">
             directExec infoAction
           </code>
-          <div class="tip" id="644">
+          <div class="tip" id="667">
             <strong>Signature:</strong>infoAction:(ProcessStartInfo -&gt; unit) -&gt; bool<br />
                       </div>
         </td>
@@ -158,10 +90,48 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '645', 645)" onmouseover="showTip(event, '645', 645)">
+          <code onmouseout="hideTip(event, '668', 668)" onmouseover="showTip(event, '668', 668)">
+            directRunGitCommand (...)
+          </code>
+          <div class="tip" id="668">
+            <strong>Signature:</strong>repositoryDir:string -&gt; command:string -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '669', 669)" onmouseover="showTip(event, '669', 669)">
+            findGitDir repositoryDir
+          </code>
+          <div class="tip" id="669">
+            <strong>Signature:</strong>repositoryDir:string -&gt; DirectoryInfo<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Searches the git dir recursivly up to the root</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '670', 670)" onmouseover="showTip(event, '670', 670)">
+            fireAndForget infoAction
+          </code>
+          <div class="tip" id="670">
+            <strong>Signature:</strong>infoAction:(ProcessStartInfo -&gt; unit) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Starts the given process</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '671', 671)" onmouseover="showTip(event, '671', 671)">
             fireAndForgetGitCommand (...)
           </code>
-          <div class="tip" id="645">
+          <div class="tip" id="671">
             <strong>Signature:</strong>repositoryDir:string -&gt; command:string -&gt; unit<br />
                       </div>
         </td>
@@ -171,11 +141,11 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '646', 646)" onmouseover="showTip(event, '646', 646)">
-            directRunGitCommand (...)
+          <code onmouseout="hideTip(event, '672', 672)" onmouseover="showTip(event, '672', 672)">
+            fixPath path
           </code>
-          <div class="tip" id="646">
-            <strong>Signature:</strong>repositoryDir:string -&gt; command:string -&gt; bool<br />
+          <div class="tip" id="672">
+            <strong>Signature:</strong>path:string -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc"></td>
@@ -183,10 +153,22 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '647', 647)" onmouseover="showTip(event, '647', 647)">
+          <code onmouseout="hideTip(event, '673', 673)" onmouseover="showTip(event, '673', 673)">
+            getGitResult repositoryDir command
+          </code>
+          <div class="tip" id="673">
+            <strong>Signature:</strong>repositoryDir:string -&gt; command:string -&gt; List&lt;string&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '674', 674)" onmouseover="showTip(event, '674', 674)">
             gitCommand repositoryDir command
           </code>
-          <div class="tip" id="647">
+          <div class="tip" id="674">
             <strong>Signature:</strong>repositoryDir:string -&gt; command:string -&gt; unit<br />
                       </div>
         </td>
@@ -195,10 +177,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '648', 648)" onmouseover="showTip(event, '648', 648)">
+          <code onmouseout="hideTip(event, '675', 675)" onmouseover="showTip(event, '675', 675)">
             gitCommandf repositoryDir fmt
           </code>
-          <div class="tip" id="648">
+          <div class="tip" id="675">
             <strong>Signature:</strong>repositoryDir:string -&gt; fmt:StringFormat&lt;&#39;?6095,unit&gt; -&gt; &#39;?6095<br />
                           <strong>Type parameters:</strong> '?6095          </div>
         </td>
@@ -207,11 +189,11 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '649', 649)" onmouseover="showTip(event, '649', 649)">
-            showGitCommand repositoryDir command
+          <code onmouseout="hideTip(event, '676', 676)" onmouseover="showTip(event, '676', 676)">
+            gitPath 
           </code>
-          <div class="tip" id="649">
-            <strong>Signature:</strong>repositoryDir:string -&gt; command:string -&gt; unit<br />
+          <div class="tip" id="676">
+            <strong>Signature:</strong>string<br />
                       </div>
         </td>
         <td class="xmldoc"></td>
@@ -219,10 +201,46 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '650', 650)" onmouseover="showTip(event, '650', 650)">
+          <code onmouseout="hideTip(event, '677', 677)" onmouseover="showTip(event, '677', 677)">
+            gitTimeOut 
+          </code>
+          <div class="tip" id="677">
+            <strong>Signature:</strong>TimeSpan<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '678', 678)" onmouseover="showTip(event, '678', 678)">
+            runGitCommand repositoryDir command
+          </code>
+          <div class="tip" id="678">
+            <strong>Signature:</strong>repositoryDir:string -&gt; command:string -&gt; bool * List&lt;string&gt; * string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '679', 679)" onmouseover="showTip(event, '679', 679)">
+            runGitCommandf fmt
+          </code>
+          <div class="tip" id="679">
+            <strong>Signature:</strong>fmt:StringFormat&lt;&#39;?6087,(string -&gt; bool * List&lt;string&gt; * string)&gt; -&gt; &#39;?6087<br />
+                          <strong>Type parameters:</strong> '?6087          </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '680', 680)" onmouseover="showTip(event, '680', 680)">
             runSimpleGitCommand (...)
           </code>
-          <div class="tip" id="650">
+          <div class="tip" id="680">
             <strong>Signature:</strong>repositoryDir:string -&gt; command:string -&gt; string<br />
                       </div>
         </td>
@@ -232,27 +250,14 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '651', 651)" onmouseover="showTip(event, '651', 651)">
-            fixPath path
+          <code onmouseout="hideTip(event, '681', 681)" onmouseover="showTip(event, '681', 681)">
+            showGitCommand repositoryDir command
           </code>
-          <div class="tip" id="651">
-            <strong>Signature:</strong>path:string -&gt; string<br />
+          <div class="tip" id="681">
+            <strong>Signature:</strong>repositoryDir:string -&gt; command:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '652', 652)" onmouseover="showTip(event, '652', 652)">
-            findGitDir repositoryDir
-          </code>
-          <div class="tip" id="652">
-            <strong>Signature:</strong>repositoryDir:string -&gt; DirectoryInfo<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Searches the git dir recursivly up to the root</p>
-</td>
       </tr>
     </tbody>
   </table>

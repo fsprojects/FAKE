@@ -63,6 +63,11 @@
 <h1>Branches</h1>
 <div class="xmldoc">
 </div>
+
+<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+
+
+<!-- END TODO -->
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -72,179 +77,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '674', 674)" onmouseover="showTip(event, '674', 674)">
-            getLocalBranches repositoryDir
-          </code>
-          <div class="tip" id="674">
-            <strong>Signature:</strong>repositoryDir:string -&gt; string list<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Gets all local branches</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '675', 675)" onmouseover="showTip(event, '675', 675)">
-            getRemoteBranches repositoryDir
-          </code>
-          <div class="tip" id="675">
-            <strong>Signature:</strong>repositoryDir:string -&gt; string list<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Gets all remote branches</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '676', 676)" onmouseover="showTip(event, '676', 676)">
-            getAllBranches repositoryDir
-          </code>
-          <div class="tip" id="676">
-            <strong>Signature:</strong>repositoryDir:string -&gt; string list<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Gets all local and remote branches</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '677', 677)" onmouseover="showTip(event, '677', 677)">
-            getSHA1 repositoryDir s
-          </code>
-          <div class="tip" id="677">
-            <strong>Signature:</strong>repositoryDir:string -&gt; s:string -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Returns the SHA1 of the given head</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '678', 678)" onmouseover="showTip(event, '678', 678)">
-            findMergeBase (...)
-          </code>
-          <div class="tip" id="678">
-            <strong>Signature:</strong>repositoryDir:string -&gt; branch1:string -&gt; branch2:string -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Returns the SHA1 of the merge base of the two given commits</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '679', 679)" onmouseover="showTip(event, '679', 679)">
-            revisionsBetween (...)
-          </code>
-          <div class="tip" id="679">
-            <strong>Signature:</strong>repositoryDir:string -&gt; branch1:string -&gt; branch2:string -&gt; int<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Returns the number of revisions between the two given commits</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '680', 680)" onmouseover="showTip(event, '680', 680)">
-            checkoutNewBranch (...)
-          </code>
-          <div class="tip" id="680">
-            <strong>Signature:</strong>repositoryDir:string -&gt; baseBranch:string -&gt; branch:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Creates a new branch based on the given baseBranch and checks it out to the working copy</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '681', 681)" onmouseover="showTip(event, '681', 681)">
-            checkoutBranch repositoryDir branch
-          </code>
-          <div class="tip" id="681">
-            <strong>Signature:</strong>repositoryDir:string -&gt; branch:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Performs a checkout of the given branch to the working copy</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '682', 682)" onmouseover="showTip(event, '682', 682)">
-            createBranch (...)
-          </code>
-          <div class="tip" id="682">
-            <strong>Signature:</strong>repositoryDir:string -&gt; newBranchName:string -&gt; fromCommit:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Creates a new branch from the given commit</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '683', 683)" onmouseover="showTip(event, '683', 683)">
-            deleteBranch repositoryDir force branch
-          </code>
-          <div class="tip" id="683">
-            <strong>Signature:</strong>repositoryDir:string -&gt; force:bool -&gt; branch:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Deletes the given branch</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '684', 684)" onmouseover="showTip(event, '684', 684)">
-            tag repositoryDir tag
-          </code>
-          <div class="tip" id="684">
-            <strong>Signature:</strong>repositoryDir:string -&gt; tag:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Tags the current branch</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '685', 685)" onmouseover="showTip(event, '685', 685)">
-            deleteTag repositoryDir tag
-          </code>
-          <div class="tip" id="685">
-            <strong>Signature:</strong>repositoryDir:string -&gt; tag:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Deletes the given tag</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '686', 686)" onmouseover="showTip(event, '686', 686)">
-            checkoutTracked (...)
-          </code>
-          <div class="tip" id="686">
-            <strong>Signature:</strong>repositoryDir:string -&gt; trackBranch:string -&gt; branch:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Checks a branch out</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '687', 687)" onmouseover="showTip(event, '687', 687)">
+          <code onmouseout="hideTip(event, '615', 615)" onmouseover="showTip(event, '615', 615)">
             checkout repositoryDir create branch
           </code>
-          <div class="tip" id="687">
+          <div class="tip" id="615">
             <strong>Signature:</strong>repositoryDir:string -&gt; create:bool -&gt; branch:string -&gt; unit<br />
                       </div>
         </td>
@@ -254,10 +90,166 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '688', 688)" onmouseover="showTip(event, '688', 688)">
+          <code onmouseout="hideTip(event, '616', 616)" onmouseover="showTip(event, '616', 616)">
+            checkoutBranch repositoryDir branch
+          </code>
+          <div class="tip" id="616">
+            <strong>Signature:</strong>repositoryDir:string -&gt; branch:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Performs a checkout of the given branch to the working copy</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '617', 617)" onmouseover="showTip(event, '617', 617)">
+            checkoutNewBranch (...)
+          </code>
+          <div class="tip" id="617">
+            <strong>Signature:</strong>repositoryDir:string -&gt; baseBranch:string -&gt; branch:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates a new branch based on the given baseBranch and checks it out to the working copy</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '618', 618)" onmouseover="showTip(event, '618', 618)">
+            checkoutTracked (...)
+          </code>
+          <div class="tip" id="618">
+            <strong>Signature:</strong>repositoryDir:string -&gt; trackBranch:string -&gt; branch:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Checks a branch out</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '619', 619)" onmouseover="showTip(event, '619', 619)">
+            createBranch (...)
+          </code>
+          <div class="tip" id="619">
+            <strong>Signature:</strong>repositoryDir:string -&gt; newBranchName:string -&gt; fromCommit:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates a new branch from the given commit</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '620', 620)" onmouseover="showTip(event, '620', 620)">
+            deleteBranch repositoryDir force branch
+          </code>
+          <div class="tip" id="620">
+            <strong>Signature:</strong>repositoryDir:string -&gt; force:bool -&gt; branch:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Deletes the given branch</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '621', 621)" onmouseover="showTip(event, '621', 621)">
+            deleteTag repositoryDir tag
+          </code>
+          <div class="tip" id="621">
+            <strong>Signature:</strong>repositoryDir:string -&gt; tag:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Deletes the given tag</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '622', 622)" onmouseover="showTip(event, '622', 622)">
+            findMergeBase (...)
+          </code>
+          <div class="tip" id="622">
+            <strong>Signature:</strong>repositoryDir:string -&gt; branch1:string -&gt; branch2:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Returns the SHA1 of the merge base of the two given commits</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '623', 623)" onmouseover="showTip(event, '623', 623)">
+            getAllBranches repositoryDir
+          </code>
+          <div class="tip" id="623">
+            <strong>Signature:</strong>repositoryDir:string -&gt; string list<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Gets all local and remote branches</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '624', 624)" onmouseover="showTip(event, '624', 624)">
+            getLocalBranches repositoryDir
+          </code>
+          <div class="tip" id="624">
+            <strong>Signature:</strong>repositoryDir:string -&gt; string list<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Gets all local branches</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '625', 625)" onmouseover="showTip(event, '625', 625)">
+            getRemoteBranches repositoryDir
+          </code>
+          <div class="tip" id="625">
+            <strong>Signature:</strong>repositoryDir:string -&gt; string list<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Gets all remote branches</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '626', 626)" onmouseover="showTip(event, '626', 626)">
+            getSHA1 repositoryDir s
+          </code>
+          <div class="tip" id="626">
+            <strong>Signature:</strong>repositoryDir:string -&gt; s:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Returns the SHA1 of the given head</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '627', 627)" onmouseover="showTip(event, '627', 627)">
+            pull repositoryDir remote branch
+          </code>
+          <div class="tip" id="627">
+            <strong>Signature:</strong>repositoryDir:string -&gt; remote:string -&gt; branch:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Pull</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '628', 628)" onmouseover="showTip(event, '628', 628)">
             push repositoryDir
           </code>
-          <div class="tip" id="688">
+          <div class="tip" id="628">
             <strong>Signature:</strong>repositoryDir:string -&gt; unit<br />
                       </div>
         </td>
@@ -267,14 +259,27 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '689', 689)" onmouseover="showTip(event, '689', 689)">
-            pull repositoryDir remote branch
+          <code onmouseout="hideTip(event, '629', 629)" onmouseover="showTip(event, '629', 629)">
+            revisionsBetween (...)
           </code>
-          <div class="tip" id="689">
-            <strong>Signature:</strong>repositoryDir:string -&gt; remote:string -&gt; branch:string -&gt; unit<br />
+          <div class="tip" id="629">
+            <strong>Signature:</strong>repositoryDir:string -&gt; branch1:string -&gt; branch2:string -&gt; int<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Pull</p>
+        <td class="xmldoc"><p>Returns the number of revisions between the two given commits</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '630', 630)" onmouseover="showTip(event, '630', 630)">
+            tag repositoryDir tag
+          </code>
+          <div class="tip" id="630">
+            <strong>Signature:</strong>repositoryDir:string -&gt; tag:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Tags the current branch</p>
 </td>
       </tr>
     </tbody>

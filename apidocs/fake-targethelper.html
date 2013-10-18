@@ -63,6 +63,43 @@
 <h1>TargetHelper</h1>
 <div class="xmldoc">
 </div>
+
+<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+    <h2>Nested types and modules</h2>
+
+    <table class="table table-bordered type-list">
+        <thead>
+            <tr><td>Type</td><td>Description</td></tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-targethelper-builderror.html">BuildError</a>
+                    </td>
+                    <td class="xmldoc"></td>
+                </tr>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-targethelper-target.html">Target</a>
+                    </td>
+                    <td class="xmldoc"></td>
+                </tr>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-targethelper-targetdescription.html">TargetDescription</a>
+                    </td>
+                    <td class="xmldoc"></td>
+                </tr>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-targethelper-targettemplate-1.html">TargetTemplate</a>
+                    </td>
+                    <td class="xmldoc"></td>
+                </tr>
+        </tbody>
+    </table>
+
+<!-- END TODO -->
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -72,216 +109,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '91', 91)" onmouseover="showTip(event, '91', 91)">
-            PrintStackTraceOnError 
-          </code>
-          <div class="tip" id="91">
-            <strong>Signature:</strong>bool<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '92', 92)" onmouseover="showTip(event, '92', 92)">
-            LastDescription 
-          </code>
-          <div class="tip" id="92">
-            <strong>Signature:</strong>TargetDescription<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '93', 93)" onmouseover="showTip(event, '93', 93)">
-            Description text
-          </code>
-          <div class="tip" id="93">
-            <strong>Signature:</strong>text:TargetDescription -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Sets the Description for the next target</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '94', 94)" onmouseover="showTip(event, '94', 94)">
-            TargetDict 
-          </code>
-          <div class="tip" id="94">
-            <strong>Signature:</strong>Dictionary&lt;string,unit TargetTemplate&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>TargetDictionary</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '95', 95)" onmouseover="showTip(event, '95', 95)">
-            FinalTargets 
-          </code>
-          <div class="tip" id="95">
-            <strong>Signature:</strong>Dictionary&lt;string,bool&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Final Targets - stores final target and if it is activated</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '96', 96)" onmouseover="showTip(event, '96', 96)">
-            ExecutedTargets 
-          </code>
-          <div class="tip" id="96">
-            <strong>Signature:</strong>HashSet&lt;string&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>The executed targets</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '97', 97)" onmouseover="showTip(event, '97', 97)">
-            ExecutedTargetTimes 
-          </code>
-          <div class="tip" id="97">
-            <strong>Signature:</strong>List&lt;string * TimeSpan&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>The executed target time</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '98', 98)" onmouseover="showTip(event, '98', 98)">
-            getTarget name
-          </code>
-          <div class="tip" id="98">
-            <strong>Signature:</strong>name:string -&gt; unit TargetTemplate<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Gets a target with the given name from the target dictionary</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '99', 99)" onmouseover="showTip(event, '99', 99)">
-            dependencyString target
-          </code>
-          <div class="tip" id="99">
-            <strong>Signature:</strong>target:&#39;?5109 TargetTemplate -&gt; string<br />
-                          <strong>Type parameters:</strong> '?5109          </div>
-        </td>
-        <td class="xmldoc"><p>Returns the DependencyString for the given target</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '100', 100)" onmouseover="showTip(event, '100', 100)">
-            getAllTargetsNames ()
-          </code>
-          <div class="tip" id="100">
-            <strong>Signature:</strong>unit -&gt; string list<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Returns a list with all targetNames</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '101', 101)" onmouseover="showTip(event, '101', 101)">
-            DoNothing ()
-          </code>
-          <div class="tip" id="101">
-            <strong>Signature:</strong>unit -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Do nothing - fun () -> ()</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '102', 102)" onmouseover="showTip(event, '102', 102)">
-            checkIfDependencyCanBeAdded (...)
-          </code>
-          <div class="tip" id="102">
-            <strong>Signature:</strong>targetName:string -&gt; dependentTargetName:string -&gt; unit TargetTemplate * unit TargetTemplate<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Checks wether the dependency can be add</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '103', 103)" onmouseover="showTip(event, '103', 103)">
-            dependencyAtFront (...)
-          </code>
-          <div class="tip" id="103">
-            <strong>Signature:</strong>targetName:string -&gt; dependentTargetName:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Adds the dependency to the front of the list of dependencies</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '104', 104)" onmouseover="showTip(event, '104', 104)">
-            dependencyAtEnd (...)
-          </code>
-          <div class="tip" id="104">
-            <strong>Signature:</strong>targetName:string -&gt; dependentTargetName:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Appends the dependency to the list of dependencies</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '105', 105)" onmouseover="showTip(event, '105', 105)">
-            dependency 
-          </code>
-          <div class="tip" id="105">
-            <strong>Signature:</strong>string -&gt; string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Adds the dependency to the list of dependencies</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '106', 106)" onmouseover="showTip(event, '106', 106)">
-            Dependencies targetName
-          </code>
-          <div class="tip" id="106">
-            <strong>Signature:</strong>targetName:string -&gt; string list -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Adds the dependencies to the list of dependencies</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '107', 107)" onmouseover="showTip(event, '107', 107)">
+          <code onmouseout="hideTip(event, '564', 564)" onmouseover="showTip(event, '564', 564)">
             ( &lt;== ) x y
           </code>
-          <div class="tip" id="107">
+          <div class="tip" id="564">
             <strong>Signature:</strong>x:string -&gt; y:string list -&gt; unit<br />
                       </div>
         </td>
@@ -291,23 +122,35 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '108', 108)" onmouseover="showTip(event, '108', 108)">
-            TargetsDependOn target targets
+          <code onmouseout="hideTip(event, '565', 565)" onmouseover="showTip(event, '565', 565)">
+            ActivateFinalTarget name
           </code>
-          <div class="tip" id="108">
-            <strong>Signature:</strong>target:string -&gt; targets:seq&lt;string&gt; -&gt; unit<br />
+          <div class="tip" id="565">
+            <strong>Signature:</strong>name:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Set a dependency for all given targets</p>
+        <td class="xmldoc"><p>Activates the FinalTarget</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '109', 109)" onmouseover="showTip(event, '109', 109)">
+          <code onmouseout="hideTip(event, '566', 566)" onmouseover="showTip(event, '566', 566)">
+            addExecutedTarget target time
+          </code>
+          <div class="tip" id="566">
+            <strong>Signature:</strong>target:string -&gt; time:TimeSpan -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '567', 567)" onmouseover="showTip(event, '567', 567)">
             AllTargetsDependOn target
           </code>
-          <div class="tip" id="109">
+          <div class="tip" id="567">
             <strong>Signature:</strong>target:string -&gt; unit<br />
                       </div>
         </td>
@@ -317,188 +160,140 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '110', 110)" onmouseover="showTip(event, '110', 110)">
-            targetFromTemplate (...)
+          <code onmouseout="hideTip(event, '568', 568)" onmouseover="showTip(event, '568', 568)">
+            checkIfDependencyCanBeAdded (...)
           </code>
-          <div class="tip" id="110">
-            <strong>Signature:</strong>template:&#39;?5121 TargetTemplate -&gt; name:string -&gt; parameters:&#39;?5121 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?5121          </div>
-        </td>
-        <td class="xmldoc"><p>Creates a target from template</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '111', 111)" onmouseover="showTip(event, '111', 111)">
-            TargetTemplateWithDependecies (...)
-          </code>
-          <div class="tip" id="111">
-            <strong>Signature:</strong>dependencies:string list -&gt; body:(&#39;?5123 -&gt; unit) -&gt; string -&gt; &#39;?5123 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?5123          </div>
-        </td>
-        <td class="xmldoc"><p>Creates a TargetTemplate with dependencies</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '112', 112)" onmouseover="showTip(event, '112', 112)">
-            TargetTemplate body
-          </code>
-          <div class="tip" id="112">
-            <strong>Signature:</strong>body:(&#39;?5125 -&gt; unit) -&gt; string -&gt; &#39;?5125 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?5125          </div>
-        </td>
-        <td class="xmldoc"><p>Creates a TargetTemplate</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '113', 113)" onmouseover="showTip(event, '113', 113)">
-            Target name body
-          </code>
-          <div class="tip" id="113">
-            <strong>Signature:</strong>name:string -&gt; body:(unit -&gt; unit) -&gt; unit<br />
+          <div class="tip" id="568">
+            <strong>Signature:</strong>targetName:string -&gt; dependentTargetName:string -&gt; unit TargetTemplate * unit TargetTemplate<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Creates a Target</p>
+        <td class="xmldoc"><p>Checks wether the dependency can be add</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '114', 114)" onmouseover="showTip(event, '114', 114)">
-            targetError targetName exn
+          <code onmouseout="hideTip(event, '569', 569)" onmouseover="showTip(event, '569', 569)">
+            Dependencies targetName
           </code>
-          <div class="tip" id="114">
-            <strong>Signature:</strong>targetName:string -&gt; exn:Exception -&gt; unit<br />
+          <div class="tip" id="569">
+            <strong>Signature:</strong>targetName:string -&gt; string list -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Adds the dependencies to the list of dependencies</p>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '115', 115)" onmouseover="showTip(event, '115', 115)">
-            addExecutedTarget target time
+          <code onmouseout="hideTip(event, '570', 570)" onmouseover="showTip(event, '570', 570)">
+            dependency 
           </code>
-          <div class="tip" id="115">
-            <strong>Signature:</strong>target:string -&gt; time:TimeSpan -&gt; unit<br />
+          <div class="tip" id="570">
+            <strong>Signature:</strong>string -&gt; string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Adds the dependency to the list of dependencies</p>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '116', 116)" onmouseover="showTip(event, '116', 116)">
-            runFinalTargets ()
+          <code onmouseout="hideTip(event, '571', 571)" onmouseover="showTip(event, '571', 571)">
+            dependencyAtEnd (...)
           </code>
-          <div class="tip" id="116">
+          <div class="tip" id="571">
+            <strong>Signature:</strong>targetName:string -&gt; dependentTargetName:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Appends the dependency to the list of dependencies</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '572', 572)" onmouseover="showTip(event, '572', 572)">
+            dependencyAtFront (...)
+          </code>
+          <div class="tip" id="572">
+            <strong>Signature:</strong>targetName:string -&gt; dependentTargetName:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Adds the dependency to the front of the list of dependencies</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '573', 573)" onmouseover="showTip(event, '573', 573)">
+            dependencyString target
+          </code>
+          <div class="tip" id="573">
+            <strong>Signature:</strong>target:&#39;?5109 TargetTemplate -&gt; string<br />
+                          <strong>Type parameters:</strong> '?5109          </div>
+        </td>
+        <td class="xmldoc"><p>Returns the DependencyString for the given target</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '574', 574)" onmouseover="showTip(event, '574', 574)">
+            Description text
+          </code>
+          <div class="tip" id="574">
+            <strong>Signature:</strong>text:TargetDescription -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Sets the Description for the next target</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '575', 575)" onmouseover="showTip(event, '575', 575)">
+            DoNothing ()
+          </code>
+          <div class="tip" id="575">
             <strong>Signature:</strong>unit -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Runs all activated final targets (in alphabetically order)</p>
+        <td class="xmldoc"><p>Do nothing - fun () -> ()</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '117', 117)" onmouseover="showTip(event, '117', 117)">
-            PrintTargets ()
+          <code onmouseout="hideTip(event, '576', 576)" onmouseover="showTip(event, '576', 576)">
+            ExecutedTargets 
           </code>
-          <div class="tip" id="117">
-            <strong>Signature:</strong>unit -&gt; unit<br />
+          <div class="tip" id="576">
+            <strong>Signature:</strong>HashSet&lt;string&gt;<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Prints all targets</p>
+        <td class="xmldoc"><p>The executed targets</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '118', 118)" onmouseover="showTip(event, '118', 118)">
-            PrintDependencyGraph verbose target
+          <code onmouseout="hideTip(event, '577', 577)" onmouseover="showTip(event, '577', 577)">
+            ExecutedTargetTimes 
           </code>
-          <div class="tip" id="118">
-            <strong>Signature:</strong>verbose:bool -&gt; target:string -&gt; unit<br />
+          <div class="tip" id="577">
+            <strong>Signature:</strong>List&lt;string * TimeSpan&gt;<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Writes a dependency graph.</p>
+        <td class="xmldoc"><p>The executed target time</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '119', 119)" onmouseover="showTip(event, '119', 119)">
-            WriteErrors ()
-          </code>
-          <div class="tip" id="119">
-            <strong>Signature:</strong>unit -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Writes a summary of errors reported during build</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '120', 120)" onmouseover="showTip(event, '120', 120)">
-            WriteTaskTimeSummary total
-          </code>
-          <div class="tip" id="120">
-            <strong>Signature:</strong>total:&#39;?5145 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?5145          </div>
-        </td>
-        <td class="xmldoc"><p>Writes a build time report.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '121', 121)" onmouseover="showTip(event, '121', 121)">
-            isListMode 
-          </code>
-          <div class="tip" id="121">
-            <strong>Signature:</strong>bool<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '122', 122)" onmouseover="showTip(event, '122', 122)">
-            listTargets ()
-          </code>
-          <div class="tip" id="122">
-            <strong>Signature:</strong>unit -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '123', 123)" onmouseover="showTip(event, '123', 123)">
-            run targetName
-          </code>
-          <div class="tip" id="123">
-            <strong>Signature:</strong>targetName:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Runs a target and its dependencies</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '124', 124)" onmouseover="showTip(event, '124', 124)">
+          <code onmouseout="hideTip(event, '578', 578)" onmouseover="showTip(event, '578', 578)">
             FinalTarget name body
           </code>
-          <div class="tip" id="124">
+          <div class="tip" id="578">
             <strong>Signature:</strong>name:string -&gt; body:(unit -&gt; unit) -&gt; unit<br />
                       </div>
         </td>
@@ -508,14 +303,256 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '125', 125)" onmouseover="showTip(event, '125', 125)">
-            ActivateFinalTarget name
+          <code onmouseout="hideTip(event, '579', 579)" onmouseover="showTip(event, '579', 579)">
+            FinalTargets 
           </code>
-          <div class="tip" id="125">
-            <strong>Signature:</strong>name:string -&gt; unit<br />
+          <div class="tip" id="579">
+            <strong>Signature:</strong>Dictionary&lt;string,bool&gt;<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Activates the FinalTarget</p>
+        <td class="xmldoc"><p>Final Targets - stores final target and if it is activated</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '580', 580)" onmouseover="showTip(event, '580', 580)">
+            getAllTargetsNames ()
+          </code>
+          <div class="tip" id="580">
+            <strong>Signature:</strong>unit -&gt; string list<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Returns a list with all targetNames</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '581', 581)" onmouseover="showTip(event, '581', 581)">
+            getTarget name
+          </code>
+          <div class="tip" id="581">
+            <strong>Signature:</strong>name:string -&gt; unit TargetTemplate<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Gets a target with the given name from the target dictionary</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '582', 582)" onmouseover="showTip(event, '582', 582)">
+            isListMode 
+          </code>
+          <div class="tip" id="582">
+            <strong>Signature:</strong>bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '583', 583)" onmouseover="showTip(event, '583', 583)">
+            LastDescription 
+          </code>
+          <div class="tip" id="583">
+            <strong>Signature:</strong>TargetDescription<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '584', 584)" onmouseover="showTip(event, '584', 584)">
+            listTargets ()
+          </code>
+          <div class="tip" id="584">
+            <strong>Signature:</strong>unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '585', 585)" onmouseover="showTip(event, '585', 585)">
+            PrintDependencyGraph verbose target
+          </code>
+          <div class="tip" id="585">
+            <strong>Signature:</strong>verbose:bool -&gt; target:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Writes a dependency graph.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '586', 586)" onmouseover="showTip(event, '586', 586)">
+            PrintStackTraceOnError 
+          </code>
+          <div class="tip" id="586">
+            <strong>Signature:</strong>bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '587', 587)" onmouseover="showTip(event, '587', 587)">
+            PrintTargets ()
+          </code>
+          <div class="tip" id="587">
+            <strong>Signature:</strong>unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Prints all targets</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '588', 588)" onmouseover="showTip(event, '588', 588)">
+            run targetName
+          </code>
+          <div class="tip" id="588">
+            <strong>Signature:</strong>targetName:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Runs a target and its dependencies</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '589', 589)" onmouseover="showTip(event, '589', 589)">
+            runFinalTargets ()
+          </code>
+          <div class="tip" id="589">
+            <strong>Signature:</strong>unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Runs all activated final targets (in alphabetically order)</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '590', 590)" onmouseover="showTip(event, '590', 590)">
+            Target name body
+          </code>
+          <div class="tip" id="590">
+            <strong>Signature:</strong>name:string -&gt; body:(unit -&gt; unit) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates a Target</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '591', 591)" onmouseover="showTip(event, '591', 591)">
+            TargetDict 
+          </code>
+          <div class="tip" id="591">
+            <strong>Signature:</strong>Dictionary&lt;string,unit TargetTemplate&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>TargetDictionary</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '592', 592)" onmouseover="showTip(event, '592', 592)">
+            targetError targetName exn
+          </code>
+          <div class="tip" id="592">
+            <strong>Signature:</strong>targetName:string -&gt; exn:Exception -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '593', 593)" onmouseover="showTip(event, '593', 593)">
+            targetFromTemplate (...)
+          </code>
+          <div class="tip" id="593">
+            <strong>Signature:</strong>template:&#39;?5121 TargetTemplate -&gt; name:string -&gt; parameters:&#39;?5121 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?5121          </div>
+        </td>
+        <td class="xmldoc"><p>Creates a target from template</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '594', 594)" onmouseover="showTip(event, '594', 594)">
+            TargetsDependOn target targets
+          </code>
+          <div class="tip" id="594">
+            <strong>Signature:</strong>target:string -&gt; targets:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Set a dependency for all given targets</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '595', 595)" onmouseover="showTip(event, '595', 595)">
+            TargetTemplate body
+          </code>
+          <div class="tip" id="595">
+            <strong>Signature:</strong>body:(&#39;?5125 -&gt; unit) -&gt; string -&gt; &#39;?5125 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?5125          </div>
+        </td>
+        <td class="xmldoc"><p>Creates a TargetTemplate</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '596', 596)" onmouseover="showTip(event, '596', 596)">
+            TargetTemplateWithDependecies (...)
+          </code>
+          <div class="tip" id="596">
+            <strong>Signature:</strong>dependencies:string list -&gt; body:(&#39;?5123 -&gt; unit) -&gt; string -&gt; &#39;?5123 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?5123          </div>
+        </td>
+        <td class="xmldoc"><p>Creates a TargetTemplate with dependencies</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '597', 597)" onmouseover="showTip(event, '597', 597)">
+            WriteErrors ()
+          </code>
+          <div class="tip" id="597">
+            <strong>Signature:</strong>unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Writes a summary of errors reported during build</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '598', 598)" onmouseover="showTip(event, '598', 598)">
+            WriteTaskTimeSummary total
+          </code>
+          <div class="tip" id="598">
+            <strong>Signature:</strong>total:&#39;?5145 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?5145          </div>
+        </td>
+        <td class="xmldoc"><p>Writes a build time report.</p>
 </td>
       </tr>
     </tbody>

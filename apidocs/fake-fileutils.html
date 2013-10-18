@@ -65,6 +65,11 @@
 <p>Shell-like functions. 
 Similar to Ruby's FileUtils: http://ruby-doc.org/core/classes/FileUtils.htm</p>
 </div>
+
+<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+
+
+<!-- END TODO -->
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -74,75 +79,23 @@ Similar to Ruby's FileUtils: http://ruby-doc.org/core/classes/FileUtils.htm</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '567', 567)" onmouseover="showTip(event, '567', 567)">
-            rm 
+          <code onmouseout="hideTip(event, '142', 142)" onmouseover="showTip(event, '142', 142)">
+            cd 
           </code>
-          <div class="tip" id="567">
+          <div class="tip" id="142">
             <strong>Signature:</strong>string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Deletes a file if it exists</p>
+        <td class="xmldoc"><p>Changes working directory</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '568', 568)" onmouseover="showTip(event, '568', 568)">
-            rm_rf f
-          </code>
-          <div class="tip" id="568">
-            <strong>Signature:</strong>f:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Like "rm -rf" in a shell. Removes files recursively, ignoring nonexisting files</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '569', 569)" onmouseover="showTip(event, '569', 569)">
-            mkdir 
-          </code>
-          <div class="tip" id="569">
-            <strong>Signature:</strong>string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Creates a directory if it doesn't exist.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '570', 570)" onmouseover="showTip(event, '570', 570)">
-            cp_r src dest
-          </code>
-          <div class="tip" id="570">
-            <strong>Signature:</strong>src:string -&gt; dest:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Like "cp -r" in a shell. Copies a file or directory recursively.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '571', 571)" onmouseover="showTip(event, '571', 571)">
-            cp 
-          </code>
-          <div class="tip" id="571">
-            <strong>Signature:</strong>string -&gt; string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Like "cp" in a shell. Copies a single file.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '572', 572)" onmouseover="showTip(event, '572', 572)">
+          <code onmouseout="hideTip(event, '143', 143)" onmouseover="showTip(event, '143', 143)">
             chdir arg00
           </code>
-          <div class="tip" id="572">
+          <div class="tip" id="143">
             <strong>Signature:</strong>arg00:string -&gt; unit<br />
                       </div>
         </td>
@@ -152,23 +105,62 @@ Similar to Ruby's FileUtils: http://ruby-doc.org/core/classes/FileUtils.htm</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '573', 573)" onmouseover="showTip(event, '573', 573)">
-            cd 
+          <code onmouseout="hideTip(event, '144', 144)" onmouseover="showTip(event, '144', 144)">
+            cp 
           </code>
-          <div class="tip" id="573">
-            <strong>Signature:</strong>string -&gt; unit<br />
+          <div class="tip" id="144">
+            <strong>Signature:</strong>string -&gt; string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Changes working directory</p>
+        <td class="xmldoc"><p>Like "cp" in a shell. Copies a single file.</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '574', 574)" onmouseover="showTip(event, '574', 574)">
+          <code onmouseout="hideTip(event, '145', 145)" onmouseover="showTip(event, '145', 145)">
+            cp_r src dest
+          </code>
+          <div class="tip" id="145">
+            <strong>Signature:</strong>src:string -&gt; dest:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Like "cp -r" in a shell. Copies a file or directory recursively.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '146', 146)" onmouseover="showTip(event, '146', 146)">
+            mkdir 
+          </code>
+          <div class="tip" id="146">
+            <strong>Signature:</strong>string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates a directory if it doesn't exist.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '147', 147)" onmouseover="showTip(event, '147', 147)">
+            mv 
+          </code>
+          <div class="tip" id="147">
+            <strong>Signature:</strong>string -&gt; string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Like "mv" in a shell. Moves/renames a file</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '148', 148)" onmouseover="showTip(event, '148', 148)">
             pwd ()
           </code>
-          <div class="tip" id="574">
+          <div class="tip" id="148">
             <strong>Signature:</strong>unit -&gt; string<br />
                       </div>
         </td>
@@ -178,14 +170,27 @@ Similar to Ruby's FileUtils: http://ruby-doc.org/core/classes/FileUtils.htm</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '575', 575)" onmouseover="showTip(event, '575', 575)">
-            mv 
+          <code onmouseout="hideTip(event, '149', 149)" onmouseover="showTip(event, '149', 149)">
+            rm 
           </code>
-          <div class="tip" id="575">
-            <strong>Signature:</strong>string -&gt; string -&gt; unit<br />
+          <div class="tip" id="149">
+            <strong>Signature:</strong>string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Like "mv" in a shell. Moves/renames a file</p>
+        <td class="xmldoc"><p>Deletes a file if it exists</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '150', 150)" onmouseover="showTip(event, '150', 150)">
+            rm_rf f
+          </code>
+          <div class="tip" id="150">
+            <strong>Signature:</strong>f:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Like "rm -rf" in a shell. Removes files recursively, ignoring nonexisting files</p>
 </td>
       </tr>
     </tbody>

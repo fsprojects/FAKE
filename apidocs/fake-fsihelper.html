@@ -63,6 +63,11 @@
 <h1>FSIHelper</h1>
 <div class="xmldoc">
 </div>
+
+<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+
+
+<!-- END TODO -->
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -72,35 +77,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '476', 476)" onmouseover="showTip(event, '476', 476)">
-            fsiPath 
-          </code>
-          <div class="tip" id="476">
-            <strong>Signature:</strong>string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>The Path to the F# interactive tool</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '477', 477)" onmouseover="showTip(event, '477', 477)">
-            fsiStartInfo (...)
-          </code>
-          <div class="tip" id="477">
-            <strong>Signature:</strong>script:string -&gt; workingDirectory:string -&gt; args:seq&lt;string * string&gt; -&gt; ProcessStartInfo -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '478', 478)" onmouseover="showTip(event, '478', 478)">
+          <code onmouseout="hideTip(event, '151', 151)" onmouseover="showTip(event, '151', 151)">
             executeFSI workingDirectory script args
           </code>
-          <div class="tip" id="478">
+          <div class="tip" id="151">
             <strong>Signature:</strong>workingDirectory:string -&gt; script:string -&gt; args:seq&lt;string * string&gt; -&gt; bool * seq&lt;ConsoleMessage&gt;<br />
                       </div>
         </td>
@@ -110,10 +90,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '479', 479)" onmouseover="showTip(event, '479', 479)">
+          <code onmouseout="hideTip(event, '152', 152)" onmouseover="showTip(event, '152', 152)">
             executeFSIWithArgs (...)
           </code>
-          <div class="tip" id="479">
+          <div class="tip" id="152">
             <strong>Signature:</strong>workingDirectory:string -&gt; script:string -&gt; extraFsiArgs:string list -&gt; args:seq&lt;string * string&gt; -&gt; bool<br />
                       </div>
         </td>
@@ -123,27 +103,52 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '480', 480)" onmouseover="showTip(event, '480', 480)">
-            runBuildScriptAt (...)
+          <code onmouseout="hideTip(event, '153', 153)" onmouseover="showTip(event, '153', 153)">
+            fsiPath 
           </code>
-          <div class="tip" id="480">
-            <strong>Signature:</strong>workingDirectory:string -&gt; printDetails:bool -&gt; script:string -&gt; args:seq&lt;string * string&gt; -&gt; bool<br />
+          <div class="tip" id="153">
+            <strong>Signature:</strong>string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Run the given buildscript with fsi.exe</p>
+        <td class="xmldoc"><p>The Path to the F# interactive tool</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '481', 481)" onmouseover="showTip(event, '481', 481)">
+          <code onmouseout="hideTip(event, '154', 154)" onmouseover="showTip(event, '154', 154)">
+            fsiStartInfo (...)
+          </code>
+          <div class="tip" id="154">
+            <strong>Signature:</strong>script:string -&gt; workingDirectory:string -&gt; args:seq&lt;string * string&gt; -&gt; ProcessStartInfo -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '155', 155)" onmouseover="showTip(event, '155', 155)">
             runBuildScript printDetails script args
           </code>
-          <div class="tip" id="481">
+          <div class="tip" id="155">
             <strong>Signature:</strong>printDetails:bool -&gt; script:string -&gt; args:seq&lt;string * string&gt; -&gt; bool<br />
                       </div>
         </td>
         <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '156', 156)" onmouseover="showTip(event, '156', 156)">
+            runBuildScriptAt (...)
+          </code>
+          <div class="tip" id="156">
+            <strong>Signature:</strong>workingDirectory:string -&gt; printDetails:bool -&gt; script:string -&gt; args:seq&lt;string * string&gt; -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Run the given buildscript with fsi.exe</p>
+</td>
       </tr>
     </tbody>
   </table>

@@ -63,6 +63,11 @@
 <h1>AdditionalSyntax</h1>
 <div class="xmldoc">
 </div>
+
+<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+
+
+<!-- END TODO -->
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -72,10 +77,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '588', 588)" onmouseover="showTip(event, '588', 588)">
+          <code onmouseout="hideTip(event, '12', 12)" onmouseover="showTip(event, '12', 12)">
             ( ? ) f s
           </code>
-          <div class="tip" id="588">
+          <div class="tip" id="12">
             <strong>Signature:</strong>f:(&#39;?6703 -&gt; &#39;?6704) -&gt; s:&#39;?6703 -&gt; &#39;?6704<br />
                           <strong>Type parameters:</strong> '?6703, '?6704          </div>
         </td>
@@ -85,10 +90,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '589', 589)" onmouseover="showTip(event, '589', 589)">
+          <code onmouseout="hideTip(event, '13', 13)" onmouseover="showTip(event, '13', 13)">
             ( ?&lt;- ) f str action
           </code>
-          <div class="tip" id="589">
+          <div class="tip" id="13">
             <strong>Signature:</strong>f:(&#39;?6706 -&gt; &#39;?6707 -&gt; &#39;?6708) -&gt; str:&#39;?6706 -&gt; action:&#39;?6707 -&gt; &#39;?6708<br />
                           <strong>Type parameters:</strong> '?6706, '?6707, '?6708          </div>
         </td>
@@ -98,138 +103,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '590', 590)" onmouseover="showTip(event, '590', 590)">
-            For x y
-          </code>
-          <div class="tip" id="590">
-            <strong>Signature:</strong>x:string -&gt; y:string list -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Allows to use For? syntax for Dependencies</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '591', 591)" onmouseover="showTip(event, '591', 591)">
-            Dependency x
-          </code>
-          <div class="tip" id="591">
-            <strong>Signature:</strong>x:&#39;?6711 -&gt; &#39;?6711 list<br />
-                          <strong>Type parameters:</strong> '?6711          </div>
-        </td>
-        <td class="xmldoc"><p>Converts a dependency into a list</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '592', 592)" onmouseover="showTip(event, '592', 592)">
-            And x y
-          </code>
-          <div class="tip" id="592">
-            <strong>Signature:</strong>x:&#39;?6713 -&gt; y:&#39;?6713 list -&gt; &#39;?6713 list<br />
-                          <strong>Type parameters:</strong> '?6713          </div>
-        </td>
-        <td class="xmldoc"><p>Appends the dependency to the list of dependencies</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '593', 593)" onmouseover="showTip(event, '593', 593)">
-            Run 
-          </code>
-          <div class="tip" id="593">
-            <strong>Signature:</strong>string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Runs a Target and its dependencies</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '594', 594)" onmouseover="showTip(event, '594', 594)">
-            RunParameterTargetOrDefault (...)
-          </code>
-          <div class="tip" id="594">
-            <strong>Signature:</strong>parameterName:string -&gt; defaultTarget:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Runs the target given by the build script parameter or the given default target</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '595', 595)" onmouseover="showTip(event, '595', 595)">
-            RunTargetOrDefault defaultTarget
-          </code>
-          <div class="tip" id="595">
-            <strong>Signature:</strong>defaultTarget:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Runs the target given by the target parameter or the given default target</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '596', 596)" onmouseover="showTip(event, '596', 596)">
-            RunTarget ()
-          </code>
-          <div class="tip" id="596">
-            <strong>Signature:</strong>unit -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Runs the target given by the target parameter</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '597', 597)" onmouseover="showTip(event, '597', 597)">
-            targetsAreOnSameLevel x y
-          </code>
-          <div class="tip" id="597">
-            <strong>Signature:</strong>x:string -&gt; y:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '598', 598)" onmouseover="showTip(event, '598', 598)">
-            addDependenciesOnSameLevel (...)
-          </code>
-          <div class="tip" id="598">
-            <strong>Signature:</strong>target:string -&gt; dependency:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '599', 599)" onmouseover="showTip(event, '599', 599)">
-            ( ==&gt; ) x y
-          </code>
-          <div class="tip" id="599">
-            <strong>Signature:</strong>x:string -&gt; y:string -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Defines a dependency - y is dependent on x</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '600', 600)" onmouseover="showTip(event, '600', 600)">
+          <code onmouseout="hideTip(event, '14', 14)" onmouseover="showTip(event, '14', 14)">
             ( &lt;=&gt; ) x y
           </code>
-          <div class="tip" id="600">
+          <div class="tip" id="14">
             <strong>Signature:</strong>x:string -&gt; y:string -&gt; string<br />
                       </div>
         </td>
@@ -239,15 +116,143 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '601', 601)" onmouseover="showTip(event, '601', 601)">
+          <code onmouseout="hideTip(event, '15', 15)" onmouseover="showTip(event, '15', 15)">
             ( =?&gt; ) x (y, condition)
           </code>
-          <div class="tip" id="601">
+          <div class="tip" id="15">
             <strong>Signature:</strong>x:string -&gt; (y:string * condition:bool) -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc"><p>Defines a conditional dependency - y is dependent on x if the condition is true</p>
 </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '16', 16)" onmouseover="showTip(event, '16', 16)">
+            ( ==&gt; ) x y
+          </code>
+          <div class="tip" id="16">
+            <strong>Signature:</strong>x:string -&gt; y:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Defines a dependency - y is dependent on x</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '17', 17)" onmouseover="showTip(event, '17', 17)">
+            addDependenciesOnSameLevel (...)
+          </code>
+          <div class="tip" id="17">
+            <strong>Signature:</strong>target:string -&gt; dependency:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '18', 18)" onmouseover="showTip(event, '18', 18)">
+            And x y
+          </code>
+          <div class="tip" id="18">
+            <strong>Signature:</strong>x:&#39;?6713 -&gt; y:&#39;?6713 list -&gt; &#39;?6713 list<br />
+                          <strong>Type parameters:</strong> '?6713          </div>
+        </td>
+        <td class="xmldoc"><p>Appends the dependency to the list of dependencies</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '19', 19)" onmouseover="showTip(event, '19', 19)">
+            Dependency x
+          </code>
+          <div class="tip" id="19">
+            <strong>Signature:</strong>x:&#39;?6711 -&gt; &#39;?6711 list<br />
+                          <strong>Type parameters:</strong> '?6711          </div>
+        </td>
+        <td class="xmldoc"><p>Converts a dependency into a list</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '20', 20)" onmouseover="showTip(event, '20', 20)">
+            For x y
+          </code>
+          <div class="tip" id="20">
+            <strong>Signature:</strong>x:string -&gt; y:string list -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Allows to use For? syntax for Dependencies</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '21', 21)" onmouseover="showTip(event, '21', 21)">
+            Run 
+          </code>
+          <div class="tip" id="21">
+            <strong>Signature:</strong>string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Runs a Target and its dependencies</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '22', 22)" onmouseover="showTip(event, '22', 22)">
+            RunParameterTargetOrDefault (...)
+          </code>
+          <div class="tip" id="22">
+            <strong>Signature:</strong>parameterName:string -&gt; defaultTarget:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Runs the target given by the build script parameter or the given default target</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '23', 23)" onmouseover="showTip(event, '23', 23)">
+            RunTarget ()
+          </code>
+          <div class="tip" id="23">
+            <strong>Signature:</strong>unit -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Runs the target given by the target parameter</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '24', 24)" onmouseover="showTip(event, '24', 24)">
+            RunTargetOrDefault defaultTarget
+          </code>
+          <div class="tip" id="24">
+            <strong>Signature:</strong>defaultTarget:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Runs the target given by the target parameter or the given default target</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '25', 25)" onmouseover="showTip(event, '25', 25)">
+            targetsAreOnSameLevel x y
+          </code>
+          <div class="tip" id="25">
+            <strong>Signature:</strong>x:string -&gt; y:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
       </tr>
     </tbody>
   </table>

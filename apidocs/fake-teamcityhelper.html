@@ -63,6 +63,11 @@
 <h1>TeamCityHelper</h1>
 <div class="xmldoc">
 </div>
+
+<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+
+
+<!-- END TODO -->
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -72,270 +77,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '126', 126)" onmouseover="showTip(event, '126', 126)">
-            EncapsulateSpecialChars text
-          </code>
-          <div class="tip" id="126">
-            <strong>Signature:</strong>text:string -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Encapsulates special chars</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '127', 127)" onmouseover="showTip(event, '127', 127)">
-            sendToTeamCity format message
-          </code>
-          <div class="tip" id="127">
-            <strong>Signature:</strong>format:StringFormat&lt;(string -&gt; string)&gt; -&gt; message:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Send message to TeamCity</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '128', 128)" onmouseover="showTip(event, '128', 128)">
-            sendStrToTeamCity s
-          </code>
-          <div class="tip" id="128">
-            <strong>Signature:</strong>s:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Send message to TeamCity</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '129', 129)" onmouseover="showTip(event, '129', 129)">
-            sendTeamCityError error
-          </code>
-          <div class="tip" id="129">
-            <strong>Signature:</strong>error:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Sends an error to TeamCity</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '130', 130)" onmouseover="showTip(event, '130', 130)">
-            sendTeamCityNUnitImport path
-          </code>
-          <div class="tip" id="130">
-            <strong>Signature:</strong>path:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Sends an NUnit results filename to TeamCity</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '131', 131)" onmouseover="showTip(event, '131', 131)">
-            sendTeamCityFXCopImport path
-          </code>
-          <div class="tip" id="131">
-            <strong>Signature:</strong>path:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Sends an FXCop results filename to TeamCity</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '132', 132)" onmouseover="showTip(event, '132', 132)">
-            StartTestCase testCaseName
-          </code>
-          <div class="tip" id="132">
-            <strong>Signature:</strong>testCaseName:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Starts the test case.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '133', 133)" onmouseover="showTip(event, '133', 133)">
-            FinishTestCase testCaseName duration
-          </code>
-          <div class="tip" id="133">
-            <strong>Signature:</strong>testCaseName:string -&gt; duration:TimeSpan -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Finishes the test case.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '134', 134)" onmouseover="showTip(event, '134', 134)">
-            IgnoreTestCase name message
-          </code>
-          <div class="tip" id="134">
-            <strong>Signature:</strong>name:string -&gt; message:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Ignores the test case.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '135', 135)" onmouseover="showTip(event, '135', 135)">
-            FinishTestSuite testSuiteName
-          </code>
-          <div class="tip" id="135">
-            <strong>Signature:</strong>testSuiteName:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Finishes the test suite.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '136', 136)" onmouseover="showTip(event, '136', 136)">
-            StartTestSuite testSuiteName
-          </code>
-          <div class="tip" id="136">
-            <strong>Signature:</strong>testSuiteName:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Starts the test suite.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '137', 137)" onmouseover="showTip(event, '137', 137)">
-            ReportProgress message
-          </code>
-          <div class="tip" id="137">
-            <strong>Signature:</strong>message:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Reports the progress.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '138', 138)" onmouseover="showTip(event, '138', 138)">
-            ReportProgressStart message
-          </code>
-          <div class="tip" id="138">
-            <strong>Signature:</strong>message:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Reports the progress start.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '139', 139)" onmouseover="showTip(event, '139', 139)">
-            ReportProgressFinish message
-          </code>
-          <div class="tip" id="139">
-            <strong>Signature:</strong>message:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Reports the progress end.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '140', 140)" onmouseover="showTip(event, '140', 140)">
-            ReportBuildStatus status message
-          </code>
-          <div class="tip" id="140">
-            <strong>Signature:</strong>status:string -&gt; message:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Reports the build status.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '141', 141)" onmouseover="showTip(event, '141', 141)">
-            PublishArticfact path
-          </code>
-          <div class="tip" id="141">
-            <strong>Signature:</strong>path:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Publishes an artifact on the TeamcCity build server.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '142', 142)" onmouseover="showTip(event, '142', 142)">
-            SetBuildNumber buildNumber
-          </code>
-          <div class="tip" id="142">
-            <strong>Signature:</strong>buildNumber:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Sets the TeamCity build number.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '143', 143)" onmouseover="showTip(event, '143', 143)">
-            SetBuildStatistic key value
-          </code>
-          <div class="tip" id="143">
-            <strong>Signature:</strong>key:string -&gt; value:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Reports a build statistic.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '144', 144)" onmouseover="showTip(event, '144', 144)">
-            SetTeamCityParameter name value
-          </code>
-          <div class="tip" id="144">
-            <strong>Signature:</strong>name:string -&gt; value:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Reports a parameter value</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '145', 145)" onmouseover="showTip(event, '145', 145)">
-            TestFailed name message details
-          </code>
-          <div class="tip" id="145">
-            <strong>Signature:</strong>name:string -&gt; message:string -&gt; details:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Reports a failed test.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '146', 146)" onmouseover="showTip(event, '146', 146)">
+          <code onmouseout="hideTip(event, '468', 468)" onmouseover="showTip(event, '468', 468)">
             ComparisonFailure (...)
           </code>
-          <div class="tip" id="146">
+          <div class="tip" id="468">
             <strong>Signature:</strong>name:string -&gt; message:string -&gt; details:string -&gt; expected:string -&gt; actual:string -&gt; unit<br />
                       </div>
         </td>
@@ -345,10 +90,62 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '147', 147)" onmouseover="showTip(event, '147', 147)">
+          <code onmouseout="hideTip(event, '469', 469)" onmouseover="showTip(event, '469', 469)">
+            EncapsulateSpecialChars text
+          </code>
+          <div class="tip" id="469">
+            <strong>Signature:</strong>text:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Encapsulates special chars</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '470', 470)" onmouseover="showTip(event, '470', 470)">
+            FinishTestCase testCaseName duration
+          </code>
+          <div class="tip" id="470">
+            <strong>Signature:</strong>testCaseName:string -&gt; duration:TimeSpan -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Finishes the test case.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '471', 471)" onmouseover="showTip(event, '471', 471)">
+            FinishTestSuite testSuiteName
+          </code>
+          <div class="tip" id="471">
+            <strong>Signature:</strong>testSuiteName:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Finishes the test suite.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '472', 472)" onmouseover="showTip(event, '472', 472)">
+            getChangedFilesInCurrentBuild ()
+          </code>
+          <div class="tip" id="472">
+            <strong>Signature:</strong>unit -&gt; seq&lt;string&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Gets the changed files</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '473', 473)" onmouseover="showTip(event, '473', 473)">
             getRecentlyFailedTests ()
           </code>
-          <div class="tip" id="147">
+          <div class="tip" id="473">
             <strong>Signature:</strong>unit -&gt; seq&lt;string&gt;<br />
                       </div>
         </td>
@@ -358,14 +155,222 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '148', 148)" onmouseover="showTip(event, '148', 148)">
-            getChangedFilesInCurrentBuild ()
+          <code onmouseout="hideTip(event, '474', 474)" onmouseover="showTip(event, '474', 474)">
+            IgnoreTestCase name message
           </code>
-          <div class="tip" id="148">
-            <strong>Signature:</strong>unit -&gt; seq&lt;string&gt;<br />
+          <div class="tip" id="474">
+            <strong>Signature:</strong>name:string -&gt; message:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Gets the changed files</p>
+        <td class="xmldoc"><p>Ignores the test case.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '475', 475)" onmouseover="showTip(event, '475', 475)">
+            PublishArticfact path
+          </code>
+          <div class="tip" id="475">
+            <strong>Signature:</strong>path:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Publishes an artifact on the TeamcCity build server.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '476', 476)" onmouseover="showTip(event, '476', 476)">
+            ReportBuildStatus status message
+          </code>
+          <div class="tip" id="476">
+            <strong>Signature:</strong>status:string -&gt; message:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Reports the build status.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '477', 477)" onmouseover="showTip(event, '477', 477)">
+            ReportProgress message
+          </code>
+          <div class="tip" id="477">
+            <strong>Signature:</strong>message:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Reports the progress.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '478', 478)" onmouseover="showTip(event, '478', 478)">
+            ReportProgressFinish message
+          </code>
+          <div class="tip" id="478">
+            <strong>Signature:</strong>message:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Reports the progress end.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '479', 479)" onmouseover="showTip(event, '479', 479)">
+            ReportProgressStart message
+          </code>
+          <div class="tip" id="479">
+            <strong>Signature:</strong>message:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Reports the progress start.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '480', 480)" onmouseover="showTip(event, '480', 480)">
+            sendStrToTeamCity s
+          </code>
+          <div class="tip" id="480">
+            <strong>Signature:</strong>s:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Send message to TeamCity</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '481', 481)" onmouseover="showTip(event, '481', 481)">
+            sendTeamCityError error
+          </code>
+          <div class="tip" id="481">
+            <strong>Signature:</strong>error:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Sends an error to TeamCity</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '482', 482)" onmouseover="showTip(event, '482', 482)">
+            sendTeamCityFXCopImport path
+          </code>
+          <div class="tip" id="482">
+            <strong>Signature:</strong>path:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Sends an FXCop results filename to TeamCity</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '483', 483)" onmouseover="showTip(event, '483', 483)">
+            sendTeamCityNUnitImport path
+          </code>
+          <div class="tip" id="483">
+            <strong>Signature:</strong>path:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Sends an NUnit results filename to TeamCity</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '484', 484)" onmouseover="showTip(event, '484', 484)">
+            sendToTeamCity format message
+          </code>
+          <div class="tip" id="484">
+            <strong>Signature:</strong>format:StringFormat&lt;(string -&gt; string)&gt; -&gt; message:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Send message to TeamCity</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '485', 485)" onmouseover="showTip(event, '485', 485)">
+            SetBuildNumber buildNumber
+          </code>
+          <div class="tip" id="485">
+            <strong>Signature:</strong>buildNumber:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Sets the TeamCity build number.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '486', 486)" onmouseover="showTip(event, '486', 486)">
+            SetBuildStatistic key value
+          </code>
+          <div class="tip" id="486">
+            <strong>Signature:</strong>key:string -&gt; value:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Reports a build statistic.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '487', 487)" onmouseover="showTip(event, '487', 487)">
+            SetTeamCityParameter name value
+          </code>
+          <div class="tip" id="487">
+            <strong>Signature:</strong>name:string -&gt; value:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Reports a parameter value</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '488', 488)" onmouseover="showTip(event, '488', 488)">
+            StartTestCase testCaseName
+          </code>
+          <div class="tip" id="488">
+            <strong>Signature:</strong>testCaseName:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Starts the test case.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '489', 489)" onmouseover="showTip(event, '489', 489)">
+            StartTestSuite testSuiteName
+          </code>
+          <div class="tip" id="489">
+            <strong>Signature:</strong>testSuiteName:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Starts the test suite.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '490', 490)" onmouseover="showTip(event, '490', 490)">
+            TestFailed name message details
+          </code>
+          <div class="tip" id="490">
+            <strong>Signature:</strong>name:string -&gt; message:string -&gt; details:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Reports a failed test.</p>
 </td>
       </tr>
     </tbody>

@@ -63,6 +63,25 @@
 <h1>DeploymentHelper</h1>
 <div class="xmldoc">
 </div>
+
+<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+    <h2>Nested types and modules</h2>
+
+    <table class="table table-bordered type-list">
+        <thead>
+            <tr><td>Type</td><td>Description</td></tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-deploymenthelper-versioninfo.html">VersionInfo</a>
+                    </td>
+                    <td class="xmldoc"></td>
+                </tr>
+        </tbody>
+    </table>
+
+<!-- END TODO -->
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -72,10 +91,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '519', 519)" onmouseover="showTip(event, '519', 519)">
+          <code onmouseout="hideTip(event, '40', 40)" onmouseover="showTip(event, '40', 40)">
             deploymentRootDir 
           </code>
-          <div class="tip" id="519">
+          <div class="tip" id="40">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
@@ -84,94 +103,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '520', 520)" onmouseover="showTip(event, '520', 520)">
-            getActiveReleases dir
-          </code>
-          <div class="tip" id="520">
-            <strong>Signature:</strong>dir:string -&gt; seq&lt;NuSpecPackage&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '521', 521)" onmouseover="showTip(event, '521', 521)">
-            getActiveReleaseFor dir app
-          </code>
-          <div class="tip" id="521">
-            <strong>Signature:</strong>dir:string -&gt; app:string -&gt; NuSpecPackage<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '522', 522)" onmouseover="showTip(event, '522', 522)">
-            getAllReleases dir
-          </code>
-          <div class="tip" id="522">
-            <strong>Signature:</strong>dir:string -&gt; seq&lt;NuSpecPackage&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '523', 523)" onmouseover="showTip(event, '523', 523)">
-            getAllReleasesFor dir app
-          </code>
-          <div class="tip" id="523">
-            <strong>Signature:</strong>dir:string -&gt; app:string -&gt; seq&lt;NuSpecPackage&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '524', 524)" onmouseover="showTip(event, '524', 524)">
-            getStatistics ()
-          </code>
-          <div class="tip" id="524">
-            <strong>Signature:</strong>unit -&gt; MachineDetails<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '525', 525)" onmouseover="showTip(event, '525', 525)">
-            getBackupFor dir app version
-          </code>
-          <div class="tip" id="525">
-            <strong>Signature:</strong>dir:string -&gt; app:string -&gt; version:string -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '526', 526)" onmouseover="showTip(event, '526', 526)">
-            unpack workDir isRollback packageBytes
-          </code>
-          <div class="tip" id="526">
-            <strong>Signature:</strong>workDir:string -&gt; isRollback:bool -&gt; packageBytes:byte [] -&gt; NuSpecPackage * string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '527', 527)" onmouseover="showTip(event, '527', 527)">
+          <code onmouseout="hideTip(event, '41', 41)" onmouseover="showTip(event, '41', 41)">
             doDeployment packageName script
           </code>
-          <div class="tip" id="527">
+          <div class="tip" id="41">
             <strong>Signature:</strong>packageName:&#39;?6408 -&gt; script:string -&gt; DeploymentResponse<br />
                           <strong>Type parameters:</strong> '?6408          </div>
         </td>
@@ -180,11 +115,11 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '528', 528)" onmouseover="showTip(event, '528', 528)">
-            runDeploymentFromPackageFile (...)
+          <code onmouseout="hideTip(event, '42', 42)" onmouseover="showTip(event, '42', 42)">
+            getActiveReleaseFor dir app
           </code>
-          <div class="tip" id="528">
-            <strong>Signature:</strong>workDir:string -&gt; packageFileName:string -&gt; DeploymentResponse<br />
+          <div class="tip" id="42">
+            <strong>Signature:</strong>dir:string -&gt; app:string -&gt; NuSpecPackage<br />
                       </div>
         </td>
         <td class="xmldoc"></td>
@@ -192,11 +127,11 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '529', 529)" onmouseover="showTip(event, '529', 529)">
-            rollback workDir app version
+          <code onmouseout="hideTip(event, '43', 43)" onmouseover="showTip(event, '43', 43)">
+            getActiveReleases dir
           </code>
-          <div class="tip" id="529">
-            <strong>Signature:</strong>workDir:string -&gt; app:string -&gt; version:string -&gt; DeploymentResponse<br />
+          <div class="tip" id="43">
+            <strong>Signature:</strong>dir:string -&gt; seq&lt;NuSpecPackage&gt;<br />
                       </div>
         </td>
         <td class="xmldoc"></td>
@@ -204,11 +139,11 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '530', 530)" onmouseover="showTip(event, '530', 530)">
-            getVersionFromNugetFileName app fileName
+          <code onmouseout="hideTip(event, '44', 44)" onmouseover="showTip(event, '44', 44)">
+            getAllReleases dir
           </code>
-          <div class="tip" id="530">
-            <strong>Signature:</strong>app:string -&gt; fileName:string -&gt; string<br />
+          <div class="tip" id="44">
+            <strong>Signature:</strong>dir:string -&gt; seq&lt;NuSpecPackage&gt;<br />
                       </div>
         </td>
         <td class="xmldoc"></td>
@@ -216,10 +151,34 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '531', 531)" onmouseover="showTip(event, '531', 531)">
+          <code onmouseout="hideTip(event, '45', 45)" onmouseover="showTip(event, '45', 45)">
+            getAllReleasesFor dir app
+          </code>
+          <div class="tip" id="45">
+            <strong>Signature:</strong>dir:string -&gt; app:string -&gt; seq&lt;NuSpecPackage&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '46', 46)" onmouseover="showTip(event, '46', 46)">
+            getBackupFor dir app version
+          </code>
+          <div class="tip" id="46">
+            <strong>Signature:</strong>dir:string -&gt; app:string -&gt; version:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '47', 47)" onmouseover="showTip(event, '47', 47)">
             getPreviousPackageVersionFromBackup (...)
           </code>
-          <div class="tip" id="531">
+          <div class="tip" id="47">
             <strong>Signature:</strong>dir:string -&gt; app:string -&gt; versions:int -&gt; string<br />
                       </div>
         </td>
@@ -228,11 +187,71 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '532', 532)" onmouseover="showTip(event, '532', 532)">
+          <code onmouseout="hideTip(event, '48', 48)" onmouseover="showTip(event, '48', 48)">
+            getStatistics ()
+          </code>
+          <div class="tip" id="48">
+            <strong>Signature:</strong>unit -&gt; MachineDetails<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '49', 49)" onmouseover="showTip(event, '49', 49)">
+            getVersionFromNugetFileName app fileName
+          </code>
+          <div class="tip" id="49">
+            <strong>Signature:</strong>app:string -&gt; fileName:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '50', 50)" onmouseover="showTip(event, '50', 50)">
+            rollback workDir app version
+          </code>
+          <div class="tip" id="50">
+            <strong>Signature:</strong>workDir:string -&gt; app:string -&gt; version:string -&gt; DeploymentResponse<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '51', 51)" onmouseover="showTip(event, '51', 51)">
             rollbackTo workDir app version
           </code>
-          <div class="tip" id="532">
+          <div class="tip" id="51">
             <strong>Signature:</strong>workDir:string -&gt; app:string -&gt; version:string -&gt; DeploymentResponse<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '52', 52)" onmouseover="showTip(event, '52', 52)">
+            runDeploymentFromPackageFile (...)
+          </code>
+          <div class="tip" id="52">
+            <strong>Signature:</strong>workDir:string -&gt; packageFileName:string -&gt; DeploymentResponse<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '53', 53)" onmouseover="showTip(event, '53', 53)">
+            unpack workDir isRollback packageBytes
+          </code>
+          <div class="tip" id="53">
+            <strong>Signature:</strong>workDir:string -&gt; isRollback:bool -&gt; packageBytes:byte [] -&gt; NuSpecPackage * string<br />
                       </div>
         </td>
         <td class="xmldoc"></td>
