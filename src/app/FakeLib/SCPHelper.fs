@@ -3,7 +3,10 @@ module Fake.SCPHelper
 
 /// The SCP parameter type
 type SCPParams =
-    { ToolPath:string;
+    { 
+      /// Path of the scp.exe 
+      ToolPath:string
+      /// Path of the private key file (optional)
       PrivateKeyPath:string}
 
 /// The SCP default parameters
