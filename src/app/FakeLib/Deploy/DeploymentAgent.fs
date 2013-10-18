@@ -1,4 +1,5 @@
-﻿module Fake.DeploymentAgent
+﻿/// Contains the implementation of the Fake.Deploy HTTP listener.
+module Fake.DeploymentAgent
     
 open System
 open System.IO
@@ -9,7 +10,6 @@ open Fake.DeploymentHelper
 open Fake.HttpListenerHelper
 
 let mutable private logger : (string * EventLogEntryType) -> unit = ignore 
-
 
 let private runDeployment workDir args (ctx : HttpListenerContext) =
     let packageBytes = getBodyFromContext ctx
@@ -53,6 +53,7 @@ let private getStatistics (args:Map<_,_>) (ctx : HttpListenerContext) =
     getStatistics()
     |> Json.serialize
 
+/// Get the HTTP routes for the deployment website.
 let routes workDir =
     defaultRoutes
         @ [ "POST", "", runDeployment workDir
@@ -63,6 +64,7 @@ let routes workDir =
             "GET", "/deployments/", getAllReleases workDir 
             "GET", "/statistics/", getStatistics]
 
+/// Starts the HTTP listener
 let start log workDir serverName port = 
     logger <- log
     routes workDir |> Seq.iter (fun (v,r,_) -> tracefn "%s %s" v r)
