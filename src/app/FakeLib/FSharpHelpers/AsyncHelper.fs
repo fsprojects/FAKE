@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+/// Contains some extensions to the F# async workflows.
 module Fake.AsyncHelper
 open System.Collections.Concurrent
 
@@ -9,16 +10,19 @@ let inline doParallel f items =
     |> Async.Parallel
     |> Async.RunSynchronously
 
-type JobRequest<'T> =
-    {
-        Id : int
-        WorkItem : 'T
-    }
+/// Generic type for JobRequests
+type JobRequest<'T> = {
+    /// The job id
+    Id : int
+    /// The work item
+    WorkItem : 'T }
 
+/// Type to represent WorkRequests
 type WorkRequest<'T> =
-    | Job of JobRequest<'T>
-    | End
+| Job of JobRequest<'T>
+| End
 
+/// Runs the given function on all items in parallel but limits the degree of parallismn
 let inline doParallelWithThrottle<'a, 'b> limit f items =
     let itemArray = Seq.toArray items
     let itemCount = Array.length itemArray
