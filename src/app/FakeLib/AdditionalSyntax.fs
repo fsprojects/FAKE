@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+/// Provides functions and operatores to deal with FAKE targets and target dependencies.
 module Fake.AdditionalSyntax
 
 open System.Collections.Generic
@@ -33,11 +34,13 @@ let RunTarget() = getBuildParam "target" |> Run
 /// Stores which targets are on the same level
 let private sameLevels = new Dictionary<_,_>()
 
+/// Specifies that two targets are on the same level of execution
 let targetsAreOnSameLevel x y =
     match sameLevels.TryGetValue y with
     | true, z -> ()
     | _  -> sameLevels.[y] <- x
 
+/// Specifies that two targets have the same dependencies
 let rec addDependenciesOnSameLevel target dependency =
     match sameLevels.TryGetValue dependency with
     | true, x -> 
