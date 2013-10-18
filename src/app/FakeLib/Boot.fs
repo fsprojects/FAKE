@@ -13,19 +13,14 @@ open System.Runtime.Versioning
 open System.Text
 open NuGet
 
-let private ( +/ ) a b = Path.Combine(a, b)
-
 /// Specifies which version of the NuGet package to install.
 type NuGetVersion =
-
-    /// Pick the latest available version.
-    | Latest
-
-    /// Pick the latest available version, including pre-release versions.
-    | LatestPreRelease
-
-    /// Pick the given semantic version, such as "2.1.170-alpha".
-    | SemanticVersion of string
+/// Pick the latest available version.
+| Latest
+/// Pick the latest available version, including pre-release versions.
+| LatestPreRelease
+/// Pick the given semantic version, such as "2.1.170-alpha".
+| SemanticVersion of string
 
 /// Specifies NuGet package dependencies.
 type NuGetDependency =
@@ -74,18 +69,18 @@ type Config =
     static member Default(sourceDir: string) : Config =
         {
             FrameworkName = FrameworkName(".NETFramework,Version=v4.0")
-            IncludesFile = sourceDir +/ ".build" +/ "boot.fsx"
+            IncludesFile = sourceDir @@ ".build" @@ "boot.fsx"
             NuGetCredentials = None
             NuGetDependencies = []
-            NuGetPackagesDirectory = sourceDir +/ "packages"
+            NuGetPackagesDirectory = sourceDir @@ "packages"
             NuGetSourceUrl = "http://nuget.org/api/v2/"
             SourceDirectory = sourceDir
         }
 
 /// Stage of execution for a boot system.
 type Stage =
-    | BuildStage
-    | ConfigureStage
+| BuildStage
+| ConfigureStage
 
 /// Abstracts over command-line environment features.
 [<AbstractClass>]
@@ -238,7 +233,7 @@ module private Implementation =
             |> Seq.iter (fun r -> assemblyRefs.Add(r.AssemblyName) |> ignore)
             pkg.AssemblyReferences
             |> Seq.filter (fun r -> IsSupported config r.SupportedFrameworks)
-            |> Seq.map (fun r -> config.NuGetPackagesDirectory +/ dir +/ r.Path)
+            |> Seq.map (fun r -> config.NuGetPackagesDirectory @@ dir @@ r.Path)
             |> SortAssemblyFilesByReferenceOrder
             |> Seq.iter pkgRefs.Enqueue)
         Seq.append assemblyRefs pkgRefs
@@ -256,8 +251,8 @@ module private Implementation =
             w.Write("#r ")
             writeString path
             w.WriteLine()
-        writeRef (fakeDir +/ "NuGet.Core.dll")
-        writeRef (fakeDir +/ "FakeLib.dll")
+        writeRef (fakeDir @@ "NuGet.Core.dll")
+        writeRef (fakeDir @@ "FakeLib.dll")
         for r in refs do
             writeRef r
         w.ToString()
@@ -310,8 +305,8 @@ module private Implementation =
         |> Array.exists (fun x -> x.StartsWith("#if BOOT"))
 
     let DoConfigureOnly (env: CommandEnvironment) =
-        let bootScript = env.CurrentDirectory +/ "conf.fsx"
-        let buildScript = env.CurrentDirectory +/ "build.fsx"
+        let bootScript = env.CurrentDirectory @@ "conf.fsx"
+        let buildScript = env.CurrentDirectory @@ "build.fsx"
         if File.Exists bootScript then
             Fsi env ConfigureStage bootScript
         elif File.Exists buildScript  && IsBootScript buildScript then
@@ -321,7 +316,7 @@ module private Implementation =
             false
 
     let DoRunOnly (env: CommandEnvironment) =
-        let buildScript = env.CurrentDirectory +/ "build.fsx"
+        let buildScript = env.CurrentDirectory @@ "build.fsx"
         if File.Exists buildScript then
             Fsi env BuildStage buildScript
         else
@@ -332,8 +327,8 @@ module private Implementation =
         DoConfigureOnly env && DoRunOnly env
 
     let DoInit (env: CommandEnvironment) =
-        let bootScript = env.CurrentDirectory +/ "conf.fsx"
-        let buildScript = env.CurrentDirectory +/ "build.fsx"
+        let bootScript = env.CurrentDirectory @@ "conf.fsx"
+        let buildScript = env.CurrentDirectory @@ "build.fsx"
         if File.Exists bootScript || File.Exists buildScript then
             env.SendMessage("Already exists: conf.fsx or build.fsx")
             false
@@ -361,7 +356,7 @@ module private Implementation =
             true
 
     let DoInitSingle (env: CommandEnvironment) =
-        let buildScript = env.CurrentDirectory +/ "build.fsx"
+        let buildScript = env.CurrentDirectory @@ "build.fsx"
         if File.Exists buildScript then
             env.SendMessage("Already exists: build.fsx")
             false
