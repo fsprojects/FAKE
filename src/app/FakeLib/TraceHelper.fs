@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+/// This module contains function which allow to trace build output
 module Fake.TraceHelper
 
 open System
@@ -73,9 +74,11 @@ let traceStartBuild() = postMessage StartMessage
         
 /// Traces the end of the build
 let traceEndBuild () = postMessage FinishedMessage
-   
+
+/// Puts an opening tag on the internal tag stack
 let openTag tag =  openTags <- tag :: openTags
 
+/// Removes an opening tag from the internal tag stack
 let closeTag tag =
     match openTags with
     | x::rest when x = tag -> openTags <- rest
