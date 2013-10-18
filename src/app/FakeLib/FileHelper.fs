@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+/// Contains helper function which allow to deal with files and directories.
 module Fake.FileHelper
 
 open System.IO
@@ -25,11 +26,11 @@ let setDirectoryReadOnly readOnly (dir:DirectoryInfo) =
         if (not readOnly) && not isReadOnly then               
             dir.Attributes <- dir.Attributes &&& (~~~FileAttributes.ReadOnly)
 
-/// Sets all files in the directory readonly 
+/// Sets all files in the directory readonly.
 let SetDirReadOnly readOnly dir =
     recursively (setDirectoryReadOnly readOnly) (fun file -> file.IsReadOnly <- readOnly) dir
   
-/// Sets all files in the directory readonly 
+/// Sets all files in the directory readonly.
 let SetReadOnly readOnly (files: string seq) =
     files
     |> Seq.iter (fun file ->
@@ -41,7 +42,7 @@ let SetReadOnly readOnly (files: string seq) =
             |> directoryInfo
             |> setDirectoryReadOnly readOnly)
       
-/// Deletes a directory if it exists
+/// Deletes a directory if it exists.
 let DeleteDir path =   
     let dir = directoryInfo path
     if dir.Exists then 
@@ -56,7 +57,7 @@ let DeleteDir path =
     else
         logfn "%s does not exist." dir.FullName
     
-/// Creates a directory if it does not exist
+/// Creates a directory if it does not exist.
 let CreateDir path =   
     let dir = directoryInfo path
     if not dir.Exists then 
@@ -65,7 +66,7 @@ let CreateDir path =
     else
        logfn "%s does already exist." dir.FullName
     
-/// Creates a file if it does not exist
+/// Creates a file if it does not exist.
 let CreateFile fileName =   
     let file = fileInfo fileName
     if not file.Exists then 
@@ -75,7 +76,7 @@ let CreateFile fileName =
     else
         logfn "%s does already exist." file.FullName
     
-/// Deletes a file if it exist
+/// Deletes a file if it exists.
 let DeleteFile fileName =   
     let file = fileInfo fileName
     if file.Exists then 
@@ -84,27 +85,30 @@ let DeleteFile fileName =
     else
         logfn "%s does not exist." file.FullName
 
-/// Deletes files
+/// Deletes the given files.
 let DeleteFiles files = Seq.iter DeleteFile files
     
+/// Active pattern which discriminates between files and directories.
 let (|File|Directory|) (fileSysInfo : FileSystemInfo) =
     match fileSysInfo with
     | :? FileInfo as file -> File (file)
     | :? DirectoryInfo as dir -> Directory (dir, seq { for x in dir.GetFileSystemInfos() -> x })
     | _ -> failwith "No file or directory given."      
       
-/// Active Pattern for determining file extension
+/// Active Pattern for determining file extension.
 let (|EndsWith|_|) extension (file : string) = if file.EndsWith extension then Some() else None
  
-/// Active Pattern for determining file name   
+/// Active Pattern for determining file name.
 let (|FileInfoFullName|) (f:FileInfo) = f.FullName
 
-/// Active Pattern for determining FileInfoNameSections
+/// Active Pattern for determining FileInfoNameSections.
 let (|FileInfoNameSections|) (f:FileInfo) = (f.Name,f.Extension,f.FullName)
 
-/// <summary>Copies a single file to a relative subfolder of the target.</summary>
-/// <param name="target">The target directory</param>
-/// <param name="fileName">The fileName</param>
+/// Copies a single file to a relative subfolder of the target.
+/// ## Parameters
+/// 
+///  - `targets` - The target directory
+///  - `fileNames` - The fileName
 let CopyFileIntoSubFolder target fileName =
     let relative = (toRelativePath fileName).TrimStart '.'
     let fi = fileInfo fileName
@@ -116,9 +120,11 @@ let CopyFileIntoSubFolder target fileName =
     logVerbosefn "Copy %s to %s" fileName targetName
     fi.CopyTo(targetName,true) |> ignore    
 
-/// <summary>Copies a single file to the target and overwrites the existing file.</summary>
-/// <param name="target">The target directory or file.</param>
-/// <param name="fileName">The FileName.</param>
+/// Copies a single file to the target and overwrites the existing file.
+/// ## Parameters
+/// 
+///  - `targets` - The target directory or file.
+///  - `fileNames` - The FileName.
 let CopyFile target fileName =
     let fi = fileSystemInfo fileName
     match fi with
@@ -133,22 +139,29 @@ let CopyFile target fileName =
                     
     | Directory _ -> logVerbosefn "Ignoring %s, because it is no file" fileName
   
-/// <summary>Copies the files to the target.</summary>
-/// <param name="target">The target directory.</param>
-/// <param name="files">The original FileNames as a sequence.</param>
+/// Copies the files to the target.
+/// ## Parameters
+/// 
+///  - `targets` - The target directory.
+///  - `files` - The original file names as a sequence.
 let Copy target files = 
     files      
       |> Seq.iter (CopyFile target)
 
 /// <summary>Copies the given files to the target.</summary>
-/// <param name="target">The target directory.</param>
-let CopyTo target = Copy target
+/// ## Parameters
+/// 
+///  - `target` - The target directory.</param>
+///  - `files` - The original file names as a sequence.
+let CopyTo target files = Copy target files
 
 /// Copies the files from a cache folder.
 /// If the files are not cached or the original files have a different write time the cache will be refreshed.
-/// <param name="target">The target FileName.</param>
-/// <param name="cacheDir">The cache directory.</param>
-/// <param name="files">The orginal files.</param>
+/// ## Parameters
+/// 
+///  - `target` - The target FileName.
+///  - `cacheDir` - The cache directory.
+///  - `files` - The orginal files.
 let CopyCached target cacheDir files = 
     let cache = directoryInfo cacheDir
     ensureDirExists cache
@@ -173,14 +186,18 @@ let CopyCached target cacheDir files =
             target @@ fi.Name)
         |> Seq.toList
 
-/// <summary>Renames the files to the target fileName.</summary>
-/// <param name="target">The target FileName.</param>
-/// <param name="file">The orginal FileName.</param>
+/// Renames the file to the target file name.
+/// ## Parameters
+/// 
+///  - `target` - The target file name.
+///  - `file` - The orginal file name.
 let Rename target fileName = (fileInfo fileName).MoveTo target
 
-/// <summary>Copy list of files to the specified directory without any output</summary>
-/// <param name="target">The target directory.</param>
-/// <param name="files">List of files to copy.</param>
+/// Copies a list of files to the specified directory without any output.
+/// ## Parameters
+/// 
+///  - `target` - The target directory.
+///  - `iles` - List of files to copy.
 let SilentCopy target files =
     files
     |> Seq.iter (fun file ->
@@ -195,9 +212,11 @@ let SilentCopy target files =
                 fi.CopyTo(targetName) |> ignore)
                
 
-/// <summary>Copies the files to the target - Alias for Copy</summary>
-/// <param name="target">The target FileName.</param>
-/// <param name="file">The orginal FileName.</param>
+/// Copies the files to the target - Alias for Copy
+/// ## Parameters
+/// 
+///  - `target` - The target directory.
+///  - `files` - The orginal file names.
 let CopyFiles target files = Copy target files  
 
 /// Exclude SVN files (path with .svn)
@@ -206,11 +225,12 @@ let excludeSVNFiles (path:string) = not <| path.Contains ".svn"
 /// Includes all files
 let allFiles (path:string) = true
 
-/// <summary>Copies a directory recursivly.
-/// If the target directory does not exist, it will be created.</summary>
-/// <param name="target">The target directory.</param>
-/// <param name="files">The source directory.</param>
-/// <param name="filterFile">A file filter function.</param>
+/// Copies a directory recursivly. If the target directory does not exist, it will be created.
+/// ## Parameters
+/// 
+///  - `target` - The target directory.
+///  - `files` - The source directory.
+///  - `filterFile` - A file filter predicate.
 let CopyDir target source filterFile =
     CreateDir target
     Directory.GetFiles(source, "*.*", SearchOption.AllDirectories)
@@ -223,8 +243,7 @@ let CopyDir target source filterFile =
         File.Copy(file, newFile, true))
     |> ignore
   
-///<summary>Cleans a directory by removing all files and sub-directories.</summary>
-///<param name="path">The path of the directory to clean.</param>
+/// Cleans a directory by removing all files and sub-directories.
 let CleanDir path =
     let di = directoryInfo path
     if di.Exists then
@@ -264,10 +283,12 @@ let ReadCSVFile(file:string) =
       |> Seq.map csvRegEx.Split 
       |> Seq.map (Array.map (fun s -> s.Trim [| '"' |]))
              
-/// <summary>Appends all given files to one file.</summary>
-/// <param name="newFileName">The target FileName.</param>
-/// <param name="files">The original FileNames as a sequence.</param>
-let AppendTextFiles newFileName files =    
+/// Appends all given files to one file.
+/// ## Parameters
+/// 
+///  - `newFileName` - The target FileName.
+///  - `files` - The original FileNames as a sequence.
+let AppendTextFiles newFileName files =
     let fi = fileInfo newFileName
     if fi.Exists then failwithf "File %s already exists." (fi.FullName)
     use writer = new StreamWriter(fi.FullName, false, encoding)
@@ -297,8 +318,8 @@ let FilesAreEqual (first:FileInfo) (second:FileInfo) =
 
     eq
   
-/// Compares the given files for changes
-/// If delete = true then equal files will be removed  
+/// Compares the given files for changes.
+/// If delete is set to true then equal files will be removed.
 let CompareFiles delete originalFileName compareFileName =  
     let ori = fileInfo originalFileName
     let comp = fileInfo compareFileName
@@ -325,11 +346,13 @@ let TestDir path =
     logfn "%s not found" di.FullName
     false
 
-/// <summary>Checks the srcFiles for changes to the last release.</summary>
-/// <param name="lastReleaseDir">The directory of the last release</param>
-/// <param name="patchDir">The target directory</param>
-/// <param name="srcFiles">The source files</param>
-/// <param name="findOldFileF">A function which finds the old file</param>
+/// Checks the srcFiles for changes to the last release.
+/// ## Parameters
+/// 
+///  - `lastReleaseDir` - The directory of the last release
+///  - `patchDir` - The target directory
+///  - `srcFiles` - The source files
+///  - `findOldFileF` - A function which finds the old file
 let GeneratePatchWithFindOldFileFunction lastReleaseDir patchDir srcFiles findOldFileF =
     for file in srcFiles do
         let newFile = toRelativePath file
@@ -339,14 +362,16 @@ let GeneratePatchWithFindOldFileFunction lastReleaseDir patchDir srcFiles findOl
         if CompareFiles false oldFile newFile |> not then
             CopyFileIntoSubFolder patchDir newFile
 
-/// <summary>Checks the srcFiles for changes to the last release.</summary>
-/// <param name="lastReleaseDir">The directory of the last release.</param>
-/// <param name="patchDir">The target directory.</param>
-/// <param name="srcFiles">The source files.</param>
+/// Checks the srcFiles for changes to the last release.
+/// ## Parameters
+/// 
+///  - `lastReleaseDir` - The directory of the last release.
+///  - `patchDir` - The target directory.
+///  - `srcFiles` - The source files.
 let GeneratePatch lastReleaseDir patchDir srcFiles =
     GeneratePatchWithFindOldFileFunction lastReleaseDir patchDir srcFiles (fun a b -> b)
 
-/// Copies the file structure recursive
+/// Copies the file structure recursively.
 let rec copyRecursive (dir:DirectoryInfo) (outputDir:DirectoryInfo) overwrite =
     let files =    
       dir
@@ -368,12 +393,14 @@ let rec copyRecursive (dir:DirectoryInfo) (outputDir:DirectoryInfo) overwrite =
              newFileName)
       |> Seq.toList) @ files
   
-/// Copies the file structure recursive
+/// Copies the file structure recursively.
 let CopyRecursive dir outputDir = copyRecursive (directoryInfo dir) (directoryInfo outputDir)
 
-/// <summary>Moves a single file to the target and overwrites the existing file.</summary>
-/// <param name="target">The target directory.</param>
-/// <param name="fileName">The FileName.</param>
+/// Moves a single file to the target and overwrites the existing file.
+/// ## Parameters
+/// 
+///  - `target` - The target directory.
+///  - `fileName` - The FileName.
 let MoveFile target fileName =    
     let fi = fileSystemInfo fileName
     
@@ -387,7 +414,7 @@ let MoveFile target fileName =
         f.MoveTo(targetName) |> ignore
     | Directory _ -> logVerbosefn "Ignoring %s, because it is no file" fileName
 
-/// Creates a config file with the parameters as key;value lines
+/// Creates a config file with the parameters as "key;value" lines
 let WriteConfigFile configFileName parameters =
     if isNullOrEmpty configFileName then () else
         
