@@ -1,4 +1,5 @@
-﻿module Fake.DynamicsNav
+﻿/// Contains helper function which allow to interact with Microsoft Dynamics NAV.
+module Fake.DynamicsNav
 
 open System
 open System.Diagnostics
@@ -7,18 +8,21 @@ open System.IO
 open Fake.UnitTestHelper
 
 [<RequireQualifiedAccess>]
+/// A Dynamics NAV server type
 type NavisionServerType =
 | SqlServer
 | NativeServer
 
-type DynamicsNavParams =
-    { ToolPath: string
-      ServerName: string
-      Database: string
-      WorkingDir: string
-      TempLogFile: string
-      TimeOut: TimeSpan}
+/// A parameter type to interact with Dynamics NAV
+type DynamicsNavParams = {
+    ToolPath: string
+    ServerName: string
+    Database: string
+    WorkingDir: string
+    TempLogFile: string
+    TimeOut: TimeSpan}
 
+/// Retrieves the the file name of the Dynamics NAV ClassicClient for the given version from the registry.
 let getNAVClassicPath navClientVersion =
     let subKey = 
         match navClientVersion with
@@ -31,9 +35,10 @@ let getNAVClassicPath navClientVersion =
 
     getRegistryValue HKEYLocalMachine subKey "Path"
 
+/// Gets the directory of the Dynamics NAV ClassicClient for the given version from the registry.
 let getNAVPath navClientVersion = (directoryInfo (getNAVClassicPath navClientVersion)).Parent.FullName
 
-/// Creates the connection information to a Dynamics NAV instance
+/// Creates the connection information to a Dynamics NAV instance.
 let createConnectionInfo navClientVersion serverMode serverName targetDatabase =
     let navServicePath = 
         try
@@ -102,13 +107,13 @@ let private import connectionInfo fileName =
 
     if deleteFile then fi.Delete()
 
-/// Imports the given txt or fob file into the Dynamics NAV client
+/// Imports the given .txt or .fob file into the Dynamics NAV client
 let ImportFile connectionInfo fileName =
     traceStartTask "ImportFile" fileName
     import connectionInfo fileName                  
     traceEndTask "ImportFile" fileName
 
-/// Creates an importfile from the given files
+/// Creates an import file from the given .txt files.
 let CreateImportFile importFileName files =
     let details = importFileName
     
@@ -122,8 +127,8 @@ let CreateImportFile importFileName files =
 
     traceEndTask "CreateImportFile" details
 
-/// Creates an import file from the given files and imports it into the Dynamics NAV client
-/// If the import fails, then every file will be tried alone
+/// Creates an import file from the given .txt files and imports it into the Dynamics NAV client.
+/// If the import fails, then every file will be tried alone.
 let ImportFiles connectionInfo importFileName files =
     let details = importFileName
     
@@ -140,7 +145,7 @@ let ImportFiles connectionInfo importFileName files =
                           
     traceEndTask "ImportFiles" details
 
-/// Compiles all uncompiled objects in the Dynamics NAV client
+/// Compiles all uncompiled objects in the Dynamics NAV client.
 let CompileAll connectionInfo =
     let details = ""
     
@@ -158,17 +163,18 @@ let CompileAll connectionInfo =
                   
     traceEndTask "CompileAll" details
 
-type RTCParams =
-    { ToolPath: string
-      ServerName: string
-      ServiceTierName: string
-      Company: string
-      Port: int
-      WorkingDir: string
-      TempLogFile: string
-      TimeOut: TimeSpan}
+/// The parameter type allows to interact with Dynamics NAV RTC.
+type RTCParams = {
+    ToolPath: string
+    ServerName: string
+    ServiceTierName: string
+    Company: string
+    Port: int
+    WorkingDir: string
+    TempLogFile: string
+    TimeOut: TimeSpan }
 
-/// Creates the connection information to a Dynamics NAV RTC
+/// Creates the connection information to a Dynamics NAV RTC instance
 let createRTCConnectionInfo navClientVersion serverName serviceTierName port company =
     let navRTCPath = getNAVPath navClientVersion @@ "RoleTailored Client"
     let rtcExe = navRTCPath @@ "Microsoft.Dynamics.NAV.Client.exe"
@@ -182,9 +188,9 @@ let createRTCConnectionInfo navClientVersion serverName serviceTierName port com
       TempLogFile = "./NavErrorMessages.txt"
       TimeOut = TimeSpan.FromMinutes 20. }
 
-/// Runs a codeunit with the RTC client
-let RunCodeunit connectionInfo (codeunit:int) =
-    let details = codeunit.ToString()
+/// Runs a codeunit with the given ID on the RTC client
+let RunCodeunit connectionInfo (codeunitID:int) =
+    let details = codeunitID.ToString()
     traceStartTask "Running Codeunit" details
     let args = 
       sprintf "-consolemode \"DynamicsNAV://%s:%d/%s/%s/runcodeunit?codeunit=%d\" -ShowNavigationPage:0" 
@@ -192,7 +198,7 @@ let RunCodeunit connectionInfo (codeunit:int) =
         connectionInfo.Port
         connectionInfo.ServiceTierName 
         connectionInfo.Company 
-        codeunit
+        codeunitID
 
     let exitCode =
         execProcessAndReturnExitCode (fun info ->  
@@ -200,11 +206,11 @@ let RunCodeunit connectionInfo (codeunit:int) =
             info.WorkingDirectory <- connectionInfo.WorkingDir
             info.Arguments <- args) connectionInfo.TimeOut
     if exitCode <> 0 && exitCode <> 255 then
-        reportError (sprintf "Running codeunit %d failed with ExitCode %d" codeunit exitCode) connectionInfo.TempLogFile
+        reportError (sprintf "Running codeunit %d failed with ExitCode %d" codeunitID exitCode) connectionInfo.TempLogFile
                   
     traceEndTask "Running Codeunit" details
 
-/// Opens a page with the RTC client
+/// Opens a page with the given ID on the RTC client
 let OpenPage connectionInfo pageNo =
     let details = sprintf "%d" pageNo
     traceStartTask "OpenPage" details
@@ -236,7 +242,7 @@ let CloseAllNavProcesses raiseExceptionIfNotFound =
 
     traceEndTask "CloseNAV" details
 
-
+/// Analyzes the Dynamics NAV test results
 let analyzeTestResults fileName =
     let messages = ReadFile fileName
 
