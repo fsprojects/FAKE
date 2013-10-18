@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+/// Contains abstractions which allow to use file globbing.
 module Fake.FileSetHelper
 
 open System.IO
@@ -14,11 +15,14 @@ type EagerFileSet = string list
 /// Every time the FileSet is used it scans again.
 type LazyFileSet = string seq
 
+/// [omit]
+/// Internal representation
 type RegexEntry =
   { IsRecursive : bool;
     BaseDirectory: string;
     Pattern: string}
 
+/// Internal representation of a file set
 type FileIncludes =
   { BaseDirectories: string list;
     Includes: string list;
