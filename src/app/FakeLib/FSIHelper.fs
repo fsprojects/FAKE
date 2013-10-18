@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+/// Contains helper functions which allow to interact with the F# Interactive.
 module Fake.FSIHelper
 
 open System
@@ -7,7 +8,7 @@ open System.Linq
 open System.Diagnostics
 open System.Threading
 
-/// The Path to the F# interactive tool
+/// The path to the F# Interactive tool.
 let fsiPath =
     let ev = environVar "FSI"
     if not (isNullOrEmpty ev) then ev else
@@ -40,6 +41,7 @@ let private FsiStartInfo script workingDirectory extraFsiArgs args =
         setVar "GIT" Git.CommandHelper.gitPath
         setVar "FSI" fsiPath)
 
+/// Creates a ProcessStartInfo which is configured to the F# Interactive.
 let fsiStartInfo script workingDirectory args =
     FsiStartInfo script workingDirectory [] args
 
@@ -52,18 +54,19 @@ let executeFSI workingDirectory script args =
     Thread.Sleep 1000
     (result, messages)
 
-/// Run the given build script with fsi.exe; allows for extra arguments to FSI.
+/// Run the given build script with fsi.exe and allows for extra arguments to FSI.
 let executeFSIWithArgs workingDirectory script extraFsiArgs args =
     let result = ExecProcess (FsiStartInfo script workingDirectory extraFsiArgs args) TimeSpan.MaxValue
     Thread.Sleep 1000
     result = 0
 
-/// Run the given buildscript with fsi.exe
+/// Run the given buildscript with fsi.exe at the given working directory.
 let runBuildScriptAt workingDirectory printDetails script args =
     if printDetails then traceFAKE "Running Buildscript: %s" script
     let result = ExecProcess (fsiStartInfo script workingDirectory args) System.TimeSpan.MaxValue
     Thread.Sleep 1000
     result = 0
 
+/// Run the given buildscript with fsi.exe
 let runBuildScript printDetails script args =
     runBuildScriptAt "" printDetails script args
