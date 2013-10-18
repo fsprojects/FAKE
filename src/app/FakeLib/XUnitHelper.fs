@@ -6,21 +6,30 @@ open System
 open System.IO
 open System.Text
 
-/// xUnit parameter type
-type XUnitParams =
-    { ToolPath: string;
-      ConfigFile :string;
-      HtmlOutput: bool;
-      NUnitXmlOutput: bool;
-      XmlOutput: bool;
-      WorkingDir:string; 
-      ShadowCopy :bool;
-      Verbose:bool;
-      TimeOut: TimeSpan;
-      OutputDir: string}
+/// The xUnit parameter type
+type XUnitParams = { 
+      /// The path to the xunit.console.exe - FAKE will scan all subfolders to find it automatically.
+      ToolPath: string
+      /// The file name of the config file (optional).
+      ConfigFile :string
+      /// If set to true a HTML output file will be generated.
+      HtmlOutput: bool
+      /// If set to true a HTML output file will be generated in NUnit format.
+      NUnitXmlOutput: bool
+      /// If set to true XML output will be generated.
+      XmlOutput: bool
+      /// The working directory (optional).
+      WorkingDir:string
+      /// If set to true xUnit will run in ShadowCopy mode.
+      ShadowCopy :bool
+      /// If set to true xUnit will generate verbose output.
+      Verbose:bool
+      /// If the timeout is reached the xUnit task will be killed. Default is 5 minutes.
+      TimeOut: TimeSpan
+      /// The output directory. It's the current directoy if nothing else is specified.
+      OutputDir: string }
 
-/// xUnit default parameters
-/// FAKE scans all subfolders to find *xunit.console.exe*
+/// The xUnit default parameters
 let XUnitDefaults =
     { ToolPath = findToolInSubPath "xunit.console.exe" (currentDirectory @@ "tools" @@ "xUnit")
       ConfigFile = null;
