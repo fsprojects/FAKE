@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="http://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="../content/style.css" />
+    <script src="../content/tips.js" type="text/javascript"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <style type="text/css">
+        #main h2 {
+            font-size: 160%;
+            margin-top: 40px;
+        }
+
+        #main h3 {
+            font-size: 130%;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        thead {
+            font-weight: bold;
+        }
+
+        .type-list .type-name, .module-list .module-name {
+            width: 25%;
+            font-weight: bold;
+        }
+
+        .member-list .member-name {
+            width: 35%;
+        }
+
+        #main table .xmldoc h2 {
+            font-size: 120%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="masthead">
+            <ul class="nav nav-pills pull-right">
+                <li><a href="http://fsharp.org">fsharp.org</a></li>
+                <li><a href="http://github.com/fsharp/fake">github page</a></li>
+            </ul>
+            <h3 class="muted">FAKE - F# Make</h3>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="span9" id="main">
+                
+
+
+
+<h1>Attribute</h1>
+<div class="xmldoc">
+<p>Represents AssemblyInfo attributes</p>
+</div>
+  <h3>Constructors</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Constructor</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '721', 721)" onmouseover="showTip(event, '721', 721)">
+            new Attribute
+          </code>
+          <div class="tip" id="721">
+            <strong>Signature:</strong>(name:string * value:string * inNamespace:string) -&gt; Attribute<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Instance members</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Instance member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '725', 725)" onmouseover="showTip(event, '725', 725)">
+            attribute.Name
+          </code>
+          <div class="tip" id="725">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '726', 726)" onmouseover="showTip(event, '726', 726)">
+            attribute.Namespace
+          </code>
+          <div class="tip" id="726">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '727', 727)" onmouseover="showTip(event, '727', 727)">
+            attribute.Value
+          </code>
+          <div class="tip" id="727">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Static members</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Static member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '729', 729)" onmouseover="showTip(event, '729', 729)">
+            Attribute.BoolAttribute(...)
+          </code>
+          <div class="tip" id="729">
+            <strong>Signature:</strong>(name:string * value:bool * inNamespace:string) -&gt; Attribute<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates a simple attribute with boolean values. Used as base for other attributes</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '730', 730)" onmouseover="showTip(event, '730', 730)">
+            Attribute.CLSCompliant(?value)
+          </code>
+          <div class="tip" id="730">
+            <strong>Signature:</strong>(?value:bool option) -&gt; Attribute<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates an attribute which specifies if the assembly is CLS compliant</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '731', 731)" onmouseover="showTip(event, '731', 731)">
+            Attribute.Company(value)
+          </code>
+          <div class="tip" id="731">
+            <strong>Signature:</strong>value:string -&gt; Attribute<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates an attribute which holds the company information</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '732', 732)" onmouseover="showTip(event, '732', 732)">
+            Attribute.ComVisible(?value)
+          </code>
+          <div class="tip" id="732">
+            <strong>Signature:</strong>(?value:bool option) -&gt; Attribute<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates an attribute which specifies if the assembly is visible via COM</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '733', 733)" onmouseover="showTip(event, '733', 733)">
+            Attribute.Configuration(value)
+          </code>
+          <div class="tip" id="733">
+            <strong>Signature:</strong>value:string -&gt; Attribute<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates an attribute which holds the assembly configuration</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '734', 734)" onmouseover="showTip(event, '734', 734)">
+            Attribute.Copyright(value)
+          </code>
+          <div class="tip" id="734">
+            <strong>Signature:</strong>value:string -&gt; Attribute<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates an attribute which holds the copyright information</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '735', 735)" onmouseover="showTip(event, '735', 735)">
+            Attribute.Culture(value)
+          </code>
+          <div class="tip" id="735">
+            <strong>Signature:</strong>value:string -&gt; Attribute<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates an attribute which holds the assembly culture information</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '736', 736)" onmouseover="showTip(event, '736', 736)">
+            Attribute.DelaySign(value)
+          </code>
+          <div class="tip" id="736">
+            <strong>Signature:</strong>(value:bool option) -&gt; Attribute<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates an attribute which specifies if the assembly uses delayed signing</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '737', 737)" onmouseover="showTip(event, '737', 737)">
+            Attribute.Description(value)
+          </code>
+          <div class="tip" id="737">
+            <strong>Signature:</strong>value:string -&gt; Attribute<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates an attribute which holds the product description</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '738', 738)" onmouseover="showTip(event, '738', 738)">
+            Attribute.FileVersion(value)
+          </code>
+          <div class="tip" id="738">
+            <strong>Signature:</strong>value:string -&gt; Attribute<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates an attribute which holds the assembly file version</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '739', 739)" onmouseover="showTip(event, '739', 739)">
+            Attribute.Guid(value)
+          </code>
+          <div class="tip" id="739">
+            <strong>Signature:</strong>value:string -&gt; Attribute<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates an attribute which holds the Guid</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '740', 740)" onmouseover="showTip(event, '740', 740)">
+            Attribute.InformationalVersion(value)
+          </code>
+          <div class="tip" id="740">
+            <strong>Signature:</strong>value:string -&gt; Attribute<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates an attribute which holds an assembly information version</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '741', 741)" onmouseover="showTip(event, '741', 741)">
+            Attribute.KeyFile(value)
+          </code>
+          <div class="tip" id="741">
+            <strong>Signature:</strong>value:string -&gt; Attribute<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates an attribute which holds the assembly key file</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '742', 742)" onmouseover="showTip(event, '742', 742)">
+            Attribute.KeyName(value)
+          </code>
+          <div class="tip" id="742">
+            <strong>Signature:</strong>value:string -&gt; Attribute<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates an attribute which holds the assembly key name</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '743', 743)" onmouseover="showTip(event, '743', 743)">
+            Attribute.Product(value)
+          </code>
+          <div class="tip" id="743">
+            <strong>Signature:</strong>value:string -&gt; Attribute<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates an attribute which holds the product name</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '744', 744)" onmouseover="showTip(event, '744', 744)">
+            Attribute.StringAttribute(...)
+          </code>
+          <div class="tip" id="744">
+            <strong>Signature:</strong>(name:string * value:string * inNamespace:string) -&gt; Attribute<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates a simple attribute with string values. Used as base for other attributes</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '745', 745)" onmouseover="showTip(event, '745', 745)">
+            Attribute.Title(value)
+          </code>
+          <div class="tip" id="745">
+            <strong>Signature:</strong>value:string -&gt; Attribute<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates an attribute which holds the product title</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '746', 746)" onmouseover="showTip(event, '746', 746)">
+            Attribute.Trademark(value)
+          </code>
+          <div class="tip" id="746">
+            <strong>Signature:</strong>value:string -&gt; Attribute<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates an attribute which holds the trademark</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '747', 747)" onmouseover="showTip(event, '747', 747)">
+            Attribute.Version(value)
+          </code>
+          <div class="tip" id="747">
+            <strong>Signature:</strong>value:string -&gt; Attribute<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates an attribute which holds the assembly version</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+            </div>
+            <div class="span3">
+
+                <ul class="nav nav-list" id="menu">
+                    <li class="nav-header">FAKE - F# Make</li>
+                    <li><a href="../index.html">Home page</a></li>
+                    <li><a href="../deploy.html">Fake.Deploy</a></li>
+                    <li class="divider"></li>
+                    <li><a href="https://nuget.org/packages/Fake">Get FAKE via NuGet</a></li>
+                    <li><a href="http://github.com/fsharp/fake">Source Code on GitHub</a></li>
+                    <li><a href="https://github.com/fsharp/FAKE/blob/develop/License.txt">License (MS-PL)</a></li>
+                    <li><a href="../changelog.html">Changelog</a></li>
+                    <li><a href="../contributing.html">Contributing to FAKE</a></li>
+                    <li class="nav-header">Articles</li>
+                    <li><a href="../gettingstarted.html">Getting started</a></li>
+                    <li class="divider"></li>
+                    <li><a href="../nuget.html">NuGet package restore</a></li>
+                    <li><a href="../fxcop.html">Using FxCop in a build</a></li>
+                    <li><a href="../assemblyinfo.html">Modifying AssemblyInfo</a></li>
+                    <li><a href="../specifictargets.html">Running specific targets</a></li>
+                    <li><a href="../commandline.html">Running FAKE from command line</a></li>
+                    <li><a href="../customtasks.html">Creating custom tasks</a></li>
+                    <li><a href="../teamcity.html">TeamCity integration</a></li>
+
+                    <li class="nav-header">Documentation</li>
+                    <li><a href="../apidocs/index.html">API Reference</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <a href="http://github.com/fsharp/fake"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
+</body>
+</html>
