@@ -148,10 +148,10 @@ let Copy target files =
     files      
       |> Seq.iter (CopyFile target)
 
-/// <summary>Copies the given files to the target.</summary>
+/// Copies the given files to the target.
 /// ## Parameters
 /// 
-///  - `target` - The target directory.</param>
+///  - `target` - The target directory.
 ///  - `files` - The original file names as a sequence.
 let CopyTo target files = Copy target files
 
