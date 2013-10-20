@@ -62,6 +62,7 @@
 
 <h1>SignHelper</h1>
 <div class="xmldoc">
+<p>Contains a task which allows to sign assembly</p>
 </div>
 
 <!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
@@ -77,15 +78,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '499', 499)" onmouseover="showTip(event, '499', 499)">
+          <code onmouseout="hideTip(event, '542', 542)" onmouseover="showTip(event, '542', 542)">
             SignTool (...)
           </code>
-          <div class="tip" id="499">
+          <div class="tip" id="542">
             <strong>Signature:</strong>toolsPath:string -&gt; certFile:string -&gt; passFile:string -&gt; filesToSign:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Signs all files in filesToSign with the certification file certFile, protected with the password in the file passFile. 
-   The signtool will be search in the toolPath.</p>
+        <td class="xmldoc"><p>Signs all files in filesToSign with the certification file certFile, 
+protected with the password in the file passFile. 
+The signtool will be search in the toolPath.</p>
 </td>
       </tr>
     </tbody>
