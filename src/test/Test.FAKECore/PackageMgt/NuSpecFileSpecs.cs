@@ -21,13 +21,13 @@ namespace Test.FAKECore.PackageMgt
             () => _package.Description.ShouldEqual("@description@");
 
         It should_contain_the_license_url =
-            () => _package.LicenseUrl.ShouldEqual("https://github.com/forki/Fake/blob/master/License.txt");
+            () => _package.LicenseUrl.ShouldEqual("http://www.github.com/fsharp/Fake/blob/master/License.txt");
 
         It should_contain_the_project_placeholder =
             () => _package.Id.ShouldEqual("@project@");
 
         It should_contain_the_project_url_placeholder =
-            () => _package.ProjectUrl.ShouldEqual("https://github.com/forki/Fake");
+            () => _package.ProjectUrl.ShouldEqual("http://www.github.com/fsharp/Fake");
 
         It should_contain_the_version_placeholder =
             () => _package.Version.ShouldEqual("@build.number@");
