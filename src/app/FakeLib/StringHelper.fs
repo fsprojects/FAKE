@@ -113,6 +113,12 @@ let inline trimSpecialChars (s:string) =
       |> Seq.filter (isUmlaut >> not)
       |> Seq.fold (fun (acc:string) c -> acc + string c) ""
 
+/// Trims the given string
+let inline trim (x: string) = if isNullOrEmpty x then x else x.Trim()
+
+/// Trims the given string
+let inline trimChars chars (x: string) = if isNullOrEmpty x then x else x.Trim chars
+
 /// Lifts a string to an option
 let liftString x = if isNullOrEmpty x then None else Some x
 
