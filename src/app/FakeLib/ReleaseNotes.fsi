@@ -1,4 +1,10 @@
-﻿
-module ReleaseNotes
+﻿namespace Fake
 
-val parseReleaseNotes: string -> string * string * string list
+type ReleaseNotes =
+    { AssemblyVersion: string
+      NugetVersion: string
+      Notes: string list }
+
+[<CompilationRepresentation (CompilationRepresentationFlags.ModuleSuffix)>]
+module ReleaseNotes =
+    val parseReleaseNotes: data:seq<string> -> ReleaseNotes
