@@ -2,7 +2,7 @@
 /// Contains a task to use [XCOPY](http://en.wikipedia.org/wiki/XCOPY) on Windows.
 module Fake.XCopyHelper
 
-/// Executes a XCopy comand
+/// Executes a XCopy command
 /// ## Parameters
 ///  - `source` - The source directory
 ///  - `destination` - The target directory

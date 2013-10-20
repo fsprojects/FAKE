@@ -2,19 +2,23 @@
 module Fake.SCPHelper 
 
 /// The SCP parameter type
-type SCPParams =
-    { 
-      /// Path of the scp.exe 
-      ToolPath:string
-      /// Path of the private key file (optional)
-      PrivateKeyPath:string}
+type SCPParams =  { 
+    /// Path of the scp.exe 
+    ToolPath:string
+    /// Path of the private key file (optional)
+    PrivateKeyPath:string}
 
 /// The SCP default parameters
-let SCPDefaults:SCPParams =
-    { ToolPath = "scp.exe"
-      PrivateKeyPath = null}
+let SCPDefaults:SCPParams = { 
+    ToolPath = "scp.exe"
+    PrivateKeyPath = null }
 
 /// Performs a SCP copy from the given source directory to the target directory
+/// ## Parameters
+///
+///  - `setParams` - Function used to manipulate the default SCPParams value.
+///  - `source` - The source directory
+///  - `target` - The target directory
 let SCP setParams source target =
     let (p:SCPParams) = setParams SCPDefaults
     tracefn "SCP %s %s" source target
