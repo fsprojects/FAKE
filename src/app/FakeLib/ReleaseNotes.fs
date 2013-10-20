@@ -1,4 +1,4 @@
-﻿module ReleaseNotes
+﻿module Fake.ReleaseNotes
 
 open System
 open System.IO
@@ -39,10 +39,11 @@ let parseComplexReleaseNotes (text:seq<string>) =
     assemblyVersion.Value, nugetVersion.Value, notes
     
 
-/// Parse a Release Notes File - Either simple or "complex" format
-/// See: https://github.com/fsharp/FAKE/issues/171
-/// <param name="filePath">The path to the release notes file</param>
-/// <returns> (assembly_version, nuget_version, [release_notes]) </returns>
+/// Parse a Release Notes File - Either simple or "complex" format as described in [issue 171](https://github.com/fsharp/FAKE/issues/171)
+/// Returns assembly_version, nuget_version, [release_notes]
+/// /// ## Parameters
+/// 
+///  - `filePath` - The path to the release notes file
 let parseReleaseNotes filePath =
     let text = // read file and trim leading & trailing blank lines
         let data = File.ReadLines(filePath) 
