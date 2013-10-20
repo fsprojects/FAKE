@@ -126,7 +126,6 @@
     <None Include="packages.config" />
     <Compile Include="SignHelper.fs" />
     <Compile Include="MageHelper.fs" />
-    <Compile Include="ReleaseNotes.fsi" />
     <Compile Include="ReleaseNotes.fs" />
     <None Include="Targets.fsx" />
   </ItemGroup>
