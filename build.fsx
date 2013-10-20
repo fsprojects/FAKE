@@ -178,7 +178,7 @@ Target "CreateNuGet" (fun _ ->
                 Publish = hasBuildParam "nugetkey" }) "fake.nuspec"
 )
 
-Target "UpdateDocs" (fun _ ->
+Target "ReleaseDocs" (fun _ ->
     CleanDir "gh-pages"
     CommandHelper.runSimpleGitCommand "" "clone -b gh-pages --single-branch git@github.com:fsharp/FAKE.git gh-pages" |> printfn "%s"
     
@@ -204,7 +204,7 @@ Target "Default" DoNothing
     ==> "ZipDocumentation"
     ==> "CreateNuGet"
     ==> "Default"
-    ==> "UpdateDocs"
+    ==> "ReleaseDocs"
 
 // start build
 RunTargetOrDefault "Default"
