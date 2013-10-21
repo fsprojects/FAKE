@@ -32,7 +32,7 @@ namespace Test.FAKECore
 
 ";
 
-        static readonly ReleaseNotes expected = new ReleaseNotes("1.1.10", "1.1.10",
+        static readonly ReleaseNotesHelper.ReleaseNotes expected = new ReleaseNotesHelper.ReleaseNotes("1.1.10", "1.1.10",
             new [] {"Support for heterogeneous XML attributes.", 
                     "Make CsvFile re-entrant.",
                     "Support for compressed HTTP responses.",
@@ -41,30 +41,30 @@ namespace Test.FAKECore
             .ToFSharpList());
 
         It should_parse_complex =
-            () => ReleaseNotesModule.parseReleaseNotes(Notes(validData)).ShouldEqual(expected);
+            () => ReleaseNotesHelper.parseReleaseNotes(Notes(validData)).ShouldEqual(expected);
 
         It should_parse_empty_notes =
-            () => ReleaseNotesModule.parseReleaseNotes(Notes(@"### New in 1.1.10 (Released 2013/09/12)"))
-                .ShouldEqual(new ReleaseNotes("1.1.10", "1.1.10", FSharpList<string>.Empty));
+            () => ReleaseNotesHelper.parseReleaseNotes(Notes(@"### New in 1.1.10 (Released 2013/09/12)"))
+                .ShouldEqual(new ReleaseNotesHelper.ReleaseNotes("1.1.10", "1.1.10", FSharpList<string>.Empty));
 
         It should_throws_on_wrong_formatted_data =
-            () => Catch.Exception(() => 
-                ReleaseNotesModule.parseReleaseNotes(Notes(@"New in 1.1.10 (Released 2013/09/12)")));
+            () => Catch.Exception(() =>
+                ReleaseNotesHelper.parseReleaseNotes(Notes(@"New in 1.1.10 (Released 2013/09/12)")));
 
         It should_throws_on_empty_seq_input =
-            () => Catch.Exception(() => ReleaseNotesModule.parseReleaseNotes(new string[] { }));
+            () => Catch.Exception(() => ReleaseNotesHelper.parseReleaseNotes(new string[] { }));
 
         It should_throws_on_single_empty_string_input =
-            () => Catch.Exception(() => ReleaseNotesModule.parseReleaseNotes(new [] {""}));
+            () => Catch.Exception(() => ReleaseNotesHelper.parseReleaseNotes(new[] { "" }));
 
         It should_throws_on_null_input =
-            () => Catch.Exception(() => ReleaseNotesModule.parseReleaseNotes(null));
+            () => Catch.Exception(() => ReleaseNotesHelper.parseReleaseNotes(null));
 
         It should_parse_simple_format =
-            () => ReleaseNotesModule.parseReleaseNotes(Notes(@"
+            () => ReleaseNotesHelper.parseReleaseNotes(Notes(@"
 * 1.1.9 - Infer booleans for ints that only manifest 0 and 1. Support for partially overriding the Schema in CsvProvider.
 * 1.1.10 - Support for heterogeneous XML attributes. Make CsvFile re-entrant."))
-                .ShouldEqual(new ReleaseNotes("1.1.10", "1.1.10",
+                .ShouldEqual(new ReleaseNotesHelper.ReleaseNotes("1.1.10", "1.1.10",
                     new[] { "Support for heterogeneous XML attributes.", "Make CsvFile re-entrant." }.ToFSharpList()));
     }
 }
