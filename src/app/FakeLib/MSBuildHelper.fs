@@ -206,8 +206,10 @@ let build setParams project =
     traceEndTask "MSBuild" project
 
 /// Builds the given project files and collects the output files.
-/// Properties are parameterized by project name.
-/// If the outputpath is null or empty then the project settings are used.
+/// ## Parameters
+///  - `outputpath` - If it is null or empty then the project settings are used.
+///  - `targets` - A string with the target names which should be run by MSBuild.
+///  - `properties` - A list with tuples of property name and property values.
 let MSBuildWithProjectProperties outputPath (targets: string) (properties: string -> (string*string) list) projects = 
     let projects = projects |> Seq.toList
     let output = 
@@ -257,6 +259,8 @@ let MSBuildDebug outputPath targets = MSBuild outputPath targets ["Configuration
 let MSBuildRelease outputPath targets = MSBuild outputPath targets ["Configuration","Release"]
 
 /// Builds the given project files or solution files in release mode to the default outputs.
+/// ## Parameters
+///  - `targets` - A string with the target names which should be run by MSBuild.
 let MSBuildWithDefaults targets = MSBuild null targets ["Configuration","Release"]
 
 /// Builds the given project files or solution files in release mode and collects the output files.
