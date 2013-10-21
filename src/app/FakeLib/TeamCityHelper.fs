@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+/// Contains helper functions which allow FAKE to communicate with a TeamCity agent
 module Fake.TeamCityHelper
 
 /// Encapsulates special chars
