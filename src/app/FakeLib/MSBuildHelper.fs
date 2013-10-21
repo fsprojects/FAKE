@@ -9,13 +9,15 @@ open System.Configuration
 open System.Xml
 open System.Xml.Linq
 
+/// An type to represent MSBuild project files.
 type MSBuildProject = XDocument
 
+/// An exception type to signal build errors.
 exception BuildException of string*list<string>
 
 /// Tries to detect the right version of MSBuild.
-///   * On Linux/Unix Systems we use xBuild.
-///   * On Windows we try to find a "MSBuild" build parameter or read the MSBuild tool location from the AppSettings file.
+///   - On Linux/Unix Systems we use xBuild.
+///   - On Windows we try to find a "MSBuild" build parameter or read the MSBuild tool location from the AppSettings file.
 let msBuildExe =   
     if isUnix then
         "xbuild"
@@ -187,7 +189,7 @@ let private errorLoggerParam =
     |> List.map(fun a -> sprintf "/logger:%s,\"%s\"" a pathToLogger)
     |> fun lst -> String.Join(" ", lst)
 
-/// Runs a msbuild project
+/// Runs a MSBuild project
 let build setParams project =
     traceStartTask "MSBuild" project
     let args = MSBuildDefaults |> setParams |> serializeMSBuildParams        
@@ -235,21 +237,33 @@ let MSBuildWithProjectProperties outputPath (targets: string) (properties: strin
 
     !! (outputPath + "/**/*.*")
 
-/// Builds the given project files or solution files and collects the output files
-/// If the outputpath is null or empty then the project settings are used.
+/// Builds the given project files or solution files and collects the output files.
+/// ## Parameters
+///  - `outputpath` - If it is null or empty then the project settings are used.
+///  - `targets` - A string with the target names which should be run by MSBuild.
+///  - `properties` - A list with tuples of property name and property values.
 let MSBuild outputPath targets properties = MSBuildWithProjectProperties outputPath targets (fun _ -> properties)
 
-/// Builds the given project files or solution files and collects the output files
-/// If the outputpath is null or empty then the project settings are used.
+/// Builds the given project files or solution files and collects the output files.
+/// ## Parameters
+///  - `outputpath` - If it is null or empty then the project settings are used.
+///  - `targets` - A string with the target names which should be run by MSBuild.
 let MSBuildDebug outputPath targets = MSBuild outputPath targets ["Configuration","Debug"]
 
-/// Builds the given project files or solution files and collects the output files
-/// If the outputpath is null or empty then the project settings are used.
+/// Builds the given project files or solution files and collects the output files.
+/// ## Parameters
+///  - `outputpath` - If it is null or empty then the project settings are used.
+///  - `targets` - A string with the target names which should be run by MSBuild.
 let MSBuildRelease outputPath targets = MSBuild outputPath targets ["Configuration","Release"]
 
 /// Builds the given project files or solution files in release mode to the default outputs.
 let MSBuildWithDefaults targets = MSBuild null targets ["Configuration","Release"]
 
+/// Builds the given project files or solution files in release mode and collects the output files.
+/// ## Parameters
+///  - `outputpath` - If it is null or empty then the project settings are used.
+///  - `properties` - A list with tuples of property name and property values.
+///  - `targets` - A string with the target names which should be run by MSBuild.
 let MSBuildReleaseExt outputPath properties targets = 
     let properties = ("Configuration", "Release") :: properties; 
     MSBuild outputPath targets properties
