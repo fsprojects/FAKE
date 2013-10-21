@@ -60,12 +60,27 @@
 
 
 
-<h1>ReleaseNotes</h1>
+<h1>ReleaseNotesHelper</h1>
 <div class="xmldoc">
+<p>Contains a helpers which allow tp parse Release Notes text files.</p>
 </div>
 
 <!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+    <h2>Nested types and modules</h2>
 
+    <table class="table table-bordered type-list">
+        <thead>
+            <tr><td>Type</td><td>Description</td></tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-releasenoteshelper-releasenotes.html">ReleaseNotes</a>
+                    </td>
+                    <td class="xmldoc"></td>
+                </tr>
+        </tbody>
+    </table>
 
 <!-- END TODO -->
   <h3>Functions and values</h3>
@@ -77,16 +92,21 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '385', 385)" onmouseover="showTip(event, '385', 385)">
+          <code onmouseout="hideTip(event, '324', 324)" onmouseover="showTip(event, '324', 324)">
             parseReleaseNotes data
           </code>
-          <div class="tip" id="385">
+          <div class="tip" id="324">
             <strong>Signature:</strong>data:seq&lt;string&gt; -&gt; ReleaseNotes<br />
                       </div>
         </td>
         <td class="xmldoc"><p>Parse a Release Notes text - Either simple or "complex" format
-See: https://github.com/fsharp/FAKE/issues/171
-<param name="data">Release notes text</param></p>
+See: https://github.com/fsharp/FAKE/issues/171</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>data</code> - Release notes text</li>
+</ul>
 </td>
       </tr>
     </tbody>
