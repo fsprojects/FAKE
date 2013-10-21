@@ -102,23 +102,25 @@ Target "BuildSolution" (fun _ ->
 )
 
 Target "GenerateDocs" (fun _ ->
-    let source = "./help"
-    let template = "./help/templates/template-project.html"
-    let projInfo =
-      [ "page-description", "FAKE - F# Make"
-        "page-author", (separated ", " authors)
-        "github-link", "https://github.com/fsharp/FAKE"
-        "project-name", "FAKE - F# Make" ]
+    (* Failed to find FSharp.Core.dll on linux, possible due previous blocks *)
+    if not isLinux then
+        let source = "./help"
+        let template = "./help/templates/template-project.html"
+        let projInfo =
+          [ "page-description", "FAKE - F# Make"
+            "page-author", (separated ", " authors)
+            "github-link", "https://github.com/fsharp/FAKE"
+            "project-name", "FAKE - F# Make" ]
 
-    Literate.ProcessDirectory (source, template, docsDir, replacements = projInfo)
+        Literate.ProcessDirectory (source, template, docsDir, replacements = projInfo)
 
-    if isLocalBuild then  // TODO: this needs to be fixed in FSharp.Formatting
-        MetadataFormat.Generate ( "./build/FakeLib.dll", apidocsDir, "./help/templates/reference/")
+        if isLocalBuild then  // TODO: this needs to be fixed in FSharp.Formatting
+            MetadataFormat.Generate ( "./build/FakeLib.dll", apidocsDir, "./help/templates/reference/")
 
-    WriteStringToFile false "./docs/.nojekyll" ""
+        WriteStringToFile false "./docs/.nojekyll" ""
 
-    CopyDir (docsDir @@ "content") "help/content" allFiles
-    CopyDir (docsDir @@ "pics") "help/pics" allFiles
+        CopyDir (docsDir @@ "content") "help/content" allFiles
+        CopyDir (docsDir @@ "pics") "help/pics" allFiles
 )
 
 Target "CopyLicense" (fun _ -> 
