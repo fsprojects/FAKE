@@ -1,15 +1,15 @@
 #I @"tools/FAKE/tools/"
 #r @"FakeLib.dll"
 
-#I "./tools/FSharp.Formatting/lib/net40"
+#I "tools/FSharp.Formatting/lib/net40"
+#I "tools/Microsoft.AspNet.Razor/lib/net40"
+#I "tools/RazorEngine/lib/net40"
 #r "System.Web.dll"
 #r "FSharp.Markdown.dll"
 #r "FSharp.CodeFormat.dll"
 #r "FSharp.Literate.dll"
 #r "FSharp.MetadataFormat.dll"
-#I "./tools/Microsoft.AspNet.Razor/lib/net40"
 #r "System.Web.Razor.dll"
-#I "./tools/RazorEngine/lib/net40"
 #r "RazorEngine.dll"
 
 open Fake

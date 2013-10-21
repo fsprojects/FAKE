@@ -159,7 +159,7 @@
       <HintPath>..\..\..\packages\Newtonsoft.Json.4.5.11\lib\net35\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NuGet.Core">
-      <HintPath>..\..\..\packages\NuGet.Core.2.5.0\lib\net40-Client\NuGet.Core.dll</HintPath>
+      <HintPath>..\..\..\packages\Nuget.Core.2.5.0\lib\net40-Client\NuGet.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
