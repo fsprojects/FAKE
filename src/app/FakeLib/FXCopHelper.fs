@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+/// Contains a task which can be used to run [FxCop](http://msdn.microsoft.com/en-us/library/bb429476(v=vs.80).aspx) on .NET assemblies.
 module Fake.FxCopHelper
 
 open System
@@ -8,6 +9,7 @@ open System.Text
 open System.Text.RegularExpressions
 open Microsoft.Win32
 
+/// The FxCop error reporting level
 type FxCopErrorLevel =
 | Warning = 5
 | CriticalWarning = 4
@@ -39,9 +41,9 @@ type FxCopParams =
    ToolPath:string;
    ForceOutput: bool}
  
+/// This checks the result file with some XML queries for errors
 let checkForErrors resultFile =
-  // This version checks the result file with some Xml queries see
-  // http://blogs.conchango.com/johnrayner/archive/2006/10/05/Getting-FxCop-to-break-the-build.aspx
+  // original version found at http://blogs.conchango.com/johnrayner/archive/2006/10/05/Getting-FxCop-to-break-the-build.aspx
   let FxCopCriticalWarnings = 0
   let getErrorValue s =
     let found,value = XMLRead_Int false resultFile String.Empty String.Empty (sprintf "string(count(//Issue[@Level='%s']))" s)
@@ -52,7 +54,7 @@ let checkForErrors resultFile =
   getErrorValue "CriticalWarning",
   getErrorValue "Warning"
 
-/// FxCop Default params  
+/// FxCop Default parameters
 let FxCopDefaults = 
   { ApplyOutXsl = false;
     DirectOutputToConsole = true;
