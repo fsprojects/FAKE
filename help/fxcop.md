@@ -2,6 +2,8 @@
 
 This article is an extension to the [getting started guide](gettingstarted.html). You will improve the same Calculator sample with a task for [FxCop](http://msdn2.microsoft.com/en-us/library/bb429476.aspx).
 
+If you need more details please see the [API docs for the FxCop](apidocs/fake-fxcophelper.html) task.
+
 ## Setting up FxCop
 
 Open *build.fsx* from your Calculator sample folder and add a new target *FxCop* to the targets section:

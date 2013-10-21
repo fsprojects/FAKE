@@ -1,5 +1,5 @@
 ﻿[<AutoOpen>]
-/// Contains a task which can be used to run [FxCop](http://msdn.microsoft.com/en-us/library/bb429476(v=vs.80).aspx) on .NET assemblies.
+/// Contains a task which can be used to run [FxCop](http://msdn.microsoft.com/en-us/library/bb429476(v=vs.80).aspx) on .NET assemblies. There is also a [tutorial](../fxcop.html) for this task available.
 module Fake.FxCopHelper
 
 open System
