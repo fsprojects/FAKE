@@ -1,4 +1,4 @@
-﻿/// Contains a helpers which allow tp parse Release Notes text files.
+﻿/// Contains helpers which allow tp parse Release Notes text files.
 module Fake.ReleaseNotesHelper
 
 open System
@@ -43,7 +43,7 @@ let private parseComplexReleaseNotes (text: seq<string>) =
     { AssemblyVersion = assemblyVer.Value; NugetVersion = nugetVer.Value; Notes = notes }
     
 /// Parse a Release Notes text - Either simple or "complex" format
-/// See: https://github.com/fsharp/FAKE/issues/171
+/// See: [https://github.com/fsharp/FAKE/issues/171](https://github.com/fsharp/FAKE/issues/171)
 /// ## Parameters
 ///  - `data` - Release notes text
 let parseReleaseNotes (data: seq<string>) = 
