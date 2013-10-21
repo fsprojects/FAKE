@@ -1,5 +1,5 @@
 ﻿[<AutoOpen>]
-/// Contains a task which can be used to run [FxCop](http://msdn.microsoft.com/en-us/library/bb429476(v=vs.80).aspx) on .NET assemblies.
+/// Contains a task which can be used to run [FxCop](http://msdn.microsoft.com/en-us/library/bb429476(v=vs.80).aspx) on .NET assemblies. There is also a [tutorial](../fxcop.html) for this task available.
 module Fake.FxCopHelper
 
 open System
@@ -18,6 +18,7 @@ type FxCopErrorLevel =
 | ToolError = 1
 | DontFailBuild = 0
   
+/// Parameter type for the FxCop tool
 type FxCopParams =
  { ApplyOutXsl:bool;
    DirectOutputToConsole: bool;
@@ -42,6 +43,7 @@ type FxCopParams =
    ForceOutput: bool}
  
 /// This checks the result file with some XML queries for errors
+/// [omit]
 let checkForErrors resultFile =
   // original version found at http://blogs.conchango.com/johnrayner/archive/2006/10/05/Getting-FxCop-to-break-the-build.aspx
   let FxCopCriticalWarnings = 0
