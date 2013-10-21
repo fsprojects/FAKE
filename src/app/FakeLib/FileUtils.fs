@@ -1,5 +1,4 @@
-﻿/// Shell-like functions. 
-/// Similar to Ruby's FileUtils: http://ruby-doc.org/core/classes/FileUtils.htm
+﻿/// Shell-like functions. Similar to [Ruby's FileUtils](http://ruby-doc.org/core/classes/FileUtils.htm).
 module Fake.FileUtils
 
 open System.IO
