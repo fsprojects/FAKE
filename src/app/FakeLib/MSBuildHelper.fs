@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+/// Contains tasks which allow to use MSBuild (or xBuild on Linux/Unix) to build .NET project files or solution files.
 module Fake.MSBuildHelper
 
 open System
@@ -12,7 +13,9 @@ type MSBuildProject = XDocument
 
 exception BuildException of string*list<string>
 
-/// MSBuild exe fileName
+/// Tries to detect the right version of MSBuild.
+///   * On Linux/Unix Systems we use xBuild.
+///   * On Windows we try to find a "MSBuild" build parameter or read the MSBuild tool location from the AppSettings file.
 let msBuildExe =   
     if isUnix then
         "xbuild"
@@ -24,13 +27,17 @@ let msBuildExe =
             else 
                 findPath "MSBuildPath" "MSBuild.exe"
 
-
+/// [omit]
 let msbuildNamespace = "http://schemas.microsoft.com/developer/msbuild/2003"
+
+/// [omit]
 let xname name = XName.Get(name,msbuildNamespace)
 
+/// [omit]
 let loadProject (projectFileName:string) : MSBuildProject = 
     MSBuildProject.Load(projectFileName,LoadOptions.PreserveWhitespace)
 
+/// [omit]
 let internal getReferenceElements elementName projectFileName (doc:XDocument) =
     let fi = fileInfo projectFileName
     doc
@@ -47,7 +54,7 @@ let internal getReferenceElements elementName projectFileName (doc:XDocument) =
                     value
             a,fileName |> FullName)   
 
-
+/// [omit]
 let processReferences elementName f projectFileName (doc:XDocument) =
     let fi = fileInfo projectFileName
     doc
@@ -55,6 +62,7 @@ let processReferences elementName f projectFileName (doc:XDocument) =
         |> Seq.iter (fun (a,fileName) -> a.Value <- f fileName)
     doc
 
+/// [omit]
 let rec getProjectReferences (projectFileName:string) =
     if projectFileName.EndsWith ".sln" then Set.empty else // exclude .sln-files since the are not XML
     let doc = loadProject projectFileName
@@ -68,15 +76,20 @@ let rec getProjectReferences (projectFileName:string) =
       |> Seq.append references
       |> Set.ofSeq
 
+/// MSBuild verbosity option
 type MSBuildVerbosity = Quiet | Minimal | Normal | Detailed | Diagnostic
+
+/// MSBuild log option
 type MSBuildLogParameter = Append | PerformanceSummary | Summary | NoSummary | ErrorsOnly | WarningsOnly | NoItemAndPropertyList | ShowCommandLine | ShowTimestamp | ShowEventId | ForceNoAlign  | DisableConsoleColor | DisableMPLogging | EnableMPLogging
 
+/// A type for MSBuild configuration
 type MSBuildFileLoggerConfig =
     { Number : int
       Filename : string option
       Verbosity : MSBuildVerbosity option
       Parameters : MSBuildLogParameter list option }
 
+/// A type for MSBuild task parameters
 type MSBuildParams = 
     { Targets: string list
       Properties: (string * string) list
@@ -85,6 +98,7 @@ type MSBuildParams =
       Verbosity: MSBuildVerbosity option
       FileLoggers: MSBuildFileLoggerConfig list option }
 
+/// Defines a default for MSBuild task parameters
 let MSBuildDefaults = 
     { Targets = []
       Properties = []
@@ -93,12 +107,14 @@ let MSBuildDefaults =
       Verbosity = None
       FileLoggers = None }
 
+/// [omit]
 let getAllParameters targets maxcpu tools verbosity fileLoggers properties =
     if isUnix then
         [targets; tools; verbosity] @ fileLoggers @ properties
     else
         [targets; maxcpu; tools; verbosity] @ fileLoggers @ properties
 
+/// [omit]
 let serializeMSBuildParams (p: MSBuildParams) = 
     let verbosityName v =
         match v with
@@ -159,7 +175,10 @@ let serializeMSBuildParams (p: MSBuildParams) =
                     | Some (k,v) -> "/" + k + (if isNullOrEmpty v then "" else ":" + v))
     |> separated " "
 
+/// [omit]
 let TeamCityLoggerName = typedefof<Fake.MsBuildLogger.TeamCityLogger>.FullName
+
+/// [omit]
 let ErrorLoggerName = typedefof<Fake.MsBuildLogger.ErrorLogger>.FullName
 
 let private errorLoggerParam = 
@@ -186,7 +205,7 @@ let build setParams project =
 
 /// Builds the given project files and collects the output files.
 /// Properties are parameterized by project name.
-/// If the outputpath is null or empty then the project settings are used.>
+/// If the outputpath is null or empty then the project settings are used.
 let MSBuildWithProjectProperties outputPath (targets: string) (properties: string -> (string*string) list) projects = 
     let projects = projects |> Seq.toList
     let output = 
