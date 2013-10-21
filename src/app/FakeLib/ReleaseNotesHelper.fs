@@ -4,10 +4,13 @@ module Fake.ReleaseNotesHelper
 open System
 open System.Text.RegularExpressions
 
-
+/// Contains the parsed information of the release notes text file.
 type ReleaseNotes =
-    { AssemblyVersion: string
+    { /// The parsed version.
+      AssemblyVersion: string
+      /// The nuget package version.
       NugetVersion: string
+      // The parsed release notes.
       Notes: string list }
     override x.ToString() = sprintf "%A" x
 
@@ -43,7 +46,7 @@ let private parseComplexReleaseNotes (text: seq<string>) =
     { AssemblyVersion = assemblyVer.Value; NugetVersion = nugetVer.Value; Notes = notes }
     
 /// Parse a Release Notes text - Either simple or "complex" format
-/// See: [https://github.com/fsharp/FAKE/issues/171](https://github.com/fsharp/FAKE/issues/171)
+/// See: [http://github.com/fsharp/FAKE/issues/171](http://github.com/fsharp/FAKE/issues/171)
 /// ## Parameters
 ///  - `data` - Release notes text
 let parseReleaseNotes (data: seq<string>) = 
