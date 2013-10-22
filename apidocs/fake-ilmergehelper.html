@@ -62,6 +62,7 @@
 
 <h1>ILMergeHelper</h1>
 <div class="xmldoc">
+<p>Contains task a task which allows to merge .NET assemblies with <a href="http://research.microsoft.com/en-us/people/mbarnett/ilmerge.aspx">ILMerge</a>.</p>
 </div>
 
 <!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
@@ -76,25 +77,29 @@
                     <td class="type-name">
                         <a href="fake-ilmergehelper-allowduplicatetypes.html">AllowDuplicateTypes</a>
                     </td>
-                    <td class="xmldoc"></td>
+                    <td class="xmldoc"><p>Option type to configure ILMerge's processing of duplicate types.</p>
+</td>
                 </tr>
                 <tr>
                     <td class="type-name">
                         <a href="fake-ilmergehelper-ilmergeparams.html">ILMergeParams</a>
                     </td>
-                    <td class="xmldoc"></td>
+                    <td class="xmldoc"><p>Parameter type for ILMerge</p>
+</td>
                 </tr>
                 <tr>
                     <td class="type-name">
                         <a href="fake-ilmergehelper-internalizetypes.html">InternalizeTypes</a>
                     </td>
-                    <td class="xmldoc"></td>
+                    <td class="xmldoc"><p>Option type to configure ILMerge's processing of internal types.</p>
+</td>
                 </tr>
                 <tr>
                     <td class="type-name">
                         <a href="fake-ilmergehelper-targetkind.html">TargetKind</a>
                     </td>
-                    <td class="xmldoc"></td>
+                    <td class="xmldoc"><p>Option type to configure ILMerge's target output.</p>
+</td>
                 </tr>
         </tbody>
     </table>
@@ -109,40 +114,35 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '241', 241)" onmouseover="showTip(event, '241', 241)">
-            getArguments (...)
-          </code>
-          <div class="tip" id="241">
-            <strong>Signature:</strong>outputFile:string -&gt; primaryAssembly:string -&gt; parameters:ILMergeParams -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Builds the arguments for the ILMerge task</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '242', 242)" onmouseover="showTip(event, '242', 242)">
+          <code onmouseout="hideTip(event, '245', 245)" onmouseover="showTip(event, '245', 245)">
             ILMerge (...)
           </code>
-          <div class="tip" id="242">
+          <div class="tip" id="245">
             <strong>Signature:</strong>setParams:(ILMergeParams -&gt; ILMergeParams) -&gt; outputFile:string -&gt; primaryAssembly:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Use ILMerge to merge some .NET assemblies.</p>
+        <td class="xmldoc"><p>Uses ILMerge to merge .NET assemblies.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>setParams</code> - Function used to create an ILMergeParams value with your required settings. Called with an ILMergeParams value configured with the defaults.</li>
+<li><code>outputFile</code> - Output file path for the merged assembly.</li>
+<li><code>primaryAssembly</code> - The assembly you want ILMerge to consider as the primary.</li>
+</ul>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '243', 243)" onmouseover="showTip(event, '243', 243)">
+          <code onmouseout="hideTip(event, '247', 247)" onmouseover="showTip(event, '247', 247)">
             ILMergeDefaults 
           </code>
-          <div class="tip" id="243">
+          <div class="tip" id="247">
             <strong>Signature:</strong>ILMergeParams<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>ILMerge default params</p>
+        <td class="xmldoc"><p>ILMerge default parameters. Tries to automatically locate ilmerge.exe in a subfolder.</p>
 </td>
       </tr>
     </tbody>
