@@ -1,8 +1,10 @@
 ﻿[<AutoOpen>]
+/// Contains task a task which allows to merge .NET assemblies with [ILMerge](http://research.microsoft.com/en-us/people/mbarnett/ilmerge.aspx).
 module Fake.ILMergeHelper
 
 open System
 
+/// Option type to configure ILMerge's processing of duplicate types.
 type AllowDuplicateTypes = 
 /// No duplicates of public types allowed
 | NoDuplicateTypes
@@ -11,16 +13,19 @@ type AllowDuplicateTypes =
 /// List of types to allow to be duplicated
 | DuplicateTypes of string list
 
+/// Option type to configure ILMerge's processing of internal types.
 type InternalizeTypes =
 | NoInternalize
 | Internalize
 | InternalizeExcept of string
 
+/// Option type to configure ILMerge's target output.
 type TargetKind =
 | Library
 | Exe
 | WinExe
 
+/// Parameter type for ILMerge
 type ILMergeParams = {
    /// Path to ILMerge.exe
    ToolPath: string
@@ -60,7 +65,7 @@ type ILMergeParams = {
    XmlDocs: bool 
    }
 
-/// ILMerge default params  
+/// ILMerge default parameters. Tries to automatically locate ilmerge.exe in a subfolder.
 let ILMergeDefaults : ILMergeParams =
     { ToolPath = findToolInSubPath "ilmerge.exe" (currentDirectory @@ "tools" @@ "ILMerge");
       Version = ""
@@ -85,6 +90,7 @@ let ILMergeDefaults : ILMergeParams =
       XmlDocs = false }
 
 /// Builds the arguments for the ILMerge task
+/// [omit]
 let getArguments outputFile primaryAssembly parameters =
     let stringParams =
         ["out", outputFile
@@ -130,11 +136,12 @@ let getArguments outputFile primaryAssembly parameters =
     let libraries = primaryAssembly :: (parameters.Libraries |> Seq.toList) |> separated " "
     allParameters + " " + libraries
    
-/// <summary>Use ILMerge to merge some .NET assemblies.</summary>
-/// <param name="setParams">Function used to create an ILMergeParams value with your required settings.  Called with an ILMergeParams value configured with the defaults.</param>
-/// <param name="outputFile">Output file path for the merged assembly.</param>
-/// <param name="primaryAssembly">The assembly you want ILMerge to consider as the primary.</param>
-/// <remarks>ILMerge must be installed for this to work.</remarks>
+/// Uses ILMerge to merge .NET assemblies.
+/// ## Parameters
+///
+///  - `setParams` - Function used to create an ILMergeParams value with your required settings. Called with an ILMergeParams value configured with the defaults.
+///  - `outputFile` - Output file path for the merged assembly.
+///  - `primaryAssembly` - The assembly you want ILMerge to consider as the primary.
 let ILMerge setParams outputFile primaryAssembly = 
     traceStartTask "ILMerge" primaryAssembly
     let parameters = setParams ILMergeDefaults
