@@ -1,8 +1,10 @@
 ﻿[<AutoOpen>]
+/// Contains tasks which allow to run msiexec in order to install or uninstall msi files.
 module Fake.MSIHelper
 
 open System
 
+/// MSI parameter type
 type MSIParams =
     { ToolPath: string
       WorkingDir:string
@@ -10,7 +12,7 @@ type MSIParams =
       ThrowIfSetupFails: bool;
       TimeOut: TimeSpan}
 
-/// MSI default params  
+/// MSI default parameters  
 let MSIDefaults =
     { ToolPath = "msiexec "
       WorkingDir = "."
@@ -18,6 +20,11 @@ let MSIDefaults =
       ThrowIfSetupFails = true
       TimeOut = TimeSpan.FromMinutes 5. }
 
+/// Installs a msi 
+/// ## Parameters
+/// 
+///  - `setParams` - Function used to manipulate the default MSI parameters.
+///  - `setup` - The setup file name.
 let Install setParams setup = 
     traceStartTask "MSI-Install" setup
     let parameters = setParams MSIDefaults
@@ -31,6 +38,11 @@ let Install setParams setup =
                   
     traceEndTask "MSI-Install" setup
 
+/// Uninstalls a msi 
+/// ## Parameters
+/// 
+///  - `setParams` - Function used to manipulate the default MSI parameters.
+///  - `setup` - The setup file name.
 let Uninstall setParams setup = 
     traceStartTask "MSI-Uninstall" setup
     let parameters = setParams MSIDefaults
