@@ -77,10 +77,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '665', 665)" onmouseover="showTip(event, '665', 665)">
+          <code onmouseout="hideTip(event, '661', 661)" onmouseover="showTip(event, '661', 661)">
             AllNUnitReferences elementName s
           </code>
-          <div class="tip" id="665">
+          <div class="tip" id="661">
             <strong>Signature:</strong>elementName:&#39;?5867 -&gt; s:string -&gt; bool<br />
                           <strong>Type parameters:</strong> '?5867          </div>
         </td>
@@ -90,10 +90,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '666', 666)" onmouseover="showTip(event, '666', 666)">
+          <code onmouseout="hideTip(event, '662', 662)" onmouseover="showTip(event, '662', 662)">
             AllSpecAndTestDataFiles elementName s
           </code>
-          <div class="tip" id="666">
+          <div class="tip" id="662">
             <strong>Signature:</strong>elementName:string -&gt; s:string -&gt; bool<br />
                       </div>
         </td>
@@ -103,10 +103,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '667', 667)" onmouseover="showTip(event, '667', 667)">
+          <code onmouseout="hideTip(event, '663', 663)" onmouseover="showTip(event, '663', 663)">
             AllSpecFiles elementName s
           </code>
-          <div class="tip" id="667">
+          <div class="tip" id="663">
             <strong>Signature:</strong>elementName:&#39;?5869 -&gt; s:string -&gt; bool<br />
                           <strong>Type parameters:</strong> '?5869          </div>
         </td>
@@ -116,8 +116,58 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '668', 668)" onmouseover="showTip(event, '668', 668)">
+          <code onmouseout="hideTip(event, '664', 664)" onmouseover="showTip(event, '664', 664)">
             createFileName projectFileName
+          </code>
+          <div class="tip" id="664">
+            <strong>Signature:</strong>projectFileName:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '665', 665)" onmouseover="showTip(event, '665', 665)">
+            normalize project
+          </code>
+          <div class="tip" id="665">
+            <strong>Signature:</strong>project:MSBuildProject -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Converts a MSBuildProject to XML</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '666', 666)" onmouseover="showTip(event, '666', 666)">
+            Nothing arg1 arg2
+          </code>
+          <div class="tip" id="666">
+            <strong>Signature:</strong>&#39;?5872 -&gt; &#39;?5873 -&gt; bool<br />
+                          <strong>Type parameters:</strong> '?5872, '?5873          </div>
+        </td>
+        <td class="xmldoc"><p>A Convetion which matches nothing</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '667', 667)" onmouseover="showTip(event, '667', 667)">
+            RemoveAllNUnitReferences projectFileName
+          </code>
+          <div class="tip" id="667">
+            <strong>Signature:</strong>projectFileName:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '668', 668)" onmouseover="showTip(event, '668', 668)">
+            RemoveAllSpecAndTestDataFiles (...)
           </code>
           <div class="tip" id="668">
             <strong>Signature:</strong>projectFileName:string -&gt; string<br />
@@ -129,83 +179,33 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '669', 669)" onmouseover="showTip(event, '669', 669)">
-            normalize project
+            removeAssemblyReference filterF doc
           </code>
           <div class="tip" id="669">
-            <strong>Signature:</strong>project:MSBuildProject -&gt; string<br />
+            <strong>Signature:</strong>filterF:(string -&gt; string -&gt; bool) -&gt; doc:XDocument -&gt; XDocument<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Converts a MSBuildProject to XML</p>
-</td>
+        <td class="xmldoc"></td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '670', 670)" onmouseover="showTip(event, '670', 670)">
-            Nothing arg1 arg2
+            removeFiles filterF doc
           </code>
           <div class="tip" id="670">
-            <strong>Signature:</strong>&#39;?5872 -&gt; &#39;?5873 -&gt; bool<br />
-                          <strong>Type parameters:</strong> '?5872, '?5873          </div>
+            <strong>Signature:</strong>filterF:(string -&gt; string -&gt; bool) -&gt; doc:XDocument -&gt; XDocument<br />
+                      </div>
         </td>
-        <td class="xmldoc"><p>A Convetion which matches nothing</p>
-</td>
+        <td class="xmldoc"></td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '671', 671)" onmouseover="showTip(event, '671', 671)">
-            RemoveAllNUnitReferences projectFileName
-          </code>
-          <div class="tip" id="671">
-            <strong>Signature:</strong>projectFileName:string -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '672', 672)" onmouseover="showTip(event, '672', 672)">
-            RemoveAllSpecAndTestDataFiles (...)
-          </code>
-          <div class="tip" id="672">
-            <strong>Signature:</strong>projectFileName:string -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '673', 673)" onmouseover="showTip(event, '673', 673)">
-            removeAssemblyReference filterF doc
-          </code>
-          <div class="tip" id="673">
-            <strong>Signature:</strong>filterF:(string -&gt; string -&gt; bool) -&gt; doc:XDocument -&gt; XDocument<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '674', 674)" onmouseover="showTip(event, '674', 674)">
-            removeFiles filterF doc
-          </code>
-          <div class="tip" id="674">
-            <strong>Signature:</strong>filterF:(string -&gt; string -&gt; bool) -&gt; doc:XDocument -&gt; XDocument<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '675', 675)" onmouseover="showTip(event, '675', 675)">
             removeFilteredElement (...)
           </code>
-          <div class="tip" id="675">
+          <div class="tip" id="671">
             <strong>Signature:</strong>elementName:string -&gt; filterF:(string -&gt; string -&gt; bool) -&gt; doc:XDocument -&gt; XDocument<br />
                       </div>
         </td>
@@ -214,10 +214,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '676', 676)" onmouseover="showTip(event, '676', 676)">
+          <code onmouseout="hideTip(event, '672', 672)" onmouseover="showTip(event, '672', 672)">
             RemoveTestsFromProject (...)
           </code>
-          <div class="tip" id="676">
+          <div class="tip" id="672">
             <strong>Signature:</strong>assemblyFilterF:(string -&gt; string -&gt; bool) -&gt; fileFilterF:(string -&gt; string -&gt; bool) -&gt; projectFileName:string -&gt; string<br />
                       </div>
         </td>
