@@ -1,10 +1,12 @@
-﻿module Fake.Json
+﻿/// Contains extensions for Newtonsoft-Json. **Don't use it directly. It's likely to be change in further versions.**
+module Fake.Json
 
 open Newtonsoft.Json
 open System
 open Microsoft.FSharp.Reflection
 open Microsoft.FSharp.Quotations
 
+/// Newtonsoft.Json converter for union types
 type UnionTypeConverter() =
     inherit JsonConverter()
 
