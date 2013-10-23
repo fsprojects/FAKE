@@ -75,14 +75,21 @@ let SystemRoot = environVar "SystemRoot"
 /// Determines if the current system is an Unix system
 let isUnix = Environment.OSVersion.Platform = PlatformID.Unix
 
-/// Determines if the current system is an Linux system
+/// Determines if the current system is a MacOs system
+let isMacOS = Environment.OSVersion.Platform = PlatformID.MacOSX
+
+/// Determines if the current system is a Linux system
 let isLinux =
     int System.Environment.OSVersion.Platform |> fun p ->
         (p = 4) || (p = 6) || (p = 128)
 
+/// Determines if the current system is a mono system
+/// Todo: Detect mono on windows
+let isMono = isLinux || isUnix || isMacOS
+
 /// Modifies the ProcessStartInfo according to the platform semantics
 let platformInfoAction (psi:ProcessStartInfo) =
-    if isUnix && psi.FileName.EndsWith ".exe" then
+    if isMono && psi.FileName.EndsWith ".exe" then
         psi.Arguments <- psi.FileName + " " + psi.Arguments
         psi.FileName <- "mono"  
 

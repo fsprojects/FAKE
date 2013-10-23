@@ -35,10 +35,6 @@ let reportDir = "./report"
 let deployZip = deployDir @@ sprintf "%s-%s.zip" projectName buildVersion
 let packagesDir = "./packages"
 
-let isLinux =
-    int System.Environment.OSVersion.Platform |> fun p ->
-        (p = 4) || (p = 6) || (p = 128)
-
 // Targets
 Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; deployDir; docsDir; apidocsDir; nugetDir; reportDir])
 
