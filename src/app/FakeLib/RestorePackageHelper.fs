@@ -1,5 +1,6 @@
 ﻿[<AutoOpen>]
 /// Contains tasks which allow to restore NuGet packages from a NuGet package feed like [nuget.org](http://www.nuget.org).
+/// There is also a tutorial about [nuget package restore](../nuget.html) available.
 module Fake.RestorePackageHelper
 
 open System
