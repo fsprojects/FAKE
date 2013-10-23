@@ -62,7 +62,10 @@ let rec runNuGetTrial retries toolPath timeOut args failWith =
         try
             runNuGet toolPath timeOut args failWith
         with
-        | _ -> runNuGetTrial (retries-1) toolPath timeOut args failWith
+        | exn -> 
+            traceImportant (sprintf "Package restore failed with %s" exn.Message)
+            traceImportant ("Retry package restore.")
+            runNuGetTrial (retries-1) toolPath timeOut args failWith
         
 
 /// [omit]
