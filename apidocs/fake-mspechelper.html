@@ -62,6 +62,7 @@
 
 <h1>MSpecHelper</h1>
 <div class="xmldoc">
+<p>Contains a task to run <a href="https://github.com/machine/machine.specifications">machine.specifications</a> tests.</p>
 </div>
 
 <!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
@@ -76,7 +77,8 @@
                     <td class="type-name">
                         <a href="fake-mspechelper-mspecparams.html">MSpecParams</a>
                     </td>
-                    <td class="xmldoc"></td>
+                    <td class="xmldoc"><p>Parameter type to configure the MSpec runner</p>
+</td>
                 </tr>
         </tbody>
     </table>
@@ -91,26 +93,34 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '259', 259)" onmouseover="showTip(event, '259', 259)">
+          <code onmouseout="hideTip(event, '248', 248)" onmouseover="showTip(event, '248', 248)">
             MSpec setParams assemblies
           </code>
-          <div class="tip" id="259">
+          <div class="tip" id="248">
             <strong>Signature:</strong>setParams:(MSpecParams -&gt; MSpecParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>This task to can be used to run <a href="https://github.com/machine/machine.specifications">machine.specifications</a> on test libraries.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>setParams</code> - Function used to overwrite the MSpec default parameters.</li>
+<li><code>assemblies</code> - The file names of the test assemblies.</li>
+</ul>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '260', 260)" onmouseover="showTip(event, '260', 260)">
+          <code onmouseout="hideTip(event, '249', 249)" onmouseover="showTip(event, '249', 249)">
             MSpecDefaults 
           </code>
-          <div class="tip" id="260">
+          <div class="tip" id="249">
             <strong>Signature:</strong>MSpecParams<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>MSpec default params</p>
+        <td class="xmldoc"><p>MSpec default parameters - tries to locate mspec.exe in any subfolder.</p>
 </td>
       </tr>
     </tbody>
