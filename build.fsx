@@ -115,7 +115,7 @@ Target "GenerateDocs" (fun _ ->
         Literate.ProcessDirectory (source, template, docsDir, replacements = projInfo)
 
         if isLocalBuild then  // TODO: this needs to be fixed in FSharp.Formatting
-            MetadataFormat.Generate ( "./build/FakeLib.dll", apidocsDir, "./help/templates/reference/")
+            MetadataFormat.Generate ( "./build/FakeLib.dll", apidocsDir, ["./help/templates/reference/"])
 
         WriteStringToFile false "./docs/.nojekyll" ""
 
