@@ -23,7 +23,7 @@ type MSpecParams = {
     /// A timeout for the test runner
     TimeOut: TimeSpan}
 
-/// MSpec default parameters - tries to locate mspec.exe in any subfolder.
+/// MSpec default parameters - tries to locate mspec-clr4.exe in any subfolder.
 let MSpecDefaults = { 
     ToolPath = findToolInSubPath "mspec-clr4.exe" (currentDirectory @@ "tools" @@ "MSpec")
     HtmlOutputDir = null
@@ -38,6 +38,11 @@ let MSpecDefaults = {
 ///
 ///  - `setParams` - Function used to overwrite the MSpec default parameters.
 ///  - `assemblies` - The file names of the test assemblies.
+///
+/// ## Sample
+///
+///     !! (testDir @@ "Test.*.dll") 
+///       |> MSpec (fun p -> {p with ExcludeTags = ["HTTP"]; HtmlOutputDir = reportDir})
 let MSpec setParams assemblies = 
     let details = separated ", " assemblies
     traceStartTask "MSpec" details

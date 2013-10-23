@@ -137,13 +137,9 @@ Target "BuildZip" (fun _ ->
 Target "Test" (fun _ ->
     (* Temporary disable tests on *nix, bug # 122 *)
     if not isLinux then
-        let MSpecVersion = GetPackageVersion packagesDir "Machine.Specifications"
-        let mspecTool = sprintf @"%s/Machine.Specifications.%s/tools/mspec-clr4.exe" packagesDir MSpecVersion
-
         !! (testDir @@ "Test.*.dll") 
         |> MSpec (fun p -> 
                 {p with
-                    ToolPath = mspecTool
                     ExcludeTags = ["HTTP"]
                     HtmlOutputDir = reportDir})
 )
