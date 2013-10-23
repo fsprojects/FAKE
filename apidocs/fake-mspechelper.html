@@ -93,10 +93,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '254', 254)" onmouseover="showTip(event, '254', 254)">
+          <code onmouseout="hideTip(event, '233', 233)" onmouseover="showTip(event, '233', 233)">
             MSpec setParams assemblies
           </code>
-          <div class="tip" id="254">
+          <div class="tip" id="233">
             <strong>Signature:</strong>setParams:(MSpecParams -&gt; MSpecParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -108,15 +108,21 @@
 <li><code>setParams</code> - Function used to overwrite the MSpec default parameters.</li>
 <li><code>assemblies</code> - The file names of the test assemblies.</li>
 </ul>
+
+<h2>Sample</h2>
+
+<pre><code>!! (testDir @@ "Test.*.dll") 
+  |&gt; MSpec (fun p -&gt; {p with ExcludeTags = ["HTTP"]; HtmlOutputDir = reportDir})
+</code></pre>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '255', 255)" onmouseover="showTip(event, '255', 255)">
+          <code onmouseout="hideTip(event, '245', 245)" onmouseover="showTip(event, '245', 245)">
             MSpecDefaults 
           </code>
-          <div class="tip" id="255">
+          <div class="tip" id="245">
             <strong>Signature:</strong>MSpecParams<br />
                       </div>
         </td>
