@@ -49,7 +49,7 @@ You can download the "NuGet.exe Command Line Tool" from the <a href="http://nuge
 <h2>Restore packages from the build script</h2>
 
 <p>Modify your build script and add <strong>RestorePackages()</strong> near the beginning of the script.
-This will use the following default parameters to retrieve all NuGet packages which are specified in "./**/packages.config" files:</p>
+This will use the following default parameters to retrieve all NuGet packages which are specified in <em>"./**/packages.config"</em> files:</p>
 
 <table class="pre"><tr><td class="lines"><pre class="fssnip">
 <span class="l">1: </span>
@@ -69,7 +69,7 @@ This will use the following default parameters to retrieve all NuGet packages wh
 
 <p>FAKE will scan all subfolders for <em>nuget.exe</em> and defaults to <em>"./tools/nuget/NuGet.exe"</em> if nothing was found.</p>
 
-<p>If you need to use different parameters please use the <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/RestorePackageHelper.fs#L18">RestorePackage</a> task directly.</p>
+<p>If you need to use different parameters please use the <a href="apidocs/fake-restorepackagehelper.html">RestorePackage</a> task directly.</p>
 
 <h2>Download latest version of FAKE via NuGet</h2>
 
