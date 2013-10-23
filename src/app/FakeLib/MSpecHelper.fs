@@ -25,7 +25,7 @@ type MSpecParams = {
 
 /// MSpec default parameters - tries to locate mspec.exe in any subfolder.
 let MSpecDefaults = { 
-    ToolPath = findToolInSubPath "mspec.exe" (currentDirectory @@ "tools" @@ "MSpec")
+    ToolPath = findToolInSubPath "mspec-clr4.exe" (currentDirectory @@ "tools" @@ "MSpec")
     HtmlOutputDir = null
     WorkingDir = null
     Silent = false
