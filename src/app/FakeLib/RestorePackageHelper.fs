@@ -1,22 +1,25 @@
 ﻿[<AutoOpen>]
+/// Contains tasks which allow to restore NuGet packages from a NuGet package feed like [nuget.org](http://www.nuget.org).
 module Fake.RestorePackageHelper
 
 open System
 open System.IO
 
+/// RestorePackages parameter path
 type RestorePackageParams =
     { ToolPath: string
       Sources: string list
       TimeOut: TimeSpan
       OutputPath: string}
 
-/// RestorePackage defaults params  
+/// RestorePackage defaults parameters
 let RestorePackageDefaults =
     { ToolPath = findToolInSubPath "nuget.exe" (currentDirectory @@ "tools" @@ "NuGet")
       Sources = []
       TimeOut = TimeSpan.FromMinutes 5.
       OutputPath = "./packages" }
 
+/// RestorePackages parameter path for single packages
 type RestoreSinglePackageParams = 
     { ToolPath: string
       Sources: string list
@@ -26,7 +29,7 @@ type RestoreSinglePackageParams =
       ExcludeVersion: bool
       IncludePreRelease: bool }
 
-/// RestoreSinglePackageParams defaults params  
+/// RestoreSinglePackageParams defaults parameters  
 let RestoreSinglePackageDefaults =
     { ToolPath = RestorePackageDefaults.ToolPath
       Sources = []
@@ -36,6 +39,7 @@ let RestoreSinglePackageDefaults =
       ExcludeVersion = false
       IncludePreRelease = false }
 
+/// [omit]
 let runNuGet toolPath timeOut args failWith =
     if not (execProcess3 (fun info ->  
         info.FileName <- toolPath |> FullName
@@ -43,6 +47,7 @@ let runNuGet toolPath timeOut args failWith =
     then
         failWith()
 
+/// [omit]
 let buildNuGetArgs setParams packageId = 
     let parameters = RestoreSinglePackageDefaults |> setParams
     let sources =
