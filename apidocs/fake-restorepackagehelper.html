@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Module</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="http://code.jquery.com/jquery-1.8.0.js"></script>
     <script src="http://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
@@ -62,6 +62,7 @@
 
 <h1>RestorePackageHelper</h1>
 <div class="xmldoc">
+<p>Contains tasks which allow to restore NuGet packages from a NuGet package feed like <a href="http://www.nuget.org">nuget.org</a>.</p>
 </div>
 
 <!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
@@ -76,13 +77,15 @@
                     <td class="type-name">
                         <a href="fake-restorepackagehelper-restorepackageparams.html">RestorePackageParams</a>
                     </td>
-                    <td class="xmldoc"></td>
+                    <td class="xmldoc"><p>RestorePackages parameter path</p>
+</td>
                 </tr>
                 <tr>
                     <td class="type-name">
                         <a href="fake-restorepackagehelper-restoresinglepackageparams.html">RestoreSinglePackageParams</a>
                     </td>
-                    <td class="xmldoc"></td>
+                    <td class="xmldoc"><p>RestorePackages parameter path for single packages</p>
+</td>
                 </tr>
         </tbody>
     </table>
@@ -97,22 +100,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '385', 385)" onmouseover="showTip(event, '385', 385)">
-            buildNuGetArgs setParams packageId
-          </code>
-          <div class="tip" id="385">
-            <strong>Signature:</strong>setParams:(RestoreSinglePackageParams -&gt; RestoreSinglePackageParams) -&gt; packageId:string -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '386', 386)" onmouseover="showTip(event, '386', 386)">
+          <code onmouseout="hideTip(event, '380', 380)" onmouseover="showTip(event, '380', 380)">
             RestorePackage setParams package
           </code>
-          <div class="tip" id="386">
+          <div class="tip" id="380">
             <strong>Signature:</strong>setParams:(RestorePackageParams -&gt; RestorePackageParams) -&gt; package:string -&gt; unit<br />
                       </div>
         </td>
@@ -122,23 +113,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '387', 387)" onmouseover="showTip(event, '387', 387)">
+          <code onmouseout="hideTip(event, '381', 381)" onmouseover="showTip(event, '381', 381)">
             RestorePackageDefaults 
           </code>
-          <div class="tip" id="387">
+          <div class="tip" id="381">
             <strong>Signature:</strong>RestorePackageParams<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>RestorePackage defaults params</p>
+        <td class="xmldoc"><p>RestorePackage defaults parameters</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '388', 388)" onmouseover="showTip(event, '388', 388)">
+          <code onmouseout="hideTip(event, '382', 382)" onmouseover="showTip(event, '382', 382)">
             RestorePackageId setParams packageId
           </code>
-          <div class="tip" id="388">
+          <div class="tip" id="382">
             <strong>Signature:</strong>setParams:(RestoreSinglePackageParams -&gt; RestoreSinglePackageParams) -&gt; packageId:string -&gt; unit<br />
                       </div>
         </td>
@@ -148,10 +139,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '389', 389)" onmouseover="showTip(event, '389', 389)">
+          <code onmouseout="hideTip(event, '383', 383)" onmouseover="showTip(event, '383', 383)">
             RestorePackages ()
           </code>
-          <div class="tip" id="389">
+          <div class="tip" id="383">
             <strong>Signature:</strong>unit -&gt; unit<br />
                       </div>
         </td>
@@ -161,27 +152,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '390', 390)" onmouseover="showTip(event, '390', 390)">
+          <code onmouseout="hideTip(event, '384', 384)" onmouseover="showTip(event, '384', 384)">
             RestoreSinglePackageDefaults 
           </code>
-          <div class="tip" id="390">
+          <div class="tip" id="384">
             <strong>Signature:</strong>RestoreSinglePackageParams<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>RestoreSinglePackageParams defaults params</p>
+        <td class="xmldoc"><p>RestoreSinglePackageParams defaults parameters</p>
 </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '391', 391)" onmouseover="showTip(event, '391', 391)">
-            runNuGet toolPath timeOut args failWith
-          </code>
-          <div class="tip" id="391">
-            <strong>Signature:</strong>toolPath:string -&gt; timeOut:TimeSpan -&gt; args:string -&gt; failWith:(unit -&gt; unit) -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
       </tr>
     </tbody>
   </table>
