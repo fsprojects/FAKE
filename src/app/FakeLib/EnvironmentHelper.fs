@@ -75,6 +75,11 @@ let SystemRoot = environVar "SystemRoot"
 /// Determines if the current system is an Unix system
 let isUnix = Environment.OSVersion.Platform = PlatformID.Unix
 
+/// Determines if the current system is an Linux system
+let isLinux =
+    int System.Environment.OSVersion.Platform |> fun p ->
+        (p = 4) || (p = 6) || (p = 128)
+
 /// Modifies the ProcessStartInfo according to the platform semantics
 let platformInfoAction (psi:ProcessStartInfo) =
     if isUnix && psi.FileName.EndsWith ".exe" then
