@@ -1,29 +1,43 @@
 ﻿[<AutoOpen>]
+/// Contains a task to run [machine.specifications](https://github.com/machine/machine.specifications) tests.
 module Fake.MSpecHelper
 
 open System
 open System.IO
 open System.Text
 
-type MSpecParams =
-    { ToolPath: string;
-      HtmlOutputDir: string;
-      WorkingDir:string;
-      Silent: bool; 
-      ExcludeTags: string list; 
-      IncludeTags: string list;
-      TimeOut: TimeSpan}
+/// Parameter type to configure the MSpec runner
+type MSpecParams = {
+    /// FileName of the mspec runner
+    ToolPath: string
+    /// Output directory for html reports (optional)
+    HtmlOutputDir: string
+    /// Working directory (optional)
+    WorkingDir:string
+    /// Can be used to run MSpec in silent mode
+    Silent: bool;
+    /// Tests with theses tags are ignored by MSpec
+    ExcludeTags: string list
+    /// Tests with theses tags are included by MSpec
+    IncludeTags: string list
+    /// A timeout for the test runner
+    TimeOut: TimeSpan}
 
-/// MSpec default params  
-let MSpecDefaults =
-    { ToolPath = findToolInSubPath "mspec.exe" (currentDirectory @@ "tools" @@ "MSpec");
-      HtmlOutputDir = null;
-      WorkingDir = null;
-      Silent = false;
-      ExcludeTags = [];
-      IncludeTags = [];
-      TimeOut = TimeSpan.FromMinutes 5.}
+/// MSpec default parameters - tries to locate mspec.exe in any subfolder.
+let MSpecDefaults = { 
+    ToolPath = findToolInSubPath "mspec.exe" (currentDirectory @@ "tools" @@ "MSpec")
+    HtmlOutputDir = null
+    WorkingDir = null
+    Silent = false
+    ExcludeTags = []
+    IncludeTags = []
+    TimeOut = TimeSpan.FromMinutes 5.}
 
+/// This task to can be used to run [machine.specifications](https://github.com/machine/machine.specifications) on test libraries.
+/// ## Parameters
+///
+///  - `setParams` - Function used to overwrite the MSpec default parameters.
+///  - `assemblies` - The file names of the test assemblies.
 let MSpec setParams assemblies = 
     let details = separated ", " assemblies
     traceStartTask "MSpec" details
