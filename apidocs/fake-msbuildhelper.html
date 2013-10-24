@@ -128,10 +128,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '254', 254)" onmouseover="showTip(event, '254', 254)">
+          <code onmouseout="hideTip(event, '257', 257)" onmouseover="showTip(event, '257', 257)">
             build setParams project
           </code>
-          <div class="tip" id="254">
+          <div class="tip" id="257">
             <strong>Signature:</strong>setParams:(MSBuildParams -&gt; MSBuildParams) -&gt; project:string -&gt; unit<br />
                       </div>
         </td>
@@ -141,10 +141,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '255', 255)" onmouseover="showTip(event, '255', 255)">
+          <code onmouseout="hideTip(event, '258', 258)" onmouseover="showTip(event, '258', 258)">
             MSBuild outputPath targets properties
           </code>
-          <div class="tip" id="255">
+          <div class="tip" id="258">
             <strong>Signature:</strong>outputPath:string -&gt; targets:string -&gt; properties:(string * string) list -&gt; seq&lt;string&gt; -&gt; LazyFileSet<br />
                       </div>
         </td>
@@ -162,56 +162,8 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '256', 256)" onmouseover="showTip(event, '256', 256)">
-            MSBuildDebug outputPath targets
-          </code>
-          <div class="tip" id="256">
-            <strong>Signature:</strong>outputPath:string -&gt; targets:string -&gt; seq&lt;string&gt; -&gt; LazyFileSet<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Builds the given project files or solution files and collects the output files.</p>
-
-<h2>Parameters</h2>
-
-<ul>
-<li><code>outputpath</code> - If it is null or empty then the project settings are used.</li>
-<li><code>targets</code> - A string with the target names which should be run by MSBuild.</li>
-</ul>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '257', 257)" onmouseover="showTip(event, '257', 257)">
-            MSBuildDefaults 
-          </code>
-          <div class="tip" id="257">
-            <strong>Signature:</strong>MSBuildParams<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Defines a default for MSBuild task parameters</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '258', 258)" onmouseover="showTip(event, '258', 258)">
-            msBuildExe 
-          </code>
-          <div class="tip" id="258">
-            <strong>Signature:</strong>string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Tries to detect the right version of MSBuild.
-  - On Linux/Unix Systems we use xBuild.
-  - On Windows we try to find a "MSBuild" build parameter or read the MSBuild tool location from the AppSettings file.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
           <code onmouseout="hideTip(event, '259', 259)" onmouseover="showTip(event, '259', 259)">
-            MSBuildRelease outputPath targets
+            MSBuildDebug outputPath targets
           </code>
           <div class="tip" id="259">
             <strong>Signature:</strong>outputPath:string -&gt; targets:string -&gt; seq&lt;string&gt; -&gt; LazyFileSet<br />
@@ -231,9 +183,57 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '260', 260)" onmouseover="showTip(event, '260', 260)">
-            MSBuildReleaseExt (...)
+            MSBuildDefaults 
           </code>
           <div class="tip" id="260">
+            <strong>Signature:</strong>MSBuildParams<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Defines a default for MSBuild task parameters</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '261', 261)" onmouseover="showTip(event, '261', 261)">
+            msBuildExe 
+          </code>
+          <div class="tip" id="261">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Tries to detect the right version of MSBuild.
+  - On Linux/Unix Systems we use xBuild.
+  - On Windows we try to find a "MSBuild" build parameter or read the MSBuild tool location from the AppSettings file.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '262', 262)" onmouseover="showTip(event, '262', 262)">
+            MSBuildRelease outputPath targets
+          </code>
+          <div class="tip" id="262">
+            <strong>Signature:</strong>outputPath:string -&gt; targets:string -&gt; seq&lt;string&gt; -&gt; LazyFileSet<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Builds the given project files or solution files and collects the output files.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>outputpath</code> - If it is null or empty then the project settings are used.</li>
+<li><code>targets</code> - A string with the target names which should be run by MSBuild.</li>
+</ul>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '263', 263)" onmouseover="showTip(event, '263', 263)">
+            MSBuildReleaseExt (...)
+          </code>
+          <div class="tip" id="263">
             <strong>Signature:</strong>outputPath:string -&gt; properties:(string * string) list -&gt; targets:string -&gt; seq&lt;string&gt; -&gt; LazyFileSet<br />
                       </div>
         </td>
@@ -251,10 +251,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '261', 261)" onmouseover="showTip(event, '261', 261)">
+          <code onmouseout="hideTip(event, '264', 264)" onmouseover="showTip(event, '264', 264)">
             MSBuildWithDefaults targets
           </code>
-          <div class="tip" id="261">
+          <div class="tip" id="264">
             <strong>Signature:</strong>targets:string -&gt; seq&lt;string&gt; -&gt; LazyFileSet<br />
                       </div>
         </td>
@@ -270,10 +270,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '262', 262)" onmouseover="showTip(event, '262', 262)">
+          <code onmouseout="hideTip(event, '265', 265)" onmouseover="showTip(event, '265', 265)">
             MSBuildWithProjectProperties (...)
           </code>
-          <div class="tip" id="262">
+          <div class="tip" id="265">
             <strong>Signature:</strong>outputPath:string -&gt; targets:string -&gt; properties:(string -&gt; (string * string) list) -&gt; projects:seq&lt;string&gt; -&gt; LazyFileSet<br />
                       </div>
         </td>
