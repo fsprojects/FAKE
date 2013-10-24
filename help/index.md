@@ -1,24 +1,8 @@
-# FAKE - F# Make
+# FAKE - F# Make - A DSL for build tasks
 
-Modern build automation systems are not limited to simply recompile programs if source code has changed. 
-They are supposed to get the latest sources from a source code management system, build test databases, 
-run automatic tests, check guidelines, create documentation files, install setup projects and much more. 
-Some companies are even deploying virtual machines, which are created during a nightly build process. 
-In order to simplify the writing of such build scripts and to provide reusability of common tasks 
-most build automation systems are using a domain-specific language (DSL). 
-These tools can be divided into tools using external DSLs with a custom syntax like **make**, 
-tools using external DSLs with an XML based syntax like **MSBuild** or **Apache Ant** and 
-tools using internal DSLs which are integrated in a host language like **Rake**, which uses Ruby.
-
-## FAKE - An integrated DSL
-
-"FAKE - F# Make" is a build automation system. Due to its integration 
-in F#, all benefits of the .NET Framework and functional programming can be used, including 
-the extensive class library, powerful debuggers and integrated development environments like 
-Visual Studio or MonoDevelop, which provide syntax highlighting and code completion. 
-
-The new DSL was designed to be succinct, typed, declarative, extensible and easy to use. 
-For instance custom build tasks can be added simply by referencing .NET assemblies and using the corresponding classes.
+"FAKE - F# Make" is a build automation system with capabilities which are similar to **make** and **rake**. 
+It is using an easy domain-specific language (DSL) so that you can start using it without learning F#.
+If you need more than the default functionality you can either write F# or simply reference .NET assemblies.
 
 ## Who is using FAKE?
 
@@ -54,10 +38,11 @@ You can download the latest builds from [http://teamcity.codebetter.com](http://
 
 # Using FAKE
 
+If you want to learn about FAKE you should read the ["Getting started with FAKE"](gettingstarted.html) tutorial.
+
 ## Targets
 
-Targets are the main unit of work in a "FAKE - F# Make" script. 
-Targets have a name and an action (given as a code block).
+Targets are the main unit of work in a "FAKE - F# Make" script. Targets have a name and an action (given as a code block).
 
 	// The clean target cleans the build and deploy folders
 	Target "Clean" (fun _ -> 
