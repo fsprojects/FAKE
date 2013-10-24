@@ -1,5 +1,5 @@
 ﻿[<AutoOpen>]
-/// Contains extensions of the defaul Seq module.
+/// Contains extensions of the default Seq module.
 module Fake.Seq
 
 /// Returns if the given element exists in the sequence

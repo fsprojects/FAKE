@@ -1,4 +1,5 @@
 [<AutoOpen>]
+/// Contains extensions of the default Option module.
 module Fake.Option
 
 open System
