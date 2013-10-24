@@ -78,14 +78,46 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '367', 367)" onmouseover="showTip(event, '367', 367)">
-            requiresAdmin installerF
+          <code onmouseout="hideTip(event, '355', 355)" onmouseover="showTip(event, '355', 355)">
+            isAdmin identity
           </code>
-          <div class="tip" id="367">
-            <strong>Signature:</strong>installerF:(unit -&gt; &#39;?5438) -&gt; &#39;?5438<br />
-                          <strong>Type parameters:</strong> '?5438          </div>
+          <div class="tip" id="355">
+            <strong>Signature:</strong>identity:WindowsIdentity -&gt; bool<br />
+                      </div>
         </td>
-        <td class="xmldoc"><p>Checks that the current user has administrator permissions</p>
+        <td class="xmldoc"><p>Returns wether the given use has administrator permissions.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>identity</code> - The windows identity of the user in question.</li>
+</ul>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '357', 357)" onmouseover="showTip(event, '357', 357)">
+            requiresAdmin f
+          </code>
+          <div class="tip" id="357">
+            <strong>Signature:</strong>f:(unit -&gt; &#39;?5439) -&gt; &#39;?5439<br />
+                          <strong>Type parameters:</strong> '?5439          </div>
+        </td>
+        <td class="xmldoc"><p>Checks that the current user has administrator permissions - otherwise it throws an exception.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>f</code> - This Function will be excuted if the use has the right permissions.</li>
+</ul>
+
+<h2>Sample</h2>
+
+<pre><code>Target "Install" (fun _ -&gt; 
+     requiresAdmin (fun p -&gt; installMSI())
+ )
+</code></pre>
 </td>
       </tr>
     </tbody>
