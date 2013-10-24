@@ -58,8 +58,8 @@ let inline getBuildParam name = getBuildParamOrDefault name String.Empty
 let ProgramFiles = Environment.GetFolderPath Environment.SpecialFolder.ProgramFiles
 
 /// The path of Program Files (x86)
-/// It seems this covers all cases where PROCESSOR_ARCHITECTURE may misreport and the case where the other variable 
-/// PROCESSOR_ARCHITEW6432 can be null
+/// It seems this covers all cases where PROCESSOR\_ARCHITECTURE may misreport and the case where the other variable 
+/// PROCESSOR\_ARCHITEW6432 can be null
 let ProgramFilesX86 =
     let wow64 = (environVar "PROCESSOR_ARCHITEW6432")
     let globalArch = (environVar "PROCESSOR_ARCHITECTURE")

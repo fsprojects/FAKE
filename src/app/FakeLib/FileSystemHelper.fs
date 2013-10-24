@@ -100,5 +100,5 @@ let isDirectory path =
     let attr = File.GetAttributes path
     attr &&& FileAttributes.Directory = FileAttributes.Directory
 
-/// Detects whethert the given path is a file.
+/// Detects whether the given path is a file.
 let isFile path = isDirectory path |> not

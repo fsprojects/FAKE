@@ -4,7 +4,7 @@ module Fake.PermissionsHelper
 
 open System.Security.Principal
 
-/// Returns wether the given user has administrator permissions.
+/// Returns whether the given user has administrator permissions.
 /// ## Parameters
 ///  - `identity` - The windows identity of the user in question.
 let isAdmin identity = 

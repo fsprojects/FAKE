@@ -36,6 +36,7 @@ Some of our users are:
 * [FSharp.Data](https://github.com/fsharp/FSharp.Data)
 * [FSharp.Charting](https://github.com/fsharp/FSharp.Charting)
 * [Portable.Licensing](https://github.com/dnauck/Portable.Licensing)
+* [FeatureSwitcher](https://github.com/mexx/FeatureSwitcher)
 
 ## How to get FAKE
 
