@@ -8,18 +8,19 @@ open System.Linq
 open System.Xml.Linq
 open System.Xml.XPath
 
-/// Reads a config file into an XElement.
+/// Reads a config file into an XmlDocument.
 /// ## Parameters
 ///  - `fileName` - The file name of the config file.
-let readConfig (fileName:string) = XElement.Load fileName
+let readConfig (fileName:string) = 
+    let xmlDocument = new XmlDocument()
+    xmlDocument.Load fileName
+    xmlDocument
 
-/// Writes an XElement to a config file.
+/// Writes an XmlDocument to a config file.
 /// ## Parameters
 ///  - `fileName` - The file name of the config file.
 ///  - `config` - The XElement representing the config.
-let writeConfig (fileName:string) (config:XElement) = config.Save fileName 
-
-let private getElement config xpath = Extensions.XPathSelectElement(config, xpath)
+let writeConfig (fileName:string) (config:XmlDocument) = config.Save fileName 
 
 /// Reads a config file from the given file name, replaces an attribute using the given xPath and writes it back.
 /// ## Parameters
@@ -27,13 +28,12 @@ let private getElement config xpath = Extensions.XPathSelectElement(config, xpat
 ///  - `attribute` - The attribute name for which the value should be replaced.
 ///  - `value` - The new attribute value.
 ///  - `config` - The XElement representing the config.
-let updateConfig xpath attribute value (config:XElement) =
-    let node = getElement config xpath
+let updateConfig xpath attribute value (config:XmlDocument) =
+    let node = config.SelectSingleNode xpath :?> XmlElement
     if node = null then
         failwithf "Could not find node addressed by %s" xpath
     else
-        let attr = node.Attribute(XName.Get(attribute)) 
-        attr.Value <- value
+        node.SetAttribute(XName.Get(attribute).ToString(), value) 
     config
 
 /// Reads a config file from the given file name, replaces an attribute using the given xPath and writes it back.
