@@ -4,10 +4,24 @@ module Fake.PermissionsHelper
 
 open System.Security.Principal
 
-/// Checks that the current user has administrator permissions
-let requiresAdmin installerF = 
-    let principal = new WindowsPrincipal(WindowsIdentity.GetCurrent())
-    if principal.IsInRole WindowsBuiltInRole.Administrator then
-        installerF()
+/// Returns wether the given user has administrator permissions.
+/// ## Parameters
+///  - `identity` - The windows identity of the user in question.
+let isAdmin identity = 
+    let principal = new WindowsPrincipal(identity)
+    principal.IsInRole WindowsBuiltInRole.Administrator
+
+/// Checks that the current user has administrator permissions - otherwise it throws an exception.
+/// ## Parameters
+///  - `f` - This Function will be excuted if the use has the right permissions.
+///
+/// ## Sample
+///
+///     Target "Install" (fun _ -> 
+///          requiresAdmin (fun p -> installMSI())
+///      )
+let requiresAdmin f = 
+    if isAdmin(WindowsIdentity.GetCurrent()) then
+        f()
     else
-        invalidOp "Administrator privileges are required to run this installer"
+        invalidOp "Administrator privileges are required to run this function."
