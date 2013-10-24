@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+/// Contains functions which can be used to start other tools.
 module Fake.ProcessHelper
 
 open System
@@ -8,7 +9,10 @@ open System.IO
 open System.Threading
 open System.Collections.Generic
 
+/// [omit]
 let mutable redirectOutputToTrace = false 
+
+/// [omit]
 let mutable enableProcessTracing = true 
 
 /// Runs the given process and returns the exit code
