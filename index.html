@@ -69,7 +69,7 @@ If you need more than the default functionality you can either write F# or simpl
 
 
 <span class="i">Target</span> <span class="s">&quot;</span><span class="s">Test</span><span class="s">&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="i">trace</span> <span class="s">&quot;</span><span class="s">Testing</span><span class="s"> </span><span class="s">FAKE</span><span class="s">&quot;</span>
+    <span class="i">trace</span> <span class="s">&quot;</span><span class="s">Testing</span><span class="s"> </span><span class="s">stuff</span><span class="s">.</span><span class="s">.</span><span class="s">.</span><span class="s">&quot;</span>
 )
 
 <span class="i">Target</span> <span class="s">&quot;</span><span class="s">Deploy</span><span class="s">&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
@@ -77,12 +77,14 @@ If you need more than the default functionality you can either write F# or simpl
 )
 
 <span class="s">&quot;</span><span class="s">Test</span><span class="s">&quot;</span>
-  <span class="o">==&gt;</span> <span class="s">&quot;</span><span class="s">Deploy</span><span class="s">&quot;</span>
+   <span class="o">==&gt;</span> <span class="s">&quot;</span><span class="s">Deploy</span><span class="s">&quot;</span>
 
 <span class="i">Run</span> <span class="s">&quot;</span><span class="s">Default</span><span class="s">&quot;</span></pre>
 </td>
 </tr>
 </table>
+
+<p>This build script has two targets. The "Default" target has exactly one dependency, namely the "Test" target. Invoking the "Default" target (line 16) will cause FAKE to invoke the "Test" target as well.</p>
 
 <h2>Who is using FAKE?</h2>
 
