@@ -1,10 +1,12 @@
 ﻿[<AutoOpen>]
+/// Contains a task which can be used to run [NCover](http://www.ncover.com/) on .NET assemblies.
 module Fake.NCoverHelper
 
 open System 
 open System.IO
 open System.Text  
 
+/// NCover parameter txpe
 type NCoverParams =
     { ProjectName: string;
       ToolPath: string;
@@ -12,7 +14,7 @@ type NCoverParams =
       TimeOut: TimeSpan;
       WorkingDir: string;}
    
-/// NCover default params
+/// NCover default parameters
 let NCoverDefaults =   
     { ProjectName = String.Empty;
       ToolPath = ProgramFiles @@ "NCover" @@ "ncover.console.exe";
@@ -20,10 +22,12 @@ let NCoverDefaults =
       TimeOut = TimeSpan.FromMinutes 5.
       WorkingDir = currentDirectory}
     
-/// <summary>Run NCover on a group of assemblies.</summary>
-/// <param name="setParams">NCover parameter function</param>
-/// <param name="assemblies">The test assemblies, which should be inspected</param>
-/// <param name="excludeAssemblies">These assemblies are excluded</param>
+/// Run NCover on a group of assemblies.
+/// ## Parameters
+///
+///  - `setParams` - Function used to overwrite the NCover default parameters.
+///  - `assemblies` - The test assemblies, which should be inspected.
+///  - `excludeAssemblies` - These assemblies are excluded.
 let NCover setParams (assemblies: string seq) (excludeAssemblies: string seq) =
   let param = setParams NCoverDefaults
       
