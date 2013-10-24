@@ -18,7 +18,7 @@ let isAdmin identity =
 /// ## Sample
 ///
 ///     Target "Install" (fun _ -> 
-///          requiresAdmin (fun p -> installMSI())
+///          requiresAdmin (fun _ -> installMSI())
 ///      )
 let requiresAdmin f = 
     if isAdmin(WindowsIdentity.GetCurrent()) then
