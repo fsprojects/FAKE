@@ -62,6 +62,7 @@
 
 <h1>SCPHelper</h1>
 <div class="xmldoc">
+<p>Conatins a task which allows to perform file copies using <a href="http://en.wikipedia.org/wiki/Secure_copy">SCP</a>.</p>
 </div>
 
 <!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
@@ -92,10 +93,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '395', 395)" onmouseover="showTip(event, '395', 395)">
+          <code onmouseout="hideTip(event, '377', 377)" onmouseover="showTip(event, '377', 377)">
             SCP setParams source target
           </code>
-          <div class="tip" id="395">
+          <div class="tip" id="377">
             <strong>Signature:</strong>setParams:(SCPParams -&gt; SCPParams) -&gt; source:string -&gt; target:string -&gt; unit<br />
                       </div>
         </td>
@@ -105,18 +106,23 @@
 
 <ul>
 <li><code>setParams</code> - Function used to manipulate the default SCPParams value.</li>
-<li><code>source</code> - The source directory</li>
-<li><code>target</code> - The target directory</li>
+<li><code>source</code> - The source directory.</li>
+<li><code>target</code> - The target path.</li>
 </ul>
+
+<h2>Sample</h2>
+
+<pre><code>SCP (fun p -&gt; { p with ToolPath =  ProgramFilesX86 @@  "git/bin/scp.exe" }) sourceDir targetPath
+</code></pre>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '396', 396)" onmouseover="showTip(event, '396', 396)">
+          <code onmouseout="hideTip(event, '378', 378)" onmouseover="showTip(event, '378', 378)">
             SCPDefaults 
           </code>
-          <div class="tip" id="396">
+          <div class="tip" id="378">
             <strong>Signature:</strong>SCPParams<br />
                       </div>
         </td>
