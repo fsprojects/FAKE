@@ -62,6 +62,7 @@
 
 <h1>REST</h1>
 <div class="xmldoc">
+<p>Contains functions to execute typical HTTP/REST calls.</p>
 </div>
 
 <!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
@@ -76,7 +77,8 @@
                     <td class="type-name">
                         <a href="fake-rest-postmethod.html">PostMethod</a>
                     </td>
-                    <td class="xmldoc"></td>
+                    <td class="xmldoc"><p>Option type for the HTTP verb</p>
+</td>
                 </tr>
         </tbody>
     </table>
@@ -91,40 +93,71 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '330', 330)" onmouseover="showTip(event, '330', 330)">
+          <code onmouseout="hideTip(event, '372', 372)" onmouseover="showTip(event, '372', 372)">
             ExecuteGetCommand userName password url
           </code>
-          <div class="tip" id="330">
+          <div class="tip" id="372">
             <strong>Signature:</strong>userName:string -&gt; password:string -&gt; url:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Executes an HTTP GET command and retrives the information.</p>
+        <td class="xmldoc"><p>Executes an HTTP GET command and retrives the information.
+It returns the response of the request, or null if we got 404 or nothing.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>userName</code> - The username to use with the request.</li>
+<li><code>password</code> - The password to use with the request.</li>
+<li><code>url</code> - The URL to perform the GET operation.</li>
+</ul>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '331', 331)" onmouseover="showTip(event, '331', 331)">
-            ExecutePost url userName
+          <code onmouseout="hideTip(event, '373', 373)" onmouseover="showTip(event, '373', 373)">
+            ExecutePost url userName password data
           </code>
-          <div class="tip" id="331">
-            <strong>Signature:</strong>url:string -&gt; userName:string -&gt; string -&gt; string -&gt; string<br />
+          <div class="tip" id="373">
+            <strong>Signature:</strong>url:string -&gt; userName:string -&gt; password:string -&gt; data:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Executes an HTTP POST command and retrives the information.
+It returns the response of the request, or null if we got 404 or nothing.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>url</code> - The URL to perform the POST operation.</li>
+<li><code>userName</code> - The username to use with the request.</li>
+<li><code>password</code> - The password to use with the request.</li>
+<li><code>data</code> - The data to post.</li>
+</ul>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '332', 332)" onmouseover="showTip(event, '332', 332)">
+          <code onmouseout="hideTip(event, '374', 374)" onmouseover="showTip(event, '374', 374)">
             ExecutePostCommand (...)
           </code>
-          <div class="tip" id="332">
+          <div class="tip" id="374">
             <strong>Signature:</strong>headerF:(WebHeaderCollection -&gt; unit) -&gt; url:string -&gt; userName:string -&gt; password:string -&gt; data:string -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc"><p>Executes an HTTP POST command and retrives the information.  <br />
- This function will automatically include a "source" parameter if the "Source" property is set.</p>
+This function will automatically include a "source" parameter if the "Source" property is set.
+It returns the response of the request, or null if we got 404 or nothing.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>headerF</code> - A function which allows to manipulate the HTTP headers.</li>
+<li><code>url</code> - The URL to perform the POST operation.</li>
+<li><code>userName</code> - The username to use with the request.</li>
+<li><code>password</code> - The password to use with the request.</li>
+<li><code>data</code> - The data to post.</li>
+</ul>
 </td>
       </tr>
     </tbody>
