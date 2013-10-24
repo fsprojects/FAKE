@@ -11,14 +11,9 @@ open System.Xml.XPath
 /// Reads a config file into an XElement.
 /// ## Parameters
 ///  - `fileName` - The file name of the config file.
-let readConfig fileName =
-    use fileStream = File.OpenRead(fileName) 
-    let configElement = XElement.Load fileStream
-    fileStream.Close()
-    configElement
+let readConfig (fileName:string) = XElement.Load fileName
 
-let private getElement config xpath =
-    (Extensions.XPathSelectElement(config, xpath))
+let private getElement config xpath = Extensions.XPathSelectElement(config, xpath)
 
 /// Reads a config file from the given file name, replaces an attribute using the given xPath and writes it back.
 /// ## Parameters
@@ -29,13 +24,12 @@ let private getElement config xpath =
 let updateConfigSetting fileName xpath attribute value =
     let config = readConfig fileName
     let node = getElement config xpath
-    if node = null then 
+    if node = null then
         failwithf "Could not find node addressed by %s in file %s" xpath fileName
     else
         let attr = node.Attribute(XName.Get(attribute)) 
-        attr.Value <- value           
-        use fs = File.Open(fileName, FileMode.Truncate, FileAccess.Write)
-        config.Save(fs)
+        attr.Value <- value
+        config.Save fileName 
 
 /// Reads a config file from the given file name, replaces the app setting value and writes it back.
 /// ## Parameters
