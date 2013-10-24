@@ -62,6 +62,7 @@
 
 <h1>Seq</h1>
 <div class="xmldoc">
+<p>Contains extensions of the defaul Seq module.</p>
 </div>
 
 <!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
@@ -77,39 +78,41 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '394', 394)" onmouseover="showTip(event, '394', 394)">
+          <code onmouseout="hideTip(event, '378', 378)" onmouseover="showTip(event, '378', 378)">
             contains element
           </code>
-          <div class="tip" id="394">
+          <div class="tip" id="378">
             <strong>Signature:</strong>element:&#39;?5248 -&gt; seq&lt;&#39;?5248&gt; -&gt; bool<br />
                           <strong>Type parameters:</strong> '?5248          </div>
         </td>
-        <td class="xmldoc"><p>Returns true if the given element exists in the sequence</p>
+        <td class="xmldoc"><p>Returns if the given element exists in the sequence</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '396', 396)" onmouseover="showTip(event, '396', 396)">
+          <code onmouseout="hideTip(event, '379', 379)" onmouseover="showTip(event, '379', 379)">
             performSafe f item
           </code>
-          <div class="tip" id="396">
+          <div class="tip" id="379">
             <strong>Signature:</strong>f:(&#39;?5250 -&gt; unit) -&gt; item:&#39;?5250 -&gt; unit<br />
                           <strong>Type parameters:</strong> '?5250          </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Tries to execute the given function on the given item and ignores possible exceptions.</p>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '397', 397)" onmouseover="showTip(event, '397', 397)">
+          <code onmouseout="hideTip(event, '380', 380)" onmouseover="showTip(event, '380', 380)">
             performSafeOnEveryItem f
           </code>
-          <div class="tip" id="397">
+          <div class="tip" id="380">
             <strong>Signature:</strong>f:(&#39;?5252 -&gt; unit) -&gt; seq&lt;&#39;?5252&gt; -&gt; unit<br />
                           <strong>Type parameters:</strong> '?5252          </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Tries to execute the given function on all items in the collection and ignores possible exceptions.</p>
+</td>
       </tr>
     </tbody>
   </table>
