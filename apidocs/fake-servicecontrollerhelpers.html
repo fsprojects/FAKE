@@ -77,10 +77,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '380', 380)" onmouseover="showTip(event, '380', 380)">
+          <code onmouseout="hideTip(event, '385', 385)" onmouseover="showTip(event, '385', 385)">
             checkServiceExists name
           </code>
-          <div class="tip" id="380">
+          <div class="tip" id="385">
             <strong>Signature:</strong>name:string -&gt; bool<br />
                       </div>
         </td>
@@ -89,71 +89,11 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '381', 381)" onmouseover="showTip(event, '381', 381)">
+          <code onmouseout="hideTip(event, '386', 386)" onmouseover="showTip(event, '386', 386)">
             ensureServiceHasStarted name timeout
           </code>
-          <div class="tip" id="381">
-            <strong>Signature:</strong>name:string -&gt; timeout:TimeSpan -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '382', 382)" onmouseover="showTip(event, '382', 382)">
-            ensureServiceHasStopped name timeout
-          </code>
-          <div class="tip" id="382">
-            <strong>Signature:</strong>name:string -&gt; timeout:TimeSpan -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '383', 383)" onmouseover="showTip(event, '383', 383)">
-            getService name
-          </code>
-          <div class="tip" id="383">
-            <strong>Signature:</strong>name:string -&gt; ServiceController option<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '384', 384)" onmouseover="showTip(event, '384', 384)">
-            getServices name
-          </code>
-          <div class="tip" id="384">
-            <strong>Signature:</strong>name:string -&gt; seq&lt;ServiceController&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '385', 385)" onmouseover="showTip(event, '385', 385)">
-            getServiceStatus name
-          </code>
-          <div class="tip" id="385">
-            <strong>Signature:</strong>name:string -&gt; ServiceControllerStatus<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '386', 386)" onmouseover="showTip(event, '386', 386)">
-            isService name s
-          </code>
           <div class="tip" id="386">
-            <strong>Signature:</strong>name:string -&gt; s:ServiceController -&gt; bool<br />
+            <strong>Signature:</strong>name:string -&gt; timeout:TimeSpan -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc"></td>
@@ -162,10 +102,10 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '387', 387)" onmouseover="showTip(event, '387', 387)">
-            startService name
+            ensureServiceHasStopped name timeout
           </code>
           <div class="tip" id="387">
-            <strong>Signature:</strong>name:string -&gt; unit<br />
+            <strong>Signature:</strong>name:string -&gt; timeout:TimeSpan -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc"></td>
@@ -174,9 +114,69 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '388', 388)" onmouseover="showTip(event, '388', 388)">
-            stopService name
+            getService name
           </code>
           <div class="tip" id="388">
+            <strong>Signature:</strong>name:string -&gt; ServiceController option<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '389', 389)" onmouseover="showTip(event, '389', 389)">
+            getServices name
+          </code>
+          <div class="tip" id="389">
+            <strong>Signature:</strong>name:string -&gt; seq&lt;ServiceController&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '390', 390)" onmouseover="showTip(event, '390', 390)">
+            getServiceStatus name
+          </code>
+          <div class="tip" id="390">
+            <strong>Signature:</strong>name:string -&gt; ServiceControllerStatus<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '391', 391)" onmouseover="showTip(event, '391', 391)">
+            isService name s
+          </code>
+          <div class="tip" id="391">
+            <strong>Signature:</strong>name:string -&gt; s:ServiceController -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '392', 392)" onmouseover="showTip(event, '392', 392)">
+            startService name
+          </code>
+          <div class="tip" id="392">
+            <strong>Signature:</strong>name:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '393', 393)" onmouseover="showTip(event, '393', 393)">
+            stopService name
+          </code>
+          <div class="tip" id="393">
             <strong>Signature:</strong>name:string -&gt; unit<br />
                       </div>
         </td>

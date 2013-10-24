@@ -62,7 +62,7 @@
 
 <h1>SCPHelper</h1>
 <div class="xmldoc">
-<p>Conatins a task which allows to perform file copies using <a href="http://en.wikipedia.org/wiki/Secure_copy">SCP</a>.</p>
+<p>Conatins a task which allows to perform file copies using <a href="http://en.wikipedia.org/wiki/Secure_copy">SCP</a>, which is based on the Secure Shell (SSH) protocol.</p>
 </div>
 
 <!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
@@ -93,36 +93,36 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '377', 377)" onmouseover="showTip(event, '377', 377)">
+          <code onmouseout="hideTip(event, '374', 374)" onmouseover="showTip(event, '374', 374)">
             SCP setParams source target
           </code>
-          <div class="tip" id="377">
+          <div class="tip" id="374">
             <strong>Signature:</strong>setParams:(SCPParams -&gt; SCPParams) -&gt; source:string -&gt; target:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Performs a SCP copy from the given source directory to the target directory</p>
+        <td class="xmldoc"><p>Performs a SCP copy from the given source directory to the target path.</p>
 
 <h2>Parameters</h2>
 
 <ul>
 <li><code>setParams</code> - Function used to manipulate the default SCPParams value.</li>
-<li><code>source</code> - The source directory.</li>
+<li><code>source</code> - The source path.</li>
 <li><code>target</code> - The target path.</li>
 </ul>
 
 <h2>Sample</h2>
 
-<pre><code>SCP (fun p -&gt; { p with ToolPath =  ProgramFilesX86 @@  "git/bin/scp.exe" }) sourceDir targetPath
+<pre><code>SCP (fun p -&gt; { p with ToolPath = "tools/scp.exe" }) source target
 </code></pre>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '378', 378)" onmouseover="showTip(event, '378', 378)">
+          <code onmouseout="hideTip(event, '375', 375)" onmouseover="showTip(event, '375', 375)">
             SCPDefaults 
           </code>
-          <div class="tip" id="378">
+          <div class="tip" id="375">
             <strong>Signature:</strong>SCPParams<br />
                       </div>
         </td>
