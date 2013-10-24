@@ -78,53 +78,84 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '202', 202)" onmouseover="showTip(event, '202', 202)">
+          <code onmouseout="hideTip(event, '5', 5)" onmouseover="showTip(event, '5', 5)">
             readConfig fileName
           </code>
-          <div class="tip" id="202">
+          <div class="tip" id="5">
             <strong>Signature:</strong>fileName:string -&gt; XElement<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Reads a config file from the given file name</p>
+        <td class="xmldoc"><p>Reads a config file into an XElement.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>fileName</code> - The file name of the config file.</li>
+</ul>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '203', 203)" onmouseover="showTip(event, '203', 203)">
-            updateAppSetting key value file
+          <code onmouseout="hideTip(event, '6', 6)" onmouseover="showTip(event, '6', 6)">
+            updateAppSetting key value fileName
           </code>
-          <div class="tip" id="203">
-            <strong>Signature:</strong>key:string -&gt; value:string -&gt; file:string -&gt; unit<br />
+          <div class="tip" id="6">
+            <strong>Signature:</strong>key:string -&gt; value:string -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc"><p>Reads a config file from the given file name, replaces the app setting value and writes it back.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>key</code> - The AppSettings attribute key name for which the value should be replaced.</li>
+<li><code>value</code> - The new AppSettings attribute value.</li>
+<li><code>fileName</code> - The file name of the config file.</li>
+</ul>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '204', 204)" onmouseover="showTip(event, '204', 204)">
+          <code onmouseout="hideTip(event, '7', 7)" onmouseover="showTip(event, '7', 7)">
             updateConfigSetting (...)
           </code>
-          <div class="tip" id="204">
+          <div class="tip" id="7">
             <strong>Signature:</strong>fileName:string -&gt; xpath:string -&gt; attribute:string -&gt; value:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc"><p>Reads a config file from the given file name, replaces an attribute using the given xPath and writes it back.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>fileName</code> - The file name of the config file.</li>
+<li><code>xpath</code> - An XPath term which can be used to replace the attribute.</li>
+<li><code>attribute</code> - The attribute name for which the value should be replaced.</li>
+<li><code>value</code> - The new attribute value.</li>
+</ul>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '205', 205)" onmouseover="showTip(event, '205', 205)">
+          <code onmouseout="hideTip(event, '8', 8)" onmouseover="showTip(event, '8', 8)">
             updateConnectionString (...)
           </code>
-          <div class="tip" id="205">
-            <strong>Signature:</strong>connectionStringKey:string -&gt; value:string -&gt; file:string -&gt; unit<br />
+          <div class="tip" id="8">
+            <strong>Signature:</strong>connectionStringKey:string -&gt; value:string -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc"><p>Reads a config file from the given file name, replaces the connection string value and writes it back.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>connectionStringKey</code> - The connection string key name for which the value should be replaced.</li>
+<li><code>value</code> - The new connection string value.</li>
+<li><code>fileName</code> - The file name of the config file.</li>
+</ul>
 </td>
       </tr>
     </tbody>
