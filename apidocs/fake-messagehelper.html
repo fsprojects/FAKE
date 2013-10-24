@@ -62,6 +62,7 @@
 
 <h1>MessageHelper</h1>
 <div class="xmldoc">
+<p>Contains helper function which allow FAKE to interact with other applications via message files.</p>
 </div>
 
 <!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
@@ -77,29 +78,29 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '258', 258)" onmouseover="showTip(event, '258', 258)">
+          <code onmouseout="hideTip(event, '355', 355)" onmouseover="showTip(event, '355', 355)">
             WaitForMessageFile file timeOut
           </code>
-          <div class="tip" id="258">
+          <div class="tip" id="355">
             <strong>Signature:</strong>file:string -&gt; timeOut:TimeSpan -&gt; TimeSpan<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Waits for another application to create a output file
-  - if the timeout is reached an exception will be raised</p>
+        <td class="xmldoc"><p>Waits for another application to create a output file.
+If the timeout is reached an exception will be raised.</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '259', 259)" onmouseover="showTip(event, '259', 259)">
+          <code onmouseout="hideTip(event, '357', 357)" onmouseover="showTip(event, '357', 357)">
             WaitForMessageFiles files timeOut
           </code>
-          <div class="tip" id="259">
+          <div class="tip" id="357">
             <strong>Signature:</strong>files:seq&lt;string&gt; -&gt; timeOut:TimeSpan -&gt; TimeSpan<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Waits for other applications to create a output files
-if the timeout is reached an exception will be raised</p>
+        <td class="xmldoc"><p>Waits for other applications to create a output files.
+If the timeout is reached an exception will be raised.</p>
 </td>
       </tr>
     </tbody>
