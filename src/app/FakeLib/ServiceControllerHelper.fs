@@ -1,5 +1,5 @@
 ﻿[<AutoOpen>]
-/// Contains tasks which allow to control NT services
+/// Contains tasks which allow to control NT services.
 module Fake.ServiceControllerHelpers
 
 open System
@@ -11,18 +11,22 @@ open System.Threading
 ///  - `name` - The name to check for.
 ///  - `s` - The service in question.
 let isService name (s:ServiceController) = s.DisplayName = name || s.ServiceName = name
+
 /// Returns sequence of services with given name.
 /// ## Parameters
 ///  - `name` - The name of the services in question.
 let getServices name = ServiceController.GetServices() |> Seq.filter (isService name)
+
 /// Returns the first service with given name or None.
 /// ## Parameters
 ///  - `name` - The name of the service in question.
 let getService name = ServiceController.GetServices() |> Seq.tryFind (isService name)
+
 /// Returns whether a service with the given name exists.
 /// ## Parameters
 ///  - `name` - The name of the service in question.
 let checkServiceExists name = ServiceController.GetServices() |> Seq.exists (isService name)
+
 /// Returns status of the service with given name or fails when service is not found.
 /// ## Parameters
 ///  - `name` - The name of the service in question.
