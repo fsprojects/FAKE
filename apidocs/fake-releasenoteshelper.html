@@ -62,7 +62,7 @@
 
 <h1>ReleaseNotesHelper</h1>
 <div class="xmldoc">
-<p>Contains helpers which allow tp parse Release Notes text files.</p>
+<p>Contains helpers which allow to parse Release Notes text files.</p>
 </div>
 
 <!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
@@ -93,21 +93,26 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '328', 328)" onmouseover="showTip(event, '328', 328)">
+          <code onmouseout="hideTip(event, '373', 373)" onmouseover="showTip(event, '373', 373)">
             parseReleaseNotes data
           </code>
-          <div class="tip" id="328">
+          <div class="tip" id="373">
             <strong>Signature:</strong>data:seq&lt;string&gt; -&gt; ReleaseNotes<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Parse a Release Notes text - Either simple or "complex" format
-See: <a href="http://github.com/fsharp/FAKE/issues/171">http://github.com/fsharp/FAKE/issues/171</a></p>
+        <td class="xmldoc"><p>Parse a Release Notes text - Either simple or "complex" format.</p>
 
 <h2>Parameters</h2>
 
 <ul>
 <li><code>data</code> - Release notes text</li>
 </ul>
+
+<h3>Simple format</h3>
+
+<pre><code>* 1.1.9 - Infer booleans for ints that only manifest 0 and 1. Support for partially overriding the Schema in CsvProvider.
+* 1.1.10 - Support for heterogeneous XML attributes. Make CsvFile re-entrant.
+</code></pre>
 
 <h2>Sample</h2>
 
