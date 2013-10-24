@@ -112,6 +112,7 @@
     <Compile Include="Boot.fs" />
     <Compile Include="MessageHelper.fs" />
     <Compile Include="HTMLHelpWorkShopHelper.fs" />
+    <Compile Include="ConfigurationHelper.fs" />
     <Compile Include="TargetHelper.fs" />
     <Compile Include="AdditionalSyntax.fs" />
     <Compile Include="HttpListenerHelper.fs" />
@@ -120,7 +121,6 @@
     <Compile Include="Deploy\DeploymentAgent.fs" />
     <Compile Include="PermissionsHelper.fs" />
     <Compile Include="SpecFlowHelper.fs" />
-    <Compile Include="ConfigurationHelper.fs" />
     <Compile Include="OctoTools.fs" />
     <None Include="packages.config" />
     <None Include="packages.config" />
