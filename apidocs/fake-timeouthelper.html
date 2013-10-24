@@ -62,6 +62,7 @@
 
 <h1>TimeoutHelper</h1>
 <div class="xmldoc">
+<p>Conatins a helper can be used to implement timeouts.</p>
 </div>
 
 <!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
@@ -77,14 +78,23 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '633', 633)" onmouseover="showTip(event, '633', 633)">
+          <code onmouseout="hideTip(event, '534', 534)" onmouseover="showTip(event, '534', 534)">
             waitFor f timeout testMS timeoutF
           </code>
-          <div class="tip" id="633">
+          <div class="tip" id="534">
             <strong>Signature:</strong>f:(unit -&gt; bool) -&gt; timeout:TimeSpan -&gt; testMS:int -&gt; timeoutF:(unit -&gt; unit) -&gt; TimeSpan<br />
                       </div>
         </td>
         <td class="xmldoc"><p>Waits until the given function returns true or the timeout is reached</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>f</code> - This function will be startet.</li>
+<li><code>timeout</code> - A System.TimeSpan representing the timeout.</li>
+<li><code>testMS</code> - An interval at which FAKE checks if the function has succeeded.</li>
+<li><code>timeoutF</code> - This function will be run if the timeout has been reached.</li>
+</ul>
 </td>
       </tr>
     </tbody>
