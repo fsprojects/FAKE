@@ -78,10 +78,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '506', 506)" onmouseover="showTip(event, '506', 506)">
+          <code onmouseout="hideTip(event, '328', 328)" onmouseover="showTip(event, '328', 328)">
             isAdmin identity
           </code>
-          <div class="tip" id="506">
+          <div class="tip" id="328">
             <strong>Signature:</strong>identity:WindowsIdentity -&gt; bool<br />
                       </div>
         </td>
@@ -97,10 +97,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '508', 508)" onmouseover="showTip(event, '508', 508)">
+          <code onmouseout="hideTip(event, '329', 329)" onmouseover="showTip(event, '329', 329)">
             requiresAdmin f
           </code>
-          <div class="tip" id="508">
+          <div class="tip" id="329">
             <strong>Signature:</strong>f:(unit -&gt; &#39;?5439) -&gt; &#39;?5439<br />
                           <strong>Type parameters:</strong> '?5439          </div>
         </td>
@@ -115,7 +115,7 @@
 <h2>Sample</h2>
 
 <pre><code>Target "Install" (fun _ -&gt; 
-     requiresAdmin (fun p -&gt; installMSI())
+     requiresAdmin (fun _ -&gt; installMSI())
  )
 </code></pre>
 </td>
@@ -129,7 +129,6 @@
                 <ul class="nav nav-list" id="menu">
                     <li class="nav-header">FAKE - F# Make</li>
                     <li><a href="../index.html">Home page</a></li>
-                    <li><a href="../deploy.html">Fake.Deploy</a></li>
                     <li class="divider"></li>
                     <li><a href="https://nuget.org/packages/Fake">Get FAKE via NuGet</a></li>
                     <li><a href="http://github.com/fsharp/fake">Source Code on GitHub</a></li>
@@ -146,6 +145,8 @@
                     <li><a href="../commandline.html">Running FAKE from command line</a></li>
                     <li><a href="../customtasks.html">Creating custom tasks</a></li>
                     <li><a href="../teamcity.html">TeamCity integration</a></li>
+                    <li class="divider"></li>
+                    <li><a href="../deploy.html">Fake.Deploy</a></li>
 
                     <li class="nav-header">Documentation</li>
                     <li><a href="../apidocs/index.html">API Reference</a></li>
