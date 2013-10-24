@@ -106,6 +106,7 @@
     <Compile Include="SideBySideSpecification\SpecsRemovementSpecs.cs" />
     <Compile Include="StringHelperSpecs.cs" />
     <Compile Include="MessageFiles\MessageFileSpecs.cs" />
+    <Compile Include="ConfigSpecs.cs" />
     <Compile Include="XmlSpecs.cs" />
     <Compile Include="TestData.cs" />
     <Compile Include="FileHandling\CleanDirectorySpecs.cs" />
@@ -189,6 +190,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="SideBySideSpecification\Project_WithRecursiveProjectReference.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Small.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\AllObjects.txt">
