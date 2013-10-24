@@ -1,4 +1,5 @@
-﻿module Fake.REST
+﻿/// Contains functions to execute typical HTTP/REST calls.
+module Fake.REST
 
 open System
 open System.IO
@@ -7,15 +8,18 @@ open System.Web
 open System.Xml
 open System.Text
 
+/// Option type for the HTTP verb
 type PostMethod =
 | GET
 | POST
 
-/// <summary>Executes an HTTP GET command and retrives the information.</summary>    
-/// <param name="userName">The username to use with the request</param>
-/// <param name="password">The password to use with the request</param>
-/// <param name="url">The URL to perform the GET operation</param>
-/// <returns>The response of the request, or null if we got 404 or nothing.</returns>
+/// Executes an HTTP GET command and retrives the information.
+/// It returns the response of the request, or null if we got 404 or nothing.
+/// ## Parameters
+///
+///  - `userName` - The username to use with the request.
+///  - `password` - The password to use with the request.
+///  - `url` - The URL to perform the GET operation.
 let ExecuteGetCommand (userName:string) (password:string) (url:string) =
     use client = new WebClient()
     if userName <> null || password <> null then    
@@ -30,14 +34,16 @@ let ExecuteGetCommand (userName:string) (password:string) (url:string) =
          // TODO: Handle HTTP 404 errors gracefully and return a null string to indicate there is no content.
          null
 
-/// <summary>Executes an HTTP POST command and retrives the information.    
-/// This function will automatically include a "source" parameter if the "Source" property is set.</summary>
-/// <param name="headerF">The client information to perform the POST operation.</param>
-/// <param name="url">The URL to perform the POST operation</param>
-/// <param name="userName">The username to use with the request</param>
-/// <param name="password">The password to use with the request</param>
-/// <param name="data">The data to post</param>
-/// <returns> The response of the request, or null if we got 404 or nothing.</returns>
+/// Executes an HTTP POST command and retrives the information.    
+/// This function will automatically include a "source" parameter if the "Source" property is set.
+/// It returns the response of the request, or null if we got 404 or nothing.
+/// ## Parameters
+///
+///  - `headerF` - A function which allows to manipulate the HTTP headers.
+///  - `url` - The URL to perform the POST operation.
+///  - `userName` - The username to use with the request.
+///  - `password` - The password to use with the request.
+///  - `data` - The data to post.
 let ExecutePostCommand headerF (url:string) userName password (data:string) =
     System.Net.ServicePointManager.Expect100Continue <- false 
     let request = WebRequest.Create url
@@ -59,4 +65,12 @@ let ExecutePostCommand headerF (url:string) userName password (data:string) =
     use reader = new StreamReader(response.GetResponseStream())
     reader.ReadToEnd()
 
-let ExecutePost url userName = ExecutePostCommand ignore url userName
+/// Executes an HTTP POST command and retrives the information.
+/// It returns the response of the request, or null if we got 404 or nothing.
+/// ## Parameters
+///
+///  - `url` - The URL to perform the POST operation.
+///  - `userName` - The username to use with the request.
+///  - `password` - The password to use with the request.
+///  - `data` - The data to post.
+let ExecutePost url userName password data = ExecutePostCommand ignore url userName password data
