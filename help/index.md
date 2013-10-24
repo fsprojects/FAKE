@@ -4,6 +4,27 @@
 It is using an easy domain-specific language (DSL) so that you can start using it without learning F#.
 If you need more than the default functionality you can either write F# or simply reference .NET assemblies.
 
+### Simple Example
+
+    #r @"tools\FAKE\tools\FakeLib.dll" // include Fake lib
+	open Fake 
+
+	
+	Target "Test" (fun _ ->
+		trace "Testing stuff..."
+	)
+
+	Target "Deploy" (fun _ ->
+		trace "Heavy deploy action"
+	)
+
+	"Test"            // define the dependencies
+	   ==> "Deploy"
+	
+	Run "Default"
+
+This build script has two targets. The "Default" target has exactly one dependency, namely the "Test" target. Invoking the "Default" target (line 16) will cause FAKE to invoke the "Test" target as well.
+
 ## Who is using FAKE?
 
 Some of our users are:
