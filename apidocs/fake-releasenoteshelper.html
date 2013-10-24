@@ -93,10 +93,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '338', 338)" onmouseover="showTip(event, '338', 338)">
+          <code onmouseout="hideTip(event, '328', 328)" onmouseover="showTip(event, '328', 328)">
             parseReleaseNotes data
           </code>
-          <div class="tip" id="338">
+          <div class="tip" id="328">
             <strong>Signature:</strong>data:seq&lt;string&gt; -&gt; ReleaseNotes<br />
                       </div>
         </td>
@@ -108,6 +108,23 @@ See: <a href="http://github.com/fsharp/FAKE/issues/171">http://github.com/fsharp
 <ul>
 <li><code>data</code> - Release notes text</li>
 </ul>
+
+<h2>Sample</h2>
+
+<pre><code>let release =
+    File.ReadLines "RELEASE_NOTES.md"
+    |&gt; ReleaseNotesHelper.parseReleaseNotes
+
+
+Target "AssemblyInfo" (fun _ -&gt;
+    CreateFSharpAssemblyInfo "src/Common/AssemblyInfo.fs"
+      [ Attribute.Title project
+       Attribute.Product project
+       Attribute.Description summary
+       Attribute.Version release.AssemblyVersion
+       Attribute.FileVersion release.AssemblyVersion]
+)
+</code></pre>
 </td>
       </tr>
     </tbody>
