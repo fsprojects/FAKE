@@ -13,7 +13,28 @@ open System.Xml.XPath
 ///  - `fileName` - The file name of the config file.
 let readConfig (fileName:string) = XElement.Load fileName
 
+/// Writes an XElement to a config file.
+/// ## Parameters
+///  - `fileName` - The file name of the config file.
+///  - `config` - The XElement representing the config.
+let writeConfig (fileName:string) (config:XElement) = config.Save fileName 
+
 let private getElement config xpath = Extensions.XPathSelectElement(config, xpath)
+
+/// Reads a config file from the given file name, replaces an attribute using the given xPath and writes it back.
+/// ## Parameters
+///  - `xpath` - An XPath term which can be used to replace the attribute.
+///  - `attribute` - The attribute name for which the value should be replaced.
+///  - `value` - The new attribute value.
+///  - `config` - The XElement representing the config.
+let updateConfig xpath attribute value (config:XElement) =
+    let node = getElement config xpath
+    if node = null then
+        failwithf "Could not find node addressed by %s" xpath
+    else
+        let attr = node.Attribute(XName.Get(attribute)) 
+        attr.Value <- value
+    config
 
 /// Reads a config file from the given file name, replaces an attribute using the given xPath and writes it back.
 /// ## Parameters
@@ -22,14 +43,9 @@ let private getElement config xpath = Extensions.XPathSelectElement(config, xpat
 ///  - `attribute` - The attribute name for which the value should be replaced.
 ///  - `value` - The new attribute value.
 let updateConfigSetting fileName xpath attribute value =
-    let config = readConfig fileName
-    let node = getElement config xpath
-    if node = null then
-        failwithf "Could not find node addressed by %s in file %s" xpath fileName
-    else
-        let attr = node.Attribute(XName.Get(attribute)) 
-        attr.Value <- value
-        config.Save fileName 
+    readConfig fileName
+    |> updateConfig xpath attribute value 
+    |> writeConfig fileName
 
 /// Reads a config file from the given file name, replaces the app setting value and writes it back.
 /// ## Parameters
