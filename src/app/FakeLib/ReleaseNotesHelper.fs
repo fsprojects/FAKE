@@ -49,6 +49,22 @@ let private parseComplexReleaseNotes (text: seq<string>) =
 /// See: [http://github.com/fsharp/FAKE/issues/171](http://github.com/fsharp/FAKE/issues/171)
 /// ## Parameters
 ///  - `data` - Release notes text
+///
+/// ## Sample
+///
+///     let release =
+///         File.ReadLines "RELEASE_NOTES.md"
+///         |> ReleaseNotesHelper.parseReleaseNotes
+///
+///
+///     Target "AssemblyInfo" (fun _ ->
+///         CreateFSharpAssemblyInfo "src/Common/AssemblyInfo.fs"
+///           [ Attribute.Title project
+///            Attribute.Product project
+///            Attribute.Description summary
+///            Attribute.Version release.AssemblyVersion
+///            Attribute.FileVersion release.AssemblyVersion]
+///     )
 let parseReleaseNotes (data: seq<string>) = 
     let data = data |> Seq.toList |> List.filter (not << isNullOrWhiteSpace)
     match data with

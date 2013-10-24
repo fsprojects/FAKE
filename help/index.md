@@ -25,11 +25,11 @@ For instance custom build tasks can be added simply by referencing .NET assembli
 Some of our users are:
 
 * [msu solutions GmbH](http://www.msu-solutions.de/)
-* E.On Global Commodities UK 
+* E.On Global Commodities UK
+* [BlueMountainCapital](https://github.com/BlueMountainCapital/Deedle)
 * [fsharpx](https://github.com/fsharp/fsharpx)
 * [FSharp.Data](https://github.com/fsharp/FSharp.Data)
 * [FSharp.Charting](https://github.com/fsharp/FSharp.Charting)
-* [FSharp.DataFrame by BlueMountainCapital](https://github.com/BlueMountainCapital/FSharp.DataFrame)
 * [Portable.Licensing](https://github.com/dnauck/Portable.Licensing)
 
 ## How to get FAKE
