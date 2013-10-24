@@ -78,10 +78,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '82', 82)" onmouseover="showTip(event, '82', 82)">
+          <code onmouseout="hideTip(event, '204', 204)" onmouseover="showTip(event, '204', 204)">
             readConfig fileName
           </code>
-          <div class="tip" id="82">
+          <div class="tip" id="204">
             <strong>Signature:</strong>fileName:string -&gt; XmlDocument<br />
                       </div>
         </td>
@@ -97,10 +97,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '83', 83)" onmouseover="showTip(event, '83', 83)">
+          <code onmouseout="hideTip(event, '205', 205)" onmouseover="showTip(event, '205', 205)">
             updateAppSetting key value fileName
           </code>
-          <div class="tip" id="83">
+          <div class="tip" id="205">
             <strong>Signature:</strong>key:string -&gt; value:string -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
@@ -113,15 +113,20 @@
 <li><code>value</code> - The new AppSettings attribute value.</li>
 <li><code>fileName</code> - The file name of the config file.</li>
 </ul>
+
+<h2>Sample</h2>
+
+<pre><code>updateAppSetting "DatabaseName" targetDatabase (navServicePath @@ "CustomSettings.config")
+</code></pre>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '84', 84)" onmouseover="showTip(event, '84', 84)">
+          <code onmouseout="hideTip(event, '206', 206)" onmouseover="showTip(event, '206', 206)">
             updateConfig (...)
           </code>
-          <div class="tip" id="84">
+          <div class="tip" id="206">
             <strong>Signature:</strong>xpath:string -&gt; attribute:string -&gt; value:string -&gt; config:XmlDocument -&gt; XmlDocument<br />
                       </div>
         </td>
@@ -140,10 +145,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '85', 85)" onmouseover="showTip(event, '85', 85)">
+          <code onmouseout="hideTip(event, '207', 207)" onmouseover="showTip(event, '207', 207)">
             updateConfigSetting (...)
           </code>
-          <div class="tip" id="85">
+          <div class="tip" id="207">
             <strong>Signature:</strong>fileName:string -&gt; xpath:string -&gt; attribute:string -&gt; value:string -&gt; unit<br />
                       </div>
         </td>
@@ -162,10 +167,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '86', 86)" onmouseover="showTip(event, '86', 86)">
+          <code onmouseout="hideTip(event, '208', 208)" onmouseover="showTip(event, '208', 208)">
             updateConnectionString (...)
           </code>
-          <div class="tip" id="86">
+          <div class="tip" id="208">
             <strong>Signature:</strong>connectionStringKey:string -&gt; value:string -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
@@ -183,10 +188,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '87', 87)" onmouseover="showTip(event, '87', 87)">
+          <code onmouseout="hideTip(event, '209', 209)" onmouseover="showTip(event, '209', 209)">
             writeConfig fileName config
           </code>
-          <div class="tip" id="87">
+          <div class="tip" id="209">
             <strong>Signature:</strong>fileName:string -&gt; config:XmlDocument -&gt; unit<br />
                       </div>
         </td>
