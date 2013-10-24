@@ -110,6 +110,7 @@
     <Compile Include="FSIHelper.fs" />
     <Compile Include="MessageHelper.fs" />
     <Compile Include="HTMLHelpWorkShopHelper.fs" />
+    <Compile Include="ConfigurationHelper.fs" />
     <Compile Include="TargetHelper.fs" />
     <Compile Include="AdditionalSyntax.fs" />
     <Compile Include="HttpListenerHelper.fs" />
