@@ -152,6 +152,8 @@ module NUnitMerge =
         |> CreateMerged
         |> fun x -> File.WriteAllText(outfile, x.ToString())
 
+
+/// Returns whether all tests in the given test result have succeeded
 let AllSucceeded xDocs =
     xDocs
     |> Seq.map GetTestAssemblies
@@ -160,73 +162,83 @@ let AllSucceeded xDocs =
     |> Seq.map (fun x -> x <> "Failure")
     |> Seq.reduce (&&)
 
+/// Option which allow to specify if a NUnit error should break the build.
 type NUnitErrorLevel =
-    | Error
-    | DontFailBuild
+/// This option instructs FAKE to break the build if NUnit reports an error. (Default)
+| Error
+/// With this option set, no exception is thrown if a test is broken.
+| DontFailBuild
 
-type NUnitParams =
-    { IncludeCategory:string;
-      ExcludeCategory:string;
-      ToolPath:string;
-      ToolName:string;
-      TestInNewThread:bool;
-      OutputFile:string;
-      Out: string;
-      ErrorOutputFile:string;
-      Framework:string;
-      ShowLabels: bool;
-      WorkingDir:string; 
-      XsltTransformFile:string;
-      TimeOut: TimeSpan;
-      DisableShadowCopy:bool
-      Domain:string
-      ErrorLevel:NUnitErrorLevel}
+/// Parameter type for NUnit.
+type NUnitParams ={ 
+    IncludeCategory : string
+    ExcludeCategory : string
+    ToolPath : string
+    ToolName : string
+    TestInNewThread : bool
+    OutputFile : string
+    Out : string
+    ErrorOutputFile : string
+    Framework : string
+    ShowLabels : bool
+    WorkingDir : string 
+    XsltTransformFile : string
+    TimeOut : TimeSpan
+    DisableShadowCopy : bool
+    Domain : string
+    ErrorLevel : NUnitErrorLevel }
 
-/// NUnit default params  
+/// NUnit default parameters. FAKE tries to locate nunit-console.exe in any subfolder.
 let NUnitDefaults =
     let toolname = "nunit-console.exe"
 
-    { IncludeCategory = null;
-      ExcludeCategory = null;
+    { IncludeCategory = null
+      ExcludeCategory = null
       ToolPath = findToolFolderInSubPath toolname (currentDirectory @@ "tools" @@ "Nunit")
-      ToolName = toolname;
-      TestInNewThread = false;
-      OutputFile = currentDirectory @@ "TestResult.xml";
-      Out = null;
-      ErrorOutputFile = null;
-      WorkingDir = null;
-      Framework = null;
-      ShowLabels = true;
-      XsltTransformFile = null;
+      ToolName = toolname
+      TestInNewThread = false
+      OutputFile = currentDirectory @@ "TestResult.xml"
+      Out = null
+      ErrorOutputFile = null
+      WorkingDir = null
+      Framework = null
+      ShowLabels = true
+      XsltTransformFile = null
       TimeOut = TimeSpan.FromMinutes 5.
-      DisableShadowCopy = false;
-      Domain = null;
-      ErrorLevel = Error}
+      DisableShadowCopy = false
+      Domain = null
+      ErrorLevel = Error }
 
+/// Builds the command line arguments from the given parameter record and the given assemblies.
+/// [omit]
 let commandLineBuilder parameters assemblies =
-    let cl = new StringBuilder()
-              |> append "-nologo"
-              |> appendIfTrue parameters.DisableShadowCopy "-noshadow" 
-              |> appendIfTrue parameters.ShowLabels "-labels" 
-              |> appendIfTrue parameters.TestInNewThread "-thread" 
-              |> appendFileNamesIfNotNull assemblies
-              |> appendIfNotNull parameters.IncludeCategory "-include:"
-              |> appendIfNotNull parameters.ExcludeCategory "-exclude:"
-              |> appendIfNotNull parameters.XsltTransformFile "-transform:"
-              |> appendIfNotNull parameters.OutputFile  "-xml:"
-              |> appendIfNotNull parameters.Out "-out:"
-              |> appendIfNotNull parameters.Framework  "-framework:"
-              |> appendIfNotNull parameters.ErrorOutputFile "-err:"
-              |> appendIfNotNull parameters.Domain "-domain:"
+    let cl = 
+        new StringBuilder()
+        |> append "-nologo"
+        |> appendIfTrue parameters.DisableShadowCopy "-noshadow" 
+        |> appendIfTrue parameters.ShowLabels "-labels" 
+        |> appendIfTrue parameters.TestInNewThread "-thread" 
+        |> appendFileNamesIfNotNull assemblies
+        |> appendIfNotNull parameters.IncludeCategory "-include:"
+        |> appendIfNotNull parameters.ExcludeCategory "-exclude:"
+        |> appendIfNotNull parameters.XsltTransformFile "-transform:"
+        |> appendIfNotNull parameters.OutputFile  "-xml:"
+        |> appendIfNotNull parameters.Out "-out:"
+        |> appendIfNotNull parameters.Framework  "-framework:"
+        |> appendIfNotNull parameters.ErrorOutputFile "-err:"
+        |> appendIfNotNull parameters.Domain "-domain:"
     cl.ToString()
 
+/// Tries to detect the working directory as specified in the parameters or via TeamCity settings
+/// [omit]
 let getWorkingDir parameters =
     Seq.find (fun s -> s <> null && s <> "") [parameters.WorkingDir; environVar("teamcity.build.workingDir"); "."]
     |> Path.GetFullPath
 
-// NUnit console returns negative error codes for errors and sum of failed/ignored/exceptional 
-// tests otherwise. Zero means that all tests passed.
-let (|OK|TestsFailed|FatalError|) = function
+/// NUnit console returns negative error codes for errors and sum of failed/ignored/exceptional 
+/// tests otherwise. Zero means that all tests passed.
+let (|OK|TestsFailed|FatalError|) errorCode =
+    match errorCode with
     | 0 -> OK
     | -1 -> FatalError "InvalidArg"
     | -2 -> FatalError "FileNotFound"
@@ -235,7 +247,18 @@ let (|OK|TestsFailed|FatalError|) = function
     | x when x < 0 -> FatalError "FatalError"
     | _ -> TestsFailed
 
-/// Run NUnit on a group of assemblies.
+/// Runs NUnit on a group of assemblies.
+/// ## Parameters
+/// 
+///  - `setParams` - Function used to manipulate the default NUnitParams value.
+///  - `assemblies` - Sequence of one or more assemblies containing NUnit unit tests.
+/// 
+/// ## Sample usage
+///
+///     Target "Test" (fun _ ->
+///         !! (testDir + @"\Test.*.dll") 
+///           |> NUnit (fun p -> { p with ErrorLevel = DontFailBuild })
+///     )
 let NUnit setParams (assemblies: string seq) =
     let details = assemblies |> separated ", "
     traceStartTask "NUnit" details
@@ -274,15 +297,25 @@ let NUnit setParams (assemblies: string seq) =
         | OK -> traceEndTask "NUnit" details
         | _ -> failwith (errorDescription result)
 
-type NUnitParallelResult =
-    {
-        AssemblyName : string
-        ErrorOut : StringBuilder
-        StandardOut : StringBuilder
-        ReturnCode : int
-        OutputFile : string
-    }
+type private NUnitParallelResult = {
+    AssemblyName : string
+    ErrorOut : StringBuilder
+    StandardOut : StringBuilder
+    ReturnCode : int
+    OutputFile : string }
 
+/// Runs NUnit in parallel on a group of assemblies.
+/// ## Parameters
+/// 
+///  - `setParams` - Function used to manipulate the default NUnitParams value.
+///  - `assemblies` - Sequence of one or more assemblies containing NUnit unit tests.
+/// 
+/// ## Sample usage
+///
+///     Target "Test" (fun _ ->
+///         !! (testDir + @"\Test.*.dll") 
+///           |> NUnitParallel (fun p -> { p with ErrorLevel = DontFailBuild })
+///     )
 let NUnitParallel setParams (assemblies: string seq) =
     let details = assemblies |> separated ", "
     traceStartTask "NUnitParallel" details
