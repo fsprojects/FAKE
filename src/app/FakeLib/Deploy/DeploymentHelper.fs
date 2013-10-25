@@ -23,34 +23,29 @@ type VersionInfo =
             else
                 Specific s
 
-let private extractNuspecFromPackageFile packageFileName =   
-    packageFileName
-    |> ZipHelper.UnzipFirstMatchingFileInMemory (fun ze -> ze.Name.EndsWith ".nuspec") 
-    |> NuGetHelper.getNuspecProperties
-
 /// The root dir for Fake.Deploy - Dafault value is "./deployments"
 let mutable deploymentRootDir = "deployments/"
 
 /// Retrieves the NuSpec information for all active releases.
 let getActiveReleases dir = 
     Files [dir] [deploymentRootDir @@ "**/active/*.nupkg"] []
-    |> Seq.map extractNuspecFromPackageFile
+    |> Seq.map GetMetaDataFromPackageFile
 
 /// Retrieves the NuSpec information for the active release of the given app.
 let getActiveReleaseFor dir (app : string) = 
     Files [dir] [deploymentRootDir + app + "/active/*.nupkg"] []
-    |> Seq.map extractNuspecFromPackageFile
+    |> Seq.map GetMetaDataFromPackageFile
     |> Seq.head
 
 /// Retrieves the NuSpec information of all releases.
 let getAllReleases dir =
     Files [dir] [deploymentRootDir @@ "**/*.nupkg"] [] 
-    |> Seq.map extractNuspecFromPackageFile
+    |> Seq.map GetMetaDataFromPackageFile
 
 /// Retrieves the NuSpec information for all releases of the given app.
 let getAllReleasesFor dir (app : string) = 
     Files [dir] [deploymentRootDir + app + "/**/*.nupkg"] [] 
-    |> Seq.map extractNuspecFromPackageFile
+    |> Seq.map GetMetaDataFromPackageFile
 
 /// Returns statistics about the machine environment.
 let getStatistics() = getMachineEnvironment()
@@ -66,7 +61,7 @@ let unpack workDir isRollback packageBytes =
     let tempFile = Path.GetTempFileName()
     WriteBytesToFile tempFile packageBytes
 
-    let package = extractNuspecFromPackageFile tempFile   
+    let package = GetMetaDataFromPackageFile tempFile   
         
     let activeDir = workDir @@ deploymentRootDir @@ package.Id @@ "active"   
     let newActiveFilePath = activeDir @@ package.FileName

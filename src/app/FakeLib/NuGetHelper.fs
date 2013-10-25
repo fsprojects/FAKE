@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+/// Contains helper functions and task which allow to inspect, create and publish [NuGet](https://www.nuget.org/) packages.
 module Fake.NuGetHelper
 
 open System
@@ -287,7 +288,12 @@ let getNuspecProperties (nuspec : string) =
        PackageHash = String.Empty
        PackageHashAlgorithm = String.Empty
     }
-    
+
+/// Returns the NuGet meta data from the given package file name
+let GetMetaDataFromPackageFile packageFileName =   
+    packageFileName
+    |> ZipHelper.UnzipFirstMatchingFileInMemory (fun ze -> ze.Name.EndsWith ".nuspec") 
+    |> getNuspecProperties
 
 let feedUrl = "http://go.microsoft.com/fwlink/?LinkID=206669"
 
