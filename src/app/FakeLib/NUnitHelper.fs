@@ -19,7 +19,7 @@ let GetTestAssemblies (xDoc : XDocument) =
 
 /// Used by the NUnitParallel helper, can also be used to merge test results
 /// from multiple calls to the normal NUnit helper.
-module NUnitMerge =
+module private NUnitMerge =
     type ResultSummary = {
         Total : int
         Errors : int
