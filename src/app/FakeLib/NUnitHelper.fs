@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+/// Contains tasks to run [NUnit](http://www.nunit.org/) unit tests.
 module Fake.NUnitHelper
 
 open System
@@ -7,89 +8,87 @@ open System.Text
 open System.Xml
 open System.Xml.Linq
 
+/// [omit]
 let inline imp arg =
   ( ^a : (static member op_Implicit : ^b -> ^a) arg)
 
+/// [omit]
 let GetTestAssemblies (xDoc : XDocument) =
     xDoc.Descendants()
     |> Seq.filter (fun el -> el.Name = (imp "test-suite") && el.Attribute(imp "type").Value = "Assembly")
 
-(*  Used by the NUnitParallel helper, can also be used to merge test results
-    from multiple calls to the normal NUnit helper *)
+/// Used by the NUnitParallel helper, can also be used to merge test results
+/// from multiple calls to the normal NUnit helper.
 module NUnitMerge =
-    type ResultSummary =
-        {
-            total : int
-            errors : int
-            failures : int
-            notrun : int
-            inconclusive : int
-            ignored : int
-            skipped : int
-            invalid : int
-            datetime : DateTime
-        }
+    type ResultSummary = {
+        Total : int
+        Errors : int
+        Failures : int
+        NotRun : int
+        Inconclusive : int
+        Ignored : int
+        Skipped : int
+        Invalid : int
+        DateTime : DateTime }
 
     let GetTestSummary (xDoc : XDocument) =
         let tr = xDoc.Element(imp "test-results")
         {
-            total = tr.Attribute(imp "total").Value |> Convert.ToInt32
-            errors = tr.Attribute(imp "errors").Value |> Convert.ToInt32
-            failures = tr.Attribute(imp "failures").Value |> Convert.ToInt32
-            notrun = tr.Attribute(imp "not-run").Value |> Convert.ToInt32 
-            inconclusive = tr.Attribute(imp "inconclusive").Value |> Convert.ToInt32
-            ignored = tr.Attribute(imp "ignored").Value |> Convert.ToInt32
-            skipped = tr.Attribute(imp "skipped").Value |> Convert.ToInt32
-            invalid = tr.Attribute(imp "invalid").Value |> Convert.ToInt32
-            datetime = String.concat " " [tr.Attribute(imp "date").Value;tr.Attribute(imp "time").Value] |> DateTime.Parse
+            Total = tr.Attribute(imp "total").Value |> Convert.ToInt32
+            Errors = tr.Attribute(imp "errors").Value |> Convert.ToInt32
+            Failures = tr.Attribute(imp "failures").Value |> Convert.ToInt32
+            NotRun = tr.Attribute(imp "not-run").Value |> Convert.ToInt32 
+            Inconclusive = tr.Attribute(imp "inconclusive").Value |> Convert.ToInt32
+            Ignored = tr.Attribute(imp "ignored").Value |> Convert.ToInt32
+            Skipped = tr.Attribute(imp "skipped").Value |> Convert.ToInt32
+            Invalid = tr.Attribute(imp "invalid").Value |> Convert.ToInt32
+            DateTime = String.concat " " [tr.Attribute(imp "date").Value;tr.Attribute(imp "time").Value] |> DateTime.Parse
         }
 
     let CreateTestSummaryElement summary =
-        XElement.Parse (sprintf "<test-results name=\"Merged results\" total=\"%d\" errors=\"%d\" failures=\"%d\" not-run=\"%d\" inconclusive=\"%d\" skipped=\"%d\" ignored=\"%d\" invalid=\"%d\" date=\"%s\" time=\"%s\" />" summary.total summary.errors summary.failures summary.notrun summary.inconclusive summary.skipped summary.ignored summary.invalid (summary.datetime.ToString("yyyy-MM-dd")) (summary.datetime.ToString("HH:mm:ss")))
+        XElement.Parse (sprintf "<test-results name=\"Merged results\" total=\"%d\" errors=\"%d\" failures=\"%d\" not-run=\"%d\" inconclusive=\"%d\" skipped=\"%d\" ignored=\"%d\" invalid=\"%d\" date=\"%s\" time=\"%s\" />" 
+            summary.Total summary.Errors summary.Failures summary.NotRun summary.Inconclusive summary.Skipped summary.Ignored summary.Invalid (summary.DateTime.ToString("yyyy-MM-dd")) (summary.DateTime.ToString("HH:mm:ss")))
 
-    type environment =
-        {
-            nunitversion : string
-            clrversion : string
-            osversion : string
-            platform : string
-            cwd : string
-            machinename : string
-            user : string
-            userdomain : string
-        }
+    type Environment = {
+        NUnitVersion : string
+        ClrVersion : string
+        OSVersion : string
+        Platform : string
+        Cwd : string
+        MachineName : string
+        User : string
+        UserDomain : string }
 
     let GetEnvironment (xDoc : XDocument) =
         let env = xDoc.Element(imp "test-results").Element(imp "environment")
         {
-            nunitversion = env.Attribute(imp "nunit-version").Value
-            clrversion = env.Attribute(imp "clr-version").Value
-            osversion = env.Attribute(imp "os-version").Value
-            platform = env.Attribute(imp "platform").Value
-            cwd = env.Attribute(imp "cwd").Value
-            machinename = env.Attribute(imp "machine-name").Value
-            user = env.Attribute(imp "user").Value
-            userdomain = env.Attribute(imp "user-domain").Value
+            NUnitVersion = env.Attribute(imp "nunit-version").Value
+            ClrVersion = env.Attribute(imp "clr-version").Value
+            OSVersion = env.Attribute(imp "os-version").Value
+            Platform = env.Attribute(imp "platform").Value
+            Cwd = env.Attribute(imp "cwd").Value
+            MachineName = env.Attribute(imp "machine-name").Value
+            User = env.Attribute(imp "user").Value
+            UserDomain = env.Attribute(imp "user-domain").Value
         }
 
     let CreateEnvironment environment =
-        XElement.Parse (sprintf "<environment nunit-version=\"%s\" clr-version=\"%s\" os-version=\"%s\" platform=\"%s\" cwd=\"%s\" machine-name=\"%s\" user=\"%s\" user-domain=\"%s\" />" environment.nunitversion environment.clrversion environment.osversion environment.platform environment.cwd environment.machinename environment.user environment.userdomain)
+        XElement.Parse (sprintf "<environment nunit-version=\"%s\" clr-version=\"%s\" os-version=\"%s\" platform=\"%s\" cwd=\"%s\" machine-name=\"%s\" user=\"%s\" user-domain=\"%s\" />" 
+            environment.NUnitVersion environment.ClrVersion environment.OSVersion environment.Platform environment.Cwd environment.MachineName environment.User environment.UserDomain)
 
-    type culture =
-        {
-            currentculture : string
-            currentuiculture : string
-        }
+    type Culture = {
+        CurrentCulture : string
+        CurrentUICulture : string }
 
     let GetCulture (xDoc : XDocument) =
         let culture = xDoc.Element(imp "test-results").Element(imp "culture-info")
         {
-            currentculture = culture.Attribute(imp "current-culture").Value
-            currentuiculture = culture.Attribute(imp "current-uiculture").Value
+            CurrentCulture = culture.Attribute(imp "current-culture").Value
+            CurrentUICulture = culture.Attribute(imp "current-uiculture").Value
         }
 
     let CreateCulture culture =
-        XElement.Parse (sprintf "<culture-info current-culture=\"%s\" current-uiculture=\"%s\" />" culture.currentculture culture.currentuiculture)
+        XElement.Parse (sprintf "<culture-info current-culture=\"%s\" current-uiculture=\"%s\" />" culture.CurrentCulture culture.CurrentUICulture)
 
     let FoldAssemblyToProjectTuple agg (assembly : XElement) =
         let result, time, asserts = agg
@@ -114,15 +113,15 @@ module NUnitMerge =
 
     let MergeTestSummary agg summary =
         { agg with 
-            total = agg.total + summary.total
-            errors = agg.errors + summary.errors
-            failures = agg.failures + summary.failures
-            notrun = agg.notrun + summary.notrun
-            inconclusive = agg.inconclusive + summary.inconclusive
-            ignored = agg.ignored + summary.ignored
-            skipped = agg.skipped + summary.skipped
-            invalid = agg.invalid + summary.invalid
-            datetime = Seq.min [agg.datetime;summary.datetime]
+            Total = agg.Total + summary.Total
+            Errors = agg.Errors + summary.Errors
+            Failures = agg.Failures + summary.Failures
+            NotRun = agg.NotRun + summary.NotRun
+            Inconclusive = agg.Inconclusive + summary.Inconclusive
+            Ignored = agg.Ignored + summary.Ignored
+            Skipped = agg.Skipped + summary.Skipped
+            Invalid = agg.Invalid + summary.Invalid
+            DateTime = Seq.min [agg.DateTime; summary.DateTime]
         }
 
 
@@ -133,7 +132,8 @@ module NUnitMerge =
     let Folder state xDoc =
         let summary, environment, culture, assemblies = state
         // Sanity check!
-        if environment <> (GetEnvironment xDoc) || culture <> (GetCulture xDoc) then printf "Unmatched environment and/or cultures detected: some of theses results files are not from the same test run."
+        if environment <> (GetEnvironment xDoc) || culture <> (GetCulture xDoc) then 
+            traceImportant "Unmatched environment and/or cultures detected: some of theses results files are not from the same test run."
         (MergeTestSummary (GetTestSummary xDoc) summary, environment, culture, Seq.append assemblies (GetTestAssemblies xDoc))
 
     let FoldDocs docs =
