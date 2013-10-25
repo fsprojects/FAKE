@@ -19,17 +19,16 @@ let continueRebase repositoryDir = gitCommand repositoryDir "rebase --continue"
 /// Restart the rebasing process by skipping the current patch. 
 let skip repositoryDir = gitCommand repositoryDir "rebase --skip"
 
-let rollBackAndUseMerge repositoryDir onTopOfBranch =
-    // rebase failed ==> fallback on merge
+/// rebase failed ==> fallback on merge
+/// [omit]
+let rollBackAndUseMerge repositoryDir onTopOfBranch =    
     abort repositoryDir
     merge repositoryDir "" onTopOfBranch
     true
 
-/// <summary>
 /// Tries to rebase on top of the given branch.
 /// If the rebasing process fails a normal merge will be started.
-/// </summary>
-/// <returns>If the process used merge instead of rebase.</returns>
+/// Returns if the process used merge instead of rebase.
 let rebaseOrFallbackOnMerge repositoryDir onTopOfBranch =
     try
         start repositoryDir onTopOfBranch
@@ -38,4 +37,3 @@ let rebaseOrFallbackOnMerge repositoryDir onTopOfBranch =
         rollBackAndUseMerge repositoryDir onTopOfBranch
     with
     | _ -> rollBackAndUseMerge repositoryDir onTopOfBranch
-            
