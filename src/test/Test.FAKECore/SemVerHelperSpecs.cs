@@ -57,5 +57,42 @@ namespace Test.FAKECore
 
         It should_detect_equal_alpha_versions =
             () => SemVerHelper.parse("1.2.3-alpha.3")
-                .ShouldEqual(SemVerHelper.parse("1.2.3-alpha.3"));    }
+                .ShouldEqual(SemVerHelper.parse("1.2.3-alpha.3"));
+
+        It should_assume_empty_build_is_smaller_than_specified_build =
+            () => SemVerHelper.parse("1.0.0-alpha")
+                .ShouldBeLessThan(SemVerHelper.parse("1.0.0-alpha.1"));
+
+        It should_assume_no_in_build_is_smaller_than_text_in_build =
+            () => SemVerHelper.parse("1.0.0-alpha.1")
+                .ShouldBeLessThan(SemVerHelper.parse("1.0.0-alpha.beta"));
+
+        It should_assume_alpha_is_smaller_tha_beta =
+            () => SemVerHelper.parse("1.0.0-alpha.beta")
+                .ShouldBeLessThan(SemVerHelper.parse("1.0.0-beta"));
+
+        It should_assume_empty_build_no_in_beta_build_is_smaller_than_text_in_build =
+            () => SemVerHelper.parse("1.0.0-beta")
+                .ShouldBeLessThan(SemVerHelper.parse("1.0.0-beta.2"));
+
+        It should_assume_smaller_build_no_are_smaller =
+            () => SemVerHelper.parse("1.0.0-beta.2")
+                .ShouldBeLessThan(SemVerHelper.parse("1.0.0-beta.11"));
+
+        It should_assume_beta_is_smaller_than_rc =
+            () => SemVerHelper.parse("1.0.0-beta.11")
+                .ShouldBeLessThan(SemVerHelper.parse("1.0.0-rc.1"));
+
+        It should_assume_rc_is_smaller_than_release =
+            () => SemVerHelper.parse("1.0.0-rc.1")
+                .ShouldBeLessThan(SemVerHelper.parse("1.0.0"));
+
+        It should_assume_release_is_greater_than_alpa =
+            () => SemVerHelper.parse("2.3.4")
+                .ShouldBeGreaterThan(SemVerHelper.parse("2.3.4-alpha"));
+
+        It should_assume_beta_2_is_smaller_than_rc_1 =
+            () => SemVerHelper.parse("1.5.0-rc.1")
+                .ShouldBeGreaterThan(SemVerHelper.parse("1.5.0-beta.2"));
+    }
 }
