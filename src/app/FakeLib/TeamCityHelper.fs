@@ -158,3 +158,6 @@ let TeamCityBuildIsPersonal =
     match environVarOrNone "BUILD_IS_PERSONAL" with
     | Some _ -> true
     | None -> false
+
+/// The Build number assigned to the build by TeamCity using the build number format or None if it's not on TeamCity.
+let TeamCityBuildNumber = environVarOrNone "BUILD_NUMBER"
