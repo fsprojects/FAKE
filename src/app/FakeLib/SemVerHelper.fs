@@ -17,19 +17,23 @@ type SemVerInfo =
       /// The optional build no.
       Build: string }
     override x.ToString() =
-        [x.Build; x.PreRelease; x.Patch.ToString(); x.Minor.ToString(); x.Major.ToString()]
-        |> Seq.skipWhile ((=) "")
-        |> Seq.toList
-        |> List.rev
-        |> separated "."
+        sprintf "%d.%d.%d" x.Major x.Minor x.Patch +
+         (if isNotNullOrEmpty x.PreRelease || isNotNullOrEmpty x.Build then "-" + x.PreRelease else "") +
+         (if isNotNullOrEmpty x.Build then "." + x.Build else "") 
+
 
 let parse version =
     let splitted = split '.' version
     let l = splitted.Length
+    let patch,preRelease =
+        if l <= 2 then 0,"" else
+        let splitted' = split '-' splitted.[2]
+        Int32.Parse splitted'.[0],if splitted'.Length > 1 then splitted'.[1] else ""
+
 
     { Major = if l > 0 then Int32.Parse splitted.[0] else 0
       Minor = if l > 1 then Int32.Parse splitted.[1] else 0
-      Patch = if l > 2 then Int32.Parse splitted.[2] else 0
-      PreRelease = ""
-      Build = ""  
+      Patch = patch
+      PreRelease = preRelease
+      Build = if l > 3 then splitted.[3] else ""
     }
