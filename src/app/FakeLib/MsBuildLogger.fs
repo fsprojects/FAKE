@@ -7,17 +7,17 @@ open System
 open System.Collections.Generic
 open System.IO
 
+/// [omit]
+let errToStr (a:BuildErrorEventArgs) = sprintf "%s: %s(%d,%d): %s" a.Code a.File a.LineNumber a.ColumnNumber a.Message
 
 /// Abstract MSBuild Logger
 type MSBuildLogger () = 
     let mutable Verbosity = LoggerVerbosity.Normal
     let mutable Parameters = ""
 
+    /// Abstract fucntion which registers a event listener.
     abstract member RegisterEvents : IEventSource -> unit
-    default t.RegisterEvents e = ()
-
-    member this.errToStr (a:BuildErrorEventArgs) = 
-        sprintf "%s: %s(%d,%d): %s" a.Code a.File a.LineNumber a.ColumnNumber a.Message
+    default t.RegisterEvents e = ()  
 
     interface ILogger with
         member this.Parameters with get() = Parameters and set(value) = Parameters <- value
@@ -29,7 +29,7 @@ type MSBuildLogger () =
 type TeamCityLogger () =
     inherit MSBuildLogger()
         override this.RegisterEvents(eventSource) = 
-            eventSource.ErrorRaised.Add(fun a -> this.errToStr a |> TeamCityHelper.sendTeamCityError )
+            eventSource.ErrorRaised.Add(fun a -> errToStr a |> TeamCityHelper.sendTeamCityError )
 
 /// The ErrorLogFile
 let ErrorLoggerFile = Path.Combine(Path.GetTempPath(), "Fake.Errors.txt")
@@ -46,8 +46,8 @@ type ErrorLogger () =
 
         eventSource.BuildFinished.Add(fun a ->
             let errMsg = 
-                errors 
-                |> Seq.map this.errToStr
+                errors
+                |> Seq.map errToStr
                 |> fun e -> String.Join(Environment.NewLine, e)
                 |> fun e -> if a.Succeeded then "" else e
             File.WriteAllText(ErrorLoggerFile, errMsg))
