@@ -82,12 +82,6 @@
                 </tr>
                 <tr>
                     <td class="type-name">
-                        <a href="fake-nunithelper-nunitparallelresult.html">NUnitParallelResult</a>
-                    </td>
-                    <td class="xmldoc"></td>
-                </tr>
-                <tr>
-                    <td class="type-name">
                         <a href="fake-nunithelper-nunitparams.html">NUnitParams</a>
                     </td>
                     <td class="xmldoc"><p>Parameter type for NUnit.</p>
@@ -121,10 +115,10 @@ from multiple calls to the normal NUnit helper.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '279', 279)" onmouseover="showTip(event, '279', 279)">
+          <code onmouseout="hideTip(event, '314', 314)" onmouseover="showTip(event, '314', 314)">
             AllSucceeded xDocs
           </code>
-          <div class="tip" id="279">
+          <div class="tip" id="314">
             <strong>Signature:</strong>xDocs:seq&lt;&#39;?5584&gt; -&gt; bool<br />
                           <strong>Type parameters:</strong> '?5584          </div>
         </td>
@@ -134,10 +128,10 @@ from multiple calls to the normal NUnit helper.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '280', 280)" onmouseover="showTip(event, '280', 280)">
+          <code onmouseout="hideTip(event, '315', 315)" onmouseover="showTip(event, '315', 315)">
             NUnit setParams assemblies
           </code>
-          <div class="tip" id="280">
+          <div class="tip" id="315">
             <strong>Signature:</strong>setParams:(NUnitParams -&gt; NUnitParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -162,10 +156,10 @@ from multiple calls to the normal NUnit helper.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '281', 281)" onmouseover="showTip(event, '281', 281)">
+          <code onmouseout="hideTip(event, '316', 316)" onmouseover="showTip(event, '316', 316)">
             NUnitDefaults 
           </code>
-          <div class="tip" id="281">
+          <div class="tip" id="316">
             <strong>Signature:</strong>NUnitParams<br />
                       </div>
         </td>
@@ -175,14 +169,30 @@ from multiple calls to the normal NUnit helper.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '282', 282)" onmouseover="showTip(event, '282', 282)">
+          <code onmouseout="hideTip(event, '317', 317)" onmouseover="showTip(event, '317', 317)">
             NUnitParallel setParams assemblies
           </code>
-          <div class="tip" id="282">
+          <div class="tip" id="317">
             <strong>Signature:</strong>setParams:(NUnitParams -&gt; NUnitParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Runs NUnit in parallel on a group of assemblies.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>setParams</code> - Function used to manipulate the default NUnitParams value.</li>
+<li><code>assemblies</code> - Sequence of one or more assemblies containing NUnit unit tests.</li>
+</ul>
+
+<h2>Sample usage</h2>
+
+<pre><code>Target "Test" (fun _ -&gt;
+    !! (testDir + @"\Test.*.dll") 
+      |&gt; NUnitParallel (fun p -&gt; { p with ErrorLevel = DontFailBuild })
+)
+</code></pre>
+</td>
       </tr>
     </tbody>
   </table>
@@ -195,11 +205,11 @@ from multiple calls to the normal NUnit helper.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '393', 393)" onmouseover="showTip(event, '393', 393)">
-            ( |OK|TestsFailed|FatalError| ) _arg1
+          <code onmouseout="hideTip(event, '363', 363)" onmouseover="showTip(event, '363', 363)">
+            ( |OK|TestsFailed|FatalError| ) (...)
           </code>
-          <div class="tip" id="393">
-            <strong>Signature:</strong>_arg1:int -&gt; Choice&lt;unit,unit,string&gt;<br />
+          <div class="tip" id="363">
+            <strong>Signature:</strong>errorCode:int -&gt; Choice&lt;unit,unit,string&gt;<br />
                       </div>
         </td>
         <td class="xmldoc"><p>NUnit console returns negative error codes for errors and sum of failed/ignored/exceptional 
