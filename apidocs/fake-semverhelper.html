@@ -60,13 +60,28 @@
 
 
 
-<h1>XCopyHelper</h1>
+<h1>SemVerHelper</h1>
 <div class="xmldoc">
-<p>Contains a task to use <a href="http://en.wikipedia.org/wiki/XCOPY">XCOPY</a> on Windows.</p>
+<p>Contains helpers which allow to deal with <a href="http://semver.org/">Semantic Versioning</a> (SemVer).</p>
 </div>
 
 <!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+    <h2>Nested types and modules</h2>
 
+    <table class="table table-bordered type-list">
+        <thead>
+            <tr><td>Type</td><td>Description</td></tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-semverhelper-semverinfo.html">SemVerInfo</a>
+                    </td>
+                    <td class="xmldoc"><p>Contains the version information.</p>
+</td>
+                </tr>
+        </tbody>
+    </table>
 
 <!-- END TODO -->
   <h3>Functions and values</h3>
@@ -78,22 +93,14 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '547', 547)" onmouseover="showTip(event, '547', 547)">
-            XCopy source destination
+          <code onmouseout="hideTip(event, '361', 361)" onmouseover="showTip(event, '361', 361)">
+            parse version
           </code>
-          <div class="tip" id="547">
-            <strong>Signature:</strong>source:string -&gt; destination:string -&gt; unit<br />
+          <div class="tip" id="361">
+            <strong>Signature:</strong>version:string -&gt; SemVerInfo<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Executes a XCopy command</p>
-
-<h2>Parameters</h2>
-
-<ul>
-<li><code>source</code> - The source directory</li>
-<li><code>destination</code> - The target directory</li>
-</ul>
-</td>
+        <td class="xmldoc"></td>
       </tr>
     </tbody>
   </table>
