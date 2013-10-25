@@ -15,7 +15,7 @@ type TraceMode =
 | Xml
 
 /// Defines if FAKE will use verbose tracing.
-/// This flage can be specified by setting the *verbose* build parameter.
+/// This flag can be specified by setting the *verbose* build parameter.
 let mutable verbose = hasBuildParam "verbose"
 
 /// A constant label for local builds
