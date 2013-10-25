@@ -124,7 +124,7 @@ let serverCommandLine (opts:OctoServerOptions) =
       (optionalStringParam "apikey" (liftString opts.ApiKey)) ] 
     |> List.fold (+) ""
 
-/// Maps an command to string input for the octopus tools cli.
+/// Maps a command to string input for the octopus tools cli.
 let commandLine command =       
     match command with
     | CreateRelease (opts, None) ->        
