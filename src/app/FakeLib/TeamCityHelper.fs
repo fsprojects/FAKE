@@ -80,11 +80,16 @@ let ReportProgressFinish message =
     EncapsulateSpecialChars message
       |> sendToTeamCity "##teamcity[progressFinish '%s']"
 
-/// Reports the build status.
-let ReportBuildStatus status message =
+/// Create  the build status.
+/// [omit]
+let buildStatus status message =
     sprintf "##teamcity[buildStatus '%s' text='%s']"
       (EncapsulateSpecialChars status)
       (EncapsulateSpecialChars message)
+
+/// Reports the build status.
+let ReportBuildStatus status message =
+    buildStatus status message
       |> sendStrToTeamCity
 
 /// Publishes an artifact on the TeamcCity build server.
