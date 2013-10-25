@@ -38,13 +38,21 @@ let jenkinsBuildNumber = tcBuildNumber
 /// [omit]
 let ccBuildLabel = environVar "CCNETLABEL"
 
-/// Determines the current BuildVersion and if it is a local build
-let buildVersion,buildServer =
-    let getVersion = getBuildParamOrDefault "buildVersion"
-    if hasBuildParam "jenkins_home" then getVersion jenkinsBuildNumber,Jenkins else
-    if not (isNullOrEmpty tcBuildNumber) then getVersion tcBuildNumber,TeamCity else
-    if not (isNullOrEmpty ccBuildLabel) then getVersion ccBuildLabel,CCNet else 
-    getVersion localBuildLabel,LocalBuild
+/// The current build server
+let buildServer =
+    if hasBuildParam "jenkins_home" then Jenkins else
+    if not (isNullOrEmpty tcBuildNumber) then TeamCity else
+    if not (isNullOrEmpty ccBuildLabel) then CCNet else 
+    LocalBuild
 
-/// Determines if the current build is a local build.
+/// The current build version as detected from the current build server.
+let buildVersion =
+    let getVersion = getBuildParamOrDefault "buildVersion"
+    match buildServer with
+    | Jenkins ->    getVersion jenkinsBuildNumber
+    | TeamCity ->   getVersion tcBuildNumber
+    | CCNet ->      getVersion ccBuildLabel
+    | LocalBuild -> getVersion localBuildLabel
+
+/// Is true when the current build is a local build.
 let isLocalBuild = LocalBuild = buildServer
