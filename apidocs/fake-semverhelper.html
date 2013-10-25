@@ -77,8 +77,7 @@
                     <td class="type-name">
                         <a href="fake-semverhelper-semverinfo.html">SemVerInfo</a>
                     </td>
-                    <td class="xmldoc"><p>Contains the version information which can be printed using ToString or compared
-according to the rules described in the <a href="http://semver.org/">SemVer docs</a>.</p>
+                    <td class="xmldoc"><p>Contains the version information.</p>
 </td>
                 </tr>
         </tbody>
@@ -94,14 +93,22 @@ according to the rules described in the <a href="http://semver.org/">SemVer docs
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '360', 360)" onmouseover="showTip(event, '360', 360)">
+          <code onmouseout="hideTip(event, '359', 359)" onmouseover="showTip(event, '359', 359)">
             parse version
           </code>
-          <div class="tip" id="360">
+          <div class="tip" id="359">
             <strong>Signature:</strong>version:string -&gt; SemVerInfo<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Parses the given version string into a SemVerInfo</p>
+        <td class="xmldoc"><p>Parses the given version string into a SemVerInfo which can be printed using ToString() or compared
+according to the rules described in the <a href="http://semver.org/">SemVer docs</a>.</p>
+
+<h2>Sample</h2>
+
+<pre><code>parse "1.0.0-rc.1"   &lt;  parse "1.0.0"     // true
+parse "1.2.3-alpha"  &gt; parse "1.2.2"      // true
+parse "1.5.0-beta.2" &gt; parse "1.5.0-rc.1" // false
+</code></pre>
 </td>
       </tr>
     </tbody>
