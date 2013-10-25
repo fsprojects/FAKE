@@ -10,7 +10,7 @@ open System.IO
 /// [omit]
 let errToStr (a:BuildErrorEventArgs) = sprintf "%s: %s(%d,%d): %s" a.Code a.File a.LineNumber a.ColumnNumber a.Message
 
-/// Abstract MSBuild Logger
+/// Abstract MSBuild Logger class.
 type MSBuildLogger () = 
     let mutable Verbosity = LoggerVerbosity.Normal
     let mutable Parameters = ""
