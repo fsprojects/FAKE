@@ -166,3 +166,9 @@ hr {
 #hp-snippet thead, #hp-snippet .title {
   font-weight:bold;
 }
+
+@media (max-width: 979px) and (min-width: 768px) {
+  .span3 {
+    width: 100%;
+  }
+}
