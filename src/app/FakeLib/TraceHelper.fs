@@ -127,4 +127,4 @@ let logToConsole(msg, eventLogEntry : System.Diagnostics.EventLogEntryType) =
     | System.Diagnostics.EventLogEntryType.Information -> TraceMessage (msg, true)
     | System.Diagnostics.EventLogEntryType.Warning -> ImportantMessage msg
     | _ -> LogMessage (msg, true)
-    |> console.Write    
+    |> console.Write

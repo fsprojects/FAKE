@@ -143,3 +143,18 @@ let getRecentlyFailedTests() =
 let getChangedFilesInCurrentBuild() =
     appSetting "teamcity.build.changedFiles.file"
       |> ReadFile
+
+/// The Version of the TeamCity server. This property can be used to determine the build is run within TeamCity.
+let TeamCityVersion = environVarOrNone "TEAMCITY_VERSION"
+
+/// The Name of the project the current build belongs to or None if it's not on TeamCity.
+let TeamCityProjectName = environVarOrNone "TEAMCITY_PROJECT_NAME"
+
+/// The Name of the Build Configuration the current build belongs to or None if it's not on TeamCity.
+let TeamCityBuildConfigurationName = environVarOrNone "TEAMCITY_BUILDCONF_NAME"
+
+/// Is set to true if the build is a personal one.
+let TeamCityBuildIsPersonal = 
+    match environVarOrNone "BUILD_IS_PERSONAL" with
+    | Some _ -> true
+    | None -> false
