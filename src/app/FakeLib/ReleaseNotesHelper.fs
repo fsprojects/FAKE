@@ -30,7 +30,9 @@ let private parseSimpleReleaseNotes (text: seq<string>) =
         |> List.map trim
         |> List.filter isNotNullOrEmpty
         |> List.map (fun x -> x + ".")
-    { AssemblyVersion = assemblyVersion.Value; NugetVersion = nugetVersion.Value; Notes = notes }
+    { AssemblyVersion = assemblyVersion.Value
+      NugetVersion = nugetVersion.Value
+      Notes = notes }
 
 /// Parse "complex" release notes text sequence
 let private parseComplexReleaseNotes (text: seq<string>) =
@@ -43,7 +45,9 @@ let private parseComplexReleaseNotes (text: seq<string>) =
     let header, notes = loop [] (text |> Seq.map (trimChars [|' '; '*'|]) |> List.ofSeq |> List.rev)
     let assemblyVer, nugetVer = assemblyRegex.Match header, nugetRegex.Match header
     if not assemblyVer.Success then failwith "Unable to parse valid Assembly version from release notes."
-    { AssemblyVersion = assemblyVer.Value; NugetVersion = nugetVer.Value; Notes = notes }
+    { AssemblyVersion = assemblyVer.Value
+      NugetVersion = nugetVer.Value
+      Notes = notes }
     
 /// Parse a Release Notes text - Either "simple" or "complex" format (see below).
 ///
