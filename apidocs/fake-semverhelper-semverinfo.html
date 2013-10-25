@@ -62,7 +62,13 @@
 
 <h1>SemVerInfo</h1>
 <div class="xmldoc">
-<p>Contains the version information.</p>
+<p>Contains the version information which can be printed using ToString or compared
+according to the rules described in the <a href="http://semver.org/">SemVer docs</a>.</p>
+                <h2>Sample</h2>
+<pre><code>parse "1.0.0-rc.1"   &lt;  parse "1.0.0"     // true
+parse "1.2.3-alpha"  &gt; parse "1.2.2"      // true
+parse "1.5.0-beta.2" &gt; parse "1.5.0-rc.1" // false
+</code></pre>
 </div>
 
             </div>
