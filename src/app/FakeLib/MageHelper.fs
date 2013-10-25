@@ -1,13 +1,25 @@
 ﻿[<AutoOpen>]
+/// Contains helper functions which allow FAKE to call the Manifest Generation and Editing Tool, in short 'MAGE'.
+/// The intentional use is the creation of a clickonce application.
+/// 
+/// The MAGE tool wants to sign the manifest using a certificate. It should be clear, that this file is not under a source control.
+/// On the other hand - you want to be able to run the compile batch on each developer machine. How can we achieve that? In the parameter
+/// structure, we use a CertFile property and a TmpCertFile property. Whenever the CertFile was not found, the manifest is signed with
+/// a temporary certificate. And the latter one can be shared in the source control.
 module Fake.MageHelper
 
 open System.IO
 
-type MageProcessor = MSIL | X86
+/// These are the supported processor types of the MAGE tool
+type MageProcessor = MSIL | X86 | IA64 | AMD64
+/// The supported commands of the MAGE tool
 type MageCall = NewApp | UpdateApp | Sign | Deploy | UpdateDeploy | SignDeploy
+/// The level of trust to grant the application on client computers.
 type MageTrustLevels = Internet | LocalIntranet | FullTrust
+
+/// Needed information to call MAGE
 type MageParams =
-  { ToolsPath : string
+  { ToolsPath : string 
     ProjectFiles : seq<string>
     Name : string
     IconPath : string 
@@ -29,11 +41,14 @@ type MageParams =
     ProviderURL : string 
     SupportURL : string option}
 
+/// Convert the parameter structure into command line arguments of MAGE
 let MageSerializeParams (action: MageCall) (mp : MageParams) =
   let processorStr =
     match mp.Processor with
     | MSIL -> "msil"
     | X86 -> "x86"
+    | IA64 -> "ia64"
+    | AMD64 -> "amd64"
   
   let processor = "-p " + processorStr
   let name = if isNullOrEmpty mp.Name then "" else "-n \"" + mp.Name + "\""
@@ -98,7 +113,7 @@ let MageSerializeParams (action: MageCall) (mp : MageParams) =
   allParameters
   |> separated " "
 
-
+/// Execute the MAGE tool. Adds some parameters, dependent on the MAGE command
 let mageCall (action : MageCall) (mp : MageParams) =
   let magePath = mp.ToolsPath @@ "mage.exe"
   let call =
@@ -116,24 +131,31 @@ let mageCall (action : MageCall) (mp : MageParams) =
       info.Arguments <- args) System.TimeSpan.MaxValue
   if result <> 0 then failwithf "Error during mage call "
 
+/// Encapsulates the MAGE call to create a new application's manifest
 let MageCreateApp (mp : MageParams) =
   mageCall NewApp mp
 
+/// Encapsulates the MAGE call to update an existing application's manifest
 let MageUpdateApp (mp : MageParams) =
   mageCall UpdateApp mp
 
+/// Encapsulates the MAGE call to sign an application's manifest
 let MageSignManifest (mp : MageParams) =
   mageCall Sign mp
 
+/// Encapsulates the MAGE call to deploy an application
 let MageDeployApp (mp : MageParams) =
   mageCall Deploy mp
 
+/// Encapsulates the MAGE call to update the deployment of an application
 let MageUpdateDeploy (mp : MageParams) =
   mageCall UpdateDeploy mp
 
+/// Encapsulates the MAGE call to sign the deployment of an application
 let MageSignDeploy (mp : MageParams) =
   mageCall SignDeploy mp
 
+/// Executes a full run of MAGE commands: first, it creates a new manifest file. Then it signs the manifest, deploys the application and finally signs the deployment.
 let MageRun (mp : MageParams) =
   traceStartTask "Mage-Tool" mp.ApplicationFile
   MageCreateApp mp
