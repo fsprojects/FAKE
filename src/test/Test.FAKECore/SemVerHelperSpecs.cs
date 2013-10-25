@@ -40,4 +40,22 @@ namespace Test.FAKECore
         It should_parse_prerelease = () => semVer.PreRelease.ShouldEqual("alpha");
         It should_parse_build = () => semVer.Build.ShouldEqual("beta");
     }
+
+    public class when_comparing_semvers
+    {
+        It should_detect_equal_versions =
+            () => SemVerHelper.parse("1.2.3")
+                .ShouldEqual(SemVerHelper.parse("1.2.3"));
+
+        It should_compare_rc_versions =
+            () => SemVerHelper.parse("1.0.0-rc.3")
+                .ShouldBeGreaterThan(SemVerHelper.parse("1.0.0-rc.1"));
+
+        It should_compare_alpha_versions =
+            () => SemVerHelper.parse("1.0.0-alpha.3")
+                .ShouldBeGreaterThan(SemVerHelper.parse("1.0.0-alpha.2"));
+
+        It should_detect_equal_alpha_versions =
+            () => SemVerHelper.parse("1.2.3-alpha.3")
+                .ShouldEqual(SemVerHelper.parse("1.2.3-alpha.3"));    }
 }
