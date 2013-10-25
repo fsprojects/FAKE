@@ -1,4 +1,5 @@
-﻿module Fake.MsBuildLogger
+﻿/// Contains Logger implementations for MsBuild.
+module Fake.MsBuildLogger
 open Fake
 open Microsoft.Build
 open Microsoft.Build.Framework
@@ -6,6 +7,8 @@ open System
 open System.Collections.Generic
 open System.IO
 
+
+/// Abstract MSBuild Logger
 type MSBuildLogger () = 
     let mutable Verbosity = LoggerVerbosity.Normal
     let mutable Parameters = ""
@@ -22,13 +25,16 @@ type MSBuildLogger () =
         member this.Shutdown () = ()
         member this.Initialize(eventSource) = this.RegisterEvents(eventSource)
 
+/// TeamCity Logger for MSBuild
 type TeamCityLogger () =
     inherit MSBuildLogger()
         override this.RegisterEvents(eventSource) = 
             eventSource.ErrorRaised.Add(fun a -> this.errToStr a |> TeamCityHelper.sendTeamCityError )
 
+/// The ErrorLogFile
 let ErrorLoggerFile = Path.Combine(Path.GetTempPath(), "Fake.Errors.txt")
 
+/// TeamCity Logger for MSBuild
 type ErrorLogger () =
     inherit MSBuildLogger()
 
@@ -44,5 +50,4 @@ type ErrorLogger () =
                 |> Seq.map this.errToStr
                 |> fun e -> String.Join(Environment.NewLine, e)
                 |> fun e -> if a.Succeeded then "" else e
-            File.WriteAllText(ErrorLoggerFile, errMsg)
-        )
+            File.WriteAllText(ErrorLoggerFile, errMsg))
