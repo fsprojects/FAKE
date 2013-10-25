@@ -1,5 +1,5 @@
 ﻿[<AutoOpen>]
-/// Contains a task which allows to sign assembly
+/// Contains a task which allows to sign assemblies.
 module Fake.SignHelper
 
 open System.IO
