@@ -235,8 +235,8 @@ let getWorkingDir parameters =
     Seq.find (fun s -> s <> null && s <> "") [parameters.WorkingDir; environVar("teamcity.build.workingDir"); "."]
     |> Path.GetFullPath
 
-/// NUnit console returns negative error codes for errors and sum of failed/ignored/exceptional 
-/// tests otherwise. Zero means that all tests passed.
+/// NUnit console returns negative error codes for errors and sum of failed, ignored and exceptional tests otherwise. 
+/// Zero means that all tests passed.
 let (|OK|TestsFailed|FatalError|) errorCode =
     match errorCode with
     | 0 -> OK
