@@ -1,4 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<appSettings>
-  <add key="DatabaseName" value="Demo Database NAV (7-0)" />
-</appSettings>
+<configuration>
+    <appSettings>
+        <add key="DatabaseName" value="Demo Database NAV (7-0)" />
+    </appSettings>
+    <connectionStrings>
+        <add name="basic" connectionString="original connection string" />
+    </connectionStrings>
+</configuration>
