@@ -60,9 +60,9 @@
 
 
 
-<h1>HTMLHelpWorkShopHelper</h1>
+<h1>NUnitSequential</h1>
 <div class="xmldoc">
-<p>Contains a task which allows to use <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms670169(v=vs.85).aspx">HTML Help Workshop</a> in order to compile a help project.</p>
+<p>Contains tasks to run <a href="http://www.nunit.org/">NUnit</a> unit tests.</p>
 </div>
 
 <!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
@@ -78,21 +78,29 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '232', 232)" onmouseover="showTip(event, '232', 232)">
-            CompileHTMLHelpProject (...)
+          <code onmouseout="hideTip(event, '288', 288)" onmouseover="showTip(event, '288', 288)">
+            NUnit setParams assemblies
           </code>
-          <div class="tip" id="232">
-            <strong>Signature:</strong>helpCompiler:string -&gt; projectFile:string -&gt; string list<br />
+          <div class="tip" id="288">
+            <strong>Signature:</strong>setParams:(NUnitParams -&gt; NUnitParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Uses the HTML Help Workshop to compile a help project and returns the generated file names of the generated files.</p>
+        <td class="xmldoc"><p>Runs NUnit on a group of assemblies.</p>
 
 <h2>Parameters</h2>
 
 <ul>
-<li><code>helpCompiler</code> - The filename of the HTML Help WorkShop tool.</li>
-<li><code>projectFile</code> - The fileName of the help project.</li>
+<li><code>setParams</code> - Function used to manipulate the default NUnitParams value.</li>
+<li><code>assemblies</code> - Sequence of one or more assemblies containing NUnit unit tests.</li>
 </ul>
+
+<h2>Sample usage</h2>
+
+<pre><code>Target "Test" (fun _ -&gt;
+    !! (testDir + @"\Test.*.dll") 
+      |&gt; NUnit (fun p -&gt; { p with ErrorLevel = DontFailBuild })
+)
+</code></pre>
 </td>
       </tr>
     </tbody>

@@ -60,13 +60,35 @@
 
 
 
-<h1>HTMLHelpWorkShopHelper</h1>
+<h1>NUnitCommon</h1>
 <div class="xmldoc">
-<p>Contains a task which allows to use <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms670169(v=vs.85).aspx">HTML Help Workshop</a> in order to compile a help project.</p>
+<p>Contains types and utility functions relaited to running <a href="http://www.nunit.org/">NUnit</a> unit tests.</p>
 </div>
 
 <!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+    <h2>Nested types and modules</h2>
 
+    <table class="table table-bordered type-list">
+        <thead>
+            <tr><td>Type</td><td>Description</td></tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-nunitcommon-nuniterrorlevel.html">NUnitErrorLevel</a>
+                    </td>
+                    <td class="xmldoc"><p>Option which allow to specify if a NUnit error should break the build.</p>
+</td>
+                </tr>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-nunitcommon-nunitparams.html">NUnitParams</a>
+                    </td>
+                    <td class="xmldoc"><p>Parameter type for NUnit.</p>
+</td>
+                </tr>
+        </tbody>
+    </table>
 
 <!-- END TODO -->
   <h3>Functions and values</h3>
@@ -78,21 +100,36 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '232', 232)" onmouseover="showTip(event, '232', 232)">
-            CompileHTMLHelpProject (...)
+          <code onmouseout="hideTip(event, '289', 289)" onmouseover="showTip(event, '289', 289)">
+            NUnitDefaults 
           </code>
-          <div class="tip" id="232">
-            <strong>Signature:</strong>helpCompiler:string -&gt; projectFile:string -&gt; string list<br />
+          <div class="tip" id="289">
+            <strong>Signature:</strong>NUnitParams<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Uses the HTML Help Workshop to compile a help project and returns the generated file names of the generated files.</p>
+        <td class="xmldoc"><p>NUnit default parameters. FAKE tries to locate nunit-console.exe in any subfolder.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Active patterns</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Active pattern</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
 
-<h2>Parameters</h2>
-
-<ul>
-<li><code>helpCompiler</code> - The filename of the HTML Help WorkShop tool.</li>
-<li><code>projectFile</code> - The fileName of the help project.</li>
-</ul>
+          <code onmouseout="hideTip(event, '357', 357)" onmouseover="showTip(event, '357', 357)">
+            ( |OK|TestsFailed|FatalError| ) (...)
+          </code>
+          <div class="tip" id="357">
+            <strong>Signature:</strong>errorCode:int -&gt; Choice&lt;unit,unit,string&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>NUnit console returns negative error codes for errors and sum of failed, ignored and exceptional tests otherwise. 
+Zero means that all tests passed.</p>
 </td>
       </tr>
     </tbody>

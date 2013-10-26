@@ -60,35 +60,13 @@
 
 
 
-<h1>NUnitHelper</h1>
+<h1>NUnitXml</h1>
 <div class="xmldoc">
-<p>Contains tasks to run <a href="http://www.nunit.org/">NUnit</a> unit tests.</p>
+<p>Contains types and functions for working with <a href="http://www.nunit.org/">NUnit</a> unit tests result xml.</p>
 </div>
 
 <!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
-    <h2>Nested types and modules</h2>
 
-    <table class="table table-bordered type-list">
-        <thead>
-            <tr><td>Type</td><td>Description</td></tr>
-        </thead>
-        <tbody>
-                <tr>
-                    <td class="type-name">
-                        <a href="fake-nunithelper-nuniterrorlevel.html">NUnitErrorLevel</a>
-                    </td>
-                    <td class="xmldoc"><p>Option which allow to specify if a NUnit error should break the build.</p>
-</td>
-                </tr>
-                <tr>
-                    <td class="type-name">
-                        <a href="fake-nunithelper-nunitparams.html">NUnitParams</a>
-                    </td>
-                    <td class="xmldoc"><p>Parameter type for NUnit.</p>
-</td>
-                </tr>
-        </tbody>
-    </table>
 
 <!-- END TODO -->
   <h3>Functions and values</h3>
@@ -100,105 +78,14 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '329', 329)" onmouseover="showTip(event, '329', 329)">
+          <code onmouseout="hideTip(event, '284', 284)" onmouseover="showTip(event, '284', 284)">
             AllSucceeded xDocs
           </code>
-          <div class="tip" id="329">
+          <div class="tip" id="284">
             <strong>Signature:</strong>xDocs:seq&lt;&#39;?5602&gt; -&gt; bool<br />
                           <strong>Type parameters:</strong> '?5602          </div>
         </td>
         <td class="xmldoc"><p>Returns whether all tests in the given test result have succeeded</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '330', 330)" onmouseover="showTip(event, '330', 330)">
-            NUnit setParams assemblies
-          </code>
-          <div class="tip" id="330">
-            <strong>Signature:</strong>setParams:(NUnitParams -&gt; NUnitParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Runs NUnit on a group of assemblies.</p>
-
-<h2>Parameters</h2>
-
-<ul>
-<li><code>setParams</code> - Function used to manipulate the default NUnitParams value.</li>
-<li><code>assemblies</code> - Sequence of one or more assemblies containing NUnit unit tests.</li>
-</ul>
-
-<h2>Sample usage</h2>
-
-<pre><code>Target "Test" (fun _ -&gt;
-    !! (testDir + @"\Test.*.dll") 
-      |&gt; NUnit (fun p -&gt; { p with ErrorLevel = DontFailBuild })
-)
-</code></pre>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '331', 331)" onmouseover="showTip(event, '331', 331)">
-            NUnitDefaults 
-          </code>
-          <div class="tip" id="331">
-            <strong>Signature:</strong>NUnitParams<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>NUnit default parameters. FAKE tries to locate nunit-console.exe in any subfolder.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '332', 332)" onmouseover="showTip(event, '332', 332)">
-            NUnitParallel setParams assemblies
-          </code>
-          <div class="tip" id="332">
-            <strong>Signature:</strong>setParams:(NUnitParams -&gt; NUnitParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Runs NUnit in parallel on a group of assemblies.</p>
-
-<h2>Parameters</h2>
-
-<ul>
-<li><code>setParams</code> - Function used to manipulate the default NUnitParams value.</li>
-<li><code>assemblies</code> - Sequence of one or more assemblies containing NUnit unit tests.</li>
-</ul>
-
-<h2>Sample usage</h2>
-
-<pre><code>Target "Test" (fun _ -&gt;
-    !! (testDir + @"\Test.*.dll") 
-      |&gt; NUnitParallel (fun p -&gt; { p with ErrorLevel = DontFailBuild })
-)
-</code></pre>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <h3>Active patterns</h3>
-  <table class="table table-bordered member-list">
-    <thead>
-      <tr><td>Active pattern</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '359', 359)" onmouseover="showTip(event, '359', 359)">
-            ( |OK|TestsFailed|FatalError| ) (...)
-          </code>
-          <div class="tip" id="359">
-            <strong>Signature:</strong>errorCode:int -&gt; Choice&lt;unit,unit,string&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>NUnit console returns negative error codes for errors and sum of failed, ignored and exceptional tests otherwise. 
-Zero means that all tests passed.</p>
 </td>
       </tr>
     </tbody>
