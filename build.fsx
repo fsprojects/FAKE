@@ -40,6 +40,11 @@ let reportDir = "./report"
 let deployZip = deployDir @@ sprintf "%s-%s.zip" projectName buildVersion
 let packagesDir = "./packages"
 
+let additionalFiles = [
+    "License.txt"
+    "README.markdown"
+    "help/changelog.md"]
+
 // Targets
 Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; deployDir; docsDir; apidocsDir; nugetDir; reportDir])
 
@@ -112,10 +117,7 @@ Target "GenerateDocs" (fun _ ->
 )
 
 Target "CopyLicense" (fun _ -> 
-    ["License.txt"
-     "README.markdown"
-     "help/changelog.md"]
-       |> CopyTo buildDir
+    CopyTo buildDir additionalFiles
 )
 
 Target "BuildZip" (fun _ ->     
@@ -159,6 +161,7 @@ Target "CreateNuGet" (fun _ ->
             else
                 CopyDir nugetToolsDir (buildDir @@ package) allFiles
                 DeleteFile (nugetToolsDir @@ "Gallio.dll")
+                CopyTo nugetToolsDir additionalFiles
 
             NuGet (fun p -> 
                 {p with
