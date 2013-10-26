@@ -16,4 +16,14 @@ namespace Test.FAKECore.ConfigHandling
         It should_equal_the_target_text =
             () => File.ReadAllText(OriginalFile).ShouldContain("MyDatabase");
     }
+
+    public class when_modifying_connection_strings
+    {
+        const string OriginalFile = "Small.txt";
+
+        Because of = () => ConfigurationHelper.updateConnectionString("basic", "New Connection String", OriginalFile);
+
+        It should_equal_the_target_text =
+            () => File.ReadAllText(OriginalFile).ShouldContain("New Connection String");
+    }
 }
