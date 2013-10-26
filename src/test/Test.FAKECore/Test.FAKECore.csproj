@@ -108,7 +108,7 @@
     <Compile Include="SideBySideSpecification\SpecsRemovementSpecs.cs" />
     <Compile Include="StringHelperSpecs.cs" />
     <Compile Include="MessageFiles\MessageFileSpecs.cs" />
-    <Compile Include="ConfigSpecs.cs" />
+    <Compile Include="ConfigFiles\ConfigSpecs.cs" />
     <Compile Include="XmlSpecs.cs" />
     <Compile Include="TestData.cs" />
     <Compile Include="FileHandling\CleanDirectorySpecs.cs" />
@@ -134,6 +134,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ConfigFiles\DynamicsNAVConfig.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="MessageFiles\FinishedAll.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -194,7 +197,7 @@
     <Content Include="SideBySideSpecification\Project_WithRecursiveProjectReference.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Small.txt">
+    <Content Include="ConfigFiles\SmallConfig.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\AllObjects.txt">
