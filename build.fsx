@@ -23,6 +23,12 @@ let projectSummary = "FAKE - F# Make - Get rid of the noise in your build script
 let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. Tasks and dependencies are specified in a DSL which is integrated in F#."
 let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"]
 let mail = "forkmann@gmx.de"
+
+let packages = 
+    [projectName,projectDescription 
+     "FAKE.Gallio",projectDescription + " Extensions for Gallio"]
+
+let buildVersion = if isLocalBuild then "0.0.1" else buildVersion
   
 let buildDir = "./build"
 let testDir = "./test"
@@ -140,22 +146,33 @@ Target "ZipDocumentation" (fun _ ->
 Target "CreateNuGet" (fun _ -> 
     (* Temporary disable tests on *nix, bug # 122 *)
     if not isLinux then
-        let nugetDocsDir = nugetDir @@ "docs"
-        let nugetToolsDir = nugetDir @@ "tools"
+        for package,description in packages do            
+            let nugetDocsDir = nugetDir @@ "docs"
+            let nugetToolsDir = nugetDir @@ "tools"
 
-        CopyDir nugetDocsDir docsDir allFiles  
-        CopyDir nugetToolsDir buildDir allFiles
-        CopyDir nugetToolsDir @"./lib/fsi" allFiles
-        DeleteFile (nugetToolsDir @@ "Gallio.dll")
+            CleanDir nugetDocsDir
+            CleanDir nugetToolsDir
+            CopyDir nugetDocsDir docsDir allFiles
+            if package = projectName then 
+                !! (buildDir @@ "*.*") |> Copy nugetToolsDir 
+                CopyDir nugetToolsDir @"./lib/fsi" allFiles
+            else
+                CopyDir nugetToolsDir (buildDir @@ package) allFiles
+                DeleteFile (nugetToolsDir @@ "Gallio.dll")
 
-        NuGet (fun p -> 
-            {p with
-                Authors = authors
-                Project = projectName
-                Description = projectDescription                               
-                OutputPath = nugetDir
-                AccessKey = getBuildParamOrDefault "nugetkey" ""
-                Publish = hasBuildParam "nugetkey" }) "fake.nuspec"
+            NuGet (fun p -> 
+                {p with
+                    Authors = authors
+                    Project = package
+                    Description = description                               
+                    OutputPath = nugetDir
+                    Summary = projectSummary
+                    Dependencies =
+                        if package <> projectName then
+                          [projectName, RequireExactly (NormalizeVersion buildVersion)]
+                        else p.Dependencies
+                    AccessKey = getBuildParamOrDefault "nugetkey" ""
+                    Publish = hasBuildParam "nugetkey" }) "fake.nuspec"
 )
 
 Target "ReleaseDocs" (fun _ ->
