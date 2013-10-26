@@ -53,7 +53,7 @@ let updateConfigSetting fileName xpath attribute value =
 ///  - `value` - The new AppSettings attribute value.
 ///  - `fileName` - The file name of the config file.
 let updateAppSetting key value fileName =
-    updateConfigSetting fileName ("appSettings/add[@key='" + key + "']") "value" value
+    updateConfigSetting fileName ("configuration/appSettings/add[@key='" + key + "']") "value" value
 
 /// Reads a config file from the given file name, replaces the connection string value and writes it back.   
 /// ## Parameters
@@ -61,4 +61,4 @@ let updateAppSetting key value fileName =
 ///  - `value` - The new connection string value.
 ///  - `fileName` - The file name of the config file.     
 let updateConnectionString connectionStringKey value fileName =
-    updateConfigSetting fileName ("connectionStrings/add[@name='" + connectionStringKey + "']") "connectionString" value
+    updateConfigSetting fileName ("configuration/connectionStrings/add[@name='" + connectionStringKey + "']") "connectionString" value
