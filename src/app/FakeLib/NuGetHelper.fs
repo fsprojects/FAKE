@@ -289,7 +289,7 @@ let getNuspecProperties (nuspec : string) =
        PackageHashAlgorithm = String.Empty
     }
 
-/// Returns the NuGet meta data from the given package file name
+/// Returns the NuGet meta data from the given package file name.
 let GetMetaDataFromPackageFile packageFileName =   
     packageFileName
     |> ZipHelper.UnzipFirstMatchingFileInMemory (fun ze -> ze.Name.EndsWith ".nuspec") 
