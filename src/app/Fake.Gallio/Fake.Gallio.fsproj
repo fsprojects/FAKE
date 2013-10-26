@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -20,26 +20,26 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\..\..\tools\Fake\</OutputPath>
-    <OutputPath>..\..\..\build\FAKE.Gallio\</OutputPath>
+    <OutputPath>..\..\..\build\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>3</WarningLevel>
-    <DocumentationFile>..\..\..\build\FAKE.Gallio\Fake.Gallio.XML</DocumentationFile>
+    <DocumentationFile>..\..\..\build\Fake.Gallio.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\build\FAKE.Gallio\</OutputPath>
+    <OutputPath>..\..\..\build\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>3</WarningLevel>
-    <DocumentationFile>..\..\..\build\FAKE.Gallio\Fake.Gallio.XML</DocumentationFile>
+    <DocumentationFile>..\..\..\build\Fake.Gallio.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DocumentationFile>..\..\..\build\FAKE.Gallio\Fake.Gallio.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\Fake.Gallio.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <DocumentationFile>..\..\..\build\FAKE.Gallio\Fake.Gallio.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\Fake.Gallio.xml</DocumentationFile>
     <OtherFlags>
     </OtherFlags>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
@@ -63,7 +63,7 @@
     <ProjectReference Include="..\FakeLib\FakeLib.fsproj">
       <Name>FakeLib</Name>
       <Project>{13d56521-772a-41db-9772-1da1a4aa8e3a}</Project>
-      <Private>False</Private>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="..\..\..\tools\FSharp\Microsoft.FSharp.Targets" Condition="'$(MSBuildFrameworkToolsPath)' == ''" />
