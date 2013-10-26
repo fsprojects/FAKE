@@ -26,7 +26,8 @@ let mail = "forkmann@gmx.de"
 
 let packages = 
     [projectName,projectDescription 
-     "FAKE.Gallio",projectDescription + " Extensions for Gallio"]
+     "FAKE.Gallio",projectDescription + " Extensions for Gallio"
+     "FAKE.SQL",projectDescription + " Extensions for SQL Server"]
 
 let buildVersion = if isLocalBuild then "0.0.1" else buildVersion
   

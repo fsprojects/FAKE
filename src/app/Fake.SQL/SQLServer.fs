@@ -8,9 +8,9 @@ open Microsoft.SqlServer.Management.Smo
 open Microsoft.SqlServer.Management.Common
 open System.IO
 
-type ServerInfo =
-    { Server: Server;
-      ConnBuilder: SqlConnectionStringBuilder}
+type ServerInfo ={ 
+    Server: Server
+    ConnBuilder: SqlConnectionStringBuilder}
   
 /// Gets a connection to the SQL server and an instance to the ConnectionStringBuilder
 let getServerInfo connectionString = 
@@ -27,7 +27,7 @@ let getServerInfo connectionString =
     conn.ServerInstance <- connbuilder.DataSource
     conn.Connect()
 
-    {Server = new Server(conn); 
+    {Server = new Server(conn)
      ConnBuilder = connbuilder}
   
 /// gets the DatabaseNames from the server
