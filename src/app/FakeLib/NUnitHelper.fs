@@ -43,7 +43,7 @@ module private NUnitMerge =
               Ignored = int tr ? ignored
               Skipped = int tr ? skipped
               Invalid = int tr ? invalid
-              DateTime = DateTime.Parse (tr ? date + tr ? time) }
+              DateTime = DateTime.Parse (sprintf "%s %s" tr ? date tr ? time) }
         static member toXElement res =
             elem "test-results"
             |> attr "name" "Merged results" 
@@ -110,37 +110,6 @@ module private NUnitMerge =
             |> attr "current-culture" culture.CurrentCulture
             |> attr "current-uiculture" culture.CurrentUICulture
 
-    let FoldAssemblyToProjectTuple (result, time, asserts) (assembly : XElement) =
-        let outResult =
-            match assembly?result, result with
-            | "Failure", _ -> "Failure" 
-            | "Inconclusive", "Success" -> "Inconclusive"
-            | _ -> result
-        outResult, time + double assembly?time, asserts + int assembly?asserts
-
-    let TestProjectSummary assemblies =
-        assemblies |> List.fold FoldAssemblyToProjectTuple ("Success", 0.0, 0)
-
-    let CreateTestProjectNode assemblies =
-        let result, time, asserts = TestProjectSummary assemblies
-        let projectEl = 
-            elem "test-suite"
-            |> attr "type" "Test Project"
-            |> attr "name" ""
-            |> attr "executed" "True"
-            |> attr "result" result
-            |> attr "time" time
-            |> attr "asserts" asserts
-        let results = elem "results"
-        results.Add (Seq.toArray assemblies)
-        projectEl.Add results
-        projectEl
-           
-    let GetXDocs directory filter =
-        Directory.GetFiles(directory, filter, SearchOption.AllDirectories)
-        |> Array.toList
-        |> List.map (fun fileName -> XDocument.Parse(File.ReadAllText(fileName)))
-
     type Doc = 
         { Doc: XDocument
           Summary: ResultSummary
@@ -159,6 +128,37 @@ module private NUnitMerge =
                 traceImportant "Unmatched environment and/or cultures detected: some of theses results files are not from the same test run."
             { doc1 with Summary = ResultSummary.append doc2.Summary doc1.Summary; Assemblies = doc2.Assemblies @ doc1.Assemblies }
 
+    let foldAssemblyToProjectTuple (result, time, asserts) (assembly : XElement) =
+        let outResult =
+            match assembly?result, result with
+            | "Failure", _ -> "Failure" 
+            | "Inconclusive", "Success" -> "Inconclusive"
+            | _ -> result
+        outResult, time + double assembly?time, asserts + int assembly?asserts
+
+    let TestProjectSummary assemblies =
+        assemblies |> List.fold foldAssemblyToProjectTuple ("Success", 0.0, 0)
+
+    let createTestProjectNode assemblies =
+        let result, time, asserts = TestProjectSummary assemblies
+        let projectEl = 
+            elem "test-suite"
+            |> attr "type" "Test Project"
+            |> attr "name" ""
+            |> attr "executed" "True"
+            |> attr "result" result
+            |> attr "time" time
+            |> attr "asserts" asserts
+        let results = elem "results"
+        results.Add (Seq.toArray assemblies)
+        projectEl.Add results
+        projectEl
+           
+    let getXDocs directory filter =
+        Directory.GetFiles(directory, filter, SearchOption.AllDirectories)
+        |> Array.toList
+        |> List.map (fun fileName -> XDocument.Parse(File.ReadAllText(fileName)))
+
     /// Merges non-empty list of test result XDocuments into a single XElement
     let mergeXDocs xDocs : XElement = 
         xDocs
@@ -169,21 +169,22 @@ module private NUnitMerge =
              res.Add
                 [Environment.toXElement merged.Env
                  Culture.toXElement merged.Culture
-                 CreateTestProjectNode merged.Assemblies]
+                 createTestProjectNode merged.Assemblies]
              res
 
-    let WriteMergedNunitResults (directory, filter, outfile) =
-        GetXDocs directory filter
+    let writeMergedNunitResults (directory, filter, outfile) =
+        getXDocs directory filter
         |> mergeXDocs
-        |> fun x -> File.WriteAllText(outfile, x.ToString())
+        |> sprintf "%O"
+        |> WriteStringToFile false outfile 
 
 /// Returns whether all tests in the given test result have succeeded
 let AllSucceeded xDocs =
     xDocs
     |> Seq.map GetTestAssemblies
     |> Seq.concat
-    |> Seq.map (fun assembly -> assembly.Attribute(imp "result").Value)
-    |> Seq.map (fun x -> x <> "Failure")
+    |> Seq.map (fun assembly -> assembly ? result)
+    |> Seq.map ((<>) "Failure")
     |> Seq.reduce (&&)
 
 /// Option which allow to specify if a NUnit error should break the build.
@@ -344,7 +345,7 @@ let NUnitParallel setParams (assemblies: string seq) =
     let details = assemblies |> separated ", "
     traceStartTask "NUnitParallel" details
     let parameters = NUnitDefaults |> setParams
-    let assemblies =  assemblies |> Seq.toArray
+    let assemblies = assemblies |> Seq.toArray
     let tool = parameters.ToolPath @@ parameters.ToolName
 
     let runSingleAssembly parameters (name, outputFile) =
