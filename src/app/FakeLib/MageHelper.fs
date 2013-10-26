@@ -2,6 +2,7 @@
 /// Contains helper functions which allow FAKE to call the [Manifest Generation and Editing Tool](http://msdn.microsoft.com/en-us/library/acz3y3te.aspx), in short 'MAGE'.
 /// The intentional use is the creation of a clickonce application.
 ///
+/// ## Certificates
 /// The MAGE tool wants to sign the manifest using a certificate. It should be clear, that this file is not under source control.
 /// On the other hand - you want to be able to run the compile batch on each developer machine. How can we achieve that? 
 /// In the parameter structure, we use a CertFile property and a TmpCertFile property. Whenever the CertFile was not found, the manifest is signed with
