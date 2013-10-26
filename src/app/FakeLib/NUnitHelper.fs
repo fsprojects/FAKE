@@ -9,149 +9,173 @@ open System.Xml
 open System.Xml.Linq
 
 /// [omit]
-let inline imp arg =
-  ( ^a : (static member op_Implicit : ^b -> ^a) arg)
+let inline imp arg = ( ^a : (static member op_Implicit : ^b -> ^a) arg)
+let inline private (?) (elem: XElement) attr = elem.Attribute(imp attr).Value
+let inline private attr attr value (elem: XElement) = elem.SetAttributeValue (imp attr, value); elem
+let inline private elem name = XElement (imp name : XName)
 
 /// [omit]
 let GetTestAssemblies (xDoc : XDocument) =
     xDoc.Descendants()
-    |> Seq.filter (fun el -> el.Name = (imp "test-suite") && el.Attribute(imp "type").Value = "Assembly")
+    |> Seq.filter (fun el -> el.Name = (imp "test-suite") && el?``type`` = "Assembly")
+    |> Seq.toList
 
 /// Used by the NUnitParallel helper, can also be used to merge test results
 /// from multiple calls to the normal NUnit helper.
 module private NUnitMerge =
-    type ResultSummary = {
-        Total : int
-        Errors : int
-        Failures : int
-        NotRun : int
-        Inconclusive : int
-        Ignored : int
-        Skipped : int
-        Invalid : int
-        DateTime : DateTime }
+    type ResultSummary = 
+        { Total: int
+          Errors: int
+          Failures: int
+          NotRun: int
+          Inconclusive: int
+          Ignored: int
+          Skipped: int
+          Invalid: int
+          DateTime: DateTime }
+        static member ofXDoc (xDoc: XDocument) = 
+            let tr = xDoc.Element (imp "test-results")
+            { Total = int tr ? total
+              Errors = int tr ? errors
+              Failures = int tr ? failures
+              NotRun = int tr ? ``not-run``
+              Inconclusive = int tr ? inconclusive
+              Ignored = int tr ? ignored
+              Skipped = int tr ? skipped
+              Invalid = int tr ? invalid
+              DateTime = DateTime.Parse (tr ? date + tr ? time) }
+        static member toXElement res =
+            elem "test-results"
+            |> attr "name" "Merged results" 
+            |> attr "total" res.Total
+            |> attr "errors" res.Errors
+            |> attr "failures" res.Failures
+            |> attr "not-run" res.NotRun
+            |> attr "inconclusive" res.Inconclusive 
+            |> attr "skipped" res.Skipped
+            |> attr "ignored" res.Ignored
+            |> attr "invalid" res.Invalid
+            |> attr "date" (res.DateTime.ToString("yyyy-MM-dd")) 
+            |> attr "time" (res.DateTime.ToString("HH:mm:ss"))
+        static member append r1 r2 = 
+            { r1 with Total = r1.Total + r2.Total
+                      Errors = r1.Errors + r2.Errors
+                      Failures = r1.Failures + r2.Failures
+                      NotRun = r1.NotRun + r2.NotRun
+                      Inconclusive = r1.Inconclusive + r2.Inconclusive
+                      Ignored = r1.Ignored + r2.Ignored
+                      Skipped = r1.Skipped + r2.Skipped
+                      Invalid = r1.Invalid + r2.Invalid
+                      DateTime = Seq.min [r1.DateTime; r2.DateTime] }
 
-    let GetTestSummary (xDoc : XDocument) =
-        let tr = xDoc.Element(imp "test-results")
-        {
-            Total = tr.Attribute(imp "total").Value |> Convert.ToInt32
-            Errors = tr.Attribute(imp "errors").Value |> Convert.ToInt32
-            Failures = tr.Attribute(imp "failures").Value |> Convert.ToInt32
-            NotRun = tr.Attribute(imp "not-run").Value |> Convert.ToInt32 
-            Inconclusive = tr.Attribute(imp "inconclusive").Value |> Convert.ToInt32
-            Ignored = tr.Attribute(imp "ignored").Value |> Convert.ToInt32
-            Skipped = tr.Attribute(imp "skipped").Value |> Convert.ToInt32
-            Invalid = tr.Attribute(imp "invalid").Value |> Convert.ToInt32
-            DateTime = String.concat " " [tr.Attribute(imp "date").Value;tr.Attribute(imp "time").Value] |> DateTime.Parse
-        }
+    type Environment = 
+        { NUnitVersion: string
+          ClrVersion: string
+          OSVersion: string
+          Platform: string
+          Cwd: string
+          MachineName: string
+          User: string
+          UserDomain: string }
+        static member ofXDoc (xDoc: XDocument) = 
+            let env = xDoc.Element(imp "test-results").Element(imp "environment")
+            { NUnitVersion = env ? ``nunit-version``
+              ClrVersion = env ? ``clr-version``
+              OSVersion = env ? ``os-version``
+              Platform = env ? platform
+              Cwd = env ? cwd
+              MachineName = env ? ``machine-name``
+              User = env ? user
+              UserDomain = env ? ``user-domain`` }
+        static member toXElement env =
+            elem "environment"
+            |> attr "nunit-version" env.NUnitVersion
+            |> attr "clr-version" env.ClrVersion
+            |> attr "os-version" env.OSVersion
+            |> attr "platform" env.Platform
+            |> attr "cwd" env.Cwd
+            |> attr "machine-name" env.MachineName
+            |> attr "user" env.User 
+            |> attr "user-domain" env.UserDomain
 
-    let CreateTestSummaryElement summary =
-        XElement.Parse (sprintf "<test-results name=\"Merged results\" total=\"%d\" errors=\"%d\" failures=\"%d\" not-run=\"%d\" inconclusive=\"%d\" skipped=\"%d\" ignored=\"%d\" invalid=\"%d\" date=\"%s\" time=\"%s\" />" 
-            summary.Total summary.Errors summary.Failures summary.NotRun summary.Inconclusive summary.Skipped summary.Ignored summary.Invalid (summary.DateTime.ToString("yyyy-MM-dd")) (summary.DateTime.ToString("HH:mm:ss")))
+    type Culture = 
+        { CurrentCulture: string
+          CurrentUICulture: string }
+        static member ofXDoc (xDoc: XDocument) = 
+            let culture = xDoc.Element(imp "test-results").Element (imp "culture-info")
+            { CurrentCulture = culture ? ``current-culture``
+              CurrentUICulture = culture ? ``current-uiculture`` }
+        static member toXElement culture =
+            elem "culture-info"
+            |> attr "current-culture" culture.CurrentCulture
+            |> attr "current-uiculture" culture.CurrentUICulture
 
-    type Environment = {
-        NUnitVersion : string
-        ClrVersion : string
-        OSVersion : string
-        Platform : string
-        Cwd : string
-        MachineName : string
-        User : string
-        UserDomain : string }
-
-    let GetEnvironment (xDoc : XDocument) =
-        let env = xDoc.Element(imp "test-results").Element(imp "environment")
-        {
-            NUnitVersion = env.Attribute(imp "nunit-version").Value
-            ClrVersion = env.Attribute(imp "clr-version").Value
-            OSVersion = env.Attribute(imp "os-version").Value
-            Platform = env.Attribute(imp "platform").Value
-            Cwd = env.Attribute(imp "cwd").Value
-            MachineName = env.Attribute(imp "machine-name").Value
-            User = env.Attribute(imp "user").Value
-            UserDomain = env.Attribute(imp "user-domain").Value
-        }
-
-    let CreateEnvironment environment =
-        XElement.Parse (sprintf "<environment nunit-version=\"%s\" clr-version=\"%s\" os-version=\"%s\" platform=\"%s\" cwd=\"%s\" machine-name=\"%s\" user=\"%s\" user-domain=\"%s\" />" 
-            environment.NUnitVersion environment.ClrVersion environment.OSVersion environment.Platform environment.Cwd environment.MachineName environment.User environment.UserDomain)
-
-    type Culture = {
-        CurrentCulture : string
-        CurrentUICulture : string }
-
-    let GetCulture (xDoc : XDocument) =
-        let culture = xDoc.Element(imp "test-results").Element(imp "culture-info")
-        {
-            CurrentCulture = culture.Attribute(imp "current-culture").Value
-            CurrentUICulture = culture.Attribute(imp "current-uiculture").Value
-        }
-
-    let CreateCulture culture =
-        XElement.Parse (sprintf "<culture-info current-culture=\"%s\" current-uiculture=\"%s\" />" culture.CurrentCulture culture.CurrentUICulture)
-
-    let FoldAssemblyToProjectTuple agg (assembly : XElement) =
-        let result, time, asserts = agg
+    let FoldAssemblyToProjectTuple (result, time, asserts) (assembly : XElement) =
         let outResult =
-            if assembly.Attribute(imp "result").Value = "Failure" then "Failure" 
-            elif assembly.Attribute(imp "result").Value = "Inconclusive" && result = "Success" then "Inconclusive"
-            else result
-        (outResult, time + Convert.ToDouble (assembly.Attribute(imp "time").Value), asserts + Convert.ToInt32 (assembly.Attribute(imp "asserts").Value))
-        
+            match assembly?result, result with
+            | "Failure", _ -> "Failure" 
+            | "Inconclusive", "Success" -> "Inconclusive"
+            | _ -> result
+        outResult, time + double assembly?time, asserts + int assembly?asserts
 
     let TestProjectSummary assemblies =
-        assemblies
-        |> Seq.fold FoldAssemblyToProjectTuple ("Success", 0.0, 0)
+        assemblies |> List.fold FoldAssemblyToProjectTuple ("Success", 0.0, 0)
 
     let CreateTestProjectNode assemblies =
         let result, time, asserts = TestProjectSummary assemblies
-        let projectEl = XElement.Parse (sprintf "<test-suite type=\"Test Project\" name=\"\" executed=\"True\" result=\"%s\" time=\"%f\" asserts=\"%d\" />" result time asserts)
-        let results = XElement.Parse ("<results/>")
-        results.Add (assemblies |> Seq.toArray)
+        let projectEl = 
+            elem "test-suite"
+            |> attr "type" "Test Project"
+            |> attr "name" ""
+            |> attr "executed" "True"
+            |> attr "result" result
+            |> attr "time" time
+            |> attr "asserts" asserts
+        let results = elem "results"
+        results.Add (Seq.toArray assemblies)
         projectEl.Add results
         projectEl
-
-    let MergeTestSummary agg summary =
-        { agg with 
-            Total = agg.Total + summary.Total
-            Errors = agg.Errors + summary.Errors
-            Failures = agg.Failures + summary.Failures
-            NotRun = agg.NotRun + summary.NotRun
-            Inconclusive = agg.Inconclusive + summary.Inconclusive
-            Ignored = agg.Ignored + summary.Ignored
-            Skipped = agg.Skipped + summary.Skipped
-            Invalid = agg.Invalid + summary.Invalid
-            DateTime = Seq.min [agg.DateTime; summary.DateTime]
-        }
-
-
+           
     let GetXDocs directory filter =
         Directory.GetFiles(directory, filter, SearchOption.AllDirectories)
-        |> Seq.map (fun fileName -> XDocument.Parse(File.ReadAllText(fileName)))
+        |> Array.toList
+        |> List.map (fun fileName -> XDocument.Parse(File.ReadAllText(fileName)))
 
-    let Folder state xDoc =
-        let summary, environment, culture, assemblies = state
-        // Sanity check!
-        if environment <> (GetEnvironment xDoc) || culture <> (GetCulture xDoc) then 
-            traceImportant "Unmatched environment and/or cultures detected: some of theses results files are not from the same test run."
-        (MergeTestSummary (GetTestSummary xDoc) summary, environment, culture, Seq.append assemblies (GetTestAssemblies xDoc))
+    type Doc = 
+        { Doc: XDocument
+          Summary: ResultSummary
+          Env: Environment
+          Culture: Culture
+          Assemblies: XElement list }
+        static member ofXDoc doc =  
+            { Doc = doc
+              Summary = ResultSummary.ofXDoc doc
+              Env = Environment.ofXDoc doc
+              Culture = Culture.ofXDoc doc
+              Assemblies = GetTestAssemblies doc }
+        static member append doc1 doc2 =
+            // Sanity check!
+            if doc1.Env <> doc2.Env || doc1.Culture <> doc2.Culture then 
+                traceImportant "Unmatched environment and/or cultures detected: some of theses results files are not from the same test run."
+            { doc1 with Summary = ResultSummary.append doc2.Summary doc1.Summary; Assemblies = doc2.Assemblies @ doc1.Assemblies }
 
-    let FoldDocs docs =
-        let state = (Seq.head docs |> GetTestSummary, Seq.head docs |> GetEnvironment, Seq.head docs |> GetCulture, Seq.head docs |> GetTestAssemblies)
-        Seq.fold Folder state docs
-
-    let CreateMerged state =
-        let summary, environment, culture, assemblies = state
-        let results = (CreateTestSummaryElement summary)
-        results.Add [CreateEnvironment environment;CreateCulture culture;CreateTestProjectNode assemblies]
-        results
+    /// Merges non-empty list of test result XDocuments into a single XElement
+    let mergeXDocs xDocs : XElement = 
+        xDocs
+        |> List.map Doc.ofXDoc
+        |> List.reduce Doc.append
+        |> fun merged -> 
+             let res = ResultSummary.toXElement merged.Summary
+             res.Add
+                [Environment.toXElement merged.Env
+                 Culture.toXElement merged.Culture
+                 CreateTestProjectNode merged.Assemblies]
+             res
 
     let WriteMergedNunitResults (directory, filter, outfile) =
         GetXDocs directory filter
-        |> FoldDocs
-        |> CreateMerged
+        |> mergeXDocs
         |> fun x -> File.WriteAllText(outfile, x.ToString())
-
 
 /// Returns whether all tests in the given test result have succeeded
 let AllSucceeded xDocs =
@@ -320,12 +344,10 @@ let NUnitParallel setParams (assemblies: string seq) =
     let details = assemblies |> separated ", "
     traceStartTask "NUnitParallel" details
     let parameters = NUnitDefaults |> setParams
-              
     let assemblies =  assemblies |> Seq.toArray
-
     let tool = parameters.ToolPath @@ parameters.ToolName
 
-    let runSingleAssembly name parameters outputFile =
+    let runSingleAssembly parameters (name, outputFile) =
         let args = commandLineBuilder { parameters with OutputFile = outputFile } [name]
         let errout = StringBuilder()
         let stdout = StringBuilder()
@@ -343,39 +365,38 @@ let NUnitParallel setParams (assemblies: string seq) =
     enableProcessTracing <- false
     let testRunResults =
         assemblies
-        |> Seq.map (fun assembly -> assembly, Path.GetTempFileName())
-        |> doParallelWithThrottle (Environment.ProcessorCount) (fun (assembly, outputFile) -> runSingleAssembly assembly parameters outputFile)
+        |> Seq.map (fun asm -> asm, Path.GetTempFileName())
+        |> doParallelWithThrottle Environment.ProcessorCount (runSingleAssembly parameters)
+        |> Seq.toList
     enableProcessTracing <- true
 
-    // Merge all valid results into single results file
-    if Array.Exists(testRunResults, fun r -> r.ReturnCode >= 0)  then
+    // Read all valid results
+    let docs = 
         testRunResults
-        |> Seq.filter (fun r -> r.ReturnCode >= 0)
-        |> Seq.map (fun result -> result.OutputFile)
-        |> Seq.map (fun fileName -> XDocument.Parse(File.ReadAllText(fileName)))
-        |> NUnitMerge.FoldDocs
-        |> NUnitMerge.CreateMerged
-        |> fun x -> File.WriteAllText(getWorkingDir parameters @@ parameters.OutputFile, x.ToString())
+        |> List.filter (fun x -> x.ReturnCode >= 0)
+        |> List.map (fun x -> x.OutputFile)
+        |> List.map (File.ReadAllText >> XDocument.Parse)
+
+    match docs with
+    | [] -> ()
+    | _ -> 
+        File.WriteAllText (getWorkingDir parameters @@ parameters.OutputFile, sprintf "%O" (NUnitMerge.mergeXDocs docs))
         sendTeamCityNUnitImport (getWorkingDir parameters @@ parameters.OutputFile)
 
-    // Deal with errors
-    let hasFailed = Array.Exists(testRunResults, fun r -> r.ReturnCode <> 0)
-    if hasFailed then
-        testRunResults
-        |> Seq.filter (fun r -> r.ReturnCode <> 0)
-        |> Seq.iter (fun r ->
-                        match r with
-                        | result when r.ReturnCode < 0 ->
-                            traceError <| sprintf "NUnit test run for %s returned error code %d, output to stderr was:" r.AssemblyName r.ReturnCode
-                            traceError <| r.ErrorOut.ToString()
-                        | result ->
-                            traceError <| sprintf "NUnit test run for %s reported failed tests, check outputfile %s for details." r.AssemblyName parameters.OutputFile)
-
     // Make sure we delete the temp files
-    testRunResults
-    |> Seq.iter (fun result -> File.Delete(result.OutputFile))
+    testRunResults 
+    |> List.map (fun x -> x.OutputFile)
+    |> List.iter File.Delete
 
-    if hasFailed then          
+    // Deal with errors
+    match testRunResults |> List.filter (fun r -> r.ReturnCode <> 0) with
+    | [] -> traceEndTask "NUnitParallel" details
+    | xs -> 
+        xs 
+        |> List.collect (function
+                | r when r.ReturnCode < 0 ->
+                        [ sprintf "NUnit test run for %s returned error code %d, output to stderr was:" r.AssemblyName r.ReturnCode
+                          sprintf "%O" r.ErrorOut ]
+                | r -> [ sprintf "NUnit test run for %s reported failed tests, check outputfile %s for details." r.AssemblyName parameters.OutputFile ])
+        |> List.iter traceError
         failwith "NUnitParallel test runs failed."
-    else
-        traceEndTask "NUnitParallel" details
