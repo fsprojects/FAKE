@@ -71,7 +71,10 @@
     <Compile Include="ProcessHelper.fs" />
     <Compile Include="FXCopHelper.fs" />
     <Compile Include="NCoverHelper.fs" />
-    <Compile Include="NUnitHelper.fs" />
+    <Compile Include="NUnit\Xml.fs" />
+    <Compile Include="NUnit\Common.fs" />
+    <Compile Include="NUnit\Sequential.fs" />
+    <Compile Include="NUnit\Parallel.fs" />
     <Compile Include="XUnitHelper.fs" />
     <Compile Include="MSpecHelper.fs" />
     <Compile Include="FileSet.fs" />
