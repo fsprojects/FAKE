@@ -23,6 +23,13 @@ let projectSummary = "FAKE - F# Make - Get rid of the noise in your build script
 let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. Tasks and dependencies are specified in a DSL which is integrated in F#."
 let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"]
 let mail = "forkmann@gmx.de"
+
+let packages = 
+    [projectName,projectDescription 
+     "FAKE.Gallio",projectDescription + " Extensions for Gallio"
+     "FAKE.SQL",projectDescription + " Extensions for SQL Server"]
+
+let buildVersion = if isLocalBuild then "0.0.1" else buildVersion
   
 let buildDir = "./build"
 let testDir = "./test"
@@ -33,6 +40,11 @@ let nugetDir = "./nuget"
 let reportDir = "./report" 
 let deployZip = deployDir @@ sprintf "%s-%s.zip" projectName buildVersion
 let packagesDir = "./packages"
+
+let additionalFiles = [
+    "License.txt"
+    "README.markdown"
+    "help/changelog.md"]
 
 // Targets
 Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; deployDir; docsDir; apidocsDir; nugetDir; reportDir])
@@ -106,10 +118,7 @@ Target "GenerateDocs" (fun _ ->
 )
 
 Target "CopyLicense" (fun _ -> 
-    ["License.txt"
-     "README.markdown"
-     "help/changelog.md"]
-       |> CopyTo buildDir
+    CopyTo buildDir additionalFiles
 )
 
 Target "BuildZip" (fun _ ->     
@@ -140,22 +149,34 @@ Target "ZipDocumentation" (fun _ ->
 Target "CreateNuGet" (fun _ -> 
     (* Temporary disable tests on *nix, bug # 122 *)
     if not isLinux then
-        let nugetDocsDir = nugetDir @@ "docs"
-        let nugetToolsDir = nugetDir @@ "tools"
+        for package,description in packages do            
+            let nugetDocsDir = nugetDir @@ "docs"
+            let nugetToolsDir = nugetDir @@ "tools"
 
-        CopyDir nugetDocsDir docsDir allFiles  
-        CopyDir nugetToolsDir buildDir allFiles
-        CopyDir nugetToolsDir @"./lib/fsi" allFiles
-        DeleteFile (nugetToolsDir @@ "Gallio.dll")
+            CleanDir nugetDocsDir
+            CleanDir nugetToolsDir
+            CopyDir nugetDocsDir docsDir allFiles
+            if package = projectName then 
+                !! (buildDir @@ "*.*") |> Copy nugetToolsDir 
+                CopyDir nugetToolsDir @"./lib/fsi" allFiles
+            else
+                CopyDir nugetToolsDir (buildDir @@ package) allFiles
+                DeleteFile (nugetToolsDir @@ "Gallio.dll")
+                CopyTo nugetToolsDir additionalFiles
 
-        NuGet (fun p -> 
-            {p with
-                Authors = authors
-                Project = projectName
-                Description = projectDescription                               
-                OutputPath = nugetDir
-                AccessKey = getBuildParamOrDefault "nugetkey" ""
-                Publish = hasBuildParam "nugetkey" }) "fake.nuspec"
+            NuGet (fun p -> 
+                {p with
+                    Authors = authors
+                    Project = package
+                    Description = description                               
+                    OutputPath = nugetDir
+                    Summary = projectSummary
+                    Dependencies =
+                        if package <> projectName then
+                          [projectName, RequireExactly (NormalizeVersion buildVersion)]
+                        else p.Dependencies
+                    AccessKey = getBuildParamOrDefault "nugetkey" ""
+                    Publish = hasBuildParam "nugetkey" }) "fake.nuspec"
 )
 
 Target "ReleaseDocs" (fun _ ->
