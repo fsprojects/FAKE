@@ -23,7 +23,6 @@ let projectSummary = "FAKE - F# Make - Get rid of the noise in your build script
 let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. Tasks and dependencies are specified in a DSL which is integrated in F#."
 let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"]
 let mail = "forkmann@gmx.de"
-let homepage = "http://github.com/fsharp/fake"
   
 let buildDir = "./build"
 let testDir = "./test"
@@ -92,7 +91,7 @@ Target "GenerateDocs" (fun _ ->
         let projInfo =
           [ "page-description", "FAKE - F# Make"
             "page-author", (separated ", " authors)
-            "github-link", "https://github.com/fsharp/FAKE"
+            "github-link", "http://github.com/fsharp/fake"
             "project-name", "FAKE - F# Make" ]
 
         Literate.ProcessDirectory (source, template, docsDir, replacements = projInfo)
