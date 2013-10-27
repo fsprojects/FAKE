@@ -1,4 +1,6 @@
 ﻿[<AutoOpen>]
+/// Contains functions which allow basic operations on git repositories.
+/// All operations assume that the CommandHelper can find git.exe.
 module Fake.Git.Repository
 
 open Fake
@@ -15,8 +17,10 @@ let init repositoryDir bare shared =
     | false, true -> gitCommand repositoryDir "init --shared=all"
     | _ -> gitCommand repositoryDir "init"
 
-///<summary>Cleans a directory by removing all files and sub-directories.</summary>
-///<param name="path">The path of the directory to clean.</param>
+/// Cleans a directory by removing all files and sub-directories.
+/// ## Parameters
+///
+///  - `path` - The path of the directory to clean.
 let fullclean repositoryDir =
     let di = directoryInfo repositoryDir
     if di.Exists then

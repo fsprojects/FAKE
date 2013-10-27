@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+/// Contains functions which allow the SHA1 of a file with git and without it.
 module Fake.Git.SHA1
 
 open System.Security.Cryptography
@@ -18,7 +19,8 @@ let calcGitSHA1 (text:string) =
     sprintf "blob %d%c%s" s.Length (char 0) s
       |> calcSHA1
 
-/// shows the SHA1 calculated by git
+/// Shows the SHA1 calculated by git.
+/// Assume that the CommandHelper module can find git.exe.
 let showObjectHash repositoryDir fileName =
     let _,msg,_ = runGitCommand repositoryDir (sprintf "hash-object %s" fileName)
     msg |> Seq.head
