@@ -50,9 +50,9 @@ You can download the latest builds from [http://teamcity.codebetter.com](http://
   <div class="span1"></div>
   <div class="span6">
     <div class="well well-small" id="nuget">
-      FAKE is also available <a href="https://nuget.org/packages/FAKE.Core">on NuGet</a>.
+      FAKE is also available <a href="https://nuget.org/packages/FAKEe">on NuGet</a>.
       To install the tool, run the following command in the <a href="http://docs.nuget.org/docs/start-here/using-the-package-manager-console">Package Manager Console</a>:
-      <pre>PM> Install-Package FAKE.Core</pre>
+      <pre>PM> Install-Package FAKE</pre>
     </div>
   </div>
   <div class="span1"></div>
