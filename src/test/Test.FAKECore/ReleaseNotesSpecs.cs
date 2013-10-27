@@ -66,5 +66,11 @@ namespace Test.FAKECore
 * 1.1.10 - Support for heterogeneous XML attributes. Make CsvFile re-entrant."))
                 .ShouldEqual(new ReleaseNotesHelper.ReleaseNotes("1.1.10", "1.1.10",
                     new[] { "Support for heterogeneous XML attributes.", "Make CsvFile re-entrant." }.ToFSharpList()));
-    }
+
+		It should_parse_simple_format_with_dots =
+			() => ReleaseNotesHelper.parseReleaseNotes (Notes (@"
+* 1.2.0 - Allow currency symbols on decimals. Remove .AsTuple member from CsvProvider. CsvProvider now uses GetSample instead of constructor like the other providers."))
+				.ShouldEqual (new ReleaseNotesHelper.ReleaseNotes ("1.2.0", "1.2.0",
+					new [] { "Allow currency symbols on decimals.", "Remove .AsTuple member from CsvProvider.", "CsvProvider now uses GetSample instead of constructor like the other providers." }.ToFSharpList ()));
+	}
 }
