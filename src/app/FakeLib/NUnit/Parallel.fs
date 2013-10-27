@@ -14,6 +14,11 @@ type private NUnitParallelResult = {
     ReturnCode : int
     OutputFile : string }
 
+type private AggFailedResult = 
+    { WorseReturnCode: int
+      Messages: string list }
+    static member Empty = { WorseReturnCode = Int32.MaxValue; Messages = [] }
+
 /// Runs NUnit in parallel on a group of assemblies.
 /// ## Parameters
 /// 
@@ -74,15 +79,36 @@ let NUnitParallel (setParams: NUnitParams -> NUnitParams) (assemblies: string se
     |> List.map (fun x -> x.OutputFile)
     |> List.iter File.Delete
 
-    // Deal with errors
-    match testRunResults |> List.filter (fun r -> r.ReturnCode <> 0) with
+    // Report results
+
+    let formatErrorMessages r =
+        [ if r.ReturnCode < 0 then
+            yield sprintf "NUnit test run for %s returned error code %d, output to stderr was:" r.AssemblyName r.ReturnCode
+            yield sprintf "%O" r.ErrorOut
+          else
+            yield sprintf "NUnit test run for %s reported failed tests, check output file %s for details." 
+                          r.AssemblyName parameters.OutputFile ]
+
+    match List.filter (fun r -> r.ReturnCode <> 0) testRunResults with
     | [] -> traceEndTask "NUnitParallel" details
-    | xs -> 
-        xs 
-        |> List.collect (function
-                | r when r.ReturnCode < 0 ->
-                        [ sprintf "NUnit test run for %s returned error code %d, output to stderr was:" r.AssemblyName r.ReturnCode
-                          sprintf "%O" r.ErrorOut ]
-                | r -> [ sprintf "NUnit test run for %s reported failed tests, check outputfile %s for details." r.AssemblyName parameters.OutputFile ])
-        |> List.iter traceError
-        failwith "NUnitParallel test runs failed."
+    | failedResults -> 
+        let aggResult = 
+            List.fold (fun acc x -> { acc with WorseReturnCode = min acc.WorseReturnCode x.ReturnCode
+                                               Messages = acc.Messages @ formatErrorMessages x }) 
+                      AggFailedResult.Empty
+                      failedResults
+
+        let fail() = 
+            List.iter traceError aggResult.Messages
+            failwithf "NUnitParallel test runs failed (%d of %d assemblies are failed)." 
+                      (List.length failedResults) (List.length testRunResults)
+
+        match parameters.ErrorLevel with
+        | DontFailBuild ->
+            match aggResult.WorseReturnCode with
+            | OK | TestsFailed -> traceEndTask "NUnit" details
+            | _ -> fail()
+        | Error ->
+            match aggResult.WorseReturnCode with
+            | OK -> traceEndTask "NUnit" details
+            | _ -> fail()
