@@ -25,7 +25,8 @@ let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"]
 let mail = "forkmann@gmx.de"
 
 let packages = 
-    [projectName,projectDescription 
+    ["FAKE.Core",projectDescription
+     projectName,projectDescription + " This package bundles all extensions."     
      "FAKE.Gallio",projectDescription + " Extensions for Gallio"
      "FAKE.SQL",projectDescription + " Extensions for SQL Server"]
 
@@ -156,13 +157,18 @@ Target "CreateNuGet" (fun _ ->
             CleanDir nugetDocsDir
             CleanDir nugetToolsDir
             CopyDir nugetDocsDir docsDir allFiles
-            if package = projectName then 
-                !! (buildDir @@ "*.*") |> Copy nugetToolsDir 
+
+            match package with
+            | p when p = projectName ->
+                !! (buildDir @@ "**/*.*") |> Copy nugetToolsDir 
+                CopyDir nugetToolsDir @"./lib/fsi" allFiles                
+            | p when p = "FAKE.Core" ->
+                !! (buildDir @@ "*.*") |> Copy nugetToolsDir
                 CopyDir nugetToolsDir @"./lib/fsi" allFiles
-            else
-                CopyDir nugetToolsDir (buildDir @@ package) allFiles
-                DeleteFile (nugetToolsDir @@ "Gallio.dll")
+            | _ ->
+                CopyDir nugetToolsDir (buildDir @@ package) allFiles                
                 CopyTo nugetToolsDir additionalFiles
+            DeleteFile (nugetToolsDir @@ "Gallio.dll")
 
             NuGet (fun p -> 
                 {p with
@@ -172,8 +178,8 @@ Target "CreateNuGet" (fun _ ->
                     OutputPath = nugetDir
                     Summary = projectSummary
                     Dependencies =
-                        if package <> projectName then
-                          [projectName, RequireExactly (NormalizeVersion buildVersion)]
+                        if package <> "FAKE.Core" && package <> projectName then
+                          ["FAKE.Core", RequireExactly (NormalizeVersion buildVersion)]
                         else p.Dependencies
                     AccessKey = getBuildParamOrDefault "nugetkey" ""
                     Publish = hasBuildParam "nugetkey" }) "fake.nuspec"
