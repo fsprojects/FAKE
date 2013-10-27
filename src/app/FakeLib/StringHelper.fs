@@ -26,8 +26,11 @@ let inline separated delimiter (items: string seq) = String.Join(delimiter, Arra
 /// Removes the slashes from the end of the given string
 let inline trimSlash (s:string) = s.TrimEnd('\\')
 
-/// Splits the given string at the given delimiter
+/// Splits the given string at the given char delimiter
 let inline split (delimiter:char) (text:string) = text.Split [|delimiter|] |> Array.toList
+
+/// Splits the given string at the given string delimiter
+let inline splitStr (delimiterStr:string) (text:string) = text.Split([|delimiterStr|], StringSplitOptions.None) |> Array.toList
 
 /// Converts a sequence of strings into a string separated with line ends
 let inline toLines s = separated "\r\n" s
