@@ -6,6 +6,7 @@ open System
 open System.IO
 open System.Text
 open System.Xml.Linq
+open System.Linq
 
 type private NUnitParallelResult = {
     AssemblyName : string
@@ -35,10 +36,9 @@ let NUnitParallel (setParams: NUnitParams -> NUnitParams) (assemblies: string se
     let details = assemblies |> separated ", "
     traceStartTask "NUnitParallel" details
     let parameters = NUnitDefaults |> setParams
-    let assemblies = assemblies |> Seq.toArray
     let tool = parameters.ToolPath @@ parameters.ToolName
 
-    let runSingleAssembly parameters (name, outputFile) =
+    let runSingleAssembly parameters name outputFile =
         let args = commandLineBuilder { parameters with OutputFile = outputFile } [name]
         let errout = StringBuilder()
         let stdout = StringBuilder()
@@ -56,8 +56,9 @@ let NUnitParallel (setParams: NUnitParams -> NUnitParams) (assemblies: string se
     enableProcessTracing <- false
     let testRunResults =
         assemblies
-        |> Seq.map (fun asm -> asm, Path.GetTempFileName())
-        |> doParallelWithThrottle Environment.ProcessorCount (runSingleAssembly parameters)
+            .AsParallel()
+            .WithDegreeOfParallelism(Environment.ProcessorCount)
+            .Select(fun asm -> runSingleAssembly parameters asm (Path.GetTempFileName()))
         |> Seq.toList
     enableProcessTracing <- true
 
