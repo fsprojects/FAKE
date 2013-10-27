@@ -23,11 +23,12 @@ let private parseSimpleReleaseNotes (text: seq<string>) =
     let assemblyVersion, nugetVersion = assemblyRegex.Match (lastLine), nugetRegex.Match (lastLine)
     if not assemblyVersion.Success
     then failwith "Unable to parse valid Assembly version from release notes."
+    let trimDot (s:string) = s.TrimEnd('.')
     let notes = 
         lastLine.Substring (nugetVersion.Index + nugetVersion.Length)
         |> trimChars [|' '; '-'|]
-        |> split '.'
-        |> List.map trim
+        |> splitStr ". "
+        |> List.map (trimDot >> trim)
         |> List.filter isNotNullOrEmpty
         |> List.map (fun x -> x + ".")
     { AssemblyVersion = assemblyVersion.Value
@@ -90,7 +91,7 @@ let private parseComplexReleaseNotes (text: seq<string>) =
 let parseReleaseNotes (data: seq<string>) = 
     let data = data |> Seq.toList |> List.filter (not << isNullOrWhiteSpace)
     match data with
-    | [] -> failwith "Empty Realease file."
+    | [] -> failwith "Empty Release file."
     | h :: _ -> 
         let (|Simple|Complex|Invalid|) = function '*' -> Simple | '#' -> Complex | _ -> Invalid
         let firstNonEmptyChar = h.Trim([|'-'; ' '|]).[0]
