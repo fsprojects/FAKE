@@ -62,6 +62,7 @@
 
 <h1>CommandHelper</h1>
 <div class="xmldoc">
+<p>Contains helpers which allow to interact with <a href="http://git-scm.com/">git</a> via the command line.</p>
 </div>
 
 <!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
@@ -77,86 +78,49 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '597', 597)" onmouseover="showTip(event, '597', 597)">
-            directExec infoAction
-          </code>
-          <div class="tip" id="597">
-            <strong>Signature:</strong>infoAction:(ProcessStartInfo -&gt; unit) -&gt; bool<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Runs the given process and returns the exit code</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '598', 598)" onmouseover="showTip(event, '598', 598)">
+          <code onmouseout="hideTip(event, '619', 619)" onmouseover="showTip(event, '619', 619)">
             directRunGitCommand (...)
           </code>
-          <div class="tip" id="598">
+          <div class="tip" id="619">
             <strong>Signature:</strong>repositoryDir:string -&gt; command:string -&gt; bool<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Runs the given git command, waits for its completion and returns if it succeeded.</p>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '599', 599)" onmouseover="showTip(event, '599', 599)">
+          <code onmouseout="hideTip(event, '620', 620)" onmouseover="showTip(event, '620', 620)">
             findGitDir repositoryDir
           </code>
-          <div class="tip" id="599">
+          <div class="tip" id="620">
             <strong>Signature:</strong>repositoryDir:string -&gt; DirectoryInfo<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Searches the git dir recursivly up to the root</p>
+        <td class="xmldoc"><p>Searches the git dir recursivly up to the root.</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '600', 600)" onmouseover="showTip(event, '600', 600)">
-            fireAndForget infoAction
-          </code>
-          <div class="tip" id="600">
-            <strong>Signature:</strong>infoAction:(ProcessStartInfo -&gt; unit) -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Starts the given process</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '601', 601)" onmouseover="showTip(event, '601', 601)">
+          <code onmouseout="hideTip(event, '621', 621)" onmouseover="showTip(event, '621', 621)">
             fireAndForgetGitCommand (...)
           </code>
-          <div class="tip" id="601">
+          <div class="tip" id="621">
             <strong>Signature:</strong>repositoryDir:string -&gt; command:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Fires the given git command</p>
+        <td class="xmldoc"><p>Fires the given git command ind the given repository directory and returns immediatly.</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '602', 602)" onmouseover="showTip(event, '602', 602)">
-            fixPath path
-          </code>
-          <div class="tip" id="602">
-            <strong>Signature:</strong>path:string -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '603', 603)" onmouseover="showTip(event, '603', 603)">
+          <code onmouseout="hideTip(event, '622', 622)" onmouseover="showTip(event, '622', 622)">
             getGitResult repositoryDir command
           </code>
-          <div class="tip" id="603">
+          <div class="tip" id="622">
             <strong>Signature:</strong>repositoryDir:string -&gt; command:string -&gt; List&lt;string&gt;<br />
                       </div>
         </td>
@@ -165,99 +129,93 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '604', 604)" onmouseover="showTip(event, '604', 604)">
+          <code onmouseout="hideTip(event, '623', 623)" onmouseover="showTip(event, '623', 623)">
             gitCommand repositoryDir command
           </code>
-          <div class="tip" id="604">
+          <div class="tip" id="623">
             <strong>Signature:</strong>repositoryDir:string -&gt; command:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '605', 605)" onmouseover="showTip(event, '605', 605)">
-            gitCommandf repositoryDir fmt
-          </code>
-          <div class="tip" id="605">
-            <strong>Signature:</strong>repositoryDir:string -&gt; fmt:StringFormat&lt;&#39;?6156,unit&gt; -&gt; &#39;?6156<br />
-                          <strong>Type parameters:</strong> '?6156          </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '606', 606)" onmouseover="showTip(event, '606', 606)">
-            gitPath 
-          </code>
-          <div class="tip" id="606">
-            <strong>Signature:</strong>string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '607', 607)" onmouseover="showTip(event, '607', 607)">
-            gitTimeOut 
-          </code>
-          <div class="tip" id="607">
-            <strong>Signature:</strong>TimeSpan<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '608', 608)" onmouseover="showTip(event, '608', 608)">
-            runGitCommand repositoryDir command
-          </code>
-          <div class="tip" id="608">
-            <strong>Signature:</strong>repositoryDir:string -&gt; command:string -&gt; bool * List&lt;string&gt; * string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '609', 609)" onmouseover="showTip(event, '609', 609)">
-            runGitCommandf fmt
-          </code>
-          <div class="tip" id="609">
-            <strong>Signature:</strong>fmt:StringFormat&lt;&#39;?6148,(string -&gt; bool * List&lt;string&gt; * string)&gt; -&gt; &#39;?6148<br />
-                          <strong>Type parameters:</strong> '?6148          </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '610', 610)" onmouseover="showTip(event, '610', 610)">
-            runSimpleGitCommand (...)
-          </code>
-          <div class="tip" id="610">
-            <strong>Signature:</strong>repositoryDir:string -&gt; command:string -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Runs the git command and returns the first line of the result</p>
+        <td class="xmldoc"><p>Runs the given git command, waits for its completion.</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '611', 611)" onmouseover="showTip(event, '611', 611)">
+          <code onmouseout="hideTip(event, '624', 624)" onmouseover="showTip(event, '624', 624)">
+            gitPath 
+          </code>
+          <div class="tip" id="624">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Tries to locate the git.exe via the eviroment variable "GIT".</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '625', 625)" onmouseover="showTip(event, '625', 625)">
+            gitTimeOut 
+          </code>
+          <div class="tip" id="625">
+            <strong>Signature:</strong>TimeSpan<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Specifies a global timeout for git.exe - default is <em>no timeout</em></p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '626', 626)" onmouseover="showTip(event, '626', 626)">
+            runGitCommand repositoryDir command
+          </code>
+          <div class="tip" id="626">
+            <strong>Signature:</strong>repositoryDir:string -&gt; command:string -&gt; bool * List&lt;string&gt; * string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Runs git.exe with the given command in the given repository directory.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '627', 627)" onmouseover="showTip(event, '627', 627)">
+            runGitCommandf fmt
+          </code>
+          <div class="tip" id="627">
+            <strong>Signature:</strong>fmt:StringFormat&lt;&#39;?6150,(string -&gt; bool * List&lt;string&gt; * string)&gt; -&gt; &#39;?6150<br />
+                          <strong>Type parameters:</strong> '?6150          </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '628', 628)" onmouseover="showTip(event, '628', 628)">
+            runSimpleGitCommand (...)
+          </code>
+          <div class="tip" id="628">
+            <strong>Signature:</strong>repositoryDir:string -&gt; command:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Runs the git command and returns the first line of the result.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '629', 629)" onmouseover="showTip(event, '629', 629)">
             showGitCommand repositoryDir command
           </code>
-          <div class="tip" id="611">
+          <div class="tip" id="629">
             <strong>Signature:</strong>repositoryDir:string -&gt; command:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Runs the given git command, waits for its completion.
+This version doesn't throw an exception if an error occurs. It just traces the error.</p>
+</td>
       </tr>
     </tbody>
   </table>
