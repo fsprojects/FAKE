@@ -114,7 +114,33 @@ let setEnvironmentVariables (startInfo:ProcessStartInfo) environmentSettings =
           
 /// Runs the given process
 /// returns true if the exit code was 0
-let execProcess infoAction timeOut = ExecProcess infoAction timeOut = 0    
+let execProcess infoAction timeOut = ExecProcess infoAction timeOut = 0
+
+/// Starts the given process and returns immediatly.
+let fireAndForget infoAction =
+    use p = new Process()
+    p.StartInfo.UseShellExecute <- false
+    infoAction p.StartInfo
+  
+    try
+        p.Start() |> ignore
+    with
+    | exn -> failwithf "Start of process %s failed. %s" p.StartInfo.FileName exn.Message
+
+/// Runs the given process, waits for its completion and returns if it succeeded.
+let directExec infoAction =
+    use p = new Process()
+    p.StartInfo.UseShellExecute <- false
+    infoAction p.StartInfo
+  
+    try
+        p.Start() |> ignore
+    with
+    | exn -> failwithf "Start of process %s failed. %s" p.StartInfo.FileName exn.Message
+  
+    p.WaitForExit()
+    
+    p.ExitCode = 0
 
 /// Starts the given process and forgets about it
 let StartProcess infoAction =
