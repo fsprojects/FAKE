@@ -20,7 +20,7 @@ let calcGitSHA1 (text:string) =
       |> calcSHA1
 
 /// Shows the SHA1 calculated by git.
-/// Assume that the CommandHelper module can find git.exe.
+/// Assumes that the CommandHelper module can find git.exe.
 let showObjectHash repositoryDir fileName =
     let _,msg,_ = runGitCommand repositoryDir (sprintf "hash-object %s" fileName)
     msg |> Seq.head

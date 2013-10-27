@@ -6,10 +6,20 @@ module Fake.Git.Repository
 open Fake
 open System.IO
 
-/// Clones a git repository
+/// Clones a git repository.
+/// ## Parameters
+///
+///  - `workingDir` - The working directory.
+///  - `repoUrl` - The URL to the origin.
+///  - `toPath` - Specifes the new target subfolder. 
 let clone workingDir repoUrl toPath =  gitCommand workingDir (sprintf "clone %s %s" repoUrl toPath)
 
-/// Inits a git repository
+/// Inits a git repository.
+/// ## Parameters
+///
+///  - `repositoryDir` - The path of the target directory.
+///  - `bare` - If the new directory is a bare directory.
+///  - `shared` - Specifies that the git repository is to be shared amongst several users. This allows users belonging to the same group to push into that repository. 
 let init repositoryDir bare shared =
     match bare, shared with
     | true, true -> gitCommand repositoryDir "init --bare --shared=all"
@@ -20,7 +30,7 @@ let init repositoryDir bare shared =
 /// Cleans a directory by removing all files and sub-directories.
 /// ## Parameters
 ///
-///  - `path` - The path of the directory to clean.
+///  - `repositoryDir` - The path of the directory to clean.
 let fullclean repositoryDir =
     let di = directoryInfo repositoryDir
     if di.Exists then
