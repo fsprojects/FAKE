@@ -37,10 +37,10 @@ let inline splitStr (delimiterStr:string) (text:string) = text.Split([|delimiter
 /// Converts a sequence of strings into a string separated with line ends
 let inline toLines s = separated "\r\n" s
 
-/// Checks wether the given text starts with the given prefix
+/// Checks whether the given text starts with the given prefix
 let startsWith prefix (text:string) = text.StartsWith prefix
 
-/// Checks wether the given text ends with the given suffix
+/// Checks whether the given text ends with the given suffix
 let endsWith suffix (text:string) = text.EndsWith suffix
 
 /// Determines whether the last character of the given <see cref="string" />
@@ -102,7 +102,7 @@ let getRegEx pattern =
 let regex_replace pattern (replacement:string) text =
     (getRegEx pattern).Replace(text,replacement)
 
-/// Checks wether the given char is a german umlaut.
+/// Checks whether the given char is a german umlaut.
 let isUmlaut c = Seq.contains c ['ä'; 'ö'; 'ü'; 'Ä'; 'Ö'; 'Ü'; 'ß']
 
 /// Converts all characters in a string to lower case.
@@ -111,7 +111,7 @@ let inline toLower (s:string) = s.ToLower()
 /// Returns all standard chars and digits.
 let charsAndDigits = ['a'..'z'] @ ['A'..'Z'] @ ['0'..'9'] 
 
-/// Checks wether the given char is a standard char or digit.
+/// Checks whether the given char is a standard char or digit.
 let isLetterOrDigit c = List.exists ((=) c) charsAndDigits
 
 /// Trims the given string with the DirectorySeparatorChar
@@ -199,7 +199,7 @@ let ReadFileAsBytes = File.ReadAllBytes
 /// Replaces any occurence of the currentDirectory with .
 let inline shortenCurrentDirectory value = replace currentDirectory "." value
 
-/// Checks wether the given text starts with the given prefix
+/// Checks whether the given text starts with the given prefix
 let inline (<*) prefix text = startsWith prefix text
 
 /// Replaces the text in the given file
