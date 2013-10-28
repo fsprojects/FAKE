@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+/// Contains a task which allows to run [SpecFlow](http://www.specflow.org/) tests.
 module Fake.SpecFlowHelper
 
 open System
@@ -37,7 +38,10 @@ let SpecFlowDefaults = {
     XsltFile =          null
 }
 
-// Run SpecFlow on a set of params.
+// Runs SpecFlow specflow on a project.
+/// ## Parameters
+///
+///  - `setParams` - Function used to manipulate the default SpecFlow parameter value.
 let SpecFlow setParams =    
 
     // get default params, and push our set of params in.
