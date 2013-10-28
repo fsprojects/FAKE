@@ -56,6 +56,10 @@ let getSubModules repositoryDir =
                UpToDate = submodule.[0] <> '+' })
 
 /// Inits a submodule with the given name in a subfolder of the given super repository.
+/// ## Parameters
+///
+///  - `superRepositoryDir` - The super repository.
+///  - `name` - The name of the new repository.
 let init superRepositoryDir name =
     if isNullOrEmpty name then "submodule update --init" else "submodule update --init \"" + name.Trim() + "\""
       |> gitCommand superRepositoryDir
@@ -66,7 +70,7 @@ let init superRepositoryDir name =
 ///  - `superRepositoryDir` - The super repository.
 ///  - `remotePath` - The path to the remote repository of the submodule.
 ///  - `localPath` - The local path to the submodule.
-///  - `branch` ->The branch to  clone. (can be null)
+///  - `branch` - The branch to  clone. (can be null)
 let add superRepositoryDir remotePath localPath branch =
     sprintf "submodule add \"%s\" \"%s\" %s"
       (remotePath |> fixPath)
