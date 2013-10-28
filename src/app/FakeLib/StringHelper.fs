@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+/// Contains basic functions for string manipulation.
 module Fake.StringHelper
 
 open System
@@ -6,6 +7,7 @@ open System.IO
 open System.Text
 open System.Collections.Generic
 
+/// [omit]
 let productName() = "FAKE"
 
 /// Returns if the string is null or empty
@@ -45,29 +47,30 @@ let endsWith suffix (text:string) = text.EndsWith suffix
 /// matches Path.DirectorySeparatorChar.         
 let endsWithSlash = endsWith (Path.DirectorySeparatorChar.ToString())
 
+/// Replaces the first occurrence of the pattern with the given replacement.
 let replaceFirst (pattern: string) replacement (text: string) = 
     let pos = text.IndexOf pattern
     if pos < 0
         then text
         else text.Remove(pos, pattern.Length).Insert(pos, replacement)
         
-/// Appends a text
-let inline append s (builder:StringBuilder) = builder.Append(sprintf "\"%s\" " s)
+/// Appends a text to a StringBuilder.
+let inline append text (builder:StringBuilder) = builder.Append(sprintf "\"%s\" " text)
 
-/// Appends a text if the predicate is true
+/// Appends a text if the predicate is true.
 let inline appendIfTrue p s builder = if p then append s builder else builder
 
-/// Appends a text if the predicate is false
+/// Appends a text if the predicate is false.
 let inline appendIfFalse p = appendIfTrue (not p)
 
-/// Appends a text if the value is not null
+/// Appends a text if the value is not null.
 let inline appendIfNotNull (value : Object) s = 
     appendIfTrue (value <> null) (
         match value with 
         | :? String as sv -> (sprintf "%s%s" s sv)
         | _ -> (sprintf "%s%A" s value))
 
-/// Appends a quoted text if the value is not null
+/// Appends a quoted text if the value is not null.
 let inline appendQuotedIfNotNull (value : Object) s (builder:StringBuilder) =    
     if (value = null) then builder else (
         match value with 
@@ -75,30 +78,34 @@ let inline appendQuotedIfNotNull (value : Object) s (builder:StringBuilder) =
         | _ -> builder.Append(sprintf "%s\"%A\" " s value))
 
 
-/// Appends a text if the value is not null
+/// Appends a text if the value is not null.
 let inline appendStringIfValueIsNotNull value = appendIfTrue (value <> null)
 
-/// Appends a text if the value is not null or empty
+/// Appends a text if the value is not null or empty.
 let inline appendStringIfValueIsNotNullOrEmpty value = appendIfTrue (isNullOrEmpty value |> not)
 
-/// Appends all notnull fileNames
+/// Appends all notnull fileNames.
 let inline appendFileNamesIfNotNull fileNames (builder:StringBuilder) =
     fileNames 
       |> Seq.fold (fun builder file -> appendIfTrue (isNullOrEmpty file |> not) file builder) builder
 
+/// [omit]
 let private regexes = new Dictionary<_,_>()
 
+/// [omit]
 let getRegEx pattern =
     match regexes.TryGetValue pattern with
     | true, regex -> regex
     | _ -> (new System.Text.RegularExpressions.Regex(pattern))
 
+/// [omit]
 let regex_replace pattern (replacement:string) text =
     (getRegEx pattern).Replace(text,replacement)
 
 /// Checks wether the given char is a german umlaut.
 let isUmlaut c = Seq.contains c ['ä'; 'ö'; 'ü'; 'Ä'; 'Ö'; 'Ü'; 'ß']
 
+/// Converts all characters in a string to lower case.
 let inline toLower (s:string) = s.ToLower()
 
 /// Returns all standard chars and digits.
@@ -110,8 +117,9 @@ let isLetterOrDigit c = List.exists ((=) c) charsAndDigits
 /// Trims the given string with the DirectorySeparatorChar
 let inline trimSeparator (s:string) = s.TrimEnd Path.DirectorySeparatorChar
 
-let inline trimSpecialChars (s:string) =
-    s
+/// Trims all special characters from a string.
+let inline trimSpecialChars (text:string) =
+    text
       |> Seq.filter isLetterOrDigit
       |> Seq.filter (isUmlaut >> not)
       |> Seq.fold (fun (acc:string) c -> acc + string c) ""
@@ -201,10 +209,16 @@ let ReplaceInFile replaceF fileName =
     |> replaceF
     |> ReplaceFile fileName
 
+/// Represents Linux line breaks
 let LinuxLineBreaks = "\n"
+
+/// Represents Windows line breaks
 let WindowsLineBreaks = "\r\n"
+
+/// Represents Mac line breaks
 let MacLineBreaks = "\r"
 
+/// Converts all line breaks in a text to windows line breaks
 let ConvertTextToWindowsLineBreaks text = 
     text
     |> replace WindowsLineBreaks LinuxLineBreaks 
@@ -241,6 +255,7 @@ let inline RemoveLineBreaks text =
 let inline EncapsulateApostrophe text = replace "'" "`" text
         
 /// A cache of relative path names.
+/// [omit]
 let relativePaths = new Dictionary<_,_>()
 
 /// <summary>Produces relative path when possible to go from baseLocation to targetLocation.</summary>
@@ -288,7 +303,7 @@ let ProduceRelativePath baseLocation targetLocation =
     else
         (!resultPath).Substring(0, (!resultPath).Length - 1)
 
-/// Replaces the absolute path to a relative
+/// Replaces the absolute path to a relative path.
 let inline toRelativePath value = 
     match relativePaths.TryGetValue value with
     | true,x -> x
@@ -297,8 +312,10 @@ let inline toRelativePath value =
          relativePaths.Add(value,x)
          x
 
+/// Find a regex pattern in a text and replaces it with the given replacement.
 let (>=>) pattern replacement text = regex_replace pattern replacement text
 
+/// Determines if a text matches a given regex pattern.
 let (>**) pattern text = (getRegEx pattern).IsMatch text
 
 /// Decodes a Base64-encoded UTF-8-encoded string
@@ -306,4 +323,3 @@ let DecodeBase64Utf8String (text:string) =
   text
   |> Convert.FromBase64String
   |> Encoding.UTF8.GetString
-    
