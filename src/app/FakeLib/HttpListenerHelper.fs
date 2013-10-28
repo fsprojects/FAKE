@@ -1,4 +1,5 @@
-﻿module Fake.HttpListenerHelper
+﻿/// Contains basic HTTP listener functions for FAKE.Deploy.
+module Fake.HttpListenerHelper
 
 open System
 open System.IO
@@ -9,6 +10,7 @@ open System.Diagnostics
 open System.Text.RegularExpressions
 open System.Security.Principal
 
+/// Represents a route.
 type Route = {
         Verb : string
         Path : string
@@ -17,11 +19,10 @@ type Route = {
     with 
         override x.ToString() = sprintf "%s %s" x.Verb x.Path              
 
-type RouteResult =
-    { Route:Route
-      Parameters: Map<string,string> }
-
-
+/// Represents a route result.
+type RouteResult = { 
+    Route : Route
+    Parameters : Map<string,string> }
      
 let private listener port = 
     let listener = new HttpListener()
@@ -38,8 +39,10 @@ let private writeResponse (ctx : HttpListenerContext) (str : string) =
     ctx.Response.AddHeader("access-control-allow-headers", "content-type, accept")
     ctx.Response.Close(response, true)
 
+/// [omit]
 let placeholderRegex = new Regex("{([^}]+)}",RegexOptions.Compiled)
 
+/// [omit]
 let routeMatcher route =
     let dict = new System.Collections.Generic.Dictionary<int,string>()
 
@@ -90,9 +93,11 @@ let private routeRequest log (ctx : HttpListenerContext) routeMatchers =
 
 let private getStatus args (ctx : HttpListenerContext) = "Http listener is running"
 
+/// Contains the default routes.
 let defaultRoutes =
     [ "GET", "", getStatus] 
 
+/// Creates routes for the http listener.
 let createRoutes routes = 
     routes
     |> Seq.map (fun (verb, route : string, func) ->        
@@ -101,11 +106,14 @@ let createRoutes routes =
           Handler = func })
     |> Seq.map routeMatcher
 
+/// [omit]
 let CreateDefaultRequestMap() = createRoutes defaultRoutes
 
+/// Matches an URL with the given routes.
 let matchRoute routes verb url =
     routes |> Seq.map routeMatcher |> Seq.tryPick (fun r -> r verb url)
 
+/// [omit]
 let getBodyFromContext (ctx : HttpListenerContext) = 
     let readAllBytes (s : Stream) =
         let ms = new MemoryStream()
@@ -121,6 +129,7 @@ let getBodyFromContext (ctx : HttpListenerContext) =
     then (readAllBytes ctx.Request.InputStream).ToArray() 
     else failwith "Attempted to read body from request when there is not one"
 
+/// Returns the first free port which can be used for the http listener.
 let getFirstFreePort() =
     let defaultPort = 8080
     let usedports = NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpListeners() |> Seq.map (fun x -> x.Port)
@@ -128,12 +137,13 @@ let getFirstFreePort() =
     let port = ports |> Seq.find (fun p -> not <| Seq.contains p usedports)
     port.ToString()
 
+/// Returns the specified port from the config or the first free port if no port was specified.
 let getPort configPort =    
     match configPort with
     | "*" -> getFirstFreePort()
     | _ -> configPort 
 
-
+/// Represents a http listener.
 type Listener =
   { ServerName: string
     Port: string
@@ -142,11 +152,13 @@ type Listener =
       member x.Cancel() = x.CancelF()
       member x.RootUrl = sprintf "http://%s:%s/fake/" x.ServerName x.Port
 
+/// Creates an empty http listener.
 let emptyListener = { 
     ServerName = ""
     Port = ""
     CancelF = id }
 
+/// [omit]
 let getSetUrlAclArgs port = 
     if Environment.OSVersion.Version.Major > 5
     then "netsh",
@@ -154,6 +166,7 @@ let getSetUrlAclArgs port =
     else "httpcfg",
          String.Format(@"set urlacl /u http://+:{0}/ /a D:(A;;GX;;;""{1}"")", port, WindowsIdentity.GetCurrent().User);
 
+/// Returns if the http listener can listen to the given port.
 let canListen port = 
     try
         let httpListener = new HttpListener()
@@ -167,6 +180,7 @@ let canListen port =
         then raise(InvalidOperationException("Could not listen to port " + port, e))
         false
 
+/// Checks whether the http listener can be bound to the given port.
 let ensureCanBindHttpPort port =
     if not <| canListen port
     then
@@ -175,6 +189,7 @@ let ensureCanBindHttpPort port =
        | 0 -> ()
        | a -> failwithf "Failed to grant rights for listening to http, exit code: %d" a
 
+/// Starts a http listener on the given server and port.
 let start log serverName port requestMap =
     let cts = new CancellationTokenSource()
     let usedPort = getPort port
@@ -195,5 +210,6 @@ let start log serverName port requestMap =
     Async.Start(listenerLoop, cts.Token)
     { ServerName = serverName; Port = usedPort; CancelF = cts.Cancel }
 
+/// Starts a http listener on the given server and port - uses the console logger.
 let startWithConsoleLogger serverName port requestMap =
     start TraceHelper.logToConsole serverName port requestMap
