@@ -62,6 +62,7 @@
 
 <h1>Reset</h1>
 <div class="xmldoc">
+<p>Contains helper functions which allow to deal with git reset.</p>
 </div>
 
 <!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
@@ -77,74 +78,128 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '625', 625)" onmouseover="showTip(event, '625', 625)">
+          <code onmouseout="hideTip(event, '667', 667)" onmouseover="showTip(event, '667', 667)">
             hard repositoryDir commit file
           </code>
-          <div class="tip" id="625">
+          <div class="tip" id="667">
             <strong>Signature:</strong>repositoryDir:string -&gt; commit:string -&gt; file:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Performs a git reset "hard".
+Resets the index and working tree. Any changes to tracked files in the working tree since <commit> are discarded.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>repositoryDir</code> - The git repository.</li>
+<li><code>commit</code> - The commit to which git should perform the reset.</li>
+<li><code>file</code> - The file to reset - null means all files.</li>
+</ul>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '626', 626)" onmouseover="showTip(event, '626', 626)">
+          <code onmouseout="hideTip(event, '668', 668)" onmouseover="showTip(event, '668', 668)">
             mixed repositoryDir commit file
           </code>
-          <div class="tip" id="626">
+          <div class="tip" id="668">
             <strong>Signature:</strong>repositoryDir:string -&gt; commit:string -&gt; file:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Performs a git reset "mixed".
+Resets the index but not the working tree and reports what has not been updated.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>repositoryDir</code> - The git repository.</li>
+<li><code>commit</code> - The commit to which git should perform the reset.</li>
+<li><code>file</code> - The file to reset - null means all files.</li>
+</ul>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '627', 627)" onmouseover="showTip(event, '627', 627)">
+          <code onmouseout="hideTip(event, '669', 669)" onmouseover="showTip(event, '669', 669)">
             ResetHard repositoryDir
           </code>
-          <div class="tip" id="627">
+          <div class="tip" id="669">
             <strong>Signature:</strong>repositoryDir:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Performs a git reset "hard" to the current HEAD.
+Resets the index and working tree. Any changes to tracked files in the working tree since <commit> are discarded.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>repositoryDir</code> - The git repository.</li>
+</ul>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '628', 628)" onmouseover="showTip(event, '628', 628)">
+          <code onmouseout="hideTip(event, '670', 670)" onmouseover="showTip(event, '670', 670)">
             ResetMixed repositoryDir
           </code>
-          <div class="tip" id="628">
+          <div class="tip" id="670">
             <strong>Signature:</strong>repositoryDir:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Performs a git reset "mixed" to the current HEAD.
+Resets the index but not the working tree and reports what has not been updated.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>repositoryDir</code> - The git repository.</li>
+</ul>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '629', 629)" onmouseover="showTip(event, '629', 629)">
+          <code onmouseout="hideTip(event, '671', 671)" onmouseover="showTip(event, '671', 671)">
             ResetSoft repositoryDir
           </code>
-          <div class="tip" id="629">
+          <div class="tip" id="671">
             <strong>Signature:</strong>repositoryDir:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Performs a git reset "soft" to the current HEAD.
+Does not touch the index file nor the working tree at all.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>repositoryDir</code> - The git repository.</li>
+</ul>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '630', 630)" onmouseover="showTip(event, '630', 630)">
+          <code onmouseout="hideTip(event, '672', 672)" onmouseover="showTip(event, '672', 672)">
             soft repositoryDir commit file
           </code>
-          <div class="tip" id="630">
+          <div class="tip" id="672">
             <strong>Signature:</strong>repositoryDir:string -&gt; commit:string -&gt; file:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Performs a git reset "soft".
+Does not touch the index file nor the working tree at all.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>repositoryDir</code> - The git repository.</li>
+<li><code>commit</code> - The commit to which git should perform the reset.</li>
+<li><code>file</code> - The file to reset - null means all files.</li>
+</ul>
+</td>
       </tr>
     </tbody>
   </table>
