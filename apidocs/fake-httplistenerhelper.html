@@ -62,6 +62,7 @@
 
 <h1>HttpListenerHelper</h1>
 <div class="xmldoc">
+<p>Contains basic HTTP listener functions for FAKE.Deploy.</p>
 </div>
 
 <!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
@@ -76,19 +77,22 @@
                     <td class="type-name">
                         <a href="fake-httplistenerhelper-listener.html">Listener</a>
                     </td>
-                    <td class="xmldoc"></td>
+                    <td class="xmldoc"><p>Represents a http listener.</p>
+</td>
                 </tr>
                 <tr>
                     <td class="type-name">
                         <a href="fake-httplistenerhelper-route.html">Route</a>
                     </td>
-                    <td class="xmldoc"></td>
+                    <td class="xmldoc"><p>Represents a route.</p>
+</td>
                 </tr>
                 <tr>
                     <td class="type-name">
                         <a href="fake-httplistenerhelper-routeresult.html">RouteResult</a>
                     </td>
-                    <td class="xmldoc"></td>
+                    <td class="xmldoc"><p>Represents a route result.</p>
+</td>
                 </tr>
         </tbody>
     </table>
@@ -103,182 +107,132 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '125', 125)" onmouseover="showTip(event, '125', 125)">
+          <code onmouseout="hideTip(event, '158', 158)" onmouseover="showTip(event, '158', 158)">
             canListen port
           </code>
-          <div class="tip" id="125">
+          <div class="tip" id="158">
             <strong>Signature:</strong>port:string -&gt; bool<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Returns if the http listener can listen to the given port.</p>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '127', 127)" onmouseover="showTip(event, '127', 127)">
-            CreateDefaultRequestMap ()
-          </code>
-          <div class="tip" id="127">
-            <strong>Signature:</strong>unit -&gt; seq&lt;(string -&gt; string -&gt; RouteResult option)&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '128', 128)" onmouseover="showTip(event, '128', 128)">
+          <code onmouseout="hideTip(event, '159', 159)" onmouseover="showTip(event, '159', 159)">
             createRoutes routes
           </code>
-          <div class="tip" id="128">
+          <div class="tip" id="159">
             <strong>Signature:</strong>routes:seq&lt;string * string * (Map&lt;string,string&gt; -&gt; HttpListenerContext -&gt; string)&gt; -&gt; seq&lt;(string -&gt; string -&gt; RouteResult option)&gt;<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Creates routes for the http listener.</p>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '129', 129)" onmouseover="showTip(event, '129', 129)">
+          <code onmouseout="hideTip(event, '160', 160)" onmouseover="showTip(event, '160', 160)">
             defaultRoutes 
           </code>
-          <div class="tip" id="129">
+          <div class="tip" id="160">
             <strong>Signature:</strong>(string * string * (&#39;?5975 -&gt; HttpListenerContext -&gt; string)) list<br />
                           <strong>Type parameters:</strong> '?5975          </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Contains the default routes.</p>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '130', 130)" onmouseover="showTip(event, '130', 130)">
+          <code onmouseout="hideTip(event, '161', 161)" onmouseover="showTip(event, '161', 161)">
             emptyListener 
           </code>
-          <div class="tip" id="130">
+          <div class="tip" id="161">
             <strong>Signature:</strong>Listener<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Creates an empty http listener.</p>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '131', 131)" onmouseover="showTip(event, '131', 131)">
+          <code onmouseout="hideTip(event, '162', 162)" onmouseover="showTip(event, '162', 162)">
             ensureCanBindHttpPort port
           </code>
-          <div class="tip" id="131">
+          <div class="tip" id="162">
             <strong>Signature:</strong>port:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Checks whether the http listener can be bound to the given port.</p>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '132', 132)" onmouseover="showTip(event, '132', 132)">
-            getBodyFromContext ctx
-          </code>
-          <div class="tip" id="132">
-            <strong>Signature:</strong>ctx:HttpListenerContext -&gt; byte []<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '133', 133)" onmouseover="showTip(event, '133', 133)">
+          <code onmouseout="hideTip(event, '163', 163)" onmouseover="showTip(event, '163', 163)">
             getFirstFreePort ()
           </code>
-          <div class="tip" id="133">
+          <div class="tip" id="163">
             <strong>Signature:</strong>unit -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Returns the first free port which can be used for the http listener.</p>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '134', 134)" onmouseover="showTip(event, '134', 134)">
+          <code onmouseout="hideTip(event, '164', 164)" onmouseover="showTip(event, '164', 164)">
             getPort configPort
           </code>
-          <div class="tip" id="134">
+          <div class="tip" id="164">
             <strong>Signature:</strong>configPort:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Returns the specified port from the config or the first free port if no port was specified.</p>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '135', 135)" onmouseover="showTip(event, '135', 135)">
-            getSetUrlAclArgs port
-          </code>
-          <div class="tip" id="135">
-            <strong>Signature:</strong>port:&#39;?5986 -&gt; string * string<br />
-                          <strong>Type parameters:</strong> '?5986          </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '136', 136)" onmouseover="showTip(event, '136', 136)">
+          <code onmouseout="hideTip(event, '165', 165)" onmouseover="showTip(event, '165', 165)">
             matchRoute routes verb url
           </code>
-          <div class="tip" id="136">
+          <div class="tip" id="165">
             <strong>Signature:</strong>routes:seq&lt;Route&gt; -&gt; verb:string -&gt; url:string -&gt; RouteResult option<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Matches an URL with the given routes.</p>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '137', 137)" onmouseover="showTip(event, '137', 137)">
-            placeholderRegex 
-          </code>
-          <div class="tip" id="137">
-            <strong>Signature:</strong>Regex<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '138', 138)" onmouseover="showTip(event, '138', 138)">
-            routeMatcher route
-          </code>
-          <div class="tip" id="138">
-            <strong>Signature:</strong>route:Route -&gt; string -&gt; string -&gt; RouteResult option<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '139', 139)" onmouseover="showTip(event, '139', 139)">
+          <code onmouseout="hideTip(event, '166', 166)" onmouseover="showTip(event, '166', 166)">
             start log serverName port requestMap
           </code>
-          <div class="tip" id="139">
+          <div class="tip" id="166">
             <strong>Signature:</strong>log:(string * EventLogEntryType -&gt; unit) -&gt; serverName:string -&gt; port:string -&gt; requestMap:seq&lt;(string -&gt; string -&gt; RouteResult option)&gt; -&gt; Listener<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Starts a http listener on the given server and port.</p>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '140', 140)" onmouseover="showTip(event, '140', 140)">
+          <code onmouseout="hideTip(event, '167', 167)" onmouseover="showTip(event, '167', 167)">
             startWithConsoleLogger (...)
           </code>
-          <div class="tip" id="140">
+          <div class="tip" id="167">
             <strong>Signature:</strong>serverName:string -&gt; port:string -&gt; requestMap:seq&lt;(string -&gt; string -&gt; RouteResult option)&gt; -&gt; Listener<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Starts a http listener on the given server and port - uses the console logger.</p>
+</td>
       </tr>
     </tbody>
   </table>
