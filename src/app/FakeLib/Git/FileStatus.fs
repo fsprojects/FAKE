@@ -1,10 +1,12 @@
 ﻿[<AutoOpen>]
+/// Contains helper functions which can be used to retrieve file status information from git.
 module Fake.Git.FileStatus
 
 open Fake
 open System
 open System.IO
 
+/// A type which represents a file status in git.
 type FileStatus =
 | Added
 | Modified
