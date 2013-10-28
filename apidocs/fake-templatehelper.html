@@ -62,6 +62,7 @@
 
 <h1>TemplateHelper</h1>
 <div class="xmldoc">
+<p>Contains basic templating functions. Used in other helpers.</p>
 </div>
 
 <!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
@@ -77,10 +78,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '508', 508)" onmouseover="showTip(event, '508', 508)">
+          <code onmouseout="hideTip(event, '483', 483)" onmouseover="showTip(event, '483', 483)">
             loadTemplates seq
           </code>
-          <div class="tip" id="508">
+          <div class="tip" id="483">
             <strong>Signature:</strong>seq:seq&lt;string&gt; -&gt; seq&lt;string * seq&lt;string&gt;&gt;<br />
                       </div>
         </td>
@@ -90,10 +91,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '509', 509)" onmouseover="showTip(event, '509', 509)">
+          <code onmouseout="hideTip(event, '484', 484)" onmouseover="showTip(event, '484', 484)">
             processTemplates replacements files
           </code>
-          <div class="tip" id="509">
+          <div class="tip" id="484">
             <strong>Signature:</strong>replacements:seq&lt;string * string&gt; -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -103,27 +104,27 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '510', 510)" onmouseover="showTip(event, '510', 510)">
+          <code onmouseout="hideTip(event, '485', 485)" onmouseover="showTip(event, '485', 485)">
             replaceKeywords replacements
           </code>
-          <div class="tip" id="510">
+          <div class="tip" id="485">
             <strong>Signature:</strong>replacements:seq&lt;string * string&gt; -&gt; seq&lt;&#39;?5014 * &#39;?5015&gt; -&gt; seq&lt;&#39;?5014 * seq&lt;string&gt;&gt;<br />
                           <strong>Type parameters:</strong> '?5014, '?5015          </div>
         </td>
-        <td class="xmldoc"><p>replaces a bunch of the keywords in all files (lazy - line by line!)</p>
+        <td class="xmldoc"><p>Replaces a bunch of the keywords in all files (lazy - line by line!)</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '511', 511)" onmouseover="showTip(event, '511', 511)">
+          <code onmouseout="hideTip(event, '486', 486)" onmouseover="showTip(event, '486', 486)">
             saveFiles 
           </code>
-          <div class="tip" id="511">
+          <div class="tip" id="486">
             <strong>Signature:</strong>seq&lt;string * seq&lt;string&gt;&gt; -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>saves all files (lazy - file by file!)</p>
+        <td class="xmldoc"><p>Saves all files (lazy - file by file!)</p>
 </td>
       </tr>
     </tbody>
