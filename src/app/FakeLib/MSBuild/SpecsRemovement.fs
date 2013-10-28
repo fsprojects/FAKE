@@ -1,4 +1,5 @@
 [<AutoOpen>]
+/// Contains functions which allow to remove side-by-side specs during the build.
 module Fake.MSBuild.SpecsRemovement
 
 open Fake
@@ -6,10 +7,12 @@ open System.Xml
 open System.Xml.Linq
 
 /// Converts a MSBuildProject to XML
+/// [omit]
 let normalize (project:MSBuildProject) =
     "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
         project.ToString(SaveOptions.DisableFormatting) 
 
+/// [omit]
 let removeFilteredElement elementName filterF (doc:XDocument) =
     let references =
         doc
@@ -22,22 +25,27 @@ let removeFilteredElement elementName filterF (doc:XDocument) =
     references.Remove()
     doc
 
+/// [omit]
 let removeAssemblyReference filterF (doc:XDocument)=
     removeFilteredElement "Reference" filterF doc
 
+/// [omit]
 let removeFiles filterF (doc:XDocument) =
     removeFilteredElement "Compile" filterF doc
       |> removeFilteredElement "None" filterF
       |> removeFilteredElement "Content" filterF
 
+/// [omit]
 let createFileName projectFileName =
     let fi = fileInfo projectFileName            
     fi.Directory.FullName @@ (fi.Name.Replace(fi.Extension,"") + "_Spliced" + fi.Extension)
 
-/// <summary>Removes test data and test files from a given MSBuild project and recursivly from all MSBuild project dependencies</summary>
-/// <param name="assemblyFilterF">A filter function for assembly references.</param>
-/// <param name="fileFilterF">A filter function for files in a project.</param>
-/// <param name="projectFileName">The MSBuild project to start.</param>
+/// Removes test data and test files from a given MSBuild project and recursivly from all MSBuild project dependencies.
+/// ## Parameters
+///
+///  - `assemblyFilterF` - A filter function for assembly references.
+///  - `fileFilterF` - A filter function for files in a project.
+///  - `projectFileName` - The MSBuild project to start.
 let RemoveTestsFromProject assemblyFilterF fileFilterF projectFileName =
     let processedProjects = new System.Collections.Generic.HashSet<_>()
     let rec removeTestsFromProject assemblyFilterF fileFilterF projectFileName =        
@@ -56,8 +64,6 @@ let RemoveTestsFromProject assemblyFilterF fileFilterF projectFileName =
 
     removeTestsFromProject assemblyFilterF fileFilterF projectFileName
 
-// Default filters
-
 /// All references to nunit.*.dlls
 let AllNUnitReferences elementName (s:string) = s.StartsWith "nunit"
 
@@ -71,8 +77,10 @@ let AllSpecAndTestDataFiles elementName (s:string) =
 /// A Convetion which matches nothing
 let Nothing _ _ = false
 
+/// Removes all NUnit references from a project.
 let RemoveAllNUnitReferences projectFileName =
     RemoveTestsFromProject AllNUnitReferences Nothing projectFileName
 
+/// Removes all spec and test data references from a project.
 let RemoveAllSpecAndTestDataFiles projectFileName =
     RemoveTestsFromProject Nothing AllSpecAndTestDataFiles projectFileName
