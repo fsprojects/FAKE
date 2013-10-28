@@ -97,25 +97,23 @@ Target "BuildSolution" (fun _ ->
 )
 
 Target "GenerateDocs" (fun _ ->
-    (* Failed to find FSharp.Core.dll on linux, possible due previous blocks *)
-    if not isLinux then
-        let source = "./help"
-        let template = "./help/templates/template-project.html"
-        let projInfo =
-          [ "page-description", "FAKE - F# Make"
-            "page-author", (separated ", " authors)
-            "github-link", "http://github.com/fsharp/fake"
-            "project-name", "FAKE - F# Make" ]
+    let source = "./help"
+    let template = "./help/templates/template-project.html"
+    let projInfo =
+      [ "page-description", "FAKE - F# Make"
+        "page-author", (separated ", " authors)
+        "github-link", "http://github.com/fsharp/fake"
+        "project-name", "FAKE - F# Make" ]
 
-        Literate.ProcessDirectory (source, template, docsDir, replacements = projInfo)
+    Literate.ProcessDirectory (source, template, docsDir, replacements = projInfo)
 
-        if isLocalBuild then  // TODO: this needs to be fixed in FSharp.Formatting
-            MetadataFormat.Generate ( "./build/FakeLib.dll", apidocsDir, ["./help/templates/reference/"])
+    if isLocalBuild then  // TODO: this needs to be fixed in FSharp.Formatting
+        MetadataFormat.Generate ( "./build/FakeLib.dll", apidocsDir, ["./help/templates/reference/"])
 
-        WriteStringToFile false "./docs/.nojekyll" ""
+    WriteStringToFile false "./docs/.nojekyll" ""
 
-        CopyDir (docsDir @@ "content") "help/content" allFiles
-        CopyDir (docsDir @@ "pics") "help/pics" allFiles
+    CopyDir (docsDir @@ "content") "help/content" allFiles
+    CopyDir (docsDir @@ "pics") "help/pics" allFiles
 )
 
 Target "CopyLicense" (fun _ -> 
@@ -131,58 +129,52 @@ Target "BuildZip" (fun _ ->
 )
 
 Target "Test" (fun _ ->
-    (* Temporary disable tests on *nix, bug # 122 *)
-    if not isLinux then
-        !! (testDir @@ "Test.*.dll") 
-        |> MSpec (fun p -> 
-                {p with
-                    ExcludeTags = ["HTTP"]
-                    HtmlOutputDir = reportDir})
+    !! (testDir @@ "Test.*.dll") 
+    |> MSpec (fun p -> 
+            {p with
+                ExcludeTags = ["HTTP"]
+                HtmlOutputDir = reportDir})
 )
 
 Target "ZipDocumentation" (fun _ -> 
-    (* Temporary disable tests on *nix, bug # 122 *)
-    if not isLinux then
-        !! (docsDir @@ @"**/*.*")  
-           |> Zip docsDir (deployDir @@ sprintf "Documentation-%s.zip" buildVersion)
+    !! (docsDir @@ @"**/*.*")  
+       |> Zip docsDir (deployDir @@ sprintf "Documentation-%s.zip" buildVersion)
 )
 
 Target "CreateNuGet" (fun _ -> 
-    (* Temporary disable tests on *nix, bug # 122 *)
-    if not isLinux then
-        for package,description in packages do            
-            let nugetDocsDir = nugetDir @@ "docs"
-            let nugetToolsDir = nugetDir @@ "tools"
+    for package,description in packages do            
+        let nugetDocsDir = nugetDir @@ "docs"
+        let nugetToolsDir = nugetDir @@ "tools"
 
-            CleanDir nugetDocsDir
-            CleanDir nugetToolsDir
-            CopyDir nugetDocsDir docsDir allFiles
+        CleanDir nugetDocsDir
+        CleanDir nugetToolsDir
+        CopyDir nugetDocsDir docsDir allFiles
 
-            match package with
-            | p when p = projectName ->
-                !! (buildDir @@ "**/*.*") |> Copy nugetToolsDir 
-                CopyDir nugetToolsDir @"./lib/fsi" allFiles                
-            | p when p = "FAKE.Core" ->
-                !! (buildDir @@ "*.*") |> Copy nugetToolsDir
-                CopyDir nugetToolsDir @"./lib/fsi" allFiles
-            | _ ->
-                CopyDir nugetToolsDir (buildDir @@ package) allFiles                
-                CopyTo nugetToolsDir additionalFiles
-            DeleteFile (nugetToolsDir @@ "Gallio.dll")
+        match package with
+        | p when p = projectName ->
+            !! (buildDir @@ "**/*.*") |> Copy nugetToolsDir 
+            CopyDir nugetToolsDir @"./lib/fsi" allFiles                
+        | p when p = "FAKE.Core" ->
+            !! (buildDir @@ "*.*") |> Copy nugetToolsDir
+            CopyDir nugetToolsDir @"./lib/fsi" allFiles
+        | _ ->
+            CopyDir nugetToolsDir (buildDir @@ package) allFiles                
+            CopyTo nugetToolsDir additionalFiles
+        DeleteFile (nugetToolsDir @@ "Gallio.dll")
 
-            NuGet (fun p -> 
-                {p with
-                    Authors = authors
-                    Project = package
-                    Description = description                               
-                    OutputPath = nugetDir
-                    Summary = projectSummary
-                    Dependencies =
-                        if package <> "FAKE.Core" && package <> projectName then
-                          ["FAKE.Core", RequireExactly (NormalizeVersion buildVersion)]
-                        else p.Dependencies
-                    AccessKey = getBuildParamOrDefault "nugetkey" ""
-                    Publish = hasBuildParam "nugetkey" }) "fake.nuspec"
+        NuGet (fun p -> 
+            {p with
+                Authors = authors
+                Project = package
+                Description = description                               
+                OutputPath = nugetDir
+                Summary = projectSummary
+                Dependencies =
+                    if package <> "FAKE.Core" && package <> projectName then
+                      ["FAKE.Core", RequireExactly (NormalizeVersion buildVersion)]
+                    else p.Dependencies
+                AccessKey = getBuildParamOrDefault "nugetkey" ""
+                Publish = hasBuildParam "nugetkey" }) "fake.nuspec"
 )
 
 Target "ReleaseDocs" (fun _ ->
@@ -204,12 +196,12 @@ Target "Default" DoNothing
     ==> "CopyFSharpFiles"
     =?> ("SetAssemblyInfo",not isLocalBuild ) 
     ==> "BuildSolution"
-    ==> "Test"
+    =?> ("Test",not isLinux )
     ==> "CopyLicense"
     ==> "BuildZip"
-    ==> "GenerateDocs"
-    ==> "ZipDocumentation"
-    ==> "CreateNuGet"
+    =?> ("GenerateDocs",    not isLinux )
+    =?> ("ZipDocumentation",not isLinux )
+    =?> ("CreateNuGet",     not isLinux )
     ==> "Default"
     ==> "ReleaseDocs"
 
