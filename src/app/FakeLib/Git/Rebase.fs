@@ -1,4 +1,5 @@
-﻿module Fake.Git.Rebase
+﻿/// Contains helper functions which allow to deal with git rebase.
+module Fake.Git.Rebase
 
 open Fake
 

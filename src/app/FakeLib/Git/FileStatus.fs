@@ -51,6 +51,7 @@ let getConflictedFiles repositoryDir =
 /// Returns true if the working copy is in a conflicted merge otherwise false
 let isInTheMiddleOfConflictedMerge repositoryDir = [] <> getConflictedFiles repositoryDir
 
+/// Returns the current rebase directory for the given repository.
 let getRebaseDir (repositoryDir:string) =
     if Directory.Exists(repositoryDir + ".git\\rebase-apply\\") then
         repositoryDir + ".git\\rebase-apply\\"
@@ -58,15 +59,17 @@ let getRebaseDir (repositoryDir:string) =
         repositoryDir + ".git\\rebase\\"
     else ""
 
+/// Returns true if the given repository is in the middle of a rebase process.
 let isInTheMiddleOfRebase repositoryDir = 
     let rebaseDir = getRebaseDir repositoryDir
     Directory.Exists rebaseDir && (not <| File.Exists(rebaseDir + "applying"))
 
+/// Returns true if the given repository is in the middle of a patch process.
 let isInTheMiddleOfPatch repositoryDir =
     let rebaseDir = getRebaseDir repositoryDir
     Directory.Exists rebaseDir && (not <| File.Exists(rebaseDir + "rebasing"))
 
-/// Cleans the working copy by doing a git reset --hard and a clean -f
+/// Cleans the working copy by doing a git reset --hard and a clean -f.
 let cleanWorkingCopy repositoryDir = 
     ResetHard repositoryDir
     showGitCommand repositoryDir "clean -f"
