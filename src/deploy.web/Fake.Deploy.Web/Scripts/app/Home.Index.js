@@ -22,14 +22,14 @@
             url: '/api/v1/agent/details/' + agent.Id(),
             dataType: 'json',
             contentType: 'application/json'
-        }).done(function (data) {
+        }).done(function () {
             agent.Status("Online");
-        }).fail(function (msg) {
+        }).fail(function () {
             agent.Status("Offline");
         });
     };
 
-    self.build = function() {
+    self.build = function () {
         $.ajax({
             type: 'GET',
             url: '/api/v1/environment/',
@@ -47,8 +47,11 @@
                 };
             });
             $('#agents li:nth-child(4n+1)').css('margin-left', '0');
-            var tab = getActiveTab() || '#envTabs a:first';
-            $('#tab_' + tab).tab('show');
+            var tab = getActiveTab() || '';
+            if (tab === '')
+                $('#envTabs a:first').tab('show');
+            else
+                $('#tab_' + tab).tab('show');
         }).fail(function (msg) {
             toastr.error('Failed to get environments', 'Error');
         });
