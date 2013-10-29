@@ -262,14 +262,20 @@ with
 
 let getNuspecProperties (nuspec : string) =
     let doc = XMLDoc nuspec
-    let namespaces = ["x","http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"]
+    let namespaces = ["x","http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"; "y", "http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd"]
     let getValue name = 
-        try
-            doc
-            |> XPathValue ("x:metadata/x:" + name) namespaces
-        with
-        | exn -> String.Empty
-
+        let getWith ns =
+            try
+                doc
+                |> XPathValue (sprintf "%s:metadata/%s:%s" ns ns name) namespaces
+                |> Some
+            with
+            | exn -> 
+                None
+        namespaces
+        |> Seq.map fst
+        |> Seq.tryPick(fun ns -> getWith ns)
+        |> (fun x -> if x.IsSome then x.Value else "")
     {
        Id = getValue "id"
        Version = getValue "version"

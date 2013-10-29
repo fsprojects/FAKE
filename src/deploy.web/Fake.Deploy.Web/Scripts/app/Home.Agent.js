@@ -1,4 +1,9 @@
-﻿function AgentStatusModel(available, msg) {
+﻿var agentStatus = {
+    Unknown: '#C0C0C0',
+    Online: 'green',
+    Offline: 'red'
+};
+function AgentStatusModel(available, msg) {
     var self = this;
 
     self.statusMessage = ko.observable(msg);
@@ -9,7 +14,7 @@ function AgentViewModel() {
     var self = this;
 
     self.agent = ko.observable();
-    self.agentStatus = ko.observable(new AgentStatusModel(false, 'Offline / Unreachable'));
+    self.agentStatus = ko.observable(new AgentStatusModel(agentStatus.Unknown, 'Querying status...'));
     self.deployments = ko.observableArray();
     self.agentDetails = ko.observable();
 
@@ -17,17 +22,17 @@ function AgentViewModel() {
 
     self.getAgentDetails = function () {
         $.ajax({
-            type: "GET",
-            url: self.agent().Address() + 'fake/statistics',
+            type: 'GET',
+            url: '/api/v1/agent/details/' + self.agent().Id(),
             dataType: 'json',
             contentType: 'application/json'
         }).done(function (data) {
-            var a = ko.mapping.fromJS(data)
+            var a = ko.mapping.fromJS(data);
             self.agentDetails(a);
-            self.agentStatus(new AgentStatusModel(true, 'Online'));
+            self.agentStatus(new AgentStatusModel(agentStatus.Online, 'Online'));
             self.refreshDeploymentsForAgent();
         }).fail(function (msg) {
-            self.agentStatus(new AgentStatusModel(false, 'Offline / Unreachable'));
+            self.agentStatus(new AgentStatusModel(agentStatus.Offline, 'Offline / Unreachable'));
         });
     };
 
@@ -35,7 +40,7 @@ function AgentViewModel() {
         if (self.agentStatus().available()) {
             $.ajax({
                 type: "GET",
-                url: self.agent().Address() + 'fake/deployments?status=active',
+                url: '/api/v1/agent/deployments/' + self.agent().Id(),
                 dataType: 'json',
                 contentType: 'application/json'
             }).done(function (data) {
@@ -94,7 +99,7 @@ function AgentViewModel() {
                 self.recentMessages([]);
                 if (data != null) {
                     $.each(data.result.Messages, function (i, msg) {
-                        self.recentMessages.push(msg)
+                        self.recentMessages.push(msg);
                     });
                 }
 
@@ -108,7 +113,7 @@ function AgentViewModel() {
                 self.recentMessages([]);
                 if (data != null) {
                     $.each(data.result.Messages, function (i, msg) {
-                        self.recentMessages.push(msg)
+                        self.recentMessages.push(msg);
                     });
                 }
             }
@@ -134,7 +139,7 @@ function AgentViewModel() {
                 self.recentMessages([]);
                 if (d != null) {
                     $.each(d.Messages, function (i, msg) {
-                        self.recentMessages.push(ko.mapping.fromJS(msg))
+                        self.recentMessages.push(ko.mapping.fromJS(msg));
                     });
                 }
                 self.refreshDeploymentsForAgent();
@@ -144,7 +149,7 @@ function AgentViewModel() {
                 if (d != null) {
                     toastr.error(data.appName + ' rollback failed: ' + msg.statusText, 'Error');
                     $.each(d.Messages, function (i, msg) {
-                        self.recentMessages.push(ko.mapping.fromJS(msg))
+                        self.recentMessages.push(ko.mapping.fromJS(msg));
                     });
 
                     self.recentMessages.push(

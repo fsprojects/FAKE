@@ -15,7 +15,6 @@ type MapHttpRouteSettings = { id : RouteParameter }
 type FaviconRoute = { favicon : string }
 type Route = { controller : string; action : string; oid : UrlParameter }
 
-
 type FakeDeployControllerFactory() = 
     inherit DefaultControllerFactory()
 
@@ -38,6 +37,8 @@ and Global() =
         routes.MapHttpRoute("DefaultApi", 
                     "api/v1/{controller}/{id}", 
                     { id = RouteParameter.Optional }) |> ignore
+        routes.MapHttpRoute("ActionApi",
+                            "api/v1/{controller}/{action}/{agentId}") |> ignore
         routes
     
     static let uiRoutes (routes:RouteCollection) =
