@@ -20,7 +20,9 @@
     <OutputPath>..\..\Fake.Deploy.Web\App_Data\Providers\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
+    <!-- 
     <DocumentationFile>bin\Debug\Fake.Deploy.Web.File.XML</DocumentationFile>
+    -->
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>

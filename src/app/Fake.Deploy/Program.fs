@@ -58,9 +58,9 @@ module Main =
         |> register
 
     let traceDeploymentResult server fileName = function        
-        | HttpClientHelper.Success _ -> tracefn "Deployment of %s to %s successful" fileName server
-        | HttpClientHelper.Failure exn -> traceError <| sprintf "Deployment of %s to %s failed\r\n%O" fileName server exn 
-        | HttpClientHelper.QueryResult result -> tracefn "Query Result for %s %s\n\t%s" server fileName (System.String.Join("\n\t", result |> Seq.map (fun r -> r.Name) |> Seq.toArray))
+        | FakeDeployAgentHelper.Success _ -> tracefn "Deployment of %s to %s successful" fileName server
+        | FakeDeployAgentHelper.Failure exn -> traceError <| sprintf "Deployment of %s to %s failed\r\n%O" fileName server exn 
+        | FakeDeployAgentHelper.QueryResult result -> tracefn "Query Result for %s %s\n\t%s" server fileName (System.String.Join("\n\t", result |> Seq.map (fun r -> r.Name) |> Seq.toArray))
 
     { Name = "activereleases"
       Parameters = ["serverUrl"; "appname"]
@@ -69,10 +69,10 @@ module Main =
            fun args -> 
                match args with
                | [|_;serverUrl;app|] -> 
-                    HttpClientHelper.getActiveReleasesFor serverUrl app 
+                    FakeDeployAgentHelper.getActiveReleasesFor serverUrl app 
                     |> traceDeploymentResult serverUrl app
                | [|_;serverUrl|] -> 
-                    HttpClientHelper.getAllActiveReleases serverUrl
+                    FakeDeployAgentHelper.getAllActiveReleases serverUrl
                     |> traceDeploymentResult serverUrl ""
                | _ -> printUsage()   }
        |> register
@@ -84,10 +84,10 @@ module Main =
            fun args ->
                match args with
                | [|_;serverUrl;app|] -> 
-                    HttpClientHelper.getAllReleasesFor serverUrl app 
+                    FakeDeployAgentHelper.getAllReleasesFor serverUrl app 
                     |> traceDeploymentResult serverUrl app
                | [|_;serverUrl|] -> 
-                    HttpClientHelper.getAllReleases serverUrl 
+                    FakeDeployAgentHelper.getAllReleases serverUrl 
                     |> traceDeploymentResult serverUrl ""
                | _ -> printUsage()  }
        |> register
@@ -99,10 +99,10 @@ module Main =
             fun args ->
                 match args with
                 | [|_;serverUrl;app|] ->
-                    HttpClientHelper.rollbackTo serverUrl app "HEAD~1" 
+                    FakeDeployAgentHelper.rollbackTo serverUrl app "HEAD~1" 
                     |> traceDeploymentResult serverUrl app
                 | [|_;serverUrl;app;version|] -> 
-                    HttpClientHelper.rollbackTo serverUrl app version 
+                    FakeDeployAgentHelper.rollbackTo serverUrl app version 
                     |> traceDeploymentResult serverUrl app 
                 | _ -> printUsage()}
         |> register
@@ -112,7 +112,7 @@ module Main =
       Description = "pushes the deployment package to the deployment agent\r\n\tlistening on the url"
       Function = 
         fun args ->
-            HttpClientHelper.postDeploymentPackage args.[1] args.[2]
+            FakeDeployAgentHelper.postDeploymentPackage args.[1] args.[2]
             |> traceDeploymentResult args.[1] args.[2] }
         |> register
 

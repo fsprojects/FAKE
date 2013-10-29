@@ -6,7 +6,7 @@ open System.Configuration
 open System.IO
 open System.Net
 open Fake
-open Fake.HttpClientHelper
+open Fake.FakeDeployAgentHelper
 
 /// Allows to specify a deployment version
 type VersionInfo =
