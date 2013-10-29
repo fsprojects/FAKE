@@ -45,7 +45,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
-    <Compile Include="FSharpHelpers\OptionExtensions.fs" />
     <Compile Include="EnvironmentHelper.fs" />
     <Compile Include="RegistryHelper.fs" />
     <Compile Include="FileSystemHelper.fs" />
