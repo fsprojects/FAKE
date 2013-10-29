@@ -173,6 +173,7 @@ type MachineDetails = {
     DriveInfo: seq<string>
 }
 
+/// Retrieves information about the hard drives
 let getDrivesInfo() =
     Environment.GetLogicalDrives()
     |> Seq.map(fun d -> IO.DriveInfo(d))
@@ -184,6 +185,7 @@ let getDrivesInfo() =
             (Convert.ToDouble(d.TotalSize) / (1024.*1024.*1024.))
     )
 
+/// Retrieves lots of machine specific information like machine name, processor count etc.
 let getMachineEnvironment() = 
      {
         ProcessorCount = Environment.ProcessorCount
