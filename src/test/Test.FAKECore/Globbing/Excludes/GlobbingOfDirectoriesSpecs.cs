@@ -22,8 +22,7 @@ namespace Test.FAKECore.Globbing.Excludes
 
         Because of = () =>
         {
-            var includes = FileSetHelper.Include("./**/packages.config");
-            Files = FileSetHelper.ScanImmediately(includes).ToArray();
+            Files = FileSystem.Search.find("./**/packages.config").ToArray();
         };
 
         It should_match_2_files = () => Files.Length.ShouldEqual(2);
