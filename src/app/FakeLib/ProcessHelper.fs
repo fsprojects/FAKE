@@ -332,12 +332,16 @@ let killProcess name =
       |> Seq.filter (fun p -> p.ProcessName.ToLower().StartsWith(name.ToLower()))
       |> Seq.iter (fun p -> tracefn "Trying to kill process %s (Id = %d)" p.ProcessName p.Id; try p.Kill() with | exn -> ())
 
+/// Kills the F# Interactive (FSI) process
 let killFSI() = killProcess "fsi.exe"
+
+/// Kills the MSBuild process
 let killMSBuild() = killProcess "msbuild"
 
 /// Execute an external program and return the exit code.
 let shellExec = asyncShellExec >> Async.RunSynchronously
 
+/// Allows to exec shell operation
 type Shell() =
     static member private GetParams (cmd, ?args, ?dir) =
         let args = defaultArg args ""
