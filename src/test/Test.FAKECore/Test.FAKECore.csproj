@@ -88,8 +88,8 @@
     <Compile Include="FileHandling\BaseFunctions.cs" />
     <Compile Include="FileHandling\FileComparisonSpecs.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="Globbing\Directories\GlobbingOfDirectoriesSpecs.cs" />
-    <Compile Include="Globbing\Excludes\GlobbingOfDirectoriesSpecs.cs" />
+    <Compile Include="Globbing\TestSample1\GlobbingOfDirectoriesSpecs.cs" />
+    <Compile Include="Globbing\TestSample2\GlobbingOfDirectoriesSpecs.cs" />
     <Compile Include="ILMerge\ILMergeSpecs.cs" />
     <Compile Include="MSBuild\FileExtractionSpecs.cs" />
     <Compile Include="NAVFiles\NAVDateSpecs.cs" />
@@ -215,10 +215,10 @@
       <Link>TestData\fake.nuspec</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Globbing\Directories\SampleApp.zip">
+    <None Include="Globbing\TestSample1\SampleApp.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Globbing\Excludes\TFSSample.zip">
+    <None Include="Globbing\TestSample2\TFSSample.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="NAVFiles\Codeunit_1.txt">
