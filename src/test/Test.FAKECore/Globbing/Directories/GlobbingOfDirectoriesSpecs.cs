@@ -28,7 +28,7 @@ namespace Test.FAKECore.Globbing.Directories
     {
         private Because of = () => Files = Globbing("temptest/SampleApp/bin/**/*.*", "");
 
-        It should_match_3_files = () => Files.Length.ShouldEqual(3);
+        It should_match_3_files = () => Files.Length.ShouldEqual(2);
         It should_find_ilmerge = () => Files[0].ShouldEndWith("ilmerge.exclude");
         It should_find_sample_app = () => Files[1].ShouldEndWith("SampleApp.dll");
     }
