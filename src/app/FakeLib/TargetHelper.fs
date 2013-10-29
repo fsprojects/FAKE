@@ -113,7 +113,7 @@ let TargetsDependOn target targets =
     getAllTargetsNames()
     |> Seq.toList  // work on copy since the dict will be changed
     |> List.filter ((<>) target)
-    |> List.filter (fun t -> Seq.contains t targets)
+    |> List.filter (fun t -> Seq.exists ((=) t) targets)
     |> List.iter (fun t -> dependencyAtFront t target)
 
 /// Set a dependency for all registered targets.

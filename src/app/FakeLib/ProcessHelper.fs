@@ -325,12 +325,12 @@ let asyncShellExec (args:ExecParams) = async {
     return proc.ExitCode
 }
 
-
+/// Kills all processes with the given name
 let killProcess name =
     tracefn "Searching for process with name = %s" name
     Process.GetProcesses()
       |> Seq.filter (fun p -> p.ProcessName.ToLower().StartsWith(name.ToLower()))
-      |> Seq.performSafeOnEveryItem (fun p -> tracefn "Trying to kill process %s (Id = %d)" p.ProcessName p.Id; p.Kill())
+      |> Seq.iter (fun p -> tracefn "Trying to kill process %s (Id = %d)" p.ProcessName p.Id; try p.Kill() with | exn -> ())
 
 let killFSI() = killProcess "fsi.exe"
 let killMSBuild() = killProcess "msbuild"

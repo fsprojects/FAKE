@@ -103,7 +103,7 @@ let regex_replace pattern (replacement:string) text =
     (getRegEx pattern).Replace(text,replacement)
 
 /// Checks whether the given char is a german umlaut.
-let isUmlaut c = Seq.contains c ['ä'; 'ö'; 'ü'; 'Ä'; 'Ö'; 'Ü'; 'ß']
+let isUmlaut c = Seq.exists ((=) c) ['ä'; 'ö'; 'ü'; 'Ä'; 'Ö'; 'Ü'; 'ß']
 
 /// Converts all characters in a string to lower case.
 let inline toLower (s:string) = s.ToLower()

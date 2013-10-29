@@ -134,7 +134,7 @@ let getFirstFreePort() =
     let defaultPort = 8080
     let usedports = NetworkInformation.IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpListeners() |> Seq.map (fun x -> x.Port)
     let ports = seq { for port in defaultPort .. defaultPort + 2048 do yield port }
-    let port = ports |> Seq.find (fun p -> not <| Seq.contains p usedports)
+    let port = ports |> Seq.find (fun p -> Seq.forall ((<>) p) usedports)
     port.ToString()
 
 /// Returns the specified port from the config or the first free port if no port was specified.
