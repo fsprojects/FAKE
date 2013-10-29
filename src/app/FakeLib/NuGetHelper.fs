@@ -275,7 +275,7 @@ with
 /// Parses nuspec metadata from a nuspec file.
 /// ## Parameters
 /// 
-///  - `nuspec - The .nuspec file content.
+///  - `nuspec` - The .nuspec file content.
 let getNuspecProperties (nuspec : string) =
     let doc = XMLDoc nuspec
     let namespaces = ["x","http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"; "y", "http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd"]
@@ -314,7 +314,7 @@ let getNuspecProperties (nuspec : string) =
 /// Returns the NuGet meta data from the given package file name.
 /// ## Parameters
 /// 
-///  - `packageFileName - The .nuspec package file name.
+///  - `packageFileName` - The .nuspec package file name.
 let GetMetaDataFromPackageFile packageFileName =   
     packageFileName
     |> ZipHelper.UnzipFirstMatchingFileInMemory (fun ze -> ze.Name.EndsWith ".nuspec") 
