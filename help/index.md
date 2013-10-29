@@ -220,8 +220,7 @@ This sample script
 You can read the [getting started guide](gettingstarted.html) to build such a script.
 
     // include Fake libs
-    #I "tools\FAKE"
-    #r "FakeLib.dll"
+    #r "tools/FAKE/FakeLib.dll"
     
     open Fake
     
