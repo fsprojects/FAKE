@@ -6,6 +6,7 @@ module FileSystem =
     open System
     open System.IO
     open System.Runtime.Caching
+    open Fake
 
     let fullPathRelativeTo rootDir file = 
         match Path.IsPathRooted(file) with
@@ -53,7 +54,9 @@ module FileSystem =
             let tempPath = 
                 if isRecursive then recursiveDir.Replace("**", "") else recursiveDir
                 |> cleanUpPath
-            let root = fullPathRelativeTo (Some <| Path.GetDirectoryName(Reflection.Assembly.GetEntryAssembly().Location)) tempPath
+            let assembly = Reflection.Assembly.GetEntryAssembly()
+            let fullPath = if assembly = null then FullName "." else Path.GetDirectoryName assembly.Location
+            let root = fullPathRelativeTo (Some fullPath) tempPath
             let result =  { Recurse = isRecursive; Root = root.FullName; FilePattern = filePattern }
             result
            
@@ -68,6 +71,8 @@ module FileSystem =
 
         let findFiles searcher pattern  =
             parse pattern |> (defaultArg searcher DefaultSearcher)
+
+        let find pattern = findFiles None pattern
 
     let FileIO serialise deserialise = 
         IO.IO
