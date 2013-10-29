@@ -5,52 +5,53 @@ module Fake.NuGetHelper
 open System
 open System.IO
 
-type NuGetParams =
-    { ToolPath: string;
-      TimeOut: TimeSpan;
-      Version: string;
-      Authors: string list;
-      Project: string;
-      Summary: string;
-      Description: string;
-      Tags: string;
-      ReleaseNotes: string;
-      Copyright: string;
-      WorkingDir: string;
-      OutputPath: string;
-      PublishUrl: string;
-      AccessKey:string;
-      NoPackageAnalysis: bool;
-      ProjectFile:string;
-      Dependencies: (string*string) list;
-      PublishTrials: int;
-      Publish:bool;
-      Properties: list<string*string>
-       }
+/// Nuget parameter type
+type NuGetParams = { 
+    ToolPath: string
+    TimeOut: TimeSpan
+    Version: string
+    Authors: string list
+    Project: string
+    Summary: string
+    Description: string
+    Tags: string
+    ReleaseNotes: string
+    Copyright: string
+    WorkingDir: string
+    OutputPath: string
+    PublishUrl: string
+    AccessKey:string
+    NoPackageAnalysis: bool
+    ProjectFile:string
+    Dependencies: (string*string) list
+    PublishTrials: int
+    Publish: bool
+    Properties: list<string*string> }
 
-/// NuGet default params  
-let NuGetDefaults() =
-    { ToolPath = findToolInSubPath "nuget.exe" (currentDirectory @@ "tools" @@ "NuGet")
-      TimeOut = TimeSpan.FromMinutes 5.
-      Version = if not isLocalBuild then buildVersion else "0.1.0.0"
-      Authors = []
-      Project = ""
-      Summary = null
-      ProjectFile = null
-      Description = null
-      Tags = null
-      ReleaseNotes = null
-      Copyright = null
-      Dependencies = []
-      OutputPath = "./NuGet"
-      WorkingDir = "./NuGet"
-      PublishUrl = null
-      AccessKey = null
-      NoPackageAnalysis = false
-      PublishTrials = 5
-      Publish = false
-      Properties = [] }
+/// NuGet default parameters  
+let NuGetDefaults() = { 
+    ToolPath = findToolInSubPath "nuget.exe" (currentDirectory @@ "tools" @@ "NuGet")
+    TimeOut = TimeSpan.FromMinutes 5.
+    Version = if not isLocalBuild then buildVersion else "0.1.0.0"
+    Authors = []
+    Project = ""
+    Summary = null
+    ProjectFile = null
+    Description = null
+    Tags = null
+    ReleaseNotes = null
+    Copyright = null
+    Dependencies = []
+    OutputPath = "./NuGet"
+    WorkingDir = "./NuGet"
+    PublishUrl = null
+    AccessKey = null
+    NoPackageAnalysis = false
+    PublishTrials = 5
+    Publish = false
+    Properties = [] }
 
+/// Creates a string which tells NuGet that you require exactly this package version.
 let RequireExactly version = sprintf "[%s]" version
 
 let private packageFileName parameters = sprintf "%s.%s.nupkg" parameters.Project parameters.Version
@@ -102,7 +103,7 @@ let private createNuspecFile parameters nuSpec =
 
     specFile
 
-// create symbols package
+/// create symbols package
 let private packSymbols parameters =
     if isNullOrEmpty parameters.ProjectFile then () else
     let args = 
@@ -120,7 +121,7 @@ let private packSymbols parameters =
     if result <> 0 then failwithf "Error during NuGet symbols creation. %s %s" parameters.ToolPath args
     parameters.OutputPath @@ (symbolsPackageFileName parameters) |> DeleteFile
 
-// create package
+/// create package
 let private pack parameters nuspecFile =
     let properties = 
         match parameters.Properties with
@@ -146,7 +147,7 @@ let private pack parameters nuspecFile =
                
     if result <> 0 then failwithf "Error during NuGet creation. %s %s" parameters.ToolPath args
 
-// push package (and try again if something fails)
+/// push package (and try again if something fails)
 let rec private publish parameters =
     let tracing = enableProcessTracing
     enableProcessTracing <- false
@@ -172,7 +173,7 @@ let rec private publish parameters =
         else
             failwithf "Error during NuGet push. %s %s" parameters.ToolPath args
 
-// push package to symbol server (and try again if something fails)
+/// push package to symbol server (and try again if something fails)
 let rec private publishSymbols parameters =
     let tracing = enableProcessTracing
     enableProcessTracing <- false
@@ -196,7 +197,11 @@ let rec private publishSymbols parameters =
         else
             failwithf "Error during NuGet symbol push. %s %s" parameters.ToolPath args     
 
-/// Creates a new NuGet package based on the nuspecFile
+/// Creates a new NuGet package based on the given .nuspec file.
+/// ## Parameters
+/// 
+///  - `setParams` - Function used to manipulate the default NuGet parameters.
+///  - `nuspecFile` - The .nuspec file name.
 let NuGetPack setParams nuspecFile =
     traceStartTask "NuGet-Pack" nuspecFile
     let parameters = NuGetDefaults() |> setParams
@@ -204,7 +209,10 @@ let NuGetPack setParams nuspecFile =
 
     traceEndTask "NuGet-Pack" nuspecFile
 
-/// Publishes a NuGet package to the nuget server
+/// Publishes a NuGet package to the nuget server.
+/// ## Parameters
+/// 
+///  - `setParams` - Function used to manipulate the default NuGet parameters.
 let NuGetPublish setParams  =
     let parameters = NuGetDefaults() |> setParams
     traceStartTask "NuGet-Push" (packageFileName parameters)
@@ -213,12 +221,16 @@ let NuGetPublish setParams  =
     traceEndTask "NuGet-Push" (packageFileName parameters)
 
 
-/// Creates a new NuGet package   
-let NuGet setParams nuSpec =
-    traceStartTask "NuGet" nuSpec
+/// Creates a new NuGet package.
+/// ## Parameters
+/// 
+///  - `setParams` - Function used to manipulate the default NuGet parameters.
+///  - `nuspecFile` - The .nuspec file name.  
+let NuGet setParams nuspecFile =
+    traceStartTask "NuGet" nuspecFile
     let parameters = NuGetDefaults() |> setParams
     try    
-        let nuspecFile = createNuspecFile parameters nuSpec
+        let nuspecFile = createNuspecFile parameters nuspecFile
 
         packSymbols parameters
         pack parameters nuspecFile
@@ -233,9 +245,9 @@ let NuGet setParams nuSpec =
           |> replaceAccessKey parameters.AccessKey
           |> failwith
 
-    traceEndTask "NuGet" nuSpec
+    traceEndTask "NuGet" nuspecFile
 
-
+/// NuSpec metadata type
 type NuSpecPackage = {
     Id : string
     Version : string
@@ -260,6 +272,10 @@ with
     member x.DirectoryName = sprintf "%s.%s" x.Id x.Version
     member x.FileName = sprintf "%s.%s.nupkg" x.Id x.Version
 
+/// Parses nuspec metadata from a nuspec file.
+/// ## Parameters
+/// 
+///  - `nuspec - The .nuspec file content.
 let getNuspecProperties (nuspec : string) =
     let doc = XMLDoc nuspec
     let namespaces = ["x","http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"; "y", "http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd"]
@@ -296,15 +312,20 @@ let getNuspecProperties (nuspec : string) =
     }
 
 /// Returns the NuGet meta data from the given package file name.
+/// ## Parameters
+/// 
+///  - `packageFileName - The .nuspec package file name.
 let GetMetaDataFromPackageFile packageFileName =   
     packageFileName
     |> ZipHelper.UnzipFirstMatchingFileInMemory (fun ze -> ze.Name.EndsWith ".nuspec") 
     |> getNuspecProperties
 
+/// Default NuGet feed
 let feedUrl = "http://go.microsoft.com/fwlink/?LinkID=206669"
 
 let private webClient = new System.Net.WebClient()
 
+/// [omit]
 let discoverRepoUrl = 
     lazy (     
         let resp = webClient.DownloadString(feedUrl)
@@ -312,8 +333,10 @@ let discoverRepoUrl =
 
         doc.["service"].GetAttribute("xml:base"))
 
+/// [omit]
 let getRepoUrl() = discoverRepoUrl.Force()      
 
+/// [omit]
 let extractFeedPackageFromXml (entry:Xml.XmlNode) =
     let properties = entry.["m:properties"]
     let property name = properties.["d:" + name].InnerText
@@ -337,6 +360,7 @@ let extractFeedPackageFromXml (entry:Xml.XmlNode) =
       Published = dateTimeProperty "Published"
       Url = entry.["content"].GetAttribute("src")}
 
+/// [omit]
 let getPackage repoUrl packageName version =
     let url:string = repoUrl + "Packages(Id='" + packageName + "',Version='" + version + "')"
     let resp = webClient.DownloadString(url)
@@ -344,17 +368,20 @@ let getPackage repoUrl packageName version =
    
     extractFeedPackageFromXml doc.["entry"]
 
+/// [omit]
 let getFeedPackagesFromUrl (url:string) =
     let resp = webClient.DownloadString(url)
     let doc = XMLDoc resp
    
     [for entry in doc.["feed"].GetElementsByTagName("entry") -> extractFeedPackageFromXml entry]
 
+/// [omit]
 let getLatestPackage repoUrl packageName =
     repoUrl + "Packages()?$filter=(Id%20eq%20'" + packageName + "')%20and%20IsLatestVersion"
     |> getFeedPackagesFromUrl
     |> Seq.head
 
+/// [omit]
 let downloadPackage targetDir (package:NuSpecPackage) =
     ensureDirectory targetDir    
     let targetFileName = targetDir @@ package.FileName

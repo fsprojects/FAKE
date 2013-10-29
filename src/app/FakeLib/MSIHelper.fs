@@ -20,7 +20,7 @@ let MSIDefaults =
       ThrowIfSetupFails = true
       TimeOut = TimeSpan.FromMinutes 5. }
 
-/// Installs a msi 
+/// Installs a msi.
 /// ## Parameters
 /// 
 ///  - `setParams` - Function used to manipulate the default MSI parameters.
@@ -38,7 +38,7 @@ let Install setParams setup =
                   
     traceEndTask "MSI-Install" setup
 
-/// Uninstalls a msi 
+/// Uninstalls a msi.
 /// ## Parameters
 /// 
 ///  - `setParams` - Function used to manipulate the default MSI parameters.
