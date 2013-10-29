@@ -41,6 +41,22 @@ namespace Test.FAKECore.Globbing.Directories
         It should_find_sample_app = () => Files.First().ShouldEndWith("SampleApp.dll");
     }
 
+    public class when_scanning_for_any_dll_in_zip : when_extracting_zip
+    {
+        private Because of = () => Files = Globbing("temptest/SampleApp/bin/*.dll", "");
+
+        It should_match_3_files = () => Files.Length.ShouldEqual(1);
+        It should_find_sample_app = () => Files.First().ShouldEndWith("SampleApp.dll");
+    }
+
+    public class when_scanning_for_any_dll_in_an_subfolder_in_zip : when_extracting_zip
+    {
+        private Because of = () => Files = Globbing("temptest/**/*.dll", "");
+
+        It should_match_3_files = () => Files.Length.ShouldEqual(1);
+        It should_find_sample_app = () => Files.First().ShouldEndWith("SampleApp.dll");
+    }
+
     public class when_scanning_for_concrete_dll_in_subfolder : when_extracting_zip
     {
         private Because of = () => Files = Globbing("temptest/**/SampleApp.dll", "");
