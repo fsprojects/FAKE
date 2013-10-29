@@ -23,9 +23,9 @@ open System.Runtime.InteropServices
 
 [<assembly: ComVisible (false)>]
 [<assembly: CLSCompliant (false)>]
-[<assembly: Guid ("84b99d0b-f0bd-4923-9270-525890bac20d")>]
-[<assembly: AssemblyTitle ("FAKE - F# Make Lib")>]
-[<assembly: AssemblyProduct ("FAKE - F# Make Lib")>]
+[<assembly: Guid ("AA284C42-1396-42CB-BCAC-D27F18D14AC7")>]
+[<assembly: AssemblyTitle ("FAKE - F# Deploy Lib")>]
+[<assembly: AssemblyProduct ("FAKE - F# Make Deploy Lib")>]
 [<assembly: AssemblyVersion ("0.2")>]
 [<assembly: AssemblyFileVersion ("0.2")>]
 [<assembly: AssemblyDelaySign (false)>]

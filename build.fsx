@@ -28,7 +28,8 @@ let packages =
     ["FAKE.Core",projectDescription
      "FAKE.Gallio",projectDescription + " Extensions for Gallio"
      "FAKE.IIS",projectDescription + " Extensions for IIS"
-     "FAKE.SQL",projectDescription + " Extensions for SQL Server"     
+     "FAKE.SQL",projectDescription + " Extensions for SQL Server"
+     "FAKE.Deploy.Lib",projectDescription + " Extensions for FAKE Deploy"
      projectName,projectDescription + " This package bundles all extensions."]
 
 let buildVersion = if isLocalBuild then "0.0.1" else buildVersion
@@ -81,7 +82,11 @@ Target "SetAssemblyInfo" (fun _ ->
     
     [Attribute.Title "FAKE - F# Make Deploy Web"
      Attribute.Guid "27BA7705-3F57-47BE-B607-8A46B27AE876"] @ common
-    |> CreateFSharpAssemblyInfo "./src/deploy.web/Fake.Deploy.Web/AssemblyInfo.cs"
+    |> CreateCSharpAssemblyInfo "./src/deploy.web/Fake.Deploy.Web/AssemblyInfo.cs"
+    
+    [Attribute.Title "FAKE - F# Make Deploy Lib"
+     Attribute.Guid "AA284C42-1396-42CB-BCAC-D27F18D14AC7"] @ common
+    |> CreateFSharpAssemblyInfo "./src/app/Fake.Deploy.Lib/AssemblyInfo.fs"
     
     [Attribute.Title "FAKE - F# Make Lib"
      Attribute.Guid "d6dd5aec-636d-4354-88d6-d66e094dadb5"] @ common
