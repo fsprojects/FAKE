@@ -269,6 +269,17 @@ The mysterious part **(fun p -> ...)** simply overrides the default parameters o
 
 ![alt text](pics/gettingstarted/alltestsgreen.png "All tests green")
 
+Alternatively you could also run the tests in parallel using the [NUnitParallel](apidocs/fake-nunitparallel.html) task:
+
+	Target "Test" (fun _ ->
+		!! (testDir + @"\NUnit.Test.*.dll") 
+		  |> NUnitParallel (fun p ->
+			  {p with
+				 ToolPath = nunitPath;
+				 DisableShadowCopy = true;
+				 OutputFile = testDir + @"TestResults.xml" })
+	)
+
 ## Deploying a zip file
 
 Now we want to deploy a *.zip file containing our application:
