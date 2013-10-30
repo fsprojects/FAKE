@@ -88,7 +88,7 @@ let fixPath (path:string) =
     let path = path.Trim()
     if "\\\\" <* path then path.Trim() else path.Replace('\\', '/').Trim()
 
-/// Searches the git dir recursivly up to the root.
+/// Searches the .git directory recursivly up to the root.
 let findGitDir repositoryDir =
     let rec findGitDir (dirInfo:DirectoryInfo) =
         let gitDir = dirInfo.FullName + directorySeparator + ".git" |> directoryInfo
