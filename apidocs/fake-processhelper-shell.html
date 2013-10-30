@@ -62,7 +62,7 @@
 
 <h1>Shell</h1>
 <div class="xmldoc">
-<p>Allows to exec shell operations.</p>
+<p>Allows to exec shell operations synchronously and asynchronously.</p>
 </div>
   <h3>Constructors</h3>
   <table class="table table-bordered member-list">
@@ -73,10 +73,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '667', 667)" onmouseover="showTip(event, '667', 667)">
+          <code onmouseout="hideTip(event, '665', 665)" onmouseover="showTip(event, '665', 665)">
             new Shell
           </code>
-          <div class="tip" id="667">
+          <div class="tip" id="665">
             <strong>Signature:</strong>unit -&gt; Shell<br />
                       </div>
         </td>
@@ -100,7 +100,16 @@
             <strong>Signature:</strong>(cmd:string * ?args:string option * ?dir:string option) -&gt; Async&lt;int&gt;<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Runs the given process asynchronously.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>cmd</code> - The command which should be run in elavated context.</li>
+<li><code>args</code> - The process arguments (optional).</li>
+<li><code>directory</code> - The working directory (optional).</li>
+</ul>
+</td>
       </tr>
       <tr>
         <td class="member-name">
@@ -112,7 +121,16 @@
             <strong>Signature:</strong>(cmd:string * ?args:string option * ?dir:string option) -&gt; int<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Runs the given process, waits for it's completion and returns the exit code.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>cmd</code> - The command which should be run in elavated context.</li>
+<li><code>args</code> - The process arguments (optional).</li>
+<li><code>directory</code> - The working directory (optional).</li>
+</ul>
+</td>
       </tr>
       <tr>
         <td class="member-name">
