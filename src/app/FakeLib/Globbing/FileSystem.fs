@@ -5,7 +5,6 @@ module FileSystem =
     
     open System
     open System.IO
-    open System.Runtime.Caching
     open Fake
 
     let fullPathRelativeTo rootDir file = 
@@ -25,7 +24,6 @@ module FileSystem =
     let write serialiser (path:string,payload:'a) =
         File.WriteAllText(path, serialiser payload)
     
-    [<AutoOpen>]
     module Search = 
         
         type T = {
@@ -73,18 +71,3 @@ module FileSystem =
             parse pattern |> (defaultArg searcher DefaultSearcher)
 
         let find pattern = findFiles None pattern
-
-    let FileIO serialise deserialise = 
-        IO.IO
-            (tryReadFile deserialise)
-            (write serialise)  
-            File.Delete 
-            (findFiles None)
-
-    let CachedFileIO serialise deserialise expiry = 
-        IO.CachedIO 
-            expiry
-            (tryReadFile deserialise)
-            (write serialise)  
-            File.Delete 
-            (findFiles None)

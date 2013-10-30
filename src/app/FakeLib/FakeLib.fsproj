@@ -67,8 +67,6 @@
     <Compile Include="AssemblyInfoFile.fs" />
     <Compile Include="AssemblyInfoHelper.fs" />
     <Compile Include="ServiceControllerHelper.fs" />
-    <Compile Include="Globbing\Caching.fs" />
-    <Compile Include="Globbing\IO.fs" />
     <Compile Include="Globbing\FileSystem.fs" />
     <Compile Include="FileSet.fs" />
     <Compile Include="ProcessHelper.fs" />
