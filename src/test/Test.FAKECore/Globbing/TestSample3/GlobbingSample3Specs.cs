@@ -26,6 +26,14 @@ namespace Test.FAKECore.Globbing.TestSample3
         It should_find_names_txt = () => Files[0].ShouldEndWith("Names.txt");
     }
 
+    public class when_scanning_for_txt_files_using_backslash : when_extracting_zip
+    {
+        Because of = () => Files = FileSystem.Search.find("temptest\\**\\*.txt").ToArray();
+
+        It should_match_1_file = () => Files.Length.ShouldEqual(1);
+        It should_find_names_txt = () => Files[0].ShouldEndWith("Names.txt");
+    }
+
     public class when_scanning_for_text_files : when_extracting_zip
     {
         Because of = () => Files = FileSystem.Search.find("temptest/**/*.text").ToArray();
