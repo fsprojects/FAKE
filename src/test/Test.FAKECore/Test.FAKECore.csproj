@@ -79,6 +79,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Globbing\TestSample3\GlobbingSample3Specs.cs" />
     <Compile Include="SemVerHelperSpecs.cs" />
     <Compile Include="TeamCitySpecs.cs" />
     <Compile Include="BasicStringHelperSpecs.cs" />
@@ -88,8 +89,8 @@
     <Compile Include="FileHandling\BaseFunctions.cs" />
     <Compile Include="FileHandling\FileComparisonSpecs.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="Globbing\TestSample1\GlobbingOfDirectoriesSpecs.cs" />
-    <Compile Include="Globbing\TestSample2\GlobbingOfDirectoriesSpecs.cs" />
+    <Compile Include="Globbing\TestSample1\GlobbingSample1Specs.cs" />
+    <Compile Include="Globbing\TestSample2\GlobbingSample2Specs.cs" />
     <Compile Include="ILMerge\ILMergeSpecs.cs" />
     <Compile Include="MSBuild\FileExtractionSpecs.cs" />
     <Compile Include="NAVFiles\NAVDateSpecs.cs" />
@@ -213,6 +214,9 @@
   <ItemGroup>
     <None Include="..\..\..\fake.nuspec">
       <Link>TestData\fake.nuspec</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Globbing\TestSample3\Sample3.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Globbing\TestSample1\SampleApp.zip">
