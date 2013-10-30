@@ -12,7 +12,7 @@ namespace Test.FAKECore.Globbing.Excludes
         Establish context = () =>
         {
             FileHelper.CleanDir(TempDir);
-            ZipHelper.Unzip(TempDir, "Globbing/Excludes/TFSSample.zip");
+            ZipHelper.Unzip(TempDir, "Globbing/TestSample2/TFSSample.zip");
         };
     }
 

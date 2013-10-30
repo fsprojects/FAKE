@@ -18,7 +18,7 @@ namespace Test.FAKECore.Globbing.Directories
         Establish context = () =>
         {
             FileHelper.CleanDir(TempDir);
-            ZipHelper.Unzip(TempDir, "Globbing/Directories/SampleApp.zip");
+            ZipHelper.Unzip(TempDir, "Globbing/TestSample1/SampleApp.zip");
         };
 
         protected static string[] Files;
