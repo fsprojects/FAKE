@@ -31,8 +31,8 @@ namespace Test.FAKECore.Globbing.TestSample3
         Because of = () => Files = FileSystem.Search.find("temptest/**/*.text").ToArray();
 
         It should_match_2_files = () => Files.Length.ShouldEqual(2);
-        It should_find_names_text = () => Files[0].ShouldEndWith("Names.text");
-        It should_find__names_txt_text = () => Files[1].ShouldEndWith("Names.txt.text");
+        It should_find_names_text = () => Files[0].ShouldEndWith("Folder1\\Subfolder1\\SubFolder2\\TextFiles\\Names.text");
+        It should_find__names_txt_text = () => Files[1].ShouldEndWith("Folder1\\Subfolder1\\SubFolder2\\TextFiles\\Names.txt.text");
     }
 
     public class when_scanning_for_txt_files_with_a_special_subfolder_which_doesnt_exist : when_extracting_zip
