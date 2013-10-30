@@ -19,28 +19,28 @@ type FxCopErrorLevel =
 | DontFailBuild = 0
   
 /// Parameter type for the FxCop tool
-type FxCopParams =
- { ApplyOutXsl:bool;
-   DirectOutputToConsole: bool;
-   DependencyDirectories: string seq;
-   ImportFiles: string seq;
-   RuleLibraries: string seq;
-   Rules: string seq;
-   CustomRuleset: string;
-   ConsoleXslFileName: string;
-   ReportFileName: string;
-   OutputXslFileName: string;
-   PlatformDirectory: string;
-   ProjectFile: string;
-   IncludeSummaryReport: bool;
-   TypeList: string seq;
-   SaveResultsInProjectFile: bool;
-   WorkingDir: string;
-   Verbose: bool;
-   FailOnError: FxCopErrorLevel;
-   TimeOut: TimeSpan;
-   ToolPath:string;
-   ForceOutput: bool}
+type FxCopParams = { 
+    ApplyOutXsl:bool
+    DirectOutputToConsole: bool
+    DependencyDirectories: string seq
+    ImportFiles: string seq
+    RuleLibraries: string seq
+    Rules: string seq
+    CustomRuleset: string
+    ConsoleXslFileName: string
+    ReportFileName: string
+    OutputXslFileName: string
+    PlatformDirectory: string
+    ProjectFile: string
+    IncludeSummaryReport: bool
+    TypeList: string seq
+    SaveResultsInProjectFile: bool
+    WorkingDir: string
+    Verbose: bool
+    FailOnError: FxCopErrorLevel
+    TimeOut: TimeSpan
+    ToolPath:string
+    ForceOutput: bool }
  
 /// This checks the result file with some XML queries for errors
 /// [omit]
@@ -57,25 +57,25 @@ let checkForErrors resultFile =
   getErrorValue "Warning"
 
 /// FxCop Default parameters
-let FxCopDefaults = 
-  { ApplyOutXsl = false;
-    DirectOutputToConsole = true;
-    DependencyDirectories = Seq.empty;
-    ImportFiles  = Seq.empty;
-    RuleLibraries = Seq.empty;
-    Rules = Seq.empty;
-    CustomRuleset = String.Empty;
-    ConsoleXslFileName = String.Empty;
-    ReportFileName = currentDirectory @@ "FXCopResults.html";
-    OutputXslFileName = String.Empty;
-    PlatformDirectory = String.Empty;
-    ProjectFile = String.Empty;
-    IncludeSummaryReport = true;
-    TypeList = Seq.empty;
-    SaveResultsInProjectFile = false;
-    WorkingDir = currentDirectory;
-    Verbose = true;
-    FailOnError = FxCopErrorLevel.DontFailBuild;
+let FxCopDefaults = {
+    ApplyOutXsl = false
+    DirectOutputToConsole = true
+    DependencyDirectories = Seq.empty
+    ImportFiles  = Seq.empty
+    RuleLibraries = Seq.empty
+    Rules = Seq.empty
+    CustomRuleset = String.Empty
+    ConsoleXslFileName = String.Empty
+    ReportFileName = currentDirectory @@ "FXCopResults.html"
+    OutputXslFileName = String.Empty
+    PlatformDirectory = String.Empty
+    ProjectFile = String.Empty
+    IncludeSummaryReport = true
+    TypeList = Seq.empty
+    SaveResultsInProjectFile = false
+    WorkingDir = currentDirectory
+    Verbose = true
+    FailOnError = FxCopErrorLevel.DontFailBuild
     TimeOut = TimeSpan.FromMinutes 5.
     ToolPath = ProgramFilesX86 @@ @"Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\FxCopCmd.exe"
     ForceOutput = false }

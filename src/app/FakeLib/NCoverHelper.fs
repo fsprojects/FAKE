@@ -7,20 +7,20 @@ open System.IO
 open System.Text  
 
 /// NCover parameter txpe
-type NCoverParams =
-    { ProjectName: string;
-      ToolPath: string;
-      TestRunnerExe: string;
-      TimeOut: TimeSpan;
-      WorkingDir: string;}
+type NCoverParams = { 
+    ProjectName: string
+    ToolPath: string
+    TestRunnerExe: string
+    TimeOut: TimeSpan
+    WorkingDir: string }
    
 /// NCover default parameters
-let NCoverDefaults =   
-    { ProjectName = String.Empty;
-      ToolPath = ProgramFiles @@ "NCover" @@ "ncover.console.exe";
-      TestRunnerExe = ProgramFiles @@ "NUnit" @@ "bin" @@ "nunit-console.exe";
-      TimeOut = TimeSpan.FromMinutes 5.
-      WorkingDir = currentDirectory}
+let NCoverDefaults = { 
+    ProjectName = String.Empty
+    ToolPath = ProgramFiles @@ "NCover" @@ "ncover.console.exe"
+    TestRunnerExe = ProgramFiles @@ "NUnit" @@ "bin" @@ "nunit-console.exe"
+    TimeOut = TimeSpan.FromMinutes 5.
+    WorkingDir = currentDirectory }
     
 /// Run NCover on a group of assemblies.
 /// ## Parameters
