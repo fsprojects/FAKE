@@ -42,6 +42,8 @@ let NUnitParallel (setParams: NUnitParams -> NUnitParams) (assemblies: string se
         let args = commandLineBuilder { parameters with OutputFile = outputFile } [name]
         let errout = StringBuilder()
         let stdout = StringBuilder()
+        tracefn "Run NUnit tests from %s." name
+        let stopwatch = System.Diagnostics.Stopwatch.StartNew()
         let result =
             ExecProcessWithLambdas (fun info ->  
                 info.FileName <- tool
@@ -51,6 +53,8 @@ let NUnitParallel (setParams: NUnitParams -> NUnitParams) (assemblies: string se
                 true
                 (fun e -> errout.Append(e) |> ignore)                
                 (fun s -> stdout.Append(s) |> ignore)
+        stopwatch.Stop()
+        tracefn "NUnit tests from %s finished in %O with result code %d." name stopwatch.Elapsed result
         { AssemblyName = name; ErrorOut = errout; StandardOut = stdout; ReturnCode = result; OutputFile = outputFile }
 
     enableProcessTracing <- false
