@@ -77,19 +77,28 @@
                     <td class="type-name">
                         <a href="fake-processhelper-consolemessage.html">ConsoleMessage</a>
                     </td>
-                    <td class="xmldoc"></td>
+                    <td class="xmldoc"><p>A record type which captures console messages</p>
+</td>
                 </tr>
                 <tr>
                     <td class="type-name">
                         <a href="fake-processhelper-execparams.html">ExecParams</a>
                     </td>
-                    <td class="xmldoc"></td>
+                    <td class="xmldoc"><p>Parameter type for process execution.</p>
+</td>
+                </tr>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-processhelper-processresult.html">ProcessResult</a>
+                    </td>
+                    <td class="xmldoc"><p>A process result including error code, message log and errors.</p>
+</td>
                 </tr>
                 <tr>
                     <td class="type-name">
                         <a href="fake-processhelper-shell.html">Shell</a>
                     </td>
-                    <td class="xmldoc"><p>Allows to exec shell operation</p>
+                    <td class="xmldoc"><p>Allows to exec shell operations.</p>
 </td>
                 </tr>
         </tbody>
@@ -103,7 +112,9 @@
                     <td class="module-name">
                         <a href="fake-processhelper-event.html">Event</a>
                     </td>
-                    <td class="xmldoc"></td>
+                    <td class="xmldoc"><p>Extensions for Event module
+See: http://stackoverflow.com/questions/2649161/need-help-regarding-async-and-fsi/</p>
+</td>
                 </tr>
         </tbody>
     </table>
@@ -118,23 +129,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '293', 293)" onmouseover="showTip(event, '293', 293)">
-            appSettings key
-          </code>
-          <div class="tip" id="293">
-            <strong>Signature:</strong>key:string -&gt; string []<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Returns the AppSettings for the key - Splitted on ;</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '295', 295)" onmouseover="showTip(event, '295', 295)">
+          <code onmouseout="hideTip(event, '294', 294)" onmouseover="showTip(event, '294', 294)">
             asyncShellExec args
           </code>
-          <div class="tip" id="295">
+          <div class="tip" id="294">
             <strong>Signature:</strong>args:ExecParams -&gt; Async&lt;int&gt;<br />
                       </div>
         </td>
@@ -147,35 +145,36 @@ sure that none of them depend on the output of another.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '296', 296)" onmouseover="showTip(event, '296', 296)">
+          <code onmouseout="hideTip(event, '295', 295)" onmouseover="showTip(event, '295', 295)">
             boolParam (paramName, paramValue)
           </code>
-          <div class="tip" id="296">
-            <strong>Signature:</strong>(paramName:&#39;?5395 * paramValue:bool) -&gt; (&#39;?5395 * &#39;?5396) option<br />
-                          <strong>Type parameters:</strong> '?5395, '?5396          </div>
+          <div class="tip" id="295">
+            <strong>Signature:</strong>(paramName:&#39;?5403 * paramValue:bool) -&gt; (&#39;?5403 * &#39;?5404) option<br />
+                          <strong>Type parameters:</strong> '?5403, '?5404          </div>
         </td>
         <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '296', 296)" onmouseover="showTip(event, '296', 296)">
+            defaultParams 
+          </code>
+          <div class="tip" id="296">
+            <strong>Signature:</strong>ExecParams<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Default parameters for process execution.</p>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '297', 297)" onmouseover="showTip(event, '297', 297)">
-            defaultParams 
+            directExec configProcessStartInfoF
           </code>
           <div class="tip" id="297">
-            <strong>Signature:</strong>ExecParams<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '298', 298)" onmouseover="showTip(event, '298', 298)">
-            directExec infoAction
-          </code>
-          <div class="tip" id="298">
-            <strong>Signature:</strong>infoAction:(ProcessStartInfo -&gt; unit) -&gt; bool<br />
+            <strong>Signature:</strong>configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; bool<br />
                       </div>
         </td>
         <td class="xmldoc"><p>Runs the given process, waits for its completion and returns if it succeeded.</p>
@@ -184,120 +183,11 @@ sure that none of them depend on the output of another.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '299', 299)" onmouseover="showTip(event, '299', 299)">
-            execProcess infoAction timeOut
+          <code onmouseout="hideTip(event, '298', 298)" onmouseover="showTip(event, '298', 298)">
+            ExecProcess (...)
           </code>
-          <div class="tip" id="299">
-            <strong>Signature:</strong>infoAction:(ProcessStartInfo -&gt; unit) -&gt; timeOut:TimeSpan -&gt; bool<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Runs the given process
-returns true if the exit code was 0</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '300', 300)" onmouseover="showTip(event, '300', 300)">
-            ExecProcess infoAction timeOut
-          </code>
-          <div class="tip" id="300">
-            <strong>Signature:</strong>infoAction:(ProcessStartInfo -&gt; unit) -&gt; timeOut:TimeSpan -&gt; int<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Runs the given process
-returns the exit code</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '301', 301)" onmouseover="showTip(event, '301', 301)">
-            execProcess2 infoAction timeOut silent
-          </code>
-          <div class="tip" id="301">
-            <strong>Signature:</strong>infoAction:(ProcessStartInfo -&gt; unit) -&gt; timeOut:TimeSpan -&gt; silent:bool -&gt; int<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Runs the given process
-returns the exit code</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '302', 302)" onmouseover="showTip(event, '302', 302)">
-            execProcess3 infoAction timeOut
-          </code>
-          <div class="tip" id="302">
-            <strong>Signature:</strong>infoAction:(ProcessStartInfo -&gt; unit) -&gt; timeOut:TimeSpan -&gt; bool<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Runs the given process
-returns if the exit code was 0</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '303', 303)" onmouseover="showTip(event, '303', 303)">
-            execProcessAndReturnExitCode (...)
-          </code>
-          <div class="tip" id="303">
-            <strong>Signature:</strong>infoAction:(ProcessStartInfo -&gt; unit) -&gt; timeOut:TimeSpan -&gt; int<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Runs the given process
-returns the exit code</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '304', 304)" onmouseover="showTip(event, '304', 304)">
-            ExecProcessAndReturnMessages (...)
-          </code>
-          <div class="tip" id="304">
-            <strong>Signature:</strong>infoAction:(ProcessStartInfo -&gt; unit) -&gt; timeOut:TimeSpan -&gt; bool * List&lt;string&gt; * List&lt;string&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Runs the given process and returns the exit code</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '305', 305)" onmouseover="showTip(event, '305', 305)">
-            ExecProcessElevated cmd args timeOut
-          </code>
-          <div class="tip" id="305">
-            <strong>Signature:</strong>cmd:string -&gt; args:string -&gt; timeOut:TimeSpan -&gt; int<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Runs the given process in an elevated context
-returns the exit code</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '306', 306)" onmouseover="showTip(event, '306', 306)">
-            ExecProcessRedirected infoAction timeOut
-          </code>
-          <div class="tip" id="306">
-            <strong>Signature:</strong>infoAction:(ProcessStartInfo -&gt; unit) -&gt; timeOut:TimeSpan -&gt; bool * seq&lt;ConsoleMessage&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '307', 307)" onmouseover="showTip(event, '307', 307)">
-            ExecProcessWithLambdas (...)
-          </code>
-          <div class="tip" id="307">
-            <strong>Signature:</strong>infoAction:(ProcessStartInfo -&gt; unit) -&gt; timeOut:TimeSpan -&gt; silent:bool -&gt; errorF:(string -&gt; unit) -&gt; messageF:(string -&gt; unit) -&gt; int<br />
+          <div class="tip" id="298">
+            <strong>Signature:</strong>configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; timeOut:TimeSpan -&gt; int<br />
                       </div>
         </td>
         <td class="xmldoc"><p>Runs the given process and returns the exit code.</p>
@@ -305,7 +195,88 @@ returns the exit code</p>
 <h2>Parameters</h2>
 
 <ul>
-<li><code>infoAction</code> - A function which overwrites a default ProcessStartInfo.</li>
+<li><code>configProcessStartInfoF</code> - A function which overwrites a default ProcessStartInfo.</li>
+<li><code>timeOut</code> - The timeout for the process.</li>
+</ul>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '299', 299)" onmouseover="showTip(event, '299', 299)">
+            ExecProcessAndReturnMessages (...)
+          </code>
+          <div class="tip" id="299">
+            <strong>Signature:</strong>configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; timeOut:TimeSpan -&gt; ProcessResult<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Runs the given process and returns the process result.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>configProcessStartInfoF</code> - A function which overwrites a default ProcessStartInfo.</li>
+<li><code>timeOut</code> - The timeout for the process.</li>
+</ul>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '300', 300)" onmouseover="showTip(event, '300', 300)">
+            ExecProcessElevated cmd args timeOut
+          </code>
+          <div class="tip" id="300">
+            <strong>Signature:</strong>cmd:string -&gt; args:string -&gt; timeOut:TimeSpan -&gt; int<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Runs the given process in an elevated context and returns the exit code.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>cmd</code> - The command which should be run in elavated context.</li>
+<li><code>args</code> - The process arguments.</li>
+<li><code>timeOut</code> - The timeout for the process.</li>
+</ul>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '301', 301)" onmouseover="showTip(event, '301', 301)">
+            ExecProcessRedirected (...)
+          </code>
+          <div class="tip" id="301">
+            <strong>Signature:</strong>configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; timeOut:TimeSpan -&gt; bool * seq&lt;ConsoleMessage&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Runs the given process and returns the process result.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>configProcessStartInfoF</code> - A function which overwrites a default ProcessStartInfo.</li>
+<li><code>timeOut</code> - The timeout for the process.</li>
+</ul>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '302', 302)" onmouseover="showTip(event, '302', 302)">
+            ExecProcessWithLambdas (...)
+          </code>
+          <div class="tip" id="302">
+            <strong>Signature:</strong>configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; timeOut:TimeSpan -&gt; silent:bool -&gt; errorF:(string -&gt; unit) -&gt; messageF:(string -&gt; unit) -&gt; int<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Runs the given process and returns the exit code.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>configProcessStartInfoF</code> - A function which overwrites a default ProcessStartInfo.</li>
 <li><code>timeOut</code> - The timeout for the process.</li>
 <li><code>silent</code> - If this flag is set then the process output is redirected to the given output functions <code>errorF</code> and <code>messageF</code>.</li>
 <li><code>errorF</code> - A function which will be called with the error log.</li>
@@ -316,37 +287,11 @@ returns the exit code</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '308', 308)" onmouseover="showTip(event, '308', 308)">
-            findFile dirs file
+          <code onmouseout="hideTip(event, '303', 303)" onmouseover="showTip(event, '303', 303)">
+            fireAndForget configProcessStartInfoF
           </code>
-          <div class="tip" id="308">
-            <strong>Signature:</strong>dirs:seq&lt;string&gt; -&gt; file:string -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Searches the given directories for the given file, failing if not found</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '309', 309)" onmouseover="showTip(event, '309', 309)">
-            findPath settingsName tool
-          </code>
-          <div class="tip" id="309">
-            <strong>Signature:</strong>settingsName:string -&gt; tool:string -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Tries to find the tool via AppSettings. If no path has the right tool we are trying the PATH system variable.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '310', 310)" onmouseover="showTip(event, '310', 310)">
-            fireAndForget infoAction
-          </code>
-          <div class="tip" id="310">
-            <strong>Signature:</strong>infoAction:(ProcessStartInfo -&gt; unit) -&gt; unit<br />
+          <div class="tip" id="303">
+            <strong>Signature:</strong>configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc"><p>Starts the given process and returns immediatly.</p>
@@ -355,36 +300,36 @@ returns the exit code</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '311', 311)" onmouseover="showTip(event, '311', 311)">
+          <code onmouseout="hideTip(event, '304', 304)" onmouseover="showTip(event, '304', 304)">
             killFSI ()
           </code>
-          <div class="tip" id="311">
+          <div class="tip" id="304">
             <strong>Signature:</strong>unit -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Kills the F# Interactive (FSI) process</p>
+        <td class="xmldoc"><p>Kills the F# Interactive (FSI) process.</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '312', 312)" onmouseover="showTip(event, '312', 312)">
+          <code onmouseout="hideTip(event, '305', 305)" onmouseover="showTip(event, '305', 305)">
             killMSBuild ()
           </code>
-          <div class="tip" id="312">
+          <div class="tip" id="305">
             <strong>Signature:</strong>unit -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Kills the MSBuild process</p>
+        <td class="xmldoc"><p>Kills the MSBuild process.</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '313', 313)" onmouseover="showTip(event, '313', 313)">
+          <code onmouseout="hideTip(event, '306', 306)" onmouseover="showTip(event, '306', 306)">
             killProcess name
           </code>
-          <div class="tip" id="313">
+          <div class="tip" id="306">
             <strong>Signature:</strong>name:string -&gt; unit<br />
                       </div>
         </td>
@@ -394,34 +339,34 @@ returns the exit code</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '314', 314)" onmouseover="showTip(event, '314', 314)">
+          <code onmouseout="hideTip(event, '307', 307)" onmouseover="showTip(event, '307', 307)">
             multipleStringParams paramName
           </code>
-          <div class="tip" id="314">
-            <strong>Signature:</strong>paramName:&#39;?5390 -&gt; seq&lt;string&gt; -&gt; (&#39;?5390 * string) option list<br />
-                          <strong>Type parameters:</strong> '?5390          </div>
+          <div class="tip" id="307">
+            <strong>Signature:</strong>paramName:&#39;?5398 -&gt; seq&lt;string&gt; -&gt; (&#39;?5398 * string) option list<br />
+                          <strong>Type parameters:</strong> '?5398          </div>
         </td>
         <td class="xmldoc"></td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '315', 315)" onmouseover="showTip(event, '315', 315)">
+          <code onmouseout="hideTip(event, '308', 308)" onmouseover="showTip(event, '308', 308)">
             optionParam (paramName, paramValue)
           </code>
-          <div class="tip" id="315">
-            <strong>Signature:</strong>(paramName:&#39;?5392 * paramValue:&#39;?5393 option) -&gt; (&#39;?5392 * string) option<br />
-                          <strong>Type parameters:</strong> '?5392, '?5393          </div>
+          <div class="tip" id="308">
+            <strong>Signature:</strong>(paramName:&#39;?5400 * paramValue:&#39;?5401 option) -&gt; (&#39;?5400 * string) option<br />
+                          <strong>Type parameters:</strong> '?5400, '?5401          </div>
         </td>
         <td class="xmldoc"></td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '316', 316)" onmouseover="showTip(event, '316', 316)">
+          <code onmouseout="hideTip(event, '309', 309)" onmouseover="showTip(event, '309', 309)">
             parametersToString (...)
           </code>
-          <div class="tip" id="316">
+          <div class="tip" id="309">
             <strong>Signature:</strong>flagPrefix:string -&gt; delimiter:string -&gt; parameters:seq&lt;(string * string) option&gt; -&gt; string<br />
                       </div>
         </td>
@@ -430,63 +375,23 @@ returns the exit code</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '317', 317)" onmouseover="showTip(event, '317', 317)">
-            quote str
-          </code>
-          <div class="tip" id="317">
-            <strong>Signature:</strong>str:string -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Adds quotes around the string</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '318', 318)" onmouseover="showTip(event, '318', 318)">
-            quoteIfNeeded str
-          </code>
-          <div class="tip" id="318">
-            <strong>Signature:</strong>str:string -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Adds quotes around the string if needed</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '319', 319)" onmouseover="showTip(event, '319', 319)">
+          <code onmouseout="hideTip(event, '310', 310)" onmouseover="showTip(event, '310', 310)">
             RunService command serviceName
           </code>
-          <div class="tip" id="319">
+          <div class="tip" id="310">
             <strong>Signature:</strong>command:string -&gt; serviceName:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Sends a command to a windows service</p>
+        <td class="xmldoc"><p>Sends a command to a windows service.</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '320', 320)" onmouseover="showTip(event, '320', 320)">
-            setEnvironmentVariables (...)
-          </code>
-          <div class="tip" id="320">
-            <strong>Signature:</strong>startInfo:ProcessStartInfo -&gt; environmentSettings:seq&lt;string * string&gt; -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>sets the environment Settings for the given startInfo
-existing values will be overrriden</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '321', 321)" onmouseover="showTip(event, '321', 321)">
+          <code onmouseout="hideTip(event, '311', 311)" onmouseover="showTip(event, '311', 311)">
             shellExec 
           </code>
-          <div class="tip" id="321">
+          <div class="tip" id="311">
             <strong>Signature:</strong>ExecParams -&gt; int<br />
                       </div>
         </td>
@@ -496,23 +401,23 @@ existing values will be overrriden</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '322', 322)" onmouseover="showTip(event, '322', 322)">
-            StartProcess infoAction
+          <code onmouseout="hideTip(event, '312', 312)" onmouseover="showTip(event, '312', 312)">
+            StartProcess configProcessStartInfoF
           </code>
-          <div class="tip" id="322">
-            <strong>Signature:</strong>infoAction:(ProcessStartInfo -&gt; unit) -&gt; unit<br />
+          <div class="tip" id="312">
+            <strong>Signature:</strong>configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Starts the given process and forgets about it</p>
+        <td class="xmldoc"><p>Starts the given process and forgets about it.</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '323', 323)" onmouseover="showTip(event, '323', 323)">
+          <code onmouseout="hideTip(event, '313', 313)" onmouseover="showTip(event, '313', 313)">
             StartService serviceName
           </code>
-          <div class="tip" id="323">
+          <div class="tip" id="313">
             <strong>Signature:</strong>serviceName:string -&gt; unit<br />
                       </div>
         </td>
@@ -522,78 +427,14 @@ existing values will be overrriden</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '324', 324)" onmouseover="showTip(event, '324', 324)">
+          <code onmouseout="hideTip(event, '314', 314)" onmouseover="showTip(event, '314', 314)">
             StopService serviceName
           </code>
-          <div class="tip" id="324">
+          <div class="tip" id="314">
             <strong>Signature:</strong>serviceName:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc"><p>Stops a windows service</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '325', 325)" onmouseover="showTip(event, '325', 325)">
-            stringParam (paramName, paramValue)
-          </code>
-          <div class="tip" id="325">
-            <strong>Signature:</strong>(paramName:&#39;?5388 * paramValue:string) -&gt; (&#39;?5388 * string) option<br />
-                          <strong>Type parameters:</strong> '?5388          </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '326', 326)" onmouseover="showTip(event, '326', 326)">
-            toParam x
-          </code>
-          <div class="tip" id="326">
-            <strong>Signature:</strong>x:string -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Adds quotes and a blank around the string</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '327', 327)" onmouseover="showTip(event, '327', 327)">
-            tryFindFile dirs file
-          </code>
-          <div class="tip" id="327">
-            <strong>Signature:</strong>dirs:seq&lt;string&gt; -&gt; file:string -&gt; string option<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Searches the given directories for all occurrences of the given file name</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '328', 328)" onmouseover="showTip(event, '328', 328)">
-            tryFindPath settingsName tool
-          </code>
-          <div class="tip" id="328">
-            <strong>Signature:</strong>settingsName:string -&gt; tool:string -&gt; string option<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Tries to find the tool via AppSettings. If no path has the right tool we are trying the PATH system variable.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '329', 329)" onmouseover="showTip(event, '329', 329)">
-            UseDefaults 
-          </code>
-          <div class="tip" id="329">
-            <strong>Signature:</strong>&#39;?5386 -&gt; &#39;?5386<br />
-                          <strong>Type parameters:</strong> '?5386          </div>
-        </td>
-        <td class="xmldoc"><p>Use default Parameters</p>
 </td>
       </tr>
     </tbody>
