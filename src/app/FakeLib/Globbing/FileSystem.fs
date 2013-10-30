@@ -45,7 +45,7 @@ module FileSystem =
                 let dir = recursiveDir.Replace("**", "") |> cleanUpPath
                 if Directory.Exists(Path.GetDirectoryName(dir))
                 then 
-                    let fi = FileInfo(str)
+                    let fi = FileInfo(str.Replace("**", "").Replace("*","f"))
                     if fi.Attributes = FileAttributes.Directory
                     then fi.FullName, "*.*" 
                     else fi.Directory.FullName, fname
