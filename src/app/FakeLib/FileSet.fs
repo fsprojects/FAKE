@@ -344,7 +344,7 @@ let DefaultBaseDir = Path.GetFullPath "."
 let Include x =    
     { BaseDirectories = [DefaultBaseDir];
       Includes = [x];
-      Excludes = []}           
+      Excludes = []}
        
 /// Lazy scan for include files.
 /// Will be processed at the time when needed.
@@ -370,6 +370,18 @@ let inline (--) x y = {x with Excludes = y::x.Excludes}
 
 /// Includes a single pattern and scans the files - !! x = AllFilesMatching x
 let inline (!!) x = !+ x |> Scan
+
+/// Includes a list of files
+let inline (!*) x =
+    { BaseDirectories = [DefaultBaseDir]
+      Includes = x
+      Excludes = [] }
+
+/// Add a list of files to Includes
+let inline (+*) x y = { x with Includes = y @ x.Includes }
+
+/// Add a list of files to Excludes
+let inline (-*) x y = { x with Excludes = y @ x.Excludes }  
 
 /// Includes a single pattern and scans the files - !! x = AllFilesMatching x
 let AllFilesMatching x = !! x
