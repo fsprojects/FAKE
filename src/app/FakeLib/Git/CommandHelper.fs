@@ -23,12 +23,13 @@ let gitPath =
 
 /// Runs git.exe with the given command in the given repository directory.
 let runGitCommand repositoryDir command = 
-    let ok,msg,errors = 
+    let processResult = 
         ExecProcessAndReturnMessages (fun info ->  
           info.FileName <- gitPath
           info.WorkingDirectory <- repositoryDir
           info.Arguments <- command) gitTimeOut
-    ok,msg,toLines errors
+
+    processResult.OK,processResult.Messages,toLines processResult.Errors
 
 /// [omit]
 let runGitCommandf fmt = Printf.ksprintf runGitCommand fmt
