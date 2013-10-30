@@ -1,9 +1,9 @@
-﻿using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using Fake;
 using Machine.Specifications;
 using Test.FAKECore.FileHandling;
-namespace Test.FAKECore.Globbing.Excludes
+
+namespace Test.FAKECore.Globbing.TestSample2
 {
     public class when_extracting_sample_zip : BaseFunctions
     {
@@ -20,10 +20,7 @@ namespace Test.FAKECore.Globbing.Excludes
     {
         static string[] Files;
 
-        Because of = () =>
-        {
-            Files = FileSystem.Search.find("./**/packages.config").ToArray();
-        };
+        Because of = () => Files = FileSystem.Search.find("./**/packages.config").ToArray();
 
         It should_match_2_files = () => Files.Length.ShouldEqual(2);
     }
