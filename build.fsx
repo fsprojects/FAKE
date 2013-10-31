@@ -161,7 +161,6 @@ Target "CreateNuGet" (fun _ ->
         | _ ->
             CopyDir nugetToolsDir (buildDir @@ package) allFiles                
             CopyTo nugetToolsDir additionalFiles
-        DeleteFile (nugetToolsDir @@ "Gallio.dll")
 
         NuGet (fun p -> 
             {p with
