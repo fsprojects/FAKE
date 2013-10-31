@@ -6,7 +6,7 @@ open System
 open System.IO
 open System.Text  
 
-/// NCover parameter txpe
+/// The NCover parameter type.
 type NCoverParams = { 
     ProjectName: string
     ToolPath: string
@@ -14,7 +14,7 @@ type NCoverParams = {
     TimeOut: TimeSpan
     WorkingDir: string }
    
-/// NCover default parameters
+/// NCover default parameters.
 let NCoverDefaults = { 
     ProjectName = String.Empty
     ToolPath = ProgramFiles @@ "NCover" @@ "ncover.console.exe"
@@ -22,7 +22,7 @@ let NCoverDefaults = {
     TimeOut = TimeSpan.FromMinutes 5.
     WorkingDir = currentDirectory }
     
-/// Run NCover on a group of assemblies.
+/// Runs NCover on a group of assemblies.
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to overwrite the NCover default parameters.
