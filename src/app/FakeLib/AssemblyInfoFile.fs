@@ -70,7 +70,7 @@ let CreateCSharpAssemblyInfo outputFileName attributes =
     (attributes |> Seq.toList |> List.map (fun (attr:Attribute) -> sprintf "[assembly: %sAttribute(%s)]" attr.Name attr.Value)) @
     (attributes |> Seq.toList |> List.map (fun (attr:Attribute) ->  
                                                   if attr.Name = "AssemblyVersion" then
-                                                      sprintf "class AssemblyVersionInformation { public const string Version = \"%s\"; }" attr.Value
+                                                      sprintf "class AssemblyVersionInformation { public const string Version = %s; }" attr.Value
                                                   else ""))
     |> writeToFile outputFileName
     
