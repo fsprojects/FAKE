@@ -67,15 +67,16 @@ let xUnit setParams assemblies =
               let dir = 
                 if isNullOrEmpty parameters.OutputDir then String.Empty else
                 Path.GetFullPath parameters.OutputDir
+               
 
               new StringBuilder()
                 |> appendFileNamesIfNotNull [assembly]
                 |> appendIfFalse parameters.ShadowCopy "/noshadow"
                 |> appendIfTrue (buildServer = TeamCity) "/teamcity"
                 |> appendIfFalse parameters.Verbose "/silent" 
-                |> appendIfTrue parameters.XmlOutput (sprintf "/xml\" \"%s%s.xml" dir name) 
-                |> appendIfTrue parameters.HtmlOutput (sprintf "/html\" \"%s%s.html" dir name) 
-                |> appendIfTrue parameters.NUnitXmlOutput (sprintf "/nunit\" \"%s%s.xml" dir name)                                
+                |> appendIfTrue parameters.XmlOutput (sprintf "/xml\" \"%s" (dir @@ (name + ".xml")))
+                |> appendIfTrue parameters.HtmlOutput (sprintf "/html\" \"%s" (dir @@ (name + ".html")))
+                |> appendIfTrue parameters.NUnitXmlOutput (sprintf "/nunit\" \"%s" (dir @@ (name + ".xml")))                              
       
           if not (execProcess3 (fun info ->  
               info.FileName <- parameters.ToolPath
