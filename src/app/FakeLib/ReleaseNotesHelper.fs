@@ -50,7 +50,7 @@ let private parseComplexReleaseNotes (text: seq<string>) =
       NugetVersion = nugetVer.Value
       Notes = notes }
     
-/// Parse a Release Notes text - Either "simple" or "complex" format (see below).
+/// Parses a Release Notes text - Either "simple" or "complex" format (see below).
 ///
 /// ## Parameters
 ///  - `data` - Release notes text
