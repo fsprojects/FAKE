@@ -6,7 +6,7 @@ open System
 open System.IO
 open System.Text
 
-// SpecFlow execution parameter type.
+/// SpecFlow execution parameter type.
 type SpecFlowParams = { 
     SubCommand:         string
     ProjectFile:        string
@@ -22,7 +22,7 @@ type SpecFlowParams = {
     XsltFile:           string
 }
 
-// SpecFlow default execution parameters.
+/// SpecFlow default execution parameters.
 let SpecFlowDefaults = { 
     SubCommand =        "generateall"
     ProjectFile =       null
