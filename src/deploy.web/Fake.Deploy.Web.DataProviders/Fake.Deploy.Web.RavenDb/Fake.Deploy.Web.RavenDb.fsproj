@@ -12,6 +12,7 @@
     <FileAlignment>512</FileAlignment>
     <Name>Fake.Deploy.Web.RavenDb</Name>
     <TargetFrameworkProfile />
+    <FSharpTargetsPath Condition="'$(FSharpTargetsPath)' == '' And '$(OS)' != 'Windows_NT'">..\..\..\tools\FSharp\Microsoft.FSharp.Targets</FSharpTargetsPath>
     <FSharpTargetsPath Condition="'$(FSharpTargetsPath)' == '' And '$(VisualStudioVersion)' != '11.0' And Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.1\Framework\v4.0\Microsoft.FSharp.Targets')">$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.1\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
     <FSharpTargetsPath Condition="'$(FSharpTargetsPath)' == '' And Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets')">$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
     <FSharpTargetsPath Condition="'$(FSharpTargetsPath)' == ''">..\..\..\tools\FSharp\Microsoft.FSharp.Targets</FSharpTargetsPath>
