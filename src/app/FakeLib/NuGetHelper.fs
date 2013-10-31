@@ -77,8 +77,8 @@ let private replaceAccessKey key (text:string) =
 
 let private createNuspecFile parameters nuSpec =
     // create .nuspec file
-    CopyFile parameters.OutputPath nuSpec
-    let specFile = parameters.OutputPath @@ (Path.GetFileName nuSpec) |> FullName
+    CopyFile parameters.WorkingDir nuSpec
+    let specFile = parameters.WorkingDir @@ (Path.GetFileName nuSpec) |> FullName
 
     let dependencies =
         if parameters.Dependencies = [] then "" else
