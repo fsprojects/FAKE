@@ -28,6 +28,7 @@ let packages =
     ["FAKE.Core",projectDescription
      projectName,projectDescription + " This package bundles all extensions."     
      "FAKE.Gallio",projectDescription + " Extensions for Gallio"
+     "FAKE.IIS",projectDescription + " Extensions for IIS"
      "FAKE.SQL",projectDescription + " Extensions for SQL Server"]
 
 let buildVersion = if isLocalBuild then "0.0.1" else buildVersion
