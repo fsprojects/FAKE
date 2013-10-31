@@ -149,15 +149,16 @@ Target "CreateNuGet" (fun _ ->
 
         CleanDir nugetDocsDir
         CleanDir nugetToolsDir
-        CopyDir nugetDocsDir docsDir allFiles
-
+        
         match package with
         | p when p = projectName ->
             !! (buildDir @@ "**/*.*") |> Copy nugetToolsDir 
-            CopyDir nugetToolsDir @"./lib/fsi" allFiles                
+            CopyDir nugetToolsDir @"./lib/fsi" allFiles
+            CopyDir nugetDocsDir docsDir allFiles
         | p when p = "FAKE.Core" ->
             !! (buildDir @@ "*.*") |> Copy nugetToolsDir
             CopyDir nugetToolsDir @"./lib/fsi" allFiles
+            CopyDir nugetDocsDir docsDir allFiles
         | _ ->
             CopyDir nugetToolsDir (buildDir @@ package) allFiles                
             CopyTo nugetToolsDir additionalFiles
