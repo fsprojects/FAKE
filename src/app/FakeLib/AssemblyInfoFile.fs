@@ -61,7 +61,9 @@ let private getDependencies attributes =
     |> Set.ofSeq
     |> Seq.toList
  
-/// Creates a C# AssemblyInfo file with the given attributes
+/// Creates a C# AssemblyInfo file with the given attributes.
+/// If the attributes contain the Version attribute class called AssemblyVersionInformation is also generated. 
+/// This class allows to easily retrieve the version no. inside of an assembly.
 let CreateCSharpAssemblyInfo outputFileName attributes =
     traceStartTask "AssemblyInfo" outputFileName
 
