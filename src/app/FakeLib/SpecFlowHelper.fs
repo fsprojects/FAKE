@@ -6,7 +6,7 @@ open System
 open System.IO
 open System.Text
 
-// SpecFlow execution params type
+// SpecFlow execution parameter type.
 type SpecFlowParams = { 
     SubCommand:         string
     ProjectFile:        string
@@ -22,7 +22,7 @@ type SpecFlowParams = {
     XsltFile:           string
 }
 
-// SpecFlow defalt execution params
+// SpecFlow default execution parameters.
 let SpecFlowDefaults = { 
     SubCommand =        "generateall"
     ProjectFile =       null
@@ -38,48 +38,40 @@ let SpecFlowDefaults = {
     XsltFile =          null
 }
 
-// Runs SpecFlow specflow on a project.
+// Runs SpecFlow on a project.
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to manipulate the default SpecFlow parameter value.
 let SpecFlow setParams =    
+    let parameters = setParams SpecFlowDefaults
 
-    // get default params, and push our set of params in.
-    let parameters = SpecFlowDefaults |> setParams
-
-    // write trace
     traceStartTask "SpecFlow " parameters.SubCommand
 
-    // build the command line args
-    let commandLineBuilder = 
-        new StringBuilder()
-            |> append           parameters.SubCommand
-            |> append           parameters.ProjectFile
-            |> appendIfNotNull  parameters.BinFolder "/binFolder:"
-            |> appendIfNotNull  parameters.OutputFile "/out:"
-            |> appendIfNotNull  parameters.XmlTestResultFile "/xmlTestResult:"
-            |> appendIfNotNull  parameters.TestOutputFile "/testOutput:"
-            |> appendIfTrue     parameters.Verbose "/verbose"
-            |> appendIfTrue     parameters.ForceRegeneration "/force"
-            |> appendIfNotNull  parameters.XsltFile "/xsltFile:"
-
-    // build the command line executable
     let tool = parameters.ToolPath @@ parameters.ToolName
 
-    // args = parameters to string
+    let commandLineBuilder = 
+        new StringBuilder()
+        |> append           parameters.SubCommand
+        |> append           parameters.ProjectFile
+        |> appendIfNotNull  parameters.BinFolder "/binFolder:"
+        |> appendIfNotNull  parameters.OutputFile "/out:"
+        |> appendIfNotNull  parameters.XmlTestResultFile "/xmlTestResult:"
+        |> appendIfNotNull  parameters.TestOutputFile "/testOutput:"
+        |> appendIfTrue     parameters.Verbose "/verbose"
+        |> appendIfTrue     parameters.ForceRegeneration "/force"
+        |> appendIfNotNull  parameters.XsltFile "/xsltFile:"
+
     let args = commandLineBuilder.ToString()
 
-    // write trace
     trace (tool + " " + args)
 
-    // execute (with max value timeout)!
     let result =
         execProcessAndReturnExitCode (fun info ->
             info.FileName <- tool
             info.WorkingDirectory <- parameters.WorkingDir
             info.Arguments <- args) System.TimeSpan.MaxValue
 
-    // handle result
+
     match result with
-        | 0 -> traceEndTask "SpecFlow " parameters.SubCommand
-        | _ -> failwithf "SpecFlow %s failed. Process finished with exit code %i" parameters.SubCommand result
+    | 0 -> traceEndTask "SpecFlow " parameters.SubCommand
+    | _ -> failwithf "SpecFlow %s failed. Process finished with exit code %i" parameters.SubCommand result
