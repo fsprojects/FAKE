@@ -14,6 +14,8 @@ type MSBuildProject = XDocument
 
 /// An exception type to signal build errors.
 exception BuildException of string*list<string>
+  with
+    override x.ToString() = x.Data0.ToString() + "\r\n" + (separated "\r\n" x.Data1)
 
 /// Tries to detect the right version of MSBuild.
 ///   - On Linux/Unix Systems we use xBuild.
@@ -201,7 +203,7 @@ let build setParams project =
     then
         if Diagnostics.Debugger.IsAttached then Diagnostics.Debugger.Break()
         let errors = File.ReadAllLines(MsBuildLogger.ErrorLoggerFile) |> List.ofArray
-        let errorMessage = sprintf "Building %s project failed." project
+        let errorMessage = sprintf "Building %s failed." project
         raise (BuildException(errorMessage, errors))
     traceEndTask "MSBuild" project
 
