@@ -21,9 +21,9 @@ If you need more than the default functionality you can either write F# or simpl
 	"Test"            // define the dependencies
 	   ==> "Deploy"
 	
-	Run "Default"
+	Run "Deploy"
 
-This build script has two targets. The "Default" target has exactly one dependency, namely the "Test" target. Invoking the "Default" target (line 16) will cause FAKE to invoke the "Test" target as well.
+This build script has two targets. The "Deploy" target has exactly one dependency, namely the "Test" target. Invoking the "Deploy" target (line 16) will cause FAKE to invoke the "Test" target as well.
 
 ## Who is using FAKE?
 
