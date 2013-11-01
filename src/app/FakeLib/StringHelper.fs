@@ -35,7 +35,7 @@ let inline split (delimiter:char) (text:string) = text.Split [|delimiter|] |> Ar
 let inline splitStr (delimiterStr:string) (text:string) = text.Split([|delimiterStr|], StringSplitOptions.None) |> Array.toList
 
 /// Converts a sequence of strings into a string separated with line ends
-let inline toLines s = separated "\r\n" s
+let inline toLines text = separated Environment.NewLine text
 
 /// Checks whether the given text starts with the given prefix
 let startsWith prefix (text:string) = text.StartsWith prefix
