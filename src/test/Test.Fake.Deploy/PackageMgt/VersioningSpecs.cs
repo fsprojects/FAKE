@@ -1,7 +1,7 @@
 ﻿using Fake;
 using Machine.Specifications;
 
-namespace Test.FAKECore.PackageMgt
+namespace Test.Fake.Deploy.PackageMgt
 {
     public class when_checking_the_given_version
     {

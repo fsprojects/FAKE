@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -24,7 +24,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\build\</OutputPath>
+    <OutputPath>..\..\..\build\FAKE.Deploy\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>3</WarningLevel>
@@ -33,24 +33,18 @@
     <StartArguments>
     </StartArguments>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <Tailcalls>true</Tailcalls>
-    <OutputPath>..\..\..\build\</OutputPath>
+    <OutputPath>..\..\..\build\FAKE.Deploy\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
-    <DocumentationFile>
-    </DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <OutputPath>..\..\..\tools\Fake\</OutputPath>
-    <StartArguments>
-    </StartArguments>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="DeploymentHelper.fs" />
+    <Compile Include="DeploymentAgent.fs" />
     <Compile Include="Services.fs" />
     <Compile Include="Installers.fs" />
     <Compile Include="Program.fs" />
@@ -75,6 +69,11 @@
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceProcess" />
+    <ProjectReference Include="..\Fake.Deploy.Lib\Fake.Deploy.Lib.fsproj">
+      <Name>Fake.Deploy.Lib</Name>
+      <Project>{83b7d6e7-6ae1-4786-9c26-4e2e73216ec9}</Project>
+      <Private>True</Private>
+    </ProjectReference>
     <ProjectReference Include="..\FakeLib\FakeLib.fsproj">
       <Name>FakeLib</Name>
       <Project>{13d56521-772a-41db-9772-1da1a4aa8e3a}</Project>

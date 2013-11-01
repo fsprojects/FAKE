@@ -76,4 +76,7 @@
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(FSharpTargetsPath)" />
+  <Import Project="..\..\..\..\tools\FSharp\Microsoft.FSharp.Targets" />
+  <Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\FSharp\Microsoft.FSharp.Targets" Condition="'$(MSBuildFrameworkToolsPath)' != ''" />
 </Project>

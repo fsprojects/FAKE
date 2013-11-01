@@ -1,5 +1,5 @@
-﻿/// Contains a http listener for FAKE.Deploy.
-module Fake.HttpClientHelper
+﻿/// Contains a http helper functions for FAKE.Deploy.
+module Fake.FakeDeployAgentHelper
 
 open System
 open System.IO
@@ -7,7 +7,7 @@ open System.Net
 
 /// A http response type.
 type Response = {
-    Messages : seq<ConsoleMessage>
+    Messages : seq<Fake.ProcessHelper.ConsoleMessage>
     Exception : obj
     IsError : bool }
 
@@ -17,32 +17,32 @@ type DeploymentResponse =
 | Failure of Response
 | QueryResult of seq<NuSpecPackage>
 
-/// Gets the http response from the given URL and runs it with the given function.
-let get f url =
-    let uri = new Uri(url, UriKind.Absolute)
+let private webClient () =
     let client = new WebClient()
     client.Headers.Add(HttpRequestHeader.ContentType, "application/fake")
-    client.DownloadString(uri) |> f
+    client
+
+/// Gets the http response from the given URL and runs it with the given function.
+let private get f url =
+    let uri = new Uri(url, UriKind.Absolute)
+    webClient().DownloadString(uri) |> f
+
+/// sends the given body using the given action (POST or PUT) to the given url
+let private sendData<'t> action url body =
+    let uri = new Uri(url, UriKind.Absolute)
+    use client = webClient()
+    use ms = new MemoryStream(client.UploadData(uri, action, body))
+    use sr = new StreamReader(ms, Text.Encoding.UTF8)
+    sr.ReadToEnd() |> Json.deserialize<'t>
 
 /// Posts the given body to the given URL.
-let post url body = 
-    let uri = new Uri(url, UriKind.Absolute)
-    let client = new WebClient()
-    let mutable uploaded = false
-    client.Headers.Add(HttpRequestHeader.ContentType, "application/fake")
-    use ms = new MemoryStream(client.UploadData(uri, "POST", body))
-    use sr = new StreamReader(ms, Text.Encoding.UTF8)
-    sr.ReadToEnd() |> Json.deserialize<DeploymentResponse>
+let private post = sendData<DeploymentResponse> "POST"
 
 /// Puts the given body to the given URL.
-let put body url = 
-    let uri = new Uri(url, UriKind.Absolute)
-    let client = new WebClient()
-    let mutable uploaded = false
-    client.Headers.Add(HttpRequestHeader.ContentType, "application/fake")
-    use ms = new MemoryStream(client.UploadData(uri, "PUT", body))
-    use sr = new StreamReader(ms, Text.Encoding.UTF8)
-    sr.ReadToEnd() |> Json.deserialize<DeploymentResponse>
+let private put = sendData<DeploymentResponse> "PUT" 
+
+type DeployStatus = | Active | Inactive
+type App = { Name:string; Version:string }
 
 /// Returns all releases of the given app from the given server.
 let getReleasesFor server appname status =
@@ -53,8 +53,7 @@ let getReleasesFor server appname status =
 
 /// Performs a rollback of the given app on the server.
 let rollbackTo server appname version =
-    server + "/deployments/"+ appname + "?version=" + version 
-        |> put [||]
+    put (server + "/deployments/"+ appname + "?version=" + version) [||]
 
 /// Returns all active releases from the given server.
 let getAllActiveReleases server = getReleasesFor server null "active"
@@ -76,11 +75,15 @@ let getAllReleases server = getAllReleasesFor server null
 let postDeploymentPackage url packageFileName = post url (ReadFileAsBytes packageFileName)
 
 /// Posts a deployment package to the given URL and handles the response.
-let PostDeploymentPackage url packageFileName = 
+let DeployPackage url packageFileName = 
     match postDeploymentPackage url packageFileName with
     | Success _ -> tracefn "Deployment of %s successful" packageFileName
     | Failure exn -> failwithf "Deployment of %A failed\r\n%A" packageFileName exn.Exception
     | response -> failwithf "Deployment of %A failed\r\n%A" packageFileName response
+
+/// Deprecated, use DeployPackage
+[<Obsolete("Use DeployPackage")>]
+let PostDeploymentPackage = DeployPackage
 
 /// Performs a rollback of the given app at the given URL and handles the response.
 let RollbackPackage url appName version = 

@@ -6,6 +6,7 @@ open System.IO
 open System.Net
 open System.Threading
 open System.Diagnostics
+open Fake
 open Fake.DeploymentHelper
 open Fake.HttpListenerHelper
 
@@ -18,7 +19,7 @@ let private runDeployment workDir args (ctx : HttpListenerContext) =
     let response = doDeployment package.Name scriptFile
     
     match response with
-    | HttpClientHelper.Success _ -> logger (sprintf "Successfully deployed %s %s" package.Id package.Version, EventLogEntryType.Information)
+    | FakeDeployAgentHelper.Success _ -> logger (sprintf "Successfully deployed %s %s" package.Id package.Version, EventLogEntryType.Information)
     | response -> logger (sprintf "Deployment failed of %s %s failed\r\nDetails:\r\n%A" package.Id package.Version response, EventLogEntryType.Information)
 
     response
@@ -26,23 +27,23 @@ let private runDeployment workDir args (ctx : HttpListenerContext) =
 
 let private getActiveReleases workDir args (ctx : HttpListenerContext) =
     getActiveReleases workDir 
-    |> HttpClientHelper.DeploymentResponse.QueryResult 
+    |> FakeDeployAgentHelper.DeploymentResponse.QueryResult 
     |> Json.serialize
 
 let private getAllReleases workDir args (ctx : HttpListenerContext) = 
     getAllReleases workDir 
-    |> HttpClientHelper.DeploymentResponse.QueryResult 
+    |> FakeDeployAgentHelper.DeploymentResponse.QueryResult 
     |> Json.serialize
 
 let private getAllReleasesFor workDir (args:Map<_,_>) (ctx : HttpListenerContext) = 
     getAllReleasesFor workDir args.["app"]
-    |> HttpClientHelper.DeploymentResponse.QueryResult 
+    |> FakeDeployAgentHelper.DeploymentResponse.QueryResult 
     |> Json.serialize
 
 let private getActiveReleaseFor workDir (args:Map<_,_>) (ctx : HttpListenerContext) =
     getActiveReleaseFor workDir args.["app"]
     |> Seq.singleton
-    |> HttpClientHelper.DeploymentResponse.QueryResult 
+    |> FakeDeployAgentHelper.DeploymentResponse.QueryResult 
     |> Json.serialize
 
 let private runRollbackToVersion workDir (args:Map<_,_>) (ctx : HttpListenerContext) = 

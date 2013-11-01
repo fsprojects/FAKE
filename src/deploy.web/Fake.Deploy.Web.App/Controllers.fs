@@ -12,8 +12,7 @@ open System.Web.Security
 open System.Collections.Generic
 open System.Net.Mail
 open Fake.Deploy.Web
-open Fake.HttpClientHelper
-
+open Fake.FakeDeployAgentHelper
 
 
 [<HandleError>]

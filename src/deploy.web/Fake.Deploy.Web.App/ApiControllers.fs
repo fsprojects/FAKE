@@ -6,10 +6,10 @@ open System.Web.Mvc
 open System.Web.Http
 open System.Net
 open System.Net.Http
-open Fake.Deploy.Web
-open Fake.HttpClientHelper
 open System.Web.Security
 open log4net
+open Fake.Deploy.Web
+open Fake.FakeDeployAgentHelper
 
 module ApiModels =
 

@@ -38,15 +38,6 @@
     <WarningLevel>3</WarningLevel>
     <DocumentationFile>..\..\..\build\FakeLib.XML</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DocumentationFile>bin\Release\FakeLib.XML</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <DocumentationFile>bin\Debug\FakeLib.xml</DocumentationFile>
-    <OtherFlags>
-    </OtherFlags>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-  </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="EnvironmentHelper.fs" />
@@ -120,9 +111,6 @@
     <Compile Include="TargetHelper.fs" />
     <Compile Include="AdditionalSyntax.fs" />
     <Compile Include="HttpListenerHelper.fs" />
-    <Compile Include="Deploy\HttpClientHelper.fs" />
-    <Compile Include="Deploy\DeploymentHelper.fs" />
-    <Compile Include="Deploy\DeploymentAgent.fs" />
     <Compile Include="PermissionsHelper.fs" />
     <Compile Include="SpecFlowHelper.fs" />
     <Compile Include="OctoTools.fs" />
@@ -170,7 +158,6 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.ServiceProcess" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Core" />
