@@ -76,7 +76,7 @@ let private parseComplexReleaseNotes (text: seq<string>) =
 /// ## Sample
 ///
 ///     let release =
-///         File.ReadLines "RELEASE_NOTES.md"
+///         ReadFile "RELEASE_NOTES.md"
 ///         |> ReleaseNotesHelper.parseReleaseNotes
 ///
 ///
