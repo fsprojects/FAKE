@@ -3,7 +3,7 @@ using System.Linq;
 using Fake;
 using Machine.Specifications;
 
-namespace Test.FAKECore.PackageMgt
+namespace Test.Fake.Deploy.PackageMgt
 {
     public class when_getting_all_active_releases_from_test_folder
     {

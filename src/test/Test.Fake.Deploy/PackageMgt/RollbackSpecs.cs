@@ -1,7 +1,7 @@
 using Fake;
 using Machine.Specifications;
 
-namespace Test.FAKECore.PackageMgt
+namespace Test.Fake.Deploy.PackageMgt
 {
     public class when_trying_to_get_the_previous_package
     {
