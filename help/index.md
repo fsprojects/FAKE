@@ -31,6 +31,7 @@ Some of our users are:
 
 * [msu solutions GmbH](http://www.msu-solutions.de/)
 * E.On Global Commodities UK
+* [Octokit](https://github.com/octokit/octokit.net/) by GitHub
 * [BlueMountainCapital](https://github.com/BlueMountainCapital/Deedle)
 * [fsharpx](https://github.com/fsharp/fsharpx)
 * [FSharp.Data](https://github.com/fsharp/FSharp.Data)
