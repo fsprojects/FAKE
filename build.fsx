@@ -157,11 +157,9 @@ Target "CreateNuGet" (fun _ ->
         match package with
         | p when p = projectName ->
             !! (buildDir @@ "**/*.*") |> Copy nugetToolsDir 
-            CopyDir nugetToolsDir @"./tools/FSharp.Compiler/tools" allFiles
             CopyDir nugetDocsDir docsDir allFiles
         | p when p = "FAKE.Core" ->
             !! (buildDir @@ "*.*") |> Copy nugetToolsDir
-            CopyDir nugetToolsDir @"./tools/FSharp.Compiler/tools" allFiles
             CopyDir nugetDocsDir docsDir allFiles
         | _ ->
             CopyDir nugetToolsDir (buildDir @@ package) allFiles                
@@ -177,8 +175,10 @@ Target "CreateNuGet" (fun _ ->
                 Summary = projectSummary
                 Dependencies =
                     if package <> "FAKE.Core" && package <> projectName then
-                      ["FAKE.Core", RequireExactly (NormalizeVersion buildVersion)]
-                    else p.Dependencies
+                      ["FAKE.Core", RequireExactly (NormalizeVersion buildVersion)
+                       "FSharp.Compiler", "3.0.0.0"]
+                    else 
+                      ["FSharp.Compiler", "3.0.0.0"]
                 AccessKey = getBuildParamOrDefault "nugetkey" ""
                 Publish = hasBuildParam "nugetkey" }) "fake.nuspec"
 )
