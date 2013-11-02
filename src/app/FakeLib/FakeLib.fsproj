@@ -130,6 +130,10 @@
       <HintPath>..\..\..\lib\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="Microsoft.Web.XmlTransform">
+      <HintPath>..\..\..\packages\Microsoft.Web.Xdt.1.0.0\lib\net40\Microsoft.Web.XmlTransform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Mono.Cecil">
       <HintPath>..\..\..\packages\Mono.Cecil.0.9.5.4\lib\net40\Mono.Cecil.dll</HintPath>
       <Private>True</Private>
@@ -152,7 +156,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="NuGet.Core">
-      <HintPath>..\..\..\packages\Nuget.Core.2.5.0\lib\net40-Client\NuGet.Core.dll</HintPath>
+      <HintPath>..\..\..\packages\NuGet.Core.2.7.1\lib\net40-Client\NuGet.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
