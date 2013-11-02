@@ -60,9 +60,9 @@
 
 
 
-<h1>TeamCityRESTHelper</h1>
+<h1>HttpListenerHelper</h1>
 <div class="xmldoc">
-<p>Contains functions which allow FAKE to interact with the <a href="http://confluence.jetbrains.com/display/TCD8/REST+API">TeamCity REST API</a>.</p>
+<p>Contains basic HTTP listener functions for FAKE.Deploy.</p>
 </div>
 
 <!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
@@ -75,30 +75,23 @@
         <tbody>
                 <tr>
                     <td class="type-name">
-                        <a href="fake-teamcityresthelper-build.html">Build</a>
+                        <a href="fake-httplistenerhelper-listener.html">Listener</a>
                     </td>
-                    <td class="xmldoc"><p>Record type which stores Build properties</p>
+                    <td class="xmldoc"><p>Represents a http listener.</p>
 </td>
                 </tr>
                 <tr>
                     <td class="type-name">
-                        <a href="fake-teamcityresthelper-buildconfiguration.html">BuildConfiguration</a>
+                        <a href="fake-httplistenerhelper-route.html">Route</a>
                     </td>
-                    <td class="xmldoc"><p>Record type which stores Build configuration properties</p>
+                    <td class="xmldoc"><p>Represents a route.</p>
 </td>
                 </tr>
                 <tr>
                     <td class="type-name">
-                        <a href="fake-teamcityresthelper-project.html">Project</a>
+                        <a href="fake-httplistenerhelper-routeresult.html">RouteResult</a>
                     </td>
-                    <td class="xmldoc"><p>Record type which stores TeamCity project properties</p>
-</td>
-                </tr>
-                <tr>
-                    <td class="type-name">
-                        <a href="fake-teamcityresthelper-vcsroot.html">VCSRoot</a>
-                    </td>
-                    <td class="xmldoc"><p>Record type which stores VCSRoot properties</p>
+                    <td class="xmldoc"><p>Represents a route result.</p>
 </td>
                 </tr>
         </tbody>
@@ -114,53 +107,131 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '373', 373)" onmouseover="showTip(event, '373', 373)">
-            getBuildConfig (...)
+          <code onmouseout="hideTip(event, '215', 215)" onmouseover="showTip(event, '215', 215)">
+            canListen port
           </code>
-          <div class="tip" id="373">
-            <strong>Signature:</strong>serverURL:string -&gt; username:string -&gt; password:string -&gt; id:string -&gt; BuildConfiguration<br />
+          <div class="tip" id="215">
+            <strong>Signature:</strong>port:string -&gt; bool<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Gets information about a build configartion from the TeamCity server.</p>
+        <td class="xmldoc"><p>Returns if the http listener can listen to the given port.</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '374', 374)" onmouseover="showTip(event, '374', 374)">
-            getProject (...)
+          <code onmouseout="hideTip(event, '216', 216)" onmouseover="showTip(event, '216', 216)">
+            createRoutes routes
           </code>
-          <div class="tip" id="374">
-            <strong>Signature:</strong>serverURL:string -&gt; username:string -&gt; password:string -&gt; id:string -&gt; Project<br />
+          <div class="tip" id="216">
+            <strong>Signature:</strong>routes:seq&lt;string * string * (Map&lt;string,string&gt; -&gt; HttpListenerContext -&gt; string)&gt; -&gt; seq&lt;(string -&gt; string -&gt; RouteResult option)&gt;<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Gets informnation about a project from the TeamCity server.</p>
+        <td class="xmldoc"><p>Creates routes for the http listener.</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '375', 375)" onmouseover="showTip(event, '375', 375)">
-            getProjects serverURL username password
+          <code onmouseout="hideTip(event, '217', 217)" onmouseover="showTip(event, '217', 217)">
+            defaultRoutes 
           </code>
-          <div class="tip" id="375">
-            <strong>Signature:</strong>serverURL:string -&gt; username:string -&gt; password:string -&gt; seq&lt;string&gt;<br />
-                      </div>
+          <div class="tip" id="217">
+            <strong>Signature:</strong>(string * string * (&#39;?5972 -&gt; HttpListenerContext -&gt; string)) list<br />
+                          <strong>Type parameters:</strong> '?5972          </div>
         </td>
-        <td class="xmldoc"><p>Gets all projects on the TeamCity.</p>
+        <td class="xmldoc"><p>Contains the default routes.</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '376', 376)" onmouseover="showTip(event, '376', 376)">
-            getRESTVersion (...)
+          <code onmouseout="hideTip(event, '218', 218)" onmouseover="showTip(event, '218', 218)">
+            emptyListener 
           </code>
-          <div class="tip" id="376">
-            <strong>Signature:</strong>serverURL:string -&gt; username:string -&gt; password:string -&gt; string<br />
+          <div class="tip" id="218">
+            <strong>Signature:</strong>Listener<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Returns the REST version of the TeamCity server</p>
+        <td class="xmldoc"><p>Creates an empty http listener.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '219', 219)" onmouseover="showTip(event, '219', 219)">
+            ensureCanBindHttpPort port
+          </code>
+          <div class="tip" id="219">
+            <strong>Signature:</strong>port:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Checks whether the http listener can be bound to the given port.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '220', 220)" onmouseover="showTip(event, '220', 220)">
+            getFirstFreePort ()
+          </code>
+          <div class="tip" id="220">
+            <strong>Signature:</strong>unit -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Returns the first free port which can be used for the http listener.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '221', 221)" onmouseover="showTip(event, '221', 221)">
+            getPort configPort
+          </code>
+          <div class="tip" id="221">
+            <strong>Signature:</strong>configPort:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Returns the specified port from the config or the first free port if no port was specified.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '222', 222)" onmouseover="showTip(event, '222', 222)">
+            matchRoute routes verb url
+          </code>
+          <div class="tip" id="222">
+            <strong>Signature:</strong>routes:seq&lt;Route&gt; -&gt; verb:string -&gt; url:string -&gt; RouteResult option<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Matches an URL with the given routes.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '223', 223)" onmouseover="showTip(event, '223', 223)">
+            start log serverName port requestMap
+          </code>
+          <div class="tip" id="223">
+            <strong>Signature:</strong>log:(string * EventLogEntryType -&gt; unit) -&gt; serverName:string -&gt; port:string -&gt; requestMap:seq&lt;(string -&gt; string -&gt; RouteResult option)&gt; -&gt; Listener<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Starts a http listener on the given server and port.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '224', 224)" onmouseover="showTip(event, '224', 224)">
+            startWithConsoleLogger (...)
+          </code>
+          <div class="tip" id="224">
+            <strong>Signature:</strong>serverName:string -&gt; port:string -&gt; requestMap:seq&lt;(string -&gt; string -&gt; RouteResult option)&gt; -&gt; Listener<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Starts a http listener on the given server and port - uses the console logger.</p>
 </td>
       </tr>
     </tbody>
