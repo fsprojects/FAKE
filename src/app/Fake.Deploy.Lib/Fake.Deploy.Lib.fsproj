@@ -39,6 +39,7 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\FSharp\Microsoft.FSharp.Targets" Condition="'$(MSBuildFrameworkToolsPath)' != ''" />
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="HttpListenerHelper.fs" />
     <Compile Include="FakeDeployAgentHelper.fs" />
     <None Include="packages.config" />
   </ItemGroup>

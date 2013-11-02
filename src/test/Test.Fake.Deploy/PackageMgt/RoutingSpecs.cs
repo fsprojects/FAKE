@@ -2,8 +2,9 @@
 using Fake;
 using Machine.Specifications;
 using Microsoft.FSharp.Core;
+using Test.FAKECore;
 
-namespace Test.FAKECore.PackageMgt
+namespace Test.Fake.Deploy.PackageMgt
 {
     public class when_matching_empty_route
     {

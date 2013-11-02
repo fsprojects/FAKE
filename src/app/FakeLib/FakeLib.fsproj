@@ -110,7 +110,6 @@
     <Compile Include="ConfigurationHelper.fs" />
     <Compile Include="TargetHelper.fs" />
     <Compile Include="AdditionalSyntax.fs" />
-    <Compile Include="HttpListenerHelper.fs" />
     <Compile Include="PermissionsHelper.fs" />
     <Compile Include="SpecFlowHelper.fs" />
     <Compile Include="OctoTools.fs" />
