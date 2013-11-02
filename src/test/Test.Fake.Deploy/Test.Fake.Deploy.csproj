@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -32,7 +32,7 @@
   <ItemGroup>
     <Reference Include="FSharp.Core">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\tools\FSharp\FSharp.Core.dll</HintPath>
+      <HintPath>..\..\..\tools\FSharp.Compiler\tools\FSharp.Core.dll</HintPath>
     </Reference>
     <Reference Include="Machine.Specifications, Version=0.5.10.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -49,8 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Test.FAKECore\Extensions.cs">
+      <Link>Extensions.cs</Link>
+    </Compile>
     <Compile Include="PackageMgt\ReleaseDiscoveringSpecs.cs" />
     <Compile Include="PackageMgt\RollbackSpecs.cs" />
+    <Compile Include="PackageMgt\RoutingSpecs.cs" />
     <Compile Include="PackageMgt\TestData.cs" />
     <Compile Include="PackageMgt\VersioningSpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -71,6 +75,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="TestData\deployments\jQuery\active\jQuery.1.7.1.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\deployments\jQuery\backups\jQuery.1.5.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\deployments\jQuery\backups\jQuery.1.6.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\deployments\SignalR\active\SignalR.0.4.0.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\deployments\SignalR\backups\SignalR.0.1.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\deployments\SignalR\backups\SignalR.0.2.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

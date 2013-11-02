@@ -19,6 +19,6 @@
   <UseCPUArchitecture>AutoDetect</UseCPUArchitecture>
   <MSTestThreadApartmentState>STA</MSTestThreadApartmentState>
   <BuildProcessArchitecture>x86</BuildProcessArchitecture>
-  <AdditionalFilesToInclude>..\..\..\tools\FSharp\*.*</AdditionalFilesToInclude>
+  <AdditionalFilesToInclude>..\..\..\tools\FSharp.Compiler\tools\*.*</AdditionalFilesToInclude>
   <HiddenWarnings>LongTestTimesWithoutParallelExecution</HiddenWarnings>
 </ProjectConfiguration>

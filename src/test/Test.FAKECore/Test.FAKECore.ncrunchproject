@@ -17,5 +17,5 @@
   <UseBuildPlatform></UseBuildPlatform>
   <ProxyProcessPath></ProxyProcessPath>
   <UseCPUArchitecture>AutoDetect</UseCPUArchitecture>
-  <AdditionalFilesToInclude>..\..\..\tools\FSharp\*.*</AdditionalFilesToInclude>
+  <AdditionalFilesToInclude>..\..\..\tools\FSharp.Compiler\tools\*.*</AdditionalFilesToInclude>
 </ProjectConfiguration>

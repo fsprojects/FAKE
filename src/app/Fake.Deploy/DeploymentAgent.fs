@@ -8,7 +8,7 @@ open System.Threading
 open System.Diagnostics
 open Fake
 open Fake.DeploymentHelper
-open Fake.HttpListenerHelper
+open Fake.Deploy.HttpListenerHelper
 
 let mutable private logger : (string * EventLogEntryType) -> unit = ignore 
 
@@ -69,4 +69,4 @@ let routes workDir =
 let start log workDir serverName port = 
     logger <- log
     routes workDir |> Seq.iter (fun (v,r,_) -> tracefn "%s %s" v r)
-    HttpListenerHelper.start log serverName port (routes workDir |> createRoutes)
+    start log serverName port (routes workDir |> createRoutes)

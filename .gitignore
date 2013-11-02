@@ -42,9 +42,8 @@ Samples/Calculator/tools/FAKE/
 deploy/
 Samples/ContinuousDeploymentWebsite/tools/
 src/deploy.web/Fake.Deploy.Web/Logs/Fake.Deploy.Web.log
-
-src/app/FakeLib/Deploy/DeploymentHelper.fs
 gh-pages/
 tools/FSharp.Formatting
 tools/Microsoft.AspNet.Razor
 tools/RazorEngine
+tools/FSharp.Compiler

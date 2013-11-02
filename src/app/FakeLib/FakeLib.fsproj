@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -11,11 +11,11 @@
     <AssemblyName>FakeLib</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <Name>FakeLib</Name>
-    <FSharpTargetsPath Condition="'$(FSharpTargetsPath)' == '' And '$(OS)' != 'Windows_NT'">..\..\..\tools\FSharp\Microsoft.FSharp.Targets</FSharpTargetsPath>
+    <FSharpTargetsPath Condition="'$(FSharpTargetsPath)' == '' And '$(OS)' != 'Windows_NT'">..\..\..\tools\FSharp.Compiler\tools\Microsoft.FSharp.Targets</FSharpTargetsPath>
     <FSharpTargetsPath Condition="'$(FSharpTargetsPath)' == '' And '$(VisualStudioVersion)' != '11.0' And Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.1\Framework\v4.0\Microsoft.FSharp.Targets')">$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.1\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
     <FSharpTargetsPath Condition="'$(FSharpTargetsPath)' == '' And Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets')">$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
-    <FSharpTargetsPath Condition="'$(FSharpTargetsPath)' == ''">..\..\..\tools\FSharp\Microsoft.FSharp.Targets</FSharpTargetsPath>
-    <FscToolPath Condition="'$(FSharpTargetsPath)' == '..\..\..\tools\FSharp\Microsoft.FSharp.Targets'">..\..\..\tools\FSharp\</FscToolPath>
+    <FSharpTargetsPath Condition="'$(FSharpTargetsPath)' == ''">..\..\..\tools\FSharp.Compiler\tools\Microsoft.FSharp.Targets</FSharpTargetsPath>
+    <FscToolPath Condition="'$(FSharpTargetsPath)' == '..\..\..\tools\FSharp.Compiler\tools\Microsoft.FSharp.Targets'">..\..\..\tools\FSharp.Compiler\tools\</FscToolPath>
     <FscToolExe>Fsc.exe</FscToolExe>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -110,7 +110,6 @@
     <Compile Include="ConfigurationHelper.fs" />
     <Compile Include="TargetHelper.fs" />
     <Compile Include="AdditionalSyntax.fs" />
-    <Compile Include="HttpListenerHelper.fs" />
     <Compile Include="PermissionsHelper.fs" />
     <Compile Include="SpecFlowHelper.fs" />
     <Compile Include="OctoTools.fs" />
@@ -124,7 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <HintPath>..\..\..\tools\FSharp\FSharp.Core.dll</HintPath>
+      <HintPath>..\..\..\tools\FSharp.Compiler\tools\FSharp.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">

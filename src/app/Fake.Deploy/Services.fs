@@ -1,6 +1,7 @@
 ﻿module Fake.Services
 
 open Fake
+open Fake.Deploy
 open System
 open System.Diagnostics
 open System.ServiceProcess

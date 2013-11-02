@@ -1,5 +1,4 @@
-#I @"tools/FAKE/tools/"
-#r @"FakeLib.dll"
+#r @"tools/FAKE/tools/FakeLib.dll"
 
 #I "tools/FSharp.Formatting/lib/net40"
 #I "tools/Microsoft.AspNet.Razor/lib/net40"
@@ -55,8 +54,8 @@ Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; deployDir; docsDir; apido
 Target "RestorePackages" RestorePackages
 
 Target "CopyFSharpFiles" (fun _ ->
-    ["./tools/FSharp/FSharp.Core.optdata"
-     "./tools/FSharp/FSharp.Core.sigdata"]
+    ["./tools/FSharp.Compiler/tools/FSharp.Core.optdata"
+     "./tools/FSharp.Compiler/tools/FSharp.Core.sigdata"]
       |> CopyTo buildDir
 )
 
@@ -158,11 +157,11 @@ Target "CreateNuGet" (fun _ ->
         match package with
         | p when p = projectName ->
             !! (buildDir @@ "**/*.*") |> Copy nugetToolsDir 
-            CopyDir nugetToolsDir @"./lib/fsi" allFiles
+            CopyDir nugetToolsDir @"./tools/FSharp.Compiler/tools" allFiles
             CopyDir nugetDocsDir docsDir allFiles
         | p when p = "FAKE.Core" ->
             !! (buildDir @@ "*.*") |> Copy nugetToolsDir
-            CopyDir nugetToolsDir @"./lib/fsi" allFiles
+            CopyDir nugetToolsDir @"./tools/FSharp.Compiler/tools" allFiles
             CopyDir nugetDocsDir docsDir allFiles
         | _ ->
             CopyDir nugetToolsDir (buildDir @@ package) allFiles                

@@ -2,6 +2,9 @@
 
 :Build
 cls
+if not exist tools\FSharp.Compiler\tools\fsi.exe ( 
+	"tools\nuget\nuget.exe" "install" "FSharp.Compiler" "-OutputDirectory" "tools" "-ExcludeVersion"
+)
 if not exist tools\FAKE\tools\Fake.exe ( 
 	"tools\nuget\nuget.exe" "install" "FAKE" "-OutputDirectory" "tools" "-ExcludeVersion" "-Prerelease"
 )

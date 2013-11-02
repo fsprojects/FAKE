@@ -3,7 +3,9 @@
 :Build
 cls
 
+"tools\nuget\nuget.exe" "install" "FSharp.Compiler" "-OutputDirectory" "tools" "-ExcludeVersion"
 "tools\nuget\nuget.exe" "install" "FAKE" "-OutputDirectory" "tools" "-ExcludeVersion" "-Prerelease"
+"tools\nuget\nuget.exe" "install" "FSharp.Formatting" "-OutputDirectory" "tools" "-ExcludeVersion"
 
 SET TARGET="Default"
 
