@@ -65,7 +65,7 @@ let private getAssemblyVersionInfo attributes =
     match attributes |> Seq.tryFind (fun (attr:Attribute) -> attr.Name = "AssemblyVersion") with
     | Some attr -> attr.Value
     | None _ -> "\"" + buildVersion + "\""
- 
+
 /// Creates a C# AssemblyInfo file with the given attributes.
 /// If the attributes contain the Version attribute class called AssemblyVersionInformation is also generated. 
 /// This class allows to easily retrieve the version no. inside of an assembly.
@@ -87,7 +87,9 @@ let CreateFSharpAssemblyInfo outputFileName attributes =
     ["module internal AssemblyInfo"] @
     (getDependencies attributes |> List.map (sprintf "open %s")) @ [""] @
     (attributes |> Seq.toList |> List.map (fun (attr:Attribute) -> sprintf "[<assembly: %sAttribute(%s)>]" attr.Name attr.Value)) @ [""] @
-    ["()"]
+    ["type AssemblyVersionInformation() ="
+     "    static member Version"
+     sprintf "        with get() = %s" (getAssemblyVersionInfo attributes)]
     |> writeToFile outputFileName
 
     traceEndTask "AssemblyInfo" outputFileName
