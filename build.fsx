@@ -201,7 +201,7 @@ Target "Default" DoNothing
 "Clean"
     ==> "RestorePackages"
     ==> "CopyFSharpFiles"
-    =?> ("SetAssemblyInfo",not isLocalBuild ) 
+   // =?> ("SetAssemblyInfo",not isLocalBuild ) 
     ==> "BuildSolution"
     =?> ("Test",not isLinux )
     ==> "CopyLicense"
