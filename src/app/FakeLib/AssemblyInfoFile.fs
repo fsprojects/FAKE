@@ -67,8 +67,7 @@ let private getAssemblyVersionInfo attributes =
     | None _ -> "\"" + buildVersion + "\""
 
 /// Creates a C# AssemblyInfo file with the given attributes.
-/// If the attributes contain the Version attribute class called AssemblyVersionInformation is also generated. 
-/// This class allows to easily retrieve the version no. inside of an assembly.
+/// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
 let CreateCSharpAssemblyInfo outputFileName attributes =
     traceStartTask "AssemblyInfo" outputFileName
 
@@ -80,7 +79,8 @@ let CreateCSharpAssemblyInfo outputFileName attributes =
     
     traceEndTask "AssemblyInfo" outputFileName
 
-/// Creates a F# AssemblyInfo file with the given attributes
+/// Creates a F# AssemblyInfo file with the given attributes.
+/// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
 let CreateFSharpAssemblyInfo outputFileName attributes =
     traceStartTask "AssemblyInfo" outputFileName
 
