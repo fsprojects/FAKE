@@ -33,3 +33,7 @@ exception ReturnNoneException183c26a427ae489c8fd92ec21a0c9a59
 [<assembly: AssemblyFileVersion ("0.2")>]
 [<assembly: AssemblyDelaySign (false)>]
 ()
+
+type AssemblyVersionInformation() =
+    static member Version
+        with get() = "0."
