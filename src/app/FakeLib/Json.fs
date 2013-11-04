@@ -1,4 +1,4 @@
-﻿/// Contains extensions for Newtonsoft-Json. **Don't use it directly. It's likely to be changed in further versions.**
+﻿/// Contains extensions for Newtonsoft.Json. **Don't use it directly. It's likely to be changed in further versions.**
 module Fake.Json
 
 open Newtonsoft.Json
