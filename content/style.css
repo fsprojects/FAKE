@@ -195,3 +195,8 @@ td.title, thead {
   width:80%;
   margin-left:30px;
 }
+@media (max-width: 979px) and (min-width: 768px) {
+  .span3 {
+    width: 100%;
+  }
+}
