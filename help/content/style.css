@@ -1,5 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Actor);
-@import url(http://fonts.googleapis.com/css?family=Droid+Sans+Mono);
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono|Actor);
 
 /*-------------------------------------------------------------------------- 
   Formatting for F# code snippets 
@@ -38,7 +37,7 @@ span.omitted {
 div.tip {
 	background:#475b5f;
   border-radius:4px;
-  font:11pt Actor, arial, sans-serif;
+  font:11pt 'Droid Sans', arial, sans-serif;
 	padding:6px 8px 6px 8px;
 	display:none;
   color:#d1d1d1;
@@ -109,6 +108,11 @@ hr {
   margin:0px 0px 20px 0px;
 }
 
+/* Make table headings and td.title bold */
+td.title, thead {
+  font-weight:bold;
+}
+
 /* Format the right-side menu */
 #menu {
   margin-top:50px;
@@ -135,6 +139,34 @@ hr {
 #main li { font-size: 12pt; margin: 5px 0px 5px 0px; }
 
 /*-------------------------------------------------------------------------- 
+  Formatting for API reference
+/*--------------------------------------------------------------------------*/
+
+#main h2 {	       
+  font-size: 160%;
+  margin-top:40px;
+}
+#main h3 {
+  font-size: 130%;
+  font-weight: bold;
+  margin-top: 20px;
+}
+.type-list .type-name, .module-list .module-name {
+  width:25%;
+  font-weight:bold;
+}
+.member-list .member-name {
+  width:35%;
+}
+#main .xmldoc h2 {
+  font-size:14pt;
+  margin:10px 0px 0px 0px;
+}
+#main .xmldoc h3 {
+  font-size:12pt;
+  margin:10px 0px 0px 0px;
+}
+/*-------------------------------------------------------------------------- 
   Additional formatting for the homepage 
 /*--------------------------------------------------------------------------*/
 
@@ -155,7 +187,7 @@ hr {
   margin-top:15px;
 }
 
-
+/* Hide snippets on the home page snippet & nicely format table */
 #hp-snippet td.lines {
   display: none;
 }
@@ -163,10 +195,6 @@ hr {
   width:80%;
   margin-left:30px;
 }
-#hp-snippet thead, #hp-snippet .title {
-  font-weight:bold;
-}
-
 @media (max-width: 979px) and (min-width: 768px) {
   .span3 {
     width: 100%;
