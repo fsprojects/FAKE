@@ -70,7 +70,6 @@
     <Compile Include="NUnit\Parallel.fs" />
     <Compile Include="XUnitHelper.fs" />
     <Compile Include="MSpecHelper.fs" />
-    <Compile Include="FileSet.fs" />
     <Compile Include="MsBuildLogger.fs" />
     <Compile Include="MSBuildHelper.fs" />
     <Compile Include="ZipHelper.fs" />
