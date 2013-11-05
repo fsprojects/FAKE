@@ -16,10 +16,10 @@ In this tutorial you will learn how to set up a complete build infrastructure wi
 
 Now download the latest [FAKE-Calculator.zip](https://github.com/fsharp/FAKE/archive/Calculator.zip) from the [FAKE project site](https://github.com/fsharp/FAKE). This sample includes 3 tiny projects and has basically the following structure:
 
-* src\app
+* src/app
 	* Calculator (command line)
 	* CalculatorLib (class library)
-* src\test
+* src/test
 	* Test.CalculatorLib
 * tools
 	* NUnit
@@ -48,7 +48,7 @@ If you run this batch file from the command line then the latest FAKE version wi
 Now open the *build.fsx* in Visual Studio or any text editor. It should look like this:
 
 	// include Fake lib
-	#r @"tools\FAKE\tools\FakeLib.dll"
+	#r @"tools/FAKE/tools/FakeLib.dll"
 	open Fake 
 
 	// Default target
@@ -71,11 +71,11 @@ The last line runs the "Default" target - which means it executes the defined ac
 A typical first step in most build scenarios is to clean the output of the last build. We can achieve this by modifying the *build.fsx* to the following:
 
 	// include Fake lib
-	#r @"tools\FAKE\tools\FakeLib.dll"
+	#r "tools/FAKE/tools/FakeLib.dll"
 	open Fake
 
 	// Properties
-	let buildDir = @".\build\"
+	let buildDir = "./build/"
 
 	// Targets
 	Target "Clean" (fun _ ->
@@ -106,11 +106,11 @@ In the dependencies section we say that the *Default* target has a dependency on
 In the next step we want to compile our C# libraries, which means we want to compile all csproj-files under */src/app* with MSBuild:
 
 	// include Fake lib
-	#r @"tools\FAKE\tools\FakeLib.dll"
+	#r "tools/FAKE/tools/FakeLib.dll"
 	open Fake
 
 	// Properties
-	let buildDir = @".\build\"
+	let buildDir = "./build/"
 
 	// Targets
 	Target "Clean" (fun _ ->
@@ -118,7 +118,7 @@ In the next step we want to compile our C# libraries, which means we want to com
 	)
 
 	Target "BuildApp" (fun _ ->
-		!! @"src\app\**\*.csproj"
+		!! "src/app/**/*.csproj"
 		  |> MSBuildRelease buildDir "Build"
 		  |> Log "AppBuild-Output: "
 	)
@@ -150,12 +150,12 @@ This means the execution order is: Clean ==> BuildApp ==> Default.
 Now our main application will be built automatically and it's time to build the test project. We use the same concepts as before:
 
 	// include Fake lib
-	#r @"tools\FAKE\tools\FakeLib.dll"
+	#r "tools/FAKE/tools/FakeLib.dll"
 	open Fake
 
 	// Properties
-	let buildDir = @".\build\"
-	let testDir  = @".\test\"
+	let buildDir = "./build/"
+	let testDir  = "./test/"
 
 	// Targets
 	Target "Clean" (fun _ ->
@@ -163,13 +163,13 @@ Now our main application will be built automatically and it's time to build the 
 	)
 
 	Target "BuildApp" (fun _ ->
-	   !! @"src\app\**\*.csproj"
+	   !! "src/app/**/*.csproj"
 		 |> MSBuildRelease buildDir "Build"
 		 |> Log "AppBuild-Output: "
 	)
 
 	Target "BuildTest" (fun _ ->
-		!! @"src\test\**\*.csproj"
+		!! "src/test/**/*.csproj"
 		  |> MSBuildDebug testDir "Build"
 		  |> Log "TestBuild-Output: "
 	)
@@ -196,7 +196,7 @@ If we run build.bat again we get an error like this:
 The problem is that we didn't download the NUnit package from nuget. So let's fix this in the build script:
 
 	// include Fake lib
-	#r @"tools\FAKE\tools\FakeLib.dll"
+	#r "tools/FAKE/tools/FakeLib.dll"
 	open Fake
 
 	RestorePackages()
@@ -209,19 +209,19 @@ With this simple command FAKE will use nuget.exe to install all the package depe
 Now all our projects will be compiled and we can use FAKE's NUnit task in order to let NUnit test our assembly:
 
 	// include Fake lib
-	#r @"tools\FAKE\tools\FakeLib.dll"
+	#r "tools/FAKE/tools/FakeLib.dll"
 	open Fake
 
 	RestorePackages()
 
 	// Properties
-	let buildDir = @".\build\"
-	let testDir  = @".\test\"
-	let packagesDir = @".\packages"
+	let buildDir = "./build/"
+	let testDir  = "./test/"
+	let packagesDir = "./packages"
 
 	// tools
 	let nunitVersion = GetPackageVersion packagesDir "NUnit.Runners"
-	let nunitPath = sprintf @"./packages/NUnit.Runners.%s/tools/" nunitVersion
+	let nunitPath = sprintf "./packages/NUnit.Runners.%s/tools/" nunitVersion
 
 	// Targets
 	Target "Clean" (fun _ ->
@@ -229,24 +229,24 @@ Now all our projects will be compiled and we can use FAKE's NUnit task in order 
 	)
 
 	Target "BuildApp" (fun _ ->
-	   !! @"src\app\**\*.csproj"
+	   !! "src/app/**/*.csproj"
 		 |> MSBuildRelease buildDir "Build"
 		 |> Log "AppBuild-Output: "
 	)
 
 	Target "BuildTest" (fun _ ->
-		!! @"src\test\**\*.csproj"
+		!! "src/test/**/*.csproj"
 		  |> MSBuildDebug testDir "Build"
 		  |> Log "TestBuild-Output: "
 	)
 
 	Target "Test" (fun _ ->
-		!! (testDir + @"\NUnit.Test.*.dll") 
+		!! (testDir + "/NUnit.Test.*.dll") 
 		  |> NUnit (fun p ->
 			  {p with
 				 ToolPath = nunitPath;
 				 DisableShadowCopy = true;
-				 OutputFile = testDir + @"TestResults.xml" })
+				 OutputFile = testDir + "TestResults.xml" })
 	)
 
 	Target "Default" (fun _ ->
@@ -272,12 +272,12 @@ The mysterious part **(fun p -> ...)** simply overrides the default parameters o
 Alternatively you could also run the tests in parallel using the [NUnitParallel](apidocs/fake-nunitparallel.html) task:
 
 	Target "Test" (fun _ ->
-		!! (testDir + @"\NUnit.Test.*.dll") 
+		!! (testDir + "/NUnit.Test.*.dll") 
 		  |> NUnitParallel (fun p ->
 			  {p with
 				 ToolPath = nunitPath;
 				 DisableShadowCopy = true;
-				 OutputFile = testDir + @"TestResults.xml" })
+				 OutputFile = testDir + "TestResults.xml" })
 	)
 
 ## Deploying a zip file
@@ -285,20 +285,20 @@ Alternatively you could also run the tests in parallel using the [NUnitParallel]
 Now we want to deploy a *.zip file containing our application:
 
 	// include Fake lib
-	#r @"tools\FAKE\tools\FakeLib.dll"
+	#r "tools/FAKE/tools/FakeLib.dll"
 	open Fake
 
 	RestorePackages()
 
 	// Properties
-	let buildDir = @".\build\"
-	let testDir  = @".\test\"
-	let deployDir = @".\deploy\"
-	let packagesDir = @".\packages"
+	let buildDir = "./build/"
+	let testDir  = "./test/"
+	let deployDir = "./deploy/"
+	let packagesDir = "./packages"
 
 	// tools
 	let nunitVersion = GetPackageVersion packagesDir "NUnit.Runners"
-	let nunitPath = sprintf @"./packages/NUnit.Runners.%s/tools/" nunitVersion
+	let nunitPath = sprintf "./packages/NUnit.Runners.%s/tools/" nunitVersion
 
 	// version info
 	let version = "0.2"  // or retrieve from CI server
@@ -309,28 +309,28 @@ Now we want to deploy a *.zip file containing our application:
 	)
 
 	Target "BuildApp" (fun _ ->
-	   !! @"src\app\**\*.csproj"
+	   !! "src/app/**/*.csproj"
 		 |> MSBuildRelease buildDir "Build"
 		 |> Log "AppBuild-Output: "
 	)
 
 	Target "BuildTest" (fun _ ->
-		!! @"src\test\**\*.csproj"
+		!! "src/test/**/*.csproj"
 		  |> MSBuildDebug testDir "Build"
 		  |> Log "TestBuild-Output: "
 	)
 
 	Target "Test" (fun _ ->
-		!! (testDir + @"\NUnit.Test.*.dll") 
+		!! (testDir + "/NUnit.Test.*.dll") 
 		  |> NUnit (fun p ->
 			  {p with
 				 ToolPath = nunitPath;
 				 DisableShadowCopy = true;
-				 OutputFile = testDir + @"TestResults.xml" })
+				 OutputFile = testDir + "TestResults.xml" })
 	)
 
 	Target "Zip" (fun _ ->
-		!! (buildDir + "\**\*.*") 
+		!! (buildDir + "/**/*.*") 
 			-- "*.zip"
 			|> Zip buildDir (deployDir + "Calculator." + version + ".zip")
 	)
