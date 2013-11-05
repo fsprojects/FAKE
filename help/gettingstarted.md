@@ -14,7 +14,7 @@ In this tutorial you will learn how to set up a complete build infrastructure wi
 
 ## Download Calculator Sample
 
-Now download the latest [FAKE-Calculator.zip](https://github.com/fsharp/FAKE/archive/Calculator.zip) from the [FAKE project site](https://github.com/fsharp/FAKE). This sample includes 3 tiny projects and has basically the following structure:
+Now download the latest [FAKE-Calculator.zip](http://fsharp.github.io/FAKE/FAKE-Calculator.zip) from the [FAKE project site](https://github.com/fsharp/FAKE). This sample includes 3 tiny projects and has basically the following structure:
 
 * src/app
 	* Calculator (command line)

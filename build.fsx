@@ -194,6 +194,7 @@ Target "ReleaseDocs" (fun _ ->
     
     fullclean "gh-pages"
     CopyRecursive "docs" "gh-pages" true |> printfn "%A"
+    CopyFile "gh-pages" "./Samples/FAKE-Calculator.zip"
     CommandHelper.runSimpleGitCommand "gh-pages" "add . --all" |> printfn "%s"
     CommandHelper.runSimpleGitCommand "gh-pages" (sprintf "commit -m \"Update generated documentation %s\"" buildVersion) |> printfn "%s"
     Branches.push "gh-pages"    
