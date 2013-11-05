@@ -47,9 +47,8 @@ let DeleteDir path =
     let dir = directoryInfo path
     if dir.Exists then 
         // set all files readonly = false
-        !+ "/**/*.*"
+        !! "/**/*.*"
           |> SetBaseDir dir.FullName
-          |> Scan
           |> (SetReadOnly false)
       
         logfn "Deleting %s" dir.FullName

@@ -120,47 +120,18 @@ These targets will be executed even if the build fails but have to be activated 
 
 ### File includes
 
-	// Includes all *.csproj files under /src/app by using the !+ operator
-	!+ "src/app/**/*.csproj"
+	// Includes all *.csproj files under /src/app by using the !! operator
+	!! "src/app/**/*.csproj"
 
 	// Includes all *.csproj files under /src/app and /test with the ++ operator
-	!+ "src/app/**/*.csproj"
+	!! "src/app/**/*.csproj"
 	  ++ "test/**/*.csproj"
 
 ### File excludes
 
 	// Includes all files under /src/app but excludes *.zip files
-	!+ "src/app/**/*.*"
+	!! "src/app/**/*.*"
 	  -- "*.zip"
-
-### Scan vs. ScanImmediately
-
-"FAKE - F# Make" provides two scan methods: Scan() and ScanImmediately().
-
-Scan is a lazy method and evaluates the FileSet as late as possible ("on-demand").
-If the FileSet is used twice, it will be reevaluated.
-
-The following code defines a lazy FileSet:
-
-	// Includes all *.csproj files under /src/app and scans them lazy
-	let apps = 
-	  !+ "src/app/**/*.csproj"
-		|> Scan
-
-The same FileSet by using the !! operator:
-
-    // Includes all *.csproj files under /src/app and scans them lazy
-    let apps = !! "src/app/**/*.csproj"
-
-ScanImmediately() scans the FileSet immediatly at time of its definition
-and memoizes it. 
-
-	// Includes all files under /src/app but excludes *.zip files
-	//	  eager scan ==> All files memoized at the time of this definition
-	let files = 
-	  !+ "src/app/**/*.csproj"
-		-- "*.zip"
-		|> ScanImmediately
 
 ## UnitTests
 
@@ -236,9 +207,8 @@ You can read the [getting started guide](gettingstarted.html) to build such a sc
     
     // Filesets
     let appReferences  = 
-        !+ @"src\app\**\*.csproj" 
-          ++ @"src\app\**\*.fsproj" 
-            |> Scan
+        !! @"src\app\**\*.csproj" 
+          ++ @"src\app\**\*.fsproj"
     
     let testReferences = !! @"src\test\**\*.csproj"
         
@@ -301,9 +271,8 @@ You can read the [getting started guide](gettingstarted.html) to build such a sc
     )
     
     Target "FxCop" (fun _ ->
-        !+ (buildDir + @"\**\*.dll") 
-            ++ (buildDir + @"\**\*.exe") 
-            |> Scan  
+        !! (buildDir + @"\**\*.dll") 
+            ++ (buildDir + @"\**\*.exe")
             |> FxCop (fun p -> 
                 {p with                     
                     ReportFileName = testDir + "FXCopResults.xml";
@@ -311,9 +280,8 @@ You can read the [getting started guide](gettingstarted.html) to build such a sc
     )
     
     Target "Deploy" (fun _ ->
-        !+ (buildDir + "\**\*.*") 
+        !! (buildDir + "\**\*.*") 
             -- "*.zip" 
-            |> Scan
             |> Zip buildDir (deployDir + "Calculator." + version + ".zip")
     )
     

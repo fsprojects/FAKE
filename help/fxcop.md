@@ -10,9 +10,8 @@ Open *build.fsx* from your Calculator sample folder and add a new target *FxCop*
 
 	Target "FxCop" (fun () ->
 	  let assemblies = 
-		!+ (buildDir + @"\**\*.dll") 
+		!! (buildDir + @"\**\*.dll") 
 		  ++ (buildDir + @"\**\*.exe") 
-		  |> Scan  
 
 	  FxCop 
 		(fun p -> 
@@ -44,9 +43,8 @@ If you want to let the build fail in the case that FxCop reports any errors or w
 
 	Target "FxCop" (fun () ->
 	  let assemblies = 
-		!+ (buildDir + @"\**\*.dll") 
-		  ++ (buildDir + @"\**\*.exe") 
-		  |> Scan  
+		!! (buildDir + @"\**\*.dll") 
+		  ++ (buildDir + @"\**\*.exe")
 
 	  FxCop 
 		(fun p -> 

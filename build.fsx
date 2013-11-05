@@ -132,10 +132,9 @@ Target "CopyLicense" (fun _ ->
 )
 
 Target "BuildZip" (fun _ ->     
-    !+ (buildDir @@ @"**/*.*") 
+    !! (buildDir @@ @"**/*.*") 
     -- "*.zip" 
     -- "**/*.pdb"
-      |> Scan
       |> Zip buildDir deployZip
 )
 

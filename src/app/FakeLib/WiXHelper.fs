@@ -1,4 +1,4 @@
-﻿[<AutoOpen>]
+[<AutoOpen>]
 /// Contains tasks to create msi installers using the [WiX toolset](http://wixtoolset.org/)
 module Fake.WiXHelper
 
@@ -123,10 +123,9 @@ let Light (parameters:WiXParams) outputFile wixObj =
 /// ## Sample
 ///     Target "BuildSetup" (fun _ ->
 ///         // Copy all important files to the deploy directory
-///         !+ (buildDir + "/**/*.dll")
+///         !! (buildDir + "/**/*.dll")
 ///           ++ (buildDir + "/**/*.exe")
 ///           ++ (buildDir + "/**/*.config")
-///           |> Scan
 ///           |> Copy deployPrepDir 
 ///    
 ///         // replace tags in a template file in order to generate a WiX script

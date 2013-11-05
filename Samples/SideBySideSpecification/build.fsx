@@ -16,10 +16,9 @@ let fxCopRoot = @".\Tools\FxCop\FxCopCmd.exe"
 
 // Filesets
 let appReferences  = 
-    !+ @"src\app\**\*.csproj" 
+    !! @"src\app\**\*.csproj" 
       ++ @"src\app\**\*.fsproj"
-      -- "**\*_Spliced*" 
-        |> Scan
+      -- "**\*_Spliced*"
 
 // version info
 let version = "0.2"  // or retrieve from CI server
@@ -61,9 +60,8 @@ Target "Test" (fun _ ->
 )
 
 Target "Deploy" (fun _ ->
-    !+ (buildDir + "\**\*.*") 
-        -- "*.zip" 
-        |> Scan
+    !! (buildDir + "\**\*.*") 
+        -- "*.zip"
         |> Zip buildDir (deployDir + "Calculator." + version + ".zip")
 )
 

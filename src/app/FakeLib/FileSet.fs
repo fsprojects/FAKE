@@ -2,18 +2,11 @@
 /// Contains abstractions which allow to use file globbing.
 module Fake.FileSetHelper
 
+open System
 open System.IO
 open System.Globalization
 open System.Text
 open System.Text.RegularExpressions
-
-/// The FileSet is eagerly loaded into a list of strings.
-/// The scan is only done once.
-type EagerFileSet = string list
-
-/// The FileSet is lazy loaded into a sequence of strings.
-/// Every time the FileSet is used it scans again.
-type LazyFileSet = string seq
 
 /// [omit]
 /// Internal representation
@@ -22,12 +15,6 @@ type RegexEntry =
     BaseDirectory: string;
     Pattern: string}
 
-/// Internal representation of a file set
-type FileIncludes =
-  { BaseDirectories: string list;
-    Includes: string list;
-    Excludes: string list}
-    
 /// Patterns can use either / \ as a directory separator.
 /// This function creates a StringBuilder which replaces both of these characters with Path.DirectorySeparatorChar
 let cleanPathBuilder (path:string) =
@@ -339,16 +326,28 @@ let Log message files = files |> Seq.iter (log << sprintf "%s%s" message)
 
 /// The default base directory (the current directory).
 let DefaultBaseDir = Path.GetFullPath "."
+
+/// Internal representation of a file set
+type FileIncludes =
+  { BaseDirectories: string list;
+    Includes: string list;
+    Excludes: string list}
+
+  interface IEnumerable<string> with 
+      member this.GetEnumerator() = (Files this.BaseDirectories this.Includes this.Excludes).GetEnumerator()
+      member this.GetEnumerator() = (Files this.BaseDirectories this.Includes this.Excludes).GetEnumerator():> System.Collections.IEnumerator
+    
   
 /// Include files
 let Include x =    
     { BaseDirectories = [DefaultBaseDir];
       Includes = [x];
-      Excludes = []}           
+      Excludes = []}       
        
 /// Lazy scan for include files.
 /// Will be processed at the time when needed.
-let Scan includes : LazyFileSet = Files includes.BaseDirectories includes.Includes includes.Excludes
+[<Obsolete("FileIncludes implement IEnumerable<string> so explicit scanning is not needed")>]
+let Scan files = files
 
 /// Adds a directory as baseDirectory for fileIncludes.
 let AddBaseDir dir fileInclude = {fileInclude with BaseDirectories = dir::fileInclude.BaseDirectories}    
@@ -357,9 +356,11 @@ let AddBaseDir dir fileInclude = {fileInclude with BaseDirectories = dir::fileIn
 let SetBaseDir (dir:string) fileInclude = {fileInclude with BaseDirectories = [dir.TrimEnd(directorySeparator.[0])]}   
       
 /// Scans immediately for include files - all matching files will be memoized.
-let ScanImmediately includes : EagerFileSet = Scan includes |> Seq.toList
+[<Obsolete("FileIncludes implement IEnumerable<string> so explicit scanning is not needed. Just use Seq.toList")>]
+let ScanImmediately includes = includes |> Seq.toList
   
 /// Include prefix operator
+[<Obsolete("!+ is obsolete - use !! instead")>]
 let inline (!+) x = Include x
 
 /// Add Include operator
@@ -369,7 +370,7 @@ let inline (++) x y = {x with Includes = y::x.Includes}
 let inline (--) x y = {x with Excludes = y::x.Excludes}  
 
 /// Includes a single pattern and scans the files - !! x = AllFilesMatching x
-let inline (!!) x = !+ x |> Scan
+let inline (!!) x = Include x
 
 /// Includes a single pattern and scans the files - !! x = AllFilesMatching x
 let AllFilesMatching x = !! x

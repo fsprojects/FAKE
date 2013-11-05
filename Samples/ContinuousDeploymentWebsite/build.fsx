@@ -38,9 +38,8 @@ Target "AssemblyInfo" (fun _ ->
 )
 
 Target "BuildApp" (fun _ ->
-    !+ @"src\app\**\*.csproj" 
+    !! @"src\app\**\*.csproj" 
       ++ @"src\app\**\*.fsproj" 
-        |> Scan
         |> MSBuildRelease buildDir "Build"
         |> Log "Build-Output: "
 )

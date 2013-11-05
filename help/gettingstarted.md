@@ -330,9 +330,8 @@ Now we want to deploy a *.zip file containing our application:
 	)
 
 	Target "Zip" (fun _ ->
-		!+ (buildDir + "\**\*.*") 
-			-- "*.zip" 
-			|> Scan
+		!! (buildDir + "\**\*.*") 
+			-- "*.zip"
 			|> Zip buildDir (deployDir + "Calculator." + version + ".zip")
 	)
 

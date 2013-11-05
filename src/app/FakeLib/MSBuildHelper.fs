@@ -240,7 +240,7 @@ let MSBuildWithProjectProperties outputPath (targets: string) (properties: strin
       |> List.iter (fun project -> build (setBuildParam project) project)
     
     // it makes no sense to output the root dir content here since it does not contain the build output
-    if isNotNullOrEmpty output  then !! (outputPath @@ "/**/*.*") else Seq.empty
+    if isNotNullOrEmpty output  then !! (outputPath @@ "/**/*.*") |> Seq.toList else []
 
 /// Builds the given project files or solution files and collects the output files.
 /// ## Parameters
