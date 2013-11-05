@@ -29,6 +29,7 @@ let packages =
      "FAKE.Gallio",projectDescription + " Extensions for Gallio"
      "FAKE.IIS",projectDescription + " Extensions for IIS"
      "FAKE.SQL",projectDescription + " Extensions for SQL Server"
+     "FAKE.Experimental",projectDescription + " Experimental Extensions"
      "FAKE.Deploy.Lib",projectDescription + " Extensions for FAKE Deploy"
      projectName,projectDescription + " This package bundles all extensions."]
 
@@ -95,6 +96,10 @@ Target "SetAssemblyInfo" (fun _ ->
     [Attribute.Title "FAKE - F# Make SQL Lib"
      Attribute.Guid "A161EAAF-EFDA-4EF2-BD5A-4AD97439F1BE"] @ common
     |> CreateFSharpAssemblyInfo "./src/app/Fake.SQL/AssemblyInfo.fs"
+
+    [Attribute.Title "FAKE - F# Make Experimental Lib"
+     Attribute.Guid "5AA28AED-B9D8-4158-A594-32FE5ABC5713"] @ common
+    |> CreateFSharpAssemblyInfo "./src/app/Fake.Experimental/AssemblyInfo.fs"
 )
 
 Target "BuildSolution" (fun _ ->        

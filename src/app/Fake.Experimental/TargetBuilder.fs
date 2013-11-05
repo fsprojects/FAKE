@@ -1,4 +1,5 @@
-﻿module Fake.TargetBuilder
+﻿[<AutoOpen>]
+module Fake.TargetBuilder
 
 type TargetBuilder (name) =
     member x.Zero () = ()

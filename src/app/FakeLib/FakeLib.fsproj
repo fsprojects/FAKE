@@ -109,7 +109,6 @@
     <Compile Include="HTMLHelpWorkShopHelper.fs" />
     <Compile Include="ConfigurationHelper.fs" />
     <Compile Include="TargetHelper.fs" />
-    <Compile Include="TargetBuilder.fs" />
     <Compile Include="AdditionalSyntax.fs" />
     <Compile Include="PermissionsHelper.fs" />
     <Compile Include="SpecFlowHelper.fs" />
