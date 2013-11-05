@@ -93,10 +93,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '448', 448)" onmouseover="showTip(event, '448', 448)">
+          <code onmouseout="hideTip(event, '439', 439)" onmouseover="showTip(event, '439', 439)">
             Candle parameters wixScript
           </code>
-          <div class="tip" id="448">
+          <div class="tip" id="439">
             <strong>Signature:</strong>parameters:WiXParams -&gt; wixScript:string -&gt; string<br />
                       </div>
         </td>
@@ -106,10 +106,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '458', 458)" onmouseover="showTip(event, '458', 458)">
+          <code onmouseout="hideTip(event, '440', 440)" onmouseover="showTip(event, '440', 440)">
             getFilesAsWiXString files
           </code>
-          <div class="tip" id="458">
+          <div class="tip" id="440">
             <strong>Signature:</strong>files:seq&lt;string&gt; -&gt; string<br />
                       </div>
         </td>
@@ -119,10 +119,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '459', 459)" onmouseover="showTip(event, '459', 459)">
+          <code onmouseout="hideTip(event, '441', 441)" onmouseover="showTip(event, '441', 441)">
             Light parameters outputFile wixObj
           </code>
-          <div class="tip" id="459">
+          <div class="tip" id="441">
             <strong>Signature:</strong>parameters:WiXParams -&gt; outputFile:string -&gt; wixObj:string -&gt; unit<br />
                       </div>
         </td>
@@ -132,10 +132,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '460', 460)" onmouseover="showTip(event, '460', 460)">
+          <code onmouseout="hideTip(event, '442', 442)" onmouseover="showTip(event, '442', 442)">
             WiX setParams outputFile wixScript
           </code>
-          <div class="tip" id="460">
+          <div class="tip" id="442">
             <strong>Signature:</strong>setParams:(WiXParams -&gt; WiXParams) -&gt; outputFile:string -&gt; wixScript:string -&gt; unit<br />
                       </div>
         </td>
@@ -153,10 +153,9 @@
 
 <pre><code>Target "BuildSetup" (fun _ -&gt;
     // Copy all important files to the deploy directory
-    !+ (buildDir + "/**/*.dll")
+    !! (buildDir + "/**/*.dll")
       ++ (buildDir + "/**/*.exe")
       ++ (buildDir + "/**/*.config")
-      |&gt; Scan
       |&gt; Copy deployPrepDir 
 
     // replace tags in a template file in order to generate a WiX script
@@ -182,10 +181,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '461', 461)" onmouseover="showTip(event, '461', 461)">
+          <code onmouseout="hideTip(event, '443', 443)" onmouseover="showTip(event, '443', 443)">
             wixComponentRefs directoryInfo
           </code>
-          <div class="tip" id="461">
+          <div class="tip" id="443">
             <strong>Signature:</strong>directoryInfo:DirectoryInfo -&gt; string<br />
                       </div>
         </td>
@@ -195,10 +194,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '462', 462)" onmouseover="showTip(event, '462', 462)">
+          <code onmouseout="hideTip(event, '444', 444)" onmouseover="showTip(event, '444', 444)">
             WiXDefaults 
           </code>
-          <div class="tip" id="462">
+          <div class="tip" id="444">
             <strong>Signature:</strong>WiXParams<br />
                       </div>
         </td>
@@ -208,10 +207,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '463', 463)" onmouseover="showTip(event, '463', 463)">
+          <code onmouseout="hideTip(event, '445', 445)" onmouseover="showTip(event, '445', 445)">
             wixDir fileFilter asSubDir directoryInfo
           </code>
-          <div class="tip" id="463">
+          <div class="tip" id="445">
             <strong>Signature:</strong>fileFilter:(FileInfo -&gt; bool) -&gt; asSubDir:bool -&gt; directoryInfo:DirectoryInfo -&gt; string<br />
                       </div>
         </td>
@@ -221,10 +220,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '464', 464)" onmouseover="showTip(event, '464', 464)">
+          <code onmouseout="hideTip(event, '446', 446)" onmouseover="showTip(event, '446', 446)">
             wixFile fileInfo
           </code>
-          <div class="tip" id="464">
+          <div class="tip" id="446">
             <strong>Signature:</strong>fileInfo:FileInfo -&gt; string<br />
                       </div>
         </td>

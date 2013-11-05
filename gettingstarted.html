@@ -612,7 +612,6 @@ pause</pre>
 <span class="l">63: </span>
 <span class="l">64: </span>
 <span class="l">65: </span>
-<span class="l">66: </span>
 </pre>
 </td>
 <td class="snippet"><pre class="fssnip">
@@ -662,9 +661,8 @@ pause</pre>
 )
 
 <span class="i">Target</span> <span class="s">&quot;</span><span class="s">Zip</span><span class="s">&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="o">!+</span> (<span onmouseout="hideTip(event, 'fs1', 48)" onmouseover="showTip(event, 'fs1', 48)" class="i">buildDir</span> <span class="o">+</span> <span class="s">&quot;</span><span class="s">\</span><span class="s">*</span><span class="s">*</span><span class="s">\</span><span class="s">*</span><span class="s">.</span><span class="s">*</span><span class="s">&quot;</span>) 
-        <span class="o">--</span> <span class="s">&quot;</span><span class="s">*</span><span class="s">.</span><span class="s">zip</span><span class="s">&quot;</span> 
-        <span class="o">|&gt;</span> <span class="i">Scan</span>
+    <span class="o">!!</span> (<span onmouseout="hideTip(event, 'fs1', 48)" onmouseover="showTip(event, 'fs1', 48)" class="i">buildDir</span> <span class="o">+</span> <span class="s">&quot;</span><span class="s">\</span><span class="s">*</span><span class="s">*</span><span class="s">\</span><span class="s">*</span><span class="s">.</span><span class="s">*</span><span class="s">&quot;</span>) 
+        <span class="o">--</span> <span class="s">&quot;</span><span class="s">*</span><span class="s">.</span><span class="s">zip</span><span class="s">&quot;</span>
         <span class="o">|&gt;</span> <span class="i">Zip</span> <span onmouseout="hideTip(event, 'fs1', 49)" onmouseover="showTip(event, 'fs1', 49)" class="i">buildDir</span> (<span onmouseout="hideTip(event, 'fs7', 50)" onmouseover="showTip(event, 'fs7', 50)" class="i">deployDir</span> <span class="o">+</span> <span class="s">&quot;</span><span class="s">Calculator</span><span class="s">.</span><span class="s">&quot;</span> <span class="o">+</span> <span onmouseout="hideTip(event, 'fs8', 51)" onmouseover="showTip(event, 'fs8', 51)" class="i">version</span> <span class="o">+</span> <span class="s">&quot;</span><span class="s">.</span><span class="s">zip</span><span class="s">&quot;</span>)
 )
 
