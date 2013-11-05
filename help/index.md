@@ -90,9 +90,9 @@ If one target should only be run on a specific condition you can use the =?> ope
 
 ### Running targets
 
-You can execute targets with the "run"-function:
+You can execute targets with the "RunTargetOrDefault"-function (for more details see [Running specific targets](specifictargets.html)):
 
-	Run "Default"
+	RunTargetOrDefault "Default"
 
 ### Final targets
 
