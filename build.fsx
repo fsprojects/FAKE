@@ -132,9 +132,9 @@ Target "CopyLicense" (fun _ ->
 )
 
 Target "BuildZip" (fun _ ->     
-    !! (buildDir @@ @"**/*.*")
-    -- "*.zip" 
-    -- "**/*.pdb"
+    Include(buildDir @@ @"**/*.*")
+      .ButNot("*.zip")
+      .ButNot("**/*.pdb")
       |> Zip buildDir deployZip
 )
 

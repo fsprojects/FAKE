@@ -333,16 +333,19 @@ type FileIncludes =
     Includes: string list;
     Excludes: string list}
 
+  /// Adds the given pattern to the file includes
+  member this.And pattern = { this with Includes = pattern::this.Includes}
+
+  /// Ignores files with the given pattern
+  member this.ButNot pattern = { this with Excludes = pattern::this.Excludes}
+
   interface IEnumerable<string> with 
       member this.GetEnumerator() = (Files this.BaseDirectories this.Includes this.Excludes).GetEnumerator()
       member this.GetEnumerator() = (Files this.BaseDirectories this.Includes this.Excludes).GetEnumerator():> System.Collections.IEnumerator
     
   
 /// Include files
-let Include x =    
-    { BaseDirectories = [DefaultBaseDir];
-      Includes = [x];
-      Excludes = []}       
+let Include x =  { BaseDirectories = [DefaultBaseDir]; Includes = [x]; Excludes = []}       
        
 /// Lazy scan for include files.
 /// Will be processed at the time when needed.
@@ -359,21 +362,21 @@ let SetBaseDir (dir:string) fileInclude = {fileInclude with BaseDirectories = [d
 [<Obsolete("FileIncludes implement IEnumerable<string> so explicit scanning is not needed. Just use Seq.toList")>]
 let ScanImmediately includes = includes |> Seq.toList
   
-/// Include prefix operator
-[<Obsolete("!+ is obsolete - use !! instead")>]
-let inline (!+) x = Include x
-
 /// Add Include operator
-let inline (++) x y = {x with Includes = y::x.Includes}
+let inline (++) (x:FileIncludes) pattern = x.And pattern
 
 /// Exclude operator
-let inline (--) x y = {x with Excludes = y::x.Excludes}  
+let inline (--) (x:FileIncludes) pattern = x.ButNot pattern
 
 /// Includes a single pattern and scans the files - !! x = AllFilesMatching x
 let inline (!!) x = Include x
 
+/// Include prefix operator
+[<Obsolete("!+ is obsolete - use !! instead")>]
+let inline (!+) x = Include x
+
 /// Includes a single pattern and scans the files - !! x = AllFilesMatching x
-let AllFilesMatching x = !! x
+let AllFilesMatching x = Include x
 
 /// Looks for a tool in all subfolders - returns the tool file name.
 let findToolInSubPath toolname defaultPath =
