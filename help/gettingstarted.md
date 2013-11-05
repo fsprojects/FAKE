@@ -217,7 +217,6 @@ Now all our projects will be compiled and we can use FAKE's NUnit task in order 
 	// Properties
 	let buildDir = "./build/"
 	let testDir  = "./test/"
-	let packagesDir = "./packages"
 
 	// Targets
 	Target "Clean" (fun _ ->
@@ -288,7 +287,6 @@ Now we want to deploy a *.zip file containing our application:
 	let buildDir = "./build/"
 	let testDir  = "./test/"
 	let deployDir = "./deploy/"
-	let packagesDir = "./packages"
 
 	// version info
 	let version = "0.2"  // or retrieve from CI server
