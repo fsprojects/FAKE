@@ -11,14 +11,7 @@ You can download the "NuGet.exe Command Line Tool" from the [release page](http:
 ## Restore packages from the build script
 
 Modify your build script and add **RestorePackages()** near the beginning of the script.
-This will use the following default parameters to retrieve all NuGet packages which are specified in *"./\*\*/packages.config"* files:
-
-	let RestorePackageDefaults =
-		{ ToolPath = findToolInSubPath "nuget.exe" "./tools/nuget/NuGet.exe"
-		  TimeOut = TimeSpan.FromMinutes 5.
-		  OutputPath = "./packages" }
-
-FAKE will scan all subfolders for *nuget.exe* and defaults to *"./tools/nuget/NuGet.exe"* if nothing was found.
+This will use the following default parameters to retrieve all NuGet packages which are specified in *"./\*\*/packages.config"* files.
 
 If you need to use different parameters please use the [RestorePackage](apidocs/fake-restorepackagehelper.html) task directly.
 
