@@ -276,7 +276,8 @@ You can read the [getting started guide](gettingstarted.html) to build such a sc
     
     // Build order
 	"Clean"
-      ==> "BuildApp" <=> "BuildTest"
+      ==> "BuildApp"
+      ==> "BuildTest"
       ==> "FxCop"
       ==> "NUnitTest"
       =?> ("xUnitTest",hasBuildParam "xUnitTest")  // runs the target only if FAKE was called with parameter xUnitTest

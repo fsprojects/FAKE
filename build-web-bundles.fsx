@@ -1,4 +1,4 @@
-﻿#I @"tools/FAKE/tools/"
+#I @"tools/FAKE/tools/"
 #r @"FakeLib.dll"
 
 open System
@@ -51,11 +51,10 @@ Target "Default" DoNothing
 
 // Dependencies
 "Clean"
-    ==> "BuildBundles" <=> "ZipBundles"
+    =?> ("SetAssemblyInfo",not isLocalBuild) 
+    ==> "BuildBundles"
+    ==> "ZipBundles"
     ==> "Default"
-
-if not isLocalBuild then
-    "Clean" ==> "SetAssemblyInfo" ==> "BuildBundles" |> ignore
 
 // start build
 RunParameterTargetOrDefault "target" "Default"
