@@ -42,4 +42,4 @@ Compile the project and put the generated assembly into the *tools/FAKE* path of
 	RandomNumberTask.RandomNumber(2,13)
 	  |> tracefn "RandomNumber: %d"
 
-If you want to use FAKE's standard functionality (like [globbing](http://en.wikipedia.org/wiki/Glob_(programming))) within your CustomTask project, just reference FakeLib.dll and [explore the FAKE namespace](api/index.htm).
+If you want to use FAKE's standard functionality (like [globbing](http://en.wikipedia.org/wiki/Glob_(programming))) within your CustomTask project, just reference FakeLib.dll and [explore the FAKE namespace](apidocs/index.html).
