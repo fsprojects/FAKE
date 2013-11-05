@@ -6,7 +6,7 @@ If you need more than the default functionality you can either write F# or simpl
 
 ### Simple Example
 
-    #r @"tools\FAKE\tools\FakeLib.dll" // include Fake lib
+    #r "tools/FAKE/tools/FakeLib.dll" // include Fake lib
 	open Fake 
 
 	
@@ -90,9 +90,8 @@ If one target should only be run on a specific condition you can use the =?> ope
 
 ### Running targets
 
-You can execute targets with the "run"-command:
+You can execute targets with the "run"-function:
 
-	// Executes Default target
 	Run "Default"
 
 ### Final targets
@@ -132,34 +131,32 @@ These targets will be executed even if the build fails but have to be activated 
 ### NUnit
 
 	// define test dlls
-	let testDlls = !! (testDir + @"/Test.*.dll")
+	let testDlls = !! (testDir + "/Test.*.dll")
 	 
 	Target "NUnitTest" (fun _ ->
 		testDlls
 			|> NUnit (fun p -> 
-				{p with 
-					ToolPath = nunitPath; 
+				{p with
 					DisableShadowCopy = true; 
 					OutputFile = testDir + "TestResults.xml"})
     )
 							 
 ### MSpec
 	// define test dlls
-	let testDlls = !! (testDir + @"/Test.*.dll")
+	let testDlls = !! (testDir + "/Test.*.dll")
 	 
 	Target "MSpecTest" (fun _ ->
 		testDlls
 			|> MSpec (fun p -> 
 				{p with 
 					ExcludeTags = ["LongRunning"]
-					HtmlOutputDir = testOutputDir						  
-					ToolPath = ".\toools\MSpec\mspec.exe"})
+					HtmlOutputDir = testOutputDir})
     )
 
 ### xUnit.net
 
 	// define test dlls
-	let testDlls = !! (testDir + @"/Test.*.dll")
+	let testDlls = !! (testDir + "/Test.*.dll")
 
 	Target "xUnitTest" (fun _ ->
         testDlls
@@ -178,10 +175,10 @@ This sample script
 * Assumes "FAKE - F# Make" is located at ./tools/FAKE
 * Assumes NUnit is located at ./tools/NUnit  
 * Cleans the build and deploy paths
-* Builds all C# projects below src/app/ and puts the output to .\build
-* Builds all NUnit test projects below src/test/ and puts the output to .\build
+* Builds all C# projects below src/app/ and puts the output to ./build
+* Builds all NUnit test projects below src/test/ and puts the output to ./build
 * Uses NUnit to test the generated Test.*.dll's
-* Zips all generated files to deploy\MyProject-0.1.zip
+* Zips all generated files to deploy/MyProject-0.1.zip
   
 You can read the [getting started guide](gettingstarted.html) to build such a script.
 
@@ -191,20 +188,19 @@ You can read the [getting started guide](gettingstarted.html) to build such a sc
     open Fake
     
     // Directories
-    let buildDir  = @".\build\"
-    let testDir   = @".\test\"
-    let deployDir = @".\deploy\"
+    let buildDir  = "./build/"
+    let testDir   = "./test/"
+    let deployDir = "./deploy/"
     
     // tools
-    let nunitPath = @".\Tools\NUnit"
-    let fxCopRoot = @".\Tools\FxCop\FxCopCmd.exe"
+    let fxCopRoot = "./Tools/FxCop/FxCopCmd.exe"
     
     // Filesets
     let appReferences  = 
-        !! @"src\app\**\*.csproj" 
-          ++ @"src\app\**\*.fsproj"
+        !! "src/app/**/*.csproj" 
+          ++ "src/app/**/*.fsproj"
     
-    let testReferences = !! @"src\test\**\*.csproj"
+    let testReferences = !! "src/test/**/*.csproj"
         
     // version info
     let version = "0.2"  // or retrieve from CI server
@@ -223,7 +219,7 @@ You can read the [getting started guide](gettingstarted.html) to build such a sc
                 AssemblyTitle = "Calculator Command line tool";
                 AssemblyDescription = "Sample project for FAKE - F# MAKE";
                 Guid = "A539B42C-CB9F-4a23-8E57-AF4E7CEE5BAA";
-                OutputFileName = @".\src\app\Calculator\Properties\AssemblyInfo.cs"})
+                OutputFileName = "./src/app/Calculator/Properties/AssemblyInfo.cs"})
                   
         AssemblyInfo 
             (fun p -> 
@@ -233,9 +229,9 @@ You can read the [getting started guide](gettingstarted.html) to build such a sc
                 AssemblyTitle = "Calculator library";
                 AssemblyDescription = "Sample project for FAKE - F# MAKE";
                 Guid = "EE5621DB-B86B-44eb-987F-9C94BCC98441";
-                OutputFileName = @".\src\app\CalculatorLib\Properties\AssemblyInfo.cs"})          
+                OutputFileName = "./src/app/CalculatorLib/Properties/AssemblyInfo.cs"})          
           
-        // compile all projects below src\app\
+        // compile all projects below src/app/
         MSBuildRelease buildDir "Build" appReferences
             |> Log "AppBuild-Output: "
     )
@@ -246,16 +242,15 @@ You can read the [getting started guide](gettingstarted.html) to build such a sc
     )
     
     Target "NUnitTest" (fun _ ->  
-        !! (testDir + @"\NUnit.Test.*.dll")
+        !! (testDir + "/NUnit.Test.*.dll")
             |> NUnit (fun p -> 
-                {p with 
-                    ToolPath = nunitPath; 
+                {p with
                     DisableShadowCopy = true; 
-                    OutputFile = testDir + @"TestResults.xml"})
+                    OutputFile = testDir + "TestResults.xml"})
     )
     
     Target "xUnitTest" (fun _ ->  
-        !! (testDir + @"\xUnit.Test.*.dll")
+        !! (testDir + "/xUnit.Test.*.dll")
             |> xUnit (fun p -> 
                 {p with 
                     ShadowCopy = false;
@@ -265,8 +260,8 @@ You can read the [getting started guide](gettingstarted.html) to build such a sc
     )
     
     Target "FxCop" (fun _ ->
-        !! (buildDir + @"\**\*.dll") 
-            ++ (buildDir + @"\**\*.exe")
+        !! (buildDir + "/**/*.dll") 
+            ++ (buildDir + "/**/*.exe")
             |> FxCop (fun p -> 
                 {p with                     
                     ReportFileName = testDir + "FXCopResults.xml";
@@ -274,7 +269,7 @@ You can read the [getting started guide](gettingstarted.html) to build such a sc
     )
     
     Target "Deploy" (fun _ ->
-        !! (buildDir + "\**\*.*") 
+        !! (buildDir + "/**/*.*") 
             -- "*.zip" 
             |> Zip buildDir (deployDir + "Calculator." + version + ".zip")
     )
