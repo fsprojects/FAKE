@@ -57,7 +57,7 @@ Now open the *build.fsx* in Visual Studio or any text editor. It should look lik
 	)
 
 	// start build
-	Run "Default"
+	RunTargetOrDefault "Default"
 
 
 As you can see the code is really simple. The first line includes the FAKE library and is vital for all FAKE build scripts.
@@ -91,7 +91,7 @@ A typical first step in most build scenarios is to clean the output of the last 
 	  ==> "Default"
 
 	// start build
-	Run "Default"
+	RunTargetOrDefault "Default"
 
 We introduced some new concepts in this snippet. At first we defined a global property called "buildDir" with the relative path of a temporary build folder.
 
@@ -133,7 +133,7 @@ In the next step we want to compile our C# libraries, which means we want to com
 	  ==> "Default"
 
 	// start build
-	Run "Default"
+	RunTargetOrDefault "Default"
 
 We defined a new build target named "BuildApp" which compiles all csproj-files with the MSBuild task and the build output will be copied to buildDir.
 
@@ -185,7 +185,7 @@ Now our main application will be built automatically and it's time to build the 
 	  ==> "Default"
 
 	// start build
-	Run "Default"
+	RunTargetOrDefault "Default"
 
 This time we defined a new target "BuildTest" which compiles all C# projects below *src/test/* in Debug mode and we put the target into our build order.
 
@@ -256,7 +256,7 @@ Now all our projects will be compiled and we can use FAKE's NUnit task in order 
 	  ==> "Default"
 
 	// start build
-	Run "Default"
+	RunTargetOrDefault "Default"
 
 Our new *Test* target scans the test directory for test assemblies and runs them with the NUnit runner. It automatically tries to locate the runner in one of your subfolders. See the [NUnit task documentation](apidocs/fake-nunitparallel.html) if you need to specify the tool path explicitly.
 
@@ -337,7 +337,7 @@ Now we want to deploy a *.zip file containing our application:
 	  ==> "Default"
 
 	// start build
-	Run "Default"
+	RunTargetOrDefault "Default"
 
 The new *Deploy* target scans the build directory for all files. The result will be zipped to */deploy/Calculator.zip* via the Zip task.
 

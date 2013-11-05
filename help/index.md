@@ -280,4 +280,4 @@ You can read the [getting started guide](gettingstarted.html) to build such a sc
       ==> "Deploy"
      
     // start build
-    Run "Deploy"
+    RunTargetOrDefault "Deploy"
