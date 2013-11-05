@@ -219,10 +219,6 @@ Now all our projects will be compiled and we can use FAKE's NUnit task in order 
 	let testDir  = "./test/"
 	let packagesDir = "./packages"
 
-	// tools
-	let nunitVersion = GetPackageVersion packagesDir "NUnit.Runners"
-	let nunitPath = sprintf "./packages/NUnit.Runners.%s/tools/" nunitVersion
-
 	// Targets
 	Target "Clean" (fun _ ->
 		CleanDirs [buildDir; testDir]
@@ -244,7 +240,6 @@ Now all our projects will be compiled and we can use FAKE's NUnit task in order 
 		!! (testDir + "/NUnit.Test.*.dll") 
 		  |> NUnit (fun p ->
 			  {p with
-				 ToolPath = nunitPath;
 				 DisableShadowCopy = true;
 				 OutputFile = testDir + "TestResults.xml" })
 	)
@@ -263,7 +258,7 @@ Now all our projects will be compiled and we can use FAKE's NUnit task in order 
 	// start build
 	Run "Default"
 
-Our new *Test* target scans the test directory for test assemblies and runs them with the NUnit runner.
+Our new *Test* target scans the test directory for test assemblies and runs them with the NUnit runner. It automatically tries to locate the runner in one of your subfolders. See the [NUnit task documentation](apidocs/fake-nunitparallel.html) if you need to specify the tool path explicitly.
 
 The mysterious part **(fun p -> ...)** simply overrides the default parameters of the NUnit task and allows to specify concrete parameters.
 
@@ -275,7 +270,6 @@ Alternatively you could also run the tests in parallel using the [NUnitParallel]
 		!! (testDir + "/NUnit.Test.*.dll") 
 		  |> NUnitParallel (fun p ->
 			  {p with
-				 ToolPath = nunitPath;
 				 DisableShadowCopy = true;
 				 OutputFile = testDir + "TestResults.xml" })
 	)
@@ -295,10 +289,6 @@ Now we want to deploy a *.zip file containing our application:
 	let testDir  = "./test/"
 	let deployDir = "./deploy/"
 	let packagesDir = "./packages"
-
-	// tools
-	let nunitVersion = GetPackageVersion packagesDir "NUnit.Runners"
-	let nunitPath = sprintf "./packages/NUnit.Runners.%s/tools/" nunitVersion
 
 	// version info
 	let version = "0.2"  // or retrieve from CI server
@@ -324,7 +314,6 @@ Now we want to deploy a *.zip file containing our application:
 		!! (testDir + "/NUnit.Test.*.dll") 
 		  |> NUnit (fun p ->
 			  {p with
-				 ToolPath = nunitPath;
 				 DisableShadowCopy = true;
 				 OutputFile = testDir + "TestResults.xml" })
 	)
