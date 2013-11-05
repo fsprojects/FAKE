@@ -10,7 +10,7 @@ open System.Reflection
 let fakePath = productName.GetType().Assembly.Location
        
 /// Gets the FAKE version no.
-let fakeVersion = Fake.AssemblyInfo.AssemblyVersionInformation.Version
+let fakeVersion = AssemblyVersionInformation.Version
     
 let mutable private openTags = []
 
