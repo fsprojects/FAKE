@@ -484,6 +484,7 @@ These targets will be executed even if the build fails but have to be activated 
 <span class="l">100: </span>
 <span class="l">101: </span>
 <span class="l">102: </span>
+<span class="l">103: </span>
 </pre>
 </td>
 <td class="snippet"><pre class="fssnip">
@@ -581,7 +582,8 @@ These targets will be executed even if the build fails but have to be activated 
 
 <span class="c">// Build order</span>
 <span class="s">&quot;</span><span class="s">Clean</span><span class="s">&quot;</span>
-  <span class="o">==&gt;</span> <span class="s">&quot;</span><span class="s">BuildApp</span><span class="s">&quot;</span> <span class="o">&lt;=&gt;</span> <span class="s">&quot;</span><span class="s">BuildTest</span><span class="s">&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;</span><span class="s">BuildApp</span><span class="s">&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;</span><span class="s">BuildTest</span><span class="s">&quot;</span>
   <span class="o">==&gt;</span> <span class="s">&quot;</span><span class="s">FxCop</span><span class="s">&quot;</span>
   <span class="o">==&gt;</span> <span class="s">&quot;</span><span class="s">NUnitTest</span><span class="s">&quot;</span>
   <span class="o">=?&gt;</span> (<span class="s">&quot;</span><span class="s">xUnitTest</span><span class="s">&quot;</span>,<span class="i">hasBuildParam</span> <span class="s">&quot;</span><span class="s">xUnitTest</span><span class="s">&quot;</span>)  <span class="c">// runs the target only if FAKE was called with parameter xUnitTest</span>
