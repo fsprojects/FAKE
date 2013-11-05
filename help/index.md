@@ -88,12 +88,6 @@ If one target should only be run on a specific condition you can use the =?> ope
 	  =?> ("Test",hasBuildParam "test")  // runs the Test target only if FAKE was called with parameter test
 	  ==> "Default"
 
-It's also possible to specify the dependencies for targets:
-
-    // Target Default is dependent from target Clean and BuildApp
-    // "FAKE - F# Make" will ensure to run these targets before Default
-    "Default"  <== ["Clean"; "BuildApp"]
-
 ### Running targets
 
 You can execute targets with the "run"-command:
