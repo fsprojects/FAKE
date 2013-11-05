@@ -57,24 +57,18 @@
 <span class="l"> 8: </span>
 <span class="l"> 9: </span>
 <span class="l">10: </span>
-<span class="l">11: </span>
-<span class="l">12: </span>
-<span class="l">13: </span>
 </pre>
 </td>
 <td class="snippet"><pre class="fssnip">
-<span class="i">Target</span> <span class="s">&quot;</span><span class="s">FxCop</span><span class="s">&quot;</span> (<span class="k">fun</span> () <span class="k">-&gt;</span>
-  <span class="k">let</span> <span class="i">assemblies</span> <span class="o">=</span> 
+<span class="i">Target</span> <span class="s">&quot;</span><span class="s">FxCop</span><span class="s">&quot;</span> (<span class="k">fun</span> () <span class="k">-&gt;</span>  
     <span class="o">!!</span> (<span class="i">buildDir</span> <span class="o">+</span> <span class="s">@&quot;</span><span class="s">\</span><span class="s">*</span><span class="s">*</span><span class="s">\</span><span class="s">*</span><span class="s">.</span><span class="s">dll</span><span class="s">&quot;</span>) 
-      <span class="o">++</span> (<span class="i">buildDir</span> <span class="o">+</span> <span class="s">@&quot;</span><span class="s">\</span><span class="s">*</span><span class="s">*</span><span class="s">\</span><span class="s">*</span><span class="s">.</span><span class="s">exe</span><span class="s">&quot;</span>) 
-
-  <span class="i">FxCop</span> 
-    (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> 
-      {<span class="i">p</span> <span class="k">with</span> 
-        <span class="c">// override default parameters</span>
-        <span class="i">ReportFileName</span> <span class="o">=</span> <span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;</span><span class="s">FXCopResults</span><span class="s">.</span><span class="s">xml</span><span class="s">&quot;</span>;
-        <span class="i">ToolPath</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">FxCopCmd</span><span class="s">.</span><span class="s">exe</span><span class="s">&quot;</span>})
-    <span class="i">assemblies</span> 
+    <span class="o">++</span> (<span class="i">buildDir</span> <span class="o">+</span> <span class="s">@&quot;</span><span class="s">\</span><span class="s">*</span><span class="s">*</span><span class="s">\</span><span class="s">*</span><span class="s">.</span><span class="s">exe</span><span class="s">&quot;</span>) 
+    <span class="o">|&gt;</span> <span class="i">FxCop</span> 
+        (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> 
+            {<span class="i">p</span> <span class="k">with</span> 
+              <span class="c">// override default parameters</span>
+              <span class="i">ReportFileName</span> <span class="o">=</span> <span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;</span><span class="s">FXCopResults</span><span class="s">.</span><span class="s">xml</span><span class="s">&quot;</span>
+              <span class="i">ToolPath</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">FxCopCmd</span><span class="s">.</span><span class="s">exe</span><span class="s">&quot;</span>})
 )</pre>
 </td>
 </tr>
@@ -124,24 +118,20 @@
 <span class="l"> 9: </span>
 <span class="l">10: </span>
 <span class="l">11: </span>
-<span class="l">12: </span>
-<span class="l">13: </span>
 </pre>
 </td>
 <td class="snippet"><pre class="fssnip">
-<span class="i">Target</span> <span class="s">&quot;</span><span class="s">FxCop</span><span class="s">&quot;</span> (<span class="k">fun</span> () <span class="k">-&gt;</span>
-  <span class="k">let</span> <span class="i">assemblies</span> <span class="o">=</span> 
+<span class="i">Target</span> <span class="s">&quot;</span><span class="s">FxCop</span><span class="s">&quot;</span> (<span class="k">fun</span> () <span class="k">-&gt;</span>  
     <span class="o">!!</span> (<span class="i">buildDir</span> <span class="o">+</span> <span class="s">@&quot;</span><span class="s">\</span><span class="s">*</span><span class="s">*</span><span class="s">\</span><span class="s">*</span><span class="s">.</span><span class="s">dll</span><span class="s">&quot;</span>) 
-      <span class="o">++</span> (<span class="i">buildDir</span> <span class="o">+</span> <span class="s">@&quot;</span><span class="s">\</span><span class="s">*</span><span class="s">*</span><span class="s">\</span><span class="s">*</span><span class="s">.</span><span class="s">exe</span><span class="s">&quot;</span>)
-
-  <span class="i">FxCop</span> 
-    (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> 
-      {<span class="i">p</span> <span class="k">with</span> 
-        <span class="c">// override default parameters</span>
-        <span class="i">ReportFileName</span> <span class="o">=</span> <span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;</span><span class="s">FXCopResults</span><span class="s">.</span><span class="s">xml</span><span class="s">&quot;</span>;
-        <span class="i">FailOnError</span> <span class="o">=</span> <span class="i">FxCopErrorLevel</span><span class="o">.</span><span class="i">CriticalWarning</span>;
-        <span class="i">ToolPath</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">FxCopCmd</span><span class="s">.</span><span class="s">exe</span><span class="s">&quot;</span>})
-    <span class="i">assemblies</span> </pre>
+    <span class="o">++</span> (<span class="i">buildDir</span> <span class="o">+</span> <span class="s">@&quot;</span><span class="s">\</span><span class="s">*</span><span class="s">*</span><span class="s">\</span><span class="s">*</span><span class="s">.</span><span class="s">exe</span><span class="s">&quot;</span>) 
+    <span class="o">|&gt;</span> <span class="i">FxCop</span> 
+        (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> 
+            {<span class="i">p</span> <span class="k">with</span> 
+              <span class="c">// override default parameters</span>
+              <span class="i">ReportFileName</span> <span class="o">=</span> <span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;</span><span class="s">FXCopResults</span><span class="s">.</span><span class="s">xml</span><span class="s">&quot;</span>
+              <span class="i">FailOnError</span> <span class="o">=</span> <span class="i">FxCopErrorLevel</span><span class="o">.</span><span class="i">CriticalWarning</span>
+              <span class="i">ToolPath</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">FxCopCmd</span><span class="s">.</span><span class="s">exe</span><span class="s">&quot;</span>})
+)</pre>
 </td>
 </tr>
 </table>
