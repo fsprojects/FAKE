@@ -1,8 +1,8 @@
-﻿using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using Fake;
 using Machine.Specifications;
 using Test.FAKECore.FileHandling;
+
 namespace Test.FAKECore.Globbing.Excludes
 {
     public class when_extracting_sample_zip : BaseFunctions

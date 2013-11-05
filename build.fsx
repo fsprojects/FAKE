@@ -135,7 +135,6 @@ Target "BuildZip" (fun _ ->
     !+ (buildDir @@ @"**/*.*") 
     -- "*.zip" 
     -- "**/*.pdb"
-      |> Scan
       |> Zip buildDir deployZip
 )
 
