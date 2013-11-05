@@ -186,33 +186,15 @@ If you need more than the default functionality you can either write F# or simpl
 </tr>
 </table>
 
-<p>It's also possible to specify the dependencies for targets:</p>
-
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="c">// Target Default is dependent from target Clean and BuildApp</span>
-<span class="c">// &quot;FAKE - F# Make&quot; will ensure to run these targets before Default</span>
-<span class="s">&quot;</span><span class="s">Default</span><span class="s">&quot;</span>  <span class="o">&lt;==</span> [<span class="s">&quot;</span><span class="s">Clean</span><span class="s">&quot;</span>; <span class="s">&quot;</span><span class="s">BuildApp</span><span class="s">&quot;</span>]</pre>
-</td>
-</tr>
-</table>
-
 <h3>Running targets</h3>
 
-<p>You can execute targets with the "run"-command:</p>
+<p>You can execute targets with the "run"-function:</p>
 
 <table class="pre"><tr><td class="lines"><pre class="fssnip">
 <span class="l">1: </span>
-<span class="l">2: </span>
 </pre>
 </td>
 <td class="snippet"><pre class="fssnip">
-<span class="c">// Executes Default target</span>
 <span class="i">Run</span> <span class="s">&quot;</span><span class="s">Default</span><span class="s">&quot;</span></pre>
 </td>
 </tr>
