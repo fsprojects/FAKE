@@ -52,11 +52,11 @@ type ReleaseNotes =
 
     static member New(assemblyVersion,nugetVersion,notes) = { 
         AssemblyVersion = assemblyVersion
-        NugetVersion = assemblyVersion
+        NugetVersion = nugetVersion
         SemVer = SemVerHelper.parse nugetVersion
         Notes = notes }
 
-let private nugetRegex = getRegEx @"([0-9]+.)+[0-9]+(-[a-zA-Z]+)?"
+let private nugetRegex = getRegEx @"([0-9]+.)+[0-9]+(-[a-zA-Z]+)?(.[0-9]+)?"
 let private assemblyRegex = getRegEx @"([0-9]+.)+[0-9]+"
 
 /// Parse simple release notes sequence

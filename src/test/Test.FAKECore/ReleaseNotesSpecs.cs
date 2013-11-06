@@ -251,4 +251,40 @@ namespace Test.FAKECore
         It should_find_the_first_entry =
             () => _result.First().ShouldEqual(expected);
     }
+
+    public class when_parsing_semver_release_notes
+    {
+        static readonly IEnumerable<string> Notes = StringHelper.ReadFile("ReleaseNotes/SemVer.md");
+
+
+        static readonly ReleaseNotesHelper.ReleaseNotes expected =
+            ReleaseNotesHelper.ReleaseNotes.New("1.0.0",
+                "1.0.0-rc.1",
+                new[]
+                {
+                    "Initial release"
+                }
+                    .ToFSharpList());
+
+        static readonly ReleaseNotesHelper.ReleaseNotes expected2 =
+            ReleaseNotesHelper.ReleaseNotes.New("1.0.0",
+                "1.0.0-beta.2",
+                new[]
+                {
+                    "Fixed problems with Microsoft.Threading.Tasks"
+                }
+                    .ToFSharpList());
+
+        static FSharpList<ReleaseNotesHelper.ReleaseNotes> _result;
+
+        Because of = () => _result = ReleaseNotesHelper.parseAllReleaseNotes(Notes);
+
+        It should_find_all_entries = () => _result.Length.ShouldEqual(2);
+
+        It should_find_the_first_entry =
+            () => _result.First().ShouldEqual(expected);
+
+        It should_find_the_second_entry =
+            () => _result.Skip(1).First().ShouldEqual(expected2);
+    }
 }
