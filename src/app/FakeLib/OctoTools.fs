@@ -1,4 +1,5 @@
-﻿/// Contains tasks which can be used for automated deployment vie [Octopus Deploy](http://octopusdeploy.com/).
+﻿/// Contains tasks which can be used for automated deployment via [Octopus Deploy](http://octopusdeploy.com/).
+/// There is also a tutorial about the [Octopus deployment helper](../octopusdeploy.html) available.
 module Fake.OctoTools
 
 open Fake
