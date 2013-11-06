@@ -39,6 +39,7 @@ Some of our users are:
 * [Portable.Licensing](https://github.com/dnauck/Portable.Licensing)
 * [FeatureSwitcher](https://github.com/mexx/FeatureSwitcher)
 * [NuGetPlus](https://github.com/mavnn/NuGetPlus)
+* [Machine.Fakes](https://github.com/machine/machine.fakes)
 
 ## How to get FAKE
 
