@@ -140,6 +140,7 @@ let commandLine command =
 
 
 /// This task calls the Octo.exe CLI.
+/// See [Octopus-Tools](https://github.com/OctopusDeploy/Octopus-Tools) for more details.
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to overwrite the OctoTools default parameters.
