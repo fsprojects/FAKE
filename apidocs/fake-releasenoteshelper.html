@@ -93,14 +93,14 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '245', 245)" onmouseover="showTip(event, '245', 245)">
-            parseReleaseNotes data
+          <code onmouseout="hideTip(event, '274', 274)" onmouseover="showTip(event, '274', 274)">
+            parseAllReleaseNotes data
           </code>
-          <div class="tip" id="245">
-            <strong>Signature:</strong>data:seq&lt;string&gt; -&gt; ReleaseNotes<br />
+          <div class="tip" id="274">
+            <strong>Signature:</strong>data:seq&lt;string&gt; -&gt; ReleaseNotes list<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Parses a Release Notes text - Either "simple" or "complex" format (see below).</p>
+        <td class="xmldoc"><p>Parses a Release Notes text - Either "simple" or "complex" format (see below) and returns all release notes ordered by version no.</p>
 
 <h2>Parameters</h2>
 
@@ -110,22 +110,22 @@
 
 <h3>Simple format</h3>
 
-<pre><code>* 1.1.9 - Infer booleans for ints that only manifest 0 and 1.
-* 1.1.10 - Support for heterogeneous XML attributes. Make CsvFile re-entrant.
+<pre><code>* 1.1.10 - Support for heterogeneous XML attributes. Make CsvFile re-entrant.
+* 1.1.9 - Infer booleans for ints that only manifest 0 and 1.
 </code></pre>
 
 <h3>Complex format</h3>
 
-<pre><code>### New in 1.1.9 (Released 2013/07/21)
-* Infer booleans for ints that only manifest 0 and 1.    
-* Support for partially overriding the Schema in CsvProvider.
-* PreferOptionals and SafeMode parameters for CsvProvider.
-
-### New in 1.1.10 (Released 2013/09/12)
+<pre><code>### New in 1.1.10 (Released 2013/09/12)
 * Support for heterogeneous XML attributes.
 * Make CsvFile re-entrant. 
 * Support for compressed HTTP responses. 
 * Fix JSON conversion of 0 and 1 to booleans.
+
+### New in 1.1.9 (Released 2013/07/21)
+* Infer booleans for ints that only manifest 0 and 1.    
+* Support for partially overriding the Schema in CsvProvider.
+* PreferOptionals and SafeMode parameters for CsvProvider.
 </code></pre>
 
 <h2>Sample</h2>
@@ -144,6 +144,19 @@ Target "AssemblyInfo" (fun _ -&gt;
         Attribute.FileVersion release.AssemblyVersion]
 )
 </code></pre>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '275', 275)" onmouseover="showTip(event, '275', 275)">
+            parseReleaseNotes data
+          </code>
+          <div class="tip" id="275">
+            <strong>Signature:</strong>data:seq&lt;string&gt; -&gt; ReleaseNotes<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Parses a Release Notes text and returns the lastest release notes.</p>
 </td>
       </tr>
     </tbody>
