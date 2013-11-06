@@ -44,9 +44,17 @@ type ReleaseNotes =
       AssemblyVersion: string
       /// The nuget package version.
       NugetVersion: string
+      /// Semantic version
+      SemVer: SemVerHelper.SemVerInfo
       // The parsed release notes.
       Notes: string list }
     override x.ToString() = sprintf "%A" x
+
+    static member New(assemblyVersion,nugetVersion,notes) = { 
+        AssemblyVersion = assemblyVersion
+        NugetVersion = assemblyVersion
+        SemVer = SemVerHelper.parse nugetVersion
+        Notes = notes }
 
 let private nugetRegex = getRegEx @"([0-9]+.)+[0-9]+(-[a-zA-Z]+)?"
 let private assemblyRegex = getRegEx @"([0-9]+.)+[0-9]+"
@@ -64,9 +72,7 @@ let private parseSimpleReleaseNotes line =
         |> List.map (trimDot >> trim)
         |> List.filter isNotNullOrEmpty
         |> List.map (fun x -> x + ".")
-    { AssemblyVersion = assemblyVersion.Value
-      NugetVersion = nugetVersion.Value
-      Notes = notes }
+    ReleaseNotes.New(assemblyVersion.Value,nugetVersion.Value,notes)
 
 /// Parse "complex" release notes text sequence
 let private parseAllComplexReleaseNotes (text: seq<string>) =
@@ -86,10 +92,7 @@ let private parseAllComplexReleaseNotes (text: seq<string>) =
         | Some(header,(notes, rest)) ->        
             let assemblyVer, nugetVer = assemblyRegex.Match header, nugetRegex.Match header
             if not assemblyVer.Success then failwith "Unable to parse valid Assembly version from release notes."
-            let newReleaseNotes =
-                { AssemblyVersion = assemblyVer.Value
-                  NugetVersion = nugetVer.Value
-                  Notes = notes |> List.filter isNotNullOrEmpty |> List.rev }
+            let newReleaseNotes = ReleaseNotes.New(assemblyVer.Value,nugetVer.Value,notes |> List.filter isNotNullOrEmpty |> List.rev)
             loop (newReleaseNotes::releaseNotes) rest
         | None -> releaseNotes
 
@@ -114,7 +117,7 @@ let parseAllReleaseNotes (data: seq<string>) =
             |> Seq.toList
         | Complex -> parseAllComplexReleaseNotes data
         | Invalid -> failwith "Invalid Release Notes format."
-        |> List.sortBy (fun x -> SemVerHelper.parse x.AssemblyVersion)
+        |> List.sortBy (fun x -> x.SemVer)
         |> List.rev
 
     
