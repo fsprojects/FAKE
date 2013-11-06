@@ -1,4 +1,38 @@
-﻿/// Contains helpers which allow to parse Release Notes text files.
+﻿/// Contains helpers which allow to parse Release Notes text files. Either "simple" or "complex" format is accepted.
+///
+/// ### Simple format
+///
+///     * 1.1.10 - Support for heterogeneous XML attributes. Make CsvFile re-entrant.
+///     * 1.1.9 - Infer booleans for ints that only manifest 0 and 1.
+///
+/// ### Complex format
+///
+///     ### New in 1.1.10 (Released 2013/09/12)
+///     * Support for heterogeneous XML attributes.
+///     * Make CsvFile re-entrant. 
+///     * Support for compressed HTTP responses. 
+///     * Fix JSON conversion of 0 and 1 to booleans.
+///
+///     ### New in 1.1.9 (Released 2013/07/21)
+///     * Infer booleans for ints that only manifest 0 and 1.    
+///     * Support for partially overriding the Schema in CsvProvider.
+///     * PreferOptionals and SafeMode parameters for CsvProvider.
+///
+/// ## Sample
+///
+///     let release =
+///         ReadFile "RELEASE_NOTES.md"
+///         |> ReleaseNotesHelper.parseReleaseNotes
+///
+///
+///     Target "AssemblyInfo" (fun _ ->
+///         CreateFSharpAssemblyInfo "src/Common/AssemblyInfo.fs"
+///           [ Attribute.Title project
+///             Attribute.Product project
+///             Attribute.Description summary
+///             Attribute.Version release.AssemblyVersion
+///             Attribute.FileVersion release.AssemblyVersion]
+///     )
 module Fake.ReleaseNotesHelper
 
 open System
@@ -62,44 +96,10 @@ let private parseAllComplexReleaseNotes (text: seq<string>) =
     loop [] (text |> Seq.map (trimChars [|' '; '*'|]) |> Seq.toList)
 
 
-/// Parses a Release Notes text - Either "simple" or "complex" format (see below) and returns all release notes ordered by version no.
+/// Parses a Release Notes text and returns all release notes.
 ///
 /// ## Parameters
 ///  - `data` - Release notes text
-///
-/// ### Simple format
-///
-///     * 1.1.10 - Support for heterogeneous XML attributes. Make CsvFile re-entrant.
-///     * 1.1.9 - Infer booleans for ints that only manifest 0 and 1.
-///
-/// ### Complex format
-///
-///     ### New in 1.1.10 (Released 2013/09/12)
-///     * Support for heterogeneous XML attributes.
-///     * Make CsvFile re-entrant. 
-///     * Support for compressed HTTP responses. 
-///     * Fix JSON conversion of 0 and 1 to booleans.
-///
-///     ### New in 1.1.9 (Released 2013/07/21)
-///     * Infer booleans for ints that only manifest 0 and 1.    
-///     * Support for partially overriding the Schema in CsvProvider.
-///     * PreferOptionals and SafeMode parameters for CsvProvider.
-///
-/// ## Sample
-///
-///     let release =
-///         ReadFile "RELEASE_NOTES.md"
-///         |> ReleaseNotesHelper.parseReleaseNotes
-///
-///
-///     Target "AssemblyInfo" (fun _ ->
-///         CreateFSharpAssemblyInfo "src/Common/AssemblyInfo.fs"
-///           [ Attribute.Title project
-///             Attribute.Product project
-///             Attribute.Description summary
-///             Attribute.Version release.AssemblyVersion
-///             Attribute.FileVersion release.AssemblyVersion]
-///     )
 let parseAllReleaseNotes (data: seq<string>) = 
     let data = data |> Seq.toList |> List.filter (not << isNullOrWhiteSpace)
     match data with
@@ -118,6 +118,9 @@ let parseAllReleaseNotes (data: seq<string>) =
 
     
 /// Parses a Release Notes text and returns the lastest release notes.
+///
+/// ## Parameters
+///  - `data` - Release notes text
 let parseReleaseNotes (data: seq<string>) =
     data
     |> parseAllReleaseNotes
