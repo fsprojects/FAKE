@@ -60,8 +60,9 @@ let private parseAllComplexReleaseNotes (text: seq<string>) =
             | None -> releaseNotes
 
     loop [] (text |> Seq.map (trimChars [|' '; '*'|]) |> Seq.toList)
-    
-/// Parses a Release Notes text - Either "simple" or "complex" format (see below).
+
+
+/// Parses a Release Notes text - Either "simple" or "complex" format (see below) and returns all release notes ordered by version no.
 ///
 /// ## Parameters
 ///  - `data` - Release notes text
@@ -99,7 +100,7 @@ let private parseAllComplexReleaseNotes (text: seq<string>) =
 ///             Attribute.Version release.AssemblyVersion
 ///             Attribute.FileVersion release.AssemblyVersion]
 ///     )
-let parseReleaseNotes (data: seq<string>) = 
+let parseAllReleaseNotes (data: seq<string>) = 
     let data = data |> Seq.toList |> List.filter (not << isNullOrWhiteSpace)
     match data with
     | [] -> failwith "Empty Release file."
@@ -112,4 +113,12 @@ let parseReleaseNotes (data: seq<string>) =
             |> Seq.map parseSimpleReleaseNotes |> Seq.toList
         | Complex -> parseAllComplexReleaseNotes data
         | Invalid -> failwith "Invalid Release Notes format."
-        |> Seq.maxBy (fun x -> SemVerHelper.parse x.AssemblyVersion)
+        |> List.sortBy (fun x -> SemVerHelper.parse x.AssemblyVersion)
+        |> List.rev
+
+    
+/// Parses a Release Notes text and returns the lastest release notes.
+let parseReleaseNotes (data: seq<string>) =
+    data
+    |> parseAllReleaseNotes
+    |> Seq.head
