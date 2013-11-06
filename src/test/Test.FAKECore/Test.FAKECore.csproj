@@ -62,6 +62,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\packages\Machine.Specifications.0.5.10\lib\net40\Machine.Specifications.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Build" />
+    <Reference Include="NuGet.Core, Version=2.5.40416.9020, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\NuGet.Core.2.5.0\lib\net40-Client\NuGet.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -74,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SemVerHelperSpecs.cs" />
+    <Compile Include="ProjectSystemSpecs.cs" />
     <Compile Include="TeamCitySpecs.cs" />
     <Compile Include="BasicStringHelperSpecs.cs" />
     <Compile Include="FileHandling\SubfolderSpecs.cs" />
@@ -248,6 +254,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="ReleaseNotes\SemVer.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ProjectTestFiles\FakeLib.proj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="TestData\fake_schema_2011_08.nuspec">
