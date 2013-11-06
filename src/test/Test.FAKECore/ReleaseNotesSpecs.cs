@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Fake;
 using Machine.Specifications;
 using Microsoft.FSharp.Collections;
@@ -135,4 +136,52 @@ namespace Test.FAKECore
                 .ShouldEqual(new ReleaseNotesHelper.ReleaseNotes("1.1.10", "1.1.10",
                     new[] { "Support for heterogeneous XML attributes.", "Make CsvFile re-entrant." }.ToFSharpList()));
     }
+
+    public class when_parsing_all_release_notes
+    {
+        static IEnumerable<string> Notes(string data)
+        {
+            return data.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+        }
+
+        const string validData = @" 
+
+### New in 1.1.9 (Released 2013/07/21)
+* Infer booleans for ints that only manifest 0 and 1.
+### New in 1.1.10 (Released 2013/09/12)
+* Support for heterogeneous XML attributes.
+* Make CsvFile re-entrant. 
+* Support for compressed HTTP responses. 
+* Fix JSON conversion of 0 and 1 to booleans.
+* Fix XmlProvider problems with nested elements and elements with same name in different namespaces.
+
+";
+
+
+        static readonly ReleaseNotesHelper.ReleaseNotes expected = new ReleaseNotesHelper.ReleaseNotes("1.1.10", "1.1.10",
+            new[] {"Support for heterogeneous XML attributes.", 
+                    "Make CsvFile re-entrant.",
+                    "Support for compressed HTTP responses.",
+                    "Fix JSON conversion of 0 and 1 to booleans.",
+                    "Fix XmlProvider problems with nested elements and elements with same name in different namespaces."}
+            .ToFSharpList());
+
+        static readonly ReleaseNotesHelper.ReleaseNotes expected2 = new ReleaseNotesHelper.ReleaseNotes("1.1.9", "1.1.9",
+            new[] { "Infer booleans for ints that only manifest 0 and 1." }
+            .ToFSharpList());
+
+        Because of = () => _result = ReleaseNotesHelper.parseAllReleaseNotes(Notes(validData));
+        It should_find_both_entries =
+            () => _result.Length.ShouldEqual(2);
+
+        It should_find_the_first_entry =
+            () => _result.First().ShouldEqual(expected);
+
+        It should_find_the_second_entry =
+            () => _result.Skip(1).First().ShouldEqual(expected2);
+
+        static FSharpList<ReleaseNotesHelper.ReleaseNotes> _result;
+    }
+
+
 }

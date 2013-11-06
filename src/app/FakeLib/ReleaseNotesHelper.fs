@@ -70,28 +70,28 @@ let private parseSimpleReleaseNotes line =
 
 /// Parse "complex" release notes text sequence
 let private parseAllComplexReleaseNotes (text: seq<string>) =
-    let findNextNotesBlock text =
-        let rec loop notes = function
-            | [] -> None
-            | h :: t -> 
-                if "#" <* h then Some(h, notes,List.rev t)
-                else loop (h :: notes) t
+    let rec findNextNotesBlock text =
+        let isHeader line = "#" <* line
+        let rec findEnd notes text =
+            match text with
+            | [] -> notes,[]
+            | h :: rest -> if isHeader h then notes,text else findEnd (h :: notes) rest
 
-        loop [] (List.rev text)
+        match text with
+        | [] -> None
+        | h :: rest -> if isHeader h then Some(h,findEnd [] rest) else findNextNotesBlock rest
 
-    let rec loop releaseNotes = function
-        | [] -> releaseNotes
-        | text -> 
-            match findNextNotesBlock text with
-            | Some(header, notes, rest ) ->        
-                let assemblyVer, nugetVer = assemblyRegex.Match header, nugetRegex.Match header
-                if not assemblyVer.Success then failwith "Unable to parse valid Assembly version from release notes."
-                let newReleaseNotes =
-                    { AssemblyVersion = assemblyVer.Value
-                      NugetVersion = nugetVer.Value
-                      Notes = notes }
-                loop (newReleaseNotes::releaseNotes) rest
-            | None -> releaseNotes
+    let rec loop releaseNotes text =
+        match findNextNotesBlock text with
+        | Some(header,(notes, rest)) ->        
+            let assemblyVer, nugetVer = assemblyRegex.Match header, nugetRegex.Match header
+            if not assemblyVer.Success then failwith "Unable to parse valid Assembly version from release notes."
+            let newReleaseNotes =
+                { AssemblyVersion = assemblyVer.Value
+                  NugetVersion = nugetVer.Value
+                  Notes = notes |> List.rev }
+            loop (newReleaseNotes::releaseNotes) rest
+        | None -> releaseNotes
 
     loop [] (text |> Seq.map (trimChars [|' '; '*'|]) |> Seq.toList)
 
