@@ -71,7 +71,7 @@ let private parseSimpleReleaseNotes line =
 /// Parse "complex" release notes text sequence
 let private parseAllComplexReleaseNotes (text: seq<string>) =
     let rec findNextNotesBlock text =
-        let isHeader line = "#" <* line
+        let isHeader line = "##" <* line
         let rec findEnd notes text =
             match text with
             | [] -> notes,[]

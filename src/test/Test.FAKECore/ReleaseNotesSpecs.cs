@@ -206,5 +206,26 @@ namespace Test.FAKECore
         static FSharpList<ReleaseNotesHelper.ReleaseNotes> _result;
     }
 
+    public class when_parsing_machine_release_notes
+    {
+        static IEnumerable<string> validData = StringHelper.ReadFile("ReleaseNotes/Machine.md");
 
+
+        static readonly ReleaseNotesHelper.ReleaseNotes expected = new ReleaseNotesHelper.ReleaseNotes("1.8.0", "1.8.0",
+            new[] {"When the subject's constructor throws an exception, it is now bubbled up and shown in the failure message.",
+                    "Fixed an exception in the Rhino Mocks adapter when faking a delegate (thanks to [Alexis Atkinson](https://github.com/alexisatkinson)).",
+                    "Updated to FakeItEasy 1.14.0",
+                    "Updated to Machine.Specifications 0.5.16",
+                    "Updated to Moq 4.1.1309.1617"}
+            .ToFSharpList());
+
+        Because of = () => _result = ReleaseNotesHelper.parseAllReleaseNotes(validData);
+
+        It should_find_all_entries = () => _result.Length.ShouldEqual(17);
+
+        It should_find_the_first_entry =
+            () => _result.First().ShouldEqual(expected);
+
+        static FSharpList<ReleaseNotesHelper.ReleaseNotes> _result;
+    }
 }
