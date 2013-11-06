@@ -62,7 +62,42 @@
 
 <h1>ReleaseNotesHelper</h1>
 <div class="xmldoc">
-<p>Contains helpers which allow to parse Release Notes text files.</p>
+<p>Contains helpers which allow to parse Release Notes text files. Either "simple" or "complex" format is accepted.</p>
+
+<h3>Simple format</h3>
+
+<pre><code>* 1.1.10 - Support for heterogeneous XML attributes. Make CsvFile re-entrant.
+* 1.1.9 - Infer booleans for ints that only manifest 0 and 1.
+</code></pre>
+
+<h3>Complex format</h3>
+
+<pre><code>### New in 1.1.10 (Released 2013/09/12)
+* Support for heterogeneous XML attributes.
+* Make CsvFile re-entrant. 
+* Support for compressed HTTP responses. 
+* Fix JSON conversion of 0 and 1 to booleans.
+
+### New in 1.1.9 (Released 2013/07/21)
+* Infer booleans for ints that only manifest 0 and 1.    
+* Support for partially overriding the Schema in CsvProvider.
+* PreferOptionals and SafeMode parameters for CsvProvider.
+</code></pre>
+                <h2>Sample</h2>
+<pre><code>let release =
+    ReadFile "RELEASE_NOTES.md"
+    |&gt; ReleaseNotesHelper.parseReleaseNotes
+
+
+Target "AssemblyInfo" (fun _ -&gt;
+    CreateFSharpAssemblyInfo "src/Common/AssemblyInfo.fs"
+      [ Attribute.Title project
+        Attribute.Product project
+        Attribute.Description summary
+        Attribute.Version release.AssemblyVersion
+        Attribute.FileVersion release.AssemblyVersion]
+)
+</code></pre>
 </div>
 
 <!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
@@ -93,70 +128,39 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '274', 274)" onmouseover="showTip(event, '274', 274)">
+          <code onmouseout="hideTip(event, '255', 255)" onmouseover="showTip(event, '255', 255)">
             parseAllReleaseNotes data
           </code>
-          <div class="tip" id="274">
+          <div class="tip" id="255">
             <strong>Signature:</strong>data:seq&lt;string&gt; -&gt; ReleaseNotes list<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Parses a Release Notes text - Either "simple" or "complex" format (see below) and returns all release notes ordered by version no.</p>
+        <td class="xmldoc"><p>Parses a Release Notes text and returns all release notes.</p>
 
 <h2>Parameters</h2>
 
 <ul>
 <li><code>data</code> - Release notes text</li>
 </ul>
-
-<h3>Simple format</h3>
-
-<pre><code>* 1.1.10 - Support for heterogeneous XML attributes. Make CsvFile re-entrant.
-* 1.1.9 - Infer booleans for ints that only manifest 0 and 1.
-</code></pre>
-
-<h3>Complex format</h3>
-
-<pre><code>### New in 1.1.10 (Released 2013/09/12)
-* Support for heterogeneous XML attributes.
-* Make CsvFile re-entrant. 
-* Support for compressed HTTP responses. 
-* Fix JSON conversion of 0 and 1 to booleans.
-
-### New in 1.1.9 (Released 2013/07/21)
-* Infer booleans for ints that only manifest 0 and 1.    
-* Support for partially overriding the Schema in CsvProvider.
-* PreferOptionals and SafeMode parameters for CsvProvider.
-</code></pre>
-
-<h2>Sample</h2>
-
-<pre><code>let release =
-    ReadFile "RELEASE_NOTES.md"
-    |&gt; ReleaseNotesHelper.parseReleaseNotes
-
-
-Target "AssemblyInfo" (fun _ -&gt;
-    CreateFSharpAssemblyInfo "src/Common/AssemblyInfo.fs"
-      [ Attribute.Title project
-        Attribute.Product project
-        Attribute.Description summary
-        Attribute.Version release.AssemblyVersion
-        Attribute.FileVersion release.AssemblyVersion]
-)
-</code></pre>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '275', 275)" onmouseover="showTip(event, '275', 275)">
+          <code onmouseout="hideTip(event, '256', 256)" onmouseover="showTip(event, '256', 256)">
             parseReleaseNotes data
           </code>
-          <div class="tip" id="275">
+          <div class="tip" id="256">
             <strong>Signature:</strong>data:seq&lt;string&gt; -&gt; ReleaseNotes<br />
                       </div>
         </td>
         <td class="xmldoc"><p>Parses a Release Notes text and returns the lastest release notes.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>data</code> - Release notes text</li>
+</ul>
 </td>
       </tr>
     </tbody>

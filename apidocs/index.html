@@ -343,7 +343,27 @@ The intentional use is the creation of a clickonce application.</p>
 		      <td class="module-name">
             <a href="fake-releasenoteshelper.html">ReleaseNotesHelper</a>
 		      </td>
-          <td class="xmldoc"><p>Contains helpers which allow to parse Release Notes text files.</p>
+          <td class="xmldoc"><p>Contains helpers which allow to parse Release Notes text files. Either "simple" or "complex" format is accepted.</p>
+
+<h3>Simple format</h3>
+
+<pre><code>* 1.1.10 - Support for heterogeneous XML attributes. Make CsvFile re-entrant.
+* 1.1.9 - Infer booleans for ints that only manifest 0 and 1.
+</code></pre>
+
+<h3>Complex format</h3>
+
+<pre><code>### New in 1.1.10 (Released 2013/09/12)
+* Support for heterogeneous XML attributes.
+* Make CsvFile re-entrant. 
+* Support for compressed HTTP responses. 
+* Fix JSON conversion of 0 and 1 to booleans.
+
+### New in 1.1.9 (Released 2013/07/21)
+* Infer booleans for ints that only manifest 0 and 1.    
+* Support for partially overriding the Schema in CsvProvider.
+* PreferOptionals and SafeMode parameters for CsvProvider.
+</code></pre>
 </td>
         </tr>
         <tr>
