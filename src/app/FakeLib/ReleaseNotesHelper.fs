@@ -18,14 +18,13 @@ let private nugetRegex = getRegEx @"([0-9]+.)+[0-9]+(-[a-zA-Z]+)?"
 let private assemblyRegex = getRegEx @"([0-9]+.)+[0-9]+"
 
 /// Parse simple release notes sequence
-let private parseSimpleReleaseNotes (text: seq<string>) = 
-    let lastLine = text |> Seq.last
-    let assemblyVersion, nugetVersion = assemblyRegex.Match (lastLine), nugetRegex.Match (lastLine)
+let private parseSimpleReleaseNotes line =
+    let assemblyVersion, nugetVersion = assemblyRegex.Match (line), nugetRegex.Match (line)
     if not assemblyVersion.Success
     then failwith "Unable to parse valid Assembly version from release notes."
     let trimDot (s:string) = s.TrimEnd('.')
     let notes = 
-        lastLine.Substring (nugetVersion.Index + nugetVersion.Length)
+        line.Substring (nugetVersion.Index + nugetVersion.Length)
         |> trimChars [|' '; '-'|]
         |> splitStr ". "
         |> List.map (trimDot >> trim)
@@ -36,19 +35,31 @@ let private parseSimpleReleaseNotes (text: seq<string>) =
       Notes = notes }
 
 /// Parse "complex" release notes text sequence
-let private parseComplexReleaseNotes (text: seq<string>) =
-    let rec loop notes = function
-        | [] -> failwithf "No header in %A" text
-        | h :: t -> 
-            if "#" <* h then h, notes
-            else loop (h :: notes) t
+let private parseAllComplexReleaseNotes (text: seq<string>) =
+    let findNextNotesBlock text =
+        let rec loop notes = function
+            | [] -> None
+            | h :: t -> 
+                if "#" <* h then Some(h, notes,List.rev t)
+                else loop (h :: notes) t
 
-    let header, notes = loop [] (text |> Seq.map (trimChars [|' '; '*'|]) |> List.ofSeq |> List.rev)
-    let assemblyVer, nugetVer = assemblyRegex.Match header, nugetRegex.Match header
-    if not assemblyVer.Success then failwith "Unable to parse valid Assembly version from release notes."
-    { AssemblyVersion = assemblyVer.Value
-      NugetVersion = nugetVer.Value
-      Notes = notes }
+        loop [] (List.rev text)
+
+    let rec loop releaseNotes = function
+        | [] -> releaseNotes
+        | text -> 
+            match findNextNotesBlock text with
+            | Some(header, notes, rest ) ->        
+                let assemblyVer, nugetVer = assemblyRegex.Match header, nugetRegex.Match header
+                if not assemblyVer.Success then failwith "Unable to parse valid Assembly version from release notes."
+                let newReleaseNotes =
+                    { AssemblyVersion = assemblyVer.Value
+                      NugetVersion = nugetVer.Value
+                      Notes = notes }
+                loop (newReleaseNotes::releaseNotes) rest
+            | None -> releaseNotes
+
+    loop [] (text |> Seq.map (trimChars [|' '; '*'|]) |> Seq.toList)
     
 /// Parses a Release Notes text - Either "simple" or "complex" format (see below).
 ///
@@ -57,21 +68,21 @@ let private parseComplexReleaseNotes (text: seq<string>) =
 ///
 /// ### Simple format
 ///
-///     * 1.1.9 - Infer booleans for ints that only manifest 0 and 1.
 ///     * 1.1.10 - Support for heterogeneous XML attributes. Make CsvFile re-entrant.
+///     * 1.1.9 - Infer booleans for ints that only manifest 0 and 1.
 ///
 /// ### Complex format
 ///
-///     ### New in 1.1.9 (Released 2013/07/21)
-///     * Infer booleans for ints that only manifest 0 and 1.    
-///     * Support for partially overriding the Schema in CsvProvider.
-///     * PreferOptionals and SafeMode parameters for CsvProvider.
-///     
 ///     ### New in 1.1.10 (Released 2013/09/12)
 ///     * Support for heterogeneous XML attributes.
 ///     * Make CsvFile re-entrant. 
 ///     * Support for compressed HTTP responses. 
 ///     * Fix JSON conversion of 0 and 1 to booleans.
+///
+///     ### New in 1.1.9 (Released 2013/07/21)
+///     * Infer booleans for ints that only manifest 0 and 1.    
+///     * Support for partially overriding the Schema in CsvProvider.
+///     * PreferOptionals and SafeMode parameters for CsvProvider.
 ///
 /// ## Sample
 ///
@@ -92,10 +103,13 @@ let parseReleaseNotes (data: seq<string>) =
     let data = data |> Seq.toList |> List.filter (not << isNullOrWhiteSpace)
     match data with
     | [] -> failwith "Empty Release file."
-    | h :: _ -> 
+    | h :: _ ->
         let (|Simple|Complex|Invalid|) = function '*' -> Simple | '#' -> Complex | _ -> Invalid
         let firstNonEmptyChar = h.Trim([|'-'; ' '|]).[0]
         match firstNonEmptyChar with
-        | Simple -> parseSimpleReleaseNotes data
-        | Complex -> parseComplexReleaseNotes data
+        | Simple -> 
+            data 
+            |> Seq.map parseSimpleReleaseNotes |> Seq.toList
+        | Complex -> parseAllComplexReleaseNotes data
         | Invalid -> failwith "Invalid Release Notes format."
+        |> Seq.maxBy (fun x -> SemVerHelper.parse x.AssemblyVersion)
