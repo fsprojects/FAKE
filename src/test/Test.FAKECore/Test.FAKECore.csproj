@@ -241,6 +241,12 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="ReleaseNotes\Machine.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ReleaseNotes\Octokit.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="TestData\fake_schema_2011_08.nuspec">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>

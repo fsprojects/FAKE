@@ -89,7 +89,7 @@ let private parseAllComplexReleaseNotes (text: seq<string>) =
             let newReleaseNotes =
                 { AssemblyVersion = assemblyVer.Value
                   NugetVersion = nugetVer.Value
-                  Notes = notes |> List.rev }
+                  Notes = notes |> List.filter isNotNullOrEmpty |> List.rev }
             loop (newReleaseNotes::releaseNotes) rest
         | None -> releaseNotes
 
@@ -110,7 +110,8 @@ let parseAllReleaseNotes (data: seq<string>) =
         match firstNonEmptyChar with
         | Simple -> 
             data 
-            |> Seq.map parseSimpleReleaseNotes |> Seq.toList
+            |> Seq.map parseSimpleReleaseNotes 
+            |> Seq.toList
         | Complex -> parseAllComplexReleaseNotes data
         | Invalid -> failwith "Invalid Release Notes format."
         |> List.sortBy (fun x -> SemVerHelper.parse x.AssemblyVersion)

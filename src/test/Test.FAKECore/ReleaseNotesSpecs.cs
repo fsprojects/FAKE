@@ -183,5 +183,28 @@ namespace Test.FAKECore
         static FSharpList<ReleaseNotesHelper.ReleaseNotes> _result;
     }
 
+    public class when_parsing_octokit_release_notes
+    {
+        static IEnumerable<string> validData = StringHelper.ReadFile("ReleaseNotes/Octokit.md");
+
+
+        static readonly ReleaseNotesHelper.ReleaseNotes expected = new ReleaseNotesHelper.ReleaseNotes("0.1.3", "0.1.3",
+            new[] {"New Xamarin Component store versions of Octokit.net",
+                    "New clients for managing assignees, milestones, and tags",
+                    "New clients for managing issues, issue events, and issue comments",
+                    "New client for managing organization members",
+                    "Fixed bug in applying query parameters that could cause paging to continually request the same page"}
+            .ToFSharpList());
+
+        Because of = () => _result = ReleaseNotesHelper.parseAllReleaseNotes(validData);
+
+        It should_find_all_entries = () => _result.Length.ShouldEqual(4);
+
+        It should_find_the_first_entry =
+            () => _result.First().ShouldEqual(expected);
+
+        static FSharpList<ReleaseNotesHelper.ReleaseNotes> _result;
+    }
+
 
 }
