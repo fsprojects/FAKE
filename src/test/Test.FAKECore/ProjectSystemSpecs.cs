@@ -1,4 +1,4 @@
-﻿using Fake.MsBuild;
+﻿using Fake.MSBuild;
 using Machine.Specifications;
 
 namespace Test.FAKECore

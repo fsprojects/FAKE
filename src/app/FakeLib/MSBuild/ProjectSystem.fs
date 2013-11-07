@@ -1,5 +1,5 @@
 /// Contains project file comparion tools for MSBuild project files.
-module Fake.MsBuild.ProjectSystem
+module Fake.MSBuild.ProjectSystem
 
 open Fake
 open System.Xml
