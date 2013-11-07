@@ -29,13 +29,13 @@ type Attribute(name,value,inNamespace) =
    /// Creates an attribute which holds the trademark
    static member Trademark(value) = Attribute.StringAttribute("AssemblyTrademark",value,"System.Reflection")
    /// Creates an attribute which holds the assembly version
-   static member Version(value) = Attribute.StringAttribute("AssemblyVersion",value,"System.Reflection")
+   static member Version(value) = Attribute.StringAttribute("AssemblyVersion",NormalizeVersion value,"System.Reflection")
    /// Creates an attribute which holds the assembly key file
    static member KeyFile(value) = Attribute.StringAttribute("AssemblyKeyFile",value,"System.Reflection")
    /// Creates an attribute which holds the assembly key name
    static member KeyName(value) = Attribute.StringAttribute("AssemblyKeyName",value,"System.Reflection")
    /// Creates an attribute which holds the assembly file version
-   static member FileVersion(value) = Attribute.StringAttribute("AssemblyFileVersion",value,"System.Reflection")
+   static member FileVersion(value) = Attribute.StringAttribute("AssemblyFileVersion",NormalizeVersion value,"System.Reflection")
    /// Creates an attribute which holds an assembly information version
    static member InformationalVersion(value) = Attribute.StringAttribute("AssemblyInformationalVersion",value,"System.Reflection")
    /// Creates an attribute which holds the Guid
