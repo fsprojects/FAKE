@@ -24,4 +24,4 @@ let findMissingFiles projectFile1 projectFile2 =
     let files1 = (ProjectSystem projectFile1).Files |> Set.ofSeq
     let files2 = (ProjectSystem projectFile2).Files |> Set.ofSeq
 
-    files2 |> Set.difference files1,files1 |> Set.difference files2
+    files1 |> Set.difference files2,files2 |> Set.difference files1

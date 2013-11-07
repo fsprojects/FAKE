@@ -15,15 +15,15 @@ namespace Test.FAKECore
 
         It should_detect_missing_files_in_project1 = () =>
         {
-            _missing.Item1.Count.ShouldEqual(2);
-            _missing.Item1.ShouldContain("Git\\Merge.fs");
-            _missing.Item1.ShouldContain("Git\\Stash.fs");
+            _missing.Item2.Count.ShouldEqual(2);
+            _missing.Item2.ShouldContain("Git\\Merge.fs");
+            _missing.Item2.ShouldContain("Git\\Stash.fs");
         };
 
         It should_detect_missing_files_in_project2 = () =>
         {
-            _missing.Item2.Count.ShouldEqual(1);
-            _missing.Item2.ShouldContain("Messages.fs");
+            _missing.Item1.Count.ShouldEqual(1);
+            _missing.Item1.ShouldContain("Messages.fs");
         };
     }
 }
