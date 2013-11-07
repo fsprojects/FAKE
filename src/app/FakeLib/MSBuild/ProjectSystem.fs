@@ -19,3 +19,18 @@ type ProjectSystem(projectFile : string) =
         [for node in document.SelectNodes(xpath,nsmgr) -> node.InnerText]
 
     member x.Files = files
+
+let findMissingFiles projectFile1 projectFile2 =
+    let proj1 = ProjectSystem projectFile1
+    let proj2 = ProjectSystem projectFile2
+
+    let missing1 = 
+        [for file in proj1.Files do
+            if proj2.Files |> List.exists ((=) file) |> not then
+                yield file]
+
+    let missing2 = 
+        [for file in proj2.Files do
+            if proj1.Files |> List.exists ((=) file) |> not then
+                yield file]
+    missing1,missing2
