@@ -202,7 +202,11 @@ let build setParams project =
         info.Arguments <- args) TimeSpan.MaxValue)
     then
         if Diagnostics.Debugger.IsAttached then Diagnostics.Debugger.Break()
-        let errors = File.ReadAllLines(MsBuildLogger.ErrorLoggerFile) |> List.ofArray
+        let errors =
+            System.Threading.Thread.Sleep(200) // wait for the file to write
+            if File.Exists MsBuildLogger.ErrorLoggerFile then
+                File.ReadAllLines(MsBuildLogger.ErrorLoggerFile) |> List.ofArray
+            else []
         let errorMessage = sprintf "Building %s failed." project
         raise (BuildException(errorMessage, errors))
     traceEndTask "MSBuild" project
