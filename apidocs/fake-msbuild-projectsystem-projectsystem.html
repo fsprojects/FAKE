@@ -60,32 +60,60 @@
 
 
 
-<h1>Staging</h1>
+<h1>ProjectSystem</h1>
 <div class="xmldoc">
-<p>Contains helper functions which allow to deal with git's staging area.</p>
+<p>A small abstraction over MSBuild project files.</p>
 </div>
-
-<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
-
-
-<!-- END TODO -->
-  <h3>Functions and values</h3>
+  <h3>Constructors</h3>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Function or value</td><td>Description</td></tr>
+      <tr><td>Constructor</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '584', 584)" onmouseover="showTip(event, '584', 584)">
-            StageFile repositoryDir file
+          <code onmouseout="hideTip(event, '638', 638)" onmouseover="showTip(event, '638', 638)">
+            new ProjectSystem
           </code>
-          <div class="tip" id="584">
-            <strong>Signature:</strong>repositoryDir:string -&gt; file:string -&gt; bool * List&lt;string&gt; * string<br />
+          <div class="tip" id="638">
+            <strong>Signature:</strong>projectFileName:string -&gt; ProjectSystem<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Adds a file to the staging area</p>
+        <td class="xmldoc"></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Instance members</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Instance member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '639', 639)" onmouseover="showTip(event, '639', 639)">
+            projectSystem.Files
+          </code>
+          <div class="tip" id="639">
+            <strong>Signature:</strong>string list<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>All files which are in "Compile" sections</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '641', 641)" onmouseover="showTip(event, '641', 641)">
+            projectSystem.ProjectFileName
+          </code>
+          <div class="tip" id="641">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>The project file name</p>
 </td>
       </tr>
     </tbody>

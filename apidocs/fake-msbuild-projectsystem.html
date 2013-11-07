@@ -60,13 +60,34 @@
 
 
 
-<h1>Staging</h1>
+<h1>ProjectSystem</h1>
 <div class="xmldoc">
-<p>Contains helper functions which allow to deal with git's staging area.</p>
+<p>Contains project file comparion tools for MSBuild project files.</p>
 </div>
 
 <!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+    <h2>Nested types and modules</h2>
 
+    <table class="table table-bordered type-list">
+        <thead>
+            <tr><td>Type</td><td>Description</td></tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-msbuild-projectsystem-projectcomparison.html">ProjectComparison</a>
+                    </td>
+                    <td class="xmldoc"></td>
+                </tr>
+                <tr>
+                    <td class="type-name">
+                        <a href="fake-msbuild-projectsystem-projectsystem.html">ProjectSystem</a>
+                    </td>
+                    <td class="xmldoc"><p>A small abstraction over MSBuild project files.</p>
+</td>
+                </tr>
+        </tbody>
+    </table>
 
 <!-- END TODO -->
   <h3>Functions and values</h3>
@@ -78,14 +99,27 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '584', 584)" onmouseover="showTip(event, '584', 584)">
-            StageFile repositoryDir file
+          <code onmouseout="hideTip(event, '579', 579)" onmouseover="showTip(event, '579', 579)">
+            CompareProjectsTo (...)
           </code>
-          <div class="tip" id="584">
-            <strong>Signature:</strong>repositoryDir:string -&gt; file:string -&gt; bool * List&lt;string&gt; * string<br />
+          <div class="tip" id="579">
+            <strong>Signature:</strong>templateProject:string -&gt; projects:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Adds a file to the staging area</p>
+        <td class="xmldoc"><p>Compares the given project files againts the template project and fails if any files are missing.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '580', 580)" onmouseover="showTip(event, '580', 580)">
+            findMissingFiles (...)
+          </code>
+          <div class="tip" id="580">
+            <strong>Signature:</strong>templateProject:string -&gt; projects:seq&lt;string&gt; -&gt; ProjectComparison list<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Compares the given project files againts the template project and returns which files are missing.</p>
 </td>
       </tr>
     </tbody>
