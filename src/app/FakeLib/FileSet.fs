@@ -380,12 +380,12 @@ let AllFilesMatching x = Include x
 
 /// Looks for a tool in all subfolders - returns the tool file name.
 let findToolInSubPath toolname defaultPath =
-    let tools = !! ("./**/" + toolname) 
-    if tools |> Seq.isEmpty then defaultPath @@ toolname else tools |> Seq.head
+    let tools = !! ("./**/" @@ toolname) 
+    if Seq.isEmpty tools then defaultPath @@ toolname else Seq.head tools
 
 /// Looks for a tool in all subfolders - returns the folder where the tool was found.
 let findToolFolderInSubPath toolname defaultPath =
-    let tools = !! ("./**/" + toolname) 
-    if tools |> Seq.isEmpty then defaultPath else 
-    let fi = fileInfo (tools |> Seq.head)
+    let tools = !! ("./**/" @@ toolname) 
+    if Seq.isEmpty tools then defaultPath else 
+    let fi = fileInfo (Seq.head tools)
     fi.Directory.FullName
