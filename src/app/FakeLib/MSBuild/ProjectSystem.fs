@@ -31,25 +31,47 @@ type ProjectComparison = {
     TemplateProjectFileName: string
     ProjectFileName: string
     MissingFiles: string seq
+    UnorderedFiles: string seq
 }
 
 /// Compares the given project files againts the template project and returns which files are missing.
+/// For F# projects it is also reporting unordered files.
 let findMissingFiles templateProject projects =
-    let templateFiles = Set.ofSeq (ProjectSystem templateProject).Files
+    let isFSharpProject file = file |> endsWith ".fsproj"
 
+    let templateFiles = (ProjectSystem templateProject).Files
+    let templateFilesSet = Set.ofSeq (ProjectSystem templateProject).Files
+    
     projects
     |> Seq.map (fun fileName -> ProjectSystem fileName)
     |> Seq.map (fun ps -> 
-                      { TemplateProjectFileName = templateProject
-                        ProjectFileName = ps.ProjectFileName
-                        MissingFiles = Set.difference templateFiles (Set.ofSeq ps.Files)})
-    |> Seq.filter (fun pc -> Seq.isEmpty pc.MissingFiles |> not)
+            let remainingFiles = ps.Files |> List.filter (fun file -> templateFiles |> List.exists ((=) file))
+            if isFSharpProject templateProject && templateFiles.Length = remainingFiles.Length then
+                { TemplateProjectFileName = templateProject
+                  ProjectFileName = ps.ProjectFileName
+                  MissingFiles  = []
+                  UnorderedFiles = 
+                      templateFiles 
+                      |> List.zip remainingFiles
+                      |> Seq.filter (fun (a,b) -> a <> b) 
+                      |> Seq.map fst }
+            else
+                { TemplateProjectFileName = templateProject
+                  ProjectFileName = ps.ProjectFileName
+                  UnorderedFiles = []
+                  MissingFiles = Set.difference templateFilesSet (Set.ofSeq ps.Files)}                          )
+    |> Seq.filter (fun pc -> Seq.isEmpty pc.MissingFiles |> not || Seq.isEmpty pc.UnorderedFiles |> not)
 
 /// Compares the given project files againts the template project and fails if any files are missing.
+/// For F# projects it is also reporting unordered files.
 let CompareProjectsTo templateProject projects =
     let errors =
         findMissingFiles templateProject projects
-        |> Seq.map (fun pc -> sprintf "Missing files in %s:\r\n%s" pc.ProjectFileName (toLines pc.MissingFiles))
+        |> Seq.map (fun pc -> 
+                if Seq.isEmpty pc.UnorderedFiles then
+                    sprintf "Missing files in %s:\r\n%s" pc.ProjectFileName (toLines pc.MissingFiles)
+                else
+                    sprintf "Unordered files in %s:\r\n%s" pc.ProjectFileName (toLines pc.UnorderedFiles))
         |> toLines
 
     if isNotNullOrEmpty errors then

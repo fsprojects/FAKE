@@ -252,12 +252,21 @@
     <Content Include="ReleaseNotes\SemVer.md">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="ProjectTestFiles\FakeLib.proj">
+    <None Include="ProjectTestFiles\FakeLib.fsproj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="ProjectTestFiles\FakeLib2.csproj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="ProjectTestFiles\FakeLib2.proj">
+    <None Include="ProjectTestFiles\FakeLib2.fsproj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="ProjectTestFiles\FakeLib3.csproj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="ProjectTestFiles\FakeLib3.fsproj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="TestData\fake_schema_2011_08.nuspec">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>

@@ -6,7 +6,7 @@ namespace Test.FAKECore
     public class when_checking_for_files
     {
         static ProjectSystem.ProjectSystem _project;
-        Because of = () => _project = new ProjectSystem.ProjectSystem("ProjectTestFiles/FakeLib.proj");
+        Because of = () => _project = new ProjectSystem.ProjectSystem("ProjectTestFiles/FakeLib.fsproj");
 
         It should_find_the_SpecsRemovement_helper_in_the_MSBuild_folder = () =>
             _project.Files.ShouldContain("MSBuild\\SpecsRemovement.fs");
