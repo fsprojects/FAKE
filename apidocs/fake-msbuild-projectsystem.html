@@ -100,27 +100,29 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '551', 551)" onmouseover="showTip(event, '551', 551)">
+          <code onmouseout="hideTip(event, '581', 581)" onmouseover="showTip(event, '581', 581)">
             CompareProjectsTo (...)
           </code>
-          <div class="tip" id="551">
+          <div class="tip" id="581">
             <strong>Signature:</strong>templateProject:string -&gt; projects:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Compares the given project files againts the template project and fails if any files are missing.</p>
+        <td class="xmldoc"><p>Compares the given project files againts the template project and fails if any files are missing.
+For F# projects it is also reporting unordered files.</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '552', 552)" onmouseover="showTip(event, '552', 552)">
+          <code onmouseout="hideTip(event, '582', 582)" onmouseover="showTip(event, '582', 582)">
             findMissingFiles (...)
           </code>
-          <div class="tip" id="552">
+          <div class="tip" id="582">
             <strong>Signature:</strong>templateProject:string -&gt; projects:seq&lt;string&gt; -&gt; seq&lt;ProjectComparison&gt;<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Compares the given project files againts the template project and returns which files are missing.</p>
+        <td class="xmldoc"><p>Compares the given project files againts the template project and returns which files are missing.
+For F# projects it is also reporting unordered files.</p>
 </td>
       </tr>
     </tbody>
