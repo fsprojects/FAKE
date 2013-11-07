@@ -75,10 +75,11 @@ let private replaceAccessKey key (text:string) =
     if isNullOrEmpty key then text else 
     text.Replace(key,"PRIVATEKEY")
 
-let private createNuspecFile parameters nuSpec =
-    // create .nuspec file
-    CopyFile parameters.WorkingDir nuSpec
-    let specFile = parameters.WorkingDir @@ (Path.GetFileName nuSpec) |> FullName
+let private createNuspecFile parameters nuSpec =    
+    let fi = fileInfo nuSpec
+    let specFile = parameters.WorkingDir @@ (fi.Name.Replace("nuspec","") + parameters.Version + ".nuspec") |> FullName
+    tracefn "Creating .nuspec file at %s" specFile
+    fi.CopyTo(specFile,true) |> ignore
 
     let dependencies =
         if parameters.Dependencies = [] then "" else
