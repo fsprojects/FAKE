@@ -82,14 +82,12 @@
 <span class="l">11: </span>
 <span class="l">12: </span>
 <span class="l">13: </span>
-<span class="l">14: </span>
 </pre>
 </td>
 <td class="snippet"><pre class="fssnip">
 <span class="k">open</span> <span class="i">OctoTools</span>
 
 <span class="i">Target</span> <span class="s">&quot;</span><span class="s">Release</span><span class="s">&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-
     <span class="k">let</span> <span class="i">release</span> <span class="o">=</span> { <span class="i">releaseOptions</span> <span class="k">with</span> <span class="i">Project</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">Order</span><span class="s"> </span><span class="s">Processor</span><span class="s">&quot;</span> }
 
     <span class="i">Octo</span> (<span class="k">fun</span> <span class="i">octoParams</span> <span class="k">-&gt;</span>
@@ -127,14 +125,12 @@
 <span class="l">12: </span>
 <span class="l">13: </span>
 <span class="l">14: </span>
-<span class="l">15: </span>
 </pre>
 </td>
 <td class="snippet"><pre class="fssnip">
 <span class="k">open</span> <span class="i">OctoTools</span>
 
 <span class="i">Target</span> <span class="s">&quot;</span><span class="s">ReleaseAndDeploy</span><span class="s">&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-
     <span class="k">let</span> <span class="i">release</span> <span class="o">=</span> { <span class="i">releaseOptions</span> <span class="k">with</span> <span class="i">Project</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">Order</span><span class="s"> </span><span class="s">Processor</span><span class="s">&quot;</span> }
     <span class="k">let</span> <span class="i">deploy</span>  <span class="o">=</span> { <span class="i">deployOptions</span> <span class="k">with</span> <span class="i">DeployTo</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">TestEnvironment</span><span class="s">&quot;</span> }
 
@@ -171,14 +167,16 @@
 <span class="l">12: </span>
 <span class="l">13: </span>
 <span class="l">14: </span>
+<span class="l">15: </span>
 </pre>
 </td>
 <td class="snippet"><pre class="fssnip">
 <span class="k">open</span> <span class="i">OctoTools</span>
 
 <span class="i">Target</span> <span class="s">&quot;</span><span class="s">PromoteRelease</span><span class="s">&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-
-    <span class="k">let</span> <span class="i">promote</span> <span class="o">=</span> { <span class="i">deployOptions</span> <span class="k">with</span> <span class="i">Project</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">Order</span><span class="s"> </span><span class="s">Processor</span><span class="s">&quot;</span>; <span class="i">DeployTo</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">UatEnvironment</span><span class="s">&quot;</span> }
+    <span class="k">let</span> <span class="i">promote</span> <span class="o">=</span> { <span class="i">deployOptions</span> <span class="k">with</span> 
+                      <span class="i">Project</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">Order</span><span class="s"> </span><span class="s">Processor</span><span class="s">&quot;</span>
+                      <span class="i">DeployTo</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">UatEnvironment</span><span class="s">&quot;</span> }
 
     <span class="i">Octo</span> (<span class="k">fun</span> <span class="i">octoParams</span> <span class="k">-&gt;</span>
         { <span class="i">octoParams</span> <span class="k">with</span>
