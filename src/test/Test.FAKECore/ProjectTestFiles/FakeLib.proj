@@ -90,6 +90,7 @@
     <Compile Include="XpkgHelper.fs" />
     <Compile Include="MSBuild\ProjectSystem.fs" />
     <Compile Include="MSBuild\SpecsRemovement.fs" />
+    <Compile Include="MSBuild\SpecsRemover.fs" > <!-- blab blb --></Compile>
     <Compile Include="Git\CommandHelper.fs" />
     <Compile Include="Git\Sha1.fs" />
     <Compile Include="Git\Repository.fs" />

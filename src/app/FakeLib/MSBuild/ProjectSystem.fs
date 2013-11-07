@@ -1,12 +1,21 @@
 module Fake.MsBuild.ProjectSystem
 
 open Fake
+open System.Xml
+open System.Xml.Linq
 
 type ProjectSystem(projectFile : string) = 
-    let file = 
-        ReadFileAsString projectFile
-        |> replace "\\" "/"
+    let document = 
+        ReadFileAsString projectFile        
+        |> XMLHelper.XMLDoc
 
-    member x.FileExistsInProject(path : string) = 
-        let path = replace "\\" "/" path
-        file.Contains (sprintf "<Compile Include=\"%s\" />" path)
+    let nsmgr = 
+        let nsmgr = new XmlNamespaceManager(document.NameTable)
+        nsmgr.AddNamespace("default", document.DocumentElement.NamespaceURI)
+        nsmgr
+
+    let files = 
+        let xpath = "/default:Project/default:ItemGroup/default:Compile/@Include"
+        [for node in document.SelectNodes(xpath,nsmgr) -> node.InnerText]
+
+    member x.Files = files
