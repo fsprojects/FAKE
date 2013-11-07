@@ -197,17 +197,18 @@ let build setParams project =
     let args = MSBuildDefaults |> setParams |> serializeMSBuildParams        
     let args = toParam project + " " + args + " " + errorLoggerParam
     tracefn "Building project: %s\n  %s %s" project msBuildExe args
-    if not (execProcess3 (fun info ->  
-        info.FileName <- msBuildExe
-        info.Arguments <- args) TimeSpan.MaxValue)
-    then
+    let exitCode =
+        execProcessAndReturnExitCode (fun info ->  
+            info.FileName <- msBuildExe
+            info.Arguments <- args) TimeSpan.MaxValue
+    if exitCode <> 0 then
         if Diagnostics.Debugger.IsAttached then Diagnostics.Debugger.Break()
         let errors =
             System.Threading.Thread.Sleep(200) // wait for the file to write
             if File.Exists MsBuildLogger.ErrorLoggerFile then
                 File.ReadAllLines(MsBuildLogger.ErrorLoggerFile) |> List.ofArray
             else []
-        let errorMessage = sprintf "Building %s failed." project
+        let errorMessage = sprintf "Building %s failed with exitcode %d." project exitCode
         raise (BuildException(errorMessage, errors))
     traceEndTask "MSBuild" project
 
