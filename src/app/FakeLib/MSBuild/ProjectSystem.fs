@@ -21,16 +21,7 @@ type ProjectSystem(projectFile : string) =
     member x.Files = files
 
 let findMissingFiles projectFile1 projectFile2 =
-    let proj1 = ProjectSystem projectFile1
-    let proj2 = ProjectSystem projectFile2
+    let files1 = (ProjectSystem projectFile1).Files |> Set.ofSeq
+    let files2 = (ProjectSystem projectFile2).Files |> Set.ofSeq
 
-    let missing1 = 
-        [for file in proj1.Files do
-            if proj2.Files |> List.exists ((=) file) |> not then
-                yield file]
-
-    let missing2 = 
-        [for file in proj2.Files do
-            if proj1.Files |> List.exists ((=) file) |> not then
-                yield file]
-    missing1,missing2
+    files2 |> Set.difference files1,files1 |> Set.difference files2
