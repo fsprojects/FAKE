@@ -67,6 +67,7 @@ Target "SetAssemblyInfo" (fun _ ->
     let common = [
          Attribute.Product "FAKE - F# Make"
          Attribute.Version buildVersion
+         Attribute.InformationalVersion buildVersion
          Attribute.FileVersion buildVersion]
     
     [Attribute.Title "FAKE - F# Make Command line tool"

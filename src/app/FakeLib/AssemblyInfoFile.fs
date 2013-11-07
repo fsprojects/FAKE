@@ -1,6 +1,10 @@
 ﻿/// Contains tasks to generate AssemblyInfo files for C# and F#
 module Fake.AssemblyInfoFile
 
+let internal assemblyVersionRegex = getRegEx @"([0-9]+.)+[0-9]+"
+
+let private NormalizeVersion version = assemblyVersionRegex.Match(version).Captures.[0].Value
+
 /// Represents AssemblyInfo attributes
 type Attribute(name,value,inNamespace) =
    member this.Name = name
@@ -29,13 +33,13 @@ type Attribute(name,value,inNamespace) =
    /// Creates an attribute which holds the trademark
    static member Trademark(value) = Attribute.StringAttribute("AssemblyTrademark",value,"System.Reflection")
    /// Creates an attribute which holds the assembly version
-   static member Version(value) = Attribute.StringAttribute("AssemblyVersion",value,"System.Reflection")
+   static member Version(value) = Attribute.StringAttribute("AssemblyVersion",NormalizeVersion value,"System.Reflection")
    /// Creates an attribute which holds the assembly key file
    static member KeyFile(value) = Attribute.StringAttribute("AssemblyKeyFile",value,"System.Reflection")
    /// Creates an attribute which holds the assembly key name
    static member KeyName(value) = Attribute.StringAttribute("AssemblyKeyName",value,"System.Reflection")
    /// Creates an attribute which holds the assembly file version
-   static member FileVersion(value) = Attribute.StringAttribute("AssemblyFileVersion",value,"System.Reflection")
+   static member FileVersion(value) = Attribute.StringAttribute("AssemblyFileVersion",NormalizeVersion value,"System.Reflection")
    /// Creates an attribute which holds an assembly information version
    static member InformationalVersion(value) = Attribute.StringAttribute("AssemblyInformationalVersion",value,"System.Reflection")
    /// Creates an attribute which holds the Guid
@@ -91,8 +95,7 @@ let CreateFSharpAssemblyInfo outputFileName attributes =
     ["namespace System"] @
     (getDependencies attributes |> List.map (sprintf "open %s")) @ [""] @
     (attributes |> Seq.toList |> List.map (fun (attr:Attribute) -> sprintf "[<assembly: %sAttribute(%s)>]" attr.Name attr.Value)) @
-    [""
-     "()"
+    ["()"
      ""
      "module internal AssemblyVersionInformation ="
      sprintf "    let [<Literal>] Version = %s" (getAssemblyVersionInfo attributes)]
