@@ -1,5 +1,5 @@
 /// Contains project file comparion tools for MSBuild project files.
-module Fake.MsBuild.ProjectSystem
+module Fake.MSBuild.ProjectSystem
 
 open Fake
 open System.Xml
@@ -26,6 +26,7 @@ type ProjectSystem(projectFileName : string) =
     /// The project file name
     member x.ProjectFileName = projectFileName
 
+/// Result type for project comparisons.
 type ProjectComparison = {
     TemplateProjectFileName: string
     ProjectFileName: string
@@ -38,18 +39,17 @@ let findMissingFiles templateProject projects =
 
     projects
     |> Seq.map (fun fileName -> ProjectSystem fileName)
-    |> Seq.toList
-    |> List.map (fun ps -> 
+    |> Seq.map (fun ps -> 
                       { TemplateProjectFileName = templateProject
                         ProjectFileName = ps.ProjectFileName
                         MissingFiles = Set.difference templateFiles (Set.ofSeq ps.Files)})
-    |> List.filter (fun pc -> Seq.isEmpty pc.MissingFiles |> not)
+    |> Seq.filter (fun pc -> Seq.isEmpty pc.MissingFiles |> not)
 
 /// Compares the given project files againts the template project and fails if any files are missing.
 let CompareProjectsTo templateProject projects =
     let errors =
         findMissingFiles templateProject projects
-        |> List.map (fun pc -> sprintf "Missing files in %s:\r\n%s" pc.ProjectFileName (toLines pc.MissingFiles))
+        |> Seq.map (fun pc -> sprintf "Missing files in %s:\r\n%s" pc.ProjectFileName (toLines pc.MissingFiles))
         |> toLines
 
     if isNotNullOrEmpty errors then
