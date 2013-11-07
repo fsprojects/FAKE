@@ -74,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="SemVerHelperSpecs.cs" />
+    <Compile Include="ProjectSystemSpecs.cs" />
     <Compile Include="TeamCitySpecs.cs" />
     <Compile Include="BasicStringHelperSpecs.cs" />
     <Compile Include="FileHandling\SubfolderSpecs.cs" />
@@ -248,6 +249,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="ReleaseNotes\SemVer.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ProjectTestFiles\FakeLib.proj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="TestData\fake_schema_2011_08.nuspec">

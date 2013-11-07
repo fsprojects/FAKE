@@ -90,6 +90,7 @@
     <Compile Include="XpkgHelper.fs" />
     <Compile Include="MSBuild\ProjectSystem.fs" />
     <Compile Include="MSBuild\SpecsRemovement.fs" />
+    <Compile Include="MSBuild\SpecsRemover.fs" > <!-- blab blb --></Compile>
     <Compile Include="Git\CommandHelper.fs" />
     <Compile Include="Git\Sha1.fs" />
     <Compile Include="Git\Repository.fs" />
@@ -130,6 +131,7 @@
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\..\..\lib\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Build" />
     <Reference Include="Microsoft.Build.Framework" />
     <Reference Include="Mono.Cecil">
       <HintPath>..\..\..\packages\Mono.Cecil.0.9.5.4\lib\net40\Mono.Cecil.dll</HintPath>
