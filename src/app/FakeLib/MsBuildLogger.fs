@@ -39,15 +39,16 @@ type ErrorLogger () =
     inherit MSBuildLogger()
 
     let errors = new List<BuildErrorEventArgs>()
-
     
     override this.RegisterEvents(eventSource) = 
+        eventSource.BuildStarted .Add(fun _ -> 
+            let fi = fileInfo ErrorLoggerFile
+            if fi.Exists then fi.Delete())
+
         eventSource.ErrorRaised.Add(fun a -> errors.Add a)
 
-        eventSource.BuildFinished.Add(fun a ->
-            let errMsg = 
-                errors
-                |> Seq.map errToStr
-                |> fun e -> String.Join(Environment.NewLine, e)
-                |> fun e -> if a.Succeeded then "" else e
-            File.WriteAllText(ErrorLoggerFile, errMsg))
+        eventSource.BuildFinished.Add(fun a ->            
+            errors
+            |> Seq.map errToStr
+            |> fun e -> String.Join(Environment.NewLine, e)
+            |> fun e -> if a.Succeeded then () else File.WriteAllText(ErrorLoggerFile, e))
