@@ -37,6 +37,7 @@ module Fake.ReleaseNotesHelper
 
 open System
 open System.Text.RegularExpressions
+open Fake.AssemblyInfoFile
 
 /// Contains the parsed information of the release notes text file.
 type ReleaseNotes =
@@ -57,11 +58,10 @@ type ReleaseNotes =
         Notes = notes }
 
 let private nugetRegex = getRegEx @"([0-9]+.)+[0-9]+(-[a-zA-Z]+)?(.[0-9]+)?"
-let private assemblyRegex = getRegEx @"([0-9]+.)+[0-9]+"
 
 /// Parse simple release notes sequence
 let private parseSimpleReleaseNotes line =
-    let assemblyVersion, nugetVersion = assemblyRegex.Match (line), nugetRegex.Match (line)
+    let assemblyVersion, nugetVersion = assemblyVersionRegex.Match (line), nugetRegex.Match (line)
     if not assemblyVersion.Success
     then failwith "Unable to parse valid Assembly version from release notes."
     let trimDot (s:string) = s.TrimEnd('.')
@@ -90,7 +90,7 @@ let private parseAllComplexReleaseNotes (text: seq<string>) =
     let rec loop releaseNotes text =
         match findNextNotesBlock text with
         | Some(header,(notes, rest)) ->        
-            let assemblyVer, nugetVer = assemblyRegex.Match header, nugetRegex.Match header
+            let assemblyVer, nugetVer = assemblyVersionRegex.Match header, nugetRegex.Match header
             if not assemblyVer.Success then failwith "Unable to parse valid Assembly version from release notes."
             let newReleaseNotes = ReleaseNotes.New(assemblyVer.Value,nugetVer.Value,notes |> List.filter isNotNullOrEmpty |> List.rev)
             loop (newReleaseNotes::releaseNotes) rest
