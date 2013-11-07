@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Fake.MsBuild;
 using Machine.Specifications;
-using Microsoft.FSharp.Collections;
 
 namespace Test.FAKECore
 {
@@ -11,16 +10,16 @@ namespace Test.FAKECore
     {
         const string Project = "ProjectTestFiles/FakeLib.proj";
         const string Project2 = "ProjectTestFiles/FakeLib2.proj";
-        static Tuple<string, FSharpSet<string>> _missing;
+        static ProjectSystem.ProjectComparison _missing;
 
         Because of = () => _missing = ProjectSystem.findMissingFiles(Project, new List<string> {Project2}).First();
 
         It should_detect_missing_files_in_project2 = () =>
         {
-            _missing.Item1.SequenceEqual(Project2);
-            _missing.Item2.Count.ShouldEqual(2);
-            _missing.Item2.ShouldContain("Git\\Merge.fs");
-            _missing.Item2.ShouldContain("Git\\Stash.fs");
+            _missing.Project.ShouldEqual(Project2);
+            _missing.MissingFiles.Count().ShouldEqual(2);
+            _missing.MissingFiles.ShouldContain("Git\\Merge.fs");
+            _missing.MissingFiles.ShouldContain("Git\\Stash.fs");
         };
     }
 
@@ -31,7 +30,7 @@ namespace Test.FAKECore
         static Exception _exn;
 
         Because of =
-            () => _exn = Catch.Exception(() => ProjectSystem.compareProjects(Project, new List<string> {Project2}));
+            () => _exn = Catch.Exception(() => ProjectSystem.CompareProjectsTo(Project, new List<string> { Project2 }));
 
         It should_fire_useful_exception = () =>
         {
@@ -45,15 +44,15 @@ namespace Test.FAKECore
     {
         const string Project = "ProjectTestFiles/FakeLib.proj";
         const string Project2 = "ProjectTestFiles/FakeLib2.proj";
-        static Tuple<string, FSharpSet<string>> _missing;
+        static ProjectSystem.ProjectComparison _missing;
 
         Because of = () => _missing = ProjectSystem.findMissingFiles(Project2, new List<string> {Project}).First();
 
         It should_detect_missing_files_in_project1 = () =>
         {
-            _missing.Item1.SequenceEqual(Project);
-            _missing.Item2.Count.ShouldEqual(1);
-            _missing.Item2.ShouldContain("Messages.fs");
+            _missing.Project.ShouldEqual(Project);
+            _missing.MissingFiles.Count().ShouldEqual(1);
+            _missing.MissingFiles.ShouldContain("Messages.fs");
         };
     }
 }

@@ -20,18 +20,25 @@ type ProjectSystem(projectFile : string) =
 
     member x.Files = files
 
+type ProjectComparison = {
+    TemplateProject: string
+    Project: string
+    MissingFiles: string seq
+}
+
 let findMissingFiles templateProject projects =
-    let projectFiles = projects |> Seq.map (fun f -> f,(ProjectSystem f).Files |> Set.ofSeq) |> Seq.toList
+    let projectFiles = 
+        projects |> Seq.map (fun f -> f,(ProjectSystem f).Files |> Set.ofSeq) |> Seq.toList
     let templateFiles = (ProjectSystem templateProject).Files |> Set.ofSeq
 
     projectFiles
-    |> List.map (fun (f,pf) -> f, pf |> Set.difference templateFiles)
-    |> List.filter (fun (f,m) -> Set.isEmpty m |> not)
+    |> List.map (fun (f,pf) -> { TemplateProject = templateProject; Project = f;  MissingFiles = Set.difference templateFiles pf})
+    |> List.filter (fun pc -> Seq.isEmpty pc.MissingFiles |> not)
 
-let compareProjects templateProject projects =
+let CompareProjectsTo templateProject projects =
     let errors =
         findMissingFiles templateProject projects
-        |> List.map (fun (f,m) -> sprintf "Missing files in %s:\r\n%s" f (toLines m))
+        |> List.map (fun pc -> sprintf "Missing files in %s:\r\n%s" pc.Project (toLines pc.MissingFiles))
         |> toLines
 
     if isNotNullOrEmpty errors then
