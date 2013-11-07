@@ -1,5 +1,5 @@
 /// Contains project file comparion tools for MSBuild project files.
-module Fake.MsBuild.ProjectSystem
+module Fake.MSBuild.ProjectSystem
 
 open Fake
 open System.Xml
@@ -26,6 +26,7 @@ type ProjectSystem(projectFileName : string) =
     /// The project file name
     member x.ProjectFileName = projectFileName
 
+/// Result type for project comparisons.
 type ProjectComparison = {
     TemplateProjectFileName: string
     ProjectFileName: string

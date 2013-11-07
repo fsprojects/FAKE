@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Fake.MsBuild;
+using Fake.MSBuild;
 using Machine.Specifications;
 
 namespace Test.FAKECore
