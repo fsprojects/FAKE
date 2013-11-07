@@ -33,15 +33,14 @@ So once you have created a project you are able to create a push a release into 
     open OctoTools
 
 	Target "Release" (fun _ ->
-		
 		let release = { releaseOptions with Project = "Order Processor" }
 
 		Octo (fun octoParams ->
 			{ octoParams with
-						 ToolPath = "./packages/octopustools"
-						 Server   = "http://your-octopus-server/api"
-						 ApiKey   = "YOUR-CI-API-KEY-HERE"
-						 Command  = CreateRelease (release, None) }
+				ToolPath = "./packages/octopustools"
+				Server   = "http://your-octopus-server/api"
+				ApiKey   = "YOUR-CI-API-KEY-HERE"
+				Command  = CreateRelease (release, None) }
 		)
 	)
 
@@ -56,16 +55,15 @@ This is often a good idea when you want your FAKE build script to continue on to
     open OctoTools
 
 	Target "ReleaseAndDeploy" (fun _ ->
-
 		let release = { releaseOptions with Project = "Order Processor" }
 		let deploy  = { deployOptions with DeployTo = "TestEnvironment" }
 
 		Octo (fun octoParams ->
 			{ octoParams with
-						 ToolPath = "./packages/octopustools"
-						 Server   = "http://your-octopus-server/api"
-						 ApiKey   = "YOUR-CI-API-KEY-HERE"
-						 Command  = CreateRelease (release, deploy) }
+				ToolPath = "./packages/octopustools"
+				Server   = "http://your-octopus-server/api"
+				ApiKey   = "YOUR-CI-API-KEY-HERE"
+				Command  = CreateRelease (release, deploy) }
 		)
 	)
 
@@ -78,14 +76,15 @@ Finally when you are absolutely happy that your release is good to go the next s
 	open OctoTools
 
 	Target "PromoteRelease" (fun _ ->
-		
-		let promote = { deployOptions with Project = "Order Processor"; DeployTo = "UatEnvironment" }
+		let promote = { deployOptions with 
+                          Project = "Order Processor"
+                          DeployTo = "UatEnvironment" }
 
 		Octo (fun octoParams ->
 			{ octoParams with
-						 ToolPath = "./packages/octopustools"
-						 Server   = "http://your-octopus-server/api"
-						 ApiKey   = "YOUR-CI-API-KEY-HERE"
-						 Command  = DeployRelease (promote) }
+				ToolPath = "./packages/octopustools"
+				Server   = "http://your-octopus-server/api"
+				ApiKey   = "YOUR-CI-API-KEY-HERE"
+				Command  = DeployRelease (promote) }
 		)
 	)
