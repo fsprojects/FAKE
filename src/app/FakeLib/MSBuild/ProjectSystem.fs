@@ -1,12 +1,14 @@
+/// Contains project file comparion tools for MSBuild project files.
 module Fake.MsBuild.ProjectSystem
 
 open Fake
 open System.Xml
 open System.Xml.Linq
 
-type ProjectSystem(projectFile : string) = 
+/// A small abstraction over MSBuild project files.
+type ProjectSystem(projectFileName : string) =
     let document = 
-        ReadFileAsString projectFile        
+        ReadFileAsString projectFileName        
         |> XMLHelper.XMLDoc
 
     let nsmgr = 
@@ -18,27 +20,36 @@ type ProjectSystem(projectFile : string) =
         let xpath = "/default:Project/default:ItemGroup/default:Compile/@Include"
         [for node in document.SelectNodes(xpath,nsmgr) -> node.InnerText]
 
+    /// All files which are in "Compile" sections
     member x.Files = files
 
+    /// The project file name
+    member x.ProjectFileName = projectFileName
+
 type ProjectComparison = {
-    TemplateProject: string
-    Project: string
+    TemplateProjectFileName: string
+    ProjectFileName: string
     MissingFiles: string seq
 }
 
+/// Compares the given project files againts the template project and returns which files are missing.
 let findMissingFiles templateProject projects =
-    let projectFiles = 
-        projects |> Seq.map (fun f -> f,(ProjectSystem f).Files |> Set.ofSeq) |> Seq.toList
-    let templateFiles = (ProjectSystem templateProject).Files |> Set.ofSeq
+    let templateFiles = Set.ofSeq (ProjectSystem templateProject).Files
 
-    projectFiles
-    |> List.map (fun (f,pf) -> { TemplateProject = templateProject; Project = f;  MissingFiles = Set.difference templateFiles pf})
+    projects
+    |> Seq.map (fun fileName -> ProjectSystem fileName)
+    |> Seq.toList
+    |> List.map (fun ps -> 
+                      { TemplateProjectFileName = templateProject
+                        ProjectFileName = ps.ProjectFileName
+                        MissingFiles = Set.difference templateFiles (Set.ofSeq ps.Files)})
     |> List.filter (fun pc -> Seq.isEmpty pc.MissingFiles |> not)
 
+/// Compares the given project files againts the template project and fails if any files are missing.
 let CompareProjectsTo templateProject projects =
     let errors =
         findMissingFiles templateProject projects
-        |> List.map (fun pc -> sprintf "Missing files in %s:\r\n%s" pc.Project (toLines pc.MissingFiles))
+        |> List.map (fun pc -> sprintf "Missing files in %s:\r\n%s" pc.ProjectFileName (toLines pc.MissingFiles))
         |> toLines
 
     if isNotNullOrEmpty errors then

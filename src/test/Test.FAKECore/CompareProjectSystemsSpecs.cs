@@ -16,7 +16,7 @@ namespace Test.FAKECore
 
         It should_detect_missing_files_in_project2 = () =>
         {
-            _missing.Project.ShouldEqual(Project2);
+            _missing.ProjectFileName.ShouldEqual(Project2);
             _missing.MissingFiles.Count().ShouldEqual(2);
             _missing.MissingFiles.ShouldContain("Git\\Merge.fs");
             _missing.MissingFiles.ShouldContain("Git\\Stash.fs");
@@ -50,7 +50,7 @@ namespace Test.FAKECore
 
         It should_detect_missing_files_in_project1 = () =>
         {
-            _missing.Project.ShouldEqual(Project);
+            _missing.ProjectFileName.ShouldEqual(Project);
             _missing.MissingFiles.Count().ShouldEqual(1);
             _missing.MissingFiles.ShouldContain("Messages.fs");
         };
