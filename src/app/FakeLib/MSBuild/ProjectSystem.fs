@@ -85,11 +85,14 @@ let findMissingFiles templateProject projects =
 
 /// Analyzes the given projects and adds all missing files to the project file.
 let FixMissingFiles templateProject projects =
-    let missing = findMissingFiles templateProject projects
-    missing
+    let addMissing (project:ProjectFile) missingFile = 
+        tracefn "Adding %s to %s" missingFile project.ProjectFileName
+        project.AddFile missingFile
+
+    findMissingFiles templateProject projects
     |> Seq.iter (fun pc -> 
             let project = ProjectFile.FromFile pc.ProjectFileName
-            let newProject = pc.MissingFiles |> Seq.fold (fun (project:ProjectFile) missingFile -> project.AddFile missingFile) project
+            let newProject = Seq.fold addMissing project pc.MissingFiles
             newProject.Save())
 
 /// Compares the given project files againts the template project and fails if any files are missing.
