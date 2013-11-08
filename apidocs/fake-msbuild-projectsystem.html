@@ -82,7 +82,7 @@
                 </tr>
                 <tr>
                     <td class="type-name">
-                        <a href="fake-msbuild-projectsystem-projectsystem.html">ProjectSystem</a>
+                        <a href="fake-msbuild-projectsystem-projectfile.html">ProjectFile</a>
                     </td>
                     <td class="xmldoc"><p>A small abstraction over MSBuild project files.</p>
 </td>
@@ -100,10 +100,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '561', 561)" onmouseover="showTip(event, '561', 561)">
+          <code onmouseout="hideTip(event, '544', 544)" onmouseover="showTip(event, '544', 544)">
             CompareProjectsTo (...)
           </code>
-          <div class="tip" id="561">
+          <div class="tip" id="544">
             <strong>Signature:</strong>templateProject:string -&gt; projects:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -114,15 +114,28 @@ For F# projects it is also reporting unordered files.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '562', 562)" onmouseover="showTip(event, '562', 562)">
+          <code onmouseout="hideTip(event, '545', 545)" onmouseover="showTip(event, '545', 545)">
             findMissingFiles (...)
           </code>
-          <div class="tip" id="562">
+          <div class="tip" id="545">
             <strong>Signature:</strong>templateProject:string -&gt; projects:seq&lt;string&gt; -&gt; seq&lt;ProjectComparison&gt;<br />
                       </div>
         </td>
         <td class="xmldoc"><p>Compares the given project files againts the template project and returns which files are missing.
 For F# projects it is also reporting unordered files.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '546', 546)" onmouseover="showTip(event, '546', 546)">
+            FixMissingFiles templateProject projects
+          </code>
+          <div class="tip" id="546">
+            <strong>Signature:</strong>templateProject:string -&gt; projects:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Analyzes the given projects and adds all missing files to the project file.</p>
 </td>
       </tr>
     </tbody>
