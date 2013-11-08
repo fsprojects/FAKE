@@ -1,5 +1,7 @@
 ﻿/// Contains helpers which allow to parse Release Notes text files. Either "simple" or "complex" format is accepted.
 ///
+/// ## Formats
+///
 /// ### Simple format
 ///
 ///     * 1.1.10 - Support for heterogeneous XML attributes. Make CsvFile re-entrant.
