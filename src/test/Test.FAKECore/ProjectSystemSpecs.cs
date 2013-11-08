@@ -5,8 +5,8 @@ namespace Test.FAKECore
 {
     public class when_checking_for_files
     {
-        static ProjectSystem.ProjectSystem _project;
-        Because of = () => _project = new ProjectSystem.ProjectSystem("ProjectTestFiles/FakeLib.fsproj");
+        static ProjectSystem.ProjectFile _project;
+        Because of = () => _project = ProjectSystem.ProjectFile.FromFile("ProjectTestFiles/FakeLib.fsproj");
 
         It should_find_the_SpecsRemovement_helper_in_the_MSBuild_folder = () =>
             _project.Files.ShouldContain("MSBuild\\SpecsRemovement.fs");
@@ -22,5 +22,18 @@ namespace Test.FAKECore
 
         It should_not_find_the_badadadum_helper = () =>
             _project.Files.ShouldNotContain("badadadumHelper.fs");
+    }
+
+    public class when_adding_files
+    {
+        static ProjectSystem.ProjectFile _project;
+        Establish context = () => _project = ProjectSystem.ProjectFile.FromFile("ProjectTestFiles/FakeLib.fsproj");
+        Because of = () => _project = _project.AddFile("badadadumHelper.fs");
+
+        It should_find_the_SpecsRemovement_helper_in_the_MSBuild_folder = () =>
+            _project.Files.ShouldContain("MSBuild\\SpecsRemovement.fs");
+
+        It should_find_the_badadadum_helper = () =>
+            _project.Files.ShouldContain("badadadumHelper.fs");
     }
 }
