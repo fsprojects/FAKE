@@ -83,7 +83,7 @@ let findMissingFiles templateProject projects =
               UnorderedFiles = unorderedFiles })
     |> Seq.filter (fun pc -> pc.HasErrors)
 
-/// Analyzes the given projects and adds all missing files to the project file.
+/// Compares the given projects to the template project and adds all missing files to the projects if needed.
 let FixMissingFiles templateProject projects =
     let addMissing (project:ProjectFile) missingFile = 
         tracefn "Adding %s to %s" missingFile project.ProjectFileName
