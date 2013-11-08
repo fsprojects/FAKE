@@ -27,6 +27,9 @@ type ProjectFile(projectFileName:string,documentContent : string) =
     /// Read a Project from a FileName
     static member FromFile(projectFileName) = new ProjectFile(projectFileName,ReadFileAsString projectFileName)
 
+    /// Saves the project file
+    member x.Save() = document.Save(projectFileName)
+
     /// Add a file to the Compile nodes
     member x.AddFile fileName =        
         let document = XMLHelper.XMLDoc documentContent // we create a copy and work immutable
@@ -79,6 +82,15 @@ let findMissingFiles templateProject projects =
               MissingFiles = missingFiles
               UnorderedFiles = unorderedFiles })
     |> Seq.filter (fun pc -> pc.HasErrors)
+
+/// Analyzes the given projects and adds all missing files to the project file.
+let FixMissingFiles templateProject projects =
+    let missing = findMissingFiles templateProject projects
+    missing
+    |> Seq.iter (fun pc -> 
+            let project = ProjectFile.FromFile pc.ProjectFileName
+            let newProject = pc.MissingFiles |> Seq.fold (fun (project:ProjectFile) missingFile -> project.AddFile missingFile) project
+            newProject.Save())
 
 /// Compares the given project files againts the template project and fails if any files are missing.
 /// For F# projects it is also reporting unordered files.
