@@ -240,6 +240,8 @@ let NuGet setParams nuspecFile =
             publish parameters 
             if parameters.ProjectFile <> null then 
                 publishSymbols parameters
+
+        DeleteFile nuspecFile
     with
     | exn -> 
         (if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message else exn.Message)        
