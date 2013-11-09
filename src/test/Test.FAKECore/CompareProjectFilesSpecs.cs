@@ -23,6 +23,22 @@ namespace Test.FAKECore
         };
     }
 
+    public class when_searching_for_duplicate_files
+    {
+        const string Project = "ProjectTestFiles/FakeLib.fsproj";
+        const string Project2 = "ProjectTestFiles/FakeLib5.fsproj";
+        static ProjectSystem.ProjectComparison _missing;
+
+        Because of = () => _missing = ProjectSystem.findMissingFiles(Project, new List<string> { Project2 }).First();
+
+        It should_detect_missing_files_in_project2 = () =>
+        {
+            _missing.ProjectFileName.ShouldEqual(Project2);
+            _missing.DuplicateFiles.Count().ShouldEqual(1);
+            _missing.DuplicateFiles.ShouldContain("Git\\CommitMessage.fs");
+        };
+    }
+
     public class when_comparing_with_missing_files
     {
         const string Project = "ProjectTestFiles/FakeLib.fsproj";
@@ -56,6 +72,23 @@ namespace Test.FAKECore
             _exn.Message.ShouldContain("ProjectTestFiles/FakeLib2.fsproj");
             _exn.Message.ShouldContain("MSBuild\\SpecsRemover.fs");
             _exn.Message.ShouldContain("MSBuild\\SpecsRemovement.fs");
+        };
+    }
+
+    public class when_comparing_with_duplictae_files
+    {
+        const string Project = "ProjectTestFiles/FakeLib.fsproj";
+        const string Project2 = "ProjectTestFiles/FakeLib5.fsproj";
+        static Exception _exn;
+
+        Because of =
+            () => _exn = Catch.Exception(() => ProjectSystem.CompareProjectsTo(Project, new List<string> { Project2 }));
+
+        It should_fire_useful_exception = () =>
+        {
+            _exn.Message.ShouldContain("Duplicate");
+            _exn.Message.ShouldContain("ProjectTestFiles/FakeLib5.fsproj");
+            _exn.Message.ShouldContain("Git\\CommitMessage.fs");
         };
     }
 

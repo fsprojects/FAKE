@@ -253,6 +253,9 @@
     <Content Include="ReleaseNotes\SemVer.md">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="ProjectTestFiles\FakeLib5.fsproj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="ProjectTestFiles\FakeLib.fsproj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

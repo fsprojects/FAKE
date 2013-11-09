@@ -51,9 +51,10 @@ type ProjectComparison =
     { TemplateProjectFileName: string
       ProjectFileName: string
       MissingFiles: string seq
+      DuplicateFiles: string seq
       UnorderedFiles: string seq }   
     
-      member this.HasErrors = not (Seq.isEmpty this.MissingFiles && Seq.isEmpty this.UnorderedFiles)
+      member this.HasErrors = not (Seq.isEmpty this.MissingFiles && Seq.isEmpty this.UnorderedFiles && Seq.isEmpty this.DuplicateFiles)
 
 /// Compares the given project files againts the template project and returns which files are missing.
 /// For F# projects it is also reporting unordered files.
@@ -67,10 +68,19 @@ let findMissingFiles templateProject projects =
     |> Seq.map (fun fileName -> ProjectFile.FromFile fileName)
     |> Seq.map (fun ps ->             
             let missingFiles = Set.difference templateFilesSet (Set.ofSeq ps.Files)
+            let duplicateFiles = 
+                [ let d = System.Collections.Generic.Dictionary()
+                  for i in ps.Files do
+                      match d.TryGetValue(i) with
+                      | false,_    -> d.[i] <- false         // first observance
+                      | true,false -> d.[i] <- true; yield i // second observance
+                      | true,true  -> ()                     // already seen at least twice
+                ]
             let unorderedFiles =
                 if not <| isFSharpProject templateProject then [] else
                 if not <| Seq.isEmpty missingFiles then [] else
                 let remainingFiles = ps.Files |> List.filter (fun file -> Set.contains file templateFilesSet)
+                if remainingFiles.Length <> templateFiles.Length then [] else
 
                 templateFiles 
                 |> List.zip remainingFiles
@@ -80,6 +90,7 @@ let findMissingFiles templateProject projects =
             { TemplateProjectFileName = templateProject
               ProjectFileName = ps.ProjectFileName
               MissingFiles = missingFiles
+              DuplicateFiles = duplicateFiles
               UnorderedFiles = unorderedFiles })
     |> Seq.filter (fun pc -> pc.HasErrors)
 
@@ -101,10 +112,14 @@ let CompareProjectsTo templateProject projects =
     let errors =
         findMissingFiles templateProject projects
         |> Seq.map (fun pc -> 
-                if Seq.isEmpty pc.UnorderedFiles then
-                    sprintf "Missing files in %s:\r\n%s" pc.ProjectFileName (toLines pc.MissingFiles)
-                else
-                    sprintf "Unordered files in %s:\r\n%s" pc.ProjectFileName (toLines pc.UnorderedFiles))
+                seq {
+                    if Seq.isEmpty pc.MissingFiles |> not then
+                        yield sprintf "Missing files in %s:\r\n%s" pc.ProjectFileName (toLines pc.MissingFiles)
+                    if Seq.isEmpty pc.UnorderedFiles |> not then
+                        yield sprintf "Unordered files in %s:\r\n%s" pc.ProjectFileName (toLines pc.UnorderedFiles)
+                    if Seq.isEmpty pc.DuplicateFiles |> not then
+                        yield sprintf "Duplicate files in %s:\r\n%s" pc.ProjectFileName (toLines pc.DuplicateFiles)}
+                    |> separated "\r\n")
         |> toLines
 
     if isNotNullOrEmpty errors then
