@@ -54,13 +54,13 @@ type ProjectFile(projectFileName:string,documentContent : string) =
     member x.Files = getCompileNodes document |> List.map getFileAttribute
 
     /// Finds duplicate files which are in "Compile" sections
-    member x.FindDuplicateFiles() = 
-        [let d = Dictionary()
-         for i in x.Files do
-            match d.TryGetValue(i) with
-            | false,_    -> d.[i] <- false         // first observance
-            | true,false -> d.[i] <- true; yield i // second observance
-            | true,true  -> ()                     // already seen at least twice
+    member this.FindDuplicateFiles() = 
+        [let dict = Dictionary()
+         for file in this.Files do
+            match dict.TryGetValue file with
+            | false,_    -> dict.[file] <- false            // first observance
+            | true,false -> dict.[file] <- true; yield file // second observance
+            | true,true  -> ()                              // already seen at least twice
         ]
 
     member x.RemoveDuplicates() =
