@@ -4,7 +4,7 @@ using Machine.Specifications;
 
 namespace Test.FAKECore
 {
-    public class when_fixing_missing_files_in_project2
+    public class when_fixing_missing_files
     {
         const string Project = "ProjectTestFiles/FakeLib.fsproj";
         const string Project4 = "ProjectTestFiles/FakeLib4.fsproj";
@@ -21,6 +21,22 @@ namespace Test.FAKECore
             _project.Files.ShouldContain("Git\\Stash.fs");
         };
 
+        static ProjectSystem.ProjectFile _project;
+    }
+
+    public class when_fixing_duplicate_files
+    {
+        const string Project = "ProjectTestFiles/FakeLib.fsproj";
+        const string Project6 = "ProjectTestFiles/FakeLib6.fsproj";
+
+        Because of = () =>
+        {
+            ProjectSystem.FixProjectFiles(Project, new List<string> { Project6 });
+            _project = ProjectSystem.ProjectFile.FromFile(Project6);
+        };
+
+        It should_have_removed_the_duplicate_files = () => _project.FindDuplicateFiles().ShouldBeEmpty();
+        
         static ProjectSystem.ProjectFile _project;
     }
 }

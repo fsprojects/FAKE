@@ -40,8 +40,30 @@ type ProjectFile(projectFileName:string,documentContent : string) =
         node.ParentNode.AppendChild(newNode) |> ignore
         new ProjectFile(projectFileName,document.OuterXml)
 
+    /// Removes a file from the Compile nodes
+    member x.RemoveFile fileName =        
+        let document = XMLHelper.XMLDoc documentContent // we create a copy and work immutable
+        let node = getCompileNodes document |> List.rev |> List.filter (fun node -> node.Attributes.["Include"].InnerText = fileName) |> Seq.last
+        node.ParentNode.RemoveChild node |> ignore
+
+        new ProjectFile(projectFileName,document.OuterXml)
+
     /// All files which are in "Compile" sections
     member x.Files = files
+
+    /// Finds duplicate files which are in "Compile" sections
+    member x.FindDuplicateFiles() = 
+        [let d = System.Collections.Generic.Dictionary()
+         for i in x.Files do
+            match d.TryGetValue(i) with
+            | false,_    -> d.[i] <- false         // first observance
+            | true,false -> d.[i] <- true; yield i // second observance
+            | true,true  -> ()                     // already seen at least twice
+        ]
+
+    member x.RemoveDuplicates() =
+        x.FindDuplicateFiles()
+        |> List.fold (fun (project:ProjectFile) duplicate -> project.RemoveFile duplicate) x
 
     /// The project file name
     member x.ProjectFileName = projectFileName
@@ -68,14 +90,7 @@ let findMissingFiles templateProject projects =
     |> Seq.map (fun fileName -> ProjectFile.FromFile fileName)
     |> Seq.map (fun ps ->             
             let missingFiles = Set.difference templateFilesSet (Set.ofSeq ps.Files)
-            let duplicateFiles = 
-                [ let d = System.Collections.Generic.Dictionary()
-                  for i in ps.Files do
-                      match d.TryGetValue(i) with
-                      | false,_    -> d.[i] <- false         // first observance
-                      | true,false -> d.[i] <- true; yield i // second observance
-                      | true,true  -> ()                     // already seen at least twice
-                ]
+                
             let unorderedFiles =
                 if not <| isFSharpProject templateProject then [] else
                 if not <| Seq.isEmpty missingFiles then [] else
@@ -90,7 +105,7 @@ let findMissingFiles templateProject projects =
             { TemplateProjectFileName = templateProject
               ProjectFileName = ps.ProjectFileName
               MissingFiles = missingFiles
-              DuplicateFiles = duplicateFiles
+              DuplicateFiles = ps.FindDuplicateFiles()
               UnorderedFiles = unorderedFiles })
     |> Seq.filter (fun pc -> pc.HasErrors)
 
@@ -105,6 +120,20 @@ let FixMissingFiles templateProject projects =
             let project = ProjectFile.FromFile pc.ProjectFileName
             let newProject = Seq.fold addMissing project pc.MissingFiles
             newProject.Save())
+
+/// It removes duplicate files from the project files.
+let RemoveDuplicateFiles projects =    
+    projects
+    |> Seq.iter (fun fileName ->
+            let project = ProjectFile.FromFile fileName
+            let newProject = project.RemoveDuplicates()
+            newProject.Save())
+
+/// Compares the given projects to the template project and adds all missing files to the projects if needed.
+/// It also removes duplicate files from the project files.
+let FixProjectFiles templateProject projects =
+    FixMissingFiles templateProject projects
+    RemoveDuplicateFiles projects
 
 /// Compares the given project files againts the template project and fails if any files are missing.
 /// For F# projects it is also reporting unordered files.
