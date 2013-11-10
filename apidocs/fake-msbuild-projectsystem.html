@@ -100,10 +100,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '546', 546)" onmouseover="showTip(event, '546', 546)">
+          <code onmouseout="hideTip(event, '576', 576)" onmouseover="showTip(event, '576', 576)">
             CompareProjectsTo (...)
           </code>
-          <div class="tip" id="546">
+          <div class="tip" id="576">
             <strong>Signature:</strong>templateProject:string -&gt; projects:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -114,10 +114,10 @@ For F# projects it is also reporting unordered files.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '547', 547)" onmouseover="showTip(event, '547', 547)">
+          <code onmouseout="hideTip(event, '577', 577)" onmouseover="showTip(event, '577', 577)">
             findMissingFiles (...)
           </code>
-          <div class="tip" id="547">
+          <div class="tip" id="577">
             <strong>Signature:</strong>templateProject:string -&gt; projects:seq&lt;string&gt; -&gt; seq&lt;ProjectComparison&gt;<br />
                       </div>
         </td>
@@ -128,14 +128,41 @@ For F# projects it is also reporting unordered files.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '548', 548)" onmouseover="showTip(event, '548', 548)">
+          <code onmouseout="hideTip(event, '578', 578)" onmouseover="showTip(event, '578', 578)">
             FixMissingFiles templateProject projects
           </code>
-          <div class="tip" id="548">
+          <div class="tip" id="578">
             <strong>Signature:</strong>templateProject:string -&gt; projects:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc"><p>Compares the given projects to the template project and adds all missing files to the projects if needed.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '579', 579)" onmouseover="showTip(event, '579', 579)">
+            FixProjectFiles templateProject projects
+          </code>
+          <div class="tip" id="579">
+            <strong>Signature:</strong>templateProject:string -&gt; projects:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Compares the given projects to the template project and adds all missing files to the projects if needed.
+It also removes duplicate files from the project files.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '580', 580)" onmouseover="showTip(event, '580', 580)">
+            RemoveDuplicateFiles projects
+          </code>
+          <div class="tip" id="580">
+            <strong>Signature:</strong>projects:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>It removes duplicate files from the project files.</p>
 </td>
       </tr>
     </tbody>
