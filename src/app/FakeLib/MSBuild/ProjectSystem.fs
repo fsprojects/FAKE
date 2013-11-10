@@ -2,6 +2,7 @@
 module Fake.MSBuild.ProjectSystem
 
 open Fake
+open System.Collections.Generic
 open System.Xml
 open System.Xml.Linq
 open XMLHelper
@@ -19,17 +20,13 @@ type ProjectFile(projectFileName:string,documentContent : string) =
     let getCompileNodes (document:XmlDocument) =         
         [for node in document.SelectNodes(compileNodesXPath,nsmgr) -> node]
 
-    let getFileAttributes (document:XmlDocument) = 
-        let xpath = compileNodesXPath + "/@Include"
-        [for attr in document.SelectNodes(xpath,nsmgr) -> attr]
+    let getFileAttribute (node:XmlNode) = node.Attributes.["Include"].InnerText
 
-    let files = getFileAttributes document |> List.map (fun attr -> attr.InnerText)
-    
     /// Read a Project from a FileName
     static member FromFile(projectFileName) = new ProjectFile(projectFileName,ReadFileAsString projectFileName)
 
     /// Saves the project file
-    member x.Save() = document.Save(projectFileName)
+    member x.Save(?fileName) = document.Save(defaultArg fileName projectFileName)
 
     /// Add a file to the Compile nodes
     member x.AddFile fileName =        
@@ -46,7 +43,7 @@ type ProjectFile(projectFileName:string,documentContent : string) =
         let document = XMLDoc documentContent // we create a copy and work immutable
         let node = 
             getCompileNodes document 
-            |> List.filter (fun node -> node.Attributes.["Include"].InnerText = fileName) 
+            |> List.filter (fun node -> getFileAttribute node = fileName) 
             |> Seq.last  // we remove the last one to make easier to remove duplicates
 
         node.ParentNode.RemoveChild node |> ignore
@@ -54,11 +51,11 @@ type ProjectFile(projectFileName:string,documentContent : string) =
         new ProjectFile(projectFileName,document.OuterXml)
 
     /// All files which are in "Compile" sections
-    member x.Files = files
+    member x.Files = getCompileNodes document |> List.map getFileAttribute
 
     /// Finds duplicate files which are in "Compile" sections
     member x.FindDuplicateFiles() = 
-        [let d = System.Collections.Generic.Dictionary()
+        [let d = Dictionary()
          for i in x.Files do
             match d.TryGetValue(i) with
             | false,_    -> d.[i] <- false         // first observance
