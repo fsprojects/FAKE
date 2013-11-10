@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="FixProjectFileSpecs.cs" />
     <Compile Include="CompareProjectFilesSpecs.cs" />
+    <Compile Include="Globbing\TestSample3\GlobbingSample3Specs.cs" />
     <Compile Include="SemVerHelperSpecs.cs" />
     <Compile Include="ProjectSystemSpecs.cs" />
     <Compile Include="TeamCitySpecs.cs" />
@@ -85,8 +86,8 @@
     <Compile Include="FileHandling\BaseFunctions.cs" />
     <Compile Include="FileHandling\FileComparisonSpecs.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="Globbing\Directories\GlobbingOfDirectoriesSpecs.cs" />
-    <Compile Include="Globbing\Excludes\GlobbingOfDirectoriesSpecs.cs" />
+    <Compile Include="Globbing\TestSample1\GlobbingSample1Specs.cs" />
+    <Compile Include="Globbing\TestSample2\GlobbingSample2Specs.cs" />
     <Compile Include="ILMerge\ILMergeSpecs.cs" />
     <Compile Include="MSBuild\FileExtractionSpecs.cs" />
     <Compile Include="NAVFiles\NAVDateSpecs.cs" />
@@ -208,10 +209,13 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
-    <None Include="Globbing\Directories\SampleApp.zip">
+    <None Include="Globbing\TestSample3\Sample3.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Globbing\Excludes\TFSSample.zip">
+    <None Include="Globbing\TestSample1\SampleApp.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Globbing\TestSample2\TFSSample.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="NAVFiles\Codeunit_1.txt">

@@ -3,7 +3,7 @@ using Fake;
 using Machine.Specifications;
 using Test.FAKECore.FileHandling;
 
-namespace Test.FAKECore.Globbing.Excludes
+namespace Test.FAKECore.Globbing.TestSample2
 {
     public class when_extracting_sample_zip : BaseFunctions
     {
@@ -12,7 +12,7 @@ namespace Test.FAKECore.Globbing.Excludes
         Establish context = () =>
         {
             FileHelper.CleanDir(TempDir);
-            ZipHelper.Unzip(TempDir, "Globbing/Excludes/TFSSample.zip");
+            ZipHelper.Unzip(TempDir, "Globbing/TestSample2/TFSSample.zip");
         };
     }
 
@@ -20,11 +20,7 @@ namespace Test.FAKECore.Globbing.Excludes
     {
         static string[] Files;
 
-        Because of = () =>
-        {
-            var includes = FileSetHelper.Include("./**/packages.config");
-            Files = FileSetHelper.ScanImmediately(includes).ToArray();
-        };
+        Because of = () => Files = FileSystem.Search.find("./**/packages.config").ToArray();
 
         It should_match_2_files = () => Files.Length.ShouldEqual(2);
     }
