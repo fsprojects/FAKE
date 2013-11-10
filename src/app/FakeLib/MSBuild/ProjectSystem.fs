@@ -4,10 +4,11 @@ module Fake.MSBuild.ProjectSystem
 open Fake
 open System.Xml
 open System.Xml.Linq
+open XMLHelper
 
 /// A small abstraction over MSBuild project files.
 type ProjectFile(projectFileName:string,documentContent : string) =
-    let document = XMLHelper.XMLDoc documentContent
+    let document = XMLDoc documentContent
 
     let nsmgr = 
         let nsmgr = new XmlNamespaceManager(document.NameTable)
@@ -32,7 +33,7 @@ type ProjectFile(projectFileName:string,documentContent : string) =
 
     /// Add a file to the Compile nodes
     member x.AddFile fileName =        
-        let document = XMLHelper.XMLDoc documentContent // we create a copy and work immutable
+        let document = XMLDoc documentContent // we create a copy and work immutable
         let node = getCompileNodes document |> Seq.last
         let newNode = node.CloneNode(false) :?> XmlElement
         newNode.SetAttribute("Include",fileName)
@@ -42,8 +43,12 @@ type ProjectFile(projectFileName:string,documentContent : string) =
 
     /// Removes a file from the Compile nodes
     member x.RemoveFile fileName =        
-        let document = XMLHelper.XMLDoc documentContent // we create a copy and work immutable
-        let node = getCompileNodes document |> List.rev |> List.filter (fun node -> node.Attributes.["Include"].InnerText = fileName) |> Seq.last
+        let document = XMLDoc documentContent // we create a copy and work immutable
+        let node = 
+            getCompileNodes document 
+            |> List.filter (fun node -> node.Attributes.["Include"].InnerText = fileName) 
+            |> Seq.last  // we remove the last one to make easier to remove duplicates
+
         node.ParentNode.RemoveChild node |> ignore
 
         new ProjectFile(projectFileName,document.OuterXml)
@@ -76,7 +81,10 @@ type ProjectComparison =
       DuplicateFiles: string seq
       UnorderedFiles: string seq }   
     
-      member this.HasErrors = not (Seq.isEmpty this.MissingFiles && Seq.isEmpty this.UnorderedFiles && Seq.isEmpty this.DuplicateFiles)
+      member this.HasErrors = 
+        not (Seq.isEmpty this.MissingFiles && 
+             Seq.isEmpty this.UnorderedFiles && 
+             Seq.isEmpty this.DuplicateFiles)
 
 /// Compares the given project files againts the template project and returns which files are missing.
 /// For F# projects it is also reporting unordered files.
@@ -148,7 +156,7 @@ let CompareProjectsTo templateProject projects =
                         yield sprintf "Unordered files in %s:\r\n%s" pc.ProjectFileName (toLines pc.UnorderedFiles)
                     if Seq.isEmpty pc.DuplicateFiles |> not then
                         yield sprintf "Duplicate files in %s:\r\n%s" pc.ProjectFileName (toLines pc.DuplicateFiles)}
-                    |> separated "\r\n")
+                    |> toLines)
         |> toLines
 
     if isNotNullOrEmpty errors then
