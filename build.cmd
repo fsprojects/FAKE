@@ -1,10 +1,21 @@
 @echo off
 
+SET MinimalFAKEVersion=639
+SET FAKEVersion=1
+cls
+
+if exist tools\FAKE\tools\PatchVersion.txt ( 
+    FOR /F "tokens=*" %%i in (tools\FAKE\tools\PatchVersion.txt) DO (SET FAKEVersion=%%i)    
+)
+
+if %MinimalFAKEVersion% lss %FAKEVersion% goto Build
+if %MinimalFAKEVersion%==%FAKEVersion% goto Build
+
+"tools\nuget\nuget.exe" "install" "FAKE" "-OutputDirectory" "tools" "-ExcludeVersion" "-Prerelease"
+
 :Build
 cls
-if not exist tools\FAKE\tools\Fake.exe ( 
-	"tools\nuget\nuget.exe" "install" "FAKE" "-OutputDirectory" "tools" "-ExcludeVersion" "-Prerelease"
-)
+
 if not exist tools\FSharp.Formatting\lib\net40\FSharp.CodeFormat.dll ( 
 	"tools\nuget\nuget.exe" "install" "FSharp.Formatting" "-OutputDirectory" "tools" "-ExcludeVersion"
 )
