@@ -174,6 +174,9 @@ Target "CreateNuGet" (fun _ ->
             CopyTo nugetToolsDir additionalFiles
         !! (nugetToolsDir @@ "*.pdb") |> DeleteFiles
 
+        (SemVerHelper.parse buildVersion).Patch.ToString()
+        |> WriteStringToFile false (nugetToolsDir @@ "PatchVersion.txt")
+
         NuGet (fun p -> 
             {p with
                 Authors = authors
