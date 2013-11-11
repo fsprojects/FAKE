@@ -35,10 +35,10 @@ let rec wixDir fileFilter asSubDir (directoryInfo:DirectoryInfo) =
 
     let compo =
       if files = "" then "" else
-      sprintf "<Component Id=\"%s\" Guid=\"%s\">%s</Component>" directoryInfo.Name (Guid.NewGuid().ToString()) files
+      sprintf "<Component Id=\"%s\" Guid=\"%s\">\r\n%s\r\n</Component>\r\n" directoryInfo.Name (Guid.NewGuid().ToString()) files
 
     if asSubDir then
-        sprintf "<Directory Id=\"%s\" Name=\"%s\">%s%s</Directory>" directoryInfo.Name directoryInfo.Name dirs compo
+        sprintf "<Directory Id=\"%s\" Name=\"%s\">\r\n%s%s\r\n</Directory>\r\n" directoryInfo.Name directoryInfo.Name dirs compo
     else
         sprintf "%s%s" dirs compo
 
@@ -50,7 +50,7 @@ let rec wixComponentRefs (directoryInfo:DirectoryInfo) =
         |> Seq.map wixComponentRefs
         |> toLines
 
-    if (filesInDir directoryInfo).Length > 0 then sprintf "%s<ComponentRef Id=\"%s\"/>" compos directoryInfo.Name else compos
+    if (filesInDir directoryInfo).Length > 0 then sprintf "%s<ComponentRef Id=\"%s\"/>\r\n" compos directoryInfo.Name else compos
 
 open System
 
