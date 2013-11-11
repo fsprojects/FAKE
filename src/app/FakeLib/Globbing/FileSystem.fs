@@ -60,7 +60,7 @@ type FileIncludes =
     member this.GetEnumerator() =
         let files = 
             seq { for pattern in this.Includes do
-                    yield! find pattern }
+                    yield! search this.BaseDirectory pattern }
         files.GetEnumerator()
                  
     member this.GetEnumerator() = (this :> IEnumerable<string>).GetEnumerator() :> System.Collections.IEnumerator
