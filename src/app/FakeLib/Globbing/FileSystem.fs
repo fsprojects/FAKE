@@ -61,9 +61,16 @@ type FileIncludes =
 
   interface IEnumerable<string> with 
     member this.GetEnumerator() =
+        let excludes = 
+            seq { for pattern in this.Excludes do
+                    yield! search this.BaseDirectory pattern }
+            |> Set.ofSeq
+
         let files = 
             seq { for pattern in this.Includes do
                     yield! search this.BaseDirectory pattern }
+            |> Seq.filter (fun x -> not(Set.contains x excludes))
+        
         files.GetEnumerator()
                  
     member this.GetEnumerator() = (this :> IEnumerable<string>).GetEnumerator() :> System.Collections.IEnumerator
