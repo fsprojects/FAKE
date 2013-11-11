@@ -20,7 +20,7 @@ namespace Test.FAKECore.Globbing.TestSample4
 
     public class when_scanning_with_asterisk_in_the_middle_and_dot : when_extracting_zip
     {
-        Because of = () => Files = FileSystem.find("temptest/**/Specs1.*.testending").ToArray();
+        Because of = () => Files = FileSystem.Include("temptest/**/Specs1.*.testending").ToArray();
 
         It should_find_the_file =
             () => Files[0].ShouldEndWith("Folder1\\Subfolder1\\SubFolder2\\TextFiles\\Specs1.Awesome.testending");
@@ -30,7 +30,7 @@ namespace Test.FAKECore.Globbing.TestSample4
 
     public class when_scanning_with_asterisk_in_the_middle : when_extracting_zip
     {
-        Because of = () => Files = FileSystem.find("temptest/**/Specs*.testending").ToArray();
+        Because of = () => Files = FileSystem.Include("temptest/**/Specs*.testending").ToArray();
 
         It should_find_the_dirst_file =
             () => Files[0].ShouldEndWith("Folder1\\Subfolder1\\Specs2.Awesome.testending");
@@ -43,7 +43,7 @@ namespace Test.FAKECore.Globbing.TestSample4
 
     public class when_scanning_with_two_asterisks_in_the_middle : when_extracting_zip
     {
-        Because of = () => Files = FileSystem.find("temptest/**/Specs*.*.testending").ToArray();
+        Because of = () => Files = FileSystem.Include("temptest/**/Specs*.*.testending").ToArray();
 
         It should_find_the_dirst_file =
             () => Files[0].ShouldEndWith("Folder1\\Subfolder1\\Specs2.Awesome.testending");
@@ -56,7 +56,7 @@ namespace Test.FAKECore.Globbing.TestSample4
 
     public class when_scanning_with_two_asterisks_and_backslashes_in_the_middle : when_extracting_zip
     {
-        Because of = () => Files = FileSystem.find("temptest\\**\\Specs*.*.testending").ToArray();
+        Because of = () => Files = FileSystem.Include("temptest\\**\\Specs*.*.testending").ToArray();
 
         It should_find_the_dirst_file =
             () => Files[0].ShouldEndWith("Folder1\\Subfolder1\\Specs2.Awesome.testending");

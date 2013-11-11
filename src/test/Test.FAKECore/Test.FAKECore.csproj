@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="FixProjectFileSpecs.cs" />
     <Compile Include="CompareProjectFilesSpecs.cs" />
+    <Compile Include="Globbing\TestSample1\FileSetSample1Specs.cs" />
     <Compile Include="Globbing\TestSample4\GlobbingSample4Specs.cs" />
     <Compile Include="Globbing\TestSample3\GlobbingSample3Specs.cs" />
     <Compile Include="SemVerHelperSpecs.cs" />

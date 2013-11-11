@@ -33,12 +33,8 @@ let rec internal buildPaths acc (input : SearchOption list) =
     | FilePattern(pattern) :: t -> 
         Seq.collect (fun dir -> Directory.EnumerateFiles(dir, pattern)) acc
         |> Seq.toList
-        
-let getBaseDir = lazy (
-    let assembly = Reflection.Assembly.GetEntryAssembly()
-    if assembly = null then FullName "." else Path.GetDirectoryName assembly.Location)
          
-let search baseDir (input : string) =
+let private search baseDir (input : string) =
     let filePattern = Path.GetFileName(input)
     input.Split([|'/';'\\'|], StringSplitOptions.RemoveEmptyEntries)
     |> Seq.map (function
@@ -48,13 +44,20 @@ let search baseDir (input : string) =
     |> Seq.toList
     |> buildPaths [baseDir]
 
-let find pattern = search (getBaseDir.Force()) pattern
-
 /// Internal representation of a file set
 type FileIncludes =
   { BaseDirectory: string
     Includes: string list
     Excludes: string list }
+
+  /// Adds the given pattern to the file includes
+  member this.And pattern = { this with Includes = pattern::this.Includes}
+
+  /// Ignores files with the given pattern
+  member this.ButNot pattern = { this with Excludes = pattern::this.Excludes}
+
+  /// Sets a directory as BaseDirectory.
+  member this.SetBaseDirectory(dir:string) = {this with BaseDirectory = dir.TrimEnd(directorySeparator.[0])}
 
   interface IEnumerable<string> with 
     member this.GetEnumerator() =
@@ -69,13 +72,12 @@ type FileIncludes =
 let Include x = { BaseDirectory = DefaultBaseDir; Includes = [x]; Excludes = []}
 
 /// Sets a directory as baseDirectory for fileIncludes. 
-let SetBaseDir (dir:string) (fileIncludes:FileIncludes)  = {fileIncludes with BaseDirectory = dir.TrimEnd(directorySeparator.[0])}
-  
+let SetBaseDir (dir:string) (fileIncludes:FileIncludes) = fileIncludes.SetBaseDirectory dir
 /// Add Include operator
-let inline (++) (x:FileIncludes) pattern = { x with Includes = pattern :: x.Includes }
+let inline (++) (x:FileIncludes) pattern = x.And pattern
 
 /// Exclude operator
-let inline (--) (x:FileIncludes) pattern = { x with Excludes = pattern :: x.Excludes }
+let inline (--) (x:FileIncludes) pattern = x.ButNot pattern
 
 /// Includes a single pattern and scans the files - !! x = AllFilesMatching x
 let inline (!!) x = Include x

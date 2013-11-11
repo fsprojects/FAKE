@@ -20,7 +20,7 @@ namespace Test.FAKECore.Globbing.TestSample2
     {
         static string[] Files;
 
-        Because of = () => Files = FileSystem.find("./**/packages.config").ToArray();
+        Because of = () => Files = FileSystem.Include("./**/packages.config").ToArray();
 
         It should_match_2_files = () => Files.Length.ShouldEqual(2);
     }
