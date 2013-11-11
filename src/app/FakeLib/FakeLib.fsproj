@@ -60,6 +60,7 @@
     <Compile Include="AssemblyInfoFile.fs" />
     <Compile Include="AssemblyInfoHelper.fs" />
     <Compile Include="ServiceControllerHelper.fs" />
+    <Compile Include="Globbing\FileSystem.fs" />
     <Compile Include="FileSet.fs" />
     <Compile Include="ProcessHelper.fs" />
     <Compile Include="FXCopHelper.fs" />
@@ -158,6 +159,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
