@@ -16,7 +16,7 @@ let wixFile (fileInfo:FileInfo) =
 let getFilesAsWiXString files =
     files
       |> Seq.map (fileInfo >> wixFile)
-      |> separated " "
+      |> toLines
 
 /// Creates recursive WiX directory and file tags from the given DirectoryInfo
 let rec wixDir fileFilter asSubDir (directoryInfo:DirectoryInfo) =
@@ -24,14 +24,14 @@ let rec wixDir fileFilter asSubDir (directoryInfo:DirectoryInfo) =
       directoryInfo
         |> subDirectories
         |> Seq.map (wixDir fileFilter true)
-        |> separated ""
+        |> toLines
 
     let files =
       directoryInfo
         |> filesInDir
         |> Seq.filter fileFilter
         |> Seq.map wixFile
-        |> separated ""
+        |> toLines
 
     let compo =
       if files = "" then "" else
@@ -48,7 +48,7 @@ let rec wixComponentRefs (directoryInfo:DirectoryInfo) =
       directoryInfo
         |> subDirectories
         |> Seq.map wixComponentRefs
-        |> separated ""
+        |> toLines
 
     if (filesInDir directoryInfo).Length > 0 then sprintf "%s<ComponentRef Id=\"%s\"/>" compos directoryInfo.Name else compos
 
