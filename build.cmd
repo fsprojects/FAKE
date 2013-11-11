@@ -1,6 +1,6 @@
 @echo off
 
-SET MinimalFAKEVersion=639
+SET MinimalFAKEVersion=654
 SET FAKEVersion=1
 cls
 

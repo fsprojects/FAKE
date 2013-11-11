@@ -16,6 +16,7 @@ open Fake
 open FSharp.Literate
 open Fake.Git
 open FSharp.MetadataFormat
+open Fake.FileSystem
  
 // properties 
 let projectName = "FAKE"
