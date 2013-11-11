@@ -90,3 +90,7 @@ let inline (--) (x:FileIncludes) pattern = x.ButNot pattern
 
 /// Includes a single pattern and scans the files - !! x = AllFilesMatching x
 let inline (!!) x = Include x
+
+/// Include prefix operator
+[<Obsolete("!+ is obsolete - use !! instead")>]
+let inline (!+) x = Include x
