@@ -61,6 +61,7 @@ type FileIncludes =
 
   interface IEnumerable<string> with 
     member this.GetEnumerator() =
+        let hashSet = HashSet()
         let excludes = 
             seq { for pattern in this.Excludes do
                     yield! search this.BaseDirectory pattern }
@@ -70,6 +71,7 @@ type FileIncludes =
             seq { for pattern in List.rev this.Includes do
                     yield! search this.BaseDirectory pattern }
             |> Seq.filter (fun x -> not(Set.contains x excludes))
+            |> Seq.filter (fun x -> hashSet.Add x)
         
         files.GetEnumerator()
                  
