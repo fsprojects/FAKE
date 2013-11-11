@@ -26,6 +26,20 @@ namespace Test.FAKECore.Globbing.TestSample1
         It should_match_1_file = () => Files.Count().ShouldEqual(1);
     }
 
+
+    public class when_using_mupltiple_includes : when_extracting_zip
+    {
+        Because of = () => Files = 
+            FileSystem
+            .Include("temptest/SampleApp/bin/SampleApp.dll")
+            .And("temptest/SampleApp/bin/ilmerge.exclude")
+            .ToArray();
+
+        It should_match_2_files = () => Files.Length.ShouldEqual(2);
+        It should_find_ilmerge = () => Files.Skip(1).First().ShouldEndWith("ilmerge.exclude");
+        It should_find_sample_app = () => Files.First().ShouldEndWith("SampleApp.dll");
+    }
+
     public class when_excluding_all_files : when_extracting_zip
     {
         Because of = () => Files =

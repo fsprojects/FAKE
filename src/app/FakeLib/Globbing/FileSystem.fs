@@ -67,7 +67,7 @@ type FileIncludes =
             |> Set.ofSeq
 
         let files = 
-            seq { for pattern in this.Includes do
+            seq { for pattern in List.rev this.Includes do
                     yield! search this.BaseDirectory pattern }
             |> Seq.filter (fun x -> not(Set.contains x excludes))
         
