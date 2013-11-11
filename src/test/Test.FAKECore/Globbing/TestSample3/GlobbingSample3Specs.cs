@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Fake;
 using Machine.Specifications;
 using Test.FAKECore.FileHandling;
