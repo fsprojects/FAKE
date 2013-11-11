@@ -60,8 +60,8 @@
     <Compile Include="AssemblyInfoFile.fs" />
     <Compile Include="AssemblyInfoHelper.fs" />
     <Compile Include="ServiceControllerHelper.fs" />
-    <Compile Include="Globbing\FileSystem.fs" />
     <Compile Include="FileSet.fs" />
+    <Compile Include="Globbing\FileSystem.fs" />
     <Compile Include="ProcessHelper.fs" />
     <Compile Include="FXCopHelper.fs" />
     <Compile Include="NCoverHelper.fs" />
