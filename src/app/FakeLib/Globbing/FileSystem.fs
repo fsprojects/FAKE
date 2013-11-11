@@ -34,9 +34,9 @@ let rec internal buildPaths acc (input : SearchOption list) =
         Seq.collect (fun dir -> Directory.EnumerateFiles(dir, pattern)) acc
         |> Seq.toList
         
-let getBaseDir () = 
+let getBaseDir = lazy (
     let assembly = Reflection.Assembly.GetEntryAssembly()
-    if assembly = null then FullName "." else Path.GetDirectoryName assembly.Location
+    if assembly = null then FullName "." else Path.GetDirectoryName assembly.Location)
          
 let search baseDir (input : string) =
     let filePattern = Path.GetFileName(input)
@@ -48,7 +48,7 @@ let search baseDir (input : string) =
     |> Seq.toList
     |> buildPaths [baseDir]
 
-let find pattern = search (getBaseDir()) pattern
+let find pattern = search (getBaseDir.Force()) pattern
 
 /// Internal representation of a file set
 type FileIncludes =
