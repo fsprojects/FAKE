@@ -60,9 +60,9 @@
 
 
 
-<h1>RegistryHelper</h1>
+<h1>FileSystem</h1>
 <div class="xmldoc">
-<p>Contains function which allow to retrieve information from the registry.</p>
+<p>Experimental Globbing - be careful we will break this.</p>
 </div>
 
 <!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
@@ -75,9 +75,9 @@
         <tbody>
                 <tr>
                     <td class="type-name">
-                        <a href="fake-registryhelper-registrybasekey.html">RegistryBaseKey</a>
+                        <a href="fake-filesystem-fileincludes.html">FileIncludes</a>
                     </td>
-                    <td class="xmldoc"><p>Registry base keys.</p>
+                    <td class="xmldoc"><p>Internal representation of a file set</p>
 </td>
                 </tr>
         </tbody>
@@ -93,27 +93,102 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '325', 325)" onmouseover="showTip(event, '325', 325)">
-            getRegistryKey baseKey subKey
+          <code onmouseout="hideTip(event, '95', 95)" onmouseover="showTip(event, '95', 95)">
+            ( -- ) x pattern
           </code>
-          <div class="tip" id="325">
-            <strong>Signature:</strong>baseKey:RegistryBaseKey -&gt; subKey:string -&gt; RegistryKey<br />
+          <div class="tip" id="95">
+            <strong>Signature:</strong>x:FileIncludes -&gt; pattern:string -&gt; FileIncludes<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Gets a registy key.</p>
+        <td class="xmldoc"><p>Exclude operator</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '326', 326)" onmouseover="showTip(event, '326', 326)">
-            getRegistryValue baseKey subKey value
+          <code onmouseout="hideTip(event, '96', 96)" onmouseover="showTip(event, '96', 96)">
+            ( !! ) x
           </code>
-          <div class="tip" id="326">
-            <strong>Signature:</strong>baseKey:RegistryBaseKey -&gt; subKey:string -&gt; value:string -&gt; string<br />
+          <div class="tip" id="96">
+            <strong>Signature:</strong>x:string -&gt; FileIncludes<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Gets a registy value as string</p>
+        <td class="xmldoc"><p>Includes a single pattern and scans the files - !! x = AllFilesMatching x</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '97', 97)" onmouseover="showTip(event, '97', 97)">
+            ( ++ ) x pattern
+          </code>
+          <div class="tip" id="97">
+            <strong>Signature:</strong>x:FileIncludes -&gt; pattern:string -&gt; FileIncludes<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Add Include operator</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '98', 98)" onmouseover="showTip(event, '98', 98)">
+            find pattern
+          </code>
+          <div class="tip" id="98">
+            <strong>Signature:</strong>pattern:string -&gt; string list<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '99', 99)" onmouseover="showTip(event, '99', 99)">
+            getBaseDir ()
+          </code>
+          <div class="tip" id="99">
+            <strong>Signature:</strong>unit -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '100', 100)" onmouseover="showTip(event, '100', 100)">
+            Include x
+          </code>
+          <div class="tip" id="100">
+            <strong>Signature:</strong>x:string -&gt; FileIncludes<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Include files</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '101', 101)" onmouseover="showTip(event, '101', 101)">
+            search baseDir input
+          </code>
+          <div class="tip" id="101">
+            <strong>Signature:</strong>baseDir:string -&gt; input:string -&gt; string list<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '102', 102)" onmouseover="showTip(event, '102', 102)">
+            SetBaseDir dir fileIncludes
+          </code>
+          <div class="tip" id="102">
+            <strong>Signature:</strong>dir:string -&gt; fileIncludes:FileIncludes -&gt; FileIncludes<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Sets a directory as baseDirectory for fileIncludes.</p>
 </td>
       </tr>
     </tbody>

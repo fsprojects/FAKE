@@ -45,16 +45,16 @@ This tutorial shows how to create a (very simple) custom task in C#.</p>
 
 <p>Open Visual Studio and create a new C# class library called my MyCustomTask and create a class called RandomNumberTask:</p>
 
-<pre lang="csharp">using System;
+<pre lang="csharp"><span class="k">using</span> System;
 
-namespace MyCustomTask
+<span class="k">namespace</span> MyCustomTask
 {
-    public class RandomNumberTask
+    <span class="k">public</span> <span class="k">class</span> RandomNumberTask
     {
-        public static int RandomNumber(int min, int max)
+        <span class="k">public</span> <span class="k">static</span> <span class="k">int</span> RandomNumber(<span class="k">int</span> min, <span class="k">int</span> max)
         {
-            var random = new Random();
-            return random.Next(min, max);
+            <span class="k">var</span> random = <span class="k">new</span> Random();
+            <span class="k">return</span> random.Next(min, max);
         }
     }
 }</pre>
