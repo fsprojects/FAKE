@@ -53,4 +53,17 @@ namespace Test.FAKECore.Globbing.TestSample4
 
         It should_match_2_files = () => Files.Length.ShouldEqual(2);
     }
+
+    public class when_scanning_with_two_asterisks_and_backslashes_in_the_middle : when_extracting_zip
+    {
+        Because of = () => Files = FileSystem.find("temptest\\**\\Specs*.*.testending").ToArray();
+
+        It should_find_the_dirst_file =
+            () => Files[0].ShouldEndWith("Folder1\\Subfolder1\\Specs2.Awesome.testending");
+
+        It should_find_the_second_file =
+            () => Files[1].ShouldEndWith("Folder1\\Subfolder1\\SubFolder2\\TextFiles\\Specs1.Awesome.testending");
+
+        It should_match_2_files = () => Files.Length.ShouldEqual(2);
+    }
 }
