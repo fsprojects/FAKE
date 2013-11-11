@@ -66,7 +66,34 @@ namespace Test.FAKECore.Globbing.TestSample1
 
     public class when_scanning_for_any_dll_in_a_special_basefolder : when_extracting_zip
     {
-        Because of = () => Files = FileSystem.Include("**/*.dll").SetBaseDirectory("temptest/").ToArray();
+        Because of = () => Files = 
+            FileSystem
+            .Include("**/*.dll")
+            .SetBaseDirectory("temptest/")
+            .ToArray();
+
+        It should_find_sample_app = () => Files.First().ShouldEndWith("SampleApp.dll");
+        It should_match_1_file = () => Files.Length.ShouldEqual(1);
+    }
+
+    public class when_scanning_for_any_dll_and_starting_in_a_wrong_subfolder : when_extracting_zip
+    {
+        Because of = () => Files =
+            FileSystem
+            .Include("**/*.dll")
+            .SetBaseDirectory("temptest/SampleApp/obj")
+            .ToArray();
+
+        It should_not_find_a_file = () => Files.Length.ShouldEqual(0);
+    }
+
+    public class when_scanning_for_any_dll_and_starting_in_a_subfolder_and_going_up : when_extracting_zip
+    {
+        Because of = () => Files =
+            FileSystem
+            .Include("../**/*.dll")
+            .SetBaseDirectory("temptest/SampleApp/obj")
+            .ToArray();
 
         It should_find_sample_app = () => Files.First().ShouldEndWith("SampleApp.dll");
         It should_match_1_file = () => Files.Length.ShouldEqual(1);
