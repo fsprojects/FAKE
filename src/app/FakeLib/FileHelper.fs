@@ -398,3 +398,10 @@ let WriteConfigFile configFileName parameters =
 
     for (key,value) in parameters do
         streamWriter.WriteLine("{0};{1}", key, value)
+
+/// Replaces the templates with the given replacements
+/// ## Parameters
+///
+///  - `replacements` - A sequence of tuples with the pattern and the replacement.
+///  - `files` - The files to process.
+let ReplaceInFiles replacements files = processTemplates replacements files
