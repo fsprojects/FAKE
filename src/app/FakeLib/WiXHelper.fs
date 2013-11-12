@@ -6,6 +6,7 @@ open System
 open System.IO
 
 let mutable internal fileCount = 0
+let mutable internal dirCount = 0
 
 /// Creates a WiX File tag from the given FileInfo
 let wixFile (fileInfo:FileInfo) =
@@ -20,6 +21,7 @@ let getFilesAsWiXString files =
 
 /// Creates recursive WiX directory and file tags from the given DirectoryInfo
 let rec wixDir fileFilter asSubDir (directoryInfo:DirectoryInfo) =
+    dirCount <- dirCount + 1
     let dirs =
       directoryInfo
         |> subDirectories
@@ -38,7 +40,7 @@ let rec wixDir fileFilter asSubDir (directoryInfo:DirectoryInfo) =
       sprintf "<Component Id=\"%s\" Guid=\"%s\">\r\n%s\r\n</Component>\r\n" directoryInfo.Name (Guid.NewGuid().ToString()) files
 
     if asSubDir then
-        sprintf "<Directory Id=\"%s\" Name=\"%s\">\r\n%s%s\r\n</Directory>\r\n" directoryInfo.Name directoryInfo.Name dirs compo
+        sprintf "<Directory Id=\"di_%d\" Name=\"%s\">\r\n%s%s\r\n</Directory>\r\n" dirCount directoryInfo.Name dirs compo
     else
         sprintf "%s%s" dirs compo
 
