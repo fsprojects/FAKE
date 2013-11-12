@@ -30,7 +30,7 @@ let setDirectoryReadOnly readOnly (dir:DirectoryInfo) =
 let SetDirReadOnly readOnly dir =
     recursively (setDirectoryReadOnly readOnly) (fun file -> file.IsReadOnly <- readOnly) dir
   
-/// Sets all files in the directory readonly.
+/// Sets all given files readonly.
 let SetReadOnly readOnly (files: string seq) =
     files
     |> Seq.iter (fun file ->
