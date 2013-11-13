@@ -111,6 +111,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "octopusdeploy", "octopusdep
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assemblyinfo", "assemblyinfo", "{64547E3E-F74E-48C2-8091-795A6C04B99C}"
 	ProjectSection(SolutionItems) = preProject
+		help\pics\assemblyinfo\generated.png = help\pics\assemblyinfo\generated.png
 		help\pics\assemblyinfo\result.png = help\pics\assemblyinfo\result.png
 		help\pics\assemblyinfo\solutioninfo.png = help\pics\assemblyinfo\solutioninfo.png
 	EndProjectSection
