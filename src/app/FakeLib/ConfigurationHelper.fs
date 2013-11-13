@@ -4,6 +4,7 @@ module Fake.ConfigurationHelper
     
 open System.Xml
 open System.Xml.Linq
+open System.Xml.Xsl
 
 /// Reads a config file into an XmlDocument.
 /// ## Parameters
@@ -63,3 +64,18 @@ let updateAppSetting key value fileName =
 ///  - `fileName` - The file name of the config file.     
 let updateConnectionString connectionStringKey value fileName =
     updateConfigSetting fileName ("//connectionStrings/add[@name='" + connectionStringKey + "']") "connectionString" value
+
+/// Applies a Xsl Stylesheet to a config file and writes it back.
+/// ## Parameters
+///  - `xsl` - The Xsl stylesheet to apply.
+///  - `fileName` - The file name of the config file.
+///
+/// ## Sample
+///
+///     applyXslOnConfig (navServicePath @@ DEV.xsl) (navServicePath @@ "CustomSettings.config")
+let applyXslOnConfig (xsl:string) fileName =
+    let xslDoc = new XslCompiledTransform()
+    xslDoc.Load xsl
+    readConfig fileName
+    |> Fake.XMLHelper.XslTransform xslDoc
+    |> writeConfig fileName
