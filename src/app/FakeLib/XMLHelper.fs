@@ -148,7 +148,7 @@ let XmlPokeNS (fileName:string) namespaces xpath value =
     XPathReplaceNS xpath value namespaces doc
     |> fun x -> x.Save fileName
 
-/// Loads the given text into a XslCompiledTransform
+/// Loads the given text into a XslCompiledTransform.
 let XslTransformer text =
     if isNullOrEmpty text then null else
     let xslCompiledTransform = new XslCompiledTransform()
@@ -156,7 +156,11 @@ let XslTransformer text =
     |> xslCompiledTransform.Load
     xslCompiledTransform
 
-/// Transforms a XmlDocument using a XslCompiledTransform
+/// Transforms a XmlDocument using a XslCompiledTransform.
+/// ## Parameters
+/// 
+///  - `xsl` - The XslCompiledTransform which should be applied.
+///  - `doc` - The XmlDocument to transform.
 let XslTransform (xsl:XslCompiledTransform) (doc:XmlDocument) =
     use memoryStream = new MemoryStream()
     use textWriter = new XmlTextWriter(memoryStream, new UTF8Encoding(false))
@@ -170,11 +174,15 @@ let XslTransform (xsl:XslCompiledTransform) (doc:XmlDocument) =
     |> outputDoc.LoadXml
     outputDoc
 
-/// Transforms a XML file using a XSL stylesheet file
-let XmlTransform (stylesheet:string) (fileName:string) =
+/// Transforms a XML file using a XSL stylesheet file.
+/// ## Parameters
+/// 
+///  - `stylesheetUri` - The Uri for the XSL stylesheet file.
+///  - `fileName` - The XML file to transform.
+let XmlTransform (stylesheetUri:string) (fileName:string) =
     let doc = new XmlDocument()
     doc.Load fileName
     let xsl = new XslCompiledTransform()
-    xsl.Load stylesheet
+    xsl.Load stylesheetUri
     XslTransform xsl doc
     |> fun x -> x.Save fileName
