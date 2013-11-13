@@ -1,4 +1,5 @@
-﻿/// Contains tasks to generate AssemblyInfo files for C# and F#
+﻿/// Contains tasks to generate AssemblyInfo files for C# and F#.
+/// There is also a tutorial about the [AssemblyInfo tasks](../assemblyinfo.html) available.
 module Fake.AssemblyInfoFile
 
 let internal assemblyVersionRegex = getRegEx @"([0-9]+.)+[0-9]+"
