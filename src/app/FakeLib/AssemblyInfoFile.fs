@@ -38,6 +38,8 @@ type Attribute(name,value,inNamespace) =
    static member KeyFile(value) = Attribute.StringAttribute("AssemblyKeyFile",value,"System.Reflection")
    /// Creates an attribute which holds the assembly key name
    static member KeyName(value) = Attribute.StringAttribute("AssemblyKeyName",value,"System.Reflection")
+   /// Creates an attribute which holds the "InternalVisibleTo" data
+   static member InternalsVisibleTo(value) = Attribute.StringAttribute("InternalsVisibleTo",value,"System.Runtime.CompilerServices")
    /// Creates an attribute which holds the assembly file version
    static member FileVersion(value) = Attribute.StringAttribute("AssemblyFileVersion",NormalizeVersion value,"System.Reflection")
    /// Creates an attribute which holds an assembly information version
