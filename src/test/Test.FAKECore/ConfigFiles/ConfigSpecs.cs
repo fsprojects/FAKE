@@ -39,4 +39,18 @@ namespace Test.FAKECore.ConfigHandling
         It should_equal_the_target_text =
             () => File.ReadAllText(OriginalFile).ShouldContain(Guid.ToString());
     }
+
+    public class when_applying_xslt_in_configuration
+    {
+        const string OriginalFile = "ConfigFiles/SmallConfig.txt";
+        const string TransformFile = "ConfigFiles/ConfigTransforms.xslt";
+
+        Because of = () => ConfigurationHelper.applyXslOnConfig(TransformFile, OriginalFile);
+
+        It should_equal_the_changed_database_text =
+            () => File.ReadAllText(OriginalFile).ShouldContain("XsltDatabaseNameChanged");
+
+        It should_equal_the_changed_connectionstring_text =
+            () => File.ReadAllText(OriginalFile).ShouldContain("XsltDatabaseConnectionStringChanged");
+    }
 }
