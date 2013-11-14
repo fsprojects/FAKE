@@ -1,5 +1,4 @@
-﻿[<AutoOpen>]
-/// Contains tasks to run [MSTest](http://en.wikipedia.org/wiki/Visual_Studio_Unit_Testing_Framework/) unit tests.
+﻿/// Contains tasks to run [MSTest](http://en.wikipedia.org/wiki/Visual_Studio_Unit_Testing_Framework/) unit tests.
 module Fake.MSTest
 
 open System
