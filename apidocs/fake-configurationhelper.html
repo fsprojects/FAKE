@@ -78,10 +78,35 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '120', 120)" onmouseover="showTip(event, '120', 120)">
+          <code onmouseout="hideTip(event, '119', 119)" onmouseover="showTip(event, '119', 119)">
+            applyXslOnConfig xsl fileName
+          </code>
+          <div class="tip" id="119">
+            <strong>Signature:</strong>xsl:string -&gt; fileName:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Applies a Xsl Stylesheet to a config file and writes it back.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>xsl</code> - The Xsl stylesheet to apply.</li>
+<li><code>fileName</code> - The file name of the config file.</li>
+</ul>
+
+<h2>Sample</h2>
+
+<pre><code>applyXslOnConfig (navServicePath @@ DEV.xsl) (navServicePath @@ "CustomSettings.config")
+</code></pre>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '121', 121)" onmouseover="showTip(event, '121', 121)">
             readConfig fileName
           </code>
-          <div class="tip" id="120">
+          <div class="tip" id="121">
             <strong>Signature:</strong>fileName:string -&gt; XmlDocument<br />
                       </div>
         </td>
@@ -97,10 +122,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '121', 121)" onmouseover="showTip(event, '121', 121)">
+          <code onmouseout="hideTip(event, '122', 122)" onmouseover="showTip(event, '122', 122)">
             updateAppSetting key value fileName
           </code>
-          <div class="tip" id="121">
+          <div class="tip" id="122">
             <strong>Signature:</strong>key:string -&gt; value:string -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
@@ -123,10 +148,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '122', 122)" onmouseover="showTip(event, '122', 122)">
+          <code onmouseout="hideTip(event, '123', 123)" onmouseover="showTip(event, '123', 123)">
             updateConfig (...)
           </code>
-          <div class="tip" id="122">
+          <div class="tip" id="123">
             <strong>Signature:</strong>xpath:string -&gt; attribute:string -&gt; value:string -&gt; config:XmlDocument -&gt; XmlDocument<br />
                       </div>
         </td>
@@ -145,10 +170,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '123', 123)" onmouseover="showTip(event, '123', 123)">
+          <code onmouseout="hideTip(event, '124', 124)" onmouseover="showTip(event, '124', 124)">
             updateConfigSetting (...)
           </code>
-          <div class="tip" id="123">
+          <div class="tip" id="124">
             <strong>Signature:</strong>fileName:string -&gt; xpath:string -&gt; attribute:string -&gt; value:string -&gt; unit<br />
                       </div>
         </td>
@@ -167,10 +192,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '124', 124)" onmouseover="showTip(event, '124', 124)">
+          <code onmouseout="hideTip(event, '125', 125)" onmouseover="showTip(event, '125', 125)">
             updateConnectionString (...)
           </code>
-          <div class="tip" id="124">
+          <div class="tip" id="125">
             <strong>Signature:</strong>connectionStringKey:string -&gt; value:string -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
@@ -188,10 +213,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '125', 125)" onmouseover="showTip(event, '125', 125)">
+          <code onmouseout="hideTip(event, '126', 126)" onmouseover="showTip(event, '126', 126)">
             writeConfig fileName config
           </code>
-          <div class="tip" id="125">
+          <div class="tip" id="126">
             <strong>Signature:</strong>fileName:string -&gt; config:XmlDocument -&gt; unit<br />
                       </div>
         </td>

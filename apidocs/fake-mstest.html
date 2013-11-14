@@ -60,9 +60,9 @@
 
 
 
-<h1>RegAsmHelper</h1>
+<h1>MSTest</h1>
 <div class="xmldoc">
-<p>Contains a task which can be used to run regasm .NET assembly</p>
+<p>Contains tasks to run <a href="http://en.wikipedia.org/wiki/Visual_Studio_Unit_Testing_Framework/">MSTest</a> unit tests.</p>
 </div>
 
 <!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
@@ -75,9 +75,9 @@
         <tbody>
                 <tr>
                     <td class="type-name">
-                        <a href="fake-regasmhelper-regasmparams.html">RegAsmParams</a>
+                        <a href="fake-mstest-mstestparams.html">MSTestParams</a>
                     </td>
-                    <td class="xmldoc"><p>RegAsm parameter type</p>
+                    <td class="xmldoc"><p>Parameter type to configure the MSTest.exe</p>
 </td>
                 </tr>
         </tbody>
@@ -93,34 +93,42 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '297', 297)" onmouseover="showTip(event, '297', 297)">
-            RegAsm setParams lib
+          <code onmouseout="hideTip(event, '228', 228)" onmouseover="showTip(event, '228', 228)">
+            MSTest setParams assemblies
           </code>
-          <div class="tip" id="297">
-            <strong>Signature:</strong>setParams:(RegAsmParams -&gt; RegAsmParams) -&gt; lib:string -&gt; unit<br />
+          <div class="tip" id="228">
+            <strong>Signature:</strong>setParams:(MSTestParams -&gt; MSTestParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Runs regasm on the given lib</p>
+        <td class="xmldoc"><p>Runs MSTest command line tool on a group of assemblies.</p>
 
 <h2>Parameters</h2>
 
 <ul>
-<li><code>setParams</code> - Function used to manipulate the default RegAsm parameters.</li>
-<li><code>lib</code> - The assembly file name.</li>
+<li><code>setParams</code> - Function used to manipulate the default MSTestParams value.</li>
+<li><code>assemblies</code> - Sequence of one or more assemblies containing Microsoft Visual Studio Unit Test Framework unit tests.</li>
 </ul>
+
+<h2>Sample usage</h2>
+
+<pre><code>Target "Test" (fun _ -&gt;
+    !! (testDir + @"\Test.*.dll") 
+      |&gt; MSTest (fun p -&gt; { p with Category = "group1" })
+)
+</code></pre>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '298', 298)" onmouseover="showTip(event, '298', 298)">
-            RegAsmDefaults 
+          <code onmouseout="hideTip(event, '229', 229)" onmouseover="showTip(event, '229', 229)">
+            MSTestDefaults 
           </code>
-          <div class="tip" id="298">
-            <strong>Signature:</strong>RegAsmParams<br />
+          <div class="tip" id="229">
+            <strong>Signature:</strong>MSTestParams<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>RegAsm default params</p>
+        <td class="xmldoc"><p>MSTest default parameters</p>
 </td>
       </tr>
     </tbody>
