@@ -66,7 +66,20 @@ let ProgramFilesX86 =
 /// System root environment variable. Typically "C:\Windows"
 let SystemRoot = environVar "SystemRoot"
 
-let isUnix = System.Environment.OSVersion.Platform = System.PlatformID.Unix
+/// Determines if the current system is an Unix system
+let isUnix = Environment.OSVersion.Platform = PlatformID.Unix
+
+/// Determines if the current system is a MacOs system
+let isMacOS = Environment.OSVersion.Platform = PlatformID.MacOSX
+
+/// Determines if the current system is a Linux system
+let isLinux =
+    int System.Environment.OSVersion.Platform |> fun p ->
+        (p = 4) || (p = 6) || (p = 128)
+
+/// Determines if the current system is a mono system
+/// Todo: Detect mono on windows
+let isMono = isLinux || isUnix || isMacOS
 
 let platformInfoAction (psi:ProcessStartInfo) =
     if isUnix && psi.FileName.EndsWith ".exe" then
