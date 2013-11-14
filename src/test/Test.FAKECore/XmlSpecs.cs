@@ -163,4 +163,43 @@ namespace Test.FAKECore.XMLHandling
             () => _resultDoc.OuterXml.ShouldEqual(_targetText);
 
     }
+
+    public class when_modifying_xml_with_xsl
+    {
+        const string OriginalText =
+            "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
+            "<painting>  <img src=\"madonna.jpg\" alt=\"Foligno Madonna, by Raphael\" />" +
+            "  <caption>This is Raphael's \"Foligno\" Madonna, painted in <date year=\"1511\" /> - <date year=\"1512\" />.</caption>" +
+            "</painting>";
+
+        const string XslStyleSheet =
+            "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
+            "<xsl:stylesheet version=\"1.0\" xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\">" +
+            "<xsl:output indent=\"yes\" omit-xml-declaration=\"no\" method=\"xml\" encoding=\"utf-8\" />" +
+            "  <xsl:template match=\"date[@year='1511']\">" +
+            "    <date year=\"1515\" />" +
+            "  </xsl:template>" +
+            "  <xsl:template match=\"@*|node()\">" +
+            "    <xsl:copy>" +
+            "      <xsl:apply-templates select=\"@*|node()\"/>" +
+            "    </xsl:copy>" +
+            "  </xsl:template>" +
+            "</xsl:stylesheet>";
+
+        static XmlDocument _doc;
+        static XmlDocument _resultDoc;
+        static string _targetText;
+
+        Establish context = () =>
+        {
+            _doc = new XmlDocument();
+            _doc.LoadXml(OriginalText);
+            _targetText = _doc.OuterXml.Replace("1511", "1515");
+        };
+
+        Because of = () => _resultDoc = XMLHelper.XslTransform(XMLHelper.XslTransformer(XslStyleSheet), _doc);
+
+        It should_equal_the_target_text =
+            () => _resultDoc.OuterXml.ShouldEqual(_targetText);
+    }
 }

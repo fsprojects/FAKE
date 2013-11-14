@@ -109,6 +109,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "octopusdeploy", "octopusdep
 		help\pics\octopusdeploy\myprofile.png = help\pics\octopusdeploy\myprofile.png
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assemblyinfo", "assemblyinfo", "{64547E3E-F74E-48C2-8091-795A6C04B99C}"
+	ProjectSection(SolutionItems) = preProject
+		help\pics\assemblyinfo\generated.png = help\pics\assemblyinfo\generated.png
+		help\pics\assemblyinfo\result.png = help\pics\assemblyinfo\result.png
+		help\pics\assemblyinfo\solutioninfo.png = help\pics\assemblyinfo\solutioninfo.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -252,6 +259,7 @@ Global
 		{853E4C7F-D5AA-4756-BAF3-13F25F460C4E} = {75162148-B884-4575-8E14-5320DD137760}
 		{F4B81CF1-FF35-46E4-9C15-97C398A674F5} = {75162148-B884-4575-8E14-5320DD137760}
 		{DC70438D-6050-435C-B365-ABF68CF8891D} = {75162148-B884-4575-8E14-5320DD137760}
+		{64547E3E-F74E-48C2-8091-795A6C04B99C} = {75162148-B884-4575-8E14-5320DD137760}
 		{A338C9EA-391D-405D-B480-D1B67C0C9369} = {E5A1C705-974C-4377-BAF3-55359A42BEF0}
 	EndGlobalSection
 EndGlobal

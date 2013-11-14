@@ -8,6 +8,7 @@ open System.Text
 open System.IO
 open System.Xml
 open System.Xml.XPath
+open System.Xml.Xsl
 
 /// Reads a value from a XML document using a XPath
 let XMLRead failOnError (xmlFileName:string) nameSpace prefix xPath =
@@ -145,4 +146,43 @@ let XmlPokeNS (fileName:string) namespaces xpath value =
     let doc = new XmlDocument()
     doc.Load fileName
     XPathReplaceNS xpath value namespaces doc
+    |> fun x -> x.Save fileName
+
+/// Loads the given text into a XslCompiledTransform.
+let XslTransformer text =
+    if isNullOrEmpty text then null else
+    let xslCompiledTransform = new XslCompiledTransform()
+    XMLDoc(text)
+    |> xslCompiledTransform.Load
+    xslCompiledTransform
+
+/// Transforms a XmlDocument using a XslCompiledTransform.
+/// ## Parameters
+/// 
+///  - `xsl` - The XslCompiledTransform which should be applied.
+///  - `doc` - The XmlDocument to transform.
+let XslTransform (xsl:XslCompiledTransform) (doc:XmlDocument) =
+    use memoryStream = new MemoryStream()
+    use textWriter = new XmlTextWriter(memoryStream, new UTF8Encoding(false))
+    use writer = System.Xml.XmlWriter.Create(textWriter, xsl.OutputSettings)
+    writer.WriteStartDocument()
+    xsl.Transform(doc, null, writer)
+    let outputDoc = new XmlDocument()
+    let encoding = new UTF8Encoding(false);
+    memoryStream.ToArray()
+    |> encoding.GetString
+    |> outputDoc.LoadXml
+    outputDoc
+
+/// Transforms a XML file using a XSL stylesheet file.
+/// ## Parameters
+/// 
+///  - `stylesheetUri` - The Uri for the XSL stylesheet file.
+///  - `fileName` - The XML file to transform.
+let XmlTransform (stylesheetUri:string) (fileName:string) =
+    let doc = new XmlDocument()
+    doc.Load fileName
+    let xsl = new XslCompiledTransform()
+    xsl.Load stylesheetUri
+    XslTransform xsl doc
     |> fun x -> x.Save fileName

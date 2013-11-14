@@ -92,6 +92,7 @@ Target "SetAssemblyInfo" (fun _ ->
     |> CreateFSharpAssemblyInfo "./src/app/Fake.Deploy.Lib/AssemblyInfo.fs"
     
     [Attribute.Title "FAKE - F# Make Lib"
+     Attribute.InternalsVisibleTo "Test.FAKECore"
      Attribute.Guid "d6dd5aec-636d-4354-88d6-d66e094dadb5"] @ common
     |> CreateFSharpAssemblyInfo "./src/app/FakeLib/AssemblyInfo.fs"
     

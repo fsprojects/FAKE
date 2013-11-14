@@ -4,8 +4,32 @@ module Fake.WiXHelper
 
 open System
 open System.IO
+open System.Collections.Generic
 
 let mutable internal fileCount = 0
+
+let mutable internal dirs = Dictionary()
+
+let dirName dir =
+    match dirs.TryGetValue dir with
+    | true,n -> dirs.[dir] <- n+1; dir + n.ToString()
+    | _ -> dirs.[dir] <- 1; dir
+
+let mutable internal compRefs = Dictionary()
+
+let compRefName compRef =
+    match compRefs.TryGetValue compRef with
+    | true,n -> compRefs.[compRef] <- n+1; compRef + n.ToString()
+    | _ -> compRefs.[compRef] <- 1; compRef
+
+let mutable internal comps = Dictionary()
+
+let compName comp =
+    match comps.TryGetValue comp with
+    | true,n -> comps.[comp] <- n+1; comp + n.ToString()
+    | _ -> comps.[comp] <- 1; comp
+
+
 
 /// Creates a WiX File tag from the given FileInfo
 let wixFile (fileInfo:FileInfo) =
@@ -35,10 +59,10 @@ let rec wixDir fileFilter asSubDir (directoryInfo:DirectoryInfo) =
 
     let compo =
       if files = "" then "" else
-      sprintf "<Component Id=\"%s\" Guid=\"%s\">\r\n%s\r\n</Component>\r\n" directoryInfo.Name (Guid.NewGuid().ToString()) files
+      sprintf "<Component Id=\"%s\" Guid=\"%s\">\r\n%s\r\n</Component>\r\n" (compName directoryInfo.Name) (Guid.NewGuid().ToString()) files
 
     if asSubDir then
-        sprintf "<Directory Id=\"%s\" Name=\"%s\">\r\n%s%s\r\n</Directory>\r\n" directoryInfo.Name directoryInfo.Name dirs compo
+        sprintf "<Directory Id=\"%s\" Name=\"%s\">\r\n%s%s\r\n</Directory>\r\n" (dirName directoryInfo.Name) directoryInfo.Name dirs compo
     else
         sprintf "%s%s" dirs compo
 
@@ -50,7 +74,7 @@ let rec wixComponentRefs (directoryInfo:DirectoryInfo) =
         |> Seq.map wixComponentRefs
         |> toLines
 
-    if (filesInDir directoryInfo).Length > 0 then sprintf "%s<ComponentRef Id=\"%s\"/>\r\n" compos directoryInfo.Name else compos
+    if (filesInDir directoryInfo).Length > 0 then sprintf "%s<ComponentRef Id=\"%s\"/>\r\n" compos (compRefName directoryInfo.Name) else compos
 
 open System
 

@@ -30,7 +30,7 @@ let setDirectoryReadOnly readOnly (dir:DirectoryInfo) =
 let SetDirReadOnly readOnly dir =
     recursively (setDirectoryReadOnly readOnly) (fun file -> file.IsReadOnly <- readOnly) dir
   
-/// Sets all files in the directory readonly.
+/// Sets all given files readonly.
 let SetReadOnly readOnly (files: string seq) =
     files
     |> Seq.iter (fun file ->
@@ -425,3 +425,10 @@ let WriteConfigFile configFileName parameters =
 
     for (key,value) in parameters do
         streamWriter.WriteLine("{0};{1}", key, value)
+
+/// Replaces all occurences of the patterns in the given files with the given replacements.
+/// ## Parameters
+///
+///  - `replacements` - A sequence of tuples with the patterns and the replacements.
+///  - `files` - The files to process.
+let ReplaceInFiles replacements files = processTemplates replacements files
