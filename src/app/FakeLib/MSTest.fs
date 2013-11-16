@@ -19,12 +19,6 @@ let mstestexe =
 
  // TODO: try to use VSTest.Console.exe as well (VS2012 and up only)
 
-/// [omit]
-let toolPath () = 
-    match tryFindFile mstestPaths mstestexe with
-     | Some path -> path
-     | None -> failwith "Cannot find MSTest.exe executable"
-
 /// Parameter type to configure the MSTest.exe
 type MSTestParams = 
     {
@@ -56,14 +50,16 @@ let commandLineBuilder parameters assembly =
             sprintf @"%s\%s.trx" parameters.ResultsDir (DateTime.Now.ToString("yyyyMMdd-HHmmss.ff"))
         else 
             null
-//    trace ("/resultsfile is:" + testResultsFile)
+
     let cl = 
         new StringBuilder()
         |> appendIfNotNull assembly "/testcontainer:"
         |> appendIfNotNull parameters.Category "/category:"
         |> appendIfNotNull testResultsFile "/resultsfile:"
+        |> append "/noisolation"
 
     cl.ToString()
+
 
 /// Runs MSTest command line tool on a group of assemblies.
 /// ## Parameters
@@ -74,28 +70,35 @@ let commandLineBuilder parameters assembly =
 /// ## Sample usage
 ///
 ///     Target "Test" (fun _ ->
-///         !! (testDir + @"\Test.*.dll") 
+///         !! (testDir + @"\*.Tests.dll") 
 ///           |> MSTest (fun p -> { p with Category = "group1" })
 ///     )
 let MSTest (setParams: MSTestParams -> MSTestParams) (assemblies: string seq) =
     let details = assemblies |> separated ", "
     traceStartTask "MSTest" details
-    trace ("Hello from MSTest" @@ details)
     let parameters = MSTestDefaults |> setParams
               
     let assemblies =  assemblies |> Seq.toArray
-
     if Array.isEmpty assemblies then
         failwith "MSTest: cannot run tests (the assembly list is empty)."
 
-    let tool = toolPath()
+    let tool = 
+        match tryFindFile mstestPaths mstestexe with
+        | Some path -> path
+        | None -> failwith "Cannot find MSTest.exe executable"
+
+    let failIfError assembly exitCode =
+        if exitCode > 0 then
+            let message = sprintf "%sMSTest test run failed for %s" Environment.NewLine assembly
+            traceError message
+            failwith message
 
     for assembly in assemblies do
         let args = commandLineBuilder parameters assembly
-        let exitCode = execProcessAndReturnExitCode (fun info ->  
+        execProcessAndReturnExitCode (fun info ->  
             info.FileName <- tool
             info.WorkingDirectory <- parameters.WorkingDir
             info.Arguments <- args) parameters.TimeOut
-        trace ("exit code: " + exitCode.ToString())
-    
+            |> failIfError assembly
+
     traceEndTask "MSTest" details
