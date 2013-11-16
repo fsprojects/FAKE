@@ -7,18 +7,16 @@ open System.Collections.Generic
 open System.IO
 open Fake
 
-type internal SearchOption = 
+type private SearchOption = 
 | Directory of string
 | Recursive
 | FilePattern of string
         
-let internal exists dir root = 
+let inline private exists dir root = 
     let di = new DirectoryInfo(Path.Combine(root, dir))
-    if di.Exists
-    then Some di.FullName
-    else None
+    if di.Exists then Some di.FullName else None
         
-let rec internal buildPaths acc (input : SearchOption list) =
+let rec private buildPaths acc (input : SearchOption list) =
     match input with
     | [] -> acc
     | Directory(name) :: t -> 
