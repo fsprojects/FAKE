@@ -56,6 +56,7 @@ let commandLineBuilder parameters assembly =
         |> appendIfNotNull assembly "/testcontainer:"
         |> appendIfNotNull parameters.Category "/category:"
         |> appendIfNotNull testResultsFile "/resultsfile:"
+        |> append "/noisolation"
 
     cl.ToString()
 
