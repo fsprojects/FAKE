@@ -20,7 +20,7 @@ namespace Test.FAKECore.Globbing.TestSample5
 
         public static string FullPath(string pattern)
         {
-            return Path.Combine(TempDir, pattern);
+            return TempDir + pattern;
         }
     }
 
@@ -58,7 +58,19 @@ namespace Test.FAKECore.Globbing.TestSample5
 
     public class when_scanning_with_two_asterisks_in_the_middle : when_extracting_zip
     {
-        Because of = () => Files = FileSystem.Include(FullPath("/**/Specs*.*.testending")).ToArray();
+        Because of = () => Files = FileSystem.Include(FullPath(_pattern)).ToArray();
+
+        It should_set_the_base_directory =
+            () => FileSystem.Include(FullPath(_pattern))
+                   .BaseDirectory.ShouldEqual(Directory.GetCurrentDirectory());
+
+        It should_set_the_pattern =
+            () => FileSystem.Include(FullPath(_pattern))
+                   .Includes.First().ShouldEqual(Directory.GetCurrentDirectory() + "\\temptest" + _pattern);
+
+        It should_create_the_full_path =
+            () => FullPath(_pattern)
+                   .ShouldStartWith(Directory.GetCurrentDirectory());
 
         It should_find_the_first_file =
             () => Files[0].ShouldEndWith("Folder1\\Subfolder1\\Specs2.Awesome.testending");
@@ -67,6 +79,7 @@ namespace Test.FAKECore.Globbing.TestSample5
             () => Files[1].ShouldEndWith("Folder1\\Subfolder1\\SubFolder2\\TextFiles\\Specs1.Awesome.testending");
 
         It should_match_2_files = () => Files.Length.ShouldEqual(2);
+        private static string _pattern = "/**/Specs*.*.testending";
     }
 
     public class when_scanning_with_two_asterisks_and_backslashes_in_the_middle : when_extracting_zip

@@ -32,7 +32,7 @@ namespace Test.FAKECore.Globbing.TestSample4
     {
         Because of = () => Files = FileSystem.Include("temptest/**/Specs*.testending").ToArray();
 
-        It should_find_the_dirst_file =
+        It should_find_the_first_file =
             () => Files[0].ShouldEndWith("Folder1\\Subfolder1\\Specs2.Awesome.testending");
 
         It should_find_the_second_file =
@@ -45,7 +45,7 @@ namespace Test.FAKECore.Globbing.TestSample4
     {
         Because of = () => Files = FileSystem.Include("temptest/**/Specs*.*.testending").ToArray();
 
-        It should_find_the_dirst_file =
+        It should_find_the_first_file =
             () => Files[0].ShouldEndWith("Folder1\\Subfolder1\\Specs2.Awesome.testending");
 
         It should_find_the_second_file =
@@ -58,7 +58,7 @@ namespace Test.FAKECore.Globbing.TestSample4
     {
         Because of = () => Files = FileSystem.Include("temptest\\**\\Specs*.*.testending").ToArray();
 
-        It should_find_the_dirst_file =
+        It should_find_the_first_file =
             () => Files[0].ShouldEndWith("Folder1\\Subfolder1\\Specs2.Awesome.testending");
 
         It should_find_the_second_file =

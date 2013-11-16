@@ -30,12 +30,13 @@ let rec internal buildPaths acc (input : SearchOption list) =
             Seq.collect (fun dir -> Directory.EnumerateDirectories(dir, "*", SearchOption.AllDirectories)) acc
             |> Seq.toList
         buildPaths (acc @ dirs) t
-    | FilePattern(pattern) :: t -> 
+    | FilePattern(pattern) :: t ->
         Seq.collect (fun dir -> Directory.EnumerateFiles(dir, pattern)) acc
         |> Seq.toList
          
-let private search baseDir (input : string) =
-    let filePattern = Path.GetFileName(input)
+let private search (baseDir:string) (input : string) =
+    let input = input.Replace(baseDir,"")
+    let filePattern = Path.GetFileName(input)    
     input.Split([|'/';'\\'|], StringSplitOptions.RemoveEmptyEntries)
     |> Seq.map (function
                 | "**" -> Recursive
