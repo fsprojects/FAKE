@@ -29,6 +29,16 @@ namespace Test.FAKECore.Globbing.TestSample1
         It should_match_1_file = () => Files.Count().ShouldEqual(1);
     }
 
+    public class when_using_empty_pattern : when_extracting_zip
+    {
+        Because of = () => Files =
+            FileSystem
+                .Include("")
+                .ToArray();
+
+        It should_find_the_base_dir = () => Files.First().ShouldEqual(System.IO.Directory.GetCurrentDirectory());
+        It should_match_no_files = () => Files.Length.ShouldEqual(1);
+    }
 
     public class when_using_mupltiple_includes : when_extracting_zip
     {
