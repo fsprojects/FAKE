@@ -22,10 +22,29 @@ namespace Test.FAKECore.Globbing.TestSample1
     {
         Because of = () => Files = FileSystem.Include("/**/SampleApp/").ToArray();
 
-        It should_find_the_file =
+        It should_find_the_dir =
             () => Files[0].ShouldEndWith("SampleApp");
 
-        It should_match_1_file = () => Files.Length.ShouldEqual(1);
+        It should_match_1_directory = () => Files.Length.ShouldEqual(1);
+    }
+
+    public class when_scanning_for_folders : when_extracting_zip
+    {
+        Because of = () => Files = FileSystem.Include("/temptest/**/").ToArray();
+
+        It should_find_the_main_dir =
+            () => Files[0].ShouldEndWith("temptest");
+
+        It should_find_the_first_subdir =
+            () => Files[1].ShouldEndWith("SampleApp");
+
+        It should_find_the_second_subdir =
+            () => Files[2].ShouldEndWith("bin");
+
+        It should_find_the_third_subdir =
+            () => Files[3].ShouldEndWith("obj");
+
+        It should_match_4_directories = () => Files.Length.ShouldEqual(4);
     }
 
     public class when_scanning_in_zip : when_extracting_zip
