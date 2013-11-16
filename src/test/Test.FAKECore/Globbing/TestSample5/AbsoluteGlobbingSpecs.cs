@@ -113,4 +113,24 @@ namespace Test.FAKECore.Globbing.TestSample5
 
         It should_match_1_file = () => Files.Length.ShouldEqual(1);
     }
+
+    public class when_scanning_with_invalid_folder_change : when_extracting_zip
+    {
+        Because of = () => Files = FileSystem.Include(FullPath("\\Folder1\\..\\..\\Folder1\\Subfolder1\\Specs*.*.testending")).ToArray();
+
+        It should_match_a_file = () => Files.Length.ShouldEqual(0);
+    }
+
+    public class when_scanning_with_multiple_folder_change : when_extracting_zip
+    {
+        Because of = () => Files = FileSystem.Include(FullPath("\\Folder1\\..\\..\\temptest\\Folder1\\Subfolder1\\Specs*.*.testending")).ToArray();
+
+        It should_find_the_first_file =
+            () => Files[0].ShouldEndWith("Folder1\\Subfolder1\\Specs2.Awesome.testending");
+
+        It should_find_the_file_with_absolute_path =
+            () => Files[0].ShouldStartWith(TempDir);
+
+        It should_match_1_file = () => Files.Length.ShouldEqual(1);
+    }
 }
