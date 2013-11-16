@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="FixProjectFileSpecs.cs" />
     <Compile Include="CompareProjectFilesSpecs.cs" />
+    <Compile Include="Globbing\TestSample5\AbsoluteGlobbingSpecs.cs" />
     <Compile Include="Globbing\TestSample1\FileSetSample1Specs.cs" />
     <Compile Include="Globbing\TestSample4\GlobbingSample4Specs.cs" />
     <Compile Include="Globbing\TestSample3\GlobbingSample3Specs.cs" />
@@ -216,6 +217,9 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Globbing\TestSample4\Sample4.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Globbing\TestSample5\Sample5.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Globbing\TestSample3\Sample3.zip">
