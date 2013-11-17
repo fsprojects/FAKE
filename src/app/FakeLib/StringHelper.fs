@@ -77,7 +77,6 @@ let inline appendQuotedIfNotNull (value : Object) s (builder:StringBuilder) =
         | :? String as sv -> builder.Append(sprintf "%s\"%s\" " s sv)
         | _ -> builder.Append(sprintf "%s\"%A\" " s value))
 
-
 /// Appends a text if the value is not null.
 let inline appendStringIfValueIsNotNull value = appendIfTrue (value <> null)
 
@@ -88,6 +87,9 @@ let inline appendStringIfValueIsNotNullOrEmpty value = appendIfTrue (isNullOrEmp
 let inline appendFileNamesIfNotNull fileNames (builder:StringBuilder) =
     fileNames 
       |> Seq.fold (fun builder file -> appendIfTrue (isNullOrEmpty file |> not) file builder) builder
+
+/// Returns the text from the StringBuilder
+let inline toText (builder:StringBuilder) = builder.ToString()
 
 /// [omit]
 let private regexes = new Dictionary<_,_>()

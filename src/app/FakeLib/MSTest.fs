@@ -56,8 +56,7 @@ let MSTestDefaults = {
         match tryFindFile mstestPaths mstestexe with
         | Some path -> path
         | None -> ""
-    ErrorLevel = ErrorLevel.Error
-    }
+    ErrorLevel = ErrorLevel.Error }
 
 /// Builds the command line arguments from the given parameter record and the given assemblies.
 /// [omit]
@@ -67,16 +66,13 @@ let commandLineBuilder parameters assembly =
             sprintf @"%s\%s.trx" parameters.ResultsDir (DateTime.Now.ToString("yyyyMMdd-HHmmss.ff"))
         else 
             null
-
-    let cl = 
-        new StringBuilder()
-        |> appendIfNotNull assembly "/testcontainer:"
-        |> appendIfNotNull parameters.Category "/category:"
-        |> appendIfNotNull testResultsFile "/resultsfile:"
-        |> append "/noisolation"
-
-    cl.ToString()
-
+    
+    new StringBuilder()
+    |> appendIfNotNull assembly "/testcontainer:"
+    |> appendIfNotNull parameters.Category "/category:"
+    |> appendIfNotNull testResultsFile "/resultsfile:"
+    |> append "/noisolation"
+    |> toText
 
 /// Runs MSTest command line tool on a group of assemblies.
 /// ## Parameters
