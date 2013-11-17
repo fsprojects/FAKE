@@ -19,6 +19,13 @@ let mstestexe =
 
  // TODO: try to use VSTest.Console.exe as well (VS2012 and up only)
 
+/// Option which allow to specify if a MSTest error should break the build.
+type ErrorLevel =
+/// This option instructs FAKE to break the build if MSTest reports an error. (Default)
+| Error
+/// With this option set, no exception is thrown if a test is broken.
+| DontFailBuild
+
 /// Parameter type to configure the MSTest.exe.
 type MSTestParams = 
     {
@@ -34,6 +41,8 @@ type MSTestParams =
     TimeOut: TimeSpan
     /// Path to MSTest.exe 
     ToolPath : string
+    /// Option which allow to specify if a MSTest error should break the build.
+    ErrorLevel: ErrorLevel
     }
 
 /// MSTest default parameters.
@@ -47,6 +56,7 @@ let MSTestDefaults = {
         match tryFindFile mstestPaths mstestexe with
         | Some path -> path
         | None -> ""
+    ErrorLevel = ErrorLevel.Error
     }
 
 /// Builds the command line arguments from the given parameter record and the given assemblies.
@@ -90,7 +100,7 @@ let MSTest (setParams: MSTestParams -> MSTestParams) (assemblies: string seq) =
         failwith "MSTest: cannot run tests (the assembly list is empty)."
 
     let failIfError assembly exitCode =
-        if exitCode > 0 then
+        if exitCode > 0 && parameters.ErrorLevel = ErrorLevel.Error then
             let message = sprintf "%sMSTest test run failed for %s" Environment.NewLine assembly
             traceError message
             failwith message
