@@ -77,7 +77,7 @@
                     <td class="type-name">
                         <a href="fake-mstest-mstestparams.html">MSTestParams</a>
                     </td>
-                    <td class="xmldoc"><p>Parameter type to configure the MSTest.exe</p>
+                    <td class="xmldoc"><p>Parameter type to configure the MSTest.exe.</p>
 </td>
                 </tr>
         </tbody>
@@ -93,10 +93,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '228', 228)" onmouseover="showTip(event, '228', 228)">
+          <code onmouseout="hideTip(event, '229', 229)" onmouseover="showTip(event, '229', 229)">
             MSTest setParams assemblies
           </code>
-          <div class="tip" id="228">
+          <div class="tip" id="229">
             <strong>Signature:</strong>setParams:(MSTestParams -&gt; MSTestParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -112,7 +112,7 @@
 <h2>Sample usage</h2>
 
 <pre><code>Target "Test" (fun _ -&gt;
-    !! (testDir + @"\Test.*.dll") 
+    !! (testDir + @"\*.Tests.dll") 
       |&gt; MSTest (fun p -&gt; { p with Category = "group1" })
 )
 </code></pre>
@@ -121,14 +121,14 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '229', 229)" onmouseover="showTip(event, '229', 229)">
+          <code onmouseout="hideTip(event, '239', 239)" onmouseover="showTip(event, '239', 239)">
             MSTestDefaults 
           </code>
-          <div class="tip" id="229">
+          <div class="tip" id="239">
             <strong>Signature:</strong>MSTestParams<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>MSTest default parameters</p>
+        <td class="xmldoc"><p>MSTest default parameters.</p>
 </td>
       </tr>
     </tbody>

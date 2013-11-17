@@ -57,11 +57,13 @@ This will use the following default parameters to retrieve all NuGet packages wh
 
 <p>If you don't want to store FAKE.exe and it components in your repository you can use a batch file which downloads it before the build:</p>
 
-<pre lang="batchfile">@echo off
+<pre><code>[lang=batchfile]
+@echo off
 cls
-&quot;tools\nuget\nuget.exe&quot; &quot;install&quot; &quot;FAKE&quot; &quot;-OutputDirectory&quot; &quot;tools&quot; &quot;-ExcludeVersion&quot;
-&quot;tools\FAKE\tools\Fake.exe&quot; build.fsx
-pause</pre>
+"tools\nuget\nuget.exe" "install" "FAKE" "-OutputDirectory" "tools" "-ExcludeVersion"
+"tools\FAKE\tools\Fake.exe" build.fsx
+pause
+</code></pre>
 
                     
         </div>
