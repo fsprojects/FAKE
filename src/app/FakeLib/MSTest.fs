@@ -19,28 +19,35 @@ let mstestexe =
 
  // TODO: try to use VSTest.Console.exe as well (VS2012 and up only)
 
-/// Parameter type to configure the MSTest.exe
+/// Parameter type to configure the MSTest.exe.
 type MSTestParams = 
     {
     /// Test category filter  (optional). The test category filter consists of one or more test category names separated by the logical operators '&', '|', '!', '&!'. The logical operators '&' and '|' cannot be used together to create a test category filter.
     Category: string
     /// Test results directory (optional)
     ResultsDir: string
-    /// path to the Test Metadata file (.vdmdi)  (optional)
+    /// Path to the Test Metadata file (.vdmdi)  (optional)
     TestMetadataPath: string
     /// Working directory (optional)
     WorkingDir:string
     /// A timeout for the test runner (optional)
     TimeOut: TimeSpan
+    /// Path to MSTest.exe 
+    ToolPath : string
     }
 
-/// MSTest default parameters
+/// MSTest default parameters.
 let MSTestDefaults = { 
     Category = null
     ResultsDir = null
     TestMetadataPath = null
     WorkingDir = null
-    TimeOut = TimeSpan.FromMinutes 5.}
+    TimeOut = TimeSpan.FromMinutes 5.
+    ToolPath =
+        match tryFindFile mstestPaths mstestexe with
+        | Some path -> path
+        | None -> ""
+    }
 
 /// Builds the command line arguments from the given parameter record and the given assemblies.
 /// [omit]
@@ -82,11 +89,6 @@ let MSTest (setParams: MSTestParams -> MSTestParams) (assemblies: string seq) =
     if Array.isEmpty assemblies then
         failwith "MSTest: cannot run tests (the assembly list is empty)."
 
-    let tool = 
-        match tryFindFile mstestPaths mstestexe with
-        | Some path -> path
-        | None -> failwith "Cannot find MSTest.exe executable"
-
     let failIfError assembly exitCode =
         if exitCode > 0 then
             let message = sprintf "%sMSTest test run failed for %s" Environment.NewLine assembly
@@ -96,7 +98,7 @@ let MSTest (setParams: MSTestParams -> MSTestParams) (assemblies: string seq) =
     for assembly in assemblies do
         let args = commandLineBuilder parameters assembly
         execProcessAndReturnExitCode (fun info ->  
-            info.FileName <- tool
+            info.FileName <- parameters.ToolPath
             info.WorkingDirectory <- parameters.WorkingDir
             info.Arguments <- args) parameters.TimeOut
             |> failIfError assembly
