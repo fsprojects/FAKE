@@ -9,6 +9,8 @@ open System.IO
 open System.Threading
 open System.Collections.Generic
 
+let startedProcesses = HashSet()
+
 /// [omit]
 let mutable redirectOutputToTrace = false 
 
@@ -59,6 +61,7 @@ let ExecProcessWithLambdas configProcessStartInfoF (timeOut:TimeSpan) silent err
           tracefn "%s %s" p.StartInfo.FileName p.StartInfo.Arguments
 
         p.Start() |> ignore
+        startedProcesses.Add p.Id |> ignore
     with
     | exn -> failwithf "Start of process %s failed. %s" p.StartInfo.FileName exn.Message
 
@@ -170,6 +173,7 @@ let fireAndForget configProcessStartInfoF =
   
     try
         p.Start() |> ignore
+        startedProcesses.Add p.Id |> ignore
     with
     | exn -> failwithf "Start of process %s failed. %s" p.StartInfo.FileName exn.Message
 
@@ -181,6 +185,7 @@ let directExec configProcessStartInfoF =
   
     try
         p.Start() |> ignore
+        startedProcesses.Add p.Id |> ignore
     with
     | exn -> failwithf "Start of process %s failed. %s" p.StartInfo.FileName exn.Message
   
@@ -194,6 +199,7 @@ let StartProcess configProcessStartInfoF =
    p.StartInfo.UseShellExecute <- false
    configProcessStartInfoF p.StartInfo
    p.Start() |> ignore
+   startedProcesses.Add p.Id |> ignore
 
 /// Sends a command to a windows service.
 let RunService command serviceName =
@@ -204,6 +210,7 @@ let RunService command serviceName =
     p.StartInfo.RedirectStandardOutput <- true
     p.StartInfo.UseShellExecute <- false
     p.Start() |> ignore
+    startedProcesses.Add p.Id |> ignore
 
 /// Stops a windows service
 let StopService serviceName = 
@@ -382,6 +389,7 @@ let asyncShellExec (args:ExecParams) = async {
         proc.Exited 
         |> guard (fun () -> 
                     proc.Start() |> ignore
+                    startedProcesses.Add proc.Id |> ignore
                     proc.BeginErrorReadLine()
                     proc.BeginOutputReadLine())
         |> Async.AwaitEvent
@@ -389,18 +397,37 @@ let asyncShellExec (args:ExecParams) = async {
     return proc.ExitCode
 }
 
+/// Kills the given process
+let kill (proc:Process) =
+    tracefn "Trying to kill process %s (Id = %d)" proc.ProcessName proc.Id
+    try proc.Kill() with 
+    | exn -> ()
+
+/// Kills all processes with the given id
+let killProcessById id =
+    Process.GetProcessById id
+    |> kill
+
 /// Kills all processes with the given name
 let killProcess name =
     tracefn "Searching for process with name = %s" name
     Process.GetProcesses()
       |> Seq.filter (fun p -> p.ProcessName.ToLower().StartsWith(name.ToLower()))
-      |> Seq.iter (fun p -> tracefn "Trying to kill process %s (Id = %d)" p.ProcessName p.Id; try p.Kill() with | exn -> ())
+      |> Seq.iter kill
 
 /// Kills the F# Interactive (FSI) process.
 let killFSI() = killProcess "fsi.exe"
 
 /// Kills the MSBuild process.
 let killMSBuild() = killProcess "msbuild"
+
+/// Kills all processes that are created by the FAKE build script.
+let killAllCreatedProcesses() =
+    for id in startedProcesses do
+        try
+            Process.GetProcessById id |> kill
+        with
+        | exn -> ()
 
 /// Execute an external program and return the exit code.
 /// [omit]
