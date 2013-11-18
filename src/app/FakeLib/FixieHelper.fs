@@ -38,7 +38,7 @@ let Fixie setParams assemblies =
     traceStartTask "Fixie" details
     let parameters = setParams FixieDefaults
     
-    let commandLineBuilder =
+    let args =
         let option = sprintf "\"--%s\" "
         let appendCustomOptions options builder =
             options
@@ -47,11 +47,12 @@ let Fixie setParams assemblies =
         new StringBuilder()
         |> appendCustomOptions parameters.CustomOptions
         |> appendFileNamesIfNotNull assemblies
+        |> toText
 
     if not (execProcess3 (fun info ->  
         info.FileName <- parameters.ToolPath
         info.WorkingDirectory <- parameters.WorkingDir
-        info.Arguments <- commandLineBuilder.ToString()) parameters.TimeOut)
+        info.Arguments <- args) parameters.TimeOut)
     then
         failwith "Fixie test failed."
                   
