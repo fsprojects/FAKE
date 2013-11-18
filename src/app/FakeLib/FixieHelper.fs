@@ -32,7 +32,7 @@ let FixieDefaults = {
 /// ## Sample
 ///
 ///     !! (testDir @@ "Test.*.dll") 
-///       |> Fixie (fun p -> {p with CustomOptions = ["custom", "1";"test", 2]})
+///       |> Fixie (fun p -> { p with CustomOptions = ["custom","1"; "test",2] })
 let Fixie setParams assemblies = 
     let details = separated ", " assemblies
     traceStartTask "Fixie" details

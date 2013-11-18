@@ -8,7 +8,7 @@ open System
 type TraceData =
 | StartMessage
 | ImportantMessage of string
-| ErrorMessage  of string
+| ErrorMessage of string
 | LogMessage of string * bool
 | TraceMessage of string * bool
 | FinishedMessage 
