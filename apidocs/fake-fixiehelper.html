@@ -60,9 +60,9 @@
 
 
 
-<h1>Json</h1>
+<h1>FixieHelper</h1>
 <div class="xmldoc">
-<p>Contains extensions for Newtonsoft.Json. <strong>Don't use it directly. It's likely to be changed in further versions.</strong></p>
+<p>Contains tasks to run <a href="http://patrick.lioi.net/fixie/">Fixie</a> unit tests.</p>
 </div>
 
 <!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
@@ -75,9 +75,9 @@
         <tbody>
                 <tr>
                     <td class="type-name">
-                        <a href="fake-json-uniontypeconverter.html">UnionTypeConverter</a>
+                        <a href="fake-fixiehelper-fixieparams.html">FixieParams</a>
                     </td>
-                    <td class="xmldoc"><p>Newtonsoft.Json converter for union types</p>
+                    <td class="xmldoc"><p>Parameter type to configure the Fixie runner</p>
 </td>
                 </tr>
         </tbody>
@@ -93,40 +93,40 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '241', 241)" onmouseover="showTip(event, '241', 241)">
-            deserialize text
+          <code onmouseout="hideTip(event, '209', 209)" onmouseover="showTip(event, '209', 209)">
+            Fixie setParams assemblies
           </code>
-          <div class="tip" id="241">
-            <strong>Signature:</strong>text:string -&gt; &#39;a<br />
-                          <strong>Type parameters:</strong> 'a          </div>
+          <div class="tip" id="209">
+            <strong>Signature:</strong>setParams:(FixieParams -&gt; FixieParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
         </td>
-        <td class="xmldoc"><p>Deserializes a text into a object of type 'a</p>
+        <td class="xmldoc"><p>This task to can be used to run <a href="http://patrick.lioi.net/fixie/">Fixie</a> on test libraries.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>setParams</code> - Function used to overwrite the Fixie default parameters.</li>
+<li><code>assemblies</code> - The file names of the test assemblies.</li>
+</ul>
+
+<h2>Sample</h2>
+
+<pre><code>!! (testDir @@ "Test.*.dll") 
+  |&gt; Fixie (fun p -&gt; {p with CustomOptions = ["custom", "1";"test", 2]})
+</code></pre>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '242', 242)" onmouseover="showTip(event, '242', 242)">
-            deserializeFile 
+          <code onmouseout="hideTip(event, '210', 210)" onmouseover="showTip(event, '210', 210)">
+            FixieDefaults 
           </code>
-          <div class="tip" id="242">
-            <strong>Signature:</strong>string -&gt; &#39;a<br />
-                          <strong>Type parameters:</strong> 'a          </div>
+          <div class="tip" id="210">
+            <strong>Signature:</strong>FixieParams<br />
+                      </div>
         </td>
-        <td class="xmldoc"><p>Deserializes a file into a object of type 'a</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '243', 243)" onmouseover="showTip(event, '243', 243)">
-            serialize x
-          </code>
-          <div class="tip" id="243">
-            <strong>Signature:</strong>x:&#39;?5981 -&gt; string<br />
-                          <strong>Type parameters:</strong> '?5981          </div>
-        </td>
-        <td class="xmldoc"><p>Serializes a object to json</p>
+        <td class="xmldoc"><p>Fixie default parameters - tries to locate Fixie.Console.exe in any subfolder.</p>
 </td>
       </tr>
     </tbody>
