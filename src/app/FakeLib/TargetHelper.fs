@@ -306,6 +306,7 @@ let run targetName =
         runTarget targetName
     finally
         runFinalTargets()
+        killAllCreatedProcesses()
         WriteTaskTimeSummary watch.Elapsed
         changeExitCodeIfErrorOccured()
  

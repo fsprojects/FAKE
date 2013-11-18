@@ -423,11 +423,17 @@ let killMSBuild() = killProcess "msbuild"
 
 /// Kills all processes that are created by the FAKE build script.
 let killAllCreatedProcesses() =
+    let traced = ref false
     for id in startedProcesses do
         try
-            Process.GetProcessById id |> kill
+            let p = Process.GetProcessById id
+            if !traced |> not then
+                tracefn "Killing all processes that are created by FAKE and are still running."
+                traced := true
+            kill p
         with
         | exn -> ()
+    startedProcesses.Clear()
 
 /// Execute an external program and return the exit code.
 /// [omit]
