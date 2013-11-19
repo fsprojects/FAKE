@@ -65,7 +65,7 @@ let ExecProcessWithLambdas configProcessStartInfoF (timeOut:TimeSpan) silent err
 
         start proc
     with
-    | exn -> failwithf "Start of process %s failed. %s" p.StartInfo.FileName exn.Message
+    | exn -> failwithf "Start of process %s failed. %s" proc.StartInfo.FileName exn.Message
 
     if silent then
         proc.BeginErrorReadLine()
@@ -176,7 +176,7 @@ let fireAndForget configProcessStartInfoF =
     try
         start proc
     with
-    | exn -> failwithf "Start of process %s failed. %s" p.StartInfo.FileName exn.Message
+    | exn -> failwithf "Start of process %s failed. %s" proc.StartInfo.FileName exn.Message
 
 /// Runs the given process, waits for its completion and returns if it succeeded.
 let directExec configProcessStartInfoF =
@@ -187,7 +187,7 @@ let directExec configProcessStartInfoF =
     try
         start proc
     with
-    | exn -> failwithf "Start of process %s failed. %s" p.StartInfo.FileName exn.Message
+    | exn -> failwithf "Start of process %s failed. %s" proc.StartInfo.FileName exn.Message
   
     proc.WaitForExit()
     
@@ -197,7 +197,7 @@ let directExec configProcessStartInfoF =
 let StartProcess configProcessStartInfoF =
    use proc = new Process()
    proc.StartInfo.UseShellExecute <- false
-   configProcessStartInfoF p.StartInfo
+   configProcessStartInfoF proc.StartInfo
    start proc
 
 /// Sends a command to a windows service.
