@@ -31,6 +31,7 @@ The following code shows such .nuspec file from the [OctoKit](https://github.com
 In the build script you need to create a target which executes the [NuGet task](apidocs/fake-nugethelper.html):
 
 	Target "CreatePackage" (fun _ ->
+	    // Copy all the package files into a package folder
 		CopyFiles packagingDir allPackageFiles
 
 		NuGet (fun p -> 
@@ -41,8 +42,7 @@ In the build script you need to create a target which executes the [NuGet task](
 				OutputPath = packagingRoot
 				Summary = projectSummary
 				WorkingDir = packagingDir
-				Version = releaseNotes.AssemblyVersion
-				ReleaseNotes = toLines releaseNotes.Notes
+				Version = buildVersion
 				AccessKey = myAccesskey
 				Publish = true }) 
 				"myProject.nuspec"
