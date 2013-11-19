@@ -63,6 +63,9 @@ The following code shows such .nuspec file from the <a href="https://github.com/
   &lt;/metadata&gt;
 &lt;/package&gt;</pre>
 
+<p>The .nuspec template contains some placeholders like @build.number@ which can filled out later by the build script.
+It also contains some specifc information like the copyright which is not handled by FAKE.</p>
+
 <h2>Setting up the build script</h2>
 
 <p>In the build script you need to create a target which executes the <a href="apidocs/fake-nugethelper.html">NuGet task</a>:</p>
