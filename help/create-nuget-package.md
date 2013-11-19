@@ -26,6 +26,9 @@ The following code shows such .nuspec file from the [OctoKit](https://github.com
 	  </metadata>
 	</package>
 
+The .nuspec template contains some placeholders like @build.number@ which can filled out later by the build script.
+It also contains some specifc information like the copyright which is not handled by FAKE.
+
 ## Setting up the build script
 
 In the build script you need to create a target which executes the [NuGet task](apidocs/fake-nugethelper.html):
