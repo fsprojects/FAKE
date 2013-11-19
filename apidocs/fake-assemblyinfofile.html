@@ -76,6 +76,13 @@ There is also a tutorial about the <a href="../assemblyinfo.html">AssemblyInfo t
         <tbody>
                 <tr>
                     <td class="type-name">
+                        <a href="fake-assemblyinfofile-assemblyinfofileconfig.html">AssemblyInfoFileConfig</a>
+                    </td>
+                    <td class="xmldoc"><p>Represents options for configuring the emission of AssemblyInfo</p>
+</td>
+                </tr>
+                <tr>
+                    <td class="type-name">
                         <a href="fake-assemblyinfofile-attribute.html">Attribute</a>
                     </td>
                     <td class="xmldoc"><p>Represents AssemblyInfo attributes</p>
@@ -94,10 +101,10 @@ There is also a tutorial about the <a href="../assemblyinfo.html">AssemblyInfo t
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '7', 7)" onmouseover="showTip(event, '7', 7)">
+          <code onmouseout="hideTip(event, '94', 94)" onmouseover="showTip(event, '94', 94)">
             CreateCSharpAssemblyInfo (...)
           </code>
-          <div class="tip" id="7">
+          <div class="tip" id="94">
             <strong>Signature:</strong>outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -108,14 +115,42 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '9', 9)" onmouseover="showTip(event, '9', 9)">
+          <code onmouseout="hideTip(event, '95', 95)" onmouseover="showTip(event, '95', 95)">
+            CreateCSharpAssemblyInfoWithConfig (...)
+          </code>
+          <div class="tip" id="95">
+            <strong>Signature:</strong>outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; config:AssemblyInfoFileConfig -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates a C# AssemblyInfo file with the given attributes and configuration.
+The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '96', 96)" onmouseover="showTip(event, '96', 96)">
             CreateFSharpAssemblyInfo (...)
           </code>
-          <div class="tip" id="9">
+          <div class="tip" id="96">
             <strong>Signature:</strong>outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc"><p>Creates a F# AssemblyInfo file with the given attributes.
+The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '97', 97)" onmouseover="showTip(event, '97', 97)">
+            CreateFSharpAssemblyInfoWithConfig (...)
+          </code>
+          <div class="tip" id="97">
+            <strong>Signature:</strong>outputFileName:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; config:AssemblyInfoFileConfig -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates a F# AssemblyInfo file with the given attributes and configuration.
 The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.</p>
 </td>
       </tr>
@@ -140,6 +175,7 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
                     <li><a href="../nuget.html">NuGet package restore</a></li>
                     <li><a href="../fxcop.html">Using FxCop in a build</a></li>
                     <li><a href="../assemblyinfo.html">Generating AssemblyInfo</a></li>
+                    <li><a href="../create-nuget-package.html">Create NuGet packages</a></li>
                     <li><a href="../specifictargets.html">Running specific targets</a></li>
                     <li><a href="../commandline.html">Running FAKE from command line</a></li>
                     <li><a href="../customtasks.html">Creating custom tasks</a></li>
