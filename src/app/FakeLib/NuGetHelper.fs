@@ -1,5 +1,6 @@
 ﻿[<AutoOpen>]
 /// Contains helper functions and task which allow to inspect, create and publish [NuGet](https://www.nuget.org/) packages.
+/// There is also a tutorial about [nuget package creating](../create-nuget-package.html) available.
 module Fake.NuGetHelper
 
 open System
@@ -226,7 +227,7 @@ let NuGetPublish setParams  =
 /// ## Parameters
 /// 
 ///  - `setParams` - Function used to manipulate the default NuGet parameters.
-///  - `nuspecFile` - The .nuspec file name.  
+///  - `nuspecFile` - The .nuspec file name.
 let NuGet setParams nuspecFile =
     traceStartTask "NuGet" nuspecFile
     let parameters = NuGetDefaults() |> setParams
