@@ -48,3 +48,8 @@ In the build script you need to create a target which executes the [NuGet task](
 				"myProject.nuspec"
 	)
 
+There are a couple of interesting things happening here. In this sample FAKE created:
+  * a copy of the .nuspec file
+  * filled in all the specified parameters
+  * created the NuGet package
+  * pushed it to [nuget.org](http://www.nuget.org).
