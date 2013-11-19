@@ -10,6 +10,9 @@ open System.Threading
 open System.Collections.Generic
 
 let startedProcesses = HashSet()
+let start (proc:Process) =
+    proc.Start() |> ignore
+    startedProcesses.Add proc.Id |> ignore
 
 /// [omit]
 let mutable redirectOutputToTrace = false 
@@ -41,44 +44,43 @@ type ProcessResult = {
 ///  - `errorF` - A function which will be called with the error log.
 ///  - `messageF` - A function which will be called with the message log.
 let ExecProcessWithLambdas configProcessStartInfoF (timeOut:TimeSpan) silent errorF messageF =
-    use p = new Process()
-    p.StartInfo.UseShellExecute <- false
-    configProcessStartInfoF p.StartInfo
-    platformInfoAction p.StartInfo
-    if isNullOrEmpty p.StartInfo.WorkingDirectory |> not then
-        if Directory.Exists p.StartInfo.WorkingDirectory |> not then
-            failwithf "Start of process %s failed. WorkingDir %s does not exist." p.StartInfo.FileName p.StartInfo.WorkingDirectory
+    use proc = new Process()
+    proc.StartInfo.UseShellExecute <- false
+    configProcessStartInfoF proc.StartInfo
+    platformInfoAction proc.StartInfo
+    if isNullOrEmpty proc.StartInfo.WorkingDirectory |> not then
+        if Directory.Exists proc.StartInfo.WorkingDirectory |> not then
+            failwithf "Start of process %s failed. WorkingDir %s does not exist." proc.StartInfo.FileName proc.StartInfo.WorkingDirectory
 
     if silent then
-        p.StartInfo.RedirectStandardOutput <- true
-        p.StartInfo.RedirectStandardError <- true
+        proc.StartInfo.RedirectStandardOutput <- true
+        proc.StartInfo.RedirectStandardError <- true
 
-        p.ErrorDataReceived.Add (fun d -> if d.Data <> null then errorF d.Data)
-        p.OutputDataReceived.Add (fun d -> if d.Data <> null then messageF d.Data)
+        proc.ErrorDataReceived.Add (fun d -> if d.Data <> null then errorF d.Data)
+        proc.OutputDataReceived.Add (fun d -> if d.Data <> null then messageF d.Data)
 
     try
-        if enableProcessTracing && (not <| p.StartInfo.FileName.EndsWith "fsi.exe" ) then 
-          tracefn "%s %s" p.StartInfo.FileName p.StartInfo.Arguments
+        if enableProcessTracing && (not <| proc.StartInfo.FileName.EndsWith "fsi.exe" ) then 
+          tracefn "%s %s" proc.StartInfo.FileName proc.StartInfo.Arguments
 
-        p.Start() |> ignore
-        startedProcesses.Add p.Id |> ignore
+        start proc
     with
     | exn -> failwithf "Start of process %s failed. %s" p.StartInfo.FileName exn.Message
 
     if silent then
-        p.BeginErrorReadLine()
-        p.BeginOutputReadLine()     
+        proc.BeginErrorReadLine()
+        proc.BeginOutputReadLine()     
   
     if timeOut = TimeSpan.MaxValue then
-        p.WaitForExit()
+        proc.WaitForExit()
     else
-        if not <| p.WaitForExit(int timeOut.TotalMilliseconds) then
+        if not <| proc.WaitForExit(int timeOut.TotalMilliseconds) then
             try
-                p.Kill()
-            with exn -> traceError <| sprintf "Could not kill process %s  %s after timeout." p.StartInfo.FileName p.StartInfo.Arguments
-            failwithf "Process %s %s timed out." p.StartInfo.FileName p.StartInfo.Arguments
+                proc.Kill()
+            with exn -> traceError <| sprintf "Could not kill process %s  %s after timeout." proc.StartInfo.FileName proc.StartInfo.Arguments
+            failwithf "Process %s %s timed out." proc.StartInfo.FileName proc.StartInfo.Arguments
     
-    p.ExitCode
+    proc.ExitCode
 
 /// Runs the given process and returns the process result.
 /// ## Parameters
@@ -167,50 +169,46 @@ let execProcess configProcessStartInfoF timeOut = ExecProcess configProcessStart
 
 /// Starts the given process and returns immediatly.
 let fireAndForget configProcessStartInfoF =
-    use p = new Process()
-    p.StartInfo.UseShellExecute <- false
-    configProcessStartInfoF p.StartInfo
+    use proc = new Process()
+    proc.StartInfo.UseShellExecute <- false
+    configProcessStartInfoF proc.StartInfo
   
     try
-        p.Start() |> ignore
-        startedProcesses.Add p.Id |> ignore
+        start proc
     with
     | exn -> failwithf "Start of process %s failed. %s" p.StartInfo.FileName exn.Message
 
 /// Runs the given process, waits for its completion and returns if it succeeded.
 let directExec configProcessStartInfoF =
-    use p = new Process()
-    p.StartInfo.UseShellExecute <- false
-    configProcessStartInfoF p.StartInfo
+    use proc = new Process()
+    proc.StartInfo.UseShellExecute <- false
+    configProcessStartInfoF proc.StartInfo
   
     try
-        p.Start() |> ignore
-        startedProcesses.Add p.Id |> ignore
+        start proc
     with
     | exn -> failwithf "Start of process %s failed. %s" p.StartInfo.FileName exn.Message
   
-    p.WaitForExit()
+    proc.WaitForExit()
     
-    p.ExitCode = 0
+    proc.ExitCode = 0
 
 /// Starts the given process and forgets about it.
 let StartProcess configProcessStartInfoF =
-   use p = new Process()
-   p.StartInfo.UseShellExecute <- false
+   use proc = new Process()
+   proc.StartInfo.UseShellExecute <- false
    configProcessStartInfoF p.StartInfo
-   p.Start() |> ignore
-   startedProcesses.Add p.Id |> ignore
+   start proc
 
 /// Sends a command to a windows service.
 let RunService command serviceName =
     tracefn "%s %s" command serviceName
-    let p = new Process()
-    p.StartInfo.FileName <- "sc";
-    p.StartInfo.Arguments <- sprintf "%s %s" command serviceName
-    p.StartInfo.RedirectStandardOutput <- true
-    p.StartInfo.UseShellExecute <- false
-    p.Start() |> ignore
-    startedProcesses.Add p.Id |> ignore
+    let proc = new Process()
+    proc.StartInfo.FileName <- "sc";
+    proc.StartInfo.Arguments <- sprintf "%s %s" command serviceName
+    proc.StartInfo.RedirectStandardOutput <- true
+    proc.StartInfo.UseShellExecute <- false
+    start proc
 
 /// Stops a windows service
 let StopService serviceName = 
@@ -388,8 +386,7 @@ let asyncShellExec (args:ExecParams) = async {
     let! exit = 
         proc.Exited 
         |> guard (fun () -> 
-                    proc.Start() |> ignore
-                    startedProcesses.Add proc.Id |> ignore
+                    start proc
                     proc.BeginErrorReadLine()
                     proc.BeginOutputReadLine())
         |> Async.AwaitEvent
