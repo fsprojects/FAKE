@@ -89,6 +89,7 @@ The following code shows such .nuspec file from the <a href="https://github.com/
 </td>
 <td class="snippet"><pre class="fssnip">
 <span class="i">Target</span> <span class="s">&quot;</span><span class="s">CreatePackage</span><span class="s">&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+    <span class="c">// Copy all the package files into a package folder</span>
     <span class="i">CopyFiles</span> <span class="i">packagingDir</span> <span class="i">allPackageFiles</span>
 
     <span class="i">NuGet</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> 
@@ -99,8 +100,7 @@ The following code shows such .nuspec file from the <a href="https://github.com/
             <span class="i">OutputPath</span> <span class="o">=</span> <span class="i">packagingRoot</span>
             <span class="i">Summary</span> <span class="o">=</span> <span class="i">projectSummary</span>
             <span class="i">WorkingDir</span> <span class="o">=</span> <span class="i">packagingDir</span>
-            <span class="i">Version</span> <span class="o">=</span> <span class="i">releaseNotes</span><span class="o">.</span><span class="i">AssemblyVersion</span>
-            <span class="i">ReleaseNotes</span> <span class="o">=</span> <span class="i">toLines</span> <span class="i">releaseNotes</span><span class="o">.</span><span class="i">Notes</span>
+            <span class="i">Version</span> <span class="o">=</span> <span class="i">buildVersion</span>
             <span class="i">AccessKey</span> <span class="o">=</span> <span class="i">myAccesskey</span>
             <span class="i">Publish</span> <span class="o">=</span> <span class="k">true</span> }) 
             <span class="s">&quot;</span><span class="s">myProject</span><span class="s">.</span><span class="s">nuspec</span><span class="s">&quot;</span>
