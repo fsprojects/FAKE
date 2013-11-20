@@ -27,7 +27,7 @@ The following code shows such .nuspec file from the [OctoKit](https://github.com
 	</package>
 
 The .nuspec template contains some placeholders like @build.number@ which can filled out later by the build script.
-It also contains some specifc information like the copyright which is not handled by FAKE.
+It also contains some specific information like the copyright which is not handled by FAKE.
 
 ## Setting up the build script
 
