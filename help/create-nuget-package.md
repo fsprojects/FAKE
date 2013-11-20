@@ -56,4 +56,4 @@ There are a couple of interesting things happening here. In this sample FAKE cre
  * a copy of the .nuspec file
  * filled in all the specified parameters
  * created the NuGet package
- * pushed it to [nuget.org](http://www.nuget.org).
+ * pushed it to [nuget.org](http://www.nuget.org) using the given `myAccessKey`.
