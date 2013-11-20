@@ -60,15 +60,15 @@ let xUnit setParams assemblies =
     let parameters = setParams XUnitDefaults
     assemblies
       |> Seq.iter (fun assembly ->
-          let commandLineBuilder =          
-              let fi = fileInfo assembly
-              let name = fi.Name
+          
+          let fi = fileInfo assembly
+          let name = fi.Name
 
-              let dir = 
-                if isNullOrEmpty parameters.OutputDir then String.Empty else
-                Path.GetFullPath parameters.OutputDir
+          let dir = 
+              if isNullOrEmpty parameters.OutputDir then String.Empty else
+              Path.GetFullPath parameters.OutputDir
                
-
+          let args =
               new StringBuilder()
                 |> appendFileNamesIfNotNull [assembly]
                 |> appendIfFalse parameters.ShadowCopy "/noshadow"
@@ -77,11 +77,12 @@ let xUnit setParams assemblies =
                 |> appendIfTrue parameters.XmlOutput (sprintf "/xml\" \"%s" (dir @@ (name + ".xml")))
                 |> appendIfTrue parameters.HtmlOutput (sprintf "/html\" \"%s" (dir @@ (name + ".html")))
                 |> appendIfTrue parameters.NUnitXmlOutput (sprintf "/nunit\" \"%s" (dir @@ (name + ".xml")))                              
-      
+                |> toText
+
           if not (execProcess3 (fun info ->  
               info.FileName <- parameters.ToolPath
               info.WorkingDirectory <- parameters.WorkingDir
-              info.Arguments <- commandLineBuilder.ToString()) parameters.TimeOut)
+              info.Arguments <- args) parameters.TimeOut)
           then
               failwith "xUnit test failed.")
                   
