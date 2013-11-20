@@ -129,7 +129,7 @@ let FxCop setParams (assemblies: string seq) =
   
   tracefn "FxCop command\n%s %s" param.ToolPath commandLineCommands
   let ok = 
-    execProcess3 (fun info ->  
+    0 = ExecProcess (fun info ->  
       info.FileName <- param.ToolPath
       if param.WorkingDir <> String.Empty then info.WorkingDirectory <- param.WorkingDir
       info.Arguments <- commandLineCommands) param.TimeOut

@@ -97,10 +97,10 @@ let private import connectionInfo fileName =
         sprintf "command=importobjects, file=\"%s\", logfile=\"%s\", servername=\"%s\", database=\"%s\"" 
             fi.FullName (FullName connectionInfo.TempLogFile) connectionInfo.ServerName connectionInfo.Database
 
-    if not (execProcess3 (fun info ->  
+    if 0 = ExecProcess (fun info ->  
         info.FileName <- connectionInfo.ToolPath
         info.WorkingDirectory <- connectionInfo.WorkingDir
-        info.Arguments <- args) connectionInfo.TimeOut)
+        info.Arguments <- args) connectionInfo.TimeOut
     then
         if deleteFile then fi.Delete()
         reportError "ImportFile failed" connectionInfo.TempLogFile
@@ -154,10 +154,10 @@ let CompileAll connectionInfo =
       sprintf "command=compileobjects, filter=\"Compiled=0\", logfile=\"%s\", servername=\"%s\", database=\"%s\"" 
         (FullName connectionInfo.TempLogFile) connectionInfo.ServerName connectionInfo.Database
 
-    if not (execProcess3 (fun info ->  
+    if 0 = ExecProcess (fun info ->  
         info.FileName <- connectionInfo.ToolPath
         info.WorkingDirectory <- connectionInfo.WorkingDir
-        info.Arguments <- args) connectionInfo.TimeOut)
+        info.Arguments <- args) connectionInfo.TimeOut
     then
         reportError "CompileAll failed" connectionInfo.TempLogFile
                   

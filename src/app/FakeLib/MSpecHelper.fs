@@ -48,7 +48,7 @@ let MSpec setParams assemblies =
     traceStartTask "MSpec" details
     let parameters = setParams MSpecDefaults
     
-    let commandLineBuilder =
+    let args =
         let html = isNotNullOrEmpty parameters.HtmlOutputDir
         let includes = parameters.IncludeTags |> separated ","
         let excludes = parameters.ExcludeTags |> separated ","
@@ -61,12 +61,13 @@ let MSpec setParams assemblies =
         |> appendIfTrue (isNotNullOrEmpty excludes) (sprintf "-x\" \"%s" excludes) 
         |> appendIfTrue (isNotNullOrEmpty includes) (sprintf "-i\" \"%s" includes) 
         |> appendFileNamesIfNotNull assemblies
+        |> toText
 
-    if not (execProcess3 (fun info ->  
+    if 0 = ExecProcess (fun info ->  
         info.FileName <- parameters.ToolPath
         info.WorkingDirectory <- parameters.WorkingDir
-        info.Arguments <- commandLineBuilder.ToString()) parameters.TimeOut)
+        info.Arguments <- args) parameters.TimeOut
     then
-        failwith "MSpec test failed."
+        failwithf "MSpec test failed on %s." details
                   
     traceEndTask "MSpec" details

@@ -50,10 +50,10 @@ let IIS (site : ServerManager -> Site)
 
 let AppCmd (command : string) = 
     System.Console.WriteLine("Applying {0} via appcmd.exe", command)
-    if not (execProcess3 (fun info ->  
+    if 0 = ExecProcess (fun info ->  
         info.FileName <- @"c:\windows\system32\inetsrv\appcmd.exe"
-        info.Arguments <- command) (System.TimeSpan.FromSeconds(30.)))
-    then failwithf "AppCmd.exe failed."
+        info.Arguments <- command) (System.TimeSpan.FromSeconds(30.))
+    then failwithf "AppCmd.exe %s failed." command
     ()
 
 let UnlockSection (configPath : string) =
