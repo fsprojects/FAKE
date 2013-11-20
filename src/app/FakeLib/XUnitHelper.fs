@@ -79,11 +79,11 @@ let xUnit setParams assemblies =
                 |> appendIfTrue parameters.NUnitXmlOutput (sprintf "/nunit\" \"%s" (dir @@ (name + ".xml")))                              
                 |> toText
 
-          if not (execProcess3 (fun info ->  
+          if 0 = ExecProcess (fun info ->  
               info.FileName <- parameters.ToolPath
               info.WorkingDirectory <- parameters.WorkingDir
-              info.Arguments <- args) parameters.TimeOut)
+              info.Arguments <- args) parameters.TimeOut
           then
-              failwith "xUnit test failed.")
+              failwithf "xUnit test failed on %s." details)
                   
     traceEndTask "xUnit" details

@@ -145,12 +145,12 @@ let getArguments outputFile primaryAssembly parameters =
 let ILMerge setParams outputFile primaryAssembly = 
     traceStartTask "ILMerge" primaryAssembly
     let parameters = setParams ILMergeDefaults
-
-    if not (execProcess3 (fun info ->  
+    let args = getArguments outputFile primaryAssembly parameters
+    if 0 = ExecProcess (fun info ->  
         info.FileName <- parameters.ToolPath
         info.WorkingDirectory <- null
-        info.Arguments <- getArguments outputFile primaryAssembly parameters) parameters.TimeOut)
+        info.Arguments <- args) parameters.TimeOut
     then
-        failwith "ILMerge failed."
+        failwithf "ILMerge %s failed." args
                     
     traceEndTask "ILMerge" primaryAssembly

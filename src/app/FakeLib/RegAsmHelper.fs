@@ -24,12 +24,13 @@ let RegAsmDefaults = {
 let RegAsm setParams lib = 
     traceStartTask "RegAsm" lib
     let parameters = setParams RegAsmDefaults
+    let args = sprintf "%s /tlb:%s" lib (replace ".dll" ".tlb" lib)
     
-    if not (execProcess3 (fun info ->  
+    if 0 = ExecProcess (fun info ->
         info.FileName <- parameters.ToolPath
         info.WorkingDirectory <- parameters.WorkingDir
-        info.Arguments <- sprintf "%s /tlb:%s" lib (replace ".dll" ".tlb" lib)) parameters.TimeOut)
+        info.Arguments <- args) parameters.TimeOut
     then
-        failwith "RegAsm failed."
+        failwithf "RegAsm %s failed." args
                   
     traceEndTask "RegAsm" lib

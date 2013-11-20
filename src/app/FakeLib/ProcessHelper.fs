@@ -128,6 +128,7 @@ let execProcessAndReturnExitCode configProcessStartInfoF timeOut = execProcess2 
 ///  - `configProcessStartInfoF` - A function which overwrites the default ProcessStartInfo.
 ///  - `timeOut` - The timeout for the process.
 /// [omit]
+[<Obsolete>]
 let execProcess3 configProcessStartInfoF timeOut = execProcessAndReturnExitCode configProcessStartInfoF timeOut = 0   
 
 /// Runs the given process and returns the exit code.

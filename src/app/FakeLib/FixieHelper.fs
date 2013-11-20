@@ -49,11 +49,11 @@ let Fixie setParams assemblies =
         |> appendFileNamesIfNotNull assemblies
         |> toText
 
-    if not (execProcess3 (fun info ->  
+    if 0 = ExecProcess (fun info ->  
         info.FileName <- parameters.ToolPath
         info.WorkingDirectory <- parameters.WorkingDir
-        info.Arguments <- args) parameters.TimeOut)
+        info.Arguments <- args) parameters.TimeOut
     then
-        failwith "Fixie test failed."
+        failwithf "Fixie test failed on %s." details
                   
     traceEndTask "Fixie" details

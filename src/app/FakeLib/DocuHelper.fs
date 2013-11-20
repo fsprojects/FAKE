@@ -40,9 +40,9 @@ let Docu setParams assemblies =
             " --output=" + (parameters.OutputPath |> FullName) +
             " --templates=" + (parameters.TemplatesPath |> FullName)
 
-    if not (execProcess3 (fun info ->  
-        info.FileName <- parameters.ToolPath |> FullName                 
-        info.Arguments <- args) parameters.TimeOut)
+    if 0 = ExecProcess (fun info ->
+        info.FileName <- parameters.ToolPath |> FullName
+        info.Arguments <- args) parameters.TimeOut
     then
         failwith "Documentation generation failed."
                     
