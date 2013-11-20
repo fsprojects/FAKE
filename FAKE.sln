@@ -43,6 +43,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "help", "help", "{564BD198-0
 		help\changelog.md = help\changelog.md
 		help\commandline.md = help\commandline.md
 		help\contributing.md = help\contributing.md
+		help\create-nuget-package.md = help\create-nuget-package.md
 		help\customtasks.md = help\customtasks.md
 		help\deploy.md = help\deploy.md
 		help\fxcop.md = help\fxcop.md
@@ -80,9 +81,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "teamcity", "teamcity", "{85
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "apidocs", "apidocs", "{E5A1C705-974C-4377-BAF3-55359A42BEF0}"
-	ProjectSection(SolutionItems) = preProject
-		help\create-nuget-package.md = help\create-nuget-package.md
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{A338C9EA-391D-405D-B480-D1B67C0C9369}"
 	ProjectSection(SolutionItems) = preProject
