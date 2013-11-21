@@ -20,7 +20,7 @@
 * Fake.Boot
 * New Globbing system
 * Tons of bug fixes
-* Using F# 3.0
+* Bundles F# 3.0 compiler and FSI.
 
 ## 1.72.0.0
 
