@@ -118,7 +118,8 @@ let CreateCSharpAssemblyInfoWithConfig outputFileName attributes config =
 
     let sourceLines =
       if generateClass
-        then  [ "    internal static class AssemblyVersionInformation {"
+        then  sourceLines @
+              [ "    internal static class AssemblyVersionInformation {"
                 sprintf "        internal const string Version = %s;" (getAssemblyVersionInfo attributes)
                 "    }" ]
         else  sourceLines
