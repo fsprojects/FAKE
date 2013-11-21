@@ -97,7 +97,7 @@ let private import connectionInfo fileName =
         sprintf "command=importobjects, file=\"%s\", logfile=\"%s\", servername=\"%s\", database=\"%s\"" 
             fi.FullName (FullName connectionInfo.TempLogFile) connectionInfo.ServerName connectionInfo.Database
 
-    if 0 = ExecProcess (fun info ->  
+    if 0 <> ExecProcess (fun info ->  
         info.FileName <- connectionInfo.ToolPath
         info.WorkingDirectory <- connectionInfo.WorkingDir
         info.Arguments <- args) connectionInfo.TimeOut
@@ -154,7 +154,7 @@ let CompileAll connectionInfo =
       sprintf "command=compileobjects, filter=\"Compiled=0\", logfile=\"%s\", servername=\"%s\", database=\"%s\"" 
         (FullName connectionInfo.TempLogFile) connectionInfo.ServerName connectionInfo.Database
 
-    if 0 = ExecProcess (fun info ->  
+    if 0 <> ExecProcess (fun info ->  
         info.FileName <- connectionInfo.ToolPath
         info.WorkingDirectory <- connectionInfo.WorkingDir
         info.Arguments <- args) connectionInfo.TimeOut

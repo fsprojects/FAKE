@@ -26,7 +26,7 @@ let RegAsm setParams lib =
     let parameters = setParams RegAsmDefaults
     let args = sprintf "%s /tlb:%s" lib (replace ".dll" ".tlb" lib)
     
-    if 0 = ExecProcess (fun info ->
+    if 0 <> ExecProcess (fun info ->
         info.FileName <- parameters.ToolPath
         info.WorkingDirectory <- parameters.WorkingDir
         info.Arguments <- args) parameters.TimeOut

@@ -40,7 +40,7 @@ let Docu setParams assemblies =
             " --output=" + (parameters.OutputPath |> FullName) +
             " --templates=" + (parameters.TemplatesPath |> FullName)
 
-    if 0 = ExecProcess (fun info ->
+    if 0 <> ExecProcess (fun info ->
         info.FileName <- parameters.ToolPath |> FullName
         info.Arguments <- args) parameters.TimeOut
     then

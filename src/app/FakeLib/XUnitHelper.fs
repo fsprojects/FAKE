@@ -79,7 +79,7 @@ let xUnit setParams assemblies =
                 |> appendIfTrue parameters.NUnitXmlOutput (sprintf "/nunit\" \"%s" (dir @@ (name + ".xml")))                              
                 |> toText
 
-          if 0 = ExecProcess (fun info ->  
+          if 0 <> ExecProcess (fun info ->  
               info.FileName <- parameters.ToolPath
               info.WorkingDirectory <- parameters.WorkingDir
               info.Arguments <- args) parameters.TimeOut

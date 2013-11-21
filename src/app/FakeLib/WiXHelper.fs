@@ -107,7 +107,7 @@ let Candle (parameters:WiXParams) wixScript =
             (separated " " parameters.AdditionalCandleArgs)
 
     tracefn "%s %s" parameters.ToolDirectory args
-    if 0 = ExecProcess (fun info ->  
+    if 0 <> ExecProcess (fun info ->  
         info.FileName <- tool
         info.WorkingDirectory <- null
         info.Arguments <- args) parameters.TimeOut
@@ -129,7 +129,7 @@ let Light (parameters:WiXParams) outputFile wixObj =
                 (separated " " parameters.AdditionalLightArgs)
 
     tracefn "%s %s" parameters.ToolDirectory args
-    if 0 = ExecProcess (fun info ->  
+    if 0 <> ExecProcess (fun info ->  
         info.FileName <- tool
         info.WorkingDirectory <- null
         info.Arguments <- args) parameters.TimeOut

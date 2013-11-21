@@ -50,7 +50,7 @@ let IIS (site : ServerManager -> Site)
 
 let AppCmd (command : string) = 
     System.Console.WriteLine("Applying {0} via appcmd.exe", command)
-    if 0 = ExecProcess (fun info ->  
+    if 0 <> ExecProcess (fun info ->  
         info.FileName <- @"c:\windows\system32\inetsrv\appcmd.exe"
         info.Arguments <- command) (System.TimeSpan.FromSeconds(30.))
     then failwithf "AppCmd.exe %s failed." command

@@ -30,7 +30,7 @@ let Install setParams setup =
     let parameters = setParams MSIDefaults
     let args = sprintf "/qb /l* %s /i %s" parameters.LogFile setup
 
-    if 0 = ExecProcess (fun info ->  
+    if 0 <> ExecProcess (fun info ->  
         info.FileName <- parameters.ToolPath
         info.WorkingDirectory <- parameters.WorkingDir
         info.Arguments <- args) parameters.TimeOut && parameters.ThrowIfSetupFails 
@@ -49,7 +49,7 @@ let Uninstall setParams setup =
     let parameters = setParams MSIDefaults
     let args = sprintf "/qb /l* %s /x %s" parameters.LogFile setup
     
-    if 0 = ExecProcess (fun info ->  
+    if 0 <> ExecProcess (fun info ->  
         info.FileName <- parameters.ToolPath
         info.WorkingDirectory <- parameters.WorkingDir
         info.Arguments <- args) parameters.TimeOut && parameters.ThrowIfSetupFails 
