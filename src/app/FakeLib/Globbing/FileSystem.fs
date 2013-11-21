@@ -1,5 +1,5 @@
 // Copied from https://github.com/colinbull/FSharp.Enterprise/blob/master/src/FSharp.Enterprise/FileSystem.fs
-/// Experimental Globbing - be careful we will break this.
+[<AutoOpen>]
 module Fake.FileSystem
     
 open System
@@ -93,3 +93,15 @@ let inline (!!) x = Include x
 /// Include prefix operator
 [<Obsolete("!+ is obsolete - use !! instead")>]
 let inline (!+) x = Include x
+
+/// Looks for a tool in all subfolders - returns the tool file name.
+let findToolInSubPath toolname defaultPath =
+    let tools = !! ("./**/" @@ toolname) 
+    if Seq.isEmpty tools then defaultPath @@ toolname else Seq.head tools
+
+/// Looks for a tool in all subfolders - returns the folder where the tool was found.
+let findToolFolderInSubPath toolname defaultPath =
+    let tools = !! ("./**/" @@ toolname) 
+    if Seq.isEmpty tools then defaultPath else 
+    let fi = fileInfo (Seq.head tools)
+    fi.Directory.FullName
