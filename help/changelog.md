@@ -1,3 +1,27 @@
+## 2.2
+
+* Created new packages on nuget:
+	* Fake.Deploy - allows to use FAKE scripts in deployment.
+	* Fake.Experimental - new stuff where we aren't sure if we want to support it.
+	* Fake.Gallio - contains the Gallio runner support.
+	* Fake.SQL - Contains tasks for SQL Server.
+	* Fake.Core - All the basic features and FAKE.exe.
+* Created documentation and tutorials - see http://fsharp.github.io/FAKE/
+* New tasks:
+	* Added ReleaseNotes parser
+	* Added Dynamics NAV helper
+	* Added support for MSTest and fixie
+	* Parallel NUnit task
+	* New AssemblyInfoFile task
+	* Support for Octopus Deploy
+	* Support for MAGE
+	* Suppport for Xamarin's xpkg
+	* Many other new tasks
+* Fake.Boot
+* New Globbing system
+* Tons of bug fixes
+* Using F# 3.0
+
 ## 1.72.0.0
 
 * "RestorePackages" allows to restore nuget packages
