@@ -302,22 +302,30 @@ let findFile dirs file =
 
 /// Returns the AppSettings for the key - Splitted on ;
 /// [omit]
-let appSettings (key:string) = 
-    try
-        System.Configuration.ConfigurationManager.AppSettings.[key].Split(';')
-    with
-    | exn -> [||]
+let appSettings (key:string) (fallbackValue:string) =
+    let value =
+        let setting =
+            try
+                System.Configuration.ConfigurationManager.AppSettings.[key]
+            with
+            | exn -> ""
+        
+        if not (isNullOrWhiteSpace(setting)) then
+            setting
+        else fallbackValue
+
+    value.Split([|';'|], StringSplitOptions.RemoveEmptyEntries)
 
 /// Tries to find the tool via AppSettings. If no path has the right tool we are trying the PATH system variable.
 /// [omit]
-let tryFindPath settingsName tool = 
-    let paths = appSettings settingsName
+let tryFindPath settingsName fallbackValue tool = 
+    let paths = appSettings settingsName fallbackValue
     tryFindFile paths tool
 
 /// Tries to find the tool via AppSettings. If no path has the right tool we are trying the PATH system variable.
 /// [omit]
-let findPath settingsName tool =
-    match tryFindPath settingsName tool with
+let findPath settingsName fallbackValue tool =
+    match tryFindPath settingsName fallbackValue tool with
     | Some file -> file
     | None -> tool
 

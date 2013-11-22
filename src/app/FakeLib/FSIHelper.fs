@@ -8,12 +8,14 @@ open System.Linq
 open System.Diagnostics
 open System.Threading
 
+let private FSIPath = @".\tools\FSharp\;.\lib\FSharp\;[ProgramFilesX86]\Microsoft SDKs\F#\3.1\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\3.0\Framework\v4.0;[ProgramFiles]\Microsoft F#\v4.0\;[ProgramFilesX86]\Microsoft F#\v4.0\;[ProgramFiles]\FSharp-2.0.0.0\bin\;[ProgramFilesX86]\FSharp-2.0.0.0\bin\;[ProgramFiles]\FSharp-1.9.9.9\bin\;[ProgramFilesX86]\FSharp-1.9.9.9\bin\"
+
 /// The path to the F# Interactive tool.
 let fsiPath =
     let ev = environVar "FSI"
     if not (isNullOrEmpty ev) then ev else
     if isUnix then
-        let paths = appSettings "FSIPath"
+        let paths = appSettings "FSIPath" FSIPath
         // The standard name on *nix is "fsharpi"
         match tryFindFile paths "fsharpi" with
         | Some file -> file
@@ -26,7 +28,7 @@ let fsiPath =
         let dir = Path.GetDirectoryName fullAssemblyPath
         let fi = fileInfo (Path.Combine(dir, "fsi.exe"))
         if fi.Exists then fi.FullName else
-        findPath "FSIPath" "fsi.exe"
+        findPath "FSIPath" FSIPath "fsi.exe"
 
 let private FsiStartInfo script workingDirectory extraFsiArgs args =
     (fun (info: ProcessStartInfo) ->
