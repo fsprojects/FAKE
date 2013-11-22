@@ -5,7 +5,6 @@ open System
 open System.Configuration
 open System.IO
 open System.Net
-open Fake
 open Fake.FakeDeployAgentHelper
 
 /// Allows to specify a deployment version
@@ -28,23 +27,23 @@ let mutable deploymentRootDir = "deployments/"
 
 /// Retrieves the NuSpec information for all active releases.
 let getActiveReleases dir = 
-    Files [dir] [deploymentRootDir @@ "**/active/*.nupkg"] []
+    !! (dir @@ deploymentRootDir @@ "**/active/*.nupkg")
     |> Seq.map GetMetaDataFromPackageFile
 
 /// Retrieves the NuSpec information for the active release of the given app.
 let getActiveReleaseFor dir (app : string) = 
-    Files [dir] [deploymentRootDir + app + "/active/*.nupkg"] []
+    !! (dir @@ deploymentRootDir @@ app @@ "/active/*.nupkg")
     |> Seq.map GetMetaDataFromPackageFile
     |> Seq.head
 
 /// Retrieves the NuSpec information of all releases.
 let getAllReleases dir =
-    Files [dir] [deploymentRootDir @@ "**/*.nupkg"] [] 
+    !! (dir @@ deploymentRootDir @@ "**/*.nupkg")
     |> Seq.map GetMetaDataFromPackageFile
 
 /// Retrieves the NuSpec information for all releases of the given app.
 let getAllReleasesFor dir (app : string) = 
-    Files [dir] [deploymentRootDir + app + "/**/*.nupkg"] [] 
+    !! (dir @@ deploymentRootDir @@ app @@ "/**/*.nupkg")
     |> Seq.map GetMetaDataFromPackageFile
 
 /// Returns statistics about the machine environment.

@@ -20,9 +20,8 @@ let rec private buildPaths acc (input : SearchOption list) =
     match input with
     | [] -> acc
     | Directory(name) :: t -> 
-        match List.tryPick (exists name) acc with
-        | Some(dir) -> buildPaths [dir] t 
-        | None -> [] 
+        let subDirs = List.choose (exists name) acc
+        buildPaths subDirs t
     | Recursive :: t ->
         let dirs = 
             Seq.collect (fun dir -> Directory.EnumerateDirectories(dir, "*", SearchOption.AllDirectories)) acc
@@ -81,6 +80,7 @@ let Include x = { BaseDirectory = DefaultBaseDir; Includes = [x]; Excludes = []}
 
 /// Sets a directory as baseDirectory for fileIncludes. 
 let SetBaseDir (dir:string) (fileIncludes:FileIncludes) = fileIncludes.SetBaseDirectory dir
+
 /// Add Include operator
 let inline (++) (x:FileIncludes) pattern = x.And pattern
 
@@ -105,3 +105,20 @@ let findToolFolderInSubPath toolname defaultPath =
     if Seq.isEmpty tools then defaultPath else 
     let fi = fileInfo (Seq.head tools)
     fi.Directory.FullName
+
+/// Includes a single pattern and scans the files - !! x = AllFilesMatching x
+[<Obsolete>]
+let AllFilesMatching x = Include x
+
+/// Lazy scan for include files.
+/// Will be processed at the time when needed.
+[<Obsolete("FileIncludes implement IEnumerable<string> so explicit scanning is not needed")>]
+let Scan files = files
+
+/// Adds a directory as baseDirectory for fileIncludes.
+[<Obsolete>]
+let AddBaseDir dir fileInclude = SetBaseDir dir fileInclude
+      
+/// Scans immediately for include files - all matching files will be memoized.
+[<Obsolete("FileIncludes implement IEnumerable<string> so explicit scanning is not needed. Just use Seq.toList")>]
+let ScanImmediately includes = includes |> Seq.toList
