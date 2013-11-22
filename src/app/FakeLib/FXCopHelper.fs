@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+/// Contains a task which can be used to run [FxCop](http://msdn.microsoft.com/en-us/library/bb429476(v=vs.80).aspx) on .NET assemblies. There is also a [tutorial](../fxcop.html) for this task available.
 module Fake.FxCopHelper
 
 open System
@@ -8,6 +9,7 @@ open System.Text
 open System.Text.RegularExpressions
 open Microsoft.Win32
 
+/// The FxCop error reporting level
 type FxCopErrorLevel =
 | Warning = 5
 | CriticalWarning = 4
@@ -16,32 +18,34 @@ type FxCopErrorLevel =
 | ToolError = 1
 | DontFailBuild = 0
   
-type FxCopParams =
- { ApplyOutXsl:bool;
-   DirectOutputToConsole: bool;
-   DependencyDirectories: string seq;
-   ImportFiles: string seq;
-   RuleLibraries: string seq;
-   Rules: string seq;
-   CustomRuleset: string;
-   ConsoleXslFileName: string;
-   ReportFileName: string;
-   OutputXslFileName: string;
-   PlatformDirectory: string;
-   ProjectFile: string;
-   IncludeSummaryReport: bool;
-   TypeList: string seq;
-   SaveResultsInProjectFile: bool;
-   WorkingDir: string;
-   Verbose: bool;
-   FailOnError: FxCopErrorLevel;
-   TimeOut: TimeSpan;
-   ToolPath:string;
-   ForceOutput: bool}
+/// Parameter type for the FxCop tool
+type FxCopParams = { 
+    ApplyOutXsl:bool
+    DirectOutputToConsole: bool
+    DependencyDirectories: string seq
+    ImportFiles: string seq
+    RuleLibraries: string seq
+    Rules: string seq
+    CustomRuleset: string
+    ConsoleXslFileName: string
+    ReportFileName: string
+    OutputXslFileName: string
+    PlatformDirectory: string
+    ProjectFile: string
+    IncludeSummaryReport: bool
+    TypeList: string seq
+    SaveResultsInProjectFile: bool
+    WorkingDir: string
+    Verbose: bool
+    FailOnError: FxCopErrorLevel
+    TimeOut: TimeSpan
+    ToolPath:string
+    ForceOutput: bool }
  
+/// This checks the result file with some XML queries for errors
+/// [omit]
 let checkForErrors resultFile =
-  // This version checks the result file with some Xml queries see
-  // http://blogs.conchango.com/johnrayner/archive/2006/10/05/Getting-FxCop-to-break-the-build.aspx
+  // original version found at http://blogs.conchango.com/johnrayner/archive/2006/10/05/Getting-FxCop-to-break-the-build.aspx
   let FxCopCriticalWarnings = 0
   let getErrorValue s =
     let found,value = XMLRead_Int false resultFile String.Empty String.Empty (sprintf "string(count(//Issue[@Level='%s']))" s)
@@ -52,26 +56,26 @@ let checkForErrors resultFile =
   getErrorValue "CriticalWarning",
   getErrorValue "Warning"
 
-/// FxCop Default params  
-let FxCopDefaults = 
-  { ApplyOutXsl = false;
-    DirectOutputToConsole = true;
-    DependencyDirectories = Seq.empty;
-    ImportFiles  = Seq.empty;
-    RuleLibraries = Seq.empty;
-    Rules = Seq.empty;
-    CustomRuleset = String.Empty;
-    ConsoleXslFileName = String.Empty;
-    ReportFileName = currentDirectory @@ "FXCopResults.html";
-    OutputXslFileName = String.Empty;
-    PlatformDirectory = String.Empty;
-    ProjectFile = String.Empty;
-    IncludeSummaryReport = true;
-    TypeList = Seq.empty;
-    SaveResultsInProjectFile = false;
-    WorkingDir = currentDirectory;
-    Verbose = true;
-    FailOnError = FxCopErrorLevel.DontFailBuild;
+/// FxCop Default parameters
+let FxCopDefaults = {
+    ApplyOutXsl = false
+    DirectOutputToConsole = true
+    DependencyDirectories = Seq.empty
+    ImportFiles  = Seq.empty
+    RuleLibraries = Seq.empty
+    Rules = Seq.empty
+    CustomRuleset = String.Empty
+    ConsoleXslFileName = String.Empty
+    ReportFileName = currentDirectory @@ "FXCopResults.html"
+    OutputXslFileName = String.Empty
+    PlatformDirectory = String.Empty
+    ProjectFile = String.Empty
+    IncludeSummaryReport = true
+    TypeList = Seq.empty
+    SaveResultsInProjectFile = false
+    WorkingDir = currentDirectory
+    Verbose = true
+    FailOnError = FxCopErrorLevel.DontFailBuild
     TimeOut = TimeSpan.FromMinutes 5.
     ToolPath = ProgramFilesX86 @@ @"Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\FxCopCmd.exe"
     ForceOutput = false }
@@ -125,7 +129,7 @@ let FxCop setParams (assemblies: string seq) =
   
   tracefn "FxCop command\n%s %s" param.ToolPath commandLineCommands
   let ok = 
-    execProcess3 (fun info ->  
+    0 = ExecProcess (fun info ->  
       info.FileName <- param.ToolPath
       if param.WorkingDir <> String.Empty then info.WorkingDirectory <- param.WorkingDir
       info.Arguments <- commandLineCommands) param.TimeOut
@@ -139,7 +143,7 @@ let FxCop setParams (assemblies: string seq) =
     let criticalErrors,errors,criticalWarnings,warnings = checkForErrors param.ReportFileName
     if criticalErrors <> 0 && param.FailOnError >= FxCopErrorLevel.CriticalError then
       failwithf "FxCop found %d critical errors." criticalErrors
-    if criticalErrors <> 0 && param.FailOnError >= FxCopErrorLevel.Error then
+    if errors <> 0 && param.FailOnError >= FxCopErrorLevel.Error then
       failwithf "FxCop found %d errors." errors      
     if criticalWarnings <> 0 && param.FailOnError >= FxCopErrorLevel.CriticalWarning then
       failwithf "FxCop found %d critical warnings." criticalWarnings

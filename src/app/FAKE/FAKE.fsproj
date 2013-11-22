@@ -9,24 +9,28 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>FAKE</RootNamespace>
     <AssemblyName>FAKE</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Name>FAKE</Name>
     <TargetFrameworkProfile />
-    <FscToolPath>..\..\..\tools\FSharp\</FscToolPath>
+    <FSharpTargetsPath Condition="'$(FSharpTargetsPath)' == '' And '$(OS)' != 'Windows_NT'">..\..\..\tools\FSharp\Microsoft.FSharp.Targets</FSharpTargetsPath>
+    <FSharpTargetsPath Condition="'$(FSharpTargetsPath)' == '' And '$(VisualStudioVersion)' != '11.0' And Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.1\Framework\v4.0\Microsoft.FSharp.Targets')">$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.1\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
+    <FSharpTargetsPath Condition="'$(FSharpTargetsPath)' == '' And Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets')">$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
+    <FSharpTargetsPath Condition="'$(FSharpTargetsPath)' == ''">..\..\..\tools\FSharp\Microsoft.FSharp.Targets</FSharpTargetsPath>
+    <FscToolPath Condition="'$(FSharpTargetsPath)' == '..\..\..\tools\FSharp\Microsoft.FSharp.Targets'">..\..\..\tools\FSharp\</FscToolPath>
+    <FscToolExe>Fsc.exe</FscToolExe>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\build\</OutputPath>
+    <OutputPath>bin\Debug</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>3</WarningLevel>
     <StartAction>Project</StartAction>
     <StartProgram>C:\sources\FAKE\tools\FAKE\FAKE.exe</StartProgram>
-    <StartWorkingDirectory>
-    </StartWorkingDirectory>
+    <StartWorkingDirectory>C:\code\github\TeamCityTest</StartWorkingDirectory>
     <StartArguments>build.fsx</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -49,7 +53,8 @@
     <Content Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="FSharp.Core">
+    <Reference Include="FSharp.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Private>False</Private>
       <HintPath>..\..\..\tools\FSharp\FSharp.Core.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
@@ -65,12 +70,5 @@
       <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="..\..\..\tools\FSharp\Microsoft.FSharp.Targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-	     Other similar extension points exist, see Microsoft.Common.targets.
-	<Target Name="BeforeBuild">
-	</Target>
-	<Target Name="AfterBuild">
-	</Target>
-	-->
+  <Import Project="$(FSharpTargetsPath)" />
 </Project>

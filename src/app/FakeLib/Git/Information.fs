@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+/// Contains helper functions which can be used to retrieve status information from git.
 module Fake.Git.Information
 
 open Fake

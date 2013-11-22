@@ -9,6 +9,7 @@ test/
 !Samples/ContinuousDeploymentWebsite/src/test/
 obj/
 build/
+build-bundles/
 nuget/
 helpBuild/
 Publish/
@@ -32,13 +33,14 @@ Samples/ContinuousDeploymentWebsite/src/app/Fake_WebSite/Properties/AssemblyInfo
 *.ncrunchsolution
 Samples/ContinuousDeploymentWebsite/deployments
 tools/FAKE/
-src/deploy.web/Fake.Deploy.Web/App_Data/RavenDB/*
-src/deploy.web/Fake.Deploy.Web/App_Data/Package_Temp/*
+src/deploy.web/Fake.Deploy.Web/App_Data/*
+src/deploy.web/Fake.Deploy.Web/Logs/*
 packages/
-Samples/Calculator/deploy/
-Samples/Calculator/tools/FAKE/
 *.orig
 deploy/
 Samples/ContinuousDeploymentWebsite/tools/
+src/deploy.web/Fake.Deploy.Web/Logs/Fake.Deploy.Web.log
 gh-pages/
 tools/FSharp.Formatting
+tools/Microsoft.AspNet.Razor
+tools/RazorEngine

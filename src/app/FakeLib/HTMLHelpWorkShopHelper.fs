@@ -1,12 +1,14 @@
 ﻿[<AutoOpen>]
+/// Contains a task which allows to use [HTML Help Workshop](http://msdn.microsoft.com/en-us/library/windows/desktop/ms670169(v=vs.85).aspx) in order to compile a help project.
 module Fake.HTMLHelpWorkShopHelper
 
 open System
 
-/// <summary>Uses the HTML Help Workshop to compile a help project.</summary>
-/// <param name="helpCompiler">The filename of the HTML Help WorkShop tool</param>
-/// <param name="projectFile">the fileName of the help project</param>
-/// <returns>The generated files (fileNames)</returns>
+/// Uses the HTML Help Workshop to compile a help project and returns the generated file names of the generated files.
+/// ## Parameters
+///
+///  - `helpCompiler` - The filename of the HTML Help WorkShop tool.
+///  - `projectFile` - The fileName of the help project.
 let CompileHTMLHelpProject helpCompiler projectFile =
     traceStartTask "HTMLHelpWorkshop" projectFile
     let fi = new IO.FileInfo(projectFile)

@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+/// Contains helper functions which allow to deal with git's staging area.
 module Fake.Git.Staging
 
 /// Adds a file to the staging area

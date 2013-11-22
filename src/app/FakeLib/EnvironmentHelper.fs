@@ -1,59 +1,65 @@
 ﻿[<AutoOpen>]
+/// This module contains functions which allow to read and write environment variables and build parameters
 module Fake.EnvironmentHelper
 
 open System
 open System.IO
 open System.Configuration
 open System.Diagnostics
+open System.Collections.Generic
+open System.Text
+open System.Text.RegularExpressions
+open Microsoft.Win32
 
+/// Type alias for System.EnvironmentVariableTarget
 type EnvironTarget = EnvironmentVariableTarget
 
-/// Retrieves the EnvironmentVariable
-let environVar = Environment.GetEnvironmentVariable
+/// Retrieves the environment variable with the given name
+let environVar name = Environment.GetEnvironmentVariable name
 
-/// Combines two path strings
-let inline combinePaths path1 (path2:string) = Path.Combine(path1,path2.TrimStart [|'\\'|])
+/// Combines two path strings using Path.Combine
+let inline combinePaths path1 (path2:string) = Path.Combine(path1,path2.TrimStart [|'\\'; '/'|])
 
-/// Combines two path strings
+/// Combines two path strings using Path.Combine
 let inline (@@) path1 path2 = combinePaths path1 path2
 
-/// Retrieves the EnvironmentVariable
+/// Retrieves all environment variables from the given target
 let environVars target = 
   [for e in Environment.GetEnvironmentVariables target ->
      let e1 = e :?> Collections.DictionaryEntry
      e1.Key,e1.Value]
 
-/// Sets the Environment variable
-let setEnvironVar environVar value = Environment.SetEnvironmentVariable(environVar,value) 
+/// Sets the environment variable with the given name
+let setEnvironVar name value = Environment.SetEnvironmentVariable(name,value) 
 
-/// Retrieves the EnvironmentVariable or a default
+/// Retrieves the environment variable with the given name or returns the default if no value was set
 let environVarOrDefault name defaultValue =
     let var = environVar name
-    if String.IsNullOrEmpty var  then defaultValue else var
+    if String.IsNullOrEmpty var then defaultValue else var
 
 /// Retrieves the environment variable or None
 let environVarOrNone name =
     let var = environVar name
     if String.IsNullOrEmpty var  then None else Some var
 
-/// Retrieves a ApplicationSettings variable
+/// Retrieves the application settings variable with the given name
 let appSetting (name:string) = ConfigurationManager.AppSettings.[name]
 
-/// Returns true if the buildParam is set and otherwise false
+/// Returns if the build parameter with the given name was set
 let inline hasBuildParam name = environVar name <> null
 
-/// Returns the value of the buildParam if it is set and otherwise "" 
-let inline getBuildParam name = if hasBuildParam name then environVar name else String.Empty
+/// Returns the value of the build parameter with the given name was set if it was set and otherwise the given default value
+let inline getBuildParamOrDefault name defaultParam = if hasBuildParam name then environVar name else defaultParam
 
-/// Returns the value of the buildParam if it is set and otherwise the default
-let inline getBuildParamOrDefault name defaultParam = if hasBuildParam name then getBuildParam name else defaultParam
+/// Returns the value of the build parameter with the given name if it was set and otherwise an empty string
+let inline getBuildParam name = getBuildParamOrDefault name String.Empty
 
-/// The path of Program Files - might be x64 on x64 machine
+/// The path of the "Program Files" folder - might be x64 on x64 machine
 let ProgramFiles = Environment.GetFolderPath Environment.SpecialFolder.ProgramFiles
 
 /// The path of Program Files (x86)
-/// I think this covers all cases where PROCESSOR_ARCHITECTURE may misreport and the case where the other variable 
-/// PROCESSOR_ARCHITEW6432 can be null
+/// It seems this covers all cases where PROCESSOR\_ARCHITECTURE may misreport and the case where the other variable 
+/// PROCESSOR\_ARCHITEW6432 can be null
 let ProgramFilesX86 =
     let wow64 = (environVar "PROCESSOR_ARCHITEW6432")
     let globalArch = (environVar "PROCESSOR_ARCHITECTURE")
@@ -63,7 +69,7 @@ let ProgramFilesX86 =
     | _ ->
         environVar "ProgramFiles"
 
-/// System root environment variable. Typically "C:\Windows"
+/// The system root environment variable. Typically "C:\Windows"
 let SystemRoot = environVar "SystemRoot"
 
 /// Determines if the current system is an Unix system
@@ -81,11 +87,13 @@ let isLinux =
 /// Todo: Detect mono on windows
 let isMono = isLinux || isUnix || isMacOS
 
+/// Modifies the ProcessStartInfo according to the platform semantics
 let platformInfoAction (psi:ProcessStartInfo) =
-    if isUnix && psi.FileName.EndsWith ".exe" then
-      psi.Arguments <- psi.FileName + " " + psi.Arguments
-      psi.FileName <- "mono"  
+    if isMono && psi.FileName.EndsWith ".exe" then
+        psi.Arguments <- psi.FileName + " " + psi.Arguments
+        psi.FileName <- "mono"  
 
+/// The path of the current target platform
 let mutable TargetPlatformPrefix = 
     let (<|>) a b = match a with None -> b | _ -> a
     environVarOrNone "FrameworkDir32"
@@ -101,9 +109,9 @@ let mutable TargetPlatformPrefix =
 /// Gets the local directory for the given target platform
 let getTargetPlatformDir platformVersion = 
     if Directory.Exists(TargetPlatformPrefix + "64") then 
-        Path.Combine(TargetPlatformPrefix + "64",platformVersion) 
+        (TargetPlatformPrefix + "64") @@ platformVersion
     else 
-        Path.Combine(TargetPlatformPrefix,platformVersion)
+        TargetPlatformPrefix @@ platformVersion
 
 /// The path to the personal documents
 let documentsFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
@@ -112,14 +120,81 @@ let documentsFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocu
 let directorySeparator = Path.DirectorySeparatorChar.ToString()
 
 /// Convert the given windows path to a path in the current system
-let convertWindowsToCurrentPath (w:string) = 
-    if (w.Length > 2 && w.[1] = ':' && w.[2] = '\\') then
-        w
+let convertWindowsToCurrentPath (windowsPath:string) = 
+    if (windowsPath.Length > 2 && windowsPath.[1] = ':' && windowsPath.[2] = '\\') then
+        windowsPath
     else
-        w.Replace(@"\",directorySeparator)
+        windowsPath.Replace(@"\",directorySeparator)
 
-/// The IO encoding from build parameter
+/// Contains the IO encoding which is given via build parameter "encoding" or the default encoding if no encoding was specified.
 let encoding =
-  match getBuildParamOrDefault "encoding" "default" with
-  | "default" -> Text.Encoding.Default
-  | enc -> Text.Encoding.GetEncoding(enc)
+    match getBuildParamOrDefault "encoding" "default" with
+    | "default" -> Text.Encoding.Default
+    | enc -> Text.Encoding.GetEncoding(enc)
+
+/// Returns a sequence with all installed .NET framework versions
+let getInstalledDotNetFrameworks() = 
+    let frameworks = new ResizeArray<_>()
+    try
+        let matches = 
+            Registry
+              .LocalMachine
+              .OpenSubKey(@"SOFTWARE\Microsoft\NET Framework Setup\NDP")
+              .GetSubKeyNames()
+            |> Seq.filter (fun keyname -> Regex.IsMatch(keyname, @"^v\d"))
+
+        for item in matches do
+            match item with
+            | "v4.0" -> ()
+            | "v4" ->
+                let key = @"SOFTWARE\Microsoft\NET Framework Setup\NDP\" + item
+                Registry.LocalMachine.OpenSubKey(key).GetSubKeyNames()
+                |> Seq.iter (fun subkey -> 
+                                let key = @"SOFTWARE\Microsoft\NET Framework Setup\NDP\" + item + @"\" + subkey
+                                let version = Registry.LocalMachine.OpenSubKey(key).GetValue("Version").ToString();
+                                frameworks.Add(String.Format("{0} ({1})", version, subkey)))
+            | "v1.1.4322" -> frameworks.Add item
+            | _ ->
+                    let key = @"SOFTWARE\Microsoft\NET Framework Setup\NDP\" + item;
+                    frameworks.Add(Registry.LocalMachine.OpenSubKey(key).GetValue("Version").ToString());
+        frameworks :> seq<_>
+    with e ->
+        frameworks :> seq<_> //Probably a new unrecognisable version
+
+/// A record which allows to display lots of machine specific information like machine name, processor count etc.
+type MachineDetails = {
+    ProcessorCount : int
+    Is64bit : bool
+    OperatingSystem : string
+    MachineName : string
+    NETFrameworks : seq<string>
+    UserDomainName : string
+    AgentVersion: string
+    DriveInfo: seq<string>
+}
+
+/// Retrieves information about the hard drives
+let getDrivesInfo() =
+    Environment.GetLogicalDrives()
+    |> Seq.map(fun d -> IO.DriveInfo(d))
+    |> Seq.filter(fun d -> d.IsReady)
+    |> Seq.map(fun d -> 
+        sprintf "%s has %0.1fGB free of %0.1fGB"
+            (d.Name.Replace(":\\", "")) 
+            (Convert.ToDouble(d.TotalFreeSpace) / (1024.*1024.*1024.))
+            (Convert.ToDouble(d.TotalSize) / (1024.*1024.*1024.))
+    )
+
+/// Retrieves lots of machine specific information like machine name, processor count etc.
+let getMachineEnvironment() = 
+     {
+        ProcessorCount = Environment.ProcessorCount
+        Is64bit = Environment.Is64BitOperatingSystem
+        OperatingSystem = Environment.OSVersion.ToString()
+        MachineName = Environment.MachineName
+        NETFrameworks = getInstalledDotNetFrameworks()
+        UserDomainName = Environment.UserDomainName
+        AgentVersion = sprintf "%A" ((System.Reflection.Assembly.GetAssembly(typedefof<MachineDetails>)).GetName().Version)
+        DriveInfo = getDrivesInfo()
+     }  
+     

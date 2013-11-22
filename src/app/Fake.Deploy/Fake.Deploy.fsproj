@@ -9,17 +9,22 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Fake.Deploy</RootNamespace>
     <AssemblyName>Fake.Deploy</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <Name>Fake.Deploy</Name>
-    <FscToolPath>..\..\..\tools\FSharp\</FscToolPath>
+    <FSharpTargetsPath Condition="'$(FSharpTargetsPath)' == '' And '$(OS)' != 'Windows_NT'">..\..\..\tools\FSharp\Microsoft.FSharp.Targets</FSharpTargetsPath>
+    <FSharpTargetsPath Condition="'$(FSharpTargetsPath)' == '' And '$(VisualStudioVersion)' != '11.0' And Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.1\Framework\v4.0\Microsoft.FSharp.Targets')">$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.1\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
+    <FSharpTargetsPath Condition="'$(FSharpTargetsPath)' == '' And Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets')">$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
+    <FSharpTargetsPath Condition="'$(FSharpTargetsPath)' == ''">..\..\..\tools\FSharp\Microsoft.FSharp.Targets</FSharpTargetsPath>
+    <FscToolPath Condition="'$(FSharpTargetsPath)' == '..\..\..\tools\FSharp\Microsoft.FSharp.Targets'">..\..\..\tools\FSharp\</FscToolPath>
+    <FscToolExe>Fsc.exe</FscToolExe>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\build\</OutputPath>
+    <OutputPath>bin\Debug</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>3</WarningLevel>
@@ -28,25 +33,18 @@
     <StartArguments>
     </StartArguments>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <Tailcalls>true</Tailcalls>
-    <OutputPath>..\..\..\build\</OutputPath>
+    <OutputPath>..\..\..\build\FAKE.Deploy\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
-    <DocumentationFile>
-    </DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <OutputPath>..\..\..\tools\Fake\</OutputPath>
-    <StartArguments>
-    </StartArguments>
-  </PropertyGroup>
-  <Import Project="..\..\..\tools\FSharp\Microsoft.FSharp.Targets" />
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="DeploymentHelper.fs" />
+    <Compile Include="DeploymentAgent.fs" />
     <Compile Include="Services.fs" />
     <Compile Include="Installers.fs" />
     <Compile Include="Program.fs" />
@@ -54,7 +52,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="FSharp.Core">
+    <Reference Include="FSharp.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Private>False</Private>
       <HintPath>..\..\..\tools\FSharp\FSharp.Core.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
@@ -62,7 +61,7 @@
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\packages\Newtonsoft.Json.4.5.11\lib\net35\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -70,17 +69,16 @@
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceProcess" />
+    <ProjectReference Include="..\Fake.Deploy.Lib\Fake.Deploy.Lib.fsproj">
+      <Name>Fake.Deploy.Lib</Name>
+      <Project>{83b7d6e7-6ae1-4786-9c26-4e2e73216ec9}</Project>
+      <Private>True</Private>
+    </ProjectReference>
     <ProjectReference Include="..\FakeLib\FakeLib.fsproj">
       <Name>FakeLib</Name>
       <Project>{13d56521-772a-41db-9772-1da1a4aa8e3a}</Project>
       <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-	     Other similar extension points exist, see Microsoft.Common.targets.
-	<Target Name="BeforeBuild">
-	</Target>
-	<Target Name="AfterBuild">
-	</Target>
-	-->
+  <Import Project="$(FSharpTargetsPath)" />
 </Project>

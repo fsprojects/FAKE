@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+/// Contains helper functions which allow FAKE to communicate with a TeamCity agent
 module Fake.TeamCityHelper
 
 /// Encapsulates special chars
@@ -17,7 +18,6 @@ let sendToTeamCity format message =
         message 
           |> RemoveLineBreaks 
           |> EncapsulateSpecialChars
-          |> shortenCurrentDirectory 
           |> sprintf format
           |> fun m -> postMessage(LogMessage(m,true))
               
@@ -80,11 +80,16 @@ let ReportProgressFinish message =
     EncapsulateSpecialChars message
       |> sendToTeamCity "##teamcity[progressFinish '%s']"
 
-/// Reports the build status.
-let ReportBuildStatus status message =
+/// Create  the build status.
+/// [omit]
+let buildStatus status message =
     sprintf "##teamcity[buildStatus '%s' text='%s']"
       (EncapsulateSpecialChars status)
       (EncapsulateSpecialChars message)
+
+/// Reports the build status.
+let ReportBuildStatus status message =
+    buildStatus status message
       |> sendStrToTeamCity
 
 /// Publishes an artifact on the TeamcCity build server.
@@ -138,3 +143,21 @@ let getRecentlyFailedTests() =
 let getChangedFilesInCurrentBuild() =
     appSetting "teamcity.build.changedFiles.file"
       |> ReadFile
+
+/// The Version of the TeamCity server. This property can be used to determine the build is run within TeamCity.
+let TeamCityVersion = environVarOrNone "TEAMCITY_VERSION"
+
+/// The Name of the project the current build belongs to or None if it's not on TeamCity.
+let TeamCityProjectName = environVarOrNone "TEAMCITY_PROJECT_NAME"
+
+/// The Name of the Build Configuration the current build belongs to or None if it's not on TeamCity.
+let TeamCityBuildConfigurationName = environVarOrNone "TEAMCITY_BUILDCONF_NAME"
+
+/// Is set to true if the build is a personal one.
+let TeamCityBuildIsPersonal = 
+    match environVarOrNone "BUILD_IS_PERSONAL" with
+    | Some _ -> true
+    | None -> false
+
+/// The Build number assigned to the build by TeamCity using the build number format or None if it's not on TeamCity.
+let TeamCityBuildNumber = environVarOrNone "BUILD_NUMBER"

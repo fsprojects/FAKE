@@ -1,6 +1,8 @@
 ﻿[<AutoOpen>]
+/// Contains functions which allow FAKE to interact with the [TeamCity REST API](http://confluence.jetbrains.com/display/TCD8/REST+API).
 module Fake.TeamCityRESTHelper
 
+/// [omit]
 let prepareURL restURL (serverURL:string) = serverURL.Trim '/' + restURL
 
 /// Returns the REST version of the TeamCity server
@@ -9,27 +11,40 @@ let getRESTVersion serverURL username password =
      |> prepareURL "/httpAuth/app/rest/version"
      |> REST.ExecuteGetCommand username password 
 
-type VCSRoot =
-    { URL: string;
-      Properties: Map<string,string>;
-      VCSName: string;
-      Name: string}
+/// Record type which stores VCSRoot properties
+type VCSRoot = { 
+    URL: string;
+    Properties: Map<string,string>
+    VCSName: string
+    Name: string }
 
-type Build =
-    { ID:string; 
-      Number:string;
-      Status:string;
-      WebURL:string }
+/// Record type which stores Build properties
+type Build = { 
+    ID:string
+    Number:string
+    Status:string
+    WebURL:string }
 
-type BuildConfiguration =
-    { ID: string;
-      Name: string; 
-      WebURL: string;
-      ProjectID: string; 
-      Paused: bool;
-      Description: string;
-      Builds: Build seq }
+/// Record type which stores Build configuration properties
+type BuildConfiguration = { 
+    ID: string
+    Name: string
+    WebURL: string
+    ProjectID: string;
+    Paused: bool
+    Description: string
+    Builds: Build seq }
 
+/// Record type which stores TeamCity project properties
+type Project = { 
+    ID: string
+    Name: string
+    Description: string
+    WebURL: string
+    Archived: bool
+    BuildConfigs: string seq}
+
+/// [omit]
 let getFirstNode serverURL username password url =
       serverURL
         |> prepareURL url
@@ -37,7 +52,7 @@ let getFirstNode serverURL username password url =
         |> XMLDoc
         |> DocElement
  
-/// Gets a projects from the TeamCity server
+/// Gets information about a build configartion from the TeamCity server.
 let getBuildConfig serverURL username password id =
     sprintf "/httpAuth/app/rest/buildTypes/id:%s" id
       |> getFirstNode serverURL username password 
@@ -50,15 +65,7 @@ let getBuildConfig serverURL username password id =
               ProjectID = parseSubNode "project" (getAttribute "id") n;
               Builds =[] })
 
-type Project =
-    { ID: string;
-      Name: string;
-      Description: string;
-      WebURL: string;
-      Archived: bool;
-      BuildConfigs: string seq}
-
-/// Gets a projects from the TeamCity server
+/// Gets informnation about a project from the TeamCity server.
 let getProject serverURL username password id =
     sprintf "/httpAuth/app/rest/projects/id:%s" id
       |> getFirstNode serverURL username password 
@@ -72,7 +79,7 @@ let getProject serverURL username password id =
                    parseSubNode "buildTypes" getChilds n
                      |> Seq.map (getAttribute "id") })
 
-/// Gets all projects on the TeamCity 
+/// Gets all projects on the TeamCity.
 let getProjects serverURL username password =  
     getFirstNode serverURL username password "/httpAuth/app/rest/projects"  
       |> parse "projects" getChilds

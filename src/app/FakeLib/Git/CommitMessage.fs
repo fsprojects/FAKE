@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+/// Contains helper functions which allow to get and set the git commit message.
 module Fake.Git.CommitMessage
 
 open Fake
@@ -6,6 +7,7 @@ open System
 open System.Text
 open System.IO
 
+/// Returns the commit message file.
 let getCommitMessageFileInfo repositoryDir = 
     (findGitDir repositoryDir).FullName + "\\COMMITMESSAGE"
       |> fileInfo

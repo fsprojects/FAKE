@@ -1,9 +1,11 @@
 ﻿[<AutoOpen>]
+/// Contains a task to use [XCOPY](http://en.wikipedia.org/wiki/XCOPY) on Windows.
 module Fake.XCopyHelper
 
-/// <summary>Performs a XCopy.</summary>
-/// <param name="source">The source directory (fileName)</param>
-/// <param name="destination">The target directory (fileName)</param>
+/// Executes a XCopy command
+/// ## Parameters
+///  - `source` - The source directory
+///  - `destination` - The target directory
 let XCopy (source:string) (destination:string) =
     let args =
           "/D /c XCOPY " +

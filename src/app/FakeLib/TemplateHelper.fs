@@ -1,10 +1,11 @@
 ﻿[<AutoOpen>]
+/// Contains basic templating functions. Used in other helpers.
 module Fake.TemplateHelper
 
 /// Loads all templates (lazy - line by line!)    
 let loadTemplates seq = Seq.map (fun fileName -> fileName,ReadFile fileName) seq
 
-/// replaces a bunch of the keywords in all files (lazy - line by line!)
+/// Replaces a bunch of the keywords in all files (lazy - line by line!)
 let replaceKeywords replacements =
     Seq.map (fun (fileName,file) -> 
         fileName, 
@@ -15,7 +16,7 @@ let replaceKeywords replacements =
                  sb <- sb.Replace(k,r)
                sb.ToString()))
       
-/// saves all files (lazy - file by file!)
+/// Saves all files (lazy - file by file!)
 let saveFiles = Seq.iter (fun (fileName,file) -> WriteFile fileName (Seq.toList file))
 
 /// Replaces the templates with the given replacements

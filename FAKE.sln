@@ -1,10 +1,11 @@
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0F0488CC-2580-4C07-9E16-3997480F0221}"
 	ProjectSection(SolutionItems) = preProject
+		build-web-bundles.cmd = build-web-bundles.cmd
+		build-web-bundles.fsx = build-web-bundles.fsx
 		build.cmd = build.cmd
 		build.fsx = build.fsx
-		changelog.markdown = changelog.markdown
 		fake.nuspec = fake.nuspec
 		README.markdown = README.markdown
 	EndProjectSection
@@ -19,8 +20,6 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FAKE", "src\app\FAKE\FAKE.f
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.FAKECore", "src\test\Test.FAKECore\Test.FAKECore.csproj", "{98944472-E50A-4771-969D-4C0349D085A4}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HelpInput", "HelpInput", "{EA6A2A1A-80C9-418F-A835-11758E1AE87E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Git", "src\test\Test.Git\Test.Git.csproj", "{AD03BF13-802D-4E5F-A939-24484299E014}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.SQL", "src\app\Fake.SQL\Fake.SQL.fsproj", "{12319188-8893-4FE4-BF1D-62B85661DEA9}"
@@ -34,9 +33,87 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{4609
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Deploy", "src\app\Fake.Deploy\Fake.Deploy.fsproj", "{ED164049-BCFD-4837-96F4-9A5FA417931D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy.Web", "Deploy.Web", "{B0DDEAC8-E18F-4DCA-A089-461267507EF8}"
-EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.IIS", "src\app\Fake.IIS\Fake.IIS.fsproj", "{6C2097C0-C2EA-410F-B4BB-A58C63A08709}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4A02B2CD-BBE1-4E4F-A490-95C6CF5BF672}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "help", "help", "{564BD198-09CB-45D1-87F2-E2153FE6D62F}"
+	ProjectSection(SolutionItems) = preProject
+		help\assemblyinfo.md = help\assemblyinfo.md
+		help\changelog.md = help\changelog.md
+		help\commandline.md = help\commandline.md
+		help\contributing.md = help\contributing.md
+		help\create-nuget-package.md = help\create-nuget-package.md
+		help\customtasks.md = help\customtasks.md
+		help\deploy.md = help\deploy.md
+		help\fxcop.md = help\fxcop.md
+		help\gettingstarted.md = help\gettingstarted.md
+		help\index.md = help\index.md
+		help\nuget.md = help\nuget.md
+		help\octopusdeploy.md = help\octopusdeploy.md
+		help\specifictargets.md = help\specifictargets.md
+		help\teamcity.md = help\teamcity.md
+		help\templates\template-project.html = help\templates\template-project.html
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pics", "pics", "{75162148-B884-4575-8E14-5320DD137760}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gettingstarted", "gettingstarted", "{454066F7-42BF-435E-BDF7-2D11948D53B4}"
+	ProjectSection(SolutionItems) = preProject
+		help\pics\gettingstarted\afterclean.png = help\pics\gettingstarted\afterclean.png
+		help\pics\gettingstarted\aftercompile.png = help\pics\gettingstarted\aftercompile.png
+		help\pics\gettingstarted\afterdownload.png = help\pics\gettingstarted\afterdownload.png
+		help\pics\gettingstarted\compileerror.png = help\pics\gettingstarted\compileerror.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "teamcity", "teamcity", "{853E4C7F-D5AA-4756-BAF3-13F25F460C4E}"
+	ProjectSection(SolutionItems) = preProject
+		help\pics\teamcity\auth.png = help\pics\teamcity\auth.png
+		help\pics\teamcity\buildstep1.png = help\pics\teamcity\buildstep1.png
+		help\pics\teamcity\buildstep2.png = help\pics\teamcity\buildstep2.png
+		help\pics\teamcity\checkoutrules.png = help\pics\teamcity\checkoutrules.png
+		help\pics\teamcity\createproject.png = help\pics\teamcity\createproject.png
+		help\pics\teamcity\generalsettings.png = help\pics\teamcity\generalsettings.png
+		help\pics\teamcity\nunit.png = help\pics\teamcity\nunit.png
+		help\pics\teamcity\output.png = help\pics\teamcity\output.png
+		help\pics\teamcity\trigger.png = help\pics\teamcity\trigger.png
+		help\pics\teamcity\vcsroot.png = help\pics\teamcity\vcsroot.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "apidocs", "apidocs", "{E5A1C705-974C-4377-BAF3-55359A42BEF0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{A338C9EA-391D-405D-B480-D1B67C0C9369}"
+	ProjectSection(SolutionItems) = preProject
+		help\templates\reference\default.cshtml = help\templates\reference\default.cshtml
+		help\templates\reference\members.cshtml = help\templates\reference\members.cshtml
+		help\templates\reference\module.cshtml = help\templates\reference\module.cshtml
+		help\templates\reference\namespaces.cshtml = help\templates\reference\namespaces.cshtml
+		help\templates\reference\type.cshtml = help\templates\reference\type.cshtml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "commandline", "commandline", "{F4B81CF1-FF35-46E4-9C15-97C398A674F5}"
+	ProjectSection(SolutionItems) = preProject
+		help\pics\commandline\cmd.png = help\pics\commandline\cmd.png
+	EndProjectSection
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Deploy.Lib", "src\app\Fake.Deploy.Lib\Fake.Deploy.Lib.fsproj", "{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Fake.Deploy", "src\test\Test.Fake.Deploy\Test.Fake.Deploy.csproj", "{0203A0DD-836B-4F9E-A766-73396DDE8F34}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Experimental", "src\app\Fake.Experimental\Fake.Experimental.fsproj", "{437FC69D-3EB5-4139-B9CD-86198AFDFD93}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "octopusdeploy", "octopusdeploy", "{DC70438D-6050-435C-B365-ABF68CF8891D}"
+	ProjectSection(SolutionItems) = preProject
+		help\pics\octopusdeploy\apikey.png = help\pics\octopusdeploy\apikey.png
+		help\pics\octopusdeploy\myprofile.png = help\pics\octopusdeploy\myprofile.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assemblyinfo", "assemblyinfo", "{64547E3E-F74E-48C2-8091-795A6C04B99C}"
+	ProjectSection(SolutionItems) = preProject
+		help\pics\assemblyinfo\generated.png = help\pics\assemblyinfo\generated.png
+		help\pics\assemblyinfo\result.png = help\pics\assemblyinfo\result.png
+		help\pics\assemblyinfo\solutioninfo.png = help\pics\assemblyinfo\solutioninfo.png
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -112,13 +189,12 @@ Global
 		{ED164049-BCFD-4837-96F4-9A5FA417931D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED164049-BCFD-4837-96F4-9A5FA417931D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{ED164049-BCFD-4837-96F4-9A5FA417931D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{ED164049-BCFD-4837-96F4-9A5FA417931D}.Debug|x86.ActiveCfg = Debug|x86
-		{ED164049-BCFD-4837-96F4-9A5FA417931D}.Debug|x86.Build.0 = Debug|x86
-		{ED164049-BCFD-4837-96F4-9A5FA417931D}.Release|Any CPU.ActiveCfg = Release|x86
-		{ED164049-BCFD-4837-96F4-9A5FA417931D}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{ED164049-BCFD-4837-96F4-9A5FA417931D}.Release|Mixed Platforms.Build.0 = Release|x86
-		{ED164049-BCFD-4837-96F4-9A5FA417931D}.Release|x86.ActiveCfg = Release|x86
-		{ED164049-BCFD-4837-96F4-9A5FA417931D}.Release|x86.Build.0 = Release|x86
+		{ED164049-BCFD-4837-96F4-9A5FA417931D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{ED164049-BCFD-4837-96F4-9A5FA417931D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED164049-BCFD-4837-96F4-9A5FA417931D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED164049-BCFD-4837-96F4-9A5FA417931D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{ED164049-BCFD-4837-96F4-9A5FA417931D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{ED164049-BCFD-4837-96F4-9A5FA417931D}.Release|x86.ActiveCfg = Release|Any CPU
 		{6C2097C0-C2EA-410F-B4BB-A58C63A08709}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6C2097C0-C2EA-410F-B4BB-A58C63A08709}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C2097C0-C2EA-410F-B4BB-A58C63A08709}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -129,12 +205,41 @@ Global
 		{6C2097C0-C2EA-410F-B4BB-A58C63A08709}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{6C2097C0-C2EA-410F-B4BB-A58C63A08709}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{6C2097C0-C2EA-410F-B4BB-A58C63A08709}.Release|x86.ActiveCfg = Release|Any CPU
+		{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9}.Release|x86.ActiveCfg = Release|Any CPU
+		{0203A0DD-836B-4F9E-A766-73396DDE8F34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0203A0DD-836B-4F9E-A766-73396DDE8F34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0203A0DD-836B-4F9E-A766-73396DDE8F34}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{0203A0DD-836B-4F9E-A766-73396DDE8F34}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{0203A0DD-836B-4F9E-A766-73396DDE8F34}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0203A0DD-836B-4F9E-A766-73396DDE8F34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0203A0DD-836B-4F9E-A766-73396DDE8F34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0203A0DD-836B-4F9E-A766-73396DDE8F34}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{0203A0DD-836B-4F9E-A766-73396DDE8F34}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{0203A0DD-836B-4F9E-A766-73396DDE8F34}.Release|x86.ActiveCfg = Release|Any CPU
+		{437FC69D-3EB5-4139-B9CD-86198AFDFD93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{437FC69D-3EB5-4139-B9CD-86198AFDFD93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{437FC69D-3EB5-4139-B9CD-86198AFDFD93}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{437FC69D-3EB5-4139-B9CD-86198AFDFD93}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{437FC69D-3EB5-4139-B9CD-86198AFDFD93}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{437FC69D-3EB5-4139-B9CD-86198AFDFD93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{437FC69D-3EB5-4139-B9CD-86198AFDFD93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{437FC69D-3EB5-4139-B9CD-86198AFDFD93}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{437FC69D-3EB5-4139-B9CD-86198AFDFD93}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{437FC69D-3EB5-4139-B9CD-86198AFDFD93}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{EA6A2A1A-80C9-418F-A835-11758E1AE87E} = {0F0488CC-2580-4C07-9E16-3997480F0221}
 		{4609456B-C12B-444C-AE55-AE96E096D7F1} = {0F0488CC-2580-4C07-9E16-3997480F0221}
 		{13D56521-772A-41DB-9772-1DA1A4AA8E3A} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
 		{CA923BCA-C273-4744-9658-7DF7001FF266} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
@@ -142,7 +247,18 @@ Global
 		{AA2BB7A4-B590-40E7-A749-BCC87B68FEAC} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
 		{ED164049-BCFD-4837-96F4-9A5FA417931D} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
 		{6C2097C0-C2EA-410F-B4BB-A58C63A08709} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
+		{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
+		{437FC69D-3EB5-4139-B9CD-86198AFDFD93} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
 		{98944472-E50A-4771-969D-4C0349D085A4} = {B774DC6A-F933-4EC3-A61F-E07344EF8ED2}
 		{AD03BF13-802D-4E5F-A939-24484299E014} = {B774DC6A-F933-4EC3-A61F-E07344EF8ED2}
+		{0203A0DD-836B-4F9E-A766-73396DDE8F34} = {B774DC6A-F933-4EC3-A61F-E07344EF8ED2}
+		{75162148-B884-4575-8E14-5320DD137760} = {564BD198-09CB-45D1-87F2-E2153FE6D62F}
+		{E5A1C705-974C-4377-BAF3-55359A42BEF0} = {564BD198-09CB-45D1-87F2-E2153FE6D62F}
+		{454066F7-42BF-435E-BDF7-2D11948D53B4} = {75162148-B884-4575-8E14-5320DD137760}
+		{853E4C7F-D5AA-4756-BAF3-13F25F460C4E} = {75162148-B884-4575-8E14-5320DD137760}
+		{F4B81CF1-FF35-46E4-9C15-97C398A674F5} = {75162148-B884-4575-8E14-5320DD137760}
+		{DC70438D-6050-435C-B365-ABF68CF8891D} = {75162148-B884-4575-8E14-5320DD137760}
+		{64547E3E-F74E-48C2-8091-795A6C04B99C} = {75162148-B884-4575-8E14-5320DD137760}
+		{A338C9EA-391D-405D-B480-D1B67C0C9369} = {E5A1C705-974C-4377-BAF3-55359A42BEF0}
 	EndGlobalSection
 EndGlobal

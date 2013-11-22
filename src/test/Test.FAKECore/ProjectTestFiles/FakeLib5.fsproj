@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{13d56521-772a-41db-9772-1da1a4aa8e3a}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>FakeLib</RootNamespace>
+    <AssemblyName>FakeLib</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <Name>FakeLib</Name>
+    <FSharpTargetsPath Condition="'$(FSharpTargetsPath)' == '' And '$(OS)' != 'Windows_NT'">..\..\..\tools\FSharp\Microsoft.FSharp.Targets</FSharpTargetsPath>
+    <FSharpTargetsPath Condition="'$(FSharpTargetsPath)' == '' And '$(VisualStudioVersion)' != '11.0' And Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.1\Framework\v4.0\Microsoft.FSharp.Targets')">$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.1\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
+    <FSharpTargetsPath Condition="'$(FSharpTargetsPath)' == '' And Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets')">$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
+    <FSharpTargetsPath Condition="'$(FSharpTargetsPath)' == ''">..\..\..\tools\FSharp\Microsoft.FSharp.Targets</FSharpTargetsPath>
+    <FscToolPath Condition="'$(FSharpTargetsPath)' == '..\..\..\tools\FSharp\Microsoft.FSharp.Targets'">..\..\..\tools\FSharp\</FscToolPath>
+    <FscToolExe>Fsc.exe</FscToolExe>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>3</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+    <OtherFlags />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\build\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>3</WarningLevel>
+    <DocumentationFile>..\..\..\build\FakeLib.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="EnvironmentHelper.fs" />
+    <Compile Include="RegistryHelper.fs" />
+    <Compile Include="FileSystemHelper.fs" />
+    <Compile Include="StringHelper.fs" />
+    <Compile Include="TemplateHelper.fs" />
+    <Compile Include="TimeoutHelper.fs" />
+    <Compile Include="CacheHelper.fs" />
+    <Compile Include="XMLHelper.fs" />
+    <Compile Include="Json.fs" />
+    <Compile Include="REST.fs" />
+    <Compile Include="BuildServerHelper.fs" />
+    <Compile Include="TraceListener.fs" />
+    <Compile Include="TeamCityHelper.fs" />
+    <Compile Include="TeamCityRESTHelper.fs" />
+    <Compile Include="TraceHelper.fs" />
+    <Compile Include="UnitTestHelper.fs" />
+    <Compile Include="AssemblyInfoFile.fs" />
+    <Compile Include="AssemblyInfoHelper.fs" />
+    <Compile Include="ServiceControllerHelper.fs" />
+    <Compile Include="FileSet.fs" />
+    <Compile Include="ProcessHelper.fs" />
+    <Compile Include="FXCopHelper.fs" />
+    <Compile Include="NCoverHelper.fs" />
+    <Compile Include="NUnit\Xml.fs" />
+    <Compile Include="NUnit\Common.fs" />
+    <Compile Include="NUnit\Sequential.fs" />
+    <Compile Include="NUnit\Parallel.fs" />
+    <Compile Include="XUnitHelper.fs" />
+    <Compile Include="MSpecHelper.fs" />
+    <Compile Include="MsBuildLogger.fs" />
+    <Compile Include="MSBuildHelper.fs" />
+    <Compile Include="ZipHelper.fs" />
+    <Compile Include="FileHelper.fs" />
+    <Compile Include="FileUtils.fs" />
+    <Compile Include="DocuHelper.fs" />
+    <Compile Include="ILMergeHelper.fs" />
+    <Compile Include="WiXHelper.fs" />
+    <Compile Include="MSIHelper.fs" />
+    <Compile Include="RegAsmHelper.fs" />
+    <Compile Include="NuGetHelper.fs" />
+    <Compile Include="RestorePackageHelper.fs" />
+    <Compile Include="VSSHelper.fs" />
+    <Compile Include="DynamicsNavHelper.fs" />
+    <Compile Include="DynamicsNavFile.fs" />
+    <Compile Include="SCPHelper.fs" />
+    <Compile Include="XCopyHelper.fs" />
+    <Compile Include="XpkgHelper.fs" />
+    <Compile Include="MSBuild\ProjectSystem.fs" />
+    <Compile Include="MSBuild\SpecsRemovement.fs" />
+    <Compile Include="MSBuild\SpecsRemover.fs" > <!-- blab blb --></Compile>
+    <Compile Include="Git\CommandHelper.fs" />
+    <Compile Include="Git\Sha1.fs" />
+    <Compile Include="Git\Repository.fs" />
+    <Compile Include="Git\Submodule.fs" />
+    <Compile Include="Git\Branches.fs" />
+    <Compile Include="Git\Reset.fs" />
+    <Compile Include="Git\SanityChecks.fs" />
+    <Compile Include="Git\Information.fs" />
+    <Compile Include="Git\FileStatus.fs" />
+    <Compile Include="Git\Rebase.fs" />
+    <Compile Include="Git\CommitMessage.fs" />
+    <Compile Include="Git\CommitMessage.fs" />
+    <Compile Include="Git\Staging.fs" />
+    <Compile Include="FSIHelper.fs" />
+    <Compile Include="Boot.fs" />
+    <Compile Include="MessageHelper.fs" />
+    <Compile Include="Messages.fs" />
+    <Compile Include="HTMLHelpWorkShopHelper.fs" />
+    <Compile Include="ConfigurationHelper.fs" />
+    <Compile Include="TargetHelper.fs" />
+    <Compile Include="AdditionalSyntax.fs" />
+    <Compile Include="PermissionsHelper.fs" />
+    <Compile Include="SpecFlowHelper.fs" />
+    <Compile Include="OctoTools.fs" />
+    <None Include="packages.config" />
+    <None Include="packages.config" />
+    <Compile Include="SignHelper.fs" />
+    <Compile Include="MageHelper.fs" />
+    <Compile Include="SemVerHelper.fs" />
+    <Compile Include="ReleaseNotesHelper.fs" />
+    <None Include="Targets.fsx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="FSharp.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\..\..\tools\FSharp\FSharp.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\..\..\lib\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Build" />
+    <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="Mono.Cecil">
+      <HintPath>..\..\..\packages\Mono.Cecil.0.9.5.4\lib\net40\Mono.Cecil.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb">
+      <HintPath>..\..\..\packages\Mono.Cecil.0.9.5.4\lib\net40\Mono.Cecil.Mdb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb">
+      <HintPath>..\..\..\packages\Mono.Cecil.0.9.5.4\lib\net40\Mono.Cecil.Pdb.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks">
+      <HintPath>..\..\..\packages\Mono.Cecil.0.9.5.4\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\packages\Newtonsoft.Json.5.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NuGet.Core">
+      <HintPath>..\..\..\packages\Nuget.Core.2.5.0\lib\net40-Client\NuGet.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <Import Project="$(FSharpTargetsPath)" />
+</Project>

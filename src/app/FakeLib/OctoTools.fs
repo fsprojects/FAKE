@@ -1,13 +1,14 @@
-﻿module Fake.OctoTools
+﻿/// Contains tasks which can be used for automated deployment via [Octopus Deploy](http://octopusdeploy.com/).
+/// There is also a tutorial about the [Octopus deployment helper](../octopusdeploy.html) available.
+module Fake.OctoTools
 
 open Fake
 open System
 
-// ************************************************************************
-// TYPES
-
 /// Octo.exe server options
-type OctoServerOptions = { Server: string; ApiKey: string }
+type OctoServerOptions = { 
+    Server: string
+    ApiKey: string }
     
 /// Options for creating a new release
 type CreateReleaseOptions = {
@@ -17,8 +18,7 @@ type CreateReleaseOptions = {
     PackageVersionOverride  : string option
     PackagesFolder          : string option
     ReleaseNotes            : string
-    ReleaseNotesFile        : string
-}
+    ReleaseNotesFile        : string }
 
 /// Options for deploying a release to an environment
 type DeployReleaseOptions = {
@@ -27,23 +27,21 @@ type DeployReleaseOptions = {
     Version                     : string
     Force                       : bool
     WaitForDeployment           : bool
-    DeploymentTimeout           : System.TimeSpan option
-    DeploymentCheckSleepCycle   : System.TimeSpan option
-}
+    DeploymentTimeout           : TimeSpan option
+    DeploymentCheckSleepCycle   : TimeSpan option }
 
 /// Options for deleting a range of releases in a project
 type DeleteReleaseOptions = {
     Project     : string
     MinVersion  : string
-    MaxVersion  : string
-}
+    MaxVersion  : string }
 
-/// DU for selecting one command
+/// Option type for selecting one command
 type OctoCommand = 
-    | CreateRelease of CreateReleaseOptions * DeployReleaseOptions option
-    | DeployRelease of DeployReleaseOptions
-    | DeleteRelease of DeleteReleaseOptions
-    | ListEnvironments
+| CreateRelease of CreateReleaseOptions * DeployReleaseOptions option
+| DeployRelease of DeployReleaseOptions
+| DeleteRelease of DeleteReleaseOptions
+| ListEnvironments
 
 /// Complete Octo.exe CLI params
 type OctoParams = {
@@ -52,11 +50,8 @@ type OctoParams = {
     WorkingDirectory    : string
     Command             : OctoCommand
     Server              : OctoServerOptions
-    Timeout             : TimeSpan
-}
+    Timeout             : TimeSpan }
 
-// ************************************************************************
-// DEFAULT OPTIONS
 
 /// Default server options.
 let serverOptions = { Server = ""; ApiKey = ""; }
@@ -64,41 +59,38 @@ let serverOptions = { Server = ""; ApiKey = ""; }
 /// Default options for 'CreateRelease'
 let releaseOptions = {
     Project = ""; Version = ""; PackageVersion = ""; PackageVersionOverride = None; 
-    PackagesFolder = None; ReleaseNotes = ""; ReleaseNotesFile = ""; 
-}
+    PackagesFolder = None; ReleaseNotes = ""; ReleaseNotesFile = "" }
 
 /// Default options for 'DeployRelease'
 let deployOptions = {
     Project = ""; DeployTo = ""; Version = ""; Force = false; WaitForDeployment = false; 
-    DeploymentTimeout = None; DeploymentCheckSleepCycle = None;
-}
+    DeploymentTimeout = None; DeploymentCheckSleepCycle = None }
 
 /// Default options for 'DeleteReleases'
 let deleteOptions = { 
-    Project = ""; MinVersion = ""; MaxVersion = "";
-}
+    Project = ""; MinVersion = ""; MaxVersion = "" }
 
 /// Default parameters to call octo.exe.
 let octoParams = {
     ToolName = "Octo.exe"; ToolPath = ""; Command = ListEnvironments;
-    Server = serverOptions; Timeout = TimeSpan.MaxValue; WorkingDirectory = "";
-}
+    Server = serverOptions; Timeout = TimeSpan.MaxValue; WorkingDirectory = "" }
 
-// ************************************************************************
-// HELPER FUNCTIONS
-
+/// [omit]
 let optionalStringParam p o = 
     match o with
     | Some s -> sprintf " --%s=\"%s\"" p s
     | None -> ""
 
+/// [omit]
 let optionalObjParam p o = 
     match o with
     | Some x -> sprintf " --%s=\"%s\"" p (x.ToString())
     | None -> ""     
 
+/// [omit]
 let flag p b = if b then sprintf " --%s" p else ""
     
+/// [omit]
 let releaseCommandLine (opts:CreateReleaseOptions) =
     [ (optionalStringParam "project" (liftString opts.Project))
       (optionalStringParam "version" (liftString opts.Version))
@@ -109,6 +101,7 @@ let releaseCommandLine (opts:CreateReleaseOptions) =
       (optionalStringParam "releasenotesfile" (liftString opts.ReleaseNotesFile)) ] 
     |> List.fold (+) ""
 
+/// [omit]
 let deployCommandLine (opts:DeployReleaseOptions) = 
     [ (optionalStringParam "project" (liftString opts.Project))
       (optionalStringParam "deployto" (liftString opts.DeployTo))
@@ -119,18 +112,20 @@ let deployCommandLine (opts:DeployReleaseOptions) =
       (optionalObjParam "deploymentchecksleepcycle" opts.DeploymentCheckSleepCycle) ] 
     |> List.fold (+) ""
 
+/// [omit]
 let deleteCommandLine (opts:DeleteReleaseOptions) =
     [ (optionalStringParam "project" (liftString opts.Project))
       (optionalStringParam "minversion" (liftString opts.MinVersion))
       (optionalStringParam "maxversion" (liftString opts.MaxVersion)) ] 
     |> List.fold (+) ""
 
+/// [omit]
 let serverCommandLine (opts:OctoServerOptions) = 
     [ (optionalStringParam "server" (liftString opts.Server))
       (optionalStringParam "apikey" (liftString opts.ApiKey)) ] 
     |> List.fold (+) ""
 
-/// Maps an command to string input for the octopus tools cli.
+/// Maps a command to string input for the octopus tools cli.
 let commandLine command =       
     match command with
     | CreateRelease (opts, None) ->        
@@ -144,10 +139,12 @@ let commandLine command =
     | ListEnvironments -> 
         " list-environments"
 
-// ************************************************************************
-// OCTO FUNCTION
 
-/// Calls the Octo.exe CLI.
+/// This task calls the Octo.exe CLI.
+/// See [Octopus-Tools](https://github.com/OctopusDeploy/Octopus-Tools) for more details.
+/// ## Parameters
+///
+///  - `setParams` - Function used to overwrite the OctoTools default parameters.
 let Octo setParams =        
     let octoParams = setParams(octoParams)
     let command = (octoParams.Command.ToString())

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Fake;
 using Machine.Specifications;
 using Microsoft.FSharp.Collections;
@@ -20,6 +20,7 @@ namespace Test.FAKECore
                     @".\myPackageFolder\",
                     null,
                     true,
+                    5,
                     false);
                 var result = Run(packageParams);
                 result.ShouldStartWith(" \"install\" \"thePackage\" \"-OutputDirectory\" \"");
@@ -36,6 +37,7 @@ namespace Test.FAKECore
                     @".\myPackageFolder\",
                     new FSharpOption<Version>(new Version("1.2.3.4")),
                     true,
+                    5,
                     true);
                 var result = Run(packageParams);
                 result.ShouldStartWith(" \"install\" \"thePackage\" \"-OutputDirectory\" \"");
@@ -52,6 +54,7 @@ namespace Test.FAKECore
                     @".\myPackageFolder\",
                     null,
                     false,
+                    5,
                     true);
                 var result = Run(packageParams);
                 result.ShouldStartWith(" \"install\" \"thePackage\" \"-OutputDirectory\" \"");
@@ -68,6 +71,7 @@ namespace Test.FAKECore
                     @".\myPackageFolder\",
                     new FSharpOption<Version>(new Version("1.2.3.4")),
                     false,
+                    5,
                     false);
                 var result = Run(packageParams);
                 result.ShouldStartWith(" \"install\" \"thePackage\" \"-OutputDirectory\" \"");
@@ -84,6 +88,7 @@ namespace Test.FAKECore
                     @".\myPackageFolder\",
                     new FSharpOption<Version>(new Version("1.2.3.4")),
                     true,
+                    5,
                     false);
                 var result = Run(packageParams);
                 result.ShouldStartWith(" \"install\" \"thePackage\" \"-OutputDirectory\" \"");

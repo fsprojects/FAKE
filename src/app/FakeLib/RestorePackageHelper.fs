@@ -1,22 +1,29 @@
 ﻿[<AutoOpen>]
+/// Contains tasks which allow to restore NuGet packages from a NuGet package feed like [nuget.org](http://www.nuget.org).
+/// There is also a tutorial about [nuget package restore](../nuget.html) available.
 module Fake.RestorePackageHelper
 
 open System
 open System.IO
 
+/// RestorePackages parameter path
 type RestorePackageParams =
     { ToolPath: string
       Sources: string list
       TimeOut: TimeSpan
+      /// Specifies how often nuget should try to restore the packages - default is 5
+      Retries: int
       OutputPath: string}
 
-/// RestorePackage defaults params  
+/// RestorePackage defaults parameters
 let RestorePackageDefaults =
     { ToolPath = findToolInSubPath "nuget.exe" (currentDirectory @@ "tools" @@ "NuGet")
       Sources = []
       TimeOut = TimeSpan.FromMinutes 5.
+      Retries = 5
       OutputPath = "./packages" }
 
+/// RestorePackages parameter path for single packages
 type RestoreSinglePackageParams = 
     { ToolPath: string
       Sources: string list
@@ -24,9 +31,11 @@ type RestoreSinglePackageParams =
       OutputPath: string
       Version: Version option
       ExcludeVersion: bool
+      /// Specifies how often nuget should try to restore the packages - default is 5
+      Retries: int
       IncludePreRelease: bool }
 
-/// RestoreSinglePackageParams defaults params  
+/// RestoreSinglePackageParams defaults parameters  
 let RestoreSinglePackageDefaults =
     { ToolPath = RestorePackageDefaults.ToolPath
       Sources = []
@@ -34,15 +43,32 @@ let RestoreSinglePackageDefaults =
       OutputPath = RestorePackageDefaults.OutputPath
       Version = None
       ExcludeVersion = false
+      Retries = 5
       IncludePreRelease = false }
 
+/// [omit]
 let runNuGet toolPath timeOut args failWith =
-    if not (execProcess3 (fun info ->  
+    if 0 <> ExecProcess (fun info ->  
         info.FileName <- toolPath |> FullName
-        info.Arguments <- args) timeOut)
+        info.Arguments <- args) timeOut
     then
         failWith()
 
+/// [omit]
+let rec runNuGetTrial retries toolPath timeOut args failWith =
+    if retries <= 0 then
+        runNuGet toolPath timeOut args failWith
+    else
+        try
+            runNuGet toolPath timeOut args failWith
+        with
+        | exn -> 
+            traceImportant (sprintf "Package restore failed with %s" exn.Message)
+            traceImportant ("Retry package restore.")
+            runNuGetTrial (retries-1) toolPath timeOut args failWith
+        
+
+/// [omit]
 let buildNuGetArgs setParams packageId = 
     let parameters = RestoreSinglePackageDefaults |> setParams
     let sources =
@@ -66,7 +92,7 @@ let RestorePackageId setParams packageId =
     let parameters = RestoreSinglePackageDefaults |> setParams
 
     let args = buildNuGetArgs setParams packageId
-    runNuGet parameters.ToolPath parameters.TimeOut args (fun () -> failwithf "Package installation of package %s failed." packageId)
+    runNuGetTrial parameters.Retries parameters.ToolPath parameters.TimeOut args (fun () -> failwithf "Package installation of package %s failed." packageId)
   
     traceEndTask "RestorePackageId" packageId
 
@@ -84,7 +110,7 @@ let RestorePackage setParams package =
         " \"install\" \"" + (package |> FullName) + "\"" +
         " \"-OutputDirectory\" \"" + (parameters.OutputPath |> FullName) + "\"" + sources
 
-    runNuGet parameters.ToolPath parameters.TimeOut args (fun () -> failwithf "Package installation of %s generation failed." package)
+    runNuGetTrial parameters.Retries parameters.ToolPath parameters.TimeOut args (fun () -> failwithf "Package installation of %s generation failed." package)
                     
     traceEndTask "RestorePackage" package
 

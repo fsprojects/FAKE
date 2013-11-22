@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+/// Contains helper functions which allow to deal with git stash.
 module Fake.Git.Stash
 
 open Fake

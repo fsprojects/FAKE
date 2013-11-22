@@ -1,29 +1,33 @@
 ﻿[<AutoOpen>]
+/// Contains a task which can be used to run [NCover](http://www.ncover.com/) on .NET assemblies.
 module Fake.NCoverHelper
 
 open System 
 open System.IO
 open System.Text  
 
-type NCoverParams =
-    { ProjectName: string;
-      ToolPath: string;
-      TestRunnerExe: string;
-      TimeOut: TimeSpan;
-      WorkingDir: string;}
+/// The NCover parameter type.
+type NCoverParams = { 
+    ProjectName: string
+    ToolPath: string
+    TestRunnerExe: string
+    TimeOut: TimeSpan
+    WorkingDir: string }
    
-/// NCover default params
-let NCoverDefaults =   
-    { ProjectName = String.Empty;
-      ToolPath = ProgramFiles @@ "NCover" @@ "ncover.console.exe";
-      TestRunnerExe = ProgramFiles @@ "NUnit" @@ "bin" @@ "nunit-console.exe";
-      TimeOut = TimeSpan.FromMinutes 5.
-      WorkingDir = currentDirectory}
+/// NCover default parameters.
+let NCoverDefaults = { 
+    ProjectName = String.Empty
+    ToolPath = ProgramFiles @@ "NCover" @@ "ncover.console.exe"
+    TestRunnerExe = ProgramFiles @@ "NUnit" @@ "bin" @@ "nunit-console.exe"
+    TimeOut = TimeSpan.FromMinutes 5.
+    WorkingDir = currentDirectory }
     
-/// <summary>Run NCover on a group of assemblies.</summary>
-/// <param name="setParams">NCover parameter function</param>
-/// <param name="assemblies">The test assemblies, which should be inspected</param>
-/// <param name="excludeAssemblies">These assemblies are excluded</param>
+/// Runs NCover on a group of assemblies.
+/// ## Parameters
+///
+///  - `setParams` - Function used to overwrite the NCover default parameters.
+///  - `assemblies` - The test assemblies, which should be inspected.
+///  - `excludeAssemblies` - These assemblies are excluded.
 let NCover setParams (assemblies: string seq) (excludeAssemblies: string seq) =
   let param = setParams NCoverDefaults
       

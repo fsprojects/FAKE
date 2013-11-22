@@ -37,7 +37,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\test\</OutputPath>
+    <OutputPath>bin\Debug\test\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -53,20 +53,14 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationManifest>MessageFiles\Message2.txt</ApplicationManifest>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FSharp.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+    <Reference Include="FSharp.Core">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\tools\FSharp\FSharp.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Machine.Specifications, Version=0.5.10.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Machine.Specifications">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\packages\Machine.Specifications.0.5.10\lib\net40\Machine.Specifications.dll</HintPath>
-    </Reference>
-    <Reference Include="Machine.Specifications.Clr4">
-      <HintPath>..\..\..\packages\Machine.Specifications.0.5.10\lib\net40\Machine.Specifications.Clr4.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -75,13 +69,20 @@
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FixProjectFileSpecs.cs" />
+    <Compile Include="CompareProjectFilesSpecs.cs" />
+    <Compile Include="Globbing\TestSample5\AbsoluteGlobbingSpecs.cs" />
+    <Compile Include="Globbing\TestSample1\FileSetSample1Specs.cs" />
+    <Compile Include="Globbing\TestSample4\GlobbingSample4Specs.cs" />
+    <Compile Include="Globbing\TestSample3\GlobbingSample3Specs.cs" />
+    <Compile Include="Globbing\TestSample5\AbsoluteDirGlobbingSpecs.cs" />
+    <Compile Include="SemVerHelperSpecs.cs" />
+    <Compile Include="ProjectSystemSpecs.cs" />
+    <Compile Include="TeamCitySpecs.cs" />
     <Compile Include="BasicStringHelperSpecs.cs" />
     <Compile Include="FileHandling\SubfolderSpecs.cs" />
     <Compile Include="FileHandling\FileReplacementSpecs.cs" />
@@ -89,31 +90,29 @@
     <Compile Include="FileHandling\BaseFunctions.cs" />
     <Compile Include="FileHandling\FileComparisonSpecs.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="Globbing\Directories\GlobbingOfDirectoriesSpecs.cs" />
-    <Compile Include="Globbing\Excludes\GlobbingOfDirectoriesSpecs.cs" />
+    <Compile Include="Globbing\TestSample1\GlobbingSample1Specs.cs" />
+    <Compile Include="Globbing\TestSample2\GlobbingSample2Specs.cs" />
     <Compile Include="ILMerge\ILMergeSpecs.cs" />
+    <Compile Include="MSBuild\FileExtractionSpecs.cs" />
     <Compile Include="NAVFiles\NAVDateSpecs.cs" />
     <Compile Include="NAVFiles\NAVModifySpecs.cs" />
     <Compile Include="NAVFiles\NAVVersionTagsSpecs.cs" />
-    <Compile Include="PackageMgt\VersioningSpecs.cs" />
-    <Compile Include="PackageMgt\RollbackSpecs.cs" />
-    <Compile Include="PackageMgt\RoutingSpecs.cs" />
-    <Compile Include="PackageMgt\ReleaseDiscoveringSpecs.cs" />
     <Compile Include="PackageMgt\FeedSpecs.cs" />
     <Compile Include="PackageMgt\NugetData.cs" />
     <Compile Include="PackageMgt\NuSpecFileSpecs.cs" />
+    <Compile Include="ReleaseNotesSpecs.cs" />
     <Compile Include="RestorePackageHelperSpecs.cs" />
     <Compile Include="SideBySideSpecification\ReferencesScanningSpecs.cs" />
     <Compile Include="SideBySideSpecification\SpecsRemovementSpecs.cs" />
     <Compile Include="StringHelperSpecs.cs" />
     <Compile Include="MessageFiles\MessageFileSpecs.cs" />
     <Compile Include="ConfigFiles\ConfigSpecs.cs" />
+    <Compile Include="AssemblyInfoSpecs.cs" />
     <Compile Include="XmlSpecs.cs" />
     <Compile Include="TestData.cs" />
     <Compile Include="FileHandling\CleanDirectorySpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FileHandling\GlobbingSpecs.cs" />
-    <Compile Include="Zip\FileExtractionSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -133,6 +132,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ConfigFiles\ConfigTransforms.xslt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="ConfigFiles\DynamicsNAVConfig.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -213,12 +215,21 @@
     <None Include="..\..\..\fake.nuspec">
       <Link>TestData\fake.nuspec</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
-    <None Include="app.config" />
-    <None Include="Globbing\Directories\SampleApp.zip">
+    <Content Include="Globbing\TestSample4\Sample4.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Globbing\TestSample5\Sample5.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Globbing\TestSample3\Sample3.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Globbing\Excludes\TFSSample.zip">
+    <None Include="Globbing\TestSample1\SampleApp.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Globbing\TestSample2\TFSSample.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="NAVFiles\Codeunit_1.txt">
@@ -248,24 +259,45 @@
     <Content Include="NAVFiles\Codeunit_1_Modified.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="packages.config" />
-    <None Include="TestData\deployments\jQuery\active\jQuery.1.7.1.nupkg">
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="ReleaseNotes\Machine.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ReleaseNotes\Octokit.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ReleaseNotes\SemVer.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ProjectTestFiles\FakeLib5.fsproj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ProjectTestFiles\FakeLib6.fsproj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="ProjectTestFiles\FakeLib.fsproj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="TestData\deployments\jQuery\backups\jQuery.1.5.nupkg">
+    <Content Include="ProjectTestFiles\FakeLib2.csproj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ProjectTestFiles\FakeLib4.fsproj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="ProjectTestFiles\FakeLib2.fsproj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="TestData\deployments\jQuery\backups\jQuery.1.6.nupkg">
+    <Content Include="ProjectTestFiles\FakeLib3.csproj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="ProjectTestFiles\FakeLib3.fsproj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="TestData\deployments\SignalR\active\SignalR.0.4.0.nupkg">
+    <None Include="TestData\fake_schema_2011_08.nuspec">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="TestData\deployments\SignalR\backups\SignalR.0.1.nupkg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="TestData\deployments\SignalR\backups\SignalR.0.2.nupkg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <None Include="TestData\Form_5227779.nav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -279,7 +311,7 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

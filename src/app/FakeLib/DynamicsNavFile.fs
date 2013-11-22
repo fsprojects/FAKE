@@ -1,16 +1,21 @@
-﻿module Fake.DynamicsNavFile
+﻿/// Provides an abstraction over Dynamics NAV object files.
+module Fake.DynamicsNavFile
 
 open System
 open System.Text
 open System.IO
 open System.Text.RegularExpressions
 
+/// A Regex which allows to retrieve the modified flag.
 let ModifiedRegex = new Regex(@"\s\s\s\sModified\=Yes;(?:\r\n|\r|\n)", RegexOptions.Compiled)
 
+/// A Regex which allows to retrieve the version list.
 let VersionRegex = new Regex(@"\n\s\s\s\sVersion List\=(?<VersionList>[^;\s]*);", RegexOptions.Compiled)
 
+/// A Regex which allows to retrieve modified date.
 let DateRegex = new Regex(@"\n\s\s\s\sDate\=(?<Date>[^;]*);", RegexOptions.Compiled)
 
+/// A Regex which allows to retrieve the modified time.
 let TimeRegex = new Regex(@"\n\s\s\s\sTime\=(?<Time>[^;]*);", RegexOptions.Compiled)
 
 /// Replaces the timestamp in a Dynamics NAV object
@@ -23,7 +28,10 @@ let removeModifiedFlag text = ModifiedRegex.Replace(text, String.Empty)
 
 /// Returns the version tag list from Dynamics NAV object
 let getVersionTagList text =
-    if VersionRegex.IsMatch text then VersionRegex.Match(text).Groups.["VersionList"].Value else ""
+    if VersionRegex.IsMatch text then 
+        VersionRegex.Match(text).Groups.["VersionList"].Value 
+    else 
+        ""
 
 /// Splits a version tag list from Dynamics NAV object into single tags
 let splitVersionTags (tagList:string) = tagList.ToUpper().Split Colon
@@ -42,11 +50,11 @@ let replaceInVersionTag (versionTag:string) (newVersion:string) (tagList:string)
     else
         tagList + Colon.ToString() + versionTag + newVersion        
 
-/// Replaces a version tag list from complete Dynamics NAV object with a new one
+/// Replaces a version tag list from a complete Dynamics NAV object with a new version tag list
 let replaceVersionTagList (text:string) (newTags:string) =
     VersionRegex.Replace(text, String.Format("\n    Version List={0};", newTags))
 
-/// Splits a version tag list from Dynamics NAV object into single tags
+/// Replaces a version tag in a Dynamics NAV
 let replaceVersionTag versionTag (newVersion:string) sourceCode =
     let tagList = getVersionTagList sourceCode
 
@@ -66,7 +74,7 @@ let getInvalidTags invalidTags versionTags =
         |> Seq.map (fun (iTag:string) -> iTag.ToUpper())
         |> Seq.filter (fun iTag -> versionTags |> Seq.exists (fun (tag:string) -> tag.StartsWith iTag))
 
-/// Checks a Dynamics NAV object for missing required andinvalid tags and raises this as errors
+/// Checks a Dynamics NAV object for missing required and invalid tags and raises this as errors
 let checkTagsInObjectString requiredTags acceptPreTagged invalidTags objectString name =
     try
         let tagList = getVersionTagList objectString

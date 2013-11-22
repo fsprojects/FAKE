@@ -1,4 +1,5 @@
 ﻿[<AutoOpen>]
+/// Contains basic functions for string manipulation.
 module Fake.StringHelper
 
 open System
@@ -6,6 +7,7 @@ open System.IO
 open System.Text
 open System.Collections.Generic
 
+/// [omit]
 let productName() = "FAKE"
 
 /// Returns if the string is null or empty
@@ -26,92 +28,109 @@ let inline separated delimiter (items: string seq) = String.Join(delimiter, Arra
 /// Removes the slashes from the end of the given string
 let inline trimSlash (s:string) = s.TrimEnd('\\')
 
-/// Splits the given string at the given delimiter
+/// Splits the given string at the given char delimiter
 let inline split (delimiter:char) (text:string) = text.Split [|delimiter|] |> Array.toList
 
-/// Converts a sequence of strings into a string separated with line ends
-let inline toLines s = separated "\r\n" s
+/// Splits the given string at the given string delimiter
+let inline splitStr (delimiterStr:string) (text:string) = text.Split([|delimiterStr|], StringSplitOptions.None) |> Array.toList
 
-/// Checks wether the given text starts with the given prefix
+/// Converts a sequence of strings into a string separated with line ends
+let inline toLines text = separated Environment.NewLine text
+
+/// Checks whether the given text starts with the given prefix
 let startsWith prefix (text:string) = text.StartsWith prefix
 
-/// Checks wether the given text ends with the given suffix
+/// Checks whether the given text ends with the given suffix
 let endsWith suffix (text:string) = text.EndsWith suffix
 
 /// Determines whether the last character of the given <see cref="string" />
 /// matches Path.DirectorySeparatorChar.         
 let endsWithSlash = endsWith (Path.DirectorySeparatorChar.ToString())
 
+/// Replaces the first occurrence of the pattern with the given replacement.
 let replaceFirst (pattern: string) replacement (text: string) = 
     let pos = text.IndexOf pattern
     if pos < 0
         then text
         else text.Remove(pos, pattern.Length).Insert(pos, replacement)
         
-/// Appends a text
-let inline append s (builder:StringBuilder) = builder.Append(sprintf "\"%s\" " s)
+/// Appends a text to a StringBuilder.
+let inline append text (builder:StringBuilder) = builder.Append(sprintf "\"%s\" " text)
 
-/// Appends a text if the predicate is true
+/// Appends a text if the predicate is true.
 let inline appendIfTrue p s builder = if p then append s builder else builder
 
-/// Appends a text if the predicate is false
+/// Appends a text if the predicate is false.
 let inline appendIfFalse p = appendIfTrue (not p)
 
-/// Appends a text if the value is not null
+/// Appends a text if the value is not null.
 let inline appendIfNotNull (value : Object) s = 
     appendIfTrue (value <> null) (
         match value with 
         | :? String as sv -> (sprintf "%s%s" s sv)
         | _ -> (sprintf "%s%A" s value))
 
-/// Appends a quoted text if the value is not null
+/// Appends a quoted text if the value is not null.
 let inline appendQuotedIfNotNull (value : Object) s (builder:StringBuilder) =    
     if (value = null) then builder else (
         match value with 
         | :? String as sv -> builder.Append(sprintf "%s\"%s\" " s sv)
         | _ -> builder.Append(sprintf "%s\"%A\" " s value))
 
-
-/// Appends a text if the value is not null
+/// Appends a text if the value is not null.
 let inline appendStringIfValueIsNotNull value = appendIfTrue (value <> null)
 
-/// Appends a text if the value is not null or empty
+/// Appends a text if the value is not null or empty.
 let inline appendStringIfValueIsNotNullOrEmpty value = appendIfTrue (isNullOrEmpty value |> not)
 
-/// Appends all notnull fileNames
+/// Appends all notnull fileNames.
 let inline appendFileNamesIfNotNull fileNames (builder:StringBuilder) =
     fileNames 
       |> Seq.fold (fun builder file -> appendIfTrue (isNullOrEmpty file |> not) file builder) builder
 
+/// Returns the text from the StringBuilder
+let inline toText (builder:StringBuilder) = builder.ToString()
+
+/// [omit]
 let private regexes = new Dictionary<_,_>()
 
+/// [omit]
 let getRegEx pattern =
     match regexes.TryGetValue pattern with
     | true, regex -> regex
     | _ -> (new System.Text.RegularExpressions.Regex(pattern))
 
+/// [omit]
 let regex_replace pattern (replacement:string) text =
     (getRegEx pattern).Replace(text,replacement)
 
-/// Checks wether the given char is a german umlaut.
-let isUmlaut c = Seq.contains c ['ä'; 'ö'; 'ü'; 'Ä'; 'Ö'; 'Ü'; 'ß']
+/// Checks whether the given char is a german umlaut.
+let isUmlaut c = Seq.exists ((=) c) ['ä'; 'ö'; 'ü'; 'Ä'; 'Ö'; 'Ü'; 'ß']
 
+/// Converts all characters in a string to lower case.
 let inline toLower (s:string) = s.ToLower()
 
 /// Returns all standard chars and digits.
 let charsAndDigits = ['a'..'z'] @ ['A'..'Z'] @ ['0'..'9'] 
 
-/// Checks wether the given char is a standard char or digit.
+/// Checks whether the given char is a standard char or digit.
 let isLetterOrDigit c = List.exists ((=) c) charsAndDigits
 
 /// Trims the given string with the DirectorySeparatorChar
 let inline trimSeparator (s:string) = s.TrimEnd Path.DirectorySeparatorChar
 
-let inline trimSpecialChars (s:string) =
-    s
+/// Trims all special characters from a string.
+let inline trimSpecialChars (text:string) =
+    text
       |> Seq.filter isLetterOrDigit
       |> Seq.filter (isUmlaut >> not)
       |> Seq.fold (fun (acc:string) c -> acc + string c) ""
+
+/// Trims the given string
+let inline trim (x: string) = if isNullOrEmpty x then x else x.Trim()
+
+/// Trims the given string
+let inline trimChars chars (x: string) = if isNullOrEmpty x then x else x.Trim chars
 
 /// Lifts a string to an option
 let liftString x = if isNullOrEmpty x then None else Some x
@@ -121,6 +140,11 @@ let ReadFile (file:string) =
     seq {use textReader = new StreamReader(file, encoding)
          while not textReader.EndOfStream do
              yield textReader.ReadLine()}
+
+/// Reads the first line of a file. This can be helpful to read a password from file.
+let ReadLine (file:string) =   
+  use sr = new StreamReader(file, Encoding.Default)
+  sr.ReadLine()
 
 /// Writes a file line by line
 let WriteToFile append fileName (lines: seq<string>) =    
@@ -177,7 +201,7 @@ let ReadFileAsBytes = File.ReadAllBytes
 /// Replaces any occurence of the currentDirectory with .
 let inline shortenCurrentDirectory value = replace currentDirectory "." value
 
-/// Checks wether the given text starts with the given prefix
+/// Checks whether the given text starts with the given prefix
 let inline (<*) prefix text = startsWith prefix text
 
 /// Replaces the text in the given file
@@ -187,10 +211,16 @@ let ReplaceInFile replaceF fileName =
     |> replaceF
     |> ReplaceFile fileName
 
+/// Represents Linux line breaks
 let LinuxLineBreaks = "\n"
+
+/// Represents Windows line breaks
 let WindowsLineBreaks = "\r\n"
+
+/// Represents Mac line breaks
 let MacLineBreaks = "\r"
 
+/// Converts all line breaks in a text to windows line breaks
 let ConvertTextToWindowsLineBreaks text = 
     text
     |> replace WindowsLineBreaks LinuxLineBreaks 
@@ -227,6 +257,7 @@ let inline RemoveLineBreaks text =
 let inline EncapsulateApostrophe text = replace "'" "`" text
         
 /// A cache of relative path names.
+/// [omit]
 let relativePaths = new Dictionary<_,_>()
 
 /// <summary>Produces relative path when possible to go from baseLocation to targetLocation.</summary>
@@ -274,7 +305,7 @@ let ProduceRelativePath baseLocation targetLocation =
     else
         (!resultPath).Substring(0, (!resultPath).Length - 1)
 
-/// Replaces the absolute path to a relative
+/// Replaces the absolute path to a relative path.
 let inline toRelativePath value = 
     match relativePaths.TryGetValue value with
     | true,x -> x
@@ -283,8 +314,10 @@ let inline toRelativePath value =
          relativePaths.Add(value,x)
          x
 
+/// Find a regex pattern in a text and replaces it with the given replacement.
 let (>=>) pattern replacement text = regex_replace pattern replacement text
 
+/// Determines if a text matches a given regex pattern.
 let (>**) pattern text = (getRegEx pattern).IsMatch text
 
 /// Decodes a Base64-encoded UTF-8-encoded string
@@ -292,4 +325,3 @@ let DecodeBase64Utf8String (text:string) =
   text
   |> Convert.FromBase64String
   |> Encoding.UTF8.GetString
-    

@@ -1,8 +1,10 @@
 ﻿[<AutoOpen>]
+/// Contains helper function which can be used for sanity checks.
 module Fake.Git.SanityChecks
 
 open Fake
 
+/// Checks if the given branch exists.
 let checkRevisionExists repositoryDir revision1 =
   let ok1,_,errors1 = runGitCommand repositoryDir <| sprintf "log %s" revision1
   

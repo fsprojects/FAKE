@@ -19,34 +19,44 @@ let mstestexe =
 
  // TODO: try to use VSTest.Console.exe as well (VS2012 and up only)
 
-/// [omit]
-let toolPath () = 
-    match tryFindFile mstestPaths mstestexe with
-     | Some path -> path
-     | None -> failwith "Cannot find MSTest.exe executable"
+/// Option which allow to specify if a MSTest error should break the build.
+type ErrorLevel =
+/// This option instructs FAKE to break the build if MSTest reports an error. (Default)
+| Error
+/// With this option set, no exception is thrown if a test is broken.
+| DontFailBuild
 
-/// Parameter type to configure the MSTest.exe
+/// Parameter type to configure the MSTest.exe.
 type MSTestParams = 
     {
     /// Test category filter  (optional). The test category filter consists of one or more test category names separated by the logical operators '&', '|', '!', '&!'. The logical operators '&' and '|' cannot be used together to create a test category filter.
     Category: string
     /// Test results directory (optional)
     ResultsDir: string
-    /// path to the Test Metadata file (.vdmdi)  (optional)
+    /// Path to the Test Metadata file (.vdmdi)  (optional)
     TestMetadataPath: string
     /// Working directory (optional)
     WorkingDir:string
     /// A timeout for the test runner (optional)
     TimeOut: TimeSpan
+    /// Path to MSTest.exe 
+    ToolPath : string
+    /// Option which allow to specify if a MSTest error should break the build.
+    ErrorLevel: ErrorLevel
     }
 
-/// MSTest default parameters
+/// MSTest default parameters.
 let MSTestDefaults = { 
     Category = null
     ResultsDir = null
     TestMetadataPath = null
     WorkingDir = null
-    TimeOut = TimeSpan.FromMinutes 5.}
+    TimeOut = TimeSpan.FromMinutes 5.
+    ToolPath =
+        match tryFindFile mstestPaths mstestexe with
+        | Some path -> path
+        | None -> ""
+    ErrorLevel = ErrorLevel.Error }
 
 /// Builds the command line arguments from the given parameter record and the given assemblies.
 /// [omit]
@@ -56,14 +66,13 @@ let commandLineBuilder parameters assembly =
             sprintf @"%s\%s.trx" parameters.ResultsDir (DateTime.Now.ToString("yyyyMMdd-HHmmss.ff"))
         else 
             null
-//    trace ("/resultsfile is:" + testResultsFile)
-    let cl = 
-        new StringBuilder()
-        |> appendIfNotNull assembly "/testcontainer:"
-        |> appendIfNotNull parameters.Category "/category:"
-        |> appendIfNotNull testResultsFile "/resultsfile:"
-
-    cl.ToString()
+    
+    new StringBuilder()
+    |> appendIfNotNull assembly "/testcontainer:"
+    |> appendIfNotNull parameters.Category "/category:"
+    |> appendIfNotNull testResultsFile "/resultsfile:"
+    |> append "/noisolation"
+    |> toText
 
 /// Runs MSTest command line tool on a group of assemblies.
 /// ## Parameters
@@ -74,28 +83,30 @@ let commandLineBuilder parameters assembly =
 /// ## Sample usage
 ///
 ///     Target "Test" (fun _ ->
-///         !! (testDir + @"\Test.*.dll") 
+///         !! (testDir + @"\*.Tests.dll") 
 ///           |> MSTest (fun p -> { p with Category = "group1" })
 ///     )
 let MSTest (setParams: MSTestParams -> MSTestParams) (assemblies: string seq) =
     let details = assemblies |> separated ", "
     traceStartTask "MSTest" details
-    trace ("Hello from MSTest" @@ details)
     let parameters = MSTestDefaults |> setParams
               
     let assemblies =  assemblies |> Seq.toArray
-
     if Array.isEmpty assemblies then
         failwith "MSTest: cannot run tests (the assembly list is empty)."
 
-    let tool = toolPath()
+    let failIfError assembly exitCode =
+        if exitCode > 0 && parameters.ErrorLevel = ErrorLevel.Error then
+            let message = sprintf "%sMSTest test run failed for %s" Environment.NewLine assembly
+            traceError message
+            failwith message
 
     for assembly in assemblies do
         let args = commandLineBuilder parameters assembly
-        let exitCode = execProcessAndReturnExitCode (fun info ->  
-            info.FileName <- tool
+        execProcessAndReturnExitCode (fun info ->  
+            info.FileName <- parameters.ToolPath
             info.WorkingDirectory <- parameters.WorkingDir
             info.Arguments <- args) parameters.TimeOut
-        trace ("exit code: " + exitCode.ToString())
-    
+            |> failIfError assembly
+
     traceEndTask "MSTest" details

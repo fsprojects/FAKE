@@ -1,9 +1,11 @@
 ﻿[<AutoOpen>]
+/// Contains tasks to create packages in [Xamarin's xpkg format](http://components.xamarin.com/)
 module Fake.XpkgHelper
 
 open System
 open System.Text
 
+/// Parameter type for xpkg tasks
 type xpkgParams =
     {
         ToolPath: string;
@@ -24,7 +26,7 @@ type xpkgParams =
         Samples: (string*string) list;
     }
 
-/// xpkg default params  
+/// Creates xpkg default parameters
 let XpkgDefaults() =
     {
         ToolPath = findToolInSubPath "xpkg.exe" (currentDirectory @@ "tools" @@ "xpkg")
@@ -47,7 +49,32 @@ let XpkgDefaults() =
 
 let private getPackageFileName parameters = sprintf "%s-%s.xam" parameters.Package parameters.Version
 
-/// Creates a new xpkg package based on the packageFileName
+/// Creates a new xpkg package based on the package file name
+///
+/// ## Sample
+///
+///     Target "PackageXamarinDistribution" (fun _ -> 
+///          xpkgPack (fun p ->
+///              {p with
+///                  ToolPath = xpkgExecutable;
+///                  Package = "Portable.Licensing";
+///                  Version = assemblyFileVersion;
+///                  OutputPath = publishDir
+///                  Project = "Portable.Licensing"
+///                  Summary = "Portable.Licensing is a cross platform licensing tool"
+///                  Publisher = "Nauck IT KG"
+///                  Website = "http://dev.nauck-it.de"
+///                  Details = "./Xamarin/Details.md"
+///                  License = "License.md"
+///                  GettingStarted = "./Xamarin/GettingStarted.md"
+///                  Icons = ["./Xamarin/Portable.Licensing_512x512.png"
+///                           "./Xamarin/Portable.Licensing_128x128.png"]
+///                  Libraries = ["mobile", "./Distribution/lib/Portable.Licensing.dll"]
+///                  Samples = ["Android Sample.", "./Samples/Android/Android.Sample.sln"
+///                             "iOS Sample.", "./Samples/iOS/iOS.Sample.sln"]
+///              }
+///          )
+///      )
 let xpkgPack setParams =    
     let parameters = XpkgDefaults() |> setParams
     let packageFileName = getPackageFileName parameters 
@@ -92,7 +119,7 @@ let xpkgPack setParams =
     else
         failwithf "Create xpkg package failed. Process finished with exit code %d." result
         
-/// Validates a xpkg package based on the packageFileName
+/// Validates a xpkg package based on the package file name
 let xpkgValidate setParams =    
     let parameters = XpkgDefaults() |> setParams
     let packageFileName = getPackageFileName parameters 

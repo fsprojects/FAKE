@@ -8,9 +8,9 @@ open Microsoft.SqlServer.Management.Smo
 open Microsoft.SqlServer.Management.Common
 open System.IO
 
-type ServerInfo =
-    { Server: Server;
-      ConnBuilder: SqlConnectionStringBuilder}
+type ServerInfo ={ 
+    Server: Server
+    ConnBuilder: SqlConnectionStringBuilder}
   
 /// Gets a connection to the SQL server and an instance to the ConnectionStringBuilder
 let getServerInfo connectionString = 
@@ -27,7 +27,7 @@ let getServerInfo connectionString =
     conn.ServerInstance <- connbuilder.DataSource
     conn.Connect()
 
-    {Server = new Server(conn); 
+    {Server = new Server(conn)
      ConnBuilder = connbuilder}
   
 /// gets the DatabaseNames from the server
@@ -45,7 +45,7 @@ let getDBName serverInfo = serverInfo.ConnBuilder.InitialCatalog
 /// Gets the name of the server
 let getServerName serverInfo = serverInfo.ConnBuilder.DataSource   
                   
-/// Checks wether the given Database exists on the server
+/// Checks whether the given Database exists on the server
 let existDBOnServer serverInfo dbName = 
     let names = getDatabaseNamesFromServer serverInfo
     let searched = getDBName serverInfo
@@ -59,7 +59,7 @@ let existDBOnServer serverInfo dbName =
 /// Gets the initial catalog as database instance
 let getDatabase serverInfo = new Database(serverInfo.Server, getDBName serverInfo)
     
-/// Checks wether the given InitialCatalog exists on the server    
+/// Checks whether the given InitialCatalog exists on the server    
 let intitialCatalogExistsOnServer serverInfo =  
     getDBName serverInfo 
       |> existDBOnServer serverInfo  

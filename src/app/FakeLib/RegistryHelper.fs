@@ -1,8 +1,10 @@
 ﻿[<AutoOpen>]
+/// Contains function which allow to retrieve information from the registry.
 module Fake.RegistryHelper
 
 open Microsoft.Win32
 
+/// Registry base keys.
 type RegistryBaseKey =
 | HKEYLocalMachine
 | HKEYClassesRoot
@@ -12,6 +14,7 @@ type RegistryBaseKey =
 | HKEYPerformanceData
 
 /// Maps the RegistryBaseKey to a RegistryKey
+/// [omit]
 let getKey = function
 | HKEYLocalMachine -> Registry.LocalMachine
 | HKEYClassesRoot -> Registry.ClassesRoot
@@ -20,7 +23,7 @@ let getKey = function
 | HKEYCurrentConfig -> Registry.CurrentConfig
 | HKEYPerformanceData -> Registry.PerformanceData
 
-/// Gets a registy key
+/// Gets a registy key.
 let getRegistryKey baseKey subKey = (getKey baseKey).OpenSubKey subKey
 
 /// Gets a registy value as string

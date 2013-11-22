@@ -190,7 +190,7 @@ let private createLauncher param =
                     ShowReports = param.ShowReports,
                     IgnoreAnnotations = param.IgnoreAnnotations,
                     ReportFormatterOptions = addProperties param.ReportFormatterOptions (ReportFormatterOptions()),
-                    RunTimeLimit = Option.toNullable param.RunTimeLimit,
+                    RunTimeLimit = (match param.RunTimeLimit with | None -> Nullable() | Some x -> Nullable(x)),
                     RuntimeSetup = createRuntimeSetup param,
                     TestExecutionOptions = createExecutionOptions param,
                     TestExplorationOptions = addProperties param.TestExplorationOptions (TestExplorationOptions()),
@@ -203,7 +203,6 @@ let private createLauncher param =
 /// </summary>
 /// <param name="setParam">Function that modifies the default parameters</param>
 /// <param name="assemblies">List of test assemblies</param>
-/// <user/>
 let Run (setParam: GallioParams -> GallioParams) assemblies =
     let param = setParam GallioDefaults
     let launcher = createLauncher param

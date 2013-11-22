@@ -1,55 +1,51 @@
 ﻿[<AutoOpen>]
+/// Contains abstractions which allow to use file globbing.
 module Fake.FileSetHelper
 
+open System
 open System.IO
 open System.Globalization
 open System.Text
 open System.Text.RegularExpressions
 
-/// The FileSet is eagerly loaded into a list of strings.
-/// The scan is only done once.
-type EagerFileSet = string list
-
-/// The FileSet is lazy loaded into a sequence of strings.
-/// Every time the FileSet is used it scans again.
-type LazyFileSet = string seq
-
+/// [omit]
+/// Internal representation
+[<Obsolete>]
 type RegexEntry =
   { IsRecursive : bool;
     BaseDirectory: string;
     Pattern: string}
 
-type FileIncludes =
-  { BaseDirectories: string list;
-    Includes: string list;
-    Excludes: string list}
-    
 /// Patterns can use either / \ as a directory separator.
-/// cleanPath replaces both of these characters with Path.DirectorySeparatorChar
-let cleanPathBuilder (path:string) =    
+/// This function creates a StringBuilder which replaces both of these characters with Path.DirectorySeparatorChar
+[<Obsolete>]
+let cleanPathBuilder (path:string) =
     (new StringBuilder(path))
       .Replace('/',  Path.DirectorySeparatorChar)
       .Replace('\\', Path.DirectorySeparatorChar)
     
 /// Patterns can use either / \ as a directory separator.
-/// cleanPath replaces both of these characters with Path.DirectorySeparatorChar
-let cleanPath path = (cleanPathBuilder path).ToString()      
+/// This function replaces both of these characters with Path.DirectorySeparatorChar
+[<Obsolete>]
+let cleanPath path = (cleanPathBuilder path).ToString()
     
+[<Obsolete>]
 let combinePath baseDirectory path =
     baseDirectory @@ cleanPath(path)
       |> Path.GetFullPath
             
-/// The base directory to scan. The default is the 
-/// <see cref="Environment.CurrentDirectory">current directory</see>.
+/// The base directory to scan. The default is the current directory.
+[<Obsolete>]
 let baseDirectory value = cleanPath value |> directoryInfo
   
-/// Ensures that the last character of the given <see cref="string" />
-/// matches Path.DirectorySeparatorChar.          
+/// Ensures that the last character of the given string matches Path.DirectorySeparatorChar.
+[<Obsolete>]
 let ensureEndsWithSlash value =
     if endsWithSlash value then value else
     value + string Path.DirectorySeparatorChar
   
 /// Converts search pattern to a regular expression pattern.
+[<Obsolete>]
 let regexPattern originalPattern =
   let pattern = cleanPathBuilder originalPattern
 
@@ -123,7 +119,7 @@ let regexPattern originalPattern =
   patternText.ToString()
   
   
-/// Given a search pattern returns a search directory and an regex search pattern.
+/// Given a search pattern this function returns a search directory and a regex search pattern.
 let parseSearchDirectoryAndPattern (baseDir:DirectoryInfo) originalPattern =
   let s = cleanPath originalPattern
   
@@ -197,8 +193,8 @@ let parseSearchDirectoryAndPattern (baseDir:DirectoryInfo) originalPattern =
   searchDirectory, recursivePattern, isRegex, regexPattern
 
 
-/// Parses specified search patterns for search directories and 
-/// corresponding regex patterns.
+/// Parses specified search patterns for search directories and corresponding regex patterns.
+[<Obsolete>]
 let convertPatterns baseDir patterns =
   patterns
     |> List.fold (fun (regExPatterns,names) pattern ->
@@ -223,9 +219,16 @@ let convertPatterns baseDir patterns =
 
 open System.Collections.Generic
 
+/// Cached case sensitive Regexes
+[<Obsolete>]
 let cachedCaseSensitiveRegexes   = new Dictionary<_,_>()
+
+/// Cached case insensitive Regexes
+[<Obsolete>]
 let cachedCaseInsensitiveRegexes = new Dictionary<_,_>()
 
+/// Tests a path if it matches the RegexEntry
+[<Obsolete>]
 let testRegex caseSensitive (path:string) (entry:RegexEntry) =
   let regexCache = if caseSensitive then cachedCaseSensitiveRegexes else cachedCaseInsensitiveRegexes
   let regexOptions = if caseSensitive then RegexOptions.Compiled else RegexOptions.Compiled ||| RegexOptions.IgnoreCase
@@ -239,7 +242,8 @@ let testRegex caseSensitive (path:string) (entry:RegexEntry) =
   else
       r.IsMatch(path.Substring(entry.BaseDirectory.Length + 1))
 
-          
+/// Tests if the given path is included in the file set
+[<Obsolete>]
 let isPathIncluded path caseSensitive compareOptions includeNames includedPatterns excludeNames excludedPatterns =     
   let compare = CultureInfo.InvariantCulture.CompareInfo
   let included =
@@ -260,8 +264,8 @@ let isPathIncluded path caseSensitive compareOptions includeNames includedPatter
   not (excludedPatterns |> List.exists (testRegex caseSensitive path))
  
   
-/// Searches a directory recursively for files and directories matching 
-/// the search criteria.
+/// Searches a directory recursively for files and directories matching the search criteria.
+[<Obsolete>]
 let rec scanDirectory caseSensitive includeNames 
      includePatterns excludeNames excludePatterns path recursivePattern =
   if not <| Directory.Exists(path) then Seq.empty else
@@ -318,8 +322,8 @@ let rec scanDirectory caseSensitive includeNames
       yield path
  }
   
-/// Searches the directories recursively for files and directories matching 
-/// the search criteria.    
+/// Searches the directories recursively for files and directories matching the search criteria.
+[<Obsolete>]
 let Files baseDirs includes excludes =
   seq {    
     for actBaseDir in baseDirs do
@@ -331,53 +335,27 @@ let Files baseDirs includes excludes =
          
       yield! scanDirectory false includeNames includePatterns excludeNames excludePatterns baseDir.FullName true}
 
-/// Logs the given files with the message  
+/// Logs the given files with the message.
 let Log message files = files |> Seq.iter (log << sprintf "%s%s" message)
 
-/// The default base directory 
+/// The default base directory (the current directory).
+[<Obsolete>]
 let DefaultBaseDir = Path.GetFullPath "."
-  
-/// Include files  
-let Include x =    
-    { BaseDirectories = [DefaultBaseDir];
-      Includes = [x];
-      Excludes = []}           
-       
-/// Lazy scan for include files
-/// Will be processed at the time when needed
-let Scan includes : LazyFileSet = Files includes.BaseDirectories includes.Includes includes.Excludes
 
-/// Adds a directory as baseDirectory for fileIncludes  
-let AddBaseDir dir fileInclude = {fileInclude with BaseDirectories = dir::fileInclude.BaseDirectories}    
+/// Internal representation of a file set
+[<Obsolete>]
+type FileIncludes =
+  { BaseDirectories: string list;
+    Includes: string list;
+    Excludes: string list}
+
+  /// Adds the given pattern to the file includes
+  member this.And pattern = { this with Includes = pattern::this.Includes}
+
+  /// Ignores files with the given pattern
+  member this.ButNot pattern = { this with Excludes = pattern::this.Excludes}
+
+  interface IEnumerable<string> with 
+      member this.GetEnumerator() = (Files this.BaseDirectories this.Includes this.Excludes).GetEnumerator()
+      member this.GetEnumerator() = (Files this.BaseDirectories this.Includes this.Excludes).GetEnumerator():> System.Collections.IEnumerator
     
-/// Sets a directory as baseDirectory for fileIncludes  
-let SetBaseDir (dir:string) fileInclude = {fileInclude with BaseDirectories = [dir.TrimEnd(directorySeparator.[0])]}   
-      
-/// Scans immediately for include files
-/// Files will be memoized
-let ScanImmediately includes : EagerFileSet = Scan includes |> Seq.toList
-  
-/// Include prefix operator
-let (!+) x = Include x
-
-/// Add Include operator
-let (++) x y = {x with Includes = y::x.Includes}
-
-/// Exclude operator
-let (--) x y = {x with Excludes = y::x.Excludes}  
-
-/// Includes a single pattern and scans the files - !! x = AllFilesMatching x
-let (!!) x = !+ x |> Scan
-
-/// Includes a single pattern and scans the files - !! x = AllFilesMatching x
-let AllFilesMatching x = !! x
-
-let findToolInSubPath toolname defaultPath =
-    let tools = !! ("./**/" + toolname) 
-    if tools |> Seq.isEmpty then defaultPath @@ toolname else tools |> Seq.head
-
-let findToolFolderInSubPath toolname defaultPath =
-    let tools = !! ("./**/" + toolname) 
-    if tools |> Seq.isEmpty then defaultPath else 
-    let fi = fileInfo (tools |> Seq.head)
-    fi.Directory.FullName
