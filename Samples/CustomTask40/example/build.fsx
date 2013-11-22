@@ -6,3 +6,4 @@ open Fake
 open MyCustomTask
 
 RandomNumberTask.RandomNumber(1, 10)
+|> tracefn "Random Number: %d"
