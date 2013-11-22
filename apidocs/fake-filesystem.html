@@ -62,7 +62,6 @@
 
 <h1>FileSystem</h1>
 <div class="xmldoc">
-<p>Experimental Globbing - be careful we will break this.</p>
 </div>
 
 <!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
@@ -93,10 +92,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '167', 167)" onmouseover="showTip(event, '167', 167)">
+          <code onmouseout="hideTip(event, '139', 139)" onmouseover="showTip(event, '139', 139)">
             ( -- ) x pattern
           </code>
-          <div class="tip" id="167">
+          <div class="tip" id="139">
             <strong>Signature:</strong>x:FileIncludes -&gt; pattern:string -&gt; FileIncludes<br />
                       </div>
         </td>
@@ -106,10 +105,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '168', 168)" onmouseover="showTip(event, '168', 168)">
+          <code onmouseout="hideTip(event, '140', 140)" onmouseover="showTip(event, '140', 140)">
             ( !! ) x
           </code>
-          <div class="tip" id="168">
+          <div class="tip" id="140">
             <strong>Signature:</strong>x:string -&gt; FileIncludes<br />
                       </div>
         </td>
@@ -119,10 +118,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '169', 169)" onmouseover="showTip(event, '169', 169)">
+          <code onmouseout="hideTip(event, '141', 141)" onmouseover="showTip(event, '141', 141)">
             ( !+ ) x
           </code>
-          <div class="tip" id="169">
+          <div class="tip" id="141">
             <strong>Signature:</strong>x:string -&gt; FileIncludes<br />
                       </div>
         </td>
@@ -132,10 +131,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '170', 170)" onmouseover="showTip(event, '170', 170)">
+          <code onmouseout="hideTip(event, '142', 142)" onmouseover="showTip(event, '142', 142)">
             ( ++ ) x pattern
           </code>
-          <div class="tip" id="170">
+          <div class="tip" id="142">
             <strong>Signature:</strong>x:FileIncludes -&gt; pattern:string -&gt; FileIncludes<br />
                       </div>
         </td>
@@ -145,10 +144,62 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '171', 171)" onmouseover="showTip(event, '171', 171)">
+          <code onmouseout="hideTip(event, '143', 143)" onmouseover="showTip(event, '143', 143)">
+            AddBaseDir dir fileInclude
+          </code>
+          <div class="tip" id="143">
+            <strong>Signature:</strong>dir:string -&gt; fileInclude:FileIncludes -&gt; FileIncludes<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Adds a directory as baseDirectory for fileIncludes.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '144', 144)" onmouseover="showTip(event, '144', 144)">
+            AllFilesMatching x
+          </code>
+          <div class="tip" id="144">
+            <strong>Signature:</strong>x:string -&gt; FileIncludes<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Includes a single pattern and scans the files - !! x = AllFilesMatching x</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '145', 145)" onmouseover="showTip(event, '145', 145)">
+            findToolFolderInSubPath (...)
+          </code>
+          <div class="tip" id="145">
+            <strong>Signature:</strong>toolname:string -&gt; defaultPath:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Looks for a tool in all subfolders - returns the folder where the tool was found.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '146', 146)" onmouseover="showTip(event, '146', 146)">
+            findToolInSubPath toolname defaultPath
+          </code>
+          <div class="tip" id="146">
+            <strong>Signature:</strong>toolname:string -&gt; defaultPath:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Looks for a tool in all subfolders - returns the tool file name.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '147', 147)" onmouseover="showTip(event, '147', 147)">
             Include x
           </code>
-          <div class="tip" id="171">
+          <div class="tip" id="147">
             <strong>Signature:</strong>x:string -&gt; FileIncludes<br />
                       </div>
         </td>
@@ -158,10 +209,37 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '172', 172)" onmouseover="showTip(event, '172', 172)">
+          <code onmouseout="hideTip(event, '148', 148)" onmouseover="showTip(event, '148', 148)">
+            Scan files
+          </code>
+          <div class="tip" id="148">
+            <strong>Signature:</strong>files:&#39;?6281 -&gt; &#39;?6281<br />
+                          <strong>Type parameters:</strong> '?6281          </div>
+        </td>
+        <td class="xmldoc"><p>Lazy scan for include files.
+Will be processed at the time when needed.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '149', 149)" onmouseover="showTip(event, '149', 149)">
+            ScanImmediately includes
+          </code>
+          <div class="tip" id="149">
+            <strong>Signature:</strong>includes:seq&lt;&#39;?6284&gt; -&gt; &#39;?6284 list<br />
+                          <strong>Type parameters:</strong> '?6284          </div>
+        </td>
+        <td class="xmldoc"><p>Scans immediately for include files - all matching files will be memoized.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '150', 150)" onmouseover="showTip(event, '150', 150)">
             SetBaseDir dir fileIncludes
           </code>
-          <div class="tip" id="172">
+          <div class="tip" id="150">
             <strong>Signature:</strong>dir:string -&gt; fileIncludes:FileIncludes -&gt; FileIncludes<br />
                       </div>
         </td>
