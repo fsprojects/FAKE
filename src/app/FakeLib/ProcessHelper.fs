@@ -310,9 +310,7 @@ let appSettings (key:string) (fallbackValue:string) =
             with
             | exn -> ""
         
-        if not (isNullOrWhiteSpace(setting)) then
-            setting
-        else fallbackValue
+        if not (isNullOrWhiteSpace setting) then setting else fallbackValue
 
     value.Split([|';'|], StringSplitOptions.RemoveEmptyEntries)
 
