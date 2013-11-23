@@ -41,7 +41,7 @@ Clear-Host
 
 try
 {
-    Write-Caution "Attempting to find the build script, $buildFile, at path:" 
+    Write-Caution "Attempting to find the build script, $buildFile, at Path:" 
 
     Write-Success "`t $basePath\$buildFile"
 
@@ -67,7 +67,7 @@ catch
 
 try
 {
-    Write-Caution "Attempting to find Nuget.exe, at path:" 
+    Write-Caution "Attempting to find Nuget.exe, at Path:" 
 
     Write-Success "`t $basePath\$nugetApplicationPath"
 
@@ -97,7 +97,7 @@ catch
 
 try
 {
-    Write-Caution "Attempting to find FAKE, at path:" 
+    Write-Caution "Attempting to find FAKE, at Path:" 
 
     Write-Success "`t $basePath\$fakeApplicationPath" 
 
@@ -145,7 +145,7 @@ try
     Set-Location $basePath
     Write-Success "$basePath\$fakeApplicationPath\Fake.exe $buildFile"
     Write-Host
-    Invoke-Expression -Command "$basePath\u$fakeApplicationPath\Fake.exe $buildFile" -ErrorAction Stop
+    Invoke-Expression -Command "$basePath\$fakeApplicationPath\Fake.exe $buildFile" -ErrorAction Stop
     Write-Host `t $output 
 
 }
