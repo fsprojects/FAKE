@@ -75,8 +75,10 @@ type FileIncludes =
                  
     member this.GetEnumerator() = (this :> IEnumerable<string>).GetEnumerator() :> System.Collections.IEnumerator
 
+let private defaultBaseDir = Path.GetFullPath "."
+
 /// Include files
-let Include x = { BaseDirectory = DefaultBaseDir; Includes = [x]; Excludes = []}
+let Include x = { BaseDirectory = defaultBaseDir; Includes = [x]; Excludes = []}
 
 /// Sets a directory as baseDirectory for fileIncludes. 
 let SetBaseDir (dir:string) (fileIncludes:FileIncludes) = fileIncludes.SetBaseDirectory dir

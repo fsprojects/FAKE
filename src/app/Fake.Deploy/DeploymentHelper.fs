@@ -108,7 +108,7 @@ let runDeploymentFromPackageFile workDir packageFileName =
 let rollback workDir (app : string) (version : string) =
     try 
         let currentPackageFileName = 
-            Files [workDir] [deploymentRootDir + app + "/active/*.nupkg"] []
+            !! (workDir @@ deploymentRootDir @@ app @@ "/active/*.nupkg")
             |> Seq.head
 
         let backupPackageFileName = getBackupFor workDir app version
@@ -131,11 +131,11 @@ let getVersionFromNugetFileName (app:string) (fileName:string) =
 /// Returns the version no. of the latest backup of the given app
 let getPreviousPackageVersionFromBackup dir app versions = 
     let currentPackageFileName = 
-        Files [dir] [deploymentRootDir + app + "/active/*.nupkg"] []
+        !! (dir @@ deploymentRootDir @@ app @@ "/active/*.nupkg")
         |> Seq.head 
         |> getVersionFromNugetFileName app
 
-    Files [dir] [deploymentRootDir + app + "/backups/*.nupkg"] []
+    !! (dir @@ deploymentRootDir @@ app @@ "/backups/*.nupkg")
     |> Seq.map (getVersionFromNugetFileName app)
     |> Seq.filter (fun x -> x < currentPackageFileName)
     |> Seq.toList
