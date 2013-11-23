@@ -16,7 +16,7 @@ The following code shows such .nuspec file from the [OctoKit](https://github.com
 		<summary>@summary@</summary>
 		<licenseUrl>https://github.com/octokit/octokit.net/blob/master/LICENSE.txt</licenseUrl>
 		<projectUrl>https://github.com/octokit/octokit.net</projectUrl>
-		<iconUrl>https://f.cloud.github.com/assets/19977/1441274/160fba8c-41a9-11e3-831d-61d88fa886f4.png</iconUrl>
+		<iconUrl>https://github.com/octokit/octokit.net/icon.png</iconUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>@description@</description>
 		<releaseNotes>@releaseNotes@</releaseNotes>
@@ -63,23 +63,23 @@ There are a couple of interesting things happening here. In this sample FAKE cre
 If your project dependends on other projects it is possible to specify these dependencies in the .nuspec definition (see also [Nuget docs](http://docs.nuget.org/docs/reference/nuspec-reference#Specifying_Dependencies_in_version_2.0_and_above)). 
 Here is a small sample which sets up dependencies for different framework versions:
 
-		NuGet (fun p -> 
-			{p with
-				Authors = authors
-				// ...
-                Dependencies =  // fallback - for all unspecified frameworks
-					 ["Octokit", "0.1"
-					  "Rx-Main", GetPackageVersion "./packages/" "Rx-Main"]
-			    DependenciesByFramework =
-					 [{ FrameworkVersion  = "net40"
-						Dependencies = 
-						  ["Octokit", "0.1"
-						   "Rx-Main", GetPackageVersion "./packages/" "Rx-Main"
-						   "SignalR", GetPackageVersion "./packages/" "SignalR"]}
-					  { FrameworkVersion  = "net45"
-						Dependencies = 
-						  ["Octokit", "0.1"
-						   "SignalR", GetPackageVersion "./packages/" "SignalR"]}]
-				// ...
-				Publish = true }) 
-				"myProject.nuspec"
+	NuGet (fun p -> 
+		{p with
+			Authors = authors
+			// ...
+            Dependencies =  // fallback - for all unspecified frameworks
+					["Octokit", "0.1"
+					"Rx-Main", GetPackageVersion "./packages/" "Rx-Main"]
+			DependenciesByFramework =
+					[{ FrameworkVersion  = "net40"
+					Dependencies = 
+						["Octokit", "0.1"
+						"Rx-Main", GetPackageVersion "./packages/" "Rx-Main"
+						"SignalR", GetPackageVersion "./packages/" "SignalR"]}
+					{ FrameworkVersion  = "net45"
+					Dependencies = 
+						["Octokit", "0.1"
+						"SignalR", GetPackageVersion "./packages/" "SignalR"]}]
+			// ...
+			Publish = true }) 
+			"myProject.nuspec"
