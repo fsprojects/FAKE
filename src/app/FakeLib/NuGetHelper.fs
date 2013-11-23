@@ -90,11 +90,9 @@ let private createNuspecFile parameters nuSpec =
     fi.CopyTo(specFile,true) |> ignore
 
     let getDependenciesTags dependencies =
-        if dependencies = [] then "" else
         dependencies
           |> Seq.map (fun (package,version) -> sprintf "<dependency id=\"%s\" version=\"%s\" />" package version)
           |> toLines
-          |> sprintf "<dependencies>\r\n%s\r\n</dependencies>"
 
     let dependencies =
         if parameters.Dependencies = [] then "" else
@@ -110,7 +108,7 @@ let private createNuspecFile parameters nuSpec =
          "@authors@",parameters.Authors |> separated ", "
          "@project@",parameters.Project
          "@summary@",if isNullOrEmpty parameters.Summary then "" else parameters.Summary
-         "@dependencies@",dependencies + dependenciesByFramework
+         "@dependencies@",sprintf "<dependencies>%s</dependencies>" (dependencies + dependenciesByFramework)
          "@description@",parameters.Description
          "@tags@",parameters.Tags
          "@releaseNotes@",parameters.ReleaseNotes
