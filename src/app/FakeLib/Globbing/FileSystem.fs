@@ -77,6 +77,9 @@ type FileIncludes =
 
 let private defaultBaseDir = Path.GetFullPath "."
 
+/// Logs the given files with the message.
+let Log message files = files |> Seq.iter (log << sprintf "%s%s" message)
+
 /// Include files
 let Include x = { BaseDirectory = defaultBaseDir; Includes = [x]; Excludes = []}
 
