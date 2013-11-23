@@ -118,8 +118,47 @@ It also contains some specific information like the copyright which is not handl
 <li>a copy of the .nuspec file</li>
 <li>filled in all the specified parameters</li>
 <li>created the NuGet package</li>
-<li>pushed it to <a href="http://www.nuget.org">nuget.org</a> using the given <code>myAccessKey</code>.</li>
+<li>pushed it to <a href="http://www.nuget.org">nuget.org</a> using the given <code>myAccessKey</code>.
+
+## Handling package dependencies</li>
 </ul>
+
+<p>If your project dependends on other projects it is possible to specify these dependencies in the .nuspec definition (see also <a href="http://docs.nuget.org/docs/reference/nuspec-reference#Specifying_Dependencies_in_version_2.0_and_above">Nuget docs</a>). 
+Here is a small sample which sets up dependencies for different framework versions:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="i">Dependencies</span> <span class="o">=</span>  <span class="c">// fallback - for all unspecified frameworks</span>
+    [<span class="s">&quot;</span><span class="s">Octokit</span><span class="s">&quot;</span>, <span class="s">&quot;</span><span class="s">0</span><span class="s">.</span><span class="s">1</span><span class="s">&quot;</span>
+     <span class="s">&quot;</span><span class="s">Rx</span><span class="s">-</span><span class="s">Main</span><span class="s">&quot;</span>, <span class="i">GetPackageVersion</span> <span class="s">&quot;</span><span class="s">.</span><span class="s">/</span><span class="s">packages</span><span class="s">/</span><span class="s">&quot;</span> <span class="s">&quot;</span><span class="s">Rx</span><span class="s">-</span><span class="s">Main</span><span class="s">&quot;</span>]
+<span class="i">DependenciesByFramework</span> <span class="o">=</span>
+    [{ <span class="i">FrameworkVersion</span>  <span class="o">=</span> <span class="s">&quot;</span><span class="s">net40</span><span class="s">&quot;</span>
+       <span class="i">Dependencies</span> <span class="o">=</span> 
+         [<span class="s">&quot;</span><span class="s">Octokit</span><span class="s">&quot;</span>, <span class="s">&quot;</span><span class="s">0</span><span class="s">.</span><span class="s">1</span><span class="s">&quot;</span>
+          <span class="s">&quot;</span><span class="s">Rx</span><span class="s">-</span><span class="s">Main</span><span class="s">&quot;</span>, <span class="i">GetPackageVersion</span> <span class="s">&quot;</span><span class="s">.</span><span class="s">/</span><span class="s">packages</span><span class="s">/</span><span class="s">&quot;</span> <span class="s">&quot;</span><span class="s">Rx</span><span class="s">-</span><span class="s">Main</span><span class="s">&quot;</span>
+          <span class="s">&quot;</span><span class="s">SignalR</span><span class="s">&quot;</span>, <span class="i">GetPackageVersion</span> <span class="s">&quot;</span><span class="s">.</span><span class="s">/</span><span class="s">packages</span><span class="s">/</span><span class="s">&quot;</span> <span class="s">&quot;</span><span class="s">SignalR</span><span class="s">&quot;</span>]}
+     { <span class="i">FrameworkVersion</span>  <span class="o">=</span> <span class="s">&quot;</span><span class="s">net45</span><span class="s">&quot;</span>
+       <span class="i">Dependencies</span> <span class="o">=</span> 
+         [<span class="s">&quot;</span><span class="s">Octokit</span><span class="s">&quot;</span>, <span class="s">&quot;</span><span class="s">0</span><span class="s">.</span><span class="s">1</span><span class="s">&quot;</span>
+          <span class="s">&quot;</span><span class="s">SignalR</span><span class="s">&quot;</span>, <span class="i">GetPackageVersion</span> <span class="s">&quot;</span><span class="s">.</span><span class="s">/</span><span class="s">packages</span><span class="s">/</span><span class="s">&quot;</span> <span class="s">&quot;</span><span class="s">SignalR</span><span class="s">&quot;</span>]}]</pre>
+</td>
+</tr>
+</table>
 
                     
         </div>
@@ -134,6 +173,7 @@ It also contains some specific information like the copyright which is not handl
               <li><a href="https://github.com/fsharp/FAKE/blob/develop/License.txt">License (MS-PL)</a></li>
               <li><a href="changelog.html">Changelog</a></li>
               <li><a href="contributing.html">Contributing to FAKE</a></li>
+              <li><a href="http://stackoverflow.com/questions/tagged/f%23-fake">Ask a question</a></li>
             <li class="nav-header">Articles</li>
               <li><a href="gettingstarted.html">Getting started</a></li>
               <li class="divider"></li>
