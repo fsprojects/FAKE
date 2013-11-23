@@ -105,8 +105,8 @@ Target "SetAssemblyInfo" (fun _ ->
 )
 
 Target "BuildSolution" (fun _ ->        
-    MSBuildWithDefaults "Build" ["./FAKE.sln"]
-    |> Log "AppBuild-Output: "
+    MSBuildWithDefaults "Build" ["./FAKE.sln"] |> ignore
+    //|> Log "AppBuild-Output: "
 )
 
 Target "GenerateDocs" (fun _ ->
