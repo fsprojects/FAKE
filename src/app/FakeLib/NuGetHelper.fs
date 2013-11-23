@@ -6,6 +6,11 @@ module Fake.NuGetHelper
 open System
 open System.IO
 
+type NugetDependencies = (string*string) list
+type NugetFrameworkDependencies = {
+    FrameworkVersion : string
+    Dependencies : NugetDependencies }
+    
 /// Nuget parameter type
 type NuGetParams = { 
     ToolPath: string
@@ -24,7 +29,8 @@ type NuGetParams = {
     AccessKey:string
     NoPackageAnalysis: bool
     ProjectFile:string
-    Dependencies: (string*string) list
+    Dependencies: NugetDependencies
+    DependenciesByFramework: NugetFrameworkDependencies list
     PublishTrials: int
     Publish: bool
     Properties: list<string*string> }
@@ -43,6 +49,7 @@ let NuGetDefaults() = {
     ReleaseNotes = null
     Copyright = null
     Dependencies = []
+    DependenciesByFramework = []
     OutputPath = "./NuGet"
     WorkingDir = "./NuGet"
     PublishUrl = null
@@ -82,19 +89,26 @@ let private createNuspecFile parameters nuSpec =
     tracefn "Creating .nuspec file at %s" specFile
     fi.CopyTo(specFile,true) |> ignore
 
+    let getDependenciesTags dependencies =
+        dependencies
+          |> Seq.map (fun (package,version) -> sprintf "<dependency id=\"%s\" version=\"%s\" />" package version)
+          |> toLines
+
     let dependencies =
         if parameters.Dependencies = [] then "" else
-        parameters.Dependencies
-          |> Seq.map (fun (package,version) -> sprintf "<dependency id=\"%s\" version=\"%s\" />" package version)
-          |> separated "\r\n"
-          |> fun s -> sprintf "<dependencies>\r\n%s\r\n</dependencies>" s
+        sprintf "<group>%s</group>" (getDependenciesTags parameters.Dependencies)
+
+    let dependenciesByFramework =
+        parameters.DependenciesByFramework
+          |> Seq.map (fun x -> sprintf "<group targetFramework=\"%s\">%s</group>" x.FrameworkVersion (getDependenciesTags x.Dependencies))
+          |> toLines
 
     let replacements =
         ["@build.number@",parameters.Version
          "@authors@",parameters.Authors |> separated ", "
          "@project@",parameters.Project
          "@summary@",if isNullOrEmpty parameters.Summary then "" else parameters.Summary
-         "@dependencies@",dependencies
+         "@dependencies@",sprintf "<dependencies>%s</dependencies>" (dependencies + dependenciesByFramework)
          "@description@",parameters.Description
          "@tags@",parameters.Tags
          "@releaseNotes@",parameters.ReleaseNotes
