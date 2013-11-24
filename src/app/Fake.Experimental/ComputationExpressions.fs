@@ -1,5 +1,5 @@
 ﻿[<AutoOpen>]
-module Fake.TargetBuilder
+module Fake.ComputationExpressions
 
 type TargetBuilder (name) =
     member x.Zero () = ()
@@ -29,3 +29,22 @@ type TargetBuilder (name) =
                 x.Delay(fun () -> body enum.Current)))
 
 let Target name = TargetBuilder(name)
+
+type FileSetBuilder() =
+    member x.Delay f = f
+    member x.Run f = f()
+    member x.Yield (()) = { Include "" with Includes = [] }
+    
+    [<CustomOperation ("add", MaintainsVariableSpace = true)>]
+    member x.Add (fs, pattern: string) = fs ++ pattern
+ 
+    [<CustomOperation ("addMany", MaintainsVariableSpace = true)>]
+    member x.AddMany (fs, patterns: string list) = { fs with Includes = fs.Includes @ patterns }
+
+    [<CustomOperation ("exclude", MaintainsVariableSpace = true)>]
+    member x.Exclude (fs: FileIncludes, pattern: string) = fs -- pattern
+
+    [<CustomOperation ("excludeMany", MaintainsVariableSpace = true)>]
+    member x.ExcludeMany (fs: FileIncludes, patterns: string list) = { fs with Excludes = fs.Excludes @ patterns }
+ 
+let files = FileSetBuilder()

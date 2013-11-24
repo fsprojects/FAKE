@@ -40,7 +40,7 @@
     <DocumentationFile>..\..\..\build\FAKE.Experimental\Fake.Experimental.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="TargetBuilder.fs" />
+    <Compile Include="ComputationExpressions.fs" />
     <Compile Include="AssemblyInfo.fs" />
   </ItemGroup>
   <ItemGroup>
