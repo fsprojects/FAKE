@@ -12,21 +12,15 @@ type private SearchOption =
 | Recursive
 | FilePattern of string
         
-let private checkSubDirs (dir:string) root =
-    if dir.Contains ".." then
-        let di = new DirectoryInfo(Path.Combine(root, dir))
-        if di.Exists then [di.FullName] else []
-    else
-        Directory.EnumerateDirectories(root, dir, SearchOption.TopDirectoryOnly) |> Seq.toList
+let inline private exists dir root = 
+    let di = new DirectoryInfo(Path.Combine(root, dir))
+    if di.Exists then Some di.FullName else None
         
 let rec private buildPaths acc (input : SearchOption list) =
     match input with
     | [] -> acc
     | Directory(name) :: t -> 
-        let subDirs = 
-            acc
-            |> List.map (checkSubDirs name) 
-            |> List.concat
+        let subDirs = List.choose (exists name) acc
         buildPaths subDirs t
     | Recursive :: t ->
         let dirs = 
