@@ -15,7 +15,7 @@ namespace Test.FAKECore.Globbing.TestSample5
         Establish context = () =>
         {
             FileHelper.CleanDir(TempDir);
-            ZipHelper.Unzip(TempDir, "Globbing/TestSample4/Sample4.zip");
+            ZipHelper.Unzip(TempDir, "Globbing/TestSample5/Sample5.zip");
         };
 
         public static string FullPath(string pattern)
