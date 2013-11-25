@@ -6,6 +6,7 @@ open System
 open System.Collections.Generic
 open System.IO
 open Fake
+open System.Text.RegularExpressions
 
 type private SearchOption = 
 | Directory of string
@@ -37,6 +38,10 @@ let rec private buildPaths acc (input : SearchOption list) =
         Seq.collect (fun dir -> Directory.EnumerateFiles(dir, pattern)) acc
         |> Seq.toList
          
+let private isDrive =
+    let regex = Regex(@"^[A-Za-z]:$", RegexOptions.Compiled)
+    fun dir -> regex.IsMatch dir
+
 let private search (baseDir:string) (input : string) =
     let input = input.Replace(baseDir,"")
     let filePattern = Path.GetFileName(input)    
@@ -44,6 +49,7 @@ let private search (baseDir:string) (input : string) =
     |> Seq.map (function
                 | "**" -> Recursive
                 | a when a = filePattern -> FilePattern(a)
+                | a when isDrive a -> Directory (a + "\\")
                 | a -> Directory(a))
     |> Seq.toList
     |> buildPaths [baseDir]
