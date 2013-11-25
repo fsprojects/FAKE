@@ -28,17 +28,6 @@ namespace Test.FAKECore.Globbing.TestSample1
         It should_match_1_directory = () => Files.Length.ShouldEqual(1);
     }
 
-
-    public class when_scanning_for_a_folder_with_asterisk : when_extracting_zip
-    {
-        Because of = () => Files = FileSystem.Include("/**/Sample*/").ToArray();
-
-        It should_find_the_dir =
-            () => Files[0].ShouldEndWith("SampleApp");
-
-        It should_match_1_directory = () => Files.Length.ShouldEqual(1);
-    }
-
     public class when_scanning_for_folders : when_extracting_zip
     {
         Because of = () => Files = FileSystem.Include("/temptest/**/").ToArray();
