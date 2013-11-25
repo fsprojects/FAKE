@@ -13,11 +13,11 @@ type private SearchOption =
 | FilePattern of string
         
 let private checkSubDirs (dir:string) root =
-    if dir.Contains ".." then
-        let di = new DirectoryInfo(Path.Combine(root, dir))
-        if di.Exists then [di.FullName] else []
-    else
+    if dir.Contains "*" then
         Directory.EnumerateDirectories(root, dir, SearchOption.TopDirectoryOnly) |> Seq.toList
+    else
+        let di = new DirectoryInfo(Path.Combine(root, dir))
+        if di.Exists then [di.FullName] else []        
         
 let rec private buildPaths acc (input : SearchOption list) =
     match input with
