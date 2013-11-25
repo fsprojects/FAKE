@@ -29,6 +29,7 @@ let getNAVClassicPath navClientVersion =
         | "601"
         | "602" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\60\Classic Client\W1 6.0"
         | "700" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\70\RoleTailored Client"
+        | "701" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\71\RoleTailored Client"
         | "501" -> @"software\microsoft\Dynamics Nav\Cside Client\W1 5.0 SP1"
         | "403" -> @"SOFTWARE\Navision\Microsoft Business Solutions-Navision\W1 4.00"
         | _     -> failwithf "Unknown NAV-Version %s" navClientVersion
@@ -48,13 +49,14 @@ let createConnectionInfo navClientVersion serverMode serverName targetDatabase =
                     | "601"
                     | "602" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\60\Classic Client\W1 6.0"
                     | "700" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\70\Service"
+                    | "701" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\71\Service"
                     | _     -> failwithf "Unknown NAV-Version %s" navClientVersion
 
                 getRegistryValue HKEYLocalMachine subKey "Path"
 
             (directoryInfo navServiceRootPath).Parent.FullName @@ "Service"    
         with
-        | exn -> @"C:\Program Files\Navision700\70\Service"
+        | exn -> @"C:\Program Files\Navision701\71\Service"
 
     let clientExe = 
         match serverMode with
