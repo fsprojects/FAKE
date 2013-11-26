@@ -15,6 +15,9 @@ See the [project home page](http://fsharp.github.com/FAKE/) for full details and
 
 I order to build the project and to resolve all nuget packages run *build.cmd*.
 
+  * develop branch runs with F# 3.1
+  * master branch runs with F# 3.0
+
 ## How to contribute code
 
 See the [contributing page](http://fsharp.github.com/FAKE/contributing.html).
