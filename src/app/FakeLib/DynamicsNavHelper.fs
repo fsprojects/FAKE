@@ -243,6 +243,29 @@ let CloseAllNavProcesses raiseExceptionIfNotFound =
         failwith "Could not kill NAV processes"
 
     traceEndTask "CloseNAV" details
+    
+
+/// Waits until all NAV processes have stopped or fails after given timeout.
+/// ## Parameters
+///  - `name` - The name of the processes in question.
+///  - `timeout` - The timespan to time out after.
+let ensureAllNAVProcessesHaveStopped timeout =
+    let endTime = DateTime.Now.Add timeout
+    
+    let getProcesses() =
+      Process.GetProcesses()
+          |> Seq.filter(fun p -> 
+                p.ProcessName.StartsWith("fin") || 
+                p.ProcessName = "finsql" || 
+                p.ProcessName.StartsWith("slave") || 
+                p.ProcessName.StartsWith("Microsoft.Dynamics.Nav.Client"))
+    
+    while DateTime.Now <= endTime && (getProcesses() <> Seq.empty) do
+        tracefn "Waiting for NAV process to stop (Timeout: %A)" endTime
+        Thread.Sleep 1000
+
+    if getProcesses() <> Seq.empty then 
+        failwith "The NAV process has not stopped (check the logs for errors)"
 
 /// Analyzes the Dynamics NAV test results
 let analyzeTestResults fileName =
