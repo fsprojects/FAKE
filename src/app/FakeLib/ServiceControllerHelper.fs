@@ -44,14 +44,14 @@ let getServiceStatus name =
 ///  - `name` - The name of the services in question.
 let startService name =
     getServices name
-    |> Seq.iter (fun s -> if s.Status <> ServiceControllerStatus.Running then s.Start())
+    |> Seq.iter (fun s -> if s.Status <> ServiceControllerStatus.Running then tracefn "Starting Service %s" name; s.Start())
 
 /// Stops all services with given name.
 /// ## Parameters
 ///  - `name` - The name of the services in question.
 let stopService name =
     getServices name
-    |> Seq.iter (fun s -> if s.Status <> ServiceControllerStatus.Stopped then s.Stop())
+    |> Seq.iter (fun s -> if s.Status <> ServiceControllerStatus.Stopped then tracefn "Stopping Service %s" name; s.Stop())
 
 /// Waits until the service with the given name has been started or fails after given timeout
 /// ## Parameters
