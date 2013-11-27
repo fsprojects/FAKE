@@ -438,6 +438,24 @@ let killAllCreatedProcesses() =
         with
         | exn -> ()
     startedProcesses.Clear()
+    
+/// Waits until the processes with the given name have stopped or fails after given timeout.
+/// ## Parameters
+///  - `name` - The name of the processes in question.
+///  - `timeout` - The timespan to time out after.
+let ensureProcessesHaveStopped name timeout =
+    let endTime = DateTime.Now.Add timeout
+    
+    let getProcesses name =
+      Process.GetProcesses()
+      |> Seq.filter (fun p -> p.ProcessName.ToLower().StartsWith(name.ToLower()))
+    
+    while DateTime.Now <= endTime && (getProcesses name <> Seq.empty) do
+        tracefn "Waiting for %s to stop (Timeout: %A)" name endTime
+        Thread.Sleep 1000
+
+    if getProcesses name <> Seq.empty then 
+        failwithf "The process %s has not stopped (check the logs for errors)" name
 
 /// Execute an external program and return the exit code.
 /// [omit]
