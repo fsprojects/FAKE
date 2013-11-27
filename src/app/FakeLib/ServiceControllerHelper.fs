@@ -59,9 +59,9 @@ let stopService name =
 ///  - `timeout` - The timespan to time out after.
 let ensureServiceHasStarted name timeout =
     let endTime = DateTime.Now.Add timeout
-    tracefn "Waiting for %s to start (Timeout: %A)" name endTime
 
     while DateTime.Now <= endTime && (getServiceStatus name <> ServiceControllerStatus.Running) do
+        tracefn "Waiting for %s to start (Timeout: %A)" name endTime
         Thread.Sleep 1000
 
     if getServiceStatus name <> ServiceControllerStatus.Running then 
@@ -73,9 +73,9 @@ let ensureServiceHasStarted name timeout =
 ///  - `timeout` - The timespan to time out after.
 let ensureServiceHasStopped name timeout =
     let endTime = DateTime.Now.Add timeout
-    tracefn "Waiting for %s to stop (Timeout: %A)" name endTime
-
+    
     while DateTime.Now <= endTime && (getServiceStatus name <> ServiceControllerStatus.Stopped) do
+        tracefn "Waiting for %s to stop (Timeout: %A)" name endTime
         Thread.Sleep 1000
 
     if getServiceStatus name <> ServiceControllerStatus.Stopped then 
