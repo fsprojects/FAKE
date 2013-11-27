@@ -226,17 +226,21 @@ let OpenPage connectionInfo pageNo =
     traceEndTask "OpenPage" details
     result
 
+/// Returns all running NAV processes.
+let getNAVProcesses() =
+    Process.GetProcesses()
+    |> Seq.filter(fun p -> 
+        p.ProcessName.StartsWith("fin") || 
+        p.ProcessName = "finsql" || 
+        p.ProcessName.StartsWith("slave") || 
+        p.ProcessName.StartsWith("Microsoft.Dynamics.Nav.Client"))
+
 /// Closes all running Dynamics NAV instances
 let CloseAllNavProcesses raiseExceptionIfNotFound =
     let details = ""
     traceStartTask "CloseNAV" details
     let closedProcesses =
-        Process.GetProcesses()
-          |> Seq.filter(fun p -> 
-                p.ProcessName.StartsWith("fin") || 
-                p.ProcessName = "finsql" || 
-                p.ProcessName.StartsWith("slave") || 
-                p.ProcessName.StartsWith("Microsoft.Dynamics.Nav.Client"))
+        getNAVProcesses()
           |> Seq.map(fun p -> p.Kill())
           |> Seq.toList
 
@@ -253,19 +257,11 @@ let CloseAllNavProcesses raiseExceptionIfNotFound =
 let ensureAllNAVProcessesHaveStopped timeout =
     let endTime = DateTime.Now.Add timeout
     
-    let getProcesses() =
-      Process.GetProcesses()
-          |> Seq.filter(fun p -> 
-                p.ProcessName.StartsWith("fin") || 
-                p.ProcessName = "finsql" || 
-                p.ProcessName.StartsWith("slave") || 
-                p.ProcessName.StartsWith("Microsoft.Dynamics.Nav.Client"))
-    
-    while DateTime.Now <= endTime && (getProcesses() <> Seq.empty) do
+    while DateTime.Now <= endTime && (getNAVProcesses() <> Seq.empty) do
         tracefn "Waiting for NAV process to stop (Timeout: %A)" endTime
         Thread.Sleep 1000
 
-    if getProcesses() <> Seq.empty then 
+    if getNAVProcesses() <> Seq.empty then 
         failwith "The NAV process has not stopped (check the logs for errors)"
 
 /// Analyzes the Dynamics NAV test results

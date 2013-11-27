@@ -412,11 +412,15 @@ let killProcessById id =
     Process.GetProcessById id
     |> kill
 
+/// Returns all processes with the given name
+let getProcessesByName (name:string) =
+      Process.GetProcesses()
+      |> Seq.filter (fun p -> p.ProcessName.ToLower().StartsWith(name.ToLower()))
+
 /// Kills all processes with the given name
 let killProcess name =
     tracefn "Searching for process with name = %s" name
-    Process.GetProcesses()
-      |> Seq.filter (fun p -> p.ProcessName.ToLower().StartsWith(name.ToLower()))
+    getProcessesByName name
       |> Seq.iter kill
 
 /// Kills the F# Interactive (FSI) process.
@@ -446,15 +450,11 @@ let killAllCreatedProcesses() =
 let ensureProcessesHaveStopped name timeout =
     let endTime = DateTime.Now.Add timeout
     
-    let getProcesses (name:string) =
-      Process.GetProcesses()
-      |> Seq.filter (fun p -> p.ProcessName.ToLower().StartsWith(name.ToLower()))
-    
-    while DateTime.Now <= endTime && (getProcesses name <> Seq.empty) do
+    while DateTime.Now <= endTime && (getProcessesByName name <> Seq.empty) do
         tracefn "Waiting for %s to stop (Timeout: %A)" name endTime
         Thread.Sleep 1000
 
-    if getProcesses name <> Seq.empty then 
+    if getProcessesByName name <> Seq.empty then 
         failwithf "The process %s has not stopped (check the logs for errors)" name
 
 /// Execute an external program and return the exit code.
