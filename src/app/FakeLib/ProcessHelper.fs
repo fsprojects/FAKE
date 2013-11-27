@@ -446,7 +446,7 @@ let killAllCreatedProcesses() =
 let ensureProcessesHaveStopped name timeout =
     let endTime = DateTime.Now.Add timeout
     
-    let getProcesses name =
+    let getProcesses (name:string) =
       Process.GetProcesses()
       |> Seq.filter (fun p -> p.ProcessName.ToLower().StartsWith(name.ToLower()))
     

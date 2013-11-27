@@ -6,6 +6,7 @@ open System.Diagnostics
 open System.Text
 open System.IO
 open Fake.UnitTestHelper
+open System.Threading
 
 [<RequireQualifiedAccess>]
 /// A Dynamics NAV server type
