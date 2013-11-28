@@ -168,6 +168,8 @@ Target "CreateNuGet" (fun _ ->
 
         CleanDir nugetDocsDir
         CleanDir nugetToolsDir
+
+        DeleteFile "./build/FAKE.Gallio/Gallio.dll"
         
         match package with
         | p when p = projectName ->
