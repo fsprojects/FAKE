@@ -126,7 +126,7 @@ Target "GenerateDocs" (fun _ ->
 
     if isLocalBuild then  // TODO: this needs to be fixed in FSharp.Formatting
         MetadataFormat.Generate ( 
-          !! "./build/FAKE*.dll" |> Seq.toList, 
+          "./build/FakeLib.dll" :: (!! "./build/**/Fake.*.dll" |> Seq.toList), 
           apidocsDir, 
           ["./help/templates/"; "./help/templates/reference/"], 
           parameters = projInfo)
