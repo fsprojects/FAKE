@@ -8,6 +8,45 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Microsoft.BuildSettings.BuildDetails">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Microsoft.BuildSettings.Version">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
 <member name="P:Microsoft.FSharp.Collections.FSharpList`1.Tail">
  <summary>Gets the tail of the list, which is a list containing all the elements of the list, excluding the first element </summary>
 </member>
