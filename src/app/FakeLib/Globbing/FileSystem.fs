@@ -29,6 +29,11 @@ let rec private buildPaths acc (input : SearchOption list) =
             |> List.map (checkSubDirs name) 
             |> List.concat
         buildPaths subDirs t
+    | Recursive :: [] ->
+        let dirs = 
+            Seq.collect (fun dir -> Directory.EnumerateFileSystemEntries(dir, "*", SearchOption.AllDirectories)) acc
+            |> Seq.toList
+        buildPaths (acc @ dirs) []
     | Recursive :: t ->
         let dirs = 
             Seq.collect (fun dir -> Directory.EnumerateDirectories(dir, "*", SearchOption.AllDirectories)) acc
