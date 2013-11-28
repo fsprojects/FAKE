@@ -56,7 +56,7 @@
     </Reference>
     <Reference Include="Gallio">
       <HintPath>..\..\..\lib\Gallio.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System" />
