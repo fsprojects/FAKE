@@ -1,4 +1,4 @@
-// Copied from https://github.com/colinbull/FSharp.Enterprise/blob/master/src/FSharp.Enterprise/FileSystem.fs
+/// This module contains a file pattern globbing implementation.
 [<AutoOpen>]
 module Fake.FileSystem
     
@@ -54,7 +54,7 @@ let private search (baseDir:string) (input : string) =
     |> Seq.toList
     |> buildPaths [baseDir]
 
-/// Internal representation of a file set
+/// Internal representation of a file set.
 type FileIncludes =
   { BaseDirectory: string
     Includes: string list
