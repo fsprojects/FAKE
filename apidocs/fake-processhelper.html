@@ -114,10 +114,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '255', 255)" onmouseover="showTip(event, '255', 255)">
+          <code onmouseout="hideTip(event, '254', 254)" onmouseover="showTip(event, '254', 254)">
             asyncShellExec args
           </code>
-          <div class="tip" id="255">
+          <div class="tip" id="254">
             <strong>Signature:</strong>args:ExecParams -&gt; Async&lt;int&gt;<br />
                       </div>
         </td>
@@ -130,10 +130,10 @@ sure that none of them depend on the output of another.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '256', 256)" onmouseover="showTip(event, '256', 256)">
+          <code onmouseout="hideTip(event, '255', 255)" onmouseover="showTip(event, '255', 255)">
             defaultParams 
           </code>
-          <div class="tip" id="256">
+          <div class="tip" id="255">
             <strong>Signature:</strong>ExecParams<br />
                       </div>
         </td>
@@ -143,14 +143,34 @@ sure that none of them depend on the output of another.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '257', 257)" onmouseover="showTip(event, '257', 257)">
+          <code onmouseout="hideTip(event, '256', 256)" onmouseover="showTip(event, '256', 256)">
             directExec configProcessStartInfoF
           </code>
-          <div class="tip" id="257">
+          <div class="tip" id="256">
             <strong>Signature:</strong>configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; bool<br />
                       </div>
         </td>
         <td class="xmldoc"><p>Runs the given process, waits for its completion and returns if it succeeded.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '257', 257)" onmouseover="showTip(event, '257', 257)">
+            ensureProcessesHaveStopped name timeout
+          </code>
+          <div class="tip" id="257">
+            <strong>Signature:</strong>name:string -&gt; timeout:TimeSpan -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Waits until the processes with the given name have stopped or fails after given timeout.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>name</code> - The name of the processes in question.</li>
+<li><code>timeout</code> - The timespan to time out after.</li>
+</ul>
 </td>
       </tr>
       <tr>
@@ -274,9 +294,22 @@ sure that none of them depend on the output of another.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '264', 264)" onmouseover="showTip(event, '264', 264)">
-            kill proc
+            getProcessesByName name
           </code>
           <div class="tip" id="264">
+            <strong>Signature:</strong>name:string -&gt; seq&lt;Process&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Returns all processes with the given name</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '265', 265)" onmouseover="showTip(event, '265', 265)">
+            kill proc
+          </code>
+          <div class="tip" id="265">
             <strong>Signature:</strong>proc:Process -&gt; unit<br />
                       </div>
         </td>
@@ -286,10 +319,10 @@ sure that none of them depend on the output of another.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '265', 265)" onmouseover="showTip(event, '265', 265)">
+          <code onmouseout="hideTip(event, '266', 266)" onmouseover="showTip(event, '266', 266)">
             killAllCreatedProcesses ()
           </code>
-          <div class="tip" id="265">
+          <div class="tip" id="266">
             <strong>Signature:</strong>unit -&gt; unit<br />
                       </div>
         </td>
@@ -299,10 +332,10 @@ sure that none of them depend on the output of another.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '266', 266)" onmouseover="showTip(event, '266', 266)">
+          <code onmouseout="hideTip(event, '267', 267)" onmouseover="showTip(event, '267', 267)">
             killFSI ()
           </code>
-          <div class="tip" id="266">
+          <div class="tip" id="267">
             <strong>Signature:</strong>unit -&gt; unit<br />
                       </div>
         </td>
@@ -312,10 +345,10 @@ sure that none of them depend on the output of another.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '267', 267)" onmouseover="showTip(event, '267', 267)">
+          <code onmouseout="hideTip(event, '268', 268)" onmouseover="showTip(event, '268', 268)">
             killMSBuild ()
           </code>
-          <div class="tip" id="267">
+          <div class="tip" id="268">
             <strong>Signature:</strong>unit -&gt; unit<br />
                       </div>
         </td>
@@ -325,10 +358,10 @@ sure that none of them depend on the output of another.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '268', 268)" onmouseover="showTip(event, '268', 268)">
+          <code onmouseout="hideTip(event, '269', 269)" onmouseover="showTip(event, '269', 269)">
             killProcess name
           </code>
-          <div class="tip" id="268">
+          <div class="tip" id="269">
             <strong>Signature:</strong>name:string -&gt; unit<br />
                       </div>
         </td>
@@ -338,10 +371,10 @@ sure that none of them depend on the output of another.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '269', 269)" onmouseover="showTip(event, '269', 269)">
+          <code onmouseout="hideTip(event, '270', 270)" onmouseover="showTip(event, '270', 270)">
             killProcessById id
           </code>
-          <div class="tip" id="269">
+          <div class="tip" id="270">
             <strong>Signature:</strong>id:int -&gt; unit<br />
                       </div>
         </td>
@@ -351,10 +384,10 @@ sure that none of them depend on the output of another.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '270', 270)" onmouseover="showTip(event, '270', 270)">
+          <code onmouseout="hideTip(event, '271', 271)" onmouseover="showTip(event, '271', 271)">
             RunService command serviceName
           </code>
-          <div class="tip" id="270">
+          <div class="tip" id="271">
             <strong>Signature:</strong>command:string -&gt; serviceName:string -&gt; unit<br />
                       </div>
         </td>
@@ -364,10 +397,10 @@ sure that none of them depend on the output of another.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '271', 271)" onmouseover="showTip(event, '271', 271)">
+          <code onmouseout="hideTip(event, '272', 272)" onmouseover="showTip(event, '272', 272)">
             start proc
           </code>
-          <div class="tip" id="271">
+          <div class="tip" id="272">
             <strong>Signature:</strong>proc:Process -&gt; unit<br />
                       </div>
         </td>
@@ -376,10 +409,10 @@ sure that none of them depend on the output of another.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '272', 272)" onmouseover="showTip(event, '272', 272)">
+          <code onmouseout="hideTip(event, '273', 273)" onmouseover="showTip(event, '273', 273)">
             startedProcesses 
           </code>
-          <div class="tip" id="272">
+          <div class="tip" id="273">
             <strong>Signature:</strong>HashSet&lt;int&gt;<br />
                       </div>
         </td>
@@ -388,10 +421,10 @@ sure that none of them depend on the output of another.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '273', 273)" onmouseover="showTip(event, '273', 273)">
+          <code onmouseout="hideTip(event, '274', 274)" onmouseover="showTip(event, '274', 274)">
             StartProcess configProcessStartInfoF
           </code>
-          <div class="tip" id="273">
+          <div class="tip" id="274">
             <strong>Signature:</strong>configProcessStartInfoF:(ProcessStartInfo -&gt; unit) -&gt; unit<br />
                       </div>
         </td>
@@ -401,10 +434,10 @@ sure that none of them depend on the output of another.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '274', 274)" onmouseover="showTip(event, '274', 274)">
+          <code onmouseout="hideTip(event, '275', 275)" onmouseover="showTip(event, '275', 275)">
             StartService serviceName
           </code>
-          <div class="tip" id="274">
+          <div class="tip" id="275">
             <strong>Signature:</strong>serviceName:string -&gt; unit<br />
                       </div>
         </td>
@@ -414,10 +447,10 @@ sure that none of them depend on the output of another.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '275', 275)" onmouseover="showTip(event, '275', 275)">
+          <code onmouseout="hideTip(event, '276', 276)" onmouseover="showTip(event, '276', 276)">
             StopService serviceName
           </code>
-          <div class="tip" id="275">
+          <div class="tip" id="276">
             <strong>Signature:</strong>serviceName:string -&gt; unit<br />
                       </div>
         </td>
