@@ -55,7 +55,10 @@ namespace Test.FAKECore.Globbing.TestSample1
         It should_find_the_third_subdir =
             () => Files[3].ShouldEndWith("obj");
 
-        It should_match_4_directories = () => Files.Length.ShouldEqual(4);
+        It should_find_the_all_files_in_the_subdir =
+            () => Files[6].ShouldEndWith("SampleApp\\bin\\ilmerge.exclude");
+
+        It should_match_9_entries = () => Files.Length.ShouldEqual(9);
     }
 
     public class when_scanning_in_zip : when_extracting_zip
