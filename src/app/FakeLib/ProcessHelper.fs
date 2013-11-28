@@ -112,6 +112,7 @@ let ExecProcessRedirected configProcessStartInfoF timeOut =
 ///  - `timeOut` - The timeout for the process.
 ///  - `silent` - If this flag is set then the process output is redicted to the trace.
 /// [omit]
+[<Obsolete>]
 let execProcess2 configProcessStartInfoF timeOut silent = ExecProcessWithLambdas configProcessStartInfoF timeOut silent traceError trace  
 
 /// Runs the given process and returns the exit code.
@@ -120,7 +121,8 @@ let execProcess2 configProcessStartInfoF timeOut silent = ExecProcessWithLambdas
 ///  - `configProcessStartInfoF` - A function which overwrites the default ProcessStartInfo.
 ///  - `timeOut` - The timeout for the process.
 /// [omit]
-let execProcessAndReturnExitCode configProcessStartInfoF timeOut = execProcess2 configProcessStartInfoF timeOut true
+[<Obsolete>]
+let execProcessAndReturnExitCode configProcessStartInfoF timeOut = ExecProcessWithLambdas configProcessStartInfoF timeOut true traceError trace
 
 /// Runs the given process and returns if the exit code was 0.
 /// ## Parameters
@@ -129,14 +131,14 @@ let execProcessAndReturnExitCode configProcessStartInfoF timeOut = execProcess2 
 ///  - `timeOut` - The timeout for the process.
 /// [omit]
 [<Obsolete>]
-let execProcess3 configProcessStartInfoF timeOut = execProcessAndReturnExitCode configProcessStartInfoF timeOut = 0   
+let execProcess3 configProcessStartInfoF timeOut = ExecProcessWithLambdas configProcessStartInfoF timeOut true traceError trace = 0   
 
 /// Runs the given process and returns the exit code.
 /// ## Parameters
 ///
 ///  - `configProcessStartInfoF` - A function which overwrites the default ProcessStartInfo.
 ///  - `timeOut` - The timeout for the process.
-let ExecProcess configProcessStartInfoF timeOut = execProcess2 configProcessStartInfoF timeOut redirectOutputToTrace
+let ExecProcess configProcessStartInfoF timeOut = ExecProcessWithLambdas configProcessStartInfoF timeOut redirectOutputToTrace traceError trace  
 
 /// Runs the given process in an elevated context and returns the exit code.
 /// ## Parameters

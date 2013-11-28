@@ -204,7 +204,7 @@ let RunCodeunit connectionInfo (codeunitID:int) =
         codeunitID
 
     let exitCode =
-        execProcessAndReturnExitCode (fun info ->  
+        ExecProcess (fun info ->  
             info.FileName <- connectionInfo.ToolPath
             info.WorkingDirectory <- connectionInfo.WorkingDir
             info.Arguments <- args) connectionInfo.TimeOut

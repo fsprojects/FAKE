@@ -29,7 +29,7 @@ let NUnit (setParams: NUnitParams -> NUnitParams) (assemblies: string seq) =
     let args = commandLineBuilder parameters assemblies
     trace (tool + " " + args)
     let result =
-        execProcessAndReturnExitCode (fun info ->  
+        ExecProcess (fun info ->  
             info.FileName <- tool
             info.WorkingDirectory <- getWorkingDir parameters
             info.Arguments <- args) parameters.TimeOut

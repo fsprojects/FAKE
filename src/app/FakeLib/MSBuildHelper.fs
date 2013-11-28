@@ -200,7 +200,7 @@ let build setParams project =
     let args = toParam project + " " + args + " " + errorLoggerParam
     tracefn "Building project: %s\n  %s %s" project msBuildExe args
     let exitCode =
-        execProcessAndReturnExitCode (fun info ->  
+        ExecProcess (fun info ->  
             info.FileName <- msBuildExe
             info.Arguments <- args) TimeSpan.MaxValue
     if exitCode <> 0 then
