@@ -1,62 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="utf-8">
-    <title>Module</title>
+    <title>MageHelper - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
+
     <script src="http://code.jquery.com/jquery-1.8.0.js"></script>
     <script src="http://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
     <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="../content/style.css" />
-    <script src="../content/tips.js" type="text/javascript"></script>
+
+    <link type="text/css" rel="stylesheet" href="http://fsharp.github.io/FAKE/content/style.css" />
+    <script type="text/javascript" src="http://fsharp.github.io/FAKE/content/tips.js"></script>
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <style type="text/css">
-        #main h2 {
-            font-size: 160%;
-            margin-top: 40px;
-        }
-
-        #main h3 {
-            font-size: 130%;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-
-        thead {
-            font-weight: bold;
-        }
-
-        .type-list .type-name, .module-list .module-name {
-            width: 25%;
-            font-weight: bold;
-        }
-
-        .member-list .member-name {
-            width: 35%;
-        }
-
-        #main table .xmldoc h2 {
-            font-size: 120%;
-        }
-    </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="masthead">
-            <ul class="nav nav-pills pull-right">
-                <li><a href="http://fsharp.org">fsharp.org</a></li>
-                <li><a href="http://github.com/fsharp/fake">github page</a></li>
-            </ul>
-            <h3 class="muted">FAKE - F# Make</h3>
-        </div>
-        <hr />
-        <div class="row">
-            <div class="span9" id="main">
-                
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="http://github.com/fsharp/fake">github page</a></li>
+        </ul>
+        <h3 class="muted">FAKE - F# Make</h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
 
 
 
@@ -64,53 +39,54 @@
 <div class="xmldoc">
 <p>Contains helper functions which allow FAKE to call the <a href="http://msdn.microsoft.com/en-us/library/acz3y3te.aspx">Manifest Generation and Editing Tool</a>, in short 'MAGE'.
 The intentional use is the creation of a clickonce application.</p>
-                <h2>Certificates</h2>
+        <h2>Certificates</h2>
 <p>The MAGE tool wants to sign the manifest using a certificate. It should be clear, that this file is not under source control.
 On the other hand - you want to be able to run the compile batch on each developer machine. How can we achieve that? 
 In the parameter structure, we use a CertFile property and a TmpCertFile property. Whenever the CertFile was not found, the manifest is signed with
 a temporary certificate. And the latter one can be shared in the source control.</p>
 </div>
 
-<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
-    <h2>Nested types and modules</h2>
+<!-- Render nested types and modules, if there are any -->
+  <h2>Nested types and modules</h2>
+  <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="fake-magehelper-magecall.html">MageCall</a>
+          </td>
+          <td class="xmldoc"><p>The supported commands of the MAGE tool</p>
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-magehelper-mageparams.html">MageParams</a>
+          </td>
+          <td class="xmldoc"><p>Needed information to call MAGE</p>
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-magehelper-mageprocessor.html">MageProcessor</a>
+          </td>
+          <td class="xmldoc"><p>These are the supported processor types of the MAGE tool</p>
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-magehelper-magetrustlevels.html">MageTrustLevels</a>
+          </td>
+          <td class="xmldoc"><p>The level of trust to grant the application on client computers.</p>
+</td>
+        </tr>
+    </tbody>
+  </table>
 
-    <table class="table table-bordered type-list">
-        <thead>
-            <tr><td>Type</td><td>Description</td></tr>
-        </thead>
-        <tbody>
-                <tr>
-                    <td class="type-name">
-                        <a href="fake-magehelper-magecall.html">MageCall</a>
-                    </td>
-                    <td class="xmldoc"><p>The supported commands of the MAGE tool</p>
-</td>
-                </tr>
-                <tr>
-                    <td class="type-name">
-                        <a href="fake-magehelper-mageparams.html">MageParams</a>
-                    </td>
-                    <td class="xmldoc"><p>Needed information to call MAGE</p>
-</td>
-                </tr>
-                <tr>
-                    <td class="type-name">
-                        <a href="fake-magehelper-mageprocessor.html">MageProcessor</a>
-                    </td>
-                    <td class="xmldoc"><p>These are the supported processor types of the MAGE tool</p>
-</td>
-                </tr>
-                <tr>
-                    <td class="type-name">
-                        <a href="fake-magehelper-magetrustlevels.html">MageTrustLevels</a>
-                    </td>
-                    <td class="xmldoc"><p>The level of trust to grant the application on client computers.</p>
-</td>
-                </tr>
-        </tbody>
-    </table>
+  </div>
 
-<!-- END TODO -->
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -120,10 +96,10 @@ a temporary certificate. And the latter one can be shared in the source control.
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '253', 253)" onmouseover="showTip(event, '253', 253)">
+          <code onmouseout="hideTip(event, '212', 212)" onmouseover="showTip(event, '212', 212)">
             mageCall action mp
           </code>
-          <div class="tip" id="253">
+          <div class="tip" id="212">
             <strong>Signature:</strong>action:MageCall -&gt; mp:MageParams -&gt; unit<br />
                       </div>
         </td>
@@ -133,10 +109,10 @@ a temporary certificate. And the latter one can be shared in the source control.
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '254', 254)" onmouseover="showTip(event, '254', 254)">
+          <code onmouseout="hideTip(event, '218', 218)" onmouseover="showTip(event, '218', 218)">
             MageCreateApp mp
           </code>
-          <div class="tip" id="254">
+          <div class="tip" id="218">
             <strong>Signature:</strong>mp:MageParams -&gt; unit<br />
                       </div>
         </td>
@@ -146,10 +122,10 @@ a temporary certificate. And the latter one can be shared in the source control.
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '255', 255)" onmouseover="showTip(event, '255', 255)">
+          <code onmouseout="hideTip(event, '219', 219)" onmouseover="showTip(event, '219', 219)">
             MageDeployApp mp
           </code>
-          <div class="tip" id="255">
+          <div class="tip" id="219">
             <strong>Signature:</strong>mp:MageParams -&gt; unit<br />
                       </div>
         </td>
@@ -159,10 +135,10 @@ a temporary certificate. And the latter one can be shared in the source control.
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '256', 256)" onmouseover="showTip(event, '256', 256)">
+          <code onmouseout="hideTip(event, '220', 220)" onmouseover="showTip(event, '220', 220)">
             MageRun mp
           </code>
-          <div class="tip" id="256">
+          <div class="tip" id="220">
             <strong>Signature:</strong>mp:MageParams -&gt; unit<br />
                       </div>
         </td>
@@ -172,10 +148,10 @@ a temporary certificate. And the latter one can be shared in the source control.
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '257', 257)" onmouseover="showTip(event, '257', 257)">
+          <code onmouseout="hideTip(event, '221', 221)" onmouseover="showTip(event, '221', 221)">
             MageSerializeParams action mp
           </code>
-          <div class="tip" id="257">
+          <div class="tip" id="221">
             <strong>Signature:</strong>action:MageCall -&gt; mp:MageParams -&gt; string<br />
                       </div>
         </td>
@@ -185,10 +161,10 @@ a temporary certificate. And the latter one can be shared in the source control.
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '258', 258)" onmouseover="showTip(event, '258', 258)">
+          <code onmouseout="hideTip(event, '222', 222)" onmouseover="showTip(event, '222', 222)">
             MageSignDeploy mp
           </code>
-          <div class="tip" id="258">
+          <div class="tip" id="222">
             <strong>Signature:</strong>mp:MageParams -&gt; unit<br />
                       </div>
         </td>
@@ -198,10 +174,10 @@ a temporary certificate. And the latter one can be shared in the source control.
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '259', 259)" onmouseover="showTip(event, '259', 259)">
+          <code onmouseout="hideTip(event, '223', 223)" onmouseover="showTip(event, '223', 223)">
             MageSignManifest mp
           </code>
-          <div class="tip" id="259">
+          <div class="tip" id="223">
             <strong>Signature:</strong>mp:MageParams -&gt; unit<br />
                       </div>
         </td>
@@ -211,10 +187,10 @@ a temporary certificate. And the latter one can be shared in the source control.
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '260', 260)" onmouseover="showTip(event, '260', 260)">
+          <code onmouseout="hideTip(event, '224', 224)" onmouseover="showTip(event, '224', 224)">
             MageUpdateApp mp
           </code>
-          <div class="tip" id="260">
+          <div class="tip" id="224">
             <strong>Signature:</strong>mp:MageParams -&gt; unit<br />
                       </div>
         </td>
@@ -224,10 +200,10 @@ a temporary certificate. And the latter one can be shared in the source control.
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '261', 261)" onmouseover="showTip(event, '261', 261)">
+          <code onmouseout="hideTip(event, '225', 225)" onmouseover="showTip(event, '225', 225)">
             MageUpdateDeploy mp
           </code>
-          <div class="tip" id="261">
+          <div class="tip" id="225">
             <strong>Signature:</strong>mp:MageParams -&gt; unit<br />
                       </div>
         </td>
@@ -237,40 +213,27 @@ a temporary certificate. And the latter one can be shared in the source control.
     </tbody>
   </table>
 
-            </div>
-            <div class="span3">
-
-                <ul class="nav nav-list" id="menu">
-                    <li class="nav-header">FAKE - F# Make</li>
-                    <li><a href="../index.html">Home page</a></li>
-                    <li class="divider"></li>
-                    <li><a href="https://nuget.org/packages/Fake">Get FAKE via NuGet</a></li>
-                    <li><a href="http://github.com/fsharp/fake">Source Code on GitHub</a></li>
-                    <li><a href="https://github.com/fsharp/FAKE/blob/develop/License.txt">License (MS-PL)</a></li>
-                    <li><a href="../changelog.html">Changelog</a></li>
-                    <li><a href="../contributing.html">Contributing to FAKE</a></li>
-                    <li><a href="http://stackoverflow.com/questions/tagged/f%23-fake">Ask a question</a></li>
-                    <li class="nav-header">Articles</li>
-                    <li><a href="../gettingstarted.html">Getting started</a></li>
-                    <li class="divider"></li>
-                    <li><a href="../nuget.html">NuGet package restore</a></li>
-                    <li><a href="../fxcop.html">Using FxCop in a build</a></li>
-                    <li><a href="../assemblyinfo.html">Generating AssemblyInfo</a></li>
-                    <li><a href="../create-nuget-package.html">Create NuGet packages</a></li>
-                    <li><a href="../specifictargets.html">Running specific targets</a></li>
-                    <li><a href="../commandline.html">Running FAKE from command line</a></li>
-                    <li><a href="../customtasks.html">Creating custom tasks</a></li>
-                    <li><a href="../teamcity.html">TeamCity integration</a></li>
-                    <li><a href="../octopusdeploy.html">Octopus Deploy</a></li>
-                    <li class="divider"></li>
-                    <li><a href="../deploy.html">Fake.Deploy</a></li>
-
-                    <li class="nav-header">Documentation</li>
-                    <li><a href="../apidocs/index.html">API Reference</a></li>
-                </ul>
-            </div>
         </div>
+        <div class="span3">
+          <ul class="nav nav-list" id="menu">
+            <li class="nav-header">FAKE - F# Make</li>
+            <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>
+            <li class="divider"></li>
+            <li><a href="https://www.nuget.org/packages/FAKE">Get Library via NuGet</a></li>
+            <li><a href="http://github.com/fsharp/fake">Source Code on GitHub</a></li>
+            <li><a href="http://github.com/fsharp/fake/blob/master/LICENSE.md">License</a></li>
+            <li><a href="http://github.com/fsharp/fake/blob/master/RELEASE_NOTES.md">Release Notes</a></li>
+            
+            <li class="nav-header">Getting started</li>
+            <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/tutorial.html">Sample tutorial</a></li>
+
+            <li class="nav-header">Documentation</li>
+            <li><a href="http://fsharp.github.io/FAKE/reference/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <a href="http://github.com/fsharp/fake"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
-</body>
-</html>
+    <a href="http://github.com/fsharp/fake"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+  </body>
+  </html>

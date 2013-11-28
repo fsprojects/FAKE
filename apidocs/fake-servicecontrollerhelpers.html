@@ -1,62 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="utf-8">
-    <title>Module</title>
+    <title>ServiceControllerHelpers - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
+
     <script src="http://code.jquery.com/jquery-1.8.0.js"></script>
     <script src="http://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
     <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="../content/style.css" />
-    <script src="../content/tips.js" type="text/javascript"></script>
+
+    <link type="text/css" rel="stylesheet" href="http://fsharp.github.io/FAKE/content/style.css" />
+    <script type="text/javascript" src="http://fsharp.github.io/FAKE/content/tips.js"></script>
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <style type="text/css">
-        #main h2 {
-            font-size: 160%;
-            margin-top: 40px;
-        }
-
-        #main h3 {
-            font-size: 130%;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-
-        thead {
-            font-weight: bold;
-        }
-
-        .type-list .type-name, .module-list .module-name {
-            width: 25%;
-            font-weight: bold;
-        }
-
-        .member-list .member-name {
-            width: 35%;
-        }
-
-        #main table .xmldoc h2 {
-            font-size: 120%;
-        }
-    </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="masthead">
-            <ul class="nav nav-pills pull-right">
-                <li><a href="http://fsharp.org">fsharp.org</a></li>
-                <li><a href="http://github.com/fsharp/fake">github page</a></li>
-            </ul>
-            <h3 class="muted">FAKE - F# Make</h3>
-        </div>
-        <hr />
-        <div class="row">
-            <div class="span9" id="main">
-                
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="http://github.com/fsharp/fake">github page</a></li>
+        </ul>
+        <h3 class="muted">FAKE - F# Make</h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
 
 
 
@@ -65,10 +40,8 @@
 <p>Contains tasks which allow to control NT services.</p>
 </div>
 
-<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+<!-- Render nested types and modules, if there are any -->
 
-
-<!-- END TODO -->
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -78,10 +51,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '293', 293)" onmouseover="showTip(event, '293', 293)">
+          <code onmouseout="hideTip(event, '279', 279)" onmouseover="showTip(event, '279', 279)">
             checkServiceExists name
           </code>
-          <div class="tip" id="293">
+          <div class="tip" id="279">
             <strong>Signature:</strong>name:string -&gt; bool<br />
                       </div>
         </td>
@@ -97,10 +70,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '294', 294)" onmouseover="showTip(event, '294', 294)">
+          <code onmouseout="hideTip(event, '280', 280)" onmouseover="showTip(event, '280', 280)">
             ensureServiceHasStarted name timeout
           </code>
-          <div class="tip" id="294">
+          <div class="tip" id="280">
             <strong>Signature:</strong>name:string -&gt; timeout:TimeSpan -&gt; unit<br />
                       </div>
         </td>
@@ -117,10 +90,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '295', 295)" onmouseover="showTip(event, '295', 295)">
+          <code onmouseout="hideTip(event, '281', 281)" onmouseover="showTip(event, '281', 281)">
             ensureServiceHasStopped name timeout
           </code>
-          <div class="tip" id="295">
+          <div class="tip" id="281">
             <strong>Signature:</strong>name:string -&gt; timeout:TimeSpan -&gt; unit<br />
                       </div>
         </td>
@@ -137,10 +110,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '296', 296)" onmouseover="showTip(event, '296', 296)">
+          <code onmouseout="hideTip(event, '282', 282)" onmouseover="showTip(event, '282', 282)">
             getService name
           </code>
-          <div class="tip" id="296">
+          <div class="tip" id="282">
             <strong>Signature:</strong>name:string -&gt; ServiceController option<br />
                       </div>
         </td>
@@ -156,10 +129,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '297', 297)" onmouseover="showTip(event, '297', 297)">
+          <code onmouseout="hideTip(event, '283', 283)" onmouseover="showTip(event, '283', 283)">
             getServices name
           </code>
-          <div class="tip" id="297">
+          <div class="tip" id="283">
             <strong>Signature:</strong>name:string -&gt; seq&lt;ServiceController&gt;<br />
                       </div>
         </td>
@@ -175,10 +148,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '298', 298)" onmouseover="showTip(event, '298', 298)">
+          <code onmouseout="hideTip(event, '284', 284)" onmouseover="showTip(event, '284', 284)">
             getServiceStatus name
           </code>
-          <div class="tip" id="298">
+          <div class="tip" id="284">
             <strong>Signature:</strong>name:string -&gt; ServiceControllerStatus<br />
                       </div>
         </td>
@@ -194,10 +167,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '299', 299)" onmouseover="showTip(event, '299', 299)">
+          <code onmouseout="hideTip(event, '285', 285)" onmouseover="showTip(event, '285', 285)">
             isService name s
           </code>
-          <div class="tip" id="299">
+          <div class="tip" id="285">
             <strong>Signature:</strong>name:string -&gt; s:ServiceController -&gt; bool<br />
                       </div>
         </td>
@@ -214,10 +187,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '300', 300)" onmouseover="showTip(event, '300', 300)">
+          <code onmouseout="hideTip(event, '286', 286)" onmouseover="showTip(event, '286', 286)">
             startService name
           </code>
-          <div class="tip" id="300">
+          <div class="tip" id="286">
             <strong>Signature:</strong>name:string -&gt; unit<br />
                       </div>
         </td>
@@ -233,10 +206,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '301', 301)" onmouseover="showTip(event, '301', 301)">
+          <code onmouseout="hideTip(event, '287', 287)" onmouseover="showTip(event, '287', 287)">
             stopService name
           </code>
-          <div class="tip" id="301">
+          <div class="tip" id="287">
             <strong>Signature:</strong>name:string -&gt; unit<br />
                       </div>
         </td>
@@ -252,40 +225,27 @@
     </tbody>
   </table>
 
-            </div>
-            <div class="span3">
-
-                <ul class="nav nav-list" id="menu">
-                    <li class="nav-header">FAKE - F# Make</li>
-                    <li><a href="../index.html">Home page</a></li>
-                    <li class="divider"></li>
-                    <li><a href="https://nuget.org/packages/Fake">Get FAKE via NuGet</a></li>
-                    <li><a href="http://github.com/fsharp/fake">Source Code on GitHub</a></li>
-                    <li><a href="https://github.com/fsharp/FAKE/blob/develop/License.txt">License (MS-PL)</a></li>
-                    <li><a href="../changelog.html">Changelog</a></li>
-                    <li><a href="../contributing.html">Contributing to FAKE</a></li>
-                    <li><a href="http://stackoverflow.com/questions/tagged/f%23-fake">Ask a question</a></li>
-                    <li class="nav-header">Articles</li>
-                    <li><a href="../gettingstarted.html">Getting started</a></li>
-                    <li class="divider"></li>
-                    <li><a href="../nuget.html">NuGet package restore</a></li>
-                    <li><a href="../fxcop.html">Using FxCop in a build</a></li>
-                    <li><a href="../assemblyinfo.html">Generating AssemblyInfo</a></li>
-                    <li><a href="../create-nuget-package.html">Create NuGet packages</a></li>
-                    <li><a href="../specifictargets.html">Running specific targets</a></li>
-                    <li><a href="../commandline.html">Running FAKE from command line</a></li>
-                    <li><a href="../customtasks.html">Creating custom tasks</a></li>
-                    <li><a href="../teamcity.html">TeamCity integration</a></li>
-                    <li><a href="../octopusdeploy.html">Octopus Deploy</a></li>
-                    <li class="divider"></li>
-                    <li><a href="../deploy.html">Fake.Deploy</a></li>
-
-                    <li class="nav-header">Documentation</li>
-                    <li><a href="../apidocs/index.html">API Reference</a></li>
-                </ul>
-            </div>
         </div>
+        <div class="span3">
+          <ul class="nav nav-list" id="menu">
+            <li class="nav-header">FAKE - F# Make</li>
+            <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>
+            <li class="divider"></li>
+            <li><a href="https://www.nuget.org/packages/FAKE">Get Library via NuGet</a></li>
+            <li><a href="http://github.com/fsharp/fake">Source Code on GitHub</a></li>
+            <li><a href="http://github.com/fsharp/fake/blob/master/LICENSE.md">License</a></li>
+            <li><a href="http://github.com/fsharp/fake/blob/master/RELEASE_NOTES.md">Release Notes</a></li>
+            
+            <li class="nav-header">Getting started</li>
+            <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/tutorial.html">Sample tutorial</a></li>
+
+            <li class="nav-header">Documentation</li>
+            <li><a href="http://fsharp.github.io/FAKE/reference/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <a href="http://github.com/fsharp/fake"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
-</body>
-</html>
+    <a href="http://github.com/fsharp/fake"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+  </body>
+  </html>

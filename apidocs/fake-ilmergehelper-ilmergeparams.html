@@ -1,62 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="utf-8">
-    <title>Module</title>
+    <title>ILMergeParams - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
+
     <script src="http://code.jquery.com/jquery-1.8.0.js"></script>
     <script src="http://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
     <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="../content/style.css" />
-    <script src="../content/tips.js" type="text/javascript"></script>
+
+    <link type="text/css" rel="stylesheet" href="http://fsharp.github.io/FAKE/content/style.css" />
+    <script type="text/javascript" src="http://fsharp.github.io/FAKE/content/tips.js"></script>
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <style type="text/css">
-        #main h2 {
-            font-size: 160%;
-            margin-top: 40px;
-        }
-
-        #main h3 {
-            font-size: 130%;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-
-        thead {
-            font-weight: bold;
-        }
-
-        .type-list .type-name, .module-list .module-name {
-            width: 25%;
-            font-weight: bold;
-        }
-
-        .member-list .member-name {
-            width: 35%;
-        }
-
-        #main table .xmldoc h2 {
-            font-size: 120%;
-        }
-    </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="masthead">
-            <ul class="nav nav-pills pull-right">
-                <li><a href="http://fsharp.org">fsharp.org</a></li>
-                <li><a href="http://github.com/fsharp/fake">github page</a></li>
-            </ul>
-            <h3 class="muted">FAKE - F# Make</h3>
-        </div>
-        <hr />
-        <div class="row">
-            <div class="span9" id="main">
-                
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="http://github.com/fsharp/fake">github page</a></li>
+        </ul>
+        <h3 class="muted">FAKE - F# Make</h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
 
 
 
@@ -64,41 +39,301 @@
 <div class="xmldoc">
 <p>Parameter type for ILMerge</p>
 </div>
+  <h3>Record Fields</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Record Field</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
 
-            </div>
-            <div class="span3">
+          <code onmouseout="hideTip(event, '734', 734)" onmouseover="showTip(event, '734', 734)">
+            AllowDuplicateTypes
+          </code>
+          <div class="tip" id="734">
+            <strong>Signature:</strong>AllowDuplicateTypes<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Duplicate types policy</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
 
-                <ul class="nav nav-list" id="menu">
-                    <li class="nav-header">FAKE - F# Make</li>
-                    <li><a href="../index.html">Home page</a></li>
-                    <li class="divider"></li>
-                    <li><a href="https://nuget.org/packages/Fake">Get FAKE via NuGet</a></li>
-                    <li><a href="http://github.com/fsharp/fake">Source Code on GitHub</a></li>
-                    <li><a href="https://github.com/fsharp/FAKE/blob/develop/License.txt">License (MS-PL)</a></li>
-                    <li><a href="../changelog.html">Changelog</a></li>
-                    <li><a href="../contributing.html">Contributing to FAKE</a></li>
-                    <li><a href="http://stackoverflow.com/questions/tagged/f%23-fake">Ask a question</a></li>
-                    <li class="nav-header">Articles</li>
-                    <li><a href="../gettingstarted.html">Getting started</a></li>
-                    <li class="divider"></li>
-                    <li><a href="../nuget.html">NuGet package restore</a></li>
-                    <li><a href="../fxcop.html">Using FxCop in a build</a></li>
-                    <li><a href="../assemblyinfo.html">Generating AssemblyInfo</a></li>
-                    <li><a href="../create-nuget-package.html">Create NuGet packages</a></li>
-                    <li><a href="../specifictargets.html">Running specific targets</a></li>
-                    <li><a href="../commandline.html">Running FAKE from command line</a></li>
-                    <li><a href="../customtasks.html">Creating custom tasks</a></li>
-                    <li><a href="../teamcity.html">TeamCity integration</a></li>
-                    <li><a href="../octopusdeploy.html">Octopus Deploy</a></li>
-                    <li class="divider"></li>
-                    <li><a href="../deploy.html">Fake.Deploy</a></li>
+          <code onmouseout="hideTip(event, '735', 735)" onmouseover="showTip(event, '735', 735)">
+            AllowMultipleAssemblyLevelAttributes
+          </code>
+          <div class="tip" id="735">
+            <strong>Signature:</strong>bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Assembly-level attributes names that have the same type are copied over into the target directory</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
 
-                    <li class="nav-header">Documentation</li>
-                    <li><a href="../apidocs/index.html">API Reference</a></li>
-                </ul>
-            </div>
+          <code onmouseout="hideTip(event, '736', 736)" onmouseover="showTip(event, '736', 736)">
+            AllowWildcards
+          </code>
+          <div class="tip" id="736">
+            <strong>Signature:</strong>bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Wild cards in file names are expanded and all matching files will be used as input.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '737', 737)" onmouseover="showTip(event, '737', 737)">
+            AllowZeroPeKind
+          </code>
+          <div class="tip" id="737">
+            <strong>Signature:</strong>bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '738', 738)" onmouseover="showTip(event, '738', 738)">
+            AttributeFile
+          </code>
+          <div class="tip" id="738">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Path to an assembly that will be used to get all of the assembly-level attributes</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '739', 739)" onmouseover="showTip(event, '739', 739)">
+            Closed
+          </code>
+          <div class="tip" id="739">
+            <strong>Signature:</strong>bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>True -> transitive closure of the input assemblies is computed and added to the list of input assemblies.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '740', 740)" onmouseover="showTip(event, '740', 740)">
+            CopyAttributes
+          </code>
+          <div class="tip" id="740">
+            <strong>Signature:</strong>bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '741', 741)" onmouseover="showTip(event, '741', 741)">
+            DebugInfo
+          </code>
+          <div class="tip" id="741">
+            <strong>Signature:</strong>bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>True (default) -> creates a .pdb file for the output assembly and merges into it any .pdb files found for input assemblies.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '742', 742)" onmouseover="showTip(event, '742', 742)">
+            FileAlignment
+          </code>
+          <div class="tip" id="742">
+            <strong>Signature:</strong>int option<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '743', 743)" onmouseover="showTip(event, '743', 743)">
+            Internalize
+          </code>
+          <div class="tip" id="743">
+            <strong>Signature:</strong>InternalizeTypes<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '744', 744)" onmouseover="showTip(event, '744', 744)">
+            KeyFile
+          </code>
+          <div class="tip" id="744">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '745', 745)" onmouseover="showTip(event, '745', 745)">
+            Libraries
+          </code>
+          <div class="tip" id="745">
+            <strong>Signature:</strong>seq&lt;string&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Assemblies to merge with the primary assembly</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '746', 746)" onmouseover="showTip(event, '746', 746)">
+            LogFile
+          </code>
+          <div class="tip" id="746">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '747', 747)" onmouseover="showTip(event, '747', 747)">
+            SearchDirectories
+          </code>
+          <div class="tip" id="747">
+            <strong>Signature:</strong>seq&lt;string&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Directories to be used to search for input assemblies</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '748', 748)" onmouseover="showTip(event, '748', 748)">
+            TargetKind
+          </code>
+          <div class="tip" id="748">
+            <strong>Signature:</strong>TargetKind<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '749', 749)" onmouseover="showTip(event, '749', 749)">
+            TargetPlatform
+          </code>
+          <div class="tip" id="749">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>v1 or v1.1 or v2 or v4 or version,platform</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '750', 750)" onmouseover="showTip(event, '750', 750)">
+            TimeOut
+          </code>
+          <div class="tip" id="750">
+            <strong>Signature:</strong>TimeSpan<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '751', 751)" onmouseover="showTip(event, '751', 751)">
+            ToolPath
+          </code>
+          <div class="tip" id="751">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Path to ILMerge.exe</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '752', 752)" onmouseover="showTip(event, '752', 752)">
+            UnionMerge
+          </code>
+          <div class="tip" id="752">
+            <strong>Signature:</strong>bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>True -> types with the same name are all merged into a single type in the target assembly.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '753', 753)" onmouseover="showTip(event, '753', 753)">
+            Version
+          </code>
+          <div class="tip" id="753">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Version to use for the merged assembly</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '754', 754)" onmouseover="showTip(event, '754', 754)">
+            XmlDocs
+          </code>
+          <div class="tip" id="754">
+            <strong>Signature:</strong>bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>True -> XML documentation files are merged to produce an XML documentation file for the target assembly.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
         </div>
+        <div class="span3">
+          <ul class="nav nav-list" id="menu">
+            <li class="nav-header">FAKE - F# Make</li>
+            <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>
+            <li class="divider"></li>
+            <li><a href="https://www.nuget.org/packages/FAKE">Get Library via NuGet</a></li>
+            <li><a href="http://github.com/fsharp/fake">Source Code on GitHub</a></li>
+            <li><a href="http://github.com/fsharp/fake/blob/master/LICENSE.md">License</a></li>
+            <li><a href="http://github.com/fsharp/fake/blob/master/RELEASE_NOTES.md">Release Notes</a></li>
+            
+            <li class="nav-header">Getting started</li>
+            <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/tutorial.html">Sample tutorial</a></li>
+
+            <li class="nav-header">Documentation</li>
+            <li><a href="http://fsharp.github.io/FAKE/reference/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <a href="http://github.com/fsharp/fake"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
-</body>
-</html>
+    <a href="http://github.com/fsharp/fake"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+  </body>
+  </html>

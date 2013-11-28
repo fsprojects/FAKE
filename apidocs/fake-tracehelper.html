@@ -1,62 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="utf-8">
-    <title>Module</title>
+    <title>TraceHelper - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
+
     <script src="http://code.jquery.com/jquery-1.8.0.js"></script>
     <script src="http://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
     <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="../content/style.css" />
-    <script src="../content/tips.js" type="text/javascript"></script>
+
+    <link type="text/css" rel="stylesheet" href="http://fsharp.github.io/FAKE/content/style.css" />
+    <script type="text/javascript" src="http://fsharp.github.io/FAKE/content/tips.js"></script>
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <style type="text/css">
-        #main h2 {
-            font-size: 160%;
-            margin-top: 40px;
-        }
-
-        #main h3 {
-            font-size: 130%;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-
-        thead {
-            font-weight: bold;
-        }
-
-        .type-list .type-name, .module-list .module-name {
-            width: 25%;
-            font-weight: bold;
-        }
-
-        .member-list .member-name {
-            width: 35%;
-        }
-
-        #main table .xmldoc h2 {
-            font-size: 120%;
-        }
-    </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="masthead">
-            <ul class="nav nav-pills pull-right">
-                <li><a href="http://fsharp.org">fsharp.org</a></li>
-                <li><a href="http://github.com/fsharp/fake">github page</a></li>
-            </ul>
-            <h3 class="muted">FAKE - F# Make</h3>
-        </div>
-        <hr />
-        <div class="row">
-            <div class="span9" id="main">
-                
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="http://github.com/fsharp/fake">github page</a></li>
+        </ul>
+        <h3 class="muted">FAKE - F# Make</h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
 
 
 
@@ -65,10 +40,8 @@
 <p>This module contains function which allow to trace build output</p>
 </div>
 
-<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+<!-- Render nested types and modules, if there are any -->
 
-
-<!-- END TODO -->
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -78,10 +51,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '431', 431)" onmouseover="showTip(event, '431', 431)">
+          <code onmouseout="hideTip(event, '392', 392)" onmouseover="showTip(event, '392', 392)">
             closeAllOpenTags ()
           </code>
-          <div class="tip" id="431">
+          <div class="tip" id="392">
             <strong>Signature:</strong>unit -&gt; unit<br />
                       </div>
         </td>
@@ -90,10 +63,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '437', 437)" onmouseover="showTip(event, '437', 437)">
+          <code onmouseout="hideTip(event, '393', 393)" onmouseover="showTip(event, '393', 393)">
             closeTag tag
           </code>
-          <div class="tip" id="437">
+          <div class="tip" id="393">
             <strong>Signature:</strong>tag:string -&gt; unit<br />
                       </div>
         </td>
@@ -103,10 +76,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '438', 438)" onmouseover="showTip(event, '438', 438)">
+          <code onmouseout="hideTip(event, '394', 394)" onmouseover="showTip(event, '394', 394)">
             console 
           </code>
-          <div class="tip" id="438">
+          <div class="tip" id="394">
             <strong>Signature:</strong>ITraceListener<br />
                       </div>
         </td>
@@ -115,10 +88,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '439', 439)" onmouseover="showTip(event, '439', 439)">
+          <code onmouseout="hideTip(event, '395', 395)" onmouseover="showTip(event, '395', 395)">
             fakePath 
           </code>
-          <div class="tip" id="439">
+          <div class="tip" id="395">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
@@ -128,10 +101,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '440', 440)" onmouseover="showTip(event, '440', 440)">
+          <code onmouseout="hideTip(event, '396', 396)" onmouseover="showTip(event, '396', 396)">
             fakeVersion 
           </code>
-          <div class="tip" id="440">
+          <div class="tip" id="396">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
@@ -141,10 +114,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '441', 441)" onmouseover="showTip(event, '441', 441)">
+          <code onmouseout="hideTip(event, '397', 397)" onmouseover="showTip(event, '397', 397)">
             fakeVersionStr 
           </code>
-          <div class="tip" id="441">
+          <div class="tip" id="397">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
@@ -154,10 +127,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '442', 442)" onmouseover="showTip(event, '442', 442)">
+          <code onmouseout="hideTip(event, '398', 398)" onmouseover="showTip(event, '398', 398)">
             log message
           </code>
-          <div class="tip" id="442">
+          <div class="tip" id="398">
             <strong>Signature:</strong>message:string -&gt; unit<br />
                       </div>
         </td>
@@ -167,10 +140,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '443', 443)" onmouseover="showTip(event, '443', 443)">
+          <code onmouseout="hideTip(event, '399', 399)" onmouseover="showTip(event, '399', 399)">
             logf fmt
           </code>
-          <div class="tip" id="443">
+          <div class="tip" id="399">
             <strong>Signature:</strong>fmt:StringFormat&lt;&#39;?4993,unit&gt; -&gt; &#39;?4993<br />
                           <strong>Type parameters:</strong> '?4993          </div>
         </td>
@@ -180,10 +153,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '444', 444)" onmouseover="showTip(event, '444', 444)">
+          <code onmouseout="hideTip(event, '400', 400)" onmouseover="showTip(event, '400', 400)">
             logfn fmt
           </code>
-          <div class="tip" id="444">
+          <div class="tip" id="400">
             <strong>Signature:</strong>fmt:StringFormat&lt;&#39;?4991,unit&gt; -&gt; &#39;?4991<br />
                           <strong>Type parameters:</strong> '?4991          </div>
         </td>
@@ -193,10 +166,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '445', 445)" onmouseover="showTip(event, '445', 445)">
+          <code onmouseout="hideTip(event, '401', 401)" onmouseover="showTip(event, '401', 401)">
             logToConsole (msg, eventLogEntry)
           </code>
-          <div class="tip" id="445">
+          <div class="tip" id="401">
             <strong>Signature:</strong>(msg:string * eventLogEntry:EventLogEntryType) -&gt; unit<br />
                       </div>
         </td>
@@ -205,10 +178,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '446', 446)" onmouseover="showTip(event, '446', 446)">
+          <code onmouseout="hideTip(event, '402', 402)" onmouseover="showTip(event, '402', 402)">
             logVerbosefn fmt
           </code>
-          <div class="tip" id="446">
+          <div class="tip" id="402">
             <strong>Signature:</strong>fmt:StringFormat&lt;&#39;?4995,unit&gt; -&gt; &#39;?4995<br />
                           <strong>Type parameters:</strong> '?4995          </div>
         </td>
@@ -218,10 +191,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '447', 447)" onmouseover="showTip(event, '447', 447)">
+          <code onmouseout="hideTip(event, '403', 403)" onmouseover="showTip(event, '403', 403)">
             openTag tag
           </code>
-          <div class="tip" id="447">
+          <div class="tip" id="403">
             <strong>Signature:</strong>tag:string -&gt; unit<br />
                       </div>
         </td>
@@ -231,10 +204,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '448', 448)" onmouseover="showTip(event, '448', 448)">
+          <code onmouseout="hideTip(event, '404', 404)" onmouseover="showTip(event, '404', 404)">
             trace message
           </code>
-          <div class="tip" id="448">
+          <div class="tip" id="404">
             <strong>Signature:</strong>message:string -&gt; unit<br />
                       </div>
         </td>
@@ -244,10 +217,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '449', 449)" onmouseover="showTip(event, '449', 449)">
+          <code onmouseout="hideTip(event, '405', 405)" onmouseover="showTip(event, '405', 405)">
             traceEndBuild ()
           </code>
-          <div class="tip" id="449">
+          <div class="tip" id="405">
             <strong>Signature:</strong>unit -&gt; unit<br />
                       </div>
         </td>
@@ -257,10 +230,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '450', 450)" onmouseover="showTip(event, '450', 450)">
+          <code onmouseout="hideTip(event, '406', 406)" onmouseover="showTip(event, '406', 406)">
             traceEndTarget name
           </code>
-          <div class="tip" id="450">
+          <div class="tip" id="406">
             <strong>Signature:</strong>name:string -&gt; unit<br />
                       </div>
         </td>
@@ -270,10 +243,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '451', 451)" onmouseover="showTip(event, '451', 451)">
+          <code onmouseout="hideTip(event, '407', 407)" onmouseover="showTip(event, '407', 407)">
             traceEndTask task description
           </code>
-          <div class="tip" id="451">
+          <div class="tip" id="407">
             <strong>Signature:</strong>task:string -&gt; description:string -&gt; unit<br />
                       </div>
         </td>
@@ -283,10 +256,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '452', 452)" onmouseover="showTip(event, '452', 452)">
+          <code onmouseout="hideTip(event, '408', 408)" onmouseover="showTip(event, '408', 408)">
             TraceEnvironmentVariables ()
           </code>
-          <div class="tip" id="452">
+          <div class="tip" id="408">
             <strong>Signature:</strong>unit -&gt; unit<br />
                       </div>
         </td>
@@ -296,10 +269,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '453', 453)" onmouseover="showTip(event, '453', 453)">
+          <code onmouseout="hideTip(event, '409', 409)" onmouseover="showTip(event, '409', 409)">
             traceError error
           </code>
-          <div class="tip" id="453">
+          <div class="tip" id="409">
             <strong>Signature:</strong>error:string -&gt; unit<br />
                       </div>
         </td>
@@ -309,10 +282,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '454', 454)" onmouseover="showTip(event, '454', 454)">
+          <code onmouseout="hideTip(event, '410', 410)" onmouseover="showTip(event, '410', 410)">
             tracef fmt
           </code>
-          <div class="tip" id="454">
+          <div class="tip" id="410">
             <strong>Signature:</strong>fmt:StringFormat&lt;&#39;?5000,unit&gt; -&gt; &#39;?5000<br />
                           <strong>Type parameters:</strong> '?5000          </div>
         </td>
@@ -322,10 +295,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '455', 455)" onmouseover="showTip(event, '455', 455)">
+          <code onmouseout="hideTip(event, '411', 411)" onmouseover="showTip(event, '411', 411)">
             traceFAKE fmt
           </code>
-          <div class="tip" id="455">
+          <div class="tip" id="411">
             <strong>Signature:</strong>fmt:StringFormat&lt;&#39;?5004,unit&gt; -&gt; &#39;?5004<br />
                           <strong>Type parameters:</strong> '?5004          </div>
         </td>
@@ -335,10 +308,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '456', 456)" onmouseover="showTip(event, '456', 456)">
+          <code onmouseout="hideTip(event, '412', 412)" onmouseover="showTip(event, '412', 412)">
             tracefn fmt
           </code>
-          <div class="tip" id="456">
+          <div class="tip" id="412">
             <strong>Signature:</strong>fmt:StringFormat&lt;&#39;?4998,unit&gt; -&gt; &#39;?4998<br />
                           <strong>Type parameters:</strong> '?4998          </div>
         </td>
@@ -348,10 +321,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '457', 457)" onmouseover="showTip(event, '457', 457)">
+          <code onmouseout="hideTip(event, '413', 413)" onmouseover="showTip(event, '413', 413)">
             traceHeader name
           </code>
-          <div class="tip" id="457">
+          <div class="tip" id="413">
             <strong>Signature:</strong>name:string -&gt; unit<br />
                       </div>
         </td>
@@ -361,10 +334,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '458', 458)" onmouseover="showTip(event, '458', 458)">
+          <code onmouseout="hideTip(event, '414', 414)" onmouseover="showTip(event, '414', 414)">
             traceImportant text
           </code>
-          <div class="tip" id="458">
+          <div class="tip" id="414">
             <strong>Signature:</strong>text:string -&gt; unit<br />
                       </div>
         </td>
@@ -374,10 +347,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '459', 459)" onmouseover="showTip(event, '459', 459)">
+          <code onmouseout="hideTip(event, '415', 415)" onmouseover="showTip(event, '415', 415)">
             traceLine ()
           </code>
-          <div class="tip" id="459">
+          <div class="tip" id="415">
             <strong>Signature:</strong>unit -&gt; unit<br />
                       </div>
         </td>
@@ -387,10 +360,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '460', 460)" onmouseover="showTip(event, '460', 460)">
+          <code onmouseout="hideTip(event, '416', 416)" onmouseover="showTip(event, '416', 416)">
             traceStartBuild ()
           </code>
-          <div class="tip" id="460">
+          <div class="tip" id="416">
             <strong>Signature:</strong>unit -&gt; unit<br />
                       </div>
         </td>
@@ -400,10 +373,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '461', 461)" onmouseover="showTip(event, '461', 461)">
+          <code onmouseout="hideTip(event, '417', 417)" onmouseover="showTip(event, '417', 417)">
             traceStartTarget (...)
           </code>
-          <div class="tip" id="461">
+          <div class="tip" id="417">
             <strong>Signature:</strong>name:string -&gt; description:string -&gt; dependencyString:string -&gt; unit<br />
                       </div>
         </td>
@@ -413,10 +386,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '462', 462)" onmouseover="showTip(event, '462', 462)">
+          <code onmouseout="hideTip(event, '418', 418)" onmouseover="showTip(event, '418', 418)">
             traceStartTask task description
           </code>
-          <div class="tip" id="462">
+          <div class="tip" id="418">
             <strong>Signature:</strong>task:string -&gt; description:string -&gt; unit<br />
                       </div>
         </td>
@@ -426,10 +399,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '463', 463)" onmouseover="showTip(event, '463', 463)">
+          <code onmouseout="hideTip(event, '419', 419)" onmouseover="showTip(event, '419', 419)">
             traceVerbose s
           </code>
-          <div class="tip" id="463">
+          <div class="tip" id="419">
             <strong>Signature:</strong>s:string -&gt; unit<br />
                       </div>
         </td>
@@ -439,40 +412,27 @@
     </tbody>
   </table>
 
-            </div>
-            <div class="span3">
-
-                <ul class="nav nav-list" id="menu">
-                    <li class="nav-header">FAKE - F# Make</li>
-                    <li><a href="../index.html">Home page</a></li>
-                    <li class="divider"></li>
-                    <li><a href="https://nuget.org/packages/Fake">Get FAKE via NuGet</a></li>
-                    <li><a href="http://github.com/fsharp/fake">Source Code on GitHub</a></li>
-                    <li><a href="https://github.com/fsharp/FAKE/blob/develop/License.txt">License (MS-PL)</a></li>
-                    <li><a href="../changelog.html">Changelog</a></li>
-                    <li><a href="../contributing.html">Contributing to FAKE</a></li>
-                    <li><a href="http://stackoverflow.com/questions/tagged/f%23-fake">Ask a question</a></li>
-                    <li class="nav-header">Articles</li>
-                    <li><a href="../gettingstarted.html">Getting started</a></li>
-                    <li class="divider"></li>
-                    <li><a href="../nuget.html">NuGet package restore</a></li>
-                    <li><a href="../fxcop.html">Using FxCop in a build</a></li>
-                    <li><a href="../assemblyinfo.html">Generating AssemblyInfo</a></li>
-                    <li><a href="../create-nuget-package.html">Create NuGet packages</a></li>
-                    <li><a href="../specifictargets.html">Running specific targets</a></li>
-                    <li><a href="../commandline.html">Running FAKE from command line</a></li>
-                    <li><a href="../customtasks.html">Creating custom tasks</a></li>
-                    <li><a href="../teamcity.html">TeamCity integration</a></li>
-                    <li><a href="../octopusdeploy.html">Octopus Deploy</a></li>
-                    <li class="divider"></li>
-                    <li><a href="../deploy.html">Fake.Deploy</a></li>
-
-                    <li class="nav-header">Documentation</li>
-                    <li><a href="../apidocs/index.html">API Reference</a></li>
-                </ul>
-            </div>
         </div>
+        <div class="span3">
+          <ul class="nav nav-list" id="menu">
+            <li class="nav-header">FAKE - F# Make</li>
+            <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>
+            <li class="divider"></li>
+            <li><a href="https://www.nuget.org/packages/FAKE">Get Library via NuGet</a></li>
+            <li><a href="http://github.com/fsharp/fake">Source Code on GitHub</a></li>
+            <li><a href="http://github.com/fsharp/fake/blob/master/LICENSE.md">License</a></li>
+            <li><a href="http://github.com/fsharp/fake/blob/master/RELEASE_NOTES.md">Release Notes</a></li>
+            
+            <li class="nav-header">Getting started</li>
+            <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/tutorial.html">Sample tutorial</a></li>
+
+            <li class="nav-header">Documentation</li>
+            <li><a href="http://fsharp.github.io/FAKE/reference/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <a href="http://github.com/fsharp/fake"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
-</body>
-</html>
+    <a href="http://github.com/fsharp/fake"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+  </body>
+  </html>

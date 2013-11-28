@@ -1,62 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="utf-8">
-    <title>Module</title>
+    <title>FileHelper - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
+
     <script src="http://code.jquery.com/jquery-1.8.0.js"></script>
     <script src="http://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
     <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="../content/style.css" />
-    <script src="../content/tips.js" type="text/javascript"></script>
+
+    <link type="text/css" rel="stylesheet" href="http://fsharp.github.io/FAKE/content/style.css" />
+    <script type="text/javascript" src="http://fsharp.github.io/FAKE/content/tips.js"></script>
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <style type="text/css">
-        #main h2 {
-            font-size: 160%;
-            margin-top: 40px;
-        }
-
-        #main h3 {
-            font-size: 130%;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-
-        thead {
-            font-weight: bold;
-        }
-
-        .type-list .type-name, .module-list .module-name {
-            width: 25%;
-            font-weight: bold;
-        }
-
-        .member-list .member-name {
-            width: 35%;
-        }
-
-        #main table .xmldoc h2 {
-            font-size: 120%;
-        }
-    </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="masthead">
-            <ul class="nav nav-pills pull-right">
-                <li><a href="http://fsharp.org">fsharp.org</a></li>
-                <li><a href="http://github.com/fsharp/fake">github page</a></li>
-            </ul>
-            <h3 class="muted">FAKE - F# Make</h3>
-        </div>
-        <hr />
-        <div class="row">
-            <div class="span9" id="main">
-                
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="http://github.com/fsharp/fake">github page</a></li>
+        </ul>
+        <h3 class="muted">FAKE - F# Make</h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
 
 
 
@@ -65,10 +40,8 @@
 <p>Contains helper function which allow to deal with files and directories.</p>
 </div>
 
-<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+<!-- Render nested types and modules, if there are any -->
 
-
-<!-- END TODO -->
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -78,10 +51,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '9', 9)" onmouseover="showTip(event, '9', 9)">
+          <code onmouseout="hideTip(event, '3', 3)" onmouseover="showTip(event, '3', 3)">
             allFiles path
           </code>
-          <div class="tip" id="9">
+          <div class="tip" id="3">
             <strong>Signature:</strong>path:string -&gt; bool<br />
                       </div>
         </td>
@@ -91,10 +64,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '10', 10)" onmouseover="showTip(event, '10', 10)">
+          <code onmouseout="hideTip(event, '9', 9)" onmouseover="showTip(event, '9', 9)">
             AppendTextFiles newFileName files
           </code>
-          <div class="tip" id="10">
+          <div class="tip" id="9">
             <strong>Signature:</strong>newFileName:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -111,10 +84,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '11', 11)" onmouseover="showTip(event, '11', 11)">
+          <code onmouseout="hideTip(event, '10', 10)" onmouseover="showTip(event, '10', 10)">
             CleanDir path
           </code>
-          <div class="tip" id="11">
+          <div class="tip" id="10">
             <strong>Signature:</strong>path:string -&gt; unit<br />
                       </div>
         </td>
@@ -124,10 +97,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '12', 12)" onmouseover="showTip(event, '12', 12)">
+          <code onmouseout="hideTip(event, '11', 11)" onmouseover="showTip(event, '11', 11)">
             CleanDirs dirs
           </code>
-          <div class="tip" id="12">
+          <div class="tip" id="11">
             <strong>Signature:</strong>dirs:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -137,10 +110,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '13', 13)" onmouseover="showTip(event, '13', 13)">
+          <code onmouseout="hideTip(event, '12', 12)" onmouseover="showTip(event, '12', 12)">
             CompareFiles (...)
           </code>
-          <div class="tip" id="13">
+          <div class="tip" id="12">
             <strong>Signature:</strong>delete:bool -&gt; originalFileName:string -&gt; compareFileName:string -&gt; bool<br />
                       </div>
         </td>
@@ -151,10 +124,10 @@ If delete is set to true then equal files will be removed.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '14', 14)" onmouseover="showTip(event, '14', 14)">
+          <code onmouseout="hideTip(event, '13', 13)" onmouseover="showTip(event, '13', 13)">
             Copy target files
           </code>
-          <div class="tip" id="14">
+          <div class="tip" id="13">
             <strong>Signature:</strong>target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -171,10 +144,10 @@ If delete is set to true then equal files will be removed.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '15', 15)" onmouseover="showTip(event, '15', 15)">
+          <code onmouseout="hideTip(event, '14', 14)" onmouseover="showTip(event, '14', 14)">
             CopyCached target cacheDir files
           </code>
-          <div class="tip" id="15">
+          <div class="tip" id="14">
             <strong>Signature:</strong>target:string -&gt; cacheDir:string -&gt; files:seq&lt;string&gt; -&gt; string list<br />
                       </div>
         </td>
@@ -193,10 +166,10 @@ If the files are not cached or the original files have a different write time th
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '16', 16)" onmouseover="showTip(event, '16', 16)">
+          <code onmouseout="hideTip(event, '15', 15)" onmouseover="showTip(event, '15', 15)">
             CopyDir target source filterFile
           </code>
-          <div class="tip" id="16">
+          <div class="tip" id="15">
             <strong>Signature:</strong>target:string -&gt; source:string -&gt; filterFile:(string -&gt; bool) -&gt; unit<br />
                       </div>
         </td>
@@ -214,10 +187,10 @@ If the files are not cached or the original files have a different write time th
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '17', 17)" onmouseover="showTip(event, '17', 17)">
+          <code onmouseout="hideTip(event, '16', 16)" onmouseover="showTip(event, '16', 16)">
             CopyFile target fileName
           </code>
-          <div class="tip" id="17">
+          <div class="tip" id="16">
             <strong>Signature:</strong>target:string -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
@@ -234,10 +207,10 @@ If the files are not cached or the original files have a different write time th
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '18', 18)" onmouseover="showTip(event, '18', 18)">
+          <code onmouseout="hideTip(event, '17', 17)" onmouseover="showTip(event, '17', 17)">
             CopyFileIntoSubFolder target fileName
           </code>
-          <div class="tip" id="18">
+          <div class="tip" id="17">
             <strong>Signature:</strong>target:string -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
@@ -254,10 +227,10 @@ If the files are not cached or the original files have a different write time th
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '19', 19)" onmouseover="showTip(event, '19', 19)">
+          <code onmouseout="hideTip(event, '18', 18)" onmouseover="showTip(event, '18', 18)">
             CopyFiles target files
           </code>
-          <div class="tip" id="19">
+          <div class="tip" id="18">
             <strong>Signature:</strong>target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -274,10 +247,10 @@ If the files are not cached or the original files have a different write time th
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '20', 20)" onmouseover="showTip(event, '20', 20)">
+          <code onmouseout="hideTip(event, '19', 19)" onmouseover="showTip(event, '19', 19)">
             copyRecursive dir outputDir overwrite
           </code>
-          <div class="tip" id="20">
+          <div class="tip" id="19">
             <strong>Signature:</strong>dir:DirectoryInfo -&gt; outputDir:DirectoryInfo -&gt; overwrite:bool -&gt; string list<br />
                       </div>
         </td>
@@ -287,10 +260,10 @@ If the files are not cached or the original files have a different write time th
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '21', 21)" onmouseover="showTip(event, '21', 21)">
+          <code onmouseout="hideTip(event, '20', 20)" onmouseover="showTip(event, '20', 20)">
             CopyRecursive dir outputDir
           </code>
-          <div class="tip" id="21">
+          <div class="tip" id="20">
             <strong>Signature:</strong>dir:string -&gt; outputDir:string -&gt; bool -&gt; string list<br />
                       </div>
         </td>
@@ -300,10 +273,10 @@ If the files are not cached or the original files have a different write time th
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '22', 22)" onmouseover="showTip(event, '22', 22)">
+          <code onmouseout="hideTip(event, '21', 21)" onmouseover="showTip(event, '21', 21)">
             CopyTo target files
           </code>
-          <div class="tip" id="22">
+          <div class="tip" id="21">
             <strong>Signature:</strong>target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -320,10 +293,10 @@ If the files are not cached or the original files have a different write time th
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '23', 23)" onmouseover="showTip(event, '23', 23)">
+          <code onmouseout="hideTip(event, '22', 22)" onmouseover="showTip(event, '22', 22)">
             CreateDir path
           </code>
-          <div class="tip" id="23">
+          <div class="tip" id="22">
             <strong>Signature:</strong>path:string -&gt; unit<br />
                       </div>
         </td>
@@ -333,10 +306,10 @@ If the files are not cached or the original files have a different write time th
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '24', 24)" onmouseover="showTip(event, '24', 24)">
+          <code onmouseout="hideTip(event, '23', 23)" onmouseover="showTip(event, '23', 23)">
             CreateFile fileName
           </code>
-          <div class="tip" id="24">
+          <div class="tip" id="23">
             <strong>Signature:</strong>fileName:string -&gt; unit<br />
                       </div>
         </td>
@@ -346,10 +319,10 @@ If the files are not cached or the original files have a different write time th
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '25', 25)" onmouseover="showTip(event, '25', 25)">
+          <code onmouseout="hideTip(event, '24', 24)" onmouseover="showTip(event, '24', 24)">
             DeleteDir path
           </code>
-          <div class="tip" id="25">
+          <div class="tip" id="24">
             <strong>Signature:</strong>path:string -&gt; unit<br />
                       </div>
         </td>
@@ -359,10 +332,10 @@ If the files are not cached or the original files have a different write time th
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '26', 26)" onmouseover="showTip(event, '26', 26)">
+          <code onmouseout="hideTip(event, '25', 25)" onmouseover="showTip(event, '25', 25)">
             DeleteDirs dirs
           </code>
-          <div class="tip" id="26">
+          <div class="tip" id="25">
             <strong>Signature:</strong>dirs:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -372,10 +345,10 @@ If the files are not cached or the original files have a different write time th
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '27', 27)" onmouseover="showTip(event, '27', 27)">
+          <code onmouseout="hideTip(event, '26', 26)" onmouseover="showTip(event, '26', 26)">
             DeleteFile fileName
           </code>
-          <div class="tip" id="27">
+          <div class="tip" id="26">
             <strong>Signature:</strong>fileName:string -&gt; unit<br />
                       </div>
         </td>
@@ -385,10 +358,10 @@ If the files are not cached or the original files have a different write time th
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '28', 28)" onmouseover="showTip(event, '28', 28)">
+          <code onmouseout="hideTip(event, '27', 27)" onmouseover="showTip(event, '27', 27)">
             DeleteFiles files
           </code>
-          <div class="tip" id="28">
+          <div class="tip" id="27">
             <strong>Signature:</strong>files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -398,10 +371,10 @@ If the files are not cached or the original files have a different write time th
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '29', 29)" onmouseover="showTip(event, '29', 29)">
+          <code onmouseout="hideTip(event, '28', 28)" onmouseover="showTip(event, '28', 28)">
             excludeSVNFiles path
           </code>
-          <div class="tip" id="29">
+          <div class="tip" id="28">
             <strong>Signature:</strong>path:string -&gt; bool<br />
                       </div>
         </td>
@@ -411,10 +384,10 @@ If the files are not cached or the original files have a different write time th
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '30', 30)" onmouseover="showTip(event, '30', 30)">
+          <code onmouseout="hideTip(event, '29', 29)" onmouseover="showTip(event, '29', 29)">
             FilesAreEqual first second
           </code>
-          <div class="tip" id="30">
+          <div class="tip" id="29">
             <strong>Signature:</strong>first:FileInfo -&gt; second:FileInfo -&gt; bool<br />
                       </div>
         </td>
@@ -424,10 +397,10 @@ If the files are not cached or the original files have a different write time th
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '31', 31)" onmouseover="showTip(event, '31', 31)">
+          <code onmouseout="hideTip(event, '30', 30)" onmouseover="showTip(event, '30', 30)">
             GeneratePatch (...)
           </code>
-          <div class="tip" id="31">
+          <div class="tip" id="30">
             <strong>Signature:</strong>lastReleaseDir:string -&gt; patchDir:string -&gt; srcFiles:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -445,10 +418,10 @@ If the files are not cached or the original files have a different write time th
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '32', 32)" onmouseover="showTip(event, '32', 32)">
+          <code onmouseout="hideTip(event, '31', 31)" onmouseover="showTip(event, '31', 31)">
             GeneratePatchWithFindOldFileFunction (...)
           </code>
-          <div class="tip" id="32">
+          <div class="tip" id="31">
             <strong>Signature:</strong>lastReleaseDir:string -&gt; patchDir:string -&gt; srcFiles:seq&lt;string&gt; -&gt; findOldFileF:(string -&gt; string -&gt; string) -&gt; unit<br />
                       </div>
         </td>
@@ -467,10 +440,10 @@ If the files are not cached or the original files have a different write time th
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '33', 33)" onmouseover="showTip(event, '33', 33)">
+          <code onmouseout="hideTip(event, '32', 32)" onmouseover="showTip(event, '32', 32)">
             MoveFile target fileName
           </code>
-          <div class="tip" id="33">
+          <div class="tip" id="32">
             <strong>Signature:</strong>target:string -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
@@ -487,10 +460,10 @@ If the files are not cached or the original files have a different write time th
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '34', 34)" onmouseover="showTip(event, '34', 34)">
+          <code onmouseout="hideTip(event, '33', 33)" onmouseover="showTip(event, '33', 33)">
             ReadCSVFile file
           </code>
-          <div class="tip" id="34">
+          <div class="tip" id="33">
             <strong>Signature:</strong>file:string -&gt; seq&lt;string []&gt;<br />
                       </div>
         </td>
@@ -501,10 +474,10 @@ delimiter is a ,</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '35', 35)" onmouseover="showTip(event, '35', 35)">
+          <code onmouseout="hideTip(event, '34', 34)" onmouseover="showTip(event, '34', 34)">
             recursively dirF fileF dir
           </code>
-          <div class="tip" id="35">
+          <div class="tip" id="34">
             <strong>Signature:</strong>dirF:(DirectoryInfo -&gt; unit) -&gt; fileF:(FileInfo -&gt; unit) -&gt; dir:DirectoryInfo -&gt; unit<br />
                       </div>
         </td>
@@ -514,10 +487,10 @@ delimiter is a ,</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '36', 36)" onmouseover="showTip(event, '36', 36)">
+          <code onmouseout="hideTip(event, '35', 35)" onmouseover="showTip(event, '35', 35)">
             Rename target fileName
           </code>
-          <div class="tip" id="36">
+          <div class="tip" id="35">
             <strong>Signature:</strong>target:string -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
@@ -534,10 +507,10 @@ delimiter is a ,</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '37', 37)" onmouseover="showTip(event, '37', 37)">
+          <code onmouseout="hideTip(event, '36', 36)" onmouseover="showTip(event, '36', 36)">
             ReplaceInFiles replacements files
           </code>
-          <div class="tip" id="37">
+          <div class="tip" id="36">
             <strong>Signature:</strong>replacements:seq&lt;string * string&gt; -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -554,10 +527,10 @@ delimiter is a ,</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '38', 38)" onmouseover="showTip(event, '38', 38)">
+          <code onmouseout="hideTip(event, '37', 37)" onmouseover="showTip(event, '37', 37)">
             setDirectoryReadOnly readOnly dir
           </code>
-          <div class="tip" id="38">
+          <div class="tip" id="37">
             <strong>Signature:</strong>readOnly:bool -&gt; dir:DirectoryInfo -&gt; unit<br />
                       </div>
         </td>
@@ -567,10 +540,10 @@ delimiter is a ,</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '39', 39)" onmouseover="showTip(event, '39', 39)">
+          <code onmouseout="hideTip(event, '38', 38)" onmouseover="showTip(event, '38', 38)">
             SetDirReadOnly readOnly dir
           </code>
-          <div class="tip" id="39">
+          <div class="tip" id="38">
             <strong>Signature:</strong>readOnly:bool -&gt; dir:DirectoryInfo -&gt; unit<br />
                       </div>
         </td>
@@ -580,10 +553,10 @@ delimiter is a ,</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '40', 40)" onmouseover="showTip(event, '40', 40)">
+          <code onmouseout="hideTip(event, '39', 39)" onmouseover="showTip(event, '39', 39)">
             SetReadOnly readOnly files
           </code>
-          <div class="tip" id="40">
+          <div class="tip" id="39">
             <strong>Signature:</strong>readOnly:bool -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -593,10 +566,10 @@ delimiter is a ,</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '41', 41)" onmouseover="showTip(event, '41', 41)">
+          <code onmouseout="hideTip(event, '40', 40)" onmouseover="showTip(event, '40', 40)">
             SilentCopy target files
           </code>
-          <div class="tip" id="41">
+          <div class="tip" id="40">
             <strong>Signature:</strong>target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -613,10 +586,10 @@ delimiter is a ,</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '42', 42)" onmouseover="showTip(event, '42', 42)">
+          <code onmouseout="hideTip(event, '41', 41)" onmouseover="showTip(event, '41', 41)">
             TestDir path
           </code>
-          <div class="tip" id="42">
+          <div class="tip" id="41">
             <strong>Signature:</strong>path:string -&gt; bool<br />
                       </div>
         </td>
@@ -626,10 +599,10 @@ delimiter is a ,</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '43', 43)" onmouseover="showTip(event, '43', 43)">
+          <code onmouseout="hideTip(event, '42', 42)" onmouseover="showTip(event, '42', 42)">
             WriteConfigFile (...)
           </code>
-          <div class="tip" id="43">
+          <div class="tip" id="42">
             <strong>Signature:</strong>configFileName:string -&gt; parameters:seq&lt;&#39;?6345 * &#39;?6346&gt; -&gt; unit<br />
                           <strong>Type parameters:</strong> '?6345, '?6346          </div>
         </td>
@@ -647,10 +620,10 @@ delimiter is a ,</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '208', 208)" onmouseover="showTip(event, '208', 208)">
+          <code onmouseout="hideTip(event, '177', 177)" onmouseover="showTip(event, '177', 177)">
             ( |EndsWith|_| ) extension file
           </code>
-          <div class="tip" id="208">
+          <div class="tip" id="177">
             <strong>Signature:</strong>extension:string -&gt; file:string -&gt; unit option<br />
                       </div>
         </td>
@@ -660,10 +633,10 @@ delimiter is a ,</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '209', 209)" onmouseover="showTip(event, '209', 209)">
+          <code onmouseout="hideTip(event, '178', 178)" onmouseover="showTip(event, '178', 178)">
             ( |File|Directory| ) fileSysInfo
           </code>
-          <div class="tip" id="209">
+          <div class="tip" id="178">
             <strong>Signature:</strong>fileSysInfo:FileSystemInfo -&gt; Choice&lt;FileInfo,(DirectoryInfo * seq&lt;FileSystemInfo&gt;)&gt;<br />
                       </div>
         </td>
@@ -673,10 +646,10 @@ delimiter is a ,</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '210', 210)" onmouseover="showTip(event, '210', 210)">
+          <code onmouseout="hideTip(event, '179', 179)" onmouseover="showTip(event, '179', 179)">
             ( |FileInfoFullName| ) f
           </code>
-          <div class="tip" id="210">
+          <div class="tip" id="179">
             <strong>Signature:</strong>f:FileInfo -&gt; string<br />
                       </div>
         </td>
@@ -686,10 +659,10 @@ delimiter is a ,</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '211', 211)" onmouseover="showTip(event, '211', 211)">
+          <code onmouseout="hideTip(event, '180', 180)" onmouseover="showTip(event, '180', 180)">
             ( |FileInfoNameSections| ) f
           </code>
-          <div class="tip" id="211">
+          <div class="tip" id="180">
             <strong>Signature:</strong>f:FileInfo -&gt; string * string * string<br />
                       </div>
         </td>
@@ -699,40 +672,27 @@ delimiter is a ,</p>
     </tbody>
   </table>
 
-            </div>
-            <div class="span3">
-
-                <ul class="nav nav-list" id="menu">
-                    <li class="nav-header">FAKE - F# Make</li>
-                    <li><a href="../index.html">Home page</a></li>
-                    <li class="divider"></li>
-                    <li><a href="https://nuget.org/packages/Fake">Get FAKE via NuGet</a></li>
-                    <li><a href="http://github.com/fsharp/fake">Source Code on GitHub</a></li>
-                    <li><a href="https://github.com/fsharp/FAKE/blob/develop/License.txt">License (MS-PL)</a></li>
-                    <li><a href="../changelog.html">Changelog</a></li>
-                    <li><a href="../contributing.html">Contributing to FAKE</a></li>
-                    <li><a href="http://stackoverflow.com/questions/tagged/f%23-fake">Ask a question</a></li>
-                    <li class="nav-header">Articles</li>
-                    <li><a href="../gettingstarted.html">Getting started</a></li>
-                    <li class="divider"></li>
-                    <li><a href="../nuget.html">NuGet package restore</a></li>
-                    <li><a href="../fxcop.html">Using FxCop in a build</a></li>
-                    <li><a href="../assemblyinfo.html">Generating AssemblyInfo</a></li>
-                    <li><a href="../create-nuget-package.html">Create NuGet packages</a></li>
-                    <li><a href="../specifictargets.html">Running specific targets</a></li>
-                    <li><a href="../commandline.html">Running FAKE from command line</a></li>
-                    <li><a href="../customtasks.html">Creating custom tasks</a></li>
-                    <li><a href="../teamcity.html">TeamCity integration</a></li>
-                    <li><a href="../octopusdeploy.html">Octopus Deploy</a></li>
-                    <li class="divider"></li>
-                    <li><a href="../deploy.html">Fake.Deploy</a></li>
-
-                    <li class="nav-header">Documentation</li>
-                    <li><a href="../apidocs/index.html">API Reference</a></li>
-                </ul>
-            </div>
         </div>
+        <div class="span3">
+          <ul class="nav nav-list" id="menu">
+            <li class="nav-header">FAKE - F# Make</li>
+            <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>
+            <li class="divider"></li>
+            <li><a href="https://www.nuget.org/packages/FAKE">Get Library via NuGet</a></li>
+            <li><a href="http://github.com/fsharp/fake">Source Code on GitHub</a></li>
+            <li><a href="http://github.com/fsharp/fake/blob/master/LICENSE.md">License</a></li>
+            <li><a href="http://github.com/fsharp/fake/blob/master/RELEASE_NOTES.md">Release Notes</a></li>
+            
+            <li class="nav-header">Getting started</li>
+            <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/tutorial.html">Sample tutorial</a></li>
+
+            <li class="nav-header">Documentation</li>
+            <li><a href="http://fsharp.github.io/FAKE/reference/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <a href="http://github.com/fsharp/fake"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
-</body>
-</html>
+    <a href="http://github.com/fsharp/fake"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+  </body>
+  </html>

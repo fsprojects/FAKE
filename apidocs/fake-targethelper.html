@@ -1,62 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="utf-8">
-    <title>Module</title>
+    <title>TargetHelper - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
+
     <script src="http://code.jquery.com/jquery-1.8.0.js"></script>
     <script src="http://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
     <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="../content/style.css" />
-    <script src="../content/tips.js" type="text/javascript"></script>
+
+    <link type="text/css" rel="stylesheet" href="http://fsharp.github.io/FAKE/content/style.css" />
+    <script type="text/javascript" src="http://fsharp.github.io/FAKE/content/tips.js"></script>
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <style type="text/css">
-        #main h2 {
-            font-size: 160%;
-            margin-top: 40px;
-        }
-
-        #main h3 {
-            font-size: 130%;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-
-        thead {
-            font-weight: bold;
-        }
-
-        .type-list .type-name, .module-list .module-name {
-            width: 25%;
-            font-weight: bold;
-        }
-
-        .member-list .member-name {
-            width: 35%;
-        }
-
-        #main table .xmldoc h2 {
-            font-size: 120%;
-        }
-    </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="masthead">
-            <ul class="nav nav-pills pull-right">
-                <li><a href="http://fsharp.org">fsharp.org</a></li>
-                <li><a href="http://github.com/fsharp/fake">github page</a></li>
-            </ul>
-            <h3 class="muted">FAKE - F# Make</h3>
-        </div>
-        <hr />
-        <div class="row">
-            <div class="span9" id="main">
-                
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="http://github.com/fsharp/fake">github page</a></li>
+        </ul>
+        <h3 class="muted">FAKE - F# Make</h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
 
 
 
@@ -65,32 +40,33 @@
 <p>Contains infrastructure code and helper functions for FAKE's target feature.</p>
 </div>
 
-<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
-    <h2>Nested types and modules</h2>
-
-    <table class="table table-bordered type-list">
-        <thead>
-            <tr><td>Type</td><td>Description</td></tr>
-        </thead>
-        <tbody>
-                <tr>
-                    <td class="type-name">
-                        <a href="fake-targethelper-builderror.html">BuildError</a>
-                    </td>
-                    <td class="xmldoc"><p>Represents build errors</p>
+<!-- Render nested types and modules, if there are any -->
+  <h2>Nested types and modules</h2>
+  <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="fake-targethelper-builderror.html">BuildError</a>
+          </td>
+          <td class="xmldoc"><p>Represents build errors</p>
 </td>
-                </tr>
-                <tr>
-                    <td class="type-name">
-                        <a href="fake-targethelper-target.html">Target</a>
-                    </td>
-                    <td class="xmldoc"><p>A Target can be run during the build</p>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-targethelper-target.html">Target</a>
+          </td>
+          <td class="xmldoc"><p>A Target can be run during the build</p>
 </td>
-                </tr>
-        </tbody>
-    </table>
+        </tr>
+    </tbody>
+  </table>
 
-<!-- END TODO -->
+  </div>
+
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
@@ -100,10 +76,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '337', 337)" onmouseover="showTip(event, '337', 337)">
+          <code onmouseout="hideTip(event, '420', 420)" onmouseover="showTip(event, '420', 420)">
             ( &lt;== ) x y
           </code>
-          <div class="tip" id="337">
+          <div class="tip" id="420">
             <strong>Signature:</strong>x:string -&gt; y:string list -&gt; unit<br />
                       </div>
         </td>
@@ -113,10 +89,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '338', 338)" onmouseover="showTip(event, '338', 338)">
+          <code onmouseout="hideTip(event, '421', 421)" onmouseover="showTip(event, '421', 421)">
             ActivateFinalTarget name
           </code>
-          <div class="tip" id="338">
+          <div class="tip" id="421">
             <strong>Signature:</strong>name:string -&gt; unit<br />
                       </div>
         </td>
@@ -126,10 +102,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '339', 339)" onmouseover="showTip(event, '339', 339)">
+          <code onmouseout="hideTip(event, '422', 422)" onmouseover="showTip(event, '422', 422)">
             addExecutedTarget target time
           </code>
-          <div class="tip" id="339">
+          <div class="tip" id="422">
             <strong>Signature:</strong>target:string -&gt; time:TimeSpan -&gt; unit<br />
                       </div>
         </td>
@@ -138,10 +114,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '340', 340)" onmouseover="showTip(event, '340', 340)">
+          <code onmouseout="hideTip(event, '423', 423)" onmouseover="showTip(event, '423', 423)">
             dependencyString target
           </code>
-          <div class="tip" id="340">
+          <div class="tip" id="423">
             <strong>Signature:</strong>target:&#39;?5113 TargetTemplate -&gt; string<br />
                           <strong>Type parameters:</strong> '?5113          </div>
         </td>
@@ -151,10 +127,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '341', 341)" onmouseover="showTip(event, '341', 341)">
+          <code onmouseout="hideTip(event, '424', 424)" onmouseover="showTip(event, '424', 424)">
             DoNothing ()
           </code>
-          <div class="tip" id="341">
+          <div class="tip" id="424">
             <strong>Signature:</strong>unit -&gt; unit<br />
                       </div>
         </td>
@@ -164,10 +140,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '342', 342)" onmouseover="showTip(event, '342', 342)">
+          <code onmouseout="hideTip(event, '425', 425)" onmouseover="showTip(event, '425', 425)">
             ExecutedTargets 
           </code>
-          <div class="tip" id="342">
+          <div class="tip" id="425">
             <strong>Signature:</strong>HashSet&lt;string&gt;<br />
                       </div>
         </td>
@@ -177,10 +153,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '343', 343)" onmouseover="showTip(event, '343', 343)">
+          <code onmouseout="hideTip(event, '426', 426)" onmouseover="showTip(event, '426', 426)">
             FinalTarget name body
           </code>
-          <div class="tip" id="343">
+          <div class="tip" id="426">
             <strong>Signature:</strong>name:string -&gt; body:(unit -&gt; unit) -&gt; unit<br />
                       </div>
         </td>
@@ -190,10 +166,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '344', 344)" onmouseover="showTip(event, '344', 344)">
+          <code onmouseout="hideTip(event, '427', 427)" onmouseover="showTip(event, '427', 427)">
             FinalTargets 
           </code>
-          <div class="tip" id="344">
+          <div class="tip" id="427">
             <strong>Signature:</strong>Dictionary&lt;string,bool&gt;<br />
                       </div>
         </td>
@@ -203,10 +179,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '345', 345)" onmouseover="showTip(event, '345', 345)">
+          <code onmouseout="hideTip(event, '428', 428)" onmouseover="showTip(event, '428', 428)">
             getAllTargetsNames ()
           </code>
-          <div class="tip" id="345">
+          <div class="tip" id="428">
             <strong>Signature:</strong>unit -&gt; string list<br />
                       </div>
         </td>
@@ -216,10 +192,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '346', 346)" onmouseover="showTip(event, '346', 346)">
+          <code onmouseout="hideTip(event, '429', 429)" onmouseover="showTip(event, '429', 429)">
             getTarget name
           </code>
-          <div class="tip" id="346">
+          <div class="tip" id="429">
             <strong>Signature:</strong>name:string -&gt; unit TargetTemplate<br />
                       </div>
         </td>
@@ -229,10 +205,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '347', 347)" onmouseover="showTip(event, '347', 347)">
+          <code onmouseout="hideTip(event, '430', 430)" onmouseover="showTip(event, '430', 430)">
             listTargets ()
           </code>
-          <div class="tip" id="347">
+          <div class="tip" id="430">
             <strong>Signature:</strong>unit -&gt; unit<br />
                       </div>
         </td>
@@ -242,10 +218,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '348', 348)" onmouseover="showTip(event, '348', 348)">
+          <code onmouseout="hideTip(event, '431', 431)" onmouseover="showTip(event, '431', 431)">
             PrintDependencyGraph verbose target
           </code>
-          <div class="tip" id="348">
+          <div class="tip" id="431">
             <strong>Signature:</strong>verbose:bool -&gt; target:string -&gt; unit<br />
                       </div>
         </td>
@@ -255,10 +231,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '349', 349)" onmouseover="showTip(event, '349', 349)">
+          <code onmouseout="hideTip(event, '432', 432)" onmouseover="showTip(event, '432', 432)">
             PrintTargets ()
           </code>
-          <div class="tip" id="349">
+          <div class="tip" id="432">
             <strong>Signature:</strong>unit -&gt; unit<br />
                       </div>
         </td>
@@ -268,10 +244,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '350', 350)" onmouseover="showTip(event, '350', 350)">
+          <code onmouseout="hideTip(event, '433', 433)" onmouseover="showTip(event, '433', 433)">
             run targetName
           </code>
-          <div class="tip" id="350">
+          <div class="tip" id="433">
             <strong>Signature:</strong>targetName:string -&gt; unit<br />
                       </div>
         </td>
@@ -281,10 +257,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '351', 351)" onmouseover="showTip(event, '351', 351)">
+          <code onmouseout="hideTip(event, '434', 434)" onmouseover="showTip(event, '434', 434)">
             Target name body
           </code>
-          <div class="tip" id="351">
+          <div class="tip" id="434">
             <strong>Signature:</strong>name:string -&gt; body:(unit -&gt; unit) -&gt; unit<br />
                       </div>
         </td>
@@ -294,10 +270,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '352', 352)" onmouseover="showTip(event, '352', 352)">
+          <code onmouseout="hideTip(event, '435', 435)" onmouseover="showTip(event, '435', 435)">
             TargetTemplate body
           </code>
-          <div class="tip" id="352">
+          <div class="tip" id="435">
             <strong>Signature:</strong>body:(&#39;?5129 -&gt; unit) -&gt; string -&gt; &#39;?5129 -&gt; unit<br />
                           <strong>Type parameters:</strong> '?5129          </div>
         </td>
@@ -307,10 +283,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '353', 353)" onmouseover="showTip(event, '353', 353)">
+          <code onmouseout="hideTip(event, '436', 436)" onmouseover="showTip(event, '436', 436)">
             TargetTemplateWithDependecies (...)
           </code>
-          <div class="tip" id="353">
+          <div class="tip" id="436">
             <strong>Signature:</strong>dependencies:string list -&gt; body:(&#39;?5127 -&gt; unit) -&gt; string -&gt; &#39;?5127 -&gt; unit<br />
                           <strong>Type parameters:</strong> '?5127          </div>
         </td>
@@ -320,10 +296,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '354', 354)" onmouseover="showTip(event, '354', 354)">
+          <code onmouseout="hideTip(event, '437', 437)" onmouseover="showTip(event, '437', 437)">
             WriteErrors ()
           </code>
-          <div class="tip" id="354">
+          <div class="tip" id="437">
             <strong>Signature:</strong>unit -&gt; unit<br />
                       </div>
         </td>
@@ -333,10 +309,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '355', 355)" onmouseover="showTip(event, '355', 355)">
+          <code onmouseout="hideTip(event, '438', 438)" onmouseover="showTip(event, '438', 438)">
             WriteTaskTimeSummary total
           </code>
-          <div class="tip" id="355">
+          <div class="tip" id="438">
             <strong>Signature:</strong>total:&#39;?5149 -&gt; unit<br />
                           <strong>Type parameters:</strong> '?5149          </div>
         </td>
@@ -346,40 +322,27 @@
     </tbody>
   </table>
 
-            </div>
-            <div class="span3">
-
-                <ul class="nav nav-list" id="menu">
-                    <li class="nav-header">FAKE - F# Make</li>
-                    <li><a href="../index.html">Home page</a></li>
-                    <li class="divider"></li>
-                    <li><a href="https://nuget.org/packages/Fake">Get FAKE via NuGet</a></li>
-                    <li><a href="http://github.com/fsharp/fake">Source Code on GitHub</a></li>
-                    <li><a href="https://github.com/fsharp/FAKE/blob/develop/License.txt">License (MS-PL)</a></li>
-                    <li><a href="../changelog.html">Changelog</a></li>
-                    <li><a href="../contributing.html">Contributing to FAKE</a></li>
-                    <li><a href="http://stackoverflow.com/questions/tagged/f%23-fake">Ask a question</a></li>
-                    <li class="nav-header">Articles</li>
-                    <li><a href="../gettingstarted.html">Getting started</a></li>
-                    <li class="divider"></li>
-                    <li><a href="../nuget.html">NuGet package restore</a></li>
-                    <li><a href="../fxcop.html">Using FxCop in a build</a></li>
-                    <li><a href="../assemblyinfo.html">Generating AssemblyInfo</a></li>
-                    <li><a href="../create-nuget-package.html">Create NuGet packages</a></li>
-                    <li><a href="../specifictargets.html">Running specific targets</a></li>
-                    <li><a href="../commandline.html">Running FAKE from command line</a></li>
-                    <li><a href="../customtasks.html">Creating custom tasks</a></li>
-                    <li><a href="../teamcity.html">TeamCity integration</a></li>
-                    <li><a href="../octopusdeploy.html">Octopus Deploy</a></li>
-                    <li class="divider"></li>
-                    <li><a href="../deploy.html">Fake.Deploy</a></li>
-
-                    <li class="nav-header">Documentation</li>
-                    <li><a href="../apidocs/index.html">API Reference</a></li>
-                </ul>
-            </div>
         </div>
+        <div class="span3">
+          <ul class="nav nav-list" id="menu">
+            <li class="nav-header">FAKE - F# Make</li>
+            <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>
+            <li class="divider"></li>
+            <li><a href="https://www.nuget.org/packages/FAKE">Get Library via NuGet</a></li>
+            <li><a href="http://github.com/fsharp/fake">Source Code on GitHub</a></li>
+            <li><a href="http://github.com/fsharp/fake/blob/master/LICENSE.md">License</a></li>
+            <li><a href="http://github.com/fsharp/fake/blob/master/RELEASE_NOTES.md">Release Notes</a></li>
+            
+            <li class="nav-header">Getting started</li>
+            <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/tutorial.html">Sample tutorial</a></li>
+
+            <li class="nav-header">Documentation</li>
+            <li><a href="http://fsharp.github.io/FAKE/reference/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <a href="http://github.com/fsharp/fake"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
-</body>
-</html>
+    <a href="http://github.com/fsharp/fake"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+  </body>
+  </html>
