@@ -119,7 +119,14 @@ let TargetsDependOn target targets =
 /// Set a dependency for all registered targets.
 /// [omit]
 [<Obsolete("Please use the ==> operator")>]
-let AllTargetsDependOn target = getAllTargetsNames() |> TargetsDependOn target
+let AllTargetsDependOn target = 
+    let targets = getAllTargetsNames() 
+
+    targets
+    |> Seq.toList  // work on copy since the dict will be changed
+    |> List.filter ((<>) target)
+    |> List.filter (fun t -> Seq.exists ((=) t) targets)
+    |> List.iter (fun t -> dependencyAtFront t target)
   
 /// Creates a target from template.
 /// [omit]
