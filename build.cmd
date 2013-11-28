@@ -17,7 +17,7 @@ if %MinimalFAKEVersion%==%FAKEVersion% goto Build
 cls
 
 if not exist tools\FSharp.Formatting\lib\net40\FSharp.CodeFormat.dll ( 
-	"tools\nuget\nuget.exe" "install" "FSharp.Formatting" "-OutputDirectory" "tools" "-ExcludeVersion"
+	"tools\nuget\nuget.exe" "install" "FSharp.Formatting" "-OutputDirectory" "tools" "-ExcludeVersion" "-Prerelease"
 )
 
 SET TARGET="Default"

@@ -1,123 +1,107 @@
 @using FSharp.MetadataFormat
 @{
-    Layout = "default";
-    Title = "Module";
+  Layout = "template";
+  Title = Model.Module.Name + " - " + Properties["project-name"];
 }
 
 @{
-    var nestModules = (IEnumerable<Module>)Model.Module.NestedModules;
-    var nestTypes = (IEnumerable<FSharp.MetadataFormat.Type>)Model.Module.NestedTypes;
+  // Get all the members & comment for the type
+  var members = (IEnumerable<Member>)Model.Module.AllMembers;
+  var comment = (Comment)Model.Module.Comment;
 
-    var members = (IEnumerable<Member>)Model.Module.AllMembers;
-    var comment = (Comment)Model.Module.Comment;
-    var byCategory =
-        members.GroupBy(m => m.Category).OrderBy(g => String.IsNullOrEmpty(g.Key) ? "ZZZ" : g.Key)
-               .Select((g, n) => new { Index = n, GroupKey = g.Key, Members = g.OrderBy(m => m.Name), Name = String.IsNullOrEmpty(g.Key) ? "Other module members" : g.Key });
+  // Group all members by their category which is an inline annotation
+  // that can be added to members using special XML comment:
+  //
+  //     /// [category:Something]
+  //
+  // ...and can be used to categorize members in large modules or types
+  // (but if this is not used, then all members end up in just one category)
+  var byCategory = members
+    .GroupBy(m => m.Category)
+    .OrderBy(g => String.IsNullOrEmpty(g.Key) ? "ZZZ" : g.Key)
+    .Select((g, n) => new { 
+      Index = n, 
+      GroupKey = g.Key, 
+      Members = g.OrderBy(m => m.Name), 
+      Name = String.IsNullOrEmpty(g.Key) ? "Other module members" : g.Key
+    });
+
+  // Get nested modules and nested types as statically typed collections
+  var nestModules = (IEnumerable<Module>)Model.Module.NestedModules;
+  var nestTypes = (IEnumerable<FSharp.MetadataFormat.Type>)Model.Module.NestedTypes;
 }
 
 <h1>@Model.Module.Name</h1>
 <div class="xmldoc">
-    @foreach (var sec in comment.Sections)
+  @foreach (var sec in comment.Sections) {
+    // XML comment for the type has multiple sections that can be labelled
+    // with categories (to give comment for an individual category). Here, 
+    // we print only those that belong to the <default> section.
+    if (!byCategory.Any(g => g.GroupKey == sec.Key))
     {
-        if (!byCategory.Any(g => g.GroupKey == sec.Key))
-        {
-            if (sec.Key != "<default>")
-            {
-                <h2>@sec.Key</h2>
-            }
-            @sec.Value
-        }
+      if (sec.Key != "<default>")        {
+        <h2>@sec.Key</h2>
+      }
+      @sec.Value  
     }
+  }
 </div>
 @if (byCategory.Count() > 1)
 {
-    <h2>Table of contents</h2>
-    <ul>
-        @foreach (var g in byCategory)
-        {
-            <li><a href="@("#section" + g.Index.ToString())">@g.Name</a></li>
-        }
-    </ul>
+  <!-- If there is more than 1 category in the type, generate TOC -->
+  <h2>Table of contents</h2>
+  <ul>
+    @foreach (var g in byCategory)
+    {
+      <li><a href="@("#section" + g.Index.ToString())">@g.Name</a></li>            
+    }
+  </ul>
 }
 
-<!-- TODO: Refactor me - copy & paste from 'namespaces.cshtml' -->
+<!-- Render nested types and modules, if there are any -->
 @if (nestTypes.Count() + nestModules.Count() > 0)
 {
-    <h2>Nested types and modules</h2>
+  <h2>Nested types and modules</h2>
+  <div>
+    @RenderPart("part-nested", new {
+      Types = nestTypes,
+      Modules = nestModules
+    })
+  </div>
 }
 
-@if (nestTypes.Count() > 0)
-{
-    <table class="table table-bordered type-list">
-        <thead>
-            <tr><td>Type</td><td>Description</td></tr>
-        </thead>
-        <tbody>
-            @foreach (var it in nestTypes)
-            {
-                <tr>
-                    <td class="type-name">
-                        <a href="@(it.UrlName).html">@it.Name</a>
-                    </td>
-                    <td class="xmldoc">@it.Comment.Blurb</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-@if (nestModules.Count() > 0)
-{
-    <table class="table table-bordered module-list">
-        <thead>
-            <tr><td>Module</td><td>Description</td></tr>
-        </thead>
-        <tbody>
-            @foreach (var it in nestModules)
-            {
-                <tr>
-                    <td class="module-name">
-                        <a href="@(it.UrlName).html">@it.Name</a>
-                    </td>
-                    <td class="xmldoc">@it.Comment.Blurb</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-
-<!-- END TODO -->
 @foreach (var g in byCategory)
 {
-    if (byCategory.Count() > 1)
+  // Iterate over all the categories and print members. If there are more than one
+  // categories, print the category heading (as <h2>) and add XML comment from the type
+  // that is related to this specific category.
+  if (byCategory.Count() > 1)
+  {
+    <h2>@g.Name<a name="@("section" + g.Index.ToString())">&#160;</a></h2>    
+    var info = comment.Sections.FirstOrDefault(kvp => kvp.Key == g.GroupKey);
+    if (info.Key != null)
     {
-        <h2>@g.Name<a name="@("section" + g.Index.ToString())">&#160;</a></h2>
-        var info = comment.Sections.FirstOrDefault(kvp => kvp.Key == g.GroupKey);
-        if (info.Key != null)
-        {
-            <div class="xmldoc">
-                @info.Value
-            </div>
-        }
+      <div class="xmldoc">
+        @info.Value
+      </div>
     }
+  }
 
-    @RenderPart("members", new
-{
-    Header = "Functions and values",
-    TableHeader = "Function or value",
-    Members = g.Members.Where(m => m.Kind == MemberKind.ValueOrFunction)
-})
+  @RenderPart("part-members", new { 
+      Header = "Functions and values",
+      TableHeader = "Function or value",
+      Members = g.Members.Where(m => m.Kind == MemberKind.ValueOrFunction)
+  })
 
-    @RenderPart("members", new
-{
-    Header = "Type extensions",
-    TableHeader = "Type extension",
-    Members = g.Members.Where(m => m.Kind == MemberKind.TypeExtension)
-})
+  @RenderPart("part-members", new { 
+      Header = "Type extensions",
+      TableHeader = "Type extension",
+      Members = g.Members.Where(m => m.Kind == MemberKind.TypeExtension)
+  })
 
-    @RenderPart("members", new
-{
-    Header = "Active patterns",
-    TableHeader = "Active pattern",
-    Members = g.Members.Where(m => m.Kind == MemberKind.ActivePattern)
-})
+  @RenderPart("part-members", new { 
+      Header = "Active patterns",
+      TableHeader = "Active pattern",
+      Members = g.Members.Where(m => m.Kind == MemberKind.ActivePattern)
+  })
 }

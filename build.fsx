@@ -115,13 +115,21 @@ Target "GenerateDocs" (fun _ ->
     let projInfo =
       [ "page-description", "FAKE - F# Make"
         "page-author", (separated ", " authors)
+        "project-author", (separated ", " authors)
         "github-link", "http://github.com/fsharp/fake"
+        "project-github", "http://github.com/fsharp/fake"
+        "project-nuget", "https://www.nuget.org/packages/FAKE"
+        "root", "http://fsharp.github.io/FAKE"
         "project-name", "FAKE - F# Make" ]
 
     Literate.ProcessDirectory (source, template, docsDir, replacements = projInfo)
 
     if isLocalBuild then  // TODO: this needs to be fixed in FSharp.Formatting
-        MetadataFormat.Generate ( "./build/FakeLib.dll", apidocsDir, ["./help/templates/reference/"])
+        MetadataFormat.Generate ( 
+          !! "./build/FAKE*.dll" |> Seq.toList, 
+          apidocsDir, 
+          ["./help/templates/"; "./help/templates/reference/"], 
+          parameters = projInfo)
 
     WriteStringToFile false "./docs/.nojekyll" ""
 
