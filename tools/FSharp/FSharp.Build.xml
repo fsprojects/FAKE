@@ -17,7 +17,7 @@
 <member name="M:FSBuild.SR.toolpathUnknown">
 <summary>
  ToolPath is unknown; specify the path to fsc.exe as the ToolPath property.
- (Originally from D:\BuildAgent-02\work\972d839445aae990\src\fsharp\FSharp.Build\FSBuild.txt:2)
+ (Originally from C:\Code\fsharp\src\fsharp\FSharp.Build\FSBuild.txt:2)
 </summary>
 </member>
 <member name="P:FSBuild.SR.SwallowResourceText(System.Boolean)">
@@ -115,6 +115,9 @@
 <member name="">
 
 </member>
+<member name="">
+
+</member>
 <member name="P:Internal.Utilities.FSharpEnvironment.DotNetBuildString">
 <summary>
  The F# version reported in the banner
@@ -129,6 +132,18 @@
 
 </member>
 <member name="T:Internal.Utilities.FSharpEnvironment">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
 
 </member>
 <member name="">

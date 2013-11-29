@@ -3929,7 +3929,7 @@
  <summary>This attribute is used for two purposes. When applied to an assembly, it must be given a string
  argument, and this argument must indicate a valid module or namespace in that assembly. Source
  code files compiled with a reference to this assembly are processed in an environment
- where the given path is automatically oepned.</summary>
+ where the given path is automatically opened.</summary>
 
  <remarks>When applied to a module within an assembly, then the attribute must not be given any arguments.
  When the enclosing namespace is opened in user source code, the module is also implicitly opened.</remarks>
@@ -6499,12 +6499,12 @@
  <returns>The result of the comparison.</returns>
 </member>
 <member name="M:Microsoft.FSharp.Core.Operators.op_UnaryPlus``1(``0)">
- <summary>Overloaded prefix=plus operator</summary>
+ <summary>Overloaded prefix-plus operator</summary>
  <param name="value">The input value.</param>
  <returns>The result of the operation.</returns>
 </member>
 <member name="M:Microsoft.FSharp.Core.Operators.op_LogicalNot``1(``0)">
- <summary>Overloaded logical-NOT operator</summary>
+ <summary>Overloaded bitwise-NOT operator</summary>
  <param name="value">The input value.</param>
  <returns>The result of the operation.</returns>
 </member>
@@ -6521,19 +6521,19 @@
  <returns>The result of the operation.</returns>
 </member>
 <member name="M:Microsoft.FSharp.Core.Operators.op_ExclusiveOr``1(``0,``0)">
- <summary>Overloaded logical-XOR operator</summary>
+ <summary>Overloaded bitwise-XOR operator</summary>
  <param name="x">The first parameter.</param>
  <param name="y">The second parameter.</param>
  <returns>The result of the operation.</returns>
 </member>
 <member name="M:Microsoft.FSharp.Core.Operators.op_BitwiseOr``1(``0,``0)">
- <summary>Overloaded logical-OR operator</summary>
+ <summary>Overloaded bitwise-OR operator</summary>
  <param name="x">The first parameter.</param>
  <param name="y">The second parameter.</param>
  <returns>The result of the operation.</returns>
 </member>
 <member name="M:Microsoft.FSharp.Core.Operators.op_BitwiseAnd``1(``0,``0)">
- <summary>Overloaded logical-AND operator</summary>
+ <summary>Overloaded bitwise-AND operator</summary>
  <param name="x">The first parameter.</param>
  <param name="y">The second parameter.</param>
  <returns>The result of the operation.</returns>
@@ -6926,8 +6926,24 @@
  <param name="finish3">The end index of the third dimension.</param>
  <returns>The three dimensional sub array from the given indices.</returns>
 </member>
+<member name="M:Microsoft.FSharp.Core.Operators.OperatorIntrinsics.SetArraySlice2DFixed2``1(``0[0:,0:],Microsoft.FSharp.Core.FSharpOption{System.Int32},Microsoft.FSharp.Core.FSharpOption{System.Int32},System.Int32,``0[])">
+ <summary>Sets a vector slice of a 2D array. The index of the second dimension is fixed.</summary>
+ <param name="target">The target array.</param>
+ <param name="start1">The start index of the first dimension.</param>
+ <param name="finish1">The end index of the first dimension.</param>
+ <param name="index2">The index of the second dimension.</param>
+ <param name="source">The source array.</param>
+</member>
+<member name="M:Microsoft.FSharp.Core.Operators.OperatorIntrinsics.SetArraySlice2DFixed1``1(``0[0:,0:],System.Int32,Microsoft.FSharp.Core.FSharpOption{System.Int32},Microsoft.FSharp.Core.FSharpOption{System.Int32},``0[])">
+ <summary>Sets a vector slice of a 2D array. The index of the first dimension is fixed.</summary>
+ <param name="target">The target array.</param>
+ <param name="index1">The index of the first dimension.</param>
+ <param name="start2">The start index of the second dimension.</param>
+ <param name="finish2">The end index of the second dimension.</param>
+ <param name="source">The source array.</param>
+</member>
 <member name="M:Microsoft.FSharp.Core.Operators.OperatorIntrinsics.SetArraySlice2D``1(``0[0:,0:],Microsoft.FSharp.Core.FSharpOption{System.Int32},Microsoft.FSharp.Core.FSharpOption{System.Int32},Microsoft.FSharp.Core.FSharpOption{System.Int32},Microsoft.FSharp.Core.FSharpOption{System.Int32},``0[0:,0:])">
- <summary>Sets a slice of an array</summary>
+ <summary>Sets a region slice of an array</summary>
  <param name="target">The target array.</param>
  <param name="start1">The start index of the first dimension.</param>
  <param name="finish1">The end index of the first dimension.</param>
@@ -6935,8 +6951,24 @@
  <param name="finish2">The end index of the second dimension.</param>
  <param name="source">The source array.</param>
 </member>
+<member name="M:Microsoft.FSharp.Core.Operators.OperatorIntrinsics.GetArraySlice2DFixed2``1(``0[0:,0:],Microsoft.FSharp.Core.FSharpOption{System.Int32},Microsoft.FSharp.Core.FSharpOption{System.Int32},System.Int32)">
+ <summary>Gets a vector slice of a 2D array. The index of the second dimension is fixed.</summary>
+ <param name="source">The source array.</param>
+ <param name="start1">The start index of the first dimension.</param>
+ <param name="finish1">The end index of the first dimension.</param>
+ <param name="index2">The fixed index of the second dimension.</param>
+ <returns>The sub array from the input indices.</returns>
+</member>
+<member name="M:Microsoft.FSharp.Core.Operators.OperatorIntrinsics.GetArraySlice2DFixed1``1(``0[0:,0:],System.Int32,Microsoft.FSharp.Core.FSharpOption{System.Int32},Microsoft.FSharp.Core.FSharpOption{System.Int32})">
+ <summary>Gets a vector slice of a 2D array. The index of the first dimension is fixed.</summary>
+ <param name="source">The source array.</param>
+ <param name="index1">The index of the first dimension.</param>
+ <param name="start2">The start index of the second dimension.</param>
+ <param name="finish2">The end index of the second dimension.</param>
+ <returns>The sub array from the input indices.</returns>
+</member>
 <member name="M:Microsoft.FSharp.Core.Operators.OperatorIntrinsics.GetArraySlice2D``1(``0[0:,0:],Microsoft.FSharp.Core.FSharpOption{System.Int32},Microsoft.FSharp.Core.FSharpOption{System.Int32},Microsoft.FSharp.Core.FSharpOption{System.Int32},Microsoft.FSharp.Core.FSharpOption{System.Int32})">
- <summary>Gets a slice of an array</summary>
+ <summary>Gets a region slice of an array</summary>
  <param name="source">The source array.</param>
  <param name="start1">The start index of the first dimension.</param>
  <param name="finish1">The end index of the first dimension.</param>
@@ -10259,6 +10291,180 @@
 </member>
 <member name="T:Microsoft.FSharp.Reflection.UnionCaseInfo">
  <summary>Represents a case of a discriminated union type</summary>
+</member>
+<member name="M:Microsoft.FSharp.Reflection.FSharpReflectionExtensions.FSharpType.IsExceptionRepresentation.Static(System.Type,Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+ <summary>Returns true if the <c>typ</c> is a representation of an F# exception declaration</summary>
+ <param name="exceptionType">The type to check.</param>
+ <param name="allowAccessToPrivateRepresentation">Optional flag that denotes accessibility of the private representation.</param>    
+ <returns>True if the type check is an F# exception.</returns>
+</member>
+<member name="M:Microsoft.FSharp.Reflection.FSharpReflectionExtensions.FSharpType.GetExceptionFields.Static(System.Type,Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+ <summary>Reads all the fields from an F# exception declaration, in declaration order</summary>
+
+ <remarks>Assumes <c>exceptionType</c> is an exception representation type. If not, ArgumentException is raised.</remarks>
+ <param name="exceptionType">The exception type to read.</param>
+ <param name="allowAccessToPrivateRepresentation">Optional flag that denotes accessibility of the private representation.</param>    
+ <exception cref="System.ArgumentException">Thrown if the given type is not an exception.</exception>
+ <returns>An array containing the PropertyInfo of each field in the exception.</returns>
+</member>
+<member name="M:Microsoft.FSharp.Reflection.FSharpReflectionExtensions.FSharpType.IsUnion.Static(System.Type,Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+ <summary>Returns true if the <c>typ</c> is a representation of an F# union type or the runtime type of a value of that type</summary>
+ <param name="typ">The type to check.</param>
+ <param name="allowAccessToPrivateRepresentation">Optional flag that denotes accessibility of the private representation.</param>    
+ <returns>True if the type check succeeds.</returns>
+</member>
+<member name="M:Microsoft.FSharp.Reflection.FSharpReflectionExtensions.FSharpType.IsRecord.Static(System.Type,Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+ <summary>Return true if the <c>typ</c> is a representation of an F# record type </summary>
+ <param name="typ">The type to check.</param>
+ <param name="allowAccessToPrivateRepresentation">Optional flag that denotes accessibility of the private representation.</param>    
+ <returns>True if the type check succeeds.</returns>
+</member>
+<member name="M:Microsoft.FSharp.Reflection.FSharpReflectionExtensions.FSharpType.GetUnionCases.Static(System.Type,Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+ <summary>Gets the cases of a union type.</summary>
+
+ <remarks>Assumes the given type is a union type. If not, ArgumentException is raised during pre-computation.</remarks>
+ <param name="unionType">The input union type.</param>
+ <param name="allowAccessToPrivateRepresentation">Optional flag that denotes accessibility of the private representation.</param>    
+ <exception cref="System.ArgumentException">Thrown when the input type is not a union type.</exception>
+ <returns>An array of descriptions of the cases of the given union type.</returns>
+</member>
+<member name="M:Microsoft.FSharp.Reflection.FSharpReflectionExtensions.FSharpType.GetRecordFields.Static(System.Type,Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+ <summary>Reads all the fields from a record value, in declaration order</summary>
+
+ <remarks>Assumes the given input is a record value. If not, ArgumentException is raised.</remarks>
+ <param name="recordType">The input record type.</param>
+ <param name="allowAccessToPrivateRepresentation">Optional flag that denotes accessibility of the private representation.</param>    
+ <returns>An array of descriptions of the properties of the record type.</returns>
+</member>
+<member name="M:Microsoft.FSharp.Reflection.FSharpReflectionExtensions.FSharpValue.GetExceptionFields.Static(System.Object,Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+ <summary>Reads all the fields from a value built using an instance of an F# exception declaration</summary>
+
+ <remarks>Assumes the given input is an F# exception value. If not, ArgumentException is raised.</remarks>
+ <param name="exn">The exception instance.</param>
+ <param name="allowAccessToPrivateRepresentation">Optional flag that denotes accessibility of the private representation.</param>    
+ <exception cref="System.ArgumentException">Thrown when the input type is not an F# exception.</exception>
+ <returns>The fields from the given exception.</returns>
+</member>
+<member name="M:Microsoft.FSharp.Reflection.FSharpReflectionExtensions.FSharpValue.PreComputeUnionConstructorInfo.Static(Microsoft.FSharp.Reflection.UnionCaseInfo,Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+ <summary>A method that constructs objects of the given case</summary>
+ <param name="unionCase">The description of the union case.</param>
+ <param name="allowAccessToPrivateRepresentation">Optional flag that denotes accessibility of the private representation.</param>    
+ <returns>The description of the constructor of the given union case.</returns>
+</member>
+<member name="M:Microsoft.FSharp.Reflection.FSharpReflectionExtensions.FSharpValue.PreComputeUnionConstructor.Static(Microsoft.FSharp.Reflection.UnionCaseInfo,Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+ <summary>Precomputes a function for constructing a discriminated union value for a particular union case. </summary>
+ <param name="unionCase">The description of the union case.</param>
+ <param name="allowAccessToPrivateRepresentation">Optional flag that denotes accessibility of the private representation.</param>    
+ <returns>A function for constructing values of the given union case.</returns>
+</member>
+<member name="M:Microsoft.FSharp.Reflection.FSharpReflectionExtensions.FSharpValue.PreComputeUnionReader.Static(Microsoft.FSharp.Reflection.UnionCaseInfo,Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+ <summary>Precomputes a function for reading all the fields for a particular discriminator case of a union type</summary>
+
+ <remarks>Using the computed function will typically be faster than executing a corresponding call to GetFields</remarks>
+ <param name="unionCase">The description of the union case to read.</param>
+ <param name="allowAccessToPrivateRepresentation">Optional flag that denotes accessibility of the private representation.</param>    
+ <returns>A function to for reading the fields of the given union case.</returns>
+</member>
+<member name="M:Microsoft.FSharp.Reflection.FSharpReflectionExtensions.FSharpValue.PreComputeUnionTagMemberInfo.Static(System.Type,Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+ <summary>Precompute a property or static method for reading an integer representing the case tag of a union type.</summary>
+ <param name="unionType">The type of union to read.</param>
+ <param name="allowAccessToPrivateRepresentation">Optional flag that denotes accessibility of the private representation.</param>    
+ <returns>The description of the union case reader.</returns>
+</member>
+<member name="M:Microsoft.FSharp.Reflection.FSharpReflectionExtensions.FSharpValue.PreComputeUnionTagReader.Static(System.Type,Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+ <summary>Assumes the given type is a union type. 
+ If not, ArgumentException is raised during pre-computation.</summary>
+
+ <remarks>Using the computed function is more efficient than calling GetUnionCase
+ because the path executed by the computed function is optimized given the knowledge that it will be
+ used to read values of the given type.</remarks>
+ <param name="unionType">The type of union to optimize reading.</param>
+ <param name="allowAccessToPrivateRepresentation">Optional flag that denotes accessibility of the private representation.</param>
+ <returns>An optimized function to read the tags of the given union type.</returns>
+</member>
+<member name="M:Microsoft.FSharp.Reflection.FSharpReflectionExtensions.FSharpValue.GetUnionFields.Static(System.Object,System.Type,Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+ <summary>Identify the union case and its fields for an object</summary>
+
+ <remarks>Assumes the given input is a union case value. If not, ArgumentException is raised.
+
+ If the type is not given, then the runtime type of the input object is used to identify the
+ relevant union type. The type should always be given if the input object may be null. For example, 
+ option values may be represented using the 'null'.</remarks>
+ <param name="value">The input union case.</param>
+ <param name="unionType">The union type containing the value.</param>
+ <param name="allowAccessToPrivateRepresentation">Optional flag that denotes accessibility of the private representation.</param>    
+ <exception cref="System.ArgumentException">Thrown when the input type is not a union case value.</exception>
+ <returns>The description of the union case and its fields.</returns>
+</member>
+<member name="M:Microsoft.FSharp.Reflection.FSharpReflectionExtensions.FSharpValue.MakeUnion.Static(Microsoft.FSharp.Reflection.UnionCaseInfo,System.Object[],Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+ <summary>Create a union case value.</summary>
+ <param name="unionCase">The description of the union case to create.</param>
+ <param name="args">The array of arguments to construct the given case.</param>
+ <param name="allowAccessToPrivateRepresentation">Optional flag that denotes accessibility of the private representation.</param>    
+ <returns>The constructed union case.</returns>
+</member>
+<member name="M:Microsoft.FSharp.Reflection.FSharpReflectionExtensions.FSharpValue.PreComputeRecordConstructorInfo.Static(System.Type,Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+ <summary>Get a ConstructorInfo for a record type</summary>
+ <param name="recordType">The record type.</param>
+ <param name="allowAccessToPrivateRepresentation">Optional flag that denotes accessibility of the private representation.</param>    
+ <returns>A ConstructorInfo for the given record type.</returns>
+</member>
+<member name="M:Microsoft.FSharp.Reflection.FSharpReflectionExtensions.FSharpValue.PreComputeRecordConstructor.Static(System.Type,Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+ <summary>Precompute a function for constructing a record value. </summary>
+
+ <remarks>Assumes the given type is a RecordType.
+ If not, ArgumentException is raised during pre-computation.</remarks>
+ <param name="recordType">The type of record to construct.</param>
+ <param name="allowAccessToPrivateRepresentation">Optional flag that denotes accessibility of the private representation.</param>    
+ <exception cref="System.ArgumentException">Thrown when the input type is not a record type.</exception>
+ <returns>A function to construct records of the given type.</returns>
+</member>
+<member name="M:Microsoft.FSharp.Reflection.FSharpReflectionExtensions.FSharpValue.PreComputeRecordReader.Static(System.Type,Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+ <summary>Precompute a function for reading all the fields from a record. The fields are returned in the
+ same order as the fields reported by a call to Microsoft.FSharp.Reflection.Type.GetInfo for
+ this type.</summary>
+
+ <remarks>Assumes the given type is a RecordType. 
+ If not, ArgumentException is raised during pre-computation.
+
+ Using the computed function will typically be faster than executing a corresponding call to Value.GetInfo
+ because the path executed by the computed function is optimized given the knowledge that it will be
+ used to read values of the given type.</remarks>
+ <param name="recordType">The type of record to read.</param>
+ <param name="allowAccessToPrivateRepresentation">Optional flag that denotes accessibility of the private representation.</param>    
+ <exception cref="System.ArgumentException">Thrown when the input type is not a record type.</exception>
+ <returns>An optimized reader for the given record type.</returns>
+</member>
+<member name="M:Microsoft.FSharp.Reflection.FSharpReflectionExtensions.FSharpValue.GetRecordFields.Static(System.Object,Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+ <summary>Reads all the fields from a record value.</summary>
+
+ <remarks>Assumes the given input is a record value. If not, ArgumentException is raised.</remarks>
+ <param name="record">The record object.</param>
+ <param name="allowAccessToPrivateRepresentation">Optional flag that denotes accessibility of the private representation.</param>
+ <exception cref="System.ArgumentException">Thrown when the input type is not a record type.</exception>
+ <returns>The array of fields from the record.</returns>
+</member>
+<member name="M:Microsoft.FSharp.Reflection.FSharpReflectionExtensions.FSharpValue.MakeRecord.Static(System.Type,System.Object[],Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+ <summary>Creates an instance of a record type.</summary>
+
+ <remarks>Assumes the given input is a record type.</remarks>
+ <param name="recordType">The type of record to make.</param>
+ <param name="values">The array of values to initialize the record.</param>
+ <param name="allowAccessToPrivateRepresentation">Optional flags that denotes accessibility of the private representation.</param>
+ <exception cref="System.ArgumentException">Thrown when the input type is not a record type.</exception>
+ <returns>The created record.</returns>
+</member>
+<member name="T:Microsoft.FSharp.Reflection.FSharpReflectionExtensions">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:Microsoft.FSharp.Reflection.ReflectionUtils">
+
 </member>
 <member name="">
 
