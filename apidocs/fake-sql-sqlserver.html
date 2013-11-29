@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>SqlServer - FAKE - F# Make</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
+
+    <script src="http://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="http://code.jquery.com/ui/1.8.23/jquery-ui.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+
+    <link type="text/css" rel="stylesheet" href="http://fsharp.github.io/FAKE/content/style.css" />
+    <script type="text/javascript" src="http://fsharp.github.io/FAKE/content/tips.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="http://github.com/fsharp/fake">github page</a></li>
+        </ul>
+        <h3 class="muted">FAKE - F# Make</h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+
+
+
+<h1>SqlServer</h1>
+<div class="xmldoc">
+</div>
+
+<!-- Render nested types and modules, if there are any -->
+  <h2>Nested types and modules</h2>
+  <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="fake-sql-sqlserver-serverinfo.html">ServerInfo</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+  <h3>Functions and values</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Function or value</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '647', 647)" onmouseover="showTip(event, '647', 647)">
+            Attach serverInfo attachOptions files
+          </code>
+          <div class="tip" id="647">
+            <strong>Signature:</strong>serverInfo:ServerInfo -&gt; attachOptions:AttachOptions -&gt; files:seq&lt;string&gt; -&gt; ServerInfo<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Attach a database</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '652', 652)" onmouseover="showTip(event, '652', 652)">
+            CreateDb serverInfo
+          </code>
+          <div class="tip" id="652">
+            <strong>Signature:</strong>serverInfo:ServerInfo -&gt; ServerInfo<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Creates a new db on the given server</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '653', 653)" onmouseover="showTip(event, '653', 653)">
+            Detach serverInfo
+          </code>
+          <div class="tip" id="653">
+            <strong>Signature:</strong>serverInfo:ServerInfo -&gt; ServerInfo<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Detaches a database</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '654', 654)" onmouseover="showTip(event, '654', 654)">
+            Disconnect serverInfo
+          </code>
+          <div class="tip" id="654">
+            <strong>Signature:</strong>serverInfo:ServerInfo -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Closes the connection to the server</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '655', 655)" onmouseover="showTip(event, '655', 655)">
+            DropAndCreateDatabase connectionString
+          </code>
+          <div class="tip" id="655">
+            <strong>Signature:</strong>connectionString:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Drops and creates the database (dropped if db exists. created nonetheless)</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '656', 656)" onmouseover="showTip(event, '656', 656)">
+            DropDb serverInfo
+          </code>
+          <div class="tip" id="656">
+            <strong>Signature:</strong>serverInfo:ServerInfo -&gt; ServerInfo<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Drops the given InitialCatalog from the server (if it exists)</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '657', 657)" onmouseover="showTip(event, '657', 657)">
+            existDBOnServer serverInfo dbName
+          </code>
+          <div class="tip" id="657">
+            <strong>Signature:</strong>serverInfo:ServerInfo -&gt; dbName:string -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Checks whether the given Database exists on the server</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '658', 658)" onmouseover="showTip(event, '658', 658)">
+            getDatabase serverInfo
+          </code>
+          <div class="tip" id="658">
+            <strong>Signature:</strong>serverInfo:ServerInfo -&gt; Database<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Gets the initial catalog as database instance</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '659', 659)" onmouseover="showTip(event, '659', 659)">
+            getDatabaseNamesFromServer serverInfo
+          </code>
+          <div class="tip" id="659">
+            <strong>Signature:</strong>serverInfo:ServerInfo -&gt; seq&lt;string&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>gets the DatabaseNames from the server</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '660', 660)" onmouseover="showTip(event, '660', 660)">
+            getDatabasesFromServer serverInfo
+          </code>
+          <div class="tip" id="660">
+            <strong>Signature:</strong>serverInfo:ServerInfo -&gt; seq&lt;Database&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>gets the DatabaseNames from the server</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '661', 661)" onmouseover="showTip(event, '661', 661)">
+            getDBName serverInfo
+          </code>
+          <div class="tip" id="661">
+            <strong>Signature:</strong>serverInfo:ServerInfo -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Gets the initial catalog name</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '662', 662)" onmouseover="showTip(event, '662', 662)">
+            getServerInfo connectionString
+          </code>
+          <div class="tip" id="662">
+            <strong>Signature:</strong>connectionString:string -&gt; ServerInfo<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Gets a connection to the SQL server and an instance to the ConnectionStringBuilder</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '663', 663)" onmouseover="showTip(event, '663', 663)">
+            getServerName serverInfo
+          </code>
+          <div class="tip" id="663">
+            <strong>Signature:</strong>serverInfo:ServerInfo -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Gets the name of the server</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '664', 664)" onmouseover="showTip(event, '664', 664)">
+            intitialCatalogExistsOnServer serverInfo
+          </code>
+          <div class="tip" id="664">
+            <strong>Signature:</strong>serverInfo:ServerInfo -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Checks whether the given InitialCatalog exists on the server</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '665', 665)" onmouseover="showTip(event, '665', 665)">
+            KillAllProcesses serverInfo
+          </code>
+          <div class="tip" id="665">
+            <strong>Signature:</strong>serverInfo:ServerInfo -&gt; ServerInfo<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Kills all processes with the given server info</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '666', 666)" onmouseover="showTip(event, '666', 666)">
+            ReplaceDatabaseFiles (...)
+          </code>
+          <div class="tip" id="666">
+            <strong>Signature:</strong>connectionString:string -&gt; targetDir:string -&gt; files:seq&lt;string&gt; -&gt; attachOptions:AttachOptions -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Replaces the database files</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '667', 667)" onmouseover="showTip(event, '667', 667)">
+            ReplaceDatabaseFilesWithCache (...)
+          </code>
+          <div class="tip" id="667">
+            <strong>Signature:</strong>connectionString:string -&gt; targetDir:string -&gt; cacheDir:string -&gt; files:seq&lt;string&gt; -&gt; attachOptions:AttachOptions -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Replaces the database files from a cache.
+ If the files in the cache are not up to date, they will be refreshed.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '668', 668)" onmouseover="showTip(event, '668', 668)">
+            runScript serverInfo sqlFile
+          </code>
+          <div class="tip" id="668">
+            <strong>Signature:</strong>serverInfo:ServerInfo -&gt; sqlFile:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Runs a sql script on the server.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '669', 669)" onmouseover="showTip(event, '669', 669)">
+            RunScripts connectionString scripts
+          </code>
+          <div class="tip" id="669">
+            <strong>Signature:</strong>connectionString:string -&gt; scripts:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Runs the given sql scripts on the server.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '670', 670)" onmouseover="showTip(event, '670', 670)">
+            RunScriptsFromDirectory (...)
+          </code>
+          <div class="tip" id="670">
+            <strong>Signature:</strong>connectionString:string -&gt; scriptDirectory:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Runs all sql scripts from the given directory on the server.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+
+        </div>
+        <div class="span3">
+          <ul class="nav nav-list" id="menu">
+            <li class="nav-header">FAKE - F# Make</li>
+            <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>
+            <li class="divider"></li>
+            <li><a href="https://nuget.org/packages/Fake">Get FAKE via NuGet</a></li>
+            <li><a href="http://github.com/fsharp/fake">Source Code on GitHub</a></li>
+            <li><a href="https://github.com/fsharp/FAKE/blob/develop/License.txt">License (MS-PL)</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/changelog.html">Changelog</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/contributing.html">Contributing to FAKE</a></li>
+            <li><a href="http://stackoverflow.com/questions/tagged/f%23-fake">Ask a question</a></li>
+            <li class="nav-header">Articles</li>
+            <li><a href="http://fsharp.github.io/FAKE/gettingstarted.html">Getting started</a></li>
+            <li class="divider"></li>
+            <li><a href="http://fsharp.github.io/FAKE/nuget.html">NuGet package restore</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/fxcop.html">Using FxCop in a build</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/assemblyinfo.html">Generating AssemblyInfo</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/create-nuget-package.html">Create NuGet packages</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/specifictargets.html">Running specific targets</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/commandline.html">Running FAKE from command line</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/customtasks.html">Creating custom tasks</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/teamcity.html">TeamCity integration</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/octopusdeploy.html">Octopus Deploy</a></li>
+            <li class="divider"></li>
+            <li><a href="http://fsharp.github.io/FAKE/deploy.html">Fake.Deploy</a></li>
+
+            <li class="nav-header">Documentation</li>
+            <li><a href="http://fsharp.github.io/FAKE/apidocs/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="http://github.com/fsharp/fake"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+  </body>
+  </html>
