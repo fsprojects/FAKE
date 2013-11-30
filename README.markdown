@@ -5,9 +5,7 @@ in F#, all benefits of the .NET Framework and functional programming can be used
 the extensive class library, powerful debuggers and integrated development environments like 
 Visual Studio or MonoDevelop, which provide syntax highlighting and code completion.
 
-The new DSL was designed to be succinct, typed, declarative, extensible and easy to use. 
-For instance custom build tasks can be added simply by referencing .NET assemblies and using 
-the corresponding classes.
+The new DSL was designed to be succinct, typed, declarative, extensible and easy to use.
 
 See the [project home page](http://fsharp.github.com/FAKE/) for tutorials and [API documentation](http://fsharp.github.io/FAKE/apidocs/index.html).
 
