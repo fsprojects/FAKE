@@ -137,10 +137,6 @@ let AllFilesMatching x = Include x
 [<Obsolete("FileIncludes implement IEnumerable<string> so explicit scanning is not needed")>]
 let Scan files = files
 
-/// Adds a directory as baseDirectory for fileIncludes.
-[<Obsolete>]
-let AddBaseDir dir fileInclude = SetBaseDir dir fileInclude
-      
 /// Scans immediately for include files - all matching files will be memoized.
 [<Obsolete("FileIncludes implement IEnumerable<string> so explicit scanning is not needed. Just use Seq.toList")>]
 let ScanImmediately includes = includes |> Seq.toList
