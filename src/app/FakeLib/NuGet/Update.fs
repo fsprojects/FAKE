@@ -1,8 +1,8 @@
-[<AutoOpen>]
 /// Contains tasks for updating NuGet packages including assembly hint paths in the project files using the [nuget.exe update command](http://docs.nuget.org/docs/reference/command-line-reference#Update_Command).
-module Fake.NugetUpdate
+module Fake.NuGet.Update
 
 open System
+open Fake
 
 /// Nuget update parameters. All optional.
 type NugetUpdateParams =
