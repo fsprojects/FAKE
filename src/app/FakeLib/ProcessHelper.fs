@@ -410,8 +410,8 @@ let killProcessById id =
 let killProcess name =
     tracefn "Searching for process with name = %s" name
     Process.GetProcesses()
-      |> Seq.filter (fun p -> not p.HasExited)
-      |> Seq.filter (fun p -> p.ProcessName.ToLower().StartsWith(name.ToLower()))
+      |> Seq.filter (fun p -> try not p.HasExited with | exn -> false)
+      |> Seq.filter (fun p -> try p.ProcessName.ToLower().StartsWith(name.ToLower()) with | exn -> false)
       |> Seq.iter kill
 
 /// Kills the F# Interactive (FSI) process.
