@@ -417,8 +417,8 @@ let killProcessById id =
 /// Returns all processes with the given name
 let getProcessesByName (name:string) =
       Process.GetProcesses()
-      |> Seq.filter (fun p -> not p.HasExited)
-      |> Seq.filter (fun p -> p.ProcessName.ToLower().StartsWith(name.ToLower()))
+      |> Seq.filter (fun p -> try not p.HasExited with | exn -> false)
+      |> Seq.filter (fun p -> try p.ProcessName.ToLower().StartsWith(name.ToLower()) with | exn -> false)
 
 /// Kills all processes with the given name
 let killProcess name =
