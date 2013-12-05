@@ -167,11 +167,10 @@ let targetError targetName (exn:System.Exception) =
             | _ -> { Target = targetName; Message = exn.ToString() } :: errors
     let error e =
         match e with
-            | BuildException(msg, errs) -> msg, msg + Environment.NewLine + e.StackTrace.ToString()
-            | _ -> exn.Message, exn.ToString()
-    let msg =
-        if PrintStackTraceOnError then error exn |> snd else
-        sprintf "%s%s" (error exn |> snd) (if exn.InnerException <> null then "\n" + (exn.InnerException |> error |> snd ) else "")
+        | BuildException(msg, errs) -> msg, msg + (if PrintStackTraceOnError then Environment.NewLine + e.StackTrace.ToString() else "")
+        | _ -> exn.Message, exn.ToString()
+
+    let msg = sprintf "%s%s" (error exn |> snd) (if exn.InnerException <> null then "\n" + (exn.InnerException |> error |> snd ) else "")
             
     traceError <| sprintf "Running build failed.\nError:\n%s" msg
     sendTeamCityError (error exn |> snd)        
