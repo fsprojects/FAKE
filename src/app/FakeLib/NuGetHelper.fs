@@ -161,7 +161,7 @@ let private pack parameters nuspecFile =
             info.WorkingDirectory <- FullName parameters.WorkingDir
             info.Arguments <- args) parameters.TimeOut
                
-    if result <> 0 then failwithf "Error during NuGet creation. %s %s" parameters.ToolPath args
+    if result <> 0 then failwithf "Error during NuGet package creation. %s %s" parameters.ToolPath args
 
 /// push package (and try again if something fails)
 let rec private publish parameters =
