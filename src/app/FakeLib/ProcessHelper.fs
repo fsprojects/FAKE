@@ -410,6 +410,7 @@ let killProcessById id =
 let killProcess name =
     tracefn "Searching for process with name = %s" name
     Process.GetProcesses()
+      |> Seq.filter (fun p -> not p.HasExited)
       |> Seq.filter (fun p -> p.ProcessName.ToLower().StartsWith(name.ToLower()))
       |> Seq.iter kill
 
