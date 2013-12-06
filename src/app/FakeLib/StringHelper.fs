@@ -83,6 +83,9 @@ let inline appendStringIfValueIsNotNull value = appendIfTrue (value <> null)
 /// Appends a text if the value is not null or empty.
 let inline appendStringIfValueIsNotNullOrEmpty value = appendIfTrue (isNullOrEmpty value |> not)
 
+/// Appends a text if the value is not null or empty.
+let inline appendIfNotNullOrEmpty value = appendIfTrue (isNullOrEmpty value |> not)
+
 /// Appends all notnull fileNames.
 let inline appendFileNamesIfNotNull fileNames (builder:StringBuilder) =
     fileNames 
