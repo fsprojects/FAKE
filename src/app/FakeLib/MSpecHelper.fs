@@ -49,7 +49,11 @@ let MSpec setParams assemblies =
     let parameters = setParams MSpecDefaults
     
     let args =
-        let html = isNotNullOrEmpty parameters.HtmlOutputDir
+        let html,htmlText = 
+            if isNotNullOrEmpty parameters.HtmlOutputDir then
+                true,sprintf "--html\" \"%s" <| parameters.HtmlOutputDir.TrimEnd Path.DirectorySeparatorChar
+            else
+                false,""
         let includes = parameters.IncludeTags |> separated ","
         let excludes = parameters.ExcludeTags |> separated ","
 
@@ -57,7 +61,7 @@ let MSpec setParams assemblies =
         |> appendIfTrue (buildServer = TeamCity) "--teamcity"
         |> appendIfTrue parameters.Silent "-s" 
         |> appendIfTrue html "-t" 
-        |> appendIfTrue html (sprintf "--html\" \"%s" <| parameters.HtmlOutputDir.TrimEnd Path.DirectorySeparatorChar) 
+        |> appendIfTrue html htmlText 
         |> appendIfTrue (isNotNullOrEmpty excludes) (sprintf "-x\" \"%s" excludes) 
         |> appendIfTrue (isNotNullOrEmpty includes) (sprintf "-i\" \"%s" includes) 
         |> appendFileNamesIfNotNull assemblies
