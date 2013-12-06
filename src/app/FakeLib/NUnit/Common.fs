@@ -54,23 +54,22 @@ let NUnitDefaults =
 
 /// Builds the command line arguments from the given parameter record and the given assemblies.
 /// [omit]
-let commandLineBuilder parameters assemblies =
-    let cl = 
-        new StringBuilder()
-        |> append "-nologo"
-        |> appendIfTrue parameters.DisableShadowCopy "-noshadow" 
-        |> appendIfTrue parameters.ShowLabels "-labels" 
-        |> appendIfTrue parameters.TestInNewThread "-thread" 
-        |> appendFileNamesIfNotNull assemblies
-        |> appendIfNotNullOrEmpty parameters.IncludeCategory "-include:"
-        |> appendIfNotNullOrEmpty parameters.ExcludeCategory "-exclude:"
-        |> appendIfNotNullOrEmpty parameters.XsltTransformFile "-transform:"
-        |> appendIfNotNullOrEmpty parameters.OutputFile  "-xml:"
-        |> appendIfNotNullOrEmpty parameters.Out "-out:"
-        |> appendIfNotNullOrEmpty parameters.Framework  "-framework:"
-        |> appendIfNotNullOrEmpty parameters.ErrorOutputFile "-err:"
-        |> appendIfNotNullOrEmpty parameters.Domain "-domain:"
-    cl.ToString()
+let buildNUnitdArgs parameters assemblies =
+    new StringBuilder()
+    |> append "-nologo"
+    |> appendIfTrue parameters.DisableShadowCopy "-noshadow" 
+    |> appendIfTrue parameters.ShowLabels "-labels" 
+    |> appendIfTrue parameters.TestInNewThread "-thread" 
+    |> appendFileNamesIfNotNull assemblies
+    |> appendIfNotNullOrEmpty parameters.IncludeCategory "-include:"
+    |> appendIfNotNullOrEmpty parameters.ExcludeCategory "-exclude:"
+    |> appendIfNotNullOrEmpty parameters.XsltTransformFile "-transform:"
+    |> appendIfNotNullOrEmpty parameters.OutputFile  "-xml:"
+    |> appendIfNotNullOrEmpty parameters.Out "-out:"
+    |> appendIfNotNullOrEmpty parameters.Framework  "-framework:"
+    |> appendIfNotNullOrEmpty parameters.ErrorOutputFile "-err:"
+    |> appendIfNotNullOrEmpty parameters.Domain "-domain:"
+    |> toText
 
 /// Tries to detect the working directory as specified in the parameters or via TeamCity settings
 /// [omit]

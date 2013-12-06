@@ -26,7 +26,7 @@ let NUnit (setParams: NUnitParams -> NUnitParams) (assemblies: string seq) =
 
     let tool = parameters.ToolPath @@ parameters.ToolName
 
-    let args = commandLineBuilder parameters assemblies
+    let args = buildNUnitdArgs parameters assemblies
     trace (tool + " " + args)
     let result =
         ExecProcess (fun info ->  
