@@ -147,15 +147,14 @@ let ExecProcess configProcessStartInfoF timeOut = ExecProcessWithLambdas configP
 ///  - `args` - The process arguments.
 ///  - `timeOut` - The timeout for the process.
 let ExecProcessElevated cmd args timeOut = 
-    ExecProcess (fun si -> 
-                       si.Verb <- "runas"
-                       si.Arguments <- args
-                       si.FileName <- cmd
-                       si.UseShellExecute <- true
-                ) timeOut
+    ExecProcess 
+        (fun si -> 
+            si.Verb <- "runas"
+            si.Arguments <- args
+            si.FileName <- cmd
+            si.UseShellExecute <- true) 
+        timeOut
 
-    
-  
 /// Sets the environment Settings for the given startInfo.
 /// Existing values will be overriden.
 /// [omit]
