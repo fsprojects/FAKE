@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>DocuHelper - FAKE - F# Make</title>
+    <title>NugetUpdateParams - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -35,68 +35,144 @@
 
 
 
-<h1>DocuHelper</h1>
+<h1>NugetUpdateParams</h1>
 <div class="xmldoc">
-<p>Contains helper functions to run the XML documentation tool "docu".</p>
+<p>Nuget update parameters. All optional.</p>
 </div>
-
-<!-- Render nested types and modules, if there are any -->
-  <h2>Nested types and modules</h2>
-  <div>
-      <table class="table table-bordered type-list">
-    <thead>
-      <tr><td>Type</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td class="type-name">
-            <a href="fake-docuhelper-docuparams.html">DocuParams</a>
-          </td>
-          <td class="xmldoc"><p>The parameter type for docu.</p>
-</td>
-        </tr>
-    </tbody>
-  </table>
-
-  </div>
-
-  <h3>Functions and values</h3>
+  <h3>Record Fields</h3>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Function or value</td><td>Description</td></tr>
+      <tr><td>Record Field</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '119', 119)" onmouseover="showTip(event, '119', 119)">
-            Docu setParams assemblies
+          <code onmouseout="hideTip(event, '1293', 1293)" onmouseover="showTip(event, '1293', 1293)">
+            ConfigFile
           </code>
-          <div class="tip" id="119">
-            <strong>Signature:</strong>setParams:(DocuParams -&gt; DocuParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
+          <div class="tip" id="1293">
+            <strong>Signature:</strong>string option<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Generates a HTML documentation from XML docs via the docu.exe.</p>
-
-<h2>Parameters</h2>
-
-<ul>
-<li><code>setParams</code> - Function used to manipulate the default docu parameters.</li>
-<li><code>assemblies</code> - Sequence of one or more assemblies containing the XML docs.</li>
-</ul>
+        <td class="xmldoc"><p>NuGet configuration file. Default <code>None</code>.</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '120', 120)" onmouseover="showTip(event, '120', 120)">
-            DocuDefaults 
+          <code onmouseout="hideTip(event, '1294', 1294)" onmouseover="showTip(event, '1294', 1294)">
+            Ids
           </code>
-          <div class="tip" id="120">
-            <strong>Signature:</strong>DocuParams<br />
+          <div class="tip" id="1294">
+            <strong>Signature:</strong>string list<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>The Docu default params</p>
+        <td class="xmldoc"><p>Packages to update. Update all if empty.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1295', 1295)" onmouseover="showTip(event, '1295', 1295)">
+            NonInteractive
+          </code>
+          <div class="tip" id="1295">
+            <strong>Signature:</strong>bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Do not prompt for user input or confirmations. Default <code>true</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1296', 1296)" onmouseover="showTip(event, '1296', 1296)">
+            Prerelease
+          </code>
+          <div class="tip" id="1296">
+            <strong>Signature:</strong>bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Allows updating to prerelease versions. Default <code>false</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1297', 1297)" onmouseover="showTip(event, '1297', 1297)">
+            RepositoryPath
+          </code>
+          <div class="tip" id="1297">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Folder to store packages in. Default <code>./packages</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1298', 1298)" onmouseover="showTip(event, '1298', 1298)">
+            Retries
+          </code>
+          <div class="tip" id="1298">
+            <strong>Signature:</strong>int<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Number of retries if update fails.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1299', 1299)" onmouseover="showTip(event, '1299', 1299)">
+            Safe
+          </code>
+          <div class="tip" id="1299">
+            <strong>Signature:</strong>bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Looks for updates with the highest version available within the same major and minor version as the installed package. Default <code>false</code>.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1300', 1300)" onmouseover="showTip(event, '1300', 1300)">
+            Sources
+          </code>
+          <div class="tip" id="1300">
+            <strong>Signature:</strong>string list<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Nuget feeds to search updates in. Use default if empty.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1301', 1301)" onmouseover="showTip(event, '1301', 1301)">
+            TimeOut
+          </code>
+          <div class="tip" id="1301">
+            <strong>Signature:</strong>TimeSpan<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Timeout for the update.</p>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1302', 1302)" onmouseover="showTip(event, '1302', 1302)">
+            ToolPath
+          </code>
+          <div class="tip" id="1302">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Path to the nuget.exe.</p>
 </td>
       </tr>
     </tbody>

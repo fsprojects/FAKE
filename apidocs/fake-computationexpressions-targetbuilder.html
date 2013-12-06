@@ -47,10 +47,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1260', 1260)" onmouseover="showTip(event, '1260', 1260)">
+          <code onmouseout="hideTip(event, '1259', 1259)" onmouseover="showTip(event, '1259', 1259)">
             new(name)
           </code>
-          <div class="tip" id="1260">
+          <div class="tip" id="1259">
             <strong>Signature:</strong>name:string -&gt; TargetBuilder<br />
                       </div>
         </td>
@@ -67,12 +67,24 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1261', 1261)" onmouseover="showTip(event, '1261', 1261)">
+          <code onmouseout="hideTip(event, '1260', 1260)" onmouseover="showTip(event, '1260', 1260)">
             Delay(f)
           </code>
+          <div class="tip" id="1260">
+            <strong>Signature:</strong>f:&#39;?6847 -&gt; &#39;?6847<br />
+                          <strong>Type parameters:</strong> '?6847          </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1261', 1261)" onmouseover="showTip(event, '1261', 1261)">
+            For(sequence, body)
+          </code>
           <div class="tip" id="1261">
-            <strong>Signature:</strong>f:&#39;?6830 -&gt; &#39;?6830<br />
-                          <strong>Type parameters:</strong> '?6830          </div>
+            <strong>Signature:</strong>(sequence:seq&lt;&#39;?6858&gt; * body:(&#39;?6858 -&gt; unit)) -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?6858          </div>
         </td>
         <td class="xmldoc"></td>
       </tr>
@@ -80,21 +92,9 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1262', 1262)" onmouseover="showTip(event, '1262', 1262)">
-            For(sequence, body)
-          </code>
-          <div class="tip" id="1262">
-            <strong>Signature:</strong>(sequence:seq&lt;&#39;?6841&gt; * body:(&#39;?6841 -&gt; unit)) -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?6841          </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1263', 1263)" onmouseover="showTip(event, '1263', 1263)">
             Run(f)
           </code>
-          <div class="tip" id="1263">
+          <div class="tip" id="1262">
             <strong>Signature:</strong>(f:(unit -&gt; unit)) -&gt; unit<br />
                       </div>
         </td>
@@ -103,12 +103,24 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1264', 1264)" onmouseover="showTip(event, '1264', 1264)">
+          <code onmouseout="hideTip(event, '1263', 1263)" onmouseover="showTip(event, '1263', 1263)">
             TryFinally(body, compensation)
           </code>
+          <div class="tip" id="1263">
+            <strong>Signature:</strong>(body:(unit -&gt; &#39;?6853) * compensation:(unit -&gt; unit)) -&gt; &#39;?6853<br />
+                          <strong>Type parameters:</strong> '?6853          </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1264', 1264)" onmouseover="showTip(event, '1264', 1264)">
+            TryWith(body, handler)
+          </code>
           <div class="tip" id="1264">
-            <strong>Signature:</strong>(body:(unit -&gt; &#39;?6836) * compensation:(unit -&gt; unit)) -&gt; &#39;?6836<br />
-                          <strong>Type parameters:</strong> '?6836          </div>
+            <strong>Signature:</strong>(body:(unit -&gt; &#39;?6851) * handler:(exn -&gt; &#39;?6851)) -&gt; &#39;?6851<br />
+                          <strong>Type parameters:</strong> '?6851          </div>
         </td>
         <td class="xmldoc"></td>
       </tr>
@@ -116,11 +128,11 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1265', 1265)" onmouseover="showTip(event, '1265', 1265)">
-            TryWith(body, handler)
+            Using(disposable, body)
           </code>
           <div class="tip" id="1265">
-            <strong>Signature:</strong>(body:(unit -&gt; &#39;?6834) * handler:(exn -&gt; &#39;?6834)) -&gt; &#39;?6834<br />
-                          <strong>Type parameters:</strong> '?6834          </div>
+            <strong>Signature:</strong>(disposable:&#39;?6855 * body:(&#39;?6855 -&gt; &#39;?6856)) -&gt; &#39;?6856<br />
+                          <strong>Type parameters:</strong> '?6855, '?6856          </div>
         </td>
         <td class="xmldoc"></td>
       </tr>
@@ -128,21 +140,9 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1266', 1266)" onmouseover="showTip(event, '1266', 1266)">
-            Using(disposable, body)
-          </code>
-          <div class="tip" id="1266">
-            <strong>Signature:</strong>(disposable:&#39;?6838 * body:(&#39;?6838 -&gt; &#39;?6839)) -&gt; &#39;?6839<br />
-                          <strong>Type parameters:</strong> '?6838, '?6839          </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1267', 1267)" onmouseover="showTip(event, '1267', 1267)">
             While(guard, body)
           </code>
-          <div class="tip" id="1267">
+          <div class="tip" id="1266">
             <strong>Signature:</strong>(guard:(unit -&gt; bool) * body:(unit -&gt; unit)) -&gt; unit<br />
                       </div>
         </td>
@@ -151,10 +151,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1268', 1268)" onmouseover="showTip(event, '1268', 1268)">
+          <code onmouseout="hideTip(event, '1267', 1267)" onmouseover="showTip(event, '1267', 1267)">
             Zero()
           </code>
-          <div class="tip" id="1268">
+          <div class="tip" id="1267">
             <strong>Signature:</strong>unit -&gt; unit<br />
                       </div>
         </td>
