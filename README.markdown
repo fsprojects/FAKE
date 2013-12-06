@@ -9,7 +9,7 @@ The new DSL was designed to be succinct, typed, declarative, extensible and easy
 For instance custom build tasks can be added simply by referencing .NET assemblies and using 
 the corresponding classes.
 
-See the [project home page](http://fsharp.github.com/FAKE/) for full details and documentation.
+See the [project home page](http://fsharp.github.com/FAKE/) for tutorials and [API documentation](http://fsharp.github.io/FAKE/apidocs/index.html).
 
 # Build the project
 
