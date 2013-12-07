@@ -112,7 +112,7 @@ let ExecProcessRedirected configProcessStartInfoF timeOut =
 ///  - `timeOut` - The timeout for the process.
 ///  - `silent` - If this flag is set then the process output is redicted to the trace.
 /// [omit]
-[<Obsolete>]
+[<Obsolete("Please use the new ExecProcess.")>]
 let execProcess2 configProcessStartInfoF timeOut silent = ExecProcessWithLambdas configProcessStartInfoF timeOut silent traceError trace  
 
 /// Runs the given process and returns the exit code.
@@ -121,7 +121,7 @@ let execProcess2 configProcessStartInfoF timeOut silent = ExecProcessWithLambdas
 ///  - `configProcessStartInfoF` - A function which overwrites the default ProcessStartInfo.
 ///  - `timeOut` - The timeout for the process.
 /// [omit]
-[<Obsolete>]
+[<Obsolete("Please use the new ExecProcess.")>]
 let execProcessAndReturnExitCode configProcessStartInfoF timeOut = ExecProcessWithLambdas configProcessStartInfoF timeOut true traceError trace
 
 /// Runs the given process and returns if the exit code was 0.
@@ -130,7 +130,7 @@ let execProcessAndReturnExitCode configProcessStartInfoF timeOut = ExecProcessWi
 ///  - `configProcessStartInfoF` - A function which overwrites the default ProcessStartInfo.
 ///  - `timeOut` - The timeout for the process.
 /// [omit]
-[<Obsolete>]
+[<Obsolete("Please use the new ExecProcess.")>]
 let execProcess3 configProcessStartInfoF timeOut = ExecProcessWithLambdas configProcessStartInfoF timeOut true traceError trace = 0   
 
 /// Runs the given process and returns the exit code.
