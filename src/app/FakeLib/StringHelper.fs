@@ -81,11 +81,11 @@ let inline appendQuotedIfNotNull (value : Object) s (builder:StringBuilder) =
 let inline appendStringIfValueIsNotNull value = appendIfTrue (value <> null)
 
 /// Appends a text if the value is not null or empty.
-[<Obsolete("Please use the new appendIfNotNullOrEmpty.")>]
 let inline appendStringIfValueIsNotNullOrEmpty value = appendIfTrue (isNullOrEmpty value |> not)
 
 /// Appends a text if the value is not null or empty.
-let inline appendIfNotNullOrEmpty value = appendIfTrue (isNullOrEmpty value |> not)
+let inline appendIfNotNullOrEmpty value s =
+    appendIfTrue (isNotNullOrEmpty value) (sprintf "%s%s" s value)
 
 /// Appends all notnull fileNames.
 let inline appendFileNamesIfNotNull fileNames (builder:StringBuilder) =
