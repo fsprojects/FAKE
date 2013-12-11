@@ -15,7 +15,7 @@ namespace Test.FAKECore.Globbing.TestSample5
         Establish context = () =>
         {
             FileHelper.CleanDir(TempDir);
-            ZipHelper.Unzip(TempDir, "Globbing/TestSample4/Sample4.zip");
+            ZipHelper.Unzip(TempDir, "Globbing/TestSample5/Sample5.zip");
         };
 
         public static string FullPath(string pattern)
@@ -113,6 +113,23 @@ namespace Test.FAKECore.Globbing.TestSample5
 
         It should_match_1_file = () => Files.Length.ShouldEqual(1);
     }
+
+    public class when_scanning_absolute_path_with_wrong_base_folder : when_extracting_zip
+    {
+        Because of = () => Files = 
+            FileSystem.Include(FullPath("\\Folder1\\Subfolder1\\Specs*.*.testending"))
+            .SetBaseDirectory(Path.Combine(TempDir, "Globbing/TestSample5/")) // somewhere else
+            .ToArray();
+
+        It should_find_the_first_file =
+            () => Files[0].ShouldEndWith("Folder1\\Subfolder1\\Specs2.Awesome.testending");
+
+        It should_find_the_file_with_absolute_path =
+            () => Files[0].ShouldStartWith(TempDir);
+
+        It should_match_1_file = () => Files.Length.ShouldEqual(1);
+    }
+
 
     public class when_scanning_with_invalid_folder_change : when_extracting_zip
     {

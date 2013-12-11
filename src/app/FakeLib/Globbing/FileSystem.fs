@@ -1,4 +1,4 @@
-// Copied from https://github.com/colinbull/FSharp.Enterprise/blob/master/src/FSharp.Enterprise/FileSystem.fs
+/// This module contains a file pattern globbing implementation.
 [<AutoOpen>]
 module Fake.FileSystem
     
@@ -59,7 +59,7 @@ let private search (baseDir:string) (input : string) =
     |> Seq.toList
     |> buildPaths [baseDir]
 
-/// Internal representation of a file set
+/// Internal representation of a file set.
 type FileIncludes =
   { BaseDirectory: string
     Includes: string list
@@ -92,8 +92,13 @@ type FileIncludes =
                  
     member this.GetEnumerator() = (this :> IEnumerable<string>).GetEnumerator() :> System.Collections.IEnumerator
 
+let private defaultBaseDir = Path.GetFullPath "."
+
+/// Logs the given files with the message.
+let Log message files = files |> Seq.iter (log << sprintf "%s%s" message)
+
 /// Include files
-let Include x = { BaseDirectory = DefaultBaseDir; Includes = [x]; Excludes = []}
+let Include x = { BaseDirectory = defaultBaseDir; Includes = [x]; Excludes = []}
 
 /// Sets a directory as baseDirectory for fileIncludes. 
 let SetBaseDir (dir:string) (fileIncludes:FileIncludes) = fileIncludes.SetBaseDirectory dir

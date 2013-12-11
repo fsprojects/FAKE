@@ -13,13 +13,13 @@ let getVSSProjectWithLabel toolPath srcSafeIni username password project (localS
         sprintf "%s -Vl%s" args' label 
 
     tracefn "%s %s" toolPath args
-    let result = execProcess2 (fun info ->
+    let result = ExecProcess (fun info ->
         ["SSDIR", srcSafeIni]
           |> setEnvironmentVariables info 
 
         info.FileName <- toolPath
         info.WorkingDirectory <- currentDirectory
-        info.Arguments <- args) System.TimeSpan.MaxValue true
+        info.Arguments <- args) System.TimeSpan.MaxValue
     if result <> 0 then failwith "Could not get sources from VSS"
 
 /// Retrieves the given project from Microsoft Visual SourceSafe    

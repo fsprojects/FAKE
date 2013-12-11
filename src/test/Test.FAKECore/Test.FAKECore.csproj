@@ -75,6 +75,8 @@
   <ItemGroup>
     <Compile Include="FixProjectFileSpecs.cs" />
     <Compile Include="CompareProjectFilesSpecs.cs" />
+    <Compile Include="Globbing\TestSample7\CountersRegressionSpecs.cs" />
+    <Compile Include="Globbing\TestSample6\CurlRegressionSpecs.cs" />
     <Compile Include="Globbing\TestSample5\AbsoluteGlobbingSpecs.cs" />
     <Compile Include="Globbing\TestSample1\FileSetSample1Specs.cs" />
     <Compile Include="Globbing\TestSample4\GlobbingSample4Specs.cs" />
@@ -257,6 +259,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="NAVFiles\Codeunit_1_Modified.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Globbing\TestSample6\Sample6.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Globbing\TestSample7\Sample7.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="packages.config">

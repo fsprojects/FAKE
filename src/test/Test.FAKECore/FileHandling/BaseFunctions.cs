@@ -97,7 +97,7 @@ namespace Test.FAKECore.FileHandling
         /// <returns></returns>
         public static List<string> Scan(string pattern)
         {
-            return Scan(pattern, FileSetHelper.DefaultBaseDir);
+            return Scan(pattern, Path.GetFullPath("."));
         }
 
 
@@ -124,7 +124,7 @@ namespace Test.FAKECore.FileHandling
         /// <returns></returns>
         public static int ScanCount(string pattern)
         {
-            return ScanCount(pattern, FileSetHelper.DefaultBaseDir);
+            return ScanCount(pattern, Path.GetFullPath("."));
         }
 
         /// <summary>

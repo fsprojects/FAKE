@@ -43,14 +43,14 @@ namespace Test.FAKECore.FileHandling
     public class when_creating_some_files_and_scanning_them_with_concrete_path : BaseFunctions
     {
         Establish context = CreateTestFileStructure;
-        It should_find_all_files_in_test_folder = () => ScanCount(FileSetHelper.DefaultBaseDir + "/Test/*.*").ShouldEqual(5);
-        It should_find_every_nav_file_in_every_folder = () => ScanCount(FileSetHelper.DefaultBaseDir + "/Test/**/*.nav").ShouldEqual(7);
+        It should_find_all_files_in_test_folder = () => ScanCount(Path.GetFullPath(".") + "/Test/*.*").ShouldEqual(5);
+        It should_find_every_nav_file_in_every_folder = () => ScanCount(Path.GetFullPath(".") + "/Test/**/*.nav").ShouldEqual(7);
 
-        It should_find_file1 = () => ScanCount(FileSetHelper.DefaultBaseDir + "/**/file1.nav").ShouldEqual(3);
-        It should_find_file1_with_every_extension = () => ScanCount(FileSetHelper.DefaultBaseDir + "/**/file1.*").ShouldEqual(5);
-        It should_find_file_x = () => ScanCount(FileSetHelper.DefaultBaseDir + "/**/file?.n??").ShouldEqual(11);
-        It should_find_file_x_in_subfolder = () => ScanCount(FileSetHelper.DefaultBaseDir + "/Test/**/Sub1/**/file*.*").ShouldEqual(6);
-        It should_not_find_a_nav_file_in_root = () => ScanCount(FileSetHelper.DefaultBaseDir + "/*.nav").ShouldEqual(0);
+        It should_find_file1 = () => ScanCount(Path.GetFullPath(".") + "/**/file1.nav").ShouldEqual(3);
+        It should_find_file1_with_every_extension = () => ScanCount(Path.GetFullPath(".") + "/**/file1.*").ShouldEqual(5);
+        It should_find_file_x = () => ScanCount(Path.GetFullPath(".") + "/**/file?.n??").ShouldEqual(11);
+        It should_find_file_x_in_subfolder = () => ScanCount(Path.GetFullPath(".") + "/Test/**/Sub1/**/file*.*").ShouldEqual(6);
+        It should_not_find_a_nav_file_in_root = () => ScanCount(Path.GetFullPath(".") + "/*.nav").ShouldEqual(0);
     }
 
     public class when_creating_some_files_and_scanning_by_convenion : BaseFunctions

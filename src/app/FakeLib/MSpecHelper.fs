@@ -6,15 +6,15 @@ open System
 open System.IO
 open System.Text
 
-/// Parameter type to configure the MSpec runner
+/// Parameter type to configure the MSpec runner.
 type MSpecParams = {
-    /// FileName of the mspec runner
+    /// FileName of the mspec runner exe. Use mspec-clr4.exe if you are on .NET 4.0 or above.
     ToolPath: string
-    /// Output directory for html reports (optional)
+    /// Output directory for html reports (optional).
     HtmlOutputDir: string
     /// Working directory (optional)
     WorkingDir:string
-    /// Can be used to run MSpec in silent mode
+    /// Can be used to run MSpec in silent mode.
     Silent: bool;
     /// Tests with theses tags are ignored by MSpec
     ExcludeTags: string list

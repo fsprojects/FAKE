@@ -66,11 +66,10 @@ let SpecFlow setParams =
     trace (tool + " " + args)
 
     let result =
-        execProcessAndReturnExitCode (fun info ->
+        ExecProcess (fun info ->
             info.FileName <- tool
             info.WorkingDirectory <- parameters.WorkingDir
             info.Arguments <- args) System.TimeSpan.MaxValue
-
 
     match result with
     | 0 -> traceEndTask "SpecFlow " parameters.SubCommand
