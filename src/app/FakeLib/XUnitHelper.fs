@@ -42,7 +42,12 @@ let XUnitDefaults =
       TimeOut = TimeSpan.FromMinutes 5.
       OutputDir = null}
 
-/// Runs xUnit unit tests via the given xUnit runner.
+/// Runs xUnit unit tests in the given assemblies via the given xUnit runner.
+/// Will fail if the runner terminates with non-zero exit code for any of the assemblies.
+/// Offending assemblies will be listed in the error message.
+///
+/// The xUnit runner terminates with a non-zero exit code if any of the tests
+/// in the given assembly fail.
 /// ## Parameters
 /// 
 ///  - `setParams` - Function used to manipulate the default XUnitParams value.
