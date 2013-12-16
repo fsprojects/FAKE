@@ -58,32 +58,39 @@ let xUnit setParams assemblies =
     let details = separated ", " assemblies
     traceStartTask "xUnit" details
     let parameters = setParams XUnitDefaults
-    assemblies
-      |> Seq.iter (fun assembly ->
-          
-          let fi = fileInfo assembly
-          let name = fi.Name
 
-          let dir = 
-              if isNullOrEmpty parameters.OutputDir then String.Empty else
-              Path.GetFullPath parameters.OutputDir
-               
-          let args =
-              new StringBuilder()
-                |> appendFileNamesIfNotNull [assembly]
-                |> appendIfFalse parameters.ShadowCopy "/noshadow"
-                |> appendIfTrue (buildServer = TeamCity) "/teamcity"
-                |> appendIfFalse parameters.Verbose "/silent" 
-                |> appendIfTrue parameters.XmlOutput (sprintf "/xml\" \"%s" (dir @@ (name + ".xml")))
-                |> appendIfTrue parameters.HtmlOutput (sprintf "/html\" \"%s" (dir @@ (name + ".html")))
-                |> appendIfTrue parameters.NUnitXmlOutput (sprintf "/nunit\" \"%s" (dir @@ (name + ".xml")))                              
-                |> toText
+    let runTests assembly =
+       let fi = fileInfo assembly
+       let name = fi.Name
 
-          if 0 <> ExecProcess (fun info ->  
-              info.FileName <- parameters.ToolPath
-              info.WorkingDirectory <- parameters.WorkingDir
-              info.Arguments <- args) parameters.TimeOut
-          then
-              failwithf "xUnit test failed on %s." details)
-                  
+       let dir =
+           if isNullOrEmpty parameters.OutputDir then String.Empty else
+           Path.GetFullPath parameters.OutputDir
+
+       let args =
+           new StringBuilder()
+             |> appendFileNamesIfNotNull [assembly]
+             |> appendIfFalse parameters.ShadowCopy "/noshadow"
+             |> appendIfTrue (buildServer = TeamCity) "/teamcity"
+             |> appendIfFalse parameters.Verbose "/silent"
+             |> appendIfTrue parameters.XmlOutput (sprintf "/xml\" \"%s" (dir @@ (name + ".xml")))
+             |> appendIfTrue parameters.HtmlOutput (sprintf "/html\" \"%s" (dir @@ (name + ".html")))
+             |> appendIfTrue parameters.NUnitXmlOutput (sprintf "/nunit\" \"%s" (dir @@ (name + ".xml")))
+             |> toText
+
+       if 0 <> ExecProcess (fun info ->
+           info.FileName <- parameters.ToolPath
+           info.WorkingDirectory <- parameters.WorkingDir
+           info.Arguments <- args) parameters.TimeOut
+       then true
+       else false
+
+    let failedTests =
+        [ for asm in List.ofSeq assemblies do
+              let succeeded = runTests asm
+              if not succeeded then yield asm ]
+
+    if not (List.isEmpty failedTests)
+    then failwithf "xUnit failed for the following assemblies: %s" (separated ", " failedTests)
+
     traceEndTask "xUnit" details
