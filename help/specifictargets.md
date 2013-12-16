@@ -26,10 +26,10 @@ FAKE has a special param "target" which can be used to run specific targets in a
 	  ==> "Deploy"
 
 	// *** Start Build ***
-	RunTargetOrDefault "Default"
+	RunTargetOrDefault "Deploy"
 
 Now we have the following options:
 
 * Fake.exe "target=Build" --> starts only the *Build* target (and runs the dependency *Clean*)
 * Fake.exe Build --> starts only the *Build* target (and runs the dependency *Clean*)
-* Fake.exe --> starts the Default target (and runs the dependencies *Clean* and *Build*)
+* Fake.exe --> starts the Deploy target (and runs the dependencies *Clean* and *Build*)
