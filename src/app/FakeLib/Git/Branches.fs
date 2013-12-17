@@ -136,6 +136,22 @@ let deleteTag repositoryDir tag =
 ///  - `repositoryDir` - The git repository.
 let push repositoryDir = directRunGitCommand repositoryDir "push" |> ignore
 
+/// Pushes the given tag to the given remote.
+/// ## Parameters
+///
+///  - `repositoryDir` - The git repository.
+///  - `remote` - The remote.
+///  - `tag` - The tag.
+let pushTag repositoryDir remote tag = directRunGitCommand repositoryDir (sprintf "push %s %s" remote tag) |> ignore
+
+/// Pushes the given branch to the given remote.
+/// ## Parameters
+///
+///  - `repositoryDir` - The git repository.
+///  - `remote` - The remote.
+///  - `branch` - The tag.
+let pushBranch repositoryDir remote branch = directRunGitCommand repositoryDir (sprintf "push %s %s" remote branch) |> ignore
+
 /// Pulls a given branch from the given remote.
 /// ## Parameters
 ///
