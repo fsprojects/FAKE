@@ -50,6 +50,13 @@
     <tbody>
         <tr>
           <td class="type-name">
+            <a href="fake-xunithelper-xuniterrorlevel.html">XUnitErrorLevel</a>
+          </td>
+          <td class="xmldoc"><p>Option which allows to specify if an xUnit error should break the build.</p>
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
             <a href="fake-xunithelper-xunitparams.html">XUnitParams</a>
           </td>
           <td class="xmldoc"><p>The xUnit parameter type</p>
@@ -69,14 +76,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '559', 559)" onmouseover="showTip(event, '559', 559)">
+          <code onmouseout="hideTip(event, '456', 456)" onmouseover="showTip(event, '456', 456)">
             xUnit setParams assemblies
           </code>
-          <div class="tip" id="559">
+          <div class="tip" id="456">
             <strong>Signature:</strong>setParams:(XUnitParams -&gt; XUnitParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Runs xUnit unit tests via the given xUnit runner.</p>
+        <td class="xmldoc"><p>Runs xUnit unit tests in the given assemblies via the given xUnit runner.
+Will fail if the runner terminates with non-zero exit code for any of the assemblies.
+Offending assemblies will be listed in the error message.</p>
+
+<p>The xUnit runner terminates with a non-zero exit code if any of the tests
+in the given assembly fail.</p>
 
 <h2>Parameters</h2>
 
@@ -97,10 +109,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '560', 560)" onmouseover="showTip(event, '560', 560)">
+          <code onmouseout="hideTip(event, '457', 457)" onmouseover="showTip(event, '457', 457)">
             XUnitDefaults 
           </code>
-          <div class="tip" id="560">
+          <div class="tip" id="457">
             <strong>Signature:</strong>XUnitParams<br />
                       </div>
         </td>
