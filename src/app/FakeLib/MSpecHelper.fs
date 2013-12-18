@@ -21,7 +21,9 @@ type MSpecParams = {
     /// Tests with theses tags are included by MSpec
     IncludeTags: string list
     /// A timeout for the test runner
-    TimeOut: TimeSpan}
+    TimeOut: TimeSpan
+    /// An error level setting to specify whether a failed test should break the build
+    ErrorLevel: TestRunnerErrorLevel }
 
 /// MSpec default parameters - tries to locate mspec-clr4.exe in any subfolder.
 let MSpecDefaults = { 
@@ -31,7 +33,8 @@ let MSpecDefaults = {
     Silent = false
     ExcludeTags = []
     IncludeTags = []
-    TimeOut = TimeSpan.FromMinutes 5.}
+    TimeOut = TimeSpan.FromMinutes 5.
+    ErrorLevel = Error }
 
 /// This task to can be used to run [machine.specifications](https://github.com/machine/machine.specifications) on test libraries.
 /// ## Parameters
@@ -72,6 +75,9 @@ let MSpec setParams assemblies =
         info.WorkingDirectory <- parameters.WorkingDir
         info.Arguments <- args) parameters.TimeOut
     then
-        failwithf "MSpec test failed on %s." details
+        sprintf "MSpec test failed on %s." details
+        |> match parameters.ErrorLevel with
+           | Error -> failwith
+           | DontFailBuild -> traceImportant
                   
     traceEndTask "MSpec" details
