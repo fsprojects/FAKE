@@ -7,11 +7,7 @@ open System.IO
 open System.Text
 
 /// Option which allows to specify if an xUnit error should break the build.
-type XUnitErrorLevel =
-/// This option instructs FAKE to break the build if xUnit reports an error. (Default)
-| Error
-/// With this option set, no exception is thrown if a test is broken.
-| DontFailBuild
+type XUnitErrorLevel = TestRunnerErrorLevel // a type alias to keep backwards compatibility
 
 /// The xUnit parameter type
 type XUnitParams = { 
