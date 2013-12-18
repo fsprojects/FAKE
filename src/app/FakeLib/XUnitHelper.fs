@@ -6,6 +6,9 @@ open System
 open System.IO
 open System.Text
 
+/// Option which allows to specify if an xUnit error should break the build.
+type XUnitErrorLevel = TestRunnerErrorLevel // a type alias to keep backwards compatibility
+
 /// The xUnit parameter type
 type XUnitParams = { 
       /// The path to the xunit.console.clr4.exe - FAKE will scan all subfolders to find it automatically.
@@ -27,7 +30,9 @@ type XUnitParams = {
       /// If the timeout is reached the xUnit task will be killed. Default is 5 minutes.
       TimeOut: TimeSpan
       /// The output directory. It's the current directoy if nothing else is specified.
-      OutputDir: string }
+      OutputDir: string
+      /// Test runner error level. Option which allows to specify if an xUnit error should break the build.
+      ErrorLevel: XUnitErrorLevel }
 
 /// The xUnit default parameters
 let XUnitDefaults =
@@ -40,7 +45,8 @@ let XUnitDefaults =
       Verbose = true;
       XmlOutput = false;
       TimeOut = TimeSpan.FromMinutes 5.
-      OutputDir = null}
+      OutputDir = null
+      ErrorLevel = Error }
 
 /// Runs xUnit unit tests in the given assemblies via the given xUnit runner.
 /// Will fail if the runner terminates with non-zero exit code for any of the assemblies.
@@ -95,7 +101,10 @@ let xUnit setParams assemblies =
               let succeeded = runTests asm
               if not succeeded then yield asm ]
 
-    if not (List.isEmpty failedTests)
-    then failwithf "xUnit failed for the following assemblies: %s" (separated ", " failedTests)
+    if not (List.isEmpty failedTests) then
+        sprintf "xUnit failed for the following assemblies: %s" (separated ", " failedTests)
+        |> match parameters.ErrorLevel with
+           | Error -> failwith
+           | DontFailBuild -> traceImportant
 
     traceEndTask "xUnit" details

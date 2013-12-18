@@ -6,12 +6,8 @@ open System
 open System.IO
 open System.Text
 
-/// Option which allow to specify if a NUnit error should break the build.
-type NUnitErrorLevel =
-/// This option instructs FAKE to break the build if NUnit reports an error. (Default)
-| Error
-/// With this option set, no exception is thrown if a test is broken.
-| DontFailBuild
+/// Option which allows to specify if a NUnit error should break the build.
+type NUnitErrorLevel = TestRunnerErrorLevel // a type alias to keep backwards compatibility
 
 /// Parameter type for NUnit.
 type NUnitParams = 
