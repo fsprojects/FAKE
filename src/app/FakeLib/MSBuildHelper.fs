@@ -106,7 +106,7 @@ type MSBuildParams =
       FileLoggers: MSBuildFileLoggerConfig list option }
 
 /// Defines a default for MSBuild task parameters
-let MSBuildDefaults = 
+let mutable MSBuildDefaults = 
     { Targets = []
       Properties = []
       MaxCpuCount = Some None
