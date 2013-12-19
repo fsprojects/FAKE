@@ -14,7 +14,7 @@ type XUnitParams = {
       /// The path to the xunit.console.clr4.exe - FAKE will scan all subfolders to find it automatically.
       ToolPath: string
       /// The file name of the config file (optional).
-      ConfigFile :string
+      ConfigFile: string
       /// If set to true a HTML output file will be generated.
       HtmlOutput: bool
       /// If set to true a HTML output file will be generated in NUnit format.
@@ -22,11 +22,11 @@ type XUnitParams = {
       /// If set to true XML output will be generated.
       XmlOutput: bool
       /// The working directory (optional).
-      WorkingDir:string
+      WorkingDir: string
       /// If set to true xUnit will run in ShadowCopy mode.
-      ShadowCopy :bool
+      ShadowCopy: bool
       /// If set to true xUnit will generate verbose output.
-      Verbose:bool
+      Verbose: bool
       /// If the timeout is reached the xUnit task will be killed. Default is 5 minutes.
       TimeOut: TimeSpan
       /// The output directory. It's the current directoy if nothing else is specified.
