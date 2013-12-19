@@ -98,6 +98,7 @@ type MSBuildParams =
     { Targets: string list
       Properties: (string * string) list
       MaxCpuCount: int option option
+      NodeReuse: bool option
       ToolsVersion: string option
       Verbosity: MSBuildVerbosity option
       FileLoggers: MSBuildFileLoggerConfig list option }
@@ -107,16 +108,17 @@ let MSBuildDefaults =
     { Targets = []
       Properties = []
       MaxCpuCount = Some None
+      NodeReuse = None
       ToolsVersion = None
       Verbosity = None
       FileLoggers = None }
 
 /// [omit]
-let getAllParameters targets maxcpu tools verbosity fileLoggers properties =
+let getAllParameters targets maxcpu nodeReuse tools verbosity fileLoggers properties =
     if isUnix then
         [targets; tools; verbosity] @ fileLoggers @ properties
     else
-        [targets; maxcpu; tools; verbosity] @ fileLoggers @ properties
+        [targets; maxcpu; nodeReuse; tools; verbosity] @ fileLoggers @ properties
 
 /// [omit]
 let serializeMSBuildParams (p: MSBuildParams) = 
@@ -137,6 +139,10 @@ let serializeMSBuildParams (p: MSBuildParams) =
         match p.MaxCpuCount with
         | None -> None
         | Some x -> Some ("m", match x with Some v -> v.ToString() | _ -> "")
+    let nodeReuse = 
+        match p.NodeReuse with
+        | None -> None
+        | Some x -> Some ("nodeReuse", x.ToString())
     let tools =
         match p.ToolsVersion with
         | None -> None
@@ -172,7 +178,7 @@ let serializeMSBuildParams (p: MSBuildParams) =
                             (match fl.Filename with | None -> "" | Some f -> sprintf "logfile=%s;" f)
                             (match fl.Verbosity with | None -> "" | Some v -> sprintf "Verbosity=%s;" (verbosityName v))
                             (match fl.Parameters with | None -> "" | Some ps -> ps |> List.map (fun p -> logParams p |> sprintf "%s;") |> String.concat "")))
-    let allParameters = getAllParameters targets maxcpu tools verbosity fileLoggers properties
+    let allParameters = getAllParameters targets maxcpu nodeReuse tools verbosity fileLoggers properties
     allParameters
     |> Seq.map (function
                     | None -> ""
