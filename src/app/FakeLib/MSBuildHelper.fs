@@ -98,7 +98,7 @@ type MSBuildParams =
     { Targets: string list
       Properties: (string * string) list
       MaxCpuCount: int option option
-      NodeReuse: bool option
+      NodeReuse: bool
       ToolsVersion: string option
       Verbosity: MSBuildVerbosity option
       FileLoggers: MSBuildFileLoggerConfig list option }
@@ -108,7 +108,7 @@ let MSBuildDefaults =
     { Targets = []
       Properties = []
       MaxCpuCount = Some None
-      NodeReuse = None
+      NodeReuse = true
       ToolsVersion = None
       Verbosity = None
       FileLoggers = None }
@@ -140,9 +140,8 @@ let serializeMSBuildParams (p: MSBuildParams) =
         | None -> None
         | Some x -> Some ("m", match x with Some v -> v.ToString() | _ -> "")
     let nodeReuse = 
-        match p.NodeReuse with
-        | None -> None
-        | Some x -> Some ("nodeReuse", x.ToString())
+        if p.NodeReuse then None else
+        Some ("nodeReuse","False")
     let tools =
         match p.ToolsVersion with
         | None -> None
