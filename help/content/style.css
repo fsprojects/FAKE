@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono|Actor);
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono|Gudea);
 
 /*-------------------------------------------------------------------------- 
   Formatting for F# code snippets 
@@ -80,7 +80,7 @@ table.pre td.lines {
 /*--------------------------------------------------------------------------*/
 
 body {
-  font-family: Actor, serif;
+  font-family: Gudea, serif;
   padding-top: 0px;
   padding-bottom: 40px;
 }
@@ -142,15 +142,6 @@ td.title, thead {
   Formatting for API reference
 /*--------------------------------------------------------------------------*/
 
-#main h2 {	       
-  font-size: 160%;
-  margin-top:40px;
-}
-#main h3 {
-  font-size: 130%;
-  font-weight: bold;
-  margin-top: 20px;
-}
 .type-list .type-name, .module-list .module-name {
   width:25%;
   font-weight:bold;
@@ -194,9 +185,4 @@ td.title, thead {
 #hp-snippet .table {
   width:80%;
   margin-left:30px;
-}
-@media (max-width: 979px) and (min-width: 768px) {
-  .span3 {
-    width: 100%;
-  }
 }
