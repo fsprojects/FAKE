@@ -151,25 +151,25 @@ Here is a small sample which sets up dependencies for different framework versio
 </td>
 <td class="snippet"><pre class="fssnip">
 <span class="i">NuGet</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> 
-    {<span class="i">p</span> <span class="k">with</span>
-        <span class="i">Authors</span> <span class="o">=</span> <span class="i">authors</span>
-        <span class="c">// ...</span>
-        <span class="i">Dependencies</span> <span class="o">=</span>  <span class="c">// fallback - for all unspecified frameworks</span>
-                [<span class="s">&quot;</span><span class="s">Octokit</span><span class="s">&quot;</span>, <span class="s">&quot;</span><span class="s">0</span><span class="s">.</span><span class="s">1</span><span class="s">&quot;</span>
-                <span class="s">&quot;</span><span class="s">Rx</span><span class="s">-</span><span class="s">Main</span><span class="s">&quot;</span>, <span class="i">GetPackageVersion</span> <span class="s">&quot;</span><span class="s">.</span><span class="s">/</span><span class="s">packages</span><span class="s">/</span><span class="s">&quot;</span> <span class="s">&quot;</span><span class="s">Rx</span><span class="s">-</span><span class="s">Main</span><span class="s">&quot;</span>]
-        <span class="i">DependenciesByFramework</span> <span class="o">=</span>
-                [{ <span class="i">FrameworkVersion</span>  <span class="o">=</span> <span class="s">&quot;</span><span class="s">net40</span><span class="s">&quot;</span>
-                <span class="i">Dependencies</span> <span class="o">=</span> 
-                    [<span class="s">&quot;</span><span class="s">Octokit</span><span class="s">&quot;</span>, <span class="s">&quot;</span><span class="s">0</span><span class="s">.</span><span class="s">1</span><span class="s">&quot;</span>
-                    <span class="s">&quot;</span><span class="s">Rx</span><span class="s">-</span><span class="s">Main</span><span class="s">&quot;</span>, <span class="i">GetPackageVersion</span> <span class="s">&quot;</span><span class="s">.</span><span class="s">/</span><span class="s">packages</span><span class="s">/</span><span class="s">&quot;</span> <span class="s">&quot;</span><span class="s">Rx</span><span class="s">-</span><span class="s">Main</span><span class="s">&quot;</span>
-                    <span class="s">&quot;</span><span class="s">SignalR</span><span class="s">&quot;</span>, <span class="i">GetPackageVersion</span> <span class="s">&quot;</span><span class="s">.</span><span class="s">/</span><span class="s">packages</span><span class="s">/</span><span class="s">&quot;</span> <span class="s">&quot;</span><span class="s">SignalR</span><span class="s">&quot;</span>]}
-                { <span class="i">FrameworkVersion</span>  <span class="o">=</span> <span class="s">&quot;</span><span class="s">net45</span><span class="s">&quot;</span>
-                <span class="i">Dependencies</span> <span class="o">=</span> 
-                    [<span class="s">&quot;</span><span class="s">Octokit</span><span class="s">&quot;</span>, <span class="s">&quot;</span><span class="s">0</span><span class="s">.</span><span class="s">1</span><span class="s">&quot;</span>
-                    <span class="s">&quot;</span><span class="s">SignalR</span><span class="s">&quot;</span>, <span class="i">GetPackageVersion</span> <span class="s">&quot;</span><span class="s">.</span><span class="s">/</span><span class="s">packages</span><span class="s">/</span><span class="s">&quot;</span> <span class="s">&quot;</span><span class="s">SignalR</span><span class="s">&quot;</span>]}]
-        <span class="c">// ...</span>
-        <span class="i">Publish</span> <span class="o">=</span> <span class="k">true</span> }) 
-        <span class="s">&quot;</span><span class="s">myProject</span><span class="s">.</span><span class="s">nuspec</span><span class="s">&quot;</span></pre>
+        {<span class="i">p</span> <span class="k">with</span>
+                <span class="i">Authors</span> <span class="o">=</span> <span class="i">authors</span>
+                <span class="c">// ...</span>
+                <span class="i">Dependencies</span> <span class="o">=</span>  <span class="c">// fallback - for all unspecified frameworks</span>
+            [<span class="s">&quot;</span><span class="s">Octokit</span><span class="s">&quot;</span>, <span class="s">&quot;</span><span class="s">0</span><span class="s">.</span><span class="s">1</span><span class="s">&quot;</span>
+            <span class="s">&quot;</span><span class="s">Rx</span><span class="s">-</span><span class="s">Main</span><span class="s">&quot;</span>, <span class="i">GetPackageVersion</span> <span class="s">&quot;</span><span class="s">.</span><span class="s">/</span><span class="s">packages</span><span class="s">/</span><span class="s">&quot;</span> <span class="s">&quot;</span><span class="s">Rx</span><span class="s">-</span><span class="s">Main</span><span class="s">&quot;</span>]
+                <span class="i">DependenciesByFramework</span> <span class="o">=</span>
+                                [{ <span class="i">FrameworkVersion</span>  <span class="o">=</span> <span class="s">&quot;</span><span class="s">net40</span><span class="s">&quot;</span>
+                                <span class="i">Dependencies</span> <span class="o">=</span> 
+                                        [<span class="s">&quot;</span><span class="s">Octokit</span><span class="s">&quot;</span>, <span class="s">&quot;</span><span class="s">0</span><span class="s">.</span><span class="s">1</span><span class="s">&quot;</span>
+                                         <span class="s">&quot;</span><span class="s">Rx</span><span class="s">-</span><span class="s">Main</span><span class="s">&quot;</span>, <span class="i">GetPackageVersion</span> <span class="s">&quot;</span><span class="s">.</span><span class="s">/</span><span class="s">packages</span><span class="s">/</span><span class="s">&quot;</span> <span class="s">&quot;</span><span class="s">Rx</span><span class="s">-</span><span class="s">Main</span><span class="s">&quot;</span>
+                                         <span class="s">&quot;</span><span class="s">SignalR</span><span class="s">&quot;</span>, <span class="i">GetPackageVersion</span> <span class="s">&quot;</span><span class="s">.</span><span class="s">/</span><span class="s">packages</span><span class="s">/</span><span class="s">&quot;</span> <span class="s">&quot;</span><span class="s">SignalR</span><span class="s">&quot;</span>]}
+                                { <span class="i">FrameworkVersion</span>  <span class="o">=</span> <span class="s">&quot;</span><span class="s">net45</span><span class="s">&quot;</span>
+                                <span class="i">Dependencies</span> <span class="o">=</span> 
+                                        [<span class="s">&quot;</span><span class="s">Octokit</span><span class="s">&quot;</span>, <span class="s">&quot;</span><span class="s">0</span><span class="s">.</span><span class="s">1</span><span class="s">&quot;</span>
+                                         <span class="s">&quot;</span><span class="s">SignalR</span><span class="s">&quot;</span>, <span class="i">GetPackageVersion</span> <span class="s">&quot;</span><span class="s">.</span><span class="s">/</span><span class="s">packages</span><span class="s">/</span><span class="s">&quot;</span> <span class="s">&quot;</span><span class="s">SignalR</span><span class="s">&quot;</span>]}]
+                <span class="c">// ...</span>
+                <span class="i">Publish</span> <span class="o">=</span> <span class="k">true</span> }) 
+                <span class="s">&quot;</span><span class="s">myProject</span><span class="s">.</span><span class="s">nuspec</span><span class="s">&quot;</span></pre>
 </td>
 </tr>
 </table>
