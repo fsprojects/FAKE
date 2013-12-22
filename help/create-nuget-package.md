@@ -63,23 +63,23 @@ There are a couple of interesting things happening here. In this sample FAKE cre
 If your project dependends on other projects it is possible to specify these dependencies in the .nuspec definition (see also [Nuget docs](http://docs.nuget.org/docs/reference/nuspec-reference#Specifying_Dependencies_in_version_2.0_and_above)). 
 Here is a small sample which sets up dependencies for different framework versions:
 
-	NuGet (fun p -> 
-		{p with
-			Authors = authors
-			// ...
-            Dependencies =  // fallback - for all unspecified frameworks
+        NuGet (fun p -> 
+                {p with
+                        Authors = authors
+                        // ...
+                        Dependencies =  // fallback - for all unspecified frameworks
 					["Octokit", "0.1"
 					"Rx-Main", GetPackageVersion "./packages/" "Rx-Main"]
-			DependenciesByFramework =
-					[{ FrameworkVersion  = "net40"
-					Dependencies = 
-						["Octokit", "0.1"
-						"Rx-Main", GetPackageVersion "./packages/" "Rx-Main"
-						"SignalR", GetPackageVersion "./packages/" "SignalR"]}
-					{ FrameworkVersion  = "net45"
-					Dependencies = 
-						["Octokit", "0.1"
-						"SignalR", GetPackageVersion "./packages/" "SignalR"]}]
-			// ...
-			Publish = true }) 
-			"myProject.nuspec"
+                        DependenciesByFramework =
+                                        [{ FrameworkVersion  = "net40"
+                                        Dependencies = 
+                                                ["Octokit", "0.1"
+                                                 "Rx-Main", GetPackageVersion "./packages/" "Rx-Main"
+                                                 "SignalR", GetPackageVersion "./packages/" "SignalR"]}
+                                        { FrameworkVersion  = "net45"
+                                        Dependencies = 
+                                                ["Octokit", "0.1"
+                                                 "SignalR", GetPackageVersion "./packages/" "SignalR"]}]
+                        // ...
+                        Publish = true }) 
+                        "myProject.nuspec"
