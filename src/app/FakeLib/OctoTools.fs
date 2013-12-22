@@ -155,7 +155,7 @@ let Octo setParams =
     trace (tool + args)
         
     let result = 
-        execProcessAndReturnExitCode (fun info ->
+        ExecProcess (fun info ->
             info.Arguments <- args
             info.WorkingDirectory <- octoParams.WorkingDirectory
             info.FileName <- tool

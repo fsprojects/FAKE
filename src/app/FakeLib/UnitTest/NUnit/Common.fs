@@ -6,12 +6,8 @@ open System
 open System.IO
 open System.Text
 
-/// Option which allow to specify if a NUnit error should break the build.
-type NUnitErrorLevel =
-/// This option instructs FAKE to break the build if NUnit reports an error. (Default)
-| Error
-/// With this option set, no exception is thrown if a test is broken.
-| DontFailBuild
+/// Option which allows to specify if a NUnit error should break the build.
+type NUnitErrorLevel = TestRunnerErrorLevel // a type alias to keep backwards compatibility
 
 /// Parameter type for NUnit.
 type NUnitParams = 
@@ -35,47 +31,46 @@ type NUnitParams =
 /// NUnit default parameters. FAKE tries to locate nunit-console.exe in any subfolder.
 let NUnitDefaults = 
     let toolname = "nunit-console.exe"
-    { IncludeCategory = null
-      ExcludeCategory = null
+    { IncludeCategory = ""
+      ExcludeCategory = ""
       ToolPath = findToolFolderInSubPath toolname (currentDirectory @@ "tools" @@ "Nunit")
       ToolName = toolname
       TestInNewThread = false
       OutputFile = currentDirectory @@ "TestResult.xml"
-      Out = null
-      ErrorOutputFile = null
-      WorkingDir = null
-      Framework = null
+      Out = ""
+      ErrorOutputFile = ""
+      WorkingDir = ""
+      Framework = ""
       ShowLabels = true
-      XsltTransformFile = null
+      XsltTransformFile = ""
       TimeOut = TimeSpan.FromMinutes 5.0
       DisableShadowCopy = false
-      Domain = null
+      Domain = ""
       ErrorLevel = Error }
 
 /// Builds the command line arguments from the given parameter record and the given assemblies.
 /// [omit]
-let commandLineBuilder parameters assemblies =
-    let cl = 
-        new StringBuilder()
-        |> append "-nologo"
-        |> appendIfTrue parameters.DisableShadowCopy "-noshadow" 
-        |> appendIfTrue parameters.ShowLabels "-labels" 
-        |> appendIfTrue parameters.TestInNewThread "-thread" 
-        |> appendFileNamesIfNotNull assemblies
-        |> appendIfNotNull parameters.IncludeCategory "-include:"
-        |> appendIfNotNull parameters.ExcludeCategory "-exclude:"
-        |> appendIfNotNull parameters.XsltTransformFile "-transform:"
-        |> appendIfNotNull parameters.OutputFile  "-xml:"
-        |> appendIfNotNull parameters.Out "-out:"
-        |> appendIfNotNull parameters.Framework  "-framework:"
-        |> appendIfNotNull parameters.ErrorOutputFile "-err:"
-        |> appendIfNotNull parameters.Domain "-domain:"
-    cl.ToString()
+let buildNUnitdArgs parameters assemblies =
+    new StringBuilder()
+    |> append "-nologo"
+    |> appendIfTrue parameters.DisableShadowCopy "-noshadow" 
+    |> appendIfTrue parameters.ShowLabels "-labels" 
+    |> appendIfTrue parameters.TestInNewThread "-thread" 
+    |> appendFileNamesIfNotNull assemblies
+    |> appendIfNotNullOrEmpty parameters.IncludeCategory "-include:"
+    |> appendIfNotNullOrEmpty parameters.ExcludeCategory "-exclude:"
+    |> appendIfNotNullOrEmpty parameters.XsltTransformFile "-transform:"
+    |> appendIfNotNullOrEmpty parameters.OutputFile  "-xml:"
+    |> appendIfNotNullOrEmpty parameters.Out "-out:"
+    |> appendIfNotNullOrEmpty parameters.Framework  "-framework:"
+    |> appendIfNotNullOrEmpty parameters.ErrorOutputFile "-err:"
+    |> appendIfNotNullOrEmpty parameters.Domain "-domain:"
+    |> toText
 
 /// Tries to detect the working directory as specified in the parameters or via TeamCity settings
 /// [omit]
 let getWorkingDir parameters =
-    Seq.find (fun s -> s <> null && s <> "") [parameters.WorkingDir; environVar("teamcity.build.workingDir"); "."]
+    Seq.find isNotNullOrEmpty [parameters.WorkingDir; environVar("teamcity.build.workingDir"); "."]
     |> Path.GetFullPath
 
 /// NUnit console returns negative error codes for errors and sum of failed, ignored and exceptional tests otherwise. 

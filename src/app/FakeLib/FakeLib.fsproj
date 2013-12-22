@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -56,24 +56,24 @@
     <Compile Include="TeamCityHelper.fs" />
     <Compile Include="TeamCityRESTHelper.fs" />
     <Compile Include="TraceHelper.fs" />
-    <Compile Include="UnitTestHelper.fs" />
+    <Compile Include="ServiceControllerHelper.fs" />    
+    <Compile Include="ProcessHelper.fs" />
+    <Compile Include="Globbing\FileSystem.fs" />    
+    <Compile Include="UnitTest\UnitTestCommon.fs" />
+    <Compile Include="UnitTest\UnitTestHelper.fs" />
+    <Compile Include="UnitTest\NUnit\Xml.fs" />
+    <Compile Include="UnitTest\NUnit\Common.fs" />
+    <Compile Include="UnitTest\NUnit\Sequential.fs" />
+    <Compile Include="UnitTest\NUnit\Parallel.fs" />
+    <Compile Include="UnitTest\XUnitHelper.fs" />
+    <Compile Include="UnitTest\MSpecHelper.fs" />        
+    <Compile Include="UnitTest\MSTest.fs" />
     <Compile Include="AssemblyInfoFile.fs" />
     <Compile Include="AssemblyInfoHelper.fs" />
-    <Compile Include="ServiceControllerHelper.fs" />
-    <Compile Include="FileSet.fs" />
-    <Compile Include="Globbing\FileSystem.fs" />
-    <Compile Include="ProcessHelper.fs" />
     <Compile Include="FXCopHelper.fs" />
     <Compile Include="NCoverHelper.fs" />
-    <Compile Include="NUnit\Xml.fs" />
-    <Compile Include="NUnit\Common.fs" />
-    <Compile Include="NUnit\Sequential.fs" />
-    <Compile Include="NUnit\Parallel.fs" />
-    <Compile Include="XUnitHelper.fs" />
-    <Compile Include="MSpecHelper.fs" />
     <Compile Include="MsBuildLogger.fs" />
     <Compile Include="MSBuildHelper.fs" />
-    <Compile Include="MSTest.fs" />
     <Compile Include="ZipHelper.fs" />
     <Compile Include="FileHelper.fs" />
     <Compile Include="FileUtils.fs" />
@@ -124,9 +124,10 @@
     <Compile Include="ReleaseNotesHelper.fs" />
     <None Include="Targets.fsx" />
     <Compile Include="FixieHelper.fs" />
+    <Compile Include="NuGet\Update.fs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="FSharp.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <Reference Include="FSharp.Core, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <HintPath>..\..\..\tools\FSharp\FSharp.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
@@ -134,6 +135,10 @@
       <HintPath>..\..\..\lib\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="Microsoft.Web.XmlTransform">
+      <HintPath>..\..\..\packages\Microsoft.Web.Xdt.1.0.0\lib\net40\Microsoft.Web.XmlTransform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Mono.Cecil">
       <HintPath>..\..\..\packages\Mono.Cecil.0.9.5.4\lib\net40\Mono.Cecil.dll</HintPath>
       <Private>True</Private>
@@ -156,7 +161,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="NuGet.Core">
-      <HintPath>..\..\..\packages\Nuget.Core.2.5.0\lib\net40-Client\NuGet.Core.dll</HintPath>
+      <HintPath>..\..\..\packages\Nuget.Core.2.7.2\lib\net40-Client\NuGet.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -168,4 +173,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <Import Project="$(FSharpTargetsPath)" />
+  <ItemGroup>
+    <Folder Include="NuGet\" />
+  </ItemGroup>
 </Project>

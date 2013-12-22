@@ -29,7 +29,7 @@ let colorMap traceData =
     | FinishedMessage    -> ConsoleColor.White
     | _                  -> ConsoleColor.Gray
 
-/// Implements a TraceListener for System.Console
+/// Implements a TraceListener for System.Console.
 /// ## Parameters
 ///  - `importantMessagesToStdErr` - Defines whether to trace important messages to StdErr.
 ///  - `colorMap` - A function which maps TracePriorities to ConsoleColors.
@@ -58,7 +58,7 @@ type ConsoleTraceListener(importantMessagesToStdErr,colorMap) =
             | FinishedMessage -> ()
             
 
-/// The default TraceListener for Console
+/// The default TraceListener for Console.
 let defaultConsoleTraceListener = ConsoleTraceListener(buildServer <> CCNet,colorMap)
 
 /// Specifies if the XmlWriter should close tags automatically

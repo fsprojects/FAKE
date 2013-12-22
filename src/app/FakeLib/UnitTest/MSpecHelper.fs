@@ -6,22 +6,24 @@ open System
 open System.IO
 open System.Text
 
-/// Parameter type to configure the MSpec runner
+/// Parameter type to configure the MSpec runner.
 type MSpecParams = {
-    /// FileName of the mspec runner
+    /// FileName of the mspec runner exe. Use mspec-clr4.exe if you are on .NET 4.0 or above.
     ToolPath: string
-    /// Output directory for html reports (optional)
+    /// Output directory for html reports (optional).
     HtmlOutputDir: string
     /// Working directory (optional)
     WorkingDir:string
-    /// Can be used to run MSpec in silent mode
+    /// Can be used to run MSpec in silent mode.
     Silent: bool;
     /// Tests with theses tags are ignored by MSpec
     ExcludeTags: string list
     /// Tests with theses tags are included by MSpec
     IncludeTags: string list
     /// A timeout for the test runner
-    TimeOut: TimeSpan}
+    TimeOut: TimeSpan
+    /// An error level setting to specify whether a failed test should break the build
+    ErrorLevel: TestRunnerErrorLevel }
 
 /// MSpec default parameters - tries to locate mspec-clr4.exe in any subfolder.
 let MSpecDefaults = { 
@@ -31,7 +33,8 @@ let MSpecDefaults = {
     Silent = false
     ExcludeTags = []
     IncludeTags = []
-    TimeOut = TimeSpan.FromMinutes 5.}
+    TimeOut = TimeSpan.FromMinutes 5.
+    ErrorLevel = Error }
 
 /// This task to can be used to run [machine.specifications](https://github.com/machine/machine.specifications) on test libraries.
 /// ## Parameters
@@ -67,11 +70,14 @@ let MSpec setParams assemblies =
         |> appendFileNamesIfNotNull assemblies
         |> toText
 
-    if 0 <> ExecProcess (fun info ->  
+    if 0 <> ExecProcess (fun info ->
         info.FileName <- parameters.ToolPath
         info.WorkingDirectory <- parameters.WorkingDir
         info.Arguments <- args) parameters.TimeOut
     then
-        failwithf "MSpec test failed on %s." details
+        sprintf "MSpec test failed on %s." details
+        |> match parameters.ErrorLevel with
+           | Error -> failwith
+           | DontFailBuild -> traceImportant
                   
     traceEndTask "MSpec" details

@@ -112,6 +112,7 @@ let ExecProcessRedirected configProcessStartInfoF timeOut =
 ///  - `timeOut` - The timeout for the process.
 ///  - `silent` - If this flag is set then the process output is redicted to the trace.
 /// [omit]
+[<Obsolete("Please use the new ExecProcess.")>]
 let execProcess2 configProcessStartInfoF timeOut silent = ExecProcessWithLambdas configProcessStartInfoF timeOut silent traceError trace  
 
 /// Runs the given process and returns the exit code.
@@ -120,7 +121,8 @@ let execProcess2 configProcessStartInfoF timeOut silent = ExecProcessWithLambdas
 ///  - `configProcessStartInfoF` - A function which overwrites the default ProcessStartInfo.
 ///  - `timeOut` - The timeout for the process.
 /// [omit]
-let execProcessAndReturnExitCode configProcessStartInfoF timeOut = execProcess2 configProcessStartInfoF timeOut true
+[<Obsolete("Please use the new ExecProcess.")>]
+let execProcessAndReturnExitCode configProcessStartInfoF timeOut = ExecProcessWithLambdas configProcessStartInfoF timeOut true traceError trace
 
 /// Runs the given process and returns if the exit code was 0.
 /// ## Parameters
@@ -128,15 +130,15 @@ let execProcessAndReturnExitCode configProcessStartInfoF timeOut = execProcess2 
 ///  - `configProcessStartInfoF` - A function which overwrites the default ProcessStartInfo.
 ///  - `timeOut` - The timeout for the process.
 /// [omit]
-[<Obsolete>]
-let execProcess3 configProcessStartInfoF timeOut = execProcessAndReturnExitCode configProcessStartInfoF timeOut = 0   
+[<Obsolete("Please use the new ExecProcess.")>]
+let execProcess3 configProcessStartInfoF timeOut = ExecProcessWithLambdas configProcessStartInfoF timeOut true traceError trace = 0   
 
 /// Runs the given process and returns the exit code.
 /// ## Parameters
 ///
 ///  - `configProcessStartInfoF` - A function which overwrites the default ProcessStartInfo.
 ///  - `timeOut` - The timeout for the process.
-let ExecProcess configProcessStartInfoF timeOut = execProcess2 configProcessStartInfoF timeOut redirectOutputToTrace
+let ExecProcess configProcessStartInfoF timeOut = ExecProcessWithLambdas configProcessStartInfoF timeOut redirectOutputToTrace traceError trace  
 
 /// Runs the given process in an elevated context and returns the exit code.
 /// ## Parameters
@@ -145,15 +147,14 @@ let ExecProcess configProcessStartInfoF timeOut = execProcess2 configProcessStar
 ///  - `args` - The process arguments.
 ///  - `timeOut` - The timeout for the process.
 let ExecProcessElevated cmd args timeOut = 
-    ExecProcess (fun si -> 
-                       si.Verb <- "runas"
-                       si.Arguments <- args
-                       si.FileName <- cmd
-                       si.UseShellExecute <- true
-                ) timeOut
+    ExecProcess 
+        (fun si -> 
+            si.Verb <- "runas"
+            si.Arguments <- args
+            si.FileName <- cmd
+            si.UseShellExecute <- true) 
+        timeOut
 
-    
-  
 /// Sets the environment Settings for the given startInfo.
 /// Existing values will be overriden.
 /// [omit]
@@ -302,22 +303,28 @@ let findFile dirs file =
 
 /// Returns the AppSettings for the key - Splitted on ;
 /// [omit]
-let appSettings (key:string) = 
-    try
-        System.Configuration.ConfigurationManager.AppSettings.[key].Split(';')
-    with
-    | exn -> [||]
+let appSettings (key:string) (fallbackValue:string) =
+    let value =
+        let setting =
+            try
+                System.Configuration.ConfigurationManager.AppSettings.[key]
+            with
+            | exn -> ""
+        
+        if not (isNullOrWhiteSpace setting) then setting else fallbackValue
+
+    value.Split([|';'|], StringSplitOptions.RemoveEmptyEntries)
 
 /// Tries to find the tool via AppSettings. If no path has the right tool we are trying the PATH system variable.
 /// [omit]
-let tryFindPath settingsName tool = 
-    let paths = appSettings settingsName
+let tryFindPath settingsName fallbackValue tool = 
+    let paths = appSettings settingsName fallbackValue
     tryFindFile paths tool
 
 /// Tries to find the tool via AppSettings. If no path has the right tool we are trying the PATH system variable.
 /// [omit]
-let findPath settingsName tool =
-    match tryFindPath settingsName tool with
+let findPath settingsName fallbackValue tool =
+    match tryFindPath settingsName fallbackValue tool with
     | Some file -> file
     | None -> tool
 
@@ -406,12 +413,16 @@ let killProcessById id =
     Process.GetProcessById id
     |> kill
 
+/// Returns all processes with the given name
+let getProcessesByName (name:string) =
+      Process.GetProcesses()
+      |> Seq.filter (fun p -> try not p.HasExited with | exn -> false)
+      |> Seq.filter (fun p -> try p.ProcessName.ToLower().StartsWith(name.ToLower()) with | exn -> false)
+
 /// Kills all processes with the given name
 let killProcess name =
     tracefn "Searching for process with name = %s" name
-    Process.GetProcesses()
-      |> Seq.filter (fun p -> try not p.HasExited with | exn -> false)
-      |> Seq.filter (fun p -> try p.ProcessName.ToLower().StartsWith(name.ToLower()) with | exn -> false)
+    getProcessesByName name
       |> Seq.iter kill
 
 /// Kills the F# Interactive (FSI) process.
@@ -433,6 +444,20 @@ let killAllCreatedProcesses() =
         with
         | exn -> ()
     startedProcesses.Clear()
+    
+/// Waits until the processes with the given name have stopped or fails after given timeout.
+/// ## Parameters
+///  - `name` - The name of the processes in question.
+///  - `timeout` - The timespan to time out after.
+let ensureProcessesHaveStopped name timeout =
+    let endTime = DateTime.Now.Add timeout
+    
+    while DateTime.Now <= endTime && (getProcessesByName name <> Seq.empty) do
+        tracefn "Waiting for %s to stop (Timeout: %A)" name endTime
+        Thread.Sleep 1000
+
+    if getProcessesByName name <> Seq.empty then 
+        failwithf "The process %s has not stopped (check the logs for errors)" name
 
 /// Execute an external program and return the exit code.
 /// [omit]

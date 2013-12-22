@@ -13,13 +13,15 @@ open Fake
 /// Specifies a global timeout for git.exe - default is *no timeout*
 let mutable gitTimeOut = TimeSpan.MaxValue
 
+let private GitPath = @"[ProgramFilesX86]\Git\bin\;[ProgramFiles]\Git\bin\"
+
 /// Tries to locate the git.exe via the eviroment variable "GIT".
 let gitPath = 
     if isUnix then
         "git"
     else
         let ev = environVar "GIT"
-        if not (isNullOrEmpty ev) then ev else findPath "GitPath" "git.exe"   
+        if not (isNullOrEmpty ev) then ev else findPath "GitPath" GitPath "git.exe"   
 
 /// Runs git.exe with the given command in the given repository directory.
 let runGitCommand repositoryDir command = 

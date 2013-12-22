@@ -20,11 +20,7 @@ let mstestexe =
  // TODO: try to use VSTest.Console.exe as well (VS2012 and up only)
 
 /// Option which allow to specify if a MSTest error should break the build.
-type ErrorLevel =
-/// This option instructs FAKE to break the build if MSTest reports an error. (Default)
-| Error
-/// With this option set, no exception is thrown if a test is broken.
-| DontFailBuild
+type ErrorLevel = TestRunnerErrorLevel
 
 /// Parameter type to configure the MSTest.exe.
 type MSTestParams = 
@@ -103,7 +99,7 @@ let MSTest (setParams: MSTestParams -> MSTestParams) (assemblies: string seq) =
 
     for assembly in assemblies do
         let args = commandLineBuilder parameters assembly
-        execProcessAndReturnExitCode (fun info ->  
+        ExecProcess (fun info ->  
             info.FileName <- parameters.ToolPath
             info.WorkingDirectory <- parameters.WorkingDir
             info.Arguments <- args) parameters.TimeOut

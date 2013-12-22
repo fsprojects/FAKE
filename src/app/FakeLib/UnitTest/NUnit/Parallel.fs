@@ -39,7 +39,7 @@ let NUnitParallel (setParams: NUnitParams -> NUnitParams) (assemblies: string se
     let tool = parameters.ToolPath @@ parameters.ToolName
 
     let runSingleAssembly parameters name outputFile =
-        let args = commandLineBuilder { parameters with OutputFile = outputFile } [name]
+        let args = buildNUnitdArgs { parameters with OutputFile = outputFile } [name]
         let errout = StringBuilder()
         let stdout = StringBuilder()
         tracefn "Run NUnit tests from %s." name

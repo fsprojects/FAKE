@@ -109,7 +109,7 @@ let xpkgPack setParams =
     let args = commandLineBuilder.ToString()
     trace (parameters.ToolPath + " " + args)
     let result =
-        execProcessAndReturnExitCode (fun info ->  
+        ExecProcess (fun info ->  
             info.FileName <- parameters.ToolPath
             info.WorkingDirectory <- parameters.WorkingDir
             info.Arguments <- args) parameters.TimeOut
@@ -134,7 +134,7 @@ let xpkgValidate setParams =
     let args = commandLineBuilder.ToString()
     trace (parameters.ToolPath + " " + args)
     let result =
-        execProcessAndReturnExitCode (fun info ->  
+        ExecProcess (fun info ->  
             info.FileName <- parameters.ToolPath
             info.WorkingDirectory <- parameters.WorkingDir
             info.Arguments <- args) parameters.TimeOut

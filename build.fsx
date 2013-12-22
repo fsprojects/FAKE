@@ -115,13 +115,21 @@ Target "GenerateDocs" (fun _ ->
     let projInfo =
       [ "page-description", "FAKE - F# Make"
         "page-author", (separated ", " authors)
+        "project-author", (separated ", " authors)
         "github-link", "http://github.com/fsharp/fake"
+        "project-github", "http://github.com/fsharp/fake"
+        "project-nuget", "https://www.nuget.org/packages/FAKE"
+        "root", "http://fsharp.github.io/FAKE"
         "project-name", "FAKE - F# Make" ]
 
     Literate.ProcessDirectory (source, template, docsDir, replacements = projInfo)
 
     if isLocalBuild then  // TODO: this needs to be fixed in FSharp.Formatting
-        MetadataFormat.Generate ( "./build/FakeLib.dll", apidocsDir, ["./help/templates/reference/"])
+        MetadataFormat.Generate ( 
+          "./build/FakeLib.dll" :: (!! "./build/**/Fake.*.dll" |> Seq.toList), 
+          apidocsDir, 
+          ["./help/templates/"; "./help/templates/reference/"], 
+          parameters = projInfo)
 
     WriteStringToFile false "./docs/.nojekyll" ""
 
@@ -160,6 +168,8 @@ Target "CreateNuGet" (fun _ ->
 
         CleanDir nugetDocsDir
         CleanDir nugetToolsDir
+
+        DeleteFile "./build/FAKE.Gallio/Gallio.dll"
         
         match package with
         | p when p = projectName ->
@@ -190,7 +200,8 @@ Target "CreateNuGet" (fun _ ->
                       ["FAKE.Core", RequireExactly (NormalizeVersion buildVersion)]
                     else p.Dependencies
                 AccessKey = getBuildParamOrDefault "nugetkey" ""
-                Publish = hasBuildParam "nugetkey" }) "fake.nuspec"
+                Publish = hasBuildParam "nugetkey"
+                ToolPath = "./tools/NuGet/nuget.exe"  }) "fake.nuspec"
 )
 
 Target "ReleaseDocs" (fun _ ->
