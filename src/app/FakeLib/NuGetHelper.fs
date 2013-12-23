@@ -103,20 +103,24 @@ let private createNuspecFile parameters nuSpec =
         parameters.DependenciesByFramework
           |> Seq.map (fun x -> sprintf "<group targetFramework=\"%s\">%s</group>" x.FrameworkVersion (getDependenciesTags x.Dependencies))
           |> toLines
-    
+
+    let dependenciesXml = 
+        sprintf "<dependencies>%s</dependencies>" (dependencies + dependenciesByFramework)
+
     let xmlEncode (notEncodedText:string) = 
         XText(notEncodedText).ToString()
 
     let replacements =
-        ["@build.number@",xmlEncode parameters.Version
-         "@authors@",parameters.Authors |> List.map xmlEncode |> separated ", "
-         "@project@",xmlEncode parameters.Project
-         "@summary@",if isNullOrEmpty parameters.Summary then "" else xmlEncode parameters.Summary
-         "@dependencies@",sprintf "<dependencies>%s</dependencies>" (xmlEncode (dependencies + dependenciesByFramework))
-         "@description@",xmlEncode parameters.Description
-         "@tags@",xmlEncode parameters.Tags
-         "@releaseNotes@",xmlEncode parameters.ReleaseNotes
-         "@copyright@",xmlEncode parameters.Copyright]
+        ["@build.number@",parameters.Version
+         "@authors@",parameters.Authors |> separated ", "
+         "@project@",parameters.Project
+         "@summary@",if isNullOrEmpty parameters.Summary then "" else parameters.Summary
+         "@description@",parameters.Description
+         "@tags@",parameters.Tags
+         "@releaseNotes@",parameters.ReleaseNotes
+         "@copyright@",parameters.Copyright]
+         |> List.map (fun (placeholder, replacement) -> placeholder, xmlEncode replacement)
+         |> List.append (["@dependencies@", dependenciesXml])
 
     processTemplates replacements [specFile]
     tracefn "Created nuspec file %s" specFile
