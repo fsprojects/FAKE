@@ -66,7 +66,7 @@ type FileIncludes =
     Excludes: string list }
 
   /// Adds the given pattern to the file includes
-  member this.And pattern = { this with Includes = pattern::this.Includes}
+  member this.And pattern = { this with Includes = this.Includes @ [pattern]}
 
   /// Ignores files with the given pattern
   member this.ButNot pattern = { this with Excludes = pattern::this.Excludes}
@@ -83,7 +83,7 @@ type FileIncludes =
             |> Set.ofSeq
 
         let files = 
-            seq { for pattern in List.rev this.Includes do
+            seq { for pattern in this.Includes do
                     yield! search this.BaseDirectory pattern }
             |> Seq.filter (fun x -> not(Set.contains x excludes))
             |> Seq.filter (fun x -> hashSet.Add x)

@@ -13,10 +13,7 @@ See the [project home page](http://fsharp.github.com/FAKE/) for tutorials and [A
 
 # Build the project
 
-I order to build the project and to resolve all nuget packages run *build.cmd*.
-
-  * develop branch runs with F# 3.1
-  * master branch runs with F# 3.0
+In order to build the project and to resolve all nuget packages run *build.cmd*.
 
 ## How to contribute code
 

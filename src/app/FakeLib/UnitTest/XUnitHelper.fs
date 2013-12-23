@@ -89,17 +89,15 @@ let xUnit setParams assemblies =
              |> appendIfTrue parameters.NUnitXmlOutput (sprintf "/nunit\" \"%s" (dir @@ (name + ".xml")))
              |> toText
 
-       if 0 <> ExecProcess (fun info ->
+       0 = ExecProcess (fun info ->
            info.FileName <- parameters.ToolPath
            info.WorkingDirectory <- parameters.WorkingDir
            info.Arguments <- args) parameters.TimeOut
-       then true
-       else false
 
     let failedTests =
         [ for asm in List.ofSeq assemblies do
-              let succeeded = runTests asm
-              if not succeeded then yield asm ]
+              if runTests asm |> not then 
+                  yield asm ]
 
     if not (List.isEmpty failedTests) then
         sprintf "xUnit failed for the following assemblies: %s" (separated ", " failedTests)
