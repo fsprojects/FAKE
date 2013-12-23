@@ -5,6 +5,7 @@ module Fake.NuGetHelper
 
 open System
 open System.IO
+open System.Xml.Linq
 
 type NugetDependencies = (string*string) list
 type NugetFrameworkDependencies = {
@@ -102,17 +103,20 @@ let private createNuspecFile parameters nuSpec =
         parameters.DependenciesByFramework
           |> Seq.map (fun x -> sprintf "<group targetFramework=\"%s\">%s</group>" x.FrameworkVersion (getDependenciesTags x.Dependencies))
           |> toLines
+    
+    let xmlEncode (notEncodedText:string) = 
+        XText(notEncodedText).ToString()
 
     let replacements =
-        ["@build.number@",parameters.Version
-         "@authors@",parameters.Authors |> separated ", "
-         "@project@",parameters.Project
-         "@summary@",if isNullOrEmpty parameters.Summary then "" else parameters.Summary
-         "@dependencies@",sprintf "<dependencies>%s</dependencies>" (dependencies + dependenciesByFramework)
-         "@description@",parameters.Description
-         "@tags@",parameters.Tags
-         "@releaseNotes@",parameters.ReleaseNotes
-         "@copyright@",parameters.Copyright]
+        ["@build.number@",xmlEncode parameters.Version
+         "@authors@",parameters.Authors |> List.map xmlEncode |> separated ", "
+         "@project@",xmlEncode parameters.Project
+         "@summary@",if isNullOrEmpty parameters.Summary then "" else xmlEncode parameters.Summary
+         "@dependencies@",sprintf "<dependencies>%s</dependencies>" (xmlEncode (dependencies + dependenciesByFramework))
+         "@description@",xmlEncode parameters.Description
+         "@tags@",xmlEncode parameters.Tags
+         "@releaseNotes@",xmlEncode parameters.ReleaseNotes
+         "@copyright@",xmlEncode parameters.Copyright]
 
     processTemplates replacements [specFile]
     tracefn "Created nuspec file %s" specFile
