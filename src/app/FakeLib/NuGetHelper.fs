@@ -107,7 +107,8 @@ let private createNuspecFile parameters nuSpec =
     let dependenciesXml = 
         sprintf "<dependencies>%s</dependencies>" (dependencies + dependenciesByFramework)
 
-    let xmlEncode (notEncodedText:string) = 
+    let xmlEncode (notEncodedText:string) =
+        if isNullOrEmpty notEncodedText then "" else
         XText(notEncodedText).ToString()
 
     let replacements =
