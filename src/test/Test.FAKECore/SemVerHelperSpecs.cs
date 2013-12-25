@@ -2,6 +2,7 @@
 using System.Linq;
 using Fake;
 using Machine.Specifications;
+using Microsoft.FSharp.Core;
 
 namespace Test.FAKECore
 {
@@ -37,7 +38,8 @@ namespace Test.FAKECore
         It should_parse_major = () => semVer.Major.ShouldEqual(1);
         It should_parse_minor = () => semVer.Minor.ShouldEqual(2);
         It should_parse_patch = () => semVer.Patch.ShouldEqual(3);
-        It should_parse_prerelease = () => semVer.PreRelease.ShouldEqual("alpha");
+        It should_parse_prerelease = () => semVer.PreRelease.ShouldEqual(
+            FSharpOption<SemVerHelper.PreRelease>.Some(new SemVerHelper.PreRelease("alpha", "alpha", FSharpOption<int>.None)));
         It should_parse_build = () => semVer.Build.ShouldEqual("beta");
     }
 
@@ -87,12 +89,24 @@ namespace Test.FAKECore
             () => SemVerHelper.parse("1.0.0-rc.1")
                 .ShouldBeLessThan(SemVerHelper.parse("1.0.0"));
 
-        It should_assume_release_is_greater_than_alpa =
+        It should_assume_release_is_greater_than_alpha =
             () => SemVerHelper.parse("2.3.4")
                 .ShouldBeGreaterThan(SemVerHelper.parse("2.3.4-alpha"));
 
         It should_assume_beta_2_is_smaller_than_rc_1 =
             () => SemVerHelper.parse("1.5.0-rc.1")
                 .ShouldBeGreaterThan(SemVerHelper.parse("1.5.0-beta.2"));
+
+        It should_assume_alpha2_is_greater_than_alpha =
+            () => SemVerHelper.parse("2.3.4-alpha2")
+                .ShouldBeGreaterThan(SemVerHelper.parse("2.3.4-alpha"));
+
+        It should_assume_alpha003_is_greater_than_alpha2 =
+            () => SemVerHelper.parse("2.3.4-alpha003")
+                .ShouldBeGreaterThan(SemVerHelper.parse("2.3.4-alpha2"));
+
+        It should_assume_rc_is_greater_than_beta2 =
+            () => SemVerHelper.parse("2.3.4-rc")
+                .ShouldBeGreaterThan(SemVerHelper.parse("2.3.4-beta2"));
     }
 }
