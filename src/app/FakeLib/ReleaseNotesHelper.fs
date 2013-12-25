@@ -59,14 +59,23 @@ type ReleaseNotes =
         SemVer = SemVerHelper.parse nugetVersion
         Notes = notes }
 
-let private nugetRegex = getRegEx @"([0-9]+.)+[0-9]+(-[a-zA-Z]+\d*)?(.[0-9]+)?"
+let parseVersions =
+    let nugetRegex = getRegEx @"([0-9]+.)+[0-9]+(-[a-zA-Z]+\d*)?(.[0-9]+)?"
+    fun line ->
+        let assemblyVersion = assemblyVersionRegex.Match line
+        if not assemblyVersion.Success
+        then failwithf "Unable to parse valid Assembly version from release notes (%s)." line
+
+        let nugetVersion = nugetRegex.Match line
+        if not nugetVersion.Success
+        then failwithf "Unable to parse valid NuGet version from release notes (%s)." line
+        assemblyVersion, nugetVersion
 
 /// Parse simple release notes sequence
 let private parseSimpleReleaseNotes line =
-    let assemblyVersion, nugetVersion = assemblyVersionRegex.Match (line), nugetRegex.Match (line)
-    if not assemblyVersion.Success
-    then failwith "Unable to parse valid Assembly version from release notes."
+    let assemblyVersion, nugetVersion = parseVersions line
     let trimDot (s:string) = s.TrimEnd('.')
+
     let notes = 
         line.Substring (nugetVersion.Index + nugetVersion.Length)
         |> trimChars [|' '; '-'|]
@@ -74,7 +83,7 @@ let private parseSimpleReleaseNotes line =
         |> List.map (trimDot >> trim)
         |> List.filter isNotNullOrEmpty
         |> List.map (fun x -> x + ".")
-    ReleaseNotes.New(assemblyVersion.Value,nugetVersion.Value,notes)
+    ReleaseNotes.New(assemblyVersion.Value, nugetVersion.Value,notes)
 
 /// Parse "complex" release notes text sequence
 let private parseAllComplexReleaseNotes (text: seq<string>) =
@@ -91,9 +100,8 @@ let private parseAllComplexReleaseNotes (text: seq<string>) =
 
     let rec loop releaseNotes text =
         match findNextNotesBlock text with
-        | Some(header,(notes, rest)) ->        
-            let assemblyVer, nugetVer = assemblyVersionRegex.Match header, nugetRegex.Match header
-            if not assemblyVer.Success then failwith "Unable to parse valid Assembly version from release notes."
+        | Some(header,(notes, rest)) ->
+            let assemblyVer, nugetVer = parseVersions header
             let newReleaseNotes = ReleaseNotes.New(assemblyVer.Value,nugetVer.Value,notes |> List.filter isNotNullOrEmpty |> List.rev)
             loop (newReleaseNotes::releaseNotes) rest
         | None -> releaseNotes
