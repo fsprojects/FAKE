@@ -59,7 +59,7 @@ type ReleaseNotes =
         SemVer = SemVerHelper.parse nugetVersion
         Notes = notes }
 
-let private nugetRegex = getRegEx @"([0-9]+.)+[0-9]+(-[a-zA-Z]+)?(.[0-9]+)?"
+let private nugetRegex = getRegEx @"([0-9]+.)+[0-9]+(-[a-zA-Z]+\d*)?(.[0-9]+)?"
 
 /// Parse simple release notes sequence
 let private parseSimpleReleaseNotes line =
