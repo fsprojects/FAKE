@@ -1,21 +1,21 @@
 #I @"tools/FAKE/tools/"
 #r @"FakeLib.dll"
 
-#I "tools/FSharp.Formatting/lib/net40"
-#I "tools/Microsoft.AspNet.Razor/lib/net40"
-#I "tools/RazorEngine/lib/net40"
-#r "System.Web.dll"
-#r "FSharp.Markdown.dll"
-#r "FSharp.CodeFormat.dll"
-#r "FSharp.Literate.dll"
-#r "FSharp.MetadataFormat.dll"
-#r "System.Web.Razor.dll"
-#r "RazorEngine.dll"
+//##//#I "tools/FSharp.Formatting/lib/net40"
+//##//#I "tools/Microsoft.AspNet.Razor/lib/net40"
+//##//#I "tools/RazorEngine/lib/net40"
+//##//#r "System.Web.dll"
+//##//#r "FSharp.Markdown.dll"
+//##//#r "FSharp.CodeFormat.dll"
+//##//#r "FSharp.Literate.dll"
+//##//#r "FSharp.MetadataFormat.dll"
+//##//#r "System.Web.Razor.dll"
+//##//#r "RazorEngine.dll"
 
 open Fake
-open FSharp.Literate
+//##//open FSharp.Literate
 open Fake.Git
-open FSharp.MetadataFormat
+//##//open FSharp.MetadataFormat
  
 // properties 
 let projectName = "FAKE"
@@ -110,31 +110,74 @@ Target "BuildSolution" (fun _ ->
 )
 
 Target "GenerateDocs" (fun _ ->
+    // TODO: should this be based on a separate 'Fake.FSFHelper.fs'?
+    // TODO: is fsformatting deployment via FAKE tools ok? Preferably a separate NuGet package?
+    // TODO: fsformatting should use FAKE logging mechanism 
+    // TODO: provide platform-independent executable
+
+    /// Specifies the fsformatting executable
+    let fsformattingPath = "./tools/fsformatting/fsformatting.exe"
+    /// Specifies a global timeout for fsformatting.exe
+    let fsformattingTimeOut = System.TimeSpan.MaxValue
+    /// Runs fsformatting.exe with the given command in the given repository directory.
+    let runFSFormattingCommand workingDir command = 
+        let processResult = 
+            ExecProcessAndReturnMessages (fun info ->  
+              info.FileName <- fsformattingPath
+              info.WorkingDirectory <- workingDir
+              info.Arguments <- command) fsformattingTimeOut
+        processResult.OK,processResult.Messages,toLines processResult.Errors
+
     let source = "./help"
     let template = "./help/templates/template-project.html"
     let projInfo =
-      [ "page-description", "FAKE - F# Make"
-        "page-author", (separated ", " authors)
-        "project-author", (separated ", " authors)
-        "github-link", "http://github.com/fsharp/fake"
-        "project-github", "http://github.com/fsharp/fake"
-        "project-nuget", "https://www.nuget.org/packages/FAKE"
-        "root", "http://fsharp.github.io/FAKE"
-        "project-name", "FAKE - F# Make" ]
+      [ "page-description"; "\"FAKE - F# Make\""
+        "page-author"; "\""+(separated ", " authors)+"\""
+        "project-author"; "\""+(separated ", " authors)+"\""
+        "github-link"; "http://github.com/fsharp/fake"
+        "project-github"; "http://github.com/fsharp/fake"
+        "project-nuget"; "https://www.nuget.org/packages/FAKE"
+        "root"; "http://fsharp.github.io/FAKE"
+        "project-name"; "\"FAKE - F# Make\"" ]
 
-    Literate.ProcessDirectory (source, template, docsDir, replacements = projInfo)
+    let ok1,_,errors1 = 
+        [ [ "literate --processdirectory";
+            "--inputdirectory"; source
+            "--templatefile"; template
+            "--replacements" ]; projInfo ]
+        |> List.concat
+        |> separated " "
+        |> runFSFormattingCommand "."
+    //##//Literate.ProcessDirectory (source, template, docsDir, replacements = projInfo)
 
-    if isLocalBuild then  // TODO: this needs to be fixed in FSharp.Formatting
-        MetadataFormat.Generate ( 
-          "./build/FakeLib.dll" :: (!! "./build/**/Fake.*.dll" |> Seq.toList), 
-          apidocsDir, 
-          ["./help/templates/"; "./help/templates/reference/"], 
-          parameters = projInfo)
+    /// TODO: define define appropriate error handling
+    if not ok1 then printfn "Failed to generate docs in %s " source
 
-    WriteStringToFile false "./docs/.nojekyll" ""
+    if isLocalBuild then  
+        let dllFiles = "./build/FakeLib.dll" :: (!! "./build/**/Fake.*.dll" |> Seq.toList)
+        let ok2,_,errors2 = 
+            [ [ "metadataformat --generate" 
+                "--dllfiles" ]; dllFiles 
+              [ "--outdir"; apidocsDir
+                "--layoutroots" ]; ["./help/templates/"; "./help/templates/reference/"]
+              [ "--parameters" ]; projInfo ] 
+            |> List.concat
+            |> separated " "
+            |> runFSFormattingCommand "."
+//##//        MetadataFormat.Generate ( 
+//##//          "./build/FakeLib.dll" :: (!! "./build/**/Fake.*.dll" |> Seq.toList), 
+//##//          apidocsDir, 
+//##//          ["./help/templates/"; "./help/templates/reference/"], 
+//##//          parameters = projInfo)
 
-    CopyDir (docsDir @@ "content") "help/content" allFiles
-    CopyDir (docsDir @@ "pics") "help/pics" allFiles
+        /// TODO: define define appropriate error handling
+        if not ok2 then printfn "Failed to generate docs for DLLs %s " (dllFiles |> separated " ")
+ 
+        if ok1 || ok2 then 
+            WriteStringToFile false "./docs/.nojekyll" ""
+
+            CopyDir (docsDir @@ "content") "help/content" allFiles
+            CopyDir (docsDir @@ "pics") "help/pics" allFiles
 )
 
 Target "CopyLicense" (fun _ -> 

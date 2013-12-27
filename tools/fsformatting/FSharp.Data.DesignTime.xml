@@ -1,0 +1,4474 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>FSharp.Data.DesignTime</name></assembly>
+<members>
+<member name="T:AssemblyInfo">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.Csv.CsvFile.Parse(System.String,Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{System.Char},Microsoft.FSharp.Core.FSharpOption{System.Boolean},Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+<summary>
+ Parses the specified CSV content
+</summary>
+</member>
+<member name="M:FSharp.Data.Csv.CsvFile.Load(System.String,Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{System.Char},Microsoft.FSharp.Core.FSharpOption{System.Boolean},Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+<summary>
+ Loads CSV from the specified uri
+</summary>
+</member>
+<member name="M:FSharp.Data.Csv.CsvFile.Load(System.IO.TextReader,Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{System.Char},Microsoft.FSharp.Core.FSharpOption{System.Boolean},Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+<summary>
+ Loads CSV from the specified reader
+</summary>
+</member>
+<member name="M:FSharp.Data.Csv.CsvFile.Load(System.IO.Stream,Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{System.Char},Microsoft.FSharp.Core.FSharpOption{System.Boolean},Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+<summary>
+ Loads CSV from the specified stream
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.Csv.CsvFile">
+<summary>
+ Represents a CSV file. The lines are read on demand from &apos;reader&apos;.
+ Columns are delimited by one of the chars passed by &apos;separators&apos; (defaults to just &apos;,&apos;), and
+ to escape the separator chars, the &apos;quote&apos; character will be used (defaults to &apos;&quot;&apos;).
+ If &apos;hasHeaders&apos; is true (the default), the first line read by &apos;reader&apos; will not be considered part of data.
+ If &apos;ignoreErrors&apos; is true (the default is false), rows with a different number of columns from the header row
+ (or the first row if headers are not present) will be ignored
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.Csv.Extensions">
+<summary>
+ Adds extension methods that can be used to work with CsvRow in a more convenient, but
+ less safe way. The module also provides the dynamic operator.
+</summary>
+</member>
+<member name="M:FSharp.Data.FreebaseOperators.Where``1(System.Linq.IQueryable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+<summary>
+ Synonym for LINQ&apos;s Where
+</summary>
+</member>
+<member name="M:FSharp.Data.FreebaseOperators.Count``1(System.Linq.IQueryable{``0})">
+<summary>
+ Synonym for LINQ&apos;s Count
+</summary>
+</member>
+<member name="M:FSharp.Data.FreebaseOperators.ApproximateCount``1(System.Linq.IQueryable{``0})">
+<summary>
+ A Freebase query operation returning an approximate count of the items satisfying a query.
+</summary>
+</member>
+<member name="M:FSharp.Data.FreebaseOperators.ApproximatelyOneOf(System.String,System.String[])">
+<summary>
+ A Freebase query operation that represents approximately matching one of the given strings. See http://www.freebase.com/docs/mql/ch03.html#directives.
+</summary>
+</member>
+<member name="M:FSharp.Data.FreebaseOperators.ApproximatelyMatches(System.String,System.String)">
+<summary>
+ A Freebase query operation that represents a perl-style match of a string, e.g. &quot;book club&quot;, &quot;book*&quot;, &quot;*book&quot;, &quot;*book*&quot;, &quot;^book&quot;, &quot;book$&quot;, &quot;* book *&quot;, &quot;book-club&quot;, &quot;book\-club&quot;. See http://www.freebase.com/docs/mql/ch03.html#directives.
+</summary>
+</member>
+<member name="T:FSharp.Data.FreebaseOperators">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.Json.JsonValue.Parse(System.String,Microsoft.FSharp.Core.FSharpOption{System.Globalization.CultureInfo})">
+<summary>
+ Parses the specified JSON string
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.JsonValue.Load(System.String,Microsoft.FSharp.Core.FSharpOption{System.Globalization.CultureInfo})">
+<summary>
+ Loads JSON from the specified uri
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.JsonValue.Load(System.IO.TextReader,Microsoft.FSharp.Core.FSharpOption{System.Globalization.CultureInfo})">
+<summary>
+ Loads JSON from the specified reader
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.JsonValue.Load(System.IO.Stream,Microsoft.FSharp.Core.FSharpOption{System.Globalization.CultureInfo})">
+<summary>
+ Loads JSON from the specified stream
+</summary>
+</member>
+<member name="T:FSharp.Data.Json.JsonValue">
+<summary>
+ Represents a JSON value. Large numbers that do not fit in the 
+ Decimal type are represented using the Float case, while
+ smaller numbers are represented as decimals to avoid precision loss.
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.op_Dynamic(FSharp.Data.Json.JsonValue,System.String)">
+<summary>
+ Get property of a JSON object (assuming that the value is an object)
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.GetProperty(FSharp.Data.Json.JsonValue,System.String)">
+<summary>
+ Get property of a JSON object. Fails if the value is not an object
+ or if the property is not present
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.TryGetProperty(FSharp.Data.Json.JsonValue,System.String)">
+<summary>
+ Try get property of a JSON object. Returns None if the value is not
+ an object or if the property is not present.
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.get_Properties(FSharp.Data.Json.JsonValue)">
+<summary>
+ Get a sequence of key-value pairs representing the properties of an object
+ (assuming that the value is an object)
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.get_InnerText(FSharp.Data.Json.JsonValue)">
+<summary>
+ Get inner text of an element - this includes just string nodes and
+ string nodes in an array (e.g. multi-line string represented as array)
+ (assuming that the value is a string or array of strings)
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.AsGuid``1(FSharp.Data.Json.JsonValue,Microsoft.FSharp.Core.FSharpOption{``0})">
+<summary>
+ Get the guid value of an element (assuming that the value is a guid)
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.AsBoolean(FSharp.Data.Json.JsonValue,Microsoft.FSharp.Core.FSharpOption{System.Globalization.CultureInfo})">
+<summary>
+ Get the boolean value of an element (assuming that the value is a boolean)
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.AsInteger64(FSharp.Data.Json.JsonValue,Microsoft.FSharp.Core.FSharpOption{System.Globalization.CultureInfo})">
+<summary>
+ Get a number as a 64-bit integer (assuming that the value fits in 64-bit integer)
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.AsInteger(FSharp.Data.Json.JsonValue,Microsoft.FSharp.Core.FSharpOption{System.Globalization.CultureInfo})">
+<summary>
+ Get a number as an integer (assuming that the value fits in integer)
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.AsDecimal(FSharp.Data.Json.JsonValue,Microsoft.FSharp.Core.FSharpOption{System.Globalization.CultureInfo})">
+<summary>
+ Get a number as a decimal (assuming that the value fits in decimal)
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.AsFloat(FSharp.Data.Json.JsonValue,Microsoft.FSharp.Core.FSharpOption{System.Globalization.CultureInfo})">
+<summary>
+ Get a number as a float (assuming that the value is convertible to a float)
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.AsDateTime(FSharp.Data.Json.JsonValue,Microsoft.FSharp.Core.FSharpOption{System.Globalization.CultureInfo})">
+<summary>
+ Get the datetime value of an element (assuming that the value is a string
+ containing well-formed ISO date or MSFT JSON date)
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.AsString(FSharp.Data.Json.JsonValue,Microsoft.FSharp.Core.FSharpOption{System.Globalization.CultureInfo})">
+<summary>
+ Get the string value of an element (assuming that the value is a scalar)
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.GetEnumerator(FSharp.Data.Json.JsonValue)">
+<summary>
+ Get all elements of a JSON object (assuming that the value is an array)
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.get_Item(FSharp.Data.Json.JsonValue,System.String)">
+<summary>
+ Assuming the value is an object, get value with the specified name
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.get_Item(FSharp.Data.Json.JsonValue,System.Int32)">
+<summary>
+ Assuming the value is an array, get the value at a specified index
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.AsArray(FSharp.Data.Json.JsonValue)">
+<summary>
+ Get all elements of a JSON object (assuming that the value is an array)
+</summary>
+</member>
+<member name="T:FSharp.Data.Json.Extensions">
+<summary>
+ Adds extension methods that can be used to work with JsonValue in a less safe, 
+ but shorter way. The module also provides the dynamic operator.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.CsvFile`1.Truncate(System.Int32)">
+<summary>
+ Returns a csv that when enumerated returns at most N rows.
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.CsvFile`1.TakeWhile(Microsoft.FSharp.Core.FSharpFunc{`0,System.Boolean})">
+<summary>
+ Returns a csv that, when iterated, yields rowswhile the given predicate
+ returns &lt;c&gt;true&lt;/c&gt;, and then returns no further rows.
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.CsvFile`1.Take(System.Int32)">
+<summary>
+ Returns a new csv with only the first N rows of the underlying csv.
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.CsvFile`1.SkipWhile(Microsoft.FSharp.Core.FSharpFunc{`0,System.Boolean})">
+<summary>
+ Returns a csv that, when iterated, skips rows while the given predicate returns
+ &lt;c&gt;true&lt;/c&gt;, and then yields the remaining rows.
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.CsvFile`1.Skip(System.Int32)">
+<summary>
+ Returns a csv that skips N rows and then yields the remaining rows.
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.CsvFile`1.SaveToString(Microsoft.FSharp.Core.FSharpOption{System.Char},Microsoft.FSharp.Core.FSharpOption{System.Char})">
+<summary>
+ Saves CSV to a string
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.CsvFile`1.Save(System.String,Microsoft.FSharp.Core.FSharpOption{System.Char},Microsoft.FSharp.Core.FSharpOption{System.Char})">
+<summary>
+ Saves CSV to the specified file
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.CsvFile`1.Save(System.IO.Stream,Microsoft.FSharp.Core.FSharpOption{System.Char},Microsoft.FSharp.Core.FSharpOption{System.Char})">
+<summary>
+ Saves CSV to the specified stream
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.CsvFile`1.Save(System.IO.TextWriter,Microsoft.FSharp.Core.FSharpOption{System.Char},Microsoft.FSharp.Core.FSharpOption{System.Char})">
+<summary>
+ Saves CSV to the specified writer
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.CsvFile`1.Filter(Microsoft.FSharp.Core.FSharpFunc{`0,System.Boolean})">
+<summary>
+ Returns a new csv containing only the rows for which the given predicate returns &quot;true&quot;.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.CsvFile`1.Cache">
+<summary>
+ Returns a new csv with the same rows as the original but which guarantees
+ that each row will be only be read and parsed from the input at most once.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.JsonDocument.Create(FSharp.Data.Json.JsonValue)">
+<summary>
+ Creates a JsonDocument representing the specified value
+</summary>
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.JsonDocument">
+<summary>
+ Underlying representation of the generated JSON types
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.JsonOperations.TryGetValueByTypeTag``2(FSharp.Data.Json.JsonValue,System.String,System.Func{FSharp.Data.Json.JsonValue,``0},System.Func{``0,``1})">
+<summary>
+ Returns a single or no value by tag type
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.JsonOperations.TryGetArrayChildByTypeTag``2(FSharp.Data.Json.JsonValue,System.String,System.Func{FSharp.Data.Json.JsonValue,``0},System.Func{``0,``1})">
+<summary>
+ Returns single or no value from an array matching the specified tag
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.JsonOperations.GetArrayChildrenByTypeTag``2(FSharp.Data.Json.JsonValue,System.String,System.Func{FSharp.Data.Json.JsonValue,``0},System.Func{``0,``1})">
+<summary>
+ Returns all array values that match the specified tag
+ (Follows the same pattern as ConvertXyz functions above)
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.JsonOperations.GetArrayChildByTypeTag(FSharp.Data.Json.JsonValue,System.String)">
+<summary>
+ Returns a single array children that matches the specified tag
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.JsonOperations.ConvertOptionalProperty``2(FSharp.Data.Json.JsonValue,System.String,System.Func{FSharp.Data.Json.JsonValue,``0},System.Func{``0,``1})">
+<summary>
+ Get optional property of a specified type
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.JsonOperations.ConvertArray``2(FSharp.Data.Json.JsonValue,System.Func{FSharp.Data.Json.JsonValue,``0},System.Func{``0,``1})">
+<summary>
+ Converts JSON array to array of target types
+ The `packer` function rebuilds representation type (such as
+ `JsonDocument`) which is then passed to projection function `f`.
+</summary>
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.JsonOperations">
+<summary>
+ Static helper methods called from the generated code
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Operations.OptionToNullable``1(Microsoft.FSharp.Core.FSharpOption{``0})">
+<summary>
+ Turn an F# option type Option&lt;&apos;T&gt; containing a primitive 
+ value type into a .NET type Nullable&lt;&apos;T&gt;
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Operations.NullableToOption``1(System.Nullable{``0})">
+<summary>
+ Turn a .NET type Nullable&lt;&apos;T&gt; to an F# option type Option&lt;&apos;T&gt;
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Operations.GetNonOptionalValue``1(System.String,Microsoft.FSharp.Core.FSharpOption{``0},Microsoft.FSharp.Core.FSharpOption{System.String})">
+<summary>
+ Operation that extracts the value from an option and reports a
+ meaningful error message when the value is not there
+
+ We could just return defaultof&lt;&apos;T&gt; if the value is None, but that is not
+ really correct, because this operation is used when the inference engine
+ inferred that the value is always present. The user should update their
+ sample to infer it as optional (and get None). If we use defaultof&lt;&apos;T&gt; we
+ might return 0 and the user would not be able to distinguish between 0
+ and missing value.
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Operations.GetCulture(System.String)">
+<summary>
+ Returns CultureInfo matching the specified culture string
+ (or InvariantCulture if the argument is null or empty)
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Operations.AsOption(System.String)">
+<summary>
+ Turns empty or null string value into None, otherwise returns Some
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Operations.AsDateTime(System.IFormatProvider,System.String)">
+<summary>
+ Parse date time using either the JSON milliseconds format or using ISO 8601
+ that is, either &quot;\/Date(&lt;msec-since-1/1/1970&gt;)\/&quot; or something
+ along the lines of &quot;2013-01-28T00:37Z&quot;
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.ReentrantEnumerable`1">
+<summary>
+ An enumerable that will return elements from the &apos;firstSeq&apos; first time it
+ is accessed and then will call &apos;nextSeq&apos; each time for all future GetEnumerator calls
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.XmlElement.Create(System.Xml.Linq.XElement)">
+<summary>
+ Creates a JsonDocument representing the specified value
+</summary>
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.XmlElement">
+<summary>
+ Underlying representation of the generated XML types
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.XmlOperations">
+<summary>
+ Static helper methods called from the generated code
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Caching.ICache`1">
+<summary>
+ Represents a cache (various implementations are available)
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Caching.createInternetFileCache(System.String,System.TimeSpan)">
+<summary>
+ Creates a cache that stores data in a local file system
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Caching.hashString(System.String)">
+<summary>
+ Get hash code of a string - used to determine cache file
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Caching.createInMemoryCache``1(System.TimeSpan)">
+<summary>
+ Creates a cache that uses in-memory collection
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Caching">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.CsvHelpers">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.CsvReader.readCsvFile(System.IO.TextReader,System.String,System.Char)">
+<summary>
+ Lazily reads the specified CSV file using the specified separators
+ (Handles most of the RFC 4180 - most notably quoted values and also
+ quoted newline characters in columns)
+</summary>
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.CsvReader">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseDataConnection.TryGetPropertyById(System.String,System.String)">
+<summary>
+ Get the FreebaseProperty object that gives schema information for a particular property of a particular type.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseDataConnection.GetInitialDataForSpecificObjectOfType(System.String,System.String)">
+<summary>
+ Get a property bag for a specific object, giving values for the properties of the given type 
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseDataConnection.GetInitialDataForObjectsFromQueryText(Microsoft.FSharp.Collections.FSharpList{System.Tuple{System.String,System.String}},System.String,System.Int32)">
+<summary>
+ Get property bags for all the objects of the given type, at the given type
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseDataConnection.GetInitialDataForAllObjectsForPropertyOfObject(System.String,System.String,FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseProperty,System.String,System.Int32)">
+<summary>
+ Get property bags for all the objects in the specific property relation to a given object, giving values for the properties of the given property type 
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.FreebaseDataConnection">
+<summary>
+ Represents a data connection to Freebase
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseDataContext._Create(System.String,System.String,System.Boolean,System.String,System.Boolean,System.Boolean)">
+<summary>
+ Create a data context
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseDataContext.FSharp-Data-RuntimeImplementation-Freebase-IFreebaseDataContext-GetDomainCategoryById(System.String)">
+<summary>
+ Get the object which represents the Freebase domain with the given object id.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.FreebaseDataContext">
+<summary>
+ Contains public entry points called by provided code.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseDomain.FSharp-Data-RuntimeImplementation-Freebase-IFreebaseDomain-GetObjectsOfTypeId(System.String)">
+<summary>
+ Get all the Freebase objects which have the given Freebase type id.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.FreebaseDomain">
+<summary>
+ Represents the contents of a Freebase namespace
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseDomainCategory.FSharp-Data-RuntimeImplementation-Freebase-IFreebaseDomainCategory-GetDomainById(System.String)">
+<summary>
+ Get all the Freebase objects which have the given Freebase type id.
+ Get the object which represents the Freebase domain with the given object id.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.FreebaseDomainCategory">
+<summary>
+ Represents the contents of a Freebase namespace
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseIndividuals._GetIndividualsObject(System.Object)">
+<summary>
+ Get all the Freebase objects which have the given Freebase type id.
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseIndividuals.FSharp-Data-RuntimeImplementation-Freebase-IFreebaseIndividuals-GetIndividualById(System.String,System.String)">
+<summary>
+ Get all the Freebase objects which have the given type id and object id.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.Freebase.FreebaseObject.Name">
+<summary>
+ The Name of this item
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.Freebase.FreebaseObject.MainImage">
+<summary>
+ The main image associated with this item, if any
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.Freebase.FreebaseObject.Id">
+<summary>
+ The ID of this item
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.Freebase.FreebaseObject.Blurb">
+<summary>
+ The Blurb text for this item, if any
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseObject.GetImages">
+<summary>
+ Images associated with this item. 
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.FreebaseObject">
+<summary>
+ Represents a single object drawn from Freebase. 
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.FreebasePropertyBag">
+<summary>
+ Represents data for a single object
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.Freebase.IFreebaseObject.Name">
+<summary>
+ The name of this item
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.Freebase.IFreebaseObject.MainImage">
+<summary>
+ The main image associated with this item
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.Freebase.IFreebaseObject.Id">
+<summary>
+ The ID of this item
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.Freebase.IFreebaseObject.Blurb">
+<summary>
+ The Blurb text for this item, if any
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.IFreebaseObject.GetPropertyByIdTyped``1(System.String,System.String)">
+<summary>
+ Get a property by identifier, with a strong type
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.IFreebaseObject.GetPropertyById(System.String,System.String)">
+<summary>
+ Get a property by identifier, with a strong type
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.IFreebaseObject.GetImages">
+<summary>
+ Images associated with this item. 
+</summary>
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.IFreebaseObject">
+<summary>
+ Represents a single object drawn from Freebase. 
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.FreebaseRequests.Utilities">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.FreebaseRequests">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="F:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseSchemaConnection.typeIdToType">
+<summary>
+ Cache policy for type properties. This will be used at runtime.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseSchemaConnection.GetTypeByTypeId(System.String)">
+<summary>
+ Get the types that correspond to type id.   The properties of the type are filled in.
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseSchemaConnection.GetDomainStructure">
+<summary>
+ Query the structure of common domains and all the type types in that domain.  Design-time only.
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseSchemaConnection.GetDomainCategories">
+<summary>
+ Query the structure of common domains and all the type types in that domain. 
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseSchemaConnection.GetBlurbById(System.String)">
+<summary>
+ Get the &apos;blurb&apos; text for this topic ID 
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseSchemaConnection.GetAllTypesInDomainSansProperties(System.String)">
+<summary>
+ Return all typesin a domain. Design-time only.
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseSchemaConnection.GetAllTypesInAllDomainsSansProperties">
+<summary>
+ Return all types. Design-time only.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseSchemaConnection.GetAllObjectsOfType(FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseType)">
+<summary>
+ Get property bags for all the objects of the given type, at the given type
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseDomainCategory">
+<summary>
+ The element type returned by GetDomainCategories
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseDomainStructure">
+<summary>
+ The element type returned by GetDomainStructure.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="F:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseProperty.UnitOfMeasure">
+<summary>
+ The unit of measure for the property, if any. e.g. /en/kilometer
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="F:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseProperty.Enumeration">
+<summary>
+ Name of the enumeration type. Like /authority/gnis
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseProperty.FSharpPropertyType(FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseSchemaConnection,Microsoft.FSharp.Core.FSharpFunc{FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseProperty,Microsoft.FSharp.Core.FSharpOption{System.Tuple{System.Type,System.Boolean}}},Microsoft.FSharp.Core.FSharpFunc{FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseType,Microsoft.FSharp.Core.FSharpOption{System.Type}},Microsoft.FSharp.Core.FSharpFunc{System.Type,System.Type},Microsoft.FSharp.Core.FSharpFunc{System.Type,System.Type})">
+<summary>
+ Compute the provided or erased runtime type corresponding to the Freebase property.
+ &apos;typeReprFunction&apos; indicates if erasure is happening or not.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseProperty.FSharpPropertyElementType(FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseSchemaConnection,Microsoft.FSharp.Core.FSharpFunc{FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseProperty,Microsoft.FSharp.Core.FSharpOption{System.Tuple{System.Type,System.Boolean}}},Microsoft.FSharp.Core.FSharpFunc{FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseType,Microsoft.FSharp.Core.FSharpOption{System.Type}})">
+<summary>
+ Compute the provided or erased runtime type corresponding to the Freebase property.
+ &apos;typeReprFunction&apos; indicates if erasure is happening or not.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.units">
+<summary>
+ This table of data was downloaded from www.freebase.com itself. 
+ See www.freebase.com for term and conditions of use.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.Utilities.dictionaryFromJson(FSharp.Data.Json.JsonValue)">
+<summary>
+ Represents one object&apos;s values for all the properties of one type id.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.Utilities">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.QueryImplementation.FreebasePropAccess">
+<summary>
+ The algebra of different supported  qualifications
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.QueryImplementation.formatQueryData(FSharp.Data.RuntimeImplementation.Freebase.FreebaseDataConnection,FSharp.Data.RuntimeImplementation.Freebase.QueryImplementation.FreebaseQueryData)">
+<summary>
+ Format as query text for MQL
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.QueryImplementation.formatPropAccessCx``1(FSharp.Data.RuntimeImplementation.Freebase.FreebaseDataConnection,Microsoft.FSharp.Collections.FSharpList{System.Tuple{``0,System.String}},System.String,System.String)">
+<summary>
+ with all the non-compound fields filled in.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.Freebase.QueryImplementation.evaluateOnClientSideWhereNecessary">
+<summary>
+ TODO: make this a parameter
+</summary>
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.QueryImplementation">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.RuntimeConversion">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Helpers.asOption``1(System.Boolean,``0)">
+<summary>
+ Convert the result of TryParse to option type
+</summary>
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Helpers">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.ProviderFileSystem.readTextAtRunTime(System.Boolean,System.String,System.String,System.String)">
+<summary>
+ Resolve a location of a file (or a web location) and open it for shared
+ read at runtime (do not monitor file changes and use runtime resolution rules)
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.ProviderFileSystem.asyncOpenStreamInProvider(System.Boolean,System.Boolean,System.String,Microsoft.FSharp.Core.FSharpOption{Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,Microsoft.FSharp.Core.Unit}},System.String,System.Uri)">
+<summary>
+ Given a type provider configuration and a name passed by user, open 
+ the uri and return it as a stream
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.ProviderFileSystem.resolveUri(System.Boolean,System.Boolean,System.String,System.String,System.Uri)">
+<summary>
+ Resolve the absolute location of a file (or web URL) according to the rules
+ used by standard F# type providers as described here:
+ https://github.com/fsharp/fsharpx/issues/195#issuecomment-12141785
+
+  * if it is web resource, just return it
+  * if it is full path, just return it
+  * otherwise..
+
+    At design-time:
+      * if the user specified resolution folder, use that
+      * use the default resolution folder
+    At run-time:
+      * if the user specified resolution folder, use that
+      * if it is running in F# interactive (config.IsHostedExecution) 
+        use the default resolution folder
+      * otherwise, use &apos;CurrentDomain.BaseDirectory&apos;
+
+ Returns the resolved file name, together with a flag specifying 
+ whether it is web based (and we need WebClient to download it)
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.ProviderFileSystem.watchForChanges(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,Microsoft.FSharp.Core.Unit},System.String)">
+<summary>
+ If the file is not web based, setup an file system watcher that 
+ invalidates the generated type whenever the file changes
+
+ Asumes that the fileName is a valid file name on the disk
+ (and not e.g. a web reference)
+</summary>
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.ProviderFileSystem">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.StructuralTypes.InferedType">
+<summary>
+ Represents inferred structural type. A type may be either primitive type
+ (one of those listed by `primitiveTypes`) or it can be collection, 
+ (named) record and heterogeneous type. We also have `Null` type (which is
+ a subtype of all non-primitive types) and universal `Top` type.
+
+  * For collection, we infer the types of different things that appear in 
+    the collection and how many times they do.
+
+  * A heterogeneous type (sum type) is simply a choice containing one
+    of multiple different possibilities
+
+ Why is collection not simply a list of Heterogeneous types? If we used that
+ we would lose information about multiplicity and so we would not be able
+ to generate nicer types!
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.StructuralTypes.InferedTypeTag.Code">
+<summary>
+ Converts tag to string code that can be passed to generated code
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.StructuralTypes.InferedTypeTag.ParseCode(System.String)">
+<summary>
+ Parses code returned by &apos;Code&apos; member (to be used in provided code)
+</summary>
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.StructuralTypes.InferedTypeTag">
+<summary>
+ For heterogeneous types, this represents the tag that defines the form
+ (that is either primitive type, collection, named record etc.)
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.StructuralTypes.InferedMultiplicity">
+<summary>
+ For heterogeneous types (types that have multiple possible forms
+ such as differently named XML nodes or records and arrays mixed together)
+ this type represents the number of occurrences of individual forms
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.StructuralTypes.InferedProperty">
+<summary>
+ A property of a record has a name and type and may be optional
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Topic.Name">
+<summary>
+ Get the name of the topic 
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Topic.Description">
+<summary>
+ Get the description of the topic 
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Topic.Code">
+<summary>
+ Get the WorldBank code of the topic
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Region.RegionCode">
+<summary>
+ Get the WorldBank code for the region
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Region.Name">
+<summary>
+ Get the name of the region
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Country.Region">
+<summary>
+ Get the region of the country 
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Country.Name">
+<summary>
+ Get the name of the country 
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Country.Code">
+<summary>
+ Get the WorldBank code of the country
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Country.CapitalCity">
+<summary>
+ Get the capital city of the country 
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.IndicatorDescription.Source">
+<summary>
+ Get the source of the indicator
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.IndicatorDescription.Name">
+<summary>
+ Get the name of the indicator
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.IndicatorDescription.IndicatorCode">
+<summary>
+ Get the code for the indicator
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.IndicatorDescription.Description">
+<summary>
+ Get the description of the indicator
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.IndicatorDescription.Code">
+<summary>
+ Get the code for the topic of the indicator
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Indicator.Years">
+<summary>
+ Get the years for which the indicator has values
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Indicator.Values">
+<summary>
+ Get the values for the indicator (without years)
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Indicator.Source">
+<summary>
+ Get the source of the indicator
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Indicator.Name">
+<summary>
+ Get the name of the indicator
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Indicator.Item(System.Int32)">
+<summary>
+ Get a value for a year for the indicator
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Indicator.IndicatorCode">
+<summary>
+ Get the code for the indicator
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Indicator.Description">
+<summary>
+ Get the description of the indicator
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Indicator.Code">
+<summary>
+ Get the code for the country or region of the indicator
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="F:FSharp.Data.RuntimeImplementation.WorldBank.Implementation.ServiceConnection.topics">
+<summary>
+ At compile time, download the schema
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.WorldBank.Implementation.ServiceConnection.GetDataAsync(System.String,System.String)">
+<summary>
+ At runtime, download the data
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.WorldBank.Implementation">
+
+</member>
+<member name="">
+
+</member>
+<member name="F:FSharp.Net.FSharp.Net.Http.runningOnMono">
+<summary>
+ Are we currently running on Mono?
+ (Mono does not have the issue with encoding slashes in URLs, so we do not need workaround)
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Net.Http.RequestDetailed``5(System.String,Microsoft.FSharp.Core.FSharpOption{``0},Microsoft.FSharp.Core.FSharpOption{``1},Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{``2},Microsoft.FSharp.Core.FSharpOption{``3},Microsoft.FSharp.Core.FSharpOption{System.Net.CookieContainer},Microsoft.FSharp.Core.FSharpOption{``4})">
+<summary>
+ Download an HTTP web resource from the specified URL synchronously
+ (allows specifying query string parameters and HTTP headers including
+ headers that have to be handled specially - such as Accept, Content-Type &amp; Referer)
+ The body for POST request can be specified either as text or as a list of parameters
+ that will be encoded, and the method will automatically be set if not specified
+</summary>
+</member>
+<member name="M:FSharp.Net.Http.Request``5(System.String,Microsoft.FSharp.Core.FSharpOption{``0},Microsoft.FSharp.Core.FSharpOption{``1},Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{``2},Microsoft.FSharp.Core.FSharpOption{``3},Microsoft.FSharp.Core.FSharpOption{System.Net.CookieContainer},Microsoft.FSharp.Core.FSharpOption{``4})">
+<summary>
+ Download an HTTP web resource from the specified URL synchronously
+ (allows specifying query string parameters and HTTP headers including
+ headers that have to be handled specially - such as Accept, Content-Type &amp; Referer)
+ The body for POST request can be specified either as text or as a list of parameters
+ that will be encoded, and the method will automatically be set if not specified
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Net.Http.AsyncRequestDetailed``5(System.String,Microsoft.FSharp.Core.FSharpOption{``0},Microsoft.FSharp.Core.FSharpOption{``1},Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{``2},Microsoft.FSharp.Core.FSharpOption{``3},Microsoft.FSharp.Core.FSharpOption{System.Net.CookieContainer},Microsoft.FSharp.Core.FSharpOption{``4})">
+<summary>
+ Download an HTTP web resource from the specified URL asynchronously
+ (allows specifying query string parameters and HTTP headers including
+ headers that have to be handled specially - such as Accept, Content-Type &amp; Referer)
+ The body for POST request can be specified either as text or as a list of parameters
+ that will be encoded, and the method will automatically be set if not specified
+</summary>
+</member>
+<member name="M:FSharp.Net.Http.AsyncRequest``5(System.String,Microsoft.FSharp.Core.FSharpOption{``0},Microsoft.FSharp.Core.FSharpOption{``1},Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{``2},Microsoft.FSharp.Core.FSharpOption{``3},Microsoft.FSharp.Core.FSharpOption{System.Net.CookieContainer},Microsoft.FSharp.Core.FSharpOption{``4})">
+<summary>
+ Download an HTTP web resource from the specified URL asynchronously
+ (allows specifying query string parameters and HTTP headers including
+ headers that have to be handled specially - such as Accept, Content-Type &amp; Referer)
+ The body for POST request can be specified either as text or as a list of parameters
+ that will be encoded, and the method will automatically be set if not specified
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Net.Http">
+<summary>
+ Utilities for working with network via HTTP. Includes methods for downloading 
+ resources with specified headers, query parameters and HTTP body
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:ProviderImplementation.AssemblyReplacer.ToRuntime(Microsoft.FSharp.Quotations.FSharpExpr)">
+<summary>
+ Gets an equivalent expression with all the types replaced with runtime equivalents
+</summary>
+</member>
+<member name="M:ProviderImplementation.AssemblyReplacer.ToRuntime(System.Type)">
+<summary>
+ Gets the equivalent runtime type
+</summary>
+</member>
+<member name="M:ProviderImplementation.AssemblyReplacer.ToDesignTime(Microsoft.FSharp.Quotations.FSharpExpr)">
+<summary>
+ Gets an equivalent expression with all the types replaced with designTime equivalents
+</summary>
+</member>
+<member name="T:ProviderImplementation.AssemblyReplacer">
+<summary>
+ When we split a type provider into a runtime assembly and a design time assembly, we can no longer 
+ use quotations directly, because they will reference the wrong types. AssemblyReplacer fixes that 
+ by transforming the expressions generated by the quotations to have the right types. On all 
+ expressions  that we provide to InvokeCode and GetterCode of ProvidedMethod, ProvidedConstructor,
+ and ProvidedProperty, instead of (fun args -&gt; &lt;@@ doSomethingWith(%%args) @@&gt;), we should use 
+ (fun args -&gt; let args = replacer.ToDesignTime args in replacer.ToRuntime &lt;@@ doSomethingWith(%%args) @@&gt;)
+ When creating the Provided* type, we have to always specify the runtime type, and when it invokes
+ the function provided to InvokeCode and GetterCode, we to first transform the argument expressions
+ to the design time types, so we can splice it in the quotation, and then after that we have to convert
+ it back to the runtime type. A further complication arises because Expr.Var&apos;s have reference equality, so
+ when can&apos;t just create new Expr.Var&apos;s with the same variable name and a different type. When transforming
+ them from runtime to design time we keep them in a dictionary, so that when we convert them back to runtime
+ we can return the exact same instance that was provided to us initially.
+ Another limitation (not only of this method, but in general with type providers) is that we can never use 
+ expressions that use F# functions as parameters or return values, we always have to use felegates instead.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:ProviderImplementation.FreebaseRuntimeInfo">
+<summary>
+ Find the handles in the Freebase type provider runtime DLL. 
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="F:ProviderImplementation.ProviderImplementation.FreebaseTypeProvider.rootNamespace">
+<summary>
+ Root namespace of Freebase types
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:ProviderImplementation.FreebaseTypeProvider">
+<summary>
+ This is the Freebase type provider.    
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:ProviderImplementation.JsonGenerationContext">
+<summary>
+ Context that is used to generate the JSON types.
+
+  * `Representation` is the type that is used to represent documents
+    (here `JsonDocument`)
+
+  * `Unpacker` is a function that takes an expression representing whatever 
+    is used to represent the document (here `JsonDocument`) and obtains the
+    underlying `JsonValue`; `Packer` is the dual (wrap value in `JsonDocument`)
+
+ Both properties are needed for other uses of the provider 
+ (most notably in the Apiary provider)
+
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:ProviderImplementation.PrimitiveInferedProperty">
+<summary>
+ Represents type information about primitive property (used mainly in the CSV provider)
+ This type captures the type, unit of measure and handling of missing values (if we
+ infer that the value may be missing, we can generate option&lt;T&gt; or nullable&lt;T&gt;)
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:ProviderImplementation.XmlGenerationContext">
+<summary>
+ Context that is used to generate the XML types.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:ProviderImplementation.ActivePatterns.|SingletonMap|_|``2(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{``0,``1}})">
+<summary>
+ Takes dictionary or a map and succeeds if it contains exactly one value
+</summary>
+</member>
+<member name="M:ProviderImplementation.ActivePatterns.|Singleton|``1(Microsoft.FSharp.Collections.FSharpList{``0})">
+<summary>
+ Helper active pattern that can be used when constructing InvokeCode
+ (to avoid writing pattern matching or incomplete matches):
+
+    p.InvokeCode &lt;- fun (Singleton self) -&gt; &lt;@ 1 + 2 @&gt;
+
+</summary>
+</member>
+<member name="T:ProviderImplementation.ActivePatterns">
+
+</member>
+<member name="M:ProviderImplementation.AssemblyReplacerModule.create(Microsoft.FSharp.Collections.FSharpList{System.Tuple{System.Reflection.Assembly,System.Reflection.Assembly}})">
+<summary>
+ Creates an AssemblyReplacer with the provided list of designTimeAssembly*runtimeAssembly mappings
+ Should always receive the current running assembly paired with the RuntimeAssembly from TypeProviderConfig,
+ and in case we&apos;re targetting a different .Net framework profile, the FSharp.Core version referenced
+ by the current assembly paired with the FSharp.Core version referenced by the runtime assembly
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:ProviderImplementation.AssemblyReplacerModule">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:ProviderImplementation.AssemblyResolver">
+
+</member>
+<member name="M:ProviderImplementation.Conversions.convertValue``2(ProviderImplementation.AssemblyReplacer,System.String,System.String,ProviderImplementation.PrimitiveInferedProperty)">
+<summary>
+ Creates a function that takes Expr&lt;string option&gt; and converts it to 
+ an expression of other type - the type is specified by `field`
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:ProviderImplementation.Conversions">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:ProviderImplementation.CsvInference.getFields(System.Boolean,FSharp.Data.RuntimeImplementation.StructuralTypes.InferedType,Microsoft.FSharp.Core.FSharpOption{ProviderImplementation.PrimitiveInferedProperty}[])">
+<summary>
+ Generates the fields for a CSV row. The CSV provider should be
+ numerical-friendly, so we do a few simple adjustments.
+ When preferOptionals is false:
+  
+  - Fields of type &apos;int + null&apos; are generated as Nullable&lt;int&gt;
+  - Fields of type &apos;int64 + null&apos; are generated as Nullable&lt;int64&gt;
+  - Fields of type &apos;float + null&apos; are just floats (and null becomes NaN)
+  - Fields of type &apos;decimal + null&apos; are generated as floats too
+  - Fields of type &apos;T + null&apos; for any other non-nullable T (bool/date/guid) become option&lt;T&gt;
+  - All other types are simply strings.
+
+ When preferOptionals is true:
+  
+  - All fields of type &apos;T + null&apos; for any type become option&lt;T&gt;, incude strings
+</summary>
+</member>
+<member name="M:ProviderImplementation.CsvInference.inferType(FSharp.Data.Csv.CsvFile,System.Int32,System.String[],System.IFormatProvider,System.String,System.Boolean,System.Boolean)">
+<summary>
+ Infers the type of a CSV file using the specified number of rows
+ (This handles units in the same way as the original MiniCSV provider)
+</summary>
+</member>
+<member name="M:ProviderImplementation.CsvInference.parseSchemaItem(System.String,System.Boolean)">
+<summary>
+ Parse schema specification for column. This can either be a name
+ with type or just type: name (typeInfo)|typeInfo.
+ If forSchemaOverride is set to true, only Full or Name is returne
+ (if we succeed we override the inferred schema, otherwise, we just
+ override the header name)
+</summary>
+</member>
+<member name="M:ProviderImplementation.CsvInference.parseTypeAndUnit(System.String)">
+<summary>
+ Parses type specification in the schema for a single column. 
+ This can be of the form: type|measure|type&lt;measure&gt;
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:ProviderImplementation.CsvInference.nameToType">
+<summary>
+ The schema may be set explicitly. This table specifies the mapping
+ from the names that users can use to the types used.
+</summary>
+</member>
+<member name="T:ProviderImplementation.CsvInference">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:ProviderImplementation.CsvTypeBuilder">
+
+</member>
+<member name="M:ProviderImplementation.Debug.prettyPrintWithMaxDepthAndExclusions(System.Boolean,System.Boolean,System.Int32,System.Collections.Generic.IEnumerable{System.String},ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition)">
+<summary>
+ Returns a string representation of the signature (and optionally also the body) of all the
+ types generated by the type provider up to a certain depth and excluding some types
+</summary>
+</member>
+<member name="M:ProviderImplementation.Debug.prettyPrintWithMaxDepth(System.Boolean,System.Boolean,System.Int32,ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition)">
+<summary>
+ Returns a string representation of the signature (and optionally also the body) of all the
+ types generated by the type provider up to a certain depth
+</summary>
+</member>
+<member name="M:ProviderImplementation.Debug.prettyPrint(System.Boolean,System.Boolean,ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition)">
+<summary>
+ Returns a string representation of the signature (and optionally also the body) of all the
+ types generated by the type provider
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:ProviderImplementation.Debug.generate``1(System.String,System.String,Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.CompilerServices.TypeProviderConfig,``0},System.Object[])">
+<summary>
+ Simulates a real instance of TypeProviderConfig and then creates an instance of the last
+ type provider added to a namespace by the type provider constructor
+</summary>
+</member>
+<member name="M:ProviderImplementation.Debug.separatedBy(System.String,System.Collections.Generic.IEnumerable{System.String})">
+<summary>
+ Converts a sequence of strings to a single string separated with the delimiters
+</summary>
+</member>
+<member name="T:ProviderImplementation.Debug">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:ProviderImplementation.HttpUtility">
+
+</member>
+<member name="M:ProviderImplementation.JsonInference.inferType(System.IFormatProvider,System.Boolean,FSharp.Data.Json.JsonValue)">
+<summary>
+ Infer type of a JSON value - this is simple function because most of the
+ functionality is handled in `StructureInference` (most notably, by
+ `inferCollectionType` and various functions to find common subtype), so
+ here we just need to infer types of primitive JSON values.
+</summary>
+</member>
+<member name="T:ProviderImplementation.JsonInference">
+
+</member>
+<member name="M:ProviderImplementation.JsonTypeBuilder.generateJsonType(System.String,ProviderImplementation.JsonGenerationContext,System.String,FSharp.Data.RuntimeImplementation.StructuralTypes.InferedType)">
+<summary>
+ Recursively walks over inferred type information and 
+ generates types for read-only access to the document
+</summary>
+</member>
+<member name="M:ProviderImplementation.JsonTypeBuilder.generateMultipleChoiceType(System.String,ProviderImplementation.JsonGenerationContext,System.String,Microsoft.FSharp.Collections.FSharpMap{FSharp.Data.RuntimeImplementation.StructuralTypes.InferedTypeTag,System.Tuple{FSharp.Data.RuntimeImplementation.StructuralTypes.InferedMultiplicity,FSharp.Data.RuntimeImplementation.StructuralTypes.InferedType}},Microsoft.FSharp.Core.FSharpFunc{System.Tuple{FSharp.Data.RuntimeImplementation.StructuralTypes.InferedMultiplicity,FSharp.Data.RuntimeImplementation.StructuralTypes.InferedType},Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Quotations.FSharpExpr,Microsoft.FSharp.Quotations.FSharpExpr},Microsoft.FSharp.Core.FSharpFunc{System.String,Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Collections.FSharpList{Microsoft.FSharp.Quotations.FSharpExpr},Microsoft.FSharp.Quotations.FSharpExpr}}}})">
+<summary>
+ Common code that is shared by code generators that generate 
+ &quot;Choice&quot; type. This is parameterized by the types (choices) to generate,
+ by functions that get the multiplicity and the type tag for each option
+ and also by function that generates the actual code.
+</summary>
+</member>
+<member name="T:ProviderImplementation.JsonTypeBuilder">
+
+</member>
+<member name="M:ProviderImplementation.List.frontAndBack``1(Microsoft.FSharp.Collections.FSharpList{``0})">
+<summary>
+ Split a non-empty list into a list with all elements 
+ except for the last one and the last element
+</summary>
+</member>
+<member name="M:ProviderImplementation.List.headAndTail``1(Microsoft.FSharp.Collections.FSharpList{``0})">
+<summary>
+ Split a non-empty list into a pair consisting of
+ its head and its tail
+</summary>
+</member>
+<member name="T:ProviderImplementation.List">
+
+</member>
+<member name="M:ProviderImplementation.NameUtils.singularize(System.String)">
+<summary>
+ Return the singular of an English word
+</summary>
+</member>
+<member name="M:ProviderImplementation.NameUtils.pluralize(System.String)">
+<summary>
+ Return the plural of an English word
+</summary>
+</member>
+<member name="M:ProviderImplementation.NameUtils.trimHtml(System.String)">
+<summary>
+ Trim HTML tags from a given string and replace all of them with spaces
+ Multiple tags are replaced with just a single space. (This is a recursive 
+ implementation that is somewhat faster than regular expression.)
+</summary>
+</member>
+<member name="M:ProviderImplementation.NameUtils.uniqueGenerator``1(Microsoft.FSharp.Core.FSharpFunc{``0,System.String})">
+<summary>
+ Given a function to format names (such as `niceCamelName` or `nicePascalName`)
+ returns a name generator that never returns duplicate name (by appending an
+ index to already used names)
+ 
+ This function is curried and should be used with partial function application:
+
+     let gen = nameGenerator nicePascalName
+     let n1 = gen &quot;sample-name&quot;
+     let n2 = gen &quot;sample-name&quot;
+
+</summary>
+</member>
+<member name="M:ProviderImplementation.NameUtils.niceCamelName(System.String)">
+<summary>
+ Turns a given non-empty string into a nice &apos;camelCase&apos; identifier
+</summary>
+</member>
+<member name="M:ProviderImplementation.NameUtils.nicePascalName(System.String)">
+<summary>
+ Turns a given non-empty string into a nice &apos;PascalCase&apos; identifier
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:ProviderImplementation.NameUtils">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:ProviderImplementation.Pluralizer">
+
+</member>
+<member name="P:ProviderImplementation.ProvidedTypes.TypeProviderForNamespaces.Namespaces">
+<summary>
+ Get all namespace with their provided types.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.TypeProviderForNamespaces.ResolveAssembly(System.ResolveEventArgs)">
+<summary>
+ AssemblyResolve handler. Default implementation searches &lt;assemblyname&gt;.dll file in registered folders 
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.TypeProviderForNamespaces.RegisterRuntimeAssemblyLocationAsProbingFolder(Microsoft.FSharp.Core.CompilerServices.TypeProviderConfig)">
+<summary>
+ Registers location of RuntimeAssembly (from TypeProviderConfig) as probing folder
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.TypeProviderForNamespaces.RegisterProbingFolder(System.String)">
+<summary>
+ Registers custom probing path that can be used for probing assemblies
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.TypeProviderForNamespaces.Invalidate">
+<summary>
+ Invalidate the information provided by the provider
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.TypeProviderForNamespaces.AddNamespace(System.String,Microsoft.FSharp.Collections.FSharpList{ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition})">
+<summary>
+ Add a namespace of provided types.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.TypeProviderForNamespaces.#ctor">
+<summary>
+ Initializes a type provider 
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.TypeProviderForNamespaces.#ctor(System.String,Microsoft.FSharp.Collections.FSharpList{ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition})">
+<summary>
+ Initializes a type provider to provide the types in the given namespace.
+</summary>
+</member>
+<member name="T:ProviderImplementation.ProvidedTypes.TypeProviderForNamespaces">
+<summary>
+ A base type providing default implementations of type provider functionality when all provided 
+ types are of type ProvidedTypeDefinition.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedAssembly.RegisterGenerated(System.String)">
+<summary>
+ Register that a given file is a provided generated assembly
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedAssembly.AddTypes(Microsoft.FSharp.Collections.FSharpList{ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition})">
+ <summary>
+ Emit the given provided type definitions as part of the assembly 
+ and adjust the 'Assembly' property of all provided type definitions to return that
+ assembly.
+
+ The assembly is only emitted when the Assembly property on the root type is accessed for the first time.
+ The host F# compiler does this when processing a generative type declaration for the type.
+ </summary>
+ <param name="enclosingTypeNames">An optional path of type names to wrap the generated types. The generated types are then generated as nested types.</param>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:ProviderImplementation.ProvidedTypes.ProvidedAssembly">
+<summary>
+ A provided generated assembly
+</summary>
+</member>
+<member name="P:ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition.SuppressRelocation(System.Boolean)">
+<summary>
+ Get or set a flag indicating if the ProvidedTypeDefinition has type-relocation suppressed
+</summary>
+</member>
+<member name="P:ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition.IsErased(System.Boolean)">
+<summary>
+ Get or set a flag indicating if the ProvidedTypeDefinition is erased
+</summary>
+</member>
+<member name="P:ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition.HideObjectMethods(System.Boolean)">
+<summary>
+ Suppress System.Object entries in intellisense menus in instances of this provided type 
+</summary>
+</member>
+<member name="P:ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition.SuppressRelocation">
+<summary>
+ Get or set a flag indicating if the ProvidedTypeDefinition has type-relocation suppressed
+</summary>
+</member>
+<member name="P:ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition.IsErased">
+<summary>
+ Get or set a flag indicating if the ProvidedTypeDefinition is erased
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition.SetBaseTypeDelayed(System.Lazy{Microsoft.FSharp.Core.FSharpOption{System.Type}})">
+<summary>
+ Set the base type to a lazily evaluated value
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition.SetBaseType(System.Type)">
+<summary>
+ Set the base type
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition.SetAttributes(System.Reflection.TypeAttributes)">
+<summary>
+ Set the attributes on the provided type. This fully replaces the default TypeAttributes.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition.ResetEnclosingType(System.Type)">
+<summary>
+ Reset the enclosing type (for generated nested types)
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition.DefineMethodOverride(ProviderImplementation.ProvidedTypes.ProvidedMethod,System.Reflection.MethodInfo)">
+<summary>
+ Specifies that the given method body implements the given method declaration.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition.AddXmlDocDelayed(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,System.String})">
+<summary>
+ Add XML documentation information to this provided constructor, where the computation of the documentation is delayed until necessary.
+ The documentation is only computed once.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition.AddXmlDocComputed(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,System.String})">
+<summary>
+ Add XML documentation information to this provided constructor, where the computation of the documentation is delayed until necessary
+ The documentation is re-computed  every time it is required.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition.AddXmlDoc(System.String)">
+<summary>
+ Add XML documentation information to this provided constructor
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition.AddObsoleteAttribute(System.String,Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+<summary>
+ Add a &apos;System.Obsolete&apos; attribute to this provided type definition
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition.AddMembersDelayed``1(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,Microsoft.FSharp.Collections.FSharpList{``0}})">
+<summary>
+ Add a set of members to a ProvidedTypeDefinition, delaying computation of the members until required by the compilation context.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition.AddMembers``1(Microsoft.FSharp.Collections.FSharpList{``0})">
+<summary>
+ Add a set of members to a ProvidedTypeDefinition
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition.AddMemberDelayed``1(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,``0})">
+<summary>
+ Add a member to a ProvidedTypeDefinition, delaying computation of the members until required by the compilation context.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition.AddMember(System.Reflection.MemberInfo)">
+<summary>
+ Add a method, property, nested type or other member to a ProvidedTypeDefinition
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition.AddInterfaceImplementationsDelayed(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,Microsoft.FSharp.Collections.FSharpList{System.Type}})">
+<summary>
+ Add the given function as a set of on-demand computed interfaces.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition.AddInterfaceImplementation(System.Type)">
+<summary>
+ Add the given type as an implemented interface.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition.AddDefinitionLocation(System.Int32,System.Int32,System.String)">
+<summary>
+ Add definition location information to the provided type definition.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition.AddAssemblyTypesAsNestedTypesDelayed(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,System.Reflection.Assembly})">
+<summary>
+ Add the types of the generated assembly as generative types, where types in namespaces get hierarchically positioned as nested types.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition.#ctor(System.String,Microsoft.FSharp.Core.FSharpOption{System.Type})">
+<summary>
+ Create a new provided type definition, to be located as a nested type in some type definition.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition.#ctor(System.Reflection.Assembly,System.String,System.String,Microsoft.FSharp.Core.FSharpOption{System.Type})">
+<summary>
+ Create a new provided type definition in a namespace. 
+</summary>
+</member>
+<member name="T:ProviderImplementation.ProvidedTypes.ProvidedTypeDefinition">
+<summary>
+ Represents a provided type definition.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedStaticParameter.AddXmlDocDelayed(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,System.String})">
+<summary>
+ Add XML documentation information to this provided constructor, where the computation of the documentation is delayed until necessary
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedStaticParameter.AddXmlDoc(System.String)">
+<summary>
+ Add XML documentation information to this provided constructor
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:ProviderImplementation.ProvidedTypes.ProvidedStaticParameter">
+<summary>
+ Represents a provided static parameter.
+</summary>
+</member>
+<member name="P:ProviderImplementation.ProvidedTypes.ProvidedMeasureBuilder.One">
+<summary>
+ e.g. 1
+</summary>
+</member>
+<member name="P:ProviderImplementation.ProvidedTypes.ProvidedMeasureBuilder.Default">
+<summary>
+ The ProvidedMeasureBuilder for building measures.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedMeasureBuilder.Square(System.Type)">
+<summary>
+ e.g. m * m 
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedMeasureBuilder.SI(System.String)">
+<summary>
+ the SI unit from the F# core library, where the string is in capitals and US spelling, e.g. Meter
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedMeasureBuilder.Ratio(System.Type,System.Type)">
+<summary>
+ e.g. kg / m
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedMeasureBuilder.Product(System.Type,System.Type)">
+<summary>
+ e.g. m * kg
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedMeasureBuilder.Inverse(System.Type)">
+<summary>
+ e.g. 1 / kg
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedMeasureBuilder.AnnotateType(System.Type,Microsoft.FSharp.Collections.FSharpList{System.Type})">
+<summary>
+ e.g. float&lt;kg&gt;, Vector&lt;int, kg&gt;
+</summary>
+</member>
+<member name="T:ProviderImplementation.ProvidedTypes.ProvidedMeasureBuilder">
+<summary>
+ Helps create erased provided unit-of-measure annotations.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedTypeBuilder.MakeGenericType(System.Type,Microsoft.FSharp.Collections.FSharpList{System.Type})">
+<summary>
+ Like typ.MakeGenericType, but will also work with unit-annotated types
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedTypeBuilder.MakeGenericMethod(System.Reflection.MethodInfo,Microsoft.FSharp.Collections.FSharpList{System.Type})">
+<summary>
+ Like methodInfo.MakeGenericMethod, but will also work with unit-annotated types and provided types
+</summary>
+</member>
+<member name="T:ProviderImplementation.ProvidedTypes.ProvidedTypeBuilder">
+<summary>
+ Provides symbolic provided types
+</summary>
+</member>
+<member name="P:ProviderImplementation.ProvidedTypes.ProvidedSymbolType.Kind">
+<summary>
+ Returns the kind of this symbolic type
+</summary>
+</member>
+<member name="P:ProviderImplementation.ProvidedTypes.ProvidedSymbolType.Args">
+<summary>
+ Return the provided types used as arguments of this symbolic type
+</summary>
+</member>
+<member name="T:ProviderImplementation.ProvidedTypes.ProvidedSymbolType">
+<summary>
+ Represents an array or other symbolic type involving a provided type as the argument.
+ See the type provider spec for the methods that must be implemented.
+ Note that the type provider specification does not require us to implement pointer-equality for provided types.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:ProviderImplementation.ProvidedTypes.SymbolKind">
+<summary>
+ Represents the type constructor in a provided symbol type.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedField.AddXmlDocDelayed(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,System.String})">
+<summary>
+ Add XML documentation information to this provided field, where the computation of the documentation is delayed until necessary
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedField.AddXmlDocComputed(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,System.String})">
+<summary>
+ Add XML documentation information to this provided field, where the computation of the documentation is delayed until necessary
+ The documentation is re-computed  every time it is required.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedField.AddXmlDoc(System.String)">
+<summary>
+ Add XML documentation information to this provided field
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedField.AddObsoleteAttribute(System.String,Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+<summary>
+ Add a &apos;System.Obsolete&apos; attribute to this provided field
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedField.AddDefinitionLocation(System.Int32,System.Int32,System.String)">
+<summary>
+ Add definition location information to the provided field definition.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedField.#ctor(System.String,System.Type)">
+<summary>
+ Create a new provided field. It is not initially associated with any specific provided type definition.
+</summary>
+</member>
+<member name="T:ProviderImplementation.ProvidedTypes.ProvidedField">
+<summary>
+ Represents an erased provided field.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedLiteralField.AddXmlDocDelayed(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,System.String})">
+<summary>
+ Add XML documentation information to this provided field, where the computation of the documentation is delayed until necessary
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedLiteralField.AddXmlDocComputed(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,System.String})">
+<summary>
+ Add XML documentation information to this provided field, where the computation of the documentation is delayed until necessary
+ The documentation is re-computed  every time it is required.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedLiteralField.AddXmlDoc(System.String)">
+<summary>
+ Add XML documentation information to this provided field
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedLiteralField.AddObsoleteAttribute(System.String,Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+<summary>
+ Add a &apos;System.Obsolete&apos; attribute to this provided field
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedLiteralField.AddDefinitionLocation(System.Int32,System.Int32,System.String)">
+<summary>
+ Add definition location information to the provided field.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedLiteralField.#ctor(System.String,System.Type,System.Object)">
+<summary>
+ Create a new provided field. It is not initially associated with any specific provided type definition.
+</summary>
+</member>
+<member name="T:ProviderImplementation.ProvidedTypes.ProvidedLiteralField">
+<summary>
+ Represents an erased provided field.
+</summary>
+</member>
+<member name="P:ProviderImplementation.ProvidedTypes.ProvidedEvent.RemoverCode(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Collections.FSharpList{Microsoft.FSharp.Quotations.FSharpExpr},Microsoft.FSharp.Quotations.FSharpExpr})">
+<summary>
+ Set the function used to compute the implementation of sets of this property.
+</summary>
+</member>
+<member name="P:ProviderImplementation.ProvidedTypes.ProvidedEvent.IsStatic(System.Boolean)">
+<summary>
+ Get or set a flag indicating if the property is static.
+</summary>
+</member>
+<member name="P:ProviderImplementation.ProvidedTypes.ProvidedEvent.AdderCode(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Collections.FSharpList{Microsoft.FSharp.Quotations.FSharpExpr},Microsoft.FSharp.Quotations.FSharpExpr})">
+<summary>
+ Set the quotation used to compute the implementation of gets of this property.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedEvent.AddXmlDocDelayed(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,System.String})">
+<summary>
+ Add XML documentation information to this provided constructor, where the computation of the documentation is delayed until necessary
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedEvent.AddXmlDocComputed(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,System.String})">
+<summary>
+ Add XML documentation information to this provided constructor, where the computation of the documentation is delayed until necessary
+ The documentation is re-computed  every time it is required.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedEvent.AddXmlDoc(System.String)">
+<summary>
+ Add XML documentation information to this provided constructor
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedEvent.AddDefinitionLocation(System.Int32,System.Int32,System.String)">
+<summary>
+ Add definition location information to the provided type definition.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedEvent.#ctor(System.String,System.Type)">
+<summary>
+ Create a new provided type. It is not initially associated with any specific provided type definition.
+</summary>
+</member>
+<member name="T:ProviderImplementation.ProvidedTypes.ProvidedEvent">
+<summary>
+ Represents an erased provided property.
+</summary>
+</member>
+<member name="P:ProviderImplementation.ProvidedTypes.ProvidedProperty.SetterCode(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Collections.FSharpList{Microsoft.FSharp.Quotations.FSharpExpr},Microsoft.FSharp.Quotations.FSharpExpr})">
+<summary>
+ Set the function used to compute the implementation of sets of this property.
+</summary>
+</member>
+<member name="P:ProviderImplementation.ProvidedTypes.ProvidedProperty.IsStatic(System.Boolean)">
+<summary>
+ Get or set a flag indicating if the property is static.
+</summary>
+</member>
+<member name="P:ProviderImplementation.ProvidedTypes.ProvidedProperty.GetterCode(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Collections.FSharpList{Microsoft.FSharp.Quotations.FSharpExpr},Microsoft.FSharp.Quotations.FSharpExpr})">
+<summary>
+ Set the quotation used to compute the implementation of gets of this property.
+</summary>
+</member>
+<member name="P:ProviderImplementation.ProvidedTypes.ProvidedProperty.IsStatic">
+<summary>
+ Get or set a flag indicating if the property is static.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedProperty.AddXmlDocDelayed(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,System.String})">
+<summary>
+ Add XML documentation information to this provided constructor, where the computation of the documentation is delayed until necessary
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedProperty.AddXmlDocComputed(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,System.String})">
+<summary>
+ Add XML documentation information to this provided constructor, where the computation of the documentation is delayed until necessary
+ The documentation is re-computed  every time it is required.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedProperty.AddXmlDoc(System.String)">
+<summary>
+ Add XML documentation information to this provided constructor
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedProperty.AddObsoleteAttribute(System.String,Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+<summary>
+ Add a &apos;System.Obsolete&apos; attribute to this provided property
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedProperty.AddDefinitionLocation(System.Int32,System.Int32,System.String)">
+<summary>
+ Add definition location information to the provided type definition.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedProperty.#ctor(System.String,System.Type,Microsoft.FSharp.Core.FSharpOption{Microsoft.FSharp.Collections.FSharpList{ProviderImplementation.ProvidedTypes.ProvidedParameter}})">
+<summary>
+ Create a new provided type. It is not initially associated with any specific provided type definition.
+</summary>
+</member>
+<member name="T:ProviderImplementation.ProvidedTypes.ProvidedProperty">
+<summary>
+ Represents an erased provided property.
+</summary>
+</member>
+<member name="P:ProviderImplementation.ProvidedTypes.ProvidedMethod.IsStaticMethod(System.Boolean)">
+<summary>
+ Get or set a flag indicating if the property is static.
+</summary>
+</member>
+<member name="P:ProviderImplementation.ProvidedTypes.ProvidedMethod.InvokeCode(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Collections.FSharpList{Microsoft.FSharp.Quotations.FSharpExpr},Microsoft.FSharp.Quotations.FSharpExpr})">
+<summary>
+ Set the quotation used to compute the implementation of invocations of this method.
+</summary>
+</member>
+<member name="P:ProviderImplementation.ProvidedTypes.ProvidedMethod.IsStaticMethod">
+<summary>
+ Get or set a flag indicating if the property is static.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedMethod.SetMethodAttrs(System.Reflection.MethodAttributes)">
+<summary>
+ Set the method attributes of the method. By default these are simple &apos;MethodAttributes.Public&apos;
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedMethod.AddXmlDocDelayed(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,System.String})">
+<summary>
+ Add XML documentation information to this provided constructor, where the computation of the documentation is delayed until necessary
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedMethod.AddXmlDocComputed(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,System.String})">
+<summary>
+ Add XML documentation information to this provided constructor, where the computation of the documentation is delayed until necessary
+ The documentation is re-computed  every time it is required.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedMethod.AddXmlDoc(System.String)">
+<summary>
+ Add XML documentation information to this provided constructor
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedMethod.AddObsoleteAttribute(System.String,Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+<summary>
+ Add XML documentation information to this provided method
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedMethod.AddDefinitionLocation(System.Int32,System.Int32,System.String)">
+<summary>
+ Add definition location information to the provided type definition.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedMethod.#ctor(System.String,Microsoft.FSharp.Collections.FSharpList{ProviderImplementation.ProvidedTypes.ProvidedParameter},System.Type)">
+<summary>
+ Create a new provided method. It is not initially associated with any specific provided type definition.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="P:ProviderImplementation.ProvidedTypes.ProvidedConstructor.IsImplicitCtor(System.Boolean)">
+<summary>
+ Set a flag indicating that the constructor acts like an F# implicit constructor, so the
+ parameters of the constructor become fields and can be accessed using Expr.GlobalVar with the
+ same name.
+</summary>
+</member>
+<member name="P:ProviderImplementation.ProvidedTypes.ProvidedConstructor.InvokeCode(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Collections.FSharpList{Microsoft.FSharp.Quotations.FSharpExpr},Microsoft.FSharp.Quotations.FSharpExpr})">
+<summary>
+ Set the quotation used to compute the implementation of invocations of this constructor.
+</summary>
+</member>
+<member name="P:ProviderImplementation.ProvidedTypes.ProvidedConstructor.BaseConstructorCall(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Collections.FSharpList{Microsoft.FSharp.Quotations.FSharpExpr},System.Tuple{System.Reflection.ConstructorInfo,Microsoft.FSharp.Collections.FSharpList{Microsoft.FSharp.Quotations.FSharpExpr}}})">
+<summary>
+ Set the target and arguments of the base constructor call. Only used for generated types.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedConstructor.AddXmlDocDelayed(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,System.String})">
+<summary>
+ Add XML documentation information to this provided constructor, where the computation of the documentation is delayed until necessary
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedConstructor.AddXmlDocComputed(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,System.String})">
+<summary>
+ Add XML documentation information to this provided constructor, where the documentation is re-computed  every time it is required.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedConstructor.AddXmlDoc(System.String)">
+<summary>
+ Add XML documentation information to this provided constructor
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedConstructor.AddObsoleteAttribute(System.String,Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+<summary>
+ Add a &apos;System.Obsolete&apos; attribute to this provided constructor
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedConstructor.AddDefinitionLocation(System.Int32,System.Int32,System.String)">
+<summary>
+ Add definition location information to the provided constructor.
+</summary>
+</member>
+<member name="M:ProviderImplementation.ProvidedTypes.ProvidedConstructor.#ctor(Microsoft.FSharp.Collections.FSharpList{ProviderImplementation.ProvidedTypes.ProvidedParameter})">
+<summary>
+ Create a new provided constructor. It is not initially associated with any specific provided type definition.
+</summary>
+</member>
+<member name="T:ProviderImplementation.ProvidedTypes.ProvidedConstructor">
+<summary>
+ Represents an erased provided constructor.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:ProviderImplementation.ProvidedTypes.ProvidedParameter">
+<summary>
+ Represents an erased provided parameter
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:ProviderImplementation.ProviderHelpers.readTextAtDesignTime(System.String,Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,Microsoft.FSharp.Core.Unit},System.String,System.Uri)">
+<summary>
+ Resolve a location of a file (or a web location) and open it for shared
+ read, and trigger the specified function whenever the file changes
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:ProviderImplementation.ProviderHelpers">
+
+</member>
+<member name="M:ProviderImplementation.QuotationBuilder.op_Dynamic``2(System.Type,System.String,``0)">
+<summary>
+ Dynamic operator (?) that can be used for constructing quoted F# code without 
+ quotations (to simplify constructing F# quotations in portable libraries - where
+ we need to pass the System.Type of various types as arguments)
+
+ There are two possible uses:
+    typ?Name tyArgs args
+    typ?Name args
+
+ In the first case, tyArgs is a sequence of type arguments for method `Name`.
+ Actual arguments can be either expression (Expr&lt;&apos;T&gt;) or primitive values, whic
+ are automatically wrapped using Expr.Value.
+
+</summary>
+</member>
+<member name="T:ProviderImplementation.QuotationBuilder">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:ProviderImplementation.ReflectionHelpers">
+
+</member>
+<member name="M:ProviderImplementation.Seq.pairBy``2(Microsoft.FSharp.Core.FSharpFunc{``0,``1},System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0})">
+<summary>
+ Merge two sequences by pairing elements for which
+ the specified predicate returns the same key
+
+ (If the inputs contain the same keys, then the order
+ of the elements is preserved.)
+</summary>
+</member>
+<member name="T:ProviderImplementation.Seq">
+
+</member>
+<member name="M:ProviderImplementation.StructureInference.inferPrimitiveType(System.IFormatProvider,System.String,Microsoft.FSharp.Core.FSharpOption{System.Type})">
+<summary>
+ Infers the type of a simple string value (this is either
+ the value inside a node or value of an attribute)
+</summary>
+</member>
+<member name="M:ProviderImplementation.StructureInference.inferCollectionType(System.Boolean,System.Collections.Generic.IEnumerable{FSharp.Data.RuntimeImplementation.StructuralTypes.InferedType})">
+<summary>
+ Infer the type of the collection based on multiple sample types
+ (group the types by tag, count their multiplicity)
+</summary>
+</member>
+<member name="M:ProviderImplementation.StructureInference.unionRecordTypes(System.Boolean,Microsoft.FSharp.Collections.FSharpList{FSharp.Data.RuntimeImplementation.StructuralTypes.InferedProperty},Microsoft.FSharp.Collections.FSharpList{FSharp.Data.RuntimeImplementation.StructuralTypes.InferedProperty})">
+<summary>
+ Get the union of record types (merge their properties)
+ This matches the corresponding members and marks them as `Optional`
+ if one may be missing. It also returns subtype of their types.
+</summary>
+</member>
+<member name="M:ProviderImplementation.StructureInference.unionCollectionTypes(System.Boolean,Microsoft.FSharp.Collections.FSharpMap{FSharp.Data.RuntimeImplementation.StructuralTypes.InferedTypeTag,System.Tuple{FSharp.Data.RuntimeImplementation.StructuralTypes.InferedMultiplicity,FSharp.Data.RuntimeImplementation.StructuralTypes.InferedType}},Microsoft.FSharp.Collections.FSharpMap{FSharp.Data.RuntimeImplementation.StructuralTypes.InferedTypeTag,System.Tuple{FSharp.Data.RuntimeImplementation.StructuralTypes.InferedMultiplicity,FSharp.Data.RuntimeImplementation.StructuralTypes.InferedType}})">
+<summary>
+ A collection can contain multiple types - in that case, we do keep 
+ the multiplicity for each different type tag to generate better types
+ (this is essentially the same as `unionHeterogeneousTypes`, but 
+ it also handles the multiplicity)
+</summary>
+</member>
+<member name="M:ProviderImplementation.StructureInference.unionHeterogeneousTypes(System.Boolean,Microsoft.FSharp.Collections.FSharpMap{FSharp.Data.RuntimeImplementation.StructuralTypes.InferedTypeTag,FSharp.Data.RuntimeImplementation.StructuralTypes.InferedType},Microsoft.FSharp.Collections.FSharpMap{FSharp.Data.RuntimeImplementation.StructuralTypes.InferedTypeTag,FSharp.Data.RuntimeImplementation.StructuralTypes.InferedType})">
+<summary>
+ Given two heterogeneous types, get a single type that can represent all the
+ types that the two heterogeneous types can. For every tag, 
+</summary>
+</member>
+<member name="M:ProviderImplementation.StructureInference.subtypeInfered(System.Boolean,FSharp.Data.RuntimeImplementation.StructuralTypes.InferedType,FSharp.Data.RuntimeImplementation.StructuralTypes.InferedType)">
+<summary>
+ Find common subtype of two infered types:
+ 
+  * If the types are both primitive, then we find common subtype of the primitive types
+  * If the types are both records, then we union their fields (and mark some as optional)
+  * If the types are both collections, then we take subtype of their elements
+    (note we do not generate heterogeneous types in this case!)
+  * If one type is the Top type, then we return the other without checking
+  * If one of the types is the Null type and the other is not a value type
+    (numbers or booleans, but not string) then we return the other type.
+    Otherwise, we return bottom.
+
+ The contract that should hold about the function is that given two types with the
+ same `InferedTypeTag`, the result also has the same `InferedTypeTag`. 
+
+</summary>
+</member>
+<member name="M:ProviderImplementation.StructureInference.|SubtypePrimitives|_|(FSharp.Data.RuntimeImplementation.StructuralTypes.InferedType,FSharp.Data.RuntimeImplementation.StructuralTypes.InferedType)">
+<summary>
+ Active pattern that calls `subtypePrimitives` on two primitive types
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="P:ProviderImplementation.StructureInference.conversionTable">
+<summary>
+ Find common subtype of two primitive types or `Bottom` if there is no such type.
+ The numeric types are ordered as below, other types are not related in any way.
+
+   float :&gt; decimal :&gt; int64 :&gt; int :&gt; bit :&gt; bit0
+   float :&gt; decimal :&gt; int64 :&gt; int :&gt; bit :&gt; bit1
+   bool :&gt; bit :&gt; bit0
+   bool :&gt; bit :&gt; bit1
+
+ This means that e.g. `int` is a subtype of `decimal` and so all `int` values
+ are also `decimal` (and `float`) values, but not the other way round.
+</summary>
+</member>
+<member name="M:ProviderImplementation.StructureInference.typeTag(FSharp.Data.RuntimeImplementation.StructuralTypes.InferedType)">
+<summary>
+ Returns a tag of a type - a tag represents a &apos;kind&apos; of type 
+ (essentially it describes the different bottom types we have)
+</summary>
+</member>
+<member name="M:ProviderImplementation.StructureInference.supportsUnitsOfMeasure(System.Type)">
+<summary>
+ Checks whether a type supports unit of measure
+</summary>
+</member>
+<member name="M:ProviderImplementation.StructureInference.supportsNull(FSharp.Data.RuntimeImplementation.StructuralTypes.InferedType)">
+<summary>
+ Checks whether a type can have null as a value
+</summary>
+</member>
+<member name="P:ProviderImplementation.StructureInference.primitiveTypes">
+<summary>
+ List of primitive types that can be returned as a result of the inference
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:ProviderImplementation.StructureInference.pairBy``2(Microsoft.FSharp.Core.FSharpFunc{``0,``1},System.Collections.Generic.IEnumerable{``0},System.Collections.Generic.IEnumerable{``0})">
+<summary>
+ Merge two sequences by pairing elements for which
+ the specified predicate returns the same key
+
+ (If the inputs contain the same keys, then the order
+ of the elements is preserved.)
+</summary>
+</member>
+<member name="T:ProviderImplementation.StructureInference">
+
+</member>
+<member name="M:ProviderImplementation.XmlInference.inferType(System.IFormatProvider,System.Boolean,System.Boolean,System.Xml.Linq.XElement)">
+<summary>
+ A type is infered either using `inferLocalType` which only looks
+ at immediate children or using `inferGlobalType` which unifies nodes
+ of the same name in the entire document
+</summary>
+</member>
+<member name="M:ProviderImplementation.XmlInference.inferLocalType(System.IFormatProvider,System.Boolean,System.Xml.Linq.XElement)">
+<summary>
+ Get information about type locally (the type of children is infered
+ recursively, so same elements in different positions have different types)
+</summary>
+</member>
+<member name="M:ProviderImplementation.XmlInference.inferGlobalType(System.IFormatProvider,System.Boolean,System.Xml.Linq.XElement)">
+<summary>
+ Infers type for the element, unifying nodes of the same name
+ accross the entire document (we first get information based
+ on just attributes and then use a fixed point)
+</summary>
+</member>
+<member name="M:ProviderImplementation.XmlInference.getAttributes(System.IFormatProvider,System.Xml.Linq.XElement)">
+<summary>
+ Generates record fields for all attributes
+</summary>
+</member>
+<member name="T:ProviderImplementation.XmlInference">
+
+</member>
+<member name="M:ProviderImplementation.XmlTypeBuilder.generateXmlType(System.String,ProviderImplementation.XmlGenerationContext,FSharp.Data.RuntimeImplementation.StructuralTypes.InferedType)">
+<summary>
+ Recursively walks over inferred type information and 
+ generates types for read-only access to the document
+</summary>
+</member>
+<member name="M:ProviderImplementation.XmlTypeBuilder.|ContentType|_|(FSharp.Data.RuntimeImplementation.StructuralTypes.InferedProperty)">
+<summary>
+ Recognizes different valid infered types of content:
+
+  - `Primitive` means that the content is a value and there are no children
+  - `Collection` means that there are always just children but no value
+  - `Heterogeneous` means that there may be either children or value(s)
+
+ We return a list with all possible primitive types and all possible
+ children types (both may be empty)
+</summary>
+</member>
+<member name="T:ProviderImplementation.XmlTypeBuilder">
+
+</member>
+</members>
+</doc>
