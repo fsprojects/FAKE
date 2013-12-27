@@ -1,6 +1,6 @@
 #### 3.2.0 - 07.07.2014
 * BREAKING CHANGE: API for CreateAssemblyInfoWithConfig was set back to original version
-    This resets the breacking change introduced in https://github.com/fsharp/FAKE/pull/471
+  This resets the breaking change introduced in https://github.com/fsharp/FAKE/pull/471
 
 #### 3.1.2 - 07.07.2014
 * Automatic tool search for SpecFlowHelper - https://github.com/fsharp/FAKE/pull/496
