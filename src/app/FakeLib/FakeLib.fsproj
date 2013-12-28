@@ -39,6 +39,7 @@
     <WarningLevel>3</WarningLevel>
     <DocumentationFile>..\..\..\build\FakeLib.XML</DocumentationFile>
   </PropertyGroup>
+  <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="EnvironmentHelper.fs" />
@@ -56,9 +57,9 @@
     <Compile Include="TeamCityHelper.fs" />
     <Compile Include="TeamCityRESTHelper.fs" />
     <Compile Include="TraceHelper.fs" />
-    <Compile Include="ServiceControllerHelper.fs" />    
+    <Compile Include="ServiceControllerHelper.fs" />
     <Compile Include="ProcessHelper.fs" />
-    <Compile Include="Globbing\FileSystem.fs" />    
+    <Compile Include="Globbing\FileSystem.fs" />
     <Compile Include="UnitTest\UnitTestCommon.fs" />
     <Compile Include="UnitTest\UnitTestHelper.fs" />
     <Compile Include="UnitTest\NUnit\Xml.fs" />
@@ -66,7 +67,7 @@
     <Compile Include="UnitTest\NUnit\Sequential.fs" />
     <Compile Include="UnitTest\NUnit\Parallel.fs" />
     <Compile Include="UnitTest\XUnitHelper.fs" />
-    <Compile Include="UnitTest\MSpecHelper.fs" />        
+    <Compile Include="UnitTest\MSpecHelper.fs" />
     <Compile Include="UnitTest\MSTest.fs" />
     <Compile Include="AssemblyInfoFile.fs" />
     <Compile Include="AssemblyInfoHelper.fs" />
@@ -80,6 +81,7 @@
     <Compile Include="DocuHelper.fs" />
     <Compile Include="ILMergeHelper.fs" />
     <Compile Include="WiXHelper.fs" />
+    <Compile Include="FSFHelper.fs" />
     <Compile Include="MSIHelper.fs" />
     <Compile Include="RegAsmHelper.fs" />
     <Compile Include="NuGetHelper.fs" />
@@ -171,9 +173,5 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Core" />
-  </ItemGroup>
-  <Import Project="$(FSharpTargetsPath)" />
-  <ItemGroup>
-    <Folder Include="NuGet\" />
   </ItemGroup>
 </Project>

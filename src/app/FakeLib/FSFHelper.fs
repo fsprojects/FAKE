@@ -16,4 +16,3 @@ let runFSFormattingCommand workingDir command =
             info.WorkingDirectory <- workingDir
             info.Arguments <- command) fsformattingTimeOut
     processResult.OK,processResult.Messages,toLines processResult.Errors
-
