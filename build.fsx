@@ -117,9 +117,7 @@ Target "GenerateDocs" (fun _ ->
         |> List.concat
         |> separated " "
         |> runFSFormattingCommand "."
-    //##//Literate.ProcessDirectory (source, template, docsDir, replacements = projInfo)
 
-    /// TODO: define define appropriate error handling
     if not ok1 then printfn "Failed to generate docs in %s " source
 
     if isLocalBuild then
@@ -133,16 +131,10 @@ Target "GenerateDocs" (fun _ ->
             |> List.concat
             |> separated " "
             |> runFSFormattingCommand "."
-//##//        MetadataFormat.Generate (
-//##//          "./build/FakeLib.dll" :: (!! "./build/**/Fake.*.dll" |> Seq.toList),
-//##//          apidocsDir,
-//##//          ["./help/templates/"; "./help/templates/reference/"],
-//##//          parameters = projInfo)
 
-        /// TODO: define define appropriate error handling
         if not ok2 then printfn "Failed to generate docs for DLLs %s " (dllFiles |> separated " ")
 
-        if ok1 || ok2 then
+        if ok1 && ok2 then
             WriteStringToFile false "./docs/.nojekyll" ""
 
             CopyDir (docsDir @@ "content") "help/content" allFiles
