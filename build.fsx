@@ -122,19 +122,25 @@ Target "GenerateDocs" (fun _ ->
 
     if isLocalBuild then
         let dllFiles = "./build/FakeLib.dll" :: (!! "./build/**/Fake.*.dll" |> Seq.toList)
-        let ok2,_,errors2 =
+        let cmds = [ for f in dllFiles do yield ( f,
             [ [ "metadataformat --generate"
-                "--dllfiles" ]; dllFiles
-              [ "--outdir"; apidocsDir
+                "--dllfiles"; f
+                "--outdir"; apidocsDir
                 "--layoutroots" ]; ["./help/templates/"; "./help/templates/reference/"]
               [ "--parameters" ]; projInfo ]
             |> List.concat
-            |> separated " "
-            |> runFSFormattingCommand "."
+            |> separated " " ) ] 
+        
+        /// true, if the docs of at least one DLL file could be generated
+        let ok2 = 
+            [ for (f,c) in cmds do 
+                let (res,_,_) = runFSFormattingCommand "." c
+                if res then printfn "Successfully generated doc for DLL %s " f
+                else printfn "Failed to generate doc for DLL %s " f
+                yield ( res ) ]
+            |> List.fold ( || ) false 
 
-        if not ok2 then printfn "Failed to generate docs for DLLs %s " (dllFiles |> separated " ")
-
-        if ok1 && ok2 then
+        if ok1 || ok2 then
             WriteStringToFile false "./docs/.nojekyll" ""
 
             CopyDir (docsDir @@ "content") "help/content" allFiles
