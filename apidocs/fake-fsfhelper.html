@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>TargetBuilder - FAKE - F# Make</title>
+    <title>FSFHelper - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,130 +36,57 @@
 
 
 
-<h1>TargetBuilder</h1>
+<h1>FSFHelper</h1>
 <div class="xmldoc">
+<p>Contains tasks which allow to run FSharp.Formatting for generating documentation.</p>
 </div>
-  <h3>Constructors</h3>
+
+<!-- Render nested types and modules, if there are any -->
+
+  <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Constructor</td><td>Description</td></tr>
+      <tr><td>Function or value</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1213', 1213)" onmouseover="showTip(event, '1213', 1213)">
-            new(name)
+          <code onmouseout="hideTip(event, '100', 100)" onmouseover="showTip(event, '100', 100)">
+            fsformattingPath 
           </code>
-          <div class="tip" id="1213">
-            <strong>Signature:</strong>name:string -&gt; TargetBuilder<br />
+          <div class="tip" id="100">
+            <strong>Signature:</strong>string<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
-      </tr>
-    </tbody>
-  </table>
-  <h3>Instance members</h3>
-  <table class="table table-bordered member-list">
-    <thead>
-      <tr><td>Instance member</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1229', 1229)" onmouseover="showTip(event, '1229', 1229)">
-            Delay(f)
-          </code>
-          <div class="tip" id="1229">
-            <strong>Signature:</strong>f:&#39;?6842 -&gt; &#39;?6842<br />
-                          <strong>Type parameters:</strong> '?6842          </div>
-        </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Specifies the fsformatting executable</p>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1230', 1230)" onmouseover="showTip(event, '1230', 1230)">
-            For(sequence, body)
+          <code onmouseout="hideTip(event, '101', 101)" onmouseover="showTip(event, '101', 101)">
+            fsformattingTimeOut 
           </code>
-          <div class="tip" id="1230">
-            <strong>Signature:</strong>(sequence:seq&lt;&#39;?6853&gt; * body:(&#39;?6853 -&gt; unit)) -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?6853          </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1231', 1231)" onmouseover="showTip(event, '1231', 1231)">
-            Run(f)
-          </code>
-          <div class="tip" id="1231">
-            <strong>Signature:</strong>(f:(unit -&gt; unit)) -&gt; unit<br />
+          <div class="tip" id="101">
+            <strong>Signature:</strong>TimeSpan<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Specifies a global timeout for fsformatting.exe</p>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1232', 1232)" onmouseover="showTip(event, '1232', 1232)">
-            TryFinally(body, compensation)
+          <code onmouseout="hideTip(event, '102', 102)" onmouseover="showTip(event, '102', 102)">
+            runFSFormattingCommand (...)
           </code>
-          <div class="tip" id="1232">
-            <strong>Signature:</strong>(body:(unit -&gt; &#39;?6848) * compensation:(unit -&gt; unit)) -&gt; &#39;?6848<br />
-                          <strong>Type parameters:</strong> '?6848          </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1233', 1233)" onmouseover="showTip(event, '1233', 1233)">
-            TryWith(body, handler)
-          </code>
-          <div class="tip" id="1233">
-            <strong>Signature:</strong>(body:(unit -&gt; &#39;?6846) * handler:(exn -&gt; &#39;?6846)) -&gt; &#39;?6846<br />
-                          <strong>Type parameters:</strong> '?6846          </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1234', 1234)" onmouseover="showTip(event, '1234', 1234)">
-            Using(disposable, body)
-          </code>
-          <div class="tip" id="1234">
-            <strong>Signature:</strong>(disposable:&#39;?6850 * body:(&#39;?6850 -&gt; &#39;?6851)) -&gt; &#39;?6851<br />
-                          <strong>Type parameters:</strong> '?6850, '?6851          </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1235', 1235)" onmouseover="showTip(event, '1235', 1235)">
-            While(guard, body)
-          </code>
-          <div class="tip" id="1235">
-            <strong>Signature:</strong>(guard:(unit -&gt; bool) * body:(unit -&gt; unit)) -&gt; unit<br />
+          <div class="tip" id="102">
+            <strong>Signature:</strong>workingDir:string -&gt; command:string -&gt; bool * List&lt;string&gt; * string<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1236', 1236)" onmouseover="showTip(event, '1236', 1236)">
-            Zero()
-          </code>
-          <div class="tip" id="1236">
-            <strong>Signature:</strong>unit -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Runs fsformatting.exe with the given command in the given repository directory.</p>
+</td>
       </tr>
     </tbody>
   </table>

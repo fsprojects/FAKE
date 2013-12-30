@@ -51,6 +51,12 @@
     <tbody>
         <tr>
           <td class="type-name">
+            <a href="fake-semverhelper-prerelease.html">PreRelease</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
             <a href="fake-semverhelper-semverinfo.html">SemVerInfo</a>
           </td>
           <td class="xmldoc"><p>Contains the version information.</p>
@@ -70,10 +76,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '485', 485)" onmouseover="showTip(event, '485', 485)">
+          <code onmouseout="hideTip(event, '432', 432)" onmouseover="showTip(event, '432', 432)">
             parse version
           </code>
-          <div class="tip" id="485">
+          <div class="tip" id="432">
             <strong>Signature:</strong>version:string -&gt; SemVerInfo<br />
                       </div>
         </td>
@@ -82,9 +88,11 @@ according to the rules described in the <a href="http://semver.org/">SemVer docs
 
 <h2>Sample</h2>
 
-<pre><code>parse "1.0.0-rc.1"   &lt; parse "1.0.0"      // true
-parse "1.2.3-alpha"  &gt; parse "1.2.2"      // true
-parse "1.5.0-beta.2" &gt; parse "1.5.0-rc.1" // false
+<pre><code>parse "1.0.0-rc.1"     &lt; parse "1.0.0"          // true
+parse "1.2.3-alpha"    &gt; parse "1.2.2"          // true
+parse "1.2.3-alpha2"   &gt; parse "1.2.3-alpha"    // true
+parse "1.2.3-alpha002" &gt; parse "1.2.3-alpha1" // true
+parse "1.5.0-beta.2"   &gt; parse "1.5.0-rc.1"     // false
 </code></pre>
 </td>
       </tr>

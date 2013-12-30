@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>FileSetBuilder - FAKE - F# Make</title>
+    <title>PreRelease - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,115 +36,67 @@
 
 
 
-<h1>FileSetBuilder</h1>
+<h1>PreRelease</h1>
 <div class="xmldoc">
 </div>
-  <h3>Constructors</h3>
+  <h3>Record Fields</h3>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Constructor</td><td>Description</td></tr>
+      <tr><td>Record Field</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1203', 1203)" onmouseover="showTip(event, '1203', 1203)">
-            new()
+          <code onmouseout="hideTip(event, '959', 959)" onmouseover="showTip(event, '959', 959)">
+            Name
           </code>
-          <div class="tip" id="1203">
-            <strong>Signature:</strong>unit -&gt; FileSetBuilder<br />
+          <div class="tip" id="959">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '968', 968)" onmouseover="showTip(event, '968', 968)">
+            Number
+          </code>
+          <div class="tip" id="968">
+            <strong>Signature:</strong>int option<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '969', 969)" onmouseover="showTip(event, '969', 969)">
+            Origin
+          </code>
+          <div class="tip" id="969">
+            <strong>Signature:</strong>string<br />
                       </div>
         </td>
         <td class="xmldoc"></td>
       </tr>
     </tbody>
   </table>
-  <h3>Instance members</h3>
+  <h3>Static members</h3>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Instance member</td><td>Description</td></tr>
+      <tr><td>Static member</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1214', 1214)" onmouseover="showTip(event, '1214', 1214)">
-            Add(fs, pattern)
+          <code onmouseout="hideTip(event, '1035', 1035)" onmouseover="showTip(event, '1035', 1035)">
+            TryParse(str)
           </code>
-          <div class="tip" id="1214">
-            <strong>Signature:</strong>(fs:FileIncludes * pattern:string) -&gt; FileIncludes<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1215', 1215)" onmouseover="showTip(event, '1215', 1215)">
-            AddMany(fs, patterns)
-          </code>
-          <div class="tip" id="1215">
-            <strong>Signature:</strong>(fs:FileIncludes * patterns:string list) -&gt; FileIncludes<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1216', 1216)" onmouseover="showTip(event, '1216', 1216)">
-            Delay(f)
-          </code>
-          <div class="tip" id="1216">
-            <strong>Signature:</strong>f:&#39;?6857 -&gt; &#39;?6857<br />
-                          <strong>Type parameters:</strong> '?6857          </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1217', 1217)" onmouseover="showTip(event, '1217', 1217)">
-            Exclude(fs, pattern)
-          </code>
-          <div class="tip" id="1217">
-            <strong>Signature:</strong>(fs:FileIncludes * pattern:string) -&gt; FileIncludes<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1218', 1218)" onmouseover="showTip(event, '1218', 1218)">
-            ExcludeMany(fs, patterns)
-          </code>
-          <div class="tip" id="1218">
-            <strong>Signature:</strong>(fs:FileIncludes * patterns:string list) -&gt; FileIncludes<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1219', 1219)" onmouseover="showTip(event, '1219', 1219)">
-            Run(f)
-          </code>
-          <div class="tip" id="1219">
-            <strong>Signature:</strong>(f:(unit -&gt; &#39;?6859)) -&gt; &#39;?6859<br />
-                          <strong>Type parameters:</strong> '?6859          </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1220', 1220)" onmouseover="showTip(event, '1220', 1220)">
-            Yield(arg1)
-          </code>
-          <div class="tip" id="1220">
-            <strong>Signature:</strong>unit -&gt; FileIncludes<br />
+          <div class="tip" id="1035">
+            <strong>Signature:</strong>str:string -&gt; PreRelease option<br />
                       </div>
         </td>
         <td class="xmldoc"></td>
