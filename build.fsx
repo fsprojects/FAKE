@@ -98,53 +98,54 @@ Target "BuildSolution" (fun _ ->
 
 Target "GenerateDocs" (fun _ ->
     let source = "./help"
-    let template = "./help/templates/template-project.html"
-    let projInfo =
-      [ "page-description"; "\"FAKE - F# Make\""
-        "page-author"; "\""+(separated ", " authors)+"\""
-        "project-author"; "\""+(separated ", " authors)+"\""
-        "github-link"; "http://github.com/fsharp/fake"
-        "project-github"; "http://github.com/fsharp/fake"
-        "project-nuget"; "https://www.nuget.org/packages/FAKE"
-        "root"; "http://fsharp.github.io/FAKE"
-        "project-name"; "\"FAKE - F# Make\"" ]
-
-    let ok1,_,errors1 =
-        [ [ "literate --processdirectory";
-            "--inputdirectory"; source
-            "--templatefile"; template
-            "--replacements" ]; projInfo ]
-        |> List.concat
-        |> separated " "
-        |> runFSFormattingCommand "."
-
-    if not ok1 then printfn "Failed to generate docs in %s " source
-
-    if isLocalBuild then
-        let dllFiles = "./build/FakeLib.dll" :: (!! "./build/**/Fake.*.dll" |> Seq.toList)
-        let cmds = [ for f in dllFiles do yield ( f,
-            [ [ "metadataformat --generate"
-                "--dllfiles"; f
-                "--outdir"; apidocsDir
-                "--layoutroots" ]; ["./help/templates/"; "./help/templates/reference/"]
-              [ "--parameters" ]; projInfo ]
-            |> List.concat
-            |> separated " " ) ] 
-        
-        /// true, if the docs of at least one DLL file could be generated
-        let ok2 = 
-            [ for (f,c) in cmds do 
-                let (res,_,_) = runFSFormattingCommand "." c
-                if res then printfn "Successfully generated doc for DLL %s " f
-                else printfn "Failed to generate doc for DLL %s " f
-                yield ( res ) ]
-            |> List.fold ( || ) false 
-
-        if ok1 || ok2 then
-            WriteStringToFile false "./docs/.nojekyll" ""
-
-            CopyDir (docsDir @@ "content") "help/content" allFiles
-            CopyDir (docsDir @@ "pics") "help/pics" allFiles
+    ()
+//    let template = "./help/templates/template-project.html"
+//    let projInfo =
+//      [ "page-description"; "\"FAKE - F# Make\""
+//        "page-author"; "\""+(separated ", " authors)+"\""
+//        "project-author"; "\""+(separated ", " authors)+"\""
+//        "github-link"; "http://github.com/fsharp/fake"
+//        "project-github"; "http://github.com/fsharp/fake"
+//        "project-nuget"; "https://www.nuget.org/packages/FAKE"
+//        "root"; "http://fsharp.github.io/FAKE"
+//        "project-name"; "\"FAKE - F# Make\"" ]
+//
+//    let ok1,_,errors1 =
+//        [ [ "literate --processdirectory";
+//            "--inputdirectory"; source
+//            "--templatefile"; template
+//            "--replacements" ]; projInfo ]
+//        |> List.concat
+//        |> separated " "
+//        |> runFSFormattingCommand "."
+//
+//    if not ok1 then printfn "Failed to generate docs in %s " source
+//
+//    if isLocalBuild then
+//        let dllFiles = "./build/FakeLib.dll" :: (!! "./build/**/Fake.*.dll" |> Seq.toList)
+//        let cmds = [ for f in dllFiles do yield ( f,
+//            [ [ "metadataformat --generate"
+//                "--dllfiles"; f
+//                "--outdir"; apidocsDir
+//                "--layoutroots" ]; ["./help/templates/"; "./help/templates/reference/"]
+//              [ "--parameters" ]; projInfo ]
+//            |> List.concat
+//            |> separated " " ) ] 
+//        
+//        /// true, if the docs of at least one DLL file could be generated
+//        let ok2 = 
+//            [ for (f,c) in cmds do 
+//                let (res,_,_) = runFSFormattingCommand "." c
+//                if res then printfn "Successfully generated doc for DLL %s " f
+//                else printfn "Failed to generate doc for DLL %s " f
+//                yield ( res ) ]
+//            |> List.fold ( || ) false 
+//
+//        if ok1 || ok2 then
+//            WriteStringToFile false "./docs/.nojekyll" ""
+//
+//            CopyDir (docsDir @@ "content") "help/content" allFiles
+//            CopyDir (docsDir @@ "pics") "help/pics" allFiles
 )
 
 Target "CopyLicense" (fun _ ->
