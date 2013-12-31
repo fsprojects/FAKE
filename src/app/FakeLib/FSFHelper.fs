@@ -1,10 +1,9 @@
-﻿[<AutoOpen>]
-/// Contains tasks which allow to run FSharp.Formatting for generating documentation.
+﻿/// Contains tasks which allow to run FSharp.Formatting for generating documentation.
 module Fake.FSFHelper
 
 /// Specifies the fsformatting executable
-let mutable fsformattingPath = "./tools/fsformatting/fsformatting.exe"
-
+let mutable fsformattingPath = findToolInSubPath "fsformatting.exe" (currentDirectory @@ "tools" @@ "fsformatting")
+    
 /// Specifies a global timeout for fsformatting.exe
 let mutable fsformattingTimeOut = System.TimeSpan.MaxValue
 
