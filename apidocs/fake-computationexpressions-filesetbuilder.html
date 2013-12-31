@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>FSFHelper - FAKE - F# Make</title>
+    <title>FileSetBuilder - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,57 +36,118 @@
 
 
 
-<h1>FSFHelper</h1>
+<h1>FileSetBuilder</h1>
 <div class="xmldoc">
-<p>Contains tasks which allow to run FSharp.Formatting for generating documentation.</p>
 </div>
-
-<!-- Render nested types and modules, if there are any -->
-
-  <h3>Functions and values</h3>
+  <h3>Constructors</h3>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Function or value</td><td>Description</td></tr>
+      <tr><td>Constructor</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '100', 100)" onmouseover="showTip(event, '100', 100)">
-            fsformattingPath 
+          <code onmouseout="hideTip(event, '1197', 1197)" onmouseover="showTip(event, '1197', 1197)">
+            new()
           </code>
-          <div class="tip" id="100">
-            <strong>Signature:</strong>string<br />
+          <div class="tip" id="1197">
+            <strong>Signature:</strong>unit -&gt; FileSetBuilder<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Specifies the fsformatting executable</p>
-</td>
+        <td class="xmldoc"></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Instance members</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Instance member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1201', 1201)" onmouseover="showTip(event, '1201', 1201)">
+            Add(fs, pattern)
+          </code>
+          <div class="tip" id="1201">
+            <strong>Signature:</strong>(fs:FileIncludes * pattern:string) -&gt; FileIncludes<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '101', 101)" onmouseover="showTip(event, '101', 101)">
-            fsformattingTimeOut 
+          <code onmouseout="hideTip(event, '1202', 1202)" onmouseover="showTip(event, '1202', 1202)">
+            AddMany(fs, patterns)
           </code>
-          <div class="tip" id="101">
-            <strong>Signature:</strong>TimeSpan<br />
+          <div class="tip" id="1202">
+            <strong>Signature:</strong>(fs:FileIncludes * patterns:string list) -&gt; FileIncludes<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Specifies a global timeout for fsformatting.exe</p>
-</td>
+        <td class="xmldoc"></td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '102', 102)" onmouseover="showTip(event, '102', 102)">
-            runFSFormattingCommand (...)
+          <code onmouseout="hideTip(event, '1203', 1203)" onmouseover="showTip(event, '1203', 1203)">
+            Delay(f)
           </code>
-          <div class="tip" id="102">
-            <strong>Signature:</strong>workingDir:string -&gt; command:string -&gt; bool * List&lt;string&gt; * string<br />
+          <div class="tip" id="1203">
+            <strong>Signature:</strong>f:&#39;?6862 -&gt; &#39;?6862<br />
+                          <strong>Type parameters:</strong> '?6862          </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1204', 1204)" onmouseover="showTip(event, '1204', 1204)">
+            Exclude(fs, pattern)
+          </code>
+          <div class="tip" id="1204">
+            <strong>Signature:</strong>(fs:FileIncludes * pattern:string) -&gt; FileIncludes<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Runs fsformatting.exe with the given command in the given repository directory.</p>
-</td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1205', 1205)" onmouseover="showTip(event, '1205', 1205)">
+            ExcludeMany(fs, patterns)
+          </code>
+          <div class="tip" id="1205">
+            <strong>Signature:</strong>(fs:FileIncludes * patterns:string list) -&gt; FileIncludes<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1206', 1206)" onmouseover="showTip(event, '1206', 1206)">
+            Run(f)
+          </code>
+          <div class="tip" id="1206">
+            <strong>Signature:</strong>(f:(unit -&gt; &#39;?6864)) -&gt; &#39;?6864<br />
+                          <strong>Type parameters:</strong> '?6864          </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1207', 1207)" onmouseover="showTip(event, '1207', 1207)">
+            Yield(arg1)
+          </code>
+          <div class="tip" id="1207">
+            <strong>Signature:</strong>unit -&gt; FileIncludes<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
       </tr>
     </tbody>
   </table>
