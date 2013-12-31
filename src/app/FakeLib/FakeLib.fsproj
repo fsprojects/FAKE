@@ -71,6 +71,7 @@
     <Compile Include="AssemblyInfoFile.fs" />
     <Compile Include="AssemblyInfoHelper.fs" />
     <Compile Include="FXCopHelper.fs" />
+    <Compile Include="FSFHelper.fs" />
     <Compile Include="NCoverHelper.fs" />
     <Compile Include="MsBuildLogger.fs" />
     <Compile Include="MSBuildHelper.fs" />
