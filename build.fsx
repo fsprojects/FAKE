@@ -98,61 +98,46 @@ Target "BuildSolution" (fun _ ->
 )
 
 Target "GenerateDocs" (fun _ ->
-    let source = "./help"
-    let template = "./help/templates/template-project.html"
-    let projInfo =
-      [ "page-description"; "\"FAKE - F# Make\""
-        "page-author"; "\""+(separated ", " authors)+"\""
-        "project-author"; "\""+(separated ", " authors)+"\""
-        "github-link"; "http://github.com/fsharp/fake"
-        "project-github"; "http://github.com/fsharp/fake"
-        "project-nuget"; "https://www.nuget.org/packages/FAKE"
-        "root"; "http://fsharp.github.io/FAKE"
-        "project-name"; "\"FAKE - F# Make\"" ]
+//    let source = "./help"
+//    let template = "./help/templates/template-project.html"
+//    let projInfo =
+//      [ "page-description"; "\"FAKE - F# Make\""
+//        "page-author"; "\""+(separated ", " authors)+"\""
+//        "project-author"; "\""+(separated ", " authors)+"\""
+//        "github-link"; "http://github.com/fsharp/fake"
+//        "project-github"; "http://github.com/fsharp/fake"
+//        "project-nuget"; "https://www.nuget.org/packages/FAKE"
+//        "root"; "http://fsharp.github.io/FAKE"
+//        "project-name"; "\"FAKE - F# Make\"" ]
+//
+//    let quiet = true
+//
+//    [ [ "literate --processdirectory";
+//        "--inputdirectory"; source
+//        "--templatefile"; template
+//        "--outputDirectory"; docsDir;
+//        "--replacements" ]; projInfo ]
+//    |> List.concat
+//    |> separated " "
+//    |> runFSFormattingCommand "." quiet
+//    
+//   
+//    let dllFiles = "./build/FakeLib.dll" :: (!! "./build/**/Fake.*.dll" |> Seq.toList)
+//    let c = 
+//            [ [ "metadataformat --generate";
+//                "--outdir"; apidocsDir;
+//                "--layoutroots" ]; 
+//                [ "./help/templates/"; "./help/templates/reference/" ]; 
+//            [ "--parameters" ]; projInfo ] 
+//            |> List.concat 
+//            |> separated " "
+//        
+    //CreateDocsForDlls "." quiet c dllFiles
 
-    let quiet = true
+    WriteStringToFile false "./docs/.nojekyll" ""
 
-    [ [ "literate --processdirectory";
-        "--inputdirectory"; source
-        "--templatefile"; template
-        "--outputDirectory"; docsDir;
-        "--replacements" ]; projInfo ]
-    |> List.concat
-    |> separated " "
-    |> runFSFormattingCommand "." quiet
-    
-    if isLocalBuild then
-        let dllFiles = "./build/FakeLib.dll" :: (!! "./build/**/Fake.*.dll" |> Seq.toList)
-        let cmds = 
-            [ for f in dllFiles do 
-                let c = 
-                    [ [ "metadataformat --generate";
-                    "--dllfiles"; f;
-                    "--outdir"; apidocsDir;
-                    "--layoutroots" ]; [ "./help/templates/"; "./help/templates/reference/" ]; 
-                    [ "--parameters" ]; projInfo ] 
-                    |> List.concat 
-                    |> separated " "
-                yield ( f, c ) ] 
-        
-        /// true, if the docs of at least one DLL file could be generated
-        let ok2 = 
-            [ for (f,c) in cmds do 
-                let res = 
-                    try 
-                        runFSFormattingCommand "." quiet c
-                        printfn "Successfully generated doc for DLL %s " f
-                        true
-                    with 
-                        | _ -> printfn "Failed to generate doc for DLL %s " f; false
-                yield ( res ) ]
-            |> List.fold ( || ) false 
-
-        if ok2 then
-            WriteStringToFile false "./docs/.nojekyll" ""
-
-            CopyDir (docsDir @@ "content") "help/content" allFiles
-            CopyDir (docsDir @@ "pics") "help/pics" allFiles
+    CopyDir (docsDir @@ "content") "help/content" allFiles
+    CopyDir (docsDir @@ "pics") "help/pics" allFiles
 )
 
 Target "CopyLicense" (fun _ ->
@@ -245,7 +230,7 @@ Target "Default" DoNothing
     =?> ("Test",not isLinux )
     ==> "CopyLicense"
     ==> "BuildZip"
-    =?> ("GenerateDocs",    not isLinux )
+    =?> ("GenerateDocs",    isLocalBuild && not isLinux )
     =?> ("ZipDocumentation",not isLinux )
     =?> ("CreateNuGet",     not isLinux )
     ==> "Default"
