@@ -82,7 +82,6 @@
     <Compile Include="DocuHelper.fs" />
     <Compile Include="ILMergeHelper.fs" />
     <Compile Include="WiXHelper.fs" />
-    <Compile Include="FSFHelper.fs" />
     <Compile Include="MSIHelper.fs" />
     <Compile Include="RegAsmHelper.fs" />
     <Compile Include="NuGetHelper.fs" />
