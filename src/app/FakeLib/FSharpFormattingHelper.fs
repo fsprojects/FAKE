@@ -22,7 +22,7 @@ let runFSFormattingCommand workingDir quiet command =
    
 let CreateDocsForDlls workingDir quiet command dllFiles =
     for file in dllFiles do 
-        let command = command + sprintf "--dllfiles %s" file
+        let command = command + sprintf " --dllfiles %s" file
                 
         runFSFormattingCommand "." quiet command
         printfn "Successfully generated doc for DLL %s" file
