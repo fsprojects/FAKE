@@ -110,6 +110,8 @@ Target "GenerateDocs" (fun _ ->
         "root"; "http://fsharp.github.io/FAKE"
         "project-name"; "\"FAKE - F# Make\"" ]
 
+    let quiet = true
+
     let ok1 =
         try
             [ [ "literate --processdirectory";
@@ -118,7 +120,7 @@ Target "GenerateDocs" (fun _ ->
                 "--replacements" ]; projInfo ]
             |> List.concat
             |> separated " "
-            |> runFSFormattingCommand "."
+            |> runFSFormattingCommand "." quiet
             true
         with 
             | _ -> false
@@ -143,7 +145,7 @@ Target "GenerateDocs" (fun _ ->
             [ for (f,c) in cmds do 
                 let res = 
                     try 
-                        runFSFormattingCommand "." c
+                        runFSFormattingCommand "." quiet c
                         printfn "Successfully generated doc for DLL %s " f
                         true
                     with 
