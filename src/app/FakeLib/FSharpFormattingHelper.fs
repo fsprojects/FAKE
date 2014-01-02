@@ -19,4 +19,10 @@ let runFSFormattingCommand workingDir quiet command =
     if ret <> 0
     then
         failwithf "FSharp.Formatting %s failed." command
-    
+   
+let CreateDocsForDlls workingDir quiet command dllFiles =
+    for file in dllFiles do 
+        let command = command + sprintf "--dllfiles %s" file
+                
+        runFSFormattingCommand "." quiet command
+        printfn "Successfully generated doc for DLL %s" file
