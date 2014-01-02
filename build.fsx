@@ -112,20 +112,15 @@ Target "GenerateDocs" (fun _ ->
 
     let quiet = true
 
-    let ok1 =
-        try
-            [ [ "literate --processdirectory";
-                "--inputdirectory"; source
-                "--templatefile"; template
-                "--replacements" ]; projInfo ]
-            |> List.concat
-            |> separated " "
-            |> runFSFormattingCommand "." quiet
-            true
-        with 
-            | _ -> false
-    if not ok1 then printfn "Failed to generate docs in %s " source
-
+    [ [ "literate --processdirectory";
+        "--inputdirectory"; source
+        "--templatefile"; template
+        "--outputDirectory"; docsDir;
+        "--replacements" ]; projInfo ]
+    |> List.concat
+    |> separated " "
+    |> runFSFormattingCommand "." quiet
+    
     if isLocalBuild then
         let dllFiles = "./build/FakeLib.dll" :: (!! "./build/**/Fake.*.dll" |> Seq.toList)
         let cmds = 
@@ -153,7 +148,7 @@ Target "GenerateDocs" (fun _ ->
                 yield ( res ) ]
             |> List.fold ( || ) false 
 
-        if ok1 || ok2 then
+        if ok2 then
             WriteStringToFile false "./docs/.nojekyll" ""
 
             CopyDir (docsDir @@ "content") "help/content" allFiles
