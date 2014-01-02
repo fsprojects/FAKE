@@ -3,6 +3,7 @@
 
 open Fake
 open Fake.Git
+open Fake.FSFHelper
 
 // properties
 let projectName = "FAKE"
@@ -109,34 +110,46 @@ Target "GenerateDocs" (fun _ ->
         "root"; "http://fsharp.github.io/FAKE"
         "project-name"; "\"FAKE - F# Make\"" ]
 
-    let ok1,_,errors1 =
-        [ [ "literate --processdirectory";
-            "--inputdirectory"; source
-            "--templatefile"; template
-            "--replacements" ]; projInfo ]
-        |> List.concat
-        |> separated " "
-        |> runFSFormattingCommand "."
+    let quiet = true
 
+    let ok1 =
+        try
+            [ [ "literate --processdirectory";
+                "--inputdirectory"; source
+                "--templatefile"; template
+                "--replacements" ]; projInfo ]
+            |> List.concat
+            |> separated " "
+            |> runFSFormattingCommand "." quiet
+            true
+        with 
+            | _ -> false
     if not ok1 then printfn "Failed to generate docs in %s " source
 
     if isLocalBuild then
         let dllFiles = "./build/FakeLib.dll" :: (!! "./build/**/Fake.*.dll" |> Seq.toList)
-        let cmds = [ for f in dllFiles do yield ( f,
-            [ [ "metadataformat --generate"
-                "--dllfiles"; f
-                "--outdir"; apidocsDir
-                "--layoutroots" ]; ["./help/templates/"; "./help/templates/reference/"]
-              [ "--parameters" ]; projInfo ]
-            |> List.concat
-            |> separated " " ) ] 
+        let cmds = 
+            [ for f in dllFiles do 
+                let c = 
+                    [ [ "metadataformat --generate";
+                    "--dllfiles"; f;
+                    "--outdir"; apidocsDir;
+                    "--layoutroots" ]; [ "./help/templates/"; "./help/templates/reference/" ]; 
+                    [ "--parameters" ]; projInfo ] 
+                    |> List.concat 
+                    |> separated " "
+                yield ( f, c ) ] 
         
         /// true, if the docs of at least one DLL file could be generated
         let ok2 = 
             [ for (f,c) in cmds do 
-                let (res,_,_) = runFSFormattingCommand "." c
-                if res then printfn "Successfully generated doc for DLL %s " f
-                else printfn "Failed to generate doc for DLL %s " f
+                let res = 
+                    try 
+                        runFSFormattingCommand "." quiet c
+                        printfn "Successfully generated doc for DLL %s " f
+                        true
+                    with 
+                        | _ -> printfn "Failed to generate doc for DLL %s " f; false
                 yield ( res ) ]
             |> List.fold ( || ) false 
 
