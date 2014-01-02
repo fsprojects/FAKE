@@ -8,10 +8,15 @@ let mutable fsformattingPath = findToolInSubPath "fsformatting.exe" (currentDire
 let mutable fsformattingTimeOut = System.TimeSpan.MaxValue
 
 /// Runs fsformatting.exe with the given command in the given repository directory.
-let runFSFormattingCommand workingDir command =
-    if 0 <> ExecProcess (fun info ->  
+let runFSFormattingCommand workingDir quiet command =
+    let redirectOutputToTrace_ = redirectOutputToTrace
+    redirectOutputToTrace <- quiet
+    let ret = ExecProcess (fun info ->  
         info.FileName <- fsformattingPath
         info.WorkingDirectory <- workingDir
         info.Arguments <- command) fsformattingTimeOut
+    redirectOutputToTrace <- redirectOutputToTrace_
+    if ret <> 0
     then
         failwithf "FSharp.Formatting %s failed." command
+    
