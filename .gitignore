@@ -44,3 +44,4 @@ gh-pages/
 tools/FSharp.Formatting
 tools/Microsoft.AspNet.Razor
 tools/RazorEngine
+!tools/FAKE/tools/FakeLib*
