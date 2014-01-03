@@ -130,24 +130,12 @@ Target "CopyLicense" (fun _ ->
     CopyTo buildDir additionalFiles
 )
 
-Target "BuildZip" (fun _ ->
-    !! (buildDir @@ @"**/*.*")
-      -- "*.zip"
-      -- "**/*.pdb"
-      |> Zip buildDir deployZip
-)
-
 Target "Test" (fun _ ->
     !! (testDir @@ "Test.*.dll")
     |> MSpec (fun p ->
             {p with
                 ExcludeTags = ["HTTP"]
                 HtmlOutputDir = reportDir})
-)
-
-Target "ZipDocumentation" (fun _ ->
-    !! (docsDir @@ @"**/*.*")
-       |> Zip docsDir (deployDir @@ sprintf "Documentation-%s.zip" buildVersion)
 )
 
 Target "CreateNuGet" (fun _ ->
@@ -215,9 +203,7 @@ Target "Default" DoNothing
     ==> "BuildSolution"
     =?> ("Test",not isLinux )
     ==> "CopyLicense"
-    ==> "BuildZip"
     =?> ("GenerateDocs",    isLocalBuild && not isLinux )
-    =?> ("ZipDocumentation",not isLinux )
     =?> ("CreateNuGet",     not isLinux )
     ==> "Default"
     ==> "ReleaseDocs"
