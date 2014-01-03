@@ -106,6 +106,7 @@
     <Compile Include="Git\Rebase.fs" />
     <Compile Include="Git\CommitMessage.fs" />
     <Compile Include="Git\Staging.fs" />
+    <Compile Include="Git\Commit.fs" />
     <Compile Include="FSIHelper.fs" />
     <Compile Include="Boot.fs" />
     <Compile Include="MessageHelper.fs" />
