@@ -183,13 +183,13 @@ Target "CreateNuGet" (fun _ ->
 
 Target "ReleaseDocs" (fun _ ->
     CleanDir "gh-pages"
-    CommandHelper.runSimpleGitCommand "" "clone -b gh-pages --single-branch git@github.com:fsharp/FAKE.git gh-pages" |> printfn "%s"
+    cloneSingleBranch "" "git@github.com:fsharp/FAKE.git" "gh-pages" "gh-pages"
 
     fullclean "gh-pages"
     CopyRecursive "docs" "gh-pages" true |> printfn "%A"
     CopyFile "gh-pages" "./Samples/FAKE-Calculator.zip"
-    CommandHelper.runSimpleGitCommand "gh-pages" "add . --all" |> printfn "%s"
-    CommandHelper.runSimpleGitCommand "gh-pages" (sprintf "commit -m \"Update generated documentation %s\"" buildVersion) |> printfn "%s"
+    StageAll "gh-pages"
+    Commit "gh-pages" (sprintf "Update generated documentation %s" buildVersion)
     Branches.push "gh-pages"
 )
 
