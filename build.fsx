@@ -114,8 +114,8 @@ Target "GenerateDocs" (fun _ ->
     CreateDocs source docsDir template projInfo
    
     let dllFiles = 
-        !! "./build/FakeLib.dll"
-          ++ "./build/**/Fake.*.dll"
+        !! "./build/**/Fake.*.dll"
+          ++ "./build/FakeLib.dll"
           -- "./build/**/Fake.Experimental.dll"
         
     CreateDocsForDlls apidocsDir templatesDir projInfo dllFiles
