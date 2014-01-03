@@ -2,16 +2,13 @@
 module Fake.FSharpFormatting
 
 /// Specifies the fsformatting executable
-let mutable fsformattingPath = findToolInSubPath "fsformatting.exe" (currentDirectory @@ "tools" @@ "fsformatting")
+let mutable toolPath = findToolInSubPath "fsformatting.exe" (currentDirectory @@ "tools" @@ "fsformatting")
     
-/// Specifies a global timeout for fsformatting.exe
-let mutable fsformattingTimeOut = System.TimeSpan.MaxValue
-
 /// Runs fsformatting.exe with the given command in the given repository directory.
-let internal runFSFormattingCommand command =
+let run command =
     if 0 <> ExecProcess (fun info ->  
-        info.FileName <- fsformattingPath
-        info.Arguments <- command) fsformattingTimeOut
+        info.FileName <- toolPath
+        info.Arguments <- command) System.TimeSpan.MaxValue
     then
         failwithf "FSharp.Formatting %s failed." command
 
@@ -30,7 +27,7 @@ let CreateDocs source outputDir template projectParameters =
         |> Seq.map (fun s -> if s.StartsWith "\"" then s else sprintf "\"%s\"" s)
         |> separated " " 
 
-    runFSFormattingCommand command
+    run command
     printfn "Successfully generated docs for %s" source
            
 let CreateDocsForDlls outputDir templatesDir projectParameters dllFiles = 
@@ -51,5 +48,5 @@ let CreateDocsForDlls outputDir templatesDir projectParameters dllFiles =
     for file in dllFiles do 
         let command = command + sprintf " --dllfiles \"%s\"" file
                 
-        runFSFormattingCommand command
+        run command
         printfn "Successfully generated docs for DLL %s" file
