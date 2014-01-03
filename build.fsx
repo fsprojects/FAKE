@@ -97,45 +97,83 @@ Target "BuildSolution" (fun _ ->
     |> Log "AppBuild-Output: "
 )
 
+/// Specifies the fsformatting executable
+let mutable fsformattingPath = findToolInSubPath "fsformatting.exe" (currentDirectory @@ "tools" @@ "fsformatting")
+    
+/// Specifies a global timeout for fsformatting.exe
+let mutable fsformattingTimeOut = System.TimeSpan.MaxValue
+
+/// Runs fsformatting.exe with the given command in the given repository directory.
+let runFSFormattingCommand workingDir command =
+    if 0 <> ExecProcess (fun info ->  
+        info.FileName <- fsformattingPath
+        info.WorkingDirectory <- workingDir
+        info.Arguments <- command) fsformattingTimeOut
+    then
+        failwithf "FSharp.Formatting %s failed." command
+
+let CreateDocs workingDir source output template projectParameters =    
+    let command =
+        projectParameters 
+        |> Seq.map (fun (k,v) -> [k;v]) 
+        |> Seq.concat
+        |> Seq.append (
+            [ "literate";
+              "--processdirectory";
+              "--inputdirectory"; source
+              "--templatefile"; template
+              "--outputDirectory"; output;
+              "--replacements" ])
+        |> Seq.map (fun s -> if s.StartsWith "\"" then s else sprintf "\"%s\"" s)
+        |> separated " " 
+
+    runFSFormattingCommand workingDir command
+    printfn "Successfully generated docs for %s" source
+           
+let CreateDocsForDlls workingDir projectParameters dllFiles =
+    let templatesDir = "./help/templates/reference/"    
+    let command =
+        projectParameters 
+        |> Seq.map (fun (k,v) -> [k;v])
+        |> Seq.concat
+        |> Seq.append (
+            [ "metadataformat"
+              "--generate";
+              "--outdir"; apidocsDir;
+              "--layoutroots"; 
+              "./help/templates/"; templatesDir;
+              "--parameters" ])
+        |> Seq.map (fun s -> if s.StartsWith "\"" then s else sprintf "\"%s\"" s)
+        |> separated " " 
+
+    for file in dllFiles do 
+        let command = command + sprintf " --dllfiles \"%s\"" file
+                
+        runFSFormattingCommand workingDir command
+        printfn "Successfully generated docs for DLL %s" file
+
 Target "GenerateDocs" (fun _ ->
     let source = "./help"
     let template = "./help/templates/template-project.html"
     let projInfo =
-      [ "page-description"; "\"FAKE - F# Make\""
-        "page-author"; "\""+(separated ", " authors)+"\""
-        "project-author"; "\""+(separated ", " authors)+"\""
-        "github-link"; "http://github.com/fsharp/fake"
-        "project-github"; "http://github.com/fsharp/fake"
-        "project-nuget"; "https://www.nuget.org/packages/FAKE"
-        "root"; "http://fsharp.github.io/FAKE"
-        "project-name"; "\"FAKE - F# Make\"" ]
+      [ "page-description", "FAKE - F# Make"
+        "page-author", separated ", " authors
+        "project-author", separated ", " authors
+        "github-link", "http://github.com/fsharp/fake"
+        "project-github", "http://github.com/fsharp/fake"
+        "project-nuget", "https://www.nuget.org/packages/FAKE"
+        "root", "http://fsharp.github.io/FAKE"
+        "project-name", "FAKE - F# Make" ]
 
-    [ [ "literate --processdirectory";
-        "--inputdirectory"; source
-        "--templatefile"; template
-        "--outputDirectory"; docsDir;
-        "--replacements" ]; projInfo ]
-    |> List.concat
-    |> separated " "
-    |> runFSFormattingCommand "."
-    
+    CreateDocs "." source docsDir template projInfo
    
     let dllFiles = 
         !! "./build/FakeLib.dll"
           ++ "./build/**/Fake.*.dll"
           -- "./build/**/Fake.Experimental.dll"
           |> Seq.toList
-
-    let c = 
-            [ [ "metadataformat --generate";
-                "--outdir"; apidocsDir;
-                "--layoutroots" ]; 
-                [ "./help/templates/"; "./help/templates/reference/" ]; 
-            [ "--parameters" ]; projInfo ] 
-            |> List.concat 
-            |> separated " "
         
-    CreateDocsForDlls "." c dllFiles
+    CreateDocsForDlls "." projInfo dllFiles
 
     WriteStringToFile false "./docs/.nojekyll" ""
 
