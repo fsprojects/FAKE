@@ -3,7 +3,7 @@
 
 open Fake
 open Fake.Git
-open Fake.FSFHelper
+open Fake.FSharpFormatting
 
 // properties
 let projectName = "FAKE"
@@ -100,42 +100,26 @@ Target "BuildSolution" (fun _ ->
 Target "GenerateDocs" (fun _ ->
     let source = "./help"
     let template = "./help/templates/template-project.html"
+    let templatesDir = "./help/templates/reference/" 
     let projInfo =
-      [ "page-description"; "\"FAKE - F# Make\""
-        "page-author"; "\""+(separated ", " authors)+"\""
-        "project-author"; "\""+(separated ", " authors)+"\""
-        "github-link"; "http://github.com/fsharp/fake"
-        "project-github"; "http://github.com/fsharp/fake"
-        "project-nuget"; "https://www.nuget.org/packages/FAKE"
-        "root"; "http://fsharp.github.io/FAKE"
-        "project-name"; "\"FAKE - F# Make\"" ]
+      [ "page-description", "FAKE - F# Make"
+        "page-author", separated ", " authors
+        "project-author", separated ", " authors
+        "github-link", "http://github.com/fsharp/fake"
+        "project-github", "http://github.com/fsharp/fake"
+        "project-nuget", "https://www.nuget.org/packages/FAKE"
+        "root", "http://fsharp.github.io/FAKE"
+        "project-name", "FAKE - F# Make" ]
 
-    [ [ "literate --processdirectory";
-        "--inputdirectory"; source
-        "--templatefile"; template
-        "--outputDirectory"; docsDir;
-        "--replacements" ]; projInfo ]
-    |> List.concat
-    |> separated " "
-    |> runFSFormattingCommand "."
-    
+    CreateDocs source docsDir template projInfo
    
     let dllFiles = 
         !! "./build/FakeLib.dll"
           ++ "./build/**/Fake.*.dll"
           -- "./build/**/Fake.Experimental.dll"
           |> Seq.toList
-
-    let c = 
-            [ [ "metadataformat --generate";
-                "--outdir"; apidocsDir;
-                "--layoutroots" ]; 
-                [ "./help/templates/"; "./help/templates/reference/" ]; 
-            [ "--parameters" ]; projInfo ] 
-            |> List.concat 
-            |> separated " "
         
-    CreateDocsForDlls "." c dllFiles
+    CreateDocsForDlls apidocsDir templatesDir projInfo dllFiles
 
     WriteStringToFile false "./docs/.nojekyll" ""
 
