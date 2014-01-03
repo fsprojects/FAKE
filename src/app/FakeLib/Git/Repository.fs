@@ -14,6 +14,18 @@ open System.IO
 ///  - `toPath` - Specifes the new target subfolder. 
 let clone workingDir repoUrl toPath =  gitCommand workingDir (sprintf "clone %s %s" repoUrl toPath)
 
+/// Clones a single branch of a git repository.
+/// ## Parameters
+///
+///  - `workingDir` - The working directory.
+///  - `repoUrl` - The URL to the origin.
+///  - `branchname` - Specifes the target branch.
+///  - `toPath` - Specifes the new target subfolder.
+let cloneSingleBranch workingDir repoUrl branchName toPath =
+    sprintf "clone -b %s --single-branch %s %s" branchName repoUrl toPath
+    |> runSimpleGitCommand workingDir
+    |> trace
+
 /// Inits a git repository.
 /// ## Parameters
 ///
