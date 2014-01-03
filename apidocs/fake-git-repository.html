@@ -53,10 +53,10 @@ All operations assume that the CommandHelper can find git.exe.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '578', 578)" onmouseover="showTip(event, '578', 578)">
+          <code onmouseout="hideTip(event, '585', 585)" onmouseover="showTip(event, '585', 585)">
             clone workingDir repoUrl toPath
           </code>
-          <div class="tip" id="578">
+          <div class="tip" id="585">
             <strong>Signature:</strong>workingDir:string -&gt; repoUrl:string -&gt; toPath:string -&gt; unit<br />
                       </div>
         </td>
@@ -74,10 +74,32 @@ All operations assume that the CommandHelper can find git.exe.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '579', 579)" onmouseover="showTip(event, '579', 579)">
+          <code onmouseout="hideTip(event, '586', 586)" onmouseover="showTip(event, '586', 586)">
+            cloneSingleBranch (...)
+          </code>
+          <div class="tip" id="586">
+            <strong>Signature:</strong>workingDir:string -&gt; repoUrl:string -&gt; branchName:string -&gt; toPath:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Clones a single branch of a git repository.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>workingDir</code> - The working directory.</li>
+<li><code>repoUrl</code> - The URL to the origin.</li>
+<li><code>branchname</code> - Specifes the target branch.</li>
+<li><code>toPath</code> - Specifes the new target subfolder.</li>
+</ul>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '587', 587)" onmouseover="showTip(event, '587', 587)">
             fullclean repositoryDir
           </code>
-          <div class="tip" id="579">
+          <div class="tip" id="587">
             <strong>Signature:</strong>repositoryDir:string -&gt; unit<br />
                       </div>
         </td>
@@ -93,10 +115,10 @@ All operations assume that the CommandHelper can find git.exe.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '580', 580)" onmouseover="showTip(event, '580', 580)">
+          <code onmouseout="hideTip(event, '588', 588)" onmouseover="showTip(event, '588', 588)">
             init repositoryDir bare shared
           </code>
-          <div class="tip" id="580">
+          <div class="tip" id="588">
             <strong>Signature:</strong>repositoryDir:string -&gt; bare:bool -&gt; shared:bool -&gt; unit<br />
                       </div>
         </td>

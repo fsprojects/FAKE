@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>FSFHelper - FAKE - F# Make</title>
+    <title>Commit - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,9 +36,9 @@
 
 
 
-<h1>FSFHelper</h1>
+<h1>Commit</h1>
 <div class="xmldoc">
-<p>Contains tasks which allow to run FSharp.Formatting for generating documentation.</p>
+<p>Contains helper functions which allow to commit to git repositories.</p>
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -52,52 +52,14 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '72', 72)" onmouseover="showTip(event, '72', 72)">
-            CreateDocsForDlls (...)
+          <code onmouseout="hideTip(event, '525', 525)" onmouseover="showTip(event, '525', 525)">
+            Commit repositoryDir message
           </code>
-          <div class="tip" id="72">
-            <strong>Signature:</strong>workingDir:&#39;?6379 -&gt; command:string -&gt; dllFiles:seq&lt;string&gt; -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?6379          </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '73', 73)" onmouseover="showTip(event, '73', 73)">
-            fsformattingPath 
-          </code>
-          <div class="tip" id="73">
-            <strong>Signature:</strong>string<br />
+          <div class="tip" id="525">
+            <strong>Signature:</strong>repositoryDir:string -&gt; message:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Specifies the fsformatting executable</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '74', 74)" onmouseover="showTip(event, '74', 74)">
-            fsformattingTimeOut 
-          </code>
-          <div class="tip" id="74">
-            <strong>Signature:</strong>TimeSpan<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Specifies a global timeout for fsformatting.exe</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '75', 75)" onmouseover="showTip(event, '75', 75)">
-            runFSFormattingCommand (...)
-          </code>
-          <div class="tip" id="75">
-            <strong>Signature:</strong>workingDir:string -&gt; command:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Runs fsformatting.exe with the given command in the given repository directory.</p>
+        <td class="xmldoc"><p>Commits all files in the given repository with the given message</p>
 </td>
       </tr>
     </tbody>

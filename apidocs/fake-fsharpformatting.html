@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Boot - FAKE - F# Make</title>
+    <title>FSharpFormatting - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,69 +36,12 @@
 
 
 
-<h1>Boot</h1>
+<h1>FSharpFormatting</h1>
 <div class="xmldoc">
-<p>Implements support for boostrapping FAKE scripts.  A bootstrapping
-<code>build.fsx</code> script executes twice (in two stages), allowing to
-download dependencies with NuGet and do other preparatory work in
-the first stage, and have these dependencies available in the
-second stage.</p>
+<p>Contains tasks which allow to run FSharp.Formatting for generating documentation.</p>
 </div>
 
 <!-- Render nested types and modules, if there are any -->
-  <h2>Nested types and modules</h2>
-  <div>
-      <table class="table table-bordered type-list">
-    <thead>
-      <tr><td>Type</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td class="type-name">
-            <a href="fake-boot-commandenvironment.html">CommandEnvironment</a>
-          </td>
-          <td class="xmldoc"><p>Abstracts over command-line environment features.</p>
-</td>
-        </tr>
-        <tr>
-          <td class="type-name">
-            <a href="fake-boot-commandhandler.html">CommandHandler</a>
-          </td>
-          <td class="xmldoc"><p>Represents a command line handler.</p>
-</td>
-        </tr>
-        <tr>
-          <td class="type-name">
-            <a href="fake-boot-config.html">Config</a>
-          </td>
-          <td class="xmldoc"><p>Configures the boostrapping process.</p>
-</td>
-        </tr>
-        <tr>
-          <td class="type-name">
-            <a href="fake-boot-nugetdependency.html">NuGetDependency</a>
-          </td>
-          <td class="xmldoc"><p>Specifies NuGet package dependencies.</p>
-</td>
-        </tr>
-        <tr>
-          <td class="type-name">
-            <a href="fake-boot-nugetversion.html">NuGetVersion</a>
-          </td>
-          <td class="xmldoc"><p>Specifies which version of the NuGet package to install.</p>
-</td>
-        </tr>
-        <tr>
-          <td class="type-name">
-            <a href="fake-boot-stage.html">Stage</a>
-          </td>
-          <td class="xmldoc"><p>Stage of execution for a boot system.</p>
-</td>
-        </tr>
-    </tbody>
-  </table>
-
-  </div>
 
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
@@ -109,28 +52,51 @@ second stage.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '20', 20)" onmouseover="showTip(event, '20', 20)">
-            ParseCommandLine args
+          <code onmouseout="hideTip(event, '127', 127)" onmouseover="showTip(event, '127', 127)">
+            CreateDocs (...)
           </code>
-          <div class="tip" id="20">
-            <strong>Signature:</strong>args:seq&lt;string&gt; -&gt; CommandHandler option<br />
+          <div class="tip" id="127">
+            <strong>Signature:</strong>source:string -&gt; outputDir:string -&gt; template:string -&gt; projectParameters:seq&lt;string * string&gt; -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Detects boot-specific commands.</p>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '128', 128)" onmouseover="showTip(event, '128', 128)">
+            CreateDocsForDlls (...)
+          </code>
+          <div class="tip" id="128">
+            <strong>Signature:</strong>outputDir:string -&gt; templatesDir:string -&gt; projectParameters:seq&lt;string * string&gt; -&gt; dllFiles:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"></td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '129', 129)" onmouseover="showTip(event, '129', 129)">
+            run command
+          </code>
+          <div class="tip" id="129">
+            <strong>Signature:</strong>command:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc"><p>Runs fsformatting.exe with the given command in the given repository directory.</p>
 </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '21', 21)" onmouseover="showTip(event, '21', 21)">
-            Prepare config
+          <code onmouseout="hideTip(event, '130', 130)" onmouseover="showTip(event, '130', 130)">
+            toolPath 
           </code>
-          <div class="tip" id="21">
-            <strong>Signature:</strong>config:Config -&gt; unit<br />
+          <div class="tip" id="130">
+            <strong>Signature:</strong>string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>The main function intended to be executed in the BOOT phase of
-boostrapping scripts.</p>
+        <td class="xmldoc"><p>Specifies the fsformatting executable</p>
 </td>
       </tr>
     </tbody>
