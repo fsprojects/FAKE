@@ -15,6 +15,8 @@ See the [project home page](http://fsharp.github.com/FAKE/) for tutorials and [A
 
 In order to build the project and to resolve all nuget packages run *build.cmd*.
 
+Status: [![Build Status](https://travis-ci.org/fsharp/FAKE.png)](https://travis-ci.org/fsharp/FAKE)
+
 ## How to contribute code
 
 See the [contributing page](http://fsharp.github.com/FAKE/contributing.html).
