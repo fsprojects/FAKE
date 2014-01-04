@@ -54,7 +54,7 @@ let private search (baseDir:string) (input : string) =
     |> Seq.map (function
                 | "**" -> Recursive
                 | a when a = filePattern -> FilePattern(a)
-                | a when isDrive a -> Directory (a + "\\")
+                | a when isDrive a -> Directory (a + Path.DirectorySeparatorChar.ToString())
                 | a -> Directory(a))
     |> Seq.toList
     |> buildPaths [baseDir]
