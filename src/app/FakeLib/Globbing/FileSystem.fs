@@ -31,6 +31,7 @@ let rec private buildPaths acc (input : SearchOption list) =
             acc
             |> List.map (checkSubDirs false name) 
             |> List.concat
+        tracefn "All subdir  %s" name
         buildPaths subDirs t
     | Drive(name) :: t ->
         let subDirs = 
@@ -40,15 +41,17 @@ let rec private buildPaths acc (input : SearchOption list) =
         buildPaths subDirs t
     | Recursive :: [] ->
         let dirs = 
-            Seq.collect (fun dir -> Directory.EnumerateFileSystemEntries(dir, "*", SearchOption.AllDirectories)) acc
+            Seq.collect (fun dir ->        tracefn "All subdirs and files %s" dir; Directory.EnumerateFileSystemEntries(dir, "*", SearchOption.AllDirectories)) acc
             |> Seq.toList
         buildPaths (acc @ dirs) []
     | Recursive :: t ->
+ 
         let dirs = 
-            Seq.collect (fun dir -> Directory.EnumerateDirectories(dir, "*", SearchOption.AllDirectories)) acc
+            Seq.collect (fun dir ->       tracefn "All subdirs %s" dir; Directory.EnumerateDirectories(dir, "*", SearchOption.AllDirectories)) acc
             |> Seq.toList
         buildPaths (acc @ dirs) t
     | FilePattern(pattern) :: t ->
+        tracefn "All files %s" pattern
         Seq.collect (fun dir -> Directory.EnumerateFiles(dir, pattern)) acc
         |> Seq.toList
          
