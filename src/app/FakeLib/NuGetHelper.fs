@@ -115,13 +115,8 @@ let private createNuspecFile parameters nuSpec =
         ["@build.number@",parameters.Version
          "@authors@",parameters.Authors |> separated ", "
          "@project@",parameters.Project
-         "@summary@",if isNullOrEmpty parameters.Summary then "" else parameters.Summary
-         // Format the description to fit on a single line (remove \r\n and double-spaces)
-         "@description@",
-                if isNullOrEmpty parameters.Description then 
-                    "" 
-                else 
-                    parameters.Description.Replace("\r", "").Replace("\n", "").Replace("  ", " ")
+         "@summary@",parameters.Summary
+         "@description@",parameters.Description
          "@tags@",parameters.Tags
          "@releaseNotes@",parameters.ReleaseNotes
          "@copyright@",parameters.Copyright]
