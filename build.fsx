@@ -201,7 +201,7 @@ Target "Default" DoNothing
     ==> "CopyFSharpFiles"
     =?> ("SetAssemblyInfo",not isLocalBuild )
     ==> "BuildSolution"
-    =?> ("Test",not isLinux )
+    ==> "Test"
     ==> "CopyLicense"
     =?> ("GenerateDocs",    isLocalBuild && not isLinux )
     =?> ("CreateNuGet",     not isLinux )

@@ -24,7 +24,7 @@ namespace Test.FAKECore
                     false);
                 var result = Run(packageParams);
                 result.ShouldStartWith(" \"install\" \"thePackage\" \"-OutputDirectory\" \"");
-                result.ShouldEndWith("\\test\\myPackageFolder\\\" \"-ExcludeVersion\"");
+                result.ShouldEndWith(string.Format("{0}test{0}myPackageFolder{0}\" \"-ExcludeVersion\"",Environment.NewLine));
             };
 
         It should_restore_package_by_package_id_with_ExcludeVersion_and_PreReleasePackage =
@@ -41,7 +41,7 @@ namespace Test.FAKECore
                     true);
                 var result = Run(packageParams);
                 result.ShouldStartWith(" \"install\" \"thePackage\" \"-OutputDirectory\" \"");
-                result.ShouldEndWith("\\test\\myPackageFolder\\\" \"-ExcludeVersion\" \"-PreRelease\"");
+                result.ShouldEndWith(string.Format("{0}test{0}myPackageFolder{0}\" \"-ExcludeVersion\" \"-PreRelease\"", Environment.NewLine));
             };
 
         It should_restore_package_by_package_id_with_PreReleasePackage =
@@ -58,7 +58,7 @@ namespace Test.FAKECore
                     true);
                 var result = Run(packageParams);
                 result.ShouldStartWith(" \"install\" \"thePackage\" \"-OutputDirectory\" \"");
-                result.ShouldEndWith("\\test\\myPackageFolder\\\" \"-PreRelease\"");
+                result.ShouldEndWith(string.Format("{0}test{0}myPackageFolder{0}\" \"-PreRelease\"", Environment.NewLine));
             };
 
         It should_restore_package_by_package_id_with_Version =
@@ -75,7 +75,7 @@ namespace Test.FAKECore
                     false);
                 var result = Run(packageParams);
                 result.ShouldStartWith(" \"install\" \"thePackage\" \"-OutputDirectory\" \"");
-                result.ShouldEndWith("\\test\\myPackageFolder\\\" \"-Version\" \"1.2.3.4\"");
+                result.ShouldEndWith(string.Format("{0}test{0}myPackageFolder{0}\" \"-Version\" \"1.2.3.4\"",Environment.NewLine));
             };
 
         It should_restore_package_by_package_id_with_Version_and_ExcludeVersion =
@@ -92,7 +92,7 @@ namespace Test.FAKECore
                     false);
                 var result = Run(packageParams);
                 result.ShouldStartWith(" \"install\" \"thePackage\" \"-OutputDirectory\" \"");
-                result.ShouldEndWith("\\test\\myPackageFolder\\\" \"-ExcludeVersion\" \"-Version\" \"1.2.3.4\"");
+                result.ShouldEndWith(string.Format("{0}test{0}myPackageFolder{0}\" \"-ExcludeVersion\" \"-Version\" \"1.2.3.4\"",Environment.NewLine));
             };
 
         It should_restore_package_by_package_id_with_defaults =
@@ -101,7 +101,7 @@ namespace Test.FAKECore
                 var packageParams = RestorePackageHelper.RestoreSinglePackageDefaults;
                 var result = Run(packageParams);
                 result.ShouldStartWith(" \"install\" \"thePackage\" \"-OutputDirectory\" \"");
-                result.ShouldEndWith("\\test\\packages\"");
+                result.ShouldEndWith(string.Format("{0}test{0}myPackageFolder{0}\"",Environment.NewLine));
             };
 
         static string Run(RestorePackageHelper.RestoreSinglePackageParams packageParams)
