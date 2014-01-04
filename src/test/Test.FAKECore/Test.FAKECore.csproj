@@ -88,7 +88,6 @@
     <Compile Include="TeamCitySpecs.cs" />
     <Compile Include="BasicStringHelperSpecs.cs" />
     <Compile Include="FileHandling\SubfolderSpecs.cs" />
-    <Compile Include="FileHandling\FileReplacementSpecs.cs" />
     <Compile Include="FSharp.Testing.cs" />
     <Compile Include="FileHandling\BaseFunctions.cs" />
     <Compile Include="FileHandling\FileComparisonSpecs.cs" />
