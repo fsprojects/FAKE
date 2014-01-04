@@ -62,7 +62,9 @@ let private search (baseDir:string) (input : string) =
     let baseDir = normalizePath baseDir
     let input = normalizePath input    
     let input = input.Replace(baseDir,"")
-    let filePattern = Path.GetFileName(input)    
+    let filePattern = Path.GetFileName(input)   
+    tracefn "BaseDir: %s" baseDir 
+    tracefn "input  : %s" input
     input.Split([|'/';'\\'|], StringSplitOptions.RemoveEmptyEntries)
     |> Seq.map (function
                 | "**" -> Recursive
