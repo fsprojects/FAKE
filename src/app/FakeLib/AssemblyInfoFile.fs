@@ -4,7 +4,9 @@ module Fake.AssemblyInfoFile
 
 let internal assemblyVersionRegex = getRegEx @"([0-9]+.)+[0-9]+"
 
-let private NormalizeVersion version = assemblyVersionRegex.Match(version).Captures.[0].Value
+let private NormalizeVersion version = 
+    let m = assemblyVersionRegex.Match(version)
+    if m.Captures.Count > 0 then m.Captures.[0].Value else version
 
 /// Represents options for configuring the emission of AssemblyInfo
 type AssemblyInfoFileConfig =
