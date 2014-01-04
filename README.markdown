@@ -16,7 +16,7 @@ See the [project home page](http://fsharp.github.com/FAKE/) for tutorials and [A
 In order to build the project and to resolve all nuget packages run *build.cmd*.
 
 * Mono: [![Mono build status](https://travis-ci.org/fsharp/FAKE.png)](https://travis-ci.org/fsharp/FAKE)
-* Windows: [![Windows build status](http://teamcity.codebetter.com/app/rest/builds/buildType:(id:bt166)/statusIcon)(http://teamcity.codebetter.com/viewType.html?buildTypeId=bt166)
+* Windows: [![Windows build status](http://teamcity.codebetter.com/app/rest/builds/buildType:\(id:bt166\)/statusIcon)(http://teamcity.codebetter.com/viewType.html?buildTypeId=bt166)
 
 ## How to contribute code
 
