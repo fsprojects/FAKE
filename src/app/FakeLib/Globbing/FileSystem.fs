@@ -25,7 +25,7 @@ let private checkSubDirs absolute (dir:string) root =
         
 let rec private buildPaths acc (input : SearchOption list) =
     match input with
-    | [] -> acc
+    | [] -> tracefn "out";acc
     | Directory(name) :: t -> 
         let subDirs = 
             acc
@@ -45,13 +45,13 @@ let rec private buildPaths acc (input : SearchOption list) =
             |> Seq.toList
         buildPaths (acc @ dirs) []
     | Recursive :: t ->
- 
+        
         let dirs = 
             Seq.collect (fun dir ->       tracefn "All subdirs %s" dir; Directory.EnumerateDirectories(dir, "*", SearchOption.AllDirectories)) acc
             |> Seq.toList
         buildPaths (acc @ dirs) t
     | FilePattern(pattern) :: t ->
-        
+        tracefn "pattern"
         Seq.collect (fun dir -> tracefn "All files %s in %s" pattern dir; Directory.EnumerateFiles(dir, pattern)) acc
         |> Seq.toList
          
