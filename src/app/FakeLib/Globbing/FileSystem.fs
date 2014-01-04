@@ -10,15 +10,18 @@ open System.Text.RegularExpressions
 
 type private SearchOption = 
 | Directory of string
+| Drive of string
 | Recursive
 | FilePattern of string
         
-let private checkSubDirs (dir:string) root =
+let private checkSubDirs absolute (dir:string) root =
     if dir.Contains "*" then
         Directory.EnumerateDirectories(root, dir, SearchOption.TopDirectoryOnly) |> Seq.toList
     else
-        let di = new DirectoryInfo(Path.Combine(root, dir))
-        if di.Exists then [di.FullName] else []        
+        let di = 
+            if absolute then new DirectoryInfo(dir) else 
+            new DirectoryInfo(root + directorySeparator + dir)
+        if di.Exists then [di.FullName] else []
         
 let rec private buildPaths acc (input : SearchOption list) =
     match input with
@@ -26,7 +29,13 @@ let rec private buildPaths acc (input : SearchOption list) =
     | Directory(name) :: t -> 
         let subDirs = 
             acc
-            |> List.map (checkSubDirs name) 
+            |> List.map (checkSubDirs false name) 
+            |> List.concat
+        buildPaths subDirs t
+    | Drive(name) :: t ->
+        let subDirs = 
+            acc
+            |> List.map (checkSubDirs true name)
             |> List.concat
         buildPaths subDirs t
     | Recursive :: [] ->
@@ -58,7 +67,7 @@ let private search (baseDir:string) (input : string) =
     |> Seq.map (function
                 | "**" -> Recursive
                 | a when a = filePattern -> FilePattern(a)
-                | a when isDrive a -> Directory (a + directorySeparator)
+                | a when isDrive a -> Drive (a + directorySeparator)
                 | a -> Directory(a))
     |> Seq.toList
     |> buildPaths [baseDir]
