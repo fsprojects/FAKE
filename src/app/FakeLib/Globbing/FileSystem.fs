@@ -54,10 +54,11 @@ let private search (baseDir:string) (input : string) =
     |> Seq.map (function
                 | "**" -> Recursive
                 | a when a = filePattern -> FilePattern(a)
-                | a when isDrive a -> Directory (a + Path.DirectorySeparatorChar.ToString())
+                | a when isDrive a -> Directory (a + directorySeparator)
                 | a -> Directory(a))
     |> Seq.toList
     |> buildPaths [baseDir]
+    |> List.map (fun p -> p.Replace('\\',System.IO.Path.DirectorySeparatorChar))
 
 /// Internal representation of a file set.
 type FileIncludes =
