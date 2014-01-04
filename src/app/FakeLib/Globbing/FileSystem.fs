@@ -47,12 +47,11 @@ let private isDrive =
     let regex = Regex(@"^[A-Za-z]:$", RegexOptions.Compiled)
     fun dir -> regex.IsMatch dir
 
-let inline private normalizePath (p:string) = p.Replace('\\',System.IO.Path.DirectorySeparatorChar)
+let inline private normalizePath (p:string) = p.Replace('\\',Path.DirectorySeparatorChar).Replace('/',Path.DirectorySeparatorChar)
 
 let private search (baseDir:string) (input : string) =
     let baseDir = normalizePath baseDir
-    let input = normalizePath input
-    if not <| Directory.Exists baseDir then [] else
+    let input = normalizePath input    
     let input = input.Replace(baseDir,"")
     let filePattern = Path.GetFileName(input)    
     input.Split([|'/';'\\'|], StringSplitOptions.RemoveEmptyEntries)

@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Fake;
 using Machine.Specifications;
 using Microsoft.FSharp.Collections;
@@ -24,7 +25,7 @@ namespace Test.FAKECore
                     false);
                 var result = Run(packageParams);
                 result.ShouldStartWith(" \"install\" \"thePackage\" \"-OutputDirectory\" \"");
-                result.ShouldEndWith(string.Format("{0}test{0}myPackageFolder{0}\" \"-ExcludeVersion\"",Environment.NewLine));
+                result.ShouldEndWith(string.Format("{0}test{0}myPackageFolder{0}\" \"-ExcludeVersion\"", Path.DirectorySeparatorChar));
             };
 
         It should_restore_package_by_package_id_with_ExcludeVersion_and_PreReleasePackage =
@@ -41,7 +42,7 @@ namespace Test.FAKECore
                     true);
                 var result = Run(packageParams);
                 result.ShouldStartWith(" \"install\" \"thePackage\" \"-OutputDirectory\" \"");
-                result.ShouldEndWith(string.Format("{0}test{0}myPackageFolder{0}\" \"-ExcludeVersion\" \"-PreRelease\"", Environment.NewLine));
+                result.ShouldEndWith(string.Format("{0}test{0}myPackageFolder{0}\" \"-ExcludeVersion\" \"-PreRelease\"", Path.DirectorySeparatorChar));
             };
 
         It should_restore_package_by_package_id_with_PreReleasePackage =
@@ -58,7 +59,7 @@ namespace Test.FAKECore
                     true);
                 var result = Run(packageParams);
                 result.ShouldStartWith(" \"install\" \"thePackage\" \"-OutputDirectory\" \"");
-                result.ShouldEndWith(string.Format("{0}test{0}myPackageFolder{0}\" \"-PreRelease\"", Environment.NewLine));
+                result.ShouldEndWith(string.Format("{0}test{0}myPackageFolder{0}\" \"-PreRelease\"", Path.DirectorySeparatorChar));
             };
 
         It should_restore_package_by_package_id_with_Version =
@@ -75,7 +76,7 @@ namespace Test.FAKECore
                     false);
                 var result = Run(packageParams);
                 result.ShouldStartWith(" \"install\" \"thePackage\" \"-OutputDirectory\" \"");
-                result.ShouldEndWith(string.Format("{0}test{0}myPackageFolder{0}\" \"-Version\" \"1.2.3.4\"",Environment.NewLine));
+                result.ShouldEndWith(string.Format("{0}test{0}myPackageFolder{0}\" \"-Version\" \"1.2.3.4\"", Path.DirectorySeparatorChar));
             };
 
         It should_restore_package_by_package_id_with_Version_and_ExcludeVersion =
@@ -92,7 +93,7 @@ namespace Test.FAKECore
                     false);
                 var result = Run(packageParams);
                 result.ShouldStartWith(" \"install\" \"thePackage\" \"-OutputDirectory\" \"");
-                result.ShouldEndWith(string.Format("{0}test{0}myPackageFolder{0}\" \"-ExcludeVersion\" \"-Version\" \"1.2.3.4\"",Environment.NewLine));
+                result.ShouldEndWith(string.Format("{0}test{0}myPackageFolder{0}\" \"-ExcludeVersion\" \"-Version\" \"1.2.3.4\"", Path.DirectorySeparatorChar));
             };
 
         It should_restore_package_by_package_id_with_defaults =
@@ -101,7 +102,7 @@ namespace Test.FAKECore
                 var packageParams = RestorePackageHelper.RestoreSinglePackageDefaults;
                 var result = Run(packageParams);
                 result.ShouldStartWith(" \"install\" \"thePackage\" \"-OutputDirectory\" \"");
-                result.ShouldEndWith(string.Format("{0}test{0}myPackageFolder{0}\"",Environment.NewLine));
+                result.ShouldEndWith(string.Format("{0}packages\"", Path.DirectorySeparatorChar));
             };
 
         static string Run(RestorePackageHelper.RestoreSinglePackageParams packageParams)

@@ -1,3 +1,4 @@
+using System.IO;
 using System.Linq;
 using Fake;
 using Machine.Specifications;
@@ -98,7 +99,7 @@ namespace Test.FAKECore.Globbing.TestSample1
                 .SetBaseDirectory("temptest/")
                 .ToArray();
 
-        It should_find_sample_app = () => Files.First().ShouldEndWith("temptest/SampleApp/bin/SampleApp.dll");
+        It should_find_sample_app = () => Files.First().ShouldEndWith(string.Format("temptest{0}SampleApp{0}bin{0}SampleApp.dll",Path.DirectorySeparatorChar));
         It should_match_1_file = () => Files.Length.ShouldEqual(1);
     }
 
