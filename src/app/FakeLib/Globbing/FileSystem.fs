@@ -51,8 +51,8 @@ let rec private buildPaths acc (input : SearchOption list) =
             |> Seq.toList
         buildPaths (acc @ dirs) t
     | FilePattern(pattern) :: t ->
-        tracefn "All files %s" pattern
-        Seq.collect (fun dir -> Directory.EnumerateFiles(dir, pattern)) acc
+        
+        Seq.collect (fun dir -> tracefn "All files %s in %s" pattern dir; Directory.EnumerateFiles(dir, pattern)) acc
         |> Seq.toList
          
 let private isDrive =
