@@ -7,6 +7,7 @@ type BuildServer =
 | TeamCity
 | CCNet
 | Jenkins
+| Travis
 | LocalBuild
 
 /// The trace mode option.
@@ -30,6 +31,10 @@ let mutable xmlOutputFile = getBuildParamOrDefault "logfile" "./output/Results.x
 /// [omit]
 let tcBuildNumber = environVar "BUILD_NUMBER"
 
+/// Build number retrieved from Travis
+/// [omit]
+let travisBuildNumber = environVar "TRAVIS_BUILD_NUMBER"
+
 /// Build number retrieved from Jenkins
 /// [omit]
 let jenkinsBuildNumber = tcBuildNumber
@@ -43,6 +48,7 @@ let buildServer =
     if hasBuildParam "jenkins_home" then Jenkins else
     if not (isNullOrEmpty tcBuildNumber) then TeamCity else
     if not (isNullOrEmpty ccBuildLabel) then CCNet else 
+    if not (isNullOrEmpty travisBuildNumber) then Travis else 
     LocalBuild
 
 /// The current build version as detected from the current build server.
@@ -52,6 +58,7 @@ let buildVersion =
     | Jenkins ->    getVersion jenkinsBuildNumber
     | TeamCity ->   getVersion tcBuildNumber
     | CCNet ->      getVersion ccBuildLabel
+    | Travis ->     getVersion travisBuildNumber
     | LocalBuild -> getVersion localBuildLabel
 
 /// Is true when the current build is a local build.
