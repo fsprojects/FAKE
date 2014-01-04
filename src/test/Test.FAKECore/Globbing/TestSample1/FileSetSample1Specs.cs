@@ -85,7 +85,7 @@ namespace Test.FAKECore.Globbing.TestSample1
                 .SetBaseDirectory("temptest/")
                 .ToArray();
 
-        It should_find_sample_app = () => Files.First().ShouldEndWith("SampleApp.dll");
+        It should_find_sample_app = () => Files.First().ShouldEndWith("temptest/SampleApp/bin/SampleApp.dll");
         It should_match_1_file = () => Files.Length.ShouldEqual(1);
     }
 
