@@ -168,7 +168,7 @@ namespace Test.FAKECore.XMLHandling
     {
         const string OriginalText =
             "<?xml version=\"1.0\" encoding=\"utf-8\"?>" +
-            "<painting>  <img src=\"madonna.jpg\" alt=\"Foligno Madonna, by Raphael\" />" +
+            "<painting>  <img src=\"madonna.jpg\" alt=\"Foligno Madonna, by Raphael\" ></img>" +
             "  <caption>This is Raphael's \"Foligno\" Madonna, painted in <date year=\"1511\" /> - <date year=\"1512\" />.</caption>" +
             "</painting>";
 
