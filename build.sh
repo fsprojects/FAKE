@@ -1,8 +1,6 @@
 #!/bin/bash
-
-#getting latest FAKE via NuGet
-mono tools/NuGet/nuget.exe install FAKE -OutputDirectory tools -ExcludeVersion -Prerelease
-mono tools/NuGet/nuget.exe install FSharp.Formatting -OutputDirectory tools -ExcludeVersion
-
-#build FAKE
-mono tools/FAKE/tools/FAKE.exe build.fsx
+if [ ! -f packages/FAKE/tools/Fake.exe ]; then
+  mono --runtime=v4.0 .NuGet/NuGet.exe install FAKE -OutputDirectory packages -ExcludeVersion  -Prerelease
+  mono tools/NuGet/nuget.exe install FSharp.Formatting -OutputDirectory tools -ExcludeVersion -Prerelease
+fi
+mono --runtime=v4.0 packages/FAKE/tools/FAKE.exe build.fsx $@
