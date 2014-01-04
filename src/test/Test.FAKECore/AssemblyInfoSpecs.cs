@@ -11,7 +11,7 @@ namespace Test.FAKECore
             () => AssemblyInfoFile.getDependencies(new List<AssemblyInfoFile.Attribute>());
     }
 
-    public class when_use_fsharp_task_with_default_config
+    public class when_using_fsharp_task_with_default_config
     {
         It should_use_system_namespace_and_emit_a_verison_module = () =>
         {
