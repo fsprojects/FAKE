@@ -179,11 +179,11 @@ namespace Test.FAKECore.NAVFiles
     public class CanCheckTagsInFile
     {
         It should_find_invalid_MCN_tag = () =>
-            Catch.Exception(() => DynamicsNavFile.checkTagsInFile(new string[0], false, new[] {"MCN"}, @"NAVFiles\Form_with_VersionTag_in_DocuTrigger.txt")).Message
+            Catch.Exception(() => DynamicsNavFile.checkTagsInFile(new string[0], false, new[] {"MCN"}, @"NAVFiles/Form_with_VersionTag_in_DocuTrigger.txt")).Message
                 .ShouldContain("Invalid VersionTag MCN found");
 
         It should_find_required_MCN_tag = () =>
-            DynamicsNavFile.checkTagsInFile(new[] {"MCN"}, false, new string[0], @"NAVFiles\Form_with_VersionTag_in_DocuTrigger.txt")
+            DynamicsNavFile.checkTagsInFile(new[] {"MCN"}, false, new string[0], @"NAVFiles/Form_with_VersionTag_in_DocuTrigger.txt")
                 .ShouldNotBeNull();
     }
 
