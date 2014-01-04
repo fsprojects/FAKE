@@ -48,6 +48,7 @@ let private isDrive =
     fun dir -> regex.IsMatch dir
 
 let private search (baseDir:string) (input : string) =
+    if not <| Directory.Exists baseDir then [] else
     let input = input.Replace(baseDir,"")
     let filePattern = Path.GetFileName(input)    
     input.Split([|'/';'\\'|], StringSplitOptions.RemoveEmptyEntries)
