@@ -18,6 +18,7 @@ let private checkSubDirs absolute (dir:string) root =
     if dir.Contains "*" then
         Directory.EnumerateDirectories(root, dir, SearchOption.TopDirectoryOnly) |> Seq.toList
     else
+        tracefn "checking %s" dir
         let di = 
             if absolute then new DirectoryInfo(dir) else 
             new DirectoryInfo(root + directorySeparator + dir)
@@ -31,7 +32,7 @@ let rec private buildPaths acc (input : SearchOption list) =
             acc
             |> List.map (checkSubDirs false name) 
             |> List.concat
-        tracefn "All subdir  %s" name
+        tracefn "All subdir  %s ==> %A" name subDirs
         buildPaths subDirs t
     | Drive(name) :: t ->
         let subDirs = 
@@ -51,7 +52,7 @@ let rec private buildPaths acc (input : SearchOption list) =
             |> Seq.toList
         buildPaths (acc @ dirs) t
     | FilePattern(pattern) :: t ->
-        tracefn "pattern"
+        tracefn "pattern %A"  acc
         Seq.collect (fun dir -> tracefn "All files %s in %s" pattern dir; Directory.EnumerateFiles(dir, pattern)) acc
         |> Seq.toList
          
