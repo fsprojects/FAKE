@@ -28,7 +28,7 @@ namespace Test.FAKECore.Globbing.TestSample3
 
     public class when_scanning_for_txt_files_in_any_subfolder : when_extracting_zip
     {
-        static string _expectedFile =
+        static readonly string _expectedFile =
             FileSystemHelper.FullName(".\\temptest\\Folder1\\Subfolder1\\SubFolder2\\TextFiles\\Names.txt");
 
         Because of = () => Files = FileSystem.Include("./**/*.txt").ToArray();

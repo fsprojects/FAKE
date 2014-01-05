@@ -22,6 +22,7 @@ let private checkSubDirs absolute (dir:string) root =
         let di = 
             if absolute then new DirectoryInfo(dir) else 
             new DirectoryInfo(root + directorySeparator + dir)
+        tracefn "  ==> %s %b" di.FullName di.Exists
         if di.Exists then [di.FullName] else []
         
 let rec private buildPaths acc (input : SearchOption list) =
