@@ -18,10 +18,10 @@ let private checkSubDirs absolute (dir:string) root =
     if dir.Contains "*" then
         Directory.EnumerateDirectories(root, dir, SearchOption.TopDirectoryOnly) |> Seq.toList
     else
-        tracefn "checking %s" (root + directorySeparator + dir)
+        let path=root + directorySeparator + dir+directorySeparator
         let di = 
             if absolute then new DirectoryInfo(dir) else 
-            new DirectoryInfo(root + directorySeparator + dir)
+            new DirectoryInfo(path)
         tracefn "  ==> %s %b" di.FullName di.Exists
         tracefn " all drunter %A" ( Directory.EnumerateDirectories(di.FullName, "*", SearchOption.AllDirectories) |> Seq.toList)
         if di.Exists then [di.FullName] else []
