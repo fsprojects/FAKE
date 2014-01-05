@@ -23,6 +23,7 @@ let private checkSubDirs absolute (dir:string) root =
             if absolute then new DirectoryInfo(dir) else 
             new DirectoryInfo(root + directorySeparator + dir)
         tracefn "  ==> %s %b" di.FullName di.Exists
+        tracefn " all drunter %A" ( Directory.EnumerateDirectories(di.FullName, "*", SearchOption.AllDirectories) |> Seq.toList)
         if di.Exists then [di.FullName] else []
         
 let rec private buildPaths acc (input : SearchOption list) =
