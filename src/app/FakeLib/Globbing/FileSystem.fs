@@ -19,6 +19,7 @@ let private checkSubDirs absolute (dir:string) root =
         Directory.EnumerateDirectories(root, dir, SearchOption.TopDirectoryOnly) |> Seq.toList
     else
         let path=root + directorySeparator + dir+directorySeparator
+        tracefn "Checking%A" path
         let di = 
             if absolute then new DirectoryInfo(dir) else 
             new DirectoryInfo(path)
