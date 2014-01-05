@@ -81,6 +81,7 @@ let private search (baseDir:string) (input : string) =
     |> Seq.toList
     |> buildPaths [baseDir]
     |> List.map normalizePath
+    |>List.map (fun x->trace(x) ;x) 
 
 /// Internal representation of a file set.
 type FileIncludes =
