@@ -25,7 +25,7 @@ namespace Test.FAKECore.Globbing.TestSample4
 
         It should_find_the_file =
             () =>
-                Files[0].ShouldEndWith(string.Format("Folder1{0}Subfolder1{0}SubFolder2{0}TextFiles{0}Specs1.Awesome.testending", Path.DirectorySeparatorChar);
+                Files[0].ShouldEndWith(string.Format("Folder1{0}Subfolder1{0}SubFolder2{0}TextFiles{0}Specs1.Awesome.testending", Path.DirectorySeparatorChar));
         
         It should_match_1_file = () => Files.Length.ShouldEqual(1);
     }
@@ -35,10 +35,10 @@ namespace Test.FAKECore.Globbing.TestSample4
         Because of = () => Files = FileSystem.Include("temptest/**/Specs*.testending").ToArray();
 
         It should_find_the_first_file =
-            () => Files[0].ShouldEndWith(string.Format("Folder1{0}Subfolder1{0}Specs2.Awesome.testending", Path.DirectorySeparatorChar);
+            () => Files[0].ShouldEndWith(string.Format("Folder1{0}Subfolder1{0}Specs2.Awesome.testending", Path.DirectorySeparatorChar));
 
         It should_find_the_second_file =
-            () => Files[1].ShouldEndWith(string.Format("Folder1{0}Subfolder1{0}SubFolder2{0}TextFiles{0}Specs1.Awesome.testending", Path.DirectorySeparatorChar);
+            () => Files[1].ShouldEndWith(string.Format("Folder1{0}Subfolder1{0}SubFolder2{0}TextFiles{0}Specs1.Awesome.testending", Path.DirectorySeparatorChar));
 
         It should_match_2_files = () => Files.Length.ShouldEqual(2);
     }
@@ -48,10 +48,10 @@ namespace Test.FAKECore.Globbing.TestSample4
         Because of = () => Files = FileSystem.Include("temptest/**/Specs*.*.testending").ToArray();
 
         It should_find_the_first_file =
-            () => Files[0].ShouldEndWith(string.Format("Folder1{0}Subfolder1{0}Specs2.Awesome.testending", Path.DirectorySeparatorChar);
+            () => Files[0].ShouldEndWith(string.Format("Folder1{0}Subfolder1{0}Specs2.Awesome.testending", Path.DirectorySeparatorChar));
 
         It should_find_the_second_file =
-            () => Files[1].ShouldEndWith(string.Format("Folder1{0}Subfolder1{0}SubFolder2{0}TextFiles{0}Specs1.Awesome.testending", Path.DirectorySeparatorChar);
+            () => Files[1].ShouldEndWith(string.Format("Folder1{0}Subfolder1{0}SubFolder2{0}TextFiles{0}Specs1.Awesome.testending", Path.DirectorySeparatorChar));
 
         It should_match_2_files = () => Files.Length.ShouldEqual(2);
     }
@@ -61,10 +61,10 @@ namespace Test.FAKECore.Globbing.TestSample4
         Because of = () => Files = FileSystem.Include("temptest\\**\\Specs*.*.testending").ToArray();
 
         It should_find_the_first_file =
-            () => Files[0].ShouldEndWith(string.Format("Folder1{0}Subfolder1{0}Specs2.Awesome.testending", Path.DirectorySeparatorChar);
+            () => Files[0].ShouldEndWith(string.Format("Folder1{0}Subfolder1{0}Specs2.Awesome.testending", Path.DirectorySeparatorChar));
 
         It should_find_the_second_file =
-            () => Files[1].ShouldEndWith(string.Format("Folder1{0}Subfolder1{0}SubFolder2{0}TextFiles{0}Specs1.Awesome.testending", Path.DirectorySeparatorChar);
+            () => Files[1].ShouldEndWith(string.Format("Folder1{0}Subfolder1{0}SubFolder2{0}TextFiles{0}Specs1.Awesome.testending", Path.DirectorySeparatorChar));
 
         It should_match_2_files = () => Files.Length.ShouldEqual(2);
     }
