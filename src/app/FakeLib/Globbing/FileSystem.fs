@@ -18,13 +18,14 @@ let private checkSubDirs absolute (dir:string) root =
     if dir.Contains "*" then
         Directory.EnumerateDirectories(root, dir, SearchOption.TopDirectoryOnly) |> Seq.toList
     else
-        let path=root + directorySeparator + dir+directorySeparator
+        let path= root + directorySeparator + dir + directorySeparator
         tracefn "Checking%A" path
         let di = 
             if absolute then new DirectoryInfo(dir) else 
             new DirectoryInfo(path)
         tracefn "  ==> %s %b" di.FullName di.Exists
-        tracefn " all drunter %A" ( Directory.EnumerateDirectories(di.FullName, "*", SearchOption.AllDirectories) |> Seq.toList)
+        tracefn "  all drunter %A" (Directory.EnumerateDirectories(di.FullName, "*", SearchOption.AllDirectories) |> Seq.toList)
+        tracefn "  *.* drunter %A" (Directory.EnumerateFileSystemEntries(dir, "*", SearchOption.AllDirectories) |> Seq.toList)
         if di.Exists then [di.FullName] else []
         
 let rec private buildPaths acc (input : SearchOption list) =
