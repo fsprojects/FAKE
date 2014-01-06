@@ -66,7 +66,7 @@ namespace Test.FAKECore.Globbing.TestSample5
 
         It should_set_the_pattern =
             () => FileSystem.Include(FullPath(Pattern))
-                   .Includes.First().ShouldEqual(Directory.GetCurrentDirectory() + "\\temptest" + Pattern);
+                   .Includes.First().ShouldEqual(Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "temptest" + Pattern);
 
         It should_create_the_full_path =
             () => FullPath(Pattern)
