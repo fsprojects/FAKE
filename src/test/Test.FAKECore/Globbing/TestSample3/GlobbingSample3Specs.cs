@@ -1,3 +1,4 @@
+using System.IO;
 using System.Linq;
 using Fake;
 using Machine.Specifications;
@@ -29,7 +30,7 @@ namespace Test.FAKECore.Globbing.TestSample3
     public class when_scanning_for_txt_files_in_any_subfolder : when_extracting_zip
     {
         static readonly string _expectedFile =
-            FileSystemHelper.FullName(".\\temptest\\Folder1\\Subfolder1\\SubFolder2\\TextFiles\\Names.txt");
+            FileSystemHelper.FullName(string.Format(".{0}temptest{0}Folder1{0}Subfolder1{0}SubFolder2{0}TextFiles{0}Names.txt", Path.DirectorySeparatorChar));
 
         Because of = () => Files = FileSystem.Include("./**/*.txt").ToArray();
 
@@ -49,10 +50,10 @@ namespace Test.FAKECore.Globbing.TestSample3
         Because of = () => Files = FileSystem.Include("temptest/**/*.text").ToArray();
 
         It should_find__names_txt_text =
-            () => Files[1].ShouldEndWith("Folder1\\Subfolder1\\SubFolder2\\TextFiles\\Names.txt.text");
+            () => Files[1].ShouldEndWith(string.Format("Folder1{0}Subfolder1{0}SubFolder2{0}TextFiles{0}Names.txt.text", Path.DirectorySeparatorChar));
 
         It should_find_names_text =
-            () => Files[0].ShouldEndWith("Folder1\\Subfolder1\\SubFolder2\\TextFiles\\Names.text");
+            () => Files[0].ShouldEndWith(string.Format("Folder1{0}Subfolder1{0}SubFolder2{0}TextFiles{0}Names.text", Path.DirectorySeparatorChar));
 
         It should_match_2_files = () => Files.Length.ShouldEqual(2);
     }
