@@ -24,9 +24,14 @@ let private checkSubDirs absolute (dir:string) root =
             if absolute then new DirectoryInfo(dir) else 
             new DirectoryInfo(path)
         tracefn "  ==> %s %b" di.FullName di.Exists
-        tracefn "  all drunter %A" (Directory.EnumerateDirectories(di.FullName, "*", SearchOption.AllDirectories) |> Seq.toList)
-        tracefn "  *.* drunter %A" (Directory.EnumerateFileSystemEntries(dir, "*", SearchOption.AllDirectories) |> Seq.toList)
-        if di.Exists then [di.FullName] else []
+        if di.Exists then
+            try
+                tracefn "  all drunter %A" (Directory.EnumerateDirectories(di.FullName, "*", SearchOption.AllDirectories) |> Seq.toList)
+                tracefn "  *.* drunter %A" (Directory.EnumerateFileSystemEntries(di.FullName, "*", SearchOption.AllDirectories) |> Seq.toList)
+            with 
+            | _ -> ()
+            [di.FullName] 
+        else []
         
 let rec private buildPaths acc (input : SearchOption list) =
     match input with
@@ -65,6 +70,7 @@ let private isDrive =
     fun dir -> regex.IsMatch dir
 
 let inline private normalizePath (p:string) = p.Replace('\\',Path.DirectorySeparatorChar).Replace('/',Path.DirectorySeparatorChar)
+let inline private normalizeOutputPath (p:string) = p.Replace('\\',Path.DirectorySeparatorChar).Replace('/',Path.DirectorySeparatorChar).TrimEnd(Path.DirectorySeparatorChar)
 
 let private search (baseDir:string) (input : string) =
     let baseDir = normalizePath baseDir
@@ -81,8 +87,8 @@ let private search (baseDir:string) (input : string) =
                 | a -> Directory(a))
     |> Seq.toList
     |> buildPaths [baseDir]
-    |> List.map normalizePath
-    |>List.map (fun x->trace(x) ;x) 
+    |> List.map normalizeOutputPath
+    |> List.map (fun x->trace(x) ;x) 
 
 /// Internal representation of a file set.
 type FileIncludes =
