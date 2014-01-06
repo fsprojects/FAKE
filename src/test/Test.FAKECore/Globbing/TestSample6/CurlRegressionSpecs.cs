@@ -29,7 +29,7 @@ namespace Test.FAKECore.Globbing.TestSample6
         Because of = () => Files = FileSystem.Include(FullPath("/curl/*.*")).ToArray();
 
         It should_find_the_file =
-            () => Files[0].ShouldEndWith("temptest\\curl\\curl.exe");
+            () => Files[0].ShouldEndWith(string.Format("temptest{0}curl{0}curl.exe", Path.DirectorySeparatorChar));
 
         It should_find_the_file_with_absolute_path =
             () => Files[0].ShouldStartWith(TempDir);
