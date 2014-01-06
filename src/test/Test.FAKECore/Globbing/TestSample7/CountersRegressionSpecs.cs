@@ -29,10 +29,10 @@ namespace Test.FAKECore.Globbing.TestSample7
         Because of = () => Files = FileSystem.Include(FullPath("/counters/*.*")).ToArray();
 
         It should_find_the_first_file =
-            () => Files[0].ShouldEndWith("temptest\\counters\\COUNTERS.mdf");
+            () => Files[0].ShouldEndWith(string.Format("temptest{0}counters{0}COUNTERS.mdf", Path.DirectorySeparatorChar));
 
         It should_find_the_second_file =
-            () => Files[1].ShouldEndWith("temptest\\counters\\COUNTERS_log.ldf");
+            () => Files[1].ShouldEndWith(string.Format("temptest{0}counters{0}COUNTERS_log.ldf", Path.DirectorySeparatorChar));
 
         It should_find_the_file_with_absolute_path =
             () => Files[0].ShouldStartWith(TempDir);
@@ -45,10 +45,10 @@ namespace Test.FAKECore.Globbing.TestSample7
         Because of = () => Files = FileSystem.Include(FullPath("\\counters\\*.*").Replace("/","\\")).ToArray();
 
         It should_find_the_first_file =
-            () => Files[0].ShouldEndWith("temptest\\counters\\COUNTERS.mdf");
+            () => Files[0].ShouldEndWith(string.Format("temptest{0}counters{0}COUNTERS.mdf",Path.DirectorySeparatorChar));
 
         It should_find_the_second_file =
-            () => Files[1].ShouldEndWith("temptest\\counters\\COUNTERS_log.ldf");
+            () => Files[1].ShouldEndWith(string.Format("temptest{0}counters{0}COUNTERS_log.ldf", Path.DirectorySeparatorChar));
 
         It should_find_the_file_with_absolute_path =
             () => Files[0].ShouldStartWith(TempDir);
