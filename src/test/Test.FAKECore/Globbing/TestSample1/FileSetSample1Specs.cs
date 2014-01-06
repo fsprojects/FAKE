@@ -48,8 +48,8 @@ namespace Test.FAKECore.Globbing.TestSample1
         It should_set_the_base_directory = 
             () => _files.BaseDirectory.ShouldEqual(System.IO.Directory.GetCurrentDirectory());
 
-        It should_find_ilmerge = () => _files.First().ShouldEndWith("ilmerge.exclude");
-        It should_find_sample_app = () => _files.Skip(1).First().ShouldEndWith("SampleApp.dll");
+        It should_find_ilmerge = () => _files.OrderBy(x => x).First().ShouldEndWith("ilmerge.exclude");
+        It should_find_sample_app = () => _files.OrderBy(x => x).Skip(1).First().ShouldEndWith("SampleApp.dll");
         It should_match_2_files = () => _files.Count().ShouldEqual(2);
     }
 
