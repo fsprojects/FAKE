@@ -19,29 +19,19 @@ let private checkSubDirs absolute (dir:string) root =
         Directory.EnumerateDirectories(root, dir, SearchOption.TopDirectoryOnly) |> Seq.toList
     else
         let path= root + directorySeparator + dir + directorySeparator
-        tracefn "Checking%A" path
         let di = 
             if absolute then new DirectoryInfo(dir) else 
             new DirectoryInfo(path)
-        tracefn "  ==> %s %b" di.FullName di.Exists
-        if di.Exists then
-            try
-                tracefn "  all drunter %A" (Directory.EnumerateDirectories(di.FullName, "*", SearchOption.AllDirectories) |> Seq.toList)
-                tracefn "  *.* drunter %A" (Directory.EnumerateFileSystemEntries(di.FullName, "*", SearchOption.AllDirectories) |> Seq.toList)
-            with 
-            | _ -> ()
-            [di.FullName] 
-        else []
+        if di.Exists then [di.FullName] else []
         
 let rec private buildPaths acc (input : SearchOption list) =
     match input with
-    | [] -> tracefn "out";acc
+    | [] -> acc
     | Directory(name) :: t -> 
         let subDirs = 
             acc
             |> List.map (checkSubDirs false name) 
             |> List.concat
-        tracefn "All subdir  %s ==> %A" name subDirs
         buildPaths subDirs t
     | Drive(name) :: t ->
         let subDirs = 
@@ -51,18 +41,17 @@ let rec private buildPaths acc (input : SearchOption list) =
         buildPaths subDirs t
     | Recursive :: [] ->
         let dirs = 
-            Seq.collect (fun dir ->        tracefn "All subdirs and files %s" dir; Directory.EnumerateFileSystemEntries(dir, "*", SearchOption.AllDirectories)) acc
+            Seq.collect (fun dir -> Directory.EnumerateFileSystemEntries(dir, "*", SearchOption.AllDirectories)) acc
             |> Seq.toList
         buildPaths (acc @ dirs) []
     | Recursive :: t ->
         
         let dirs = 
-            Seq.collect (fun dir ->       tracefn "All subdirs %s" dir; Directory.EnumerateDirectories(dir, "*", SearchOption.AllDirectories)) acc
+            Seq.collect (fun dir -> Directory.EnumerateDirectories(dir, "*", SearchOption.AllDirectories)) acc
             |> Seq.toList
         buildPaths (acc @ dirs) t
     | FilePattern(pattern) :: t ->
-        tracefn "pattern %A"  acc
-        Seq.collect (fun dir -> tracefn "All files %s in %s" pattern dir; Directory.EnumerateFiles(dir, pattern)) acc
+        Seq.collect (fun dir -> Directory.EnumerateFiles(dir, pattern)) acc
         |> Seq.toList
          
 let private isDrive =
@@ -76,9 +65,7 @@ let private search (baseDir:string) (input : string) =
     let baseDir = normalizePath baseDir
     let input = normalizePath input    
     let input = input.Replace(baseDir,"")
-    let filePattern = Path.GetFileName(input)   
-    tracefn "BaseDir: %s" baseDir 
-    tracefn "input  : %s" input
+    let filePattern = Path.GetFileName(input)
     input.Split([|'/';'\\'|], StringSplitOptions.RemoveEmptyEntries)
     |> Seq.map (function
                 | "**" -> Recursive
@@ -88,7 +75,6 @@ let private search (baseDir:string) (input : string) =
     |> Seq.toList
     |> buildPaths [baseDir]
     |> List.map normalizeOutputPath
-    |> List.map (fun x->trace(x) ;x) 
 
 /// Internal representation of a file set.
 type FileIncludes =
