@@ -200,6 +200,6 @@ namespace Test.FAKECore.XMLHandling
         Because of = () => _resultDoc = XMLHelper.XslTransform(XMLHelper.XslTransformer(XslStyleSheet), _doc);
 
         It should_equal_the_target_text =
-            () => _resultDoc.OuterXml.ShouldEqual(_targetText);
+            () => _resultDoc.OuterXml.Replace("></img>", " />").Replace("></date>", " />").ShouldEqual(_targetText);
     }
 }

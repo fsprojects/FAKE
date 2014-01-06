@@ -47,3 +47,4 @@ tools/RazorEngine
 !tools/FAKE/tools/FakeLib.dll
 !tools/FAKE/tools/FakeLib.pdb
 .gitignore
+_NCrunch_FAKE/

@@ -35,6 +35,7 @@ namespace Test.FAKECore
             () => StringHelper.ReadFile("TestData/AllObjects.txt")
                       .Count().ShouldEqual(3578);
     }
+
     public class when_converting_to_windows_line_endings
     {
         It should_convert_linux_text_to_windows_text =
