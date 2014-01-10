@@ -188,4 +188,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Import Project="$(FSharpTargetsPath)" />
 </Project>
