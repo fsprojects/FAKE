@@ -47,7 +47,7 @@
     <Compile Include="FileSystemHelper.fs" />
     <Compile Include="StringHelper.fs" />
     <Compile Include="TemplateHelper.fs" />
-    <Compile Include="TimeoutHelper.fs" />
+    <Compile Include="TaskRunnerHelper.fs" />
     <Compile Include="CacheHelper.fs" />
     <Compile Include="XMLHelper.fs" />
     <Compile Include="Json.fs" />
