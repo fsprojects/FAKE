@@ -18,3 +18,17 @@ let waitFor f timeout (testMS:int) timeoutF =
         System.Threading.Thread.Sleep testMS
 
     watch.Elapsed
+
+/// Retries the given function until a retry limit is reached or the function succeeds without exception.
+/// ## Parameters
+///
+///  - `f` - This function will be started.
+///  - `retries` - A retry limit.
+let rec runWithRetries f retries =
+    if retries <= 0 then
+        f()
+    else
+        try
+            f()
+        with
+        | exn -> runWithRetries f (retries-1)
