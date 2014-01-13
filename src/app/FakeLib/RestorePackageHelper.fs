@@ -56,18 +56,9 @@ let runNuGet toolPath timeOut args failWith =
 
 /// [omit]
 let rec runNuGetTrial retries toolPath timeOut args failWith =
-    if retries <= 0 then
-        runNuGet toolPath timeOut args failWith
-    else
-        try
-            runNuGet toolPath timeOut args failWith
-        with
-        | exn -> 
-            traceImportant (sprintf "Package restore failed with %s" exn.Message)
-            traceImportant ("Retry package restore.")
-            runNuGetTrial (retries-1) toolPath timeOut args failWith
+    let f() = runNuGet toolPath timeOut args failWith
+    runWithRetries f retries
         
-
 /// [omit]
 let buildNuGetArgs setParams packageId = 
     let parameters = RestoreSinglePackageDefaults |> setParams

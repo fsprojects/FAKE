@@ -31,4 +31,7 @@ let rec runWithRetries f retries =
         try
             f()
         with
-        | exn -> runWithRetries f (retries-1)
+        | exn -> 
+            trace (sprintf "Task failed with %s" exn.Message)
+            trace ("Retry.")
+            runWithRetries f (retries-1)
