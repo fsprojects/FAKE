@@ -12,7 +12,7 @@ open System.Collections.Generic
 let startedProcesses = HashSet()
 let start (proc:Process) =
     proc.Start() |> ignore
-    startedProcesses.Add proc.Id |> ignore
+    startedProcesses.Add (proc.Id, proc.ProcessName) |> ignore
 
 /// [omit]
 let mutable redirectOutputToTrace = false 
@@ -434,13 +434,14 @@ let killMSBuild() = killProcess "msbuild"
 /// Kills all processes that are created by the FAKE build script.
 let killAllCreatedProcesses() =
     let traced = ref false
-    for id in startedProcesses do
+    for (id, name) in startedProcesses do
         try
             let p = Process.GetProcessById id
             if !traced |> not then
                 tracefn "Killing all processes that are created by FAKE and are still running."
                 traced := true
-            kill p
+            if p.ProcessName = name 
+            then kill p
         with
         | exn -> ()
     startedProcesses.Clear()
