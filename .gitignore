@@ -48,3 +48,4 @@ tools/RazorEngine
 !tools/FAKE/tools/FakeLib.pdb
 .gitignore
 _NCrunch_FAKE/
+tools/FSharp.Compiler.Service
