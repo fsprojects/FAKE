@@ -1,0 +1,2771 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>FSharp.Data</name></assembly>
+<members>
+<member name="T:AssemblyInfo">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.Csv.CsvFile.Parse(System.String,Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{System.Char},Microsoft.FSharp.Core.FSharpOption{System.Boolean},Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+<summary>
+ Parses the specified CSV content
+</summary>
+</member>
+<member name="M:FSharp.Data.Csv.CsvFile.Load(System.String,Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{System.Char},Microsoft.FSharp.Core.FSharpOption{System.Boolean},Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+<summary>
+ Loads CSV from the specified uri
+</summary>
+</member>
+<member name="M:FSharp.Data.Csv.CsvFile.Load(System.IO.TextReader,Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{System.Char},Microsoft.FSharp.Core.FSharpOption{System.Boolean},Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+<summary>
+ Loads CSV from the specified reader
+</summary>
+</member>
+<member name="M:FSharp.Data.Csv.CsvFile.Load(System.IO.Stream,Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{System.Char},Microsoft.FSharp.Core.FSharpOption{System.Boolean},Microsoft.FSharp.Core.FSharpOption{System.Boolean})">
+<summary>
+ Loads CSV from the specified stream
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.Csv.CsvFile">
+<summary>
+ Represents a CSV file. The lines are read on demand from &apos;reader&apos;.
+ Columns are delimited by one of the chars passed by &apos;separators&apos; (defaults to just &apos;,&apos;), and
+ to escape the separator chars, the &apos;quote&apos; character will be used (defaults to &apos;&quot;&apos;).
+ If &apos;hasHeaders&apos; is true (the default), the first line read by &apos;reader&apos; will not be considered part of data.
+ If &apos;ignoreErrors&apos; is true (the default is false), rows with a different number of columns from the header row
+ (or the first row if headers are not present) will be ignored
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.Csv.Extensions">
+<summary>
+ Adds extension methods that can be used to work with CsvRow in a more convenient, but
+ less safe way. The module also provides the dynamic operator.
+</summary>
+</member>
+<member name="M:FSharp.Data.FreebaseOperators.Where``1(System.Linq.IQueryable{``0},System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+<summary>
+ Synonym for LINQ&apos;s Where
+</summary>
+</member>
+<member name="M:FSharp.Data.FreebaseOperators.Count``1(System.Linq.IQueryable{``0})">
+<summary>
+ Synonym for LINQ&apos;s Count
+</summary>
+</member>
+<member name="M:FSharp.Data.FreebaseOperators.ApproximateCount``1(System.Linq.IQueryable{``0})">
+<summary>
+ A Freebase query operation returning an approximate count of the items satisfying a query.
+</summary>
+</member>
+<member name="M:FSharp.Data.FreebaseOperators.ApproximatelyOneOf(System.String,System.String[])">
+<summary>
+ A Freebase query operation that represents approximately matching one of the given strings. See http://www.freebase.com/docs/mql/ch03.html#directives.
+</summary>
+</member>
+<member name="M:FSharp.Data.FreebaseOperators.ApproximatelyMatches(System.String,System.String)">
+<summary>
+ A Freebase query operation that represents a perl-style match of a string, e.g. &quot;book club&quot;, &quot;book*&quot;, &quot;*book&quot;, &quot;*book*&quot;, &quot;^book&quot;, &quot;book$&quot;, &quot;* book *&quot;, &quot;book-club&quot;, &quot;book\-club&quot;. See http://www.freebase.com/docs/mql/ch03.html#directives.
+</summary>
+</member>
+<member name="T:FSharp.Data.FreebaseOperators">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.Json.JsonValue.Parse(System.String,Microsoft.FSharp.Core.FSharpOption{System.Globalization.CultureInfo})">
+<summary>
+ Parses the specified JSON string
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.JsonValue.Load(System.String,Microsoft.FSharp.Core.FSharpOption{System.Globalization.CultureInfo})">
+<summary>
+ Loads JSON from the specified uri
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.JsonValue.Load(System.IO.TextReader,Microsoft.FSharp.Core.FSharpOption{System.Globalization.CultureInfo})">
+<summary>
+ Loads JSON from the specified reader
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.JsonValue.Load(System.IO.Stream,Microsoft.FSharp.Core.FSharpOption{System.Globalization.CultureInfo})">
+<summary>
+ Loads JSON from the specified stream
+</summary>
+</member>
+<member name="T:FSharp.Data.Json.JsonValue">
+<summary>
+ Represents a JSON value. Large numbers that do not fit in the 
+ Decimal type are represented using the Float case, while
+ smaller numbers are represented as decimals to avoid precision loss.
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.op_Dynamic(FSharp.Data.Json.JsonValue,System.String)">
+<summary>
+ Get property of a JSON object (assuming that the value is an object)
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.GetProperty(FSharp.Data.Json.JsonValue,System.String)">
+<summary>
+ Get property of a JSON object. Fails if the value is not an object
+ or if the property is not present
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.TryGetProperty(FSharp.Data.Json.JsonValue,System.String)">
+<summary>
+ Try get property of a JSON object. Returns None if the value is not
+ an object or if the property is not present.
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.get_Properties(FSharp.Data.Json.JsonValue)">
+<summary>
+ Get a sequence of key-value pairs representing the properties of an object
+ (assuming that the value is an object)
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.get_InnerText(FSharp.Data.Json.JsonValue)">
+<summary>
+ Get inner text of an element - this includes just string nodes and
+ string nodes in an array (e.g. multi-line string represented as array)
+ (assuming that the value is a string or array of strings)
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.AsGuid``1(FSharp.Data.Json.JsonValue,Microsoft.FSharp.Core.FSharpOption{``0})">
+<summary>
+ Get the guid value of an element (assuming that the value is a guid)
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.AsBoolean(FSharp.Data.Json.JsonValue,Microsoft.FSharp.Core.FSharpOption{System.Globalization.CultureInfo})">
+<summary>
+ Get the boolean value of an element (assuming that the value is a boolean)
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.AsInteger64(FSharp.Data.Json.JsonValue,Microsoft.FSharp.Core.FSharpOption{System.Globalization.CultureInfo})">
+<summary>
+ Get a number as a 64-bit integer (assuming that the value fits in 64-bit integer)
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.AsInteger(FSharp.Data.Json.JsonValue,Microsoft.FSharp.Core.FSharpOption{System.Globalization.CultureInfo})">
+<summary>
+ Get a number as an integer (assuming that the value fits in integer)
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.AsDecimal(FSharp.Data.Json.JsonValue,Microsoft.FSharp.Core.FSharpOption{System.Globalization.CultureInfo})">
+<summary>
+ Get a number as a decimal (assuming that the value fits in decimal)
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.AsFloat(FSharp.Data.Json.JsonValue,Microsoft.FSharp.Core.FSharpOption{System.Globalization.CultureInfo})">
+<summary>
+ Get a number as a float (assuming that the value is convertible to a float)
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.AsDateTime(FSharp.Data.Json.JsonValue,Microsoft.FSharp.Core.FSharpOption{System.Globalization.CultureInfo})">
+<summary>
+ Get the datetime value of an element (assuming that the value is a string
+ containing well-formed ISO date or MSFT JSON date)
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.AsString(FSharp.Data.Json.JsonValue,Microsoft.FSharp.Core.FSharpOption{System.Globalization.CultureInfo})">
+<summary>
+ Get the string value of an element (assuming that the value is a scalar)
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.GetEnumerator(FSharp.Data.Json.JsonValue)">
+<summary>
+ Get all elements of a JSON object (assuming that the value is an array)
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.get_Item(FSharp.Data.Json.JsonValue,System.String)">
+<summary>
+ Assuming the value is an object, get value with the specified name
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.get_Item(FSharp.Data.Json.JsonValue,System.Int32)">
+<summary>
+ Assuming the value is an array, get the value at a specified index
+</summary>
+</member>
+<member name="M:FSharp.Data.Json.Extensions.JsonValue.AsArray(FSharp.Data.Json.JsonValue)">
+<summary>
+ Get all elements of a JSON object (assuming that the value is an array)
+</summary>
+</member>
+<member name="T:FSharp.Data.Json.Extensions">
+<summary>
+ Adds extension methods that can be used to work with JsonValue in a less safe, 
+ but shorter way. The module also provides the dynamic operator.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.CsvFile`1.Truncate(System.Int32)">
+<summary>
+ Returns a csv that when enumerated returns at most N rows.
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.CsvFile`1.TakeWhile(Microsoft.FSharp.Core.FSharpFunc{`0,System.Boolean})">
+<summary>
+ Returns a csv that, when iterated, yields rowswhile the given predicate
+ returns &lt;c&gt;true&lt;/c&gt;, and then returns no further rows.
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.CsvFile`1.Take(System.Int32)">
+<summary>
+ Returns a new csv with only the first N rows of the underlying csv.
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.CsvFile`1.SkipWhile(Microsoft.FSharp.Core.FSharpFunc{`0,System.Boolean})">
+<summary>
+ Returns a csv that, when iterated, skips rows while the given predicate returns
+ &lt;c&gt;true&lt;/c&gt;, and then yields the remaining rows.
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.CsvFile`1.Skip(System.Int32)">
+<summary>
+ Returns a csv that skips N rows and then yields the remaining rows.
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.CsvFile`1.SaveToString(Microsoft.FSharp.Core.FSharpOption{System.Char},Microsoft.FSharp.Core.FSharpOption{System.Char})">
+<summary>
+ Saves CSV to a string
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.CsvFile`1.Save(System.String,Microsoft.FSharp.Core.FSharpOption{System.Char},Microsoft.FSharp.Core.FSharpOption{System.Char})">
+<summary>
+ Saves CSV to the specified file
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.CsvFile`1.Save(System.IO.Stream,Microsoft.FSharp.Core.FSharpOption{System.Char},Microsoft.FSharp.Core.FSharpOption{System.Char})">
+<summary>
+ Saves CSV to the specified stream
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.CsvFile`1.Save(System.IO.TextWriter,Microsoft.FSharp.Core.FSharpOption{System.Char},Microsoft.FSharp.Core.FSharpOption{System.Char})">
+<summary>
+ Saves CSV to the specified writer
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.CsvFile`1.Filter(Microsoft.FSharp.Core.FSharpFunc{`0,System.Boolean})">
+<summary>
+ Returns a new csv containing only the rows for which the given predicate returns &quot;true&quot;.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.CsvFile`1.Cache">
+<summary>
+ Returns a new csv with the same rows as the original but which guarantees
+ that each row will be only be read and parsed from the input at most once.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.JsonDocument.Create(FSharp.Data.Json.JsonValue)">
+<summary>
+ Creates a JsonDocument representing the specified value
+</summary>
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.JsonDocument">
+<summary>
+ Underlying representation of the generated JSON types
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.JsonOperations.TryGetValueByTypeTag``2(FSharp.Data.Json.JsonValue,System.String,System.Func{FSharp.Data.Json.JsonValue,``0},System.Func{``0,``1})">
+<summary>
+ Returns a single or no value by tag type
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.JsonOperations.TryGetArrayChildByTypeTag``2(FSharp.Data.Json.JsonValue,System.String,System.Func{FSharp.Data.Json.JsonValue,``0},System.Func{``0,``1})">
+<summary>
+ Returns single or no value from an array matching the specified tag
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.JsonOperations.GetArrayChildrenByTypeTag``2(FSharp.Data.Json.JsonValue,System.String,System.Func{FSharp.Data.Json.JsonValue,``0},System.Func{``0,``1})">
+<summary>
+ Returns all array values that match the specified tag
+ (Follows the same pattern as ConvertXyz functions above)
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.JsonOperations.GetArrayChildByTypeTag(FSharp.Data.Json.JsonValue,System.String)">
+<summary>
+ Returns a single array children that matches the specified tag
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.JsonOperations.ConvertOptionalProperty``2(FSharp.Data.Json.JsonValue,System.String,System.Func{FSharp.Data.Json.JsonValue,``0},System.Func{``0,``1})">
+<summary>
+ Get optional property of a specified type
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.JsonOperations.ConvertArray``2(FSharp.Data.Json.JsonValue,System.Func{FSharp.Data.Json.JsonValue,``0},System.Func{``0,``1})">
+<summary>
+ Converts JSON array to array of target types
+ The `packer` function rebuilds representation type (such as
+ `JsonDocument`) which is then passed to projection function `f`.
+</summary>
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.JsonOperations">
+<summary>
+ Static helper methods called from the generated code
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Operations.OptionToNullable``1(Microsoft.FSharp.Core.FSharpOption{``0})">
+<summary>
+ Turn an F# option type Option&lt;&apos;T&gt; containing a primitive 
+ value type into a .NET type Nullable&lt;&apos;T&gt;
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Operations.NullableToOption``1(System.Nullable{``0})">
+<summary>
+ Turn a .NET type Nullable&lt;&apos;T&gt; to an F# option type Option&lt;&apos;T&gt;
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Operations.GetNonOptionalValue``1(System.String,Microsoft.FSharp.Core.FSharpOption{``0},Microsoft.FSharp.Core.FSharpOption{System.String})">
+<summary>
+ Operation that extracts the value from an option and reports a
+ meaningful error message when the value is not there
+
+ We could just return defaultof&lt;&apos;T&gt; if the value is None, but that is not
+ really correct, because this operation is used when the inference engine
+ inferred that the value is always present. The user should update their
+ sample to infer it as optional (and get None). If we use defaultof&lt;&apos;T&gt; we
+ might return 0 and the user would not be able to distinguish between 0
+ and missing value.
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Operations.GetCulture(System.String)">
+<summary>
+ Returns CultureInfo matching the specified culture string
+ (or InvariantCulture if the argument is null or empty)
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Operations.AsOption(System.String)">
+<summary>
+ Turns empty or null string value into None, otherwise returns Some
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Operations.AsDateTime(System.IFormatProvider,System.String)">
+<summary>
+ Parse date time using either the JSON milliseconds format or using ISO 8601
+ that is, either &quot;\/Date(&lt;msec-since-1/1/1970&gt;)\/&quot; or something
+ along the lines of &quot;2013-01-28T00:37Z&quot;
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.ReentrantEnumerable`1">
+<summary>
+ An enumerable that will return elements from the &apos;firstSeq&apos; first time it
+ is accessed and then will call &apos;nextSeq&apos; each time for all future GetEnumerator calls
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.XmlElement.Create(System.Xml.Linq.XElement)">
+<summary>
+ Creates a JsonDocument representing the specified value
+</summary>
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.XmlElement">
+<summary>
+ Underlying representation of the generated XML types
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.XmlOperations">
+<summary>
+ Static helper methods called from the generated code
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Caching.ICache`1">
+<summary>
+ Represents a cache (various implementations are available)
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Caching.createInternetFileCache(System.String,System.TimeSpan)">
+<summary>
+ Creates a cache that stores data in a local file system
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Caching.hashString(System.String)">
+<summary>
+ Get hash code of a string - used to determine cache file
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Caching.createInMemoryCache``1(System.TimeSpan)">
+<summary>
+ Creates a cache that uses in-memory collection
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Caching">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.CsvHelpers">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.CsvReader.readCsvFile(System.IO.TextReader,System.String,System.Char)">
+<summary>
+ Lazily reads the specified CSV file using the specified separators
+ (Handles most of the RFC 4180 - most notably quoted values and also
+ quoted newline characters in columns)
+</summary>
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.CsvReader">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseDataConnection.TryGetPropertyById(System.String,System.String)">
+<summary>
+ Get the FreebaseProperty object that gives schema information for a particular property of a particular type.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseDataConnection.GetInitialDataForSpecificObjectOfType(System.String,System.String)">
+<summary>
+ Get a property bag for a specific object, giving values for the properties of the given type 
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseDataConnection.GetInitialDataForObjectsFromQueryText(Microsoft.FSharp.Collections.FSharpList{System.Tuple{System.String,System.String}},System.String,System.Int32)">
+<summary>
+ Get property bags for all the objects of the given type, at the given type
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseDataConnection.GetInitialDataForAllObjectsForPropertyOfObject(System.String,System.String,FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseProperty,System.String,System.Int32)">
+<summary>
+ Get property bags for all the objects in the specific property relation to a given object, giving values for the properties of the given property type 
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.FreebaseDataConnection">
+<summary>
+ Represents a data connection to Freebase
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseDataContext._Create(System.String,System.String,System.Boolean,System.String,System.Boolean,System.Boolean)">
+<summary>
+ Create a data context
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseDataContext.FSharp-Data-RuntimeImplementation-Freebase-IFreebaseDataContext-GetDomainCategoryById(System.String)">
+<summary>
+ Get the object which represents the Freebase domain with the given object id.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.FreebaseDataContext">
+<summary>
+ Contains public entry points called by provided code.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseDomain.FSharp-Data-RuntimeImplementation-Freebase-IFreebaseDomain-GetObjectsOfTypeId(System.String)">
+<summary>
+ Get all the Freebase objects which have the given Freebase type id.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.FreebaseDomain">
+<summary>
+ Represents the contents of a Freebase namespace
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseDomainCategory.FSharp-Data-RuntimeImplementation-Freebase-IFreebaseDomainCategory-GetDomainById(System.String)">
+<summary>
+ Get all the Freebase objects which have the given Freebase type id.
+ Get the object which represents the Freebase domain with the given object id.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.FreebaseDomainCategory">
+<summary>
+ Represents the contents of a Freebase namespace
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseIndividuals._GetIndividualsObject(System.Object)">
+<summary>
+ Get all the Freebase objects which have the given Freebase type id.
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseIndividuals.FSharp-Data-RuntimeImplementation-Freebase-IFreebaseIndividuals-GetIndividualById(System.String,System.String)">
+<summary>
+ Get all the Freebase objects which have the given type id and object id.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.Freebase.FreebaseObject.Name">
+<summary>
+ The Name of this item
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.Freebase.FreebaseObject.MainImage">
+<summary>
+ The main image associated with this item, if any
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.Freebase.FreebaseObject.Id">
+<summary>
+ The ID of this item
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.Freebase.FreebaseObject.Blurb">
+<summary>
+ The Blurb text for this item, if any
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseObject.GetImages">
+<summary>
+ Images associated with this item. 
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.FreebaseObject">
+<summary>
+ Represents a single object drawn from Freebase. 
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.FreebasePropertyBag">
+<summary>
+ Represents data for a single object
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.Freebase.IFreebaseObject.Name">
+<summary>
+ The name of this item
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.Freebase.IFreebaseObject.MainImage">
+<summary>
+ The main image associated with this item
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.Freebase.IFreebaseObject.Id">
+<summary>
+ The ID of this item
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.Freebase.IFreebaseObject.Blurb">
+<summary>
+ The Blurb text for this item, if any
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.IFreebaseObject.GetPropertyByIdTyped``1(System.String,System.String)">
+<summary>
+ Get a property by identifier, with a strong type
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.IFreebaseObject.GetPropertyById(System.String,System.String)">
+<summary>
+ Get a property by identifier, with a strong type
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.IFreebaseObject.GetImages">
+<summary>
+ Images associated with this item. 
+</summary>
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.IFreebaseObject">
+<summary>
+ Represents a single object drawn from Freebase. 
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.FreebaseRequests.Utilities">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.FreebaseRequests">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="F:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseSchemaConnection.typeIdToType">
+<summary>
+ Cache policy for type properties. This will be used at runtime.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseSchemaConnection.GetTypeByTypeId(System.String)">
+<summary>
+ Get the types that correspond to type id.   The properties of the type are filled in.
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseSchemaConnection.GetDomainStructure">
+<summary>
+ Query the structure of common domains and all the type types in that domain.  Design-time only.
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseSchemaConnection.GetDomainCategories">
+<summary>
+ Query the structure of common domains and all the type types in that domain. 
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseSchemaConnection.GetBlurbById(System.String)">
+<summary>
+ Get the &apos;blurb&apos; text for this topic ID 
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseSchemaConnection.GetAllTypesInDomainSansProperties(System.String)">
+<summary>
+ Return all typesin a domain. Design-time only.
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseSchemaConnection.GetAllTypesInAllDomainsSansProperties">
+<summary>
+ Return all types. Design-time only.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseSchemaConnection.GetAllObjectsOfType(FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseType)">
+<summary>
+ Get property bags for all the objects of the given type, at the given type
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseDomainCategory">
+<summary>
+ The element type returned by GetDomainCategories
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseDomainStructure">
+<summary>
+ The element type returned by GetDomainStructure.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="F:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseProperty.UnitOfMeasure">
+<summary>
+ The unit of measure for the property, if any. e.g. /en/kilometer
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="F:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseProperty.Enumeration">
+<summary>
+ Name of the enumeration type. Like /authority/gnis
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseProperty.FSharpPropertyType(FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseSchemaConnection,Microsoft.FSharp.Core.FSharpFunc{FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseProperty,Microsoft.FSharp.Core.FSharpOption{System.Tuple{System.Type,System.Boolean}}},Microsoft.FSharp.Core.FSharpFunc{FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseType,Microsoft.FSharp.Core.FSharpOption{System.Type}},Microsoft.FSharp.Core.FSharpFunc{System.Type,System.Type},Microsoft.FSharp.Core.FSharpFunc{System.Type,System.Type})">
+<summary>
+ Compute the provided or erased runtime type corresponding to the Freebase property.
+ &apos;typeReprFunction&apos; indicates if erasure is happening or not.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseProperty.FSharpPropertyElementType(FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseSchemaConnection,Microsoft.FSharp.Core.FSharpFunc{FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseProperty,Microsoft.FSharp.Core.FSharpOption{System.Tuple{System.Type,System.Boolean}}},Microsoft.FSharp.Core.FSharpFunc{FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.FreebaseType,Microsoft.FSharp.Core.FSharpOption{System.Type}})">
+<summary>
+ Compute the provided or erased runtime type corresponding to the Freebase property.
+ &apos;typeReprFunction&apos; indicates if erasure is happening or not.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.units">
+<summary>
+ This table of data was downloaded from www.freebase.com itself. 
+ See www.freebase.com for term and conditions of use.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.Utilities.dictionaryFromJson(FSharp.Data.Json.JsonValue)">
+<summary>
+ Represents one object&apos;s values for all the properties of one type id.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema.Utilities">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.FreebaseSchema">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.QueryImplementation.FreebasePropAccess">
+<summary>
+ The algebra of different supported  qualifications
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.QueryImplementation.formatQueryData(FSharp.Data.RuntimeImplementation.Freebase.FreebaseDataConnection,FSharp.Data.RuntimeImplementation.Freebase.QueryImplementation.FreebaseQueryData)">
+<summary>
+ Format as query text for MQL
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Freebase.QueryImplementation.formatPropAccessCx``1(FSharp.Data.RuntimeImplementation.Freebase.FreebaseDataConnection,Microsoft.FSharp.Collections.FSharpList{System.Tuple{``0,System.String}},System.String,System.String)">
+<summary>
+ with all the non-compound fields filled in.
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.Freebase.QueryImplementation.evaluateOnClientSideWhereNecessary">
+<summary>
+ TODO: make this a parameter
+</summary>
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.QueryImplementation">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Freebase.RuntimeConversion">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.Helpers.asOption``1(System.Boolean,``0)">
+<summary>
+ Convert the result of TryParse to option type
+</summary>
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.Helpers">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.ProviderFileSystem.readTextAtRunTime(System.Boolean,System.String,System.String,System.String)">
+<summary>
+ Resolve a location of a file (or a web location) and open it for shared
+ read at runtime (do not monitor file changes and use runtime resolution rules)
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.ProviderFileSystem.asyncOpenStreamInProvider(System.Boolean,System.Boolean,System.String,Microsoft.FSharp.Core.FSharpOption{Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,Microsoft.FSharp.Core.Unit}},System.String,System.Uri)">
+<summary>
+ Given a type provider configuration and a name passed by user, open 
+ the uri and return it as a stream
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.ProviderFileSystem.resolveUri(System.Boolean,System.Boolean,System.String,System.String,System.Uri)">
+<summary>
+ Resolve the absolute location of a file (or web URL) according to the rules
+ used by standard F# type providers as described here:
+ https://github.com/fsharp/fsharpx/issues/195#issuecomment-12141785
+
+  * if it is web resource, just return it
+  * if it is full path, just return it
+  * otherwise..
+
+    At design-time:
+      * if the user specified resolution folder, use that
+      * use the default resolution folder
+    At run-time:
+      * if the user specified resolution folder, use that
+      * if it is running in F# interactive (config.IsHostedExecution) 
+        use the default resolution folder
+      * otherwise, use &apos;CurrentDomain.BaseDirectory&apos;
+
+ Returns the resolved file name, together with a flag specifying 
+ whether it is web based (and we need WebClient to download it)
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.ProviderFileSystem.watchForChanges(Microsoft.FSharp.Core.FSharpFunc{Microsoft.FSharp.Core.Unit,Microsoft.FSharp.Core.Unit},System.String)">
+<summary>
+ If the file is not web based, setup an file system watcher that 
+ invalidates the generated type whenever the file changes
+
+ Asumes that the fileName is a valid file name on the disk
+ (and not e.g. a web reference)
+</summary>
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.ProviderFileSystem">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.StructuralTypes.InferedType">
+<summary>
+ Represents inferred structural type. A type may be either primitive type
+ (one of those listed by `primitiveTypes`) or it can be collection, 
+ (named) record and heterogeneous type. We also have `Null` type (which is
+ a subtype of all non-primitive types) and universal `Top` type.
+
+  * For collection, we infer the types of different things that appear in 
+    the collection and how many times they do.
+
+  * A heterogeneous type (sum type) is simply a choice containing one
+    of multiple different possibilities
+
+ Why is collection not simply a list of Heterogeneous types? If we used that
+ we would lose information about multiplicity and so we would not be able
+ to generate nicer types!
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.StructuralTypes.InferedTypeTag.Code">
+<summary>
+ Converts tag to string code that can be passed to generated code
+</summary>
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.StructuralTypes.InferedTypeTag.ParseCode(System.String)">
+<summary>
+ Parses code returned by &apos;Code&apos; member (to be used in provided code)
+</summary>
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.StructuralTypes.InferedTypeTag">
+<summary>
+ For heterogeneous types, this represents the tag that defines the form
+ (that is either primitive type, collection, named record etc.)
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.StructuralTypes.InferedMultiplicity">
+<summary>
+ For heterogeneous types (types that have multiple possible forms
+ such as differently named XML nodes or records and arrays mixed together)
+ this type represents the number of occurrences of individual forms
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.StructuralTypes.InferedProperty">
+<summary>
+ A property of a record has a name and type and may be optional
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Topic.Name">
+<summary>
+ Get the name of the topic 
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Topic.Description">
+<summary>
+ Get the description of the topic 
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Topic.Code">
+<summary>
+ Get the WorldBank code of the topic
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Region.RegionCode">
+<summary>
+ Get the WorldBank code for the region
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Region.Name">
+<summary>
+ Get the name of the region
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Country.Region">
+<summary>
+ Get the region of the country 
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Country.Name">
+<summary>
+ Get the name of the country 
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Country.Code">
+<summary>
+ Get the WorldBank code of the country
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Country.CapitalCity">
+<summary>
+ Get the capital city of the country 
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.IndicatorDescription.Source">
+<summary>
+ Get the source of the indicator
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.IndicatorDescription.Name">
+<summary>
+ Get the name of the indicator
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.IndicatorDescription.IndicatorCode">
+<summary>
+ Get the code for the indicator
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.IndicatorDescription.Description">
+<summary>
+ Get the description of the indicator
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.IndicatorDescription.Code">
+<summary>
+ Get the code for the topic of the indicator
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Indicator.Years">
+<summary>
+ Get the years for which the indicator has values
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Indicator.Values">
+<summary>
+ Get the values for the indicator (without years)
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Indicator.Source">
+<summary>
+ Get the source of the indicator
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Indicator.Name">
+<summary>
+ Get the name of the indicator
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Indicator.Item(System.Int32)">
+<summary>
+ Get a value for a year for the indicator
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Indicator.IndicatorCode">
+<summary>
+ Get the code for the indicator
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Indicator.Description">
+<summary>
+ Get the description of the indicator
+</summary>
+</member>
+<member name="P:FSharp.Data.RuntimeImplementation.WorldBank.Indicator.Code">
+<summary>
+ Get the code for the country or region of the indicator
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="F:FSharp.Data.RuntimeImplementation.WorldBank.Implementation.ServiceConnection.topics">
+<summary>
+ At compile time, download the schema
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Data.RuntimeImplementation.WorldBank.Implementation.ServiceConnection.GetDataAsync(System.String,System.String)">
+<summary>
+ At runtime, download the data
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Data.RuntimeImplementation.WorldBank.Implementation">
+
+</member>
+<member name="">
+
+</member>
+<member name="F:FSharp.Net.FSharp.Net.Http.runningOnMono">
+<summary>
+ Are we currently running on Mono?
+ (Mono does not have the issue with encoding slashes in URLs, so we do not need workaround)
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Net.Http.RequestDetailed``5(System.String,Microsoft.FSharp.Core.FSharpOption{``0},Microsoft.FSharp.Core.FSharpOption{``1},Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{``2},Microsoft.FSharp.Core.FSharpOption{``3},Microsoft.FSharp.Core.FSharpOption{System.Net.CookieContainer},Microsoft.FSharp.Core.FSharpOption{``4})">
+<summary>
+ Download an HTTP web resource from the specified URL synchronously
+ (allows specifying query string parameters and HTTP headers including
+ headers that have to be handled specially - such as Accept, Content-Type &amp; Referer)
+ The body for POST request can be specified either as text or as a list of parameters
+ that will be encoded, and the method will automatically be set if not specified
+</summary>
+</member>
+<member name="M:FSharp.Net.Http.Request``5(System.String,Microsoft.FSharp.Core.FSharpOption{``0},Microsoft.FSharp.Core.FSharpOption{``1},Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{``2},Microsoft.FSharp.Core.FSharpOption{``3},Microsoft.FSharp.Core.FSharpOption{System.Net.CookieContainer},Microsoft.FSharp.Core.FSharpOption{``4})">
+<summary>
+ Download an HTTP web resource from the specified URL synchronously
+ (allows specifying query string parameters and HTTP headers including
+ headers that have to be handled specially - such as Accept, Content-Type &amp; Referer)
+ The body for POST request can be specified either as text or as a list of parameters
+ that will be encoded, and the method will automatically be set if not specified
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="M:FSharp.Net.Http.AsyncRequestDetailed``5(System.String,Microsoft.FSharp.Core.FSharpOption{``0},Microsoft.FSharp.Core.FSharpOption{``1},Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{``2},Microsoft.FSharp.Core.FSharpOption{``3},Microsoft.FSharp.Core.FSharpOption{System.Net.CookieContainer},Microsoft.FSharp.Core.FSharpOption{``4})">
+<summary>
+ Download an HTTP web resource from the specified URL asynchronously
+ (allows specifying query string parameters and HTTP headers including
+ headers that have to be handled specially - such as Accept, Content-Type &amp; Referer)
+ The body for POST request can be specified either as text or as a list of parameters
+ that will be encoded, and the method will automatically be set if not specified
+</summary>
+</member>
+<member name="M:FSharp.Net.Http.AsyncRequest``5(System.String,Microsoft.FSharp.Core.FSharpOption{``0},Microsoft.FSharp.Core.FSharpOption{``1},Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{System.String},Microsoft.FSharp.Core.FSharpOption{``2},Microsoft.FSharp.Core.FSharpOption{``3},Microsoft.FSharp.Core.FSharpOption{System.Net.CookieContainer},Microsoft.FSharp.Core.FSharpOption{``4})">
+<summary>
+ Download an HTTP web resource from the specified URL asynchronously
+ (allows specifying query string parameters and HTTP headers including
+ headers that have to be handled specially - such as Accept, Content-Type &amp; Referer)
+ The body for POST request can be specified either as text or as a list of parameters
+ that will be encoded, and the method will automatically be set if not specified
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:FSharp.Net.Http">
+<summary>
+ Utilities for working with network via HTTP. Includes methods for downloading 
+ resources with specified headers, query parameters and HTTP body
+</summary>
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="">
+
+</member>
+<member name="T:ProviderImplementation.HttpUtility">
+
+</member>
+</members>
+</doc>

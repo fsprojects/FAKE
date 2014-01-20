@@ -2,6 +2,6 @@
 {
     public static class TestData
     {
-        public const string TestDataDir = "TestData";
+        public const string TestDataDir = "./TestData";
     }
 }

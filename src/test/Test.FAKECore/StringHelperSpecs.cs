@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Fake;
 using Machine.Specifications;
 
@@ -23,7 +22,11 @@ namespace Test.FAKECore
             () => StringHelper.NormalizeVersion("0.1.2.1.6.5").ShouldEqual("0.1.2.1");
 
         It should_remove_the_fith_part_and_trim =
-                    () => StringHelper.NormalizeVersion("0.1.2.0.6").ShouldEqual("0.1.2");
+            () => StringHelper.NormalizeVersion("0.1.2.0.6").ShouldEqual("0.1.2");
+
+        It should_accept_single_versions_like_travis_build_numbers =
+            () => StringHelper.NormalizeVersion("42").ShouldEqual("42");
+
     }
 
     public class when_using_string_helper
@@ -32,6 +35,7 @@ namespace Test.FAKECore
             () => StringHelper.ReadFile("TestData/AllObjects.txt")
                       .Count().ShouldEqual(3578);
     }
+
     public class when_converting_to_windows_line_endings
     {
         It should_convert_linux_text_to_windows_text =

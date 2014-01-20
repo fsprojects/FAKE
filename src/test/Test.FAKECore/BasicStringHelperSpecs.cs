@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Fake;
 using Machine.Specifications;
@@ -21,7 +23,7 @@ namespace Test.FAKECore
 
         It should_separate_three_lines_with_line_ends =
             () => StringHelper.toLines(new List<string> { "first", "second", "third" })
-                      .ShouldEqual("first\r\nsecond\r\nthird");
+                      .ShouldEqual(string.Format("first{0}second{0}third", Environment.NewLine));
 
         It should_separate_two_lines_with_blank =
             () => StringHelper.separated(" ", new List<string> { "first", "second" })

@@ -41,7 +41,7 @@ namespace Test.FAKECore.Globbing.TestSample1
 
     public class when_scanning_for_folders : when_extracting_zip
     {
-        Because of = () => Files = FileSystem.Include("/temptest/**/").ToArray();
+        Because of = () => Files = FileSystem.Include("/temptest/**/").OrderBy(x => x).ToArray();
 
         It should_find_the_main_dir =
             () => Files[0].ShouldEndWith("temptest");
@@ -52,11 +52,8 @@ namespace Test.FAKECore.Globbing.TestSample1
         It should_find_the_second_subdir =
             () => Files[2].ShouldEndWith("bin");
 
-        It should_find_the_third_subdir =
-            () => Files[3].ShouldEndWith("obj");
-
-        It should_find_the_all_files_in_the_subdir =
-            () => Files[6].ShouldEndWith("SampleApp\\bin\\ilmerge.exclude");
+        It should_find_all_files_in_the_subdir =
+            () => Files[6].ShouldEndWith("test.rename");
 
         It should_match_9_entries = () => Files.Length.ShouldEqual(9);
     }
@@ -66,8 +63,6 @@ namespace Test.FAKECore.Globbing.TestSample1
         Because of = () => Files = FileSystem.Include("temptest/SampleApp/bin/**/*.*").ToArray();
 
         It should_match_2_files = () => Files.Length.ShouldEqual(2);
-        It should_find_ilmerge = () => Files[0].ShouldEndWith("ilmerge.exclude");
-        It should_find_sample_app = () => Files[1].ShouldEndWith("SampleApp.dll");
     }
 
     public class when_scanning_for_concrete_dll_in_zip : when_extracting_zip

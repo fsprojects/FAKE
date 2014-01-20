@@ -10,8 +10,8 @@ namespace Test.FAKECore.Globbing.TestSample5
         Because of = () => Files = FileSystem.Include(FullPath("/**/TextFiles/")).ToArray();
 
         It should_find_the_file =
-            () => Files[0].ShouldEndWith("Folder1\\Subfolder1\\SubFolder2\\TextFiles");
-
+            () => Files[0].ShouldEndWith(string.Format("Folder1{0}Subfolder1{0}SubFolder2{0}TextFiles", Path.DirectorySeparatorChar));
+        
         It should_find_the_file_with_absolute_path =
             () => Files[0].ShouldStartWith(TempDir);
         
