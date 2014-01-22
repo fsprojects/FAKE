@@ -199,6 +199,25 @@ let private errorLoggerParam =
     |> fun lst -> String.Join(" ", lst)
 
 /// Runs a MSBuild project
+/// ## Parameters
+///  - `setParams` - A function that overwrites the default MsBuildParams
+///  - `project` - A string with the path to the project file to build.
+/// ## Sample
+///
+///     let buildMode = getBuildParamOrDefault "buildMode" "Release"
+///     let setParams defaults =
+///             { defaults with
+///                 Verbosity = Some(Quiet)
+///                 Targets = ["Build"]
+///                 Properties =
+///                     [
+///                         "Optimize", "True"
+///                         "DebugSymbols", "True"
+///                         "Configuration", buildMode
+///                     ]
+///              }
+///     build setParams "./MySolution.sln"
+///           |> DoNothing
 let build setParams project =
     traceStartTask "MSBuild" project
     let args = MSBuildDefaults |> setParams |> serializeMSBuildParams        
