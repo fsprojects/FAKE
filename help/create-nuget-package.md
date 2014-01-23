@@ -83,3 +83,20 @@ Here is a small sample which sets up dependencies for different framework versio
                         // ...
                         Publish = true }) 
                         "myProject.nuspec"
+
+## Explicit assembly references
+
+If you want to have auxiliary assemblies next to the ones that get referenced by the target project, you can place  all the needed files in the `lib` directory and explicitly specify which of them should be referenced (see [Nuget docs](http://docs.nuget.org/docs/reference/nuspec-reference#Specifying_Explicit_Assembly_References_in_version_2.5_and_above)) via the `References` and `ReferencesByFramework` fields.
+Here is a code snippet showing how to use these:
+
+    NuGet (fun p -> 
+        {p with
+            Authors = authors
+            // ...
+            References = ["a.dll"]
+            ReferencesByFramework =
+                [{ FrameworkVersion  = "net40"; References = ["b.dll"]}
+                 { FrameworkVersion  = "net45"; References = ["c.dll"]}]
+            // ...
+            Publish = false })
+            "template.nuspec"
