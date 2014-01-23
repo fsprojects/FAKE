@@ -12,6 +12,11 @@ type NugetFrameworkDependencies = {
     FrameworkVersion : string
     Dependencies : NugetDependencies }
     
+type NugetReferences = string list
+type NugetFrameworkReferences = {
+    FrameworkVersion : string
+    References : NugetReferences }
+
 /// Nuget parameter type
 type NuGetParams = { 
     ToolPath: string
@@ -32,6 +37,8 @@ type NuGetParams = {
     ProjectFile:string
     Dependencies: NugetDependencies
     DependenciesByFramework: NugetFrameworkDependencies list
+    References: NugetReferences
+    ReferencesByFramework: NugetFrameworkReferences list
     PublishTrials: int
     Publish: bool
     Properties: list<string*string> }
@@ -51,6 +58,8 @@ let NuGetDefaults() = {
     Copyright = null
     Dependencies = []
     DependenciesByFramework = []
+    References = []
+    ReferencesByFramework = []
     OutputPath = "./NuGet"
     WorkingDir = "./NuGet"
     PublishUrl = null
@@ -90,19 +99,41 @@ let private createNuspecFile parameters nuSpec =
     tracefn "Creating .nuspec file at %s" specFile
     fi.CopyTo(specFile,true) |> ignore
 
+    let getFrameworkGroup (frameworkTags: (string*string) seq) =
+        frameworkTags
+          |> Seq.map (fun (frameworkVersion, tags) -> sprintf "<group targetFramework=\"%s\">%s</group>" frameworkVersion tags)
+          |> toLines
+
+    let getGroup items toTags =
+        if items = [] then "" else
+        sprintf "<group>%s</group>" (items |> toTags)
+
+    let getReferencesTags references =
+        references
+          |> Seq.map (fun assembly -> sprintf "<reference file=\"%s\" />" assembly)
+          |> toLines
+
+    let references = getGroup parameters.References getReferencesTags
+
+    let referencesByFramework =
+        parameters.ReferencesByFramework
+          |> Seq.map (fun x -> (x.FrameworkVersion, getReferencesTags x.References))
+          |> getFrameworkGroup
+
+    let referencesXml =
+        sprintf "<references>%s</references>" (references + referencesByFramework)
+
     let getDependenciesTags dependencies =
         dependencies
           |> Seq.map (fun (package,version) -> sprintf "<dependency id=\"%s\" version=\"%s\" />" package version)
           |> toLines
 
-    let dependencies =
-        if parameters.Dependencies = [] then "" else
-        sprintf "<group>%s</group>" (getDependenciesTags parameters.Dependencies)
+    let dependencies = getGroup parameters.Dependencies getDependenciesTags
 
     let dependenciesByFramework =
         parameters.DependenciesByFramework
-          |> Seq.map (fun x -> sprintf "<group targetFramework=\"%s\">%s</group>" x.FrameworkVersion (getDependenciesTags x.Dependencies))
-          |> toLines
+          |> Seq.map (fun x -> (x.FrameworkVersion, getDependenciesTags x.Dependencies))
+          |> getFrameworkGroup
 
     let dependenciesXml = 
         sprintf "<dependencies>%s</dependencies>" (dependencies + dependenciesByFramework)
@@ -121,7 +152,7 @@ let private createNuspecFile parameters nuSpec =
          "@releaseNotes@",parameters.ReleaseNotes
          "@copyright@",parameters.Copyright]
          |> List.map (fun (placeholder, replacement) -> placeholder, xmlEncode replacement)
-         |> List.append (["@dependencies@", dependenciesXml])
+         |> List.append ["@dependencies@", dependenciesXml; "@references@", referencesXml]
 
     processTemplates replacements [specFile]
     tracefn "Created nuspec file %s" specFile
