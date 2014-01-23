@@ -43,12 +43,6 @@ Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; deployDir; docsDir; apido
 
 Target "RestorePackages" RestorePackages
 
-Target "CopyFSharpFiles" (fun _ ->
-    ["./tools/FSharp/FSharp.Core.optdata"
-     "./tools/FSharp/FSharp.Core.sigdata"]
-      |> CopyTo buildDir
-)
-
 open Fake.AssemblyInfoFile
 
 Target "SetAssemblyInfo" (fun _ ->
@@ -198,7 +192,6 @@ Target "Default" DoNothing
 // Dependencies
 "Clean"
     ==> "RestorePackages"
-    ==> "CopyFSharpFiles"
     =?> ("SetAssemblyInfo",not isLocalBuild )
     ==> "BuildSolution"
     ==> "Test"
