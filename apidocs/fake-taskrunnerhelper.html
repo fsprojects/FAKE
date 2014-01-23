@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>TimeoutHelper - FAKE - F# Make</title>
+    <title>TaskRunnerHelper - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,9 +36,9 @@
 
 
 
-<h1>TimeoutHelper</h1>
+<h1>TaskRunnerHelper</h1>
 <div class="xmldoc">
-<p>Contains a helper which can be used to implement timeouts.</p>
+<p>Contains a helper which can be used to implement timeouts and retries.</p>
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -52,10 +52,30 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '420', 420)" onmouseover="showTip(event, '420', 420)">
+          <code onmouseout="hideTip(event, '368', 368)" onmouseover="showTip(event, '368', 368)">
+            runWithRetries f retries
+          </code>
+          <div class="tip" id="368">
+            <strong>Signature:</strong>f:(unit -&gt; &#39;?5117) -&gt; retries:int -&gt; &#39;?5117<br />
+                          <strong>Type parameters:</strong> '?5117          </div>
+        </td>
+        <td class="xmldoc"><p>Retries the given function until a retry limit is reached or the function succeeds without exception.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>f</code> - This function will be started.</li>
+<li><code>retries</code> - A retry limit.</li>
+</ul>
+</td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '369', 369)" onmouseover="showTip(event, '369', 369)">
             waitFor f timeout testMS timeoutF
           </code>
-          <div class="tip" id="420">
+          <div class="tip" id="369">
             <strong>Signature:</strong>f:(unit -&gt; bool) -&gt; timeout:TimeSpan -&gt; testMS:int -&gt; timeoutF:(unit -&gt; unit) -&gt; TimeSpan<br />
                       </div>
         </td>
