@@ -174,6 +174,41 @@ Here is a small sample which sets up dependencies for different framework versio
 </tr>
 </table>
 
+<h2>Explicit assembly references</h2>
+
+<p>If you want to have auxiliary assemblies next to the ones that get referenced by the target project, you can place  all the needed files in the <code>lib</code> directory and explicitly specify which of them should be referenced (see <a href="http://docs.nuget.org/docs/reference/nuspec-reference#Specifying_Explicit_Assembly_References_in_version_2.5_and_above">Nuget docs</a>) via the <code>References</code> and <code>ReferencesByFramework</code> fields.
+Here is a code snippet showing how to use these:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="i">NuGet</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> 
+    {<span class="i">p</span> <span class="k">with</span>
+        <span class="i">Authors</span> <span class="o">=</span> <span class="i">authors</span>
+        <span class="c">// ...</span>
+        <span class="i">References</span> <span class="o">=</span> [<span class="s">&quot;</span><span class="s">a</span><span class="s">.</span><span class="s">dll</span><span class="s">&quot;</span>]
+        <span class="i">ReferencesByFramework</span> <span class="o">=</span>
+            [{ <span class="i">FrameworkVersion</span>  <span class="o">=</span> <span class="s">&quot;</span><span class="s">net40</span><span class="s">&quot;</span>; <span class="i">References</span> <span class="o">=</span> [<span class="s">&quot;</span><span class="s">b</span><span class="s">.</span><span class="s">dll</span><span class="s">&quot;</span>]}
+             { <span class="i">FrameworkVersion</span>  <span class="o">=</span> <span class="s">&quot;</span><span class="s">net45</span><span class="s">&quot;</span>; <span class="i">References</span> <span class="o">=</span> [<span class="s">&quot;</span><span class="s">c</span><span class="s">.</span><span class="s">dll</span><span class="s">&quot;</span>]}]
+        <span class="c">// ...</span>
+        <span class="i">Publish</span> <span class="o">=</span> <span class="k">false</span> })
+        <span class="s">&quot;</span><span class="s">template</span><span class="s">.</span><span class="s">nuspec</span><span class="s">&quot;</span></pre>
+</td>
+</tr>
+</table>
+
                     
         </div>
         <div class="span3">
