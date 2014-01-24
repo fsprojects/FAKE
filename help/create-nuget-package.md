@@ -23,6 +23,7 @@ The following code shows such .nuspec file from the [OctoKit](https://github.com
 		<copyright>Copyright GitHub 2013</copyright>    
 		<tags>GitHub API Octokit</tags>
 		@dependencies@
+		@references@
 	  </metadata>
 	</package>
 
