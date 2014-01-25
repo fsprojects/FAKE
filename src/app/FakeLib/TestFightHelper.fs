@@ -14,7 +14,7 @@ type TestFlightParams = {
     File: string
     /// Release notes for the build
     Notes: string option
-    /// iOS ONLY - the zipped .dSYM corresponding to the build
+    /// iOS ONLY - the .dSYM corresponding to the build
     DSym: string option
     /// Distribution list names which will receive access to the build
     DistributionLists: string list
