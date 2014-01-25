@@ -38,11 +38,13 @@ try
         | None ->
             let buildScriptArg = if cmdArgs.Length > 1 && cmdArgs.[1].EndsWith ".fsx" then cmdArgs.[1] else Seq.head buildScripts
             let args = CommandlineParams.parseArgs (cmdArgs |> Seq.filter ((<>) buildScriptArg) |> Seq.filter ((<>) "details"))
+            let fakeArgs = args |> List.filter (fun (k,v) -> k.StartsWith "-d:" = false)
+            let fsiArgs = args |> List.filter (fun (k,v) -> k.StartsWith "-d:") |> List.map fst
             traceStartBuild()
             let printDetails = containsParam "details" cmdArgs
             if printDetails then
-                printEnvironment cmdArgs args
-            if not (runBuildScript printDetails buildScriptArg args) then
+                printEnvironment cmdArgs fakeArgs
+            if not (runBuildScript printDetails buildScriptArg fsiArgs fakeArgs) then
                 Environment.ExitCode <- 1
             else
                 if printDetails then log "Ready."
