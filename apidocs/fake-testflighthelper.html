@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Listener - FAKE - F# Make</title>
+    <title>TestFlightHelper - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,83 +36,68 @@
 
 
 
-<h1>Listener</h1>
+<h1>TestFlightHelper</h1>
 <div class="xmldoc">
-<p>Represents a http listener.</p>
+<p>Contains tasks to upload apps to <a href="http://testflightapp.com">TestFlight</a></p>
 </div>
-  <h3>Record Fields</h3>
-  <table class="table table-bordered member-list">
+
+<!-- Render nested types and modules, if there are any -->
+  <h2>Nested types and modules</h2>
+  <div>
+      <table class="table table-bordered type-list">
     <thead>
-      <tr><td>Record Field</td><td>Description</td></tr>
+      <tr><td>Type</td><td>Description</td></tr>
     </thead>
     <tbody>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '29', 29)" onmouseover="showTip(event, '29', 29)">
-            CancelF
-          </code>
-          <div class="tip" id="29">
-            <strong>Signature:</strong>unit -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '30', 30)" onmouseover="showTip(event, '30', 30)">
-            Port
-          </code>
-          <div class="tip" id="30">
-            <strong>Signature:</strong>string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '31', 31)" onmouseover="showTip(event, '31', 31)">
-            ServerName
-          </code>
-          <div class="tip" id="31">
-            <strong>Signature:</strong>string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"></td>
-      </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-testflighthelper-testflightparams.html">TestFlightParams</a>
+          </td>
+          <td class="xmldoc"><p>The TestFlight parameter type.</p>
+</td>
+        </tr>
     </tbody>
   </table>
-  <h3>Instance members</h3>
+
+  </div>
+
+  <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Instance member</td><td>Description</td></tr>
+      <tr><td>Function or value</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '37', 37)" onmouseover="showTip(event, '37', 37)">
-            Cancel()
+          <code onmouseout="hideTip(event, '465', 465)" onmouseover="showTip(event, '465', 465)">
+            TestFlight setParams
           </code>
-          <div class="tip" id="37">
-            <strong>Signature:</strong>unit -&gt; unit<br />
+          <div class="tip" id="465">
+            <strong>Signature:</strong>setParams:(TestFlightParams -&gt; TestFlightParams) -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>Uploads the app build to TestFlight.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>setParams</code> - Function used to manipulate the default TestFlightParams value.</li>
+</ul>
+</td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '38', 38)" onmouseover="showTip(event, '38', 38)">
-            RootUrl
+          <code onmouseout="hideTip(event, '467', 467)" onmouseover="showTip(event, '467', 467)">
+            TestFlightDefaults 
           </code>
-          <div class="tip" id="38">
-            <strong>Signature:</strong>string<br />
+          <div class="tip" id="467">
+            <strong>Signature:</strong>TestFlightParams<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc"><p>The default TestFlight upload parameters.</p>
+</td>
       </tr>
     </tbody>
   </table>
