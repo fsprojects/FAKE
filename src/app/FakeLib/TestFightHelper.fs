@@ -43,21 +43,25 @@ let TestFlightDefaults = {
 }
 
 /// [omit]
-let private toCurlArgs parameters  = seq {
-    yield "http://testflightapp.com/api/builds.json"
-
-    if parameters.ApiToken = "" then
+let private validateParams ps =
+    if ps.ApiToken = "" then
         failwith "Get your API token at testflightapp.com/account/#api"
-    yield sprintf "-F api_token=%s" parameters.ApiToken
-
-    if parameters.TeamToken = "" then
+    if ps.TeamToken = "" then
         failwith "Get your team token at testflightapp.com/dashboard/team/edit"
+    if not <| File.Exists ps.File then
+        failwithf "No such file: %s" ps.File
+    match ps.DSym with
+    | Some dsym when not <| Directory.Exists dsym ->
+        failwithf "No such file: %s" dsym
+    | _ -> ()
+    ps
+
+/// [omit]
+let private toCurlArgs parameters = seq {
+    yield "http://testflightapp.com/api/builds.json"
+    yield sprintf "-F api_token=%s" parameters.ApiToken
     yield sprintf "-F team_token=%s" parameters.TeamToken
-
-    if not <| File.Exists parameters.File then
-        failwithf "No such file: %s" parameters.File
     yield sprintf "-F file=@%s" parameters.File
-
     yield sprintf "-F notes='%s'" (defaultArg parameters.Notes "")
     yield sprintf "-F distribution_lists='%s'" (String.concat "," parameters.DistributionLists)
     yield sprintf "-F notify=%b" parameters.Notify
@@ -77,6 +81,7 @@ let private toCurlArgs parameters  = seq {
 let TestFlight (setParams: TestFlightParams -> TestFlightParams) =
     TestFlightDefaults
     |> setParams
+    |> validateParams
     |> toCurlArgs
     |> String.concat " "
     |> shell "curl"
