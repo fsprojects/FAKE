@@ -3,6 +3,7 @@
 module Fake.TestFlightHelper
 
 open System
+open System.IO
 
 /// [omit]
 let private shell cmd args =
@@ -37,9 +38,19 @@ let TestFlightDefaults = {
 /// [omit]
 let private toCurlArgs parameters  = seq {
     yield "http://testflightapp.com/api/builds.json"
-    yield sprintf "-F file=@%s" parameters.File
+
+    if parameters.ApiToken = "" then
+        failwith "Get your API token at testflightapp.com/account/#api"
     yield sprintf "-F api_token=%s" parameters.ApiToken
+
+    if parameters.TeamToken = "" then
+        failwith "Get your team token at testflightapp.com/dashboard/team/edit"
     yield sprintf "-F team_token=%s" parameters.TeamToken
+
+    if not <| File.Exists parameters.File then
+        failwithf "No such file: %s" parameters.File
+    yield sprintf "-F file=@%s" parameters.File
+
     yield sprintf "-F notes='%s'" (defaultArg parameters.Notes "")
     yield sprintf "-F distribution_lists='%s'" (String.concat "," parameters.DistributionLists)
     yield sprintf "-F notify=%b" parameters.Notify
