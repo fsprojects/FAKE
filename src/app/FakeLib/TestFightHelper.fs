@@ -1,5 +1,4 @@
-﻿[<AutoOpen>]
-/// Contains tasks to upload apps to [TestFlight](http://testflightapp.com)
+﻿/// Contains tasks to upload apps to [TestFlight](http://testflightapp.com)
 module Fake.TestFlightHelper
 
 open System
