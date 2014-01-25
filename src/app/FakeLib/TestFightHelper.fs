@@ -12,13 +12,21 @@ let private shell cmd args =
     
 /// The TestFlight parameter type.
 type TestFlightParams = {
+    /// (Required) API token from testflightapp.com/account/#api
     ApiToken: string
+    /// (Required) Team token from testflightapp.com/dashboard/team/edit
     TeamToken: string
+    /// (Required) file data for the build (.ipa or .apk)
     File: string
+    /// Release notes for the build
     Notes: string option
+    /// iOS ONLY - the zipped .dSYM corresponding to the build
     DSym: string option
+    /// Distribution list names which will receive access to the build
     DistributionLists: string list
+    /// Notify permitted teammates to install the build
     Notify: bool
+    /// Replace binary for an existing build if one is found with the same name/bundle version
     Replace: bool
 }
 
