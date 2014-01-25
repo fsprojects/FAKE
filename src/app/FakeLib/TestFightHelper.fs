@@ -4,12 +4,6 @@ module Fake.TestFlightHelper
 open System
 open System.IO
 
-/// [omit]
-let private shell cmd args =
-    let result = Shell.Exec (cmd, args)
-    if result <> 0 then
-        failwithf "%s exited with error (%d)" cmd result
-    
 /// The TestFlight parameter type.
 type TestFlightParams = {
     /// (Required) API token from testflightapp.com/account/#api
@@ -79,9 +73,8 @@ let private toCurlArgs ps = seq {
 /// ## Parameters
 ///  - `setParams` - Function used to manipulate the default TestFlightParams value.
 let TestFlight (setParams: TestFlightParams -> TestFlightParams) =
-    TestFlightDefaults
-    |> setParams
-    |> validateParams
-    |> toCurlArgs
-    |> String.concat " "
-    |> shell "curl"
+    let ps = TestFlightDefaults |> setParams |> validateParams
+    let args = ps |> toCurlArgs |> String.concat " "
+    let result = Shell.Exec ("curl", args)
+    if result <> 0 then
+        failwithf "curl exited with error (%d)" result
