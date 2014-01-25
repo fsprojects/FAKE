@@ -58,7 +58,7 @@ let private toCurlArgs parameters  = seq {
     match parameters.DSym with
     | None -> ()
     | Some dsym ->
-        trace <| sprintf "Zipping %s..." dsym
+        tracefn "Zipping %s..." dsym
         let zipped = dsym + ".zip"
         shell "zip" <| sprintf "-r %s %s" zipped dsym
         yield sprintf "-F dsym=@%s" zipped
