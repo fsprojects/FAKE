@@ -4,12 +4,6 @@ module Fake.TestFlightHelper
 open System
 open System.IO
 
-/// [omit]
-let private shell cmd args =
-    let result = Shell.Exec (cmd, args)
-    if result <> 0 then
-        failwithf "%s exited with error (%d)" cmd result
-    
 /// The TestFlight parameter type.
 type TestFlightParams = {
     /// (Required) API token from testflightapp.com/account/#api
@@ -20,7 +14,7 @@ type TestFlightParams = {
     File: string
     /// Release notes for the build
     Notes: string option
-    /// iOS ONLY - the zipped .dSYM corresponding to the build
+    /// iOS ONLY - the .dSYM corresponding to the build
     DSym: string option
     /// Distribution list names which will receive access to the build
     DistributionLists: string list
@@ -43,32 +37,35 @@ let TestFlightDefaults = {
 }
 
 /// [omit]
-let private toCurlArgs parameters  = seq {
-    yield "http://testflightapp.com/api/builds.json"
-
-    if parameters.ApiToken = "" then
+let private validateParams ps =
+    if ps.ApiToken = "" then
         failwith "Get your API token at testflightapp.com/account/#api"
-    yield sprintf "-F api_token=%s" parameters.ApiToken
-
-    if parameters.TeamToken = "" then
+    if ps.TeamToken = "" then
         failwith "Get your team token at testflightapp.com/dashboard/team/edit"
-    yield sprintf "-F team_token=%s" parameters.TeamToken
+    if not <| File.Exists ps.File then
+        failwithf "No such file: %s" ps.File
+    match ps.DSym with
+    | Some dsym when not <| Directory.Exists dsym ->
+        failwithf "No such file: %s" dsym
+    | _ -> ()
+    ps
 
-    if not <| File.Exists parameters.File then
-        failwithf "No such file: %s" parameters.File
-    yield sprintf "-F file=@%s" parameters.File
+/// [omit]
+let private toCurlArgs ps = seq {
+    yield "http://testflightapp.com/api/builds.json"
+    yield sprintf "-F api_token=%s" ps.ApiToken
+    yield sprintf "-F team_token=%s" ps.TeamToken
+    yield sprintf "-F file=@%s" ps.File
+    yield sprintf "-F notes='%s'" (defaultArg ps.Notes "")
+    yield sprintf "-F distribution_lists='%s'" (String.concat "," ps.DistributionLists)
+    yield sprintf "-F notify=%b" ps.Notify
+    yield sprintf "-F replace=%b" ps.Replace
 
-    yield sprintf "-F notes='%s'" (defaultArg parameters.Notes "")
-    yield sprintf "-F distribution_lists='%s'" (String.concat "," parameters.DistributionLists)
-    yield sprintf "-F notify=%b" parameters.Notify
-    yield sprintf "-F replace=%b" parameters.Replace
-
-    match parameters.DSym with
+    match ps.DSym with
     | None -> ()
     | Some dsym ->
-        tracefn "Zipping %s..." dsym
         let zipped = dsym + ".zip"
-        shell "zip" <| sprintf "-r %s %s" zipped dsym
+        ZipHelper.CreateZip (Path.GetDirectoryName dsym) zipped "" ZipHelper.DefaultZipLevel false (!! (dsym @@ "**"))
         yield sprintf "-F dsym=@%s" zipped
 }
 
@@ -76,8 +73,8 @@ let private toCurlArgs parameters  = seq {
 /// ## Parameters
 ///  - `setParams` - Function used to manipulate the default TestFlightParams value.
 let TestFlight (setParams: TestFlightParams -> TestFlightParams) =
-    TestFlightDefaults
-    |> setParams
-    |> toCurlArgs
-    |> String.concat " "
-    |> shell "curl"
+    let ps = TestFlightDefaults |> setParams |> validateParams
+    let args = ps |> toCurlArgs |> String.concat " "
+    let result = Shell.Exec ("curl", args)
+    if result <> 0 then
+        failwithf "curl exited with error (%d)" result
