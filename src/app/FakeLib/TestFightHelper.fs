@@ -66,9 +66,8 @@ let private toCurlArgs parameters  = seq {
     match parameters.DSym with
     | None -> ()
     | Some dsym ->
-        tracefn "Zipping %s..." dsym
         let zipped = dsym + ".zip"
-        shell "zip" <| sprintf "-r %s %s" zipped dsym
+        ZipHelper.CreateZip (Path.GetDirectoryName dsym) zipped "" ZipHelper.DefaultZipLevel false (!! (dsym @@ "**"))
         yield sprintf "-F dsym=@%s" zipped
 }
 
