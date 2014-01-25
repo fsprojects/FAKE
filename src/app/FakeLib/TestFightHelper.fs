@@ -57,17 +57,17 @@ let private validateParams ps =
     ps
 
 /// [omit]
-let private toCurlArgs parameters = seq {
+let private toCurlArgs ps = seq {
     yield "http://testflightapp.com/api/builds.json"
-    yield sprintf "-F api_token=%s" parameters.ApiToken
-    yield sprintf "-F team_token=%s" parameters.TeamToken
-    yield sprintf "-F file=@%s" parameters.File
-    yield sprintf "-F notes='%s'" (defaultArg parameters.Notes "")
-    yield sprintf "-F distribution_lists='%s'" (String.concat "," parameters.DistributionLists)
-    yield sprintf "-F notify=%b" parameters.Notify
-    yield sprintf "-F replace=%b" parameters.Replace
+    yield sprintf "-F api_token=%s" ps.ApiToken
+    yield sprintf "-F team_token=%s" ps.TeamToken
+    yield sprintf "-F file=@%s" ps.File
+    yield sprintf "-F notes='%s'" (defaultArg ps.Notes "")
+    yield sprintf "-F distribution_lists='%s'" (String.concat "," ps.DistributionLists)
+    yield sprintf "-F notify=%b" ps.Notify
+    yield sprintf "-F replace=%b" ps.Replace
 
-    match parameters.DSym with
+    match ps.DSym with
     | None -> ()
     | Some dsym ->
         let zipped = dsym + ".zip"
