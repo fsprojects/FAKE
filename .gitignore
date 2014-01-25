@@ -22,6 +22,7 @@ _ReSharper*/
 *.suo
 */*.suo
 *.user
+*.userprefs
 output.xml
 FAKE.crunchsolution.cache
 FAKE_mm_cache.bin
