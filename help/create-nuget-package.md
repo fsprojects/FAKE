@@ -30,6 +30,21 @@ The following code shows such .nuspec file from the [OctoKit](https://github.com
 The .nuspec template contains some placeholders like `@build.number@` which can be replaced later by the build script.
 It also contains some specific information like the copyright which is not handled by FAKE.
 
+The following table gives the correspondence between the placeholders and the fields of the record type used by the NuGet task.
+
+Placeholder | replaced by (`NuGetParams` record field)
+--- | ---
+`@build.number@` | `Version`
+`@authors@` | `Authors`
+`@project@` | `Project`
+`@summary@` | `Summary`
+`@description@` | `Description`
+`@tags@` | `Tags`
+`@releaseNotes@` | `ReleaseNotes`
+`@copyright@` | `Copyright`
+`@dependencies@` | a combination of `Dependencies` and `DependenciesByFramework`
+`@references@` | a combination of `References` and `ReferencesByFramework`
+
 ## Setting up the build script
 
 In the build script you need to create a target which executes the [NuGet task](apidocs/fake-nugethelper.html):
