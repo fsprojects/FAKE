@@ -9,6 +9,7 @@
     <summary>@summary@</summary>
     <projectUrl>http://www.github.com/fsharp/Fake</projectUrl>
     <licenseUrl>http://www.github.com/fsharp/Fake/blob/master/License.txt</licenseUrl>
+    <iconUrl>https://raw2.github.com/fsharp/FAKE/develop/help/pics/logo.png</iconUrl>
     <tags>build</tags>
     @dependencies@
   </metadata>
