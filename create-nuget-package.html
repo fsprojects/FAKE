@@ -67,6 +67,60 @@ The following code shows such .nuspec file from the <a href="https://github.com/
 <p>The .nuspec template contains some placeholders like <code>@build.number@</code> which can be replaced later by the build script.
 It also contains some specific information like the copyright which is not handled by FAKE.</p>
 
+<p>The following table gives the correspondence between the placeholders and the fields of the record type used by the NuGet task.</p>
+
+<table>
+<thead>
+<tr class="header">
+<th><p>Placeholder</p></th>
+<th><p>replaced by (<code>NuGetParams</code> record field)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p><code>@build.number@</code></p></td>
+<td><p><code>Version</code></p></td>
+</tr>
+<tr class="even">
+<td><p><code>@authors@</code></p></td>
+<td><p><code>Authors</code></p></td>
+</tr>
+<tr class="odd">
+<td><p><code>@project@</code></p></td>
+<td><p><code>Project</code></p></td>
+</tr>
+<tr class="even">
+<td><p><code>@summary@</code></p></td>
+<td><p><code>Summary</code></p></td>
+</tr>
+<tr class="odd">
+<td><p><code>@description@</code></p></td>
+<td><p><code>Description</code></p></td>
+</tr>
+<tr class="even">
+<td><p><code>@tags@</code></p></td>
+<td><p><code>Tags</code></p></td>
+</tr>
+<tr class="odd">
+<td><p><code>@releaseNotes@</code></p></td>
+<td><p><code>ReleaseNotes</code></p></td>
+</tr>
+<tr class="even">
+<td><p><code>@copyright@</code></p></td>
+<td><p><code>Copyright</code></p></td>
+</tr>
+<tr class="odd">
+<td><p><code>@dependencies@</code></p></td>
+<td><p>a combination of <code>Dependencies</code> and <code>DependenciesByFramework</code></p></td>
+</tr>
+<tr class="even">
+<td><p><code>@references@</code></p></td>
+<td><p>a combination of <code>References</code> and <code>ReferencesByFramework</code></p></td>
+</tr>
+</tbody>
+</table>
+
+
 <h2>Setting up the build script</h2>
 
 <p>In the build script you need to create a target which executes the <a href="apidocs/fake-nugethelper.html">NuGet task</a>:</p>
