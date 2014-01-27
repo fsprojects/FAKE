@@ -9,6 +9,7 @@
     <RootNamespace>Test.Fake.Deploy</RootNamespace>
     <AssemblyName>Test.Fake.Deploy</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFSharpCoreVersion>4.3.0.0</TargetFSharpCoreVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -32,9 +33,8 @@
     <NoWarn>414</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FSharp.Core">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\tools\FSharp\FSharp.Core.dll</HintPath>
+    <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Private>True</Private>
     </Reference>
     <Reference Include="Machine.Specifications, Version=0.6.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
