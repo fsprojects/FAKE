@@ -10,7 +10,7 @@
     <RootNamespace>Fake.Deploy.Web.App</RootNamespace>
     <AssemblyName>Fake.Deploy.Web.App</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFSharpCoreVersion>4.3.1.0</TargetFSharpCoreVersion>
+    <TargetFSharpCoreVersion>4.3.0.0</TargetFSharpCoreVersion>
     <FileAlignment>512</FileAlignment>
     <Name>Fake.Deploy.Web.App</Name>
     <TargetFrameworkProfile />
