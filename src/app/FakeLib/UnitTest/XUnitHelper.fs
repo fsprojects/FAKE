@@ -48,6 +48,25 @@ let XUnitDefaults =
       OutputDir = null
       ErrorLevel = Error }
 
+/// Builds the command line arguments from the given parameter record and the given assemblies.
+/// [omit]
+let buildXUnitArgs parameters assembly =
+    let fi = fileInfo assembly
+    let name = fi.Name
+
+    let dir =
+        if isNullOrEmpty parameters.OutputDir then String.Empty else
+        Path.GetFullPath parameters.OutputDir
+
+    new StringBuilder()
+        |> appendFileNamesIfNotNull [assembly]
+        |> appendIfFalse parameters.ShadowCopy "/noshadow"
+        |> appendIfTrue (buildServer = TeamCity) "/teamcity"
+        |> appendIfFalse parameters.Verbose "/silent"
+        |> appendIfTrue parameters.XmlOutput (sprintf "/xml\" \"%s" (dir @@ (name + ".xml")))
+        |> appendIfTrue parameters.HtmlOutput (sprintf "/html\" \"%s" (dir @@ (name + ".html")))
+        |> appendIfTrue parameters.NUnitXmlOutput (sprintf "/nunit\" \"%s" (dir @@ (name + ".xml")))
+        |> toText
 /// Runs xUnit unit tests in the given assemblies via the given xUnit runner.
 /// Will fail if the runner terminates with non-zero exit code for any of the assemblies.
 /// Offending assemblies will be listed in the error message.
@@ -71,23 +90,7 @@ let xUnit setParams assemblies =
     let parameters = setParams XUnitDefaults
 
     let runTests assembly =
-       let fi = fileInfo assembly
-       let name = fi.Name
-
-       let dir =
-           if isNullOrEmpty parameters.OutputDir then String.Empty else
-           Path.GetFullPath parameters.OutputDir
-
-       let args =
-           new StringBuilder()
-             |> appendFileNamesIfNotNull [assembly]
-             |> appendIfFalse parameters.ShadowCopy "/noshadow"
-             |> appendIfTrue (buildServer = TeamCity) "/teamcity"
-             |> appendIfFalse parameters.Verbose "/silent"
-             |> appendIfTrue parameters.XmlOutput (sprintf "/xml\" \"%s" (dir @@ (name + ".xml")))
-             |> appendIfTrue parameters.HtmlOutput (sprintf "/html\" \"%s" (dir @@ (name + ".html")))
-             |> appendIfTrue parameters.NUnitXmlOutput (sprintf "/nunit\" \"%s" (dir @@ (name + ".xml")))
-             |> toText
+       let args = buildXUnitArgs parameters assembly
 
        0 = ExecProcess (fun info ->
            info.FileName <- parameters.ToolPath
