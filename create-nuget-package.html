@@ -60,11 +60,66 @@ The following code shows such .nuspec file from the <a href="https://github.com/
     <span class="k">&lt;</span><span class="i">copyright</span><span class="k">&gt;</span>Copyright GitHub 2013<span class="k">&lt;/</span><span class="i">copyright</span><span class="k">&gt;</span>    
     <span class="k">&lt;</span><span class="i">tags</span><span class="k">&gt;</span>GitHub API Octokit<span class="k">&lt;/</span><span class="i">tags</span><span class="k">&gt;</span>
     @dependencies@
+    @references@
   <span class="k">&lt;/</span><span class="i">metadata</span><span class="k">&gt;</span>
 <span class="k">&lt;/</span><span class="i">package</span><span class="k">&gt;</span></pre>
 
 <p>The .nuspec template contains some placeholders like <code>@build.number@</code> which can be replaced later by the build script.
 It also contains some specific information like the copyright which is not handled by FAKE.</p>
+
+<p>The following table gives the correspondence between the placeholders and the fields of the record type used by the NuGet task.</p>
+
+<table>
+<thead>
+<tr class="header">
+<th><p>Placeholder</p></th>
+<th><p>replaced by (<code>NuGetParams</code> record field)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><p><code>@build.number@</code></p></td>
+<td><p><code>Version</code></p></td>
+</tr>
+<tr class="even">
+<td><p><code>@authors@</code></p></td>
+<td><p><code>Authors</code></p></td>
+</tr>
+<tr class="odd">
+<td><p><code>@project@</code></p></td>
+<td><p><code>Project</code></p></td>
+</tr>
+<tr class="even">
+<td><p><code>@summary@</code></p></td>
+<td><p><code>Summary</code></p></td>
+</tr>
+<tr class="odd">
+<td><p><code>@description@</code></p></td>
+<td><p><code>Description</code></p></td>
+</tr>
+<tr class="even">
+<td><p><code>@tags@</code></p></td>
+<td><p><code>Tags</code></p></td>
+</tr>
+<tr class="odd">
+<td><p><code>@releaseNotes@</code></p></td>
+<td><p><code>ReleaseNotes</code></p></td>
+</tr>
+<tr class="even">
+<td><p><code>@copyright@</code></p></td>
+<td><p><code>Copyright</code></p></td>
+</tr>
+<tr class="odd">
+<td><p><code>@dependencies@</code></p></td>
+<td><p>a combination of <code>Dependencies</code> and <code>DependenciesByFramework</code></p></td>
+</tr>
+<tr class="even">
+<td><p><code>@references@</code></p></td>
+<td><p>a combination of <code>References</code> and <code>ReferencesByFramework</code></p></td>
+</tr>
+</tbody>
+</table>
+
 
 <h2>Setting up the build script</h2>
 
@@ -174,11 +229,46 @@ Here is a small sample which sets up dependencies for different framework versio
 </tr>
 </table>
 
+<h2>Explicit assembly references</h2>
+
+<p>If you want to have auxiliary assemblies next to the ones that get referenced by the target project, you can place  all the needed files in the <code>lib</code> directory and explicitly specify which of them should be referenced (see <a href="http://docs.nuget.org/docs/reference/nuspec-reference#Specifying_Explicit_Assembly_References_in_version_2.5_and_above">Nuget docs</a>) via the <code>References</code> and <code>ReferencesByFramework</code> fields.
+Here is a code snippet showing how to use these:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="i">NuGet</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> 
+    {<span class="i">p</span> <span class="k">with</span>
+        <span class="i">Authors</span> <span class="o">=</span> <span class="i">authors</span>
+        <span class="c">// ...</span>
+        <span class="i">References</span> <span class="o">=</span> [<span class="s">&quot;</span><span class="s">a</span><span class="s">.</span><span class="s">dll</span><span class="s">&quot;</span>]
+        <span class="i">ReferencesByFramework</span> <span class="o">=</span>
+            [{ <span class="i">FrameworkVersion</span>  <span class="o">=</span> <span class="s">&quot;</span><span class="s">net40</span><span class="s">&quot;</span>; <span class="i">References</span> <span class="o">=</span> [<span class="s">&quot;</span><span class="s">b</span><span class="s">.</span><span class="s">dll</span><span class="s">&quot;</span>]}
+             { <span class="i">FrameworkVersion</span>  <span class="o">=</span> <span class="s">&quot;</span><span class="s">net45</span><span class="s">&quot;</span>; <span class="i">References</span> <span class="o">=</span> [<span class="s">&quot;</span><span class="s">c</span><span class="s">.</span><span class="s">dll</span><span class="s">&quot;</span>]}]
+        <span class="c">// ...</span>
+        <span class="i">Publish</span> <span class="o">=</span> <span class="k">false</span> })
+        <span class="s">&quot;</span><span class="s">template</span><span class="s">.</span><span class="s">nuspec</span><span class="s">&quot;</span></pre>
+</td>
+</tr>
+</table>
+
                     
         </div>
         <div class="span3">
-
-          <ul class="nav nav-list" id="menu">
+          <img src="pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
+          <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
             <li class="nav-header">FAKE - F# Make</li>
               <li><a href="index.html">Home page</a></li>
               <li class="divider"></li>              
