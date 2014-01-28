@@ -20,11 +20,10 @@ let CreateDocs source outputDir template projectParameters =
         |> Seq.append (
             [ "literate";
               "--processdirectory";
-              "--sourceRepo"; "https://github.com/fsharp/FAKE" // TODO:
-              "--sourceFolder"; "C:/code/FAKE/"  // TODO:
               "--inputdirectory"; source
               "--templatefile"; template
               "--outputDirectory"; outputDir
+              "--includesource" // TODO:
               "--replacements" ])
         |> Seq.map (fun s -> if s.StartsWith "\"" then s else sprintf "\"%s\"" s)
         |> separated " " 
