@@ -98,7 +98,7 @@ let getArguments outputFile primaryAssembly parameters =
          "attr", parameters.AttributeFile
          "keyfile", parameters.KeyFile
          "log", parameters.LogFile
-         "target", parameters.TargetKind.ToString().ToLower()
+         "target", (sprintf "%A" parameters.TargetKind).ToLower()
          "targetplatform", parameters.TargetPlatform]
           |> List.map stringParam
 
