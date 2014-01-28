@@ -24,8 +24,6 @@ namespace Test.FAKECore.ILMerge
 
 
         It should_have_the_right_arguments =
-            () =>
-            _arguments.ShouldEqual(
-                "/out:\".\\build\\myoutput.dll\" /target:\"fake.ilmergehelper+targetkind\" /closed myPrimaryAssembly.dll");
+            () => _arguments.ShouldEqual("/out:\".\\build\\myoutput.dll\" /target:\"library\" /closed myPrimaryAssembly.dll");
     }
 }
