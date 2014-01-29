@@ -30,7 +30,7 @@ let CreateDocs source outputDir template projectParameters =
     run command
     printfn "Successfully generated docs for %s" source
            
-let CreateDocsForDlls outputDir templatesDir projectParameters dllFiles = 
+let CreateDocsForDlls outputDir templatesDir projectParameters sourceRepo sourceFolder dllFiles = 
     let command =
         projectParameters 
         |> Seq.map (fun (k,v) -> [k;v])
@@ -41,8 +41,8 @@ let CreateDocsForDlls outputDir templatesDir projectParameters dllFiles =
               "--outdir"; outputDir
               "--layoutroots"; 
               "./help/templates/"; templatesDir;
-              "--sourceRepo"; "https://github.com/fsharp/FAKE"
-              "--sourceFolder"; @"C:\code\fake"
+              "--sourceRepo"; sourceRepo
+              "--sourceFolder"; sourceFolder
               "--parameters" ])
         |> Seq.map (fun s -> if s.StartsWith "\"" then s else sprintf "\"%s\"" s)
         |> separated " " 
