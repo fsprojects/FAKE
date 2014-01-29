@@ -2,7 +2,7 @@
 module Fake.FSharpFormatting
 
 /// Specifies the fsformatting executable
-let mutable toolPath = findToolInSubPath "fsformatting.exe" (currentDirectory @@ "tools" @@ "fsformatting")
+let mutable toolPath = findToolInSubPath "fsformatting.exe" (currentDirectory @@ "tools" @@ "FSharp.Formatting.CommandTool" @@ "tools")
     
 /// Runs fsformatting.exe with the given command in the given repository directory.
 let run command =
