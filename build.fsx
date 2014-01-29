@@ -95,11 +95,12 @@ Target "GenerateDocs" (fun _ ->
     let source = "./help"
     let template = "./help/templates/template-project.html"
     let templatesDir = "./help/templates/reference/" 
+    let githubLink = "https://github.com/fsharp/FAKE"
     let projInfo =
       [ "page-description", "FAKE - F# Make"
         "page-author", separated ", " authors
         "project-author", separated ", " authors
-        "github-link", "http://github.com/fsharp/fake"
+        "github-link", githubLink
         "project-github", "http://github.com/fsharp/fake"
         "project-nuget", "https://www.nuget.org/packages/FAKE"
         "root", "http://fsharp.github.io/FAKE"
@@ -112,7 +113,7 @@ Target "GenerateDocs" (fun _ ->
           ++ "./build/FakeLib.dll"
           -- "./build/**/Fake.Experimental.dll"
         
-    CreateDocsForDlls apidocsDir templatesDir projInfo  "https://github.com/fsharp/FAKE" @"C:\code\fake" dllFiles
+    CreateDocsForDlls apidocsDir templatesDir projInfo githubLink currentDirectory dllFiles
 
     WriteStringToFile false "./docs/.nojekyll" ""
 
