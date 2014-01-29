@@ -30,7 +30,7 @@ let CreateDocs source outputDir template projectParameters =
     run command
     printfn "Successfully generated docs for %s" source
            
-let CreateDocsForDlls outputDir templatesDir projectParameters sourceRepo sourceFolder dllFiles = 
+let CreateDocsForDlls outputDir templatesDir projectParameters sourceRepo dllFiles = 
     let command =
         projectParameters 
         |> Seq.map (fun (k,v) -> [k;v])
@@ -42,7 +42,7 @@ let CreateDocsForDlls outputDir templatesDir projectParameters sourceRepo source
               "--layoutroots"; 
               "./help/templates/"; templatesDir;
               "--sourceRepo"; sourceRepo
-              "--sourceFolder"; sourceFolder
+              "--sourceFolder"; currentDirectory
               "--parameters" ])
         |> Seq.map (fun s -> if s.StartsWith "\"" then s else sprintf "\"%s\"" s)
         |> separated " " 
