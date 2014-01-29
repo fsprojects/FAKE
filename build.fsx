@@ -112,7 +112,7 @@ Target "GenerateDocs" (fun _ ->
           ++ "./build/FakeLib.dll"
           -- "./build/**/Fake.Experimental.dll"
         
-    CreateDocsForDlls apidocsDir templatesDir projInfo dllFiles
+    CreateDocsForDlls apidocsDir templatesDir projInfo  "https://github.com/fsharp/FAKE" @"C:\code\fake" dllFiles
 
     WriteStringToFile false "./docs/.nojekyll" ""
 
