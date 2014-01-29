@@ -22,8 +22,7 @@ let CreateDocs source outputDir template projectParameters =
               "--processdirectory";
               "--inputdirectory"; source
               "--templatefile"; template
-              "--outputDirectory"; outputDir     
-              "--includesource" // TODO:         
+              "--outputDirectory"; outputDir      
               "--replacements" ])
         |> Seq.map (fun s -> if s.StartsWith "\"" then s else sprintf "\"%s\"" s)
         |> separated " " 
@@ -42,7 +41,8 @@ let CreateDocsForDlls outputDir templatesDir projectParameters dllFiles =
               "--outdir"; outputDir
               "--layoutroots"; 
               "./help/templates/"; templatesDir;
-              "--includesource" // TODO:
+              "--sourceRepo"; "https://github.com/fsharp/FAKE"
+              "--sourceFolder"; @"C:\code\FAKE\"
               "--parameters" ])
         |> Seq.map (fun s -> if s.StartsWith "\"" then s else sprintf "\"%s\"" s)
         |> separated " " 
