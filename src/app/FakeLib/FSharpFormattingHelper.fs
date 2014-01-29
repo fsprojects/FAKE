@@ -42,7 +42,7 @@ let CreateDocsForDlls outputDir templatesDir projectParameters dllFiles =
               "--layoutroots"; 
               "./help/templates/"; templatesDir;
               "--sourceRepo"; "https://github.com/fsharp/FAKE"
-              "--sourceFolder"; @"C:\code\FAKE"
+              "--sourceFolder"; @"C:\code\fake"
               "--parameters" ])
         |> Seq.map (fun s -> if s.StartsWith "\"" then s else sprintf "\"%s\"" s)
         |> separated " " 
