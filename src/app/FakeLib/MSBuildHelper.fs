@@ -192,13 +192,11 @@ let TeamCityLoggerName = typedefof<Fake.MsBuildLogger.TeamCityLogger>.FullName
 /// [omit]
 let ErrorLoggerName = typedefof<Fake.MsBuildLogger.ErrorLogger>.FullName
 
-let internal buildErrorLoggerParam(path:string) =
-    let pathToLogger = if path.StartsWith "file:///" then path.Replace("file:///","").Replace("/",directorySeparator) else (Uri path).LocalPath
+let private errorLoggerParam = 
+    let pathToLogger = typedefof<MSBuildParams>.Assembly.Location
     [ TeamCityLoggerName; ErrorLoggerName ]
     |> List.map(fun a -> sprintf "/logger:%s,\"%s\"" a pathToLogger)
     |> fun lst -> String.Join(" ", lst)
-
-let private errorLoggerParam = typedefof<MSBuildParams>.Assembly.CodeBase |> buildErrorLoggerParam
 
 /// Runs a MSBuild project
 /// ## Parameters
