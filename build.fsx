@@ -112,8 +112,8 @@ Target "GenerateDocs" (fun _ ->
         !! "./build/**/Fake.*.dll"
           ++ "./build/FakeLib.dll"
           -- "./build/**/Fake.Experimental.dll"
+          -- "./build/**/Fake.Deploy.Lib.dll"
     
-    let dllFiles = !! "./build/FakeLib.dll"
     CreateDocsForDlls apidocsDir templatesDir projInfo githubLink dllFiles
 
     WriteStringToFile false "./docs/.nojekyll" ""
