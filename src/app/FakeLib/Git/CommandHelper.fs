@@ -79,6 +79,7 @@ let runSimpleGitCommand repositoryDir command =
         let ok,msg,errors = runGitCommand repositoryDir command
         if msg.Count = 0 then "" else
         try
+            msg |> Seq.iter (tracefn "%s")
             msg.[0]
         with 
         | exn -> failwithf "Git didn't return a msg.\r\n%s" errors
