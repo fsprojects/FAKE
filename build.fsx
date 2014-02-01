@@ -95,7 +95,7 @@ Target "GenerateDocs" (fun _ ->
     let source = "./help"
     let template = "./help/templates/template-project.html"
     let templatesDir = "./help/templates/reference/" 
-    let githubLink = "https://github.com/fsharp/FAKE"
+    let githubLink = "https://github.com/fsharp/FAKE/blob/develop"
     let projInfo =
       [ "page-description", "FAKE - F# Make"
         "page-author", separated ", " authors
