@@ -77,376 +77,460 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '72', 72)" onmouseover="showTip(event, '72', 72)">
+          <code onmouseout="hideTip(event, '78', 78)" onmouseover="showTip(event, '78', 78)">
             ( @@ ) path1 path2
           </code>
-          <div class="tip" id="72">
-            <strong>Signature:</strong>path1:string -&gt; path2:string -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Combines two path strings using Path.Combine</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '73', 73)" onmouseover="showTip(event, '73', 73)">
-            appSetting name
-          </code>
-          <div class="tip" id="73">
-            <strong>Signature:</strong>name:string -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Retrieves the application settings variable with the given name</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '74', 74)" onmouseover="showTip(event, '74', 74)">
-            combinePaths path1 path2
-          </code>
-          <div class="tip" id="74">
-            <strong>Signature:</strong>path1:string -&gt; path2:string -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Combines two path strings using Path.Combine</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '75', 75)" onmouseover="showTip(event, '75', 75)">
-            convertWindowsToCurrentPath windowsPath
-          </code>
-          <div class="tip" id="75">
-            <strong>Signature:</strong>windowsPath:string -&gt; string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Convert the given windows path to a path in the current system</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '76', 76)" onmouseover="showTip(event, '76', 76)">
-            directorySeparator 
-          </code>
-          <div class="tip" id="76">
-            <strong>Signature:</strong>string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>The directory separator string. On most systems / or \</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '77', 77)" onmouseover="showTip(event, '77', 77)">
-            documentsFolder 
-          </code>
-          <div class="tip" id="77">
-            <strong>Signature:</strong>string<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>The path to the personal documents</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '78', 78)" onmouseover="showTip(event, '78', 78)">
-            encoding 
-          </code>
           <div class="tip" id="78">
-            <strong>Signature:</strong>Encoding<br />
+            <strong>Signature:</strong>path1:string -&gt; path2:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Contains the IO encoding which is given via build parameter "encoding" or the default encoding if no encoding was specified.</p>
-</td>
+        <td class="xmldoc">
+        <p>Combines two path strings using Path.Combine</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/EnvironmentHelper.fs#L24-24" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '79', 79)" onmouseover="showTip(event, '79', 79)">
-            environVar name
+            appSetting name
           </code>
           <div class="tip" id="79">
             <strong>Signature:</strong>name:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Retrieves the environment variable with the given name</p>
-</td>
+        <td class="xmldoc">
+        <p>Retrieves the application settings variable with the given name</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/EnvironmentHelper.fs#L46-46" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '80', 80)" onmouseover="showTip(event, '80', 80)">
-            environVarOrDefault name defaultValue
+            combinePaths path1 path2
           </code>
           <div class="tip" id="80">
-            <strong>Signature:</strong>name:string -&gt; defaultValue:string -&gt; string<br />
+            <strong>Signature:</strong>path1:string -&gt; path2:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Retrieves the environment variable with the given name or returns the default if no value was set</p>
-</td>
+        <td class="xmldoc">
+        <p>Combines two path strings using Path.Combine</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/EnvironmentHelper.fs#L21-21" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '81', 81)" onmouseover="showTip(event, '81', 81)">
-            environVarOrNone name
+            convertWindowsToCurrentPath windowsPath
           </code>
           <div class="tip" id="81">
-            <strong>Signature:</strong>name:string -&gt; string option<br />
+            <strong>Signature:</strong>windowsPath:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Retrieves the environment variable or None</p>
-</td>
+        <td class="xmldoc">
+        <p>Convert the given windows path to a path in the current system</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/EnvironmentHelper.fs#L123-123" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '82', 82)" onmouseover="showTip(event, '82', 82)">
-            environVars target
+            directorySeparator 
           </code>
           <div class="tip" id="82">
-            <strong>Signature:</strong>target:EnvironmentVariableTarget -&gt; (obj * obj) list<br />
+            <strong>Signature:</strong>string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Retrieves all environment variables from the given target</p>
-</td>
+        <td class="xmldoc">
+        <p>The directory separator string. On most systems / or \</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/EnvironmentHelper.fs#L120-120" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '83', 83)" onmouseover="showTip(event, '83', 83)">
-            getBuildParam name
+            documentsFolder 
           </code>
           <div class="tip" id="83">
-            <strong>Signature:</strong>name:string -&gt; string<br />
+            <strong>Signature:</strong>string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Returns the value of the build parameter with the given name if it was set and otherwise an empty string</p>
-</td>
+        <td class="xmldoc">
+        <p>The path to the personal documents</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/EnvironmentHelper.fs#L117-117" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '84', 84)" onmouseover="showTip(event, '84', 84)">
-            getBuildParamOrDefault name defaultParam
+            encoding 
           </code>
           <div class="tip" id="84">
-            <strong>Signature:</strong>name:string -&gt; defaultParam:string -&gt; string<br />
+            <strong>Signature:</strong>Encoding<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Returns the value of the build parameter with the given name was set if it was set and otherwise the given default value</p>
-</td>
+        <td class="xmldoc">
+        <p>Contains the IO encoding which is given via build parameter "encoding" or the default encoding if no encoding was specified.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/EnvironmentHelper.fs#L130-130" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '85', 85)" onmouseover="showTip(event, '85', 85)">
-            getDrivesInfo ()
+            environVar name
           </code>
           <div class="tip" id="85">
-            <strong>Signature:</strong>unit -&gt; seq&lt;string&gt;<br />
+            <strong>Signature:</strong>name:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Retrieves information about the hard drives</p>
-</td>
+        <td class="xmldoc">
+        <p>Retrieves the environment variable with the given name</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/EnvironmentHelper.fs#L18-18" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '86', 86)" onmouseover="showTip(event, '86', 86)">
-            getInstalledDotNetFrameworks ()
+            environVarOrDefault name defaultValue
           </code>
           <div class="tip" id="86">
-            <strong>Signature:</strong>unit -&gt; seq&lt;string&gt;<br />
+            <strong>Signature:</strong>name:string -&gt; defaultValue:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Returns a sequence with all installed .NET framework versions</p>
-</td>
+        <td class="xmldoc">
+        <p>Retrieves the environment variable with the given name or returns the default if no value was set</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/EnvironmentHelper.fs#L36-36" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '87', 87)" onmouseover="showTip(event, '87', 87)">
-            getMachineEnvironment ()
+            environVarOrNone name
           </code>
           <div class="tip" id="87">
-            <strong>Signature:</strong>unit -&gt; MachineDetails<br />
+            <strong>Signature:</strong>name:string -&gt; string option<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Retrieves lots of machine specific information like machine name, processor count etc.</p>
-</td>
+        <td class="xmldoc">
+        <p>Retrieves the environment variable or None</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/EnvironmentHelper.fs#L41-41" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '88', 88)" onmouseover="showTip(event, '88', 88)">
-            getTargetPlatformDir platformVersion
+            environVars target
           </code>
           <div class="tip" id="88">
-            <strong>Signature:</strong>platformVersion:string -&gt; string<br />
+            <strong>Signature:</strong>target:EnvironmentVariableTarget -&gt; (obj * obj) list<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Gets the local directory for the given target platform</p>
-</td>
+        <td class="xmldoc">
+        <p>Retrieves all environment variables from the given target</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/EnvironmentHelper.fs#L27-27" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '89', 89)" onmouseover="showTip(event, '89', 89)">
-            hasBuildParam name
+            getBuildParam name
           </code>
           <div class="tip" id="89">
-            <strong>Signature:</strong>name:string -&gt; bool<br />
+            <strong>Signature:</strong>name:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Returns if the build parameter with the given name was set</p>
-</td>
+        <td class="xmldoc">
+        <p>Returns the value of the build parameter with the given name if it was set and otherwise an empty string</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/EnvironmentHelper.fs#L55-55" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '90', 90)" onmouseover="showTip(event, '90', 90)">
-            isLinux 
+            getBuildParamOrDefault name defaultParam
           </code>
           <div class="tip" id="90">
-            <strong>Signature:</strong>bool<br />
+            <strong>Signature:</strong>name:string -&gt; defaultParam:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Determines if the current system is a Linux system</p>
-</td>
+        <td class="xmldoc">
+        <p>Returns the value of the build parameter with the given name was set if it was set and otherwise the given default value</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/EnvironmentHelper.fs#L52-52" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '91', 91)" onmouseover="showTip(event, '91', 91)">
-            isMacOS 
+            getDrivesInfo arg1
           </code>
           <div class="tip" id="91">
-            <strong>Signature:</strong>bool<br />
+            <strong>Signature:</strong>unit -&gt; seq&lt;string&gt;<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Determines if the current system is a MacOs system</p>
-</td>
+        <td class="xmldoc">
+        <p>Retrieves information about the hard drives</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/EnvironmentHelper.fs#L177-177" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '92', 92)" onmouseover="showTip(event, '92', 92)">
-            isMono 
+            getInstalledDotNetFrameworks arg1
           </code>
           <div class="tip" id="92">
-            <strong>Signature:</strong>bool<br />
+            <strong>Signature:</strong>unit -&gt; seq&lt;string&gt;<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Determines if the current system is a mono system
-Todo: Detect mono on windows</p>
-</td>
+        <td class="xmldoc">
+        <p>Returns a sequence with all installed .NET framework versions</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/EnvironmentHelper.fs#L136-136" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '93', 93)" onmouseover="showTip(event, '93', 93)">
-            isUnix 
+            getMachineEnvironment arg1
           </code>
           <div class="tip" id="93">
-            <strong>Signature:</strong>bool<br />
+            <strong>Signature:</strong>unit -&gt; MachineDetails<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Determines if the current system is an Unix system</p>
-</td>
+        <td class="xmldoc">
+        <p>Retrieves lots of machine specific information like machine name, processor count etc.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/EnvironmentHelper.fs#L189-189" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '94', 94)" onmouseover="showTip(event, '94', 94)">
-            platformInfoAction psi
+            getTargetPlatformDir platformVersion
           </code>
           <div class="tip" id="94">
-            <strong>Signature:</strong>psi:ProcessStartInfo -&gt; unit<br />
+            <strong>Signature:</strong>platformVersion:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Modifies the ProcessStartInfo according to the platform semantics</p>
-</td>
+        <td class="xmldoc">
+        <p>Gets the local directory for the given target platform</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/EnvironmentHelper.fs#L110-110" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '95', 95)" onmouseover="showTip(event, '95', 95)">
-            ProgramFiles 
+            hasBuildParam name
           </code>
           <div class="tip" id="95">
-            <strong>Signature:</strong>string<br />
+            <strong>Signature:</strong>name:string -&gt; bool<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>The path of the "Program Files" folder - might be x64 on x64 machine</p>
-</td>
+        <td class="xmldoc">
+        <p>Returns if the build parameter with the given name was set</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/EnvironmentHelper.fs#L49-49" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '96', 96)" onmouseover="showTip(event, '96', 96)">
-            ProgramFilesX86 
+            isLinux 
           </code>
           <div class="tip" id="96">
-            <strong>Signature:</strong>string<br />
+            <strong>Signature:</strong>bool<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>The path of Program Files (x86)
-It seems this covers all cases where PROCESSOR_ARCHITECTURE may misreport and the case where the other variable 
-PROCESSOR_ARCHITEW6432 can be null</p>
-</td>
+        <td class="xmldoc">
+        <p>Determines if the current system is a Linux system</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/EnvironmentHelper.fs#L82-82" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '97', 97)" onmouseover="showTip(event, '97', 97)">
-            setEnvironVar name value
+            isMacOS 
           </code>
           <div class="tip" id="97">
-            <strong>Signature:</strong>name:string -&gt; value:string -&gt; unit<br />
+            <strong>Signature:</strong>bool<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Sets the environment variable with the given name</p>
-</td>
+        <td class="xmldoc">
+        <p>Determines if the current system is a MacOs system</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/EnvironmentHelper.fs#L79-79" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '98', 98)" onmouseover="showTip(event, '98', 98)">
-            SystemRoot 
+            isMono 
           </code>
           <div class="tip" id="98">
-            <strong>Signature:</strong>string<br />
+            <strong>Signature:</strong>bool<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>The system root environment variable. Typically "C:\Windows"</p>
-</td>
+        <td class="xmldoc">
+        <p>Determines if the current system is a mono system
+Todo: Detect mono on windows</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/EnvironmentHelper.fs#L88-88" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '99', 99)" onmouseover="showTip(event, '99', 99)">
-            TargetPlatformPrefix 
+            isUnix 
           </code>
           <div class="tip" id="99">
+            <strong>Signature:</strong>bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Determines if the current system is an Unix system</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/EnvironmentHelper.fs#L76-76" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '100', 100)" onmouseover="showTip(event, '100', 100)">
+            platformInfoAction psi
+          </code>
+          <div class="tip" id="100">
+            <strong>Signature:</strong>psi:ProcessStartInfo -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Modifies the ProcessStartInfo according to the platform semantics</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/EnvironmentHelper.fs#L91-91" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '101', 101)" onmouseover="showTip(event, '101', 101)">
+            ProgramFiles 
+          </code>
+          <div class="tip" id="101">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>The path of the current target platform</p>
-</td>
+        <td class="xmldoc">
+        <p>The path of the "Program Files" folder - might be x64 on x64 machine</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/EnvironmentHelper.fs#L58-58" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '102', 102)" onmouseover="showTip(event, '102', 102)">
+            ProgramFilesX86 
+          </code>
+          <div class="tip" id="102">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>The path of Program Files (x86)
+It seems this covers all cases where PROCESSOR_ARCHITECTURE may misreport and the case where the other variable 
+PROCESSOR_ARCHITEW6432 can be null</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/EnvironmentHelper.fs#L63-63" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '103', 103)" onmouseover="showTip(event, '103', 103)">
+            setEnvironVar name value
+          </code>
+          <div class="tip" id="103">
+            <strong>Signature:</strong>name:string -&gt; value:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Sets the environment variable with the given name</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/EnvironmentHelper.fs#L33-33" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '104', 104)" onmouseover="showTip(event, '104', 104)">
+            SystemRoot 
+          </code>
+          <div class="tip" id="104">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>The system root environment variable. Typically "C:\Windows"</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/EnvironmentHelper.fs#L73-73" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '105', 105)" onmouseover="showTip(event, '105', 105)">
+            TargetPlatformPrefix 
+          </code>
+          <div class="tip" id="105">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>The path of the current target platform</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/EnvironmentHelper.fs#L97-97" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
     </tbody>
   </table>
 
         </div>
         <div class="span3">
-          <img src="pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
+          <img src="http://fsharp.github.io/FAKE/pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
           <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
             <li class="nav-header">FAKE - F# Make</li>
             <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>

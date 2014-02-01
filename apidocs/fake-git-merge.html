@@ -70,14 +70,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '524', 524)" onmouseover="showTip(event, '524', 524)">
+          <code onmouseout="hideTip(event, '498', 498)" onmouseover="showTip(event, '498', 498)">
             compareBranches (...)
           </code>
-          <div class="tip" id="524">
+          <div class="tip" id="498">
             <strong>Signature:</strong>repositoryDir:string -&gt; local:string -&gt; remote:string -&gt; MergeType<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Tests whether branches and their "origin" counterparts have diverged and need merging first.</p>
+        <td class="xmldoc">
+        <p>Tests whether branches and their "origin" counterparts have diverged and need merging first.</p>
 
 <h2>Parameters</h2>
 
@@ -86,45 +87,54 @@
 <li><code>local</code> - The local branch name.</li>
 <li><code>remote</code> - The remote branch name.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Git/Merge.fs#L32-32" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '525', 525)" onmouseover="showTip(event, '525', 525)">
+          <code onmouseout="hideTip(event, '499', 499)" onmouseover="showTip(event, '499', 499)">
             FastForwardFlag 
           </code>
-          <div class="tip" id="525">
+          <div class="tip" id="499">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Allows git to use fast-forward merges</p>
-</td>
+        <td class="xmldoc">
+        <p>Allows git to use fast-forward merges</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Git/Merge.fs#L14-14" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '526', 526)" onmouseover="showTip(event, '526', 526)">
+          <code onmouseout="hideTip(event, '500', 500)" onmouseover="showTip(event, '500', 500)">
             getMergeMessage repositoryDir
           </code>
-          <div class="tip" id="526">
+          <div class="tip" id="500">
             <strong>Signature:</strong>repositoryDir:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Gets the current merge message.</p>
-</td>
+        <td class="xmldoc">
+        <p>Gets the current merge message.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Git/Merge.fs#L9-9" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '527', 527)" onmouseover="showTip(event, '527', 527)">
+          <code onmouseout="hideTip(event, '501', 501)" onmouseover="showTip(event, '501', 501)">
             merge repositoryDir flags branch
           </code>
-          <div class="tip" id="527">
+          <div class="tip" id="501">
             <strong>Signature:</strong>repositoryDir:string -&gt; flags:string -&gt; branch:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Performs a merge of the given branch with the current branch</p>
+        <td class="xmldoc">
+        <p>Performs a merge of the given branch with the current branch</p>
 
 <h2>Parameters</h2>
 
@@ -135,27 +145,32 @@
 <h2>Sample</h2>
 <p>merge @"C:\code\Fake" NoFastForwardFlag "master"</p></li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Git/Merge.fs#L50-50" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '528', 528)" onmouseover="showTip(event, '528', 528)">
+          <code onmouseout="hideTip(event, '502', 502)" onmouseover="showTip(event, '502', 502)">
             NoFastForwardFlag 
           </code>
-          <div class="tip" id="528">
+          <div class="tip" id="502">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Forbids git to use fast-forward merges</p>
-</td>
+        <td class="xmldoc">
+        <p>Forbids git to use fast-forward merges</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Git/Merge.fs#L17-17" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
     </tbody>
   </table>
 
         </div>
         <div class="span3">
-          <img src="pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
+          <img src="http://fsharp.github.io/FAKE/pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
           <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
             <li class="nav-header">FAKE - F# Make</li>
             <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>

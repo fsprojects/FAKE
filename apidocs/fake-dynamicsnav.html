@@ -91,8 +91,11 @@
             <strong>Signature:</strong>fileName:string -&gt; TestResults option<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Analyzes the Dynamics NAV test results</p>
-</td>
+        <td class="xmldoc">
+        <p>Analyzes the Dynamics NAV test results</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/DynamicsNavHelper.fs#L268-268" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -104,8 +107,11 @@
             <strong>Signature:</strong>raiseExceptionIfNotFound:bool -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Closes all running Dynamics NAV instances</p>
-</td>
+        <td class="xmldoc">
+        <p>Closes all running Dynamics NAV instances</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/DynamicsNavHelper.fs#L239-239" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -117,8 +123,11 @@
             <strong>Signature:</strong>connectionInfo:DynamicsNavParams -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Compiles all uncompiled objects in the Dynamics NAV client.</p>
-</td>
+        <td class="xmldoc">
+        <p>Compiles all uncompiled objects in the Dynamics NAV client.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/DynamicsNavHelper.fs#L152-152" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -130,8 +139,11 @@
             <strong>Signature:</strong>navClientVersion:string -&gt; serverMode:NavisionServerType -&gt; serverName:string -&gt; targetDatabase:string -&gt; DynamicsNavParams<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Creates the connection information to a Dynamics NAV instance.</p>
-</td>
+        <td class="xmldoc">
+        <p>Creates the connection information to a Dynamics NAV instance.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/DynamicsNavHelper.fs#L44-44" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -143,8 +155,11 @@
             <strong>Signature:</strong>importFileName:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Creates an import file from the given .txt files.</p>
-</td>
+        <td class="xmldoc">
+        <p>Creates an import file from the given .txt files.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/DynamicsNavHelper.fs#L120-120" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -156,8 +171,11 @@
             <strong>Signature:</strong>navClientVersion:string -&gt; serverName:string -&gt; serviceTierName:string -&gt; port:int -&gt; company:string -&gt; RTCParams<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Creates the connection information to a Dynamics NAV RTC instance</p>
-</td>
+        <td class="xmldoc">
+        <p>Creates the connection information to a Dynamics NAV RTC instance</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/DynamicsNavHelper.fs#L181-181" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -169,7 +187,8 @@
             <strong>Signature:</strong>timeout:TimeSpan -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Waits until all NAV processes have stopped or fails after given timeout.</p>
+        <td class="xmldoc">
+        <p>Waits until all NAV processes have stopped or fails after given timeout.</p>
 
 <h2>Parameters</h2>
 
@@ -177,7 +196,9 @@
 <li><code>name</code> - The name of the processes in question.</li>
 <li><code>timeout</code> - The timespan to time out after.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/DynamicsNavHelper.fs#L257-257" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -189,8 +210,11 @@
             <strong>Signature:</strong>navClientVersion:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Retrieves the the file name of the Dynamics NAV ClassicClient for the given version from the registry.</p>
-</td>
+        <td class="xmldoc">
+        <p>Retrieves the the file name of the Dynamics NAV ClassicClient for the given version from the registry.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/DynamicsNavHelper.fs#L27-27" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -202,21 +226,27 @@
             <strong>Signature:</strong>navClientVersion:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Gets the directory of the Dynamics NAV ClassicClient for the given version from the registry.</p>
-</td>
+        <td class="xmldoc">
+        <p>Gets the directory of the Dynamics NAV ClassicClient for the given version from the registry.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/DynamicsNavHelper.fs#L41-41" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '67', 67)" onmouseover="showTip(event, '67', 67)">
-            getNAVProcesses ()
+            getNAVProcesses arg1
           </code>
           <div class="tip" id="67">
             <strong>Signature:</strong>unit -&gt; seq&lt;Process&gt;<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Returns all running NAV processes.</p>
-</td>
+        <td class="xmldoc">
+        <p>Returns all running NAV processes.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/DynamicsNavHelper.fs#L230-230" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -228,8 +258,11 @@
             <strong>Signature:</strong>connectionInfo:DynamicsNavParams -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Imports the given .txt or .fob file into the Dynamics NAV client</p>
-</td>
+        <td class="xmldoc">
+        <p>Imports the given .txt or .fob file into the Dynamics NAV client</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/DynamicsNavHelper.fs#L114-114" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -241,9 +274,12 @@
             <strong>Signature:</strong>connectionInfo:DynamicsNavParams -&gt; importFileName:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Creates an import file from the given .txt files and imports it into the Dynamics NAV client.
+        <td class="xmldoc">
+        <p>Creates an import file from the given .txt files and imports it into the Dynamics NAV client.
 If the import fails, then every file will be tried alone.</p>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/DynamicsNavHelper.fs#L135-135" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -255,8 +291,11 @@ If the import fails, then every file will be tried alone.</p>
             <strong>Signature:</strong>connectionInfo:RTCParams -&gt; pageNo:int -&gt; bool<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Opens a page with the given ID on the RTC client</p>
-</td>
+        <td class="xmldoc">
+        <p>Opens a page with the given ID on the RTC client</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/DynamicsNavHelper.fs#L217-217" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -268,15 +307,18 @@ If the import fails, then every file will be tried alone.</p>
             <strong>Signature:</strong>connectionInfo:RTCParams -&gt; codeunitID:int -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Runs a codeunit with the given ID on the RTC client</p>
-</td>
+        <td class="xmldoc">
+        <p>Runs a codeunit with the given ID on the RTC client</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/DynamicsNavHelper.fs#L195-195" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
     </tbody>
   </table>
 
         </div>
         <div class="span3">
-          <img src="pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
+          <img src="http://fsharp.github.io/FAKE/pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
           <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
             <li class="nav-header">FAKE - F# Make</li>
             <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>

@@ -59,8 +59,11 @@
             <strong>Signature:</strong>path:string -&gt; bool<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Includes all files</p>
-</td>
+        <td class="xmldoc">
+        <p>Includes all files</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L225-225" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -72,7 +75,8 @@
             <strong>Signature:</strong>newFileName:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Appends all given files to one file.</p>
+        <td class="xmldoc">
+        <p>Appends all given files to one file.</p>
 
 <h2>Parameters</h2>
 
@@ -80,7 +84,9 @@
 <li><code>newFileName</code> - The target FileName.</li>
 <li><code>files</code> - The original FileNames as a sequence.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L290-290" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -92,8 +98,11 @@
             <strong>Signature:</strong>path:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Cleans a directory by removing all files and sub-directories.</p>
-</td>
+        <td class="xmldoc">
+        <p>Cleans a directory by removing all files and sub-directories.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L246-246" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -105,8 +114,11 @@
             <strong>Signature:</strong>dirs:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Cleans multiple directories</p>
-</td>
+        <td class="xmldoc">
+        <p>Cleans multiple directories</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L271-271" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -118,9 +130,12 @@
             <strong>Signature:</strong>delete:bool -&gt; originalFileName:string -&gt; compareFileName:string -&gt; bool<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Compares the given files for changes.
+        <td class="xmldoc">
+        <p>Compares the given files for changes.
 If delete is set to true then equal files will be removed.</p>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L322-322" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -132,7 +147,8 @@ If delete is set to true then equal files will be removed.</p>
             <strong>Signature:</strong>target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Copies the files to the target.</p>
+        <td class="xmldoc">
+        <p>Copies the files to the target.</p>
 
 <h2>Parameters</h2>
 
@@ -140,7 +156,9 @@ If delete is set to true then equal files will be removed.</p>
 <li><code>target</code> - The target directory.</li>
 <li><code>files</code> - The original file names as a sequence.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L146-146" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -152,7 +170,8 @@ If delete is set to true then equal files will be removed.</p>
             <strong>Signature:</strong>target:string -&gt; cacheDir:string -&gt; files:seq&lt;string&gt; -&gt; string list<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Copies the files from a cache folder.
+        <td class="xmldoc">
+        <p>Copies the files from a cache folder.
 If the files are not cached or the original files have a different write time the cache will be refreshed.</p>
 
 <h2>Parameters</h2>
@@ -162,7 +181,9 @@ If the files are not cached or the original files have a different write time th
 <li><code>cacheDir</code> - The cache directory.</li>
 <li><code>files</code> - The orginal files.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L164-164" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -174,7 +195,8 @@ If the files are not cached or the original files have a different write time th
             <strong>Signature:</strong>target:string -&gt; source:string -&gt; filterFile:(string -&gt; bool) -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Copies a directory recursivly. If the target directory does not exist, it will be created.</p>
+        <td class="xmldoc">
+        <p>Copies a directory recursivly. If the target directory does not exist, it will be created.</p>
 
 <h2>Parameters</h2>
 
@@ -183,7 +205,9 @@ If the files are not cached or the original files have a different write time th
 <li><code>source</code> - The source directory.</li>
 <li><code>filterFile</code> - A file filter predicate.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L233-233" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -195,7 +219,8 @@ If the files are not cached or the original files have a different write time th
             <strong>Signature:</strong>target:string -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Copies a single file to the target and overwrites the existing file.</p>
+        <td class="xmldoc">
+        <p>Copies a single file to the target and overwrites the existing file.</p>
 
 <h2>Parameters</h2>
 
@@ -203,7 +228,9 @@ If the files are not cached or the original files have a different write time th
 <li><code>target</code> - The target directory or file.</li>
 <li><code>fileName</code> - The FileName.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L127-127" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -215,7 +242,8 @@ If the files are not cached or the original files have a different write time th
             <strong>Signature:</strong>target:string -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Copies a single file to a relative subfolder of the target.</p>
+        <td class="xmldoc">
+        <p>Copies a single file to a relative subfolder of the target.</p>
 
 <h2>Parameters</h2>
 
@@ -223,7 +251,9 @@ If the files are not cached or the original files have a different write time th
 <li><code>target</code> - The target directory</li>
 <li><code>fileName</code> - The fileName</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L111-111" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -235,7 +265,8 @@ If the files are not cached or the original files have a different write time th
             <strong>Signature:</strong>target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Copies the files to the target - Alias for Copy</p>
+        <td class="xmldoc">
+        <p>Copies the files to the target - Alias for Copy</p>
 
 <h2>Parameters</h2>
 
@@ -243,7 +274,9 @@ If the files are not cached or the original files have a different write time th
 <li><code>target</code> - The target directory.</li>
 <li><code>files</code> - The orginal file names.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L219-219" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -255,8 +288,11 @@ If the files are not cached or the original files have a different write time th
             <strong>Signature:</strong>dir:DirectoryInfo -&gt; outputDir:DirectoryInfo -&gt; overwrite:bool -&gt; string list<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Copies the file structure recursively.</p>
-</td>
+        <td class="xmldoc">
+        <p>Copies the file structure recursively.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L374-374" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -268,8 +304,11 @@ If the files are not cached or the original files have a different write time th
             <strong>Signature:</strong>dir:string -&gt; outputDir:string -&gt; bool -&gt; string list<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Copies the file structure recursively.</p>
-</td>
+        <td class="xmldoc">
+        <p>Copies the file structure recursively.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L396-396" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -281,7 +320,8 @@ If the files are not cached or the original files have a different write time th
             <strong>Signature:</strong>target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Copies the given files to the target.</p>
+        <td class="xmldoc">
+        <p>Copies the given files to the target.</p>
 
 <h2>Parameters</h2>
 
@@ -289,7 +329,9 @@ If the files are not cached or the original files have a different write time th
 <li><code>target</code> - The target directory.</li>
 <li><code>files</code> - The original file names as a sequence.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L155-155" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -301,8 +343,11 @@ If the files are not cached or the original files have a different write time th
             <strong>Signature:</strong>path:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Creates a directory if it does not exist.</p>
-</td>
+        <td class="xmldoc">
+        <p>Creates a directory if it does not exist.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L60-60" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -314,8 +359,11 @@ If the files are not cached or the original files have a different write time th
             <strong>Signature:</strong>fileName:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Creates a file if it does not exist.</p>
-</td>
+        <td class="xmldoc">
+        <p>Creates a file if it does not exist.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L69-69" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -327,8 +375,11 @@ If the files are not cached or the original files have a different write time th
             <strong>Signature:</strong>path:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Deletes a directory if it exists.</p>
-</td>
+        <td class="xmldoc">
+        <p>Deletes a directory if it exists.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L46-46" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -340,8 +391,11 @@ If the files are not cached or the original files have a different write time th
             <strong>Signature:</strong>dirs:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Deletes multiple directories</p>
-</td>
+        <td class="xmldoc">
+        <p>Deletes multiple directories</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L274-274" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -353,8 +407,11 @@ If the files are not cached or the original files have a different write time th
             <strong>Signature:</strong>fileName:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Deletes a file if it exists.</p>
-</td>
+        <td class="xmldoc">
+        <p>Deletes a file if it exists.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L79-79" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -366,8 +423,11 @@ If the files are not cached or the original files have a different write time th
             <strong>Signature:</strong>files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Deletes the given files.</p>
-</td>
+        <td class="xmldoc">
+        <p>Deletes the given files.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L88-88" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -379,8 +439,11 @@ If the files are not cached or the original files have a different write time th
             <strong>Signature:</strong>path:string -&gt; bool<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Exclude SVN files (path with .svn)</p>
-</td>
+        <td class="xmldoc">
+        <p>Exclude SVN files (path with .svn)</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L222-222" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -392,8 +455,11 @@ If the files are not cached or the original files have a different write time th
             <strong>Signature:</strong>first:FileInfo -&gt; second:FileInfo -&gt; bool<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Checks if the two files are byte-to-byte equal.</p>
-</td>
+        <td class="xmldoc">
+        <p>Checks if the two files are byte-to-byte equal.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L301-301" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -405,7 +471,8 @@ If the files are not cached or the original files have a different write time th
             <strong>Signature:</strong>lastReleaseDir:string -&gt; patchDir:string -&gt; srcFiles:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Checks the srcFiles for changes to the last release.</p>
+        <td class="xmldoc">
+        <p>Checks the srcFiles for changes to the last release.</p>
 
 <h2>Parameters</h2>
 
@@ -414,7 +481,9 @@ If the files are not cached or the original files have a different write time th
 <li><code>patchDir</code> - The target directory.</li>
 <li><code>srcFiles</code> - The source files.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L370-370" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -426,7 +495,8 @@ If the files are not cached or the original files have a different write time th
             <strong>Signature:</strong>lastReleaseDir:string -&gt; patchDir:string -&gt; srcFiles:seq&lt;string&gt; -&gt; findOldFileF:(string -&gt; string -&gt; string) -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Checks the srcFiles for changes to the last release.</p>
+        <td class="xmldoc">
+        <p>Checks the srcFiles for changes to the last release.</p>
 
 <h2>Parameters</h2>
 
@@ -436,7 +506,9 @@ If the files are not cached or the original files have a different write time th
 <li><code>srcFiles</code> - The source files</li>
 <li><code>findOldFileF</code> - A function which finds the old file</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L355-355" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -448,7 +520,8 @@ If the files are not cached or the original files have a different write time th
             <strong>Signature:</strong>target:string -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Moves a single file to the target and overwrites the existing file.</p>
+        <td class="xmldoc">
+        <p>Moves a single file to the target and overwrites the existing file.</p>
 
 <h2>Parameters</h2>
 
@@ -456,7 +529,9 @@ If the files are not cached or the original files have a different write time th
 <li><code>target</code> - The target directory.</li>
 <li><code>fileName</code> - The FileName.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L403-403" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -468,9 +543,12 @@ If the files are not cached or the original files have a different write time th
             <strong>Signature:</strong>file:string -&gt; seq&lt;string []&gt;<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Reads a csv file line by line
+        <td class="xmldoc">
+        <p>Reads a csv file line by line
 delimiter is a ,</p>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L278-278" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -482,8 +560,11 @@ delimiter is a ,</p>
             <strong>Signature:</strong>dirF:(DirectoryInfo -&gt; unit) -&gt; fileF:(FileInfo -&gt; unit) -&gt; dir:DirectoryInfo -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Performs the given actions on all files and subdirectories</p>
-</td>
+        <td class="xmldoc">
+        <p>Performs the given actions on all files and subdirectories</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L9-9" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -495,7 +576,8 @@ delimiter is a ,</p>
             <strong>Signature:</strong>target:string -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Renames the file to the target file name.</p>
+        <td class="xmldoc">
+        <p>Renames the file to the target file name.</p>
 
 <h2>Parameters</h2>
 
@@ -503,7 +585,9 @@ delimiter is a ,</p>
 <li><code>target</code> - The target file name.</li>
 <li><code>file</code> - The orginal file name.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L193-193" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -515,7 +599,8 @@ delimiter is a ,</p>
             <strong>Signature:</strong>replacements:seq&lt;string * string&gt; -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Replaces all occurences of the patterns in the given files with the given replacements.</p>
+        <td class="xmldoc">
+        <p>Replaces all occurences of the patterns in the given files with the given replacements.</p>
 
 <h2>Parameters</h2>
 
@@ -523,7 +608,9 @@ delimiter is a ,</p>
 <li><code>replacements</code> - A sequence of tuples with the patterns and the replacements.</li>
 <li><code>files</code> - The files to process.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L434-434" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -535,8 +622,11 @@ delimiter is a ,</p>
             <strong>Signature:</strong>readOnly:bool -&gt; dir:DirectoryInfo -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Sets the directory readonly</p>
-</td>
+        <td class="xmldoc">
+        <p>Sets the directory readonly</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L21-21" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -548,8 +638,11 @@ delimiter is a ,</p>
             <strong>Signature:</strong>readOnly:bool -&gt; dir:DirectoryInfo -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Sets all files in the directory readonly.</p>
-</td>
+        <td class="xmldoc">
+        <p>Sets all files in the directory readonly.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L30-30" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -561,8 +654,11 @@ delimiter is a ,</p>
             <strong>Signature:</strong>readOnly:bool -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Sets all given files readonly.</p>
-</td>
+        <td class="xmldoc">
+        <p>Sets all given files readonly.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L34-34" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -574,7 +670,8 @@ delimiter is a ,</p>
             <strong>Signature:</strong>target:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Copies a list of files to the specified directory without any output.</p>
+        <td class="xmldoc">
+        <p>Copies a list of files to the specified directory without any output.</p>
 
 <h2>Parameters</h2>
 
@@ -582,7 +679,9 @@ delimiter is a ,</p>
 <li><code>target</code> - The target directory.</li>
 <li><code>files</code> - List of files to copy.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L200-200" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -594,8 +693,11 @@ delimiter is a ,</p>
             <strong>Signature:</strong>path:string -&gt; bool<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Checks if the directory exists</p>
-</td>
+        <td class="xmldoc">
+        <p>Checks if the directory exists</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L341-341" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -604,11 +706,14 @@ delimiter is a ,</p>
             WriteConfigFile (...)
           </code>
           <div class="tip" id="144">
-            <strong>Signature:</strong>configFileName:string -&gt; parameters:seq&lt;&#39;?6400 * &#39;?6401&gt; -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?6400, '?6401          </div>
+            <strong>Signature:</strong>configFileName:string -&gt; parameters:seq&lt;&#39;?7637 * &#39;?7638&gt; -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?7637, '?7638          </div>
         </td>
-        <td class="xmldoc"><p>Creates a config file with the parameters as "key;value" lines</p>
-</td>
+        <td class="xmldoc">
+        <p>Creates a config file with the parameters as "key;value" lines</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L417-417" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -628,8 +733,11 @@ delimiter is a ,</p>
             <strong>Signature:</strong>extension:string -&gt; file:string -&gt; unit option<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Active Pattern for determining file extension.</p>
-</td>
+        <td class="xmldoc">
+        <p>Active Pattern for determining file extension.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L98-98" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -641,8 +749,11 @@ delimiter is a ,</p>
             <strong>Signature:</strong>fileSysInfo:FileSystemInfo -&gt; Choice&lt;FileInfo,(DirectoryInfo * seq&lt;FileSystemInfo&gt;)&gt;<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Active pattern which discriminates between files and directories.</p>
-</td>
+        <td class="xmldoc">
+        <p>Active pattern which discriminates between files and directories.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L91-91" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -654,8 +765,11 @@ delimiter is a ,</p>
             <strong>Signature:</strong>f:FileInfo -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Active Pattern for determining file name.</p>
-</td>
+        <td class="xmldoc">
+        <p>Active Pattern for determining file name.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L101-101" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -667,15 +781,18 @@ delimiter is a ,</p>
             <strong>Signature:</strong>f:FileInfo -&gt; string * string * string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Active Pattern for determining FileInfoNameSections.</p>
-</td>
+        <td class="xmldoc">
+        <p>Active Pattern for determining FileInfoNameSections.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FileHelper.fs#L104-104" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
     </tbody>
   </table>
 
         </div>
         <div class="span3">
-          <img src="pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
+          <img src="http://fsharp.github.io/FAKE/pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
           <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
             <li class="nav-header">FAKE - F# Make</li>
             <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>

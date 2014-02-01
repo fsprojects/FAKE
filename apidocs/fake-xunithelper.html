@@ -77,14 +77,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '521', 521)" onmouseover="showTip(event, '521', 521)">
+          <code onmouseout="hideTip(event, '453', 453)" onmouseover="showTip(event, '453', 453)">
             xUnit setParams assemblies
           </code>
-          <div class="tip" id="521">
+          <div class="tip" id="453">
             <strong>Signature:</strong>setParams:(XUnitParams -&gt; XUnitParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Runs xUnit unit tests in the given assemblies via the given xUnit runner.
+        <td class="xmldoc">
+        <p>Runs xUnit unit tests in the given assemblies via the given xUnit runner.
 Will fail if the runner terminates with non-zero exit code for any of the assemblies.
 Offending assemblies will be listed in the error message.</p>
 
@@ -105,27 +106,32 @@ in the given assembly fail.</p>
       |&gt; xUnit (fun p -&gt; {p with OutputDir = testDir })
 )
 </code></pre>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/UnitTest/XUnitHelper.fs#L87-87" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '522', 522)" onmouseover="showTip(event, '522', 522)">
+          <code onmouseout="hideTip(event, '459', 459)" onmouseover="showTip(event, '459', 459)">
             XUnitDefaults 
           </code>
-          <div class="tip" id="522">
+          <div class="tip" id="459">
             <strong>Signature:</strong>XUnitParams<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>The xUnit default parameters</p>
-</td>
+        <td class="xmldoc">
+        <p>The xUnit default parameters</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/UnitTest/XUnitHelper.fs#L38-38" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
     </tbody>
   </table>
 
         </div>
         <div class="span3">
-          <img src="pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
+          <img src="http://fsharp.github.io/FAKE/pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
           <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
             <li class="nav-header">FAKE - F# Make</li>
             <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>

@@ -70,14 +70,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '185', 185)" onmouseover="showTip(event, '185', 185)">
+          <code onmouseout="hideTip(event, '193', 193)" onmouseover="showTip(event, '193', 193)">
             Fixie setParams assemblies
           </code>
-          <div class="tip" id="185">
+          <div class="tip" id="193">
             <strong>Signature:</strong>setParams:(FixieParams -&gt; FixieParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>This task to can be used to run <a href="http://patrick.lioi.net/fixie/">Fixie</a> on test libraries.</p>
+        <td class="xmldoc">
+        <p>This task to can be used to run <a href="http://patrick.lioi.net/fixie/">Fixie</a> on test libraries.</p>
 
 <h2>Parameters</h2>
 
@@ -91,27 +92,32 @@
 <pre><code>!! (testDir @@ "Test.*.dll") 
   |&gt; Fixie (fun p -&gt; { p with CustomOptions = ["custom","1"; "test",2] })
 </code></pre>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FixieHelper.fs#L36-36" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '186', 186)" onmouseover="showTip(event, '186', 186)">
+          <code onmouseout="hideTip(event, '194', 194)" onmouseover="showTip(event, '194', 194)">
             FixieDefaults 
           </code>
-          <div class="tip" id="186">
+          <div class="tip" id="194">
             <strong>Signature:</strong>FixieParams<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Fixie default parameters - tries to locate Fixie.Console.exe in any subfolder.</p>
-</td>
+        <td class="xmldoc">
+        <p>Fixie default parameters - tries to locate Fixie.Console.exe in any subfolder.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FixieHelper.fs#L20-20" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
     </tbody>
   </table>
 
         </div>
         <div class="span3">
-          <img src="pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
+          <img src="http://fsharp.github.io/FAKE/pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
           <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
             <li class="nav-header">FAKE - F# Make</li>
             <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>

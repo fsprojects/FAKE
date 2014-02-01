@@ -77,255 +77,312 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '307', 307)" onmouseover="showTip(event, '307', 307)">
+          <code onmouseout="hideTip(event, '334', 334)" onmouseover="showTip(event, '334', 334)">
             ( &lt;== ) x y
           </code>
-          <div class="tip" id="307">
+          <div class="tip" id="334">
             <strong>Signature:</strong>x:string -&gt; y:string list -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Backwards dependencies operator - y is dependend on x.</p>
-</td>
+        <td class="xmldoc">
+        <p>Backwards dependencies operator - y is dependend on x.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TargetHelper.fs#L107-107" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '308', 308)" onmouseover="showTip(event, '308', 308)">
+          <code onmouseout="hideTip(event, '335', 335)" onmouseover="showTip(event, '335', 335)">
             ActivateFinalTarget name
           </code>
-          <div class="tip" id="308">
+          <div class="tip" id="335">
             <strong>Signature:</strong>name:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Activates the FinalTarget.</p>
-</td>
+        <td class="xmldoc">
+        <p>Activates the FinalTarget.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TargetHelper.fs#L325-325" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '309', 309)" onmouseover="showTip(event, '309', 309)">
+          <code onmouseout="hideTip(event, '336', 336)" onmouseover="showTip(event, '336', 336)">
             addExecutedTarget target time
           </code>
-          <div class="tip" id="309">
+          <div class="tip" id="336">
             <strong>Signature:</strong>target:string -&gt; time:TimeSpan -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"></td>
+        <td class="xmldoc">
+        
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TargetHelper.fs#L185-185" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '310', 310)" onmouseover="showTip(event, '310', 310)">
+          <code onmouseout="hideTip(event, '337', 337)" onmouseover="showTip(event, '337', 337)">
             dependencyString target
           </code>
-          <div class="tip" id="310">
-            <strong>Signature:</strong>target:&#39;?5145 TargetTemplate -&gt; string<br />
-                          <strong>Type parameters:</strong> '?5145          </div>
+          <div class="tip" id="337">
+            <strong>Signature:</strong>target:&#39;?6396 TargetTemplate -&gt; string<br />
+                          <strong>Type parameters:</strong> '?6396          </div>
         </td>
-        <td class="xmldoc"><p>Returns the DependencyString for the given target.</p>
-</td>
+        <td class="xmldoc">
+        <p>Returns the DependencyString for the given target.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TargetHelper.fs#L55-55" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '311', 311)" onmouseover="showTip(event, '311', 311)">
-            DoNothing ()
+          <code onmouseout="hideTip(event, '338', 338)" onmouseover="showTip(event, '338', 338)">
+            DoNothing arg1
           </code>
-          <div class="tip" id="311">
+          <div class="tip" id="338">
             <strong>Signature:</strong>unit -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Do nothing - fun () -> () - Can be used to define empty targets.</p>
-</td>
+        <td class="xmldoc">
+        <p>Do nothing - fun () -> () - Can be used to define empty targets.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TargetHelper.fs#L66-66" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '312', 312)" onmouseover="showTip(event, '312', 312)">
+          <code onmouseout="hideTip(event, '339', 339)" onmouseover="showTip(event, '339', 339)">
             ExecutedTargets 
           </code>
-          <div class="tip" id="312">
+          <div class="tip" id="339">
             <strong>Signature:</strong>HashSet&lt;string&gt;<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>The executed targets.</p>
-</td>
+        <td class="xmldoc">
+        <p>The executed targets.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TargetHelper.fs#L42-42" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '313', 313)" onmouseover="showTip(event, '313', 313)">
+          <code onmouseout="hideTip(event, '340', 340)" onmouseover="showTip(event, '340', 340)">
             FinalTarget name body
           </code>
-          <div class="tip" id="313">
+          <div class="tip" id="340">
             <strong>Signature:</strong>name:string -&gt; body:(unit -&gt; unit) -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Registers a final target (not activated).</p>
-</td>
+        <td class="xmldoc">
+        <p>Registers a final target (not activated).</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TargetHelper.fs#L320-320" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '314', 314)" onmouseover="showTip(event, '314', 314)">
+          <code onmouseout="hideTip(event, '341', 341)" onmouseover="showTip(event, '341', 341)">
             FinalTargets 
           </code>
-          <div class="tip" id="314">
+          <div class="tip" id="341">
             <strong>Signature:</strong>Dictionary&lt;string,bool&gt;<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Final Targets - stores final targets and if they are activated.</p>
-</td>
+        <td class="xmldoc">
+        <p>Final Targets - stores final targets and if they are activated.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TargetHelper.fs#L39-39" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '315', 315)" onmouseover="showTip(event, '315', 315)">
-            getAllTargetsNames ()
+          <code onmouseout="hideTip(event, '342', 342)" onmouseover="showTip(event, '342', 342)">
+            getAllTargetsNames arg1
           </code>
-          <div class="tip" id="315">
+          <div class="tip" id="342">
             <strong>Signature:</strong>unit -&gt; string list<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Returns a list with all target names.</p>
-</td>
+        <td class="xmldoc">
+        <p>Returns a list with all target names.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TargetHelper.fs#L63-63" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '316', 316)" onmouseover="showTip(event, '316', 316)">
+          <code onmouseout="hideTip(event, '343', 343)" onmouseover="showTip(event, '343', 343)">
             getTarget name
           </code>
-          <div class="tip" id="316">
+          <div class="tip" id="343">
             <strong>Signature:</strong>name:string -&gt; unit TargetTemplate<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Gets a target with the given name from the target dictionary.</p>
-</td>
+        <td class="xmldoc">
+        <p>Gets a target with the given name from the target dictionary.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TargetHelper.fs#L49-49" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '317', 317)" onmouseover="showTip(event, '317', 317)">
-            listTargets ()
+          <code onmouseout="hideTip(event, '344', 344)" onmouseover="showTip(event, '344', 344)">
+            listTargets arg1
           </code>
-          <div class="tip" id="317">
+          <div class="tip" id="344">
             <strong>Signature:</strong>unit -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Prints all available targets.</p>
-</td>
+        <td class="xmldoc">
+        <p>Prints all available targets.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TargetHelper.fs#L279-279" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '318', 318)" onmouseover="showTip(event, '318', 318)">
+          <code onmouseout="hideTip(event, '345', 345)" onmouseover="showTip(event, '345', 345)">
             PrintDependencyGraph verbose target
           </code>
-          <div class="tip" id="318">
+          <div class="tip" id="345">
             <strong>Signature:</strong>verbose:bool -&gt; target:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Writes a dependency graph.</p>
-</td>
+        <td class="xmldoc">
+        <p>Writes a dependency graph.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TargetHelper.fs#L214-214" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '319', 319)" onmouseover="showTip(event, '319', 319)">
-            PrintTargets ()
+          <code onmouseout="hideTip(event, '346', 346)" onmouseover="showTip(event, '346', 346)">
+            PrintTargets arg1
           </code>
-          <div class="tip" id="319">
+          <div class="tip" id="346">
             <strong>Signature:</strong>unit -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Prints all targets.</p>
-</td>
+        <td class="xmldoc">
+        <p>Prints all targets.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TargetHelper.fs#L206-206" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '320', 320)" onmouseover="showTip(event, '320', 320)">
+          <code onmouseout="hideTip(event, '347', 347)" onmouseover="showTip(event, '347', 347)">
             run targetName
           </code>
-          <div class="tip" id="320">
+          <div class="tip" id="347">
             <strong>Signature:</strong>targetName:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Runs a target and its dependencies.</p>
-</td>
+        <td class="xmldoc">
+        <p>Runs a target and its dependencies.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TargetHelper.fs#L287-287" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '321', 321)" onmouseover="showTip(event, '321', 321)">
+          <code onmouseout="hideTip(event, '348', 348)" onmouseover="showTip(event, '348', 348)">
             Target name body
           </code>
-          <div class="tip" id="321">
+          <div class="tip" id="348">
             <strong>Signature:</strong>name:string -&gt; body:(unit -&gt; unit) -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Creates a Target.</p>
-</td>
+        <td class="xmldoc">
+        <p>Creates a Target.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TargetHelper.fs#L157-157" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '322', 322)" onmouseover="showTip(event, '322', 322)">
+          <code onmouseout="hideTip(event, '349', 349)" onmouseover="showTip(event, '349', 349)">
             TargetTemplate body
           </code>
-          <div class="tip" id="322">
-            <strong>Signature:</strong>body:(&#39;?5161 -&gt; unit) -&gt; string -&gt; &#39;?5161 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?5161          </div>
+          <div class="tip" id="349">
+            <strong>Signature:</strong>body:(&#39;?6412 -&gt; unit) -&gt; string -&gt; &#39;?6412 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?6412          </div>
         </td>
-        <td class="xmldoc"><p>Creates a TargetTemplate.</p>
-</td>
+        <td class="xmldoc">
+        <p>Creates a TargetTemplate.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TargetHelper.fs#L154-154" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '323', 323)" onmouseover="showTip(event, '323', 323)">
+          <code onmouseout="hideTip(event, '350', 350)" onmouseover="showTip(event, '350', 350)">
             TargetTemplateWithDependecies (...)
           </code>
-          <div class="tip" id="323">
-            <strong>Signature:</strong>dependencies:string list -&gt; body:(&#39;?5159 -&gt; unit) -&gt; string -&gt; &#39;?5159 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?5159          </div>
+          <div class="tip" id="350">
+            <strong>Signature:</strong>dependencies:string list -&gt; body:(&#39;?6410 -&gt; unit) -&gt; string -&gt; &#39;?6410 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?6410          </div>
         </td>
-        <td class="xmldoc"><p>Creates a TargetTemplate with dependencies-</p>
-</td>
+        <td class="xmldoc">
+        <p>Creates a TargetTemplate with dependencies-</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TargetHelper.fs#L146-146" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '324', 324)" onmouseover="showTip(event, '324', 324)">
-            WriteErrors ()
+          <code onmouseout="hideTip(event, '351', 351)" onmouseover="showTip(event, '351', 351)">
+            WriteErrors arg1
           </code>
-          <div class="tip" id="324">
+          <div class="tip" id="351">
             <strong>Signature:</strong>unit -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Writes a summary of errors reported during build.</p>
-</td>
+        <td class="xmldoc">
+        <p>Writes a summary of errors reported during build.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TargetHelper.fs#L236-236" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '325', 325)" onmouseover="showTip(event, '325', 325)">
+          <code onmouseout="hideTip(event, '352', 352)" onmouseover="showTip(event, '352', 352)">
             WriteTaskTimeSummary total
           </code>
-          <div class="tip" id="325">
-            <strong>Signature:</strong>total:&#39;?5181 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?5181          </div>
+          <div class="tip" id="352">
+            <strong>Signature:</strong>total:&#39;?6432 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?6432          </div>
         </td>
-        <td class="xmldoc"><p>Writes a build time report.</p>
-</td>
+        <td class="xmldoc">
+        <p>Writes a build time report.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TargetHelper.fs#L244-244" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
     </tbody>
   </table>
 
         </div>
         <div class="span3">
-          <img src="pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
+          <img src="http://fsharp.github.io/FAKE/pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
           <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
             <li class="nav-header">FAKE - F# Make</li>
             <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>

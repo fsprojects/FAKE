@@ -52,14 +52,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '465', 465)" onmouseover="showTip(event, '465', 465)">
+          <code onmouseout="hideTip(event, '547', 547)" onmouseover="showTip(event, '547', 547)">
             checkout repositoryDir create branch
           </code>
-          <div class="tip" id="465">
+          <div class="tip" id="547">
             <strong>Signature:</strong>repositoryDir:string -&gt; create:bool -&gt; branch:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Performs a checkout of the given branch to the working copy.</p>
+        <td class="xmldoc">
+        <p>Performs a checkout of the given branch to the working copy.</p>
 
 <h2>Parameters</h2>
 
@@ -68,19 +69,22 @@
 <li><code>create</code> - Set this to true if the branch is new.</li>
 <li><code>branch</code> - The new branch.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Git/Branches.fs#L90-90" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '467', 467)" onmouseover="showTip(event, '467', 467)">
+          <code onmouseout="hideTip(event, '548', 548)" onmouseover="showTip(event, '548', 548)">
             checkoutBranch repositoryDir branch
           </code>
-          <div class="tip" id="467">
+          <div class="tip" id="548">
             <strong>Signature:</strong>repositoryDir:string -&gt; branch:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Performs a checkout of the given branch to the working copy.</p>
+        <td class="xmldoc">
+        <p>Performs a checkout of the given branch to the working copy.</p>
 
 <h2>Parameters</h2>
 
@@ -88,19 +92,22 @@
 <li><code>repositoryDir</code> - The git repository.</li>
 <li><code>branch</code> - The branch for the checkout.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Git/Branches.fs#L61-61" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '468', 468)" onmouseover="showTip(event, '468', 468)">
+          <code onmouseout="hideTip(event, '549', 549)" onmouseover="showTip(event, '549', 549)">
             checkoutNewBranch (...)
           </code>
-          <div class="tip" id="468">
+          <div class="tip" id="549">
             <strong>Signature:</strong>repositoryDir:string -&gt; baseBranch:string -&gt; branch:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Creates a new branch based on the given baseBranch and checks it out to the working copy.</p>
+        <td class="xmldoc">
+        <p>Creates a new branch based on the given baseBranch and checks it out to the working copy.</p>
 
 <h2>Parameters</h2>
 
@@ -109,19 +116,22 @@
 <li><code>baseBranch</code> - The base branch.</li>
 <li><code>branch</code> - The new branch.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Git/Branches.fs#L80-80" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '469', 469)" onmouseover="showTip(event, '469', 469)">
+          <code onmouseout="hideTip(event, '550', 550)" onmouseover="showTip(event, '550', 550)">
             checkoutTracked (...)
           </code>
-          <div class="tip" id="469">
+          <div class="tip" id="550">
             <strong>Signature:</strong>repositoryDir:string -&gt; trackBranch:string -&gt; branch:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Performs a checkout of the given branch with an additional tracking branch.</p>
+        <td class="xmldoc">
+        <p>Performs a checkout of the given branch with an additional tracking branch.</p>
 
 <h2>Parameters</h2>
 
@@ -130,19 +140,22 @@
 <li><code>trackBranch</code> - The tracking branch.</li>
 <li><code>branch</code> - The branch for the checkout.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Git/Branches.fs#L71-71" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '470', 470)" onmouseover="showTip(event, '470', 470)">
+          <code onmouseout="hideTip(event, '551', 551)" onmouseover="showTip(event, '551', 551)">
             createBranch (...)
           </code>
-          <div class="tip" id="470">
+          <div class="tip" id="551">
             <strong>Signature:</strong>repositoryDir:string -&gt; newBranchName:string -&gt; commit:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Creates a new branch from the given commit.</p>
+        <td class="xmldoc">
+        <p>Creates a new branch from the given commit.</p>
 
 <h2>Parameters</h2>
 
@@ -151,19 +164,22 @@
 <li><code>newBranchName</code> - The new branch.</li>
 <li><code>commit</code> - The commit which git should take as the new HEAD. - can be HEAD, HEAD~1, ... , a branch name or a prefix of a SHA1.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Git/Branches.fs#L101-101" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '471', 471)" onmouseover="showTip(event, '471', 471)">
+          <code onmouseout="hideTip(event, '552', 552)" onmouseover="showTip(event, '552', 552)">
             deleteBranch repositoryDir force branch
           </code>
-          <div class="tip" id="471">
+          <div class="tip" id="552">
             <strong>Signature:</strong>repositoryDir:string -&gt; force:bool -&gt; branch:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Deletes the given branch.</p>
+        <td class="xmldoc">
+        <p>Deletes the given branch.</p>
 
 <h2>Parameters</h2>
 
@@ -172,19 +188,22 @@
 <li><code>force</code> - Determines if git should be run with the <em>force</em> flag.</li>
 <li><code>branch</code> - The branch which should be deleted.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Git/Branches.fs#L111-111" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '472', 472)" onmouseover="showTip(event, '472', 472)">
+          <code onmouseout="hideTip(event, '553', 553)" onmouseover="showTip(event, '553', 553)">
             deleteTag repositoryDir tag
           </code>
-          <div class="tip" id="472">
+          <div class="tip" id="553">
             <strong>Signature:</strong>repositoryDir:string -&gt; tag:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Deletes the given tag.</p>
+        <td class="xmldoc">
+        <p>Deletes the given tag.</p>
 
 <h2>Parameters</h2>
 
@@ -192,19 +211,22 @@
 <li><code>repositoryDir</code> - The git repository.</li>
 <li><code>tag</code> - The tag which should be deleted.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Git/Branches.fs#L129-129" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '473', 473)" onmouseover="showTip(event, '473', 473)">
+          <code onmouseout="hideTip(event, '554', 554)" onmouseover="showTip(event, '554', 554)">
             findMergeBase (...)
           </code>
-          <div class="tip" id="473">
+          <div class="tip" id="554">
             <strong>Signature:</strong>repositoryDir:string -&gt; commit1:string -&gt; commit2:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Returns the SHA1 of the merge base of the two given commits from the given repository.</p>
+        <td class="xmldoc">
+        <p>Returns the SHA1 of the merge base of the two given commits from the given repository.</p>
 
 <h2>Parameters</h2>
 
@@ -213,58 +235,70 @@
 <li><code>commit1</code> - The first commit for which git should find the merge base.</li>
 <li><code>commit2</code> - The second commit for which git should find the merge base.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Git/Branches.fs#L40-40" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '474', 474)" onmouseover="showTip(event, '474', 474)">
+          <code onmouseout="hideTip(event, '555', 555)" onmouseover="showTip(event, '555', 555)">
             getAllBranches repositoryDir
           </code>
-          <div class="tip" id="474">
+          <div class="tip" id="555">
             <strong>Signature:</strong>repositoryDir:string -&gt; string list<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Gets all local and remote branches from the given repository.</p>
-</td>
+        <td class="xmldoc">
+        <p>Gets all local and remote branches from the given repository.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Git/Branches.fs#L23-23" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '475', 475)" onmouseover="showTip(event, '475', 475)">
+          <code onmouseout="hideTip(event, '556', 556)" onmouseover="showTip(event, '556', 556)">
             getLocalBranches repositoryDir
           </code>
-          <div class="tip" id="475">
+          <div class="tip" id="556">
             <strong>Signature:</strong>repositoryDir:string -&gt; string list<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Gets all local branches from the given repository.</p>
-</td>
+        <td class="xmldoc">
+        <p>Gets all local branches from the given repository.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Git/Branches.fs#L13-13" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '476', 476)" onmouseover="showTip(event, '476', 476)">
+          <code onmouseout="hideTip(event, '557', 557)" onmouseover="showTip(event, '557', 557)">
             getRemoteBranches repositoryDir
           </code>
-          <div class="tip" id="476">
+          <div class="tip" id="557">
             <strong>Signature:</strong>repositoryDir:string -&gt; string list<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Gets all remote branches from the given repository.</p>
-</td>
+        <td class="xmldoc">
+        <p>Gets all remote branches from the given repository.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Git/Branches.fs#L18-18" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '477', 477)" onmouseover="showTip(event, '477', 477)">
+          <code onmouseout="hideTip(event, '558', 558)" onmouseover="showTip(event, '558', 558)">
             getSHA1 repositoryDir commit
           </code>
-          <div class="tip" id="477">
+          <div class="tip" id="558">
             <strong>Signature:</strong>repositoryDir:string -&gt; commit:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Returns the SHA1 of the given commit from the given repository.</p>
+        <td class="xmldoc">
+        <p>Returns the SHA1 of the given commit from the given repository.</p>
 
 <h2>Parameters</h2>
 
@@ -272,19 +306,22 @@
 <li><code>repositoryDir</code> - The git repository.</li>
 <li><code>commit</code> - The commit for which git should return the SHA1 - can be HEAD, HEAD~1, ... , a branch name or a prefix of a SHA1.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Git/Branches.fs#L32-32" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '478', 478)" onmouseover="showTip(event, '478', 478)">
+          <code onmouseout="hideTip(event, '559', 559)" onmouseover="showTip(event, '559', 559)">
             pull repositoryDir remote branch
           </code>
-          <div class="tip" id="478">
+          <div class="tip" id="559">
             <strong>Signature:</strong>repositoryDir:string -&gt; remote:string -&gt; branch:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Pulls a given branch from the given remote.</p>
+        <td class="xmldoc">
+        <p>Pulls a given branch from the given remote.</p>
 
 <h2>Parameters</h2>
 
@@ -293,38 +330,44 @@
 <li><code>remote</code> - The name of the remote.</li>
 <li><code>branch</code> - The name of the branch to pull.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Git/Branches.fs#L161-161" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '479', 479)" onmouseover="showTip(event, '479', 479)">
+          <code onmouseout="hideTip(event, '560', 560)" onmouseover="showTip(event, '560', 560)">
             push repositoryDir
           </code>
-          <div class="tip" id="479">
+          <div class="tip" id="560">
             <strong>Signature:</strong>repositoryDir:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Pushes all branches to the default remote.</p>
+        <td class="xmldoc">
+        <p>Pushes all branches to the default remote.</p>
 
 <h2>Parameters</h2>
 
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Git/Branches.fs#L137-137" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '480', 480)" onmouseover="showTip(event, '480', 480)">
+          <code onmouseout="hideTip(event, '561', 561)" onmouseover="showTip(event, '561', 561)">
             pushBranch repositoryDir remote branch
           </code>
-          <div class="tip" id="480">
+          <div class="tip" id="561">
             <strong>Signature:</strong>repositoryDir:string -&gt; remote:string -&gt; branch:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Pushes the given branch to the given remote.</p>
+        <td class="xmldoc">
+        <p>Pushes the given branch to the given remote.</p>
 
 <h2>Parameters</h2>
 
@@ -333,19 +376,22 @@
 <li><code>remote</code> - The remote.</li>
 <li><code>branch</code> - The tag.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Git/Branches.fs#L153-153" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '481', 481)" onmouseover="showTip(event, '481', 481)">
+          <code onmouseout="hideTip(event, '562', 562)" onmouseover="showTip(event, '562', 562)">
             pushTag repositoryDir remote tag
           </code>
-          <div class="tip" id="481">
+          <div class="tip" id="562">
             <strong>Signature:</strong>repositoryDir:string -&gt; remote:string -&gt; tag:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Pushes the given tag to the given remote.</p>
+        <td class="xmldoc">
+        <p>Pushes the given tag to the given remote.</p>
 
 <h2>Parameters</h2>
 
@@ -354,19 +400,22 @@
 <li><code>remote</code> - The remote.</li>
 <li><code>tag</code> - The tag.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Git/Branches.fs#L145-145" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '482', 482)" onmouseover="showTip(event, '482', 482)">
+          <code onmouseout="hideTip(event, '563', 563)" onmouseover="showTip(event, '563', 563)">
             revisionsBetween (...)
           </code>
-          <div class="tip" id="482">
+          <div class="tip" id="563">
             <strong>Signature:</strong>repositoryDir:string -&gt; commit1:string -&gt; commit2:string -&gt; int<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Returns the number of revisions between the two given commits.</p>
+        <td class="xmldoc">
+        <p>Returns the number of revisions between the two given commits.</p>
 
 <h2>Parameters</h2>
 
@@ -375,19 +424,22 @@
 <li><code>commit1</code> - The first commit for which git should find the merge base.</li>
 <li><code>commit2</code> - The second commit for which git should find the merge base.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Git/Branches.fs#L50-50" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '483', 483)" onmouseover="showTip(event, '483', 483)">
+          <code onmouseout="hideTip(event, '564', 564)" onmouseover="showTip(event, '564', 564)">
             tag repositoryDir tag
           </code>
-          <div class="tip" id="483">
+          <div class="tip" id="564">
             <strong>Signature:</strong>repositoryDir:string -&gt; tag:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Tags the current branch.</p>
+        <td class="xmldoc">
+        <p>Tags the current branch.</p>
 
 <h2>Parameters</h2>
 
@@ -395,14 +447,16 @@
 <li><code>repositoryDir</code> - The git repository.</li>
 <li><code>tag</code> - The new tag.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Git/Branches.fs#L120-120" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
     </tbody>
   </table>
 
         </div>
         <div class="span3">
-          <img src="pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
+          <img src="http://fsharp.github.io/FAKE/pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
           <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
             <li class="nav-header">FAKE - F# Make</li>
             <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>

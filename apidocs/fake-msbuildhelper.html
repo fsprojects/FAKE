@@ -105,14 +105,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '222', 222)" onmouseover="showTip(event, '222', 222)">
+          <code onmouseout="hideTip(event, '209', 209)" onmouseover="showTip(event, '209', 209)">
             build setParams project
           </code>
-          <div class="tip" id="222">
+          <div class="tip" id="209">
             <strong>Signature:</strong>setParams:(MSBuildParams -&gt; MSBuildParams) -&gt; project:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Runs a MSBuild project</p>
+        <td class="xmldoc">
+        <p>Runs a MSBuild project</p>
 
 <h2>Parameters</h2>
 
@@ -135,19 +136,22 @@ let setParams defaults =
 build setParams "./MySolution.sln"
       |> DoNothing</p></li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/MSBuildHelper.fs#L221-221" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '223', 223)" onmouseover="showTip(event, '223', 223)">
+          <code onmouseout="hideTip(event, '210', 210)" onmouseover="showTip(event, '210', 210)">
             MSBuild outputPath targets properties
           </code>
-          <div class="tip" id="223">
+          <div class="tip" id="210">
             <strong>Signature:</strong>outputPath:string -&gt; targets:string -&gt; properties:(string * string) list -&gt; seq&lt;string&gt; -&gt; string list<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Builds the given project files or solution files and collects the output files.</p>
+        <td class="xmldoc">
+        <p>Builds the given project files or solution files and collects the output files.</p>
 
 <h2>Parameters</h2>
 
@@ -156,19 +160,22 @@ build setParams "./MySolution.sln"
 <li><code>targets</code> - A string with the target names which should be run by MSBuild.</li>
 <li><code>properties</code> - A list with tuples of property name and property values.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/MSBuildHelper.fs#L281-281" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '224', 224)" onmouseover="showTip(event, '224', 224)">
+          <code onmouseout="hideTip(event, '211', 211)" onmouseover="showTip(event, '211', 211)">
             MSBuildDebug outputPath targets
           </code>
-          <div class="tip" id="224">
+          <div class="tip" id="211">
             <strong>Signature:</strong>outputPath:string -&gt; targets:string -&gt; seq&lt;string&gt; -&gt; string list<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Builds the given project files or solution files and collects the output files.</p>
+        <td class="xmldoc">
+        <p>Builds the given project files or solution files and collects the output files.</p>
 
 <h2>Parameters</h2>
 
@@ -176,47 +183,56 @@ build setParams "./MySolution.sln"
 <li><code>outputpath</code> - If it is null or empty then the project settings are used.</li>
 <li><code>targets</code> - A string with the target names which should be run by MSBuild.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/MSBuildHelper.fs#L287-287" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '225', 225)" onmouseover="showTip(event, '225', 225)">
+          <code onmouseout="hideTip(event, '212', 212)" onmouseover="showTip(event, '212', 212)">
             MSBuildDefaults 
           </code>
-          <div class="tip" id="225">
+          <div class="tip" id="212">
             <strong>Signature:</strong>MSBuildParams<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Defines a default for MSBuild task parameters</p>
-</td>
+        <td class="xmldoc">
+        <p>Defines a default for MSBuild task parameters</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/MSBuildHelper.fs#L109-109" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '226', 226)" onmouseover="showTip(event, '226', 226)">
+          <code onmouseout="hideTip(event, '213', 213)" onmouseover="showTip(event, '213', 213)">
             msBuildExe 
           </code>
-          <div class="tip" id="226">
+          <div class="tip" id="213">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Tries to detect the right version of MSBuild.
+        <td class="xmldoc">
+        <p>Tries to detect the right version of MSBuild.
   - On Linux/Unix Systems we use xBuild.
   - On Windows we try to find a "MSBuild" build parameter or read the MSBuild tool location from the AppSettings file.</p>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/MSBuildHelper.fs#L25-25" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '227', 227)" onmouseover="showTip(event, '227', 227)">
+          <code onmouseout="hideTip(event, '214', 214)" onmouseover="showTip(event, '214', 214)">
             MSBuildRelease outputPath targets
           </code>
-          <div class="tip" id="227">
+          <div class="tip" id="214">
             <strong>Signature:</strong>outputPath:string -&gt; targets:string -&gt; seq&lt;string&gt; -&gt; string list<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Builds the given project files or solution files and collects the output files.</p>
+        <td class="xmldoc">
+        <p>Builds the given project files or solution files and collects the output files.</p>
 
 <h2>Parameters</h2>
 
@@ -224,19 +240,22 @@ build setParams "./MySolution.sln"
 <li><code>outputpath</code> - If it is null or empty then the project settings are used.</li>
 <li><code>targets</code> - A string with the target names which should be run by MSBuild.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/MSBuildHelper.fs#L293-293" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '228', 228)" onmouseover="showTip(event, '228', 228)">
+          <code onmouseout="hideTip(event, '215', 215)" onmouseover="showTip(event, '215', 215)">
             MSBuildReleaseExt (...)
           </code>
-          <div class="tip" id="228">
+          <div class="tip" id="215">
             <strong>Signature:</strong>outputPath:string -&gt; properties:(string * string) list -&gt; targets:string -&gt; seq&lt;string&gt; -&gt; string list<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Builds the given project files or solution files in release mode and collects the output files.</p>
+        <td class="xmldoc">
+        <p>Builds the given project files or solution files in release mode and collects the output files.</p>
 
 <h2>Parameters</h2>
 
@@ -245,38 +264,44 @@ build setParams "./MySolution.sln"
 <li><code>properties</code> - A list with tuples of property name and property values.</li>
 <li><code>targets</code> - A string with the target names which should be run by MSBuild.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/MSBuildHelper.fs#L305-305" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '229', 229)" onmouseover="showTip(event, '229', 229)">
+          <code onmouseout="hideTip(event, '216', 216)" onmouseover="showTip(event, '216', 216)">
             MSBuildWithDefaults targets
           </code>
-          <div class="tip" id="229">
+          <div class="tip" id="216">
             <strong>Signature:</strong>targets:string -&gt; seq&lt;string&gt; -&gt; string list<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Builds the given project files or solution files in release mode to the default outputs.</p>
+        <td class="xmldoc">
+        <p>Builds the given project files or solution files in release mode to the default outputs.</p>
 
 <h2>Parameters</h2>
 
 <ul>
 <li><code>targets</code> - A string with the target names which should be run by MSBuild.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/MSBuildHelper.fs#L298-298" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '230', 230)" onmouseover="showTip(event, '230', 230)">
+          <code onmouseout="hideTip(event, '217', 217)" onmouseover="showTip(event, '217', 217)">
             MSBuildWithProjectProperties (...)
           </code>
-          <div class="tip" id="230">
+          <div class="tip" id="217">
             <strong>Signature:</strong>outputPath:string -&gt; targets:string -&gt; properties:(string -&gt; (string * string) list) -&gt; projects:seq&lt;string&gt; -&gt; string list<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Builds the given project files and collects the output files.</p>
+        <td class="xmldoc">
+        <p>Builds the given project files and collects the output files.</p>
 
 <h2>Parameters</h2>
 
@@ -285,14 +310,16 @@ build setParams "./MySolution.sln"
 <li><code>targets</code> - A string with the target names which should be run by MSBuild.</li>
 <li><code>properties</code> - A list with tuples of property name and property values.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/MSBuildHelper.fs#L246-246" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
     </tbody>
   </table>
 
         </div>
         <div class="span3">
-          <img src="pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
+          <img src="http://fsharp.github.io/FAKE/pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
           <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
             <li class="nav-header">FAKE - F# Make</li>
             <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>

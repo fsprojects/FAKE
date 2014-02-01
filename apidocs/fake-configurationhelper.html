@@ -59,7 +59,8 @@
             <strong>Signature:</strong>xsl:string -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Applies a Xsl Stylesheet to a config file and writes it back.</p>
+        <td class="xmldoc">
+        <p>Applies a Xsl Stylesheet to a config file and writes it back.</p>
 
 <h2>Parameters</h2>
 
@@ -72,7 +73,9 @@
 
 <pre><code>applyXslOnConfig (navServicePath @@ DEV.xsl) (navServicePath @@ "CustomSettings.config")
 </code></pre>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/ConfigurationHelper.fs#L76-76" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -84,14 +87,17 @@
             <strong>Signature:</strong>fileName:string -&gt; XmlDocument<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Reads a config file into an XmlDocument.</p>
+        <td class="xmldoc">
+        <p>Reads a config file into an XmlDocument.</p>
 
 <h2>Parameters</h2>
 
 <ul>
 <li><code>fileName</code> - The file name of the config file.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/ConfigurationHelper.fs#L12-12" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -103,7 +109,8 @@
             <strong>Signature:</strong>key:string -&gt; value:string -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Reads a config file from the given file name, replaces the app setting value and writes it back.</p>
+        <td class="xmldoc">
+        <p>Reads a config file from the given file name, replaces the app setting value and writes it back.</p>
 
 <h2>Parameters</h2>
 
@@ -117,7 +124,9 @@
 
 <pre><code>updateAppSetting "DatabaseName" targetDatabase (navServicePath @@ "CustomSettings.config")
 </code></pre>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/ConfigurationHelper.fs#L57-57" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -129,7 +138,8 @@
             <strong>Signature:</strong>xpath:string -&gt; attribute:string -&gt; value:string -&gt; config:XmlDocument -&gt; XmlDocument<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Reads a config file from the given file name, replaces an attribute using the given xPath and writes it back.</p>
+        <td class="xmldoc">
+        <p>Reads a config file from the given file name, replaces an attribute using the given xPath and writes it back.</p>
 
 <h2>Parameters</h2>
 
@@ -139,7 +149,9 @@
 <li><code>value</code> - The new attribute value.</li>
 <li><code>config</code> - The XElement representing the config.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/ConfigurationHelper.fs#L29-29" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -151,7 +163,8 @@
             <strong>Signature:</strong>fileName:string -&gt; xpath:string -&gt; attribute:string -&gt; value:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Reads a config file from the given file name, replaces an attribute using the given xPath and writes it back.</p>
+        <td class="xmldoc">
+        <p>Reads a config file from the given file name, replaces an attribute using the given xPath and writes it back.</p>
 
 <h2>Parameters</h2>
 
@@ -161,7 +174,9 @@
 <li><code>attribute</code> - The attribute name for which the value should be replaced.</li>
 <li><code>value</code> - The new attribute value.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/ConfigurationHelper.fs#L43-43" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -173,7 +188,8 @@
             <strong>Signature:</strong>connectionStringKey:string -&gt; value:string -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Reads a config file from the given file name, replaces the connection string value and writes it back.</p>
+        <td class="xmldoc">
+        <p>Reads a config file from the given file name, replaces the connection string value and writes it back.</p>
 
 <h2>Parameters</h2>
 
@@ -182,7 +198,9 @@
 <li><code>value</code> - The new connection string value.</li>
 <li><code>fileName</code> - The file name of the config file.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/ConfigurationHelper.fs#L65-65" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -194,7 +212,8 @@
             <strong>Signature:</strong>fileName:string -&gt; config:XmlDocument -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Writes an XmlDocument to a config file.</p>
+        <td class="xmldoc">
+        <p>Writes an XmlDocument to a config file.</p>
 
 <h2>Parameters</h2>
 
@@ -202,14 +221,16 @@
 <li><code>fileName</code> - The file name of the config file.</li>
 <li><code>config</code> - The XmlDocument representing the config.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/ConfigurationHelper.fs#L21-21" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
     </tbody>
   </table>
 
         </div>
         <div class="span3">
-          <img src="pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
+          <img src="http://fsharp.github.io/FAKE/pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
           <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
             <li class="nav-header">FAKE - F# Make</li>
             <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>

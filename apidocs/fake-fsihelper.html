@@ -52,87 +52,105 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '100', 100)" onmouseover="showTip(event, '100', 100)">
+          <code onmouseout="hideTip(event, '72', 72)" onmouseover="showTip(event, '72', 72)">
             executeFSI workingDirectory script args
           </code>
-          <div class="tip" id="100">
+          <div class="tip" id="72">
             <strong>Signature:</strong>workingDirectory:string -&gt; script:string -&gt; args:seq&lt;string * string&gt; -&gt; bool * seq&lt;ConsoleMessage&gt;<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Run the given buildscript with fsi.exe</p>
-</td>
+        <td class="xmldoc">
+        <p>Run the given buildscript with fsi.exe</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FSIHelper.fs#L51-51" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '101', 101)" onmouseover="showTip(event, '101', 101)">
+          <code onmouseout="hideTip(event, '73', 73)" onmouseover="showTip(event, '73', 73)">
             executeFSIWithArgs (...)
           </code>
-          <div class="tip" id="101">
+          <div class="tip" id="73">
             <strong>Signature:</strong>workingDirectory:string -&gt; script:string -&gt; extraFsiArgs:string list -&gt; args:seq&lt;string * string&gt; -&gt; bool<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Run the given build script with fsi.exe and allows for extra arguments to FSI.</p>
-</td>
+        <td class="xmldoc">
+        <p>Run the given build script with fsi.exe and allows for extra arguments to FSI.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FSIHelper.fs#L60-60" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '102', 102)" onmouseover="showTip(event, '102', 102)">
+          <code onmouseout="hideTip(event, '74', 74)" onmouseover="showTip(event, '74', 74)">
             fsiPath 
           </code>
-          <div class="tip" id="102">
+          <div class="tip" id="74">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>The path to the F# Interactive tool.</p>
-</td>
+        <td class="xmldoc">
+        <p>The path to the F# Interactive tool.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FSIHelper.fs#L14-14" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '103', 103)" onmouseover="showTip(event, '103', 103)">
+          <code onmouseout="hideTip(event, '75', 75)" onmouseover="showTip(event, '75', 75)">
             fsiStartInfo (...)
           </code>
-          <div class="tip" id="103">
+          <div class="tip" id="75">
             <strong>Signature:</strong>script:string -&gt; workingDirectory:string -&gt; args:seq&lt;string * string&gt; -&gt; ProcessStartInfo -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Creates a ProcessStartInfo which is configured to the F# Interactive.</p>
-</td>
+        <td class="xmldoc">
+        <p>Creates a ProcessStartInfo which is configured to the F# Interactive.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FSIHelper.fs#L47-47" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '104', 104)" onmouseover="showTip(event, '104', 104)">
+          <code onmouseout="hideTip(event, '76', 76)" onmouseover="showTip(event, '76', 76)">
             runBuildScript printDetails script args
           </code>
-          <div class="tip" id="104">
+          <div class="tip" id="76">
             <strong>Signature:</strong>printDetails:bool -&gt; script:string -&gt; args:string list -&gt; seq&lt;string * string&gt; -&gt; bool<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Run the given buildscript with fsi.exe</p>
-</td>
+        <td class="xmldoc">
+        <p>Run the given buildscript with fsi.exe</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FSIHelper.fs#L73-73" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '105', 105)" onmouseover="showTip(event, '105', 105)">
+          <code onmouseout="hideTip(event, '77', 77)" onmouseover="showTip(event, '77', 77)">
             runBuildScriptAt (...)
           </code>
-          <div class="tip" id="105">
+          <div class="tip" id="77">
             <strong>Signature:</strong>workingDirectory:string -&gt; printDetails:bool -&gt; script:string -&gt; extraFsiArgs:string list -&gt; args:seq&lt;string * string&gt; -&gt; bool<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Run the given buildscript with fsi.exe at the given working directory.</p>
-</td>
+        <td class="xmldoc">
+        <p>Run the given buildscript with fsi.exe at the given working directory.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/FSIHelper.fs#L66-66" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
     </tbody>
   </table>
 
         </div>
         <div class="span3">
-          <img src="pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
+          <img src="http://fsharp.github.io/FAKE/pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
           <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
             <li class="nav-header">FAKE - F# Make</li>
             <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>

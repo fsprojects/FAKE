@@ -70,14 +70,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '610', 610)" onmouseover="showTip(event, '610', 610)">
+          <code onmouseout="hideTip(event, '583', 583)" onmouseover="showTip(event, '583', 583)">
             NugetUpdate setParams packagesFile
           </code>
-          <div class="tip" id="610">
+          <div class="tip" id="583">
             <strong>Signature:</strong>setParams:(NugetUpdateParams -&gt; NugetUpdateParams) -&gt; packagesFile:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Update packages specified in the package file.</p>
+        <td class="xmldoc">
+        <p>Update packages specified in the package file.</p>
 
 <p>Fails if packages are not installed; see <a href="https://nuget.codeplex.com/workitem/3874">nuget bug</a>.
 Fails if packages file has no corresponding VS project; see <a href="https://nuget.codeplex.com/workitem/3875">nuget bug</a>.</p>
@@ -88,27 +89,32 @@ Fails if packages file has no corresponding VS project; see <a href="https://nug
 <li><code>setParams</code> - Function used to manipulate the default parameters.</li>
 <li><code>packagesFile</code> - Path to the <code>*.sln</code>, <code>*.*proj</code> or <code>packages.config</code> file.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/NuGet/Update.fs#L69-69" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '611', 611)" onmouseover="showTip(event, '611', 611)">
+          <code onmouseout="hideTip(event, '584', 584)" onmouseover="showTip(event, '584', 584)">
             NugetUpdateDefaults 
           </code>
-          <div class="tip" id="611">
+          <div class="tip" id="584">
             <strong>Signature:</strong>NugetUpdateParams<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Parameter default values.</p>
-</td>
+        <td class="xmldoc">
+        <p>Parameter default values.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/NuGet/Update.fs#L32-32" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
     </tbody>
   </table>
 
         </div>
         <div class="span3">
-          <img src="pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
+          <img src="http://fsharp.github.io/FAKE/pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
           <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
             <li class="nav-header">FAKE - F# Make</li>
             <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>

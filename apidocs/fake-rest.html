@@ -70,14 +70,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '258', 258)" onmouseover="showTip(event, '258', 258)">
+          <code onmouseout="hideTip(event, '292', 292)" onmouseover="showTip(event, '292', 292)">
             ExecuteGetCommand userName password url
           </code>
-          <div class="tip" id="258">
+          <div class="tip" id="292">
             <strong>Signature:</strong>userName:string -&gt; password:string -&gt; url:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Executes an HTTP GET command and retrives the information.
+        <td class="xmldoc">
+        <p>Executes an HTTP GET command and retrives the information.
 It returns the response of the request, or null if we got 404 or nothing.</p>
 
 <h2>Parameters</h2>
@@ -87,19 +88,22 @@ It returns the response of the request, or null if we got 404 or nothing.</p>
 <li><code>password</code> - The password to use with the request.</li>
 <li><code>url</code> - The URL to perform the GET operation.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/REST.fs#L23-23" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '259', 259)" onmouseover="showTip(event, '259', 259)">
+          <code onmouseout="hideTip(event, '293', 293)" onmouseover="showTip(event, '293', 293)">
             ExecutePost url userName password data
           </code>
-          <div class="tip" id="259">
+          <div class="tip" id="293">
             <strong>Signature:</strong>url:string -&gt; userName:string -&gt; password:string -&gt; data:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Executes an HTTP POST command and retrives the information.
+        <td class="xmldoc">
+        <p>Executes an HTTP POST command and retrives the information.
 It returns the response of the request, or null if we got 404 or nothing.</p>
 
 <h2>Parameters</h2>
@@ -110,19 +114,22 @@ It returns the response of the request, or null if we got 404 or nothing.</p>
 <li><code>password</code> - The password to use with the request.</li>
 <li><code>data</code> - The data to post.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/REST.fs#L76-76" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '260', 260)" onmouseover="showTip(event, '260', 260)">
+          <code onmouseout="hideTip(event, '294', 294)" onmouseover="showTip(event, '294', 294)">
             ExecutePostCommand (...)
           </code>
-          <div class="tip" id="260">
+          <div class="tip" id="294">
             <strong>Signature:</strong>headerF:(WebHeaderCollection -&gt; unit) -&gt; url:string -&gt; userName:string -&gt; password:string -&gt; data:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Executes an HTTP POST command and retrives the information.  <br />
+        <td class="xmldoc">
+        <p>Executes an HTTP POST command and retrives the information.  <br />
 This function will automatically include a "source" parameter if the "Source" property is set.
 It returns the response of the request, or null if we got 404 or nothing.</p>
 
@@ -135,14 +142,16 @@ It returns the response of the request, or null if we got 404 or nothing.</p>
 <li><code>password</code> - The password to use with the request.</li>
 <li><code>data</code> - The data to post.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/REST.fs#L47-47" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
     </tbody>
   </table>
 
         </div>
         <div class="span3">
-          <img src="pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
+          <img src="http://fsharp.github.io/FAKE/pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
           <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
             <li class="nav-header">FAKE - F# Make</li>
             <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>

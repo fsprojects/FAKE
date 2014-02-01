@@ -52,33 +52,37 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '235', 235)" onmouseover="showTip(event, '235', 235)">
+          <code onmouseout="hideTip(event, '279', 279)" onmouseover="showTip(event, '279', 279)">
             isAdmin identity
           </code>
-          <div class="tip" id="235">
+          <div class="tip" id="279">
             <strong>Signature:</strong>identity:WindowsIdentity -&gt; bool<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Returns whether the given user has administrator permissions.</p>
+        <td class="xmldoc">
+        <p>Returns whether the given user has administrator permissions.</p>
 
 <h2>Parameters</h2>
 
 <ul>
 <li><code>identity</code> - The windows identity of the user in question.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/PermissionsHelper.fs#L10-10" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '236', 236)" onmouseover="showTip(event, '236', 236)">
+          <code onmouseout="hideTip(event, '280', 280)" onmouseover="showTip(event, '280', 280)">
             requiresAdmin f
           </code>
-          <div class="tip" id="236">
-            <strong>Signature:</strong>f:(unit -&gt; &#39;?5501) -&gt; &#39;?5501<br />
-                          <strong>Type parameters:</strong> '?5501          </div>
+          <div class="tip" id="280">
+            <strong>Signature:</strong>f:(unit -&gt; &#39;?6752) -&gt; &#39;?6752<br />
+                          <strong>Type parameters:</strong> '?6752          </div>
         </td>
-        <td class="xmldoc"><p>Checks that the current user has administrator permissions - otherwise it throws an exception.</p>
+        <td class="xmldoc">
+        <p>Checks that the current user has administrator permissions - otherwise it throws an exception.</p>
 
 <h2>Parameters</h2>
 
@@ -92,14 +96,16 @@
      requiresAdmin (fun _ -&gt; installMSI())
  )
 </code></pre>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/PermissionsHelper.fs#L23-23" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
     </tbody>
   </table>
 
         </div>
         <div class="span3">
-          <img src="pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
+          <img src="http://fsharp.github.io/FAKE/pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
           <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
             <li class="nav-header">FAKE - F# Make</li>
             <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>

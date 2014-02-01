@@ -52,33 +52,37 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '265', 265)" onmouseover="showTip(event, '265', 265)">
+          <code onmouseout="hideTip(event, '281', 281)" onmouseover="showTip(event, '281', 281)">
             checkServiceExists name
           </code>
-          <div class="tip" id="265">
+          <div class="tip" id="281">
             <strong>Signature:</strong>name:string -&gt; bool<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Returns whether a service with the given name exists.</p>
+        <td class="xmldoc">
+        <p>Returns whether a service with the given name exists.</p>
 
 <h2>Parameters</h2>
 
 <ul>
 <li><code>name</code> - The name of the service in question.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/ServiceControllerHelper.fs#L28-28" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '266', 266)" onmouseover="showTip(event, '266', 266)">
+          <code onmouseout="hideTip(event, '283', 283)" onmouseover="showTip(event, '283', 283)">
             ensureServiceHasStarted name timeout
           </code>
-          <div class="tip" id="266">
+          <div class="tip" id="283">
             <strong>Signature:</strong>name:string -&gt; timeout:TimeSpan -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Waits until the service with the given name has been started or fails after given timeout</p>
+        <td class="xmldoc">
+        <p>Waits until the service with the given name has been started or fails after given timeout</p>
 
 <h2>Parameters</h2>
 
@@ -86,19 +90,22 @@
 <li><code>name</code> - The name of the service in question.</li>
 <li><code>timeout</code> - The timespan to time out after.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/ServiceControllerHelper.fs#L60-60" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '267', 267)" onmouseover="showTip(event, '267', 267)">
+          <code onmouseout="hideTip(event, '284', 284)" onmouseover="showTip(event, '284', 284)">
             ensureServiceHasStopped name timeout
           </code>
-          <div class="tip" id="267">
+          <div class="tip" id="284">
             <strong>Signature:</strong>name:string -&gt; timeout:TimeSpan -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Waits until the service with the given name has been stopped or fails after given timeout</p>
+        <td class="xmldoc">
+        <p>Waits until the service with the given name has been stopped or fails after given timeout</p>
 
 <h2>Parameters</h2>
 
@@ -106,76 +113,88 @@
 <li><code>name</code> - The name of the service in question.</li>
 <li><code>timeout</code> - The timespan to time out after.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/ServiceControllerHelper.fs#L74-74" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '268', 268)" onmouseover="showTip(event, '268', 268)">
+          <code onmouseout="hideTip(event, '285', 285)" onmouseover="showTip(event, '285', 285)">
             getService name
           </code>
-          <div class="tip" id="268">
+          <div class="tip" id="285">
             <strong>Signature:</strong>name:string -&gt; ServiceController option<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Returns the first service with given name or None.</p>
+        <td class="xmldoc">
+        <p>Returns the first service with given name or None.</p>
 
 <h2>Parameters</h2>
 
 <ul>
 <li><code>name</code> - The name of the service in question.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/ServiceControllerHelper.fs#L23-23" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '269', 269)" onmouseover="showTip(event, '269', 269)">
+          <code onmouseout="hideTip(event, '286', 286)" onmouseover="showTip(event, '286', 286)">
             getServices name
           </code>
-          <div class="tip" id="269">
+          <div class="tip" id="286">
             <strong>Signature:</strong>name:string -&gt; seq&lt;ServiceController&gt;<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Returns sequence of services with given name.</p>
+        <td class="xmldoc">
+        <p>Returns sequence of services with given name.</p>
 
 <h2>Parameters</h2>
 
 <ul>
 <li><code>name</code> - The name of the services in question.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/ServiceControllerHelper.fs#L18-18" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '270', 270)" onmouseover="showTip(event, '270', 270)">
+          <code onmouseout="hideTip(event, '287', 287)" onmouseover="showTip(event, '287', 287)">
             getServiceStatus name
           </code>
-          <div class="tip" id="270">
+          <div class="tip" id="287">
             <strong>Signature:</strong>name:string -&gt; ServiceControllerStatus<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Returns status of the service with given name or fails when service is not found.</p>
+        <td class="xmldoc">
+        <p>Returns status of the service with given name or fails when service is not found.</p>
 
 <h2>Parameters</h2>
 
 <ul>
 <li><code>name</code> - The name of the service in question.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/ServiceControllerHelper.fs#L33-33" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '271', 271)" onmouseover="showTip(event, '271', 271)">
+          <code onmouseout="hideTip(event, '288', 288)" onmouseover="showTip(event, '288', 288)">
             isService name s
           </code>
-          <div class="tip" id="271">
+          <div class="tip" id="288">
             <strong>Signature:</strong>name:string -&gt; s:ServiceController -&gt; bool<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Returns whether the given service has the given name as display or service name.</p>
+        <td class="xmldoc">
+        <p>Returns whether the given service has the given name as display or service name.</p>
 
 <h2>Parameters</h2>
 
@@ -183,52 +202,60 @@
 <li><code>name</code> - The name to check for.</li>
 <li><code>s</code> - The service in question.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/ServiceControllerHelper.fs#L13-13" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '272', 272)" onmouseover="showTip(event, '272', 272)">
+          <code onmouseout="hideTip(event, '289', 289)" onmouseover="showTip(event, '289', 289)">
             startService name
           </code>
-          <div class="tip" id="272">
+          <div class="tip" id="289">
             <strong>Signature:</strong>name:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Starts all services with given name.</p>
+        <td class="xmldoc">
+        <p>Starts all services with given name.</p>
 
 <h2>Parameters</h2>
 
 <ul>
 <li><code>name</code> - The name of the services in question.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/ServiceControllerHelper.fs#L45-45" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '273', 273)" onmouseover="showTip(event, '273', 273)">
+          <code onmouseout="hideTip(event, '290', 290)" onmouseover="showTip(event, '290', 290)">
             stopService name
           </code>
-          <div class="tip" id="273">
+          <div class="tip" id="290">
             <strong>Signature:</strong>name:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Stops all services with given name.</p>
+        <td class="xmldoc">
+        <p>Stops all services with given name.</p>
 
 <h2>Parameters</h2>
 
 <ul>
 <li><code>name</code> - The name of the services in question.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/ServiceControllerHelper.fs#L52-52" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
     </tbody>
   </table>
 
         </div>
         <div class="span3">
-          <img src="pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
+          <img src="http://fsharp.github.io/FAKE/pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
           <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
             <li class="nav-header">FAKE - F# Make</li>
             <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>

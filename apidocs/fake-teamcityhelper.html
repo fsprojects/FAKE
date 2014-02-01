@@ -52,373 +52,457 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '326', 326)" onmouseover="showTip(event, '326', 326)">
+          <code onmouseout="hideTip(event, '303', 303)" onmouseover="showTip(event, '303', 303)">
             ComparisonFailure (...)
           </code>
-          <div class="tip" id="326">
+          <div class="tip" id="303">
             <strong>Signature:</strong>name:string -&gt; message:string -&gt; details:string -&gt; expected:string -&gt; actual:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Reports a failed comparison.</p>
-</td>
+        <td class="xmldoc">
+        <p>Reports a failed comparison.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TeamCityHelper.fs#L128-128" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '304', 304)" onmouseover="showTip(event, '304', 304)">
+            EncapsulateSpecialChars text
+          </code>
+          <div class="tip" id="304">
+            <strong>Signature:</strong>text:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Encapsulates special chars</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TeamCityHelper.fs#L6-6" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '305', 305)" onmouseover="showTip(event, '305', 305)">
+            FinishTestCase testCaseName duration
+          </code>
+          <div class="tip" id="305">
+            <strong>Signature:</strong>testCaseName:string -&gt; duration:TimeSpan -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Finishes the test case.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TeamCityHelper.fs#L45-45" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '306', 306)" onmouseover="showTip(event, '306', 306)">
+            FinishTestSuite testSuiteName
+          </code>
+          <div class="tip" id="306">
+            <strong>Signature:</strong>testSuiteName:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Finishes the test suite.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TeamCityHelper.fs#L59-59" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '307', 307)" onmouseover="showTip(event, '307', 307)">
+            getChangedFilesInCurrentBuild arg1
+          </code>
+          <div class="tip" id="307">
+            <strong>Signature:</strong>unit -&gt; seq&lt;string&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Gets the changed files</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TeamCityHelper.fs#L143-143" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '308', 308)" onmouseover="showTip(event, '308', 308)">
+            getRecentlyFailedTests arg1
+          </code>
+          <div class="tip" id="308">
+            <strong>Signature:</strong>unit -&gt; seq&lt;string&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Gets the recently failed tests</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TeamCityHelper.fs#L138-138" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '309', 309)" onmouseover="showTip(event, '309', 309)">
+            IgnoreTestCase name message
+          </code>
+          <div class="tip" id="309">
+            <strong>Signature:</strong>name:string -&gt; message:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Ignores the test case.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TeamCityHelper.fs#L52-52" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '310', 310)" onmouseover="showTip(event, '310', 310)">
+            PublishArticfact path
+          </code>
+          <div class="tip" id="310">
+            <strong>Signature:</strong>path:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Publishes an artifact on the TeamcCity build server.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TeamCityHelper.fs#L96-96" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '311', 311)" onmouseover="showTip(event, '311', 311)">
+            ReportBuildStatus status message
+          </code>
+          <div class="tip" id="311">
+            <strong>Signature:</strong>status:string -&gt; message:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Reports the build status.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TeamCityHelper.fs#L91-91" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '312', 312)" onmouseover="showTip(event, '312', 312)">
+            ReportProgress message
+          </code>
+          <div class="tip" id="312">
+            <strong>Signature:</strong>message:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Reports the progress.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TeamCityHelper.fs#L69-69" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '313', 313)" onmouseover="showTip(event, '313', 313)">
+            ReportProgressFinish message
+          </code>
+          <div class="tip" id="313">
+            <strong>Signature:</strong>message:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Reports the progress end.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TeamCityHelper.fs#L79-79" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '314', 314)" onmouseover="showTip(event, '314', 314)">
+            ReportProgressStart message
+          </code>
+          <div class="tip" id="314">
+            <strong>Signature:</strong>message:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Reports the progress start.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TeamCityHelper.fs#L74-74" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '315', 315)" onmouseover="showTip(event, '315', 315)">
+            sendStrToTeamCity s
+          </code>
+          <div class="tip" id="315">
+            <strong>Signature:</strong>s:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Send message to TeamCity</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TeamCityHelper.fs#L25-25" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '316', 316)" onmouseover="showTip(event, '316', 316)">
+            sendTeamCityError error
+          </code>
+          <div class="tip" id="316">
+            <strong>Signature:</strong>error:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Sends an error to TeamCity</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TeamCityHelper.fs#L29-29" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '317', 317)" onmouseover="showTip(event, '317', 317)">
+            sendTeamCityFXCopImport path
+          </code>
+          <div class="tip" id="317">
+            <strong>Signature:</strong>path:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Sends an FXCop results filename to TeamCity</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TeamCityHelper.fs#L37-37" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '318', 318)" onmouseover="showTip(event, '318', 318)">
+            sendTeamCityNUnitImport path
+          </code>
+          <div class="tip" id="318">
+            <strong>Signature:</strong>path:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Sends an NUnit results filename to TeamCity</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TeamCityHelper.fs#L33-33" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '319', 319)" onmouseover="showTip(event, '319', 319)">
+            sendToTeamCity format message
+          </code>
+          <div class="tip" id="319">
+            <strong>Signature:</strong>format:StringFormat&lt;(string -&gt; string)&gt; -&gt; message:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Send message to TeamCity</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TeamCityHelper.fs#L16-16" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '320', 320)" onmouseover="showTip(event, '320', 320)">
+            SetBuildNumber buildNumber
+          </code>
+          <div class="tip" id="320">
+            <strong>Signature:</strong>buildNumber:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Sets the TeamCity build number.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TeamCityHelper.fs#L101-101" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '321', 321)" onmouseover="showTip(event, '321', 321)">
+            SetBuildStatistic key value
+          </code>
+          <div class="tip" id="321">
+            <strong>Signature:</strong>key:string -&gt; value:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Reports a build statistic.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TeamCityHelper.fs#L106-106" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '322', 322)" onmouseover="showTip(event, '322', 322)">
+            SetTeamCityParameter name value
+          </code>
+          <div class="tip" id="322">
+            <strong>Signature:</strong>name:string -&gt; value:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Reports a parameter value</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TeamCityHelper.fs#L113-113" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '323', 323)" onmouseover="showTip(event, '323', 323)">
+            StartTestCase testCaseName
+          </code>
+          <div class="tip" id="323">
+            <strong>Signature:</strong>testCaseName:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Starts the test case.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TeamCityHelper.fs#L41-41" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '324', 324)" onmouseover="showTip(event, '324', 324)">
+            StartTestSuite testSuiteName
+          </code>
+          <div class="tip" id="324">
+            <strong>Signature:</strong>testSuiteName:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Starts the test suite.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TeamCityHelper.fs#L64-64" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '325', 325)" onmouseover="showTip(event, '325', 325)">
+            TeamCityBuildConfigurationName 
+          </code>
+          <div class="tip" id="325">
+            <strong>Signature:</strong>string option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>The Name of the Build Configuration the current build belongs to or None if it's not on TeamCity.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TeamCityHelper.fs#L154-154" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '326', 326)" onmouseover="showTip(event, '326', 326)">
+            TeamCityBuildIsPersonal 
+          </code>
+          <div class="tip" id="326">
+            <strong>Signature:</strong>bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Is set to true if the build is a personal one.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TeamCityHelper.fs#L157-157" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '327', 327)" onmouseover="showTip(event, '327', 327)">
-            EncapsulateSpecialChars text
+            TeamCityBuildNumber 
           </code>
           <div class="tip" id="327">
-            <strong>Signature:</strong>text:string -&gt; string<br />
+            <strong>Signature:</strong>string option<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Encapsulates special chars</p>
-</td>
+        <td class="xmldoc">
+        <p>The Build number assigned to the build by TeamCity using the build number format or None if it's not on TeamCity.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TeamCityHelper.fs#L163-163" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '328', 328)" onmouseover="showTip(event, '328', 328)">
-            FinishTestCase testCaseName duration
+            TeamCityProjectName 
           </code>
           <div class="tip" id="328">
-            <strong>Signature:</strong>testCaseName:string -&gt; duration:TimeSpan -&gt; unit<br />
+            <strong>Signature:</strong>string option<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Finishes the test case.</p>
-</td>
+        <td class="xmldoc">
+        <p>The Name of the project the current build belongs to or None if it's not on TeamCity.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TeamCityHelper.fs#L151-151" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '329', 329)" onmouseover="showTip(event, '329', 329)">
-            FinishTestSuite testSuiteName
+            TeamCityVersion 
           </code>
           <div class="tip" id="329">
-            <strong>Signature:</strong>testSuiteName:string -&gt; unit<br />
+            <strong>Signature:</strong>string option<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Finishes the test suite.</p>
-</td>
+        <td class="xmldoc">
+        <p>The Version of the TeamCity server. This property can be used to determine the build is run within TeamCity.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TeamCityHelper.fs#L148-148" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '330', 330)" onmouseover="showTip(event, '330', 330)">
-            getChangedFilesInCurrentBuild ()
-          </code>
-          <div class="tip" id="330">
-            <strong>Signature:</strong>unit -&gt; seq&lt;string&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Gets the changed files</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '331', 331)" onmouseover="showTip(event, '331', 331)">
-            getRecentlyFailedTests ()
-          </code>
-          <div class="tip" id="331">
-            <strong>Signature:</strong>unit -&gt; seq&lt;string&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Gets the recently failed tests</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '332', 332)" onmouseover="showTip(event, '332', 332)">
-            IgnoreTestCase name message
-          </code>
-          <div class="tip" id="332">
-            <strong>Signature:</strong>name:string -&gt; message:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Ignores the test case.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '333', 333)" onmouseover="showTip(event, '333', 333)">
-            PublishArticfact path
-          </code>
-          <div class="tip" id="333">
-            <strong>Signature:</strong>path:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Publishes an artifact on the TeamcCity build server.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '334', 334)" onmouseover="showTip(event, '334', 334)">
-            ReportBuildStatus status message
-          </code>
-          <div class="tip" id="334">
-            <strong>Signature:</strong>status:string -&gt; message:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Reports the build status.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '335', 335)" onmouseover="showTip(event, '335', 335)">
-            ReportProgress message
-          </code>
-          <div class="tip" id="335">
-            <strong>Signature:</strong>message:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Reports the progress.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '336', 336)" onmouseover="showTip(event, '336', 336)">
-            ReportProgressFinish message
-          </code>
-          <div class="tip" id="336">
-            <strong>Signature:</strong>message:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Reports the progress end.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '337', 337)" onmouseover="showTip(event, '337', 337)">
-            ReportProgressStart message
-          </code>
-          <div class="tip" id="337">
-            <strong>Signature:</strong>message:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Reports the progress start.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '338', 338)" onmouseover="showTip(event, '338', 338)">
-            sendStrToTeamCity s
-          </code>
-          <div class="tip" id="338">
-            <strong>Signature:</strong>s:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Send message to TeamCity</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '339', 339)" onmouseover="showTip(event, '339', 339)">
-            sendTeamCityError error
-          </code>
-          <div class="tip" id="339">
-            <strong>Signature:</strong>error:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Sends an error to TeamCity</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '340', 340)" onmouseover="showTip(event, '340', 340)">
-            sendTeamCityFXCopImport path
-          </code>
-          <div class="tip" id="340">
-            <strong>Signature:</strong>path:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Sends an FXCop results filename to TeamCity</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '341', 341)" onmouseover="showTip(event, '341', 341)">
-            sendTeamCityNUnitImport path
-          </code>
-          <div class="tip" id="341">
-            <strong>Signature:</strong>path:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Sends an NUnit results filename to TeamCity</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '342', 342)" onmouseover="showTip(event, '342', 342)">
-            sendToTeamCity format message
-          </code>
-          <div class="tip" id="342">
-            <strong>Signature:</strong>format:StringFormat&lt;(string -&gt; string)&gt; -&gt; message:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Send message to TeamCity</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '343', 343)" onmouseover="showTip(event, '343', 343)">
-            SetBuildNumber buildNumber
-          </code>
-          <div class="tip" id="343">
-            <strong>Signature:</strong>buildNumber:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Sets the TeamCity build number.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '344', 344)" onmouseover="showTip(event, '344', 344)">
-            SetBuildStatistic key value
-          </code>
-          <div class="tip" id="344">
-            <strong>Signature:</strong>key:string -&gt; value:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Reports a build statistic.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '345', 345)" onmouseover="showTip(event, '345', 345)">
-            SetTeamCityParameter name value
-          </code>
-          <div class="tip" id="345">
-            <strong>Signature:</strong>name:string -&gt; value:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Reports a parameter value</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '346', 346)" onmouseover="showTip(event, '346', 346)">
-            StartTestCase testCaseName
-          </code>
-          <div class="tip" id="346">
-            <strong>Signature:</strong>testCaseName:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Starts the test case.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '347', 347)" onmouseover="showTip(event, '347', 347)">
-            StartTestSuite testSuiteName
-          </code>
-          <div class="tip" id="347">
-            <strong>Signature:</strong>testSuiteName:string -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Starts the test suite.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '348', 348)" onmouseover="showTip(event, '348', 348)">
-            TeamCityBuildConfigurationName 
-          </code>
-          <div class="tip" id="348">
-            <strong>Signature:</strong>string option<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>The Name of the Build Configuration the current build belongs to or None if it's not on TeamCity.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '349', 349)" onmouseover="showTip(event, '349', 349)">
-            TeamCityBuildIsPersonal 
-          </code>
-          <div class="tip" id="349">
-            <strong>Signature:</strong>bool<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>Is set to true if the build is a personal one.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '350', 350)" onmouseover="showTip(event, '350', 350)">
-            TeamCityBuildNumber 
-          </code>
-          <div class="tip" id="350">
-            <strong>Signature:</strong>string option<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>The Build number assigned to the build by TeamCity using the build number format or None if it's not on TeamCity.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '351', 351)" onmouseover="showTip(event, '351', 351)">
-            TeamCityProjectName 
-          </code>
-          <div class="tip" id="351">
-            <strong>Signature:</strong>string option<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>The Name of the project the current build belongs to or None if it's not on TeamCity.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '352', 352)" onmouseover="showTip(event, '352', 352)">
-            TeamCityVersion 
-          </code>
-          <div class="tip" id="352">
-            <strong>Signature:</strong>string option<br />
-                      </div>
-        </td>
-        <td class="xmldoc"><p>The Version of the TeamCity server. This property can be used to determine the build is run within TeamCity.</p>
-</td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '353', 353)" onmouseover="showTip(event, '353', 353)">
             TestFailed name message details
           </code>
-          <div class="tip" id="353">
+          <div class="tip" id="330">
             <strong>Signature:</strong>name:string -&gt; message:string -&gt; details:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Reports a failed test.</p>
-</td>
+        <td class="xmldoc">
+        <p>Reports a failed test.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/TeamCityHelper.fs#L120-120" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
     </tbody>
   </table>
 
         </div>
         <div class="span3">
-          <img src="pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
+          <img src="http://fsharp.github.io/FAKE/pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
           <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
             <li class="nav-header">FAKE - F# Make</li>
             <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>

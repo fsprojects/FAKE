@@ -52,14 +52,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '529', 529)" onmouseover="showTip(event, '529', 529)">
+          <code onmouseout="hideTip(event, '503', 503)" onmouseover="showTip(event, '503', 503)">
             CreateZip (...)
           </code>
-          <div class="tip" id="529">
+          <div class="tip" id="503">
             <strong>Signature:</strong>workingDir:string -&gt; fileName:string -&gt; comment:string -&gt; level:int -&gt; flatten:bool -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Creates a zip file with the given files</p>
+        <td class="xmldoc">
+        <p>Creates a zip file with the given files</p>
 
 <h2>Parameters</h2>
 
@@ -71,32 +72,38 @@
 <li><code>flatten</code> - If set to true then all subfolders are merged into the root folder.</li>
 <li><code>files</code> - A sequence with files to zip.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/ZipHelper.fs#L21-21" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '530', 530)" onmouseover="showTip(event, '530', 530)">
+          <code onmouseout="hideTip(event, '505', 505)" onmouseover="showTip(event, '505', 505)">
             DefaultZipLevel 
           </code>
-          <div class="tip" id="530">
+          <div class="tip" id="505">
             <strong>Signature:</strong>int<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>The default zip level</p>
-</td>
+        <td class="xmldoc">
+        <p>The default zip level</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/ZipHelper.fs#L11-11" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '531', 531)" onmouseover="showTip(event, '531', 531)">
+          <code onmouseout="hideTip(event, '506', 506)" onmouseover="showTip(event, '506', 506)">
             Unzip target fileName
           </code>
-          <div class="tip" id="531">
+          <div class="tip" id="506">
             <strong>Signature:</strong>target:string -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Unzips a file with the given file name.</p>
+        <td class="xmldoc">
+        <p>Unzips a file with the given file name.</p>
 
 <h2>Parameters</h2>
 
@@ -104,19 +111,22 @@
 <li><code>target</code> - The target directory.</li>
 <li><code>fileName</code> - The file name of the zip file.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/ZipHelper.fs#L88-88" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '532', 532)" onmouseover="showTip(event, '532', 532)">
+          <code onmouseout="hideTip(event, '507', 507)" onmouseover="showTip(event, '507', 507)">
             UnzipFirstMatchingFileInMemory (...)
           </code>
-          <div class="tip" id="532">
-            <strong>Signature:</strong>predicate:(ZipEntry -&gt; bool) -&gt; zipFileName:string -&gt; string<br />
+          <div class="tip" id="507">
+            <strong>Signature:</strong>predicate:((type) -&gt; bool) -&gt; zipFileName:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Unzips a single file from the archive with the given file name.</p>
+        <td class="xmldoc">
+        <p>Unzips a single file from the archive with the given file name.</p>
 
 <h2>Parameters</h2>
 
@@ -124,19 +134,22 @@
 <li><code>predicate</code> - The predictae for the searched file in the archive.</li>
 <li><code>zipFileName</code> - The file name of the zip file.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/ZipHelper.fs#L127-127" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '533', 533)" onmouseover="showTip(event, '533', 533)">
+          <code onmouseout="hideTip(event, '508', 508)" onmouseover="showTip(event, '508', 508)">
             UnzipSingleFileInMemory (...)
           </code>
-          <div class="tip" id="533">
+          <div class="tip" id="508">
             <strong>Signature:</strong>fileToUnzip:string -&gt; zipFileName:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Unzips a single file from the archive with the given file name.</p>
+        <td class="xmldoc">
+        <p>Unzips a single file from the archive with the given file name.</p>
 
 <h2>Parameters</h2>
 
@@ -144,19 +157,22 @@
 <li><code>fileToUnzip</code> - The file inside the archive.</li>
 <li><code>zipFileName</code> - The file name of the zip file.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/ZipHelper.fs#L113-113" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '534', 534)" onmouseover="showTip(event, '534', 534)">
+          <code onmouseout="hideTip(event, '509', 509)" onmouseover="showTip(event, '509', 509)">
             Zip workingDir fileName
           </code>
-          <div class="tip" id="534">
+          <div class="tip" id="509">
             <strong>Signature:</strong>workingDir:string -&gt; fileName:string -&gt; seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Creates a zip file with the given files.</p>
+        <td class="xmldoc">
+        <p>Creates a zip file with the given files.</p>
 
 <h2>Parameters</h2>
 
@@ -165,19 +181,22 @@
 <li><code>fileName</code> - The file name of the resulting zip file.</li>
 <li><code>files</code> - A sequence with files to zip.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/ZipHelper.fs#L74-74" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '535', 535)" onmouseover="showTip(event, '535', 535)">
+          <code onmouseout="hideTip(event, '510', 510)" onmouseover="showTip(event, '510', 510)">
             ZipFile fileName targetFileName
           </code>
-          <div class="tip" id="535">
+          <div class="tip" id="510">
             <strong>Signature:</strong>fileName:string -&gt; targetFileName:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Creates a zip file with the given file.</p>
+        <td class="xmldoc">
+        <p>Creates a zip file with the given file.</p>
 
 <h2>Parameters</h2>
 
@@ -185,14 +204,16 @@
 <li><code>fileName</code> - The file name of the resulting zip file.</li>
 <li><code>targetFileName</code> - The file to zip.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/ZipHelper.fs#L80-80" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
     </tbody>
   </table>
 
         </div>
         <div class="span3">
-          <img src="pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
+          <img src="http://fsharp.github.io/FAKE/pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
           <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
             <li class="nav-header">FAKE - F# Make</li>
             <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>

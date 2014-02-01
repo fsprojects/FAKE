@@ -53,14 +53,15 @@ All operations assume that the CommandHelper can find git.exe.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '539', 539)" onmouseover="showTip(event, '539', 539)">
+          <code onmouseout="hideTip(event, '579', 579)" onmouseover="showTip(event, '579', 579)">
             clone workingDir repoUrl toPath
           </code>
-          <div class="tip" id="539">
+          <div class="tip" id="579">
             <strong>Signature:</strong>workingDir:string -&gt; repoUrl:string -&gt; toPath:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Clones a git repository.</p>
+        <td class="xmldoc">
+        <p>Clones a git repository.</p>
 
 <h2>Parameters</h2>
 
@@ -69,19 +70,22 @@ All operations assume that the CommandHelper can find git.exe.</p>
 <li><code>repoUrl</code> - The URL to the origin.</li>
 <li><code>toPath</code> - Specifes the new target subfolder.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Git/Repository.fs#L15-15" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '540', 540)" onmouseover="showTip(event, '540', 540)">
+          <code onmouseout="hideTip(event, '580', 580)" onmouseover="showTip(event, '580', 580)">
             cloneSingleBranch (...)
           </code>
-          <div class="tip" id="540">
+          <div class="tip" id="580">
             <strong>Signature:</strong>workingDir:string -&gt; repoUrl:string -&gt; branchName:string -&gt; toPath:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Clones a single branch of a git repository.</p>
+        <td class="xmldoc">
+        <p>Clones a single branch of a git repository.</p>
 
 <h2>Parameters</h2>
 
@@ -91,38 +95,44 @@ All operations assume that the CommandHelper can find git.exe.</p>
 <li><code>branchname</code> - Specifes the target branch.</li>
 <li><code>toPath</code> - Specifes the new target subfolder.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Git/Repository.fs#L24-24" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '541', 541)" onmouseover="showTip(event, '541', 541)">
+          <code onmouseout="hideTip(event, '581', 581)" onmouseover="showTip(event, '581', 581)">
             fullclean repositoryDir
           </code>
-          <div class="tip" id="541">
+          <div class="tip" id="581">
             <strong>Signature:</strong>repositoryDir:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Cleans a directory by removing all files and sub-directories.</p>
+        <td class="xmldoc">
+        <p>Cleans a directory by removing all files and sub-directories.</p>
 
 <h2>Parameters</h2>
 
 <ul>
 <li><code>repositoryDir</code> - The path of the directory to clean.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Git/Repository.fs#L46-46" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '542', 542)" onmouseover="showTip(event, '542', 542)">
+          <code onmouseout="hideTip(event, '582', 582)" onmouseover="showTip(event, '582', 582)">
             init repositoryDir bare shared
           </code>
-          <div class="tip" id="542">
+          <div class="tip" id="582">
             <strong>Signature:</strong>repositoryDir:string -&gt; bare:bool -&gt; shared:bool -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Inits a git repository.</p>
+        <td class="xmldoc">
+        <p>Inits a git repository.</p>
 
 <h2>Parameters</h2>
 
@@ -131,14 +141,16 @@ All operations assume that the CommandHelper can find git.exe.</p>
 <li><code>bare</code> - If the new directory is a bare directory.</li>
 <li><code>shared</code> - Specifies that the git repository is to be shared amongst several users. This allows users belonging to the same group to push into that repository.</li>
 </ul>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Git/Repository.fs#L35-35" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
     </tbody>
   </table>
 
         </div>
         <div class="span3">
-          <img src="pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
+          <img src="http://fsharp.github.io/FAKE/pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
           <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
             <li class="nav-header">FAKE - F# Make</li>
             <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>

@@ -76,14 +76,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '264', 264)" onmouseover="showTip(event, '264', 264)">
+          <code onmouseout="hideTip(event, '332', 332)" onmouseover="showTip(event, '332', 332)">
             parse version
           </code>
-          <div class="tip" id="264">
+          <div class="tip" id="332">
             <strong>Signature:</strong>version:string -&gt; SemVerInfo<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Parses the given version string into a SemVerInfo which can be printed using ToString() or compared
+        <td class="xmldoc">
+        <p>Parses the given version string into a SemVerInfo which can be printed using ToString() or compared
 according to the rules described in the <a href="http://semver.org/">SemVer docs</a>.</p>
 
 <h2>Sample</h2>
@@ -94,14 +95,16 @@ parse "1.2.3-alpha2"   &gt; parse "1.2.3-alpha"    // true
 parse "1.2.3-alpha002" &gt; parse "1.2.3-alpha1" // true
 parse "1.5.0-beta.2"   &gt; parse "1.5.0-rc.1"     // false
 </code></pre>
-</td>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/SemVerHelper.fs#L88-88" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
     </tbody>
   </table>
 
         </div>
         <div class="span3">
-          <img src="pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
+          <img src="http://fsharp.github.io/FAKE/pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
           <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
             <li class="nav-header">FAKE - F# Make</li>
             <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>

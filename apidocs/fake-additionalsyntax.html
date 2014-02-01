@@ -56,11 +56,14 @@
             ( ? ) f s
           </code>
           <div class="tip" id="1">
-            <strong>Signature:</strong>f:(&#39;?6767 -&gt; &#39;?6768) -&gt; s:&#39;?6767 -&gt; &#39;?6768<br />
-                          <strong>Type parameters:</strong> '?6767, '?6768          </div>
+            <strong>Signature:</strong>f:(&#39;?8004 -&gt; &#39;?8005) -&gt; s:&#39;?8004 -&gt; &#39;?8005<br />
+                          <strong>Type parameters:</strong> '?8004, '?8005          </div>
         </td>
-        <td class="xmldoc"><p>Allows to use Tokens instead of strings</p>
-</td>
+        <td class="xmldoc">
+        <p>Allows to use Tokens instead of strings</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/AdditionalSyntax.fs#L8-8" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -69,11 +72,14 @@
             ( ?&lt;- ) f str action
           </code>
           <div class="tip" id="2">
-            <strong>Signature:</strong>f:(&#39;?6770 -&gt; &#39;?6771 -&gt; &#39;?6772) -&gt; str:&#39;?6770 -&gt; action:&#39;?6771 -&gt; &#39;?6772<br />
-                          <strong>Type parameters:</strong> '?6770, '?6771, '?6772          </div>
+            <strong>Signature:</strong>f:(&#39;?8007 -&gt; &#39;?8008 -&gt; &#39;?8009) -&gt; str:&#39;?8007 -&gt; action:&#39;?8008 -&gt; &#39;?8009<br />
+                          <strong>Type parameters:</strong> '?8007, '?8008, '?8009          </div>
         </td>
-        <td class="xmldoc"><p>Allows to use Tokens instead of strings for TargetNames</p>
-</td>
+        <td class="xmldoc">
+        <p>Allows to use Tokens instead of strings for TargetNames</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/AdditionalSyntax.fs#L11-11" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -85,8 +91,11 @@
             <strong>Signature:</strong>x:string -&gt; y:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Defines that x and y are not dependent on each other but y is dependent on all dependencies of x.</p>
-</td>
+        <td class="xmldoc">
+        <p>Defines that x and y are not dependent on each other but y is dependent on all dependencies of x.</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/AdditionalSyntax.fs#L59-59" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -98,8 +107,11 @@
             <strong>Signature:</strong>x:string -&gt; (y:string * condition:bool) -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Defines a conditional dependency - y is dependent on x if the condition is true</p>
-</td>
+        <td class="xmldoc">
+        <p>Defines a conditional dependency - y is dependent on x if the condition is true</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/AdditionalSyntax.fs#L66-66" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -111,8 +123,11 @@
             <strong>Signature:</strong>x:string -&gt; y:string -&gt; string<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Defines a dependency - y is dependent on x</p>
-</td>
+        <td class="xmldoc">
+        <p>Defines a dependency - y is dependent on x</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/AdditionalSyntax.fs#L52-52" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -124,8 +139,11 @@
             <strong>Signature:</strong>target:string -&gt; dependency:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Specifies that two targets have the same dependencies</p>
-</td>
+        <td class="xmldoc">
+        <p>Specifies that two targets have the same dependencies</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/AdditionalSyntax.fs#L44-44" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -134,11 +152,14 @@
             And x y
           </code>
           <div class="tip" id="7">
-            <strong>Signature:</strong>x:&#39;?6777 -&gt; y:&#39;?6777 list -&gt; &#39;?6777 list<br />
-                          <strong>Type parameters:</strong> '?6777          </div>
+            <strong>Signature:</strong>x:&#39;?8014 -&gt; y:&#39;?8014 list -&gt; &#39;?8014 list<br />
+                          <strong>Type parameters:</strong> '?8014          </div>
         </td>
-        <td class="xmldoc"><p>Appends the dependency to the list of dependencies</p>
-</td>
+        <td class="xmldoc">
+        <p>Appends the dependency to the list of dependencies</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/AdditionalSyntax.fs#L20-20" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -147,11 +168,14 @@
             Dependency x
           </code>
           <div class="tip" id="8">
-            <strong>Signature:</strong>x:&#39;?6775 -&gt; &#39;?6775 list<br />
-                          <strong>Type parameters:</strong> '?6775          </div>
+            <strong>Signature:</strong>x:&#39;?8012 -&gt; &#39;?8012 list<br />
+                          <strong>Type parameters:</strong> '?8012          </div>
         </td>
-        <td class="xmldoc"><p>Converts a dependency into a list</p>
-</td>
+        <td class="xmldoc">
+        <p>Converts a dependency into a list</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/AdditionalSyntax.fs#L17-17" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -163,8 +187,11 @@
             <strong>Signature:</strong>x:string -&gt; y:string list -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Allows to use For? syntax for Dependencies</p>
-</td>
+        <td class="xmldoc">
+        <p>Allows to use For? syntax for Dependencies</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/AdditionalSyntax.fs#L14-14" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -176,8 +203,11 @@
             <strong>Signature:</strong>string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Runs a Target and its dependencies</p>
-</td>
+        <td class="xmldoc">
+        <p>Runs a Target and its dependencies</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/AdditionalSyntax.fs#L23-23" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -189,21 +219,27 @@
             <strong>Signature:</strong>parameterName:string -&gt; defaultTarget:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Runs the target given by the build script parameter or the given default target</p>
-</td>
+        <td class="xmldoc">
+        <p>Runs the target given by the build script parameter or the given default target</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/AdditionalSyntax.fs#L26-26" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '12', 12)" onmouseover="showTip(event, '12', 12)">
-            RunTarget ()
+            RunTarget arg1
           </code>
           <div class="tip" id="12">
             <strong>Signature:</strong>unit -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Runs the target given by the target parameter</p>
-</td>
+        <td class="xmldoc">
+        <p>Runs the target given by the target parameter</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/AdditionalSyntax.fs#L32-32" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -215,8 +251,11 @@
             <strong>Signature:</strong>defaultTarget:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Runs the target given by the target parameter or the given default target</p>
-</td>
+        <td class="xmldoc">
+        <p>Runs the target given by the target parameter or the given default target</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/AdditionalSyntax.fs#L29-29" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
       <tr>
         <td class="member-name">
@@ -228,15 +267,18 @@
             <strong>Signature:</strong>x:string -&gt; y:string -&gt; unit<br />
                       </div>
         </td>
-        <td class="xmldoc"><p>Specifies that two targets are on the same level of execution</p>
-</td>
+        <td class="xmldoc">
+        <p>Specifies that two targets are on the same level of execution</p>
+
+            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/AdditionalSyntax.fs#L38-38" class="github-link">Go to GitHub source</a>
+        </td>
       </tr>
     </tbody>
   </table>
 
         </div>
         <div class="span3">
-          <img src="pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
+          <img src="http://fsharp.github.io/FAKE/pics/logo.png" alt="FAKE - F# Make" style="width:150px;margin-left: 20px;" />
           <ul class="nav nav-list" id="menu" style="margin-top: 20px;">
             <li class="nav-header">FAKE - F# Make</li>
             <li><a href="http://fsharp.github.io/FAKE/index.html">Home page</a></li>
