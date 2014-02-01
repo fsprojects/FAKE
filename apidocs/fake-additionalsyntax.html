@@ -52,225 +52,225 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2', 2)" onmouseover="showTip(event, '2', 2)">
+          <code onmouseout="hideTip(event, '1', 1)" onmouseover="showTip(event, '1', 1)">
             ( ? ) f s
           </code>
-          <div class="tip" id="2">
+          <div class="tip" id="1">
             <strong>Signature:</strong>f:(&#39;?8004 -&gt; &#39;?8005) -&gt; s:&#39;?8004 -&gt; &#39;?8005<br />
                           <strong>Type parameters:</strong> '?8004, '?8005          </div>
         </td>
         <td class="xmldoc">
         <p>Allows to use Tokens instead of strings</p>
 
-            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/AdditionalSyntax.fs#L8-8" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AdditionalSyntax.fs#L8-8" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '3', 3)" onmouseover="showTip(event, '3', 3)">
+          <code onmouseout="hideTip(event, '2', 2)" onmouseover="showTip(event, '2', 2)">
             ( ?&lt;- ) f str action
           </code>
-          <div class="tip" id="3">
+          <div class="tip" id="2">
             <strong>Signature:</strong>f:(&#39;?8007 -&gt; &#39;?8008 -&gt; &#39;?8009) -&gt; str:&#39;?8007 -&gt; action:&#39;?8008 -&gt; &#39;?8009<br />
                           <strong>Type parameters:</strong> '?8007, '?8008, '?8009          </div>
         </td>
         <td class="xmldoc">
         <p>Allows to use Tokens instead of strings for TargetNames</p>
 
-            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/AdditionalSyntax.fs#L11-11" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AdditionalSyntax.fs#L11-11" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '4', 4)" onmouseover="showTip(event, '4', 4)">
+          <code onmouseout="hideTip(event, '3', 3)" onmouseover="showTip(event, '3', 3)">
             ( &lt;=&gt; ) x y
           </code>
-          <div class="tip" id="4">
+          <div class="tip" id="3">
             <strong>Signature:</strong>x:string -&gt; y:string -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Defines that x and y are not dependent on each other but y is dependent on all dependencies of x.</p>
 
-            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/AdditionalSyntax.fs#L59-59" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AdditionalSyntax.fs#L59-59" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '5', 5)" onmouseover="showTip(event, '5', 5)">
+          <code onmouseout="hideTip(event, '4', 4)" onmouseover="showTip(event, '4', 4)">
             ( =?&gt; ) x (y, condition)
           </code>
-          <div class="tip" id="5">
+          <div class="tip" id="4">
             <strong>Signature:</strong>x:string -&gt; (y:string * condition:bool) -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Defines a conditional dependency - y is dependent on x if the condition is true</p>
 
-            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/AdditionalSyntax.fs#L66-66" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AdditionalSyntax.fs#L66-66" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '6', 6)" onmouseover="showTip(event, '6', 6)">
+          <code onmouseout="hideTip(event, '5', 5)" onmouseover="showTip(event, '5', 5)">
             ( ==&gt; ) x y
           </code>
-          <div class="tip" id="6">
+          <div class="tip" id="5">
             <strong>Signature:</strong>x:string -&gt; y:string -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Defines a dependency - y is dependent on x</p>
 
-            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/AdditionalSyntax.fs#L52-52" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AdditionalSyntax.fs#L52-52" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '7', 7)" onmouseover="showTip(event, '7', 7)">
+          <code onmouseout="hideTip(event, '6', 6)" onmouseover="showTip(event, '6', 6)">
             addDependenciesOnSameLevel (...)
           </code>
-          <div class="tip" id="7">
+          <div class="tip" id="6">
             <strong>Signature:</strong>target:string -&gt; dependency:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Specifies that two targets have the same dependencies</p>
 
-            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/AdditionalSyntax.fs#L44-44" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AdditionalSyntax.fs#L44-44" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '8', 8)" onmouseover="showTip(event, '8', 8)">
+          <code onmouseout="hideTip(event, '7', 7)" onmouseover="showTip(event, '7', 7)">
             And x y
           </code>
-          <div class="tip" id="8">
+          <div class="tip" id="7">
             <strong>Signature:</strong>x:&#39;?8014 -&gt; y:&#39;?8014 list -&gt; &#39;?8014 list<br />
                           <strong>Type parameters:</strong> '?8014          </div>
         </td>
         <td class="xmldoc">
         <p>Appends the dependency to the list of dependencies</p>
 
-            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/AdditionalSyntax.fs#L20-20" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AdditionalSyntax.fs#L20-20" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '9', 9)" onmouseover="showTip(event, '9', 9)">
+          <code onmouseout="hideTip(event, '8', 8)" onmouseover="showTip(event, '8', 8)">
             Dependency x
           </code>
-          <div class="tip" id="9">
+          <div class="tip" id="8">
             <strong>Signature:</strong>x:&#39;?8012 -&gt; &#39;?8012 list<br />
                           <strong>Type parameters:</strong> '?8012          </div>
         </td>
         <td class="xmldoc">
         <p>Converts a dependency into a list</p>
 
-            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/AdditionalSyntax.fs#L17-17" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AdditionalSyntax.fs#L17-17" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '10', 10)" onmouseover="showTip(event, '10', 10)">
+          <code onmouseout="hideTip(event, '9', 9)" onmouseover="showTip(event, '9', 9)">
             For x y
           </code>
-          <div class="tip" id="10">
+          <div class="tip" id="9">
             <strong>Signature:</strong>x:string -&gt; y:string list -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Allows to use For? syntax for Dependencies</p>
 
-            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/AdditionalSyntax.fs#L14-14" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AdditionalSyntax.fs#L14-14" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '11', 11)" onmouseover="showTip(event, '11', 11)">
+          <code onmouseout="hideTip(event, '10', 10)" onmouseover="showTip(event, '10', 10)">
             Run 
           </code>
-          <div class="tip" id="11">
+          <div class="tip" id="10">
             <strong>Signature:</strong>string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Runs a Target and its dependencies</p>
 
-            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/AdditionalSyntax.fs#L23-23" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AdditionalSyntax.fs#L23-23" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '12', 12)" onmouseover="showTip(event, '12', 12)">
+          <code onmouseout="hideTip(event, '11', 11)" onmouseover="showTip(event, '11', 11)">
             RunParameterTargetOrDefault (...)
           </code>
-          <div class="tip" id="12">
+          <div class="tip" id="11">
             <strong>Signature:</strong>parameterName:string -&gt; defaultTarget:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Runs the target given by the build script parameter or the given default target</p>
 
-            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/AdditionalSyntax.fs#L26-26" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AdditionalSyntax.fs#L26-26" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '13', 13)" onmouseover="showTip(event, '13', 13)">
+          <code onmouseout="hideTip(event, '12', 12)" onmouseover="showTip(event, '12', 12)">
             RunTarget arg1
           </code>
-          <div class="tip" id="13">
+          <div class="tip" id="12">
             <strong>Signature:</strong>unit -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Runs the target given by the target parameter</p>
 
-            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/AdditionalSyntax.fs#L32-32" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AdditionalSyntax.fs#L32-32" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '14', 14)" onmouseover="showTip(event, '14', 14)">
+          <code onmouseout="hideTip(event, '13', 13)" onmouseover="showTip(event, '13', 13)">
             RunTargetOrDefault defaultTarget
           </code>
-          <div class="tip" id="14">
+          <div class="tip" id="13">
             <strong>Signature:</strong>defaultTarget:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Runs the target given by the target parameter or the given default target</p>
 
-            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/AdditionalSyntax.fs#L29-29" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AdditionalSyntax.fs#L29-29" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '15', 15)" onmouseover="showTip(event, '15', 15)">
+          <code onmouseout="hideTip(event, '14', 14)" onmouseover="showTip(event, '14', 14)">
             targetsAreOnSameLevel x y
           </code>
-          <div class="tip" id="15">
+          <div class="tip" id="14">
             <strong>Signature:</strong>x:string -&gt; y:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Specifies that two targets are on the same level of execution</p>
 
-            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/AdditionalSyntax.fs#L38-38" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AdditionalSyntax.fs#L38-38" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
     </tbody>

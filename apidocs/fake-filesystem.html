@@ -70,24 +70,72 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '178', 178)" onmouseover="showTip(event, '178', 178)">
+          <code onmouseout="hideTip(event, '177', 177)" onmouseover="showTip(event, '177', 177)">
             ( -- ) x pattern
           </code>
-          <div class="tip" id="178">
+          <div class="tip" id="177">
             <strong>Signature:</strong>x:FileIncludes -&gt; pattern:string -&gt; FileIncludes<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Exclude operator</p>
 
-            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Globbing/FileSystem.fs#L126-126" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/Globbing/FileSystem.fs#L126-126" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '178', 178)" onmouseover="showTip(event, '178', 178)">
+            ( !! ) x
+          </code>
+          <div class="tip" id="178">
+            <strong>Signature:</strong>x:string -&gt; FileIncludes<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Includes a single pattern and scans the files - !! x = AllFilesMatching x</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/Globbing/FileSystem.fs#L129-129" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '179', 179)" onmouseover="showTip(event, '179', 179)">
+            ( !+ ) x
+          </code>
+          <div class="tip" id="179">
+            <strong>Signature:</strong>x:string -&gt; FileIncludes<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Include prefix operator</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/Globbing/FileSystem.fs#L133-133" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '180', 180)" onmouseover="showTip(event, '180', 180)">
+            ( ++ ) x pattern
+          </code>
+          <div class="tip" id="180">
+            <strong>Signature:</strong>x:FileIncludes -&gt; pattern:string -&gt; FileIncludes<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Add Include operator</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/Globbing/FileSystem.fs#L123-123" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '181', 181)" onmouseover="showTip(event, '181', 181)">
-            ( !! ) x
+            AllFilesMatching x
           </code>
           <div class="tip" id="181">
             <strong>Signature:</strong>x:string -&gt; FileIncludes<br />
@@ -96,128 +144,80 @@
         <td class="xmldoc">
         <p>Includes a single pattern and scans the files - !! x = AllFilesMatching x</p>
 
-            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Globbing/FileSystem.fs#L129-129" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/Globbing/FileSystem.fs#L149-149" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '182', 182)" onmouseover="showTip(event, '182', 182)">
-            ( !+ ) x
-          </code>
-          <div class="tip" id="182">
-            <strong>Signature:</strong>x:string -&gt; FileIncludes<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-        <p>Include prefix operator</p>
-
-            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Globbing/FileSystem.fs#L133-133" class="github-link">Go to GitHub source</a>
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '183', 183)" onmouseover="showTip(event, '183', 183)">
-            ( ++ ) x pattern
-          </code>
-          <div class="tip" id="183">
-            <strong>Signature:</strong>x:FileIncludes -&gt; pattern:string -&gt; FileIncludes<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-        <p>Add Include operator</p>
-
-            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Globbing/FileSystem.fs#L123-123" class="github-link">Go to GitHub source</a>
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '184', 184)" onmouseover="showTip(event, '184', 184)">
-            AllFilesMatching x
-          </code>
-          <div class="tip" id="184">
-            <strong>Signature:</strong>x:string -&gt; FileIncludes<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-        <p>Includes a single pattern and scans the files - !! x = AllFilesMatching x</p>
-
-            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Globbing/FileSystem.fs#L149-149" class="github-link">Go to GitHub source</a>
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '185', 185)" onmouseover="showTip(event, '185', 185)">
             findToolFolderInSubPath (...)
           </code>
-          <div class="tip" id="185">
+          <div class="tip" id="182">
             <strong>Signature:</strong>toolname:string -&gt; defaultPath:string -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Looks for a tool in all subfolders - returns the folder where the tool was found.</p>
 
-            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Globbing/FileSystem.fs#L141-141" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/Globbing/FileSystem.fs#L141-141" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '186', 186)" onmouseover="showTip(event, '186', 186)">
+          <code onmouseout="hideTip(event, '183', 183)" onmouseover="showTip(event, '183', 183)">
             findToolInSubPath toolname defaultPath
           </code>
-          <div class="tip" id="186">
+          <div class="tip" id="183">
             <strong>Signature:</strong>toolname:string -&gt; defaultPath:string -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Looks for a tool in all subfolders - returns the tool file name.</p>
 
-            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Globbing/FileSystem.fs#L136-136" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/Globbing/FileSystem.fs#L136-136" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '187', 187)" onmouseover="showTip(event, '187', 187)">
+          <code onmouseout="hideTip(event, '184', 184)" onmouseover="showTip(event, '184', 184)">
             Include x
           </code>
-          <div class="tip" id="187">
+          <div class="tip" id="184">
             <strong>Signature:</strong>x:string -&gt; FileIncludes<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Include files</p>
 
-            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Globbing/FileSystem.fs#L117-117" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/Globbing/FileSystem.fs#L117-117" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '188', 188)" onmouseover="showTip(event, '188', 188)">
+          <code onmouseout="hideTip(event, '185', 185)" onmouseover="showTip(event, '185', 185)">
             Log message files
           </code>
-          <div class="tip" id="188">
+          <div class="tip" id="185">
             <strong>Signature:</strong>message:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Logs the given files with the message.</p>
 
-            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Globbing/FileSystem.fs#L114-114" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/Globbing/FileSystem.fs#L114-114" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '189', 189)" onmouseover="showTip(event, '189', 189)">
+          <code onmouseout="hideTip(event, '186', 186)" onmouseover="showTip(event, '186', 186)">
             Scan files
           </code>
-          <div class="tip" id="189">
+          <div class="tip" id="186">
             <strong>Signature:</strong>files:&#39;?7593 -&gt; &#39;?7593<br />
                           <strong>Type parameters:</strong> '?7593          </div>
         </td>
@@ -225,39 +225,39 @@
         <p>Lazy scan for include files.
 Will be processed at the time when needed.</p>
 
-            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Globbing/FileSystem.fs#L154-154" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/Globbing/FileSystem.fs#L154-154" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '193', 193)" onmouseover="showTip(event, '193', 193)">
+          <code onmouseout="hideTip(event, '187', 187)" onmouseover="showTip(event, '187', 187)">
             ScanImmediately includes
           </code>
-          <div class="tip" id="193">
+          <div class="tip" id="187">
             <strong>Signature:</strong>includes:seq&lt;&#39;?7595&gt; -&gt; &#39;?7595 list<br />
                           <strong>Type parameters:</strong> '?7595          </div>
         </td>
         <td class="xmldoc">
         <p>Scans immediately for include files - all matching files will be memoized.</p>
 
-            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Globbing/FileSystem.fs#L158-158" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/Globbing/FileSystem.fs#L158-158" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '194', 194)" onmouseover="showTip(event, '194', 194)">
+          <code onmouseout="hideTip(event, '188', 188)" onmouseover="showTip(event, '188', 188)">
             SetBaseDir dir fileIncludes
           </code>
-          <div class="tip" id="194">
+          <div class="tip" id="188">
             <strong>Signature:</strong>dir:string -&gt; fileIncludes:FileIncludes -&gt; FileIncludes<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Sets a directory as baseDirectory for fileIncludes.</p>
 
-            <a href="https://github.com/fsharp/FAKE/src/app/FakeLib/Globbing/FileSystem.fs#L120-120" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/Globbing/FileSystem.fs#L120-120" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
     </tbody>
