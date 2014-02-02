@@ -1,5 +1,4 @@
-﻿[<AutoOpen>]
-/// Contains a task which can be used to run [DotCover](http://www.jetbrains.com/dotcover/) on .NET assemblies.
+﻿/// Contains a task which can be used to run [DotCover](http://www.jetbrains.com/dotcover/) on .NET assemblies.
 module Fake.DotCover
 
 open Fake
