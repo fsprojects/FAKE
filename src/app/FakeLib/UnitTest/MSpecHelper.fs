@@ -73,6 +73,7 @@ let MSpec setParams assemblies =
     let parameters = setParams MSpecDefaults
     
     let args = buildMSpecArgs parameters assemblies
+    trace (parameters.ToolPath + " " + args)
 
     if 0 <> ExecProcess (fun info ->
         info.FileName <- parameters.ToolPath
