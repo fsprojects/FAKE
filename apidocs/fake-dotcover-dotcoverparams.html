@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Stash - FAKE - F# Make</title>
+    <title>DotCoverParams - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,52 +36,119 @@
 
 
 
-<h1>Stash</h1>
+<h1>DotCoverParams</h1>
 <div class="xmldoc">
-<p>Contains helper functions which allow to deal with git stash.</p>
+<p>The DotCover parameter type for running coverage</p>
 </div>
-
-<!-- Render nested types and modules, if there are any -->
-
-  <h3>Functions and values</h3>
+  <h3>Record Fields</h3>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Function or value</td><td>Description</td></tr>
+      <tr><td>Record Field</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '618', 618)" onmouseover="showTip(event, '618', 618)">
-            pop repositoryDir
+          <code onmouseout="hideTip(event, '719', 719)" onmouseover="showTip(event, '719', 719)">
+            Filters
           </code>
-          <div class="tip" id="618">
-            <strong>Signature:</strong>repositoryDir:string -&gt; unit<br />
+          <div class="tip" id="719">
+            <strong>Signature:</strong>string<br />
                       </div>
         </td>
         <td class="xmldoc">
-        <p>Remove a single stashed state from the stash list and 
-apply it on top of the current working tree state, 
-i.e., do the inverse operation of git stash save. 
-The working directory must match the index.</p>
-
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/Git/Stash.fs#L16-16" class="github-link">Go to GitHub source</a>
+        
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DotCover.fs#L23-23" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '619', 619)" onmouseover="showTip(event, '619', 619)">
-            push repositoryDir message
+          <code onmouseout="hideTip(event, '720', 720)" onmouseover="showTip(event, '720', 720)">
+            Output
           </code>
-          <div class="tip" id="619">
-            <strong>Signature:</strong>repositoryDir:string -&gt; message:string -&gt; unit<br />
+          <div class="tip" id="720">
+            <strong>Signature:</strong>string<br />
                       </div>
         </td>
         <td class="xmldoc">
-        <p>Stash the changes in a dirty working directory away.</p>
+        
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DotCover.fs#L22-22" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/Git/Stash.fs#L8-8" class="github-link">Go to GitHub source</a>
+          <code onmouseout="hideTip(event, '721', 721)" onmouseover="showTip(event, '721', 721)">
+            TargetArguments
+          </code>
+          <div class="tip" id="721">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DotCover.fs#L20-20" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '722', 722)" onmouseover="showTip(event, '722', 722)">
+            TargetExecutable
+          </code>
+          <div class="tip" id="722">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DotCover.fs#L19-19" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '723', 723)" onmouseover="showTip(event, '723', 723)">
+            TargetWorkingDir
+          </code>
+          <div class="tip" id="723">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DotCover.fs#L21-21" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '724', 724)" onmouseover="showTip(event, '724', 724)">
+            ToolPath
+          </code>
+          <div class="tip" id="724">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DotCover.fs#L17-17" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '725', 725)" onmouseover="showTip(event, '725', 725)">
+            WorkingDir
+          </code>
+          <div class="tip" id="725">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DotCover.fs#L18-18" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
     </tbody>
