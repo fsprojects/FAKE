@@ -115,7 +115,7 @@ let DotCover (setParams: DotCoverParams -> DotCoverParams) =
 ///  - `setParams` - Function used to overwrite the DotCover merge default parameters.
 /// ## Sample
 ///
-///    DotCoverMerge (fun p -> { p with 
+///     DotCoverMerge (fun p -> { p with 
 ///                         Source = [artifactsDir @@ "NUnitDotCover.snapshot";artifactsDir @@ "MSpecDotCover.snapshot"]
 ///                         Output = artifactsDir @@ "DotCover.snapshot" }) 
 let DotCoverMerge (setParams: DotCoverMergeParams -> DotCoverMergeParams) =
