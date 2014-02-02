@@ -23,7 +23,13 @@
             }
           </div>
         </td>
-        <td class="xmldoc">@it.Comment.FullText</td>
+        <td class="xmldoc">
+        @it.Comment.FullText
+        @if (!String.IsNullOrEmpty(it.Details.FormatSourceLocation))
+        {
+            <a href="@it.Details.FormatSourceLocation" class="github-link">Go to GitHub source</a>
+        }
+        </td>
       </tr>
     }
     </tbody>

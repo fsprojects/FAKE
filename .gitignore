@@ -22,6 +22,7 @@ _ReSharper*/
 *.suo
 */*.suo
 *.user
+*.userprefs
 output.xml
 FAKE.crunchsolution.cache
 FAKE_mm_cache.bin
@@ -48,3 +49,5 @@ tools/RazorEngine
 !tools/FAKE/tools/FakeLib.pdb
 .gitignore
 _NCrunch_FAKE/
+tools/FSharp.Compiler.Service
+tools/FSharp.Formatting.CommandTool/

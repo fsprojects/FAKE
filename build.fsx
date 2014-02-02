@@ -43,12 +43,6 @@ Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; deployDir; docsDir; apido
 
 Target "RestorePackages" RestorePackages
 
-Target "CopyFSharpFiles" (fun _ ->
-    ["./tools/FSharp/FSharp.Core.optdata"
-     "./tools/FSharp/FSharp.Core.sigdata"]
-      |> CopyTo buildDir
-)
-
 open Fake.AssemblyInfoFile
 
 Target "SetAssemblyInfo" (fun _ ->
@@ -101,11 +95,12 @@ Target "GenerateDocs" (fun _ ->
     let source = "./help"
     let template = "./help/templates/template-project.html"
     let templatesDir = "./help/templates/reference/" 
+    let githubLink = "https://github.com/fsharp/FAKE/blob/develop"
     let projInfo =
       [ "page-description", "FAKE - F# Make"
         "page-author", separated ", " authors
         "project-author", separated ", " authors
-        "github-link", "http://github.com/fsharp/fake"
+        "github-link", githubLink
         "project-github", "http://github.com/fsharp/fake"
         "project-nuget", "https://www.nuget.org/packages/FAKE"
         "root", "http://fsharp.github.io/FAKE"
@@ -117,8 +112,9 @@ Target "GenerateDocs" (fun _ ->
         !! "./build/**/Fake.*.dll"
           ++ "./build/FakeLib.dll"
           -- "./build/**/Fake.Experimental.dll"
-        
-    CreateDocsForDlls apidocsDir templatesDir projInfo dllFiles
+          -- "./build/**/Fake.Deploy.Lib.dll"
+    
+    CreateDocsForDlls apidocsDir templatesDir projInfo githubLink dllFiles
 
     WriteStringToFile false "./docs/.nojekyll" ""
 
@@ -183,7 +179,7 @@ Target "CreateNuGet" (fun _ ->
 
 Target "ReleaseDocs" (fun _ ->
     CleanDir "gh-pages"
-    cloneSingleBranch "" "git@github.com:fsharp/FAKE.git" "gh-pages" "gh-pages"
+    cloneSingleBranch "" "https://github.com/fsharp/FAKE.git" "gh-pages" "gh-pages"
 
     fullclean "gh-pages"
     CopyRecursive "docs" "gh-pages" true |> printfn "%A"
@@ -198,7 +194,6 @@ Target "Default" DoNothing
 // Dependencies
 "Clean"
     ==> "RestorePackages"
-    ==> "CopyFSharpFiles"
     =?> ("SetAssemblyInfo",not isLocalBuild )
     ==> "BuildSolution"
     ==> "Test"

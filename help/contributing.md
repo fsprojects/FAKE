@@ -13,6 +13,11 @@ contributing to FAKE.
    [Issue list](https://github.com/fsharp/FAKE/issues) on GitHub or send
    an email to the [FAKE mailing list](http://groups.google.com/group/fsharpMake).
 
+## Features vs. BugFixes
+
+If you find a bug and want to contribute a fix then please send a pull request to the [master](https://github.com/fsharp/FAKE/tree/master) branch.
+Please use the [develop](https://github.com/fsharp/FAKE/tree/develop) branch for all other pull requests (features, documentation, ...).
+
 ## Documentation
 
 The documentation for FAKE is automatically generated using the 
