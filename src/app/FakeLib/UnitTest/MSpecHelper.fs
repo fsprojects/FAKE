@@ -36,6 +36,27 @@ let MSpecDefaults = {
     TimeOut = TimeSpan.FromMinutes 5.
     ErrorLevel = Error }
 
+/// Builds the command line arguments from the given parameter record and the given assemblies.
+/// [omit]
+let buildMSpecArgs parameters assemblies =
+    let html,htmlText = 
+        if isNotNullOrEmpty parameters.HtmlOutputDir then
+            true,sprintf "--html\" \"%s" <| parameters.HtmlOutputDir.TrimEnd Path.DirectorySeparatorChar
+        else
+            false,""
+    let includes = parameters.IncludeTags |> separated ","
+    let excludes = parameters.ExcludeTags |> separated ","
+
+    new StringBuilder()
+    |> appendIfTrue (buildServer = TeamCity) "--teamcity"
+    |> appendIfTrue parameters.Silent "-s" 
+    |> appendIfTrue html "-t" 
+    |> appendIfTrue html htmlText 
+    |> appendIfTrue (isNotNullOrEmpty excludes) (sprintf "-x\" \"%s" excludes) 
+    |> appendIfTrue (isNotNullOrEmpty includes) (sprintf "-i\" \"%s" includes) 
+    |> appendFileNamesIfNotNull assemblies
+    |> toText
+
 /// This task to can be used to run [machine.specifications](https://github.com/machine/machine.specifications) on test libraries.
 /// ## Parameters
 ///
@@ -51,24 +72,8 @@ let MSpec setParams assemblies =
     traceStartTask "MSpec" details
     let parameters = setParams MSpecDefaults
     
-    let args =
-        let html,htmlText = 
-            if isNotNullOrEmpty parameters.HtmlOutputDir then
-                true,sprintf "--html\" \"%s" <| parameters.HtmlOutputDir.TrimEnd Path.DirectorySeparatorChar
-            else
-                false,""
-        let includes = parameters.IncludeTags |> separated ","
-        let excludes = parameters.ExcludeTags |> separated ","
-
-        new StringBuilder()
-        |> appendIfTrue (buildServer = TeamCity) "--teamcity"
-        |> appendIfTrue parameters.Silent "-s" 
-        |> appendIfTrue html "-t" 
-        |> appendIfTrue html htmlText 
-        |> appendIfTrue (isNotNullOrEmpty excludes) (sprintf "-x\" \"%s" excludes) 
-        |> appendIfTrue (isNotNullOrEmpty includes) (sprintf "-i\" \"%s" includes) 
-        |> appendFileNamesIfNotNull assemblies
-        |> toText
+    let args = buildMSpecArgs parameters assemblies
+    trace (parameters.ToolPath + " " + args)
 
     if 0 <> ExecProcess (fun info ->
         info.FileName <- parameters.ToolPath
