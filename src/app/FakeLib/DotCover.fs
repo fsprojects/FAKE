@@ -99,8 +99,7 @@ let buildParamsAndExecute parameters buildArguments toolPath workingDir =
               info.Arguments <- args) TimeSpan.MaxValue
     if result <> 0 then failwithf "Error running %s" toolPath
 
-/// Runs the DotCover "cover" command, using a target executable (such as NUnit or MSpec)
-/// and generates a snapshot file
+/// Runs the DotCover "cover" command, using a target executable (such as NUnit or MSpec) and generates a snapshot file.
 ///
 /// ## Parameters
 ///
@@ -118,7 +117,8 @@ let DotCover (setParams: DotCoverParams -> DotCoverParams) =
 /// ## Sample
 ///
 ///     DotCoverMerge (fun p -> { p with 
-///                         Source = [artifactsDir @@ "NUnitDotCover.snapshot";artifactsDir @@ "MSpecDotCover.snapshot"]
+///                         Source = [artifactsDir @@ "NUnitDotCover.snapshot"
+///                                   artifactsDir @@ "MSpecDotCover.snapshot"]
 ///                         Output = artifactsDir @@ "DotCover.snapshot" }) 
 let DotCoverMerge (setParams: DotCoverMergeParams -> DotCoverMergeParams) =
     let parameters = (DotCoverMergeDefaults |> setParams)
@@ -128,6 +128,7 @@ let DotCoverMerge (setParams: DotCoverMergeParams -> DotCoverMergeParams) =
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to overwrite the DotCover report default parameters.
+///
 /// ## Sample
 ///
 ///     DotCoverReport (fun p -> { p with 
