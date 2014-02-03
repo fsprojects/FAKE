@@ -154,8 +154,11 @@ let DotCoverReport (setParams: DotCoverReportParams -> DotCoverReportParams) =
 ///             (fun nUnitOptions -> { nUnitOptions with
 ///                     DisableShadowCopy = true })
 let DotCoverNUnit (setDotCoverParams: DotCoverParams -> DotCoverParams) (setNUnitParams: NUnitParams -> NUnitParams) (assemblies: string seq) =
-    let parameters = NUnitDefaults |> setNUnitParams            
     let assemblies = assemblies |> Seq.toArray
+    let details =  assemblies |> separated ", "
+    traceStartTask "DotCoverNUnit" details
+
+    let parameters = NUnitDefaults |> setNUnitParams
     let args = buildNUnitdArgs parameters assemblies
     
     DotCover (fun p ->
@@ -163,6 +166,8 @@ let DotCoverNUnit (setDotCoverParams: DotCoverParams -> DotCoverParams) (setNUni
                      TargetExecutable = parameters.ToolPath @@ parameters.ToolName
                      TargetArguments = args
                   } |> setDotCoverParams)
+
+    traceEndTask "DotCoverNUnit" details
 
 /// Runs the DotCover "cover" command against the MSpec test runner.
 /// ## Parameters
@@ -179,8 +184,12 @@ let DotCoverNUnit (setDotCoverParams: DotCoverParams -> DotCoverParams) (setNUni
 ///             (fun mSpecOptions -> { mSpecOptions with
 ///                     Silent = true })
 let DotCoverMSpec (setDotCoverParams: DotCoverParams -> DotCoverParams) (setMSpecParams: MSpecParams -> MSpecParams) (assemblies: string seq) =
-    let parameters = MSpecDefaults |> setMSpecParams            
     let assemblies = assemblies |> Seq.toArray
+    let details =  assemblies |> separated ", "
+    traceStartTask "DotCoverMSpec" details
+
+    let parameters = MSpecDefaults |> setMSpecParams            
+   
     let args = buildMSpecArgs parameters assemblies
     
     DotCover (fun p ->
@@ -188,3 +197,5 @@ let DotCoverMSpec (setDotCoverParams: DotCoverParams -> DotCoverParams) (setMSpe
                      TargetExecutable = parameters.ToolPath
                      TargetArguments = args
                   } |> setDotCoverParams)
+
+    traceEndTask "DotCoverMSpec" details
