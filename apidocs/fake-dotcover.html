@@ -88,10 +88,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '72', 72)" onmouseover="showTip(event, '72', 72)">
+          <code onmouseout="hideTip(event, '87', 87)" onmouseover="showTip(event, '87', 87)">
             buildDotCoverArgs parameters
           </code>
-          <div class="tip" id="72">
+          <div class="tip" id="87">
             <strong>Signature:</strong>parameters:DotCoverParams -&gt; string<br />
                       </div>
         </td>
@@ -103,10 +103,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '73', 73)" onmouseover="showTip(event, '73', 73)">
+          <code onmouseout="hideTip(event, '101', 101)" onmouseover="showTip(event, '101', 101)">
             buildDotCoverMergeArgs parameters
           </code>
-          <div class="tip" id="73">
+          <div class="tip" id="101">
             <strong>Signature:</strong>parameters:DotCoverMergeParams -&gt; string<br />
                       </div>
         </td>
@@ -118,10 +118,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '74', 74)" onmouseover="showTip(event, '74', 74)">
+          <code onmouseout="hideTip(event, '102', 102)" onmouseover="showTip(event, '102', 102)">
             buildDotCoverReportArgs parameters
           </code>
-          <div class="tip" id="74">
+          <div class="tip" id="102">
             <strong>Signature:</strong>parameters:DotCoverReportParams -&gt; string<br />
                       </div>
         </td>
@@ -133,10 +133,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '75', 75)" onmouseover="showTip(event, '75', 75)">
+          <code onmouseout="hideTip(event, '103', 103)" onmouseover="showTip(event, '103', 103)">
             buildParamsAndExecute (...)
           </code>
-          <div class="tip" id="75">
+          <div class="tip" id="103">
             <strong>Signature:</strong>parameters:&#39;?7800 -&gt; buildArguments:(&#39;?7800 -&gt; string) -&gt; toolPath:string -&gt; workingDir:string -&gt; unit<br />
                           <strong>Type parameters:</strong> '?7800          </div>
         </td>
@@ -148,10 +148,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '76', 76)" onmouseover="showTip(event, '76', 76)">
+          <code onmouseout="hideTip(event, '104', 104)" onmouseover="showTip(event, '104', 104)">
             DotCover setParams
           </code>
-          <div class="tip" id="76">
+          <div class="tip" id="104">
             <strong>Signature:</strong>setParams:(DotCoverParams -&gt; DotCoverParams) -&gt; unit<br />
                       </div>
         </td>
@@ -165,16 +165,16 @@ and generates a snapshot file</p>
 <li><code>setParams</code> - Function used to overwrite the DotCover default parameters.</li>
 </ul>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DotCover.fs#L107-107" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DotCover.fs#L108-108" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '77', 77)" onmouseover="showTip(event, '77', 77)">
+          <code onmouseout="hideTip(event, '105', 105)" onmouseover="showTip(event, '105', 105)">
             DotCoverDefaults 
           </code>
-          <div class="tip" id="77">
+          <div class="tip" id="105">
             <strong>Signature:</strong>DotCoverParams<br />
                       </div>
         </td>
@@ -187,10 +187,10 @@ and generates a snapshot file</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '78', 78)" onmouseover="showTip(event, '78', 78)">
+          <code onmouseout="hideTip(event, '106', 106)" onmouseover="showTip(event, '106', 106)">
             DotCoverMerge setParams
           </code>
-          <div class="tip" id="78">
+          <div class="tip" id="106">
             <strong>Signature:</strong>setParams:(DotCoverMergeParams -&gt; DotCoverMergeParams) -&gt; unit<br />
                       </div>
         </td>
@@ -201,23 +201,26 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
 <h2>Parameters</h2>
 
 <ul>
-<li><p><code>setParams</code> - Function used to overwrite the DotCover merge default parameters.</p>
-<h2>Sample</h2>
-<p>DotCoverMerge (fun p -> { p with 
-                    Source = [artifactsDir @@ "NUnitDotCover.snapshot";artifactsDir @@ "MSpecDotCover.snapshot"]
-                    Output = artifactsDir @@ "DotCover.snapshot" })</p></li>
+<li><code>setParams</code> - Function used to overwrite the DotCover merge default parameters.</li>
 </ul>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DotCover.fs#L121-121" class="github-link">Go to GitHub source</a>
+<h2>Sample</h2>
+
+<pre><code>DotCoverMerge (fun p -&gt; { p with 
+                    Source = [artifactsDir @@ "NUnitDotCover.snapshot";artifactsDir @@ "MSpecDotCover.snapshot"]
+                    Output = artifactsDir @@ "DotCover.snapshot" }) 
+</code></pre>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DotCover.fs#L123-123" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '79', 79)" onmouseover="showTip(event, '79', 79)">
+          <code onmouseout="hideTip(event, '107', 107)" onmouseover="showTip(event, '107', 107)">
             DotCoverMergeDefaults 
           </code>
-          <div class="tip" id="79">
+          <div class="tip" id="107">
             <strong>Signature:</strong>DotCoverMergeParams<br />
                       </div>
         </td>
@@ -229,10 +232,10 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '80', 80)" onmouseover="showTip(event, '80', 80)">
+          <code onmouseout="hideTip(event, '108', 108)" onmouseover="showTip(event, '108', 108)">
             DotCoverMSpec (...)
           </code>
-          <div class="tip" id="80">
+          <div class="tip" id="108">
             <strong>Signature:</strong>setDotCoverParams:(DotCoverParams -&gt; DotCoverParams) -&gt; setMSpecParams:(MSpecParams -&gt; MSpecParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -243,26 +246,29 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
 
 <ul>
 <li><code>setDotCoverParams</code> - Function used to overwrite the DotCover report default parameters.</li>
-<li><p><code>setMSpecParams</code> - Function used to overwrite the MSpec default parameters.</p>
-<h2>Sample</h2>
-<p>!! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll") 
-    |> DotCoverMSpec 
-        (fun dotCoverOptions -> { dotCoverOptions with 
-                Output = artifactsDir @@ "MSpecDotCover.snapshot" }) 
-        (fun mSpecOptions -> { mSpecOptions with
-                Silent = true })</p></li>
+<li><code>setMSpecParams</code> - Function used to overwrite the MSpec default parameters.</li>
 </ul>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DotCover.fs#L176-176" class="github-link">Go to GitHub source</a>
+<h2>Sample</h2>
+
+<pre><code>!! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll") 
+    |&gt; DotCoverMSpec 
+        (fun dotCoverOptions -&gt; { dotCoverOptions with 
+                Output = artifactsDir @@ "MSpecDotCover.snapshot" }) 
+        (fun mSpecOptions -&gt; { mSpecOptions with
+                Silent = true })
+</code></pre>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DotCover.fs#L180-180" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '81', 81)" onmouseover="showTip(event, '81', 81)">
+          <code onmouseout="hideTip(event, '109', 109)" onmouseover="showTip(event, '109', 109)">
             DotCoverNUnit (...)
           </code>
-          <div class="tip" id="81">
+          <div class="tip" id="109">
             <strong>Signature:</strong>setDotCoverParams:(DotCoverParams -&gt; DotCoverParams) -&gt; setNUnitParams:(NUnitParams -&gt; NUnitParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -273,26 +279,29 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
 
 <ul>
 <li><code>setDotCoverParams</code> - Function used to overwrite the DotCover report default parameters.</li>
-<li><p><code>setNUnitParams</code> - Function used to overwrite the NUnit default parameters.</p>
-<h2>Sample</h2>
-<p>!! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll") 
-    |> DotCoverNUnit 
-        (fun dotCoverOptions -> { dotCoverOptions with 
-                Output = artifactsDir @@ "NUnitDotCover.snapshot" }) 
-        (fun nUnitOptions -> { nUnitOptions with
-                DisableShadowCopy = true })</p></li>
+<li><code>setNUnitParams</code> - Function used to overwrite the NUnit default parameters.</li>
 </ul>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DotCover.fs#L152-152" class="github-link">Go to GitHub source</a>
+<h2>Sample</h2>
+
+<pre><code>!! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll") 
+    |&gt; DotCoverNUnit 
+        (fun dotCoverOptions -&gt; { dotCoverOptions with 
+                Output = artifactsDir @@ "NUnitDotCover.snapshot" }) 
+        (fun nUnitOptions -&gt; { nUnitOptions with
+                DisableShadowCopy = true })
+</code></pre>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DotCover.fs#L155-155" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '82', 82)" onmouseover="showTip(event, '82', 82)">
+          <code onmouseout="hideTip(event, '110', 110)" onmouseover="showTip(event, '110', 110)">
             DotCoverReport setParams
           </code>
-          <div class="tip" id="82">
+          <div class="tip" id="110">
             <strong>Signature:</strong>setParams:(DotCoverReportParams -&gt; DotCoverReportParams) -&gt; unit<br />
                       </div>
         </td>
@@ -310,16 +319,16 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
                     ReportType = DotCoverReportType.Xml })</p></li>
 </ul>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DotCover.fs#L135-135" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DotCover.fs#L137-137" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '83', 83)" onmouseover="showTip(event, '83', 83)">
+          <code onmouseout="hideTip(event, '111', 111)" onmouseover="showTip(event, '111', 111)">
             DotCoverReportDefaults 
           </code>
-          <div class="tip" id="83">
+          <div class="tip" id="111">
             <strong>Signature:</strong>DotCoverReportParams<br />
                       </div>
         </td>
@@ -331,10 +340,10 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '84', 84)" onmouseover="showTip(event, '84', 84)">
+          <code onmouseout="hideTip(event, '112', 112)" onmouseover="showTip(event, '112', 112)">
             getWorkingDir workingDir
           </code>
-          <div class="tip" id="84">
+          <div class="tip" id="112">
             <strong>Signature:</strong>workingDir:string -&gt; string<br />
                       </div>
         </td>
