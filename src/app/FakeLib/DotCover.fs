@@ -101,6 +101,7 @@ let buildParamsAndExecute parameters buildArguments toolPath workingDir =
 
 /// Runs the DotCover "cover" command, using a target executable (such as NUnit or MSpec)
 /// and generates a snapshot file
+///
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to overwrite the DotCover default parameters.
@@ -113,6 +114,7 @@ let DotCover (setParams: DotCoverParams -> DotCoverParams) =
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to overwrite the DotCover merge default parameters.
+///
 /// ## Sample
 ///
 ///     DotCoverMerge (fun p -> { p with 
@@ -141,6 +143,7 @@ let DotCoverReport (setParams: DotCoverReportParams -> DotCoverReportParams) =
 ///
 ///  - `setDotCoverParams` - Function used to overwrite the DotCover report default parameters.
 ///  - `setNUnitParams` - Function used to overwrite the NUnit default parameters.
+///
 /// ## Sample
 ///
 ///     !! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll") 
@@ -165,6 +168,7 @@ let DotCoverNUnit (setDotCoverParams: DotCoverParams -> DotCoverParams) (setNUni
 ///
 ///  - `setDotCoverParams` - Function used to overwrite the DotCover report default parameters.
 ///  - `setMSpecParams` - Function used to overwrite the MSpec default parameters.
+///
 /// ## Sample
 ///
 ///     !! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll") 
