@@ -15,7 +15,7 @@ type CreateReleaseOptions = {
     Project                 : string
     Version                 : string
     PackageVersion          : string
-    [<Obsolete "use Packages instead of PackageVersionOverride">]
+//    [<Obsolete "use Packages instead of PackageVersionOverride">] // warns on any use of the record
     PackageVersionOverride  : string option
     Packages                : string list
     PackagesFolder          : string option
