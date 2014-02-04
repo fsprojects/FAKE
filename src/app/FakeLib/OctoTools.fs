@@ -89,6 +89,7 @@ let optionalObjParam p o =
     | Some x -> sprintf " --%s=\"%s\"" p (x.ToString())
     | None -> ""     
 
+/// [omit]
 let stringListParam p os =
     let sb = Text.StringBuilder()
     for o in os do
