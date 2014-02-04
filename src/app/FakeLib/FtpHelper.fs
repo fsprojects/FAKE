@@ -92,7 +92,7 @@ let uploadAFile (server:string) (user:string) (pwd:string) (destPath:string) (sr
 let private checkInExistingDirList server user pwd destPath fname =
     destPath |> lastSlashPos |> getSubstring 0 destPath |> getFtpDirContents server user pwd |> regexCheck fname
 
-/// <summary>Given a folder path, will check if that folder is present at a given root directory of a ftp server<summary>
+/// <summary>Given a folder path, will check if that folder is present at a given root directory of a ftp server</summary>
 /// <param name="destPath">The full name of folder which needs to be checked for existance, including all its parent folders</param>
 /// <param name="server">Ftp Server name (ex: "ftp://10.100.200.300:21/")</param>
 /// <param name="user">Ftp Server login name (ex: "joebloggs")</param>
