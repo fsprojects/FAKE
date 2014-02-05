@@ -14,7 +14,7 @@ let parseArgs cmdArgs =
                         addXmlListener s.[1]
                     s.[0], s.[1]
                 else
-                    if (i = 0) && (not (arg.StartsWith "-")) then
+                    if i = 0 then
                         "target", arg
                     else
                         arg, "true")
