@@ -131,10 +131,8 @@ try
                 let printDetails = containsParam "details" cmdArgs
                 if printDetails then
                     printEnvironment cmdArgs args
-                if not (runBuildScript printDetails buildScriptArg fsiArgs args) then
-                    Environment.ExitCode <- 1
-                else
-                    if printDetails then log "Ready."
+                if not (runBuildScript printDetails buildScriptArg fsiArgs args) then Environment.ExitCode <- 1
+                else if printDetails then log "Ready."
             | Some handler ->
                 handler.Interact()
     with
