@@ -62,13 +62,28 @@ let executeFSIWithArgs workingDirectory script extraFsiArgs args =
     Thread.Sleep 1000
     result = 0
 
-/// Run the given buildscript with fsi.exe at the given working directory.
-let runBuildScriptAt workingDirectory printDetails script extraFsiArgs args =
-    if printDetails then traceFAKE "Running Buildscript: %s" script
-    let result = ExecProcess (FsiStartInfo script workingDirectory extraFsiArgs args) System.TimeSpan.MaxValue
-    Thread.Sleep 1000
-    result = 0
+open Microsoft.FSharp.Compiler.Interactive.Shell
 
-/// Run the given buildscript with fsi.exe
-let runBuildScript printDetails script args =
-    runBuildScriptAt "" printDetails script args
+/// Run the given buildscript at the given working directory.
+let runBuildScriptAt workingDirectory printDetails script extraFsiArgs args =
+    // TODO: What do we do with the args?
+    if printDetails then traceFAKE "Running Buildscript: %s" script
+
+    let fsiConfig = FsiEvaluationSession.GetDefaultConfiguration()
+    let commonOptions = [| "fsi.exe"; "--noninteractive";|] |> Array.append extraFsiArgs
+    let stdin = new StreamReader(Stream.Null)
+ 
+    let stdoutStream = new CompilerOutputStream()
+    let stdout = StreamWriter.Synchronized(new StreamWriter(stdoutStream, AutoFlush=true))
+ 
+    let stderrStream = new CompilerOutputStream()
+    let stderr = StreamWriter.Synchronized(new StreamWriter(stderrStream, AutoFlush=true))
+    
+
+    let session = FsiEvaluationSession(fsiConfig, commonOptions, stdin, stdout, stderr)
+
+    session.EvalScript script
+
+/// Run the given buildscript
+let runBuildScript printDetails script extraFsiArgs args =
+    runBuildScriptAt "" printDetails script extraFsiArgs args
