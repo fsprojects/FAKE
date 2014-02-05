@@ -15,7 +15,9 @@ type CreateReleaseOptions = {
     Project                 : string
     Version                 : string
     PackageVersion          : string
+//    [<Obsolete "use Packages instead of PackageVersionOverride">] // warns on any use of the record
     PackageVersionOverride  : string option
+    Packages                : string list
     PackagesFolder          : string option
     ReleaseNotes            : string
     ReleaseNotesFile        : string }
@@ -58,7 +60,7 @@ let serverOptions = { Server = ""; ApiKey = ""; }
 
 /// Default options for 'CreateRelease'
 let releaseOptions = {
-    Project = ""; Version = ""; PackageVersion = ""; PackageVersionOverride = None; 
+    Project = ""; Version = ""; PackageVersion = ""; PackageVersionOverride = None; Packages = [];
     PackagesFolder = None; ReleaseNotes = ""; ReleaseNotesFile = "" }
 
 /// Default options for 'DeployRelease'
@@ -88,6 +90,13 @@ let optionalObjParam p o =
     | None -> ""     
 
 /// [omit]
+let stringListParam p os =
+    let sb = Text.StringBuilder()
+    for o in os do
+        sb.Append (sprintf " --%s=\"%s\"" p (o.ToString())) |> ignore
+    sb.ToString()
+
+/// [omit]
 let flag p b = if b then sprintf " --%s" p else ""
     
 /// [omit]
@@ -96,6 +105,7 @@ let releaseCommandLine (opts:CreateReleaseOptions) =
       (optionalStringParam "version" (liftString opts.Version))
       (optionalStringParam "packageversion" (liftString opts.PackageVersion))
       (optionalStringParam "packageversionoverride" opts.PackageVersionOverride)
+      (stringListParam "package" opts.Packages)
       (optionalStringParam "packagesfolder" opts.PackagesFolder)
       (optionalStringParam "releasenotes" (liftString opts.ReleaseNotes))
       (optionalStringParam "releasenotesfile" (liftString opts.ReleaseNotesFile)) ] 
