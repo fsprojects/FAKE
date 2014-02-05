@@ -213,8 +213,7 @@ let rec private publish parameters =
             (parameters.OutputPath @@ packageFileName parameters |> FullName) 
             parameters.AccessKey source
 
-    if tracing then         
-        tracefn "%s %s in WorkingDir: %s" parameters.ToolPath (replaceAccessKey parameters.AccessKey args) (FullName parameters.WorkingDir)
+    tracefn "%s %s in WorkingDir: %s Trials left: %d" parameters.ToolPath (replaceAccessKey parameters.AccessKey args) (FullName parameters.WorkingDir) parameters.PublishTrials
 
     let result =
         ExecProcess (fun info ->
