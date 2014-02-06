@@ -100,51 +100,46 @@ let mutable IISExpressPath =
 
 let xname s = XName.Get(s)
 
-let createSiteElement(id, name, physicalPath, hostname, port) =
-    XElement(xname "site",
-        XAttribute(xname "name", name),
-        XAttribute(xname "id", id.ToString()),
-        XAttribute(xname "serverAutoStart", "true"),
-
-        XElement(xname "application",
-            XAttribute(xname "path", "/"),
-
-            XElement(xname "virtualDirectory",
-                XAttribute(xname "path", "/"),
-                XAttribute(xname "physicalPath", physicalPath)
-            )
-        ),
-
-        XElement(xname "bindings",
-            XElement(xname "binding",
-                XAttribute(xname "protocol", "http"),
-                XAttribute(xname "bindingInformation", ":" + port + ":" + hostname)
-            )
-        )
-    )
-
-let createConfigFile(fileName:string, appRootDirectory, appPath, appHostName, appPort, websitePath, websiteHostName, websitePort) =
-    let templateFilename = Path.Combine(appRootDirectory, "iisexpress-template.config")
+let createConfigFile(name, rootDirectory, path, hostName, port) =
+    let uniqueConfigFile = Path.Combine(rootDirectory, "iisexpress-" + Guid.NewGuid().ToString() + ".config")
+    let templateFilename = Path.Combine(rootDirectory, "iisexpress-template.config")
     use template = File.OpenRead(templateFilename)
     let xml = XDocument.Load(template)   
 
-    let sitesElement = xml.Root.Element(xname "system.applicationHost").Element(xname "sites")
-    let appElement = createSiteElement(1, "Witness", appPath, appHostName, appPort)
+    let sitesElement = xml.Root.Element(xname "system.applicationHost").Element(xname "sites")    
+    let appElement =
+        XElement(xname "site",
+            XAttribute(xname "name", name),
+            XAttribute(xname "id", id.ToString()),
+            XAttribute(xname "serverAutoStart", "true"),
+
+            XElement(xname "application",
+                XAttribute(xname "path", "/"),
+
+                XElement(xname "virtualDirectory",
+                    XAttribute(xname "path", "/"),
+                    XAttribute(xname "physicalPath", path)
+                )
+            ),
+
+            XElement(xname "bindings",
+                XElement(xname "binding",
+                    XAttribute(xname "protocol", "http"),
+                    XAttribute(xname "bindingInformation", ":" + port + ":" + hostName)
+                )
+            )
+        )
+
     sitesElement.Add(appElement)
 
-    if String.IsNullOrEmpty(websitePath) = false then
-        let websiteElement = createSiteElement(2, "Website Under Test", websitePath, websiteHostName, websitePort)
-        sitesElement.Add(websiteElement)
+    xml.Save(uniqueConfigFile)
+    uniqueConfigFile
 
-    xml.Save(fileName)
-
-let StartWebsites configFileName =    
-    [|1;2|]
-    |> Array.map (fun id ->
-        ProcessStartInfo(
-            FileName = IISExpressPath,
-            Arguments = sprintf "/config:\"%s\" /siteid:%d" configFileName id,
-            RedirectStandardError = true,
-            RedirectStandardOutput = true,
-            UseShellExecute = false)
-        |> Process.Start)
+let StartWebsite configFileName id =
+    ProcessStartInfo(
+        FileName = IISExpressPath,
+        Arguments = sprintf "/config:\"%s\" /siteid:%d" configFileName id,
+        RedirectStandardError = true,
+        RedirectStandardOutput = true,
+        UseShellExecute = false)
+    |> Process.Start
