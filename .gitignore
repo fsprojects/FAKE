@@ -45,6 +45,7 @@ gh-pages/
 tools/FSharp.Formatting
 tools/Microsoft.AspNet.Razor
 tools/RazorEngine
+!src/app/FakeLib/NuGet
 !tools/FAKE/tools/FakeLib.dll
 !tools/FAKE/tools/FakeLib.pdb
 .gitignore

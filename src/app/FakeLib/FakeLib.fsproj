@@ -78,7 +78,6 @@
     <Compile Include="WiXHelper.fs" />
     <Compile Include="MSIHelper.fs" />
     <Compile Include="RegAsmHelper.fs" />
-    <Compile Include="NuGetHelper.fs" />
     <Compile Include="RestorePackageHelper.fs" />
     <Compile Include="VSSHelper.fs" />
     <Compile Include="DynamicsNavHelper.fs" />
@@ -121,6 +120,7 @@
     <Compile Include="ReleaseNotesHelper.fs" />
     <None Include="Targets.fsx" />
     <Compile Include="FixieHelper.fs" />
+    <Compile Include="NuGet\NugetHelper.fs" />
     <Compile Include="NuGet\Update.fs" />
     <Compile Include="TestFlightHelper.fs" />
     <Compile Include="DotCover.fs" />
