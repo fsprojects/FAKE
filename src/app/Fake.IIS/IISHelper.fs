@@ -100,17 +100,18 @@ let mutable IISExpressPath =
 
 let xname s = XName.Get(s)
 
-let createConfigFile(name, rootDirectory, path, hostName, port) =
-    let uniqueConfigFile = Path.Combine(rootDirectory, "iisexpress-" + Guid.NewGuid().ToString() + ".config")
-    let templateFilename = Path.Combine(rootDirectory, "iisexpress-template.config")
-    use template = File.OpenRead(templateFilename)
+let createConfigFile(name, templateFileName, path, hostName, port:int) =
+    let configRoot = FileInfo(templateFileName).Directory
+    let uniqueConfigFile = Path.Combine(configRoot.FullName, "iisexpress-" + Guid.NewGuid().ToString() + ".config")
+   
+    use template = File.OpenRead(templateFileName)
     let xml = XDocument.Load(template)   
 
     let sitesElement = xml.Root.Element(xname "system.applicationHost").Element(xname "sites")    
     let appElement =
         XElement(xname "site",
             XAttribute(xname "name", name),
-            XAttribute(xname "id", id.ToString()),
+            XAttribute(xname "id", "1"),
             XAttribute(xname "serverAutoStart", "true"),
 
             XElement(xname "application",
@@ -125,7 +126,7 @@ let createConfigFile(name, rootDirectory, path, hostName, port) =
             XElement(xname "bindings",
                 XElement(xname "binding",
                     XAttribute(xname "protocol", "http"),
-                    XAttribute(xname "bindingInformation", ":" + port + ":" + hostName)
+                    XAttribute(xname "bindingInformation", ":" + port.ToString() + ":" + hostName)
                 )
             )
         )
@@ -135,11 +136,19 @@ let createConfigFile(name, rootDirectory, path, hostName, port) =
     xml.Save(uniqueConfigFile)
     uniqueConfigFile
 
-let StartWebsite configFileName id =
+let StartWebsite configFileName =
     ProcessStartInfo(
         FileName = IISExpressPath,
-        Arguments = sprintf "/config:\"%s\" /siteid:%d" configFileName id,
+        Arguments = sprintf "/config:\"%s\" /siteid:%d" configFileName 1,
         RedirectStandardError = true,
         RedirectStandardOutput = true,
         UseShellExecute = false)
     |> Process.Start
+
+let p =
+    createConfigFile("msu.Prestige", @"C:\Code\prestige\iisexpress-template.config", @"C:\Code\prestige\src\msu.Prestige", "localhost", 54766)
+    |> StartWebsite
+
+
+p.Refresh()
+p.Kill()
