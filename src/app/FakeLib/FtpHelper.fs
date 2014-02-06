@@ -1,7 +1,7 @@
-﻿/// Contains helpers which allow to upload a whole folder/specific file into a Ftp Server. 
-/// Uses `Passive Mode` FTP and handles all files as binary (and not ASCII)
-/// Assumes direct network connectivity to destination Ftp server (not via a proxy)
-/// Does not support FTPS and SFTP
+﻿/// Contains helpers which allow to upload a whole folder/specific file into a FTP Server. 
+/// Uses `Passive Mode` FTP and handles all files as binary (and not ASCII).
+/// Assumes direct network connectivity to destination FTP server (not via a proxy).
+/// Does not support FTPS and SFTP.
 module Fake.FtpHelper
 
 open System
@@ -13,10 +13,10 @@ type FtpServerInfo =
     { Server : string
       Request : FtpWebRequest }
 
-/// Gets a connection to the Ftp server
-let private getServerInfo (serverNameIp : string) (user : string) (pwd : string) ftpMethod = 
+/// Gets a connection to the FTP server
+let getServerInfo (serverNameIp : string) (user : string) (password : string) ftpMethod = 
     let ftpRequest = (WebRequest.Create serverNameIp) :?> FtpWebRequest
-    ftpRequest.Credentials <- new NetworkCredential(user, pwd)
+    ftpRequest.Credentials <- new NetworkCredential(user, password)
     ftpRequest.Method <- ftpMethod
     { Server = serverNameIp
       Request = ftpRequest }
@@ -46,12 +46,12 @@ let inline private dirNameIsValid (dirName : string) =
 /// Checks to see if the `ftp content` string containts the string `<DIR>    Given_Folder_Name`
 let inline regexCheck fname ftpContents = Regex.IsMatch(ftpContents, (sprintf @"\<DIR\>\s*%s\s+" fname))
 
-/// Gets the contents/listing of files and folders in a given ftp server folder
+/// Gets the contents/listing of files and folders in a given FTP server folder
 /// ## Parameters
 ///  - `dirPath` - The full name of folder whose content need to be listed
-///  - `server` - Ftp Server name (ex: "ftp://10.100.200.300:21/")
-///  - `user` - Ftp Server login name (ex: "joebloggs")
-///  - `pwd`Ftp Server login password (ex: "J0Eblogg5")
+///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
+///  - `user` - FTP Server login name (ex: "joebloggs")
+///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
 let getFtpDirContents (server : string) (user : string) (pwd : string) (dirPath : string) = 
     logfn "getting ftp dir contents for %s" dirPath
     dirPath
@@ -62,13 +62,13 @@ let getFtpDirContents (server : string) (user : string) (pwd : string) (dirPath 
         use reader = new StreamReader(responseStream)
         reader.ReadToEnd()
 
-/// Uploads a single file from local directory into remote Ftp folder
+/// Uploads a single file from local directory into remote FTP folder.
 /// ## Parameters
 ///  - `destPath` - The full local file path that needs to be uploaded
 ///  - `srcPath` - The full path to file which needs to be created, including all its parent folders
-///  - `server` - Ftp Server name (ex: "ftp://10.100.200.300:21/")
-///  - `user` - Ftp Server login name (ex: "joebloggs")
-///  - `pwd` - Ftp Server login password (ex: "J0Eblogg5")
+///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
+///  - `user` - FTP Server login name (ex: "joebloggs")
+///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
 let uploadAFile (server : string) (user : string) (pwd : string) (destPath : string) (srcPath : string) = 
     logfn "upload %s from to %s" srcPath destPath
     let fl = new FileInfo(srcPath)
@@ -81,11 +81,11 @@ let uploadAFile (server : string) (user : string) (pwd : string) (destPath : str
             use reqStrm = si.Request.GetRequestStream()
             writeChunkToReqStream (br.ReadBytes 1024) reqStrm br
 
-/// Given a folder name, will check if that folder is present at a given root directory of a ftp server
+/// Given a folder name, will check if that folder is present at a given root directory of a FTP server.
 /// ## Parameters
-///  - `server` - Ftp Server name (ex: "ftp://10.100.200.300:21/")
-///  - `user` - Ftp Server login name (ex: "joebloggs")
-///  - `pwd` - Ftp Server login password (ex: "J0Eblogg5")
+///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
+///  - `user` - FTP Server login name (ex: "joebloggs")
+///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
 let private checkInExistingDirList server user pwd destPath fname = 
     destPath
     |> lastSlashPos
@@ -93,24 +93,24 @@ let private checkInExistingDirList server user pwd destPath fname =
     |> getFtpDirContents server user pwd
     |> regexCheck fname
 
-/// Given a folder path, will check if that folder is present at a given root directory of a ftp server
+/// Given a folder path, will check if that folder is present at a given root directory of a FTP server.
 /// ## Parameters
 ///  - `destPath` - The full name of folder which needs to be checked for existance, including all its parent folders
-///  - `server` - Ftp Server name (ex: "ftp://10.100.200.300:21/")
-///  - `user` - Ftp Server login name (ex: "joebloggs")
-///  - `pwd` - Ftp Server login password (ex: "J0Eblogg5")
+///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
+///  - `user` - FTP Server login name (ex: "joebloggs")
+///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
 let isFolderPresent server user pwd (destPath : string) = 
     destPath
     |> lastSlashPos
     |> destPath.Substring
     |> checkInExistingDirList server user pwd destPath
 
-/// Creates a matching folder in ftp folder, if not already present
+/// Creates a matching folder in FTP folder, if not already present.
 /// ## Parameters
 ///  - `destPath` - The full name of folder which needs to be created, including all its parent folders
-///  - `server` - Ftp Server name (ex: "ftp://10.100.200.300:21/")
-///  - `user` - Ftp Server login name (ex: "joebloggs")
-///  - `pwd` - Ftp Server login password (ex: "J0Eblogg5")
+///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
+///  - `user` - FTP Server login name (ex: "joebloggs")
+///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
 let createAFolder (server : string) (user : string) (pwd : string) (destPath : string) = 
     logfn "folder to create=%s" destPath
     if not ((String.IsNullOrEmpty destPath) || (isFolderPresent server user pwd destPath)) then 
@@ -120,13 +120,13 @@ let createAFolder (server : string) (user : string) (pwd : string) (destPath : s
             use response = (si.Request.GetResponse() :?> FtpWebResponse)
             logfn "create folder status = %s" (response.StatusDescription)
 
-/// Uploads a given local folder to a given root dir on a Ftp server
+/// Uploads a given local folder to a given root dir on a FTP server.
 /// ## Parameters
 ///  - `srcPath` - The local server path from which files need to be uploaded
-///  - `rootDir` - The remote root dir where files need to be uploaded, leave this as empty, if files need to be uploaded to root dir of ftp server
-///  - `server` - Ftp Server name (ex: "ftp://10.100.200.300:21/")
-///  - `user` - Ftp Server login name (ex: "joebloggs")
-///  - `pwd` - Ftp Server login password (ex: "J0Eblogg5")
+///  - `rootDir` - The remote root dir where files need to be uploaded, leave this as empty, if files need to be uploaded to root dir of FTP server
+///  - `server` - FTP Server name (ex: "ftp://10.100.200.300:21/")
+///  - `user` - FTP Server login name (ex: "joebloggs")
+///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
 let rec uploadAFolder server user pwd (srcPath : string) (rootDir : string) = 
     logfn "folder to upload=%s" srcPath
     let dirInfo = new DirectoryInfo(srcPath)
