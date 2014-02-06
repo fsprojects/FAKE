@@ -3,17 +3,17 @@
 module Fake.BuildServerHelper
 
 /// The server type option.
-type BuildServer =
-| TeamCity
-| CCNet
-| Jenkins
-| Travis
-| LocalBuild
+type BuildServer = 
+    | TeamCity
+    | CCNet
+    | Jenkins
+    | Travis
+    | LocalBuild
 
 /// The trace mode option.
-type TraceMode =
-| Console
-| Xml
+type TraceMode = 
+    | Console
+    | Xml
 
 /// Defines if FAKE will use verbose tracing.
 /// This flag can be specified by setting the *verbose* build parameter.
@@ -44,21 +44,21 @@ let jenkinsBuildNumber = tcBuildNumber
 let ccBuildLabel = environVar "CCNETLABEL"
 
 /// The current build server
-let buildServer =
-    if hasBuildParam "jenkins_home" then Jenkins else
-    if not (isNullOrEmpty tcBuildNumber) then TeamCity else
-    if not (isNullOrEmpty ccBuildLabel) then CCNet else 
-    if not (isNullOrEmpty travisBuildNumber) then Travis else 
-    LocalBuild
+let buildServer = 
+    if hasBuildParam "jenkins_home" then Jenkins
+    elif not (isNullOrEmpty tcBuildNumber) then TeamCity
+    elif not (isNullOrEmpty ccBuildLabel) then CCNet
+    elif not (isNullOrEmpty travisBuildNumber) then Travis
+    else LocalBuild
 
 /// The current build version as detected from the current build server.
-let buildVersion =
+let buildVersion = 
     let getVersion = getBuildParamOrDefault "buildVersion"
     match buildServer with
-    | Jenkins ->    getVersion jenkinsBuildNumber
-    | TeamCity ->   getVersion tcBuildNumber
-    | CCNet ->      getVersion ccBuildLabel
-    | Travis ->     getVersion travisBuildNumber
+    | Jenkins -> getVersion jenkinsBuildNumber
+    | TeamCity -> getVersion tcBuildNumber
+    | CCNet -> getVersion ccBuildLabel
+    | Travis -> getVersion travisBuildNumber
     | LocalBuild -> getVersion localBuildLabel
 
 /// Is true when the current build is a local build.
