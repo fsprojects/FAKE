@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>MsBuildLogger - FAKE - F# Make</title>
+    <title>AzureHelper - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,9 +36,9 @@
 
 
 
-<h1>MsBuildLogger</h1>
+<h1>AzureHelper</h1>
 <div class="xmldoc">
-<p>Contains Logger implementations for MsBuild.</p>
+<p>Contains tasks to control the local Azure Emulator</p>
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -51,23 +51,9 @@
     <tbody>
         <tr>
           <td class="type-name">
-            <a href="fake-msbuildlogger-errorlogger.html">ErrorLogger</a>
+            <a href="fake-azurehelper-azureemulatorparams.html">AzureEmulatorParams</a>
           </td>
-          <td class="xmldoc"><p>TeamCity Logger for MSBuild</p>
-</td>
-        </tr>
-        <tr>
-          <td class="type-name">
-            <a href="fake-msbuildlogger-msbuildlogger.html">MSBuildLogger</a>
-          </td>
-          <td class="xmldoc"><p>Abstract MSBuild Logger class.</p>
-</td>
-        </tr>
-        <tr>
-          <td class="type-name">
-            <a href="fake-msbuildlogger-teamcitylogger.html">TeamCityLogger</a>
-          </td>
-          <td class="xmldoc"><p>TeamCity Logger for MSBuild</p>
+          <td class="xmldoc"><p>A type for the controlling parameter</p>
 </td>
         </tr>
     </tbody>
@@ -84,17 +70,97 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '255', 255)" onmouseover="showTip(event, '255', 255)">
-            ErrorLoggerFile 
+          <code onmouseout="hideTip(event, '26', 26)" onmouseover="showTip(event, '26', 26)">
+            AzureEmulatorDefaults 
           </code>
-          <div class="tip" id="255">
-            <strong>Signature:</strong>string<br />
+          <div class="tip" id="26">
+            <strong>Signature:</strong>AzureEmulatorParams<br />
                       </div>
         </td>
         <td class="xmldoc">
-        <p>The ErrorLogFile</p>
+        <p>The default parameter of emulator</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/MsBuildLogger.fs#L35-35" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AzureHelper.fs#L21-21" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '28', 28)" onmouseover="showTip(event, '28', 28)">
+            ResetDevStorage _arg1
+          </code>
+          <div class="tip" id="28">
+            <strong>Signature:</strong>_arg1:&#39;?8009 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?8009          </div>
+        </td>
+        <td class="xmldoc">
+        <p>Resets the devstore (BLOB, Queues and Tables)</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AzureHelper.fs#L78-78" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '29', 29)" onmouseover="showTip(event, '29', 29)">
+            StartComputeEmulator _arg1
+          </code>
+          <div class="tip" id="29">
+            <strong>Signature:</strong>_arg1:&#39;?8007 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?8007          </div>
+        </td>
+        <td class="xmldoc">
+        <p>Starts the compute emulator</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AzureHelper.fs#L67-67" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '30', 30)" onmouseover="showTip(event, '30', 30)">
+            StartStorageEmulator _arg1
+          </code>
+          <div class="tip" id="30">
+            <strong>Signature:</strong>_arg1:&#39;?8003 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?8003          </div>
+        </td>
+        <td class="xmldoc">
+        <p>Starts the staorage emulator</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AzureHelper.fs#L45-45" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '31', 31)" onmouseover="showTip(event, '31', 31)">
+            StopComputeEmulator _arg1
+          </code>
+          <div class="tip" id="31">
+            <strong>Signature:</strong>_arg1:&#39;?8005 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?8005          </div>
+        </td>
+        <td class="xmldoc">
+        <p>Stops the compute emulator</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AzureHelper.fs#L56-56" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '32', 32)" onmouseover="showTip(event, '32', 32)">
+            StopStorageEmulator _arg1
+          </code>
+          <div class="tip" id="32">
+            <strong>Signature:</strong>_arg1:&#39;?8001 -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?8001          </div>
+        </td>
+        <td class="xmldoc">
+        <p>Stops the storage emulator</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AzureHelper.fs#L34-34" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
     </tbody>
