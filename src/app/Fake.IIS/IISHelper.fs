@@ -83,6 +83,7 @@ let deleteApplicationPool (name : string) =
 open System.Diagnostics
 open System
 open System.IO
+open System.Xml.Linq
 
 let mutable IISExpressPath =
     let root = 
@@ -97,15 +98,53 @@ let mutable IISExpressPath =
     
     filename
 
+let xname s = XName.Get(s)
+
+let createSiteElement(id, name, physicalPath, hostname, port) =
+    XElement(xname "site",
+        XAttribute(xname "name", name),
+        XAttribute(xname "id", id.ToString()),
+        XAttribute(xname "serverAutoStart", "true"),
+
+        XElement(xname "application",
+            XAttribute(xname "path", "/"),
+
+            XElement(xname "virtualDirectory",
+                XAttribute(xname "path", "/"),
+                XAttribute(xname "physicalPath", physicalPath)
+            )
+        ),
+
+        XElement(xname "bindings",
+            XElement(xname "binding",
+                XAttribute(xname "protocol", "http"),
+                XAttribute(xname "bindingInformation", ":" + port + ":" + hostname)
+            )
+        )
+    )
+
+let createConfigFile(fileName:string, appRootDirectory, appPath, appHostName, appPort, websitePath, websiteHostName, websitePort) =
+    let templateFilename = Path.Combine(appRootDirectory, "iisexpress-template.config")
+    use template = File.OpenRead(templateFilename)
+    let xml = XDocument.Load(template)   
+
+    let sitesElement = xml.Root.Element(xname "system.applicationHost").Element(xname "sites")
+    let appElement = createSiteElement(1, "Witness", appPath, appHostName, appPort)
+    sitesElement.Add(appElement)
+
+    if String.IsNullOrEmpty(websitePath) = false then
+        let websiteElement = createSiteElement(2, "Website Under Test", websitePath, websiteHostName, websitePort)
+        sitesElement.Add(websiteElement)
+
+    xml.Save(fileName)
+
 let StartWebsites configFileName =    
     [|1;2|]
     |> Array.map (fun id ->
-        let arguments = sprintf "/config:\"%s\" /siteid:%d" configFileName id
-        let startInfo = 
-            new ProcessStartInfo(
-                FileName = IISExpressPath,
-                Arguments = arguments,
-                RedirectStandardError = true,
-                RedirectStandardOutput = true,
-                UseShellExecute = false)
-        Process.Start(startInfo))
+        ProcessStartInfo(
+            FileName = IISExpressPath,
+            Arguments = sprintf "/config:\"%s\" /siteid:%d" configFileName id,
+            RedirectStandardError = true,
+            RedirectStandardOutput = true,
+            UseShellExecute = false)
+        |> Process.Start)
