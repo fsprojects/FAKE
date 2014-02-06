@@ -101,8 +101,7 @@ let mutable IISExpressPath =
 let xname s = XName.Get(s)
 
 let createConfigFile(name, templateFileName, path, hostName, port:int) =
-    let configRoot = FileInfo(templateFileName).Directory
-    let uniqueConfigFile = Path.Combine(configRoot.FullName, "iisexpress-" + Guid.NewGuid().ToString() + ".config")
+    let uniqueConfigFile = Path.Combine(Path.GetTempPath(), "iisexpress-" + Guid.NewGuid().ToString() + ".config")
    
     use template = File.OpenRead(templateFileName)
     let xml = XDocument.Load(template)   
@@ -146,7 +145,7 @@ let StartWebsite configFileName =
     |> Process.Start
 
 let p =
-    createConfigFile("msu.Prestige", @"C:\Code\prestige\iisexpress-template.config", @"C:\Code\prestige\src\msu.Prestige", "localhost", 54766)
+    createConfigFile("msu.Prestige", @"C:\Code\msu-perception\iisexpress-template.config", @"C:\Code\msu-perception\src\msu.Perception", "localhost", 54766)
     |> StartWebsite
 
 
