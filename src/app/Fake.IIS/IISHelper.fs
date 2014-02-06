@@ -79,3 +79,33 @@ let deleteApplicationPool (name : string) =
     if appPool <> null then
         appPool.Delete()
         commit mgr
+
+open System.Diagnostics
+open System
+open System.IO
+
+let mutable IISExpressPath =
+    let root = 
+        if Environment.Is64BitOperatingSystem then
+            Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86)
+        else
+            Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
+
+    let filename = Path.Combine(root, "IIS Express", "iisexpress.exe")
+    if File.Exists(filename) = false then
+        failwithf "Could not find IIS Express at \"%s\". Please install IIS Express." filename
+    
+    filename
+
+let StartWebsites configFileName =    
+    [|1;2|]
+    |> Array.map (fun id ->
+        let arguments = sprintf "/config:\"%s\" /siteid:%d" configFileName id
+        let startInfo = 
+            new ProcessStartInfo(
+                FileName = IISExpressPath,
+                Arguments = arguments,
+                RedirectStandardError = true,
+                RedirectStandardOutput = true,
+                UseShellExecute = false)
+        Process.Start(startInfo))
