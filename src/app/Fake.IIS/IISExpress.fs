@@ -1,4 +1,5 @@
-﻿module Fake.IISExpress
+﻿/// Contains tasks to host webprojects in IIS Express.
+module Fake.IISExpress
 
 open System.Diagnostics
 open System
