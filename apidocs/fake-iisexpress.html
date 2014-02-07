@@ -87,25 +87,9 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '12', 12)" onmouseover="showTip(event, '12', 12)">
-            IISExpressDefaults 
+            HostWebsite (...)
           </code>
           <div class="tip" id="12">
-            <strong>Signature:</strong>IISExpressOptions<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-        <p>IISExpress default parameters - tries to locate the iisexpress.exe</p>
-
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/Fake.IIS/IISExpress.fs#L14-14" class="github-link">Go to GitHub source</a>
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '13', 13)" onmouseover="showTip(event, '13', 13)">
-            StartWebsite (...)
-          </code>
-          <div class="tip" id="13">
             <strong>Signature:</strong>setParams:(IISExpressOptions -&gt; IISExpressOptions) -&gt; configFileName:string -&gt; siteId:int -&gt; Process<br />
                       </div>
         </td>
@@ -122,10 +106,58 @@
 
 <h2>Sample</h2>
 
-<pre><code> StartWebsite (fun p -&gt; { p with ToolPath = "iisexpress.exe" }) "configfile.config" 1
+<pre><code> HostWebsite (fun p -&gt; { p with ToolPath = "iisexpress.exe" }) "configfile.config" 1
 </code></pre>
 
             <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/Fake.IIS/IISExpress.fs#L62-62" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '13', 13)" onmouseover="showTip(event, '13', 13)">
+            IISExpressDefaults 
+          </code>
+          <div class="tip" id="13">
+            <strong>Signature:</strong>IISExpressOptions<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>IISExpress default parameters - tries to locate the iisexpress.exe</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/Fake.IIS/IISExpress.fs#L14-14" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '14', 14)" onmouseover="showTip(event, '14', 14)">
+            OpenUrlInBrowser url
+          </code>
+          <div class="tip" id="14">
+            <strong>Signature:</strong>url:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Opens the given url in the browser</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/Fake.IIS/IISExpress.fs#L78-78" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '15', 15)" onmouseover="showTip(event, '15', 15)">
+            OpenWebsiteInBrowser hostName port
+          </code>
+          <div class="tip" id="15">
+            <strong>Signature:</strong>hostName:string -&gt; port:int -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Opens the given website in the browser</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/Fake.IIS/IISExpress.fs#L81-81" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
     </tbody>
