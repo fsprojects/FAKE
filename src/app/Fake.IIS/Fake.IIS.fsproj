@@ -52,6 +52,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IISExpress.fs" />
     <Compile Include="IISHelper.fs" />
     <None Include="packages.config" />
     <None Include="Script.fsx" />
