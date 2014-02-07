@@ -79,3 +79,4 @@ let deleteApplicationPool (name : string) =
     if appPool <> null then
         appPool.Delete()
         commit mgr
+

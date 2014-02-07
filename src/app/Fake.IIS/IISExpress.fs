@@ -1,0 +1,74 @@
+﻿module Fake.IISExpress
+
+open System.Diagnostics
+open System
+open System.IO
+open System.Xml.Linq
+
+/// Options for using IISExpress
+type IISExpressOptions = 
+    { ToolPath : string }
+
+/// IISExpress default parameters - tries to locate the iisexpress.exe
+let IISExpressDefaults = 
+    { ToolPath = 
+          let root = 
+              if Environment.Is64BitOperatingSystem then 
+                  Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86)
+              else Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
+          
+          Path.Combine(root, "IIS Express", "iisexpress.exe") }
+
+let private xname s = XName.Get(s)
+
+/// Create a IISExpress config file from a given template
+let createConfigFile (name, siteId : int, templateFileName, path, hostName, port : int) = 
+    let uniqueConfigFile = Path.Combine(Path.GetTempPath(), "iisexpress-" + Guid.NewGuid().ToString() + ".config")
+    use template = File.OpenRead(templateFileName)
+    let xml = XDocument.Load(template)
+    let sitesElement = xml.Root.Element(xname "system.applicationHost").Element(xname "sites")
+    let appElement = 
+        XElement
+            (xname "site", XAttribute(xname "name", name), XAttribute(xname "id", siteId.ToString()), 
+             XAttribute(xname "serverAutoStart", "true"), 
+             
+             XElement
+                 (xname "application", XAttribute(xname "path", "/"), 
+                  
+                  XElement
+                      (xname "virtualDirectory", XAttribute(xname "path", "/"), XAttribute(xname "physicalPath", path))), 
+             
+             XElement
+                 (xname "bindings", 
+                  
+                  XElement
+                      (xname "binding", XAttribute(xname "protocol", "http"), 
+                       XAttribute(xname "bindingInformation", ":" + port.ToString() + ":" + hostName))))
+    sitesElement.Add(appElement)
+    xml.Save(uniqueConfigFile)
+    uniqueConfigFile
+
+/// This task starts the given site in IISExpress with the given ConfigFile.
+/// ## Parameters
+///
+///  - `setParams` - Function used to overwrite the default parameters.
+///  - `configFileName` - The file name of the IISExpress configfile.
+///  - `siteId` - The id (in the config file) of the website to run.
+///
+/// ## Sample
+///
+///      StartWebsite (fun p -> { p with ToolPath = "iisexpress.exe" }) "configfile.config" 1
+let StartWebsite setParams configFileName siteId = 
+    let parameters = setParams IISExpressDefaults
+
+    traceStartTask "StartWebSite" configFileName
+    let args = sprintf "/config:\"%s\" /siteid:%d" configFileName siteId
+    tracefn "Starting WebSite with %s %s" parameters.ToolPath args
+
+    let proc = 
+        ProcessStartInfo(FileName = parameters.ToolPath, Arguments = args, UseShellExecute = false) 
+        |> Process.Start
+
+    traceEndTask "StartWebSite" configFileName
+
+    proc
