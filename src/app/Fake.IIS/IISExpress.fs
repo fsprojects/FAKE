@@ -36,7 +36,7 @@ let createConfigFile (name, siteId : int, templateFileName, path, hostName, port
                  (xname "application", XAttribute(xname "path", "/"), 
                   
                   XElement
-                      (xname "virtualDirectory", XAttribute(xname "path", "/"), XAttribute(xname "physicalPath", path))), 
+                      (xname "virtualDirectory", XAttribute(xname "path", "/"), XAttribute(xname "physicalPath", DirectoryInfo(path).FullName))), 
              
              XElement
                  (xname "bindings", 
