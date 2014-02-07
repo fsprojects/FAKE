@@ -57,8 +57,8 @@ let createConfigFile (name, siteId : int, templateFileName, path, hostName, port
 ///
 /// ## Sample
 ///
-///      StartWebsite (fun p -> { p with ToolPath = "iisexpress.exe" }) "configfile.config" 1
-let StartWebsite setParams configFileName siteId = 
+///      HostWebsite (fun p -> { p with ToolPath = "iisexpress.exe" }) "configfile.config" 1
+let HostWebsite setParams configFileName siteId = 
     let parameters = setParams IISExpressDefaults
 
     traceStartTask "StartWebSite" configFileName
@@ -72,3 +72,9 @@ let StartWebsite setParams configFileName siteId =
     traceEndTask "StartWebSite" configFileName
 
     proc
+
+/// Opens the given url in the browser
+let OpenUrlInBrowser url = Process.Start(url:string) |> ignore
+
+/// Opens the given website in the browser
+let OpenWebsiteInBrowser hostName port = sprintf "http://%s:%d/" hostName port |> OpenUrlInBrowser
