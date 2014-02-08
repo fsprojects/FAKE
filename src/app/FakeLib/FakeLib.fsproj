@@ -75,9 +75,9 @@
     <Compile Include="NCoverHelper.fs" />
     <Compile Include="FSharpFormattingHelper.fs" />
     <Compile Include="MsBuildLogger.fs" />
+    <Compile Include="FileHelper.fs" />
     <Compile Include="MSBuildHelper.fs" />
     <Compile Include="ZipHelper.fs" />
-    <Compile Include="FileHelper.fs" />
     <Compile Include="FileUtils.fs" />
     <Compile Include="DocuHelper.fs" />
     <Compile Include="ILMergeHelper.fs" />
