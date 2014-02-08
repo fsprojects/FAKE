@@ -193,12 +193,31 @@ let TeamCityLoggerName = typedefof<Fake.MsBuildLogger.TeamCityLogger>.FullName
 let ErrorLoggerName = typedefof<Fake.MsBuildLogger.ErrorLogger>.FullName
 
 let private errorLoggerParam = 
-    let pathToLogger = (Uri(typedefof<MSBuildParams>.Assembly.CodeBase)).LocalPath
+    let pathToLogger = typedefof<MSBuildParams>.Assembly.Location
     [ TeamCityLoggerName; ErrorLoggerName ]
     |> List.map(fun a -> sprintf "/logger:%s,\"%s\"" a pathToLogger)
     |> fun lst -> String.Join(" ", lst)
 
 /// Runs a MSBuild project
+/// ## Parameters
+///  - `setParams` - A function that overwrites the default MsBuildParams
+///  - `project` - A string with the path to the project file to build.
+/// ## Sample
+///
+///     let buildMode = getBuildParamOrDefault "buildMode" "Release"
+///     let setParams defaults =
+///             { defaults with
+///                 Verbosity = Some(Quiet)
+///                 Targets = ["Build"]
+///                 Properties =
+///                     [
+///                         "Optimize", "True"
+///                         "DebugSymbols", "True"
+///                         "Configuration", buildMode
+///                     ]
+///              }
+///     build setParams "./MySolution.sln"
+///           |> DoNothing
 let build setParams project =
     traceStartTask "MSBuild" project
     let args = MSBuildDefaults |> setParams |> serializeMSBuildParams        

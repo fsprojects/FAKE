@@ -60,7 +60,7 @@ let gitCommand repositoryDir command =
     let ok,msg,error = runGitCommand repositoryDir command
 
     if not ok then failwith error else 
-    msg |> Seq.iter (tracefn "%s")
+    msg |> Seq.iter (logfn "%s")
 
 /// [omit]
 let gitCommandf repositoryDir fmt = Printf.ksprintf (gitCommand repositoryDir) fmt
@@ -69,7 +69,7 @@ let gitCommandf repositoryDir fmt = Printf.ksprintf (gitCommand repositoryDir) f
 /// This version doesn't throw an exception if an error occurs. It just traces the error.
 let showGitCommand repositoryDir command =
     let ok,msg,errors = runGitCommand repositoryDir command
-    msg |> Seq.iter (tracefn "%s")
+    msg |> Seq.iter (logfn "%s")
     if errors <> "" then
       traceError <| sprintf "Errors: %s" errors
 
@@ -79,6 +79,7 @@ let runSimpleGitCommand repositoryDir command =
         let ok,msg,errors = runGitCommand repositoryDir command
         if msg.Count = 0 then "" else
         try
+            msg |> Seq.iter (logfn "%s")
             msg.[0]
         with 
         | exn -> failwithf "Git didn't return a msg.\r\n%s" errors

@@ -12,7 +12,7 @@ open System.Collections.Generic
 let startedProcesses = HashSet()
 let start (proc:Process) =
     proc.Start() |> ignore
-    startedProcesses.Add proc.Id |> ignore
+    startedProcesses.Add (proc.Id, proc.ProcessName) |> ignore
 
 /// [omit]
 let mutable redirectOutputToTrace = false 
@@ -138,6 +138,14 @@ let execProcess3 configProcessStartInfoF timeOut = ExecProcessWithLambdas config
 ///
 ///  - `configProcessStartInfoF` - A function which overwrites the default ProcessStartInfo.
 ///  - `timeOut` - The timeout for the process.
+/// ## Sample
+///
+///     let result = ExecProcess (fun info ->  
+///                       info.FileName <- "c:/MyProc.exe"
+///                       info.WorkingDirectory <- "c:/workingDirectory"
+///                       info.Arguments <- "-v") (TimeSpan.FromMinutes 5.0)
+///     
+///     if result <> 0 then failwithf "MyProc.exe returned with a non-zero exit code"
 let ExecProcess configProcessStartInfoF timeOut = ExecProcessWithLambdas configProcessStartInfoF timeOut redirectOutputToTrace traceError trace  
 
 /// Runs the given process in an elevated context and returns the exit code.
@@ -434,13 +442,14 @@ let killMSBuild() = killProcess "msbuild"
 /// Kills all processes that are created by the FAKE build script.
 let killAllCreatedProcesses() =
     let traced = ref false
-    for id in startedProcesses do
+    for (id, name) in startedProcesses do
         try
             let p = Process.GetProcessById id
             if !traced |> not then
                 tracefn "Killing all processes that are created by FAKE and are still running."
                 traced := true
-            kill p
+            if p.ProcessName = name 
+            then kill p
         with
         | exn -> ()
     startedProcesses.Clear()

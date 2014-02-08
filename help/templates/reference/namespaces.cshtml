@@ -7,7 +7,7 @@
 
 @foreach (var ns in Model.Namespaces)
 {
-  <h2>@ns.Name</h2>
+  <h2>@ns.Name Namespace</h2>
   <div>
     @RenderPart("part-nested", new {
       Types = ns.Types,

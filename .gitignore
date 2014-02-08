@@ -22,6 +22,7 @@ _ReSharper*/
 *.suo
 */*.suo
 *.user
+*.userprefs
 output.xml
 FAKE.crunchsolution.cache
 FAKE_mm_cache.bin
@@ -44,3 +45,9 @@ gh-pages/
 tools/FSharp.Formatting
 tools/Microsoft.AspNet.Razor
 tools/RazorEngine
+!tools/FAKE/tools/FakeLib.dll
+!tools/FAKE/tools/FakeLib.pdb
+.gitignore
+_NCrunch_FAKE/
+tools/FSharp.Compiler.Service
+tools/FSharp.Formatting.CommandTool/

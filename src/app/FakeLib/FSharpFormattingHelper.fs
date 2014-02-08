@@ -2,7 +2,7 @@
 module Fake.FSharpFormatting
 
 /// Specifies the fsformatting executable
-let mutable toolPath = findToolInSubPath "fsformatting.exe" (currentDirectory @@ "tools" @@ "fsformatting")
+let mutable toolPath = findToolInSubPath "fsformatting.exe" (currentDirectory @@ "tools" @@ "FSharp.Formatting.CommandTool" @@ "tools")
     
 /// Runs fsformatting.exe with the given command in the given repository directory.
 let run command =
@@ -22,7 +22,7 @@ let CreateDocs source outputDir template projectParameters =
               "--processdirectory";
               "--inputdirectory"; source
               "--templatefile"; template
-              "--outputDirectory"; outputDir
+              "--outputDirectory"; outputDir      
               "--replacements" ])
         |> Seq.map (fun s -> if s.StartsWith "\"" then s else sprintf "\"%s\"" s)
         |> separated " " 
@@ -30,7 +30,7 @@ let CreateDocs source outputDir template projectParameters =
     run command
     printfn "Successfully generated docs for %s" source
            
-let CreateDocsForDlls outputDir templatesDir projectParameters dllFiles = 
+let CreateDocsForDlls outputDir templatesDir projectParameters sourceRepo dllFiles = 
     let command =
         projectParameters 
         |> Seq.map (fun (k,v) -> [k;v])
@@ -41,6 +41,8 @@ let CreateDocsForDlls outputDir templatesDir projectParameters dllFiles =
               "--outdir"; outputDir
               "--layoutroots"; 
               "./help/templates/"; templatesDir;
+              "--sourceRepo"; sourceRepo
+              "--sourceFolder"; currentDirectory
               "--parameters" ])
         |> Seq.map (fun s -> if s.StartsWith "\"" then s else sprintf "\"%s\"" s)
         |> separated " " 

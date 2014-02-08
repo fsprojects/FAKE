@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using Fake;
 using Machine.Specifications;
 using System;
@@ -14,8 +13,8 @@ namespace Test.FAKECore.NAVFiles
 
         Establish context = () =>
         {
-            string result = @"NAVFiles\Codeunit_1_with_Date_changed.txt";
-            string original = @"NAVFiles\Codeunit_1.txt";
+            const string result = @"NAVFiles/Codeunit_1_with_Date_changed.txt";
+            const string original = @"NAVFiles/Codeunit_1.txt";
 
             _navisionObject = File.ReadAllText(original);
             _expectedObject = File.ReadAllText(result);

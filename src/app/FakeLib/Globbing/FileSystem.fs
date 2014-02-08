@@ -10,15 +10,19 @@ open System.Text.RegularExpressions
 
 type private SearchOption = 
 | Directory of string
+| Drive of string
 | Recursive
 | FilePattern of string
         
-let private checkSubDirs (dir:string) root =
+let private checkSubDirs absolute (dir:string) root =
     if dir.Contains "*" then
         Directory.EnumerateDirectories(root, dir, SearchOption.TopDirectoryOnly) |> Seq.toList
     else
-        let di = new DirectoryInfo(Path.Combine(root, dir))
-        if di.Exists then [di.FullName] else []        
+        let path = Path.Combine(root, dir)
+        let di = 
+            if absolute then new DirectoryInfo(dir) else 
+            new DirectoryInfo(path)
+        if di.Exists then [di.FullName] else []
         
 let rec private buildPaths acc (input : SearchOption list) =
     match input with
@@ -26,7 +30,13 @@ let rec private buildPaths acc (input : SearchOption list) =
     | Directory(name) :: t -> 
         let subDirs = 
             acc
-            |> List.map (checkSubDirs name) 
+            |> List.map (checkSubDirs false name) 
+            |> List.concat
+        buildPaths subDirs t
+    | Drive(name) :: t ->
+        let subDirs = 
+            acc
+            |> List.map (checkSubDirs true name)
             |> List.concat
         buildPaths subDirs t
     | Recursive :: [] ->
@@ -47,17 +57,23 @@ let private isDrive =
     let regex = Regex(@"^[A-Za-z]:$", RegexOptions.Compiled)
     fun dir -> regex.IsMatch dir
 
+let inline private normalizePath (p:string) = p.Replace('\\',Path.DirectorySeparatorChar).Replace('/',Path.DirectorySeparatorChar)
+let inline private normalizeOutputPath (p:string) = p.Replace('\\',Path.DirectorySeparatorChar).Replace('/',Path.DirectorySeparatorChar).TrimEnd(Path.DirectorySeparatorChar)
+
 let private search (baseDir:string) (input : string) =
+    let baseDir = normalizePath baseDir
+    let input = normalizePath input    
     let input = input.Replace(baseDir,"")
-    let filePattern = Path.GetFileName(input)    
+    let filePattern = Path.GetFileName(input)
     input.Split([|'/';'\\'|], StringSplitOptions.RemoveEmptyEntries)
     |> Seq.map (function
                 | "**" -> Recursive
                 | a when a = filePattern -> FilePattern(a)
-                | a when isDrive a -> Directory (a + Path.DirectorySeparatorChar.ToString())
+                | a when isDrive a -> Directory (a + "\\")
                 | a -> Directory(a))
     |> Seq.toList
     |> buildPaths [baseDir]
+    |> List.map normalizeOutputPath
 
 /// Internal representation of a file set.
 type FileIncludes =

@@ -23,11 +23,27 @@ The following code shows such .nuspec file from the [OctoKit](https://github.com
 		<copyright>Copyright GitHub 2013</copyright>    
 		<tags>GitHub API Octokit</tags>
 		@dependencies@
+		@references@
 	  </metadata>
 	</package>
 
 The .nuspec template contains some placeholders like `@build.number@` which can be replaced later by the build script.
 It also contains some specific information like the copyright which is not handled by FAKE.
+
+The following table gives the correspondence between the placeholders and the fields of the record type used by the NuGet task.
+
+Placeholder | replaced by (`NuGetParams` record field)
+--- | ---
+`@build.number@` | `Version`
+`@authors@` | `Authors`
+`@project@` | `Project`
+`@summary@` | `Summary`
+`@description@` | `Description`
+`@tags@` | `Tags`
+`@releaseNotes@` | `ReleaseNotes`
+`@copyright@` | `Copyright`
+`@dependencies@` | a combination of `Dependencies` and `DependenciesByFramework`
+`@references@` | a combination of `References` and `ReferencesByFramework`
 
 ## Setting up the build script
 
@@ -83,3 +99,20 @@ Here is a small sample which sets up dependencies for different framework versio
                         // ...
                         Publish = true }) 
                         "myProject.nuspec"
+
+## Explicit assembly references
+
+If you want to have auxiliary assemblies next to the ones that get referenced by the target project, you can place  all the needed files in the `lib` directory and explicitly specify which of them should be referenced (see [Nuget docs](http://docs.nuget.org/docs/reference/nuspec-reference#Specifying_Explicit_Assembly_References_in_version_2.5_and_above)) via the `References` and `ReferencesByFramework` fields.
+Here is a code snippet showing how to use these:
+
+    NuGet (fun p -> 
+        {p with
+            Authors = authors
+            // ...
+            References = ["a.dll"]
+            ReferencesByFramework =
+                [{ FrameworkVersion  = "net40"; References = ["b.dll"]}
+                 { FrameworkVersion  = "net45"; References = ["c.dll"]}]
+            // ...
+            Publish = false })
+            "template.nuspec"
