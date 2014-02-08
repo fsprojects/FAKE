@@ -202,6 +202,7 @@ let private errorLoggerParam =
 /// ## Parameters
 ///  - `setParams` - A function that overwrites the default MsBuildParams
 ///  - `project` - A string with the path to the project file to build.
+///
 /// ## Sample
 ///
 ///     let buildMode = getBuildParamOrDefault "buildMode" "Release"
