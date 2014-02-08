@@ -338,5 +338,5 @@ let BuildWebsite outputPath projectFile =
 /// ## Parameters
 ///  - `outputPath` - The output path.
 ///  - `projectFiles` - The project file paths.
-let BuildWebsites websiteDir projectFiless =
+let BuildWebsites websiteDir projectFiles =
     Seq.iter (BuildWebsite websiteDir) projectFiles
