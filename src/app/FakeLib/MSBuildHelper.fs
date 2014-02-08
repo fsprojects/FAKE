@@ -241,7 +241,7 @@ let build setParams project =
 
 /// Builds the given project files and collects the output files.
 /// ## Parameters
-///  - `outputpath` - If it is null or empty then the project settings are used.
+///  - `outputPath` - If it is null or empty then the project settings are used.
 ///  - `targets` - A string with the target names which should be run by MSBuild.
 ///  - `properties` - A list with tuples of property name and property values.
 let MSBuildWithProjectProperties outputPath (targets: string) (properties: string -> (string*string) list) projects = 
@@ -276,20 +276,20 @@ let MSBuildWithProjectProperties outputPath (targets: string) (properties: strin
 
 /// Builds the given project files or solution files and collects the output files.
 /// ## Parameters
-///  - `outputpath` - If it is null or empty then the project settings are used.
+///  - `outputPath` - If it is null or empty then the project settings are used.
 ///  - `targets` - A string with the target names which should be run by MSBuild.
 ///  - `properties` - A list with tuples of property name and property values.
 let MSBuild outputPath targets properties = MSBuildWithProjectProperties outputPath targets (fun _ -> properties)
 
 /// Builds the given project files or solution files and collects the output files.
 /// ## Parameters
-///  - `outputpath` - If it is null or empty then the project settings are used.
+///  - `outputPath` - If it is null or empty then the project settings are used.
 ///  - `targets` - A string with the target names which should be run by MSBuild.
 let MSBuildDebug outputPath targets = MSBuild outputPath targets ["Configuration","Debug"]
 
 /// Builds the given project files or solution files and collects the output files.
 /// ## Parameters
-///  - `outputpath` - If it is null or empty then the project settings are used.
+///  - `outputPath` - If it is null or empty then the project settings are used.
 ///  - `targets` - A string with the target names which should be run by MSBuild.
 let MSBuildRelease outputPath targets = MSBuild outputPath targets ["Configuration","Release"]
 
@@ -300,7 +300,7 @@ let MSBuildWithDefaults targets = MSBuild null targets ["Configuration","Release
 
 /// Builds the given project files or solution files in release mode and collects the output files.
 /// ## Parameters
-///  - `outputpath` - If it is null or empty then the project settings are used.
+///  - `outputPath` - If it is null or empty then the project settings are used.
 ///  - `properties` - A list with tuples of property name and property values.
 ///  - `targets` - A string with the target names which should be run by MSBuild.
 let MSBuildReleaseExt outputPath properties targets = 
