@@ -48,7 +48,7 @@ let createConfigFile (name, siteId : int, templateFileName, path, hostName, port
                        
                   XElement
                       (xname "binding", XAttribute(xname "protocol", "http"), 
-                       XAttribute(xname "bindingInformation", "*:" + port.ToString() + ":"))))
+                       XAttribute(xname "bindingInformation", "*:" + port.ToString() + ":*"))))
     sitesElement.Add(appElement)
     xml.Save(uniqueConfigFile)
     uniqueConfigFile
