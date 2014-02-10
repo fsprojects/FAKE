@@ -36,7 +36,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
   </PropertyGroup>
-  <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="DeploymentHelper.fs" />
@@ -51,6 +50,7 @@
     <Reference Include="FSharp.Core, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <Private>True</Private>
       <HintPath>..\..\..\lib\fsi\FSharp.Core.dll</HintPath>
+      <HintPath>..\..\..\tools\FSharp\FSharp.Core.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\..\..\lib\ICSharpCode.SharpZipLib.dll</HintPath>
@@ -93,4 +93,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Import Project="$(FSharpTargetsPath)" />
 </Project>
