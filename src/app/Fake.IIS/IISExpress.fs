@@ -20,10 +20,9 @@ let IISExpressDefaults =
           
           Path.Combine(root, "IIS Express", "iisexpress.exe") }
 
-let private xname s = XName.Get(s)
-
 /// Create a IISExpress config file from a given template
 let createConfigFile (name, siteId : int, templateFileName, path, hostName, port : int) = 
+    let xname s = XName.Get(s)
     let uniqueConfigFile = Path.Combine(Path.GetTempPath(), "iisexpress-" + Guid.NewGuid().ToString() + ".config")
     use template = File.OpenRead(templateFileName)
     let xml = XDocument.Load(template)
