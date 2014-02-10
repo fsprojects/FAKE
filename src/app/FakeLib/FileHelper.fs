@@ -4,6 +4,7 @@ module Fake.FileHelper
 
 open System.IO
 open System.Text
+open System.Diagnostics
 
 /// Performs the given actions on all files and subdirectories
 let rec recursively dirF fileF (dir:DirectoryInfo) =
@@ -432,3 +433,19 @@ let WriteConfigFile configFileName parameters =
 ///  - `replacements` - A sequence of tuples with the patterns and the replacements.
 ///  - `files` - The files to process.
 let ReplaceInFiles replacements files = processTemplates replacements files
+
+/// Gets the file version of a FileVersionInfo object as string
+/// ## Parameters
+///
+///   - 'fi' - A FileVerionInfo object
+let inline getFileVersionInfoAsString (fileVersionInfo:FileVersionInfo) = fileVersionInfo.FileVersion.ToString()
+
+/// Get the version a file
+/// ## Parameters
+///
+///  - 'fileName' - Name of file who gets the version from. The path can be relative
+let FileVersion (fileName:string) = 
+    FullName fileName
+    |> FileVersionInfo.GetVersionInfo
+    |> getFileVersionInfoAsString
+
