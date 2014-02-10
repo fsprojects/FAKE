@@ -57,6 +57,15 @@ let replaceFirst (pattern: string) replacement (text: string) =
 /// Appends a text to a StringBuilder.
 let inline append text (builder:StringBuilder) = builder.Append(sprintf "\"%s\" " text)
 
+/// Appends a text to a StringBuilder without surrounding quotes.
+let inline appendWithoutQuotes (text:string) (builder:StringBuilder) = builder.Append(text)
+
+/// Appends string of function value if option has some value
+let inline appendIfSome o f builder =
+    match o with
+    | Some(value) -> appendWithoutQuotes (f value) builder
+    | None -> builder
+
 /// Appends a text if the predicate is true.
 let inline appendIfTrue p s builder = if p then append s builder else builder
 

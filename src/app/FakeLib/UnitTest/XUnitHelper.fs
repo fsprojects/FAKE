@@ -32,9 +32,14 @@ type XUnitParams = {
       /// The output directory. It's the current directoy if nothing else is specified.
       OutputDir: string
       /// Test runner error level. Option which allows to specify if an xUnit error should break the build.
-      ErrorLevel: XUnitErrorLevel }
+      ErrorLevel: XUnitErrorLevel 
+      /// Include named traits with comma separated values
+      IncludeTraits: (string * string) option
+      /// Exclude named traits with comma separated values
+      ExcludeTraits: (string * string) option }
 
 /// The xUnit default parameters
+let emptyTrait : (string * string) option = None
 let XUnitDefaults =
     { ToolPath = findToolInSubPath "xunit.console.clr4.exe" (currentDirectory @@ "tools" @@ "xUnit")
       ConfigFile = null;
@@ -46,7 +51,9 @@ let XUnitDefaults =
       XmlOutput = false;
       TimeOut = TimeSpan.FromMinutes 5.
       OutputDir = null
-      ErrorLevel = Error }
+      ErrorLevel = Error
+      IncludeTraits  = emptyTrait
+      ExcludeTraits = emptyTrait }
 
 /// Builds the command line arguments from the given parameter record and the given assemblies.
 /// [omit]
@@ -58,6 +65,11 @@ let buildXUnitArgs parameters assembly =
         if isNullOrEmpty parameters.OutputDir then String.Empty else
         Path.GetFullPath parameters.OutputDir
 
+    let traits includeExclude (name, values:string) =
+        values.Split ([|','|],  System.StringSplitOptions.RemoveEmptyEntries) 
+        |> Seq.collect (fun value -> [| includeExclude; sprintf "\"%s=%s\"" name value |]) 
+        |> String.concat " "
+
     new StringBuilder()
         |> appendFileNamesIfNotNull [assembly]
         |> appendIfFalse parameters.ShadowCopy "/noshadow"
@@ -66,6 +78,8 @@ let buildXUnitArgs parameters assembly =
         |> appendIfTrue parameters.XmlOutput (sprintf "/xml\" \"%s" (dir @@ (name + ".xml")))
         |> appendIfTrue parameters.HtmlOutput (sprintf "/html\" \"%s" (dir @@ (name + ".html")))
         |> appendIfTrue parameters.NUnitXmlOutput (sprintf "/nunit\" \"%s" (dir @@ (name + ".xml")))
+        |> appendIfSome parameters.IncludeTraits (traits "/trait") 
+        |> appendIfSome parameters.ExcludeTraits (traits "/-trait") 
         |> toText
 /// Runs xUnit unit tests in the given assemblies via the given xUnit runner.
 /// Will fail if the runner terminates with non-zero exit code for any of the assemblies.
