@@ -52,13 +52,14 @@
             dataProviders : @Html.Raw((JsonConvert.SerializeObject(Model.AvailableDataProviders))),
             dataProviderParameters: @Html.Raw(JsonConvert.SerializeObject(Model.DataProviderParametersDescription)),
             membershipProviders : @Html.Raw((JsonConvert.SerializeObject(Model.AvailableDataProviders))),
-            membershipProviderParameters: @Html.Raw(JsonConvert.SerializeObject(Model.MembershipProviderParametersDescription))            
+            membershipProviderParameters: @Html.Raw(JsonConvert.SerializeObject(Model.MembershipProviderParametersDescription))
         };
     </script>
     <script src="@Url.Content("~/Scripts/app/Setup.Index.js")" type="text/javascript"></script>
     <script type="text/javascript">
         $(function () {
             var vm = new IndexViewModel();
+            vm.setInitialData(@Html.Raw(JsonConvert.SerializeObject((Model))));
             ko.applyBindings(vm);
         });
     </script>
@@ -140,12 +141,48 @@
     </div>
 
     <div class="control-group" data-bind="foreach: membershipProviderParameters">
-        <label class="control-label" for="agentName" data-bind="text: ParameterName, attr: {title:Description}"></label>
+        <label class="control-label" for="agentName" data-bind="text: ParameterName, attr: { title:Description }"></label>
         <div class="controls">
             <input type="text" data-bind="attr: { id: 'membershipProviderParameter_' + ParameterName, title:Description }"></input>
             @Html.ValidationMessageFor(model => model.MembershipProviderParameters)
         </div>
     </div>
+
+    <div class="control-group">
+        <div class="controls">
+            <label>
+                <input type="checkbox" data-bind="checked: useFileUpload"/> Use file upload of packages
+            </label>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <div class="controls">
+            <label>
+                <input type="checkbox" data-bind="checked: useNuGetFeedUpload"/> Use NuGet feed package upload integration
+            </label>
+        </div>
+    </div>
+    
+    <div class="control-group" data-bind="foreach: nugetFeeds">
+        <label class="control-label" data-bind ="text: $index() + 1 + '. ', id: 'nugetFeed_' + $index()"></label>
+        <div class="controls">
+            <input type="text" data-bind="value: $parent.nugetFeeds()[$index()]"/>
+            <a href="#" class="badge badge-important" data-bind="click: $parent.removeNugetFeed" alt="remove" title="remove">X</a>
+        </div>        
+    </div>
+    <div class="control-group" data-bind="if: useNuGetFeedUpload">
+        <label class="control-label" for="agentName">Uri:</label>
+            <div class="controls">
+                <label>
+                    <input type="text" 
+                           title="uri to nuget feed, ex: http://teamcity.codebetter.com/guestAuth/app/nuget/v1/FeedService.svc"
+                           data-bind="value: nugetFeedToAdd, valueUpdate: 'afterKeyUp'"/>
+                    <a class="btn btn-primary" data-bind="click: addNugetFeed">Add</a>
+                </label>
+            </div>
+    </div>
+
 
     <p>
         <button type="submit" class="btn btn-primary"><i class="icon-hdd icon-white"></i>&nbsp;Save Changes</button>

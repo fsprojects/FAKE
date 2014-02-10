@@ -43,6 +43,9 @@ type SetupController() =
                         Data.membershipProviders()
                         |> Seq.map(fun dp -> dp.Id, dp.ParameterDescriptions)
                         |> dict
+                    UseFileUpload = false
+                    UseNuGetFeedUpload = false
+                    NuGetFeeds = [||]
                 }         
             this.View(appInfo) :> ActionResult
 
@@ -51,8 +54,7 @@ type SetupController() =
     member this.SaveSetupInformation(info : SetupInfo) =
         Data.init(info)
         Data.saveSetupInfo info
-
-        this.RedirectToAction("Index", "Home");
+        this.RedirectToAction("Index", "Home")
         
 
 [<HandleError>]

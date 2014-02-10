@@ -76,6 +76,10 @@ type SetupInfo = {
     MembershipProviderParameters : string
     AvailableMembershipProviders: string array
     MembershipProviderParametersDescription : IDictionary<string, seq<ParameterDescription>>
+
+    UseFileUpload : bool
+    UseNuGetFeedUpload : bool
+    NuGetFeeds : Uri[]
 }
 
 [<InheritedExport>]

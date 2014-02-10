@@ -8,6 +8,7 @@
     open System.Web
     open System.Web.Configuration
     open System.ComponentModel.Composition
+    open Newtonsoft.Json
     
     let appdata = HttpContext.Current.Server.MapPath("~/App_Data")
     let providerPath = Path.Combine(appdata, "Providers\\")
@@ -21,6 +22,9 @@
         DataProviderParameters : string
         MembershipProvider : string
         MembershipProviderParameters : string
+        UseFileUpload : bool
+        UseNuGetFeedUpload : bool
+        NuGetFeeds : seq<Uri>
     }
 
     type Configuration internal() =
@@ -77,15 +81,20 @@
     let isInitialized() = 
         File.Exists(setupInfoPath)
 
-    let saveSetupInfo(info : SetupInfo) =
-        let info = 
+    let private CreateAppInfo (info : SetupInfo) =
             { 
                 DataProvider = info.DataProvider;
                 DataProviderParameters = info.DataProviderParameters
                 MembershipProvider = info.MembershipProvider
                 MembershipProviderParameters = info.MembershipProviderParameters
+                UseFileUpload = info.UseFileUpload
+                UseNuGetFeedUpload = info.UseNuGetFeedUpload
+                NuGetFeeds = if info.UseNuGetFeedUpload then info.NuGetFeeds |> List.ofSeq else []
             }
-        File.WriteAllText(setupInfoPath, Newtonsoft.Json.JsonConvert.SerializeObject(info))
+
+    let saveSetupInfo(info : SetupInfo) =
+        let info = CreateAppInfo info
+        File.WriteAllText(setupInfoPath, JsonConvert.SerializeObject(info, Formatting.Indented))
 
     let private doInit(info : AppInfo) = 
         config.SetDataProvider(info.DataProvider)
@@ -95,14 +104,7 @@
         started := true
 
     let init(info : SetupInfo) =
-        let appInfo = 
-            { 
-                DataProvider = info.DataProvider;
-                DataProviderParameters = info.DataProviderParameters
-                MembershipProvider = info.MembershipProvider
-                MembershipProviderParameters = info.MembershipProviderParameters
-            }
-
+        let appInfo = CreateAppInfo info
         doInit appInfo
         InitialData.Init(info.AdministratorUserName, info.AdministratorPassword, info.AdministratorEmail, config.Data, config.Membership)
     

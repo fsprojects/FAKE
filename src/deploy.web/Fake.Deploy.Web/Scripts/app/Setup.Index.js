@@ -24,6 +24,9 @@
     self.setup = function(form) {
         $('#initDialog').modal('show');
         var data = $(form).serializeObject();
+        data.UseNuGetFeedUpload = self.useNuGetFeedUpload();
+        data.UseFileUpload = self.useFileUpload();
+        data.NugetFeeds = self.nugetFeeds();
         self.addDynamicParameters(data, form);
         var jsonStr = JSON.stringify(data);
         $.ajax({
@@ -44,11 +47,31 @@
     self.membershipProviders = ko.observableArray(metaData.membershipProviders);
     self.selectedDataProvider = ko.observable("");
     self.selectedMembershipProvider = ko.observable("");
+    self.nugetFeeds = ko.observableArray([]);
+    self.nugetFeedToAdd = ko.observable("");
+    self.useNuGetFeedUpload = ko.observable(false);
+    self.useFileUpload = ko.observable(false);
+
+    self.setInitialData = function (data) {
+        self.useNuGetFeedUpload(data.UseNuGetFeedUpload);
+        self.useFileUpload(data.UseFileUpload);
+    };
+
+    self.addNugetFeed = function() {
+        if ((this.nugetFeedToAdd() != "") && (this.nugetFeeds.indexOf(this.nugetFeedToAdd()) < 0))
+            this.nugetFeeds.push(this.nugetFeedToAdd());
+        this.nugetFeedToAdd("");
+    };
+
+    self.removeNugetFeed = function (index) {
+        self.nugetFeeds.remove(index);
+    };
 
     self.providerParameters = function(provider, selection) {
         if (selection === "" || selection === undefined) {
             return [];
-        } else {
+        }
+        else {
             return metaData[provider][selection];
         }
     };
