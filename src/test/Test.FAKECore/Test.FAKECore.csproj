@@ -130,6 +130,7 @@
     <Compile Include="FileHandling\CleanDirectorySpecs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FileHandling\GlobbingSpecs.cs" />
+    <Compile Include="XUnitHelperSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
