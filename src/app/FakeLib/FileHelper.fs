@@ -434,24 +434,18 @@ let WriteConfigFile configFileName parameters =
 ///  - `files` - The files to process.
 let ReplaceInFiles replacements files = processTemplates replacements files
 
-/// Get the absolute file path
-/// ## Parameters
-/// 
-///  - 'fileName' - The relative file name, shown from current location
-let FullPath (fileName:string) = Path.GetFullPath(fileName)
-
 /// Gets the file version of a FileVersionInfo object as string
 /// ## Parameters
 ///
 ///   - 'fi' - A FileVerionInfo object
-let getFileVersionInfoAsString (fileVersionInfo:FileVersionInfo) = fileVersionInfo.FileVersion.ToString()
+let inline getFileVersionInfoAsString (fileVersionInfo:FileVersionInfo) = fileVersionInfo.FileVersion.ToString()
 
 /// Get the version a file
 /// ## Parameters
 ///
 ///  - 'fileName' - Name of file who gets the version from. The path can be relative
 let FileVersion (fileName:string) = 
-    FullPath fileName
+    FullName fileName
     |> FileVersionInfo.GetVersionInfo
     |> getFileVersionInfoAsString
 
