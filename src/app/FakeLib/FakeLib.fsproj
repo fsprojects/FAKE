@@ -52,6 +52,7 @@
     <Compile Include="TraceHelper.fs" />
     <Compile Include="TaskRunnerHelper.fs" />
     <Compile Include="ServiceControllerHelper.fs" />
+    <Compile Include="GuardedAwaitObservable.fs" />
     <Compile Include="ProcessHelper.fs" />
     <Compile Include="Globbing\FileSystem.fs" />
     <Compile Include="UnitTest\UnitTestCommon.fs" />
