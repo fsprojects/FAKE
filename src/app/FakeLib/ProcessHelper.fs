@@ -387,7 +387,7 @@ let asyncShellExec (args:ExecParams) = async {
     use proc = new Process(StartInfo = info)
     proc.ErrorDataReceived.Add(fun e -> if e.Data <> null then traceError e.Data)
     proc.OutputDataReceived.Add(fun e -> if e.Data <> null then trace e.Data)
-    proc.Start() |> ignore
+    start proc
     proc.BeginOutputReadLine()
     proc.BeginErrorReadLine()
     // attaches handler to Exited event, enables raising events, then awaits event
