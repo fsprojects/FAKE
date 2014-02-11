@@ -368,17 +368,6 @@ let private formatArgs args =
     |> Seq.map (fun (k, v) -> delimit k + quoteIfNeeded v)
     |> separated " "
 
-/// See: http://stackoverflow.com/questions/2649161/need-help-regarding-async-and-fsi/
-/// [omit]
-let guard f (e:IEvent<'Del, 'Args>) = 
-    let e = Event.map id e
-    { new IEvent<'Args> with 
-        member this.AddHandler d = 
-            e.AddHandler d 
-            f() //must call f here!
-        member this.RemoveHandler d = e.RemoveHandler d
-        member this.Subscribe observer = let rm = e.Subscribe observer in f(); rm }
-
 /// Execute an external program asynchronously and return the exit code,
 /// logging output and error messages to FAKE output. You can compose the result
 /// with Async.Parallel to run multiple external programs at once, but be
@@ -395,18 +384,15 @@ let asyncShellExec (args:ExecParams) = async {
                                  WorkingDirectory = args.WorkingDirectory,
                                  Arguments = commandLine )
 
-    use proc = new Process(StartInfo = info, EnableRaisingEvents = true)
+    use proc = new Process(StartInfo = info)
     proc.ErrorDataReceived.Add(fun e -> if e.Data <> null then traceError e.Data)
     proc.OutputDataReceived.Add(fun e -> if e.Data <> null then trace e.Data)
-    
-    let! exit = 
-        proc.Exited 
-        |> guard (fun () -> 
-                    start proc
-                    proc.BeginErrorReadLine()
-                    proc.BeginOutputReadLine())
-        |> Async.AwaitEvent
-    
+    proc.Start() |> ignore
+    proc.BeginOutputReadLine()
+    proc.BeginErrorReadLine()
+    // attaches handler to Exited event, enables raising events, then awaits event
+    // the event gets triggered even if process has already finished
+    let! _ = Async.GuardedAwaitObservable proc.Exited (fun _ -> proc.EnableRaisingEvents <- true)
     return proc.ExitCode
 }
 
