@@ -59,12 +59,9 @@ module Main =
         |> register
 
     let traceDeploymentResult server fileName = function
-        | Message msg ->
-            match msg with
-            | FakeDeployAgentHelper.Success _ -> tracefn "Deployment of %s to %s successful" fileName server
-            | FakeDeployAgentHelper.Failure exn -> traceError <| sprintf "Deployment of %s to %s failed\r\n%O" fileName server exn 
-            | FakeDeployAgentHelper.QueryResult result -> tracefn "Query Result for %s %s\n\t%s" server fileName (System.String.Join("\n\t", result |> Seq.map (fun r -> r.Name) |> Seq.toArray))
-        | Exception exn -> traceError <| sprintf "An internal error occured: %s" exn
+        | FakeDeployAgentHelper.Success _ -> tracefn "Deployment of %s to %s successful" fileName server
+        | FakeDeployAgentHelper.Failure exn -> traceError <| sprintf "Deployment of %s to %s failed\r\n%O" fileName server exn.Exception 
+        | FakeDeployAgentHelper.QueryResult result -> tracefn "Query Result for %s %s\n\t%s" server fileName (System.String.Join("\n\t", result |> Seq.map (fun r -> r.Name) |> Seq.toArray))
 
     { Name = "activereleases"
       Parameters = ["serverUrl"; "appname"]
@@ -126,7 +123,6 @@ module Main =
       Function =
         fun args -> 
             runDeploymentFromPackageFile args.[1] args.[2]
-            |> Message
             |> traceDeploymentResult "local" args.[2] }
         |> register
 
