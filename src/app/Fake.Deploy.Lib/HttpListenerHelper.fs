@@ -31,6 +31,7 @@ type RouteResult = {
 let private listener port = 
     let listener = new HttpListener()
     listener.Prefixes.Add(sprintf "http://+:%s/fake/" port)
+    listener.Prefixes.Add(sprintf "http://+:%s/" port)
     listener.Start()
     listener
 
