@@ -2,6 +2,8 @@
 using Fake;
 using Machine.Specifications;
 using System;
+using System.Threading;
+using System.Globalization;
 
 namespace Test.FAKECore.NAVFiles
 {
@@ -18,6 +20,8 @@ namespace Test.FAKECore.NAVFiles
 
             _navisionObject = File.ReadAllText(original);
             _expectedObject = File.ReadAllText(result);
+
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("de-DE");
         };
 
         Because of = () =>
