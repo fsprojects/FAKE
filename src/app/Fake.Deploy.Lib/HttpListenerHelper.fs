@@ -89,7 +89,7 @@ let routeMatcher route =
 let private routeRequest log (ctx : HttpListenerContext) routeMatchers =     
     try
         let verb = ctx.Request.HttpMethod
-        let url = ctx.Request.RawUrl.Replace("fake/", "")
+        let url = (ctx.Request.RawUrl.TrimEnd('/') + "/").Replace("fake/", "")
 
         match routeMatchers |> Seq.tryPick (fun r -> r verb url) with
         | Some routeResult ->
