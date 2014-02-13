@@ -4,6 +4,7 @@ module Fake.FakeDeployAgentHelper
 open System
 open System.IO
 open System.Net
+open HttpListenerHelper
 
 /// A http response type.
 type Response = {
@@ -25,15 +26,31 @@ let private webClient () =
 /// Gets the http response from the given URL and runs it with the given function.
 let private get f url =
     let uri = new Uri(url, UriKind.Absolute)
-    webClient().DownloadString(uri) |> f
+    use client = webClient()
+    client.Headers.Add("fake-deploy-use-http-response-messages", "true")
+    let msg = client.DownloadString(uri)
+    try
+        match msg |> Json.deserialize with
+        | Message msg -> f msg |> Message
+        | Exception exn -> Exception exn
+    with
+    | _ -> f msg |> Message
 
 /// sends the given body using the given action (POST or PUT) to the given url
 let private sendData<'t> action url body =
     let uri = new Uri(url, UriKind.Absolute)
     use client = webClient()
+    client.Headers.Add("fake-deploy-use-http-response-messages", "true")
     use ms = new MemoryStream(client.UploadData(uri, action, body))
     use sr = new StreamReader(ms, Text.Encoding.UTF8)
-    sr.ReadToEnd() |> Json.deserialize<'t>
+    let msg = sr.ReadToEnd()
+    try
+        match msg |> Json.deserialize with
+        | Message msg -> Json.deserialize<'t> msg |> Message
+        | Exception exn -> Exception exn
+    with
+    | _ -> msg |> Json.deserialize<'t> |> Message
+    
 
 /// Posts the given body to the given URL.
 let private post = sendData<DeploymentResponse> "POST"
@@ -77,9 +94,12 @@ let postDeploymentPackage url packageFileName = post url (ReadFileAsBytes packag
 /// Posts a deployment package to the given URL and handles the response.
 let DeployPackage url packageFileName = 
     match postDeploymentPackage url packageFileName with
-    | Success _ -> tracefn "Deployment of %s successful" packageFileName
-    | Failure exn -> failwithf "Deployment of %A failed\r\n%A" packageFileName exn.Exception
-    | response -> failwithf "Deployment of %A failed\r\n%A" packageFileName response
+    | Message msg ->
+        match msg with
+        | Success _ -> tracefn "Deployment of %s successful" packageFileName
+        | Failure exn -> failwithf "Deployment of %A failed\r\n%A" packageFileName exn.Exception
+        | response -> failwithf "Deployment of %A failed\r\n%A" packageFileName response
+    | Exception exn -> failwithf "An internal error occured: %s" exn
 
 /// Deprecated, use DeployPackage
 [<Obsolete("Use DeployPackage")>]
@@ -88,6 +108,9 @@ let PostDeploymentPackage = DeployPackage
 /// Performs a rollback of the given app at the given URL and handles the response.
 let RollbackPackage url appName version = 
     match rollbackTo url appName version with
-    | Success _ -> tracefn "Rollback of %s to %s successful" appName version
-    | Failure exn -> failwithf "Deployment of %s to %s failed\r\n%A" appName version exn.Exception
-    | response -> failwithf "Deployment of %s to %s failed\r\n%A" appName version response
+    | Message msg ->
+        match msg with
+        | Success _ -> tracefn "Rollback of %s to %s successful" appName version
+        | Failure exn -> failwithf "Deployment of %s to %s failed\r\n%A" appName version exn.Exception
+        | response -> failwithf "Deployment of %s to %s failed\r\n%A" appName version response
+    | Exception exn -> failwithf "An internal error occured: %s" exn
