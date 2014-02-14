@@ -110,6 +110,33 @@ let private import connectionInfo fileName =
 
     if deleteFile then fi.Delete()
 
+let private export connectionInfo filter fileName =
+    let fi = fileInfo fileName
+
+    let args =
+        sprintf "command=exportobjects, file=\"%s\", logfile=\"%s\", filter=\"%s\", servername=\"%s\", database=\"%s\""
+            fi.FullName (FullName connectionInfo.TempLogFile) filter connectionInfo.ServerName connectionInfo.Database
+
+    if 0 <> ExecProcess (fun info ->
+        info.FileName <- connectionInfo.ToolPath
+        info.WorkingDirectory <- connectionInfo.WorkingDir
+        info.Arguments <- args) connectionInfo.TimeOut
+    then
+        fi.Delete()
+        reportError "Export failed" connectionInfo.TempLogFile
+
+/// Exports objects from the Dynamics NAV client based on the given filter to the given .txt or .fob file
+let ExportObjects connectionInfo filter fileName =
+    traceStartTask "ExportObjects" fileName
+    export connectionInfo filter fileName
+    traceEndTask "ExportObjects" fileName
+
+/// Exports all objects from the Dynamics NAV client to the given .txt or .fob file
+let ExportAllObjects connectionInfo fileName =
+    traceStartTask "ExportAllObjects" fileName
+    export connectionInfo "" fileName
+    traceEndTask "ExportAllObjects" fileName
+
 /// Imports the given .txt or .fob file into the Dynamics NAV client
 let ImportFile connectionInfo fileName =
     traceStartTask "ImportFile" fileName

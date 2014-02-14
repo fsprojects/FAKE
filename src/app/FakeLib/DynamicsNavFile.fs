@@ -2,9 +2,11 @@
 module Fake.DynamicsNavFile
 
 open System
-open System.Text
+open System.Globalization
 open System.IO
+open System.Text
 open System.Text.RegularExpressions
+open System.Threading
 
 /// A Regex which allows to retrieve the modified flag.
 let ModifiedRegex = new Regex(@"\s\s\s\sModified\=Yes;(?:\r\n|\r|\n)", RegexOptions.Compiled)
@@ -18,9 +20,11 @@ let DateRegex = new Regex(@"\n\s\s\s\sDate\=(?<Date>[^;]*);", RegexOptions.Compi
 /// A Regex which allows to retrieve the modified time.
 let TimeRegex = new Regex(@"\n\s\s\s\sTime\=(?<Time>[^;]*);", RegexOptions.Compiled)
 
+let NavObjectDateFormat = Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern.Replace("yyyy", "yy")
+
 /// Replaces the timestamp in a Dynamics NAV object
 let replaceDateTimeInString (dateTime:DateTime) text = 
-    let t1 = DateRegex.Replace(text, String.Format("\n    Date={0};", dateTime.Date.ToString("dd.MM.yy")))
+    let t1 = DateRegex.Replace(text, String.Format("\n    Date={0};", dateTime.Date.ToString(NavObjectDateFormat)))
     TimeRegex.Replace(t1, String.Format("\n    Time={0};", dateTime.ToString("HH:mm:ss")))
 
 /// Removes the modified flag from a Dynamics NAV object
