@@ -4,6 +4,7 @@ module Fake.FakeDeployAgentHelper
 open System
 open System.IO
 open System.Net
+open HttpListenerHelper
 
 /// A http response type.
 type Response = {
@@ -17,23 +18,48 @@ type DeploymentResponse =
 | Failure of Response
 | QueryResult of seq<NuSpecPackage>
 
+let private wrapFailure = function
+    | Choice1Of2 (Message msg) -> msg
+    | Choice1Of2 (Exception exn) -> { Messages = Seq.empty; IsError = true; Exception = exn } |> Failure
+    | Choice2Of2 exn -> { Messages = Seq.empty; IsError = true; Exception = exn } |> Failure
+
 let private webClient () =
     let client = new WebClient()
     client.Headers.Add(HttpRequestHeader.ContentType, "application/fake")
+    client.Headers.Add("fake-deploy-use-http-response-messages", "true")
     client
 
 /// Gets the http response from the given URL and runs it with the given function.
 let private get f url =
-    let uri = new Uri(url, UriKind.Absolute)
-    webClient().DownloadString(uri) |> f
+    try
+        let uri = new Uri(url, UriKind.Absolute)
+        use client = webClient()
+        let msg = client.DownloadString(uri)
+        try
+            match msg |> Json.deserialize with
+            | Message msg -> f msg |> Message |> Choice1Of2
+            | Exception exn -> Exception exn |> Choice1Of2
+        with
+        | _ -> f msg |> Message |> Choice1Of2
+    with
+    | exn -> Choice2Of2 exn
 
 /// sends the given body using the given action (POST or PUT) to the given url
 let private sendData<'t> action url body =
-    let uri = new Uri(url, UriKind.Absolute)
-    use client = webClient()
-    use ms = new MemoryStream(client.UploadData(uri, action, body))
-    use sr = new StreamReader(ms, Text.Encoding.UTF8)
-    sr.ReadToEnd() |> Json.deserialize<'t>
+    try
+        let uri = new Uri(url, UriKind.Absolute)
+        use client = webClient()
+        use ms = new MemoryStream(client.UploadData(uri, action, body))
+        use sr = new StreamReader(ms, Text.Encoding.UTF8)
+        let msg = sr.ReadToEnd()
+        try
+            match msg |> Json.deserialize with
+            | Message msg -> Json.deserialize<'t> msg |> Message |> Choice1Of2
+            | Exception exn -> Exception exn |> Choice1Of2
+        with
+        | _ -> msg |> Json.deserialize<'t> |> Message |> Choice1Of2
+    with
+    | exn -> Choice2Of2 exn
 
 /// Posts the given body to the given URL.
 let private post = sendData<DeploymentResponse> "POST"
@@ -53,13 +79,13 @@ let getReleasesFor server appname status =
 
 /// Performs a rollback of the given app on the server.
 let rollbackTo server appname version =
-    put (server + "/deployments/"+ appname + "?version=" + version) [||]
+    put (server + "/deployments/"+ appname + "?version=" + version) [||] |> wrapFailure
 
 /// Returns all active releases from the given server.
-let getAllActiveReleases server = getReleasesFor server null "active"
+let getAllActiveReleases server = getReleasesFor server null "active" |> wrapFailure
 
 /// Returns the active release of the given app from the given server.
-let getActiveReleasesFor server appname = getReleasesFor server appname "active"
+let getActiveReleasesFor server appname = getReleasesFor server appname "active" |> wrapFailure
 
 /// Returns all releases of the given app from the given server.
 let getAllReleasesFor server appname = 
@@ -67,12 +93,13 @@ let getAllReleasesFor server appname =
     then server + "/deployments/"
     else server + "/deployments/" + appname + "/"
     |> get (Json.deserialize<DeploymentResponse>)
+    |> wrapFailure
 
 /// Returns all releases from the given server.
 let getAllReleases server = getAllReleasesFor server null
 
 /// Posts a deployment package to the given URL.
-let postDeploymentPackage url packageFileName = post url (ReadFileAsBytes packageFileName)
+let postDeploymentPackage url packageFileName = post url (ReadFileAsBytes packageFileName) |> wrapFailure 
 
 /// Posts a deployment package to the given URL and handles the response.
 let DeployPackage url packageFileName = 

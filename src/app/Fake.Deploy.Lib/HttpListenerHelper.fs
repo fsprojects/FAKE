@@ -19,6 +19,10 @@ type Route = {
     with 
         override x.ToString() = sprintf "%s %s" x.Verb x.Path              
 
+type HttpResponseMessage<'a> =
+    | Message of 'a
+    | Exception of string
+
 /// Represents a route result.
 type RouteResult = { 
     Route : Route
@@ -27,10 +31,17 @@ type RouteResult = {
 let private listener port = 
     let listener = new HttpListener()
     listener.Prefixes.Add(sprintf "http://+:%s/fake/" port)
+    listener.Prefixes.Add(sprintf "http://+:%s/" port)
     listener.Start()
     listener
 
-let private writeResponse (ctx : HttpListenerContext) (str : string) = 
+let private writeResponse (ctx : HttpListenerContext) msg = 
+    let str =
+        match ctx.Request.Headers.["fake-deploy-use-http-response-messages"], msg with
+        | "true", msg -> Json.serialize msg
+        | _, Message msg
+        | _, Exception msg -> msg
+
     let response = Text.Encoding.UTF8.GetBytes(str)
     ctx.Response.ContentLength64 <- response.Length |> int64
     ctx.Response.ContentEncoding <- Text.Encoding.UTF8
@@ -79,17 +90,17 @@ let routeMatcher route =
 let private routeRequest log (ctx : HttpListenerContext) routeMatchers =     
     try
         let verb = ctx.Request.HttpMethod
-        let url = ctx.Request.RawUrl.Replace("fake/", "")
+        let url = (ctx.Request.RawUrl.TrimEnd('/') + "/").Replace("fake/", "")
 
         match routeMatchers |> Seq.tryPick (fun r -> r verb url) with
         | Some routeResult ->
             routeResult.Route.Handler routeResult.Parameters ctx 
-              |> writeResponse ctx
-        | None -> writeResponse ctx (sprintf "Unknown route %s" ctx.Request.Url.AbsoluteUri)
+            |> Message |> writeResponse ctx
+        | None -> writeResponse ctx (sprintf "Unknown route %s" ctx.Request.Url.AbsoluteUri |> Exception)
     with e ->
         let msg = sprintf "Fake Deploy Request Error:\n\n%A" e
         log (msg, EventLogEntryType.Error)
-        writeResponse ctx msg
+        writeResponse ctx (Exception msg)
 
 let private getStatus args (ctx : HttpListenerContext) = "Http listener is running"
 
