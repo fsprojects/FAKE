@@ -166,6 +166,11 @@ let objectsInObjectString text =
     |> Seq.filter (fun x -> x.StartsWith("OBJECT "))
     |> Seq.map (fun (objectString: string) ->
         let m = ObjectRegex.Match(objectString)
+
+        trace objectString
+        tracefn "Matched: %s" (m.Success.ToString())
+        tracefn "ObjectId: %s" m.Groups.["ObjectId"].Value;
+
         {
             Type = m.Groups.["ObjectType"].Value;
             Id = int m.Groups.["ObjectId"].Value;
