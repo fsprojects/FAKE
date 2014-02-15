@@ -21,10 +21,10 @@ let DateRegex = new Regex(@"\n\s\s\s\sDate\=(?<Date>[^;]*);", RegexOptions.Compi
 let TimeRegex = new Regex(@"\n\s\s\s\sTime\=(?<Time>[^;]*);", RegexOptions.Compiled)
 
 /// A Regex which allows to parse objects in a Dynamics NAV file.
-let ObjectRegex = new Regex(@"OBJECT (?<ObjectType>(Table|Form|Report|Dataport|Codeunit|XMLport|MenuSuite|Page|Query)) (?<ObjectId>(\d+)) (?<ObjectName>([^\r]+))", RegexOptions.Compiled)
+let ObjectRegex = new Regex(@"OBJECT (?<ObjectType>(Table|Form|Report|Dataport|Codeunit|XMLport|MenuSuite|Page|Query)) (?<ObjectId>(\d+)) (?<ObjectName>([^\r\n]+))", RegexOptions.Compiled)
 
 /// A Regex which allows to find objects in a Dynamics NAV file.
-let ObjectSplitRegex = new Regex(@"(?=OBJECT (?:(Table|Form|Report|Dataport|Codeunit|XMLport|MenuSuite|Page|Query)) (?:(\d+)) (?:([^\r]+)))", RegexOptions.Compiled)
+let ObjectSplitRegex = new Regex(@"(?=OBJECT (?:(Table|Form|Report|Dataport|Codeunit|XMLport|MenuSuite|Page|Query)) (?:(\d+)) (?:([^\r\n]+)))", RegexOptions.Compiled)
 
 /// A type definition of a Dynamics NAV object.
 type NavObject = {Type:string; Id:int; Name:string; Source:string}
@@ -166,11 +166,6 @@ let objectsInObjectString text =
     |> Seq.filter (fun x -> x.StartsWith("OBJECT "))
     |> Seq.map (fun (objectString: string) ->
         let m = ObjectRegex.Match(objectString)
-
-        trace objectString
-        tracefn "Matched: %s" (m.Success.ToString())
-        tracefn "ObjectId: %s" m.Groups.["ObjectId"].Value;
-        tracefn "ObjectName: %s" m.Groups.["ObjectName"].Value;
 
         {
             Type = m.Groups.["ObjectType"].Value;
