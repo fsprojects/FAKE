@@ -98,6 +98,7 @@
     <Compile Include="Globbing\TestSample4\GlobbingSample4Specs.cs" />
     <Compile Include="Globbing\TestSample3\GlobbingSample3Specs.cs" />
     <Compile Include="Globbing\TestSample5\AbsoluteDirGlobbingSpecs.cs" />
+    <Compile Include="NAVFiles\NAVSplitObjectSpecs.cs" />
     <Compile Include="SemVerHelperSpecs.cs" />
     <Compile Include="ProjectSystemSpecs.cs" />
     <Compile Include="TeamCitySpecs.cs" />
@@ -190,6 +191,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="NAVFiles\PRETaggedReport_1095.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NAVFiles\Table_3.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NAVFiles\Table_3_and_4.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="NAVFiles\Table_4.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="SideBySideSpecification\Project1.txt">
