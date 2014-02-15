@@ -32,10 +32,13 @@ type NavObject = {Type:string; Id:int; Name:string; Source:string}
 /// A NAV culture-specific date format.
 let NavObjectDateFormat = Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern.Replace("yyyy", "yy")
 
+let replaceDateTimeInStringWithFormat (dateTime:DateTime) (dateFormat:string) text = 
+    let t1 = DateRegex.Replace(text, String.Format("\n    Date={0};", dateTime.Date.ToString(dateFormat)))
+    TimeRegex.Replace(t1, String.Format("\n    Time={0};", dateTime.ToString("HH:mm:ss")))
+
 /// Replaces the timestamp in a Dynamics NAV object.
 let replaceDateTimeInString (dateTime:DateTime) text = 
-    let t1 = DateRegex.Replace(text, String.Format("\n    Date={0};", dateTime.Date.ToString(NavObjectDateFormat)))
-    TimeRegex.Replace(t1, String.Format("\n    Time={0};", dateTime.ToString("HH:mm:ss")))
+    replaceDateTimeInStringWithFormat dateTime NavObjectDateFormat text
 
 /// Removes the modified flag from a Dynamics NAV object.
 let removeModifiedFlag text = ModifiedRegex.Replace(text, String.Empty)
