@@ -371,8 +371,12 @@ let analyzeXmlTestResults (fileName:string) (testSuite:string) =
                 |> Seq.map (fun node -> 
                     let testName = node.SelectSingleNode("Name").InnerText
                     let testCodeunit = node.SelectSingleNode("TestCodeunit").InnerText
-                    let startTime = DateTime.Parse(node.SelectSingleNode("StartTime").InnerText)
-                    let endTime = DateTime.Parse(node.SelectSingleNode("FinishTime").InnerText)
+                    let startTime = match DateTime.TryParse(node.SelectSingleNode("StartTime").InnerText) with
+                                    | true,dt -> dt
+                                    | _ -> DateTime.Now
+                    let endTime = match DateTime.TryParse(node.SelectSingleNode("FinishTime").InnerText) with
+                                    | true, dt -> dt
+                                    | _ -> DateTime.Now
                     let status =
                         match node.SelectSingleNode("Run").InnerText with
                         | "No" -> Ignored("", "")
