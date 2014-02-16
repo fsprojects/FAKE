@@ -200,6 +200,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="NAVFiles\Table_4.txt">
+    <Content Include="NAVFiles\TestResultsXMLPort130021.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="SideBySideSpecification\Project1.txt">
