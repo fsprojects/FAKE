@@ -3,10 +3,11 @@ module Fake.DynamicsNav
 
 open System
 open System.Diagnostics
-open System.Text
 open System.IO
-open Fake.UnitTestHelper
+open System.Text
 open System.Threading
+open System.Xml
+open Fake.UnitTestHelper
 
 [<RequireQualifiedAccess>]
 /// A Dynamics NAV server type
@@ -356,3 +357,31 @@ let analyzeTestResults fileName =
         let tests = getTests messages
 
         Some { SuiteName = suiteName; Tests = tests }
+
+
+/// Analyzes the XML-based Dynamics NAV test results from XMLPort 130021
+let analyzeXmlTestResults (fileName:string) (testSuite:string) =
+    let doc = new XmlDocument()
+    doc.Load(fileName)
+
+    let suite = doc.SelectSingleNode("/TestSuites/TestSuite[Name='" + testSuite + "']")
+
+    let tests = suite.SelectNodes("TestLines/TestLine")
+                |> Seq.cast<XmlNode>
+                |> Seq.map (fun node -> 
+                    let testName = node.SelectSingleNode("Name").InnerText
+                    let testCodeunit = node.SelectSingleNode("TestCodeunit").InnerText
+                    let startTime = DateTime.Parse(node.SelectSingleNode("StartTime").InnerText)
+                    let endTime = DateTime.Parse(node.SelectSingleNode("FinishTime").InnerText)
+                    let status =
+                        match node.SelectSingleNode("Result").InnerText with
+                        | "Failure" -> Failure(node.SelectSingleNode("Function").InnerText + " (CU: " + testCodeunit + ")", node.SelectSingleNode("FirstError").InnerText)
+                        | _ -> Ok
+
+                    { Name = testName
+                      RunTime = endTime - startTime
+                      Status = status }
+                )
+                |> List.ofSeq
+
+    Some { SuiteName = testSuite; Tests = tests }

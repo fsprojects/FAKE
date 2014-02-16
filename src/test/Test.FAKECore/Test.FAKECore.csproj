@@ -192,6 +192,9 @@
     <Content Include="NAVFiles\PRETaggedReport_1095.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="NAVFiles\TestResultsXMLPort130021.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="SideBySideSpecification\Project1.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
