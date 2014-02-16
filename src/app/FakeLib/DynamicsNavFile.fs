@@ -20,17 +20,30 @@ let DateRegex = new Regex(@"\n\s\s\s\sDate\=(?<Date>[^;]*);", RegexOptions.Compi
 /// A Regex which allows to retrieve the modified time.
 let TimeRegex = new Regex(@"\n\s\s\s\sTime\=(?<Time>[^;]*);", RegexOptions.Compiled)
 
+/// A Regex which allows to parse objects in a Dynamics NAV file.
+let ObjectRegex = new Regex(@"OBJECT (?<ObjectType>(Table|Form|Report|Dataport|Codeunit|XMLport|MenuSuite|Page|Query)) (?<ObjectId>(\d+)) (?<ObjectName>([^\r\n]+))", RegexOptions.Compiled)
+
+/// A Regex which allows to find objects in a Dynamics NAV file.
+let ObjectSplitRegex = new Regex(@"(?=OBJECT (?:(Table|Form|Report|Dataport|Codeunit|XMLport|MenuSuite|Page|Query)) (?:(\d+)) (?:([^\r\n]+)))", RegexOptions.Compiled)
+
+/// A type definition of a Dynamics NAV object.
+type NavObject = {Type:string; Id:int; Name:string; Source:string}
+
+/// A NAV culture-specific date format.
 let NavObjectDateFormat = Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern.Replace("yyyy", "yy")
 
-/// Replaces the timestamp in a Dynamics NAV object
-let replaceDateTimeInString (dateTime:DateTime) text = 
-    let t1 = DateRegex.Replace(text, String.Format("\n    Date={0};", dateTime.Date.ToString(NavObjectDateFormat)))
+let replaceDateTimeInStringWithFormat (dateTime:DateTime) (dateFormat:string) text = 
+    let t1 = DateRegex.Replace(text, String.Format("\n    Date={0};", dateTime.Date.ToString(dateFormat)))
     TimeRegex.Replace(t1, String.Format("\n    Time={0};", dateTime.ToString("HH:mm:ss")))
 
-/// Removes the modified flag from a Dynamics NAV object
+/// Replaces the timestamp in a Dynamics NAV object.
+let replaceDateTimeInString (dateTime:DateTime) text = 
+    replaceDateTimeInStringWithFormat dateTime NavObjectDateFormat text
+
+/// Removes the modified flag from a Dynamics NAV object.
 let removeModifiedFlag text = ModifiedRegex.Replace(text, String.Empty)
 
-/// Returns the version tag list from Dynamics NAV object
+/// Returns the version tag list from Dynamics NAV object.
 let getVersionTagList text =
     if VersionRegex.IsMatch text then 
         VersionRegex.Match(text).Groups.["VersionList"].Value 
@@ -146,3 +159,40 @@ let setVersionTags requiredTags acceptPreTagged invalidTags versionTag newVersio
     if DateTime.MinValue <> newDateTime then
         tracefn "Setting DateTime to %A" (newDateTime.ToString())
     modifyNavisionFiles requiredTags acceptPreTagged invalidTags versionTag newVersion removeModifiedFlag newDateTime fileNames
+
+/// Splits an object string into multiple Dynamics NAV objects of type NavObject.
+let objectsInObjectString text =
+    ObjectSplitRegex.Split(text)
+    |> Seq.filter (fun x -> x.StartsWith("OBJECT "))
+    |> Seq.map (fun (objectString: string) ->
+        let m = ObjectRegex.Match(objectString)
+
+        {
+            Type = m.Groups.["ObjectType"].Value;
+            Id = int m.Groups.["ObjectId"].Value;
+            Name = m.Groups.["ObjectName"].Value;
+            Source = objectString;
+        }
+    )
+    |> List.ofSeq
+
+/// Returns a standardized filename based on the given NavObject.
+let fileNameFromObject (navObject:NavObject, fileEnding:string) =
+    String.Format("{0}{1}.{2}", navObject.Type.Substring(0, 3).ToUpper(), navObject.Id, fileEnding)
+
+/// Splits the given files into individual object files in the specified destination directory.
+let splitNavisionFiles fileNames destDir =
+    trace "Splitting files"
+    for fileName in fileNames do
+        tracefn " - File: %s" fileName
+
+        let objectString = (ReadFileAsString fileName)
+        let objects = objectsInObjectString objectString
+        for x in objects do
+            tracefn "  - Object: %s %i %s" x.Type x.Id x.Name
+            let targetFile = fileNameFromObject(x, "txt")
+            tracefn "  - Writing: %s" targetFile
+
+            use outputFile = new StreamWriter(Path.Combine(destDir, targetFile), false)
+            outputFile.Write(x.Source)
+            outputFile.Close()

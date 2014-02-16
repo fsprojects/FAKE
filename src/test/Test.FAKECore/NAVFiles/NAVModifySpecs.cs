@@ -8,7 +8,6 @@ namespace Test.FAKECore.NAVFiles
     {
         static string _navisionObject;
         static string _expectedObject;
-        static string _result;
 
         Establish context = () =>
         {

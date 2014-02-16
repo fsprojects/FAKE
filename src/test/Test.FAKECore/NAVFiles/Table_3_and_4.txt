@@ -1,0 +1,534 @@
+OBJECT Table 3 Payment Terms
+{
+  OBJECT-PROPERTIES
+  {
+    Date=07-09-12;
+    Time=12:00:00;
+    Version List=NAVW17.00,NAVDK7.00;
+  }
+  PROPERTIES
+  {
+    DataCaptionFields=Code,Description;
+    OnDelete=VAR
+               PaymentTermsTranslation@1000 : Record 462;
+             BEGIN
+               WITH PaymentTermsTranslation DO BEGIN
+                 SETRANGE("Payment Term",Code);
+                 DELETEALL
+               END;
+             END;
+
+    CaptionML=[DAN=Betalingsbetingelser;
+               ENU=Payment Terms];
+    LookupPageID=Page4;
+  }
+  FIELDS
+  {
+    { 1   ;   ;Code                ;Code10        ;CaptionML=[DAN=Kode;
+                                                              ENU=Code];
+                                                   NotBlank=Yes }
+    { 2   ;   ;Due Date Calculation;DateFormula   ;CaptionML=[DAN=Forfaldsdatoformel;
+                                                              ENU=Due Date Calculation] }
+    { 3   ;   ;Discount Date Calculation;DateFormula;
+                                                   CaptionML=[DAN=Kont.rabat datoform.;
+                                                              ENU=Discount Date Calculation] }
+    { 4   ;   ;Discount %          ;Decimal       ;CaptionML=[DAN=Rabatpct.;
+                                                              ENU=Discount %];
+                                                   DecimalPlaces=0:5;
+                                                   MinValue=0;
+                                                   MaxValue=100 }
+    { 5   ;   ;Description         ;Text50        ;CaptionML=[DAN=Beskrivelse;
+                                                              ENU=Description] }
+    { 6   ;   ;Calc. Pmt. Disc. on Cr. Memos;Boolean;
+                                                   CaptionML=[DAN=Beregn kont.rabat pÜ kred.notaer;
+                                                              ENU=Calc. Pmt. Disc. on Cr. Memos] }
+    { 13600;  ;OIOUBL Code         ;Option        ;CaptionML=[DAN=OIOUBL-kode;
+                                                              ENU=OIOUBL Code];
+                                                   OptionCaptionML=[DAN=" ,Kontrakt,Specifik";
+                                                                    ENU=" ,Contract,Specific"];
+                                                   OptionString=[ ,Contract,Specific] }
+  }
+  KEYS
+  {
+    {    ;Code                                    ;Clustered=Yes }
+  }
+  FIELDGROUPS
+  {
+    { 1   ;DropDown            ;Code,Description,Due Date Calculation    }
+  }
+  CODE
+  {
+
+    PROCEDURE TranslateDescription@1(VAR PaymentTerms@1000 : Record 3;Language@1001 : Code[10]);
+    VAR
+      PaymentTermsTranslation@1002 : Record 462;
+    BEGIN
+      IF PaymentTermsTranslation.GET(PaymentTerms.Code,Language) THEN
+        PaymentTerms.Description := PaymentTermsTranslation.Description;
+    END;
+
+    BEGIN
+    END.
+  }
+}
+
+OBJECT Table 4 Currency
+{
+  OBJECT-PROPERTIES
+  {
+    Date=23-09-13;
+    Time=12:00:00;
+    Version List=NAVW17.10,NAVDK7.10;
+  }
+  PROPERTIES
+  {
+    OnModify=BEGIN
+               "Last Date Modified" := TODAY;
+             END;
+
+    OnDelete=VAR
+               CustLedgEntry@1000 : Record 21;
+               VendLedgEntry@1001 : Record 25;
+             BEGIN
+               IF NOT CustLedgEntry.SETCURRENTKEY("Customer No.",Open,Positive,"Due Date","Currency Code") THEN
+                 CustLedgEntry.SETCURRENTKEY(Open,"Due Date");
+               CustLedgEntry.SETRANGE(Open,TRUE);
+               CustLedgEntry.SETRANGE("Currency Code",Code);
+               IF CustLedgEntry.FINDFIRST THEN
+                 ERROR(Text002,CustLedgEntry.TABLECAPTION,TABLECAPTION,Code);
+
+               IF NOT VendLedgEntry.SETCURRENTKEY("Vendor No.",Open,Positive,"Due Date","Currency Code") THEN
+                 VendLedgEntry.SETCURRENTKEY(Open,"Due Date");
+               VendLedgEntry.SETRANGE(Open,TRUE);
+               VendLedgEntry.SETRANGE("Currency Code",Code);
+               IF VendLedgEntry.FINDFIRST THEN
+                 ERROR(Text002,VendLedgEntry.TABLECAPTION,TABLECAPTION,Code);
+
+               CurrExchRate.SETRANGE("Currency Code",Code);
+               CurrExchRate.DELETEALL;
+             END;
+
+    OnRename=BEGIN
+               "Last Date Modified" := TODAY;
+             END;
+
+    CaptionML=[DAN=Valuta;
+               ENU=Currency];
+    LookupPageID=Page5;
+  }
+  FIELDS
+  {
+    { 1   ;   ;Code                ;Code10        ;CaptionML=[DAN=Kode;
+                                                              ENU=Code];
+                                                   NotBlank=Yes }
+    { 2   ;   ;Last Date Modified  ;Date          ;CaptionML=[DAN=Rettet den;
+                                                              ENU=Last Date Modified];
+                                                   Editable=No }
+    { 3   ;   ;Last Date Adjusted  ;Date          ;CaptionML=[DAN=Reguleret den;
+                                                              ENU=Last Date Adjusted];
+                                                   Editable=No }
+    { 6   ;   ;Unrealized Gains Acc.;Code20       ;TableRelation="G/L Account";
+                                                   OnValidate=BEGIN
+                                                                CheckGLAcc("Unrealized Gains Acc.");
+                                                              END;
+
+                                                   CaptionML=[DAN=Urealiseret gevinstkonto;
+                                                              ENU=Unrealized Gains Acc.] }
+    { 7   ;   ;Realized Gains Acc. ;Code20        ;TableRelation="G/L Account";
+                                                   OnValidate=BEGIN
+                                                                CheckGLAcc("Realized Gains Acc.");
+                                                              END;
+
+                                                   CaptionML=[DAN=Realiseret gevinstkonto;
+                                                              ENU=Realized Gains Acc.] }
+    { 8   ;   ;Unrealized Losses Acc.;Code20      ;TableRelation="G/L Account";
+                                                   OnValidate=BEGIN
+                                                                CheckGLAcc("Unrealized Losses Acc.");
+                                                              END;
+
+                                                   CaptionML=[DAN=Urealiseret tabskonto;
+                                                              ENU=Unrealized Losses Acc.] }
+    { 9   ;   ;Realized Losses Acc.;Code20        ;TableRelation="G/L Account";
+                                                   OnValidate=BEGIN
+                                                                CheckGLAcc("Realized Losses Acc.");
+                                                              END;
+
+                                                   CaptionML=[DAN=Realiseret tabskonto;
+                                                              ENU=Realized Losses Acc.] }
+    { 10  ;   ;Invoice Rounding Precision;Decimal ;InitValue=1;
+                                                   OnValidate=BEGIN
+                                                                IF "Amount Rounding Precision" <> 0 THEN
+                                                                  IF "Invoice Rounding Precision" <> ROUND("Invoice Rounding Precision","Amount Rounding Precision") THEN
+                                                                    FIELDERROR(
+                                                                      "Invoice Rounding Precision",
+                                                                      STRSUBSTNO(Text000,"Amount Rounding Precision"));
+                                                              END;
+
+                                                   CaptionML=[DAN=Fakturaafrundingsprëcision;
+                                                              ENU=Invoice Rounding Precision];
+                                                   AutoFormatType=1;
+                                                   AutoFormatExpr=Code }
+    { 12  ;   ;Invoice Rounding Type;Option       ;CaptionML=[DAN=Fakturaafrundingsretning;
+                                                              ENU=Invoice Rounding Type];
+                                                   OptionCaptionML=[DAN=Nërmeste,Op,Ned;
+                                                                    ENU=Nearest,Up,Down];
+                                                   OptionString=Nearest,Up,Down }
+    { 13  ;   ;Amount Rounding Precision;Decimal  ;InitValue=0,01;
+                                                   OnValidate=BEGIN
+                                                                IF "Amount Rounding Precision" <> 0 THEN
+                                                                  "Invoice Rounding Precision" := ROUND("Invoice Rounding Precision","Amount Rounding Precision");
+                                                              END;
+
+                                                   CaptionML=[DAN=Afrundingsprëcision;
+                                                              ENU=Amount Rounding Precision];
+                                                   DecimalPlaces=2:5;
+                                                   MinValue=0 }
+    { 14  ;   ;Unit-Amount Rounding Precision;Decimal;
+                                                   InitValue=0,00001;
+                                                   CaptionML=[DAN=Pris - afrundingsprëcision;
+                                                              ENU=Unit-Amount Rounding Precision];
+                                                   DecimalPlaces=0:9;
+                                                   MinValue=0 }
+    { 15  ;   ;Description         ;Text30        ;CaptionML=[DAN=Beskrivelse;
+                                                              ENU=Description] }
+    { 17  ;   ;Amount Decimal Places;Text5        ;InitValue=2:2;
+                                                   OnValidate=BEGIN
+                                                                GLSetup.CheckDecimalPlacesFormat("Amount Decimal Places");
+                                                              END;
+
+                                                   CaptionML=[DAN=Belõbsdecimalpladser;
+                                                              ENU=Amount Decimal Places];
+                                                   NotBlank=Yes }
+    { 18  ;   ;Unit-Amount Decimal Places;Text5   ;InitValue=2:5;
+                                                   OnValidate=BEGIN
+                                                                GLSetup.CheckDecimalPlacesFormat("Unit-Amount Decimal Places");
+                                                              END;
+
+                                                   CaptionML=[DAN=Pris-decimalpladser;
+                                                              ENU=Unit-Amount Decimal Places];
+                                                   NotBlank=Yes }
+    { 19  ;   ;Customer Filter     ;Code20        ;FieldClass=FlowFilter;
+                                                   TableRelation=Customer;
+                                                   CaptionML=[DAN=Debitorfilter;
+                                                              ENU=Customer Filter] }
+    { 20  ;   ;Vendor Filter       ;Code20        ;FieldClass=FlowFilter;
+                                                   TableRelation=Vendor;
+                                                   CaptionML=[DAN=Kreditorfilter;
+                                                              ENU=Vendor Filter] }
+    { 21  ;   ;Global Dimension 1 Filter;Code20   ;FieldClass=FlowFilter;
+                                                   TableRelation="Dimension Value".Code WHERE (Global Dimension No.=CONST(1));
+                                                   CaptionML=[DAN=Global dimension 1-filter;
+                                                              ENU=Global Dimension 1 Filter];
+                                                   CaptionClass='1,3,1' }
+    { 22  ;   ;Global Dimension 2 Filter;Code20   ;FieldClass=FlowFilter;
+                                                   TableRelation="Dimension Value".Code WHERE (Global Dimension No.=CONST(2));
+                                                   CaptionML=[DAN=Global dimension 2-filter;
+                                                              ENU=Global Dimension 2 Filter];
+                                                   CaptionClass='1,3,2' }
+    { 23  ;   ;Date Filter         ;Date          ;FieldClass=FlowFilter;
+                                                   CaptionML=[DAN=Datofilter;
+                                                              ENU=Date Filter] }
+    { 24  ;   ;Cust. Ledg. Entries in Filter;Boolean;
+                                                   FieldClass=FlowField;
+                                                   CalcFormula=Exist("Cust. Ledger Entry" WHERE (Customer No.=FIELD(Customer Filter),
+                                                                                                 Currency Code=FIELD(Code)));
+                                                   CaptionML=[DAN=Debitorposter i filter;
+                                                              ENU=Cust. Ledg. Entries in Filter];
+                                                   Editable=No }
+    { 25  ;   ;Customer Balance    ;Decimal       ;FieldClass=FlowField;
+                                                   CalcFormula=Sum("Detailed Cust. Ledg. Entry".Amount WHERE (Customer No.=FIELD(Customer Filter),
+                                                                                                              Initial Entry Global Dim. 1=FIELD(Global Dimension 1 Filter),
+                                                                                                              Initial Entry Global Dim. 2=FIELD(Global Dimension 2 Filter),
+                                                                                                              Posting Date=FIELD(Date Filter),
+                                                                                                              Currency Code=FIELD(Code)));
+                                                   CaptionML=[DAN=Debitorbelõb;
+                                                              ENU=Customer Balance];
+                                                   Editable=No;
+                                                   AutoFormatType=1;
+                                                   AutoFormatExpr=Code }
+    { 26  ;   ;Customer Outstanding Orders;Decimal;FieldClass=FlowField;
+                                                   CalcFormula=Sum("Sales Line"."Outstanding Amount" WHERE (Document Type=CONST(Order),
+                                                                                                            Bill-to Customer No.=FIELD(Customer Filter),
+                                                                                                            Currency Code=FIELD(Code),
+                                                                                                            Shortcut Dimension 1 Code=FIELD(Global Dimension 1 Filter),
+                                                                                                            Shortcut Dimension 2 Code=FIELD(Global Dimension 2 Filter)));
+                                                   CaptionML=[DAN=UdestÜende salgsordrer;
+                                                              ENU=Customer Outstanding Orders];
+                                                   Editable=No;
+                                                   AutoFormatType=1;
+                                                   AutoFormatExpr=Code }
+    { 27  ;   ;Customer Shipped Not Invoiced;Decimal;
+                                                   FieldClass=FlowField;
+                                                   CalcFormula=Sum("Sales Line"."Shipped Not Invoiced" WHERE (Document Type=CONST(Order),
+                                                                                                              Bill-to Customer No.=FIELD(Customer Filter),
+                                                                                                              Currency Code=FIELD(Code),
+                                                                                                              Shortcut Dimension 1 Code=FIELD(Global Dimension 1 Filter),
+                                                                                                              Shortcut Dimension 2 Code=FIELD(Global Dimension 2 Filter)));
+                                                   CaptionML=[DAN=Salg - leveret (ufakt.);
+                                                              ENU=Customer Shipped Not Invoiced];
+                                                   Editable=No;
+                                                   AutoFormatType=1;
+                                                   AutoFormatExpr=Code }
+    { 28  ;   ;Customer Balance Due;Decimal       ;FieldClass=FlowField;
+                                                   CalcFormula=Sum("Detailed Cust. Ledg. Entry".Amount WHERE (Customer No.=FIELD(Customer Filter),
+                                                                                                              Initial Entry Global Dim. 1=FIELD(Global Dimension 1 Filter),
+                                                                                                              Initial Entry Global Dim. 2=FIELD(Global Dimension 2 Filter),
+                                                                                                              Initial Entry Due Date=FIELD(Date Filter),
+                                                                                                              Posting Date=FIELD(UPPERLIMIT(Date Filter)),
+                                                                                                              Currency Code=FIELD(Code)));
+                                                   CaptionML=[DAN=Forf. debitorbelõb;
+                                                              ENU=Customer Balance Due];
+                                                   Editable=No;
+                                                   AutoFormatType=1;
+                                                   AutoFormatExpr=Code }
+    { 29  ;   ;Vendor Ledg. Entries in Filter;Boolean;
+                                                   FieldClass=FlowField;
+                                                   CalcFormula=Exist("Vendor Ledger Entry" WHERE (Vendor No.=FIELD(Vendor Filter),
+                                                                                                  Currency Code=FIELD(Code)));
+                                                   CaptionML=[DAN=Kreditorposter i filter;
+                                                              ENU=Vendor Ledg. Entries in Filter];
+                                                   Editable=No }
+    { 30  ;   ;Vendor Balance      ;Decimal       ;FieldClass=FlowField;
+                                                   CalcFormula=-Sum("Detailed Vendor Ledg. Entry".Amount WHERE (Vendor No.=FIELD(Vendor Filter),
+                                                                                                                Initial Entry Global Dim. 1=FIELD(Global Dimension 1 Filter),
+                                                                                                                Initial Entry Global Dim. 2=FIELD(Global Dimension 2 Filter),
+                                                                                                                Posting Date=FIELD(Date Filter),
+                                                                                                                Currency Code=FIELD(Code)));
+                                                   CaptionML=[DAN=Kreditorbelõb;
+                                                              ENU=Vendor Balance];
+                                                   Editable=No;
+                                                   AutoFormatType=1;
+                                                   AutoFormatExpr=Code }
+    { 31  ;   ;Vendor Outstanding Orders;Decimal  ;FieldClass=FlowField;
+                                                   CalcFormula=Sum("Purchase Line"."Outstanding Amount" WHERE (Document Type=CONST(Order),
+                                                                                                               Pay-to Vendor No.=FIELD(Vendor Filter),
+                                                                                                               Currency Code=FIELD(Code),
+                                                                                                               Shortcut Dimension 1 Code=FIELD(Global Dimension 1 Filter),
+                                                                                                               Shortcut Dimension 2 Code=FIELD(Global Dimension 2 Filter)));
+                                                   CaptionML=[DAN=UdestÜende kõbsordrer;
+                                                              ENU=Vendor Outstanding Orders];
+                                                   Editable=No;
+                                                   AutoFormatType=1;
+                                                   AutoFormatExpr=Code }
+    { 32  ;   ;Vendor Amt. Rcd. Not Invoiced;Decimal;
+                                                   FieldClass=FlowField;
+                                                   CalcFormula=Sum("Purchase Line"."Amt. Rcd. Not Invoiced" WHERE (Document Type=CONST(Order),
+                                                                                                                   Pay-to Vendor No.=FIELD(Vendor Filter),
+                                                                                                                   Currency Code=FIELD(Code),
+                                                                                                                   Shortcut Dimension 1 Code=FIELD(Global Dimension 1 Filter),
+                                                                                                                   Shortcut Dimension 2 Code=FIELD(Global Dimension 2 Filter)));
+                                                   CaptionML=[DAN=Modt. kreditorbelõb ufakt.;
+                                                              ENU=Vendor Amt. Rcd. Not Invoiced];
+                                                   Editable=No;
+                                                   AutoFormatType=1;
+                                                   AutoFormatExpr=Code }
+    { 33  ;   ;Vendor Balance Due  ;Decimal       ;FieldClass=FlowField;
+                                                   CalcFormula=-Sum("Detailed Vendor Ledg. Entry".Amount WHERE (Vendor No.=FIELD(Vendor Filter),
+                                                                                                                Initial Entry Global Dim. 1=FIELD(Global Dimension 1 Filter),
+                                                                                                                Initial Entry Global Dim. 2=FIELD(Global Dimension 2 Filter),
+                                                                                                                Initial Entry Due Date=FIELD(Date Filter),
+                                                                                                                Posting Date=FIELD(UPPERLIMIT(Date Filter)),
+                                                                                                                Currency Code=FIELD(Code)));
+                                                   CaptionML=[DAN=Forf. kreditorbelõb;
+                                                              ENU=Vendor Balance Due];
+                                                   Editable=No;
+                                                   AutoFormatType=1;
+                                                   AutoFormatExpr=Code }
+    { 34  ;   ;Customer Balance (LCY);Decimal     ;FieldClass=FlowField;
+                                                   CalcFormula=Sum("Detailed Cust. Ledg. Entry"."Amount (LCY)" WHERE (Customer No.=FIELD(Customer Filter),
+                                                                                                                      Initial Entry Global Dim. 1=FIELD(Global Dimension 1 Filter),
+                                                                                                                      Initial Entry Global Dim. 2=FIELD(Global Dimension 2 Filter),
+                                                                                                                      Posting Date=FIELD(Date Filter),
+                                                                                                                      Currency Code=FIELD(Code)));
+                                                   CaptionML=[DAN=Debitorbelõb (RV);
+                                                              ENU=Customer Balance (LCY)];
+                                                   Editable=No;
+                                                   AutoFormatType=1 }
+    { 35  ;   ;Vendor Balance (LCY);Decimal       ;FieldClass=FlowField;
+                                                   CalcFormula=-Sum("Detailed Vendor Ledg. Entry"."Amount (LCY)" WHERE (Vendor No.=FIELD(Vendor Filter),
+                                                                                                                        Initial Entry Global Dim. 1=FIELD(Global Dimension 1 Filter),
+                                                                                                                        Initial Entry Global Dim. 2=FIELD(Global Dimension 2 Filter),
+                                                                                                                        Posting Date=FIELD(Date Filter),
+                                                                                                                        Currency Code=FIELD(Code)));
+                                                   CaptionML=[DAN=Kreditorbelõb (RV);
+                                                              ENU=Vendor Balance (LCY)];
+                                                   Editable=No;
+                                                   AutoFormatType=1 }
+    { 40  ;   ;Realized G/L Gains Account;Code20  ;TableRelation="G/L Account";
+                                                   OnValidate=BEGIN
+                                                                CheckGLAcc("Realized G/L Gains Account");
+                                                              END;
+
+                                                   CaptionML=[DAN=Realiseret finansgevinstkonto;
+                                                              ENU=Realized G/L Gains Account] }
+    { 41  ;   ;Realized G/L Losses Account;Code20 ;TableRelation="G/L Account";
+                                                   OnValidate=BEGIN
+                                                                CheckGLAcc("Realized G/L Losses Account");
+                                                              END;
+
+                                                   CaptionML=[DAN=Realiseret finanstabskonto;
+                                                              ENU=Realized G/L Losses Account] }
+    { 44  ;   ;Appln. Rounding Precision;Decimal  ;CaptionML=[DAN=Udlign. afrundingsprëcision;
+                                                              ENU=Appln. Rounding Precision];
+                                                   MinValue=0;
+                                                   AutoFormatType=1;
+                                                   AutoFormatExpr=Code }
+    { 45  ;   ;EMU Currency        ;Boolean       ;CaptionML=[DAN=ùMU-valuta;
+                                                              ENU=EMU Currency] }
+    { 46  ;   ;Currency Factor     ;Decimal       ;CaptionML=[DAN=Valutafaktor;
+                                                              ENU=Currency Factor];
+                                                   DecimalPlaces=0:5;
+                                                   Editable=No }
+    { 47  ;   ;Residual Gains Account;Code20      ;TableRelation="G/L Account";
+                                                   CaptionML=[DAN=Afrundingskonto (gevinst);
+                                                              ENU=Residual Gains Account] }
+    { 48  ;   ;Residual Losses Account;Code20     ;TableRelation="G/L Account";
+                                                   CaptionML=[DAN=Afrundingskonto (tab);
+                                                              ENU=Residual Losses Account] }
+    { 50  ;   ;Conv. LCY Rndg. Debit Acc.;Code20  ;TableRelation="G/L Account";
+                                                   CaptionML=[DAN=Konv. RV afr. debetkonto;
+                                                              ENU=Conv. LCY Rndg. Debit Acc.] }
+    { 51  ;   ;Conv. LCY Rndg. Credit Acc.;Code20 ;TableRelation="G/L Account";
+                                                   CaptionML=[DAN=Konv. RV afr. kreditkonto;
+                                                              ENU=Conv. LCY Rndg. Credit Acc.] }
+    { 52  ;   ;Max. VAT Difference Allowed;Decimal;OnValidate=BEGIN
+                                                                IF "Max. VAT Difference Allowed" <> ROUND("Max. VAT Difference Allowed","Amount Rounding Precision") THEN
+                                                                  ERROR(
+                                                                    Text001,
+                                                                    FIELDCAPTION("Max. VAT Difference Allowed"),"Amount Rounding Precision");
+
+                                                                "Max. VAT Difference Allowed" := ABS("Max. VAT Difference Allowed");
+                                                              END;
+
+                                                   CaptionML=[DAN=Maks. momsdifference tilladt;
+                                                              ENU=Max. VAT Difference Allowed];
+                                                   AutoFormatType=1;
+                                                   AutoFormatExpr=Code }
+    { 53  ;   ;VAT Rounding Type   ;Option        ;CaptionML=[DAN=Momsafrundingstype;
+                                                              ENU=VAT Rounding Type];
+                                                   OptionCaptionML=[DAN=Nërmeste,Op,Ned;
+                                                                    ENU=Nearest,Up,Down];
+                                                   OptionString=Nearest,Up,Down }
+    { 54  ;   ;Payment Tolerance % ;Decimal       ;CaptionML=[DAN=Betalingstolerancepct.;
+                                                              ENU=Payment Tolerance %];
+                                                   DecimalPlaces=0:5;
+                                                   MinValue=0;
+                                                   MaxValue=100;
+                                                   Editable=No }
+    { 55  ;   ;Max. Payment Tolerance Amount;Decimal;
+                                                   CaptionML=[DAN=Maks. betalingstolerancebelõb;
+                                                              ENU=Max. Payment Tolerance Amount];
+                                                   MinValue=0;
+                                                   Editable=No;
+                                                   AutoFormatType=1;
+                                                   AutoFormatExpr=Code }
+    { 13600;  ;OIOUBL Currency Code;Code10        ;CaptionML=[DAN=OIOUBL-valutakode;
+                                                              ENU=OIOUBL Currency Code] }
+  }
+  KEYS
+  {
+    {    ;Code                                    ;Clustered=Yes }
+  }
+  FIELDGROUPS
+  {
+  }
+  CODE
+  {
+    VAR
+      Text000@1000 : TextConst 'DAN=skal afrundes til nërmeste %1;ENU=must be rounded to the nearest %1';
+      Text001@1001 : TextConst 'DAN=%1 skal afrundes til nërmeste %2.;ENU=%1 must be rounded to the nearest %2.';
+      CurrExchRate@1002 : Record 330;
+      GLSetup@1003 : Record 98;
+      Text002@1004 : TextConst '@@@=1 either customer or vendor ledger entry table 2 name co currency table 3 currencency code;DAN=Der er en eller flere Übne poster i tabellen %1, der bruger %2 %3.;ENU=There is one or more opened entries in the %1 table using %2 %3.';
+      IncorrectEntryTypeErr@1005 : TextConst 'DAN=Forkert posttype %1.;ENU=Incorrect Entry Type %1.';
+
+    PROCEDURE InitRoundingPrecision@2();
+    BEGIN
+      GLSetup.GET;
+      IF GLSetup."Amount Rounding Precision" <> 0 THEN
+        "Amount Rounding Precision" := GLSetup."Amount Rounding Precision"
+      ELSE
+        "Amount Rounding Precision" := 0.01;
+      IF GLSetup."Unit-Amount Rounding Precision" <> 0 THEN
+        "Unit-Amount Rounding Precision" := GLSetup."Unit-Amount Rounding Precision"
+      ELSE
+        "Unit-Amount Rounding Precision" := 0.00001;
+      "Max. VAT Difference Allowed" := GLSetup."Max. VAT Difference Allowed";
+      "VAT Rounding Type" := GLSetup."VAT Rounding Type";
+      "Invoice Rounding Precision" := GLSetup."Inv. Rounding Precision (LCY)";
+      "Invoice Rounding Type" := GLSetup."Inv. Rounding Type (LCY)";
+    END;
+
+    LOCAL PROCEDURE CheckGLAcc@1(AccNo@1000 : Code[20]);
+    VAR
+      GLAcc@1001 : Record 15;
+    BEGIN
+      IF AccNo <> '' THEN BEGIN
+        GLAcc.GET(AccNo);
+        GLAcc.CheckGLAcc;
+      END;
+    END;
+
+    PROCEDURE VATRoundingDirection@3() : Text[1];
+    BEGIN
+      CASE "VAT Rounding Type" OF
+        "VAT Rounding Type"::Nearest:
+          EXIT('=');
+        "VAT Rounding Type"::Up:
+          EXIT('>');
+        "VAT Rounding Type"::Down:
+          EXIT('<');
+      END;
+    END;
+
+    PROCEDURE InvoiceRoundingDirection@4() : Text[1];
+    BEGIN
+      CASE "Invoice Rounding Type" OF
+        "Invoice Rounding Type"::Nearest:
+          EXIT('=');
+        "Invoice Rounding Type"::Up:
+          EXIT('>');
+        "Invoice Rounding Type"::Down:
+          EXIT('<');
+      END;
+    END;
+
+    PROCEDURE CheckAmountRoundingPrecision@5();
+    BEGIN
+      TESTFIELD("Unit-Amount Rounding Precision");
+      TESTFIELD("Amount Rounding Precision");
+    END;
+
+    PROCEDURE GetGainLossAccount@6(DtldCVLedgEntryBuf@1000 : Record 383) : Code[20];
+    BEGIN
+      CASE DtldCVLedgEntryBuf."Entry Type" OF
+        DtldCVLedgEntryBuf."Entry Type"::"Unrealized Loss":
+          BEGIN
+            TESTFIELD("Unrealized Losses Acc.");
+            EXIT("Unrealized Losses Acc.");
+          END;
+        DtldCVLedgEntryBuf."Entry Type"::"Unrealized Gain":
+          BEGIN
+            TESTFIELD("Unrealized Gains Acc.");
+            EXIT("Unrealized Gains Acc.");
+          END;
+        DtldCVLedgEntryBuf."Entry Type"::"Realized Loss":
+          BEGIN
+            TESTFIELD("Realized Losses Acc.");
+            EXIT("Realized Losses Acc.");
+          END;
+        DtldCVLedgEntryBuf."Entry Type"::"Realized Gain":
+          BEGIN
+            TESTFIELD("Realized Gains Acc.");
+            EXIT("Realized Gains Acc.");
+          END;
+        ELSE
+          ERROR(IncorrectEntryTypeErr,DtldCVLedgEntryBuf."Entry Type");
+      END;
+    END;
+
+    BEGIN
+    END.
+  }
+}
+

@@ -11,6 +11,7 @@ namespace Test.FAKECore.NAVFiles
     {
         static string _navisionObject;
         static string _expectedObject;
+        static string _dateFormat;
         static string _result;
 
         Establish context = () =>
@@ -22,10 +23,11 @@ namespace Test.FAKECore.NAVFiles
             _expectedObject = File.ReadAllText(result);
 
             Thread.CurrentThread.CurrentCulture = new CultureInfo("de-DE");
+            _dateFormat = Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern.Replace("yyyy", "yy");
         };
 
         Because of = () =>
-           _result = DynamicsNavFile.replaceDateTimeInString(new DateTime(2010, 1, 1, 12, 0, 0), _navisionObject);
+           _result = DynamicsNavFile.replaceDateTimeInStringWithFormat(new DateTime(2010, 1, 1, 12, 0, 0), _dateFormat, _navisionObject);
 
         It should_replace_the_date = () => _result.ShouldEqual(_expectedObject);
     }

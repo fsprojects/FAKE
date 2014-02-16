@@ -1,0 +1,74 @@
+OBJECT Table 3 Payment Terms
+{
+  OBJECT-PROPERTIES
+  {
+    Date=07-09-12;
+    Time=12:00:00;
+    Version List=NAVW17.00,NAVDK7.00;
+  }
+  PROPERTIES
+  {
+    DataCaptionFields=Code,Description;
+    OnDelete=VAR
+               PaymentTermsTranslation@1000 : Record 462;
+             BEGIN
+               WITH PaymentTermsTranslation DO BEGIN
+                 SETRANGE("Payment Term",Code);
+                 DELETEALL
+               END;
+             END;
+
+    CaptionML=[DAN=Betalingsbetingelser;
+               ENU=Payment Terms];
+    LookupPageID=Page4;
+  }
+  FIELDS
+  {
+    { 1   ;   ;Code                ;Code10        ;CaptionML=[DAN=Kode;
+                                                              ENU=Code];
+                                                   NotBlank=Yes }
+    { 2   ;   ;Due Date Calculation;DateFormula   ;CaptionML=[DAN=Forfaldsdatoformel;
+                                                              ENU=Due Date Calculation] }
+    { 3   ;   ;Discount Date Calculation;DateFormula;
+                                                   CaptionML=[DAN=Kont.rabat datoform.;
+                                                              ENU=Discount Date Calculation] }
+    { 4   ;   ;Discount %          ;Decimal       ;CaptionML=[DAN=Rabatpct.;
+                                                              ENU=Discount %];
+                                                   DecimalPlaces=0:5;
+                                                   MinValue=0;
+                                                   MaxValue=100 }
+    { 5   ;   ;Description         ;Text50        ;CaptionML=[DAN=Beskrivelse;
+                                                              ENU=Description] }
+    { 6   ;   ;Calc. Pmt. Disc. on Cr. Memos;Boolean;
+                                                   CaptionML=[DAN=Beregn kont.rabat p† kred.notaer;
+                                                              ENU=Calc. Pmt. Disc. on Cr. Memos] }
+    { 13600;  ;OIOUBL Code         ;Option        ;CaptionML=[DAN=OIOUBL-kode;
+                                                              ENU=OIOUBL Code];
+                                                   OptionCaptionML=[DAN=" ,Kontrakt,Specifik";
+                                                                    ENU=" ,Contract,Specific"];
+                                                   OptionString=[ ,Contract,Specific] }
+  }
+  KEYS
+  {
+    {    ;Code                                    ;Clustered=Yes }
+  }
+  FIELDGROUPS
+  {
+    { 1   ;DropDown            ;Code,Description,Due Date Calculation    }
+  }
+  CODE
+  {
+
+    PROCEDURE TranslateDescription@1(VAR PaymentTerms@1000 : Record 3;Language@1001 : Code[10]);
+    VAR
+      PaymentTermsTranslation@1002 : Record 462;
+    BEGIN
+      IF PaymentTermsTranslation.GET(PaymentTerms.Code,Language) THEN
+        PaymentTerms.Description := PaymentTermsTranslation.Description;
+    END;
+
+    BEGIN
+    END.
+  }
+}
+
