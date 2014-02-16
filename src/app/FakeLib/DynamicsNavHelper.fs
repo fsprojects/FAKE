@@ -366,7 +366,7 @@ let analyzeXmlTestResults (fileName:string) (testSuite:string) =
 
     let suite = doc.SelectSingleNode("/TestSuites/TestSuite[Name='" + testSuite + "']")
 
-    let tests = suite.SelectNodes("TestLines/TestLine")
+    let tests = suite.SelectNodes("TestLines/TestLine[Level='2']")
                 |> Seq.cast<XmlNode>
                 |> Seq.map (fun node -> 
                     let testName = node.SelectSingleNode("Name").InnerText
@@ -374,9 +374,11 @@ let analyzeXmlTestResults (fileName:string) (testSuite:string) =
                     let startTime = DateTime.Parse(node.SelectSingleNode("StartTime").InnerText)
                     let endTime = DateTime.Parse(node.SelectSingleNode("FinishTime").InnerText)
                     let status =
-                        match node.SelectSingleNode("Result").InnerText with
-                        | "Failure" -> Failure(node.SelectSingleNode("Function").InnerText + " (CU: " + testCodeunit + ")", node.SelectSingleNode("FirstError").InnerText)
-                        | _ -> Ok
+                        match node.SelectSingleNode("Run").InnerText with
+                        | "No" -> Ignored("", "")
+                        | _ -> match node.SelectSingleNode("Result").InnerText with
+                                | "Failure" -> Failure(node.SelectSingleNode("FirstError").InnerText, "(CU: " + testCodeunit + ", " + node.SelectSingleNode("Function").InnerText + ")\n")
+                                | _ -> Ok
 
                     { Name = testName
                       RunTime = endTime - startTime
