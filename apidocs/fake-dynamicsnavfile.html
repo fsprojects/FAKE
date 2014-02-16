@@ -42,6 +42,24 @@
 </div>
 
 <!-- Render nested types and modules, if there are any -->
+  <h2>Nested types and modules</h2>
+  <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dynamicsnavfile-navobject.html">NavObject</a>
+          </td>
+          <td class="xmldoc"><p>A type definition of a Dynamics NAV object.</p>
+</td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
 
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
@@ -52,122 +70,138 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '45', 45)" onmouseover="showTip(event, '45', 45)">
+          <code onmouseout="hideTip(event, '59', 59)" onmouseover="showTip(event, '59', 59)">
             checkTagsInFile (...)
           </code>
-          <div class="tip" id="45">
+          <div class="tip" id="59">
             <strong>Signature:</strong>requiredTags:seq&lt;string&gt; -&gt; acceptPreTagged:bool -&gt; invalidTags:seq&lt;string&gt; -&gt; fileName:string -&gt; string * string<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Checks a Dynamics NAV file for missing required and invalid tags and raises this as errors</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L106-106" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L123-123" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '46', 46)" onmouseover="showTip(event, '46', 46)">
+          <code onmouseout="hideTip(event, '75', 75)" onmouseover="showTip(event, '75', 75)">
             checkTagsInObjectString (...)
           </code>
-          <div class="tip" id="46">
+          <div class="tip" id="75">
             <strong>Signature:</strong>requiredTags:seq&lt;string&gt; -&gt; acceptPreTagged:bool -&gt; invalidTags:seq&lt;string&gt; -&gt; objectString:string -&gt; name:string -&gt; string * string<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Checks a Dynamics NAV object for missing required and invalid tags and raises this as errors</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L78-78" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L95-95" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '47', 47)" onmouseover="showTip(event, '47', 47)">
+          <code onmouseout="hideTip(event, '76', 76)" onmouseover="showTip(event, '76', 76)">
             DateRegex 
           </code>
-          <div class="tip" id="47">
+          <div class="tip" id="76">
             <strong>Signature:</strong>Regex<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>A Regex which allows to retrieve modified date.</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L16-16" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L18-18" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '48', 48)" onmouseover="showTip(event, '48', 48)">
+          <code onmouseout="hideTip(event, '77', 77)" onmouseover="showTip(event, '77', 77)">
+            fileNameFromObject (...)
+          </code>
+          <div class="tip" id="77">
+            <strong>Signature:</strong>(navObject:NavObject * fileEnding:string) -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Returns a standardized filename based on the given NavObject.</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L180-180" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '78', 78)" onmouseover="showTip(event, '78', 78)">
             getInvalidTags invalidTags versionTags
           </code>
-          <div class="tip" id="48">
+          <div class="tip" id="78">
             <strong>Signature:</strong>invalidTags:seq&lt;string&gt; -&gt; versionTags:seq&lt;string&gt; -&gt; seq&lt;string&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Get all invalid tags from a Dynamics NAV version tag list</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L72-72" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L89-89" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '49', 49)" onmouseover="showTip(event, '49', 49)">
+          <code onmouseout="hideTip(event, '79', 79)" onmouseover="showTip(event, '79', 79)">
             getMissingRequiredTags (...)
           </code>
-          <div class="tip" id="49">
+          <div class="tip" id="79">
             <strong>Signature:</strong>requiredTags:seq&lt;string&gt; -&gt; versionTags:seq&lt;string&gt; -&gt; seq&lt;string&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Get all missing required tags from a Dynamics NAV version tag list</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L66-66" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L83-83" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '50', 50)" onmouseover="showTip(event, '50', 50)">
+          <code onmouseout="hideTip(event, '80', 80)" onmouseover="showTip(event, '80', 80)">
             getVersionTagList text
           </code>
-          <div class="tip" id="50">
+          <div class="tip" id="80">
             <strong>Signature:</strong>text:string -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
-        <p>Returns the version tag list from Dynamics NAV object</p>
+        <p>Returns the version tag list from Dynamics NAV object.</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L30-30" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L47-47" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '51', 51)" onmouseover="showTip(event, '51', 51)">
+          <code onmouseout="hideTip(event, '81', 81)" onmouseover="showTip(event, '81', 81)">
             ModifiedRegex 
           </code>
-          <div class="tip" id="51">
+          <div class="tip" id="81">
             <strong>Signature:</strong>Regex<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>A Regex which allows to retrieve the modified flag.</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L10-10" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L12-12" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '52', 52)" onmouseover="showTip(event, '52', 52)">
+          <code onmouseout="hideTip(event, '82', 82)" onmouseover="showTip(event, '82', 82)">
             modifyNavisionFiles (...)
           </code>
-          <div class="tip" id="52">
+          <div class="tip" id="82">
             <strong>Signature:</strong>requiredTags:seq&lt;string&gt; -&gt; acceptPreTagged:bool -&gt; invalidTags:seq&lt;string&gt; -&gt; versionTag:string -&gt; newVersion:string -&gt; removeModified:bool -&gt; newDateTime:DateTime -&gt; fileNames:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -175,21 +209,69 @@
         <p>Checks a Dynamics NAV object for missing required and invalid tags and raises this as errors.
 It also changes the given tag, resets the modified flag and time stamp.</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L111-111" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L128-128" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '53', 53)" onmouseover="showTip(event, '53', 53)">
-            removeModifiedFlag text
+          <code onmouseout="hideTip(event, '83', 83)" onmouseover="showTip(event, '83', 83)">
+            NavObjectDateFormat 
           </code>
-          <div class="tip" id="53">
-            <strong>Signature:</strong>text:string -&gt; string<br />
+          <div class="tip" id="83">
+            <strong>Signature:</strong>string<br />
                       </div>
         </td>
         <td class="xmldoc">
-        <p>Removes the modified flag from a Dynamics NAV object</p>
+        <p>A NAV culture-specific date format.</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L33-33" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '84', 84)" onmouseover="showTip(event, '84', 84)">
+            ObjectRegex 
+          </code>
+          <div class="tip" id="84">
+            <strong>Signature:</strong>Regex<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>A Regex which allows to parse objects in a Dynamics NAV file.</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L24-24" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '85', 85)" onmouseover="showTip(event, '85', 85)">
+            objectsInObjectString text
+          </code>
+          <div class="tip" id="85">
+            <strong>Signature:</strong>text:string -&gt; NavObject list<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Splits an object string into multiple Dynamics NAV objects of type NavObject.</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L164-164" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '86', 86)" onmouseover="showTip(event, '86', 86)">
+            ObjectSplitRegex 
+          </code>
+          <div class="tip" id="86">
+            <strong>Signature:</strong>Regex<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>A Regex which allows to find objects in a Dynamics NAV file.</p>
 
             <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L27-27" class="github-link">Go to GitHub source</a>
         </td>
@@ -197,31 +279,31 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '54', 54)" onmouseover="showTip(event, '54', 54)">
-            replaceDateTimeInString dateTime text
+          <code onmouseout="hideTip(event, '87', 87)" onmouseover="showTip(event, '87', 87)">
+            removeModifiedFlag text
           </code>
-          <div class="tip" id="54">
-            <strong>Signature:</strong>dateTime:DateTime -&gt; text:string -&gt; string<br />
+          <div class="tip" id="87">
+            <strong>Signature:</strong>text:string -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
-        <p>Replaces the timestamp in a Dynamics NAV object</p>
+        <p>Removes the modified flag from a Dynamics NAV object.</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L22-22" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L44-44" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '55', 55)" onmouseover="showTip(event, '55', 55)">
-            replaceInVersionTag (...)
+          <code onmouseout="hideTip(event, '88', 88)" onmouseover="showTip(event, '88', 88)">
+            replaceDateTimeInString dateTime text
           </code>
-          <div class="tip" id="55">
-            <strong>Signature:</strong>versionTag:string -&gt; newVersion:string -&gt; tagList:string -&gt; string<br />
+          <div class="tip" id="88">
+            <strong>Signature:</strong>dateTime:DateTime -&gt; text:string -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
-        <p>Replaces a version tag in a version tag list from Dynamics NAV object</p>
+        <p>Replaces the timestamp in a Dynamics NAV object.</p>
 
             <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L40-40" class="github-link">Go to GitHub source</a>
         </td>
@@ -229,42 +311,73 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '56', 56)" onmouseover="showTip(event, '56', 56)">
+          <code onmouseout="hideTip(event, '89', 89)" onmouseover="showTip(event, '89', 89)">
+            replaceDateTimeInStringWithFormat (...)
+          </code>
+          <div class="tip" id="89">
+            <strong>Signature:</strong>dateTime:DateTime -&gt; dateFormat:string -&gt; text:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L35-35" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '90', 90)" onmouseover="showTip(event, '90', 90)">
+            replaceInVersionTag (...)
+          </code>
+          <div class="tip" id="90">
+            <strong>Signature:</strong>versionTag:string -&gt; newVersion:string -&gt; tagList:string -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Replaces a version tag in a version tag list from Dynamics NAV object</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L57-57" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '91', 91)" onmouseover="showTip(event, '91', 91)">
             replaceVersionTag (...)
           </code>
-          <div class="tip" id="56">
+          <div class="tip" id="91">
             <strong>Signature:</strong>versionTag:string -&gt; newVersion:string -&gt; sourceCode:string -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Replaces a version tag in a Dynamics NAV</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L58-58" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L75-75" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '57', 57)" onmouseover="showTip(event, '57', 57)">
+          <code onmouseout="hideTip(event, '92', 92)" onmouseover="showTip(event, '92', 92)">
             replaceVersionTagList text newTags
           </code>
-          <div class="tip" id="57">
+          <div class="tip" id="92">
             <strong>Signature:</strong>text:string -&gt; newTags:string -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Replaces a version tag list from a complete Dynamics NAV object with a new version tag list</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L54-54" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L71-71" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '58', 58)" onmouseover="showTip(event, '58', 58)">
+          <code onmouseout="hideTip(event, '93', 93)" onmouseover="showTip(event, '93', 93)">
             setVersionTags (...)
           </code>
-          <div class="tip" id="58">
+          <div class="tip" id="93">
             <strong>Signature:</strong>requiredTags:seq&lt;string&gt; -&gt; acceptPreTagged:bool -&gt; invalidTags:seq&lt;string&gt; -&gt; versionTag:string -&gt; newVersion:string -&gt; removeModifiedFlag:bool -&gt; newDateTime:DateTime -&gt; fileNames:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -272,55 +385,71 @@ It also changes the given tag, resets the modified flag and time stamp.</p>
         <p>Checks a Dynamics NAV object for missing required and invalid tags and raises this as errors.
 It also changes the given tag, resets the modified flag and time stamp.</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L136-136" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L153-153" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '59', 59)" onmouseover="showTip(event, '59', 59)">
+          <code onmouseout="hideTip(event, '94', 94)" onmouseover="showTip(event, '94', 94)">
+            splitNavisionFiles fileNames destDir
+          </code>
+          <div class="tip" id="94">
+            <strong>Signature:</strong>fileNames:seq&lt;string&gt; -&gt; destDir:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Splits the given files into individual object files in the specified destination directory.</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L184-184" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '95', 95)" onmouseover="showTip(event, '95', 95)">
             splitVersionTags tagList
           </code>
-          <div class="tip" id="59">
+          <div class="tip" id="95">
             <strong>Signature:</strong>tagList:string -&gt; string []<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Splits a version tag list from Dynamics NAV object into single tags</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L37-37" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L54-54" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '60', 60)" onmouseover="showTip(event, '60', 60)">
+          <code onmouseout="hideTip(event, '96', 96)" onmouseover="showTip(event, '96', 96)">
             TimeRegex 
           </code>
-          <div class="tip" id="60">
+          <div class="tip" id="96">
             <strong>Signature:</strong>Regex<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>A Regex which allows to retrieve the modified time.</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L19-19" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L21-21" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '61', 61)" onmouseover="showTip(event, '61', 61)">
+          <code onmouseout="hideTip(event, '97', 97)" onmouseover="showTip(event, '97', 97)">
             VersionRegex 
           </code>
-          <div class="tip" id="61">
+          <div class="tip" id="97">
             <strong>Signature:</strong>Regex<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>A Regex which allows to retrieve the version list.</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L13-13" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/DynamicsNavFile.fs#L15-15" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
     </tbody>

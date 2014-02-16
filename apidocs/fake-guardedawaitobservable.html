@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>FtpServerInfo - FAKE - F# Make</title>
+    <title>GuardedAwaitObservable - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,43 +36,58 @@
 
 
 
-<h1>FtpServerInfo</h1>
+<h1>GuardedAwaitObservable</h1>
 <div class="xmldoc">
 </div>
-  <h3>Record Fields</h3>
+
+<!-- Render nested types and modules, if there are any -->
+
+  <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Record Field</td><td>Description</td></tr>
+      <tr><td>Function or value</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '820', 820)" onmouseover="showTip(event, '820', 820)">
-            Request
+          <code onmouseout="hideTip(event, '213', 213)" onmouseover="showTip(event, '213', 213)">
+            synchronize f
           </code>
-          <div class="tip" id="820">
-            <strong>Signature:</strong>FtpWebRequest<br />
-                      </div>
+          <div class="tip" id="213">
+            <strong>Signature:</strong>f:(((unit -&gt; unit) -&gt; unit) -&gt; &#39;?7345) -&gt; &#39;?7345<br />
+                          <strong>Type parameters:</strong> '?7345          </div>
         </td>
         <td class="xmldoc">
-        
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/FtpHelper.fs#L14-14" class="github-link">Go to GitHub source</a>
+        <p>Helper that can be used for writing CPS-style code that resumes
+on the same thread where the operation was started.</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/GuardedAwaitObservable.fs#L11-11" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
+    </tbody>
+  </table>
+  <h3>Type extensions</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Type extension</td><td>Description</td></tr>
+    </thead>
+    <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '821', 821)" onmouseover="showTip(event, '821', 821)">
-            Server
+          <code onmouseout="hideTip(event, '223', 223)" onmouseover="showTip(event, '223', 223)">
+            GuardedAwaitObservable(...)
           </code>
-          <div class="tip" id="821">
-            <strong>Signature:</strong>string<br />
-                      </div>
+          <div class="tip" id="223">
+            <strong>Signature:</strong>ev1:IObservable&lt;&#39;T1&gt; -&gt; (guardFunction:(unit -&gt; unit)) -&gt; Async&lt;&#39;T1&gt;<br />
+                          <strong>Type parameters:</strong> 'T1          </div>
         </td>
         <td class="xmldoc">
-        
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/FtpHelper.fs#L13-13" class="github-link">Go to GitHub source</a>
+        <p>Behaves like AwaitObservable, but calls the specified guarding function
+after a subscriber is registered with the observable.</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/GuardedAwaitObservable.fs#L23-23" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
     </tbody>
