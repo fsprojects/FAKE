@@ -9,14 +9,12 @@ module Fake.TaskRunnerHelper
 ///  - `timeout` - A System.TimeSpan representing the timeout.
 ///  - `testMS` - An interval at which FAKE checks if the function has succeeded.
 ///  - `timeoutF` - This function will be run if the timeout has been reached.
-let waitFor f timeout (testMS:int) timeoutF = 
+let waitFor f timeout (testMS : int) timeoutF = 
     let watch = new System.Diagnostics.Stopwatch()
-    watch.Start()    
-
+    watch.Start()
     while f() |> not do
         if watch.Elapsed > timeout then timeoutF()
         System.Threading.Thread.Sleep testMS
-
     watch.Elapsed
 
 /// Retries the given function until a retry limit is reached or the function succeeds without exception.
@@ -24,14 +22,12 @@ let waitFor f timeout (testMS:int) timeoutF =
 ///
 ///  - `f` - This function will be started.
 ///  - `retries` - A retry limit.
-let rec runWithRetries f retries =
-    if retries <= 0 then
-        f()
-    else
-        try
+let rec runWithRetries f retries = 
+    if retries <= 0 then f()
+    else 
+        try 
             f()
-        with
-        | exn -> 
+        with exn -> 
             trace (sprintf "Task failed with %s" exn.Message)
             trace ("Retry.")
-            runWithRetries f (retries-1)
+            runWithRetries f (retries - 1)

@@ -10,7 +10,7 @@ open System.Threading
 /// ## Parameters
 ///  - `name` - The name to check for.
 ///  - `s` - The service in question.
-let isService name (s:ServiceController) = s.DisplayName = name || s.ServiceName = name
+let isService name (s : ServiceController) = s.DisplayName = name || s.ServiceName = name
 
 /// Returns sequence of services with given name.
 /// ## Parameters
@@ -30,7 +30,7 @@ let checkServiceExists name = ServiceController.GetServices() |> Seq.exists (isS
 /// Returns status of the service with given name or fails when service is not found.
 /// ## Parameters
 ///  - `name` - The name of the service in question.
-let getServiceStatus name =
+let getServiceStatus name = 
     match getService name with
     | Some sc -> sc.Status
     | None -> 
@@ -42,28 +42,30 @@ let getServiceStatus name =
 /// Starts all services with given name.
 /// ## Parameters
 ///  - `name` - The name of the services in question.
-let startService name =
-    getServices name
-    |> Seq.iter (fun s -> if s.Status <> ServiceControllerStatus.Running then tracefn "Starting Service %s" name; s.Start())
+let startService name = 
+    getServices name |> Seq.iter (fun s -> 
+                            if s.Status <> ServiceControllerStatus.Running then 
+                                tracefn "Starting Service %s" name
+                                s.Start())
 
 /// Stops all services with given name.
 /// ## Parameters
 ///  - `name` - The name of the services in question.
-let stopService name =
-    getServices name
-    |> Seq.iter (fun s -> if s.Status <> ServiceControllerStatus.Stopped then tracefn "Stopping Service %s" name; s.Stop())
+let stopService name = 
+    getServices name |> Seq.iter (fun s -> 
+                            if s.Status <> ServiceControllerStatus.Stopped then 
+                                tracefn "Stopping Service %s" name
+                                s.Stop())
 
 /// Waits until the service with the given name has been started or fails after given timeout
 /// ## Parameters
 ///  - `name` - The name of the service in question.
 ///  - `timeout` - The timespan to time out after.
-let ensureServiceHasStarted name timeout =
+let ensureServiceHasStarted name timeout = 
     let endTime = DateTime.Now.Add timeout
-
     while DateTime.Now <= endTime && (getServiceStatus name <> ServiceControllerStatus.Running) do
         tracefn "Waiting for %s to start (Timeout: %A)" name endTime
         Thread.Sleep 1000
-
     if getServiceStatus name <> ServiceControllerStatus.Running then 
         failwithf "The service %s has not been started (check the logs for errors)" name
 
@@ -71,12 +73,10 @@ let ensureServiceHasStarted name timeout =
 /// ## Parameters
 ///  - `name` - The name of the service in question.
 ///  - `timeout` - The timespan to time out after.
-let ensureServiceHasStopped name timeout =
+let ensureServiceHasStopped name timeout = 
     let endTime = DateTime.Now.Add timeout
-    
     while DateTime.Now <= endTime && (getServiceStatus name <> ServiceControllerStatus.Stopped) do
         tracefn "Waiting for %s to stop (Timeout: %A)" name endTime
         Thread.Sleep 1000
-
     if getServiceStatus name <> ServiceControllerStatus.Stopped then 
         failwithf "The service %s has not stopped (check the logs for errors)" name

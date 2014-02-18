@@ -11,22 +11,22 @@ type NUnitErrorLevel = TestRunnerErrorLevel // a type alias to keep backwards co
 
 /// Parameter type for NUnit.
 type NUnitParams = 
-    { IncludeCategory: string
-      ExcludeCategory: string
-      ToolPath: string
-      ToolName: string
-      TestInNewThread: bool
-      OutputFile: string
-      Out: string
-      ErrorOutputFile: string
-      Framework: string
-      ShowLabels: bool
-      WorkingDir: string
-      XsltTransformFile: string
-      TimeOut: TimeSpan
-      DisableShadowCopy: bool
-      Domain: string
-      ErrorLevel: NUnitErrorLevel }
+    { IncludeCategory : string
+      ExcludeCategory : string
+      ToolPath : string
+      ToolName : string
+      TestInNewThread : bool
+      OutputFile : string
+      Out : string
+      ErrorOutputFile : string
+      Framework : string
+      ShowLabels : bool
+      WorkingDir : string
+      XsltTransformFile : string
+      TimeOut : TimeSpan
+      DisableShadowCopy : bool
+      Domain : string
+      ErrorLevel : NUnitErrorLevel }
 
 /// NUnit default parameters. FAKE tries to locate nunit-console.exe in any subfolder.
 let NUnitDefaults = 
@@ -50,32 +50,34 @@ let NUnitDefaults =
 
 /// Builds the command line arguments from the given parameter record and the given assemblies.
 /// [omit]
-let buildNUnitdArgs parameters assemblies =
+let buildNUnitdArgs parameters assemblies = 
     new StringBuilder()
     |> append "-nologo"
-    |> appendIfTrue parameters.DisableShadowCopy "-noshadow" 
-    |> appendIfTrue parameters.ShowLabels "-labels" 
-    |> appendIfTrue parameters.TestInNewThread "-thread" 
+    |> appendIfTrue parameters.DisableShadowCopy "-noshadow"
+    |> appendIfTrue parameters.ShowLabels "-labels"
+    |> appendIfTrue parameters.TestInNewThread "-thread"
     |> appendFileNamesIfNotNull assemblies
     |> appendIfNotNullOrEmpty parameters.IncludeCategory "-include:"
     |> appendIfNotNullOrEmpty parameters.ExcludeCategory "-exclude:"
     |> appendIfNotNullOrEmpty parameters.XsltTransformFile "-transform:"
-    |> appendIfNotNullOrEmpty parameters.OutputFile  "-xml:"
+    |> appendIfNotNullOrEmpty parameters.OutputFile "-xml:"
     |> appendIfNotNullOrEmpty parameters.Out "-out:"
-    |> appendIfNotNullOrEmpty parameters.Framework  "-framework:"
+    |> appendIfNotNullOrEmpty parameters.Framework "-framework:"
     |> appendIfNotNullOrEmpty parameters.ErrorOutputFile "-err:"
     |> appendIfNotNullOrEmpty parameters.Domain "-domain:"
     |> toText
 
 /// Tries to detect the working directory as specified in the parameters or via TeamCity settings
 /// [omit]
-let getWorkingDir parameters =
-    Seq.find isNotNullOrEmpty [parameters.WorkingDir; environVar("teamcity.build.workingDir"); "."]
+let getWorkingDir parameters = 
+    Seq.find isNotNullOrEmpty [ parameters.WorkingDir
+                                environVar ("teamcity.build.workingDir")
+                                "." ]
     |> Path.GetFullPath
 
 /// NUnit console returns negative error codes for errors and sum of failed, ignored and exceptional tests otherwise. 
 /// Zero means that all tests passed.
-let (|OK|TestsFailed|FatalError|) errorCode =
+let (|OK|TestsFailed|FatalError|) errorCode = 
     match errorCode with
     | 0 -> OK
     | -1 -> FatalError "InvalidArg"
@@ -84,5 +86,3 @@ let (|OK|TestsFailed|FatalError|) errorCode =
     | -100 -> FatalError "UnexpectedError"
     | x when x < 0 -> FatalError "FatalError"
     | _ -> TestsFailed
-
-

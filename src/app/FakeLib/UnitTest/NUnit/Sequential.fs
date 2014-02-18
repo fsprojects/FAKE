@@ -14,40 +14,32 @@ module Fake.NUnitSequential
 ///         !! (testDir + @"\Test.*.dll") 
 ///           |> NUnit (fun p -> { p with ErrorLevel = DontFailBuild })
 ///     )
-let NUnit (setParams: NUnitParams -> NUnitParams) (assemblies: string seq) =
+let NUnit (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) = 
     let details = assemblies |> separated ", "
     traceStartTask "NUnit" details
     let parameters = NUnitDefaults |> setParams
-              
-    let assemblies =  assemblies |> Seq.toArray
-
-    if Array.isEmpty assemblies then
-        failwith "NUnit: cannot run tests (the assembly list is empty)."
-
+    let assemblies = assemblies |> Seq.toArray
+    if Array.isEmpty assemblies then failwith "NUnit: cannot run tests (the assembly list is empty)."
     let tool = parameters.ToolPath @@ parameters.ToolName
-
     let args = buildNUnitdArgs parameters assemblies
     trace (tool + " " + args)
-    let result =
-        ExecProcess (fun info ->  
+    let result = 
+        ExecProcess (fun info -> 
             info.FileName <- tool
             info.WorkingDirectory <- getWorkingDir parameters
             info.Arguments <- args) parameters.TimeOut
-
     sendTeamCityNUnitImport (getWorkingDir parameters @@ parameters.OutputFile)
-
     let errorDescription error = 
         match error with
         | OK -> "OK"
         | TestsFailed -> sprintf "NUnit test failed (%d)." error
         | FatalError x -> sprintf "NUnit test failed. Process finished with exit code %s (%d)." x error
-    
     match parameters.ErrorLevel with
-    | DontFailBuild ->
+    | DontFailBuild -> 
         match result with
         | OK | TestsFailed -> traceEndTask "NUnit" details
         | _ -> failwith (errorDescription result)
-    | Error ->
+    | Error -> 
         match result with
         | OK -> traceEndTask "NUnit" details
         | _ -> failwith (errorDescription result)
