@@ -26,7 +26,7 @@ type NugetInstallParams =
       ExcludeVersion: bool
       /// Allows updating to prerelease versions. Default `false`.
       Prerelease: bool
-      /// Specifies the directory in which packages will be installed. If none specified, uses the current directory.
+      /// Specifies the directory in which packages will be installed. Default  `./packages/`.
       OutputDirectory: string
       /// Display this amount of details in the output: normal, quiet, detailed. Default `normal`.
       Verbosity: NugetInstallVerbosity
@@ -45,7 +45,7 @@ let NugetInstallDefaults =
       Sources = []
       Version = None
       ExcludeVersion = false
-      OutputDirectory = ""
+      OutputDirectory = "./packages/"
       Prerelease = false
       NonInteractive = true
       Verbosity = Normal
