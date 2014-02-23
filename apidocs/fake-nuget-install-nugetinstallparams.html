@@ -49,129 +49,193 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1241', 1241)" onmouseover="showTip(event, '1241', 1241)">
+          <code onmouseout="hideTip(event, '1271', 1271)" onmouseover="showTip(event, '1271', 1271)">
             ConfigFile
           </code>
-          <div class="tip" id="1241">
+          <div class="tip" id="1271">
             <strong>Signature:</strong>string option<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>NuGet configuration file. Default <code>None</code>.</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/NuGet/Install.fs#L25-25" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/NuGet/Install.fs#L38-38" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1243', 1243)" onmouseover="showTip(event, '1243', 1243)">
+          <code onmouseout="hideTip(event, '1272', 1272)" onmouseover="showTip(event, '1272', 1272)">
+            ExcludeVersion
+          </code>
+          <div class="tip" id="1272">
+            <strong>Signature:</strong>bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>If set, the destination directory will contain only the package name, not the version number. Default <code>false</code>.</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/NuGet/Install.fs#L26-26" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1273', 1273)" onmouseover="showTip(event, '1273', 1273)">
+            NoCache
+          </code>
+          <div class="tip" id="1273">
+            <strong>Signature:</strong>bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Disable looking up packages from local machine cache. Default <code>false</code>.</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/NuGet/Install.fs#L36-36" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1274', 1274)" onmouseover="showTip(event, '1274', 1274)">
             NonInteractive
           </code>
-          <div class="tip" id="1243">
+          <div class="tip" id="1274">
             <strong>Signature:</strong>bool<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Do not prompt for user input or confirmations. Default <code>true</code>.</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/NuGet/Install.fs#L23-23" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/NuGet/Install.fs#L34-34" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1244', 1244)" onmouseover="showTip(event, '1244', 1244)">
+          <code onmouseout="hideTip(event, '1275', 1275)" onmouseover="showTip(event, '1275', 1275)">
+            OutputDirectory
+          </code>
+          <div class="tip" id="1275">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Specifies the directory in which packages will be installed. If none specified, uses the current directory.</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/NuGet/Install.fs#L30-30" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1276', 1276)" onmouseover="showTip(event, '1276', 1276)">
             Prerelease
           </code>
-          <div class="tip" id="1244">
+          <div class="tip" id="1276">
             <strong>Signature:</strong>bool<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Allows updating to prerelease versions. Default <code>false</code>.</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/NuGet/Install.fs#L21-21" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/NuGet/Install.fs#L28-28" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1245', 1245)" onmouseover="showTip(event, '1245', 1245)">
-            RepositoryPath
-          </code>
-          <div class="tip" id="1245">
-            <strong>Signature:</strong>string<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-        <p>Folder to store packages in. Default <code>./packages</code>.</p>
-
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/NuGet/Install.fs#L19-19" class="github-link">Go to GitHub source</a>
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1246', 1246)" onmouseover="showTip(event, '1246', 1246)">
+          <code onmouseout="hideTip(event, '1277', 1277)" onmouseover="showTip(event, '1277', 1277)">
             Retries
           </code>
-          <div class="tip" id="1246">
+          <div class="tip" id="1277">
             <strong>Signature:</strong>int<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Number of retries if update fails.</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/NuGet/Install.fs#L15-15" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/NuGet/Install.fs#L20-20" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1247', 1247)" onmouseover="showTip(event, '1247', 1247)">
+          <code onmouseout="hideTip(event, '1278', 1278)" onmouseover="showTip(event, '1278', 1278)">
             Sources
           </code>
-          <div class="tip" id="1247">
+          <div class="tip" id="1278">
             <strong>Signature:</strong>string list<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Nuget feeds to search updates in. Use default if empty.</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/NuGet/Install.fs#L17-17" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/NuGet/Install.fs#L22-22" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1248', 1248)" onmouseover="showTip(event, '1248', 1248)">
+          <code onmouseout="hideTip(event, '1279', 1279)" onmouseover="showTip(event, '1279', 1279)">
             TimeOut
           </code>
-          <div class="tip" id="1248">
+          <div class="tip" id="1279">
             <strong>Signature:</strong>TimeSpan<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Timeout for the update.</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/NuGet/Install.fs#L13-13" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/NuGet/Install.fs#L18-18" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1249', 1249)" onmouseover="showTip(event, '1249', 1249)">
+          <code onmouseout="hideTip(event, '1280', 1280)" onmouseover="showTip(event, '1280', 1280)">
             ToolPath
           </code>
-          <div class="tip" id="1249">
+          <div class="tip" id="1280">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>Path to the nuget.exe.</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/NuGet/Install.fs#L11-11" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/NuGet/Install.fs#L16-16" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1281', 1281)" onmouseover="showTip(event, '1281', 1281)">
+            Verbosity
+          </code>
+          <div class="tip" id="1281">
+            <strong>Signature:</strong>NugetInstallVerbosity<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Display this amount of details in the output: normal, quiet, detailed. Default <code>normal</code>.</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/NuGet/Install.fs#L32-32" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1282', 1282)" onmouseover="showTip(event, '1282', 1282)">
+            Version
+          </code>
+          <div class="tip" id="1282">
+            <strong>Signature:</strong>string option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>The version of the package to install.</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/NuGet/Install.fs#L24-24" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
     </tbody>
