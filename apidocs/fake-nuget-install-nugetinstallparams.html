@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>AzureHelper - FAKE - F# Make</title>
+    <title>NugetInstallParams - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,131 +36,142 @@
 
 
 
-<h1>AzureHelper</h1>
+<h1>NugetInstallParams</h1>
 <div class="xmldoc">
-<p>Contains tasks to control the local Azure Emulator</p>
+<p>Nuget install parameters. All optional.</p>
 </div>
-
-<!-- Render nested types and modules, if there are any -->
-  <h2>Nested types and modules</h2>
-  <div>
-      <table class="table table-bordered type-list">
-    <thead>
-      <tr><td>Type</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td class="type-name">
-            <a href="fake-azurehelper-azureemulatorparams.html">AzureEmulatorParams</a>
-          </td>
-          <td class="xmldoc"><p>A type for the controlling parameter</p>
-</td>
-        </tr>
-    </tbody>
-  </table>
-
-  </div>
-
-  <h3>Functions and values</h3>
+  <h3>Record Fields</h3>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Function or value</td><td>Description</td></tr>
+      <tr><td>Record Field</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '18', 18)" onmouseover="showTip(event, '18', 18)">
-            AzureEmulatorDefaults 
+          <code onmouseout="hideTip(event, '1241', 1241)" onmouseover="showTip(event, '1241', 1241)">
+            ConfigFile
           </code>
-          <div class="tip" id="18">
-            <strong>Signature:</strong>AzureEmulatorParams<br />
+          <div class="tip" id="1241">
+            <strong>Signature:</strong>string option<br />
                       </div>
         </td>
         <td class="xmldoc">
-        <p>The default parameter of emulator</p>
+        <p>NuGet configuration file. Default <code>None</code>.</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AzureHelper.fs#L21-21" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/NuGet/Install.fs#L25-25" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '23', 23)" onmouseover="showTip(event, '23', 23)">
-            ResetDevStorage _arg1
+          <code onmouseout="hideTip(event, '1243', 1243)" onmouseover="showTip(event, '1243', 1243)">
+            NonInteractive
           </code>
-          <div class="tip" id="23">
-            <strong>Signature:</strong>_arg1:&#39;?8056 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?8056          </div>
+          <div class="tip" id="1243">
+            <strong>Signature:</strong>bool<br />
+                      </div>
         </td>
         <td class="xmldoc">
-        <p>Resets the devstore (BLOB, Queues and Tables)</p>
+        <p>Do not prompt for user input or confirmations. Default <code>true</code>.</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AzureHelper.fs#L78-78" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/NuGet/Install.fs#L23-23" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '24', 24)" onmouseover="showTip(event, '24', 24)">
-            StartComputeEmulator _arg1
+          <code onmouseout="hideTip(event, '1244', 1244)" onmouseover="showTip(event, '1244', 1244)">
+            Prerelease
           </code>
-          <div class="tip" id="24">
-            <strong>Signature:</strong>_arg1:&#39;?8054 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?8054          </div>
+          <div class="tip" id="1244">
+            <strong>Signature:</strong>bool<br />
+                      </div>
         </td>
         <td class="xmldoc">
-        <p>Starts the compute emulator</p>
+        <p>Allows updating to prerelease versions. Default <code>false</code>.</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AzureHelper.fs#L67-67" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/NuGet/Install.fs#L21-21" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '25', 25)" onmouseover="showTip(event, '25', 25)">
-            StartStorageEmulator _arg1
+          <code onmouseout="hideTip(event, '1245', 1245)" onmouseover="showTip(event, '1245', 1245)">
+            RepositoryPath
           </code>
-          <div class="tip" id="25">
-            <strong>Signature:</strong>_arg1:&#39;?8050 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?8050          </div>
+          <div class="tip" id="1245">
+            <strong>Signature:</strong>string<br />
+                      </div>
         </td>
         <td class="xmldoc">
-        <p>Starts the staorage emulator</p>
+        <p>Folder to store packages in. Default <code>./packages</code>.</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AzureHelper.fs#L45-45" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/NuGet/Install.fs#L19-19" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '26', 26)" onmouseover="showTip(event, '26', 26)">
-            StopComputeEmulator _arg1
+          <code onmouseout="hideTip(event, '1246', 1246)" onmouseover="showTip(event, '1246', 1246)">
+            Retries
           </code>
-          <div class="tip" id="26">
-            <strong>Signature:</strong>_arg1:&#39;?8052 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?8052          </div>
+          <div class="tip" id="1246">
+            <strong>Signature:</strong>int<br />
+                      </div>
         </td>
         <td class="xmldoc">
-        <p>Stops the compute emulator</p>
+        <p>Number of retries if update fails.</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AzureHelper.fs#L56-56" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/NuGet/Install.fs#L15-15" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '27', 27)" onmouseover="showTip(event, '27', 27)">
-            StopStorageEmulator _arg1
+          <code onmouseout="hideTip(event, '1247', 1247)" onmouseover="showTip(event, '1247', 1247)">
+            Sources
           </code>
-          <div class="tip" id="27">
-            <strong>Signature:</strong>_arg1:&#39;?8048 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?8048          </div>
+          <div class="tip" id="1247">
+            <strong>Signature:</strong>string list<br />
+                      </div>
         </td>
         <td class="xmldoc">
-        <p>Stops the storage emulator</p>
+        <p>Nuget feeds to search updates in. Use default if empty.</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AzureHelper.fs#L34-34" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/NuGet/Install.fs#L17-17" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1248', 1248)" onmouseover="showTip(event, '1248', 1248)">
+            TimeOut
+          </code>
+          <div class="tip" id="1248">
+            <strong>Signature:</strong>TimeSpan<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Timeout for the update.</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/NuGet/Install.fs#L13-13" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1249', 1249)" onmouseover="showTip(event, '1249', 1249)">
+            ToolPath
+          </code>
+          <div class="tip" id="1249">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Path to the nuget.exe.</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/NuGet/Install.fs#L11-11" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
     </tbody>
