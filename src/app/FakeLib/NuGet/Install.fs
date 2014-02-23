@@ -22,7 +22,7 @@ type NugetInstallParams =
       /// Nuget feeds to search updates in. Use default if empty.
       Sources: string list
       /// The version of the package to install.
-      Version: string option
+      Version: string
       /// If set, the destination directory will contain only the package name, not the version number. Default `false`.
       ExcludeVersion: bool
       /// Allows updating to prerelease versions. Default `false`.
@@ -44,7 +44,7 @@ let NugetInstallDefaults =
       TimeOut = TimeSpan.FromMinutes 5.
       Retries = 5
       Sources = []
-      Version = None
+      Version = ""
       ExcludeVersion = false
       OutputDirectory = "./packages/"
       Prerelease = false
@@ -62,7 +62,7 @@ let argList name values =
 /// [omit]
 let buildArgs (param: NugetInstallParams) =
     [   param.Sources |> argList "source"
-        (match param.Version with | Some version -> sprintf "-version \"%s\"" version | _ -> "")
+        (if param.Version <> "" then sprintf "-version \"%s\""  param.Version else "")
         (if param.OutputDirectory <> "" then sprintf "-outputdirectory \"%s\"" param.OutputDirectory else "")
         (match param.Verbosity with | Quiet -> "quiet" | Detailed -> "detailed" | Normal -> "")
         (if param.ExcludeVersion then "-excludeversion" else "")
