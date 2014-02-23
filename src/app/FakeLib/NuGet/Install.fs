@@ -4,12 +4,13 @@ module Fake.NuGet.Install
 open System
 open Fake
 
+/// Nuget install verbosity mode.
 type NugetInstallVerbosity =
 | Normal
 | Quiet
 | Detailed
 
-/// Nuget install parameters. All optional.
+/// Nuget install parameters.
 type NugetInstallParams =
     {
       /// Path to the nuget.exe.

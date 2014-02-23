@@ -4,7 +4,7 @@ module Fake.NuGet.Update
 open System
 open Fake
 
-/// Nuget update parameters. All optional.
+/// Nuget update parameters.
 type NugetUpdateParams =
     {
       /// Path to the nuget.exe.
