@@ -15,8 +15,6 @@ type CreateReleaseOptions = {
     Project                 : string
     Version                 : string
     PackageVersion          : string
-//    [<Obsolete "use Packages instead of PackageVersionOverride">] // warns on any use of the record
-    PackageVersionOverride  : string option
     Packages                : string list
     PackagesFolder          : string option
     ReleaseNotes            : string
@@ -60,7 +58,7 @@ let serverOptions = { Server = ""; ApiKey = ""; }
 
 /// Default options for 'CreateRelease'
 let releaseOptions = {
-    Project = ""; Version = ""; PackageVersion = ""; PackageVersionOverride = None; Packages = [];
+    Project = ""; Version = ""; PackageVersion = ""; Packages = [];
     PackagesFolder = None; ReleaseNotes = ""; ReleaseNotesFile = "" }
 
 /// Default options for 'DeployRelease'
@@ -104,7 +102,6 @@ let releaseCommandLine (opts:CreateReleaseOptions) =
     [ (optionalStringParam "project" (liftString opts.Project))
       (optionalStringParam "version" (liftString opts.Version))
       (optionalStringParam "packageversion" (liftString opts.PackageVersion))
-      (optionalStringParam "packageversionoverride" opts.PackageVersionOverride)
       (stringListParam "package" opts.Packages)
       (optionalStringParam "packagesfolder" opts.PackagesFolder)
       (optionalStringParam "releasenotes" (liftString opts.ReleaseNotes))
