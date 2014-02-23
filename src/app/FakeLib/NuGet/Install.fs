@@ -1,11 +1,11 @@
-/// Contains tasks for updating NuGet packages including assembly hint paths in the project files using the [nuget.exe update command](http://docs.nuget.org/docs/reference/command-line-reference#Update_Command).
-module Fake.NuGet.Update
+/// Contains tasks for installing NuGet packages using the [nuget.exe install command](http://docs.nuget.org/docs/reference/command-line-reference#Install_Command).
+module Fake.NuGet.Install
 
 open System
 open Fake
 
-/// Nuget update parameters. All optional.
-type NugetUpdateParams =
+/// Nuget install parameters. All optional.
+type NugetInstallParams =
     {
       /// Path to the nuget.exe.
       ToolPath: string
@@ -15,12 +15,8 @@ type NugetUpdateParams =
       Retries: int
       /// Nuget feeds to search updates in. Use default if empty.
       Sources: string list
-      /// Packages to update. Update all if empty.
-      Ids: string list
       /// Folder to store packages in. Default `./packages`.
       RepositoryPath: string
-      /// Looks for updates with the highest version available within the same major and minor version as the installed package. Default `false`.
-      Safe: bool
       /// Allows updating to prerelease versions. Default `false`.
       Prerelease: bool
       /// Do not prompt for user input or confirmations. Default `true`.
@@ -29,40 +25,40 @@ type NugetUpdateParams =
       ConfigFile: string option }
 
 /// Parameter default values.
-let NugetUpdateDefaults =
+let NugetInstallDefaults =
     { ToolPath = findToolInSubPath "nuget.exe" (currentDirectory @@ "tools" @@ "NuGet")
       TimeOut = TimeSpan.FromMinutes 5.
       Retries = 5
       Sources = []
-      Ids = []
       RepositoryPath = "./packages"
-      Safe = false
       Prerelease = false
       NonInteractive = true
       ConfigFile = None }
 
 /// [omit]
-let buildArgs (param: NugetUpdateParams) =
+let argList name values =
+    values
+    |> Seq.collect (fun v -> ["-" + name; sprintf @"""%s""" v])
+    |> String.concat " "
+
+/// [omit]
+let buildArgs (param: NugetInstallParams) =
     [   param.Sources |> argList "source"
-        param.Ids |> argList "id"
         [param.RepositoryPath] |> argList "repositoryPath"
-        (if param.Safe then "-safe" else "")
         (if param.Prerelease then "-prerelease" else "")
         (if param.NonInteractive then "-nonInteractive" else "")
         param.ConfigFile |> Option.toList |> argList "configFile"
     ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
 
-/// Update packages specified in the package file.
+/// Installs the given package.
 ///
-/// Fails if packages are not installed; see [nuget bug](https://nuget.codeplex.com/workitem/3874).
-/// Fails if packages file has no corresponding VS project; see [nuget bug](https://nuget.codeplex.com/workitem/3875).
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to manipulate the default parameters.
 ///  - `packagesFile` - Path to the `*.sln`, `*.*proj` or `packages.config` file.
-let NugetUpdate setParams packagesFile =
-    traceStartTask "NugetUpdate" packagesFile
-    let param = NugetUpdateDefaults |> setParams
-    let args = sprintf "update %s %s" packagesFile (buildArgs param)
-    runNuGetTrial param.Retries param.ToolPath param.TimeOut args (fun () -> failwithf "Package update for %s failed." packagesFile)
-    traceEndTask "NugetUpdate" packagesFile
+let NugetInstall setParams packageName =
+    traceStartTask "NugetInstall" packageName
+    let param = NugetInstallDefaults |> setParams
+    let args = sprintf "install %s %s" packageName (buildArgs param)
+    runNuGetTrial param.Retries param.ToolPath param.TimeOut args (fun () -> failwithf "Package install for %s failed." packageName)
+    traceEndTask "NugetInstall" packageName

@@ -123,6 +123,7 @@
     <Compile Include="FixieHelper.fs" />
     <Compile Include="NuGet\NugetHelper.fs" />
     <Compile Include="NuGet\Update.fs" />
+    <Compile Include="NuGet\Install.fs" />
     <Compile Include="TestFlightHelper.fs" />
     <Compile Include="DotCover.fs" />
     <Compile Include="AzureHelper.fs" />

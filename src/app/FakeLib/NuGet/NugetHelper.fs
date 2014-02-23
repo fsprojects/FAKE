@@ -426,3 +426,9 @@ let downloadPackage targetDir (package : NuSpecPackage) =
         targetFileName
     webClient.DownloadFile(package.Url, targetFileName)
     targetFileName
+
+/// [omit]
+let argList name values =
+    values
+    |> Seq.collect (fun v -> ["-" + name; sprintf @"""%s""" v])
+    |> String.concat " "
