@@ -40,6 +40,7 @@ Some of our users are:
 * [FeatureSwitcher](https://github.com/mexx/FeatureSwitcher)
 * [NuGetPlus](https://github.com/mavnn/NuGetPlus)
 * [Machine.Fakes](https://github.com/machine/machine.fakes)
+* [Enticify](http://www.enticify.com/)
 
 ## How to get FAKE
 
