@@ -145,13 +145,13 @@ let inline (!+) x = Include x
 
 /// Looks for a tool in all subfolders - returns the tool file name.
 let findToolInSubPath toolname defaultPath = 
-    let tools = !!("./**/" @@ toolname)
+    let tools = !! ("./**/" @@ toolname)
     if Seq.isEmpty tools then defaultPath @@ toolname
     else Seq.head tools
 
 /// Looks for a tool in all subfolders - returns the folder where the tool was found.
 let findToolFolderInSubPath toolname defaultPath = 
-    let tools = !!("./**/" @@ toolname)
+    let tools = !! ("./**/" @@ toolname)
     if Seq.isEmpty tools then defaultPath
     else 
         let fi = fileInfo (Seq.head tools)

@@ -30,7 +30,7 @@ type NugetUpdateParams =
 
 /// Parameter default values.
 let NugetUpdateDefaults =
-    { ToolPath = findToolInSubPath "nuget.exe" (currentDirectory @@ "tools" @@ "NuGet")
+    { ToolPath = findNuget (currentDirectory @@ "tools" @@ "NuGet")
       TimeOut = TimeSpan.FromMinutes 5.
       Retries = 5
       Sources = []

@@ -47,7 +47,7 @@ type NuGetParams =
 
 /// NuGet default parameters  
 let NuGetDefaults() = 
-    { ToolPath = findToolInSubPath "nuget.exe" (currentDirectory @@ "tools" @@ "NuGet")
+    { ToolPath = findNuget (currentDirectory @@ "tools" @@ "NuGet")
       TimeOut = TimeSpan.FromMinutes 5.
       Version = 
           if not isLocalBuild then buildVersion

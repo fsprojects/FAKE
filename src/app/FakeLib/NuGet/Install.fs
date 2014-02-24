@@ -40,7 +40,7 @@ type NugetInstallParams =
 
 /// Parameter default values.
 let NugetInstallDefaults =
-    { ToolPath = findToolInSubPath "nuget.exe" (currentDirectory @@ "tools" @@ "NuGet")
+    { ToolPath = findNuget (currentDirectory @@ "tools" @@ "NuGet")
       TimeOut = TimeSpan.FromMinutes 5.
       Retries = 5
       Sources = []

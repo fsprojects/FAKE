@@ -6,6 +6,14 @@ module Fake.RestorePackageHelper
 open System
 open System.IO
 
+/// Looks for a tool in all subfolders - returns the tool file name.
+let findNuget defaultPath = 
+    let tools = !! ("./**/" @@ "nuget.exe")
+    if Seq.isEmpty tools then 
+        let tools = !! ("./**/" @@ "NuGet.exe")
+        if Seq.isEmpty tools then defaultPath @@ "NuGet.exe" else Seq.head tools
+    else Seq.head tools
+
 /// RestorePackages parameter path
 type RestorePackageParams =
     { ToolPath: string
@@ -17,7 +25,7 @@ type RestorePackageParams =
 
 /// RestorePackage defaults parameters
 let RestorePackageDefaults =
-    { ToolPath = findToolInSubPath "nuget.exe" (currentDirectory @@ "tools" @@ "NuGet")
+    { ToolPath = findNuget (currentDirectory @@ "tools" @@ "NuGet")
       Sources = []
       TimeOut = TimeSpan.FromMinutes 5.
       Retries = 5
