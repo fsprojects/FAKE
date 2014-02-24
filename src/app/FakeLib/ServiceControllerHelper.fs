@@ -75,7 +75,14 @@ let ensureServiceHasStarted name timeout =
 ///  - `timeout` - The timespan to time out after.
 let ensureServiceHasStopped name timeout = 
     let endTime = DateTime.Now.Add timeout
-    if getServices name = Seq.empty then tracefn "Service %s was not found." name else
+    let getServiceStatus name =
+        try 
+            getServiceStatus name
+        with
+        | exn -> 
+            tracefn "Service %s was not found." name
+            ServiceControllerStatus.Stopped
+
     while DateTime.Now <= endTime && (getServiceStatus name <> ServiceControllerStatus.Stopped) do
         tracefn "Waiting for %s to stop (Timeout: %A)" name endTime
         Thread.Sleep 1000
