@@ -8,6 +8,7 @@ type BuildServer =
     | CCNet
     | Jenkins
     | Travis
+    | AppVeyor
     | LocalBuild
 
 /// The trace mode option.
@@ -43,12 +44,17 @@ let jenkinsBuildNumber = tcBuildNumber
 /// [omit]
 let ccBuildLabel = environVar "CCNETLABEL"
 
+/// AppVeyor build number
+/// [omit]
+let appVeyorBuildNumber = environVar "APPVEYOR_BUILD_NUMBER"
+
 /// The current build server
 let buildServer = 
     if hasBuildParam "jenkins_home" then Jenkins
     elif not (isNullOrEmpty tcBuildNumber) then TeamCity
     elif not (isNullOrEmpty ccBuildLabel) then CCNet
     elif not (isNullOrEmpty travisBuildNumber) then Travis
+    elif not (isNullOrEmpty appVeyorBuildNumber) then AppVeyor
     else LocalBuild
 
 /// The current build version as detected from the current build server.
@@ -59,6 +65,7 @@ let buildVersion =
     | TeamCity -> getVersion tcBuildNumber
     | CCNet -> getVersion ccBuildLabel
     | Travis -> getVersion travisBuildNumber
+    | AppVeyor -> getVersion appVeyorBuildNumber
     | LocalBuild -> getVersion localBuildLabel
 
 /// Is true when the current build is a local build.
