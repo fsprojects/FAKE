@@ -46,7 +46,7 @@ let ccBuildLabel = environVar "CCNETLABEL"
 
 /// AppVeyor build number
 /// [omit]
-let appVeyorBuildNumber = environVar "Appveyor_ProjectBuildNumber"
+let appVeyorBuildNumber = environVar "APPVEYOR_BUILD_NUMBER"
 
 /// The current build server
 let buildServer = 
