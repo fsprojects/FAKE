@@ -13,8 +13,8 @@ See the [project home page](http://fsharp.github.com/FAKE/) for tutorials and [A
 
 # Build the project
 
-* Mono: Run *build.sh*  [![Mono build status](https://travis-ci.org/fsharp/FAKE.png)](https://travis-ci.org/fsharp/FAKE)
-* Windows: Run *build.cmd* [![Windows build status](http://teamcity.codebetter.com/app/rest/builds/buildType:\(id:bt166\)/statusIcon)](http://teamcity.codebetter.com/viewType.html?buildTypeId=bt166)
+* Mono: Run *build.sh*  [![Travis build status](https://travis-ci.org/fsharp/FAKE.png)](https://travis-ci.org/fsharp/FAKE)
+* Windows: Run *build.cmd* [![Teamcity build status](http://teamcity.codebetter.com/app/rest/builds/buildType:\(id:bt166\)/statusIcon)](http://teamcity.codebetter.com/viewType.html?buildTypeId=bt166) [![AppVeyor build status](https://ci.appveyor.com/api/projects/status?id=hfnreg7s53xvnq3b)](https://ci.appveyor.com/project/FAKE)
 
 ## How to contribute code
 
