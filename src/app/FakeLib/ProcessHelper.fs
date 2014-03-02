@@ -13,7 +13,10 @@ let startedProcesses = HashSet()
 
 let start (proc : Process) = 
     proc.Start() |> ignore
-    startedProcesses.Add(proc.Id, proc.ProcessName) |> ignore
+    try
+        startedProcesses.Add(proc.Id, proc.ProcessName) |> ignore
+    with
+        | :? InvalidOperationException -> () // thrown when trying to access proc.ProcessName and process already exited
 
 /// [omit]
 let mutable redirectOutputToTrace = false
