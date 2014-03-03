@@ -9,6 +9,19 @@ open System.Text
 /// Option which allows to specify if a NUnit error should break the build.
 type NUnitErrorLevel = TestRunnerErrorLevel // a type alias to keep backwards compatibility
 
+/// Process model for nunit to use, see http://www.nunit.org/index.php?p=projectEditor&r=2.5
+type NUnitProcessModel = 
+    | DefaultProcessModel
+    | SingleProcessModel
+    | SeperateProcessModel
+    | MultipleProcessModel with 
+    member x.ParamString =
+        match x with
+        | DefaultProcessModel -> ""
+        | SingleProcessModel -> "Single"
+        | SeperateProcessModel -> "Seperate"
+        | MultipleProcessModel -> "Multiple"
+
 /// Parameter type for NUnit.
 type NUnitParams = 
     { IncludeCategory : string
@@ -20,6 +33,7 @@ type NUnitParams =
       Out : string
       ErrorOutputFile : string
       Framework : string
+      ProcessModel : NUnitProcessModel
       ShowLabels : bool
       WorkingDir : string
       XsltTransformFile : string
@@ -41,6 +55,7 @@ let NUnitDefaults =
       ErrorOutputFile = ""
       WorkingDir = ""
       Framework = ""
+      ProcessModel = DefaultProcessModel
       ShowLabels = true
       XsltTransformFile = ""
       TimeOut = TimeSpan.FromMinutes 5.0
@@ -63,6 +78,7 @@ let buildNUnitdArgs parameters assemblies =
     |> appendIfNotNullOrEmpty parameters.OutputFile "-xml:"
     |> appendIfNotNullOrEmpty parameters.Out "-out:"
     |> appendIfNotNullOrEmpty parameters.Framework "-framework:"
+    |> appendIfNotNullOrEmpty parameters.ProcessModel.ParamString "-process:"
     |> appendIfNotNullOrEmpty parameters.ErrorOutputFile "-err:"
     |> appendIfNotNullOrEmpty parameters.Domain "-domain:"
     |> toText
