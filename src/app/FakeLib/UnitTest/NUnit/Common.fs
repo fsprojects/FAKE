@@ -21,14 +21,27 @@ type NUnitProcessModel =
         | SingleProcessModel -> "Single"
         | SeperateProcessModel -> "Seperate"
         | MultipleProcessModel -> "Multiple"
-
+/// The /domain option controls of the creation of AppDomains for running tests. See http://www.nunit.org/index.php?p=consoleCommandLine&r=2.4.6
+type NUnitDomainModel = 
+    /// No domain is created - the tests are run in the primary domain. This normally requires copying the NUnit assemblies into the same directory as your tests.
+    | DefaultDomainModel
+    /// A test domain is created - this is how NUnit worked prior to version 2.4
+    | SingleDomainModel
+    /// A separate test domain is created for each assembly
+    | MultipleDomainModel with
+    member x.ParamString =
+        match x with
+        | DefaultDomainModel -> ""
+        | SingleDomainModel -> "Single"
+        | MultipleDomainModel -> "Multiple"
 /// Parameter type for NUnit.
 type NUnitParams = 
     { IncludeCategory : string
       ExcludeCategory : string
       ToolPath : string
       ToolName : string
-      TestInNewThread : bool
+      DontTestInNewThread : bool
+      StopOnError : bool
       OutputFile : string
       Out : string
       ErrorOutputFile : string
@@ -39,7 +52,7 @@ type NUnitParams =
       XsltTransformFile : string
       TimeOut : TimeSpan
       DisableShadowCopy : bool
-      Domain : string
+      Domain : NUnitDomainModel
       ErrorLevel : NUnitErrorLevel }
 
 /// NUnit default parameters. FAKE tries to locate nunit-console.exe in any subfolder.
@@ -49,7 +62,8 @@ let NUnitDefaults =
       ExcludeCategory = ""
       ToolPath = findToolFolderInSubPath toolname (currentDirectory @@ "tools" @@ "Nunit")
       ToolName = toolname
-      TestInNewThread = false
+      DontTestInNewThread = false
+      StopOnError = false
       OutputFile = currentDirectory @@ "TestResult.xml"
       Out = ""
       ErrorOutputFile = ""
@@ -60,7 +74,7 @@ let NUnitDefaults =
       XsltTransformFile = ""
       TimeOut = TimeSpan.FromMinutes 5.0
       DisableShadowCopy = false
-      Domain = ""
+      Domain = DefaultDomainModel
       ErrorLevel = Error }
 
 /// Builds the command line arguments from the given parameter record and the given assemblies.
@@ -70,7 +84,8 @@ let buildNUnitdArgs parameters assemblies =
     |> append "-nologo"
     |> appendIfTrue parameters.DisableShadowCopy "-noshadow"
     |> appendIfTrue parameters.ShowLabels "-labels"
-    |> appendIfTrue parameters.TestInNewThread "-thread"
+    |> appendIfTrue parameters.DontTestInNewThread "-nothread"
+    |> appendIfTrue parameters.StopOnError "-stoponerror"
     |> appendFileNamesIfNotNull assemblies
     |> appendIfNotNullOrEmpty parameters.IncludeCategory "-include:"
     |> appendIfNotNullOrEmpty parameters.ExcludeCategory "-exclude:"
@@ -80,7 +95,7 @@ let buildNUnitdArgs parameters assemblies =
     |> appendIfNotNullOrEmpty parameters.Framework "-framework:"
     |> appendIfNotNullOrEmpty parameters.ProcessModel.ParamString "-process:"
     |> appendIfNotNullOrEmpty parameters.ErrorOutputFile "-err:"
-    |> appendIfNotNullOrEmpty parameters.Domain "-domain:"
+    |> appendIfNotNullOrEmpty parameters.Domain.ParamString "-domain:"
     |> toText
 
 /// Tries to detect the working directory as specified in the parameters or via TeamCity settings
