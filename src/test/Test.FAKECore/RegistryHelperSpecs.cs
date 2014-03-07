@@ -32,16 +32,4 @@ namespace Test.FAKECore
             ex.ShouldBeOfType<NullReferenceException>(); // cries...
         };
     }
-
-    public class When_reading_from_the_registry
-    {
-        private It Should_read_registry_value = () =>
-        {
-            var value = RegistryHelper.getRegistryValue(
-                RegistryHelper.RegistryBaseKey.HKEYLocalMachine,
-                @"Software\Microsoft\Windows\CurrentVersion", "ProgramFilesDir");
-            value.ShouldNotBeEmpty();
-            value.ShouldNotBeNull();
-        };
-    }
 }
