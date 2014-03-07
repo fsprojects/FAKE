@@ -86,6 +86,7 @@
     <Compile Include="SCPHelper.fs" />
     <Compile Include="XCopyHelper.fs" />
     <Compile Include="XpkgHelper.fs" />
+    <Compile Include="VersionHelper.fs" />
     <Compile Include="MSBuild\ProjectSystem.fs" />
     <Compile Include="MSBuild\SpecsRemovement.fs" />
     <Compile Include="Git\CommandHelper.fs" />
