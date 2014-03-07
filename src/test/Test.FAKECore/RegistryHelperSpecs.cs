@@ -38,8 +38,8 @@ namespace Test.FAKECore
         private It Should_read_registry_value = () =>
         {
             var value = RegistryHelper.getRegistryValue(
-                RegistryHelper.RegistryBaseKey.HKEYCurrentUser,
-                "Software\\7-zip", "Path");
+                RegistryHelper.RegistryBaseKey.HKEYLocalMachine,
+                @"Software\Microsoft\Windows\CurrentVersion", "ProgramFilesDir");
             value.ShouldNotBeEmpty();
             value.ShouldNotBeNull();
         };
