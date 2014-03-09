@@ -134,6 +134,15 @@ let getAllParameters targets maxcpu nodeReuse tools verbosity fileLoggers proper
     if isUnix then [ targets; tools; verbosity ] @ fileLoggers @ properties
     else [ targets; maxcpu; nodeReuse; tools; verbosity ] @ fileLoggers @ properties
 
+let private serializeArgs args =
+    args
+    |> Seq.map (function 
+           | None -> ""
+           | Some(k, v) -> 
+               "/" + k + (if isNullOrEmpty v then ""
+                          else ":" + v))
+    |> separated " "
+
 /// [omit]
 let serializeMSBuildParams (p : MSBuildParams) = 
     let verbosityName v = 
@@ -215,14 +224,8 @@ let serializeMSBuildParams (p : MSBuildParams) =
                                                                                                 |> sprintf "%s;")
                                                                                          |> String.concat "")))
     
-    let allParameters = getAllParameters targets maxcpu nodeReuse tools verbosity fileLoggers properties
-    allParameters
-    |> Seq.map (function 
-           | None -> ""
-           | Some(k, v) -> 
-               "/" + k + (if isNullOrEmpty v then ""
-                          else ":" + v))
-    |> separated " "
+    getAllParameters targets maxcpu nodeReuse tools verbosity fileLoggers properties
+    |> serializeArgs
 
 /// [omit]
 let TeamCityLoggerName = typedefof<Fake.MsBuildLogger.TeamCityLogger>.FullName
@@ -230,12 +233,12 @@ let TeamCityLoggerName = typedefof<Fake.MsBuildLogger.TeamCityLogger>.FullName
 /// [omit]
 let ErrorLoggerName = typedefof<Fake.MsBuildLogger.ErrorLogger>.FullName
 
-let private errorLoggerParam = 
+/// Defines the loggers to use for MSBuild task
+let mutable MSBuildLoggers =
     let pathToLogger = typedefof<MSBuildParams>.Assembly.Location
     [ TeamCityLoggerName; ErrorLoggerName ]
-    |> List.map (fun a -> sprintf "/logger:%s,\"%s\"" a pathToLogger)
-    |> fun lst -> String.Join(" ", lst)
-
+    |> List.map (fun a -> sprintf "%s,\"%s\"" a pathToLogger)
+    
 /// Runs a MSBuild project
 /// ## Parameters
 ///  - `setParams` - A function that overwrites the default MsBuildParams
@@ -263,6 +266,11 @@ let build setParams project =
         MSBuildDefaults
         |> setParams
         |> serializeMSBuildParams
+
+    let errorLoggerParam = 
+        MSBuildLoggers
+        |> List.map (fun a -> Some ("logger", a))
+        |> serializeArgs
     
     let args = toParam project + " " + args + " " + errorLoggerParam
     tracefn "Building project: %s\n  %s %s" project msBuildExe args
