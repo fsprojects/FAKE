@@ -16,7 +16,7 @@ type MSBuildLogger() =
     let mutable Verbosity = LoggerVerbosity.Normal
     let mutable Parameters = ""
     
-    /// Abstract fucntion which registers a event listener.
+    /// Abstract function which registers an event listener.
     abstract RegisterEvents : IEventSource -> unit
     
     override t.RegisterEvents e = ()
