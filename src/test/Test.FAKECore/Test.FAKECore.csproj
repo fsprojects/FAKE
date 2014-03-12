@@ -91,6 +91,7 @@
   <ItemGroup>
     <Compile Include="FixProjectFileSpecs.cs" />
     <Compile Include="CompareProjectFilesSpecs.cs" />
+    <Compile Include="Globbing\SampeWithParens\SampleWithParensSpecs.cs" />
     <Compile Include="Globbing\TestSample7\CountersRegressionSpecs.cs" />
     <Compile Include="Globbing\TestSample6\CurlRegressionSpecs.cs" />
     <Compile Include="Globbing\TestSample5\AbsoluteGlobbingSpecs.cs" />
@@ -254,6 +255,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Globbing\TestSample5\Sample5.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Globbing\SampeWithParens\SampleWithParens.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Globbing\TestSample3\Sample3.zip">
