@@ -426,8 +426,12 @@ let killFSI() = killProcess "fsi.exe"
 /// Kills the MSBuild process.
 let killMSBuild() = killProcess "msbuild"
 
-/// Kills all processes that are created by the FAKE build script.
-let killAllCreatedProcesses() = 
+/// [omit]
+let mutable killCreatedProcesses = true
+
+/// Kills all processes that are created by the FAKE build script unless "donotkill" flag was set.
+let killAllCreatedProcesses() =
+    if not killCreatedProcesses then () else
     let traced = ref false
     for (id, name) in startedProcesses do
         try 
