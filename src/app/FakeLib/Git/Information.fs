@@ -3,19 +3,38 @@
 module Fake.Git.Information
 
 open Fake
+open System
 open System.IO
+   
+/// Gets the git version
+let getVersion repositoryDir = 
+    let ok,msg,errors = runGitCommand repositoryDir "--version"
+    msg |> separated ""
+
+let isVersionHigherOrEqual currentVersion referenceVersion = 
+  
+    parseVersion currentVersion >= parseVersion referenceVersion
+                
+let isGitVersionHigherOrEqual referenceVersion = 
+
+    let currentVersion = getVersion "."
+    let versionParts = currentVersion.Replace("git version ","") 
+
+    isVersionHigherOrEqual versionParts referenceVersion
 
 /// Gets the git branch name
 let getBranchName repositoryDir = 
     let ok,msg,errors = runGitCommand repositoryDir "status"
     let s = msg |> Seq.head 
-    if s = "# Not currently on any branch." then "NoBranch" else
-    s.Replace("# On branch ","")
-    
-/// Gets the git version
-let getVersion repositoryDir = 
-    let ok,msg,errors = runGitCommand repositoryDir "--version"
-    msg |> separated ""
+
+    let mutable replaceBranchString = "On branch "
+    let mutable replaceNoBranchString = "Not currently on any branch."
+    let noBranch = "NoBranch"
+
+    if isGitVersionHigherOrEqual "1.9" then replaceNoBranchString <- "HEAD detached"
+    if not <| isGitVersionHigherOrEqual "1.9" then replaceBranchString <- "# " + replaceBranchString
+
+    if startsWith replaceNoBranchString s then noBranch else s.Replace(replaceBranchString,"")
 
 /// Returns the SHA1 of the current HEAD
 let getCurrentSHA1 repositoryDir = getSHA1 repositoryDir "HEAD"
