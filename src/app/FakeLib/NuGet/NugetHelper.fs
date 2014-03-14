@@ -26,6 +26,7 @@ type NuGetParams =
       Version : string
       Authors : string list
       Project : string
+      Title : string
       Summary : string
       Description : string
       Tags : string
@@ -54,6 +55,7 @@ let NuGetDefaults() =
           else "0.1.0.0"
       Authors = []
       Project = ""
+      Title = ""
       Summary = null
       ProjectFile = null
       Description = null
@@ -142,6 +144,7 @@ let private createNuspecFile parameters nuSpec =
     
     let replacements = 
         [ "@build.number@", parameters.Version
+          "@title@", parameters.Title
           "@authors@", parameters.Authors |> separated ", "
           "@project@", parameters.Project
           "@summary@", parameters.Summary
