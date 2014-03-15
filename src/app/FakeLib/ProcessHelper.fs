@@ -13,10 +13,7 @@ let startedProcesses = HashSet()
 
 let start (proc : Process) = 
     proc.Start() |> ignore
-    try
-        startedProcesses.Add(proc.Id, proc.ProcessName) |> ignore
-    with
-        | :? InvalidOperationException -> () // thrown when trying to access proc.ProcessName and process already exited
+    startedProcesses.Add proc |> ignore
 
 /// [omit]
 let mutable redirectOutputToTrace = false
@@ -433,13 +430,13 @@ let mutable killCreatedProcesses = true
 let killAllCreatedProcesses() =
     if not killCreatedProcesses then () else
     let traced = ref false
-    for (id, name) in startedProcesses do
+    for p in startedProcesses do
         try 
-            let p = Process.GetProcessById id
-            if !traced |> not then 
-                tracefn "Killing all processes that are created by FAKE and are still running."
-                traced := true
-            if p.ProcessName = name then kill p
+            if p.HasExited |> not then
+                if !traced |> not then 
+                    tracefn "Killing all processes that are created by FAKE and are still running."
+                    traced := true
+                kill p
         with exn -> ()
     startedProcesses.Clear()
 
