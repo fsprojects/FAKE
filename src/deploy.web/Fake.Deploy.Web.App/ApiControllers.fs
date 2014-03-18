@@ -11,56 +11,6 @@ open log4net
 open Fake.Deploy.Web
 open Fake.FakeDeployAgentHelper
 
-module ApiModels =
-
-    type CreateUserModel = {
-        UserName : string
-        Password : string
-        ConfirmPassword : string
-        Email : string
-    }
-
-type UserController() =
-    inherit ApiController()
-
-    let logger = LogManager.GetLogger("UserController")
-
-    member this.Get() = 
-        try
-            this.Request.CreateResponse(HttpStatusCode.OK, Data.getAllUsers())
-        with e ->
-            logger.Error("An error occured retrieving users" ,e)
-            this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e)
-
-    member this.Get(id : string) = 
-        try
-            this.Request.CreateResponse(HttpStatusCode.OK, Data.getUser id)
-        with e ->
-            logger.Error(sprintf "An error occured retrieving user %s" id,e)
-            this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e)
-
-    member this.Post(model : ApiModels.CreateUserModel) = 
-        async {
-            try
-                if model.Password = model.ConfirmPassword then
-                    match Data.registerUser model.UserName model.Password model.Email with
-                    | MembershipCreateStatus.Success, user -> return this.Request.CreateResponse(HttpStatusCode.Created)
-                    | _,s -> return this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, sprintf "User not created %s" (s.ToString()));
-                else return this.Request.CreateErrorResponse(HttpStatusCode.BadRequest, "Passwords do not match");
-            with e -> 
-                return this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e)
-        } |> Async.toTask
-
-    member this.Delete(id : string) = 
-        try
-            if Data.deleteUser id
-            then this.Request.CreateResponse(HttpStatusCode.OK)
-            else this.Request.CreateErrorResponse(HttpStatusCode.NotFound, sprintf "Could not find user %s" id)
-        with e ->
-            logger.Error(sprintf "An error occured deleting user %s" id,e)
-            this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e)
-
-
 type AgentController() = 
     inherit ApiController()
     

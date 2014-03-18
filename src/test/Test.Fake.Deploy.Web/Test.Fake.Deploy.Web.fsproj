@@ -78,10 +78,10 @@
     <Compile Include="AccountTest.fs" />
     <Compile Include="Api.AgentTests.fs" />
     <Compile Include="Api.EnvironmentTests.fs" />
+    <Compile Include="Api.UserTests.fs" />
     <Compile Include="AppDataPathTest.fs" />
     <None Include="packages.config" />
     <None Include="app.config" />
-    <None Include="web.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\deploy.web\Fake.Deploy.Web.Abstractions\Fake.Deploy.Web.Abstractions.fsproj">
