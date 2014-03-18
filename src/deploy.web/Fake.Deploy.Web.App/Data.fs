@@ -10,8 +10,21 @@
     open System.ComponentModel.Composition
     open Newtonsoft.Json
     
-    let appdata = HttpContext.Current.Server.MapPath("~/App_Data")
-    let providerPath = Path.Combine(appdata, "Providers\\")
+
+    let appdata =
+        let dir =
+            match HttpContext.Current <> null with
+            | true -> DirectoryInfo(HttpContext.Current.Server.MapPath("~/App_Data"))
+            | false  -> 
+                Reflection.Assembly.GetExecutingAssembly()
+                |> fun asm -> Uri(asm.CodeBase).AbsolutePath
+                |> Path.GetDirectoryName
+                |> fun p -> Path.Combine(p, "App_Data")
+                |> fun p -> DirectoryInfo p
+        if not <| dir.Exists then dir.Create()
+        dir
+
+    let providerPath = Path.Combine(appdata.FullName, "Providers\\")
 
     do
         if not <| Directory.Exists(providerPath)
@@ -27,7 +40,8 @@
         NuGetFeeds : seq<Uri>
     }
 
-    type Configuration internal() =
+
+    type Configuration () =
         
         let mutable membership : IMembershipProvider = Unchecked.defaultof<_> 
         let mutable data : IDataProvider = Unchecked.defaultof<_> 
@@ -59,6 +73,7 @@
                 if box(x.Data) <> null then x.Data.Dispose()
                 if box(x.Membership) <> null then x.Membership.Dispose()
                
+    [<Obsolete>]
     let private config = new Configuration()
     let private started = ref false
 
@@ -76,7 +91,7 @@
                    )
         |> dict
 
-    let setupInfoPath = Path.Combine(appdata, "SetupInfo.json")
+    let setupInfoPath = Path.Combine(appdata.FullName, "SetupInfo.json")
 
     let isInitialized() = 
         File.Exists(setupInfoPath)
@@ -96,24 +111,24 @@
         let info = CreateAppInfo info
         File.WriteAllText(setupInfoPath, JsonConvert.SerializeObject(info, Formatting.Indented))
 
-    let private doInit(info : AppInfo) = 
+    let private doInit(config : Configuration) (info : AppInfo) = 
         config.SetDataProvider(info.DataProvider)
         config.Data.Initialize(parametersToMap info.DataProviderParameters)
         config.SetMembershipProvider(info.MembershipProvider)
         config.Membership.Initialize(parametersToMap info.MembershipProviderParameters)
         started := true
 
-    let init(info : SetupInfo) =
+    let init(config : Configuration) (info : SetupInfo) =
         let appInfo = CreateAppInfo info
-        doInit appInfo
+        doInit config appInfo
         InitialData.Init(info.AdministratorUserName, info.AdministratorPassword, info.AdministratorEmail, config.Data, config.Membership)
     
-    let start() = 
+    let start(config : Configuration) = 
         if (not <| !started) && isInitialized()
         then 
             let si = Newtonsoft.Json.JsonConvert.DeserializeObject<AppInfo>(File.ReadAllText(setupInfoPath))
             container.SatisfyImportsOnce(config) |> ignore
-            doInit si
+            doInit config si
         else 
             //Unzip bundles and copy to Providers
 //            let bundles = HttpContext.Current.Server.MapPath("Bundles")
@@ -125,54 +140,72 @@
     let dispose() =
         (config :> IDisposable).Dispose()
 
+    [<Obsolete>]
     let getEnvironment (id : string) = 
         config.Data.GetEnvironments([id]) |> Seq.head
 
+    [<Obsolete>]
     let saveEnvironment (env : Environment) = 
         config.Data.SaveEnvironments [env]
 
+    [<Obsolete>]
     let deleteEnvironment (id : string) =
         config.Data.DeleteEnvironment id
 
+    [<Obsolete>]
     let getEnvironments() = 
         config.Data.GetEnvironments([])
     
+    [<Obsolete>]
     let saveAgent (environmentId : string) (agent : Agent) = 
         let env = getEnvironment environmentId
-        env.AddAgents([agent])
+        let env = env.AddAgents([agent])
         saveEnvironment(env)
         config.Data.SaveAgents([agent])
 
+    [<Obsolete>]
     let getAgents() = 
         config.Data.GetAgents([])
 
+    [<Obsolete>]
     let getAgent (id : string) =
         config.Data.GetAgents [id] |> Seq.head
 
+    [<Obsolete>]
     let deleteAgent (id : string) =
         config.Data.DeleteAgent(id)
 
+    [<Obsolete>]
     let logon username password rememberMe = 
-        config.Membership.Login(username, password, rememberMe)
+        match config.Membership.Login(username, password, rememberMe) with
+        | false -> None
+        | true -> Some <| config.Membership.GetUser(username).Value
 
+    [<Obsolete>]
     let logoff() = 
         config.Membership.Logout()
 
+    [<Obsolete>]
     let registerUser username password email = 
         config.Membership.CreateUser(username, password, email)
 
+    [<Obsolete>]
     let deleteUser id =
         config.Membership.DeleteUser id
 
+    [<Obsolete>]
     let getAllUsers() =
         config.Membership.GetUsers()
 
+    [<Obsolete>]
     let getUser id = 
         config.Membership.GetUser id
 
+    [<Obsolete>]
     let addUserToRole user role = 
         config.Membership.AddUserToRoles(user,role)
 
+    [<Obsolete>]
     let removeUserFromRole user role = 
         config.Membership.RemoveUserFromRoles(user, role)
 

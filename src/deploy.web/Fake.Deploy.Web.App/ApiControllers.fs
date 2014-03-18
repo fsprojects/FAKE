@@ -60,40 +60,6 @@ type UserController() =
             logger.Error(sprintf "An error occured deleting user %s" id,e)
             this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e)
 
-type EnvironmentController() =
-    inherit ApiController()
-
-    let logger = LogManager.GetLogger("EnvironmentController")
-
-    member this.Get() = 
-        try
-            this.Request.CreateResponse(HttpStatusCode.OK, Data.getEnvironments())
-        with e ->
-            logger.Error("An error occured retrieving environments" ,e)
-            this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e)
-
-    member this.Get(id : string) = 
-        try
-            this.Request.CreateResponse(HttpStatusCode.OK, Data.getEnvironment id)
-        with e ->
-            logger.Error(sprintf "An error occured retrieving environment %s" id,e)
-            this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e)
-
-    member this.Post(env : Environment) = 
-        try
-            Data.saveEnvironment env
-            this.Request.CreateResponse(HttpStatusCode.Created)
-        with e ->
-            logger.Error("An error occured saving environment" ,e)
-            this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e)
-
-    member this.Delete(id : string) = 
-        try
-            Data.deleteEnvironment id
-            this.Request.CreateResponse(HttpStatusCode.OK)
-        with e ->
-            logger.Error(sprintf "An error occured delete environment %s" id,e)
-            this.Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e)
 
 type AgentController() = 
     inherit ApiController()
@@ -148,7 +114,7 @@ type AgentController() =
                     let agentName = formData.Get("agentName")
                     let environmentId = formData.Get("environmentId")
                     try
-                        let agent = Agent.Create(agentUrl, environmentId, agentName)
+                        let agent = Agent.Create agentUrl environmentId agentName
                         Data.saveAgent environmentId agent
                         return this.Request.CreateResponse(HttpStatusCode.Created)
                     with e ->

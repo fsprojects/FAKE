@@ -82,7 +82,7 @@ and Global() =
         Global.RegisterGlobalFilters(GlobalFilters.Filters)
         Global.RegisterRoutes(RouteTable.Routes) |> ignore
         ControllerBuilder.Current.SetControllerFactory(new FakeDeployControllerFactory())
-        Data.start()
+        Data.start (new Fake.Deploy.Web.Data.Configuration())
 
     member this.End() = 
         Fake.Deploy.Web.Data.dispose()

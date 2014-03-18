@@ -23,13 +23,13 @@ let private MSBuildPath =
 /// Tries to detect the right version of MSBuild.
 ///   - On Linux/Unix Systems we use xBuild.
 ///   - On Windows we try to find a "MSBuild" build parameter or read the MSBuild tool location from the AppSettings file.
-let msBuildExe = 
+let msBuildExe =   
     if isUnix then "xbuild"
-    else 
+    else
         let ev = environVar "MSBuild"
         if not (isNullOrEmpty ev) then ev
         else if "true".Equals(ConfigurationManager.AppSettings.["IgnoreMSBuild"], StringComparison.OrdinalIgnoreCase) then 
-            String.Empty
+                String.Empty 
         else findPath "MSBuildPath" MSBuildPath "MSBuild.exe"
 
 /// [omit]
@@ -47,12 +47,12 @@ let internal getReferenceElements elementName projectFileName (doc : XDocument) 
     let fi = fileInfo projectFileName
     doc.Descendants(xname "Project").Descendants(xname "ItemGroup").Descendants(xname elementName) 
     |> Seq.map (fun e -> 
-           let a = e.Attribute(XName.Get "Include")
-           let value = convertWindowsToCurrentPath a.Value
+            let a = e.Attribute(XName.Get "Include")
+            let value = convertWindowsToCurrentPath a.Value
            
-           let fileName = 
-               if value.StartsWith(".." + directorySeparator) || (not <| value.Contains directorySeparator) then 
-                   fi.Directory.FullName @@ value
+            let fileName =
+                if value.StartsWith(".." + directorySeparator) || (not <| value.Contains directorySeparator) then
+                    fi.Directory.FullName @@ value
                else value
            a, fileName |> FullName)
 
@@ -60,7 +60,7 @@ let internal getReferenceElements elementName projectFileName (doc : XDocument) 
 let processReferences elementName f projectFileName (doc : XDocument) = 
     let fi = fileInfo projectFileName
     doc
-    |> getReferenceElements elementName projectFileName
+        |> getReferenceElements elementName projectFileName
     |> Seq.iter (fun (a, fileName) -> a.Value <- f fileName)
     doc
 
@@ -69,13 +69,13 @@ let rec getProjectReferences (projectFileName : string) =
     if projectFileName.EndsWith ".sln" then Set.empty
     else // exclude .sln-files since the are not XML
          
-        let doc = loadProject projectFileName
+    let doc = loadProject projectFileName
         let references = getReferenceElements "ProjectReference" projectFileName doc |> Seq.map snd
-        references
-        |> Seq.map getProjectReferences
-        |> Seq.concat
-        |> Seq.append references
-        |> Set.ofSeq
+    references
+      |> Seq.map getProjectReferences
+      |> Seq.concat
+      |> Seq.append references
+      |> Set.ofSeq
 
 /// MSBuild verbosity option
 type MSBuildVerbosity = 
@@ -103,7 +103,7 @@ type MSBuildLogParameter =
     | EnableMPLogging
 
 /// A type for MSBuild configuration
-type MSBuildFileLoggerConfig = 
+type MSBuildFileLoggerConfig =
     { Number : int
       Filename : string option
       Verbosity : MSBuildVerbosity option
@@ -130,7 +130,7 @@ let mutable MSBuildDefaults =
       FileLoggers = None }
 
 /// [omit]
-let getAllParameters targets maxcpu nodeReuse tools verbosity fileLoggers properties = 
+let getAllParameters targets maxcpu nodeReuse tools verbosity fileLoggers properties =
     if isUnix then [ targets; tools; verbosity ] @ fileLoggers @ properties
     else [ targets; maxcpu; nodeReuse; tools; verbosity ] @ fileLoggers @ properties
 
@@ -145,7 +145,7 @@ let private serializeArgs args =
 
 /// [omit]
 let serializeMSBuildParams (p : MSBuildParams) = 
-    let verbosityName v = 
+    let verbosityName v =
         match v with
         | Quiet -> "q"
         | Minimal -> "m"
@@ -173,7 +173,7 @@ let serializeMSBuildParams (p : MSBuildParams) =
         if p.NodeReuse then None
         else Some("nodeReuse", "False")
     
-    let tools = 
+    let tools =
         match p.ToolsVersion with
         | None -> None
         | Some t -> Some("tv", t)
@@ -183,8 +183,8 @@ let serializeMSBuildParams (p : MSBuildParams) =
         | None -> None
         | Some v -> Some("v", verbosityName v)
     
-    let fileLoggers = 
-        let logParams param = 
+    let fileLoggers =
+        let logParams param =
             match param with
             | Append -> "Append"
             | PerformanceSummary -> "PerformanceSummary"
@@ -202,7 +202,7 @@ let serializeMSBuildParams (p : MSBuildParams) =
             | EnableMPLogging -> "EnableMPLogging"
         match p.FileLoggers with
         | None -> []
-        | Some fls -> 
+        | Some fls ->
             fls 
             |> List.map 
                    (fun fl -> 
@@ -210,7 +210,7 @@ let serializeMSBuildParams (p : MSBuildParams) =
                        ("flp" + (string fl.Number), 
                         
                         sprintf "%s%s%s" (match fl.Filename with
-                                          | None -> ""
+                    | None -> ""
                                           | Some f -> sprintf "logfile=%s;" f) 
                             (match fl.Verbosity with
                              | None -> ""
@@ -223,7 +223,7 @@ let serializeMSBuildParams (p : MSBuildParams) =
                                                                                                 logParams p 
                                                                                                 |> sprintf "%s;")
                                                                                          |> String.concat "")))
-    
+
     getAllParameters targets maxcpu nodeReuse tools verbosity fileLoggers properties
     |> serializeArgs
 
@@ -238,7 +238,7 @@ let mutable MSBuildLoggers =
     let pathToLogger = typedefof<MSBuildParams>.Assembly.Location
     [ TeamCityLoggerName; ErrorLoggerName ]
     |> List.map (fun a -> sprintf "%s,\"%s\"" a pathToLogger)
-    
+
 /// Runs a MSBuild project
 /// ## Parameters
 ///  - `setParams` - A function that overwrites the default MsBuildParams
@@ -260,7 +260,7 @@ let mutable MSBuildLoggers =
 ///              }
 ///     build setParams "./MySolution.sln"
 ///           |> DoNothing
-let build setParams project = 
+let build setParams project =
     traceStartTask "MSBuild" project
     let args = 
         MSBuildDefaults
@@ -274,15 +274,15 @@ let build setParams project =
     
     let args = toParam project + " " + args + " " + errorLoggerParam
     tracefn "Building project: %s\n  %s %s" project msBuildExe args
-    let exitCode = 
-        ExecProcess (fun info -> 
+    let exitCode =
+        ExecProcess (fun info ->  
             info.FileName <- msBuildExe
             info.Arguments <- args) TimeSpan.MaxValue
-    if exitCode <> 0 then 
+    if exitCode <> 0 then
         if Diagnostics.Debugger.IsAttached then Diagnostics.Debugger.Break()
-        let errors = 
+        let errors =
             System.Threading.Thread.Sleep(200) // wait for the file to write
-            if File.Exists MsBuildLogger.ErrorLoggerFile then 
+            if File.Exists MsBuildLogger.ErrorLoggerFile then
                 File.ReadAllLines(MsBuildLogger.ErrorLoggerFile) |> List.ofArray
             else []
         
@@ -301,26 +301,26 @@ let MSBuildWithProjectProperties outputPath (targets : string) (properties : str
     let output = 
         if isNullOrEmpty outputPath then ""
         else 
-            outputPath
-            |> FullName
-            |> trimSeparator
-    
+        outputPath
+          |> FullName
+          |> trimSeparator
+
     let properties = 
         if isNullOrEmpty output then properties
         else fun x -> ("OutputPath", output) :: (properties x)
-    
-    let dependencies = 
-        projects
-        |> List.map getProjectReferences
-        |> Set.unionMany
-    
+
+    let dependencies =
+        projects 
+            |> List.map getProjectReferences
+            |> Set.unionMany
+
     let setBuildParam project projectParams = 
         { projectParams with Targets = targets |> split ';'
-                             Properties = projectParams.Properties @ properties project }
-    
+            Properties = projectParams.Properties @ properties project }
+
     projects
-    |> List.filter (fun project -> not <| Set.contains project dependencies)
-    |> List.iter (fun project -> build (setBuildParam project) project)
+      |> List.filter (fun project -> not <| Set.contains project dependencies)
+      |> List.iter (fun project -> build (setBuildParam project) project)
     // it makes no sense to output the root dir content here since it does not contain the build output
     if isNotNullOrEmpty output then !!(outputPath @@ "/**/*.*") |> Seq.toList
     else []
@@ -362,7 +362,7 @@ let MSBuildReleaseExt outputPath properties targets =
 /// ## Parameters
 ///  - `outputPath` - The output path.
 ///  - `projectFile` - The project file path.
-let BuildWebsite outputPath projectFile = 
+let BuildWebsite outputPath projectFile =
     traceStartTask "BuildWebsite" projectFile
     let projectName = (fileInfo projectFile).Name.Replace(".csproj", "").Replace(".fsproj", "").Replace(".vbproj", "")
     
@@ -381,7 +381,7 @@ let BuildWebsite outputPath projectFile =
     MSBuild "" "_CopyWebApplication;_BuiltWebOutputGroupOutput" 
         [ "OutDir", prefix + outputPath
           "WebProjectOutputDir", prefix + outputPath + "/" + projectName ] [ projectFile ]
-    |> ignore
+        |> ignore
     !!(projectDir + "/bin/*.*") |> Copy(outputPath + "/" + projectName + "/bin/")
     traceEndTask "BuildWebsite" projectFile
 

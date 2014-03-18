@@ -52,7 +52,7 @@ type SetupController() =
     [<HttpPost>]
     [<System.Web.Mvc.AllowAnonymous>]
     member this.SaveSetupInformation(info : SetupInfo) =
-        Data.init(info)
+        Data.init (new Data.Configuration()) info
         Data.saveSetupInfo info
         this.RedirectToAction("Index", "Home")
         
@@ -101,12 +101,12 @@ type AccountController() =
     member this.DoLogOn(model : LogOnModel, returnUrl : string) =
         if this.ModelState.IsValid
         then 
-            if Data.logon model.UserName model.Password model.RememberMe
-            then
+            match (Data.logon model.UserName model.Password model.RememberMe) with
+            | Some u ->
                 if this.Url.IsLocalUrl(returnUrl) 
                 then this.Redirect(returnUrl) :> ActionResult
                 else this.RedirectToAction("Index", "Home") :> ActionResult
-            else 
+            | None ->
                 this.ModelState.AddModelError("", "The user name or password provided is incorrect.");
                 this.View("Login", model) :> ActionResult
         else this.View("Login", model) :> ActionResult

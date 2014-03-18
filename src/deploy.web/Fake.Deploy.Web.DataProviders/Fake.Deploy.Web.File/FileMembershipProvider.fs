@@ -91,7 +91,8 @@ type FileMembershipProvider () =
             | Some(user) -> 
                 if validatePassword user.Password password
                 then
-                    FormsAuthentication.SetAuthCookie(username, rememberme); true
+                    //FormsAuthentication.SetAuthCookie(username, rememberme)
+                    true
                 else false
             | None -> false
 
