@@ -44,7 +44,7 @@ type SemVerInfo =
     override x.ToString() =
         sprintf "%d.%d.%d" x.Major x.Minor x.Patch +
          (match x.PreRelease, isNotNullOrEmpty x.Build with
-          | Some preRelease, true -> "-" + preRelease.Name 
+          | Some preRelease, _ -> "-" + preRelease.Name 
           | None, true -> "-"
           | _ -> "") +
          (if isNotNullOrEmpty x.Build then "." + x.Build else "")
