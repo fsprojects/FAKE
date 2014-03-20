@@ -114,7 +114,6 @@
     <Compile Include="SpecFlowHelper.fs" />
     <Compile Include="OctoTools.fs" />
     <None Include="packages.config" />
-    <None Include="packages.config" />
     <Compile Include="SignHelper.fs" />
     <Compile Include="MageHelper.fs" />
     <Compile Include="SemVerHelper.fs" />

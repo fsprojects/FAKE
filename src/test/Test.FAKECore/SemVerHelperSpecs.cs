@@ -28,6 +28,9 @@ namespace Test.FAKECore
 
         It should_parse_rc_versions =
             () => SemVerHelper.parse("1.0.0-rc.1").ToString().ShouldEqual("1.0.0-rc.1");
+
+        It should_parse_prerelease_versions_without_build =
+            () => SemVerHelper.parse("1.2.3-foo").ToString().ShouldEqual("1.2.3-foo");
     }
 
     public class when_parsing_semver_strings
