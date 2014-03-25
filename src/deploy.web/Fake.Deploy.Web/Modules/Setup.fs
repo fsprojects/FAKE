@@ -1,12 +1,13 @@
 ﻿namespace Fake.Deploy.Web.Module
 open Fake.Deploy.Web
-open Fancy
+open Fake.Deploy.Web.Data
+open Fake.Deploy.Web.Module.NancyOp
 open Nancy
 open Nancy.ModelBinding
 open Nancy.Authentication.Forms
 
 
-type Setup (dataProvider : IDataProvider) as http =
+type Setup (config : Configuration) as http =
     inherit FakeModule("setup")
 
     do
@@ -22,14 +23,14 @@ type Setup (dataProvider : IDataProvider) as http =
                         AdministratorPassword="";ConfirmAdministratorPassword="";
                         DataProvider=""; DataProviderParameters="";
                         MembershipProvider=""; MembershipProviderParameters="";
-                        AvailableDataProviders = Data.dataProviders() |> Seq.map(fun p -> p.Id) |> Array.ofSeq
-                        AvailableMembershipProviders = Data.membershipProviders() |> Seq.map(fun p -> p.Id) |> Array.ofSeq
+                        AvailableDataProviders = config.DataProviders |> Seq.map(fun p -> p.Id) |> Array.ofSeq
+                        AvailableMembershipProviders = config.MembershipProviders |> Seq.map(fun p -> p.Id) |> Array.ofSeq
                         DataProviderParametersDescription = 
-                            Data.dataProviders()
+                            config.DataProviders
                             |> Seq.map(fun dp -> dp.Id, dp.ParameterDescriptions)
                             |> dict
                         MembershipProviderParametersDescription =
-                            Data.membershipProviders()
+                            config.MembershipProviders
                             |> Seq.map(fun dp -> dp.Id, dp.ParameterDescriptions)
                             |> dict
                         UseFileUpload = false
@@ -39,10 +40,10 @@ type Setup (dataProvider : IDataProvider) as http =
                 http.View.["setup"].WithModel appInfo |> box
         )
 
-        http.post "/setup/save" (fun p ->
+        http.post "/save" (fun p ->
             let model = http.Bind<SetupInfo>()
-            Data.init (new Data.Configuration()) model
+            Data.init (config) model
             Data.saveSetupInfo model
-            http.Response.AsRedirect "/"
+            http.Response.AsText("").WithStatusCode HttpStatusCode.Created
         )
         

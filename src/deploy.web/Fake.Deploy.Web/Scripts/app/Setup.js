@@ -31,12 +31,12 @@
         var jsonStr = JSON.stringify(data);
         $.ajax({
             type: "POST",
-            url: '/Setup/SaveSetupInformation',
+            url: '/setup/save',
             data: jsonStr,
             contentType: 'application/json'
         }).done(function(d) {
             $('#initDialog').modal('hide');
-            window.location.href = '/Home/Index';
+            window.location.href = '/';
         }).fail(function(msg) {
             toastr.error('Initialisation Failed', 'Error');
             $('#initDialog').modal('hide');

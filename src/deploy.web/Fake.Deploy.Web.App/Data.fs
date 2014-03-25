@@ -43,16 +43,19 @@
 
     type Configuration () =
         
-        let mutable membership : IMembershipProvider = Unchecked.defaultof<_> 
-        let mutable data : IDataProvider = Unchecked.defaultof<_> 
+        let mutable membership : IMembershipProvider = Unchecked.defaultof<_>
+        let mutable data : IDataProvider = Unchecked.defaultof<_>
 
         [<ImportMany>]
         member val DataProviders : seq<IDataProvider> = Seq.empty with get, set 
         [<ImportMany>]
         member val MembershipProviders : seq<IMembershipProvider> = Seq.empty with get, set
 
+
         member x.Membership with get() = membership
         member x.Data with get() = data
+
+        member x.IsConfigured with get() = data <> Unchecked.defaultof<_> && membership <> Unchecked.defaultof<_>
 
         member x.SetMembershipProvider(id : string) =
             x.MembershipProviders 
@@ -209,7 +212,10 @@
     let removeUserFromRole user role = 
         config.Membership.RemoveUserFromRoles(user, role)
 
+    [<Obsolete>]
     let dataProviders () =
         config.DataProviders
+
+    [<Obsolete>]
     let membershipProviders () =
         config.MembershipProviders

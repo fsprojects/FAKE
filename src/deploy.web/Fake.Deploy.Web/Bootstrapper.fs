@@ -12,6 +12,16 @@ type Bootstrapper() =
         let m = UserMapper()
         container.Register<IUserMapper, UserMapper>(m) |> ignore
         container.Register<UserMapper, UserMapper>(m) |> ignore
+        let c = new Configuration()
+        Data.start c
+        container.Register<Configuration>(c) |> ignore
+        
+        let fd (x: TinyIoc.TinyIoCContainer) (y : TinyIoc.NamedParameterOverloads) = c.Data
+        container.Register<IDataProvider>(fd) |> ignore
+        
+        let fm (x: TinyIoc.TinyIoCContainer) (y : TinyIoc.NamedParameterOverloads) = c.Membership
+        container.Register<IMembershipProvider>(fm) |> ignore
+
 
     override this.ApplicationStartup (container, pipelines) =
         //StaticConfiguration.Caching.EnableRuntimeViewUpdates <- true
@@ -20,17 +30,13 @@ type Bootstrapper() =
         Csrf.Enable pipelines
         Nancy.Json.JsonSettings.MaxJsonLength <- 1024 * 1024
 
-        use c = new Configuration()
-        Data.start c
-
-        container.Register<IDataProvider, IDataProvider>(c.Data) |> ignore
-        container.Register<IMembershipProvider, IMembershipProvider>(c.Membership) |> ignore     
-
         base.ApplicationStartup(container, pipelines);
         
     override this.RequestStartup(container, pipelines, context) =
+        let c = container.Resolve<Configuration>()
+
         let formsAuthConfig = FormsAuthenticationConfiguration()
-        formsAuthConfig.RedirectUrl <- if Data.isInitialized() then "~/Account/Login" else "~/Setup"
+        formsAuthConfig.RedirectUrl <- if c.IsConfigured then "~/Account/Login" else "~/Setup"
         let u = container.Resolve<IUserMapper>()
         formsAuthConfig.UserMapper <- u
         FormsAuthentication.Enable(pipelines, formsAuthConfig)
