@@ -146,6 +146,7 @@
     <Compile Include="Modules\Setup.fs" />
     <Compile Include="Modules\Account.fs" />
     <Compile Include="Modules\Admin.fs" />
+    <Compile Include="Modules\ApiModels.fs" />
     <Compile Include="Modules\Api.Agent.fs" />
     <Compile Include="Modules\Api.Environment.fs" />
     <Compile Include="Modules\Api.Package.fs" />
@@ -204,6 +205,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\app\Fake.Deploy.Lib\Fake.Deploy.Lib.fsproj">
+      <Name>Fake.Deploy.Lib</Name>
+      <Project>{83b7d6e7-6ae1-4786-9c26-4e2e73216ec9}</Project>
+      <Private>True</Private>
+    </ProjectReference>
     <ProjectReference Include="..\..\app\FakeLib\FakeLib.fsproj">
       <Name>FakeLib</Name>
       <Project>{13d56521-772a-41db-9772-1da1a4aa8e3a}</Project>
