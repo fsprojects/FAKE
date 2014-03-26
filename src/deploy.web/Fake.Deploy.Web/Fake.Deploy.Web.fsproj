@@ -102,6 +102,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="packages.config" />
+    <None Include="Views\admin\environment.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Views\_layout.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
