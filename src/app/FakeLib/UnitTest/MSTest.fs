@@ -34,7 +34,9 @@ type MSTestParams =
       /// Path to MSTest.exe 
       ToolPath : string
       /// Option which allow to specify if a MSTest error should break the build.
-      ErrorLevel : ErrorLevel }
+      ErrorLevel : ErrorLevel
+      /// Run tests in isolation.
+      Isolate : bool }
 
 /// MSTest default parameters.
 let MSTestDefaults = 
@@ -47,7 +49,8 @@ let MSTestDefaults =
           match tryFindFile mstestPaths mstestexe with
           | Some path -> path
           | None -> ""
-      ErrorLevel = ErrorLevel.Error }
+      ErrorLevel = ErrorLevel.Error
+      Isolate = false }
 
 /// Builds the command line arguments from the given parameter record and the given assemblies.
 /// [omit]
@@ -60,7 +63,7 @@ let buildMSTestArgs parameters assembly =
     |> appendIfNotNull assembly "/testcontainer:"
     |> appendIfNotNull parameters.Category "/category:"
     |> appendIfNotNull testResultsFile "/resultsfile:"
-    |> append "/noisolation"
+    |> appendIfFalse parameters.Isolate "/noisolation"
     |> toText
 
 /// Runs MSTest command line tool on a group of assemblies.
