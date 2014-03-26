@@ -160,13 +160,21 @@ let private createNuspecFile parameters nuSpec =
     tracefn "Created nuspec file %s" specFile
     specFile
 
+let private propertiesParam = function 
+    | [] -> ""
+    | lst -> 
+        "-Properties " + (lst
+                          |> List.map (fun p -> (fst p) + "=\"" + (snd p) + "\"")
+                          |> String.concat ";")
 /// create symbols package
 let private packSymbols parameters = 
     if isNullOrEmpty parameters.ProjectFile then ()
     else 
+        let properties = propertiesParam parameters.Properties
+
         let args = 
-            sprintf "pack -sym -Version %s -OutputDirectory \"%s\" \"%s\"" parameters.Version 
-                (FullName parameters.OutputPath) (FullName parameters.ProjectFile)
+            sprintf "pack -sym -Version %s -OutputDirectory \"%s\" \"%s\" %s" parameters.Version 
+                (FullName parameters.OutputPath) (FullName parameters.ProjectFile) properties
         
         let result = 
             ExecProcess (fun info -> 
@@ -179,15 +187,8 @@ let private packSymbols parameters =
 
 /// create package
 let private pack parameters nuspecFile = 
-    let properties = 
-        match parameters.Properties with
-        | [] -> ""
-        | lst -> 
-            "-Properties " + (lst
-                              |> List.map (fun p -> (fst p) + "=\"" + (snd p) + "\"")
-                              |> List.fold (fun state p -> p + ";" + state) ""
-                              |> (fun s -> s.TrimEnd(';')))
-    
+    let properties = propertiesParam parameters.Properties
+
     let args = 
         sprintf "pack \"%s\" -Version %s -OutputDirectory \"%s\" %s %s" (FullName nuspecFile) parameters.Version 
             (FullName(parameters.OutputPath.TrimEnd('\\').TrimEnd('/'))) (if parameters.NoPackageAnalysis then 
