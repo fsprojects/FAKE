@@ -47,4 +47,12 @@ namespace Test.FAKECore.PackageMgt
         Because of = () => nuspec_behaviours.Package = NuGetHelper.getNuspecProperties(_text);
         Behaves_like<nuspec_behaviours> nuspec_behaviour;
     }
+
+    public class when_parsing_fake_nuspec_file_with_no_schema
+    {
+        static string _text;
+        Establish context = () => _text = File.ReadAllText(Path.Combine(TestData.TestDataDir, "fake_no_schema.nuspec"));
+        Because of = () => nuspec_behaviours.Package = NuGetHelper.getNuspecProperties(_text);
+        Behaves_like<nuspec_behaviours> nuspec_behaviour;
+    }
 }

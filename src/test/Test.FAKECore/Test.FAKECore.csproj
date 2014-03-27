@@ -338,6 +338,10 @@
     <None Include="ProjectTestFiles\FakeLib3.fsproj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="TestData\fake_no_schema.nuspec">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="TestData\fake_schema_2011_08.nuspec">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
