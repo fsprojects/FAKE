@@ -41,6 +41,7 @@ Some of our users are:
 * [NuGetPlus](https://github.com/mavnn/NuGetPlus)
 * [Machine.Fakes](https://github.com/machine/machine.fakes)
 * [Enticify](http://www.enticify.com/)
+* [Akka.net](https://github.com/akkadotnet/akka.net)
 
 ## How to get FAKE
 
