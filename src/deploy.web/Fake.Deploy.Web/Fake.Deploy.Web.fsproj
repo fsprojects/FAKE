@@ -108,6 +108,9 @@
     <None Include="Views\admin\agent.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Views\admin\users.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Views\_layout.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

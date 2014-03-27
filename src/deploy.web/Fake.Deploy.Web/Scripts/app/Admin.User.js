@@ -43,7 +43,7 @@
 	self.deleteUser = function (data) {
 	    $.ajax({
 	        type: "DELETE",
-	        url: '/api/v1/user/'+data.Username(),
+	        url: '/api/v1/user/'+data.username(),
 	        contentType: 'application/json'
 	    }).done(function (d) {
 	        toastr.info('Successfully deleted user');
