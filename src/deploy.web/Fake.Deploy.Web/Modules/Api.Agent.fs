@@ -43,7 +43,6 @@ type ApiAgent (dataProvider : IDataProvider) as http =
         )
 
         http.get "/{agentId}" (fun p ->
-
             let id = (p ?> "agentId")
             try
                 match getAgent id with
@@ -72,7 +71,11 @@ type ApiAgent (dataProvider : IDataProvider) as http =
         http.delete "/{agentId}" (fun p ->
             let agentId = p?> "agentId"
             try
+                let agent = dataProvider.GetAgents([agentId]) |> Seq.head
                 dataProvider.DeleteAgent agentId
+                let env = dataProvider.GetEnvironments([agent.EnvironmentId]) |> Seq.head
+                let env' = env.RemoveAgents([agent])
+                dataProvider.SaveEnvironments([env'])
                 HttpStatusCode.NoContent |> box
             with e ->
                 logger.Error(sprintf "An error occured retrieving agent %s" agentId, e)

@@ -61,7 +61,7 @@
 	self.deleteAgent = function (data) {
 	    $.ajax({
 	        method: "DELETE",
-	        url: '/api/v1/agent/'+data.Id(),
+	        url: '/api/v1/agent/'+data.id(),
 	        contentType: 'application/json'
 	    }).done(function (d) {
 	        toastr.info('Successfully deleted agent');
