@@ -24,7 +24,7 @@
             <h3 data-bind="text: description"></h3>
             <ul id="agents" class="thumbnails" data-bind="foreach: agents">
                 <li class="span3">
-                    <a class="thumbnail" style="cursor: pointer" data-bind="attr: { href: '/Home/Agent?agentId=' + id(), Description: id }">
+                    <a class="thumbnail" style="cursor: pointer" data-bind="attr: { href: '/Agent/' + id(), Description: id }">
                         <img data-bind="attr: {src: '/img/server' + status() + '.png', alt: 'server ' + status()}" width="64" />
                         <h4 data-bind="text: name" style="text-align: center"></h4>
                     </a>

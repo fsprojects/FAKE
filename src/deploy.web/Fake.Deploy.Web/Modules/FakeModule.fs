@@ -5,9 +5,12 @@ open Newtonsoft.Json
 
 
 module NancyOp =
+    let private nullString:string = null
+
     let (?>) (target : obj) targetKey =
         let t = target :?> DynamicDictionary
-        t.[targetKey].ToString()
+        let x = t.[targetKey] :?> DynamicDictionaryValue
+        if x.HasValue then x.Value.ToString() else nullString
 
     let fromJSON<'T> str =
         JsonConvert.DeserializeObject<'T>(str)

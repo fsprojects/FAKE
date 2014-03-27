@@ -126,25 +126,31 @@
     <None Include="Views\login.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Content Include="Scripts\extensions.js" />
-    <Content Include="Scripts\jquery.serializeToJson.js" />
+    <None Include="Views\agent.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="Scripts\app\Home.Index.js" />
     <Content Include="Scripts\app\Home.Agent.js" />
     <Content Include="Scripts\app\Setup.js" />
     <Content Include="Scripts\app\Admin.Agent.js" />
     <Content Include="Scripts\app\Admin.Environment.js" />
     <Content Include="Scripts\app\Admin.User.js" />
-    <None Include="Scripts\jquery-2.1.0.min.map" />
+    <Content Include="Scripts\extensions.js" />
+    <Content Include="Scripts\jquery.serializeToJson.js" />
+    <Content Include="Scripts\jquery.iframe-transport.js" />
+    <Content Include="Scripts\jquery.ui.widget.js" />
+    <Content Include="Scripts\jquery.fileupload.js" />
     <Content Include="Scripts\jquery-2.1.0.min.js" />
     <Content Include="Scripts\jquery-2.1.0.js" />
     <Content Include="Scripts\jquery-2.1.0.intellisense.js" />
+    <None Include="Scripts\jquery-2.1.0.min.map" />
     <Content Include="Scripts\knockout-2.2.1.js" />
     <Content Include="Scripts\knockout-2.2.1.debug.js" />
+    <Content Include="Scripts\knockout.mapping-latest.js" />
+    <Content Include="Scripts\knockout.mapping-latest.debug.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\knockout.mapping-latest.js" />
-    <Content Include="Scripts\knockout.mapping-latest.debug.js" />
     <None Include="content\toastr.css" />
     <None Include="content\bootstrap-responsive.min.css" />
     <None Include="content\bootstrap-responsive.css" />
@@ -168,10 +174,6 @@
     <Compile Include="Extensions.fs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Fancy">
-      <HintPath>..\..\..\packages\Fancy.0.3.1.0-alpha\lib\net45\Fancy.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="log4net">
       <HintPath>..\..\..\packages\log4net.2.0.0\lib\net40-full\log4net.dll</HintPath>
       <Private>True</Private>

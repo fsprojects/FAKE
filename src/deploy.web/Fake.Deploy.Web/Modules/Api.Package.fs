@@ -13,6 +13,8 @@ open Fake.Deploy.Web.Data
 open Fake.Deploy.Web.Module.NancyOp
 open Fake.Deploy.Web.Module.ApiModels
 
+type DeployMessage = { IsError : bool; Message : string; Timestamp : DateTime }
+
 type ApiPackage (dataProvider : IDataProvider) as http =
     inherit FakeModule("/api/v1/package")
 
@@ -32,7 +34,7 @@ type ApiPackage (dataProvider : IDataProvider) as http =
         | _ -> { Agent = agent.Name; Messages = []; Success = false; Error = "Unexpected response from agent" }
 
     do
-        http.post "/rollback/{model}" (fun p ->
+        http.post "/rollback" (fun p ->
             let body = http.Bind<ApiModels.RollbackRequest>()
             try
                match rollbackTo (body.agentUrl.Trim('/') + "/fake/") body.appName body.version with
@@ -41,7 +43,7 @@ type ApiPackage (dataProvider : IDataProvider) as http =
                | Success a -> 
                     http.Response
                         .AsText("")
-                        .WithHeader("Location", http.Request.Headers.Referrer)
+                        .WithStatusCode HttpStatusCode.NoContent
                | _ -> 
                     http.Response
                         .AsText("Unexpected response")
@@ -51,11 +53,12 @@ type ApiPackage (dataProvider : IDataProvider) as http =
                 http.InternalServerError e
         )
 
-        http.post "/deploy/file" (fun p ->
+        http.post "/deploy" (fun p ->
             try
-                let agentId = p ?> "agentId"
+                let agentId = http.Request.Form ?> "agentId"
                 let agent = dataProvider.GetAgents [agentId] |> Seq.head
                 let url = agent.Address.AbsoluteUri + "fake/"
+                Directory.CreateDirectory(packageTemp) |> ignore
                 let files = 
                     http.Request.Files
                     |> Seq.map(fun file ->
@@ -84,7 +87,7 @@ type ApiPackage (dataProvider : IDataProvider) as http =
                         (code, msg)
                         ) (HttpStatusCode.OK, [])
                 http.Response
-                    .AsJson(message)
+                    .AsJson(message |> List.map(fun m -> { IsError = m.IsError; Message = m.Message; Timestamp = m.Timestamp.LocalDateTime }))
                     .WithStatusCode code
             with e ->
                 logger.Error("An error occured deploying package", e)

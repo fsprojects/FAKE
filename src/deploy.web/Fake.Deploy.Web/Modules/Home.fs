@@ -1,7 +1,7 @@
 namespace Fake.Deploy.Web.Module
 open System
 open Fake.Deploy.Web
-open Fancy
+open Fake.Deploy.Web.Module.NancyOp
 open Nancy
 open Nancy.ModelBinding
 open Nancy.Authentication.Forms
@@ -18,6 +18,7 @@ type HomeModule() as http =
         )
 
         http.get "/agent/{id}" (fun p ->
+            let id = p ?> "id"
             http.View.["Agent"].WithModel id
         )
 

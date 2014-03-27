@@ -1,7 +1,6 @@
 namespace Fake.Deploy.Web.Module
 open System
 open Fake.Deploy.Web
-open Fancy
 open Nancy
 open Nancy.ModelBinding
 open Nancy.Authentication.Forms
