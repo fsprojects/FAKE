@@ -101,6 +101,7 @@
     <Compile Include="Globbing\TestSample5\AbsoluteDirGlobbingSpecs.cs" />
     <Compile Include="NAVFiles\NAVSplitObjectSpecs.cs" />
     <Compile Include="NAVFiles\NavTestResultSpecs.cs" />
+    <Compile Include="PackageMgt\PackagesConfigSpecs.cs" />
     <Compile Include="RegistryHelperSpecs.cs" />
     <Compile Include="SemVerHelperSpecs.cs" />
     <Compile Include="ProjectSystemSpecs.cs" />
@@ -341,6 +342,8 @@
     <None Include="TestData\fake_no_schema.nuspec">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Include="TestData\fake.packages.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="TestData\fake_schema_2011_08.nuspec">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

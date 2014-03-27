@@ -438,3 +438,17 @@ let argList name values =
     values
     |> Seq.collect (fun v -> ["-" + name; sprintf @"""%s""" v])
     |> String.concat " "
+
+
+/// loads the dependences from specified packages.config file
+let getDependencies (packagesFile:string) =
+    let xname = XName.op_Implicit
+    let attribute name (e:XElement) =
+        match e.Attribute (xname name) with
+        | null -> ""
+        | a -> a.Value
+
+    let doc = 
+        XDocument.Load packagesFile
+    [for package in doc.Descendants (xname"package") ->
+        attribute "id" package, attribute "version" package ]
