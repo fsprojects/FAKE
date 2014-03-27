@@ -4,6 +4,7 @@ open Nancy
 open Nancy.Security
 open Nancy.Authentication.Forms
 open Fake.Deploy.Web.Data
+open Newtonsoft.Json
 
 type Bootstrapper() =
     inherit DefaultNancyBootstrapper()
@@ -28,6 +29,7 @@ type Bootstrapper() =
         StaticConfiguration.EnableRequestTracing <- true
         StaticConfiguration.DisableErrorTraces <- false
         Csrf.Enable pipelines
+        
         Nancy.Json.JsonSettings.MaxJsonLength <- 1024 * 1024
 
         base.ApplicationStartup(container, pipelines);

@@ -92,7 +92,6 @@
     </VisualStudio>
   </ProjectExtensions>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.fs" />
     <Content Include="favicon.ico" />
     <Content Include="Web.config" />
     <None Include="Web.Debug.config">
@@ -158,6 +157,11 @@
     <None Include="content\bootstrap.css" />
     <None Include="img\glyphicons-halflings-white.png" />
     <None Include="img\glyphicons-halflings.png" />
+    <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="UnionTypeConverter.fs" />
+    <Compile Include="ApiHelpers.fs" />
+    <Compile Include="InitialData.fs" />
+    <Compile Include="Data.fs" />
     <Compile Include="UserMapper.fs" />
     <Compile Include="Modules\FakeModule.fs" />
     <Compile Include="Modules\Home.fs" />
@@ -203,6 +207,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
@@ -232,11 +237,6 @@
     <ProjectReference Include="..\Fake.Deploy.Web.Abstractions\Fake.Deploy.Web.Abstractions.fsproj">
       <Name>Fake.Deploy.Web.Abstractions</Name>
       <Project>{b58d394b-deac-4c34-8c2b-cc422d408ae5}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Fake.Deploy.Web.App\Fake.Deploy.Web.App.fsproj">
-      <Name>Fake.Deploy.Web.App</Name>
-      <Project>{65bd7fd0-6c61-4c72-b242-65ed2d390b5a}</Project>
       <Private>True</Private>
     </ProjectReference>
   </ItemGroup>

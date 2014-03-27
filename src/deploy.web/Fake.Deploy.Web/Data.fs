@@ -10,7 +10,6 @@
     open System.ComponentModel.Composition
     open Newtonsoft.Json
     
-
     let appdata =
         let dir =
             match HttpContext.Current <> null with
@@ -27,8 +26,7 @@
     let providerPath = Path.Combine(appdata.FullName, "Providers\\")
 
     do
-        if not <| Directory.Exists(providerPath)
-        then Directory.CreateDirectory(providerPath) |> ignore
+        Directory.CreateDirectory(providerPath) |> ignore
     
     type AppInfo = {
         DataProvider : string
@@ -39,8 +37,7 @@
         UseNuGetFeedUpload : bool
         NuGetFeeds : seq<Uri>
     }
-
-
+    
     type Configuration () =
         
         let mutable membership : IMembershipProvider = Unchecked.defaultof<_>
@@ -76,8 +73,6 @@
                 if box(x.Data) <> null then x.Data.Dispose()
                 if box(x.Membership) <> null then x.Membership.Dispose()
                
-    [<Obsolete>]
-    let private config = new Configuration()
     let private started = ref false
 
     let private container = 
@@ -139,83 +134,3 @@
 //                Fake.ZipHelper.Unzip providerPath bundle
             
             container.SatisfyImportsOnce(config) |> ignore
-
-    let dispose() =
-        (config :> IDisposable).Dispose()
-
-    [<Obsolete>]
-    let getEnvironment (id : string) = 
-        config.Data.GetEnvironments([id]) |> Seq.head
-
-    [<Obsolete>]
-    let saveEnvironment (env : Environment) = 
-        config.Data.SaveEnvironments [env]
-
-    [<Obsolete>]
-    let deleteEnvironment (id : string) =
-        config.Data.DeleteEnvironment id
-
-    [<Obsolete>]
-    let getEnvironments() = 
-        config.Data.GetEnvironments([])
-    
-    [<Obsolete>]
-    let saveAgent (environmentId : string) (agent : Agent) = 
-        let env = getEnvironment environmentId
-        let env = env.AddAgents([agent])
-        saveEnvironment(env)
-        config.Data.SaveAgents([agent])
-
-    [<Obsolete>]
-    let getAgents() = 
-        config.Data.GetAgents([])
-
-    [<Obsolete>]
-    let getAgent (id : string) =
-        config.Data.GetAgents [id] |> Seq.head
-
-    [<Obsolete>]
-    let deleteAgent (id : string) =
-        config.Data.DeleteAgent(id)
-
-    [<Obsolete>]
-    let logon username password rememberMe = 
-        match config.Membership.Login(username, password, rememberMe) with
-        | false -> None
-        | true -> Some <| config.Membership.GetUser(username).Value
-
-    [<Obsolete>]
-    let logoff() = 
-        config.Membership.Logout()
-
-    [<Obsolete>]
-    let registerUser username password email = 
-        config.Membership.CreateUser(username, password, email)
-
-    [<Obsolete>]
-    let deleteUser id =
-        config.Membership.DeleteUser id
-
-    [<Obsolete>]
-    let getAllUsers() =
-        config.Membership.GetUsers()
-
-    [<Obsolete>]
-    let getUser id = 
-        config.Membership.GetUser id
-
-    [<Obsolete>]
-    let addUserToRole user role = 
-        config.Membership.AddUserToRoles(user,role)
-
-    [<Obsolete>]
-    let removeUserFromRole user role = 
-        config.Membership.RemoveUserFromRoles(user, role)
-
-    [<Obsolete>]
-    let dataProviders () =
-        config.DataProviders
-
-    [<Obsolete>]
-    let membershipProviders () =
-        config.MembershipProviders

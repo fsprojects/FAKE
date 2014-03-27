@@ -89,11 +89,6 @@
       <Project>{b58d394b-deac-4c34-8c2b-cc422d408ae5}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\deploy.web\Fake.Deploy.Web.App\Fake.Deploy.Web.App.fsproj">
-      <Name>Fake.Deploy.Web.App</Name>
-      <Project>{65bd7fd0-6c61-4c72-b242-65ed2d390b5a}</Project>
-      <Private>True</Private>
-    </ProjectReference>
     <ProjectReference Include="..\..\deploy.web\Fake.Deploy.Web\Fake.Deploy.Web.fsproj">
       <Name>Fake.Deploy.Web</Name>
       <Project>{329aecd2-ae80-46e8-b486-7d7ba9804b0b}</Project>

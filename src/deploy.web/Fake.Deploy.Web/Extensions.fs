@@ -9,7 +9,7 @@ open Nancy.ViewEngines.Razor
 [<ExtensionAttribute>]
 module public Extensions =
         [<ExtensionAttribute>]
-        let IsAuthenticated(u : IUserIdentity) role = 
+        let IsAuthenticated2(u : IUserIdentity) role = 
             false
         
         [<ExtensionAttribute>]

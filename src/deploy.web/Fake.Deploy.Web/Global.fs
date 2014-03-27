@@ -3,5 +3,5 @@
 module Global =
 
     let Version = 
-        typeof<Global>.Assembly.GetName().Version.ToString()
+        typeof<Fake.Deploy.Web.AuthenticatedUser>.Assembly.GetName().Version.ToString()
 

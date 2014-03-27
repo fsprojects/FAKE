@@ -44,7 +44,7 @@ type Account (userMapper : UserMapper, memberProvider : IMembershipProvider) as 
     do
         http.get "/login" (fun p ->
             let url = http.Request.Query ?> "returnUrl"
-            let model = { UserName = ""; Password = ""; RememberMe = true; ReturnUrl = url; Result = "" }
+            let model = { UserName = ""; Password = ""; RememberMe = false; ReturnUrl = url; Result = "" }
             http.View.["login"].WithModel model)
 
         http.post "/login" (fun p ->
