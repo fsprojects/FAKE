@@ -439,17 +439,14 @@ let argList name values =
 
 
 /// loads the dependences from specified packages.config file
-let getDependencies packagesFile =
+let getDependencies (packagesFile:string) =
     let xname = XName.op_Implicit
     let attribute name (e:XElement) =
         match e.Attribute (xname name) with
         | null -> ""
         | a -> a.Value
 
-
-    if fileExists packagesFile then
-        let doc = XDocument.Load(packagesFile)
-        [for package in doc.Descendants (xname"package") ->
-            attribute "id" package, attribute "version" package ]
-    else 
-        []
+    let doc = 
+        XDocument.Load packagesFile
+    [for package in doc.Descendants (xname"package") ->
+        attribute "id" package, attribute "version" package ]
