@@ -406,3 +406,42 @@ let FileVersion(fileName : string) =
     FullName fileName
     |> FileVersionInfo.GetVersionInfo
     |> fun x -> x.FileVersion.ToString()
+
+
+/// Get the filename extension including the leading '.', or an empty string if the file has no extension.
+/// ## Parameters
+///
+/// - 'fileName' - Name of the file from which the extension is retrieved.
+let ext fileName = Path.GetExtension fileName
+
+/// Change the extension of the file.
+/// ## Parameters
+///
+/// - 'extension' - The new extension containing the leading '.'.
+/// - 'fileName' - Name of the file from which the extension is retrieved.
+let changeExt extension fileName = Path.ChangeExtension(fileName, extension)
+
+/// Tests whether the file has specified extensions (containing the leading '.')
+/// ## Parameters
+///
+/// - 'extension' - The extension to fine containing the leading '.'.
+/// - 'fileName' - Name of the file from which the extension is retrieved.
+let hasExt extension fileName = System.String.Equals(ext fileName, extension, System.StringComparison.InvariantCultureIgnoreCase)
+
+/// Get the filename for the specified path
+/// ## Parameters
+///
+/// - 'path' - The path from which the filename is retrieved.
+let filename path = Path.GetFileName path
+
+/// Get the filename for the specified path without it's extension
+/// ## Parameters
+///
+/// - 'path' - The path from which the filename is retrieved.
+let filenameWithouExt path = Path.GetFileNameWithoutExtension path
+
+/// Get the directory of the specified path
+/// ## Parameters
+///
+/// - 'path' - The path from which the directory is retrieved.
+let directory path = Path.GetDirectoryName path
