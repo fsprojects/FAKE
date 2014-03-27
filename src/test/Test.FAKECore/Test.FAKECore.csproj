@@ -341,6 +341,7 @@
     <None Include="TestData\fake_no_schema.nuspec">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="TestData\fake.packages.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
