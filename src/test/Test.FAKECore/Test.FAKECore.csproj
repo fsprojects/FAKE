@@ -102,7 +102,6 @@
     <Compile Include="NAVFiles\NAVSplitObjectSpecs.cs" />
     <Compile Include="NAVFiles\NavTestResultSpecs.cs" />
     <Compile Include="PackageMgt\PackagesConfigSpecs.cs" />
-    <Compile Include="RegistryHelperSpecs.cs" />
     <Compile Include="SemVerHelperSpecs.cs" />
     <Compile Include="ProjectSystemSpecs.cs" />
     <Compile Include="TeamCitySpecs.cs" />
