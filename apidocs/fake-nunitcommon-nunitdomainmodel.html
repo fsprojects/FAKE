@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>NuGetDependency - FAKE - F# Make</title>
+    <title>NUnitDomainModel - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,70 +36,85 @@
 
 
 
-<h1>NuGetDependency</h1>
+<h1>NUnitDomainModel</h1>
 <div class="xmldoc">
-<p>Specifies NuGet package dependencies.</p>
+<p>The /domain option controls of the creation of AppDomains for running tests. See http://www.nunit.org/index.php?p=consoleCommandLine&amp;r=2.4.6</p>
 </div>
-  <h3>Record Fields</h3>
+  <h3>Union Cases</h3>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Record Field</td><td>Description</td></tr>
+      <tr><td>Union Case</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '740', 740)" onmouseover="showTip(event, '740', 740)">
-            PackageId
+          <code onmouseout="hideTip(event, '942', 942)" onmouseover="showTip(event, '942', 942)">
+            DefaultDomainModel
           </code>
-          <div class="tip" id="740">
-            <strong>Signature:</strong>string<br />
+          <div class="tip" id="942">
+            <strong>Signature:</strong><br />
                       </div>
         </td>
         <td class="xmldoc">
-        <p>The identifer of the package, such as "FAKE".</p>
+        <p>No domain is created - the tests are run in the primary domain. This normally requires copying the NUnit assemblies into the same directory as your tests.</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/Boot.fs#L29-29" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/UnitTest/NUnit/Common.fs#L27-27" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '741', 741)" onmouseover="showTip(event, '741', 741)">
-            Version
+          <code onmouseout="hideTip(event, '944', 944)" onmouseover="showTip(event, '944', 944)">
+            MultipleDomainModel
           </code>
-          <div class="tip" id="741">
-            <strong>Signature:</strong>NuGetVersion<br />
+          <div class="tip" id="944">
+            <strong>Signature:</strong><br />
                       </div>
         </td>
         <td class="xmldoc">
-        <p>The version specification.</p>
+        <p>A separate test domain is created for each assembly</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/Boot.fs#L32-32" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/UnitTest/NUnit/Common.fs#L31-31" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '945', 945)" onmouseover="showTip(event, '945', 945)">
+            SingleDomainModel
+          </code>
+          <div class="tip" id="945">
+            <strong>Signature:</strong><br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>A test domain is created - this is how NUnit worked prior to version 2.4</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/UnitTest/NUnit/Common.fs#L29-29" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
     </tbody>
   </table>
-  <h3>Static members</h3>
+  <h3>Instance members</h3>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Static member</td><td>Description</td></tr>
+      <tr><td>Instance member</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '753', 753)" onmouseover="showTip(event, '753', 753)">
-            Create(id)
+          <code onmouseout="hideTip(event, '977', 977)" onmouseover="showTip(event, '977', 977)">
+            ParamString(arg1)
           </code>
-          <div class="tip" id="753">
-            <strong>Signature:</strong>id:string -&gt; NuGetDependency<br />
+          <div class="tip" id="977">
+            <strong>Signature:</strong>unit -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
-        <p>The default pacakage dependency - take latest including pre-release.</p>
-
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/Boot.fs#L36-36" class="github-link">Go to GitHub source</a>
+        
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/UnitTest/NUnit/Common.fs#L32-32" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
     </tbody>

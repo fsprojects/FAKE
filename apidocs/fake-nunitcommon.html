@@ -51,6 +51,13 @@
     <tbody>
         <tr>
           <td class="type-name">
+            <a href="fake-nunitcommon-nunitdomainmodel.html">NUnitDomainModel</a>
+          </td>
+          <td class="xmldoc"><p>The /domain option controls of the creation of AppDomains for running tests. See http://www.nunit.org/index.php?p=consoleCommandLine&amp;r=2.4.6</p>
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
             <a href="fake-nunitcommon-nuniterrorlevel.html">NUnitErrorLevel</a>
           </td>
           <td class="xmldoc"><p>Option which allows to specify if a NUnit error should break the build.</p>
@@ -61,6 +68,13 @@
             <a href="fake-nunitcommon-nunitparams.html">NUnitParams</a>
           </td>
           <td class="xmldoc"><p>Parameter type for NUnit.</p>
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-nunitcommon-nunitprocessmodel.html">NUnitProcessModel</a>
+          </td>
+          <td class="xmldoc"><p>Process model for nunit to use, see http://www.nunit.org/index.php?p=projectEditor&amp;r=2.5</p>
 </td>
         </tr>
     </tbody>
@@ -77,17 +91,17 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '304', 304)" onmouseover="showTip(event, '304', 304)">
+          <code onmouseout="hideTip(event, '266', 266)" onmouseover="showTip(event, '266', 266)">
             NUnitDefaults 
           </code>
-          <div class="tip" id="304">
+          <div class="tip" id="266">
             <strong>Signature:</strong>NUnitParams<br />
                       </div>
         </td>
         <td class="xmldoc">
         <p>NUnit default parameters. FAKE tries to locate nunit-console.exe in any subfolder.</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/UnitTest/NUnit/Common.fs#L32-32" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/UnitTest/NUnit/Common.fs#L59-59" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
     </tbody>
@@ -101,10 +115,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '316', 316)" onmouseover="showTip(event, '316', 316)">
+          <code onmouseout="hideTip(event, '271', 271)" onmouseover="showTip(event, '271', 271)">
             ( |OK|TestsFailed|FatalError| ) (...)
           </code>
-          <div class="tip" id="316">
+          <div class="tip" id="271">
             <strong>Signature:</strong>errorCode:int -&gt; Choice&lt;unit,unit,string&gt;<br />
                       </div>
         </td>
@@ -112,7 +126,7 @@
         <p>NUnit console returns negative error codes for errors and sum of failed, ignored and exceptional tests otherwise. 
 Zero means that all tests passed.</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/UnitTest/NUnit/Common.fs#L80-80" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/UnitTest/NUnit/Common.fs#L111-111" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
     </tbody>

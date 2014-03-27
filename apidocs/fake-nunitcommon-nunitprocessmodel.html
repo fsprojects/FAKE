@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>NuGetDependency - FAKE - F# Make</title>
+    <title>NUnitProcessModel - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,70 +36,97 @@
 
 
 
-<h1>NuGetDependency</h1>
+<h1>NUnitProcessModel</h1>
 <div class="xmldoc">
-<p>Specifies NuGet package dependencies.</p>
+<p>Process model for nunit to use, see http://www.nunit.org/index.php?p=projectEditor&amp;r=2.5</p>
 </div>
-  <h3>Record Fields</h3>
+  <h3>Union Cases</h3>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Record Field</td><td>Description</td></tr>
+      <tr><td>Union Case</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '740', 740)" onmouseover="showTip(event, '740', 740)">
-            PackageId
+          <code onmouseout="hideTip(event, '1024', 1024)" onmouseover="showTip(event, '1024', 1024)">
+            DefaultProcessModel
           </code>
-          <div class="tip" id="740">
-            <strong>Signature:</strong>string<br />
+          <div class="tip" id="1024">
+            <strong>Signature:</strong><br />
                       </div>
         </td>
         <td class="xmldoc">
-        <p>The identifer of the package, such as "FAKE".</p>
-
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/Boot.fs#L29-29" class="github-link">Go to GitHub source</a>
+        
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/UnitTest/NUnit/Common.fs#L14-14" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '741', 741)" onmouseover="showTip(event, '741', 741)">
-            Version
+          <code onmouseout="hideTip(event, '1025', 1025)" onmouseover="showTip(event, '1025', 1025)">
+            MultipleProcessModel
           </code>
-          <div class="tip" id="741">
-            <strong>Signature:</strong>NuGetVersion<br />
+          <div class="tip" id="1025">
+            <strong>Signature:</strong><br />
                       </div>
         </td>
         <td class="xmldoc">
-        <p>The version specification.</p>
+        
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/UnitTest/NUnit/Common.fs#L17-17" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/Boot.fs#L32-32" class="github-link">Go to GitHub source</a>
+          <code onmouseout="hideTip(event, '1026', 1026)" onmouseover="showTip(event, '1026', 1026)">
+            SeperateProcessModel
+          </code>
+          <div class="tip" id="1026">
+            <strong>Signature:</strong><br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/UnitTest/NUnit/Common.fs#L16-16" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1027', 1027)" onmouseover="showTip(event, '1027', 1027)">
+            SingleProcessModel
+          </code>
+          <div class="tip" id="1027">
+            <strong>Signature:</strong><br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/UnitTest/NUnit/Common.fs#L15-15" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
     </tbody>
   </table>
-  <h3>Static members</h3>
+  <h3>Instance members</h3>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Static member</td><td>Description</td></tr>
+      <tr><td>Instance member</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '753', 753)" onmouseover="showTip(event, '753', 753)">
-            Create(id)
+          <code onmouseout="hideTip(event, '1035', 1035)" onmouseover="showTip(event, '1035', 1035)">
+            ParamString(arg1)
           </code>
-          <div class="tip" id="753">
-            <strong>Signature:</strong>id:string -&gt; NuGetDependency<br />
+          <div class="tip" id="1035">
+            <strong>Signature:</strong>unit -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
-        <p>The default pacakage dependency - take latest including pre-release.</p>
-
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/Boot.fs#L36-36" class="github-link">Go to GitHub source</a>
+        
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/UnitTest/NUnit/Common.fs#L18-18" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
     </tbody>
