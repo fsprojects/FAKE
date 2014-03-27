@@ -139,3 +139,11 @@ let parseReleaseNotes (data: seq<string>) =
     data
     |> parseAllReleaseNotes
     |> Seq.head
+
+/// Parses a Release Notes text file and returns the lastest release notes.
+///
+/// ## Parameters
+///  - `fileName` - Release notes text file name
+let LoadReleaseNotes fileName =
+    System.IO.File.ReadLines fileName
+    |> parseReleaseNotes
