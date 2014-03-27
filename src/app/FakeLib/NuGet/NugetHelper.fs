@@ -324,7 +324,9 @@ let getNuspecProperties (nuspec : string) =
     
     let namespaces = 
         [ "x", "http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"
-          "y", "http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd" ]
+          "y", "http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd" 
+          "default", ""
+          ]
     
     let getValue name = 
         let getWith ns = 

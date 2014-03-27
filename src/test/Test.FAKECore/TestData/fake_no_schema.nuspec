@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <description>@description@</description>
+    <id>@project@</id>
+    <title>@title@</title>
+    <version>@build.number@</version>
+    <authors>@authors@</authors>
+    <language>en-US</language>
+    <summary>@summary@</summary>
+    <iconUrl>@iconUrl@</iconUrl>
+    <projectUrl>http://www.github.com/fsharp/Fake</projectUrl>
+    <licenseUrl>http://www.github.com/fsharp/Fake/blob/master/License.txt</licenseUrl>
+    <tags>build</tags>
+  </metadata>
+</package>
