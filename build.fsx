@@ -213,7 +213,7 @@ Target "Default" DoNothing
     ==> "Test"
     ==> "CopyLicense"
     =?> ("GenerateDocs", isLocalBuild && not isLinux)
-    =?> ("SourceLink", isLocalBuild)
+    //=?> ("SourceLink", isLocalBuild)
     =?> ("CreateNuGet", not isLinux)
     ==> "Default"
     ==> "ReleaseDocs"
