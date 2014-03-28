@@ -208,13 +208,13 @@ Target "Default" DoNothing
 // Dependencies
 "Clean"
     ==> "RestorePackages"
-    =?> ("SetAssemblyInfo",not isLocalBuild )
+    =?> ("SetAssemblyInfo",not isLocalBuild)
     ==> "BuildSolution"
     ==> "Test"
     ==> "CopyLicense"
-    =?> ("GenerateDocs",    isLocalBuild && not isLinux )
+    =?> ("GenerateDocs", isLocalBuild && not isLinux)
     ==> "SourceLink"
-    =?> ("CreateNuGet",     not isLinux )
+    =?> ("CreateNuGet", not isLinux)
     ==> "Default"
     ==> "ReleaseDocs"
 
