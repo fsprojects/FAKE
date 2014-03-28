@@ -51,8 +51,8 @@ module Provider =
             | Some x -> x
 
     let saveEnvironments(envs: seq<Fake.Deploy.Web.Environment>) =
-        envs |> Seq.iter(fun e -> if e.Id = null then e.Id <- Guid.NewGuid().ToString())
-        let toSave = getSavedExcept (getEnvironments()) envs (fun x y -> x.Id = y.Id)
+        let envsWithId = envs |> Seq.map(fun e -> if String.IsNullOrEmpty e.Id then { e with Id = Guid.NewGuid().ToString() } else e)
+        let toSave = getSavedExcept (getEnvironments()) envsWithId (fun x y -> x.Id = y.Id)
         write environmentsFile toSave
         
     let deleteEnvironment id = 
@@ -68,8 +68,8 @@ module Provider =
 
 
     let saveAgents(agents: seq<Agent>) =
-        agents |> Seq.iter(fun x -> if x.Id = null then x.Id <- Guid.NewGuid().ToString())
-        let toSave = getSavedExcept (getAgents()) agents (fun x y -> x.Id = y.Id)
+        let agentsWithId = agents |> Seq.map(fun e -> if String.IsNullOrEmpty e.Id then { e with Id = Guid.NewGuid().ToString() } else e)
+        let toSave = getSavedExcept (getAgents()) agentsWithId (fun x y -> x.Id = y.Id)
         write agentsFile toSave
 
     let deleteAgent (id:string) =

@@ -48,7 +48,7 @@
     self.deleteEnvironment = function (data) {
         $.ajax({
             type: "DELETE",
-            url: '/api/v1/environment/' + data.Id(),
+            url: '/api/v1/environment/' + data.id(),
             contentType: 'application/json'
         }).done(function (d) {
             toastr.info('Successfully deleted environment');

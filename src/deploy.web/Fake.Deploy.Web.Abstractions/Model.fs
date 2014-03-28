@@ -16,17 +16,17 @@ type AgentRef = {
 [<CLIMutable>]
 [<DataContract>]
 type Agent = {
-    [<DataMember>] mutable Id : string
+    [<DataMember>]Id : string
     [<DataMember>]Name : string
     [<DataMember>]Address : Uri
     [<DataMember>]EnvironmentId : string
     }
     with
-        static member Create(url : string, environmentId : string, ?name : string) =
+        static member Create url environmentId name =
             let url = Uri(url)
             {
                 Id = url.Host + "-" + (url.Port.ToString())
-                Name = defaultArg name url.Host
+                Name = if String.IsNullOrEmpty name then url.Host else name
                 Address = url
                 EnvironmentId = environmentId
             }
@@ -36,24 +36,30 @@ type Agent = {
 [<CLIMutable>]
 [<DataContract>]
 type Environment = {
-        [<DataMember>]mutable Id : string
+        [<DataMember>]Id : string
         [<DataMember>]Name : string
         [<DataMember>]Description : string
-        [<DataMember>]mutable Agents : seq<AgentRef>
+        [<DataMember>]Agents : seq<AgentRef>
     }
     with
-        static member Create(name : string, desc : string, agents : seq<_>) =
-               { Id = null; Name = name; Description = desc; Agents = agents }
+        static member CreateWithId id  name desc agents =
+            { Id = id; Name = name; Description = desc; Agents = agents }
+
+        static member Create name desc agents  =
+            { Id = Guid.NewGuid().ToString(); Name = name; Description = desc; Agents = agents }
+
         member x.AddAgents(agents : seq<Agent>) = 
-                x.Agents <- Seq.append (agents |> Seq.map (fun a -> a.Ref)) x.Agents
+            { x with Agents = Seq.append (agents |> Seq.map (fun a -> a.Ref)) x.Agents |> Seq.distinct }
+
         member x.RemoveAgents(agents : seq<Agent>) =
-               x.Agents <- Seq.filter (fun a -> 
+            { x with 
+                Agents = Seq.filter (fun a -> 
                                           agents 
                                           |> Seq.map (fun a -> a.Ref) 
                                           |> Seq.exists (fun b -> a = b)
                                           |> not
                                       ) x.Agents
-
+            }
 
 [<CLIMutable>]
 type ParameterDescription = { 
@@ -76,6 +82,10 @@ type SetupInfo = {
     MembershipProviderParameters : string
     AvailableMembershipProviders: string array
     MembershipProviderParametersDescription : IDictionary<string, seq<ParameterDescription>>
+
+    UseFileUpload : bool
+    UseNuGetFeedUpload : bool
+    NuGetFeeds : Uri[]
 }
 
 [<InheritedExport>]

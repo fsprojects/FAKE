@@ -3,18 +3,19 @@
     Online: 'green',
     Offline: 'red'
 };
-function AgentStatusModel(available, msg) {
-    var self = this;
 
-    self.statusMessage = ko.observable(msg);
-    self.available = ko.observable(available);
+function AgentStatusModel(available, msg) {
+    return ko.mapping.fromJS({
+        statusMessage: msg,
+        available: available
+    });
 }
 
 function AgentViewModel() {
     var self = this;
 
     self.agent = ko.observable();
-    self.agentStatus = ko.observable(new AgentStatusModel(agentStatus.Unknown, 'Querying status...'));
+    self.agentStatus = ko.observable(AgentStatusModel(agentStatus.Unknown, 'Querying status...'));
     self.deployments = ko.observableArray();
     self.agentDetails = ko.observable();
 
@@ -23,16 +24,16 @@ function AgentViewModel() {
     self.getAgentDetails = function () {
         $.ajax({
             type: 'GET',
-            url: '/api/v1/agent/details/' + self.agent().Id(),
+            url: '/api/v1/agent/details/' + self.agent().id(),
             dataType: 'json',
             contentType: 'application/json'
         }).done(function (data) {
             var a = ko.mapping.fromJS(data);
             self.agentDetails(a);
-            self.agentStatus(new AgentStatusModel(agentStatus.Online, 'Online'));
+            self.agentStatus(AgentStatusModel(agentStatus.Online, 'Online'));
             self.refreshDeploymentsForAgent();
         }).fail(function (msg) {
-            self.agentStatus(new AgentStatusModel(agentStatus.Offline, 'Offline / Unreachable'));
+            self.agentStatus(AgentStatusModel(agentStatus.Offline, 'Offline / Unreachable'));
         });
     };
 
@@ -40,7 +41,7 @@ function AgentViewModel() {
         if (self.agentStatus().available()) {
             $.ajax({
                 type: "GET",
-                url: '/api/v1/agent/deployments/' + self.agent().Id(),
+                url: '/api/v1/agent/deployments/' + self.agent().id(),
                 dataType: 'json',
                 contentType: 'application/json'
             }).done(function (data) {
@@ -53,7 +54,7 @@ function AgentViewModel() {
                 });
 
             }).fail(function (msg) {
-                toastr.error('Failed to get active deployments for agent ' + self.agent().Name(), 'Error');
+                toastr.error('Failed to get active deployments for agent ' + self.agent().name(), 'Error');
             });
         }
     };
@@ -71,7 +72,7 @@ function AgentViewModel() {
         }).fail(function (msg) {
             toastr.error('Failed to get agent ' + agentId, 'Error');
         });
-
+        
         $('#fileupload').fileupload({
             dataType: 'json',
             redirect: '@Url.Action("Agent", new { agentId = Model })',
@@ -97,8 +98,8 @@ function AgentViewModel() {
                 $('#selectPackageBtn').removeClass('hide');
                 toastr.info('Package deployed');
                 self.recentMessages([]);
-                if (data != null) {
-                    $.each(data.result.Messages, function (i, msg) {
+                if (data != null && data.result !== undefined) {
+                    $.each(data.result, function (i, msg) {
                         self.recentMessages.push(msg);
                     });
                 }
@@ -111,13 +112,14 @@ function AgentViewModel() {
                 $('#filePlaceHolder').modal('hide');
                 toastr.error('Package deployment failed');
                 self.recentMessages([]);
-                if (data != null) {
-                    $.each(data.result.Messages, function (i, msg) {
+                if (data != null && data.result !== undefined) {
+                    $.each(data.result, function (i, msg) {
                         self.recentMessages.push(msg);
                     });
                 }
             }
         });
+        
 
         setInterval(function () { self.getAgentDetails(); }, 10000);
     };

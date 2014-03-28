@@ -77,7 +77,7 @@ module internal Provider =
         assertDocStore()
         use session = store.OpenSession()
         let env = session.Load<Environment>(environmentId)
-        env.AddAgents([agent])
+        let env = env.AddAgents([agent])
         session.Store(env)
         session.Store(agent)
         session.SaveChanges()
@@ -96,7 +96,7 @@ module internal Provider =
         use session = store.OpenSession()
         let agent = session.Load<Agent>(id)
         let env = session.Load<Environment>(agent.EnvironmentId)
-        env.RemoveAgents [agent]
+        let env = env.RemoveAgents [agent]
         session.Store(env)
         session.Delete(agent)
         session.SaveChanges()

@@ -49,33 +49,33 @@ ko.bindingHandlers.date = {
                 d1 = Date.now();
             }
             else {
-                 d1 = new Date(Date.parse(jsonDate));
+                d1 = new Date(Date.parse(jsonDate));
             }
-                var curr_year = d1.getFullYear();
+            var curr_year = d1.getFullYear();
 
-                var curr_month = d1.getMonth() + 1; //Months are zero based
-                if (curr_month < 10)
-                    curr_month = "0" + curr_month;
+            var curr_month = d1.getMonth() + 1; //Months are zero based
+            if (curr_month < 10)
+                curr_month = "0" + curr_month;
 
-                var curr_date = d1.getDate();
-                if (curr_date < 10)
-                    curr_date = "0" + curr_date;
+            var curr_date = d1.getDate();
+            if (curr_date < 10)
+                curr_date = "0" + curr_date;
 
-                var curr_hour = d1.getHours();
-                if (curr_hour < 10)
-                    curr_hour = "0" + curr_hour;
+            var curr_hour = d1.getHours();
+            if (curr_hour < 10)
+                curr_hour = "0" + curr_hour;
 
-                var curr_min = d1.getMinutes();
-                if (curr_min < 10)
-                    curr_min = "0" + curr_min;
+            var curr_min = d1.getMinutes();
+            if (curr_min < 10)
+                curr_min = "0" + curr_min;
 
-                var curr_sec = d1.getSeconds();
-                if (curr_sec < 10)
-                    curr_sec = "0" + curr_sec;
+            var curr_sec = d1.getSeconds();
+            if (curr_sec < 10)
+                curr_sec = "0" + curr_sec;
 
-                var newtimestamp = curr_year + "-" + curr_month + "-" + curr_date + " " + curr_hour + ":" + curr_min + ":" + curr_sec;
-                element.innerHTML = newtimestamp;
-            
+            var newtimestamp = curr_year + "-" + curr_month + "-" + curr_date + " " + curr_hour + ":" + curr_min + ":" + curr_sec;
+            element.innerHTML = newtimestamp;
+
         }
         catch (exc) {
         }
