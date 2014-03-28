@@ -93,7 +93,7 @@ Target "BuildSolution" (fun _ ->
 
 Target "GenerateDocs" (fun _ ->
     let source = "./help"
-    let template = "./help/templates/template-project.html"
+    let template = "./help/literate/templates/template-project.html"
     let templatesDir = "./help/templates/reference/" 
     let githubLink = "https://github.com/fsharp/FAKE"
     let projInfo =
