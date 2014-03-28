@@ -1,15 +1,14 @@
-namespace System
+﻿namespace System
 open System.Reflection
-open System.Runtime.CompilerServices
 open System.Runtime.InteropServices
 
 [<assembly: AssemblyTitleAttribute("FAKE - F# Make Deploy Web")>]
-[<assembly: InternalsVisibleToAttribute("Test.FAKECore")>]
-[<assembly: GuidAttribute("9B1A0CF2-FE31-4649-AD2D-F061A7B8AE14")>]
+[<assembly: GuidAttribute("27BA7705-3F57-47BE-B607-8A46B27AE876")>]
 [<assembly: AssemblyProductAttribute("FAKE - F# Make")>]
-[<assembly: AssemblyVersionAttribute("0.0.1")>]
-[<assembly: AssemblyFileVersionAttribute("0.0.1")>]
+[<assembly: AssemblyVersionAttribute("2.11.50")>]
+[<assembly: AssemblyInformationalVersionAttribute("2.11.50")>]
+[<assembly: AssemblyFileVersionAttribute("2.11.50")>]
+do ()
 
-()                        
 module internal AssemblyVersionInformation =
-    let [<Literal>] Version = "0.0.1"
+    let [<Literal>] Version = "2.11.50"
