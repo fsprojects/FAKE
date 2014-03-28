@@ -7,6 +7,7 @@ open Fake.Git
 open Fake.FSharpFormatting
 open System.IO
 open SourceLink
+open Fake.ReleaseNotesHelper
 
 // properties
 let projectName = "FAKE"
@@ -15,6 +16,8 @@ let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. 
 let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"]
 let mail = "forkmann@gmx.de"
 let gitRaw = environVarOrDefault "gitRaw" "https://raw.github.com/fsharp"
+
+let release = parseReleaseNotes (System.IO.File.ReadAllLines "RELEASE_NOTES.md")
 
 let packages =
     ["FAKE.Core",projectDescription
@@ -25,8 +28,6 @@ let packages =
      "FAKE.Deploy.Lib",projectDescription + " Extensions for FAKE Deploy"
      projectName,projectDescription + " This package bundles all extensions."]
 
-let buildVersion = if isLocalBuild then "0.0.1" else buildVersion
-
 let buildDir = "./build"
 let testDir = "./test"
 let deployDir = "./Publish"
@@ -34,7 +35,7 @@ let docsDir = "./docs"
 let apidocsDir = "./docs/apidocs/"
 let nugetDir = "./nuget"
 let reportDir = "./report"
-let deployZip = deployDir @@ sprintf "%s-%s.zip" projectName buildVersion
+let deployZip = deployDir @@ sprintf "%s-%s.zip" projectName release.AssemblyVersion
 let packagesDir = "./packages"
 
 let additionalFiles = [
@@ -52,9 +53,9 @@ open Fake.AssemblyInfoFile
 Target "SetAssemblyInfo" (fun _ ->
     let common = [
          Attribute.Product "FAKE - F# Make"
-         Attribute.Version buildVersion
-         Attribute.InformationalVersion buildVersion
-         Attribute.FileVersion buildVersion]
+         Attribute.Version release.AssemblyVersion
+         Attribute.InformationalVersion release.AssemblyVersion
+         Attribute.FileVersion release.AssemblyVersion]
 
     [Attribute.Title "FAKE - F# Make Command line tool"
      Attribute.Guid "fb2b540f-d97a-4660-972f-5eeff8120fba"] @ common
@@ -172,9 +173,6 @@ Target "CreateNuGet" (fun _ ->
             CopyTo nugetToolsDir additionalFiles
         !! (nugetToolsDir @@ "*.pdb") |> DeleteFiles
 
-        (SemVerHelper.parse buildVersion).Patch.ToString()
-        |> WriteStringToFile false (nugetToolsDir @@ "PatchVersion.txt")
-
         NuGet (fun p ->
             {p with
                 Authors = authors
@@ -182,9 +180,10 @@ Target "CreateNuGet" (fun _ ->
                 Description = description
                 OutputPath = nugetDir
                 Summary = projectSummary
+                ReleaseNotes = release.Notes |> toLines
                 Dependencies =
                     if package <> "FAKE.Core" && package <> projectName then
-                      ["FAKE.Core", RequireExactly (NormalizeVersion buildVersion)]
+                      ["FAKE.Core", RequireExactly (NormalizeVersion release.AssemblyVersion)]
                     else p.Dependencies
                 AccessKey = getBuildParamOrDefault "nugetkey" ""
                 Publish = hasBuildParam "nugetkey"
@@ -199,7 +198,7 @@ Target "ReleaseDocs" (fun _ ->
     CopyRecursive "docs" "gh-pages" true |> printfn "%A"
     CopyFile "gh-pages" "./Samples/FAKE-Calculator.zip"
     StageAll "gh-pages"
-    Commit "gh-pages" (sprintf "Update generated documentation %s" buildVersion)
+    Commit "gh-pages" (sprintf "Update generated documentation %s" release.AssemblyVersion)
     Branches.push "gh-pages"
 )
 
