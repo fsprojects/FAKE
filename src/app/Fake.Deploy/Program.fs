@@ -1,5 +1,4 @@
-﻿
-open Fake
+﻿open Fake
 open DeploymentHelper
 open HttpListenerHelper
 
