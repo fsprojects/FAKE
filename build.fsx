@@ -89,7 +89,7 @@ Target "SetAssemblyInfo" (fun _ ->
 )
 
 Target "BuildSolution" (fun _ ->
-    MSBuildWithDefaults "Build" ["./FAKE.sln"]
+    MSBuildWithDefaults "Build" ["./FAKE.sln"; "./FAKE.Deploy.Web.sln"]
     |> Log "AppBuild-Output: "
 )
 
@@ -109,13 +109,13 @@ Target "GenerateDocs" (fun _ ->
         "project-name", "FAKE - F# Make" ]
 
     CreateDocs source docsDir template projInfo
-   
-    let dllFiles = 
+
+    let dllFiles =
         !! "./build/**/Fake.*.dll"
           ++ "./build/FakeLib.dll"
           -- "./build/**/Fake.Experimental.dll"
           -- "./build/**/Fake.Deploy.Lib.dll"
-    
+
     CreateDocsForDlls apidocsDir templatesDir projInfo (githubLink + "/blob/develop") dllFiles
 
     WriteStringToFile false "./docs/.nojekyll" ""
@@ -129,11 +129,16 @@ Target "CopyLicense" (fun _ ->
 )
 
 Target "Test" (fun _ ->
-    !! (testDir @@ "Test.*.dll")
+    let dlls = !! (testDir @@ "Test.*.dll")
+
+    dlls
     |> MSpec (fun p ->
             {p with
                 ExcludeTags = ["HTTP"]
                 HtmlOutputDir = reportDir})
+
+    dlls
+    |>  xUnit (fun p -> p)
 )
 
 Target "SourceLink" (fun _ ->
