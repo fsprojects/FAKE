@@ -47,14 +47,14 @@ let internal getReferenceElements elementName projectFileName (doc : XDocument) 
     let fi = fileInfo projectFileName
     doc.Descendants(xname "Project").Descendants(xname "ItemGroup").Descendants(xname elementName) 
     |> Seq.map (fun e -> 
-            let a = e.Attribute(XName.Get "Include")
-            let value = convertWindowsToCurrentPath a.Value
+        let a = e.Attribute(XName.Get "Include")
+        let value = convertWindowsToCurrentPath a.Value
            
-            let fileName =
-                if value.StartsWith(".." + directorySeparator) || (not <| value.Contains directorySeparator) then
-                    fi.Directory.FullName @@ value
-               else value
-           a, fileName |> FullName)
+        let fileName =
+            if value.StartsWith(".." + directorySeparator) || (not <| value.Contains directorySeparator) then
+                fi.Directory.FullName @@ value
+            else value
+        a, fileName |> FullName)
 
 /// [omit]
 let processReferences elementName f projectFileName (doc : XDocument) = 
@@ -70,7 +70,7 @@ let rec getProjectReferences (projectFileName : string) =
     else // exclude .sln-files since the are not XML
          
     let doc = loadProject projectFileName
-        let references = getReferenceElements "ProjectReference" projectFileName doc |> Seq.map snd
+    let references = getReferenceElements "ProjectReference" projectFileName doc |> Seq.map snd
     references
       |> Seq.map getProjectReferences
       |> Seq.concat
@@ -315,8 +315,7 @@ let MSBuildWithProjectProperties outputPath (targets : string) (properties : str
             |> Set.unionMany
 
     let setBuildParam project projectParams = 
-        { projectParams with Targets = targets |> split ';'
-            Properties = projectParams.Properties @ properties project }
+        { projectParams with Targets = targets |> split ';'; Properties = projectParams.Properties @ properties project }
 
     projects
       |> List.filter (fun project -> not <| Set.contains project dependencies)
