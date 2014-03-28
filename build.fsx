@@ -41,6 +41,7 @@ let packagesDir = "./packages"
 let additionalFiles = [
     "License.txt"
     "README.markdown"
+    "RELEASE_NOTES.md"
     "help/changelog.md"]
 
 // Targets
