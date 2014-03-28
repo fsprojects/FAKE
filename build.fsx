@@ -68,7 +68,7 @@ Target "SetAssemblyInfo" (fun _ ->
 
     [Attribute.Title "FAKE - F# Make Deploy Web"
      Attribute.Guid "27BA7705-3F57-47BE-B607-8A46B27AE876"] @ common
-    |> CreateCSharpAssemblyInfo "./src/deploy.web/Fake.Deploy.Web/AssemblyInfo.cs"
+    |> CreateFSharpAssemblyInfo "./src/deploy.web/Fake.Deploy.Web/AssemblyInfo.fs"
 
     [Attribute.Title "FAKE - F# Make Deploy Lib"
      Attribute.Guid "AA284C42-1396-42CB-BCAC-D27F18D14AC7"] @ common
