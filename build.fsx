@@ -179,6 +179,7 @@ Target "CreateNuGet" (fun _ ->
                 Authors = authors
                 Project = package
                 Description = description
+                Version = release.NugetVersion
                 OutputPath = nugetDir
                 Summary = projectSummary
                 ReleaseNotes = release.Notes |> toLines
