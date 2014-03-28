@@ -1,9 +1,14 @@
 #I @"tools/FAKE/tools/"
 #r @"FakeLib.dll"
+#load "tools/SourceLink.Fake/tools/SourceLink.fsx"
 
 open Fake
 open Fake.Git
 open Fake.FSharpFormatting
+open System.IO
+open SourceLink
+
+let (!!) includes = (!! includes).SetBaseDirectory __SOURCE_DIRECTORY__
 
 // properties
 let projectName = "FAKE"
@@ -11,6 +16,7 @@ let projectSummary = "FAKE - F# Make - Get rid of the noise in your build script
 let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. Tasks and dependencies are specified in a DSL which is integrated in F#."
 let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"]
 let mail = "forkmann@gmx.de"
+let gitRaw = environVarOrDefault "gitRaw" "https://raw.github.com/fsharp"
 
 let packages =
     ["FAKE.Core",projectDescription
@@ -134,6 +140,20 @@ Target "Test" (fun _ ->
                 HtmlOutputDir = reportDir})
 )
 
+Target "SourceLink" (fun _ ->
+    use repo = new GitRepo(__SOURCE_DIRECTORY__)
+    !! "src/app/**/*.fsproj" 
+    |> Seq.iter (fun f ->
+        let proj = VsProj.LoadRelease f
+        logfn "source linking %s" proj.OutputFilePdb
+        let files = proj.Compiles -- "**/AssemblyInfo.fs"
+        repo.VerifyChecksums files
+        proj.VerifyPdbChecksums files
+        proj.CreateSrcSrv (sprintf "%s/%s/{0}/%%var2%%" gitRaw projectName) repo.Revision (repo.Paths files)
+        Pdbstr.exec proj.OutputFilePdb proj.OutputFilePdbSrcSrv
+    )
+)
+
 Target "CreateNuGet" (fun _ ->
     for package,description in packages do
         let nugetDocsDir = nugetDir @@ "docs"
@@ -199,6 +219,7 @@ Target "Default" DoNothing
     ==> "Test"
     ==> "CopyLicense"
     =?> ("GenerateDocs",    isLocalBuild && not isLinux )
+    ==> "SourceLink"
     =?> ("CreateNuGet",     not isLinux )
     ==> "Default"
     ==> "ReleaseDocs"
