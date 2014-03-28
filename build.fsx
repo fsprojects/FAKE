@@ -8,8 +8,6 @@ open Fake.FSharpFormatting
 open System.IO
 open SourceLink
 
-let (!!) includes = (!! includes).SetBaseDirectory __SOURCE_DIRECTORY__
-
 // properties
 let projectName = "FAKE"
 let projectSummary = "FAKE - F# Make - Get rid of the noise in your build scripts."
