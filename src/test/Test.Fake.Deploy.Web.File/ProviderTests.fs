@@ -20,6 +20,9 @@
         ms2.Seek(0L, SeekOrigin.Begin) |> ignore
         (new StreamReader(ms2)).ReadToEnd()
     
+    let removeAllWhiteSpaces s =
+        Text.RegularExpressions.Regex.Replace(s, "\s", "")
+
     [<Fact>]
     let ``File doesnt exist when reading Roles`` () =
         Fake.Deploy.Web.File.FileIO.Exists <- fun x -> false
@@ -37,7 +40,7 @@
         FileIO.Create <- fun x -> ms :> Stream
         Provider.init (Path.GetTempPath())        
         Provider.saveRoles [{Id = "Admin"}]
-        let s = toString ms
+        let s = toString ms |> removeAllWhiteSpaces
         Assert.Equal<string>("[{\"Id\":\"Admin\"}]", s)
 
     [<Fact>]
@@ -47,9 +50,9 @@
         FileIO.Create <- fun x -> ms :> Stream
 
         Provider.init (Path.GetTempPath())
-        Provider.saveEnvironments([{Name="Test"; Description="Test env"; Agents=[{Id="a"; Name="Orange"}]; Id="22"}])
-        let s = toString ms
-        Assert.Equal<string>("[{\"Agents\":[{\"Id\":\"a\",\"Name\":\"Orange\"}],\"Description\":\"Test env\",\"Id\":\"22\",\"Name\":\"Test\"}]", s)
+        Provider.saveEnvironments([{Name="Test"; Description="desc"; Agents=[{Id="a"; Name="Orange"}]; Id="22"}])
+        let s = toString ms |> removeAllWhiteSpaces
+        Assert.Equal<string>("[{\"Id\":\"22\",\"Name\":\"Test\",\"Description\":\"desc\",\"Agents\":[{\"Id\":\"a\",\"Name\":\"Orange\"}]}]", s)
 
 
     [<Fact>]
@@ -57,16 +60,16 @@
         FileIO.Exists <- fun x -> true
         FileIO.OpenRead <- 
             fun (s:string) -> 
-                toStream ("[{\"Agents\":[{\"Id\":\"a\",\"Name\":\"a\"}],\"Description\":\"Test env\",\"Id\":\"1\",\"Name\":\"a\"}," +
-                          "{\"Agents\":[{\"Id\":\"b\",\"Name\":\"b\"}],\"Description\":\"Test env\",\"Id\":\"2\",\"Name\":\"b\"}," +
-                          "{\"Agents\":[{\"Id\":\"c\",\"Name\":\"c\"}],\"Description\":\"Test env\",\"Id\":\"3\",\"Name\":\"c\"}]")
+                toStream ("[{\"Agents\":[{\"Id\":\"a\",\"Name\":\"a\"}],\"Description\":\"desc\",\"Id\":\"1\",\"Name\":\"a\"}," +
+                          "{\"Agents\":[{\"Id\":\"b\",\"Name\":\"b\"}],\"Description\":\"desc\",\"Id\":\"2\",\"Name\":\"b\"}," +
+                          "{\"Agents\":[{\"Id\":\"c\",\"Name\":\"c\"}],\"Description\":\"desc\",\"Id\":\"3\",\"Name\":\"c\"}]")
         let ms = new MemoryStream()
         FileIO.Create <- fun x -> ms :> Stream
 
         Provider.init (Path.GetTempPath())
         Provider.deleteEnvironment "2"
-        let actual = toString ms
-        let expected = "[{\"Agents\":[{\"Id\":\"a\",\"Name\":\"a\"}],\"Description\":\"Test env\",\"Id\":\"1\",\"Name\":\"a\"}," +
-                       "{\"Agents\":[{\"Id\":\"c\",\"Name\":\"c\"}],\"Description\":\"Test env\",\"Id\":\"3\",\"Name\":\"c\"}]"
+        let actual = toString ms |> removeAllWhiteSpaces
+        let expected = "[{\"Id\":\"1\",\"Name\":\"a\",\"Description\":\"desc\",\"Agents\":[{\"Id\":\"a\",\"Name\":\"a\"}]}," +
+                       "{\"Id\":\"3\",\"Name\":\"c\",\"Description\":\"desc\",\"Agents\":[{\"Id\":\"c\",\"Name\":\"c\"}]}]"
 
         Assert.Equal<string>(expected, actual)
