@@ -33,14 +33,13 @@ let getRegistryValue baseKey subKey value =
     (key.GetValue value).ToString()
 
 /// create a registry subKey
-let createRegistrySubKey baseKey subKey =
-    (getKey baseKey).CreateSubKey subKey |> ignore
+let createRegistrySubKey baseKey subKey = (getKey baseKey).CreateSubKey subKey |> ignore
 
 /// Sets a registry value
-let setRegistryValue<'T> baseKey subKey keyName (value:'T) =
+let setRegistryValue<'T> baseKey subKey keyName (value : 'T) = 
     use key = getRegistryKey baseKey subKey true
     key.SetValue(keyName, value)
 
-let deleteRegistryValue baseKey subKey keyName =
+let deleteRegistryValue baseKey subKey keyName = 
     use key = getRegistryKey baseKey subKey true
     key.DeleteValue keyName
