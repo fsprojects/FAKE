@@ -40,6 +40,7 @@ let setRegistryValue<'T> baseKey subKey keyName (value : 'T) =
     use key = getRegistryKey baseKey subKey true
     key.SetValue(keyName, value)
 
+/// Deletes the registry value from its key
 let deleteRegistryValue baseKey subKey keyName = 
     use key = getRegistryKey baseKey subKey true
     key.DeleteValue keyName
