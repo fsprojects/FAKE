@@ -1,4 +1,4 @@
-﻿namespace System
+namespace System
 open System.Reflection
 open System.Runtime.CompilerServices
 open System.Runtime.InteropServices
@@ -10,7 +10,6 @@ open System.Runtime.InteropServices
 [<assembly: AssemblyVersionAttribute("0.0.1")>]
 [<assembly: AssemblyFileVersionAttribute("0.0.1")>]
 
-()
-
+()                        
 module internal AssemblyVersionInformation =
     let [<Literal>] Version = "0.0.1"
