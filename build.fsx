@@ -210,19 +210,21 @@ Target "ReleaseDocs" (fun _ ->
 )
 
 Target "Default" DoNothing
+Target "Release" DoNothing
 
 // Dependencies
 "Clean"
     ==> "RestorePackages"
     ==> "SetAssemblyInfo"
     ==> "BuildSolution"
-    ==> "Test"
+    ==> "Test"    
+    ==> "Default"
     ==> "CopyLicense"
     =?> ("GenerateDocs", isLocalBuild && not isLinux)
-    //=?> ("SourceLink", isLocalBuild)
+    =?> ("SourceLink", isLocalBuild && not isLinux)
     =?> ("CreateNuGet", not isLinux)
-    ==> "Default"
-    ==> "ReleaseDocs"
+    =?> ("ReleaseDocs", isLocalBuild && not isLinux)
+    ==> "Release"
 
 // start build
 RunTargetOrDefault "Default"
