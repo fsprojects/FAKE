@@ -3,15 +3,15 @@
 cls
 
 if not exist tools\FAKE\tools\Fake.exe (
-    "tools\nuget\nuget.exe" "install" "FAKE" "-OutputDirectory" "tools" "-ExcludeVersion" "-Prerelease"
+    "tools\nuget\nuget.exe" "install" "FAKE" "-OutputDirectory" "tools" "-ExcludeVersion" "-Prerelease" -nocache
 )
 
 if not exist tools\FSharp.Formatting.CommandTool\tools\fsformatting.exe ( 
-    "tools\nuget\nuget.exe" "install" "FSharp.Formatting.CommandTool" "-OutputDirectory" "tools" "-ExcludeVersion" "-Prerelease"
+    "tools\nuget\nuget.exe" "install" "FSharp.Formatting.CommandTool" "-OutputDirectory" "tools" "-ExcludeVersion" "-Prerelease" -nocache
 )
 
 if not exist tools\SourceLink.Fake\tools\SourceLink.fsx (
-    "tools\nuget\nuget.exe" "install" "SourceLink.Fake" "-OutputDirectory" "tools" "-ExcludeVersion"
+    "tools\nuget\nuget.exe" "install" "SourceLink.Fake" "-OutputDirectory" "tools" "-ExcludeVersion" -nocache
 )
 
 SET TARGET="Default"
