@@ -53,3 +53,4 @@ _NCrunch_FAKE/
 tools/FSharp.Compiler.Service
 tools/FSharp.Formatting.CommandTool/
 release.cmd
+tools/SourceLink.Fake
