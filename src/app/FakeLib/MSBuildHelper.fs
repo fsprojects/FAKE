@@ -156,7 +156,7 @@ let serializeMSBuildParams (p : MSBuildParams) =
     let targets = 
         match p.Targets with
         | [] -> None
-        | t -> Some("t", t |> separated ";")
+        | t -> Some("t", t |> Seq.map (replace "." "_") |> separated ";")
     
     let properties = p.Properties |> List.map (fun (k, v) -> Some("p", sprintf "%s=\"%s\"" k v))
     
