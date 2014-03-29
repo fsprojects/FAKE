@@ -52,3 +52,4 @@ tools/RazorEngine
 _NCrunch_FAKE/
 tools/FSharp.Compiler.Service
 tools/FSharp.Formatting.CommandTool/
+release.cmd
