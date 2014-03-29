@@ -15,7 +15,7 @@ type FakeDeployInstaller() as self =
     let processInstaller = new ServiceProcessInstaller(Account = ServiceAccount.LocalSystem)
     let serviceInstaller = 
         new ServiceInstaller(DisplayName = "Fake Deploy Service Agent", 
-                             Description = "Allows FAKE scripts to run as a deployment", ServiceName = ServiceName, 
+                             Description = "Allows FAKE scripts to run as a deployment task", ServiceName = ServiceName, 
                              StartType = ServiceStartMode.Automatic)
     
     do 
