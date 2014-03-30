@@ -156,7 +156,7 @@ let serializeMSBuildParams (p : MSBuildParams) =
     let targets = 
         match p.Targets with
         | [] -> None
-        | t -> Some("t", t |> separated ";")
+        | t -> Some("t", t |> Seq.map (replace "." "_") |> separated ";")
     
     let properties = p.Properties |> List.map (fun (k, v) -> Some("p", sprintf "%s=\"%s\"" k v))
     
@@ -295,7 +295,8 @@ let build setParams project =
 ///  - `outputPath` - If it is null or empty then the project settings are used.
 ///  - `targets` - A string with the target names which should be run by MSBuild.
 ///  - `properties` - A list with tuples of property name and property values.
-let MSBuildWithProjectProperties outputPath (targets : string) (properties : string -> (string * string) list) projects = 
+///  - `projects` - A list of project or solution files.
+let MSBuildWithProjectProperties outputPath (targets : string) (properties : (string) -> (string * string) list) projects = 
     let projects = projects |> Seq.toList
     
     let output = 
@@ -329,33 +330,38 @@ let MSBuildWithProjectProperties outputPath (targets : string) (properties : str
 ///  - `outputPath` - If it is null or empty then the project settings are used.
 ///  - `targets` - A string with the target names which should be run by MSBuild.
 ///  - `properties` - A list with tuples of property name and property values.
-let MSBuild outputPath targets properties = MSBuildWithProjectProperties outputPath targets (fun _ -> properties)
+///  - `projects` - A list of project or solution files.
+let MSBuild outputPath targets properties projects = MSBuildWithProjectProperties outputPath targets (fun _ -> properties) projects
 
 /// Builds the given project files or solution files and collects the output files.
 /// ## Parameters
 ///  - `outputPath` - If it is null or empty then the project settings are used.
 ///  - `targets` - A string with the target names which should be run by MSBuild.
-let MSBuildDebug outputPath targets = MSBuild outputPath targets [ "Configuration", "Debug" ]
+///  - `projects` - A list of project or solution files.
+let MSBuildDebug outputPath targets projects = MSBuild outputPath targets [ "Configuration", "Debug" ] projects
 
 /// Builds the given project files or solution files and collects the output files.
 /// ## Parameters
 ///  - `outputPath` - If it is null or empty then the project settings are used.
 ///  - `targets` - A string with the target names which should be run by MSBuild.
-let MSBuildRelease outputPath targets = MSBuild outputPath targets [ "Configuration", "Release" ]
+///  - `projects` - A list of project or solution files.
+let MSBuildRelease outputPath targets projects = MSBuild outputPath targets [ "Configuration", "Release" ] projects
 
 /// Builds the given project files or solution files in release mode to the default outputs.
 /// ## Parameters
 ///  - `targets` - A string with the target names which should be run by MSBuild.
-let MSBuildWithDefaults targets = MSBuild null targets [ "Configuration", "Release" ]
+///  - `projects` - A list of project or solution files.
+let MSBuildWithDefaults targets projects = MSBuild null targets [ "Configuration", "Release" ] projects
 
 /// Builds the given project files or solution files in release mode and collects the output files.
 /// ## Parameters
 ///  - `outputPath` - If it is null or empty then the project settings are used.
 ///  - `properties` - A list with tuples of property name and property values.
 ///  - `targets` - A string with the target names which should be run by MSBuild.
-let MSBuildReleaseExt outputPath properties targets = 
+///  - `projects` - A list of project or solution files.
+let MSBuildReleaseExt outputPath properties targets projects = 
     let properties = ("Configuration", "Release") :: properties
-    MSBuild outputPath targets properties
+    MSBuild outputPath targets properties projects
 
 /// Builds the given web project file in debug mode and copies it to the given websiteDir.
 /// ## Parameters

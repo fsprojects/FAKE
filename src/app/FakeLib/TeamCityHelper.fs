@@ -80,7 +80,7 @@ let buildStatus status message =
 let ReportBuildStatus status message = buildStatus status message |> sendStrToTeamCity
 
 /// Publishes an artifact on the TeamcCity build server.
-let PublishArticfact path = EncapsulateSpecialChars path |> sendToTeamCity "##teamcity[publishArtifacts '%s']"
+let PublishArtifact path = EncapsulateSpecialChars path |> sendToTeamCity "##teamcity[publishArtifacts '%s']"
 
 /// Sets the TeamCity build number.
 let SetBuildNumber buildNumber = EncapsulateSpecialChars buildNumber |> sendToTeamCity "##teamcity[buildNumber '%s']"
