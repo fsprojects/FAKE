@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>VSSHelper - FAKE - F# Make</title>
+    <title>ProcessTestRunner - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,12 +36,30 @@
 
 
 
-<h1>VSSHelper</h1>
+<h1>ProcessTestRunner</h1>
 <div class="xmldoc">
-<p>Contains helper functions for <a href="http://en.wikipedia.org/wiki/Microsoft_Visual_SourceSafe">Microsoft Visual SourceSafe</a></p>
+<p>Allows to execute processes as unit tests.</p>
 </div>
 
 <!-- Render nested types and modules, if there are any -->
+  <h2>Nested types and modules</h2>
+  <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="fake-processtestrunner-processtestrunnerparams.html">ProcessTestRunnerParams</a>
+          </td>
+          <td class="xmldoc"><p>The ProcessTestRunner parameter type.</p>
+</td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
 
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
@@ -52,33 +70,81 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '423', 423)" onmouseover="showTip(event, '423', 423)">
-            getVSSProject (...)
+          <code onmouseout="hideTip(event, '287', 287)" onmouseover="showTip(event, '287', 287)">
+            ProcessTestRunnerDefaults 
           </code>
-          <div class="tip" id="423">
-            <strong>Signature:</strong>toolPath:string -&gt; srcSafeIni:string -&gt; username:string -&gt; password:string -&gt; project:string -&gt; localSpec:string -&gt; unit<br />
+          <div class="tip" id="287">
+            <strong>Signature:</strong>ProcessTestRunnerParams<br />
                       </div>
         </td>
         <td class="xmldoc">
-        <p>Retrieves the given project from Microsoft Visual SourceSafe</p>
+        <p>The ProcessTestRunner defeaults.</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/VSSHelper.fs#L29-29" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/UnitTest/ProcessTestRunner.fs#L18-18" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '425', 425)" onmouseover="showTip(event, '425', 425)">
-            getVSSProjectWithLabel (...)
+          <code onmouseout="hideTip(event, '297', 297)" onmouseover="showTip(event, '297', 297)">
+            RunConsoleTest parameters fileName args
           </code>
-          <div class="tip" id="425">
-            <strong>Signature:</strong>toolPath:string -&gt; srcSafeIni:string -&gt; username:string -&gt; password:string -&gt; project:string -&gt; localSpec:string -&gt; label:string -&gt; unit<br />
+          <div class="tip" id="297">
+            <strong>Signature:</strong>parameters:ProcessTestRunnerParams -&gt; fileName:string -&gt; args:string -&gt; string option<br />
                       </div>
         </td>
         <td class="xmldoc">
-        <p>Retrieves the given label of the given project from Microsoft Visual SourceSafe</p>
+        <p>Runs the given process and returns the process result.</p>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/VSSHelper.fs#L6-6" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/UnitTest/ProcessTestRunner.fs#L24-24" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '298', 298)" onmouseover="showTip(event, '298', 298)">
+            runConsoleTests parameters processes
+          </code>
+          <div class="tip" id="298">
+            <strong>Signature:</strong>parameters:ProcessTestRunnerParams -&gt; processes:seq&lt;string * string&gt; -&gt; seq&lt;string * string * string&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Runs the given processes and returns the process result messages.</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/UnitTest/ProcessTestRunner.fs#L41-41" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '299', 299)" onmouseover="showTip(event, '299', 299)">
+            RunConsoleTests setParams processes
+          </code>
+          <div class="tip" id="299">
+            <strong>Signature:</strong>setParams:(ProcessTestRunnerParams -&gt; ProcessTestRunnerParams) -&gt; processes:seq&lt;string * string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Runs the given processes and returns the process results.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>setParams</code> - Function used to manipulate the default parameter value.</li>
+<li><code>processes</code> - Sequence of one or more filenames and arguments to run.</li>
+</ul>
+
+<h2>Sample usage</h2>
+
+<pre><code>Target "Test" (fun _ -&gt;
+    ["process1.exe","argument1"
+     "process2.exe","argument2"]
+      |&gt; RunConsoleTests (fun p -&gt; {p with TimeOut = TimeSpan.FromMinutes 1. })
+)
+</code></pre>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/UnitTest/ProcessTestRunner.fs#L63-63" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
     </tbody>
