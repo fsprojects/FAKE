@@ -78,6 +78,6 @@ let MSpec setParams assemblies =
                 info.Arguments <- args) parameters.TimeOut
     then 
         sprintf "MSpec test failed on %s." details |> match parameters.ErrorLevel with
-                                                      | Error -> failwith
+                                                      | Error | FailOnFirstError -> failwith
                                                       | DontFailBuild -> traceImportant
     traceEndTask "MSpec" details

@@ -107,7 +107,7 @@ let NUnitParallel (setParams : NUnitParams -> NUnitParams) (assemblies : string 
             match aggResult.WorseReturnCode with
             | OK | TestsFailed -> traceEndTask "NUnit" details
             | _ -> fail()
-        | Error -> 
+        | Error | FailOnFirstError -> 
             match aggResult.WorseReturnCode with
             | OK -> traceEndTask "NUnit" details
             | _ -> fail()

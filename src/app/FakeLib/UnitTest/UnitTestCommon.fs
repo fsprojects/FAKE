@@ -8,5 +8,7 @@ open System
 type TestRunnerErrorLevel = 
     /// This option instructs FAKE to break the build if a test runner reports an error.
     | Error
+    /// This option instructs FAKE to break the build if a test runner finds the first error.
+    | FailOnFirstError
     /// With this option set, no exception is thrown if a test is broken.
     | DontFailBuild

@@ -85,7 +85,7 @@ let MSTest (setParams : MSTestParams -> MSTestParams) (assemblies : string seq) 
     let assemblies = assemblies |> Seq.toArray
     if Array.isEmpty assemblies then failwith "MSTest: cannot run tests (the assembly list is empty)."
     let failIfError assembly exitCode = 
-        if exitCode > 0 && parameters.ErrorLevel = ErrorLevel.Error then 
+        if exitCode > 0 && parameters.ErrorLevel <> ErrorLevel.DontFailBuild then 
             let message = sprintf "%sMSTest test run failed for %s" Environment.NewLine assembly
             traceError message
             failwith message

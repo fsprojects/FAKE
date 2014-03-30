@@ -121,6 +121,6 @@ let xUnit setParams assemblies =
     if not (List.isEmpty failedTests) then 
         sprintf "xUnit failed for the following assemblies: %s" (separated ", " failedTests) 
         |> match parameters.ErrorLevel with
-           | Error -> failwith
+           | Error | FailOnFirstError -> failwith
            | DontFailBuild -> traceImportant
     traceEndTask "xUnit" details

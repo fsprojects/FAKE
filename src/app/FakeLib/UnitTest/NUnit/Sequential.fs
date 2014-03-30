@@ -39,7 +39,7 @@ let NUnit (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) =
         match result with
         | OK | TestsFailed -> traceEndTask "NUnit" details
         | _ -> failwith (errorDescription result)
-    | Error -> 
+    | Error | FailOnFirstError -> 
         match result with
         | OK -> traceEndTask "NUnit" details
         | _ -> failwith (errorDescription result)
