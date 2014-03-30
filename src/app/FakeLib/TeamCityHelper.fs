@@ -82,6 +82,9 @@ let ReportBuildStatus status message = buildStatus status message |> sendStrToTe
 /// Publishes an artifact on the TeamcCity build server.
 let PublishArtifact path = EncapsulateSpecialChars path |> sendToTeamCity "##teamcity[publishArtifacts '%s']"
 
+[<System.Obsolete("There was a typo - please use PublishArtifact")>]
+let PublishArticfact path = PublishArtifact path
+
 /// Sets the TeamCity build number.
 let SetBuildNumber buildNumber = EncapsulateSpecialChars buildNumber |> sendToTeamCity "##teamcity[buildNumber '%s']"
 
