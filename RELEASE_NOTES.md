@@ -1,3 +1,6 @@
+#### 2.12.1-alpha - 31.03.2014
+* Fixed mono build on Travis
+
 #### 2.12.0 - 31.03.2014
 * Add getDependencies to NugetHelper
 * SourceLink support
