@@ -92,7 +92,9 @@ type ApiAgent (dataProvider : IDataProvider) as http =
         http.get "/deployments/{agentId}" (fun p ->
             let agentId = p ?> "agentId"
             callAgent 
-                agentId "deployments?status=active" fromJSON<AgentResponse<NuSpecPackage[]>>
+                agentId "deployments?status=active" (fun x -> 
+                    let result = fromJSON<AgentResponse<NuSpecPackage[]>> x
+                    result)
                 (fun e -> logger.Error(sprintf "An error occured retrieving deployments for agent %s" agentId ,e))
         )
         

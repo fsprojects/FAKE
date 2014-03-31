@@ -39,7 +39,10 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="DeploymentHelper.fs" />
+    <Compile Include="DeployAgentModule.fs" />
     <Compile Include="DeploymentAgent.fs" />
+    <Compile Include="JSonSerializers.fs" />
+    <Compile Include="NancyBootStrapper.fs" />
     <Compile Include="Services.fs" />
     <Compile Include="Installers.fs" />
     <Compile Include="Program.fs" />
@@ -58,6 +61,14 @@
     <Reference Include="mscorlib" />
     <Reference Include="Nancy">
       <HintPath>..\..\..\packages\Nancy.0.22.2\lib\net40\Nancy.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nancy.Hosting.Self">
+      <HintPath>..\..\..\packages\Nancy.Hosting.Self.0.22.2\lib\net40\Nancy.Hosting.Self.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nancy.Serialization.JsonNet">
+      <HintPath>..\..\..\packages\Nancy.Serialization.JsonNet.0.22.2\lib\net40\Nancy.Serialization.JsonNet.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json">

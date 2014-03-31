@@ -8,12 +8,29 @@ open System.Threading
 open System.Diagnostics
 open Fake
 open Fake.DeploymentHelper
+open Fake.DeployAgentModule
 open Fake.HttpListenerHelper
+open Nancy
+open Nancy.Hosting.Self
 
 let mutable private logger : string * EventLogEntryType -> unit = ignore
 
-let private runDeployment workDir args (ctx : HttpListenerContext) = 
-    let packageBytes = getBodyFromContext ctx
+let getBodyFromNancyRequest (ctx : Nancy.Request) = 
+    let readAllBytes (s : Stream) = 
+        let ms = new MemoryStream()
+        let buf = Array.zeroCreate 8192
+        
+        let rec impl() = 
+            let read = s.Read(buf, 0, buf.Length)
+            if read > 0 then 
+                ms.Write(buf, 0, read)
+                impl()
+        impl()
+        ms
+    (readAllBytes ctx.Body).ToArray()
+
+let  runDeployment workDir (ctx : Nancy.Request) = 
+    let packageBytes = getBodyFromNancyRequest ctx
     let package, scriptFile = unpack workDir false packageBytes
     let response = doDeployment package.Name scriptFile
     match response with
@@ -25,43 +42,53 @@ let private runDeployment workDir args (ctx : HttpListenerContext) =
              EventLogEntryType.Information)
     response |> Json.serialize
 
-let private getActiveReleases workDir args (ctx : HttpListenerContext) = 
-    getActiveReleases workDir
-    |> FakeDeployAgentHelper.DeploymentResponse.QueryResult
-    |> Json.serialize
 
-let private getAllReleases workDir args (ctx : HttpListenerContext) = 
-    getAllReleases workDir
-    |> FakeDeployAgentHelper.DeploymentResponse.QueryResult
-    |> Json.serialize
+let createNancyHost uri =
+    let config = HostConfiguration()
+    config.UrlReservations.CreateAutomatically <- true
+    new NancyHost(config, uri)
 
-let private getAllReleasesFor workDir (args : Map<_, _>) (ctx : HttpListenerContext) = 
-    getAllReleasesFor workDir args.["app"]
-    |> FakeDeployAgentHelper.DeploymentResponse.QueryResult
-    |> Json.serialize
 
-let private getActiveReleaseFor workDir (args : Map<_, _>) (ctx : HttpListenerContext) = 
-    getActiveReleaseFor workDir args.["app"]
-    |> Seq.singleton
-    |> FakeDeployAgentHelper.DeploymentResponse.QueryResult
-    |> Json.serialize
+let mutable workDir = Path.GetDirectoryName(Uri(typedefof<FakeModule>.Assembly.CodeBase).LocalPath)
 
-let private runRollbackToVersion workDir (args : Map<_, _>) (ctx : HttpListenerContext) = 
-    rollbackTo workDir args.["app"] args.["version"] |> Json.serialize
-let private getStatistics (args : Map<_, _>) (ctx : HttpListenerContext) = getStatistics() |> Json.serialize
 
-/// Get the HTTP routes for the deployment website.
-let routes workDir = 
-    defaultRoutes @ [ "POST", "", runDeployment workDir
-                      "GET", "/deployments/{app}/", getAllReleasesFor workDir
-                      "GET", "/deployments/{app}?status=active", getActiveReleaseFor workDir
-                      "PUT", "/deployments/{app}?version={version}", runRollbackToVersion workDir
-                      "GET", "/deployments?status=active", getActiveReleases workDir
-                      "GET", "/deployments/", getAllReleases workDir
-                      "GET", "/statistics/", getStatistics ]
+type DeployAgentModule() as http =
+    inherit FakeModule("/fake")
 
-/// Starts the HTTP listener
-let start log workDir serverName port = 
-    logger <- log
-    routes workDir |> Seq.iter (fun (v, r, _) -> tracefn "%s %s" v r)
-    HttpListenerHelper.start log serverName port (routes workDir |> createRoutes)
+
+    let createResponse x = 
+        x
+        |> FakeDeployAgentHelper.DeploymentResponse.QueryResult
+        |> http.Response.AsJson
+    do
+        http.post "/" (fun p -> 
+            runDeployment workDir http.Request)
+
+        http.get "/deployments/" (fun p -> 
+            let status = http.Request.Query ?> "status"
+            match status with
+                | "active" -> getActiveReleases workDir
+                | _ -> getAllReleases workDir
+            |> createResponse
+        )
+
+        http.get "/deployments/{app}/" (fun p ->
+            let app = p ?> "app"
+            let status = http.Request.Query ?> "status"
+            match status with
+                | "active" -> 
+                    getActiveReleaseFor workDir app
+                    |> Seq.singleton
+                | _ -> getAllReleasesFor workDir app
+            |> createResponse
+        )
+
+        http.put "/deployments/{app}" (fun p ->
+            let version = p ?> "version"
+            let app = p ?> "app"
+            let result = rollbackTo workDir app version
+            http.Response
+                .AsJson result
+        )
+
+        http.get "/statistics/" (fun p -> getStatistics() |> http.Response.AsJson)
