@@ -9,8 +9,10 @@ open System.IO
 open System.Threading
 open System.Collections.Generic
 
+/// [omit]
 let startedProcesses = HashSet()
 
+/// [omit]
 let start (proc : Process) = 
     proc.Start() |> ignore
     startedProcesses.Add proc |> ignore
@@ -427,18 +429,19 @@ let killMSBuild() = killProcess "msbuild"
 let mutable killCreatedProcesses = true
 
 /// Kills all processes that are created by the FAKE build script unless "donotkill" flag was set.
-let killAllCreatedProcesses() =
-    if not killCreatedProcesses then () else
-    let traced = ref false
-    for p in startedProcesses do
-        try 
-            if p.HasExited |> not then
-                if !traced |> not then 
-                    tracefn "Killing all processes that are created by FAKE and are still running."
-                    traced := true
-                kill p
-        with exn -> ()
-    startedProcesses.Clear()
+let killAllCreatedProcesses() = 
+    if not killCreatedProcesses then ()
+    else 
+        let traced = ref false
+        for p in startedProcesses do
+            try 
+                if p.HasExited |> not then 
+                    if !traced |> not then 
+                        tracefn "Killing all processes that are created by FAKE and are still running."
+                        traced := true
+                    kill p
+            with exn -> ()
+        startedProcesses.Clear()
 
 /// Waits until the processes with the given name have stopped or fails after given timeout.
 /// ## Parameters
