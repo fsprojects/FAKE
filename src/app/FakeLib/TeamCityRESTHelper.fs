@@ -52,7 +52,7 @@ let getFirstNode serverURL username password url =
     |> XMLDoc
     |> DocElement
 
-/// Gets information about a build configartion from the TeamCity server.
+/// Gets information about a build configuration from the TeamCity server.
 let getBuildConfig serverURL username password id = 
     sprintf "/httpAuth/app/rest/buildTypes/id:%s" id
     |> getFirstNode serverURL username password
@@ -77,7 +77,7 @@ let getProject serverURL username password id =
              Archived = getAttribute "archived" n |> System.Boolean.Parse
              BuildConfigs = parseSubNode "buildTypes" getChilds n |> Seq.map (getAttribute "id") })
 
-/// Gets all projects on the TeamCity.
+/// Gets all projects on the TeamCity server.
 let getProjects serverURL username password = 
     getFirstNode serverURL username password "/httpAuth/app/rest/projects"
     |> parse "projects" getChilds
