@@ -205,17 +205,17 @@ Target "ReleaseDocs" (fun _ ->
     CopyRecursive "docs" "gh-pages" true |> printfn "%A"
     CopyFile "gh-pages" "./Samples/FAKE-Calculator.zip"
     StageAll "gh-pages"
-    Commit "gh-pages" (sprintf "Update generated documentation %s" release.AssemblyVersion)
+    Commit "gh-pages" (sprintf "Update generated documentation %s" release.NugetVersion)
     Branches.push "gh-pages"
 )
 
 Target "Release" (fun _ ->
     StageAll ""
-    Commit "" (sprintf "Bump version to %s" release.AssemblyVersion)
+    Commit "" (sprintf "Bump version to %s" release.NugetVersion)
     Branches.push ""
 
-    Branches.tag "" release.AssemblyVersion
-    Branches.pushTag "" "origin" release.AssemblyVersion
+    Branches.tag "" release.NugetVersion
+    Branches.pushTag "" "origin" release.NugetVersion
 )
 
 Target "Default" DoNothing
