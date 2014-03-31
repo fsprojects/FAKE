@@ -209,8 +209,16 @@ Target "ReleaseDocs" (fun _ ->
     Branches.push "gh-pages"
 )
 
+Target "Release" (fun _ ->
+    StageAll ""
+    Commit "" (sprintf "Bump version to %s" release.AssemblyVersion)
+    Branches.push ""
+
+    Branches.tag "" release.AssemblyVersion
+    Branches.pushTag "" "origin" release.AssemblyVersion
+)
+
 Target "Default" DoNothing
-Target "Release" DoNothing
 
 // Dependencies
 "Clean"
