@@ -1,3 +1,6 @@
+#### 2.12.2 - 31.03.2014
+* Fixed ProcessTestRunner
+
 #### 2.12.1-alpha3 - 31.03.2014
 * Fixed mono build on Travis
 

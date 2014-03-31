@@ -70,7 +70,9 @@ let RunConsoleTests setParams processes =
         |> toLines
     match parameters.ErrorLevel with
     | TestRunnerErrorLevel.DontFailBuild -> execute() |> trace
-    | TestRunnerErrorLevel.Error -> execute() |> failwith
+    | TestRunnerErrorLevel.Error -> 
+        let msg = execute()
+        if msg <> "" then failwith msg
     | TestRunnerErrorLevel.FailOnFirstError -> 
         for fileName, args in processes do
             match RunConsoleTest parameters fileName args with
