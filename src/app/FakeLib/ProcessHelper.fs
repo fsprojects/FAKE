@@ -15,7 +15,7 @@ let startedProcesses = HashSet()
 /// [omit]
 let start (proc : Process) = 
     proc.Start() |> ignore
-    startedProcesses.Add proc |> ignore
+    startedProcesses.Add (proc.ProcessName,proc) |> ignore
 
 /// [omit]
 let mutable redirectOutputToTrace = false
@@ -432,15 +432,14 @@ let mutable killCreatedProcesses = true
 let killAllCreatedProcesses() = 
     if not killCreatedProcesses then ()
     else 
-        let traced = ref false
-        for p in startedProcesses do
+        if startedProcesses.Count > 0 then 
+            tracefn "Killing all processes that are created by FAKE and are still running."
+        for name,proc in startedProcesses do
             try 
-                if p.HasExited |> not then 
-                    if !traced |> not then 
-                        tracefn "Killing all processes that are created by FAKE and are still running."
-                        traced := true
-                    kill p
-            with exn -> ()
+                if not proc.HasExited then 
+                    tracefn "Trying to kill %s" name
+                    kill proc
+            with exn -> tracefn "Killing %s failed with %s" name exn.Message
         startedProcesses.Clear()
 
 /// Waits until the processes with the given name have stopped or fails after given timeout.
