@@ -437,9 +437,9 @@ let killAllCreatedProcesses() =
         for name,proc in startedProcesses do
             try 
                 if not proc.HasExited then 
-                    tracefn "Trying to kill %s" name
+                    logfn "Trying to kill %s" name
                     kill proc
-            with exn -> tracefn "Killing %s failed with %s" name exn.Message
+            with exn -> logfn "Killing %s failed with %s" name exn.Message
         startedProcesses.Clear()
 
 /// Waits until the processes with the given name have stopped or fails after given timeout.
