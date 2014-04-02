@@ -71,6 +71,10 @@ let inline appendIfTrue p s builder =
     if p then append s builder
     else builder
 
+let inline appendIfTrueWithoutQuotes p s builder = 
+    if p then appendWithoutQuotes s builder
+    else builder
+
 /// Appends a text if the predicate is false.
 let inline appendIfFalse p = appendIfTrue (not p)
 
