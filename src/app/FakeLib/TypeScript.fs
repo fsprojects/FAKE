@@ -41,13 +41,6 @@ let TypeScriptDefaultParams =
       ToolPath = typeScriptCompilerPath
       TimeOut = TimeSpan.FromMinutes 5. }
 
-let private typeScriptCompilerProcess fileName timeout arguments = 
-    let p = 
-        (fun (info : Diagnostics.ProcessStartInfo) -> 
-        info.FileName <- fileName
-        info.Arguments <- arguments)
-    ExecProcessAndReturnMessages p timeout
-
 let private buildArguments parameters file = 
     let version = 
         match parameters.ECMAScript with
@@ -90,7 +83,10 @@ let TypeScriptCompiler setParams files =
     let callResults = 
         files
         |> Seq.map (buildArguments parameters)
-        |> Seq.map (typeScriptCompilerProcess parameters.ToolPath parameters.TimeOut)
+        |> Seq.map (fun arguments -> 
+               ExecProcessAndReturnMessages (fun (info : Diagnostics.ProcessStartInfo) -> 
+                   info.FileName <- parameters.ToolPath
+                   info.Arguments <- arguments) parameters.TimeOut)
     
     let errors = Seq.collect (fun x -> x.Errors) callResults
     if errors
