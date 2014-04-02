@@ -72,6 +72,16 @@ let private buildArguments parameters file =
         
     args.ToString()
 
+/// This task to can be used to call the [TypeScript](http://www.typescriptlang.org/) compiler.
+/// ## Parameters
+///
+///  - `parameters` - The type script compiler flags.
+///  - `files` - The type script files to compile.
+///
+/// ## Sample
+///
+///         !! "src/**/*.ts"
+///             |> TypeScriptCompiler defaultParams
 let TypeScriptCompiler parameters files = 
     let typeScriptCompilerPath = typeScriptCompilerPath parameters.ToolPath
     let callResults =
@@ -83,4 +93,13 @@ let TypeScriptCompiler parameters files =
     if errors |> Seq.isEmpty |> not then Seq.iter traceError errors
     Seq.collect (fun x -> x.Messages) callResults
 
+/// This task to can be used to call the [TypeScript](http://www.typescriptlang.org/) compiler.
+/// ## Parameters
+///
+///  - `files` - The type script files to compile.
+///
+/// ## Sample
+///
+///         !! "src/**/*.ts"
+///             |> TypeScriptCompilerDefault
 let TypeScriptCompilerDefault files = TypeScriptCompiler TypeScriptDefaultParams files
