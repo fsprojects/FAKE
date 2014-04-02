@@ -1,5 +1,4 @@
-﻿[<AutoOpen>]
-/// Contains code to call the typescript compiler
+﻿/// Contains code to call the typescript compiler
 module Fake.TypeScript
 
 open System
