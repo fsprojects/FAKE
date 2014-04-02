@@ -20,6 +20,7 @@ type TypeScriptParams = {
     ModuleGeneration : ModuleGeneration;
     EmitSourceMaps : bool;
     NoLib : bool;
+    ToolPath : string
 } 
 
 let TypeScriptDefaultParams = {
@@ -30,20 +31,21 @@ let TypeScriptDefaultParams = {
     ModuleGeneration = CommonJs;
     EmitSourceMaps = false;
     NoLib = false;
+    ToolPath = String.Empty
 }
 
 let private TypeScriptCompilerPath =  @"[ProgramFilesX86]\Microsoft SDKs\TypeScript\0.9\;[ProgramFiles]\Microsoft SDKs\TypeScript\0.9\"
 
-let typeScriptCompilerPath = 
+let typeScriptCompilerPath toolPath = 
     if isUnix then
         "tsc"
     else
-        findPath "TypeScriptPath" TypeScriptCompilerPath "tsc.exe"   
+        if toolPath |> isNullOrEmpty then findPath "TypeScriptPath" TypeScriptCompilerPath "tsc.exe" else toolPath
 
 
-let private typeScriptCompilerProcess arguments  =
+let private typeScriptCompilerProcess fileName arguments  =
     let p = (fun (info:Diagnostics.ProcessStartInfo)-> 
-        info.FileName <- typeScriptCompilerPath
+        info.FileName <- fileName
         info.Arguments <- arguments )
     ExecProcessAndReturnMessages p TimeSpan.MaxValue
 
@@ -71,10 +73,11 @@ let private buildArguments parameters file =
     args.ToString()
 
 let TypeScriptCompiler parameters files = 
+    let typeScriptCompilerPath = typeScriptCompilerPath parameters.ToolPath
     let callResults =
         files
         |> Seq.map (buildArguments parameters)
-        |> Seq.map typeScriptCompilerProcess
+        |> Seq.map (typeScriptCompilerProcess typeScriptCompilerPath)
 
     let errors = Seq.collect (fun x -> x.Errors) callResults
     if errors |> Seq.isEmpty |> not then Seq.iter traceError errors
