@@ -75,7 +75,7 @@ let private buildArguments parameters file =
 /// ## Sample
 ///
 ///         !! "src/**/*.ts"
-///             |> TypeScriptCompiler { p with Timout = TimeSpan.MaxValue }
+///             |> TypeScriptCompiler (fun p -> { p with TimeOut = TimeSpan.MaxValue }) 
 let TypeScriptCompiler setParams files = 
     traceStartTask "TypeScript" ""
     let parameters = setParams TypeScriptDefaultParams
