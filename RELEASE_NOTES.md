@@ -1,3 +1,6 @@
+#### 2.13-alpha1 - 02.04.2014
+* Added TypeScript support
+
 #### 2.12.2 - 31.03.2014
 * Fixed ProcessTestRunner
 

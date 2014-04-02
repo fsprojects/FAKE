@@ -21,7 +21,16 @@ type TypeScriptParams = {
     EmitSourceMaps : bool;
     NoLib : bool;
     ToolPath : string
-} 
+    TimeOut : TimeSpan
+}
+
+let private TypeScriptCompilerPath =  @"[ProgramFilesX86]\Microsoft SDKs\TypeScript\0.9\;[ProgramFiles]\Microsoft SDKs\TypeScript\0.9\" 
+
+let typeScriptCompilerPath = 
+    if isUnix then
+        "tsc"
+    else
+        findPath "TypeScriptPath" TypeScriptCompilerPath "tsc.exe"
 
 let TypeScriptDefaultParams = {
     ECMAScript = ES3;
@@ -31,23 +40,15 @@ let TypeScriptDefaultParams = {
     ModuleGeneration = CommonJs;
     EmitSourceMaps = false;
     NoLib = false;
-    ToolPath = String.Empty
+    ToolPath = typeScriptCompilerPath
+    TimeOut = TimeSpan.FromMinutes 5.
 }
 
-let private TypeScriptCompilerPath =  @"[ProgramFilesX86]\Microsoft SDKs\TypeScript\0.9\;[ProgramFiles]\Microsoft SDKs\TypeScript\0.9\"
-
-let typeScriptCompilerPath toolPath = 
-    if isUnix then
-        "tsc"
-    else
-        if toolPath |> isNullOrEmpty then findPath "TypeScriptPath" TypeScriptCompilerPath "tsc.exe" else toolPath
-
-
-let private typeScriptCompilerProcess fileName arguments  =
+let private typeScriptCompilerProcess fileName timeout arguments  =
     let p = (fun (info:Diagnostics.ProcessStartInfo)-> 
         info.FileName <- fileName
         info.Arguments <- arguments )
-    ExecProcessAndReturnMessages p TimeSpan.MaxValue
+    ExecProcessAndReturnMessages p timeout
 
 let private buildArguments parameters file =
     let version = match parameters.ECMAScript with
@@ -81,25 +82,18 @@ let private buildArguments parameters file =
 /// ## Sample
 ///
 ///         !! "src/**/*.ts"
-///             |> TypeScriptCompiler defaultParams
-let TypeScriptCompiler parameters files = 
-    let typeScriptCompilerPath = typeScriptCompilerPath parameters.ToolPath
+///             |> TypeScriptCompiler { p with Timout = TimeSpan.MaxValue }
+let TypeScriptCompiler setParams files = 
+    traceStartTask "TypeScript" ""
+    let parameters = setParams TypeScriptDefaultParams
+
     let callResults =
         files
         |> Seq.map (buildArguments parameters)
-        |> Seq.map (typeScriptCompilerProcess typeScriptCompilerPath)
+        |> Seq.map (typeScriptCompilerProcess parameters.ToolPath parameters.TimeOut)
 
     let errors = Seq.collect (fun x -> x.Errors) callResults
     if errors |> Seq.isEmpty |> not then Seq.iter traceError errors
-    Seq.collect (fun x -> x.Messages) callResults
+    Seq.collect (fun x -> x.Messages) callResults |> Seq.iter trace
 
-/// This task to can be used to call the [TypeScript](http://www.typescriptlang.org/) compiler.
-/// ## Parameters
-///
-///  - `files` - The type script files to compile.
-///
-/// ## Sample
-///
-///         !! "src/**/*.ts"
-///             |> TypeScriptCompilerDefault
-let TypeScriptCompilerDefault files = TypeScriptCompiler TypeScriptDefaultParams files
+    traceEndTask "TypeScript" "" 
