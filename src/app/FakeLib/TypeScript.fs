@@ -69,7 +69,7 @@ let private buildArguments parameters file =
 /// This task to can be used to call the [TypeScript](http://www.typescriptlang.org/) compiler.
 /// ## Parameters
 ///
-///  - `parameters` - The type script compiler flags.
+///  - `setParams` - Function used to overwrite the TypeScript compiler flags.
 ///  - `files` - The type script files to compile.
 ///
 /// ## Sample
