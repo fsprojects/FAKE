@@ -22,7 +22,7 @@ type TypeScriptParams = {
     NoLib : bool;
 } 
 
-let defaultParams = {
+let TypeScriptDefaultParams = {
     ECMAScript = ES3;
     EmitComments = false;
     OutputSingleFile = None;
@@ -80,4 +80,4 @@ let TypeScriptCompiler parameters files =
     if errors |> Seq.isEmpty |> not then Seq.iter traceError errors
     Seq.collect (fun x -> x.Messages) callResults
 
-let TypeScriptCompilerDefault files = TypeScriptCompiler defaultParams files
+let TypeScriptCompilerDefault files = TypeScriptCompiler TypeScriptDefaultParams files
