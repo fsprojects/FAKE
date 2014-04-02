@@ -18,3 +18,4 @@ Some of our users are:
 * [Machine.Fakes](https://github.com/machine/machine.fakes)
 * [Enticify](http://www.enticify.com/)
 * [SolrNet](https://github.com/mausch/SolrNet)
+* [FsPickler](https://github.com/nessos/FsPickler)
