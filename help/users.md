@@ -1,4 +1,4 @@
-# WHo is using FAKE?
+# Who is using FAKE?
 
 Some of our users are:
 
@@ -19,3 +19,4 @@ Some of our users are:
 * [Enticify](http://www.enticify.com/)
 * [SolrNet](https://github.com/mausch/SolrNet)
 * [FsPickler](https://github.com/nessos/FsPickler)
+* [Carbonite](http://www.carbonite.com)
