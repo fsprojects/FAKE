@@ -65,8 +65,8 @@ let private buildArguments parameters file =
         |> appendIfSome                 parameters.OutputSingleFile (fun s -> sprintf " --out %s" s)
         |> appendIfTrueWithoutQuotes    parameters.EmitDeclarations " --declarations"
         |> appendWithoutQuotes          (" --module " + moduleGeneration)
-        |> appendIfTrue                 parameters.EmitSourceMaps " -sourcemap"
-        |> appendIfTrue                 parameters.NoLib " --nolib"
+        |> appendIfTrueWithoutQuotes    parameters.EmitSourceMaps " -sourcemap"
+        |> appendIfTrueWithoutQuotes    parameters.NoLib " --nolib"
         |> appendWithoutQuotes          " "
         |> append                       file
         
