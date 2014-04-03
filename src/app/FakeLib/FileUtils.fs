@@ -3,8 +3,6 @@ module Fake.FileUtils
 
 open System.IO
 
-let private flip f x y = f y x
-
 /// Deletes a file if it exists
 let rm = DeleteFile
 
@@ -14,7 +12,7 @@ let rm_rf f =
     else DeleteFile f
 
 /// Creates a directory if it doesn't exist.
-let mkdir = CreateDir
+let mkdir path = CreateDir path
 
 /// <summary>
 /// Like "cp -r" in a shell. Copies a file or directory recursively.
@@ -26,16 +24,20 @@ let cp_r src dest =
     else CopyFile dest src
 
 /// Like "cp" in a shell. Copies a single file.
-let cp = flip CopyFile
+/// <param name="src">The source</param>
+/// <param name="dest">The destination</param>
+let cp src dest = CopyFile src dest
 
 /// Changes working directory
-let chdir = Directory.SetCurrentDirectory
+let chdir path = Directory.SetCurrentDirectory path
 
 /// Changes working directory
-let cd = chdir
+let cd path = chdir path
 
 /// Gets working directory
 let pwd = Directory.GetCurrentDirectory
 
 /// Like "mv" in a shell. Moves/renames a file
-let mv = flip MoveFile
+/// <param name="src">The source</param>
+/// <param name="dest">The destination</param>
+let mv src dest = MoveFile src dest
