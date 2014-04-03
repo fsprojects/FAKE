@@ -82,11 +82,7 @@ let DeleteFiles files = Seq.iter DeleteFile files
 let (|File|Directory|) (fileSysInfo : FileSystemInfo) = 
     match fileSysInfo with
     | :? FileInfo as file -> File(file)
-    | :? DirectoryInfo as dir -> 
-        Directory(dir, 
-                  seq { 
-                      for x in dir.GetFileSystemInfos() -> x
-                  })
+    | :? DirectoryInfo as dir -> Directory(dir, dir.EnumerateFileSystemInfos())
     | _ -> failwith "No file or directory given."
 
 /// Active Pattern for determining file extension.
@@ -406,7 +402,6 @@ let FileVersion(fileName : string) =
     FullName fileName
     |> FileVersionInfo.GetVersionInfo
     |> fun x -> x.FileVersion.ToString()
-
 
 /// Get the filename extension including the leading '.', or an empty string if the file has no extension.
 /// ## Parameters

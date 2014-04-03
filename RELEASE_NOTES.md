@@ -1,3 +1,6 @@
+#### 2.13.0-alpha3 - unreleased
+* Enumerate the files lazily in the File|Directory active pattern
+
 #### 2.13.0-alpha2 - 03.04.2014
 * Added TypeScript 1.0 support
 
