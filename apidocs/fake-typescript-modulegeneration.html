@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>ProjectSystem - FAKE - F# Make</title>
+    <title>ModuleGeneration - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,125 +36,43 @@
 
 
 
-<h1>ProjectSystem</h1>
+<h1>ModuleGeneration</h1>
 <div class="xmldoc">
-<p>Contains project file comparion tools for MSBuild project files.</p>
 </div>
-
-<!-- Render nested types and modules, if there are any -->
-  <h2>Nested types and modules</h2>
-  <div>
-      <table class="table table-bordered type-list">
-    <thead>
-      <tr><td>Type</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td class="type-name">
-            <a href="fake-msbuild-projectsystem-projectcomparison.html">ProjectComparison</a>
-          </td>
-          <td class="xmldoc"><p>Result type for project comparisons.</p>
-</td>
-        </tr>
-        <tr>
-          <td class="type-name">
-            <a href="fake-msbuild-projectsystem-projectfile.html">ProjectFile</a>
-          </td>
-          <td class="xmldoc"><p>A small abstraction over MSBuild project files.</p>
-</td>
-        </tr>
-    </tbody>
-  </table>
-
-  </div>
-
-  <h3>Functions and values</h3>
+  <h3>Union Cases</h3>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Function or value</td><td>Description</td></tr>
+      <tr><td>Union Case</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '659', 659)" onmouseover="showTip(event, '659', 659)">
-            CompareProjectsTo (...)
+          <code onmouseout="hideTip(event, '1181', 1181)" onmouseover="showTip(event, '1181', 1181)">
+            AMD
           </code>
-          <div class="tip" id="659">
-            <strong>Signature:</strong>templateProject:string -&gt; projects:seq&lt;string&gt; -&gt; unit<br />
+          <div class="tip" id="1181">
+            <strong>Signature:</strong><br />
                       </div>
         </td>
         <td class="xmldoc">
-        <p>Compares the given project files againts the template project and fails if any files are missing.
-For F# projects it is also reporting unordered files.</p>
-
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/MSBuild/ProjectSystem.fs#L145-145" class="github-link">Go to GitHub source</a>
+        
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/TypeScript.fs#L13-13" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '660', 660)" onmouseover="showTip(event, '660', 660)">
-            findMissingFiles (...)
+          <code onmouseout="hideTip(event, '1182', 1182)" onmouseover="showTip(event, '1182', 1182)">
+            CommonJs
           </code>
-          <div class="tip" id="660">
-            <strong>Signature:</strong>templateProject:string -&gt; projects:seq&lt;string&gt; -&gt; seq&lt;ProjectComparison&gt;<br />
+          <div class="tip" id="1182">
+            <strong>Signature:</strong><br />
                       </div>
         </td>
         <td class="xmldoc">
-        <p>Compares the given project files againts the template project and returns which files are missing.
-For F# projects it is also reporting unordered files.</p>
-
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/MSBuild/ProjectSystem.fs#L88-88" class="github-link">Go to GitHub source</a>
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '661', 661)" onmouseover="showTip(event, '661', 661)">
-            FixMissingFiles templateProject projects
-          </code>
-          <div class="tip" id="661">
-            <strong>Signature:</strong>templateProject:string -&gt; projects:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-        <p>Compares the given projects to the template project and adds all missing files to the projects if needed.</p>
-
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/MSBuild/ProjectSystem.fs#L118-118" class="github-link">Go to GitHub source</a>
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '662', 662)" onmouseover="showTip(event, '662', 662)">
-            FixProjectFiles templateProject projects
-          </code>
-          <div class="tip" id="662">
-            <strong>Signature:</strong>templateProject:string -&gt; projects:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-        <p>Compares the given projects to the template project and adds all missing files to the projects if needed.
-It also removes duplicate files from the project files.</p>
-
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/MSBuild/ProjectSystem.fs#L139-139" class="github-link">Go to GitHub source</a>
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '663', 663)" onmouseover="showTip(event, '663', 663)">
-            RemoveDuplicateFiles projects
-          </code>
-          <div class="tip" id="663">
-            <strong>Signature:</strong>projects:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-        <p>It removes duplicate files from the project files.</p>
-
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/MSBuild/ProjectSystem.fs#L130-130" class="github-link">Go to GitHub source</a>
+        
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/TypeScript.fs#L12-12" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
     </tbody>
