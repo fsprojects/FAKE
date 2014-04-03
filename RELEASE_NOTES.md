@@ -1,3 +1,6 @@
+#### 2.13.0-alpha2 - 03.04.2014
+* Added TypeScript 1.0 support
+
 #### 2.13.0-alpha1 - 02.04.2014
 * Added TypeScript support
 

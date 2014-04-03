@@ -24,7 +24,7 @@ type TypeScriptParams =
       TimeOut : TimeSpan }
 
 let private TypeScriptCompilerPath = 
-    @"[ProgramFilesX86]\Microsoft SDKs\TypeScript\0.9\;[ProgramFiles]\Microsoft SDKs\TypeScript\0.9\"
+    @"[ProgramFilesX86]\Microsoft SDKs\TypeScript\1.0\;[ProgramFiles]\Microsoft SDKs\TypeScript\1.0\;[ProgramFilesX86]\Microsoft SDKs\TypeScript\0.9\;[ProgramFiles]\Microsoft SDKs\TypeScript\0.9\"
 
 let typeScriptCompilerPath = 
     if isUnix then "tsc"
