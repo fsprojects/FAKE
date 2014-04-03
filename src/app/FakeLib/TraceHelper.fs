@@ -115,10 +115,13 @@ let traceEndTask task description =
 
 let console = new ConsoleTraceListener(false, colorMap) :> ITraceListener
 
-let logToConsole (msg, eventLogEntry : System.Diagnostics.EventLogEntryType) = 
+open System.Diagnostics
+
+/// Traces the message to the console
+let logToConsole (msg, eventLogEntry : EventLogEntryType) = 
     match eventLogEntry with
-    | System.Diagnostics.EventLogEntryType.Error -> ErrorMessage msg
-    | System.Diagnostics.EventLogEntryType.Information -> TraceMessage(msg, true)
-    | System.Diagnostics.EventLogEntryType.Warning -> ImportantMessage msg
+    | EventLogEntryType.Error -> ErrorMessage msg
+    | EventLogEntryType.Information -> TraceMessage(msg, true)
+    | EventLogEntryType.Warning -> ImportantMessage msg
     | _ -> LogMessage(msg, true)
     |> console.Write
