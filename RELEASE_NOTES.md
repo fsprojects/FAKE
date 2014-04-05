@@ -1,5 +1,9 @@
-#### 2.13.0-alpha3 - unreleased
+#### 2.13.1 - 05.04.2014
+* Don't call the TypeScript compiler more than once
+
+#### 2.13.0 - 04.04.2014
 * Enumerate the files lazily in the File|Directory active pattern
+* Using Nuget 2.8.1
 
 #### 2.13.0-alpha2 - 03.04.2014
 * Added TypeScript 1.0 support
