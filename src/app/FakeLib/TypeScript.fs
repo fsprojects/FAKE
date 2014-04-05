@@ -87,6 +87,7 @@ let TypeScriptCompiler setParams files =
                ExecProcessAndReturnMessages (fun (info : Diagnostics.ProcessStartInfo) -> 
                    info.FileName <- parameters.ToolPath
                    info.Arguments <- arguments) parameters.TimeOut)
+        |> Seq.toList
     
     let errors = Seq.collect (fun x -> x.Errors) callResults
     if errors
