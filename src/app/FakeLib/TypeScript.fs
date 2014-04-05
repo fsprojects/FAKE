@@ -1,4 +1,4 @@
-﻿/// Contains code to call the typescript compiler
+﻿/// Contains code to call the typescript compiler.  There is also a [tutorial](../typescript.html) for this task available.
 module Fake.TypeScript
 
 open System

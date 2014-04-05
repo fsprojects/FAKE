@@ -34,3 +34,5 @@ Now create a build.fsx and run it via Fake.exe:
 	)
 
 	RunTargetOrDefault "CompileTypeScript"
+
+If you need more details please see the [API docs for the TypeScript](apidocs/fake-typescript.html) task.
