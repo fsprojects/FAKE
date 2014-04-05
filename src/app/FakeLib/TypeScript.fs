@@ -20,6 +20,7 @@ type TypeScriptParams =
       ModuleGeneration : ModuleGeneration
       EmitSourceMaps : bool
       NoLib : bool
+      RemoveComments : bool
       ToolPath : string
       OutputPath : string
       TimeOut : TimeSpan }
@@ -39,6 +40,7 @@ let TypeScriptDefaultParams =
       ModuleGeneration = CommonJs
       EmitSourceMaps = false
       NoLib = false
+      RemoveComments = false
       OutputPath = null
       ToolPath = typeScriptCompilerPath
       TimeOut = TimeSpan.FromMinutes 5. }
@@ -64,6 +66,7 @@ let private buildArguments parameters file =
         |> appendWithoutQuotes (" --module " + moduleGeneration)
         |> appendIfTrueWithoutQuotes parameters.EmitSourceMaps " -sourcemap"
         |> appendIfTrueWithoutQuotes parameters.NoLib " --nolib"
+        |> appendIfTrueWithoutQuotes parameters.RemoveComments " --removeComments"
         |> appendWithoutQuotes " "
         |> append file
     

@@ -1,5 +1,6 @@
 #### 2.13.1 - 05.04.2014
 * Don't call the TypeScript compiler more than once
+* New parameters for TypeScript
 
 #### 2.13.0 - 04.04.2014
 * Enumerate the files lazily in the File|Directory active pattern
