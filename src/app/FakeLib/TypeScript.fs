@@ -61,7 +61,7 @@ let private buildArguments parameters file =
         |> appendWithoutQuotes (" --target " + version)
         |> appendIfTrueWithoutQuotes parameters.EmitComments " --c"
         |> appendIfSome parameters.OutputSingleFile (fun s -> sprintf " --out %s" s)
-        |> appendIfNotNull parameters.OutputPath (sprintf " --outDir %s" parameters.OutputPath)
+        |> appendQuotedIfNotNull parameters.OutputPath " --outDir "
         |> appendIfTrueWithoutQuotes parameters.EmitDeclarations " --declarations"
         |> appendWithoutQuotes (" --module " + moduleGeneration)
         |> appendIfTrueWithoutQuotes parameters.EmitSourceMaps " -sourcemap"
