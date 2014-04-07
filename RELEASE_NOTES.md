@@ -1,5 +1,6 @@
 #### 2.13.2 - 07.04.2014
 * Fix TypeScript output dir
+* Add better docs for the TypeScript compiler.
 
 #### 2.13.1 - 05.04.2014
 * Don't call the TypeScript compiler more than once

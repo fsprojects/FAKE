@@ -1,37 +1,49 @@
-﻿/// Contains code to call the typescript compiler.  There is also a [tutorial](../typescript.html) for this task available.
+﻿/// Contains code to call the typescript compiler. There is also a [tutorial](../typescript.html) for this task available.
 module Fake.TypeScript
 
 open System
 open System.Text
 
-type ECMAScript = 
+/// Generated ECMAScript version
+type ECMAScript =
     | ES3
     | ES5
 
+/// Generated JavaScript module type
 type ModuleGeneration = 
     | CommonJs
     | AMD
 
-type TypeScriptParams = 
-    { ECMAScript : ECMAScript
+/// TypeScript task parameter type
+type TypeScriptParams =
+    { 
+      /// Specifies which ECMAScript version the TypeScript compiler should generate. Default is ES3.
+      ECMAScript : ECMAScript
+      /// Specifies if the TypeScript compiler should generate comments. Default is false.
       EmitComments : bool
+      /// Specifies if the TypeScript compiler should generate a single output file and its filename.
       OutputSingleFile : string option
+      /// Specifies if the TypeScript compiler should generate declarations. Default is false.
       EmitDeclarations : bool
+      /// Specifies which JavaScript module type the TypeScript compiler should generate. Default is CommonJs.
       ModuleGeneration : ModuleGeneration
+      /// Specifies if the TypeScript compiler should emit source maps. Default is false.
       EmitSourceMaps : bool
-      NoLib : bool
+      /// Specifies if the TypeScript compiler should not use libs. Default is false.
+      NoLib : bool      
+      /// Specifies if the TypeScript compiler should remove comments. Default is false.
       RemoveComments : bool
+      /// Specifies the TypeScript compiler path.
       ToolPath : string
+      /// Specifies the TypeScript compiler output path.
       OutputPath : string
+      /// Specifies the timeout for the TypeScript compiler.
       TimeOut : TimeSpan }
 
 let private TypeScriptCompilerPath = 
     @"[ProgramFilesX86]\Microsoft SDKs\TypeScript\1.0\;[ProgramFiles]\Microsoft SDKs\TypeScript\1.0\;[ProgramFilesX86]\Microsoft SDKs\TypeScript\0.9\;[ProgramFiles]\Microsoft SDKs\TypeScript\0.9\"
 
-let typeScriptCompilerPath = 
-    if isUnix then "tsc"
-    else findPath "TypeScriptPath" TypeScriptCompilerPath "tsc.exe"
-
+/// Default parameters for the TypeScript task
 let TypeScriptDefaultParams = 
     { ECMAScript = ES3
       EmitComments = false
@@ -42,7 +54,9 @@ let TypeScriptDefaultParams =
       NoLib = false
       RemoveComments = false
       OutputPath = null
-      ToolPath = typeScriptCompilerPath
+      ToolPath = 
+            if isUnix then "tsc"
+            else findPath "TypeScriptPath" TypeScriptCompilerPath "tsc.exe"
       TimeOut = TimeSpan.FromMinutes 5. }
 
 let private buildArguments parameters file = 
@@ -73,6 +87,7 @@ let private buildArguments parameters file =
     args.ToString()
 
 /// This task to can be used to call the [TypeScript](http://www.typescriptlang.org/) compiler.
+/// There is also a [tutorial](../typescript.html) for this task available.
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to overwrite the TypeScript compiler flags.
