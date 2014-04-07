@@ -7,7 +7,7 @@ open TypeScript
 
 Target "CompileTypeScript" (fun _ ->
   !! "**/*.ts"
-    |> TypeScriptCompiler (fun p -> { p with TimeOut = TimeSpan.MaxValue }) 
+    |> TypeScriptCompiler (fun p -> { p with OutputDir = "./out/" }) 
 )
 
 RunTargetOrDefault "CompileTypeScript"
