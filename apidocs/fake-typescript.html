@@ -38,7 +38,7 @@
 
 <h1>TypeScript</h1>
 <div class="xmldoc">
-<p>Contains code to call the typescript compiler.  There is also a <a href="../typescript.html">tutorial</a> for this task available.</p>
+<p>Contains code to call the typescript compiler. There is also a <a href="../typescript.html">tutorial</a> for this task available.</p>
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -53,19 +53,22 @@
           <td class="type-name">
             <a href="fake-typescript-ecmascript.html">ECMAScript</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc"><p>Generated ECMAScript version</p>
+</td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-typescript-modulegeneration.html">ModuleGeneration</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc"><p>Generated JavaScript module type</p>
+</td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-typescript-typescriptparams.html">TypeScriptParams</a>
           </td>
-          <td class="xmldoc"></td>
+          <td class="xmldoc"><p>TypeScript task parameter type</p>
+</td>
         </tr>
     </tbody>
   </table>
@@ -81,15 +84,16 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '387', 387)" onmouseover="showTip(event, '387', 387)">
+          <code onmouseout="hideTip(event, '448', 448)" onmouseover="showTip(event, '448', 448)">
             TypeScriptCompiler setParams files
           </code>
-          <div class="tip" id="387">
+          <div class="tip" id="448">
             <strong>Signature:</strong>setParams:(TypeScriptParams -&gt; TypeScriptParams) -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-        <p>This task to can be used to call the <a href="http://www.typescriptlang.org/">TypeScript</a> compiler.</p>
+        <p>This task to can be used to call the <a href="http://www.typescriptlang.org/">TypeScript</a> compiler.
+There is also a <a href="../typescript.html">tutorial</a> for this task available.</p>
 
 <h2>Parameters</h2>
 
@@ -104,37 +108,23 @@
         |&gt; TypeScriptCompiler (fun p -&gt; { p with TimeOut = TimeSpan.MaxValue }) 
 </code></pre>
 
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/TypeScript.fs#L85-85" class="github-link">Go to GitHub source</a>
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/TypeScript.fs#L100-100" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '449', 449)" onmouseover="showTip(event, '449', 449)">
-            typeScriptCompilerPath 
-          </code>
-          <div class="tip" id="449">
-            <strong>Signature:</strong>string<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-        
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/TypeScript.fs#L31-31" class="github-link">Go to GitHub source</a>
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '450', 450)" onmouseover="showTip(event, '450', 450)">
             TypeScriptDefaultParams 
           </code>
-          <div class="tip" id="450">
+          <div class="tip" id="449">
             <strong>Signature:</strong>TypeScriptParams<br />
                       </div>
         </td>
         <td class="xmldoc">
-        
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/TypeScript.fs#L35-35" class="github-link">Go to GitHub source</a>
+        <p>Default parameters for the TypeScript task</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/TypeScript.fs#L47-47" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
     </tbody>
