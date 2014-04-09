@@ -24,6 +24,7 @@ The following code shows such .nuspec file from the [OctoKit](https://github.com
 		<tags>GitHub API Octokit</tags>
 		@dependencies@
 		@references@
+		@files@
 	  </metadata>
 	</package>
 
@@ -124,12 +125,14 @@ If you want to specify exactly what files are packaged and where they are placed
 Here is a code snippet showing how to use this:
 
 	// Here we are specifically only taking the js and css folders from our project and placing them in matching target folder in the resulting nuspec.
+	// Note that the include paths are relative to the location of the .nuspec file
+	// See [Nuget docs](http://docs.nuget.org/docs/reference/nuspec-reference#Specifying_Files_to_Include_in_the_Package) for more detailed examples of how to specify file includes, as this follows the same syntax.
 	NuGet (fun p ->
 		{p with
 			// ...
 			Files = [
-				("..\..\js\**\**.*", "js")
-				("..\..\css\**\**.*", "css")
+				(@"tools\**\*.*", None, None)
+				(@"bin\Debug\*.dll", Some "lib", Some "badfile.css;otherbadfile.css")
 			]
 			// ...
 		})

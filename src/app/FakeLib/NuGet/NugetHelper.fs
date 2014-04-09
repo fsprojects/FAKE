@@ -45,7 +45,7 @@ type NuGetParams =
       PublishTrials : int
       Publish : bool
       Properties : list<string * string>
-      Files : list<string*string*string>}
+      Files : list<string*string option*string option>}
 
 /// NuGet default parameters  
 let NuGetDefaults() = 
@@ -142,7 +142,15 @@ let private createNuspecFile parameters nuSpec =
     
     let filesTags =
         parameters.Files
-        |> Seq.map (fun (source, target, exclude) -> sprintf "<file src=\"%s\" target=\"%s\" exclude=\"%s\" />" source target exclude)
+        |> Seq.map (fun (source, target, exclude) -> 
+            let excludeStr = 
+                if exclude.IsSome then sprintf " exclude=\"%s\"" exclude.Value
+                else String.Empty
+            let targetStr = 
+                if target.IsSome then sprintf " target=\"%s\"" target.Value
+                else String.Empty
+
+            sprintf "<file src=\"%s\"%s%s />" source targetStr excludeStr)
         |> toLines
 
     let filesXml = sprintf "<files>%s</files>" filesTags
