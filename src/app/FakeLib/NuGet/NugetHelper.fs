@@ -45,7 +45,6 @@ type NuGetParams =
       PublishTrials : int
       Publish : bool
       Properties : list<string * string>
-      /// src by target
       Files : list<string*string*string>}
 
 /// NuGet default parameters  

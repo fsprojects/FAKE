@@ -44,6 +44,7 @@ Placeholder | replaced by (`NuGetParams` record field)
 `@copyright@` | `Copyright`
 `@dependencies@` | a combination of `Dependencies` and `DependenciesByFramework`
 `@references@` | a combination of `References` and `ReferencesByFramework`
+`@files@` | a list of source, target, and exclude strings for files to be included in the nuget package
 
 ## Setting up the build script
 
