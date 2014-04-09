@@ -116,3 +116,20 @@ Here is a code snippet showing how to use these:
             // ...
             Publish = false })
             "template.nuspec"
+
+## Explicit file specifications
+
+If you want to specify exactly what files are packaged and where they are placed in the resulting NuGet package you can specify the Files property directly.  This is exactly like having the Files element of a nuspec filled out ahead of time.
+Here is a code snippet showing how to use this:
+
+	// Here we are specifically only taking the js and css folders from our project and placing them in matching target folder in the resulting nuspec.
+	NuGet (fun p ->
+		{p with
+			// ...
+			Files = [
+				("..\..\js\**\**.*", "js")
+				("..\..\css\**\**.*", "css")
+			]
+			// ...
+		})
+		"template.nuspec"
