@@ -24,6 +24,7 @@ The following code shows such .nuspec file from the [OctoKit](https://github.com
 		<tags>GitHub API Octokit</tags>
 		@dependencies@
 		@references@
+		@files@
 	  </metadata>
 	</package>
 
@@ -44,6 +45,7 @@ Placeholder | replaced by (`NuGetParams` record field)
 `@copyright@` | `Copyright`
 `@dependencies@` | a combination of `Dependencies` and `DependenciesByFramework`
 `@references@` | a combination of `References` and `ReferencesByFramework`
+`@files@` | a list of source, target, and exclude strings for files to be included in the nuget package
 
 ## Setting up the build script
 
@@ -116,3 +118,22 @@ Here is a code snippet showing how to use these:
             // ...
             Publish = false })
             "template.nuspec"
+
+## Explicit file specifications
+
+If you want to specify exactly what files are packaged and where they are placed in the resulting NuGet package you can specify the Files property directly.  This is exactly like having the Files element of a nuspec filled out ahead of time.
+Here is a code snippet showing how to use this:
+
+	// Here we are specifically only taking the js and css folders from our project and placing them in matching target folder in the resulting nuspec.
+	// Note that the include paths are relative to the location of the .nuspec file
+	// See [Nuget docs](http://docs.nuget.org/docs/reference/nuspec-reference#Specifying_Files_to_Include_in_the_Package) for more detailed examples of how to specify file includes, as this follows the same syntax.
+	NuGet (fun p ->
+		{p with
+			// ...
+			Files = [
+				(@"tools\**\*.*", None, None)
+				(@"bin\Debug\*.dll", Some "lib", Some "badfile.css;otherbadfile.css")
+			]
+			// ...
+		})
+		"template.nuspec"

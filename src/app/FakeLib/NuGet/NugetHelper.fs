@@ -44,7 +44,8 @@ type NuGetParams =
       ReferencesByFramework : NugetFrameworkReferences list
       PublishTrials : int
       Publish : bool
-      Properties : list<string * string> }
+      Properties : list<string * string>
+      Files : list<string*string option*string option>}
 
 /// NuGet default parameters  
 let NuGetDefaults() = 
@@ -73,7 +74,8 @@ let NuGetDefaults() =
       NoPackageAnalysis = false
       PublishTrials = 5
       Publish = false
-      Properties = [] }
+      Properties = []
+      Files = [] }
 
 /// Creates a string which tells NuGet that you require exactly this package version.
 let RequireExactly version = sprintf "[%s]" version
@@ -138,10 +140,25 @@ let private createNuspecFile parameters nuSpec =
     
     let dependenciesXml = sprintf "<dependencies>%s</dependencies>" (dependencies + dependenciesByFramework)
     
+    let filesTags =
+        parameters.Files
+        |> Seq.map (fun (source, target, exclude) -> 
+            let excludeStr = 
+                if exclude.IsSome then sprintf " exclude=\"%s\"" exclude.Value
+                else String.Empty
+            let targetStr = 
+                if target.IsSome then sprintf " target=\"%s\"" target.Value
+                else String.Empty
+
+            sprintf "<file src=\"%s\"%s%s />" source targetStr excludeStr)
+        |> toLines
+
+    let filesXml = sprintf "<files>%s</files>" filesTags
+    
     let xmlEncode (notEncodedText : string) = 
         if isNullOrEmpty notEncodedText then ""
         else XText(notEncodedText).ToString()
-    
+               
     let replacements = 
         [ "@build.number@", parameters.Version
           "@title@", parameters.Title
@@ -151,10 +168,12 @@ let private createNuspecFile parameters nuSpec =
           "@description@", parameters.Description
           "@tags@", parameters.Tags
           "@releaseNotes@", parameters.ReleaseNotes
-          "@copyright@", parameters.Copyright ]
+          "@copyright@", parameters.Copyright
+        ]
         |> List.map (fun (placeholder, replacement) -> placeholder, xmlEncode replacement)
         |> List.append [ "@dependencies@", dependenciesXml
-                         "@references@", referencesXml ]
+                         "@references@", referencesXml
+                         "@files@", filesXml ]
     
     processTemplates replacements [ specFile ]
     tracefn "Created nuspec file %s" specFile
@@ -357,7 +376,8 @@ let getNuspecProperties (nuspec : string) =
       Created = DateTime.MinValue
       Published = DateTime.MinValue
       PackageHash = String.Empty
-      PackageHashAlgorithm = String.Empty }
+      PackageHashAlgorithm = String.Empty
+    }
 
 /// Returns the NuGet meta data from the given package file name.
 /// ## Parameters
