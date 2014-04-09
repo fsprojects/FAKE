@@ -1,6 +1,6 @@
 # FAKE - F# Make
 
-"FAKE - F# Make" is a build automation system. Due to its integration 
+"FAKE - F# Make" is a cross platform build automation system. Due to its integration 
 in F#, all benefits of the .NET Framework and functional programming can be used, including 
 the extensive class library, powerful debuggers and integrated development environments like 
 Visual Studio or MonoDevelop, which provide syntax highlighting and code completion.
