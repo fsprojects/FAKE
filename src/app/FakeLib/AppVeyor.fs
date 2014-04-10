@@ -4,6 +4,27 @@ module Fake.AppVeyor
 
 open Fake.MSBuildHelper
 
+/// AppVeyor environment variables as [described](http://www.appveyor.com/docs/environment-variables)
+type AppVeyorEnvironment =
+    static member ApiUrl = environVar "APPVEYOR_API_URL"
+    static member ProjectId = environVar "APPVEYOR_PROJECT_ID"
+    static member ProjectName = environVar "APPVEYOR_PROJECT_NAME"
+    static member ProjectSlug = environVar "APPVEYOR_PROJECT_SLUG"
+    static member BuildFolder = environVar "APPVEYOR_BUILD_FOLDER"
+    static member BuildId = environVar "APPVEYOR_BUILD_ID"
+    static member BuildNumber = environVar "APPVEYOR_BUILD_NUMBER"
+    static member BuildVersion = environVar "APPVEYOR_BUILD_VERSION"
+    static member JobId = environVar "APPVEYOR_JOB_ID"
+    static member RepoProvider = environVar "APPVEYOR_REPO_PROVIDER"
+    static member RepoScm = environVar "APPVEYOR_REPO_SCM"
+    static member RepoName = environVar "APPVEYOR_REPO_NAME"
+    static member RepoBranch = environVar "APPVEYOR_REPO_BRANCH"
+    static member RepoCommit = environVar "APPVEYOR_REPO_COMMIT"
+    static member RepoCommitAuthor = environVar "APPVEYOR_REPO_COMMIT_AUTHOR"
+    static member RepoCommitAuthorEmail = environVar "APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL"
+    static member RepoCommitTimestamp = environVar "APPVEYOR_REPO_COMMIT_TIMESTAMP"
+    static member RepoCommitMessage = environVar "APPVEYOR_REPO_COMMIT_MESSAGE"
+
 let private sendToAppVeyor args = 
     ExecProcess (fun info -> 
         info.FileName <- "appveyor"
