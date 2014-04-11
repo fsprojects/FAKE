@@ -55,3 +55,4 @@ tools/FSharp.Formatting.CommandTool/
 tools/SourceLink.Fake
 
 release.cmd
+Samples/typescript/out/

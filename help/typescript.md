@@ -19,7 +19,7 @@ Consider a greetings.ts file:
 
     document.body.innerHTML = greeter(user);
 
-Now create a build.fsx and run it via Fake.exe:
+Now create a build.fsx and run it via FAKE.exe:
 
 	#I @"../../tools/FAKE/tools/"
 	#r @"FakeLib.dll"
@@ -30,9 +30,21 @@ Now create a build.fsx and run it via Fake.exe:
 
 	Target "CompileTypeScript" (fun _ ->
 	    !! "**/*.ts"
-		  |> TypeScriptCompiler (fun p -> { p with TimeOut = TimeSpan.MaxValue }) 
+		  |> TypeScriptCompiler (fun p -> { p with OutputPath = "./out" }) 
 	)
 
 	RunTargetOrDefault "CompileTypeScript"
+
+
+This small script will run all *.ts files through the TypeScript compiler and put them into the ./out/ folder. In this case we will find a greetings.js:
+
+    [lang=javascript]
+	function greeter(person) {
+		return "Hello, " + person.firstname + " " + person.lastname;
+	}
+
+	var user = { firstname: "Jane", lastname: "User" };
+
+	document.body.innerHTML = greeter(user);
 
 If you need more details please see the [API docs for the TypeScript](apidocs/fake-typescript.html) task.
