@@ -44,16 +44,16 @@ In this tutorial we are looking at the TypeScript support.</p>
 
 <p>Consider a greetings.ts file:</p>
 
-<pre lang="typescript">interface Person {
-    firstname: string;
-    lastname: string;
+<pre lang="javascript"><span class="k">interface</span> Person {
+    firstname: <span class="k">string</span>;
+    lastname: <span class="k">string</span>;
 }
 
-function greeter(person : Person) {
-    return &quot;Hello, &quot; + person.firstname + &quot; &quot; + person.lastname;
+<span class="k">function</span> greeter(person : Person) {
+    <span class="k">return</span> <span class="s">"Hello, "</span> + person.firstname + <span class="s">" "</span> + person.lastname;
 }
 
-var user = {firstname: &quot;Jane&quot;, lastname: &quot;User&quot;};
+<span class="k">var</span> user = {firstname: <span class="s">"Jane"</span>, lastname: <span class="s">"User"</span>};
 
 document.body.innerHTML = greeter(user);</pre>
 
