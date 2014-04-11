@@ -1,3 +1,6 @@
+#### 2.13.4 - unreleased
+* Adding AppVeyor environment variables 
+
 #### 2.13.3 - 09.04.2014
 * Allows explicit file specification on the NuGetParams Type
 
