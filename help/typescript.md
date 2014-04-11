@@ -5,7 +5,7 @@ In this tutorial we are looking at the TypeScript support.
 
 Consider a greetings.ts file:
 
-    [lang=typescript]
+    [lang=javascript]
     interface Person {
         firstname: string;
         lastname: string;
