@@ -57,7 +57,7 @@ var user = {firstname: &quot;Jane&quot;, lastname: &quot;User&quot;};
 
 document.body.innerHTML = greeter(user);</pre>
 
-<p>Now create a build.fsx and run it via Fake.exe:</p>
+<p>Now create a build.fsx and run it via FAKE.exe:</p>
 
 <table class="pre"><tr><td class="lines"><pre class="fssnip">
 <span class="l"> 1: </span>
@@ -85,7 +85,7 @@ document.body.innerHTML = greeter(user);</pre>
 
 <span class="i">Target</span> <span class="s">&quot;</span><span class="s">CompileTypeScript</span><span class="s">&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
     <span class="o">!!</span> <span class="s">&quot;</span><span class="s">*</span><span class="s">*</span><span class="s">/</span><span class="s">*</span><span class="s">.</span><span class="s">ts</span><span class="s">&quot;</span>
-      <span class="o">|&gt;</span> <span class="i">TypeScriptCompiler</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> { <span class="i">p</span> <span class="k">with</span> <span class="i">TimeOut</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">TimeSpan</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="i">MaxValue</span> }) 
+      <span class="o">|&gt;</span> <span class="i">TypeScriptCompiler</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> { <span class="i">p</span> <span class="k">with</span> <span class="i">OutputPath</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">.</span><span class="s">/</span><span class="s">out</span><span class="s">&quot;</span> }) 
 )
 
 <span class="i">RunTargetOrDefault</span> <span class="s">&quot;</span><span class="s">CompileTypeScript</span><span class="s">&quot;</span></pre>
@@ -93,11 +93,19 @@ document.body.innerHTML = greeter(user);</pre>
 </tr>
 </table>
 
+<p>This small script will run all *.ts files through the TypeScript compiler and put them into the ./out/ folder. In this case we will find a greetings.js:</p>
+
+<pre lang="javascript"><span class="k">function</span> greeter(person) {
+    <span class="k">return</span> <span class="s">"Hello, "</span> + person.firstname + <span class="s">" "</span> + person.lastname;
+}
+
+<span class="k">var</span> user = { firstname: <span class="s">"Jane"</span>, lastname: <span class="s">"User"</span> };
+
+document.body.innerHTML = greeter(user);</pre>
+
 <p>If you need more details please see the <a href="apidocs/fake-typescript.html">API docs for the TypeScript</a> task.</p>
 
           <div class="tip" id="fs1">namespace System</div>
-<div class="tip" id="fs2">Multiple items<br />type TimeSpan =<br />&#160;&#160;struct<br />&#160;&#160;&#160;&#160;new : ticks:int64 -&gt; TimeSpan + 3 overloads<br />&#160;&#160;&#160;&#160;member Add : ts:TimeSpan -&gt; TimeSpan<br />&#160;&#160;&#160;&#160;member CompareTo : value:obj -&gt; int + 1 overload<br />&#160;&#160;&#160;&#160;member Days : int<br />&#160;&#160;&#160;&#160;member Duration : unit -&gt; TimeSpan<br />&#160;&#160;&#160;&#160;member Equals : value:obj -&gt; bool + 1 overload<br />&#160;&#160;&#160;&#160;member GetHashCode : unit -&gt; int<br />&#160;&#160;&#160;&#160;member Hours : int<br />&#160;&#160;&#160;&#160;member Milliseconds : int<br />&#160;&#160;&#160;&#160;member Minutes : int<br />&#160;&#160;&#160;&#160;...<br />&#160;&#160;end<br /><br />Full name: System.TimeSpan<br /><br />--------------------<br />TimeSpan()<br />TimeSpan(ticks: int64) : unit<br />TimeSpan(hours: int, minutes: int, seconds: int) : unit<br />TimeSpan(days: int, hours: int, minutes: int, seconds: int) : unit<br />TimeSpan(days: int, hours: int, minutes: int, seconds: int, milliseconds: int) : unit</div>
-<div class="tip" id="fs3">field TimeSpan.MaxValue</div>
           
         </div>
         <div class="span3">
@@ -125,6 +133,7 @@ document.body.innerHTML = greeter(user);</pre>
               <li><a href="customtasks.html">Creating custom tasks</a></li>
               <li><a href="teamcity.html">TeamCity integration</a></li>
               <li><a href="octopusdeploy.html">Octopus Deploy</a></li>
+              <li><a href="typescript.html">TypeScript support</a></li>
               <li class="divider"></li>
               <li><a href="deploy.html">Fake.Deploy</a></li>
               <li class="nav-header">Documentation</li>

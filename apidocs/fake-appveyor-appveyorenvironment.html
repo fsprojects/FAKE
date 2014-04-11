@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>xpkgParams - FAKE - F# Make</title>
+    <title>AppVeyorEnvironment - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,254 +36,302 @@
 
 
 
-<h1>xpkgParams</h1>
+<h1>AppVeyorEnvironment</h1>
 <div class="xmldoc">
-<p>Parameter type for xpkg tasks</p>
+<p>AppVeyor environment variables as <a href="http://www.appveyor.com/docs/environment-variables">described</a></p>
 </div>
-  <h3>Record Fields</h3>
+  <h3>Static members</h3>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Record Field</td><td>Description</td></tr>
+      <tr><td>Static member</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1216', 1216)" onmouseover="showTip(event, '1216', 1216)">
-            Details
+          <code onmouseout="hideTip(event, '713', 713)" onmouseover="showTip(event, '713', 713)">
+            ApiUrl
           </code>
-          <div class="tip" id="1216">
+          <div class="tip" id="713">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
         <td class="xmldoc">
-        
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/XpkgHelper.fs#L20-20" class="github-link">Go to GitHub source</a>
+        <p>AppVeyor Build Agent API URL</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AppVeyor.fs#L10-10" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1217', 1217)" onmouseover="showTip(event, '1217', 1217)">
-            GettingStarted
+          <code onmouseout="hideTip(event, '714', 714)" onmouseover="showTip(event, '714', 714)">
+            BuildFolder
           </code>
-          <div class="tip" id="1217">
+          <div class="tip" id="714">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
         <td class="xmldoc">
-        
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/XpkgHelper.fs#L22-22" class="github-link">Go to GitHub source</a>
+        <p>Path to clone directory</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AppVeyor.fs#L18-18" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1218', 1218)" onmouseover="showTip(event, '1218', 1218)">
-            Icons
+          <code onmouseout="hideTip(event, '715', 715)" onmouseover="showTip(event, '715', 715)">
+            BuildId
           </code>
-          <div class="tip" id="1218">
-            <strong>Signature:</strong>string list<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-        
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/XpkgHelper.fs#L23-23" class="github-link">Go to GitHub source</a>
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1219', 1219)" onmouseover="showTip(event, '1219', 1219)">
-            Libraries
-          </code>
-          <div class="tip" id="1219">
-            <strong>Signature:</strong>(string * string) list<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-        
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/XpkgHelper.fs#L24-24" class="github-link">Go to GitHub source</a>
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1220', 1220)" onmouseover="showTip(event, '1220', 1220)">
-            License
-          </code>
-          <div class="tip" id="1220">
+          <div class="tip" id="715">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
         <td class="xmldoc">
-        
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/XpkgHelper.fs#L21-21" class="github-link">Go to GitHub source</a>
+        <p>AppVeyor unique build ID</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AppVeyor.fs#L20-20" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1221', 1221)" onmouseover="showTip(event, '1221', 1221)">
-            OutputPath
+          <code onmouseout="hideTip(event, '716', 716)" onmouseover="showTip(event, '716', 716)">
+            BuildNumber
           </code>
-          <div class="tip" id="1221">
+          <div class="tip" id="716">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
         <td class="xmldoc">
-        
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/XpkgHelper.fs#L15-15" class="github-link">Go to GitHub source</a>
+        <p>Build number</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AppVeyor.fs#L22-22" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1222', 1222)" onmouseover="showTip(event, '1222', 1222)">
-            Package
+          <code onmouseout="hideTip(event, '717', 717)" onmouseover="showTip(event, '717', 717)">
+            BuildVersion
           </code>
-          <div class="tip" id="1222">
+          <div class="tip" id="717">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
         <td class="xmldoc">
-        
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/XpkgHelper.fs#L13-13" class="github-link">Go to GitHub source</a>
+        <p>Build version</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AppVeyor.fs#L24-24" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1223', 1223)" onmouseover="showTip(event, '1223', 1223)">
-            Project
+          <code onmouseout="hideTip(event, '718', 718)" onmouseover="showTip(event, '718', 718)">
+            JobId
           </code>
-          <div class="tip" id="1223">
+          <div class="tip" id="718">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
         <td class="xmldoc">
-        
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/XpkgHelper.fs#L16-16" class="github-link">Go to GitHub source</a>
+        <p>AppVeyor unique job ID</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AppVeyor.fs#L26-26" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1224', 1224)" onmouseover="showTip(event, '1224', 1224)">
-            Publisher
+          <code onmouseout="hideTip(event, '719', 719)" onmouseover="showTip(event, '719', 719)">
+            ProjectId
           </code>
-          <div class="tip" id="1224">
+          <div class="tip" id="719">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
         <td class="xmldoc">
-        
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/XpkgHelper.fs#L18-18" class="github-link">Go to GitHub source</a>
+        <p>AppVeyor unique project ID</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AppVeyor.fs#L12-12" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1225', 1225)" onmouseover="showTip(event, '1225', 1225)">
-            Samples
+          <code onmouseout="hideTip(event, '720', 720)" onmouseover="showTip(event, '720', 720)">
+            ProjectName
           </code>
-          <div class="tip" id="1225">
-            <strong>Signature:</strong>(string * string) list<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-        
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/XpkgHelper.fs#L25-25" class="github-link">Go to GitHub source</a>
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1226', 1226)" onmouseover="showTip(event, '1226', 1226)">
-            Summary
-          </code>
-          <div class="tip" id="1226">
+          <div class="tip" id="720">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
         <td class="xmldoc">
-        
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/XpkgHelper.fs#L17-17" class="github-link">Go to GitHub source</a>
+        <p>Project name</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AppVeyor.fs#L14-14" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1227', 1227)" onmouseover="showTip(event, '1227', 1227)">
-            TimeOut
+          <code onmouseout="hideTip(event, '721', 721)" onmouseover="showTip(event, '721', 721)">
+            ProjectSlug
           </code>
-          <div class="tip" id="1227">
-            <strong>Signature:</strong>TimeSpan<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-        
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/XpkgHelper.fs#L12-12" class="github-link">Go to GitHub source</a>
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1228', 1228)" onmouseover="showTip(event, '1228', 1228)">
-            ToolPath
-          </code>
-          <div class="tip" id="1228">
+          <div class="tip" id="721">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
         <td class="xmldoc">
-        
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/XpkgHelper.fs#L10-10" class="github-link">Go to GitHub source</a>
+        <p>Project slug (as seen in project details URL)</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AppVeyor.fs#L16-16" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1229', 1229)" onmouseover="showTip(event, '1229', 1229)">
-            Version
+          <code onmouseout="hideTip(event, '722', 722)" onmouseover="showTip(event, '722', 722)">
+            RepoBranch
           </code>
-          <div class="tip" id="1229">
+          <div class="tip" id="722">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
         <td class="xmldoc">
-        
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/XpkgHelper.fs#L14-14" class="github-link">Go to GitHub source</a>
+        <p>Build branch</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AppVeyor.fs#L34-34" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1230', 1230)" onmouseover="showTip(event, '1230', 1230)">
-            Website
+          <code onmouseout="hideTip(event, '723', 723)" onmouseover="showTip(event, '723', 723)">
+            RepoCommit
           </code>
-          <div class="tip" id="1230">
+          <div class="tip" id="723">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
         <td class="xmldoc">
-        
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/XpkgHelper.fs#L19-19" class="github-link">Go to GitHub source</a>
+        <p>Commit ID (SHA)</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AppVeyor.fs#L36-36" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1231', 1231)" onmouseover="showTip(event, '1231', 1231)">
-            WorkingDir
+          <code onmouseout="hideTip(event, '724', 724)" onmouseover="showTip(event, '724', 724)">
+            RepoCommitAuthor
           </code>
-          <div class="tip" id="1231">
+          <div class="tip" id="724">
             <strong>Signature:</strong>string<br />
                       </div>
         </td>
         <td class="xmldoc">
-        
-            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/XpkgHelper.fs#L11-11" class="github-link">Go to GitHub source</a>
+        <p>Commit author's name</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AppVeyor.fs#L38-38" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '725', 725)" onmouseover="showTip(event, '725', 725)">
+            RepoCommitAuthorEmail
+          </code>
+          <div class="tip" id="725">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Commit author's email address</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AppVeyor.fs#L40-40" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '726', 726)" onmouseover="showTip(event, '726', 726)">
+            RepoCommitMessage
+          </code>
+          <div class="tip" id="726">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Commit message</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AppVeyor.fs#L44-44" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '727', 727)" onmouseover="showTip(event, '727', 727)">
+            RepoCommitTimestamp
+          </code>
+          <div class="tip" id="727">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Commit date/time</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AppVeyor.fs#L42-42" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '728', 728)" onmouseover="showTip(event, '728', 728)">
+            RepoName
+          </code>
+          <div class="tip" id="728">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>Repository name in format owner-name/repo-name</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AppVeyor.fs#L32-32" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '729', 729)" onmouseover="showTip(event, '729', 729)">
+            RepoProvider
+          </code>
+          <div class="tip" id="729">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>GitHub, BitBucket or Kiln</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AppVeyor.fs#L28-28" class="github-link">Go to GitHub source</a>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '730', 730)" onmouseover="showTip(event, '730', 730)">
+            RepoScm
+          </code>
+          <div class="tip" id="730">
+            <strong>Signature:</strong>string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+        <p>git or mercurial</p>
+
+            <a href="https://github.com/fsharp/FAKE/blob/develop/src/app/FakeLib/AppVeyor.fs#L30-30" class="github-link">Go to GitHub source</a>
         </td>
       </tr>
     </tbody>
