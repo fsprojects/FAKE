@@ -246,6 +246,5 @@ let BulkReplaceAssemblyInfoVersions (dir : string) replacementParameters =
     if directory.Exists then 
         !!(directory.FullName @@ "**/AssemblyInfo.*s") 
         |> Seq.iter 
-               (fun file -> 
-               ReplaceAssemblyInfoVersions((fun p -> { p with OutputFileName = file }) >> replacementParameters))
+               (fun file -> ReplaceAssemblyInfoVersions ((fun p -> { p with OutputFileName = file }) >> replacementParameters))
     else logfn "%s does not exist." directory.FullName
