@@ -1,5 +1,8 @@
-#### 2.13.4 - unreleased
+#### 2.13.4 - 14.04.2014
 * Adding AppVeyor environment variables 
+* New BulkReplaceAssemblyInfoVersions task
+* Fixed default nuspec file
+* "Getting started" tutorial uses better folder structure
 
 #### 2.13.3 - 09.04.2014
 * Allows explicit file specification on the NuGetParams Type
