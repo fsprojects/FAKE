@@ -241,10 +241,11 @@ let ReplaceAssemblyInfoVersions param =
 ///
 /// - 'dir' - The directory (subdirectories will be included), which inhabits the AssemblyInfo.cs files
 /// - 'replacementParameters' - The replacement parameters for the AssemblyInfo.cs files
-let BulkReplaceAssemblyInfoVersions (dir:string) (replacementParameters:AssemblyInfoReplacementParams->AssemblyInfoReplacementParams) = 
+let BulkReplaceAssemblyInfoVersions (dir : string) replacementParameters = 
     let directory = directoryInfo dir
     if directory.Exists then 
-        !!(directory.FullName @@ @"\**\Properties\AssemblyInfo.cs")
-          |> Seq.iter(fun file ->
-             ReplaceAssemblyInfoVersions ((fun p -> {p with OutputFileName = file }) >> replacementParameters))
+        !!(directory.FullName @@ "**/AssemblyInfo.*s") 
+        |> Seq.iter 
+               (fun file -> 
+               ReplaceAssemblyInfoVersions((fun p -> { p with OutputFileName = file }) >> replacementParameters))
     else logfn "%s does not exist." directory.FullName
