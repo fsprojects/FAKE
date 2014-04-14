@@ -235,3 +235,16 @@ let ReplaceAssemblyInfoVersions param =
     |> Seq.map replaceLine
     |> Seq.toList // break laziness
     |> WriteFile parameters.OutputFileName
+
+/// Update all AssemblyInfo.cs files in the specified directory and its subdirectories
+/// ## Parameters
+///
+/// - 'dir' - The directory (subdirectories will be included), which inhabits the AssemblyInfo.cs files
+/// - 'replacementParameters' - The replacement parameters for the AssemblyInfo.cs files
+let BulkReplaceAssemblyInfoVersions (dir:string) (replacementParameters:AssemblyInfoReplacementParams->AssemblyInfoReplacementParams) = 
+    let directory = directoryInfo dir
+    if directory.Exists then 
+        !!(directory.FullName @@ @"\**\Properties\AssemblyInfo.cs")
+          |> Seq.iter(fun file ->
+             ReplaceAssemblyInfoVersions ((fun p -> {p with OutputFileName = file }) >> replacementParameters))
+    else logfn "%s does not exist." directory.FullName
