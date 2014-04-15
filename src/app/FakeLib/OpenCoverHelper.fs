@@ -6,7 +6,7 @@ open System
 open System.Text
 
 type RegisterType = 
-    | None
+    | Manual
     | Register
     | RegisterUser
 
@@ -25,7 +25,7 @@ let OpenCoverDefaults =
     { ExePath = environVar "LOCALAPPDATA" @@ "Apps" @@ "OpenCover" @@ "OpenCover.Console.exe"
       TestRunnerExePath = ProgramFiles @@ "NUnit" @@ "bin" @@ "nunit-console.exe"
       Output = String.Empty
-      Register = None
+      Register = Manual
       Filter = String.Empty
       TimeOut = TimeSpan.FromMinutes 5.
       WorkingDir = currentDirectory }
@@ -52,7 +52,7 @@ let OpenCover setParams targetArgs =
             append "-output:"
             appendQuoted param.Output
         append (match param.Register with
-                | None -> String.Empty
+                | Manual -> String.Empty
                 | Register -> "-register "
                 | RegisterUser -> "-register:user ")
         if param.Filter <> String.Empty then 
