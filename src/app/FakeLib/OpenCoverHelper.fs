@@ -43,6 +43,11 @@ let OpenCoverDefaults =
 ///
 ///  - `setParams` - Function used to overwrite the default OpenCover parameters.
 ///  - `targetArgs` - Test runner arguments.
+///
+/// ## Sample
+///
+///  OpenCover (fun p -> { p with TestRunnerExePath = "./Tools/NUnit/nunit-console.exe" }) 
+///     "project-file.nunit /config:Release /noshadow /xml:artifacts/nunit.xml /framework:net-4.0"
 let OpenCover setParams targetArgs = 
     let taskName = "OpenCover"
     let description = "Gathering coverage statistics"
