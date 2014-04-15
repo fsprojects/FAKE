@@ -9,17 +9,26 @@ type RegisterType =
     | Register
     | RegisterUser
 
-// Open Cover parameter type
+/// OpenCover parameters, for more details see: https://github.com/OpenCover/opencover/wiki/Usage#console-application-usage.
 type OpenCoverParams = 
-    { ExePath : string
+    { /// (Required) Path to the OpenCover console application
+      ExePath : string
+      /// (Required) Path to the NUnit/XUnit console runner
       TestRunnerExePath : string
+      /// The location and name of the output xml file. 
+      /// If no value is supplied then the current directory 
+      /// will be used and the output filename will be results.xml.
       Output : string
+      /// Use this to register and de-register the code coverage profiler.
       Register : RegisterType
+      /// A list of filters to apply to selectively include or exclude assemblies and classes from coverage results.
       Filter : string
+      /// The timeout for the OpenCover process.
       TimeOut : TimeSpan
+      /// The directory where the OpenCover process will be started.
       WorkingDir : string }
 
-// Open Cover default parameters
+/// OpenCover default parameters
 let OpenCoverDefaults = 
     { ExePath = environVar "LOCALAPPDATA" @@ "Apps" @@ "OpenCover" @@ "OpenCover.Console.exe"
       TestRunnerExePath = ProgramFiles @@ "NUnit" @@ "bin" @@ "nunit-console.exe"
