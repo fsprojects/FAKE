@@ -1,5 +1,4 @@
-﻿[<AutoOpen>]
-/// Contains a task which can be used to run [OpenCover](https://github.com/sawilde/opencover) on .NET assemblies.
+﻿/// Contains a task which can be used to run [OpenCover](https://github.com/sawilde/opencover) on .NET assemblies.
 module Fake.OpenCoverHelper
 
 open System
