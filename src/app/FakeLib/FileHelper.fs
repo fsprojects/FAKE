@@ -433,6 +433,9 @@ let filename path = Path.GetFileName path
 /// ## Parameters
 ///
 /// - 'path' - The path from which the filename is retrieved.
+let fileNameWithoutExt path = Path.GetFileNameWithoutExtension path
+
+[<System.Obsolete("This was a typo - please use fileNameWithoutExt")>]
 let filenameWithouExt path = Path.GetFileNameWithoutExtension path
 
 /// Get the directory of the specified path
