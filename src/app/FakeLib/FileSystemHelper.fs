@@ -79,7 +79,7 @@ let rec isSubfolderOf (dir2 : DirectoryInfo) (dir1 : DirectoryInfo) =
 let isInFolder (dir : DirectoryInfo) (fileInfo : FileInfo) = isSubfolderOf dir fileInfo.Directory
 
 /// Checks if the directory exists on disk.
-let directoryExists = Directory.Exists
+let directoryExists dir = Directory.Exists dir
 
 /// Ensure that directory chain exists. Create necessary directories if necessary.
 let inline ensureDirExists (dir : DirectoryInfo) = 

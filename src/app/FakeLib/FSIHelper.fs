@@ -44,8 +44,8 @@ let private FsiStartInfo script workingDirectory extraFsiArgs args =
         setVar "FSI" fsiPath)
 
 /// Creates a ProcessStartInfo which is configured to the F# Interactive.
-let fsiStartInfo script workingDirectory args =
-    FsiStartInfo script workingDirectory [] args
+let fsiStartInfo script workingDirectory args info =
+    FsiStartInfo script workingDirectory [] args info
 
 /// Run the given buildscript with fsi.exe
 let executeFSI workingDirectory script args =
@@ -70,5 +70,5 @@ let runBuildScriptAt workingDirectory printDetails script extraFsiArgs args =
     result = 0
 
 /// Run the given buildscript with fsi.exe
-let runBuildScript printDetails script args =
-    runBuildScriptAt "" printDetails script args
+let runBuildScript printDetails script extraFsiArgs args =
+    runBuildScriptAt "" printDetails script extraFsiArgs args

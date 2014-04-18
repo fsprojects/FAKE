@@ -4,7 +4,7 @@ module Fake.FileUtils
 open System.IO
 
 /// Deletes a file if it exists
-let rm = DeleteFile
+let rm fileName = DeleteFile fileName
 
 /// Like "rm -rf" in a shell. Removes files recursively, ignoring nonexisting files
 let rm_rf f = 
