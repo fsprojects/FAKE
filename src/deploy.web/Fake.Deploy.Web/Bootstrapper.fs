@@ -13,6 +13,7 @@ type Bootstrapper() =
         let m = UserMapper()
         container.Register<IUserMapper, UserMapper>(m) |> ignore
         container.Register<UserMapper, UserMapper>(m) |> ignore
+        container.Register<AgentProxy, AgentProxy>().AsSingleton() |> ignore
         let c = new Configuration()
         Data.start c
         container.Register<Configuration>(c) |> ignore

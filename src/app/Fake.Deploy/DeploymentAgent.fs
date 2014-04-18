@@ -1,5 +1,4 @@
-﻿/// Contains the implementation of the Fake.Deploy HTTP listener.
-module Fake.DeploymentAgent
+﻿module Fake.DeploymentAgent
 
 open System
 open System.IO
@@ -12,6 +11,7 @@ open Fake.DeployAgentModule
 open Fake.HttpListenerHelper
 open Nancy
 open Nancy.Hosting.Self
+open Nancy.Security
 
 let mutable private logger : string * EventLogEntryType -> unit = ignore
 
@@ -55,12 +55,15 @@ let mutable workDir = Path.GetDirectoryName(Uri(typedefof<FakeModule>.Assembly.C
 type DeployAgentModule() as http =
     inherit FakeModule("/fake")
 
-
     let createResponse x = 
         x
         |> FakeDeployAgentHelper.DeploymentResponse.QueryResult
         |> http.Response.AsJson
+
     do
+        http.RequiresAuthentication()
+
+
         http.post "/" (fun p -> 
             runDeployment workDir http.Request)
 

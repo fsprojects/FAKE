@@ -7,13 +7,11 @@ type JsonSerializerForFsharp =
     inherit JsonNetSerializer
     
     new (s:JsonSerializer) =
-        s.Converters.Add(UnionTypeConverter())
         { inherit JsonNetSerializer(s) }
 
 type JsonBodySerializerForFsharp =
     inherit JsonNetBodyDeserializer
     
     new (s:JsonSerializer) =
-        s.Converters.Add(UnionTypeConverter())
         { inherit JsonNetBodyDeserializer(s) }
 

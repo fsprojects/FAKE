@@ -38,9 +38,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="AppConfig.fs" />
     <Compile Include="DeploymentHelper.fs" />
     <Compile Include="DeployAgentModule.fs" />
     <Compile Include="DeploymentAgent.fs" />
+    <Compile Include="AuthenticatedUser.fs" />
+    <Compile Include="UserMapper.fs" />
+    <Compile Include="AuthModule.fs" />
     <Compile Include="JSonSerializers.fs" />
     <Compile Include="NancyBootStrapper.fs" />
     <Compile Include="Services.fs" />
@@ -63,6 +67,10 @@
       <HintPath>..\..\..\packages\Nancy.0.22.2\lib\net40\Nancy.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Nancy.Authentication.Stateless">
+      <HintPath>..\..\..\packages\Nancy.Authentication.Stateless.0.22.2\lib\net40\Nancy.Authentication.Stateless.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Nancy.Hosting.Self">
       <HintPath>..\..\..\packages\Nancy.Hosting.Self.0.22.2\lib\net40\Nancy.Hosting.Self.dll</HintPath>
       <Private>True</Private>
@@ -73,6 +81,10 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\packages\Newtonsoft.Json.6.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Renci.SshNet">
+      <HintPath>..\..\..\packages\SSH.NET.2013.4.7\lib\net40\Renci.SshNet.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
