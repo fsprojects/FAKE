@@ -53,7 +53,7 @@ let inline regexCheck fname ftpContents = Regex.IsMatch(ftpContents, (sprintf @"
 ///  - `user` - FTP Server login name (ex: "joebloggs")
 ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
 let getFtpDirContents (server : string) (user : string) (pwd : string) (dirPath : string) = 
-    logfn "getting ftp dir contents for %s" dirPath
+    logfn "Getting FTP dir contents for %s" dirPath
     dirPath
     |> fun d -> getServerInfo (sprintf "%s/%s" server d) user pwd WebRequestMethods.Ftp.ListDirectoryDetails
     |> fun si -> 
@@ -70,7 +70,7 @@ let getFtpDirContents (server : string) (user : string) (pwd : string) (dirPath 
 ///  - `user` - FTP Server login name (ex: "joebloggs")
 ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
 let uploadAFile (server : string) (user : string) (pwd : string) (destPath : string) (srcPath : string) = 
-    logfn "upload %s from to %s" srcPath destPath
+    logfn "Uploading %s to %s" srcPath destPath
     let fl = new FileInfo(srcPath)
     if (fl.Length <> 0L) then 
         destPath
@@ -112,13 +112,13 @@ let isFolderPresent server user pwd (destPath : string) =
 ///  - `user` - FTP Server login name (ex: "joebloggs")
 ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
 let createAFolder (server : string) (user : string) (pwd : string) (destPath : string) = 
-    logfn "folder to create=%s" destPath
+    logfn "Creating folder %s" destPath
     if not ((String.IsNullOrEmpty destPath) || (isFolderPresent server user pwd destPath)) then 
         destPath
         |> fun d -> getServerInfo (sprintf "%s/%s" server d) user pwd WebRequestMethods.Ftp.MakeDirectory
         |> fun si -> 
             use response = (si.Request.GetResponse() :?> FtpWebResponse)
-            logfn "create folder status = %s" (response.StatusDescription)
+            logfn "Create folder status: %s" (response.StatusDescription)
 
 /// Uploads a given local folder to a given root dir on a FTP server.
 /// ## Parameters
@@ -128,7 +128,7 @@ let createAFolder (server : string) (user : string) (pwd : string) (destPath : s
 ///  - `user` - FTP Server login name (ex: "joebloggs")
 ///  - `pwd` - FTP Server login password (ex: "J0Eblogg5")
 let rec uploadAFolder server user pwd (srcPath : string) (rootDir : string) = 
-    logfn "folder to upload=%s" srcPath
+    logfn "Uploading folder %s" srcPath
     let dirInfo = new DirectoryInfo(srcPath)
     if dirInfo.Exists && dirNameIsValid rootDir then 
         dirInfo.GetFileSystemInfos() |> Seq.iter (fun fsi -> upload server user pwd fsi rootDir)
@@ -140,4 +140,4 @@ and private upload server user pwd (fsi : FileSystemInfo) (rootDir : string) =
         createAFolder server user pwd (sprintf "%s\\%s" rootDir fsi.Name)
         uploadAFolder server user pwd fsi.FullName (sprintf "%s\\%s" rootDir fsi.Name)
     | "System.IO.FileInfo" -> uploadAFile server user pwd (sprintf "%s\\%s" rootDir fsi.Name) fsi.FullName
-    | _ -> logfn "unknown object found at %A" fsi
+    | _ -> logfn "Unknown object found at %A" fsi

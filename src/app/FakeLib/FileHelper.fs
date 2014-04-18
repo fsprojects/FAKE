@@ -56,7 +56,7 @@ let CreateDir path =
     if not dir.Exists then 
         logfn "Creating %s" dir.FullName
         dir.Create()
-    else logfn "%s does already exist." dir.FullName
+    else logfn "%s already exists." dir.FullName
 
 /// Creates a file if it does not exist.
 let CreateFile fileName = 
@@ -65,7 +65,7 @@ let CreateFile fileName =
         logfn "Creating %s" file.FullName
         let newFile = file.Create()
         newFile.Close()
-    else logfn "%s does already exist." file.FullName
+    else logfn "%s already exists." file.FullName
 
 /// Deletes a file if it exists.
 let DeleteFile fileName = 
@@ -125,7 +125,7 @@ let CopyFile target fileName =
             | File f' -> f'.FullName
         logVerbosefn "Copy %s to %s" fileName targetName
         f.CopyTo(targetName, true) |> ignore
-    | Directory _ -> logVerbosefn "Ignoring %s, because it is no file" fileName
+    | Directory _ -> logVerbosefn "Ignoring %s, because it is a directory." fileName
 
 /// Copies the files to the target.
 /// ## Parameters
@@ -375,7 +375,7 @@ let MoveFile target fileName =
         if targetInfo.Exists then targetInfo.Delete()
         logVerbosefn "Move %s to %s" fileName targetName
         f.MoveTo(targetName) |> ignore
-    | Directory _ -> logVerbosefn "Ignoring %s, because it is no file" fileName
+    | Directory _ -> logVerbosefn "Ignoring %s, because it is a directory." fileName
 
 /// Creates a config file with the parameters as "key;value" lines
 let WriteConfigFile configFileName parameters = 
