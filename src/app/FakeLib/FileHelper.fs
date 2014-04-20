@@ -132,7 +132,9 @@ let CopyFile target fileName =
 /// 
 ///  - `target` - The target directory.
 ///  - `files` - The original file names as a sequence.
-let Copy target files = files |> Seq.iter (CopyFile target)
+let Copy target files = 
+    ensureDirectory target
+    files |> Seq.iter (CopyFile target)
 
 /// Copies the given files to the target.
 /// ## Parameters
