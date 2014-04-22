@@ -1,6 +1,10 @@
+#### 2.14.0 - 22.04.2014
+* Support for OpenCover - https://github.com/fsharp/FAKE/pull/398
+* Support for ReportsGenerator - https://github.com/fsharp/FAKE/pull/399
+
 #### 2.13.4 - 14.04.2014
 * Adding AppVeyor environment variables 
-* New BulkReplaceAssemblyInfoVersions task
+* New BulkReplaceAssemblyInfoVersions task - https://github.com/fsharp/FAKE/pull/394
 * Fixed default nuspec file
 * "Getting started" tutorial uses better folder structure
 
