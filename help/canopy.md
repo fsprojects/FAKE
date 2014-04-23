@@ -3,8 +3,10 @@
 FAKE can be used to run a variety of different testing frameworks. 
 In this tutorial we are looking at [Canopy](http://lefthandedgoat.github.io/canopy/) support.
 
+![alt text](pics/canopy/logo.jpg "Running canopy tests from FAKE")
+
 ## Setup your canopy project
-Consider a simple program.fs file:
+Consider a simple canopy program.fs file:
 
 	#r "canopy.dll"
 
@@ -23,8 +25,7 @@ Consider a simple program.fs file:
 	    //go to url
 	    url "http://localhost:81/canopy/testpages/"
 
-	    //assert that the element with an id of 'welcome' has
-	    //the text 'Welcome'
+	    //assert that the element with an id of 'welcome' has the text 'Welcome'
 	    "#welcome" == "Welcome"
 
 	//run all tests
@@ -43,7 +44,6 @@ Normally canopy loads PhantomJS.exe from C:\ but in our case we want to use the 
 The target in FAKE basically hosts the website in IIS Express and starts the canopy tests. IISExpress requires a configuration template ("iisexpress-template.config") which can be copied from %ProgramFiles%\IIS Express\AppServer\applicationhost.config. 
 
 	Target "CanopyTests" (fun _ ->
-
 		let hostName = "localhost"
 		let port = 81
 
