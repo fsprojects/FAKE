@@ -136,13 +136,13 @@
     <Content Include="Scripts\jquery-2.1.0.js" />
     <Content Include="Scripts\jquery-2.1.0.intellisense.js" />
     <None Include="Scripts\jquery-2.1.0.min.map" />
-    <Content Include="Scripts\knockout-2.2.1.js" />
-    <Content Include="Scripts\knockout-2.2.1.debug.js" />
     <Content Include="Scripts\knockout.mapping-latest.js" />
     <Content Include="Scripts\knockout.mapping-latest.debug.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\knockout-3.1.0.js" />
+    <Content Include="Scripts\knockout-3.1.0.debug.js" />
     <None Include="content\toastr.css" />
     <None Include="content\bootstrap-responsive.min.css" />
     <None Include="content\bootstrap-responsive.css" />
