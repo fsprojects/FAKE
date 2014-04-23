@@ -1,3 +1,6 @@
+#### 2.14.1 - 23.04.2014
+* Silent mode for MSIHelper - https://github.com/fsharp/FAKE/issues/400
+
 #### 2.14.0 - 22.04.2014
 * Support for OpenCover - https://github.com/fsharp/FAKE/pull/398
 * Support for ReportsGenerator - https://github.com/fsharp/FAKE/pull/399

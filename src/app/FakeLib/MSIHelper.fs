@@ -9,7 +9,8 @@ type MSIParams =
     { ToolPath: string
       WorkingDir:string
       LogFile:string
-      ThrowIfSetupFails: bool;
+      ThrowIfSetupFails: bool
+      Silent: bool
       TimeOut: TimeSpan}
 
 /// MSI default parameters  
@@ -18,6 +19,7 @@ let MSIDefaults =
       WorkingDir = "."
       LogFile = "InstallLog.txt"
       ThrowIfSetupFails = true
+      Silent = false
       TimeOut = TimeSpan.FromMinutes 5. }
 
 /// Installs a msi.
@@ -28,7 +30,7 @@ let MSIDefaults =
 let Install setParams setup = 
     traceStartTask "MSI-Install" setup
     let parameters = setParams MSIDefaults
-    let args = sprintf "/qb /l* %s /i %s" parameters.LogFile setup
+    let args = sprintf "%s /l* %s /i %s" (if parameters.Silent then "/qn" else "/qb") parameters.LogFile setup
 
     if 0 <> ExecProcess (fun info ->  
         info.FileName <- parameters.ToolPath
@@ -47,7 +49,7 @@ let Install setParams setup =
 let Uninstall setParams setup = 
     traceStartTask "MSI-Uninstall" setup
     let parameters = setParams MSIDefaults
-    let args = sprintf "/qb /l* %s /x %s" parameters.LogFile setup
+    let args = sprintf "%s /l* %s /x %s" (if parameters.Silent then "/qn" else "/qb") parameters.LogFile setup
     
     if 0 <> ExecProcess (fun info ->  
         info.FileName <- parameters.ToolPath
