@@ -56,6 +56,7 @@
     <Compile Include="IISHelper.fs" />
     <None Include="packages.config" />
     <None Include="Script.fsx" />
+    <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FakeLib\FakeLib.fsproj">
