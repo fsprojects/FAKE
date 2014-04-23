@@ -139,14 +139,16 @@
     <Content Include="Scripts\knockout.mapping-latest.js" />
     <Content Include="Scripts\knockout.mapping-latest.debug.js" />
     <Content Include="Scripts\toastr.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\knockout-3.1.0.js" />
     <Content Include="Scripts\knockout-3.1.0.debug.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
     <None Include="content\toastr.css" />
-    <None Include="content\bootstrap-responsive.min.css" />
-    <None Include="content\bootstrap-responsive.css" />
+    <None Include="content\bootstrap-theme.min.css" />
+    <None Include="content\bootstrap-theme.css.map" />
+    <None Include="content\bootstrap-theme.css" />
     <None Include="content\bootstrap.min.css" />
+    <None Include="content\bootstrap.css.map" />
     <None Include="content\bootstrap.css" />
     <None Include="img\glyphicons-halflings-white.png" />
     <None Include="img\glyphicons-halflings.png" />
@@ -169,6 +171,10 @@
     <Compile Include="Global.fs" />
     <Compile Include="Bootstrapper.fs" />
     <Compile Include="Extensions.fs" />
+    <None Include="fonts\glyphicons-halflings-regular.woff" />
+    <None Include="fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="fonts\glyphicons-halflings-regular.svg" />
+    <None Include="fonts\glyphicons-halflings-regular.eot" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
