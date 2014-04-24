@@ -17,19 +17,19 @@ exception BuildException of string*list<string>
   with
     override x.ToString() = x.Data0.ToString() + "\r\n" + (separated "\r\n" x.Data1)
 
-let private MSBuildPath = 
-    (ProgramFilesX86 @@ @"\MSBuild\12.0\Bin") + ";" +
-    (ProgramFilesX86 @@ @"\MSBuild\12.0\Bin\amd64") + ";" + 
-    @"c:\Windows\Microsoft.NET\Framework\v4.0.30319\;" + 
-    @"c:\Windows\Microsoft.NET\Framework\v4.0.30128\;" + 
-    @"c:\Windows\Microsoft.NET\Framework\v3.5\"
-
 /// Tries to detect the right version of MSBuild.
 ///   - On Linux/Unix Systems we use xBuild.
 ///   - On Windows we try to find a "MSBuild" build parameter or read the MSBuild tool location from the AppSettings file.
 let msBuildExe =   
     if isUnix then "xbuild"
     else
+        let MSBuildPath = 
+            (ProgramFilesX86 @@ @"\MSBuild\12.0\Bin") + ";" +
+            (ProgramFilesX86 @@ @"\MSBuild\12.0\Bin\amd64") + ";" + 
+            @"c:\Windows\Microsoft.NET\Framework\v4.0.30319\;" + 
+            @"c:\Windows\Microsoft.NET\Framework\v4.0.30128\;" + 
+            @"c:\Windows\Microsoft.NET\Framework\v3.5\"
+
         let ev = environVar "MSBuild"
         if not (isNullOrEmpty ev) then ev
         else if "true".Equals(ConfigurationManager.AppSettings.["IgnoreMSBuild"], StringComparison.OrdinalIgnoreCase) then 
