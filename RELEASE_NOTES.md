@@ -1,3 +1,6 @@
+#### 2.14.14 - unreleased
+* UnionConverter no longer needed for Json.Net
+
 #### 2.14.13 - 24.04.2014
 * Handle problems with ProgramFilesX86 on mono - https://github.com/tpetricek/FsLab/pull/32
 
