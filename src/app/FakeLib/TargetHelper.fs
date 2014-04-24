@@ -38,6 +38,9 @@ let TargetDict = new Dictionary<_,_>()
 /// Final Targets - stores final targets and if they are activated.
 let FinalTargets = new Dictionary<_,_>()
 
+/// BuildFailureTargets - stores build failure targets.
+let BuildFailureTargets = new List<_>()
+
 /// The executed targets.
 let ExecutedTargets = new HashSet<_>()
 
@@ -196,11 +199,26 @@ let runFinalTargets() =
            try             
                let watch = new System.Diagnostics.Stopwatch()
                watch.Start()
-               tracefn "Starting Finaltarget: %s" name
+               tracefn "Starting FinalTarget: %s" name
                TargetDict.[toLower name].Function()
                addExecutedTarget name watch.Elapsed
            with
            | exn -> targetError name exn)
+
+/// Runs all build failure targets.
+/// [omit]
+let runBuildFailureTargets() =
+    BuildFailureTargets
+      |> Seq.iter (fun name ->
+           try             
+               let watch = new System.Diagnostics.Stopwatch()
+               watch.Start()
+               tracefn "Starting BuildFailureTarget: %s" name
+               TargetDict.[toLower name].Function()
+               addExecutedTarget name watch.Elapsed
+           with
+           | exn -> targetError name exn)
+
 
 /// Prints all targets.
 let PrintTargets() =
@@ -311,10 +329,17 @@ let run targetName =
         PrintDependencyGraph false targetName
         runTarget targetName
     finally
+        if errors <> [] then
+            runBuildFailureTargets()    
         runFinalTargets()
         killAllCreatedProcesses()
         WriteTaskTimeSummary watch.Elapsed
         changeExitCodeIfErrorOccured()
+
+/// Registers a BuildFailureTarget (not activated).
+let BuildFailureTarget name body = 
+    Target name body
+    BuildFailureTargets.Add(toLower name)
  
 /// Registers a final target (not activated).
 let FinalTarget name body = 

@@ -1,4 +1,5 @@
-#### 2.14.14 - unreleased
+#### 2.15.0 - 24.4.2014
+* Allow to register BuildFailureTargets - https://github.com/fsharp/FAKE/issues/407
 * UnionConverter no longer needed for Json.Net
 
 #### 2.14.13 - 24.04.2014
