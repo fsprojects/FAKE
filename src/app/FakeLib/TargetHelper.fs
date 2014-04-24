@@ -38,8 +38,8 @@ let TargetDict = new Dictionary<_,_>()
 /// Final Targets - stores final targets and if they are activated.
 let FinalTargets = new Dictionary<_,_>()
 
-/// BuildFailureTargets - stores build failure targets.
-let BuildFailureTargets = new List<_>()
+/// BuildFailureTargets - stores build failure targets and if they are activated.
+let BuildFailureTargets = new Dictionary<_,_>()
 
 /// The executed targets.
 let ExecutedTargets = new HashSet<_>()
@@ -209,6 +209,8 @@ let runFinalTargets() =
 /// [omit]
 let runBuildFailureTargets() =
     BuildFailureTargets
+      |> Seq.filter (fun kv -> kv.Value)     // only if activated
+      |> Seq.map (fun kv -> kv.Key)
       |> Seq.iter (fun name ->
            try             
                let watch = new System.Diagnostics.Stopwatch()
@@ -339,7 +341,12 @@ let run targetName =
 /// Registers a BuildFailureTarget (not activated).
 let BuildFailureTarget name body = 
     Target name body
-    BuildFailureTargets.Add(toLower name)
+    BuildFailureTargets.Add(toLower name,false)
+
+/// Activates the BuildFailureTarget.
+let ActivateBuildFailureTarget name = 
+    let t = getTarget name // test if target is defined
+    BuildFailureTargets.[toLower name] <- true
  
 /// Registers a final target (not activated).
 let FinalTarget name body = 
