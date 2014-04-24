@@ -95,19 +95,6 @@ You can execute targets with the "RunTargetOrDefault"-function (for more details
 
 	RunTargetOrDefault "Default"
 
-### Final targets
-
-Final target can be used for TearDown functionality. 
-These targets will be executed even if the build fails but have to be activated via ActivateFinalTarget().
-
-	// FinalTarget will be excuted even if build fails
-	FinalTarget "CloseSomePrograms" (fun _ ->
-		// close stuff and release resources
-	)
-
-	// Activate FinalTarget somewhere during build
-	ActivateFinalTarget "CloseSomePrograms"
-
 ## FileSets
 
 "FAKE - F# Make" uses similar include and exclude patterns as NAnt and MSBuild. 

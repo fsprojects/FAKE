@@ -5,10 +5,10 @@ open System.Runtime.InteropServices
 [<assembly: AssemblyTitleAttribute("FAKE - F# Make Command line tool")>]
 [<assembly: GuidAttribute("fb2b540f-d97a-4660-972f-5eeff8120fba")>]
 [<assembly: AssemblyProductAttribute("FAKE - F# Make")>]
-[<assembly: AssemblyVersionAttribute("2.14.13")>]
-[<assembly: AssemblyInformationalVersionAttribute("2.14.13")>]
-[<assembly: AssemblyFileVersionAttribute("2.14.13")>]
+[<assembly: AssemblyVersionAttribute("2.15.0")>]
+[<assembly: AssemblyInformationalVersionAttribute("2.15.0")>]
+[<assembly: AssemblyFileVersionAttribute("2.15.0")>]
 do ()
 
 module internal AssemblyVersionInformation =
-    let [<Literal>] Version = "2.14.13"
+    let [<Literal>] Version = "2.15.0"
