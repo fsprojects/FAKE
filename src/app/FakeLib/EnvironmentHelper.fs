@@ -65,11 +65,14 @@ let ProgramFiles = Environment.GetFolderPath Environment.SpecialFolder.ProgramFi
 /// It seems this covers all cases where PROCESSOR\_ARCHITECTURE may misreport and the case where the other variable 
 /// PROCESSOR\_ARCHITEW6432 can be null
 let ProgramFilesX86 = 
-    let wow64 = (environVar "PROCESSOR_ARCHITEW6432")
-    let globalArch = (environVar "PROCESSOR_ARCHITECTURE")
+    let wow64 = environVar "PROCESSOR_ARCHITEW6432"
+    let globalArch = environVar "PROCESSOR_ARCHITECTURE"
     match wow64, globalArch with
-    | "AMD64", "AMD64" | null, "AMD64" | "x86", "AMD64" -> environVar "ProgramFiles(x86)"
+    | "AMD64", "AMD64" 
+    | null, "AMD64" 
+    | "x86", "AMD64" -> environVar "ProgramFiles(x86)"
     | _ -> environVar "ProgramFiles"
+    |> fun detected -> if detected = null then @"C:\Program Files (x86)\" else detected
 
 /// The system root environment variable. Typically "C:\Windows"
 let SystemRoot = environVar "SystemRoot"

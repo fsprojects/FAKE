@@ -1,3 +1,6 @@
+#### 2.14.13 - 24.04.2014
+* Handle problems with ProgramFilesX86 on mono - https://github.com/tpetricek/FsLab/pull/32
+
 #### 2.14.12 - 24.04.2014
 * Change the MSBuild 12.0 path settings according to https://github.com/tpetricek/FsLab/pull/32
 
