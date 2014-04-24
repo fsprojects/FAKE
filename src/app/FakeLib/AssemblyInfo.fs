@@ -7,10 +7,10 @@ open System.Runtime.InteropServices
 [<assembly: InternalsVisibleToAttribute("Test.FAKECore")>]
 [<assembly: GuidAttribute("d6dd5aec-636d-4354-88d6-d66e094dadb5")>]
 [<assembly: AssemblyProductAttribute("FAKE - F# Make")>]
-[<assembly: AssemblyVersionAttribute("2.14.12")>]
-[<assembly: AssemblyInformationalVersionAttribute("2.14.12")>]
-[<assembly: AssemblyFileVersionAttribute("2.14.12")>]
+[<assembly: AssemblyVersionAttribute("2.14.13")>]
+[<assembly: AssemblyInformationalVersionAttribute("2.14.13")>]
+[<assembly: AssemblyFileVersionAttribute("2.14.13")>]
 do ()
 
 module internal AssemblyVersionInformation =
-    let [<Literal>] Version = "2.14.12"
+    let [<Literal>] Version = "2.14.13"
