@@ -18,8 +18,8 @@ exception BuildException of string*list<string>
     override x.ToString() = x.Data0.ToString() + "\r\n" + (separated "\r\n" x.Data1)
 
 let private MSBuildPath = 
-    @"[ProgramFilesX86]\MSBuild\12.0\bin\;" + 
-    @"[ProgramFilesX86]\MSBuild\12.0\bin\amd64\;" + 
+    (ProgramFilesX86 @@ @"\MSBuild\12.0\Bin") + ";" +
+    (ProgramFilesX86 @@ @"\MSBuild\12.0\Bin\amd64") + ";" + 
     @"c:\Windows\Microsoft.NET\Framework\v4.0.30319\;" + 
     @"c:\Windows\Microsoft.NET\Framework\v4.0.30128\;" + 
     @"c:\Windows\Microsoft.NET\Framework\v3.5\"

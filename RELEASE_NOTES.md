@@ -1,3 +1,6 @@
+#### 2.14.12 - 24.04.2014
+* Change the MSBuild 12.0 path settings according to https://github.com/tpetricek/FsLab/pull/32
+
 #### 2.14.1 - 23.04.2014
 * Silent mode for MSIHelper - https://github.com/fsharp/FAKE/issues/400
 
