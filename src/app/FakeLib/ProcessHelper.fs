@@ -15,7 +15,7 @@ let startedProcesses = HashSet()
 /// [omit]
 let start (proc : Process) = 
     proc.Start() |> ignore
-    startedProcesses.Add(proc.ProcessName, proc) |> ignore
+    startedProcesses.Add(proc.Id, proc.StartTime) |> ignore
 
 /// [omit]
 let mutable redirectOutputToTrace = false
@@ -429,18 +429,22 @@ let killMSBuild() = killProcess "msbuild"
 let mutable killCreatedProcesses = true
 
 /// Kills all processes that are created by the FAKE build script unless "donotkill" flag was set.
-let killAllCreatedProcesses() = 
+let killAllCreatedProcesses() =
     if not killCreatedProcesses then ()
     else 
         if startedProcesses.Count > 0 then 
             tracefn "Killing all processes that are created by FAKE and are still running."
-        for name, proc in startedProcesses do
-            try 
-                if not proc.HasExited then 
+        for pid, startTime in startedProcesses do
+            try
+                let proc = Process.GetProcessById pid
+                
+                // process IDs may be reused by the operating system so we need
+                // to make sure the process is indeed the one we started
+                if proc.StartTime = startTime && not proc.HasExited then
                     try 
-                        logfn "Trying to kill %s" name
+                        logfn "Trying to kill %s" proc.ProcessName
                         kill proc
-                    with exn -> logfn "Killing %s failed with %s" name exn.Message
+                    with exn -> logfn "Killing %s failed with %s" proc.ProcessName exn.Message                              
             with exn -> ()
         startedProcesses.Clear()
 
