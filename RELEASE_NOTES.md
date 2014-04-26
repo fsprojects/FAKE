@@ -1,4 +1,4 @@
-#### 2.15.3 - 24.4.2014
+#### 2.15.4 - 24.4.2014
 * Fix issues in the ProcessHelper - https://github.com/fsharp/FAKE/pull/412 and https://github.com/fsharp/FAKE/pull/411
 
 #### 2.15.2 - 24.4.2014
