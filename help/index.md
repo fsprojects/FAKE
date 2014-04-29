@@ -32,6 +32,7 @@ Some of our users are:
 * [msu solutions GmbH](http://www.msu-solutions.de/)
 * [E.On Global Commodities UK](http://www.eon.com/en/about-us/structure/company-finder/e-dot-on-global-commodities.html)
 * [Octokit](https://github.com/octokit/octokit.net/) by GitHub
+* [Tachyus](http://tachyus.com/)
 * [Akka.net](https://github.com/akkadotnet/akka.net)
 * [FSharp.Compiler.Service](https://github.com/fsharp/FSharp.Compiler.Service)
 * [Visual F# Power Tools](https://github.com/fsprojects/VisualFSharpPowerTools)
