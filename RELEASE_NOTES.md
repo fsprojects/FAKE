@@ -1,3 +1,6 @@
+#### 2.15.5 - 08.05.2014
+* Fix issue with symbol packages in NugetHelper
+
 #### 2.15.4 - 24.4.2014
 * Fix issues in the ProcessHelper - https://github.com/fsharp/FAKE/pull/412 and https://github.com/fsharp/FAKE/pull/411
 
