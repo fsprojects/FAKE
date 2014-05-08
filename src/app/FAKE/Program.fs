@@ -26,6 +26,8 @@ let printEnvironment cmdArgs args =
 
 let containsParam param = Seq.map toLower >> Seq.exists ((=) (toLower param))
 
+let paramIsHelp param = containsParam param ["help"; "?"; "/?"; "-h"; "--help"; "/h"; "/help"]
+
 let buildScripts = !! "*.fsx" |> Seq.toList
 
 try
@@ -33,7 +35,7 @@ try
         AutoCloseXmlWriter <- true
         let cmdArgs = System.Environment.GetCommandLineArgs()
         if containsParam "version" cmdArgs then printVersion() else
-        if (cmdArgs.Length = 2 && cmdArgs.[1].ToLower() = "help") || (cmdArgs.Length = 1 && List.length buildScripts = 0) then CommandlineParams.printAllParams() else
+        if (cmdArgs.Length = 2 && paramIsHelp cmdArgs.[1]) || (cmdArgs.Length = 1 && List.length buildScripts = 0) then CommandlineParams.printAllParams() else
         match Boot.ParseCommandLine(cmdArgs) with
         | None ->
             let buildScriptArg = if cmdArgs.Length > 1 && cmdArgs.[1].EndsWith ".fsx" then cmdArgs.[1] else Seq.head buildScripts
