@@ -1,5 +1,5 @@
-﻿[<AutoOpen>]
-/// Provides functions and operatores to deal with FAKE targets and target dependencies.
+[<AutoOpen>]
+/// Provides functions and operators to deal with FAKE targets and target dependencies.
 module Fake.AdditionalSyntax
 
 open System.Collections.Generic
