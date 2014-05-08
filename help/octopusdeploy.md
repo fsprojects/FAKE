@@ -34,12 +34,12 @@ So once you have created a project you are able to create a push a release into 
 
 	Target "Release" (fun _ ->
 		let release = { releaseOptions with Project = "Order Processor" }
+		let server = { Server = "http://your-octopus-server/api"; ApiKey   = "YOUR-CI-API-KEY-HERE" }
 
 		Octo (fun octoParams ->
 			{ octoParams with
 				ToolPath = "./packages/octopustools"
-				Server   = "http://your-octopus-server/api"
-				ApiKey   = "YOUR-CI-API-KEY-HERE"
+				Server   = server
 				Command  = CreateRelease (release, None) }
 		)
 	)
@@ -57,12 +57,12 @@ This is often a good idea when you want your FAKE build script to continue on to
 	Target "ReleaseAndDeploy" (fun _ ->
 		let release = { releaseOptions with Project = "Order Processor" }
 		let deploy  = { deployOptions with DeployTo = "TestEnvironment" }
+		let server = { Server = "http://your-octopus-server/api"; ApiKey   = "YOUR-CI-API-KEY-HERE" }
 
 		Octo (fun octoParams ->
 			{ octoParams with
 				ToolPath = "./packages/octopustools"
-				Server   = "http://your-octopus-server/api"
-				ApiKey   = "YOUR-CI-API-KEY-HERE"
+				Server   = server
 				Command  = CreateRelease (release, deploy) }
 		)
 	)
@@ -79,12 +79,12 @@ Finally when you are absolutely happy that your release is good to go the next s
 		let promote = { deployOptions with 
                           Project = "Order Processor"
                           DeployTo = "UatEnvironment" }
+		let server = { Server = "http://your-octopus-server/api"; ApiKey   = "YOUR-CI-API-KEY-HERE" }
 
 		Octo (fun octoParams ->
 			{ octoParams with
 				ToolPath = "./packages/octopustools"
-				Server   = "http://your-octopus-server/api"
-				ApiKey   = "YOUR-CI-API-KEY-HERE"
+				Server   = server
 				Command  = DeployRelease (promote) }
 		)
 	)
