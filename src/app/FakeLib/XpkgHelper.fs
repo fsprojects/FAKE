@@ -10,18 +10,56 @@ type xpkgParams =
     { ToolPath : string
       WorkingDir : string
       TimeOut : TimeSpan
+
+      /// File-system name of the component, without version and extension
       Package : string
+
+      /// Version of the component
       Version : string
+
+      /// Path where the generated .xam component package should be written to.
       OutputPath : string
+
+      /// Human readable name of the component.
+      /// Corresponds to the --name argument.
       Project : string
+
+      /// Human readable short description of the component.
+      /// Corresponds to the --summary argument.
       Summary : string
+
+      /// Human readable name of the publisher/author of the component.
+      /// Corresponds to the --publisher argument.
       Publisher : string
+
+      /// Website URL.
+      /// Corresponds to the --website argument.
       Website : string
+
+      /// Path to the Details.md file.
+      /// Corresponds to the --details argument.
       Details : string
+
+      /// Path to the License.md file.
+      /// Corresponds to the --license argument.
       License : string
+
+      /// Path to the GerringStarted.md file.
+      /// Corresponds to the --getting-started argument.
       GettingStarted : string
+
+      /// List of paths to icon files, whose names should end with _512x512.png and _128x128.png.
+      /// Corresponds to the --icon argument.
       Icons : string list
+
+      /// List of framework id * path tuples, specifying the assemblies for each platform.
+      /// Possible Framework ids include "android", "ios", "winphone-7.0", "winphone-7.1" and "mobile" for all in one.
+      /// Corresponds to the --library argument.
       Libraries : (string * string) list
+
+      /// List of summary * path tuples, specifying sample solutions.
+      /// The sample solutions must not have any project references; reference the assemblies directly.
+      /// Corresponds to the --sample argument.
       Samples : (string * string) list }
 
 /// Creates xpkg default parameters
