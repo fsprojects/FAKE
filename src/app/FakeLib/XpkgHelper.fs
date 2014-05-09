@@ -81,7 +81,7 @@ let xpkgPack setParams =
     
     let commandLineBuilder = 
         new StringBuilder()
-        |> append "create"
+        |> append "create-manually"
         |> append (sprintf "\"%s\"" fullPath)
         |> appendQuotedIfNotNull parameters.Project "--name="
         |> appendQuotedIfNotNull parameters.Summary "--summary="
