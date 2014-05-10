@@ -1,5 +1,6 @@
 ﻿[<AutoOpen>]
 /// Contains tasks to create packages in [Xamarin's xpkg format](http://components.xamarin.com/)
+/// Using the xpkg/xamarin-component.exe tool.
 module Fake.XpkgHelper
 
 open System
@@ -24,7 +25,7 @@ type xpkgParams =
       /// Corresponds to the --name argument.
       Project : string
 
-      /// Human readable short description of the component.
+      /// A short description of the component (max 160 characters).
       /// Corresponds to the --summary argument.
       Summary : string
 
@@ -32,9 +33,21 @@ type xpkgParams =
       /// Corresponds to the --publisher argument.
       Publisher : string
 
-      /// Website URL.
+      /// A URL to the website of the publisher/author.
+      /// Corresponds to the --publisher-url argument.
+      PublisherUrl : string
+
+      /// A URL to the website of the component.
       /// Corresponds to the --website argument.
       Website : string
+
+      /// A URL to an online source code repository (GitHub etc.)
+      /// Corresponds to the --srcurl argument.
+      SourcesUrl : string
+
+      /// A URL for any online documentation or support resources associated with the component.
+      /// Corresponds to the --docs argument.
+      DocsUrl : string
 
       /// Path to the Details.md file.
       /// Corresponds to the --details argument.
@@ -48,7 +61,12 @@ type xpkgParams =
       /// Corresponds to the --getting-started argument.
       GettingStarted : string
 
+      /// Path to an optional popover image (320x200).
+      /// Corresponds to the --popover argument.
+      Popover : string
+
       /// List of paths to icon files, whose names should end with _512x512.png and _128x128.png.
+      /// The recommended sizes are 512x512 and 128x128.
       /// Corresponds to the --icon argument.
       Icons : string list
 
@@ -60,7 +78,11 @@ type xpkgParams =
       /// List of summary * path tuples, specifying sample solutions.
       /// The sample solutions must not have any project references; reference the assemblies directly.
       /// Corresponds to the --sample argument.
-      Samples : (string * string) list }
+      Samples : (string * string) list
+
+      /// List of title * path tuples, specifying optional screenshots. The recommended size is 700x400.
+      /// Corresponds to the --screenshot argument.
+      Screenshots : (string * string) list }
 
 /// Creates xpkg default parameters
 let XpkgDefaults() = 
@@ -75,13 +97,18 @@ let XpkgDefaults() =
       Project = null
       Summary = null
       Publisher = null
+      PublisherUrl = null
       Website = null
+      SourcesUrl = null
+      DocsUrl = null
       Details = "Details.md"
       License = "License.md"
       GettingStarted = "GettingStarted.md"
+      Popover = null
       Icons = []
       Libraries = []
-      Samples = [] }
+      Samples = []
+      Screenshots = [] }
 
 let private getPackageFileName parameters = sprintf "%s-%s.xam" parameters.Package parameters.Version
 
@@ -124,10 +151,14 @@ let xpkgPack setParams =
         |> appendQuotedIfNotNull parameters.Project "--name="
         |> appendQuotedIfNotNull parameters.Summary "--summary="
         |> appendQuotedIfNotNull parameters.Publisher "--publisher="
+        |> appendQuotedIfNotNull parameters.PublisherUrl "--publisher-url="
         |> appendQuotedIfNotNull parameters.Website "--website="
         |> appendQuotedIfNotNull parameters.Details "--details="
         |> appendQuotedIfNotNull parameters.License "--license="
         |> appendQuotedIfNotNull parameters.GettingStarted "--getting-started="
+        |> appendQuotedIfNotNull parameters.Popover "--popover="
+        |> appendQuotedIfNotNull parameters.DocsUrl "--docs="
+        |> appendQuotedIfNotNull parameters.SourcesUrl "--srcurl="
     parameters.Icons
     |> List.map (fun icon -> sprintf " --icon=\"%s\"" icon)
     |> List.iter (fun x -> commandLineBuilder.Append x |> ignore)
@@ -136,6 +167,9 @@ let xpkgPack setParams =
     |> List.iter (fun x -> commandLineBuilder.Append x |> ignore)
     parameters.Samples
     |> List.map (fun (sample, solution) -> sprintf " --sample=\"%s\":\"%s\"" sample solution)
+    |> List.iter (fun x -> commandLineBuilder.Append x |> ignore)
+    parameters.Screenshots
+    |> List.map (fun (title, path) -> sprintf " --screenshot=\"%s\":\"%s\"" title path)
     |> List.iter (fun x -> commandLineBuilder.Append x |> ignore)
     let args = commandLineBuilder.ToString()
     trace (parameters.ToolPath + " " + args)
