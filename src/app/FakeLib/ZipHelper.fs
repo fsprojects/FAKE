@@ -63,7 +63,7 @@ let CreateZip workingDir fileName comment level flatten files =
 ///  - `workingDir` - The relative dir of the zip files. Use this parameter to influence directory structure within zip file.
 ///  - `fileName` - The file name of the resulting zip file.
 ///  - `files` - A sequence with files to zip.
-let Zip workingDir fileName = CreateZip workingDir fileName "" DefaultZipLevel false
+let Zip workingDir fileName files = CreateZip workingDir fileName "" DefaultZipLevel false files
 
 /// Creates a zip file with the given file.
 /// ## Parameters

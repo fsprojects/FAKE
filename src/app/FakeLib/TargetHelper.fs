@@ -100,11 +100,11 @@ let dependencyAtEnd targetName dependentTargetName =
 
 /// Adds the dependency to the list of dependencies.
 /// [omit]
-let dependency = dependencyAtEnd
+let dependency targetName dependentTargetName = dependencyAtEnd targetName dependentTargetName
   
 /// Adds the dependencies to the list of dependencies.
 /// [omit]
-let Dependencies targetName = List.iter (dependency targetName)
+let Dependencies targetName dependentTargetNames = dependentTargetNames |> List.iter (dependency targetName)
 
 /// Backwards dependencies operator - y is dependend on x.
 let inline (<==) x y = Dependencies x y

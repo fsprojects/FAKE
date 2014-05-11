@@ -216,7 +216,7 @@ let AppendToFile file lines = WriteToFile true file lines
 let inline ReadFileAsString file = File.ReadAllText(file, encoding)
 
 /// Reads a file as one array of bytes
-let ReadFileAsBytes = File.ReadAllBytes
+let ReadFileAsBytes file = File.ReadAllBytes file
 
 /// Replaces any occurence of the currentDirectory with .
 let inline shortenCurrentDirectory value = replace currentDirectory "." value

@@ -462,7 +462,7 @@ let ensureProcessesHaveStopped name timeout =
 
 /// Execute an external program and return the exit code.
 /// [omit]
-let shellExec = asyncShellExec >> Async.RunSynchronously
+let shellExec args = args |> asyncShellExec |> Async.RunSynchronously
 
 /// Allows to exec shell operations synchronously and asynchronously.
 type Shell() = 
