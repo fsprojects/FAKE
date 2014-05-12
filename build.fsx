@@ -30,12 +30,10 @@ let packages =
 
 let buildDir = "./build"
 let testDir = "./test"
-let deployDir = "./Publish"
 let docsDir = "./docs"
 let apidocsDir = "./docs/apidocs/"
 let nugetDir = "./nuget"
 let reportDir = "./report"
-let deployZip = deployDir @@ sprintf "%s-%s.zip" projectName release.AssemblyVersion
 let packagesDir = "./packages"
 
 let additionalFiles = [
@@ -45,7 +43,7 @@ let additionalFiles = [
     "help/changelog.md"]
 
 // Targets
-Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; deployDir; docsDir; apidocsDir; nugetDir; reportDir])
+Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDir; reportDir])
 
 Target "RestorePackages" RestorePackages
 
