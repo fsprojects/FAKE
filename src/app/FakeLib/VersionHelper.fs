@@ -41,14 +41,15 @@ let parseVersion version =
       Patch = if l > 2 then Int32.Parse splitted.[2] else 0
     }
 
-/// Gets file assembly version in form of major.minor.build.revision.
-/// ## Parameters
-///  - `assemblyFile` - The assembly file path.
-let GetAssemblyVersionString (assemblyFile: string) = 
-    AssemblyName.GetAssemblyName(assemblyFile).Version.ToString()
-
 /// Gets file assembly version.
 /// ## Parameters
 ///  - `assemblyFile` - The assembly file path.
 let GetAssemblyVersion (assemblyFile: string) = 
     AssemblyName.GetAssemblyName(assemblyFile).Version
+
+/// Gets file assembly version in form of major.minor.build.revision.
+/// ## Parameters
+///  - `assemblyFile` - The assembly file path.
+let GetAssemblyVersionString (assemblyFile: string) = 
+    GetAssemblyVersion(assemblyFile).ToString()
+
