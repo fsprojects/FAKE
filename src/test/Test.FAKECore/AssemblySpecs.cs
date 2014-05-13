@@ -8,14 +8,14 @@ using Machine.Specifications;
 
 namespace Test.FAKECore
 {
-    public class when_getting_assembly_version
+    public class when_getting_assembly_version_string
     {
         It should_return_valid_version_number_in_expected_form = () =>
         {
             var currentAssemblyVersion = Assembly.GetCallingAssembly().GetName().Version;
             var currentAssemblyFile = Assembly.GetCallingAssembly().Location;
             
-            var fakeVersion = Fake.AssemblyHelper.GetAssemblyVersion(currentAssemblyFile);
+            var fakeVersion = Fake.VersionHelper.GetAssemblyVersionString(currentAssemblyFile);
 
             fakeVersion.ShouldEqual(currentAssemblyVersion.Major + "." +
                                     currentAssemblyVersion.Minor + "." +
@@ -28,9 +28,22 @@ namespace Test.FAKECore
             var currentAssemblyVersion = Assembly.GetCallingAssembly().GetName().Version;
             var currentAssemblyFile = Assembly.GetCallingAssembly().Location;
 
-            var fakeVersion = Fake.AssemblyHelper.GetAssemblyVersion(currentAssemblyFile);
+            var fakeVersion = Fake.VersionHelper.GetAssemblyVersionString(currentAssemblyFile);
 
             fakeVersion.ShouldEqual(currentAssemblyVersion.ToString());
+        };
+    }
+
+    public class when_getting_assembly_version
+    {
+        It should_return_valid_version = () =>
+        {
+            var currentAssemblyVersion = Assembly.GetCallingAssembly().GetName().Version;
+            var currentAssemblyFile = Assembly.GetCallingAssembly().Location;
+
+            var fakeVersion = Fake.VersionHelper.GetAssemblyVersion(currentAssemblyFile);
+
+            fakeVersion.ShouldEqual(currentAssemblyVersion);
         };
     }
 }

@@ -132,7 +132,6 @@
     <Compile Include="TypeScript.fs" />
     <Compile Include="OpenCoverHelper.fs" />
     <Compile Include="ReportGeneratorHelper.fs" />
-    <Compile Include="AssemblyHelper.fs" />
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
