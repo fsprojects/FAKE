@@ -12,7 +12,8 @@ type xpkgParams =
       WorkingDir : string
       TimeOut : TimeSpan
 
-      /// File-system name of the component, without version and extension
+      /// Name to identify the component, without version and extension.
+      /// Must be composed of lowercase letters, numbers, and - or _.
       Package : string
 
       /// Version of the component
@@ -75,7 +76,8 @@ type xpkgParams =
       /// Corresponds to the --library argument.
       Libraries : (string * string) list
 
-      /// List of summary * path tuples, specifying sample solutions.
+      /// List of description * path tuples, specifying sample solutions.
+      /// Each description must contain at least two sentences. The first sentence will be used as title, the rest as summary.
       /// The sample solutions must not have any project references; reference the assemblies directly.
       /// Corresponds to the --sample argument.
       Samples : (string * string) list
