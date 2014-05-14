@@ -151,6 +151,7 @@
     <None Include="content\bootstrap.min.css" />
     <None Include="content\bootstrap.css.map" />
     <None Include="content\bootstrap.css" />
+    <None Include="content\toastr.scss" />
     <None Include="content\toastr.min.css" />
     <None Include="content\toastr.less" />
     <None Include="content\toastr.css" />
