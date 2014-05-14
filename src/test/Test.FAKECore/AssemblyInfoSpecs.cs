@@ -14,7 +14,7 @@ namespace Test.FAKECore
 
     public class when_using_fsharp_task_with_default_config
     {
-        It should_use_system_namespace_and_emit_a_verison_module = () =>
+        It should_use_system_namespace_and_emit_a_version_module = () =>
         {
             string infoFile = Path.GetTempFileName();
             var attributes = new[]
