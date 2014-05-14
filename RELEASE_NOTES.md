@@ -1,3 +1,6 @@
+#### 2.15.6 - 14.05.2014
+* Allow to retrieve version no. from assemblies
+
 #### 2.15.5 - 08.05.2014
 * Fix issue with symbol packages in NugetHelper
 
