@@ -91,6 +91,10 @@ type Attribute(name, value, inNamespace) =
     static member DelaySign(value) = 
         Attribute.BoolAttribute("AssemblyDelaySign", defaultArg value false, "System.Reflection")
 
+    /// Create an attribute which specifies metadata about the assembly
+    static member Metadata(name,value) = 
+        Attribute.StringAttribute("AssemblyMetadata", sprintf "%s\",\"%s" name value, "System.Reflection")
+
 let private writeToFile outputFileName (lines : seq<string>) = 
     let fi = fileInfo outputFileName
     fi.Delete()
