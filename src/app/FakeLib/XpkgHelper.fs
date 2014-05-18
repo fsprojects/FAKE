@@ -1,6 +1,6 @@
 ﻿[<AutoOpen>]
 /// Contains tasks to create packages in [Xamarin's xpkg format](http://components.xamarin.com/)
-/// Using the xpkg/xamarin-component.exe tool.
+/// using the [xamarin-component.exe](https://components.xamarin.com/submit/xpkg) tool.
 module Fake.XpkgHelper
 
 open System
@@ -88,7 +88,7 @@ type xpkgParams =
 
 /// Creates xpkg default parameters
 let XpkgDefaults() = 
-    { ToolPath = findToolInSubPath "xpkg.exe" (currentDirectory @@ "tools" @@ "xpkg")
+    { ToolPath = findToolInSubPath "xamarin-component.exe" (currentDirectory @@ "tools" @@ "xpkg")
       WorkingDir = "./"
       TimeOut = TimeSpan.FromMinutes 5.
       Package = null
@@ -135,8 +135,8 @@ let private getPackageFileName parameters = sprintf "%s-%s.xam" parameters.Packa
 ///                  Icons = ["./Xamarin/Portable.Licensing_512x512.png"
 ///                           "./Xamarin/Portable.Licensing_128x128.png"]
 ///                  Libraries = ["mobile", "./Distribution/lib/Portable.Licensing.dll"]
-///                  Samples = ["Android Sample.", "./Samples/Android/Android.Sample.sln"
-///                             "iOS Sample.", "./Samples/iOS/iOS.Sample.sln"]
+///                  Samples = ["Android Sample. Sample description.", "./Samples/Android/Android.Sample.sln"
+///                             "iOS Sample. Sample description.", "./Samples/iOS/iOS.Sample.sln"]
 ///              }
 ///          )
 ///      )
