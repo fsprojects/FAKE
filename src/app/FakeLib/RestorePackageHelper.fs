@@ -65,7 +65,7 @@ let runNuGet toolPath timeOut args failWith =
 /// [omit]
 let rec runNuGetTrial retries toolPath timeOut args failWith =
     let f() = runNuGet toolPath timeOut args failWith
-    runWithRetries f retries
+    TaskRunnerHelper.runWithRetries f retries
         
 /// [omit]
 let buildNuGetArgs setParams packageId = 

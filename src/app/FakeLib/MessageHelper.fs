@@ -9,7 +9,7 @@ let WaitForMessageFiles files timeOut =
     tracefn "Waiting for message files %A (Timeout: %A)" files timeOut
 
     let time = 
-        waitFor 
+        TaskRunnerHelper.waitFor 
             (fun _ -> allFilesExist files) 
             timeOut 
             100 
