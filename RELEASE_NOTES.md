@@ -1,3 +1,6 @@
+#### 2.15.7 - 21.05.2014
+* Remove AutoOpen from TaskRunnerHelper
+
 #### 2.15.6 - 14.05.2014
 * Allow to retrieve version no. from assemblies
 

@@ -1,5 +1,4 @@
-﻿[<AutoOpen>]
-/// Contains a helper which can be used to implement timeouts and retries.
+﻿/// Contains a helper which can be used to implement timeouts and retries.
 module Fake.TaskRunnerHelper
 
 /// Waits until the given function returns true or the timeout is reached.
