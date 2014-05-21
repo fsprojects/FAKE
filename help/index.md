@@ -46,7 +46,6 @@ You can find more user [here](users.html).
 You can download the latest builds from [http://teamcity.codebetter.com](http://teamcity.codebetter.com). You don't need to register, a guest login is ok.
 
 * [Latest stable build](http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt335&tab=artifacts&guest=1)
-* [Latest development build](http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt166&tab=artifacts&guest=1)
 * [Release Notes](RELEASE_NOTES.html)
 
 <div class="row">

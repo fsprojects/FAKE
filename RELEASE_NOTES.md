@@ -1,3 +1,6 @@
+#### 2.16.0 - 21.05.2014
+* Promoted the master branch as default branch and removed develop branch
+
 #### 2.15.7 - 21.05.2014
 * Remove AutoOpen from TaskRunnerHelper
 * Adding Metadata to AsssemblyInfo
