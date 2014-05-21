@@ -47,7 +47,7 @@ You can download the latest builds from [http://teamcity.codebetter.com](http://
 
 * [Latest stable build](http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt335&tab=artifacts&guest=1)
 * [Latest development build](http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt166&tab=artifacts&guest=1)
-* [Changelog](changelog.html)
+* [Release Notes](RELEASE_NOTES.html)
 
 <div class="row">
   <div class="span1"></div>

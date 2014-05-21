@@ -39,8 +39,7 @@ let packagesDir = "./packages"
 let additionalFiles = [
     "License.txt"
     "README.markdown"
-    "RELEASE_NOTES.md"
-    "help/changelog.md"]
+    "RELEASE_NOTES.md"]
 
 // Targets
 Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDir; reportDir])
@@ -105,6 +104,8 @@ Target "GenerateDocs" (fun _ ->
         "project-nuget", "https://www.nuget.org/packages/FAKE"
         "root", "http://fsharp.github.io/FAKE"
         "project-name", "FAKE - F# Make" ]
+
+    Copy source ["RELEASE_NOTES.md"]
 
     CreateDocs source docsDir template projInfo
 

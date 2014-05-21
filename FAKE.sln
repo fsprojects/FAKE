@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30324.0
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0F0488CC-2580-4C07-9E16-3997480F0221}"
 	ProjectSection(SolutionItems) = preProject
@@ -46,7 +46,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "help", "help", "{564BD198-09CB-45D1-87F2-E2153FE6D62F}"
 	ProjectSection(SolutionItems) = preProject
 		help\assemblyinfo.md = help\assemblyinfo.md
-		help\changelog.md = help\changelog.md
 		help\commandline.md = help\commandline.md
 		help\contributing.md = help\contributing.md
 		help\create-nuget-package.md = help\create-nuget-package.md
