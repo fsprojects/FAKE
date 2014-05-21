@@ -265,7 +265,7 @@ You can read the [getting started guide](gettingstarted.html) to build such a sc
       ==> "BuildTest"
       ==> "FxCop"
       ==> "NUnitTest"
-      =?> ("xUnitTest",hasBuildParam "xUnitTest")  // runs the target only if FAKE was called with parameter xUnitTest
+      =?> ("xUnitTest",hasBuildParam "xUnitTest")  // only if FAKE was called with parameter xUnitTest
       ==> "Deploy"
      
     // start build
