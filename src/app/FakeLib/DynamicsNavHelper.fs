@@ -69,10 +69,12 @@ let createConnectionInfo navClientVersion serverMode serverName targetDatabase =
 
 let private analyzeLogFile fileName = 
     try 
-        let lines = ReadFile fileName |> Seq.toList
+        let lines = ReadFile fileName |> Seq.cache
         lines |> Seq.iter traceError
         File.Delete fileName
-        lines.Length
+        lines
+        |> Seq.filter(fun l -> l.Contains "-- Object:")
+        |> Seq.length
     with exn -> 
         traceError exn.Message
         1
