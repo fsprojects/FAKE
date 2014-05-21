@@ -67,24 +67,26 @@ let createConnectionInfo navClientVersion serverMode serverName targetDatabase =
       TempLogFile = "./NavErrorMessages.txt"
       TimeOut = TimeSpan.FromMinutes 20. }
 
-let private analyzeLogFile fileName = 
-    try 
-        let lines = ReadFile fileName |> Seq.cache
-        lines |> Seq.iter traceError
-        File.Delete fileName
-        lines
-        |> Seq.filter(fun l -> l.Contains "-- Object:")
-        |> Seq.length
-    with exn -> 
-        traceError exn.Message
-        1
-
 let private reportError text logFile = 
-    let errors = analyzeLogFile logFile
+    let errors =
+        try 
+            let lines = ReadFile logFile |> Seq.toList            
+            lines |> Seq.iter traceError
+
+            lines
+            |> Seq.filter(fun l -> l.Contains "-- Object:")
+            |> Seq.length
+            |> fun e -> if e = 0 then lines.Length else e
+        with exn ->
+            traceError exn.Message
+            1
+
+    File.Delete logFile
+
     failwith (text + (if errors = 1 then " with 1 error."
                       else sprintf " with %d errors." errors))
 
-let private import connectionInfo fileName = 
+let private import connectionInfo fileName =
     let fi = fileInfo fileName
     
     let deleteFile, fi = 

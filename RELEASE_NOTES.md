@@ -1,3 +1,6 @@
+#### 2.16.1 - 21.05.2014
+* If the NAV error file contains no compile errors return the length
+
 #### 2.16.0 - 21.05.2014
 * Promoted the master branch as default branch and removed develop branch
 
