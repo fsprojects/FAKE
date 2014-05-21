@@ -132,10 +132,6 @@
     <Content Include="Scripts\jquery.iframe-transport.js" />
     <Content Include="Scripts\jquery.ui.widget.js" />
     <Content Include="Scripts\jquery.fileupload.js" />
-    <Content Include="Scripts\jquery-2.1.0.min.js" />
-    <Content Include="Scripts\jquery-2.1.0.js" />
-    <Content Include="Scripts\jquery-2.1.0.intellisense.js" />
-    <None Include="Scripts\jquery-2.1.0.min.map" />
     <Content Include="Scripts\knockout-3.1.0.js" />
     <Content Include="Scripts\knockout-3.1.0.debug.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -145,6 +141,10 @@
     <None Include="Scripts\toastr.min.js.map" />
     <Content Include="Scripts\toastr.min.js" />
     <Content Include="Scripts\toastr.js" />
+    <None Include="Scripts\jquery-2.1.1.min.map" />
+    <Content Include="Scripts\jquery-2.1.1.min.js" />
+    <Content Include="Scripts\jquery-2.1.1.js" />
+    <Content Include="Scripts\jquery-2.1.1.intellisense.js" />
     <None Include="content\bootstrap-theme.min.css" />
     <None Include="content\bootstrap-theme.css.map" />
     <None Include="content\bootstrap-theme.css" />
