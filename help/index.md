@@ -87,7 +87,7 @@ If one target should only be run on a specific condition you can use the =?> ope
 	
 	"Clean" 
 	  ==> "BuildApp"
-	  =?> ("Test",hasBuildParam "test")  // runs the Test target only if FAKE was called with parameter test
+	  =?> ("Test",hasBuildParam "test")  // only if FAKE was called with parameter xUnitTest
 	  ==> "Default"
 
 ### Running targets
