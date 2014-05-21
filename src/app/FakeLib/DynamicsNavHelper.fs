@@ -71,7 +71,7 @@ let private analyzeLogFile fileName =
     try 
         let lines = ReadFile fileName |> Seq.toList
         lines |> Seq.iter traceError
-        DeleteFile fileName
+        File.Delete fileName
         lines.Length
     with exn -> 
         traceError exn.Message
