@@ -27,6 +27,8 @@ type MSTestParams =
       ResultsDir : string
       /// Path to the Test Metadata file (.vdmdi)  (optional)
       TestMetadataPath : string
+      /// Path to the Test Settings file (.testsettings)  (optional)
+      TestSettingsPath : string
       /// Working directory (optional)
       WorkingDir : string
       /// A timeout for the test runner (optional)
@@ -43,6 +45,7 @@ let MSTestDefaults =
     { Category = null
       ResultsDir = null
       TestMetadataPath = null
+      TestSettingsPath = null
       WorkingDir = null
       TimeOut = TimeSpan.FromMinutes 5.
       ToolPath = 
@@ -62,6 +65,8 @@ let buildMSTestArgs parameters assembly =
     new StringBuilder()
     |> appendIfNotNull assembly "/testcontainer:"
     |> appendIfNotNull parameters.Category "/category:"
+    |> appendIfNotNull parameters.TestMetadataPath "/testmetadata:"
+    |> appendIfNotNull parameters.TestSettingsPath "/testsettings:"
     |> appendIfNotNull testResultsFile "/resultsfile:"
     |> appendIfTrue parameters.NoIsolation "/noisolation"
     |> toText
