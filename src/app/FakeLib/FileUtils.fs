@@ -26,7 +26,7 @@ let cp_r src dest =
 /// Like "cp" in a shell. Copies a single file.
 /// <param name="src">The source</param>
 /// <param name="dest">The destination</param>
-let cp src dest = CopyFile src dest
+let cp src dest = CopyFile dest src
 
 /// Changes working directory
 let chdir path = Directory.SetCurrentDirectory path
