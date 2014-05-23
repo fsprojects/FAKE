@@ -1,3 +1,6 @@
+#### 2.17.2 - 23.05.2014
+* fix appveyor msbuild logger
+
 #### 2.17.1 - 23.05.2014
 * Don't add Teamcity logger if not needed
 

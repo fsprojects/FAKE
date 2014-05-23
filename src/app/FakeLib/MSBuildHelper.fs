@@ -247,7 +247,7 @@ let mutable MSBuildLoggers =
 // Add MSBuildLogger to track build messages
 match buildServer with
 | BuildServer.AppVeyor ->
-    MSBuildLoggers <- @"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" :: MSBuildLoggers
+    MSBuildLoggers <- @"""C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll""" :: MSBuildLoggers
 | BuildServer.TeamCity  -> MSBuildLoggers <- sprintf "%s,\"%s\"" TeamCityLoggerName pathToLogger :: MSBuildLoggers
 | _ -> ()
 
