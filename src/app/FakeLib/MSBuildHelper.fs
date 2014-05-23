@@ -237,15 +237,19 @@ let TeamCityLoggerName = typedefof<Fake.MsBuildLogger.TeamCityLogger>.FullName
 /// [omit]
 let ErrorLoggerName = typedefof<Fake.MsBuildLogger.ErrorLogger>.FullName
 
+let private pathToLogger = typedefof<MSBuildParams>.Assembly.Location 
+
 /// Defines the loggers to use for MSBuild task
-let mutable MSBuildLoggers =
-    let pathToLogger = typedefof<MSBuildParams>.Assembly.Location
-    [ TeamCityLoggerName; ErrorLoggerName ]
+let mutable MSBuildLoggers =    
+    [ ErrorLoggerName ]
     |> List.map (fun a -> sprintf "%s,\"%s\"" a pathToLogger)
 
 // Add MSBuildLogger to track build messages
-if buildServer = BuildServer.AppVeyor then 
+match buildServer with
+| BuildServer.AppVeyor ->
     MSBuildLoggers <- @"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" :: MSBuildLoggers
+| BuildServer.TeamCity  -> MSBuildLoggers <- sprintf "%s,\"%s\"" TeamCityLoggerName pathToLogger :: MSBuildLoggers
+| _ -> ()
 
 /// Runs a MSBuild project
 /// ## Parameters
