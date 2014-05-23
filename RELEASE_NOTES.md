@@ -1,5 +1,5 @@
-#### 2.17.3-alpha2 - 23.05.2014
-* Try to report tests to AppVeyor
+#### 2.17.3- 23.05.2014
+* Allow to report tests to AppVeyor
 
 #### 2.17.2 - 23.05.2014
 * fix appveyor msbuild logger
