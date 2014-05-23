@@ -52,7 +52,6 @@ let IgnoreTestCase name message =
     StartTestCase name
     sprintf "##teamcity[testIgnored name='%s' message='%s']" (EncapsulateSpecialChars name) 
         (EncapsulateSpecialChars message) |> sendStrToTeamCity
-    FinishTestCase name System.TimeSpan.Zero
 
 /// Finishes the test suite.
 let FinishTestSuite testSuiteName = 
