@@ -45,13 +45,16 @@ let reportToTeamCity testResults =
 
 /// Reports the given test results to [AppVeyor](http://www.appveyor.com/).
 let reportToAppVeyor testResults =     
+    AppVeyor.StartTestSuite testResults.SuiteName
     for test in testResults.Tests do
         let runtime = System.TimeSpan.FromSeconds 2.
-        AppVeyor.StartTestCase test.Name
+        AppVeyor.StartTestCase testResults.SuiteName test.Name
         match test.Status with
-        | Ok -> ()
-        | _ -> ()
-        AppVeyor.FinishTestCase test.Name test.RunTime
+        | Ok -> AppVeyor.TestSucceeded testResults.SuiteName test.Name
+        | Failure(msg, details) -> AppVeyor.TestFailed testResults.SuiteName test.Name msg details
+        | Ignored(msg, details) -> AppVeyor.IgnoreTestCase testResults.SuiteName test.Name msg
+        AppVeyor.FinishTestCase testResults.SuiteName test.Name test.RunTime
+    AppVeyor.FinishTestSuite testResults.SuiteName
 
 /// Reports the given test results to the detected build server
 let reportTestResults testResults = 

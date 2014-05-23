@@ -1,4 +1,4 @@
-#### 2.17.3-alpha1 - 23.05.2014
+#### 2.17.3-alpha2 - 23.05.2014
 * Try to report tests to AppVeyor
 
 #### 2.17.2 - 23.05.2014

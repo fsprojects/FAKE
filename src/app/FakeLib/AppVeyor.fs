@@ -81,15 +81,32 @@ if buildServer = BuildServer.AppVeyor then
               | StartMessage | FinishedMessage | OpenTag(_, _) | CloseTag _ -> () }
     |> listeners.Add
 
+/// Finishes the test suite.
+let FinishTestSuite testSuiteName = () // Nothing in API yet
+
+/// Starts the test suite.
+let StartTestSuite testSuiteName = () // Nothing in API yet
+
 /// Starts the test case.
-let StartTestCase testCaseName = 
-    sendToAppVeyor <| sprintf "AddTest \"%s\" -Outcome Running" testCaseName
+let StartTestCase testSuiteName testCaseName = 
+    sendToAppVeyor <| sprintf "AddTest \"%s\" -Outcome Running" (testSuiteName + " - " + testCaseName)
+
+/// Reports a failed test.
+let TestFailed testSuiteName testCaseName message details = 
+    sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Outcome Failed -ErrorMessage %s -ErrorStackTrace %s" (testSuiteName + " - " + testCaseName)
+        (EncapsulateSpecialChars message) (EncapsulateSpecialChars details)
+
+/// Ignores the test case.      
+let IgnoreTestCase testSuiteName testCaseName message = sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Outcome Passed" (testSuiteName + " - " + testCaseName)
+
+/// Reports a succeeded test.
+let TestSucceeded testSuiteName testCaseName = sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Outcome Passed" (testSuiteName + " - " + testCaseName)
 
 /// Finishes the test case.
-let FinishTestCase testCaseName (duration : System.TimeSpan) = 
+let FinishTestCase testSuiteName testCaseName (duration : System.TimeSpan) = 
     let duration = 
         duration.TotalMilliseconds
         |> round
         |> string
 
-    sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Outcome Passed -Duration %s" testCaseName duration
+    sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Duration %s" (testSuiteName + " - " + testCaseName) duration
