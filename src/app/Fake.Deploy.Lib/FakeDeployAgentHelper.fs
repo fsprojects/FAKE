@@ -4,7 +4,15 @@ module Fake.FakeDeployAgentHelper
 open System
 open System.IO
 open System.Net
+open System.Text
+open System.Web
 open HttpListenerHelper
+open Fake.SshRsaModule
+
+type AuthToken = 
+    | AuthToken of Guid
+
+let mutable private authToken : Guid option = None
 
 /// A http response type.
 type Response = 
@@ -36,6 +44,9 @@ let private webClient() =
     let client = new WebClient()
     client.Headers.Add(HttpRequestHeader.ContentType, "application/fake")
     client.Headers.Add("fake-deploy-use-http-response-messages", "true")
+    match authToken with
+    | None -> ()
+    | Some t -> client.Headers.Add("AuthToken", t.ToString())
     client
 
 /// Gets the http response from the given URL and runs it with the given function.
@@ -92,6 +103,17 @@ type DeployStatus =
 type App = 
     { Name : string
       Version : string }
+
+/// Authenticate against the given server with the given userId and private key
+let authenticate server userId serverpathToPrivateKeyFile passwordForPrivateKey = 
+    let privateKey = loadPrivateKey serverpathToPrivateKeyFile passwordForPrivateKey
+    let challenge = REST.ExecuteGetCommand null null (server + "/login/" + userId)
+    let signature = challenge |> Convert.FromBase64String |> privateKey.Sign |> Convert.ToBase64String 
+
+    let postData = sprintf "challenge=%s&signature=%s" (HttpUtility.UrlEncode challenge) (HttpUtility.UrlEncode signature)
+    let response = REST.ExecutePost (server + "/login") "x" "x" postData
+    authToken <- response.Trim([|'"'|]) |> Guid.Parse |> Some
+    authToken
 
 /// Returns all releases of the given app from the given server.
 let getReleasesFor server appname status = 

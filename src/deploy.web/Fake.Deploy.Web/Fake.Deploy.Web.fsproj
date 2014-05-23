@@ -163,6 +163,7 @@
     <Compile Include="InitialData.fs" />
     <Compile Include="Data.fs" />
     <Compile Include="UserMapper.fs" />
+    <Compile Include="AgentProxy.fs" />
     <Compile Include="Modules\FakeModule.fs" />
     <Compile Include="Modules\Home.fs" />
     <Compile Include="Modules\Setup.fs" />

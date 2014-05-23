@@ -10,8 +10,8 @@ let ServiceName = "Fake Deploy Agent"
 
 type FakeDeployService() as self = 
     inherit ServiceBase()
-    let mutable listener = HttpListenerHelper.emptyListener
-    
+    let mutable nancyHost = null
+
     let logger = 
         if Environment.UserInteractive then TraceHelper.logToConsole
         else 
@@ -29,16 +29,23 @@ type FakeDeployService() as self =
             else ConfigurationManager.AppSettings.["ServerName"]
         
         let port = 
-            if args <> null && args.Length > 2 then args.[2]
-            else ConfigurationManager.AppSettings.["Port"]
-        
-        let workDir = 
+            let p =
+                if args <> null && args.Length > 2 then args.[2]
+                else ConfigurationManager.AppSettings.["Port"]
+            let success, port' = Int32.TryParse(p)
+            if success then port' else 8080
+                    
+        DeploymentAgent.workDir <-
             if args <> null && args.Length > 3 then args.[3]
             else ConfigurationManager.AppSettings.["WorkDirectory"]
         
-        listener <- DeploymentAgent.start logger workDir serverName port
+        let uri = sprintf "http://%s:%i/" serverName port
+        logger(sprintf "Listening on %s" uri, EventLogEntryType.Information)
+        nancyHost <- DeploymentAgent.createNancyHost ([| Uri uri |])
+        nancyHost.Start()
     
-    override x.OnStop() = listener.Cancel()
+    override x.OnStop() =
+        nancyHost.Stop()
     
     member x.Start(args) = 
         if Environment.UserInteractive then x.OnStart args

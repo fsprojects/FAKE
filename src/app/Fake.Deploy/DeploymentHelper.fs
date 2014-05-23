@@ -8,6 +8,8 @@ open System.Net
 open Fake.FakeDeployAgentHelper
 
 /// Allows to specify a deployment version
+let predecessorPrefix = "head~"
+
 type VersionInfo = 
     /// Allows to deploy a specific version
     | Specific of string
@@ -15,7 +17,6 @@ type VersionInfo =
     | Predecessor of int
     static member Parse(s : string) = 
         let s = s.ToLower()
-        let predecessorPrefix = "head~"
         if s.StartsWith predecessorPrefix then 
             s.Replace(predecessorPrefix, "")
             |> Int32.Parse
@@ -152,6 +153,8 @@ let getPreviousPackageVersionFromBackup dir app versions =
 
 /// Rolls the given app back to the specified version info
 let rollbackTo workDir app versionInfo = 
+    let previousVersion = predecessorPrefix + "1"
+    let versionInfo = if String.IsNullOrEmpty versionInfo then previousVersion else  versionInfo
     try 
         let newVersion = 
             match VersionInfo.Parse versionInfo with
