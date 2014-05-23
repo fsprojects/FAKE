@@ -1,3 +1,7 @@
+#### 2.17.0 - 23.05.2014
+* Fake.Deploy agent requires user authentication
+* Remove AutoOpen von AppVeyor
+
 #### 2.16.3 - 23.05.2014
 * fix order of arguments in call to CopyFile
  
