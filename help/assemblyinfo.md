@@ -40,6 +40,23 @@ The version parameter can be declared as a property or fetched from a build serv
 
 ![alt text](pics/assemblyinfo/result.png "The file version is set by FAKE")
 
+## Storing the githash in the AssemblyInfo
+
+Storing the githash with the assembly can make it easier to identify exactly what code is running. There isn't an attribute that
+directly fits with doing this, but one way is by storing it as Metadata (warning: this attribute is only available in .NET 4.5 and above)
+
+If your solution is inside a git repository you can get the git hash like this:
+
+	let commitHash = Information.getCurrentSHA1()
+	
+And set like this:
+
+	Attribute.Metadata("githash", commitHash)
+
+One of the easiest ways to retrieve this hash is to load use a reflector program, like [ILSpy](https://github.com/icsharpcode/ILSpy):
+
+![alt text](pics/assemblyinfo/assemblymetadata.png "Checking the git hash of an assembly")
+
 ## Using the SolutionInfo approach
 
 Some companies split their AssemblyInfo into a SolutionInfo.cs which is shared by all projects and a specific AssemblyInfo per project which contains the product data. 
