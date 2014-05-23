@@ -1,3 +1,6 @@
+#### 2.16.3 - 23.05.2014
+* fix order of arguments in call to CopyFile
+* 
 #### 2.16.2 - 22.05.2014
 * Support MSTest test settings - https://github.com/fsharp/FAKE/pull/428
 
