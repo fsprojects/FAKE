@@ -67,4 +67,4 @@ if buildServer = BuildServer.AppVeyor then
 
 // Add MSBuildLogger to track build messages
 if buildServer = BuildServer.AppVeyor then 
-    MSBuildLoggers <- @"""C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll""" :: MSBuildLoggers
+    MSBuildLoggers <- @"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" :: MSBuildLoggers
