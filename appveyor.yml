@@ -1,7 +1,5 @@
 build_script:
-  - cmd: build.cmd %fakeargs%
+  - ps: .\build.cmd
 test: off
 artifacts:
   - path: bin\*.nupkg
-environment:
-  fakeargs: createnuget
