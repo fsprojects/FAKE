@@ -1,3 +1,6 @@
+#### 2.17.1 - 23.05.2014
+* Don't add Teamcity logger if not needed
+
 #### 2.17.0 - 23.05.2014
 * Fake.Deploy agent requires user authentication
 * Remove AutoOpen von AppVeyor
