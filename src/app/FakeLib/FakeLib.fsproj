@@ -49,10 +49,11 @@
     <Compile Include="TeamCityHelper.fs" />
     <Compile Include="TeamCityRESTHelper.fs" />
     <Compile Include="TraceHelper.fs" />
-    <Compile Include="TaskRunnerHelper.fs" />
     <Compile Include="ServiceControllerHelper.fs" />
     <Compile Include="GuardedAwaitObservable.fs" />
     <Compile Include="ProcessHelper.fs" />
+    <Compile Include="AppVeyor.fs" />
+    <Compile Include="TaskRunnerHelper.fs" />
     <Compile Include="Globbing\FileSystem.fs" />
     <Compile Include="UnitTest\UnitTestCommon.fs" />
     <Compile Include="UnitTest\UnitTestHelper.fs" />
@@ -128,7 +129,6 @@
     <Compile Include="DotCover.fs" />
     <Compile Include="AzureHelper.fs" />
     <Compile Include="FtpHelper.fs" />
-    <Compile Include="AppVeyor.fs" />
     <Compile Include="TypeScript.fs" />
     <Compile Include="OpenCoverHelper.fs" />
     <Compile Include="ReportGeneratorHelper.fs" />

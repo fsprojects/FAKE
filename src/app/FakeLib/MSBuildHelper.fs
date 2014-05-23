@@ -243,6 +243,10 @@ let mutable MSBuildLoggers =
     [ TeamCityLoggerName; ErrorLoggerName ]
     |> List.map (fun a -> sprintf "%s,\"%s\"" a pathToLogger)
 
+// Add MSBuildLogger to track build messages
+if buildServer = BuildServer.AppVeyor then 
+    MSBuildLoggers <- @"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" :: MSBuildLoggers
+
 /// Runs a MSBuild project
 /// ## Parameters
 ///  - `setParams` - A function that overwrites the default MsBuildParams
