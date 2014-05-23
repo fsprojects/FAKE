@@ -211,22 +211,20 @@ let serializeMSBuildParams (p : MSBuildParams) =
             |> List.map 
                    (fun fl -> 
                    Some
-                       ("flp" + (string fl.Number), 
-                        
-                        sprintf "%s%s%s" (match fl.Filename with
-                    | None -> ""
-                                          | Some f -> sprintf "logfile=%s;" f) 
-                            (match fl.Verbosity with
-                             | None -> ""
-                             | Some v -> sprintf "Verbosity=%s;" (verbosityName v)) (match fl.Parameters with
-                                                                                     | None -> ""
-                                                                                     | Some ps -> 
-                                                                                         ps
-                                                                                         |> List.map 
-                                                                                                (fun p -> 
-                                                                                                logParams p 
-                                                                                                |> sprintf "%s;")
-                                                                                         |> String.concat "")))
+                       ("flp" + (string fl.Number),                         
+                        sprintf "%s%s%s" 
+                         (match fl.Filename with
+                          | None -> ""
+                          | Some f -> sprintf "logfile=%s;" f)
+                         (match fl.Verbosity with
+                          | None -> ""
+                          | Some v -> sprintf "Verbosity=%s;" (verbosityName v)) 
+                         (match fl.Parameters with
+                          | None -> ""
+                          | Some ps -> 
+                                ps
+                                |> List.map (fun p -> sprintf "%s;" (logParams p))
+                                |> String.concat "")))
 
     getAllParameters targets maxcpu nodeReuse tools verbosity fileLoggers properties
     |> serializeArgs
