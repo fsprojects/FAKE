@@ -80,3 +80,16 @@ if buildServer = BuildServer.AppVeyor then
                   if not enableProcessTracing then addNoCategory x
               | StartMessage | FinishedMessage | OpenTag(_, _) | CloseTag _ -> () }
     |> listeners.Add
+
+/// Starts the test case.
+let StartTestCase testCaseName = 
+    sendToAppVeyor <| sprintf "AddTest \"%s\" -Outcome Running" testCaseName
+
+/// Finishes the test case.
+let FinishTestCase testCaseName (duration : System.TimeSpan) = 
+    let duration = 
+        duration.TotalMilliseconds
+        |> round
+        |> string
+
+    sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Outcome Passed -Duration %s" testCaseName duration

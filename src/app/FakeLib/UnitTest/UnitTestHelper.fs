@@ -29,7 +29,7 @@ type TestResults =
     
     member this.GetTestCount() = List.length this.Tests
 
-/// Reports the given test results to [TeamCity](http://www.jetbrains.com/teamcity/)
+/// Reports the given test results to [TeamCity](http://www.jetbrains.com/teamcity/).
 let reportToTeamCity testResults = 
     StartTestSuite testResults.SuiteName
     for test in testResults.Tests do
@@ -42,10 +42,22 @@ let reportToTeamCity testResults =
         FinishTestCase test.Name test.RunTime
     FinishTestSuite testResults.SuiteName
 
+
+/// Reports the given test results to [AppVeyor](http://www.appveyor.com/).
+let reportToAppVeyor testResults =     
+    for test in testResults.Tests do
+        let runtime = System.TimeSpan.FromSeconds 2.
+        AppVeyor.StartTestCase test.Name
+        match test.Status with
+        | Ok -> ()
+        | _ -> ()
+        AppVeyor.FinishTestCase test.Name test.RunTime
+
 /// Reports the given test results to the detected build server
 let reportTestResults testResults = 
     match buildServer with
     | TeamCity -> reportToTeamCity testResults
+    | AppVeyor -> reportToAppVeyor testResults
     | _ -> 
         tracefn "TestSuite: %s" testResults.SuiteName
         for test in testResults.Tests do
