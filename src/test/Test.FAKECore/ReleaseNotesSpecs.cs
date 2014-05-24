@@ -27,7 +27,7 @@ namespace Test.FAKECore
 
 ### New in 1.1.10 (Released 2013/09/12)
 * Support for heterogeneous XML attributes.
-* Make CsvFile re-entrant. 
+* Make CsvFile re-entrant. *new*
 * Support for compressed HTTP responses. 
 * Fix JSON conversion of 0 and 1 to booleans.
 * Fix XmlProvider problems with nested elements and elements with same name in different namespaces.
@@ -40,7 +40,7 @@ namespace Test.FAKECore
             new[]
             {
                 "Support for heterogeneous XML attributes.",
-                "Make CsvFile re-entrant.",
+                "Make CsvFile re-entrant. *new*",
                 "Support for compressed HTTP responses.",
                 "Fix JSON conversion of 0 and 1 to booleans.",
                 "Fix XmlProvider problems with nested elements and elements with same name in different namespaces."

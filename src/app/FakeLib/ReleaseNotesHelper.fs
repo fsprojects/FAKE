@@ -83,7 +83,7 @@ let private parseSimpleReleaseNotes line =
         |> List.map (trimDot >> trim)
         |> List.filter isNotNullOrEmpty
         |> List.map (fun x -> x + ".")
-    ReleaseNotes.New(assemblyVersion.Value, nugetVersion.Value,notes)
+    ReleaseNotes.New(assemblyVersion.Value, nugetVersion.Value, notes)
 
 /// Parse "complex" release notes text sequence
 let private parseAllComplexReleaseNotes (text: seq<string>) =
@@ -106,7 +106,7 @@ let private parseAllComplexReleaseNotes (text: seq<string>) =
             loop (newReleaseNotes::releaseNotes) rest
         | None -> releaseNotes
 
-    loop [] (text |> Seq.map (trimChars [|' '; '*'|]) |> Seq.toList)
+    loop [] (text |> Seq.map (trimStartChars [|' '; '*'|] >> trimEndChars [|' '|]) |> Seq.toList)
 
 
 /// Parses a Release Notes text and returns all release notes.

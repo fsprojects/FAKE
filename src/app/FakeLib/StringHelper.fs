@@ -152,6 +152,16 @@ let inline trimChars chars (x : string) =
     if isNullOrEmpty x then x
     else x.Trim chars
 
+/// Trims the start of the given string
+let inline trimStartChars chars (x : string) =
+    if isNullOrEmpty x then x
+    else x.TrimStart chars
+
+/// Trims the end of the given string
+let inline trimEndChars chars (x : string) =
+    if isNullOrEmpty x then x
+    else x.TrimEnd chars
+
 /// Lifts a string to an option
 let liftString x = 
     if isNullOrEmpty x then None
