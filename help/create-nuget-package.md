@@ -24,8 +24,8 @@ The following code shows such .nuspec file from the [OctoKit](https://github.com
 		<tags>GitHub API Octokit</tags>
 		@dependencies@
 		@references@
-		@files@
 	  </metadata>
+	  @files@
 	</package>
 
 The .nuspec template contains some placeholders like `@build.number@` which can be replaced later by the build script.
