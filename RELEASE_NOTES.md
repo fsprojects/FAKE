@@ -1,4 +1,8 @@
-#### 2.17.3- 23.05.2014
+#### 2.17.4 - 25.05.2014
+* Release Notes parser should not drop asterisk at end of lines
+* Corrected location of @files@ in nuspec sample
+
+#### 2.17.3 - 23.05.2014
 * Allow to report tests to AppVeyor
 
 #### 2.17.2 - 23.05.2014
