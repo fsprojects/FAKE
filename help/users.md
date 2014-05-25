@@ -20,3 +20,4 @@ Some of our users are:
 * [SolrNet](https://github.com/mausch/SolrNet)
 * [FsPickler](https://github.com/nessos/FsPickler)
 * [Carbonite](http://www.carbonite.com)
+* [Math.NET Numerics](http://numerics.mathdotnet.com)
