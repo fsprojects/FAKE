@@ -1,3 +1,6 @@
+#### 2.17.5 - 26.05.2014
+* Deploy PDBs via nuget https://github.com/fsharp/FAKE/issues/435 
+
 #### 2.17.4 - 25.05.2014
 * Release Notes parser should not drop asterisk at end of lines
 * Corrected location of @files@ in nuspec sample

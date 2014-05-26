@@ -176,7 +176,7 @@ Target "CreateNuGet" (fun _ ->
         | _ ->
             CopyDir nugetToolsDir (buildDir @@ package) allFiles
             CopyTo nugetToolsDir additionalFiles
-        !! (nugetToolsDir @@ "*.pdb") |> DeleteFiles
+        !! (nugetToolsDir @@ "*.srcsv") |> DeleteFiles
 
         NuGet (fun p ->
             {p with
