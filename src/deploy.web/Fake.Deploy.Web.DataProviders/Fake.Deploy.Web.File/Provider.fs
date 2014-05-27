@@ -6,9 +6,14 @@ open System.IO
 open System.Runtime.Serialization.Json
 
 module FileIO =
+    let assertDirectory f (path:string) = 
+        let dir = IO.Path.GetDirectoryName(path)
+        if not <| IO.Directory.Exists(dir)
+        then IO.Directory.CreateDirectory(dir) |> ignore
+        f path
     let mutable Exists = IO.File.Exists
     let mutable OpenRead = fun (path:string) -> IO.File.OpenRead(path) :> IO.Stream
-    let mutable Create = fun (path:string) -> IO.File.Create(path) :> IO.Stream
+    let mutable Create = assertDirectory (fun path ->  IO.File.Create(path) :> IO.Stream)
 
 module Provider =
     let mutable dataFolder = "" 

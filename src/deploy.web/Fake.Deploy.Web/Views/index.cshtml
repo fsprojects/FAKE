@@ -15,21 +15,19 @@
     </script>
 }
 
-<div class="tabbable tabs-left">
-    <ul id="envTabs" class="nav nav-tabs" data-bind="foreach: environments">
-        <li><a data-bind="attr: { href: '#' + id(), Id: 'tab_' + id(), title: description }, text: name, click: $parent.changedTab" data-toggle="tab"></a></li>
-    </ul>
-    <div class="tab-content span10" data-bind="foreach: environments">
-        <div class="tab-pane" data-bind="attr: { id: id }">
-            <h3 data-bind="text: description"></h3>
-            <ul id="agents" class="thumbnails" data-bind="foreach: agents">
-                <li class="span3">
-                    <a class="thumbnail" style="cursor: pointer" data-bind="attr: { href: '/Agent/' + id(), Description: id }">
-                        <img data-bind="attr: {src: '/img/server' + status() + '.png', alt: 'server ' + status()}" width="64" />
-                        <h4 data-bind="text: name" style="text-align: center"></h4>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
+ <ul id="envTabs" class="nav nav-tabs" data-bind="foreach: environments">
+     <li><a data-bind="attr: { href: '#' + id(), Id: 'tab_' + id(), title: description }, text: name, click: $parent.changedTab" data-toggle="tab"></a></li>
+ </ul>
+ <div class="tab-content" data-bind="foreach: environments">
+     <div class="tab-pane" data-bind="attr: { id: id }">
+         <h3 data-bind="text: description"></h3>
+         <div id="agents" data-bind="foreach: agents">
+             <div>
+                 <a class="thumbnail" style="cursor: pointer" data-bind="attr: { href: '/Agent/' + id(), Description: id }">
+                     <img data-bind="attr: {src: '/img/server' + status() + '.png', alt: 'server ' + status()}" width="64" />
+                     <h4 data-bind="text: name" style="text-align: center"></h4>
+                 </a>
+             </div>
+         </div>
+     </div>
+ </div>

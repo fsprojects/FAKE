@@ -12,7 +12,8 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
-    <link href="@Url.Content("~/content/bootstrap.css")" rel="stylesheet">
+    <link href="@Url.Content("~/content/bootstrap.min.css")" rel="stylesheet">
+    <link href="@Url.Content("~/content/bootstrap-theme.min.css")" rel="stylesheet">
     <link href="@Url.Content("~/content/jquery.fileupload-ui.css")" rel="stylesheet">
     <link href="@Url.Content("~/content/toastr.css")" rel="stylesheet">
     <style type="text/css">
@@ -65,11 +66,11 @@
     <![endif]-->
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="/favicon.ico">
-    <script src="@Url.Content("~/Scripts/jquery-2.1.0.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery-2.1.1.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/jquery.serializeToJson.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/bootstrap.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/toastr.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/knockout-2.2.1.debug.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/knockout-3.1.0.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/knockout.mapping-latest.debug.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/extensions.js")" type="text/javascript"></script>
     @RenderSection("header", false)
@@ -81,38 +82,42 @@
         @if (RenderContext.Context.CurrentUser != null) // (RenderContext.Context.CurrentUser.IsAuthenticated())
         {
             <div class="navbar navbar-inverse">
-                <div class="navbar-inner">
-                    <a class="brand" href="#">Fake Deploy Web</a>
-                    <ul class="nav">
-                        <li class="active divider-vertical"><a href="/">Home</a></li>
-                        @if (Fake.Deploy.Web.Extensions.IsInRole(RenderContext.Context.CurrentUser, "Administrator"))
-                        {
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    Administration<b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="/admin/environment">Environments</a></li>
-                                    <li><a href="/admin/agent">Agents</a></li>
-                                    <li><a href="/admin/users">Users</a></li>
-                                </ul>
-                            </li>
-                        }
-                    </ul>
-                    @Html.Partial("_LoginPartial")
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">Fake Deploy Web</a>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="active divider"><a href="/">Home</a></li>
+                            @if (Fake.Deploy.Web.Extensions.IsInRole(RenderContext.Context.CurrentUser, "Administrator"))
+                            {
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        Administration<b class="caret"></b>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="/admin/environment">Environments</a></li>
+                                        <li><a href="/admin/agent">Agents</a></li>
+                                        <li><a href="/admin/users">Users</a></li>
+                                    </ul>
+                                </li>
+                            }
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            @Html.Partial("_LoginPartial")
+                        </ul>
+                    </div>
                 </div>
             </div>
         }
 
 
         <div class="container-fluid">
-            <div class="row-fluid">
-                <div class="span12">
-                    @RenderBody()
-                </div>
+            <div class="row col-md-10 col-md-offset-1">
+                @RenderBody()
             </div>
         </div>
-        <div class="push"></div>
     </div>
     @if (RenderContext.Context.CurrentUser != null) // (RenderContext.Context.CurrentUser.IsAuthenticated())
     {

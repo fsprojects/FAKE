@@ -16,33 +16,27 @@
 
 <h2>Manage environments</h2>
 
-<div class="row" style="margin-left: 30px">
-    <div class="span6">
+<div>
+    <div class="col-md-6">
         <form class="form-horizontal" data-bind="submit: $root.saveEnvironment">
             <fieldset>
                 <legend>Create Environment</legend>
 
-                <div class="control-group">
+                <div class="form-group">
                     <label class="control-label" for="Name">Environment Name</label>
-                    <div class="controls">
-                        <input type="text" id="Name" name="Name" placeholder="Enter environment name...">
-                    </div>
+                    <input type="text" id="Name" class="form-control" name="Name" placeholder="Enter environment name...">
                 </div>
-                <div class="control-group">
+                <div class="form-group">
                     <label class="control-label" for="Description">Environment Description</label>
-                    <div class="controls">
-                        <input type="text" id="Description" name="Description" placeholder="Environment Description...">
-                    </div>
+                    <input type="text" class="form-control" id="Description" name="Description" placeholder="Environment Description...">
                 </div>
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                    <button type="reset" class="btn">Cancel</button>
-                </div>
+               <button type="submit" class="btn btn-primary">Save changes</button>
+               <button type="reset" class="btn">Cancel</button>
             </fieldset>
         </form>
     </div>
 
-    <div class="span6">
+    <div class="col-md-6">
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -57,7 +51,7 @@
                     <td data-bind="text: description"></td>
                     <td>
                         <button class="btn btn-danger" data-bind="click: $root.deleteEnvironment">
-                            <i class="icon-trash icon-white"></i>&nbsp;Delete
+                            <i class="glyphicon glyphicon-trash"></i>&nbsp;Delete
                         </button>
                     </td>
                 </tr>
