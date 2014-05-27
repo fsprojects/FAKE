@@ -16,48 +16,38 @@
 
 <h2>Manage Users</h2>
 
-<div class="row" style="margin-left: 30px">
-    <div class="span6">
+<div>
+    <div class="col-md-6">
         <form class="form-horizontal" data-bind="submit: $root.registerUser">
             <fieldset>
                 <legend>Create User</legend>
             </fieldset>
-            <div class="control-group">
+            <div class="form-group">
                 <label class="control-label">Username</label>
-                <div class="controls">
-                   <input type="text" id="UserName" name="UserName"/>
-                </div>
+                <input type="text" class="form-control" id="Username" name="Username" />
             </div>
 
-            <div class="control-group">
+            <div class="form-group">
                 <label class="control-label">E-mail</label>
-                <div class="controls">
-                    <input type="text" id="Email" name="Email"/>
-                </div>
+                <input type="text" class="form-control" id="Email" name="Email" />
             </div>
 
-            <div class="control-group">
+            <div class="form-group">
                 <label class="control-label">Password</label>
-                <div class="controls">
-                    <input type="password" id="Password" name="Password"/>
-                </div>
+                <input type="password" class="form-control" id="Password" name="Password" />
             </div>
 
-            <div class="control-group">
+            <div class="form-group">
                 <label class="control-label">Confirm Password</label>
-                <div class="controls">
-                    <input type="password" id="ConfirmPassword" name="ConfirmPassword"/>
-                </div>
+                <input type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword" />
             </div>
-            
-            <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                    <button type="reset" class="btn">Cancel</button>
-                </div>
+
+            <button type="submit" class="btn btn-primary">Save changes</button>
+            <button type="reset" class="btn">Cancel</button>
 
         </form>
     </div>
-    <div class="span6">
+    <div class="col-md-6">
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -67,13 +57,13 @@
                 </tr>
             </thead>
             <tbody data-bind="foreach: users">
-                    <tr>
-                        <td data-bind="text: username"></td>
-                        <td data-bind="text: email"></td>
-                        <td data-bind="if: $root.users().length > 1">
-                            <button data-bind="click: $root.deleteUser" class="btn btn-danger" style="margin-left: 10px"><i class="icon-trash icon-white"></i>&nbsp;Delete User</button>
-                        </td>
-                    </tr>
+                <tr>
+                    <td data-bind="text: username"></td>
+                    <td data-bind="text: email"></td>
+                    <td data-bind="if: $root.users().length > 1">
+                        <button data-bind="click: $root.deleteUser" class="btn btn-danger" style="margin-left: 10px"><i class="glyphicon glyphicon-trash"></i>&nbsp;Delete User</button>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>

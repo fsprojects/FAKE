@@ -30,7 +30,7 @@ type AgentProxy(dataProvider : IDataProvider) as this =
         match getAgent agentId with
         | None -> failwith (sprintf "Agent %s not found!" agentId)
         | Some agent -> 
-            authenticate agent
+            //authenticate agent
             let url = sprintf "%Afake/%s" (agent.Address) urlPart
             let wc = new WebClient()
             wc.Headers.Add("AuthToken", authToken.ToString())

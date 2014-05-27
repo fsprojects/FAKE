@@ -13,7 +13,6 @@ type Bootstrapper() =
         let m = UserMapper()
         container.Register<IUserMapper, UserMapper>(m) |> ignore
         container.Register<UserMapper, UserMapper>(m) |> ignore
-        container.Register<AgentProxy, AgentProxy>().AsSingleton() |> ignore
         let c = new Configuration()
         Data.start c
         container.Register<Configuration>(c) |> ignore
@@ -23,6 +22,8 @@ type Bootstrapper() =
         
         let fm (x: TinyIoc.TinyIoCContainer) (y : TinyIoc.NamedParameterOverloads) = c.Membership
         container.Register<IMembershipProvider>(fm) |> ignore
+
+        container.Register<AgentProxy, AgentProxy>().AsSingleton() |> ignore
 
 
     override this.ApplicationStartup (container, pipelines) =

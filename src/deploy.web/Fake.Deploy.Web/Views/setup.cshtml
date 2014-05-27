@@ -46,7 +46,7 @@
         var metaData = {
             dataProviders : @Html.Raw((JsonConvert.SerializeObject(Model.AvailableDataProviders))),
             dataProviderParameters: @Html.Raw(JsonConvert.SerializeObject(Model.DataProviderParametersDescription)),
-            membershipProviders : @Html.Raw((JsonConvert.SerializeObject(Model.AvailableDataProviders))),
+            membershipProviders : @Html.Raw((JsonConvert.SerializeObject(Model.AvailableMembershipProviders))),
             membershipProviderParameters: @Html.Raw(JsonConvert.SerializeObject(Model.MembershipProviderParametersDescription))
         };
     </script>

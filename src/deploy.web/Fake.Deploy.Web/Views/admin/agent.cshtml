@@ -15,42 +15,35 @@
 }
 
 <div class="page-header">
-    <h1>Manage agents</h1>
+    <h2>Manage agents</h2>
 </div>
 
-<div class="row" style="margin-left: 30px">
-    <div class="span6">
+<div>
+    <div class="col-md-6">
         <form class="form-horizontal" data-bind="submit: $root.registerAgent">
             <fieldset>
                 <legend>Create Agent</legend>
-                <div class="control-group">
+                <div class="form-group">
                     <label class="control-label" for="environmentId">Environment</label>
-                    <div class="controls">
-                        <select id="environmentId" name="environmentId" data-bind="options: environments, optionsText: 'name', optionsValue: 'id', optionsCaption: 'Choose...'">
+                        <select id="environmentId" name="environmentId" class="form-control" data-bind="options: environments, optionsText: 'name', optionsValue: 'id', optionsCaption: 'Choose...'">
                         </select>
-                    </div>
                 </div>
-                <div class="control-group">
+                <div class="form-group">
                     <label class="control-label" for="agentName">Agent Name</label>
-                    <div class="controls">
-                        <input type="text" id="agentName" name="name" placeholder="Enter agent name...">
-                    </div>
+
+                    <input type="text" class="form-control" id="agentName" name="name" placeholder="Enter agent name...">
                 </div>
-                <div class="control-group">
+                <div class="form-group">
                     <label class="control-label" for="agentUrl">Agent Url</label>
-                    <div class="controls">
-                        <input type="text" id="agentUrl" name="address" placeholder="Enter agent base url...">
-                    </div>
+                    <input type="text" class="form-control" id="agentUrl" name="address" placeholder="Enter agent base url...">
                 </div>
-                <div class="form-actions">
                     <button type="submit" class="btn btn-primary">Save changes</button>
                     <button type="reset" class="btn">Cancel</button>
-                </div>
             </fieldset>
         </form>
     </div>
 
-    <div class="span6">
+    <div class="col-md-6">
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -65,7 +58,7 @@
                     <td data-bind="text: address"></td>
                     <td>
                         <button class="btn btn-danger" data-bind="click: $root.deleteAgent">
-                            <i class="icon-trash icon-white"></i>&nbsp;Delete
+                            <i class="glyphicon-trash"></i>&nbsp;Delete
                         </button>
                     </td>
                 </tr>
