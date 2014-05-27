@@ -1,3 +1,6 @@
+#### 2.17.6 - 27.05.2014
+* Mainly Layout fixes and disabling authenticate in FAKE.Deploy https://github.com/fsharp/FAKE/pull/441
+
 #### 2.17.5 - 26.05.2014
 * Deploy PDBs via nuget https://github.com/fsharp/FAKE/issues/435 
 
