@@ -41,7 +41,13 @@ let private wrapFailure =
         |> Failure
 
 let private webClient() = 
-    let client = new WebClient()
+    let client = 
+        { new WebClient() with
+            override x.GetWebRequest uri =
+                let req = base.GetWebRequest(uri)
+                req.Timeout <- 20 * 60 * 1000
+                req }
+
     client.Headers.Add(HttpRequestHeader.ContentType, "application/fake")
     client.Headers.Add("fake-deploy-use-http-response-messages", "true")
     match authToken with
