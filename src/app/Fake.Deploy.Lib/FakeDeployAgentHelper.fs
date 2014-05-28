@@ -74,33 +74,44 @@ let private get f url =
             |> Choice1Of2
     with exn -> Choice2Of2 exn
 
+type Url = string
+type Action = string
+type Resp = byte[]
+type FilePath = string
+
+let uploadData (action: Action) (url: Url) (body: byte[]) = 
+    use client = webClient()
+    client.UploadData(Uri(url, UriKind.Absolute), action, body)
+
+let uploadFile (action: Action) (url: Url) (file: FilePath) = 
+    use client = webClient()
+    client.UploadFile(Uri(url, UriKind.Absolute), action, file)
+
 /// sends the given body using the given action (POST or PUT) to the given url
-let private sendData<'t> action url body = 
+let private processResponse (response: Resp) =
     try 
-        let uri = new Uri(url, UriKind.Absolute)
-        use client = webClient()
-        use ms = new MemoryStream(client.UploadData(uri, action, body))
+        use ms = new MemoryStream(response)
         use sr = new StreamReader(ms, Text.Encoding.UTF8)
         let msg = sr.ReadToEnd()
         try 
             match msg |> Json.deserialize with
             | Message msg -> 
-                Json.deserialize<'t> msg
+                Json.deserialize<DeploymentResponse> msg
                 |> Message
                 |> Choice1Of2
             | Exception exn -> Exception exn |> Choice1Of2
         with _ -> 
             msg
-            |> Json.deserialize<'t>
+            |> Json.deserialize<DeploymentResponse>
             |> Message
             |> Choice1Of2
     with exn -> Choice2Of2 exn
 
-/// Posts the given body to the given URL.
-let private post = sendData<DeploymentResponse> "POST"
+/// Posts the given file to the given URL.
+let private post file = uploadFile "POST" file >> processResponse
 
 /// Puts the given body to the given URL.
-let private put = sendData<DeploymentResponse> "PUT"
+let private put url = uploadData "PUT" url >> processResponse
 
 type DeployStatus = 
     | Active
@@ -148,7 +159,7 @@ let getAllReleasesFor server appname =
 let getAllReleases server = getAllReleasesFor server null
 
 /// Posts a deployment package to the given URL.
-let postDeploymentPackage url packageFileName = post url (ReadFileAsBytes packageFileName) |> wrapFailure
+let postDeploymentPackage url packageFileName = post url packageFileName |> wrapFailure
 
 /// Posts a deployment package to the given URL and handles the response.
 let DeployPackage url packageFileName = 
