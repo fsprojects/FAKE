@@ -1,3 +1,6 @@
+#### 2.17.7 - 28.05.2014
+* Increase WebClient's request timeout to 20 minutes - https://github.com/fsharp/FAKE/pull/442
+
 #### 2.17.6 - 27.05.2014
 * Mainly Layout fixes and disabling authenticate in FAKE.Deploy https://github.com/fsharp/FAKE/pull/441
 
