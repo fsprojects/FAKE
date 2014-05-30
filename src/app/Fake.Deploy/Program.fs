@@ -59,7 +59,7 @@ module Main =
 
     let traceDeploymentResult server fileName = function
         | FakeDeployAgentHelper.Success _ -> tracefn "Deployment of %s to %s successful" fileName server
-        | FakeDeployAgentHelper.Failure exn -> traceError <| sprintf "Deployment of %s to %s failed\r\n%O" fileName server exn.Exception 
+        | FakeDeployAgentHelper.Failure exn -> traceError <| sprintf "Deployment of %s to %s failed\r\n%s" fileName server (FakeDeployAgentHelper.buildExceptionString exn)
         | FakeDeployAgentHelper.QueryResult result -> tracefn "Query Result for %s %s\n\t%s" server fileName (System.String.Join("\n\t", result |> Seq.map (fun r -> r.Name) |> Seq.toArray))
 
     { Name = "activereleases"

@@ -110,6 +110,15 @@ type App =
     { Name : string
       Version : string }
 
+
+let buildExceptionString (r:Response) =
+    let msgs = 
+        r.Messages
+        |> Seq.map(fun m -> sprintf "  %s %s" (m.Timestamp.ToString("yyyy-MM-dd hh::mm:ss.fff")) m.Message)
+        |> fun arr -> String.Join("\r\n", arr)
+    sprintf "%O\r\n\r\nDeploy messages\r\n{\r\n%s\r\n}\r\n" r.Exception  msgs
+
+
 /// Authenticate against the given server with the given userId and private key
 let authenticate server userId serverpathToPrivateKeyFile passwordForPrivateKey = 
     let privateKey = loadPrivateKey serverpathToPrivateKeyFile passwordForPrivateKey
@@ -151,10 +160,10 @@ let getAllReleases server = getAllReleasesFor server null
 let postDeploymentPackage url packageFileName = post url (ReadFileAsBytes packageFileName) |> wrapFailure
 
 /// Posts a deployment package to the given URL and handles the response.
-let DeployPackage url packageFileName = 
+let DeployPackage url packageFileName =
     match postDeploymentPackage url packageFileName with
     | Success _ -> tracefn "Deployment of %s successful" packageFileName
-    | Failure exn -> failwithf "Deployment of %A failed\r\n%A" packageFileName exn.Exception
+    | Failure exn -> failwithf "Deployment of %A failed\r\n%s" packageFileName (buildExceptionString exn)
     | response -> failwithf "Deployment of %A failed\r\n%A" packageFileName response
 
 /// Deprecated, use DeployPackage
@@ -165,5 +174,5 @@ let PostDeploymentPackage = DeployPackage
 let RollbackPackage url appName version = 
     match rollbackTo url appName version with
     | Success _ -> tracefn "Rollback of %s to %s successful" appName version
-    | Failure exn -> failwithf "Deployment of %s to %s failed\r\n%A" appName version exn.Exception
+    | Failure exn -> failwithf "Deployment of %s to %s failed\r\n%s" appName version (buildExceptionString exn)
     | response -> failwithf "Deployment of %s to %s failed\r\n%A" appName version response
