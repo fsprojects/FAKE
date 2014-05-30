@@ -40,27 +40,32 @@ let private wrapFailure =
           Exception = exn }
         |> Failure
 
-let private webClient() = 
-    let client = 
-        { new WebClient() with
-            override x.GetWebRequest uri =
-                let req = base.GetWebRequest(uri)
-                req.Timeout <- 20 * 60 * 1000
-                req }
+type Url = string
+type Action = string
+type FilePath = string
 
-    client.Headers.Add(HttpRequestHeader.ContentType, "application/fake")
-    client.Headers.Add("fake-deploy-use-http-response-messages", "true")
+let private webRequest (url: Url) (action: Action) = 
+    let req = WebRequest.Create url :?> HttpWebRequest
+    req.Method <- action
+    req.Timeout <- 20 * 60 * 1000
+    req.ContentType <- "application/fake"
+    req.Headers.Add("fake-deploy-use-http-response-messages", "true")
     match authToken with
     | None -> ()
-    | Some t -> client.Headers.Add("AuthToken", t.ToString())
-    client
+    | Some t -> req.Headers.Add("AuthToken", string t)
+    req
+
+let private downloadString (request: HttpWebRequest) =
+    use responseStream = request.GetRequestStream()
+    use ms = new MemoryStream()
+    responseStream.CopyTo ms
+    Encoding.UTF8.GetString(ms.ToArray())
+
 
 /// Gets the http response from the given URL and runs it with the given function.
 let private get f url = 
     try 
-        let uri = new Uri(url, UriKind.Absolute)
-        use client = webClient()
-        let msg = client.DownloadString(uri)
+        let msg = webRequest url "GET" |> downloadString
         try 
             match msg |> Json.deserialize with
             | Message msg -> 
@@ -74,22 +79,30 @@ let private get f url =
             |> Choice1Of2
     with exn -> Choice2Of2 exn
 
-type Url = string
-type Action = string
-type Resp = byte[]
-type FilePath = string
-
 let uploadData (action: Action) (url: Url) (body: byte[]) = 
-    use client = webClient()
-    client.UploadData(Uri(url, UriKind.Absolute), action, body)
+    let req = webRequest url action 
+    use reqStream = req.GetRequestStream()
+    reqStream.Write (body, 0, body.Length)
+    use respStream = req.GetResponse().GetResponseStream()
+    let ms = new MemoryStream()
+    respStream.CopyTo ms
+    ms.ToArray()
 
 let uploadFile (action: Action) (url: Url) (file: FilePath) = 
-    use client = webClient()
-    client.UploadFile(Uri(url, UriKind.Absolute), action, file)
-
+    let req = webRequest url action
+    req.AllowWriteStreamBuffering <- false
+    use fileStream = File.OpenRead file
+    req.ContentLength <- fileStream.Length
+    use reqStream = req.GetRequestStream()
+    fileStream.CopyTo reqStream
+    use respStream = req.GetResponse().GetResponseStream()
+    let ms = new MemoryStream()
+    respStream.CopyTo ms
+    ms.ToArray()
+    
 /// sends the given body using the given action (POST or PUT) to the given url
-let private processResponse (response: Resp) =
-    try 
+let private processResponse (response: byte[]) =
+    try
         use ms = new MemoryStream(response)
         use sr = new StreamReader(ms, Text.Encoding.UTF8)
         let msg = sr.ReadToEnd()
