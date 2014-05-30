@@ -1,3 +1,8 @@
+#### 2.17.8 - 30.05.2014
+* Display messages when deploy fails
+* Fix formatting in FAKE.Deploy docs
+* Fix memory usage in FAKE.Deploy
+
 #### 2.17.7 - 28.05.2014
 * Increase WebClient's request timeout to 20 minutes - https://github.com/fsharp/FAKE/pull/442
 
