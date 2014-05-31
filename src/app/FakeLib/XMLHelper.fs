@@ -29,7 +29,7 @@ let XMLRead failOnError (xmlFileName : string) nameSpace prefix xPath =
             | _ -> failwith <| sprintf "XPath-Expression return type %A not implemented" expression.ReturnType
         }
     with exn -> 
-        if failOnError then failwith "XMLRead error:\n%s" exn.Message
+        if failOnError then failwithf "XMLRead error:\n%s" exn.Message
         else Seq.empty
 
 /// Reads a value from a XML document using a XPath
