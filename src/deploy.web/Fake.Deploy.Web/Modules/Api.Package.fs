@@ -27,7 +27,7 @@ type ApiPackage (dataProvider : IDataProvider) as http =
             msgs |> Seq.map(fun msg -> sprintf "%s: %s" (msg.Timestamp.ToString("yyyy-MM-dd HH:mm:ss")) msg.Message )
 
         let url = Uri(agent.Address, "/fake/")
-        let response = postDeploymentPackage url.AbsoluteUri packageFileName
+        let response = postDeploymentPackage url.AbsoluteUri packageFileName [||]
         match response with
         | Failure x -> { Agent = agent.Name; Messages = toStr x.Messages; Success = not <| x.IsError; Error = x.Exception.ToString() }
         | Success x -> { Agent = agent.Name; Messages = toStr x.Messages; Success = not <| x.IsError; Error = "" }
@@ -69,7 +69,7 @@ type ApiPackage (dataProvider : IDataProvider) as http =
                 let code, message = 
                     files
                     |> Seq.map(fun file ->
-                        match postDeploymentPackage url file with
+                        match postDeploymentPackage url file [||] with
                         | Failure(err) -> 
                             file, Some err, HttpStatusCode.InternalServerError, None
                         | Success a -> 
