@@ -19,6 +19,14 @@ type NugetFrameworkReferences =
     { FrameworkVersion : string
       References : NugetReferences }
 
+type NugetSymbolPackage =
+    /// Do not build symbol packages
+    | None = 0
+    /// Build a symbol package using a project file, if provided
+    | ProjectFile = 1
+    /// Build a symbol package using the nuspec file
+    | Nuspec = 2
+
 /// Nuget parameter type
 type NuGetParams = 
     { ToolPath : string
@@ -44,6 +52,7 @@ type NuGetParams =
       ReferencesByFramework : NugetFrameworkReferences list
       PublishTrials : int
       Publish : bool
+      SymbolPackage : NugetSymbolPackage
       Properties : list<string * string>
       Files : list<string*string option*string option>}
 
@@ -74,6 +83,7 @@ let NuGetDefaults() =
       NoPackageAnalysis = false
       PublishTrials = 5
       Publish = false
+      SymbolPackage = NugetSymbolPackage.ProjectFile
       Properties = []
       Files = [] }
 
@@ -187,40 +197,39 @@ let private propertiesParam = function
         "-Properties " + (lst
                           |> List.map (fun p -> (fst p) + "=\"" + (snd p) + "\"")
                           |> String.concat ";")
-/// create symbols package
-let private packSymbols parameters = 
-    if isNullOrEmpty parameters.ProjectFile then ()
-    else 
-        let properties = propertiesParam parameters.Properties
 
-        let args = 
-            sprintf "pack -sym -Version %s -OutputDirectory \"%s\" \"%s\" %s" parameters.Version 
-                (FullName parameters.OutputPath) (FullName parameters.ProjectFile) properties
-        
-        let result = 
-            ExecProcess (fun info -> 
+/// create package (including symbols package if enabled)
+let private pack parameters nuspecFile =
+    let properties = propertiesParam parameters.Properties
+    let outputPath = (FullName(parameters.OutputPath.TrimEnd('\\').TrimEnd('/')))
+    let packageAnalysis = if parameters.NoPackageAnalysis then "-NoPackageAnalysis" else ""
+
+    let execute args =
+        let result =
+            ExecProcess (fun info ->
                 info.FileName <- parameters.ToolPath
                 info.WorkingDirectory <- FullName parameters.WorkingDir
                 info.Arguments <- args) parameters.TimeOut
-        if result <> 0 then failwithf "Error during NuGet symbols creation. %s %s" parameters.ToolPath args
+        if result <> 0 then failwithf "Error during NuGet package creation. %s %s" parameters.ToolPath args
 
-/// create package
-let private pack parameters nuspecFile = 
-    let properties = propertiesParam parameters.Properties
-
-    let args = 
-        sprintf "pack \"%s\" -Version %s -OutputDirectory \"%s\" %s %s" (FullName nuspecFile) parameters.Version 
-            (FullName(parameters.OutputPath.TrimEnd('\\').TrimEnd('/'))) (if parameters.NoPackageAnalysis then 
-                                                                              "-NoPackageAnalysis"
-                                                                          else "") properties
+    match parameters.SymbolPackage with
+    | NugetSymbolPackage.ProjectFile ->
+        if not (isNullOrEmpty parameters.ProjectFile) then
+            sprintf "pack -Symbols -Version %s -OutputDirectory \"%s\" \"%s\" %s %s"
+                parameters.Version outputPath (FullName parameters.ProjectFile) packageAnalysis properties
+            |> execute
+        sprintf "pack -Version %s -OutputDirectory \"%s\" \"%s\" %s %s"
+            parameters.Version outputPath (FullName nuspecFile) packageAnalysis properties
+        |> execute
+    | NugetSymbolPackage.Nuspec ->
+        sprintf "pack -Symbols -Version %s -OutputDirectory \"%s\" \"%s\" %s %s"
+            parameters.Version outputPath (FullName nuspecFile) packageAnalysis properties
+        |> execute
+    | _ ->
+        sprintf "pack -Version %s -OutputDirectory \"%s\" \"%s\" %s %s"
+            parameters.Version outputPath (FullName nuspecFile) packageAnalysis properties
+        |> execute
     
-    let result = 
-        ExecProcess (fun info -> 
-            info.FileName <- parameters.ToolPath
-            info.WorkingDirectory <- FullName parameters.WorkingDir
-            info.Arguments <- args) parameters.TimeOut
-    
-    if result <> 0 then failwithf "Error during NuGet package creation. %s %s" parameters.ToolPath args
 
 /// push package (and try again if something fails)
 let rec private publish parameters = 
@@ -298,7 +307,6 @@ let NuGet setParams nuspecFile =
     let parameters = NuGetDefaults() |> setParams
     try 
         let nuspecFile = createNuspecFile parameters nuspecFile
-        packSymbols parameters
         pack parameters nuspecFile
         if parameters.Publish then 
             publish parameters
