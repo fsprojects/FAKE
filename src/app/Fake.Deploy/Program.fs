@@ -112,18 +112,22 @@ module Main =
       Description = "pushes the deployment package to the deployment agent\r\n\tlistening on the url"
       Function = 
         fun args ->
-            FakeDeployAgentHelper.postDeploymentPackage args.[1] args.[2]
-            |> traceDeploymentResult args.[1] args.[2] }
+            let _ :: url :: package :: args = 
+                List.ofArray args
+            FakeDeployAgentHelper.postDeploymentPackage url package (List.toArray args)
+            |> traceDeploymentResult url package }
         |> register
 
     { Name = "deploy"
-      Parameters = ["workDir"; "package"]
+      Parameters = ["workDir"; "package"; "scriptArguments"]
       Description = "runs the deployment on the local machine (for testing purposes)"
       Function =
-        fun args -> 
-            runDeploymentFromPackageFile args.[1] args.[2]
-            |> traceDeploymentResult "local" args.[2] }
-        |> register
+        fun args ->
+            let _ :: workDir :: package :: args = List.ofArray args
+            runDeploymentFromPackageFile workDir package (List.toArray args)
+            |> traceDeploymentResult "local" package
+    }
+    |> register
 
     { Name = "help"
       Parameters = []

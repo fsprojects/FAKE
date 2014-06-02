@@ -72,10 +72,11 @@ let unpack workDir isRollback packageBytes =
     package, scriptFile
 
 /// Runs a deployment script from the given package
-let doDeployment packageName scriptFileName = 
+let doDeployment packageName scriptFileName scriptArgs = 
     try 
         let workingDirectory = DirectoryName scriptFileName
-        let (result, messages) = FSIHelper.executeFSI workingDirectory (FullName scriptFileName) Seq.empty
+        let (result, messages) = 
+            FSIHelper.executeFSIWithScriptArgsAndReturnMessages workingDirectory (FullName scriptFileName) scriptArgs
         if result then 
             Success { Messages = messages
                       IsError = false
@@ -90,11 +91,11 @@ let doDeployment packageName scriptFileName =
                   Exception = e }
 
 /// Runs a deployment from the given package file name
-let runDeploymentFromPackageFile workDir packageFileName = 
+let runDeploymentFromPackageFile workDir packageFileName scriptArgs = 
     try 
         let packageBytes = ReadFileAsBytes packageFileName
         let package, scriptFile = unpack workDir false packageBytes
-        doDeployment package.Name scriptFile
+        doDeployment package.Name scriptFile scriptArgs
     with e -> 
         Failure { Messages = Seq.empty
                   IsError = true
@@ -111,7 +112,7 @@ let rollback workDir (app : string) (version : string) =
                       Exception = (Exception "Cannot rollback to currently active version") }
         else 
             let package, scriptFile = unpack workDir true (backupPackageFileName |> ReadFileAsBytes)
-            doDeployment package.Name scriptFile
+            doDeployment package.Name scriptFile [||]
     with
     | :? FileNotFoundException as e -> 
         let msg = 
