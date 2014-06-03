@@ -16,23 +16,21 @@ open Nancy.Security
 let mutable private logger : string * EventLogEntryType -> unit = ignore
 
 let getBodyFromNancyRequest (ctx : Nancy.Request) = 
-    let readAllBytes (s : Stream) = 
-        let ms = new MemoryStream()
-        let buf = Array.zeroCreate 8192
-        
-        let rec impl() = 
-            let read = s.Read(buf, 0, buf.Length)
-            if read > 0 then 
-                ms.Write(buf, 0, read)
-                impl()
-        impl()
-        ms
-    (readAllBytes ctx.Body).ToArray()
+    use ms = new MemoryStream()
+    ctx.Body.CopyTo ms
+    ms.ToArray()
+
+let getScriptArgumentsFromNancyRequest (ctx : Nancy.Request) =
+    ctx.Headers 
+    |> Seq.choose (fun pair -> if pair.Key = FakeDeployAgentHelper.scriptArgumentsHeaderName then Some pair.Value else None)
+    |> Seq.concat
+    |> Seq.toArray
 
 let  runDeployment workDir (ctx : Nancy.Request) = 
     let packageBytes = getBodyFromNancyRequest ctx
     let package, scriptFile = unpack workDir false packageBytes
-    let response = doDeployment package.Name scriptFile
+    let scriptArguments = getScriptArgumentsFromNancyRequest ctx
+    let response = doDeployment package.Name scriptFile scriptArguments
     match response with
     | FakeDeployAgentHelper.Success _ -> 
         logger (sprintf "Successfully deployed %s %s" package.Id package.Version, EventLogEntryType.Information)

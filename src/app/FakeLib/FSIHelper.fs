@@ -1,4 +1,5 @@
-﻿[<AutoOpen>]
+﻿
+[<AutoOpen>]
 /// Contains helper functions which allow to interact with the F# Interactive.
 module Fake.FSIHelper
 
@@ -75,6 +76,15 @@ let executeFSIWithArgs workingDirectory script extraFsiArgs args =
     let result = ExecProcess (FsiStartInfo workingDirectory (FsiArgs(extraFsiArgs, script, [])) args) TimeSpan.MaxValue
     Thread.Sleep 1000
     result = 0
+
+/// Run the given build script with fsi.exe and allows for extra arguments to the script. Returns output.
+let executeFSIWithScriptArgsAndReturnMessages workingDirectory script (scriptArgs: string[]) =
+    let (result, messages) =
+        ExecProcessRedirected (fun si ->
+            FsiStartInfo "" (FsiArgs([], script, scriptArgs |> List.ofArray)) [] si)
+            TimeSpan.MaxValue
+    Thread.Sleep 1000
+    (result, messages)
 
 /// Run the given buildscript with fsi.exe at the given working directory.  Provides full access to Fsi options and args.
 let runBuildScriptWithFsiArgsAt workingDirectory printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args =

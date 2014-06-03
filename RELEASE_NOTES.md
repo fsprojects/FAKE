@@ -1,3 +1,7 @@
+#### 2.17.9 - 03.06.2014
+* Pass optional arguments to deployment scripts
+* Support building source packages without project file
+
 #### 2.17.8 - 30.05.2014
 * Display messages when deploy fails
 * Fix formatting in FAKE.Deploy docs

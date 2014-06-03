@@ -44,6 +44,9 @@ type Url = string
 type Action = string
 type FilePath = string
 
+[<Literal>] 
+let scriptArgumentsHeaderName = "X-FAKE-Script-Arguments"
+
 let private webRequest (url: Url) (action: Action) = 
     let req = WebRequest.Create url :?> HttpWebRequest
     req.Method <- action
@@ -88,8 +91,9 @@ let uploadData (action: Action) (url: Url) (body: byte[]) =
     respStream.CopyTo ms
     ms.ToArray()
 
-let uploadFile (action: Action) (url: Url) (file: FilePath) = 
+let uploadFile (action: Action) (url: Url) (file: FilePath) (args: string[]) = 
     let req = webRequest url action
+    req.Headers.Add(scriptArgumentsHeaderName, String.Join (";", args))
     req.AllowWriteStreamBuffering <- false
     use fileStream = File.OpenRead file
     req.ContentLength <- fileStream.Length
@@ -121,7 +125,7 @@ let private processResponse (response: byte[]) =
     with exn -> Choice2Of2 exn
 
 /// Posts the given file to the given URL.
-let private post file = uploadFile "POST" file >> processResponse
+let private post url file = uploadFile "POST" url file >> processResponse
 
 /// Puts the given body to the given URL.
 let private put url = uploadData "PUT" url >> processResponse
@@ -181,14 +185,17 @@ let getAllReleasesFor server appname =
 let getAllReleases server = getAllReleasesFor server null
 
 /// Posts a deployment package to the given URL.
-let postDeploymentPackage url packageFileName = post url packageFileName |> wrapFailure
+let postDeploymentPackage url packageFileName args = post url packageFileName args |> wrapFailure
 
-/// Posts a deployment package to the given URL and handles the response.
-let DeployPackage url packageFileName =
-    match postDeploymentPackage url packageFileName with
+/// Posts a deployment package to the given URL, executes the script inside it with given arguments and handles the response.
+let DeployPackageWithArgs url packageFileName args =
+    match postDeploymentPackage url packageFileName args with
     | Success _ -> tracefn "Deployment of %s successful" packageFileName
     | Failure exn -> failwithf "Deployment of %A failed\r\n%s" packageFileName (buildExceptionString exn)
     | response -> failwithf "Deployment of %A failed\r\n%A" packageFileName response
+
+/// Posts a deployment package to the given URL and handles the response.
+let DeployPackage url packageFileName = DeployPackageWithArgs url packageFileName [||]
 
 /// Deprecated, use DeployPackage
 [<Obsolete("Use DeployPackage")>]
