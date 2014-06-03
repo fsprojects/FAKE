@@ -26,7 +26,7 @@
     <StartAction>Project</StartAction>
     <StartProgram>C:\sources\FAKE\tools\FAKE\FAKE.exe</StartProgram>
     <StartWorkingDirectory>C:\code\github\TeamCityTest</StartWorkingDirectory>
-    <StartArguments>-ev test 1 -ev test 2 -ef hello -ef good --fsiargs --define:MONO build.fsx a b c</StartArguments>
+    <StartArguments>build.fsx</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
