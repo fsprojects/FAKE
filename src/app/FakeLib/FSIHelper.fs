@@ -62,6 +62,16 @@ let executeFSIWithArgs workingDirectory script extraFsiArgs args =
     Thread.Sleep 1000
     result = 0
 
+/// Run the given build script with fsi.exe and allows for extra arguments to the script. Returns output.
+let executeFSIWithScriptArgsAndReturnMessages workingDirectory script (scriptArgs: string[]) =
+    let (result, messages) =
+        ExecProcessRedirected (fun si ->
+            FsiStartInfo script workingDirectory [] Seq.empty si
+            si.Arguments <- si.Arguments + " " + (String.Join (" ", scriptArgs)))
+            TimeSpan.MaxValue
+    Thread.Sleep 1000
+    (result, messages)
+
 /// Run the given buildscript with fsi.exe at the given working directory.
 let runBuildScriptAt workingDirectory printDetails script extraFsiArgs args =
     if printDetails then traceFAKE "Running Buildscript: %s" script
