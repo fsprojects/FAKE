@@ -402,12 +402,16 @@ module private Implementation =
         | Some RunOnly -> DoRunOnly env
         | None -> DoHelp env
 
+/// Creates the CommandHandler from the 
+let HandlerForArgs args = { Run = RunCommandLine args }
+
 /// Detects boot-specific commands.
 let ParseCommandLine (args: seq<string>) : option<CommandHandler> =
     match Seq.toList args with
     | "boot" :: xs
-    | _ :: "boot" :: xs -> Some { Run = RunCommandLine xs }
+    | _ :: "boot" :: xs -> Some (HandlerForArgs xs)
     | _ -> None
+
 
 /// The main function intended to be executed in the BOOT phase of
 /// boostrapping scripts.
