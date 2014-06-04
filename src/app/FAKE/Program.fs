@@ -44,9 +44,12 @@ let buildScripts = !! "*.fsx" |> Seq.toList
 try
     try
         AutoCloseXmlWriter <- true
+
         let cmdArgs = System.Environment.GetCommandLineArgs()
-        
-        match Cli.parsedArgsOrEx cmdArgs with
+
+        let args = Cli.parsePositionalArgs cmdArgs
+
+        match Cli.parsedArgsOrEx args.Rest with
 
         //We have new style help args!
         | Choice1Of2(fakeArgs) ->
@@ -80,13 +83,14 @@ try
                 //Combine the key value pair vars and the flag vars.
                 let envVars =
                     seq { yield! fakeArgs.GetResults <@ Cli.EnvFlag @> |> Seq.map (fun name -> name, "true")
-                          yield! fakeArgs.GetResults <@ Cli.EnvVar @> }
+                          yield! fakeArgs.GetResults <@ Cli.EnvVar @>
+                          if args.Target.IsSome then yield "target", args.Target.Value }
 
                 //Get our fsiargs from somewhere!
                 let fsiArgs = 
                     match
                         fakeArgs.GetResults <@ Cli.FsiArgs @>,
-                        fakeArgs.TryGetResult <@ Cli.Script @>,
+                        args.Script,
                         List.isEmpty buildScripts with
 
                     //TODO check for presence of --fsiargs with no args?  Make attribute for UAP?
@@ -97,7 +101,7 @@ try
                         | Choice1Of2(fsiArgs) -> fsiArgs
                         | Choice2Of2(msg) -> failwith (sprintf "Unable to parse --fsiargs.  %s." msg)
 
-                    //--script path is specified.
+                    //Script path is specified.
                     | [], Some(script), _ -> FsiArgs([], script, [])
 
                     //No explicit script, but have in working directory.
