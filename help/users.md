@@ -21,3 +21,4 @@ Some of our users are:
 * [FsPickler](https://github.com/nessos/FsPickler)
 * [Carbonite](http://www.carbonite.com)
 * [Math.NET Numerics](http://numerics.mathdotnet.com)
+* [FsCheck](https://github.com/fsharp/FsCheck)
