@@ -22,4 +22,4 @@ Some of our users are:
 * [Carbonite](http://www.carbonite.com)
 * [Math.NET Numerics](http://numerics.mathdotnet.com)
 * [FsCheck](https://github.com/fsharp/FsCheck)
-* [FundApps](https://www.fundapps.co)
+* [FundApps](http://www.fundapps.co)
