@@ -121,6 +121,7 @@ type MSBuildParams =
       NodeReuse : bool
       ToolsVersion : string option
       Verbosity : MSBuildVerbosity option
+      NoConsoleLogger : bool
       FileLoggers : MSBuildFileLoggerConfig list option }
 
 /// Defines a default for MSBuild task parameters
@@ -131,12 +132,13 @@ let mutable MSBuildDefaults =
       NodeReuse = true
       ToolsVersion = None
       Verbosity = None
+      NoConsoleLogger = false
       FileLoggers = None }
 
 /// [omit]
-let getAllParameters targets maxcpu nodeReuse tools verbosity fileLoggers properties =
-    if isUnix then [ targets; tools; verbosity ] @ fileLoggers @ properties
-    else [ targets; maxcpu; nodeReuse; tools; verbosity ] @ fileLoggers @ properties
+let getAllParameters targets maxcpu nodeReuse tools verbosity noconsolelogger fileLoggers properties =
+    if isUnix then [ targets; tools; verbosity; noconsolelogger ] @ fileLoggers @ properties
+    else [ targets; maxcpu; nodeReuse; tools; verbosity; noconsolelogger ] @ fileLoggers @ properties
 
 let private serializeArgs args =
     args
@@ -187,6 +189,10 @@ let serializeMSBuildParams (p : MSBuildParams) =
         | None -> None
         | Some v -> Some("v", verbosityName v)
     
+    let noconsolelogger =
+        if p.NoConsoleLogger then Some("noconlog", "")
+        else None
+
     let fileLoggers =
         let logParams param =
             match param with
@@ -226,7 +232,7 @@ let serializeMSBuildParams (p : MSBuildParams) =
                                 |> List.map (fun p -> sprintf "%s;" (logParams p))
                                 |> String.concat "")))
 
-    getAllParameters targets maxcpu nodeReuse tools verbosity fileLoggers properties
+    getAllParameters targets maxcpu nodeReuse tools verbosity noconsolelogger fileLoggers properties
     |> serializeArgs
 
 /// [omit]
