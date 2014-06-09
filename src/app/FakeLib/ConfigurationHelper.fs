@@ -57,6 +57,24 @@ let updateConfigSetting fileName xpath attribute value =
 let updateAppSetting key value fileName =
     updateConfigSetting fileName ("//appSettings/add[@key='" + key + "']") "value" value
 
+/// Reads a config file from the given file name, replaces the Application Setting (as opposed to AppSetting) value and writes it back.
+/// ## Parameters
+///  - `settingName` - The ApplicationSetting name for which the value should be replaced.
+///  - `value` - The new ApplicationSetting value.
+///  - `fileName` - The file name of the config file.
+///
+/// ## Sample
+///
+///     updateApplicationSetting "DatabaseName" targetDatabase (navServicePath @@ "CustomSettings.config")
+let updateApplicationSetting (fileName : string) settingName value = 
+    let doc = new XmlDocument()
+    let xpath = "/configuration/applicationSettings//setting[@name=\"" + settingName + "\"]/value"
+    doc.Load fileName
+    let node = doc.SelectSingleNode xpath
+    if node = null then failwithf "XML node '%s' not found" xpath
+    node.InnerText <- value
+    doc.Save fileName
+
 /// Reads a config file from the given file name, replaces the connection string value and writes it back.   
 /// ## Parameters
 ///  - `connectionStringKey` - The connection string key name for which the value should be replaced.
