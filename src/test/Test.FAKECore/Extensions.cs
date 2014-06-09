@@ -23,5 +23,10 @@ namespace Test.FAKECore
         {
             value.ShouldEqual(FSharpOption<T>.None);    
         }        
+
+        public static void ShouldBeSome<T>(this FSharpOption<T> value)
+        {
+            value.ShouldEqual(FSharpOption<T>.Some(value.Value));    
+        }        
     }
 }

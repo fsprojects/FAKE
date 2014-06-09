@@ -1,4 +1,5 @@
-﻿[<AutoOpen>]
+﻿
+[<AutoOpen>]
 /// Contains helper functions which allow to interact with the F# Interactive.
 module Fake.FSIHelper
 
@@ -30,14 +31,28 @@ let fsiPath =
         if fi.Exists then fi.FullName else
         findPath "FSIPath" FSIPath "fsi.exe"
 
-let private FsiStartInfo script workingDirectory extraFsiArgs args =
+type FsiArgs =
+    FsiArgs of string list * string * string list with
+    static member parse (args:string array) =
+        //Find first arg that does not start with - (as these are fsi options that precede the fsx).
+        match args |> Array.tryFindIndex (fun arg -> arg.StartsWith("-") = false) with
+        | Some(i) ->
+            let fsxPath = args.[i]
+            if fsxPath.EndsWith(".fsx", StringComparison.InvariantCultureIgnoreCase) then
+                let fsiOpts = if i > 0 then args.[0..i-1] else [||]
+                let scriptArgs = if args.Length > (i+1) then args.[i+1..] else [||]
+                Choice1Of2(FsiArgs(fsiOpts |> List.ofArray, fsxPath, scriptArgs |> List.ofArray))
+            else Choice2Of2(sprintf "Expected argument %s to be the build script path, but it does not have the .fsx extension." fsxPath) 
+        | None -> Choice2Of2("Unable to locate the build script path.") 
+    
+let private FsiStartInfo workingDirectory (FsiArgs(fsiOptions, scriptPath, scriptArgs)) environmentVars =
     (fun (info: ProcessStartInfo) ->
         info.FileName <- fsiPath
-        info.Arguments <- String.concat " " (extraFsiArgs @ [script])
+        info.Arguments <- String.concat " " (fsiOptions @ [scriptPath] @ scriptArgs)
         info.WorkingDirectory <- workingDirectory
         let setVar k v =
             info.EnvironmentVariables.[k] <- v
-        for (k, v) in args do
+        for (k, v) in environmentVars do
             setVar k v
         setVar "MSBuild"  msBuildExe
         setVar "GIT" Git.CommandHelper.gitPath
@@ -45,7 +60,7 @@ let private FsiStartInfo script workingDirectory extraFsiArgs args =
 
 /// Creates a ProcessStartInfo which is configured to the F# Interactive.
 let fsiStartInfo script workingDirectory args info =
-    FsiStartInfo script workingDirectory [] args info
+    FsiStartInfo workingDirectory (FsiArgs([], script, [])) args info
 
 /// Run the given buildscript with fsi.exe
 let executeFSI workingDirectory script args =
@@ -58,7 +73,7 @@ let executeFSI workingDirectory script args =
 
 /// Run the given build script with fsi.exe and allows for extra arguments to FSI.
 let executeFSIWithArgs workingDirectory script extraFsiArgs args =
-    let result = ExecProcess (FsiStartInfo script workingDirectory extraFsiArgs args) TimeSpan.MaxValue
+    let result = ExecProcess (FsiStartInfo workingDirectory (FsiArgs(extraFsiArgs, script, [])) args) TimeSpan.MaxValue
     Thread.Sleep 1000
     result = 0
 
@@ -66,18 +81,21 @@ let executeFSIWithArgs workingDirectory script extraFsiArgs args =
 let executeFSIWithScriptArgsAndReturnMessages workingDirectory script (scriptArgs: string[]) =
     let (result, messages) =
         ExecProcessRedirected (fun si ->
-            FsiStartInfo script workingDirectory [] Seq.empty si
-            si.Arguments <- si.Arguments + " " + (String.Join (" ", scriptArgs)))
+            FsiStartInfo "" (FsiArgs([], script, scriptArgs |> List.ofArray)) [] si)
             TimeSpan.MaxValue
     Thread.Sleep 1000
     (result, messages)
 
-/// Run the given buildscript with fsi.exe at the given working directory.
-let runBuildScriptAt workingDirectory printDetails script extraFsiArgs args =
+/// Run the given buildscript with fsi.exe at the given working directory.  Provides full access to Fsi options and args.
+let runBuildScriptWithFsiArgsAt workingDirectory printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args =
     if printDetails then traceFAKE "Running Buildscript: %s" script
-    let result = ExecProcess (FsiStartInfo script workingDirectory extraFsiArgs args) System.TimeSpan.MaxValue
+    let result = ExecProcess (FsiStartInfo workingDirectory (FsiArgs(fsiOptions, script, scriptArgs)) args) System.TimeSpan.MaxValue
     Thread.Sleep 1000
     result = 0
+
+/// Run the given buildscript with fsi.exe at the given working directory.
+let runBuildScriptAt workingDirectory printDetails script extraFsiArgs args =
+    runBuildScriptWithFsiArgsAt workingDirectory printDetails (FsiArgs(extraFsiArgs, script, [])) args
 
 /// Run the given buildscript with fsi.exe
 let runBuildScript printDetails script extraFsiArgs args =
