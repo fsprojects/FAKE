@@ -1,4 +1,4 @@
-﻿// Contains tasks to run [RoundhousE](http://projectroundhouse.org/) database migrations.
+﻿/// Contains tasks to run [RoundhousE](http://projectroundhouse.org/) database migrations.
 module Fake.RoundhouseHelper
 
 open Fake
@@ -183,6 +183,6 @@ let Roundhouse setParams =
         info.WorkingDirectory <- parameters.WorkingDir
         info.Arguments <- args) parameters.TimeOut
     then
-        failwithf "Roundhouse failed with %s" args
+        failwithf "Roundhouse failed on %s" args
                   
     traceEndTask "Roundhouse" args
