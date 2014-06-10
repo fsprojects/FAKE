@@ -1,12 +1,22 @@
 language: objective-c
 
 env:
-  matrix:
-    - MONO_VERSION="3.2.5"
+  global:
+    - MONO_VERSION=3.4.0
+    - FSHARP_VERSION=3.1.1.11
 
 install:
-  - wget "http://download.xamarin.com/MonoFrameworkMDK/Macx86/MonoFramework-MDK-${MONO_VERSION}.macos10.xamarin.x86.pkg"
+  - wget "http://download.mono-project.com/archive/${MONO_VERSION}/macos-10-x86/MonoFramework-MDK-${MONO_VERSION}.macos10.xamarin.x86.pkg"
   - sudo installer -pkg "MonoFramework-MDK-${MONO_VERSION}.macos10.xamarin.x86.pkg" -target /
+  - wget "https://github.com/fsharp/fsharp/archive/${FSHARP_VERSION}.tar.gz" -O /tmp/fsharp-${FSHARP_VERSION}.tar.gz
+  - ./autogen.sh --prefix=/Library/Frameworks/Mono.framework/Versions/${MONO_VERSION}
+  - make
+  - sudo make install
+  - popd  
 
 script: 
   - ./build.sh Default
+  
+branches:
+  except:
+    - gh-pages  
