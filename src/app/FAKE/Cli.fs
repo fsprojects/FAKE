@@ -53,7 +53,8 @@ let parsePositionalArgs (args:string []) =
     let maybeScript, maybeTarget = 
         if args.Length > 1 then
             let isScriptArg (arg:string) = arg.EndsWith(".fsx", StringComparison.InvariantCultureIgnoreCase)
-            let isTargetArg (arg:string) = not <| arg.StartsWith("-")//i.e. it's not a switch.
+            //Don't consider it the positional target if looks like switch or old kvp arg.
+            let isTargetArg (arg:string) = not <| (arg.StartsWith("-") || arg.Contains("="))
             let arg1 = args.[1]
             let maybeScriptOrTarget = 
                 if isScriptArg arg1 then Some(Choice1Of2(arg1))
