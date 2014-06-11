@@ -1,4 +1,4 @@
-#### 2.18.0-alpha3 - 10.06.2014
+#### 2.18.0 - 11.06.2014
 * New (backwards compat) CLI for FAKE that includes FSI cmd args passing - https://github.com/fsharp/FAKE/pull/455
 * New updateApplicationSetting method - https://github.com/fsharp/FAKE/pull/462
 * Support for msbuild /noconlog - https://github.com/fsharp/FAKE/pull/463
