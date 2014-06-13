@@ -1,4 +1,4 @@
-﻿/// Contains tasks which can be used for automated deployment via [Octopus Deploy](http://octopusdeploy.com/).
+/// Contains tasks which can be used for automated deployment via [Octopus Deploy](http://octopusdeploy.com/).
 /// There is also a tutorial about the [Octopus deployment helper](../octopusdeploy.html) available.
 module Fake.OctoTools
 
@@ -18,7 +18,8 @@ type CreateReleaseOptions = {
     Packages                : string list
     PackagesFolder          : string option
     ReleaseNotes            : string
-    ReleaseNotesFile        : string }
+    ReleaseNotesFile        : string
+    IgnoreExisting          : bool }
 
 /// Options for deploying a release to an environment
 type DeployReleaseOptions = {
@@ -59,7 +60,8 @@ let serverOptions = { Server = ""; ApiKey = ""; }
 /// Default options for 'CreateRelease'
 let releaseOptions = {
     Project = ""; Version = ""; PackageVersion = ""; Packages = [];
-    PackagesFolder = None; ReleaseNotes = ""; ReleaseNotesFile = "" }
+    PackagesFolder = None; ReleaseNotes = ""; ReleaseNotesFile = "";
+    IgnoreExisting = false }
 
 /// Default options for 'DeployRelease'
 let deployOptions = {
@@ -105,7 +107,8 @@ let releaseCommandLine (opts:CreateReleaseOptions) =
       (stringListParam "package" opts.Packages)
       (optionalStringParam "packagesfolder" opts.PackagesFolder)
       (optionalStringParam "releasenotes" (liftString opts.ReleaseNotes))
-      (optionalStringParam "releasenotesfile" (liftString opts.ReleaseNotesFile)) ] 
+      (optionalStringParam "releasenotesfile" (liftString opts.ReleaseNotesFile))
+      (flag "ignoreExisting" opts.IgnoreExisting) ] 
     |> List.fold (+) ""
 
 /// [omit]
