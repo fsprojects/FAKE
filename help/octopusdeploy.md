@@ -63,7 +63,7 @@ This is often a good idea when you want your FAKE build script to continue on to
 			{ octoParams with
 				ToolPath = "./packages/octopustools"
 				Server   = server
-				Command  = CreateRelease (release, deploy) }
+				Command  = CreateRelease (release, Some deploy) }
 		)
 	)
 
