@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Fake;
 using Machine.Specifications;
+using Microsoft.FSharp.Core;
 
 namespace Test.FAKECore
 {
@@ -34,7 +35,7 @@ namespace Test.FAKECore
     {
         It should_use_custom_namespace_and_not_emit_a_version_module = () =>
         {
-            var customConfig = new AssemblyInfoFile.AssemblyInfoFileConfig(false, "Custom");
+            var customConfig = new AssemblyInfoFile.AssemblyInfoFileConfig(false, new FSharpOption<string>("Custom"));
             string infoFile = Path.GetTempFileName();
             var attributes = new[]
             {
