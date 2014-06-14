@@ -13,8 +13,8 @@ type FakeArg =
     | [<AltCommandLine("-lf")>] LogFile of string
     | [<AltCommandLine("-pd")>] PrintDetails
     | [<AltCommandLine("-v")>] Version
-    | [<Rest>] FsiArgs of string
-    | [<Rest>] Boot of string
+    | [<Rest>] [<AltCommandLine("-fa")>] FsiArgs of string
+    | [<AltCommandLine("-b")>] [<Rest>] Boot of string
     interface IArgParserTemplate with
         member x.Usage = 
             match x with
@@ -24,7 +24,7 @@ type FakeArg =
             | PrintDetails _ -> "Print details of FAKE's activity."
             | FsiArgs _ -> "Pass args after this switch to FSI when running the build script."
             | Version _ -> "Print FAKE version information."
-            | Boot _ -> "TBC"
+            | Boot _ -> "Boostrapp your FAKE script."
 
 /// Return the parsed FAKE args or the parse exception.
 let parsedArgsOrEx args = 
@@ -37,9 +37,13 @@ let parsedArgsOrEx args =
 /// Prints the FAKE argument usage.
 let printUsage () =
     printfn @"
-    fake.exe [<scriptPath>] [<targetName>] [switches]
+    fake.exe [<scriptPath>] [<targetName>] [options]
 
-    Switches:
+    scriptPath: Optional.  Path to your FAKE build script.  If not specified, FAKE will use the first .fsx file in the working directory and fail if none exists.
+    
+    targetName: Optional.  Name of the target you wish to run.  This will override the target you specifed to run in the build script.
+
+    Options:
     %s" (UnionArgParser<FakeArg>().Usage())
     
 type Args = { Script: string option; Target: string option; Rest: string [] }
