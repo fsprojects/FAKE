@@ -27,6 +27,7 @@ type FxCopParams =
       RuleLibraries : string seq
       Rules : string seq
       CustomRuleset : string
+      IgnoreGeneratedCode : bool
       ConsoleXslFileName : string
       ReportFileName : string
       OutputXslFileName : string
@@ -63,6 +64,7 @@ let FxCopDefaults =
       RuleLibraries = Seq.empty
       Rules = Seq.empty
       CustomRuleset = String.Empty
+      IgnoreGeneratedCode = false
       ConsoleXslFileName = String.Empty
       ReportFileName = currentDirectory @@ "FXCopResults.html"
       OutputXslFileName = String.Empty
@@ -112,6 +114,7 @@ let FxCop setParams (assemblies : string seq) =
         for item in param.RuleLibraries do
             appendFormat "/r:\"{0}\" " (param.ToolPath @@ "Rules" @@ item)
         appendItems "/rid:{0} " param.Rules
+        append param.IgnoreGeneratedCode "/ignoregeneratedcode "
         append param.IncludeSummaryReport "/s "
         appendFormat "/t:{0} " (separated "," param.TypeList)
         append param.SaveResultsInProjectFile "/u "
