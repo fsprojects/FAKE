@@ -1,3 +1,11 @@
+#### 2.18.1 - 16.06.2014
+* Improved CLI documentation - https://github.com/fsharp/FAKE/pull/472
+* Added Visual Basic support to AssemblyFileInfo task and make Namespace optional in config - https://github.com/fsharp/FAKE/pull/471
+* Added support for OctoTools ignoreExisting flag - https://github.com/fsharp/FAKE/pull/470
+* OctoTools samples fixed - https://github.com/fsharp/FAKE/pull/468 https://github.com/fsharp/FAKE/pull/469
+* Added support for FxCop /ignoregeneratedcode parameter - https://github.com/fsharp/FAKE/pull/467
+* CreateAssemblyInfo works with nonexisting directories - https://github.com/fsharp/FAKE/pull/466
+
 #### 2.18.0 - 11.06.2014
 * New (backwards compat) CLI for FAKE that includes FSI cmd args passing - https://github.com/fsharp/FAKE/pull/455
 * New updateApplicationSetting method - https://github.com/fsharp/FAKE/pull/462
