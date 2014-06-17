@@ -1,3 +1,7 @@
+#### 2.18.2 - 17.06.2014
+* Use Nuget.Core 2.8.2
+* Fix NUnitProcessModel.SeparateProcessModel - https://github.com/fsharp/FAKE/pull/474
+
 #### 2.18.1 - 16.06.2014
 * Improved CLI documentation - https://github.com/fsharp/FAKE/pull/472
 * Added Visual Basic support to AssemblyFileInfo task and make Namespace optional in config - https://github.com/fsharp/FAKE/pull/471
