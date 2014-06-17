@@ -13,7 +13,7 @@ type NUnitErrorLevel = TestRunnerErrorLevel // a type alias to keep backwards co
 type NUnitProcessModel = 
     | DefaultProcessModel
     | SingleProcessModel
-    | SeperateProcessModel
+    | SeparateProcessModel
     | MultipleProcessModel with 
     member x.ParamString =
         match x with
