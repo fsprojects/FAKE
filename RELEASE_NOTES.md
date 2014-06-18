@@ -1,4 +1,4 @@
-#### 3.0.0-alpha4 - 18.06.2014
+#### 3.0.0-alpha5 - 18.06.2014
 * Use FSharp.Compiler.Service instead of fsi.exe
 * Better error message for registry access
 
