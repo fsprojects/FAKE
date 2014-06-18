@@ -2,6 +2,7 @@
 * Use FSharp.Compiler.Service instead of fsi.exe
 * Better error message for registry access
 * Fall back to 32bit registry keys if 64bit cannot be found
+* Make SqlServer Disconnect more robust
 
 #### 2.18.2 - 17.06.2014
 * Use Nuget.Core 2.8.2
