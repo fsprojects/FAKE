@@ -113,6 +113,7 @@ Target "GenerateDocs" (fun _ ->
         !! "./build/**/Fake.*.dll"
           ++ "./build/FakeLib.dll"
           -- "./build/**/Fake.Experimental.dll"
+          -- "./build/**/FSharp.Compiler.Service.dll"
           -- "./build/**/Fake.Deploy.Lib.dll"
 
     CreateDocsForDlls apidocsDir templatesDir projInfo (githubLink + "/blob/master") dllFiles
