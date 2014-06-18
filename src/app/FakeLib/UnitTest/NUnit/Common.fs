@@ -13,13 +13,13 @@ type NUnitErrorLevel = TestRunnerErrorLevel // a type alias to keep backwards co
 type NUnitProcessModel = 
     | DefaultProcessModel
     | SingleProcessModel
-    | SeperateProcessModel
+    | SeparateProcessModel
     | MultipleProcessModel with 
     member x.ParamString =
         match x with
         | DefaultProcessModel -> ""
         | SingleProcessModel -> "Single"
-        | SeperateProcessModel -> "Seperate"
+        | SeparateProcessModel -> "Separate" 
         | MultipleProcessModel -> "Multiple"
 /// The /domain option controls of the creation of AppDomains for running tests. See http://www.nunit.org/index.php?p=consoleCommandLine&r=2.4.6
 type NUnitDomainModel = 
