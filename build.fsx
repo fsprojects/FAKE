@@ -185,8 +185,7 @@ Target "CreateNuGet" (fun _ ->
                 OutputPath = nugetDir
                 Summary = projectSummary
                 ReleaseNotes = release.Notes |> toLines
-                Dependencies =
-                    ("FSharp.Compiler.Service", GetPackageVersion "./packages/" "FSharp.Compiler.Service") :: 
+                Dependencies =                    
                     (if package <> "FAKE.Core" && package <> projectName then
                        ["FAKE.Core", RequireExactly (NormalizeVersion release.AssemblyVersion)]
                      else p.Dependencies) 
