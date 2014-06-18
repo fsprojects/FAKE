@@ -95,9 +95,9 @@ let runBuildScriptWithFsiArgsAt workingDirectory printDetails (FsiArgs(fsiOption
     
     if printDetails then traceFAKE "Running Buildscript: %s" script
 
-    // TODO: What do we do with the args?
+    BuildParams.Clear()
     for (k,v) in args do
-      Environment.SetEnvironmentVariable(k, v, EnvironmentVariableTarget.Process)
+      BuildParams.Add(k, v)
 
     let fsiConfig = FsiEvaluationSession.GetDefaultConfiguration()
     let evalFailed = new Event<_>()

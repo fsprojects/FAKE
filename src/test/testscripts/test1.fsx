@@ -7,8 +7,10 @@ Target "Default" DoNothing
 
 RunTargetOrDefault "Default"
 
-if getBuildParam "test" = "" then
+if hasBuildParam "test" |> not then
     failwith "test param is missing"
+else
+    trace <|  getBuildParam "test"
 
 
 System.Console.ReadKey() |> ignore
