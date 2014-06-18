@@ -31,7 +31,7 @@ let getRegistryKey baseKey subKey (writePermission : bool) = (getKey baseKey).Op
 let getRegistryValue baseKey subKey value = 
     use key = getRegistryKey baseKey subKey false
     if key = null then
-        failwithf "Registry subkey %s could not be found for key %s" subKey (baseKey.ToString())
+        failwithf "Registry subkey %s could not be found for key %A" subKey baseKey
     let value = key.GetValue value
     if value = null then
         failwithf "Registry value is null for key %s" (key.ToString())
