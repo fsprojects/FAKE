@@ -1,5 +1,6 @@
-#### 3.0.0-alpha3 - 31.03.2014
+#### 3.0.0-alpha4 - 18.06.2014
 * Use FSharp.Compiler.Service instead of fsi.exe
+* Better error message for registry access
 
 #### 2.18.2 - 17.06.2014
 * Use Nuget.Core 2.8.2

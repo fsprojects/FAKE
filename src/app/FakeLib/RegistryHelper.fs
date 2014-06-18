@@ -30,7 +30,12 @@ let getRegistryKey baseKey subKey (writePermission : bool) = (getKey baseKey).Op
 /// Gets a registy value as string
 let getRegistryValue baseKey subKey value = 
     use key = getRegistryKey baseKey subKey false
-    (key.GetValue value).ToString()
+    if key = null then
+        failwithf "Registry subkey %s could not be found for key %s" subKey (baseKey.ToString())
+    let value = key.GetValue value
+    if value = null then
+        failwithf "Registry value is null for key %s" (key.ToString())
+    value.ToString()
 
 /// create a registry subKey
 let createRegistrySubKey baseKey subKey = (getKey baseKey).CreateSubKey subKey |> ignore
