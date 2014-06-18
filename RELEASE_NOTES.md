@@ -1,3 +1,6 @@
+#### 3.0.0-alpha1 - 31.03.2014
+* Use FSharp.Compiler.Service instead of fsi.exe
+
 #### 2.18.1 - 16.06.2014
 * Improved CLI documentation - https://github.com/fsharp/FAKE/pull/472
 * Added Visual Basic support to AssemblyFileInfo task and make Namespace optional in config - https://github.com/fsharp/FAKE/pull/471
