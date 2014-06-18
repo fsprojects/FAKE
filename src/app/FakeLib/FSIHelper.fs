@@ -88,19 +88,17 @@ let executeFSIWithScriptArgsAndReturnMessages workingDirectory script (scriptArg
     Thread.Sleep 1000
     (result, messages)
 
-
-
 /// Run the given buildscript with fsi.exe at the given working directory.  Provides full access to Fsi options and args.
 let runBuildScriptWithFsiArgsAt workingDirectory printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args =
     
     if printDetails then traceFAKE "Running Buildscript: %s" script
 
+    // Add arguments to the BuildParams dictionary
     BuildParams.Clear()
     for (k,v) in args do
       BuildParams.Add(k, v)
 
     let fsiConfig = FsiEvaluationSession.GetDefaultConfiguration()
-    let evalFailed = new Event<_>()
 
     let commonOptions = [ "fsi.exe"; "--noninteractive" ] |> List.append fsiOptions |> List.toArray
 
