@@ -1,4 +1,4 @@
-#### 3.0.0-alpha2 - 31.03.2014
+#### 3.0.0-alpha3 - 31.03.2014
 * Use FSharp.Compiler.Service instead of fsi.exe
 
 #### 2.18.2 - 17.06.2014
