@@ -27,6 +27,7 @@
     <StartProgram>C:\sources\FAKE\tools\FAKE\FAKE.exe</StartProgram>
     <StartWorkingDirectory>D:\Code\FAKE\src\test\testscripts</StartWorkingDirectory>
     <StartArguments>test1.fsx</StartArguments>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>

@@ -134,6 +134,7 @@ Target "Test" (fun _ ->
     dlls
     |> MSpec (fun p ->
             {p with
+                ToolPath = findToolInSubPath "mspec-x86-clr4.exe" (currentDirectory @@ "tools" @@ "MSpec")
                 ExcludeTags = ["HTTP"]
                 HtmlOutputDir = reportDir})
 
