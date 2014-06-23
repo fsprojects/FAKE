@@ -55,8 +55,7 @@ You can find more user [here](users.html).
   <div class="span1"></div>
 </div>
 
-* [Release Notes](RELEASE_NOTES.html) [![NuGet Status](http://img.shields.io/nuget/v/FAKE.svg?style=flat)](https://www.nuget.org/packages/FAKE/) 
-* [Latest stable build](http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt335&tab=artifacts&guest=1)
+[Release Notes](RELEASE_NOTES.html) [![NuGet Status](http://img.shields.io/nuget/v/FAKE.svg?style=flat)](https://www.nuget.org/packages/FAKE/)
 
 # Using FAKE
 
