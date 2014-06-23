@@ -43,11 +43,6 @@ You can find more user [here](users.html).
 
 ## How to get FAKE
 
-You can download the latest builds from [http://teamcity.codebetter.com](http://teamcity.codebetter.com). You don't need to register, a guest login is ok.
-
-* [Latest stable build](http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt335&tab=artifacts&guest=1)
-* [Release Notes](RELEASE_NOTES.html)
-
 <div class="row">
   <div class="span1"></div>
   <div class="span6">
@@ -59,6 +54,9 @@ You can download the latest builds from [http://teamcity.codebetter.com](http://
   </div>
   <div class="span1"></div>
 </div>
+
+* [Release Notes](RELEASE_NOTES.html) [![NuGet Status](http://img.shields.io/nuget/v/FAKE.svg?style=flat)](https://www.nuget.org/packages/FAKE/) 
+* [Latest stable build](http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt335&tab=artifacts&guest=1)
 
 # Using FAKE
 
