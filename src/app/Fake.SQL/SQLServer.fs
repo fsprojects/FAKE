@@ -120,14 +120,11 @@ let runScript serverInfo sqlFile =
 /// Closes the connection to the server
 let Disconnect serverInfo = 
     logfn "Disconnecting from server %s." (getServerName serverInfo)
-    try
-        if serverInfo.Server = null then
-            failwith "Server is not configured"
-        if serverInfo.Server.ConnectionContext = null then
-            failwith "Server.ConnectionContext is not configured"
-        serverInfo.Server.ConnectionContext.Disconnect()
-    with
-    | e -> traceImportant <| sprintf "Disconnecting failed with %s" e.Message
+    if serverInfo.Server = null then
+        failwith "Server is not configured"
+    if serverInfo.Server.ConnectionContext = null then
+        failwith "Server.ConnectionContext is not configured"
+    serverInfo.Server.ConnectionContext.Disconnect()
 
 /// Replaces the database files
 let internal replaceDatabaseFiles connectionString attachOptions copyF =
