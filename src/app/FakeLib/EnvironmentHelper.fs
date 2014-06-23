@@ -47,18 +47,16 @@ let environVarOrNone name =
 /// Retrieves the application settings variable with the given name
 let appSetting (name : string) = ConfigurationManager.AppSettings.[name]
 
-let internal BuildParams = new System.Collections.Generic.Dictionary<_,_>()
-
 /// Returns if the build parameter with the given name was set
-let hasBuildParam name = BuildParams.ContainsKey name
+let inline hasBuildParam name = environVar name <> null
 
 /// Returns the value of the build parameter with the given name was set if it was set and otherwise the given default value
-let getBuildParamOrDefault name defaultParam = 
-    if hasBuildParam name then BuildParams.[name]
+let inline getBuildParamOrDefault name defaultParam = 
+    if hasBuildParam name then environVar name
     else defaultParam
 
 /// Returns the value of the build parameter with the given name if it was set and otherwise an empty string
-let getBuildParam name = getBuildParamOrDefault name String.Empty
+let inline getBuildParam name = getBuildParamOrDefault name String.Empty
 
 /// The path of the "Program Files" folder - might be x64 on x64 machine
 let ProgramFiles = Environment.GetFolderPath Environment.SpecialFolder.ProgramFiles
