@@ -47,7 +47,7 @@ You can find more user [here](users.html).
   <div class="span1"></div>
   <div class="span6">
     <div class="well well-small" id="nuget">
-      FAKE is also available <a href="https://nuget.org/packages/FAKEe">on NuGet</a>.
+      FAKE is available <a href="https://nuget.org/packages/FAKE">on NuGet</a>.
       To install the tool, run the following command in the <a href="http://docs.nuget.org/docs/start-here/using-the-package-manager-console">Package Manager Console</a>:
       <pre>PM> Install-Package FAKE</pre>
     </div>
@@ -55,7 +55,8 @@ You can find more user [here](users.html).
   <div class="span1"></div>
 </div>
 
-[Release Notes](RELEASE_NOTES.html) [![NuGet Status](http://img.shields.io/nuget/v/FAKE.svg?style=flat)](https://www.nuget.org/packages/FAKE/)
+* [Release Notes](RELEASE_NOTES.html)
+* [![NuGet Status](http://img.shields.io/nuget/v/FAKE.svg?style=flat)](https://www.nuget.org/packages/FAKE/)
 
 # Using FAKE
 
