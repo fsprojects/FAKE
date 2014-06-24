@@ -83,7 +83,7 @@ type SemVerInfo =
 ///     parse "1.0.0-rc.1"     < parse "1.0.0"          // true
 ///     parse "1.2.3-alpha"    > parse "1.2.2"          // true
 ///     parse "1.2.3-alpha2"   > parse "1.2.3-alpha"    // true
-///     parse "1.2.3-alpha002" > parse "1.2.3-alpha1" // true
+///     parse "1.2.3-alpha002" > parse "1.2.3-alpha1"   // true
 ///     parse "1.5.0-beta.2"   > parse "1.5.0-rc.1"     // false
 let parse version =
     let splitted = split '.' version
