@@ -129,16 +129,15 @@ Target "CopyLicense" (fun _ ->
 )
 
 Target "Test" (fun _ ->
-    let dlls = !! (testDir @@ "Test.*.dll")
-
-    dlls
+    !! (testDir @@ "Test.*.dll")
     |> MSpec (fun p ->
             {p with
                 ToolPath = findToolInSubPath "mspec-x86-clr4.exe" (currentDirectory @@ "tools" @@ "MSpec")
                 ExcludeTags = ["HTTP"]
                 HtmlOutputDir = reportDir})
 
-    dlls
+    !! (testDir @@ "Test.*.dll")
+      ++ (testDir @@ "FsCheck.*.dll")
     |>  xUnit (fun p -> p)
 )
 
