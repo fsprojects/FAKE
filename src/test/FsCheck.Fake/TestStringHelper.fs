@@ -6,5 +6,5 @@ open global.Xunit
 
 [<Fact>]
 let ``startsWith is alias for string.StartsWith`` () =
-    let startsWithIsAlias (prefix:string) (text:string) = startsWith prefix text <> text.StartsWith prefix
+    let startsWithIsAlias (prefix:string) (text:string) = startsWith prefix text = text.StartsWith prefix
     Check.QuickThrowOnFailure startsWithIsAlias
