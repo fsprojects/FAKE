@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono|Open+Sans:400,600,700);
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono|Open+Sans:400,600,700);
 
 /*-------------------------------------------------------------------------- 
   Formatting for F# code snippets 
@@ -92,10 +92,6 @@ pre {
 /* Format the heading - nicer spacing etc. */
 .masthead {
   overflow: hidden;
-}
-.masthead .muted a {
-  text-decoration:none;
-  color:#999999;
 }
 .masthead ul, .masthead li {
   margin-bottom:0px;

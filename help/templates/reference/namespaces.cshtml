@@ -1,4 +1,4 @@
-@{ 
+@{
   Layout = "template";
   Title = "Namespaces - " + Properties["project-name"];
 }
@@ -7,11 +7,14 @@
 
 @foreach (var ns in Model.Namespaces)
 {
-  <h2>@ns.Name Namespace</h2>
-  <div>
-    @RenderPart("part-nested", new {
-      Types = ns.Types,
-      Modules = ns.Modules
-    })
-  </div>
+  if (ns.Types.Length + ns.Modules.Length > 0)
+  {
+    <h2>@ns.Name Namespace</h2>
+    <div>
+      @RenderPart("part-nested", new {
+         Types = ns.Types,
+         Modules = ns.Modules
+      })
+    </div>
+  }
 }
