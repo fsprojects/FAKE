@@ -187,7 +187,8 @@ let WriteToFile append fileName (lines : seq<string>) =
     lines |> Seq.iter writer.WriteLine
 
 /// Removes all trailing .0 from a version string
-let rec NormalizeVersion(version : string) = 
+let rec NormalizeVersion(version : string) =
+    if version = null then "" else
     let elements = version.Split [| '.' |]
     let mutable version = ""
     for i in 0..3 do

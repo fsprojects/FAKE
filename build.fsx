@@ -137,7 +137,7 @@ Target "Test" (fun _ ->
                 HtmlOutputDir = reportDir})
 
     !! (testDir @@ "Test.*.dll")
-      ++ (testDir @@ "FsCheck.*.dll")
+      ++ (testDir @@ "FsCheck.Fake.dll")
     |>  xUnit (fun p -> p)
 )
 

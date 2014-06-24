@@ -5,6 +5,6 @@ open Fake
 open global.Xunit
 
 [<Fact>]
-let ``startsWith is alias for string.StartsWith`` () =
-    let startsWithIsAlias (prefix:string) (text:string) = startsWith prefix text = text.StartsWith prefix
-    Check.QuickThrowOnFailure startsWithIsAlias
+let ``NormalizeVersion removes tralining .0`` () =
+    let noTrailingZero x = (NormalizeVersion x).EndsWith(".0") = false
+    Check.QuickThrowOnFailure noTrailingZero
