@@ -1,19 +1,15 @@
 language: objective-c
 
 env:
-  global:
-    - MONO_VERSION=3.4.0
-    - FSHARP_VERSION=3.1.1.19
-    
+  matrix:
+    - MONO_VERSION="3.4.0"
+
 install:
   - wget "http://download.mono-project.com/archive/${MONO_VERSION}/macos-10-x86/MonoFramework-MDK-${MONO_VERSION}.macos10.xamarin.x86.pkg"
   - sudo installer -pkg "MonoFramework-MDK-${MONO_VERSION}.macos10.xamarin.x86.pkg" -target /
-  - wget "https://github.com/fsharp/fsharp/archive/${FSHARP_VERSION}.tar.gz" -O /tmp/fsharp-${FSHARP_VERSION}.tar.gz
-  - (cd /tmp; tar xf fsharp-${FSHARP_VERSION}.tar.gz) && pushd /tmp/fsharp-${FSHARP_VERSION}
-  - ./autogen.sh --prefix=/Library/Frameworks/Mono.framework/Versions/${MONO_VERSION}
-  - make
-  - sudo make install
-  - popd
+
+before_script:
+ - chmod +x build.sh
 
 script: 
   - ./build.sh Default
