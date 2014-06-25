@@ -108,7 +108,7 @@ let runBuildScriptWithFsiArgsAt workingDirectory printDetails (FsiArgs(fsiOption
 
     let stdin = new StreamReader(Stream.Null)   
 
-    let session = FsiEvaluationSession(fsiConfig, commonOptions, stdin, outStream, errStream)
+    let session = FsiEvaluationSession.Create(fsiConfig, commonOptions, stdin, outStream, errStream)
 
     try
         session.EvalScript script
