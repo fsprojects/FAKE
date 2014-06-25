@@ -1,5 +1,5 @@
-#### 3.0.0-beta3 - 23.06.2014
-* Use FSharp.Compiler.Service instead of fsi.exe
+#### 3.0.0-beta4 - 25.06.2014
+* Use FSharp.Compiler.Service 0.0.56 instead of fsi.exe
 * Better error message for registry access
 * Fall back to 32bit registry keys if 64bit cannot be found
 * Improved SqlServer Disconnect error message
