@@ -34,6 +34,7 @@ type FxCopParams =
       PlatformDirectory : string
       ProjectFile : string
       IncludeSummaryReport : bool
+      UseGACSwitch : bool
       TypeList : string seq
       SaveResultsInProjectFile : bool
       WorkingDir : string
@@ -72,6 +73,7 @@ let FxCopDefaults =
       ProjectFile = String.Empty
       IncludeSummaryReport = true
       TypeList = Seq.empty
+      UseGACSwitch = false
       SaveResultsInProjectFile = false
       WorkingDir = currentDirectory
       Verbose = true
@@ -119,6 +121,7 @@ let FxCop setParams (assemblies : string seq) =
         appendFormat "/t:{0} " (separated "," param.TypeList)
         append param.SaveResultsInProjectFile "/u "
         append param.Verbose "/v "
+        append param.UseGACSwitch "/gac "
         (!args).ToString()
     
     tracefn "FxCop command\n%s %s" param.ToolPath commandLineCommands
