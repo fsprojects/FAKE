@@ -17,7 +17,7 @@ let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"]
 let mail = "forkmann@gmx.de"
 let gitRaw = environVarOrDefault "gitRaw" "https://raw.github.com/fsharp"
 
-let release = parseReleaseNotes (System.IO.File.ReadAllLines "RELEASE_NOTES.md")
+let release = LoadReleaseNotes "RELEASE_NOTES.md"
 
 let packages =
     ["FAKE.Core",projectDescription
