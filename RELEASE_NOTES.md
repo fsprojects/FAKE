@@ -1,4 +1,4 @@
-#### 3.0.0-beta5 - 25.06.2014
+#### 3.0.0-rc1 - 26.06.2014
 * Use FSharp.Compiler.Service 0.0.57 instead of fsi.exe
 * Better error message for registry access
 * Fall back to 32bit registry keys if 64bit cannot be found
