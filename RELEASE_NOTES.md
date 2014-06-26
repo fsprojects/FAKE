@@ -6,6 +6,7 @@
 * Log "kill all processes" only when needed
 * Try to run as x86 due to Dynamics NAV problems
 * Allow to use /gac for FxCop
+* Make NuGet description fit into single line
 
 #### 2.18.2 - 17.06.2014
 * Use Nuget.Core 2.8.2

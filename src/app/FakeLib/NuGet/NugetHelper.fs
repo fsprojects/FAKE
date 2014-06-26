@@ -170,14 +170,16 @@ let private createNuspecFile parameters nuSpec =
     let xmlEncode (notEncodedText : string) = 
         if isNullOrEmpty notEncodedText then ""
         else XText(notEncodedText).ToString()
+
+    let toSingleLine (text:string) = text.Replace("\r", "").Replace("\n", "").Replace("  ", " ")
                
     let replacements = 
         [ "@build.number@", parameters.Version
           "@title@", parameters.Title
           "@authors@", parameters.Authors |> separated ", "
           "@project@", parameters.Project
-          "@summary@", parameters.Summary
-          "@description@", parameters.Description
+          "@summary@", parameters.Summary |> toSingleLine
+          "@description@", parameters.Description |> toSingleLine
           "@tags@", parameters.Tags
           "@releaseNotes@", parameters.ReleaseNotes
           "@copyright@", parameters.Copyright
