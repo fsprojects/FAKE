@@ -152,6 +152,9 @@ Target "SourceLink" (fun _ ->
         proj.CreateSrcSrv (sprintf "%s/%s/{0}/%%var2%%" gitRaw projectName) repo.Revision (repo.Paths files)
         Pdbstr.exec proj.OutputFilePdb proj.OutputFilePdbSrcSrv
     )
+    let pdbFakeLib = "./build/FakeLib.pdb"
+    CopyFile "./build/FAKE.Deploy" pdbFakeLib
+    CopyFile "./build/FAKE.Deploy.Lib" pdbFakeLib
 )
 
 Target "CreateNuGet" (fun _ ->

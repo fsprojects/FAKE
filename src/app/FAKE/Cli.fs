@@ -15,6 +15,7 @@ type FakeArg =
     | [<AltCommandLine("-v")>] Version
     | [<Rest>] [<AltCommandLine("-fa")>] FsiArgs of string
     | [<AltCommandLine("-b")>] [<Rest>] Boot of string
+    | [<AltCommandLine("-br")>] Break
     interface IArgParserTemplate with
         member x.Usage = 
             match x with
@@ -25,6 +26,7 @@ type FakeArg =
             | FsiArgs _ -> "Pass args after this switch to FSI when running the build script."
             | Version _ -> "Print FAKE version information."
             | Boot _ -> "Boostrapp your FAKE script."
+            | Break _ -> "Pauses FAKE with a Debugger.Break() near the start"
 
 /// Return the parsed FAKE args or the parse exception.
 let parsedArgsOrEx args = 
