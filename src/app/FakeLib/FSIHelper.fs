@@ -89,8 +89,7 @@ let executeFSIWithScriptArgsAndReturnMessages workingDirectory script (scriptArg
     (result, messages)
 
 /// Run the given buildscript with fsi.exe at the given working directory.  Provides full access to Fsi options and args.
-let runBuildScriptWithFsiArgsAt workingDirectory printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args =
-    
+let runBuildScriptWithFsiArgsAt workingDirectory printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args =    
     if printDetails then traceFAKE "Running Buildscript: %s" script
 
     // Add arguments to the Environment
@@ -107,18 +106,24 @@ let runBuildScriptWithFsiArgsAt workingDirectory printDetails (FsiArgs(fsiOption
     let errStream = new StringWriter(sbErr)
 
     let stdin = new StreamReader(Stream.Null)   
-
-    let session = FsiEvaluationSession.Create(fsiConfig, commonOptions, stdin, outStream, errStream)
-
+    
+    let evalException = ref null
     try
-        session.EvalScript script
-        true
-    with
-    | exn -> 
+        let session = FsiEvaluationSession.Create(fsiConfig, commonOptions, stdin, outStream, errStream)
+
+        try 
+            session.EvalScript script
+            true
+        with    
+        | exn -> 
+            traceError <| sbErr.ToString()
+            false       
+    with    
+    | exn ->
+        traceError "FsiEvaluationSession could not be created."
         traceError <| sbErr.ToString()
-        false
-
-
+        raise exn
+    
 /// Run the given buildscript with fsi.exe at the given working directory.
 let runBuildScriptAt workingDirectory printDetails script extraFsiArgs args =
     runBuildScriptWithFsiArgsAt workingDirectory printDetails (FsiArgs(extraFsiArgs, script, [])) args
