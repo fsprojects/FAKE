@@ -171,7 +171,9 @@ let private createNuspecFile parameters nuSpec =
         if isNullOrEmpty notEncodedText then ""
         else XText(notEncodedText).ToString()
 
-    let toSingleLine (text:string) = text.Replace("\r", "").Replace("\n", "").Replace("  ", " ")
+    let toSingleLine (text:string) =
+        if text = null then null 
+        else text.Replace("\r", "").Replace("\n", "").Replace("  ", " ")
                
     let replacements = 
         [ "@build.number@", parameters.Version
