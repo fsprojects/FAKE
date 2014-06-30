@@ -1,3 +1,9 @@
+#### 3.0.1 - 29.06.2014
+* Fixed SourceLinking of FAKE
+* Added new exception trap for Fsi creation
+* -br in command line will run debugger in F# scripts - https://github.com/fsharp/FAKE/pull/483
+* Null check in NuGet helper - https://github.com/fsharp/FAKE/pull/482
+
 #### 3.0.0 - 27.06.2014
 * Use FSharp.Compiler.Service 0.0.57 instead of fsi.exe
 * Better error message for registry access
