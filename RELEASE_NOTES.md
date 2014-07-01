@@ -1,3 +1,6 @@
+#### 3.0.6 - 01.07.2014
+* Use FSharp.Compiler.Service 0.0.58
+* 
 #### 3.0.5 - 01.07.2014
 * Report all targets if a target error occurs
 
