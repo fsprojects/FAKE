@@ -1,3 +1,6 @@
+#### 3.0.7 - 01.07.2014
+* Check if file exists before delete in AssemblyInfoFile
+
 #### 3.0.6 - 01.07.2014
 * Use FSharp.Compiler.Service 0.0.58
 * 
