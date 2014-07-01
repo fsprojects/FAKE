@@ -1,3 +1,6 @@
+#### 3.0.2 - 01.07.2014
+* Fixed TargetTracing
+
 #### 3.0.1 - 29.06.2014
 * Fixed SourceLinking of FAKE
 * Added new exception trap for Fsi creation
