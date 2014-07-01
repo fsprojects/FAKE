@@ -5,10 +5,10 @@ open System.Runtime.InteropServices
 [<assembly: AssemblyTitleAttribute("FAKE - F# Make SQL Lib")>]
 [<assembly: GuidAttribute("A161EAAF-EFDA-4EF2-BD5A-4AD97439F1BE")>]
 [<assembly: AssemblyProductAttribute("FAKE - F# Make")>]
-[<assembly: AssemblyVersionAttribute("3.0.3")>]
-[<assembly: AssemblyInformationalVersionAttribute("3.0.3")>]
-[<assembly: AssemblyFileVersionAttribute("3.0.3")>]
+[<assembly: AssemblyVersionAttribute("3.0.4")>]
+[<assembly: AssemblyInformationalVersionAttribute("3.0.4")>]
+[<assembly: AssemblyFileVersionAttribute("3.0.4")>]
 do ()
 
 module internal AssemblyVersionInformation =
-    let [<Literal>] Version = "3.0.3"
+    let [<Literal>] Version = "3.0.4"
