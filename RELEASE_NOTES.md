@@ -1,3 +1,6 @@
+#### 3.0.4 - 01.07.2014
+* Use FSharp.Compiler.Service with better FSharp.Core resolution - https://github.com/fsharp/FSharp.Compiler.Service/issues/156
+
 #### 3.0.3 - 01.07.2014
 * Don't break in MSBuildHelper
 * Put FSharp.Core.optdata and FSharp.Core.sigdata into nuget package
