@@ -1,3 +1,6 @@
+#### 3.0.3 - 01.07.2014
+* Don't break in MSBuildHelper
+
 #### 3.0.2 - 01.07.2014
 * Fixed TargetTracing
 
