@@ -311,11 +311,11 @@ let run targetName =
         try      
             if errors = [] && ExecutedTargets.Contains (toLower targetName) |> not then
                 let target = getTarget targetName      
-                traceStartTarget target.Name target.Description (dependencyString target)
       
                 List.iter runTarget target.Dependencies
       
                 if errors = [] then
+                    traceStartTarget target.Name target.Description (dependencyString target)
                     let watch = new System.Diagnostics.Stopwatch()
                     watch.Start()
                     target.Function()
