@@ -57,8 +57,8 @@ let getTarget name =
     | true, target -> target
     | _  -> 
         traceError <| sprintf "Target \"%s\" is not defined. Existing targets:" name
-        for target in getAllTargetsNames() do
-            traceError  <| sprintf "  - %s" target
+        for target in TargetDict do
+            traceError  <| sprintf "  - %s" target.Value.Name
         failwithf "Target \"%s\" is not defined." name
 
 /// Returns the DependencyString for the given target.
