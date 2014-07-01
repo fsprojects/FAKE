@@ -1,3 +1,6 @@
+#### 3.0.5 - 01.07.2014
+* Report all targets if a target error occurs
+
 #### 3.0.4 - 01.07.2014
 * Use FSharp.Compiler.Service with better FSharp.Core resolution - https://github.com/fsharp/FSharp.Compiler.Service/issues/156
 
