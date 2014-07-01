@@ -38,7 +38,9 @@ let packagesDir = "./packages"
 let additionalFiles = [
     "License.txt"
     "README.markdown"
-    "RELEASE_NOTES.md"]
+    "RELEASE_NOTES.md"
+    "./lib/FSharp/FSharp.Core.sigdata"
+    "./lib/FSharp/FSharp.Core.optdata"]
 
 // Targets
 Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDir; reportDir])
