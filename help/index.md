@@ -43,22 +43,20 @@ You can find more user [here](users.html).
 
 ## How to get FAKE
 
-You can download the latest builds from [http://teamcity.codebetter.com](http://teamcity.codebetter.com). You don't need to register, a guest login is ok.
-
-* [Latest stable build](http://teamcity.codebetter.com/viewLog.html?buildId=lastSuccessful&buildTypeId=bt335&tab=artifacts&guest=1)
-* [Release Notes](RELEASE_NOTES.html)
-
 <div class="row">
   <div class="span1"></div>
   <div class="span6">
     <div class="well well-small" id="nuget">
-      FAKE is also available <a href="https://nuget.org/packages/FAKEe">on NuGet</a>.
+      FAKE is available <a href="https://nuget.org/packages/FAKE">on NuGet</a>.
       To install the tool, run the following command in the <a href="http://docs.nuget.org/docs/start-here/using-the-package-manager-console">Package Manager Console</a>:
       <pre>PM> Install-Package FAKE</pre>
     </div>
   </div>
   <div class="span1"></div>
 </div>
+
+* [Release Notes](RELEASE_NOTES.html)
+* [![NuGet Status](http://img.shields.io/nuget/v/FAKE.svg?style=flat)](https://www.nuget.org/packages/FAKE/)
 
 # Using FAKE
 

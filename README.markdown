@@ -16,6 +16,8 @@ See the [project home page](http://fsharp.github.com/FAKE/) for tutorials and [A
 * Mono: Run *build.sh*  [![Travis build status](https://travis-ci.org/fsharp/FAKE.png)](https://travis-ci.org/fsharp/FAKE)
 * Windows: Run *build.cmd* [![Teamcity build status](http://teamcity.codebetter.com/app/rest/builds/buildType:\(id:bt335\)/statusIcon)](http://teamcity.codebetter.com/viewType.html?buildTypeId=bt335) [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/lk1dfo1qi99ri78f)](https://ci.appveyor.com/project/SteffenForkmann/fake)
 
+[![NuGet Status](http://img.shields.io/nuget/v/FAKE.svg?style=flat)](https://www.nuget.org/packages/FAKE/) 
+
 ## How to contribute code
 
 See the [contributing page](http://fsharp.github.com/FAKE/contributing.html).

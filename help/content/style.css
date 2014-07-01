@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono|Gudea:400,700,400italic);
+@import url(https://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono|Open+Sans:400,600,700);
 
 /*-------------------------------------------------------------------------- 
   Formatting for F# code snippets 
@@ -80,7 +80,7 @@ table.pre td.lines {
 /*--------------------------------------------------------------------------*/
 
 body {
-  font-family: Gudea, serif;
+  font-family: 'Open Sans', serif;
   padding-top: 0px;
   padding-bottom: 40px;
 }
@@ -92,6 +92,10 @@ pre {
 /* Format the heading - nicer spacing etc. */
 .masthead {
   overflow: hidden;
+}
+.masthead .muted a {
+  text-decoration:none;
+  color:#999999;
 }
 .masthead ul, .masthead li {
   margin-bottom:0px;
@@ -133,10 +137,10 @@ td.title, thead {
 /* Change font sizes for headings etc. */
 #main h1 { font-size: 26pt; margin:10px 0px 15px 0px; font-weight:400; }
 #main h2 { font-size: 20pt; margin:20px 0px 0px 0px; font-weight:400; }
-#main h3 { font-size: 14pt; margin:15px 0px 0px 0px; font-weight:400; }
-#main p  { font-size: 12pt; margin:5px 0px 15px 0px; }
-#main ul { font-size: 12pt; margin-top:10px; }
-#main li { font-size: 12pt; margin: 5px 0px 5px 0px; }
+#main h3 { font-size: 14pt; margin:15px 0px 0px 0px; font-weight:600; }
+#main p  { font-size: 11pt; margin:5px 0px 15px 0px; }
+#main ul { font-size: 11pt; margin-top:10px; }
+#main li { font-size: 11pt; margin: 5px 0px 5px 0px; }
 #main strong { font-weight:700; }
 
 /*-------------------------------------------------------------------------- 
@@ -158,6 +162,19 @@ td.title, thead {
   font-size:12pt;
   margin:10px 0px 0px 0px;
 }
+.github-link {
+  float:right;
+  text-decoration:none;
+}
+.github-link img {
+  border-style:none;
+  margin-left:10px;
+}
+.github-link .hover { display:none; }
+.github-link:hover .hover { display:block; }
+.github-link .normal { display: block; }
+.github-link:hover .normal { display: none; }
+
 /*-------------------------------------------------------------------------- 
   Additional formatting for the homepage 
 /*--------------------------------------------------------------------------*/
@@ -177,13 +194,4 @@ td.title, thead {
   border-style:none;
   color: #e0e0e0;
   margin-top:15px;
-}
-
-/* Hide snippets on the home page snippet & nicely format table */
-#hp-snippet td.lines {
-  display: none;
-}
-#hp-snippet .table {
-  width:80%;
-  margin-left:30px;
 }

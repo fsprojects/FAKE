@@ -27,12 +27,14 @@ type FxCopParams =
       RuleLibraries : string seq
       Rules : string seq
       CustomRuleset : string
+      IgnoreGeneratedCode : bool
       ConsoleXslFileName : string
       ReportFileName : string
       OutputXslFileName : string
       PlatformDirectory : string
       ProjectFile : string
       IncludeSummaryReport : bool
+      UseGACSwitch : bool
       TypeList : string seq
       SaveResultsInProjectFile : bool
       WorkingDir : string
@@ -63,6 +65,7 @@ let FxCopDefaults =
       RuleLibraries = Seq.empty
       Rules = Seq.empty
       CustomRuleset = String.Empty
+      IgnoreGeneratedCode = false
       ConsoleXslFileName = String.Empty
       ReportFileName = currentDirectory @@ "FXCopResults.html"
       OutputXslFileName = String.Empty
@@ -70,6 +73,7 @@ let FxCopDefaults =
       ProjectFile = String.Empty
       IncludeSummaryReport = true
       TypeList = Seq.empty
+      UseGACSwitch = false
       SaveResultsInProjectFile = false
       WorkingDir = currentDirectory
       Verbose = true
@@ -112,10 +116,12 @@ let FxCop setParams (assemblies : string seq) =
         for item in param.RuleLibraries do
             appendFormat "/r:\"{0}\" " (param.ToolPath @@ "Rules" @@ item)
         appendItems "/rid:{0} " param.Rules
+        append param.IgnoreGeneratedCode "/ignoregeneratedcode "
         append param.IncludeSummaryReport "/s "
         appendFormat "/t:{0} " (separated "," param.TypeList)
         append param.SaveResultsInProjectFile "/u "
         append param.Verbose "/v "
+        append param.UseGACSwitch "/gac "
         (!args).ToString()
     
     tracefn "FxCop command\n%s %s" param.ToolPath commandLineCommands

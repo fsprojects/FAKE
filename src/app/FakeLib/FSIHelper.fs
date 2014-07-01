@@ -77,6 +77,8 @@ let executeFSIWithArgs workingDirectory script extraFsiArgs args =
     Thread.Sleep 1000
     result = 0
 
+open Microsoft.FSharp.Compiler.Interactive.Shell
+
 /// Run the given build script with fsi.exe and allows for extra arguments to the script. Returns output.
 let executeFSIWithScriptArgsAndReturnMessages workingDirectory script (scriptArgs: string[]) =
     let (result, messages) =
@@ -87,12 +89,41 @@ let executeFSIWithScriptArgsAndReturnMessages workingDirectory script (scriptArg
     (result, messages)
 
 /// Run the given buildscript with fsi.exe at the given working directory.  Provides full access to Fsi options and args.
-let runBuildScriptWithFsiArgsAt workingDirectory printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args =
+let runBuildScriptWithFsiArgsAt workingDirectory printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args =    
     if printDetails then traceFAKE "Running Buildscript: %s" script
-    let result = ExecProcess (FsiStartInfo workingDirectory (FsiArgs(fsiOptions, script, scriptArgs)) args) System.TimeSpan.MaxValue
-    Thread.Sleep 1000
-    result = 0
 
+    // Add arguments to the Environment
+    for (k,v) in args do
+      Environment.SetEnvironmentVariable(k, v, EnvironmentVariableTarget.Process)
+
+    let fsiConfig = FsiEvaluationSession.GetDefaultConfiguration()
+
+    let commonOptions = [ "fsi.exe"; "--noninteractive" ] |> List.append fsiOptions |> List.toArray
+
+    let sbOut = new Text.StringBuilder()
+    let sbErr = new Text.StringBuilder()
+    let outStream = new StringWriter(sbOut)
+    let errStream = new StringWriter(sbErr)
+
+    let stdin = new StreamReader(Stream.Null)   
+    
+    let evalException = ref null
+    try
+        let session = FsiEvaluationSession.Create(fsiConfig, commonOptions, stdin, outStream, errStream)
+
+        try 
+            session.EvalScript script
+            true
+        with    
+        | exn -> 
+            traceError <| sbErr.ToString()
+            false       
+    with    
+    | exn ->
+        traceError "FsiEvaluationSession could not be created."
+        traceError <| sbErr.ToString()
+        raise exn
+    
 /// Run the given buildscript with fsi.exe at the given working directory.
 let runBuildScriptAt workingDirectory printDetails script extraFsiArgs args =
     runBuildScriptWithFsiArgsAt workingDirectory printDetails (FsiArgs(extraFsiArgs, script, [])) args

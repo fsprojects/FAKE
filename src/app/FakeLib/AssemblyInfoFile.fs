@@ -101,6 +101,7 @@ type Attribute(name, value, inNamespace) =
 let private writeToFile outputFileName (lines : seq<string>) = 
     let fi = fileInfo outputFileName
     fi.Delete()
+    System.IO.Directory.CreateDirectory(System.IO.Path.GetDirectoryName(outputFileName)) |> ignore
     use writer = new System.IO.StreamWriter(outputFileName, false, System.Text.Encoding.UTF8)
     lines |> Seq.iter writer.WriteLine
     tracefn "Created AssemblyInfo file \"%s\"." outputFileName

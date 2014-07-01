@@ -48,11 +48,18 @@ let ExecutedTargets = new HashSet<_>()
 /// [omit]
 let ExecutedTargetTimes = new List<_>()
 
+/// Returns a list with all target names.
+let getAllTargetsNames() = TargetDict |> Seq.map (fun t -> t.Key) |> Seq.toList
+
 /// Gets a target with the given name from the target dictionary.
 let getTarget name = 
     match TargetDict.TryGetValue (toLower name) with
     | true, target -> target
-    | _  -> failwithf "Target \"%s\" is not defined." name
+    | _  -> 
+        traceError <| sprintf "Target \"%s\" is not defined. Existing targets:" name
+        for target in TargetDict do
+            traceError  <| sprintf "  - %s" target.Value.Name
+        failwithf "Target \"%s\" is not defined." name
 
 /// Returns the DependencyString for the given target.
 let dependencyString target =
@@ -61,9 +68,6 @@ let dependencyString target =
       |> Seq.map (fun d -> (getTarget d).Name)
       |> separated ", "
       |> sprintf "(==> %s)"
-
-/// Returns a list with all target names.
-let getAllTargetsNames() = TargetDict |> Seq.map (fun t -> t.Key) |> Seq.toList
     
 /// Do nothing - fun () -> () - Can be used to define empty targets.
 let DoNothing = (fun () -> ())
@@ -311,11 +315,11 @@ let run targetName =
         try      
             if errors = [] && ExecutedTargets.Contains (toLower targetName) |> not then
                 let target = getTarget targetName      
-                traceStartTarget target.Name target.Description (dependencyString target)
       
                 List.iter runTarget target.Dependencies
       
                 if errors = [] then
+                    traceStartTarget target.Name target.Description (dependencyString target)
                     let watch = new System.Diagnostics.Stopwatch()
                     watch.Start()
                     target.Function()

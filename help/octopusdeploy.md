@@ -30,7 +30,7 @@ Octopus Deploy relies on the concept of a **release**, which should be an immuta
 
 So once you have created a project you are able to create a push a release into Octopus Deploy. This can be done through the Octopus UI, command line tool, or in our case - from a FAKE script.
 
-    open OctoTools
+    open Fake.OctoTools
 
 	Target "Release" (fun _ ->
 		let release = { releaseOptions with Project = "Order Processor" }
@@ -52,7 +52,7 @@ You can automatically deploy a release when you create it, but using the optiona
 
 This is often a good idea when you want your FAKE build script to continue on to a second set of perhaps slower, unit tests that exercise behaviours in a more complete and perhaps integrated environment. 
 
-    open OctoTools
+    open Fake.OctoTools
 
 	Target "ReleaseAndDeploy" (fun _ ->
 		let release = { releaseOptions with Project = "Order Processor" }
@@ -63,7 +63,7 @@ This is often a good idea when you want your FAKE build script to continue on to
 			{ octoParams with
 				ToolPath = "./packages/octopustools"
 				Server   = server
-				Command  = CreateRelease (release, deploy) }
+				Command  = CreateRelease (release, Some deploy) }
 		)
 	)
 
@@ -73,7 +73,7 @@ In this instance we've used the default `deployOptions` and modified the environ
 
 Finally when you are absolutely happy that your release is good to go the next stage (be that some manual or exploratory testing, or perhaps a staging environment). We can use a `DeployRelease` command to promote an existing release to the next environment:
 
-	open OctoTools
+	open Fake.OctoTools
 
 	Target "PromoteRelease" (fun _ ->
 		let promote = { deployOptions with 

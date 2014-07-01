@@ -14,10 +14,9 @@ let projectName = "FAKE"
 let projectSummary = "FAKE - F# Make - Get rid of the noise in your build scripts."
 let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. Tasks and dependencies are specified in a DSL which is integrated in F#."
 let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"]
-let mail = "forkmann@gmx.de"
 let gitRaw = environVarOrDefault "gitRaw" "https://raw.github.com/fsharp"
 
-let release = parseReleaseNotes (System.IO.File.ReadAllLines "RELEASE_NOTES.md")
+let release = LoadReleaseNotes "RELEASE_NOTES.md"
 
 let packages =
     ["FAKE.Core",projectDescription
@@ -39,7 +38,9 @@ let packagesDir = "./packages"
 let additionalFiles = [
     "License.txt"
     "README.markdown"
-    "RELEASE_NOTES.md"]
+    "RELEASE_NOTES.md"
+    "./lib/FSharp/FSharp.Core.sigdata"
+    "./lib/FSharp/FSharp.Core.optdata"]
 
 // Targets
 Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDir; reportDir])
@@ -113,6 +114,7 @@ Target "GenerateDocs" (fun _ ->
         !! "./build/**/Fake.*.dll"
           ++ "./build/FakeLib.dll"
           -- "./build/**/Fake.Experimental.dll"
+          -- "./build/**/FSharp.Compiler.Service.dll"
           -- "./build/**/Fake.Deploy.Lib.dll"
 
     CreateDocsForDlls apidocsDir templatesDir projInfo (githubLink + "/blob/master") dllFiles
@@ -128,15 +130,15 @@ Target "CopyLicense" (fun _ ->
 )
 
 Target "Test" (fun _ ->
-    let dlls = !! (testDir @@ "Test.*.dll")
-
-    dlls
+    !! (testDir @@ "Test.*.dll")
     |> MSpec (fun p ->
             {p with
+                ToolPath = findToolInSubPath "mspec-x86-clr4.exe" (currentDirectory @@ "tools" @@ "MSpec")
                 ExcludeTags = ["HTTP"]
                 HtmlOutputDir = reportDir})
 
-    dlls
+    !! (testDir @@ "Test.*.dll")
+      ++ (testDir @@ "FsCheck.Fake.dll")
     |>  xUnit (fun p -> p)
 )
 
@@ -152,6 +154,9 @@ Target "SourceLink" (fun _ ->
         proj.CreateSrcSrv (sprintf "%s/%s/{0}/%%var2%%" gitRaw projectName) repo.Revision (repo.Paths files)
         Pdbstr.exec proj.OutputFilePdb proj.OutputFilePdbSrcSrv
     )
+    let pdbFakeLib = "./build/FakeLib.pdb"
+    CopyFile "./build/FAKE.Deploy" pdbFakeLib
+    CopyFile "./build/FAKE.Deploy.Lib" pdbFakeLib
 )
 
 Target "CreateNuGet" (fun _ ->
@@ -167,11 +172,9 @@ Target "CreateNuGet" (fun _ ->
         match package with
         | p when p = projectName ->
             !! (buildDir @@ "**/*.*") |> Copy nugetToolsDir
-            CopyDir nugetToolsDir @"./lib/fsi" allFiles
             CopyDir nugetDocsDir docsDir allFiles
         | p when p = "FAKE.Core" ->
             !! (buildDir @@ "*.*") |> Copy nugetToolsDir
-            CopyDir nugetToolsDir @"./lib/fsi" allFiles
             CopyDir nugetDocsDir docsDir allFiles
         | _ ->
             CopyDir nugetToolsDir (buildDir @@ package) allFiles
@@ -187,10 +190,10 @@ Target "CreateNuGet" (fun _ ->
                 OutputPath = nugetDir
                 Summary = projectSummary
                 ReleaseNotes = release.Notes |> toLines
-                Dependencies =
-                    if package <> "FAKE.Core" && package <> projectName then
-                      ["FAKE.Core", RequireExactly (NormalizeVersion release.AssemblyVersion)]
-                    else p.Dependencies
+                Dependencies =                    
+                    (if package <> "FAKE.Core" && package <> projectName then
+                       ["FAKE.Core", RequireExactly (NormalizeVersion release.AssemblyVersion)]
+                     else p.Dependencies) 
                 AccessKey = getBuildParamOrDefault "nugetkey" ""
                 Publish = hasBuildParam "nugetkey"
                 ToolPath = "./tools/NuGet/nuget.exe"  }) "fake.nuspec"

@@ -1,3 +1,47 @@
+#### 3.0.6 - 01.07.2014
+* Use FSharp.Compiler.Service 0.0.58
+* 
+#### 3.0.5 - 01.07.2014
+* Report all targets if a target error occurs
+
+#### 3.0.4 - 01.07.2014
+* Use FSharp.Compiler.Service with better FSharp.Core resolution - https://github.com/fsharp/FSharp.Compiler.Service/issues/156
+
+#### 3.0.3 - 01.07.2014
+* Don't break in MSBuildHelper
+* Put FSharp.Core.optdata and FSharp.Core.sigdata into nuget package
+
+#### 3.0.2 - 01.07.2014
+* Fixed TargetTracing
+
+#### 3.0.1 - 29.06.2014
+* Fixed SourceLinking of FAKE
+* Added new exception trap for Fsi creation
+* -br in command line will run debugger in F# scripts - https://github.com/fsharp/FAKE/pull/483
+* Null check in NuGet helper - https://github.com/fsharp/FAKE/pull/482
+
+#### 3.0.0 - 27.06.2014
+* Use FSharp.Compiler.Service 0.0.57 instead of fsi.exe
+* Better error message for registry access
+* Fall back to 32bit registry keys if 64bit cannot be found
+* Improved SqlServer Disconnect error message
+* Log "kill all processes" only when needed
+* Try to run as x86 due to Dynamics NAV problems
+* Allow to use /gac for FxCop
+* Make NuGet description fit into single line
+
+#### 2.18.2 - 17.06.2014
+* Use Nuget.Core 2.8.2
+* Fix NUnitProcessModel.SeparateProcessModel - https://github.com/fsharp/FAKE/pull/474
+
+#### 2.18.1 - 16.06.2014
+* Improved CLI documentation - https://github.com/fsharp/FAKE/pull/472
+* Added Visual Basic support to AssemblyFileInfo task and make Namespace optional in config - https://github.com/fsharp/FAKE/pull/471
+* Added support for OctoTools ignoreExisting flag - https://github.com/fsharp/FAKE/pull/470
+* OctoTools samples fixed - https://github.com/fsharp/FAKE/pull/468 https://github.com/fsharp/FAKE/pull/469
+* Added support for FxCop /ignoregeneratedcode parameter - https://github.com/fsharp/FAKE/pull/467
+* CreateAssemblyInfo works with nonexisting directories - https://github.com/fsharp/FAKE/pull/466
+
 #### 2.18.0 - 11.06.2014
 * New (backwards compat) CLI for FAKE that includes FSI cmd args passing - https://github.com/fsharp/FAKE/pull/455
 * New updateApplicationSetting method - https://github.com/fsharp/FAKE/pull/462

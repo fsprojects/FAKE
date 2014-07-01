@@ -118,7 +118,13 @@ let runScript serverInfo sqlFile =
       |> (getDatabase serverInfo).ExecuteNonQuery
     
 /// Closes the connection to the server
-let Disconnect serverInfo = serverInfo.Server.ConnectionContext.Disconnect()
+let Disconnect serverInfo = 
+    logfn "Disconnecting from server %s." (getServerName serverInfo)
+    if serverInfo.Server = null then
+        failwith "Server is not configured"
+    if serverInfo.Server.ConnectionContext = null then
+        failwith "Server.ConnectionContext is not configured"
+    serverInfo.Server.ConnectionContext.Disconnect()
 
 /// Replaces the database files
 let internal replaceDatabaseFiles connectionString attachOptions copyF =

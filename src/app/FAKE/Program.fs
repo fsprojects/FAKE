@@ -53,6 +53,9 @@ try
 
         //We have new style help args!
         | Choice1Of2(fakeArgs) ->
+            
+            //Break to allow a debugger to be attached here
+            if fakeArgs.Contains <@ Cli.Break @> then Diagnostics.Debugger.Break()
 
             //Boot and version force us to ignore other args, so check for them and handle.
             let isBoot, bootArgs = fakeArgs.Contains <@ Cli.Boot @>, fakeArgs.GetResults <@ Cli.Boot @>
@@ -131,10 +134,8 @@ try
                 let printDetails = containsParam "details" cmdArgs
                 if printDetails then
                     printEnvironment cmdArgs args
-                if not (runBuildScript printDetails buildScriptArg fsiArgs args) then
-                    Environment.ExitCode <- 1
-                else
-                    if printDetails then log "Ready."
+                if not (runBuildScript printDetails buildScriptArg fsiArgs args) then Environment.ExitCode <- 1
+                else if printDetails then log "Ready."
             | Some handler ->
                 handler.Interact()
     with

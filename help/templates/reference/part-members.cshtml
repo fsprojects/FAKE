@@ -14,7 +14,7 @@
             @Html.Encode(it.Details.FormatUsage(40))
           </code>
           <div class="tip" id="@id">
-            <strong>Signature:</strong>@Html.Encode(it.Details.Signature)<br />
+            <strong>Signature:</strong> @Html.Encode(it.Details.Signature)<br />
             @if (!it.Details.Modifiers.IsEmpty) {
               <strong>Modifiers:</strong> @it.Details.FormatModifiers<br />
             }
@@ -24,11 +24,14 @@
           </div>
         </td>
         <td class="xmldoc">
-        @it.Comment.FullText
-        @if (!String.IsNullOrEmpty(it.Details.FormatSourceLocation))
-        {
-            <a href="@it.Details.FormatSourceLocation" class="github-link">Go to GitHub source</a>
-        }
+          @if (!String.IsNullOrEmpty(it.Details.FormatSourceLocation))
+          {
+            <a href="@it.Details.FormatSourceLocation" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          }
+          @it.Comment.FullText
         </td>
       </tr>
     }

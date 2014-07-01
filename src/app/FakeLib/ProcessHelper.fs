@@ -432,8 +432,8 @@ let mutable killCreatedProcesses = true
 let killAllCreatedProcesses() =
     if not killCreatedProcesses then ()
     else 
-        if startedProcesses.Count > 0 then 
-            tracefn "Killing all processes that are created by FAKE and are still running."
+        let traced = ref false
+            
         for pid, startTime in startedProcesses do
             try
                 let proc = Process.GetProcessById pid
@@ -442,6 +442,10 @@ let killAllCreatedProcesses() =
                 // to make sure the process is indeed the one we started
                 if proc.StartTime = startTime && not proc.HasExited then
                     try 
+                        if not !traced then
+                          tracefn "Killing all processes that are created by FAKE and are still running."
+                          traced := true
+
                         logfn "Trying to kill %s" proc.ProcessName
                         kill proc
                     with exn -> logfn "Killing %s failed with %s" proc.ProcessName exn.Message                              

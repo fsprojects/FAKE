@@ -122,6 +122,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assemblyinfo", "assemblyinf
 		help\pics\assemblyinfo\solutioninfo.png = help\pics\assemblyinfo\solutioninfo.png
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "testscripts", "testscripts", "{16D0306A-E2D0-444B-87F8-22605A1EC57C}"
+	ProjectSection(SolutionItems) = preProject
+		src\test\testscripts\test1.fsx = src\test\testscripts\test1.fsx
+	EndProjectSection
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsCheck.Fake", "src\test\FsCheck.Fake\FsCheck.Fake.fsproj", "{791651E4-4422-4A31-8DDE-6B1AD79B377A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -242,6 +249,16 @@ Global
 		{437FC69D-3EB5-4139-B9CD-86198AFDFD93}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{437FC69D-3EB5-4139-B9CD-86198AFDFD93}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{437FC69D-3EB5-4139-B9CD-86198AFDFD93}.Release|x86.ActiveCfg = Release|Any CPU
+		{791651E4-4422-4A31-8DDE-6B1AD79B377A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{791651E4-4422-4A31-8DDE-6B1AD79B377A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{791651E4-4422-4A31-8DDE-6B1AD79B377A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{791651E4-4422-4A31-8DDE-6B1AD79B377A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{791651E4-4422-4A31-8DDE-6B1AD79B377A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{791651E4-4422-4A31-8DDE-6B1AD79B377A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{791651E4-4422-4A31-8DDE-6B1AD79B377A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{791651E4-4422-4A31-8DDE-6B1AD79B377A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{791651E4-4422-4A31-8DDE-6B1AD79B377A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{791651E4-4422-4A31-8DDE-6B1AD79B377A}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -267,5 +284,6 @@ Global
 		{437FC69D-3EB5-4139-B9CD-86198AFDFD93} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
 		{DC70438D-6050-435C-B365-ABF68CF8891D} = {75162148-B884-4575-8E14-5320DD137760}
 		{64547E3E-F74E-48C2-8091-795A6C04B99C} = {75162148-B884-4575-8E14-5320DD137760}
+		{791651E4-4422-4A31-8DDE-6B1AD79B377A} = {B774DC6A-F933-4EC3-A61F-E07344EF8ED2}
 	EndGlobalSection
 EndGlobal

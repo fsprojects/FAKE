@@ -295,7 +295,6 @@ let build setParams project =
             info.FileName <- msBuildExe
             info.Arguments <- args) TimeSpan.MaxValue
     if exitCode <> 0 then
-        if Diagnostics.Debugger.IsAttached then Diagnostics.Debugger.Break()
         let errors =
             System.Threading.Thread.Sleep(200) // wait for the file to write
             if File.Exists MsBuildLogger.ErrorLoggerFile then
