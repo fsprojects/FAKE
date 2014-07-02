@@ -1,3 +1,6 @@
+#### 3.0.8 - 02.07.2014
+* "CustomDictionary" support for FxCop - https://github.com/fsharp/FAKE/pull/489
+
 #### 3.0.7 - 01.07.2014
 * Check if file exists before delete in AssemblyInfoFile
 
