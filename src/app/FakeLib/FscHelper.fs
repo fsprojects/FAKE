@@ -69,9 +69,9 @@ let fscList (srcFiles: string list) (opts: string list): int =
 ///     FscTarget = ...
 ///     ... })
 ///   ["file1.fsx"; "file2.fsx"]
-///
-/// Returns the exit code of the compilation process.
 let Fsc (fscParamSetter: FscParams -> FscParams) inputFiles =
+  let inputFiles = inputFiles |> Seq.toList
+  traceStartTask "Fsc " (inputFiles |> separated ", ")
   let fscParams = fscParamSetter FscDefaultParams
   let output = fscParams.Output
   let argList =
@@ -90,5 +90,6 @@ let Fsc (fscParamSetter: FscParams -> FscParams) inputFiles =
     @ List.map (fun r -> "--reference:" + r) fscParams.References
     @ if fscParams.Debug then ["-g"] else []
     @ fscParams.OtherParams
-
-  fscList (inputFiles |> Seq.toList) argList |> ignore
+    
+  fscList inputFiles argList |> ignore
+  traceEndTask "Fsc " (inputFiles |> separated ", ")
