@@ -135,8 +135,8 @@
     <Compile Include="OpenCoverHelper.fs" />
     <Compile Include="ReportGeneratorHelper.fs" />
     <Compile Include="RoundhouseHelper.fs" />
-    <None Include="app.config" />
     <Compile Include="FscHelper.fs" />
+    <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Compiler.Service">
