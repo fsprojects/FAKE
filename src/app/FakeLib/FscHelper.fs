@@ -49,6 +49,7 @@ type FscParams =
 ///   fscList ["MyFile.fs"] ["-a"; "-r"; "Common.dll"])
 let fscList (srcFiles : string list) (opts : string list) : int = 
     let scs = SimpleSourceCodeServices()
+    
     let optsArr = 
         // If output file name is specified, pass it on to fsc.
         if Seq.exists (fun e -> e = "-o" || e.StartsWith("--out:")) opts then opts @ srcFiles
@@ -70,7 +71,7 @@ let fscList (srcFiles : string list) (opts : string list) : int =
         | Microsoft.FSharp.Compiler.Error -> traceError errMsg
     exitCode
 
-/// Compiles one or more F# source files with the specified parameters.
+/// Compiles the given F# source files with the specified parameters.
 /// Can be called as:
 ///
 /// ["file1.fs"; "file2.fs"]
@@ -82,6 +83,7 @@ let fscList (srcFiles : string list) (opts : string list) : int =
 /// Returns the exit code of the compile run.
 let fsc (fscParamSetter : FscParams -> FscParams) (inputFiles : string list) : int = 
     let inputFiles = inputFiles |> Seq.toList
+    let taskDesc = inputFiles |> separated ", "
     let fscParams = fscParamSetter FscParams.Default
     let output = fscParams.Output
     
@@ -101,9 +103,9 @@ let fsc (fscParamSetter : FscParams -> FscParams) (inputFiles : string list) : i
             | AnyCpu -> [ "--platform:anycpu" ] 
             @ List.map (fun r -> "--reference:" + r) fscParams.References @ if fscParams.Debug then [ "-g" ]
                                                                             else [] @ fscParams.OtherParams
-    traceStartTask "Fsc " (inputFiles |> separated ", ")
+    traceStartTask "Fsc " taskDesc
     let res = fscList inputFiles argList
-    traceEndTask "Fsc " (inputFiles |> separated ", ")
+    traceEndTask "Fsc " taskDesc
     res
 
 /// Compiles one or more F# source files with the specified parameters.
@@ -116,5 +118,5 @@ let fsc (fscParamSetter : FscParams -> FscParams) (inputFiles : string list) : i
 ///                     ... })
 let Fsc (fscParamSetter : FscParams -> FscParams) (inputFiles : string list) : unit = 
     let res = fsc fscParamSetter inputFiles
-    if res <> 0 then raise (Fake.MSBuildHelper.BuildException("Fsc: compile failed with exit code", [ string res ]))
+    if res <> 0 then raise <| BuildException("Fsc: compile failed with exit code", [ string res ])
     ()
