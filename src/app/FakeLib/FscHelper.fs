@@ -2,8 +2,6 @@
 
 open Microsoft.FSharp.Compiler.SimpleSourceCodeServices
 
-let private scs = SimpleSourceCodeServices()
-
 /// 'fsc.exe' output target types
 type FscTarget = 
     | Exe
@@ -50,6 +48,7 @@ type FscParams =
 /// Target "MyFile" (fun _ ->
 ///   fscList ["MyFile.fs"] ["-a"; "-r"; "Common.dll"])
 let fscList (srcFiles : string list) (opts : string list) : int = 
+    let scs = SimpleSourceCodeServices()
     let optsArr = 
         // If output file name is specified, pass it on to fsc.
         if Seq.exists (fun e -> e = "-o" || e.StartsWith("--out:")) opts then opts @ srcFiles
