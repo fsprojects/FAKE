@@ -219,7 +219,7 @@ let RunRemoteService command host serviceName =
     let host, address =
         if host = "."
         then Environment.MachineName, ""
-        else host, "\\" + host
+        else host, @"\\" + host
     tracefn "%s %s on %s" command serviceName host
     let proc = new Process()
     proc.StartInfo.FileName <- "sc"
