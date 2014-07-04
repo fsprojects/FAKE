@@ -1,4 +1,5 @@
-﻿module Fake.FscHelper
+﻿/// Contains tasks to compiles F# source file with the [FSharp.Compiler.Service](https://github.com/fsharp/FSharp.Compiler.Service).
+module Fake.FscHelper
 
 open Microsoft.FSharp.Compiler.SimpleSourceCodeServices
 
