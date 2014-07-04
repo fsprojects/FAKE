@@ -1,5 +1,5 @@
 ﻿[<AutoOpen>]
-module Fake.GuardedAwaitObservable
+module internal Fake.GuardedAwaitObservable
 
 // from https://github.com/fsprojects/fsharpx/blob/f99a8f669ab49166c854c479d17c3add2b39f8d7/src/FSharpx.Core/Observable.fs
 open System
