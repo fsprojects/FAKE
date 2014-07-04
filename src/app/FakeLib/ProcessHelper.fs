@@ -217,11 +217,10 @@ let StartProcess configProcessStartInfoF =
 
 /// Sends a command to a remote windows service.
 let RunRemoteService command host serviceName =
-    let service = getRemoteService host serviceName
     let host, address =
-        if host = "."
-        then Environment.MachineName, ""
-        else host, @"\\" + host
+        match host with
+        | "." -> Environment.MachineName, ""
+        | _ -> host, @"\\" + host
     tracefn "%s %s on %s" command serviceName host
     if not <| directExec (fun p ->
         p.FileName <- "sc"
