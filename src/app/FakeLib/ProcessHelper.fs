@@ -8,6 +8,7 @@ open System.Diagnostics
 open System.IO
 open System.Threading
 open System.Collections.Generic
+open System.ServiceProcess
 
 /// [omit]
 let startedProcesses = HashSet()
@@ -216,17 +217,17 @@ let StartProcess configProcessStartInfoF =
 
 /// Sends a command to a remote windows service.
 let RunRemoteService command host serviceName =
+    let service = getRemoteService host serviceName
     let host, address =
         if host = "."
         then Environment.MachineName, ""
         else host, @"\\" + host
     tracefn "%s %s on %s" command serviceName host
-    let proc = new Process()
-    proc.StartInfo.FileName <- "sc"
-    proc.StartInfo.Arguments <- sprintf @"%s %s %s" address command serviceName
-    proc.StartInfo.RedirectStandardOutput <- true
-    proc.StartInfo.UseShellExecute <- false
-    start proc
+    if not <| directExec (fun p ->
+        p.FileName <- "sc"
+        p.Arguments <- sprintf @"%s %s %s" address command serviceName
+        p.RedirectStandardOutput <- true
+    ) then failwith "Failed to send command to service."
 
 /// Sends a command to a local windows service.
 let RunService command serviceName =
