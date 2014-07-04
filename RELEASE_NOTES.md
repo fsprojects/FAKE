@@ -1,3 +1,6 @@
+#### 3.1.0 - 04.07.2014
+* New FSC helper allows to call F# compiler directly from FAKE - https://github.com/fsharp/FAKE/pull/485
+
 #### 3.0.8 - 02.07.2014
 * "CustomDictionary" support for FxCop - https://github.com/fsharp/FAKE/pull/489
 
