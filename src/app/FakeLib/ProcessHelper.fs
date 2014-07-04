@@ -214,25 +214,43 @@ let StartProcess configProcessStartInfoF =
     configProcessStartInfoF proc.StartInfo
     start proc
 
-/// Sends a command to a windows service.
-let RunService command serviceName = 
-    tracefn "%s %s" command serviceName
+/// Sends a command to a remote windows service.
+let RunRemoteService command host serviceName =
+    let host, address =
+        if host = "."
+        then Environment.MachineName, ""
+        else host, "\\" + host
+    tracefn "%s %s on %s" command serviceName host
     let proc = new Process()
     proc.StartInfo.FileName <- "sc"
-    proc.StartInfo.Arguments <- sprintf "%s %s" command serviceName
+    proc.StartInfo.Arguments <- sprintf @"%s %s %s" address command serviceName
     proc.StartInfo.RedirectStandardOutput <- true
     proc.StartInfo.UseShellExecute <- false
     start proc
 
-/// Stops a windows service
-let StopService serviceName = 
+/// Sends a command to a local windows service.
+let RunService command serviceName =
+    RunRemoteService command "." serviceName
+
+/// Stops a local windows service. Waits up to two minutes for a response.
+let StopService serviceName =
     stopService serviceName
     ensureServiceHasStopped serviceName (TimeSpan.FromMinutes 2.)
 
-/// Starts a windows service
-let StartService serviceName = 
+/// Stops a remote windows service. Waits up to two minutes for a response.
+let StopRemoteService host serviceName =
+    stopRemoteService host serviceName
+    ensureRemoteServiceHasStopped host serviceName (TimeSpan.FromMinutes 2.)
+
+/// Starts a local windows service. Waits up to two minutes for a response.
+let StartService serviceName =
     startService serviceName
     ensureServiceHasStarted serviceName (TimeSpan.FromMinutes 2.)
+
+/// Starts a remote windows service. Waits up to two minutes for a response.
+let StartRemoteService host serviceName =
+    startRemoteService host serviceName
+    ensureRemoteServiceHasStarted host serviceName (TimeSpan.FromMinutes 2.)
 
 /// Adds quotes around the string
 /// [omit]
