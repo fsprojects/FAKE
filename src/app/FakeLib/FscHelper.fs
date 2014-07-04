@@ -3,14 +3,14 @@ module Fake.FscHelper
 
 open Microsoft.FSharp.Compiler.SimpleSourceCodeServices
 
-/// 'fsc.exe' output target types
+/// The 'fsc.exe' output target types
 type FscTarget = 
     | Exe
     | Winexe
     | Library
     | Module
 
-/// 'fsc.exe' output platforms
+/// The 'fsc.exe' output platforms
 type FscPlatform = 
     | X86
     | Itanium
@@ -32,6 +32,7 @@ type FscParams =
       Debug : bool
       /// Specifies other params for the compilation. Freeform strings.
       OtherParams : string list }
+
     /// The default parameters to the compiler service.
     static member Default = 
         { Output = ""
@@ -44,10 +45,7 @@ type FscParams =
 /// Compiles the given source file with the given options. If no options
 /// given (i.e. the second argument is an empty list), by default tries
 /// to behave the same way as would the command-line 'fsc.exe' tool.
-///
-/// Example usage:
-/// Target "MyFile" (fun _ ->
-///   fscList ["MyFile.fs"] ["-a"; "-r"; "Common.dll"])
+/// [omit]
 let fscList (srcFiles : string list) (opts : string list) : int = 
     let scs = SimpleSourceCodeServices()
     
@@ -72,20 +70,23 @@ let fscList (srcFiles : string list) (opts : string list) : int =
         | Microsoft.FSharp.Compiler.Error -> traceError errMsg
     exitCode
 
-/// Compiles the given F# source files with the specified parameters.
-/// Can be called as:
+/// Compiles the given F# source files with the specified parameters and returns the exit code of the compile run.
+/// ## Parameters
 ///
-/// ["file1.fs"; "file2.fs"]
-/// |> fsc (fun parameters ->
-///   { parameters with Output = ...
-///                     FscTarget = ...
-///                     ... })
+///  - `setParams` - Function used to overwrite the default Fsc parameters.
+///  - `inputFiles` - The F# input files.
 ///
-/// Returns the exit code of the compile run.
-let fsc (fscParamSetter : FscParams -> FscParams) (inputFiles : string list) : int = 
+/// ## Sample
+///
+///     ["file1.fs"; "file2.fs"]
+///     |> fsc (fun parameters ->
+///              { parameters with Output = ...
+///                                FscTarget = ...
+///                                ... })
+let fsc (setParams : FscParams -> FscParams) (inputFiles : string list) : int = 
     let inputFiles = inputFiles |> Seq.toList
     let taskDesc = inputFiles |> separated ", "
-    let fscParams = fscParamSetter FscParams.Default
+    let fscParams = setParams FscParams.Default
     let output = fscParams.Output
     
     let argList = 
@@ -110,14 +111,19 @@ let fsc (fscParamSetter : FscParams -> FscParams) (inputFiles : string list) : i
     res
 
 /// Compiles one or more F# source files with the specified parameters.
-/// Can be called as:
+/// ## Parameters
 ///
-/// ["file1.fs"; "file2.fs"]
-/// |> Fsc (fun parameters ->
-///   { parameters with Output = ...
-///                     FscTarget = ...
-///                     ... })
-let Fsc (fscParamSetter : FscParams -> FscParams) (inputFiles : string list) : unit = 
-    let res = fsc fscParamSetter inputFiles
+///  - `setParams` - Function used to overwrite the default Fsc parameters.
+///  - `inputFiles` - The F# input files.
+///
+/// ## Sample
+///
+///     ["file1.fs"; "file2.fs"]
+///     |> Fsc (fun parameters ->
+///                   { parameters with Output = ...
+///                                     FscTarget = ...
+///                                     ... })
+let Fsc (setParams : FscParams -> FscParams) (inputFiles : string list) : unit = 
+    let res = fsc setParams inputFiles
     if res <> 0 then raise <| BuildException("Fsc: compile failed with exit code", [ string res ])
     ()
