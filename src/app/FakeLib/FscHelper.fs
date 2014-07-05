@@ -46,7 +46,6 @@ type FscParams =
 /// Compiles the given source file with the given options. If no options
 /// given (i.e. the second argument is an empty list), by default tries
 /// to behave the same way as would the command-line 'fsc.exe' tool.
-/// [omit]
 let fscList (srcFiles : string list) (opts : string list) : int = 
     let scs = SimpleSourceCodeServices()
     
@@ -80,7 +79,7 @@ let fscList (srcFiles : string list) (opts : string list) : int =
 ///
 /// ## Returns
 ///
-/// The exit status code of the compile.
+/// The exit status code of the compile process.
 ///
 /// ## Sample
 ///
@@ -132,4 +131,3 @@ let fsc (setParams : FscParams -> FscParams) (inputFiles : string list) : int =
 let Fsc (setParams : FscParams -> FscParams) (inputFiles : string list) : unit = 
     let res = fsc setParams inputFiles
     if res <> 0 then raise <| BuildException("Fsc: compile failed with exit code", [ string res ])
-    ()
