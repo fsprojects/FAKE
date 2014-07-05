@@ -1,4 +1,5 @@
 ﻿/// Contains tasks to compiles F# source file with the [FSharp.Compiler.Service](https://github.com/fsharp/FSharp.Compiler.Service).
+/// There is also a tutorial about the [F# compiler tasks](../fsc.html) available.
 module Fake.FscHelper
 
 open Microsoft.FSharp.Compiler.SimpleSourceCodeServices
