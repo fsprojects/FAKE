@@ -1,47 +1,48 @@
 # Compiling F# Sources
 
 FAKE can be used to build F# source files and output libraries, modules,
-and executables. It does this by making use of the
-`FSharp.Compiler.Service` library that it comes with, and making
-available three FAKE tasks for compiling in different ways and with
-different return values. In this tutorial we will look at each compile
-task.
+and executables by using the bundeld
+[FSharp.Compiler.Service](https://github.com/fsharp/FSharp.Compiler.Service). 
+In this tutorial we will look at these compile tasks.
 
-## `Fsc`
+## The `Fsc` task
 
-The first task can be used in standard FAKE targets:
+The `Fsc` task can be used in standard FAKE targets:
 
     #r "/path/to/FakeLib.dll"
     open Fake
     open Fake.FscHelper
 
     Target "Something.dll" (fun _ ->
-      ["Something.fs"]
-      |> Fsc (fun parameters ->
-        { parameters with Output = "Something.dll"
-                          FscTarget = Library }))
+      !! "src/**/*.fs"
+      |> Fsc (fun p ->
+               { p with Output = "Something.dll"
+                        FscTarget = Library })
+    )
 
     Target "Otherthing.dll" (fun _ ->
-      ["Otherthing.fs"]
-      |> Fsc (fun parameters ->
-        { parameters with FscTarget = Library }))
+      ["Otherthing.fs"; "Otherthing2.fs"]
+      |> Fsc (fun p -> { p with FscTarget = Library })
+	)
 
     Target "Main.exe" (fun _ ->
       ["Main.fs"]
-      |> Fsc (fun parameters ->
-        { parameters with References =
-                            [ "Something.dll"
-                              "Otherthing.dll" ] }))
+      |> Fsc (fun p ->
+               { p with References =
+                          [ "Something.dll"
+                            "Otherthing.dll" ] })
+    )
 
     "Something.dll"
       ==> "Otherthing.dll"
       ==> "Main.exe"
     RunTargetOrDefault "Main.exe"
 
-The `Fsc` task takes two arguments: (1) a function which overrides the
-default compile parameters, and (2) a list of source files. We start
-with the list of source files, and send it into the `Fsc` task using the
-`|>` ('pipe') operator. We put the override function last. The override
+The `Fsc` task takes two arguments: 
+  1. a function which overrides the default compile parameters, and 
+  2. a list of source files.
+We start with the list of source files, and send it into the `Fsc` task using F#'s
+`|>` operator. We put the override function last. The override
 function takes the default compile parameters and needs to return the
 parameters with any, all, or no parameters overridden.
 
