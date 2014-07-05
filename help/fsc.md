@@ -1,11 +1,11 @@
 # Compiling F# Sources
 
-FAKE can be used to build F# source files and output libraries, modules,
+The [Fsc task set](apidocs/fake-fschelper.html)() in FAKE can be used to build F# source files and output libraries, modules,
 and executables by using the bundeld
 [FSharp.Compiler.Service](https://github.com/fsharp/FSharp.Compiler.Service). 
 In this tutorial we will look at these compile tasks.
 
-## The `Fsc` task
+## The Fsc task
 
 The `Fsc` task can be used in standard FAKE targets:
 
@@ -39,16 +39,17 @@ The `Fsc` task can be used in standard FAKE targets:
     RunTargetOrDefault "Main.exe"
 
 The `Fsc` task takes two arguments: 
+
   1. a function which overrides the default compile parameters, and 
   2. a list of source files.
-We start with the list of source files, and send it into the `Fsc` task using F#'s
-`|>` operator. We put the override function last. The override
-function takes the default compile parameters and needs to return the
-parameters with any, all, or no parameters overridden.
 
-In the above examples, notice that I don't always override the output
+We start with the list of source files, and send it into the `Fsc` task using F#'s
+`|>` operator. The parameter override function takes the default compile parameters and 
+needs to return the parameters with any, all, or no parameters overridden.
+
+In the above examples, notice that we don't always override the output
 file name. By default `Fsc` will behave exactly the same way as
-`fsc.exe` if you don't specify an output file: it will use the name of
+`fsc.exe`. If you don't specify an output file: it will use the name of
 the first input file, and the appropriate filename extension.
 
 The `FscTarget` slot also behaves in the same way as the `fsc.exe`
@@ -61,10 +62,10 @@ directly available; the others can all be set inside the `OtherParams`
 slot as a list of strings:
 
     ["Something.fs"]
-    |> Fsc (fun parameters ->
-      { parameters with Output = "Something.dll"
-                        FscTarget = Library
-                        OtherParams =
+    |> Fsc (fun p ->
+              { p with Output = "Something.dll"
+                       FscTarget = Library
+                       OtherParams =
                           [ "--nooptimizationdata"
                             "--checked+" ] })
 
@@ -74,7 +75,7 @@ the available parameters.
 The `Fsc` task will print any compile warnings or errors. If there's any
 compile error, it will notify you and immediately quit.
 
-## `fsc`
+## The fsc task
 
 The next task that can compile F# sources starts with a lowercase 'f'.
 It takes exactly the same arguments and can be called in exactly the
@@ -86,7 +87,7 @@ Having an exit status code returned can be useful when you're trying to
 integrate FAKE with other build management tools, e.g. your own CI
 server or a test runner.
 
-## `fscList`
+## The fscList helper
 
 This task is lower level than the previous two. It takes a list of
 source files and a list of strings which contains the same arguments
