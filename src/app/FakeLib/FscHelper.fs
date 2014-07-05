@@ -70,11 +70,16 @@ let fscList (srcFiles : string list) (opts : string list) : int =
         | Microsoft.FSharp.Compiler.Error -> traceError errMsg
     exitCode
 
-/// Compiles the given F# source files with the specified parameters and returns the exit code of the compile run.
+/// Compiles the given F# source files with the specified parameters.
+///
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to overwrite the default Fsc parameters.
 ///  - `inputFiles` - The F# input files.
+///
+/// ## Returns
+///
+/// The exit status code of the compile.
 ///
 /// ## Sample
 ///
