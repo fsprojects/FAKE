@@ -61,13 +61,15 @@ function. Several of them, like `Output`, `References`, etc., are made
 directly available; the others can all be set inside the `OtherParams`
 slot as a list of strings:
 
-    ["Something.fs"]
-    |> Fsc (fun p ->
-              { p with Output = "Something.dll"
-                       FscTarget = Library
-                       OtherParams =
-                          [ "--nooptimizationdata"
-                            "--checked+" ] })
+    Target "Something.dll" (fun _ ->    
+        ["Something.fs"]
+        |> Fsc (fun p ->
+                 { p with Output = "Something.dll"
+                          FscTarget = Library
+                          OtherParams =
+                             [ "--nooptimizationdata"
+                               "--checked+" ] })
+	)
 
 See the [API docs for Fsc](apidocs/fake-fschelper.html) for details of
 the available parameters.
@@ -97,9 +99,10 @@ _all_ the parameters. It too prints warnings and errors, and returns a
 compile exit status code. E.g.:
 
     Target "Something.dll" (fun _ ->
-      ["Something.fs"]
-      |> fscList ["-o"; "Something.dll"; "--target:library"]
-      ())
+        ["Something.fs"]
+        |> fscList ["-o"; "Something.dll"; "--target:library"]
+        |> ignore
+	)
 
 This task may be useful when you already have compile options in string
 format and just need to pass them in to your build tool. You'd just need
