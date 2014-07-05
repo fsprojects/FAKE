@@ -7,6 +7,7 @@ Some of our users are:
 * [Octokit](https://github.com/octokit/octokit.net/) by GitHub
 * [Akka.net](https://github.com/akkadotnet/akka.net)
 * [FSharp.Compiler.Service](https://github.com/fsharp/FSharp.Compiler.Service)
+* [FsLexYacc](https://github.com/fsprojects/FsLexYacc)
 * [Visual F# Power Tools](https://github.com/fsprojects/VisualFSharpPowerTools)
 * [Deedle](https://github.com/BlueMountainCapital/Deedle) by BlueMountainCapital
 * [fsharpx](https://github.com/fsharp/fsharpx)
