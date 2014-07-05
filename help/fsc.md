@@ -1,7 +1,7 @@
 # Compiling F# Sources
 
 The [Fsc task set](apidocs/fake-fschelper.html) in FAKE can be used to build F# source files and output libraries, modules,
-and executables by using the bundeld
+and executables by using the bundled
 [FSharp.Compiler.Service](https://github.com/fsharp/FSharp.Compiler.Service). 
 In this tutorial we will look at these compile tasks.
 
