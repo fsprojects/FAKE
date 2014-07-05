@@ -1,5 +1,6 @@
 #### 3.1.1 - 04.07.2014
 * GuardedAwaitObservable was made public by accident - this was fixed
+* Add support for remote service admin - https://github.com/fsharp/FAKE/pull/492
 
 #### 3.1.0 - 04.07.2014
 * New FSC helper allows to call F# compiler directly from FAKE - https://github.com/fsharp/FAKE/pull/485
