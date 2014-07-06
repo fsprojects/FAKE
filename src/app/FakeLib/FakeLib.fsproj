@@ -137,6 +137,7 @@
     <Compile Include="RoundhouseHelper.fs" />
     <Compile Include="FscHelper.fs" />
     <None Include="app.config" />
+    <Compile Include="ReFake.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Compiler.Service">
