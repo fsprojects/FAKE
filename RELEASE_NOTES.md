@@ -1,3 +1,6 @@
+#### 3.1.2 - 07.07.2014
+* Automatic tool search for SpecFlowHelper - https://github.com/fsharp/FAKE/pull/496
+
 #### 3.1.1 - 05.07.2014
 * GuardedAwaitObservable was made public by accident - this was fixed
 * Add support for remote service admin - https://github.com/fsharp/FAKE/pull/492
