@@ -207,4 +207,4 @@ let CreateFSharpAssemblyInfo outputFileName attributes =
 /// Creates a VB AssemblyInfo file with the given attributes.
 /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
 let CreateVisualBasicAssemblyInfo outputFileName attributes =
-    CreateVisualBasicAssemblyInfoWithConfig (utputFileName attributes AssemblyInfoFileConfig.Default
+    CreateVisualBasicAssemblyInfoWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
