@@ -98,7 +98,9 @@ let runBuildScriptWithFsiArgsAt workingDirectory printDetails (FsiArgs(fsiOption
 
     let fsiConfig = FsiEvaluationSession.GetDefaultConfiguration()
 
-    let commonOptions = [ "fsi.exe"; "--noninteractive" ] |> List.append fsiOptions |> List.toArray
+    let commonOptions = 
+        [ "fsi.exe"; "--noninteractive" ] @ fsiOptions @ scriptArgs
+        |> List.toArray
 
     let sbOut = new Text.StringBuilder()
     let sbErr = new Text.StringBuilder()
@@ -107,7 +109,6 @@ let runBuildScriptWithFsiArgsAt workingDirectory printDetails (FsiArgs(fsiOption
 
     let stdin = new StreamReader(Stream.Null)   
     
-    let evalException = ref null
     try
         let session = FsiEvaluationSession.Create(fsiConfig, commonOptions, stdin, outStream, errStream)
 
@@ -115,7 +116,7 @@ let runBuildScriptWithFsiArgsAt workingDirectory printDetails (FsiArgs(fsiOption
             session.EvalScript script
             true
         with    
-        | exn -> 
+        | _ -> 
             traceError <| sbErr.ToString()
             false       
     with    

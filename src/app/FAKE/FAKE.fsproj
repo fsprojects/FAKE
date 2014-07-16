@@ -26,7 +26,7 @@
     <StartAction>Project</StartAction>
     <StartProgram>C:\sources\FAKE\tools\FAKE\FAKE.exe</StartProgram>
     <StartWorkingDirectory>C:\Code\FAKE\src\test\testscripts</StartWorkingDirectory>
-    <StartArguments>test1.fsx</StartArguments>
+    <StartArguments>test1.fsx --fsiargs test1.fsx -d:MONO</StartArguments>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
