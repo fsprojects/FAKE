@@ -1,3 +1,6 @@
+#### 3.2.1 - 16.07.2014
+* Fix fsiargs and -d options - https://github.com/fsharp/FAKE/pull/498 https://github.com/fsharp/FAKE/pull/500
+
 #### 3.2.0 - 07.07.2014
 * BREAKING CHANGE: API for CreateAssemblyInfoWithConfig was set back to original version
   This resets the breaking change introduced in https://github.com/fsharp/FAKE/pull/471
