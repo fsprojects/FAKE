@@ -123,16 +123,18 @@ let FixMissingFiles templateProject projects =
     findMissingFiles templateProject projects
     |> Seq.iter (fun pc -> 
             let project = ProjectFile.FromFile pc.ProjectFileName
-            let newProject = Seq.fold addMissing project pc.MissingFiles
-            newProject.Save())
+            if not (Seq.isEmpty pc.MissingFiles) then
+                let newProject = Seq.fold addMissing project pc.MissingFiles
+                newProject.Save())
 
 /// It removes duplicate files from the project files.
 let RemoveDuplicateFiles projects =    
     projects
     |> Seq.iter (fun fileName ->
             let project = ProjectFile.FromFile fileName
-            let newProject = project.RemoveDuplicates()
-            newProject.Save())
+            if not (project.FindDuplicateFiles().IsEmpty) then
+                let newProject = project.RemoveDuplicates()
+                newProject.Save())
 
 /// Compares the given projects to the template project and adds all missing files to the projects if needed.
 /// It also removes duplicate files from the project files.
