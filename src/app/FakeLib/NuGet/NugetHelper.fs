@@ -219,6 +219,13 @@ let private pack parameters nuspecFile =
                 info.Arguments <- args) parameters.TimeOut
         if result <> 0 then failwithf "Error during NuGet package creation. %s %s" parameters.ToolPath args
 
+    let nuspecFile = 
+        let fi = fileInfo nuspecFile
+        if fi.Directory.FullName = FullName parameters.WorkingDir then
+            fi.Name
+        else
+            FullName nuspecFile
+
     match parameters.SymbolPackage with
     | NugetSymbolPackage.ProjectFile ->
         if not (isNullOrEmpty parameters.ProjectFile) then
@@ -226,15 +233,15 @@ let private pack parameters nuspecFile =
                 parameters.Version outputPath (FullName parameters.ProjectFile) packageAnalysis properties
             |> execute
         sprintf "pack -Version %s -OutputDirectory \"%s\" \"%s\" %s %s"
-            parameters.Version outputPath (FullName nuspecFile) packageAnalysis properties
+            parameters.Version outputPath nuspecFile packageAnalysis properties
         |> execute
     | NugetSymbolPackage.Nuspec ->
         sprintf "pack -Symbols -Version %s -OutputDirectory \"%s\" \"%s\" %s %s"
-            parameters.Version outputPath (FullName nuspecFile) packageAnalysis properties
+            parameters.Version outputPath nuspecFile packageAnalysis properties
         |> execute
     | _ ->
         sprintf "pack -Version %s -OutputDirectory \"%s\" \"%s\" %s %s"
-            parameters.Version outputPath (FullName nuspecFile) packageAnalysis properties
+            parameters.Version outputPath nuspecFile packageAnalysis properties
         |> execute
     
 

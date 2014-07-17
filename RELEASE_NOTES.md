@@ -1,3 +1,6 @@
+#### 3.2.3 - 17.07.2014
+* Try to reference local nuspec in order to fix https://github.com/fsprojects/FSharp.TypeProviders.StarterPack/pull/33
+
 #### 3.2.2 - 17.07.2014
 * Better log messages to fix https://github.com/fsprojects/FSharp.TypeProviders.StarterPack/pull/33
 
