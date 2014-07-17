@@ -207,6 +207,9 @@ let private pack parameters nuspecFile =
     let properties = propertiesParam parameters.Properties
     let outputPath = (FullName(parameters.OutputPath.TrimEnd('\\').TrimEnd('/')))
     let packageAnalysis = if parameters.NoPackageAnalysis then "-NoPackageAnalysis" else ""
+    
+    if Directory.Exists parameters.OutputPath |> not then 
+        failwithf "OutputDir %s does not exist." parameters.OutputPath
 
     let execute args =
         let result =

@@ -1,3 +1,6 @@
+#### 3.2.2 - 17.07.2014
+* Better log messages to fix https://github.com/fsprojects/FSharp.TypeProviders.StarterPack/pull/33
+
 #### 3.2.1 - 16.07.2014
 * Fix fsiargs and -d options - https://github.com/fsharp/FAKE/pull/498 https://github.com/fsharp/FAKE/pull/500
 * Change RemoveDuplicateFiles & FixMissingFiles to only save on change - https://github.com/fsharp/FAKE/pull/499
