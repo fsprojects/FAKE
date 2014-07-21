@@ -2,7 +2,7 @@
 
 Easy [TeamCity](http://www.jetbrains.com/teamcity/) integration was one of the major goals for the FAKE build system.
 
-In this article you will learn how to set up a FAKE build script in TeamCity. We will use the CalculatorSample which you can build from the [getting started guid](gettingstarted.html).
+In this article you will learn how to set up a FAKE build script in TeamCity. We will use the CalculatorSample which you can build from the [getting started guide](gettingstarted.html).
 
 ## Installing TeamCity
 
