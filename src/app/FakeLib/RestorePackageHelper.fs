@@ -95,9 +95,24 @@ let RestorePackageId setParams packageId =
   
     traceEndTask "RestorePackageId" packageId
 
-/// Restores the given package from NuGet
-let RestorePackage setParams package = 
-    traceStartTask "RestorePackage" package
+/// Restores the packages in the given packages.config file from NuGet.
+/// ## Parameters
+/// 
+///  - `setParams` - Function used to manipulate the default NuGet parameters.
+///  - `packageFile` - The packages.config file name.
+///
+/// ## Sample
+///
+///     Target "RestorePackages" (fun _ -> 
+///          "./scr/ProjectA/packages.config"
+///          |> RestorePackage (fun p ->
+///              { p with
+///                  Sources = "http:://myNugetSources.com" :: p.Sources
+///                  OutputPath = outputDir
+///                  Retries = 4 })
+///      )
+let RestorePackage setParams packageFile = 
+    traceStartTask "RestorePackage" packageFile
     let (parameters:RestorePackageParams) = RestorePackageDefaults |> setParams
 
     let sources =
@@ -106,14 +121,14 @@ let RestorePackage setParams package =
         |> separated ""
 
     let args =
-        " \"install\" \"" + (package |> FullName) + "\"" +
+        " \"install\" \"" + (packageFile |> FullName) + "\"" +
         " \"-OutputDirectory\" \"" + (parameters.OutputPath |> FullName) + "\"" + sources
 
-    runNuGetTrial parameters.Retries parameters.ToolPath parameters.TimeOut args (fun () -> failwithf "Package installation of %s generation failed." package)
+    runNuGetTrial parameters.Retries parameters.ToolPath parameters.TimeOut args (fun () -> failwithf "Package installation of %s generation failed." packageFile)
                     
-    traceEndTask "RestorePackage" package
+    traceEndTask "RestorePackage" packageFile
 
-/// Restores all packages from NuGet to the default directories
+/// Restores all packages from NuGet to the default directories by scan for packages.config files in any subdirectory.
 let RestorePackages() = 
     !! "./**/packages.config"
     |> Seq.iter (RestorePackage id)
