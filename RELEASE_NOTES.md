@@ -1,3 +1,6 @@
+#### 3.2.7 - 22.07.2014
+* Adding helpers which allow to strong name assemblies
+
 #### 3.2.6 - 22.07.2014
 * Allow to use empty MSBuild targets
 
