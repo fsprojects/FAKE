@@ -1,4 +1,4 @@
-#### 3.2.4 - 22.07.2014
+#### 3.2.5 - 22.07.2014
 * Adding setProcessEnvironVar and clearProcessEnvironVar
 
 #### 3.2.3 - 17.07.2014

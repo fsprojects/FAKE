@@ -32,6 +32,12 @@ let environVars target =
 /// Sets the environment variable with the given name
 let setEnvironVar name value = Environment.SetEnvironmentVariable(name, value)
 
+/// Sets the environment variable with the given name for the current process.
+let setProcessEnvironVar name value = Environment.SetEnvironmentVariable(name, value, EnvironmentVariableTarget.Process)
+
+/// Clears the environment variable with the given name for the current process.
+let clearProcessEnvironVar name = Environment.SetEnvironmentVariable(name, null, EnvironmentVariableTarget.Process)
+
 /// Retrieves the environment variable with the given name or returns the default if no value was set
 let environVarOrDefault name defaultValue = 
     let var = environVar name
