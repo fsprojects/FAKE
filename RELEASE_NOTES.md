@@ -1,3 +1,6 @@
+#### 3.2.6 - 22.07.2014
+* Allow to use empty MSBuild targets
+
 #### 3.2.5 - 22.07.2014
 * Adding setProcessEnvironVar and clearProcessEnvironVar
 
