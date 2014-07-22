@@ -1,3 +1,6 @@
+#### 3.2.4 - 22.07.2014
+* Adding setProcessEnvironVar and clearProcessEnvironVar
+
 #### 3.2.3 - 17.07.2014
 * Try to reference local nuspec in order to fix https://github.com/fsprojects/FSharp.TypeProviders.StarterPack/pull/33
 
