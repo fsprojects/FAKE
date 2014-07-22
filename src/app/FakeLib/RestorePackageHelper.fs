@@ -1,4 +1,4 @@
-﻿[<AutoOpen>]
+[<AutoOpen>]
 /// Contains tasks which allow to restore NuGet packages from a NuGet package feed like [nuget.org](http://www.nuget.org).
 /// There is also a tutorial about [nuget package restore](../nuget.html) available.
 module Fake.RestorePackageHelper
@@ -128,7 +128,7 @@ let RestorePackage setParams packageFile =
                     
     traceEndTask "RestorePackage" packageFile
 
-/// Restores all packages from NuGet to the default directories by scan for packages.config files in any subdirectory.
+/// Restores all packages from NuGet to the default directories by scanning for packages.config files in any subdirectory.
 let RestorePackages() = 
     !! "./**/packages.config"
     |> Seq.iter (RestorePackage id)
