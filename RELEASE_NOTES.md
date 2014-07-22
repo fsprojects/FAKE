@@ -1,3 +1,6 @@
+#### 3.2.8 - 22.07.2014
+* Allow to use all sn.exe features
+
 #### 3.2.7 - 22.07.2014
 * Adding helpers which allow to strong name assemblies
 
