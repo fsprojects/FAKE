@@ -78,6 +78,7 @@
     <Compile Include="ZipHelper.fs" />
     <Compile Include="StrongNamingHelper.fs" />
     <Compile Include="GACHelper.fs" />
+    <Compile Include="NGenHelper.fs" />
     <Compile Include="FileUtils.fs" />
     <Compile Include="DocuHelper.fs" />
     <Compile Include="ILMergeHelper.fs" />
