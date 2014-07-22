@@ -1,3 +1,6 @@
+#### 3.2.11 - 22.07.2014
+* Adding NGen Install task
+
 #### 3.2.10 - 22.07.2014
 * Allow to use gacutil
 * Allow to use ngen.exe

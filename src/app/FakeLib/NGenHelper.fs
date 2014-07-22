@@ -25,12 +25,7 @@ let NGenDefaults =
       TimeOut = TimeSpan.FromMinutes 5.
       WorkingDir = currentDirectory }
 
-/// Runs ngen.exe with the given command.
-let NGen setParams command = 
-    let taskName = "NGen"
-    traceStartTask taskName command
-    let param = setParams NGenDefaults
-    
+let private ngen param command = 
     let ok = 
         execProcess (fun info -> 
             info.FileName <- param.ToolPath
@@ -38,4 +33,22 @@ let NGen setParams command =
             info.Arguments <- command) param.TimeOut
     if not ok then failwithf "NGenutil reported errors."
 
+/// Runs ngen.exe with the given command.
+let NGen setParams command = 
+    let taskName = "NGen"
+    traceStartTask taskName command
+    ngen (setParams NGenDefaults) command
     traceEndTask taskName command
+
+/// Runs ngen.exe install on given assemblies.
+let Install setParams assemblies = 
+    let taskName = "NGen Install"
+    traceStartTask taskName ""
+
+    let param = setParams NGenDefaults
+    for assembly in assemblies do
+        ngen param (sprintf "install \"%s\" /queue:1" assembly)
+
+    ngen param "executeQueuedItems 1"
+
+    traceEndTask taskName ""
