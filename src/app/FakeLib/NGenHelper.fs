@@ -13,8 +13,11 @@ type NGenParams =
       WorkingDir : string }
 
 let private winDir = Environment.GetFolderPath Environment.SpecialFolder.Windows
-let mutable NGen32 = winDir @@ "Microsoft.NET/Framework/4.0.30319/ngen.exe"
-let mutable NGen64 = winDir @@ "Microsoft.NET/Framework64/4.0.30319/ngen.exe"
+let mutable NGen32 = winDir @@ "Microsoft.NET/Framework/v4.0.30319/ngen.exe"
+let mutable NGen64 = winDir @@ "Microsoft.NET/Framework64/v4.0.30319/ngen.exe"
+
+
+let UseNGen64 p : NGenParams = { p with ToolPath = NGen64 }
 
 /// NGen default parameters
 let NGenDefaults = 

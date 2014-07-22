@@ -1,4 +1,4 @@
-#### 3.2.9 - 22.07.2014
+#### 3.2.10 - 22.07.2014
 * Allow to use gacutil
 * Allow to use ngen.exe
 
