@@ -1,3 +1,6 @@
+#### 3.2.9 - 22.07.2014
+* Allow to use gacutil
+
 #### 3.2.8 - 22.07.2014
 * Allow to use all sn.exe features
 * Adding DisableVerification for StrongNames

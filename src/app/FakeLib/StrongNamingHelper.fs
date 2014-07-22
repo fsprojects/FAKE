@@ -22,7 +22,7 @@ let StrongNameDefaults =
       TimeOut = TimeSpan.FromMinutes 5.
       WorkingDir = currentDirectory }
 
-/// Runs sn.exe on a group of assemblies.
+/// Runs sn.exe with the given command.
 let StrongName setParams command = 
     let taskName = "StrongName"
     traceStartTask taskName command
