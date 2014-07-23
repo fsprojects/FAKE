@@ -42,7 +42,8 @@ type FxCopParams =
       FailOnError : FxCopErrorLevel
       TimeOut : TimeSpan
       ToolPath : string
-      ForceOutput : bool }
+      ForceOutput : bool
+      CustomDictionary : string }
 
 /// This checks the result file with some XML queries for errors
 /// [omit]
@@ -80,7 +81,8 @@ let FxCopDefaults =
       FailOnError = FxCopErrorLevel.DontFailBuild
       TimeOut = TimeSpan.FromMinutes 5.
       ToolPath = ProgramFilesX86 @@ @"Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\FxCopCmd.exe"
-      ForceOutput = false }
+      ForceOutput = false
+      CustomDictionary = String.Empty }
 
 /// Run FxCop on a group of assemblies.
 let FxCop setParams (assemblies : string seq) = 
@@ -122,6 +124,7 @@ let FxCop setParams (assemblies : string seq) =
         append param.SaveResultsInProjectFile "/u "
         append param.Verbose "/v "
         append param.UseGACSwitch "/gac "
+        appendFormat "/dic:\"{0}\" " param.CustomDictionary
         (!args).ToString()
     
     tracefn "FxCop command\n%s %s" param.ToolPath commandLineCommands

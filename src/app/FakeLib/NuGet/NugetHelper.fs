@@ -207,6 +207,9 @@ let private pack parameters nuspecFile =
     let properties = propertiesParam parameters.Properties
     let outputPath = (FullName(parameters.OutputPath.TrimEnd('\\').TrimEnd('/')))
     let packageAnalysis = if parameters.NoPackageAnalysis then "-NoPackageAnalysis" else ""
+    
+    if Directory.Exists parameters.OutputPath |> not then 
+        failwithf "OutputDir %s does not exist." parameters.OutputPath
 
     let execute args =
         let result =
@@ -216,6 +219,13 @@ let private pack parameters nuspecFile =
                 info.Arguments <- args) parameters.TimeOut
         if result <> 0 then failwithf "Error during NuGet package creation. %s %s" parameters.ToolPath args
 
+    let nuspecFile = 
+        let fi = fileInfo nuspecFile
+        if fi.Directory.FullName = FullName parameters.WorkingDir then
+            fi.Name
+        else
+            FullName nuspecFile
+
     match parameters.SymbolPackage with
     | NugetSymbolPackage.ProjectFile ->
         if not (isNullOrEmpty parameters.ProjectFile) then
@@ -223,15 +233,15 @@ let private pack parameters nuspecFile =
                 parameters.Version outputPath (FullName parameters.ProjectFile) packageAnalysis properties
             |> execute
         sprintf "pack -Version %s -OutputDirectory \"%s\" \"%s\" %s %s"
-            parameters.Version outputPath (FullName nuspecFile) packageAnalysis properties
+            parameters.Version outputPath nuspecFile packageAnalysis properties
         |> execute
     | NugetSymbolPackage.Nuspec ->
         sprintf "pack -Symbols -Version %s -OutputDirectory \"%s\" \"%s\" %s %s"
-            parameters.Version outputPath (FullName nuspecFile) packageAnalysis properties
+            parameters.Version outputPath nuspecFile packageAnalysis properties
         |> execute
     | _ ->
         sprintf "pack -Version %s -OutputDirectory \"%s\" \"%s\" %s %s"
-            parameters.Version outputPath (FullName nuspecFile) packageAnalysis properties
+            parameters.Version outputPath nuspecFile packageAnalysis properties
         |> execute
     
 

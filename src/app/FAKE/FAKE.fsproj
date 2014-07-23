@@ -26,7 +26,7 @@
     <StartAction>Project</StartAction>
     <StartProgram>C:\sources\FAKE\tools\FAKE\FAKE.exe</StartProgram>
     <StartWorkingDirectory>C:\Code\FAKE\src\test\testscripts</StartWorkingDirectory>
-    <StartArguments>test1.fsx</StartArguments>
+    <StartArguments>test1.fsx  -d:MONO</StartArguments>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -56,6 +56,14 @@
   <Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')" />
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
+    <Content Include="..\..\..\lib\FSharp\FSharp.Core.optdata">
+      <Link>FSharp.Core.optdata</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\..\lib\FSharp\FSharp.Core.sigdata">
+      <Link>FSharp.Core.sigdata</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Compile Include="CommandlineParams.fs" />
     <Compile Include="Cli.fs" />
     <Compile Include="Program.fs" />

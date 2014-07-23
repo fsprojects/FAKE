@@ -22,12 +22,14 @@ type SpecFlowParams = {
     XsltFile:           string
 }
 
+let toolname = "specflow.exe"
+
 /// SpecFlow default execution parameters.
 let SpecFlowDefaults = { 
     SubCommand =        "generateall"
     ProjectFile =       null
-    ToolName =          "specflow.exe"
-    ToolPath =          currentDirectory @@ "tools" @@ "SpecFlow"
+    ToolName =          toolname
+    ToolPath =          findToolFolderInSubPath toolname (currentDirectory @@ "tools" @@ "SpecFlow")
     WorkingDir =        null
     BinFolder =         null
     OutputFile =        null

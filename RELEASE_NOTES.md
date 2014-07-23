@@ -1,6 +1,56 @@
+#### 3.2.11 - 22.07.2014
+* Adding NGen Install task
+
+#### 3.2.10 - 22.07.2014
+* Allow to use gacutil
+* Allow to use ngen.exe
+
+#### 3.2.8 - 22.07.2014
+* Allow to use all sn.exe features
+* Adding DisableVerification for StrongNames
+
+#### 3.2.7 - 22.07.2014
+* Adding helpers which allow to strong name assemblies
+
+#### 3.2.6 - 22.07.2014
+* Allow to use empty MSBuild targets
+
+#### 3.2.5 - 22.07.2014
+* Adding setProcessEnvironVar and clearProcessEnvironVar
+
+#### 3.2.3 - 17.07.2014
+* Try to reference local nuspec in order to fix https://github.com/fsprojects/FSharp.TypeProviders.StarterPack/pull/33
+
+#### 3.2.2 - 17.07.2014
+* Better log messages to fix https://github.com/fsprojects/FSharp.TypeProviders.StarterPack/pull/33
+
+#### 3.2.1 - 16.07.2014
+* Fix fsiargs and -d options - https://github.com/fsharp/FAKE/pull/498 https://github.com/fsharp/FAKE/pull/500
+* Change RemoveDuplicateFiles & FixMissingFiles to only save on change - https://github.com/fsharp/FAKE/pull/499
+
+#### 3.2.0 - 07.07.2014
+* BREAKING CHANGE: API for CreateAssemblyInfoWithConfig was set back to original version
+  This resets the breaking change introduced in https://github.com/fsharp/FAKE/pull/471
+
+#### 3.1.2 - 07.07.2014
+* Automatic tool search for SpecFlowHelper - https://github.com/fsharp/FAKE/pull/496
+
+#### 3.1.1 - 05.07.2014
+* GuardedAwaitObservable was made public by accident - this was fixed
+* Add support for remote service admin - https://github.com/fsharp/FAKE/pull/492
+
+#### 3.1.0 - 04.07.2014
+* New FSC helper allows to call F# compiler directly from FAKE - https://github.com/fsharp/FAKE/pull/485
+
+#### 3.0.8 - 02.07.2014
+* "CustomDictionary" support for FxCop - https://github.com/fsharp/FAKE/pull/489
+
+#### 3.0.7 - 01.07.2014
+* Check if file exists before delete in AssemblyInfoFile
+
 #### 3.0.6 - 01.07.2014
 * Use FSharp.Compiler.Service 0.0.58
-* 
+
 #### 3.0.5 - 01.07.2014
 * Report all targets if a target error occurs
 

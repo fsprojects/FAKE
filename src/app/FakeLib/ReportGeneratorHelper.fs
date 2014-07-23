@@ -58,7 +58,7 @@ let ReportGeneratorDefaultParams =
 ///
 /// ## Sample
 ///
-///  ReportGenerator (fun p -> { p with TargetDir = "c:/reports/" }) [ "c:/opencover.xml" ]
+///      ReportGenerator (fun p -> { p with TargetDir = "c:/reports/" }) [ "c:/opencover.xml" ]
 let ReportGenerator setParams (reports : string list) = 
     let taskName = "ReportGenerator"
     let description = "Generating reports"

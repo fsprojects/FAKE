@@ -331,7 +331,7 @@ let MSBuildWithProjectProperties outputPath (targets : string) (properties : (st
             |> Set.unionMany
 
     let setBuildParam project projectParams = 
-        { projectParams with Targets = targets |> split ';'; Properties = projectParams.Properties @ properties project }
+        { projectParams with Targets = targets |> split ';' |> List.filter ((<>) ""); Properties = projectParams.Properties @ properties project }
 
     projects
       |> List.filter (fun project -> not <| Set.contains project dependencies)
