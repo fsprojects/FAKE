@@ -96,10 +96,13 @@ let runBuildScriptWithFsiArgsAt workingDirectory printDetails (FsiArgs(fsiOption
     for (k,v) in args do
       Environment.SetEnvironmentVariable(k, v, EnvironmentVariableTarget.Process)
 
+    // Create an env var that only contains the build script args part from the --fsiargs (or "").
+    Environment.SetEnvironmentVariable("fsiargs-buildscriptargs", String.Join(" ", scriptArgs))
+
     let fsiConfig = FsiEvaluationSession.GetDefaultConfiguration()
 
     let commonOptions = 
-        [ "fsi.exe"; "--noninteractive" ] @ fsiOptions @ scriptArgs
+        [ "fsi.exe"; "--noninteractive" ] @ fsiOptions
         |> List.toArray
 
     let sbOut = new Text.StringBuilder()
