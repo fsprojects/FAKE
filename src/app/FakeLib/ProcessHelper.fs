@@ -329,6 +329,16 @@ let findFile dirs file =
     | Some found -> found
     | None -> failwithf "%s not found in %A." file dirs
 
+/// Searches the current directory and the directories within the PATH
+/// environment variable for the given file. If successful returns the full
+/// path to the file.
+/// ## Parameters
+///  - `exe` - The executable file to locate
+let tryFindFileOnPath (file : string) : string option =
+    Environment.GetEnvironmentVariable("PATH").Split([| Path.PathSeparator |])
+    |> Seq.append ["."]
+    |> fun path -> tryFindFile path file
+
 /// Returns the AppSettings for the key - Splitted on ;
 /// [omit]
 let appSettings (key : string) (fallbackValue : string) = 
