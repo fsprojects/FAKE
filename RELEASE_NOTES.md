@@ -1,3 +1,6 @@
+#### 3.2.13 - 29.07.2014
+* FSC - support of compilation for different versions of F#
+ 
 #### 3.2.12 - 29.07.2014
 * Provide env var access to --fsiargs build script args so works on FAKE 
 
