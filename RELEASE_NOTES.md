@@ -1,3 +1,6 @@
+#### 3.2.12 - 29.07.2014
+* Provide env var access to --fsiargs build script args so works on FAKE 
+
 #### 3.2.11 - 22.07.2014
 * Adding NGen Install task
 
