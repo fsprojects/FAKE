@@ -59,7 +59,8 @@ let fscList (srcFiles : string list) (opts : string list) : int =
                 else ".exe"
             "-o" :: FileHelper.changeExt outExt (List.head srcFiles) :: opts @ srcFiles
         |> Array.ofList
-    
+
+    traceImportant <| sprintf "FSC with args:%A" optsArr
     let errors, exitCode = scs.Compile(optsArr)
     // Better compile reporting thanks to:
     // https://github.com/jbtule/ComposableExtensions/blob/5b961b30668bb7f4d17238770869b5a884bc591f/tools/CompilerHelper.fsx#L233
@@ -92,24 +93,34 @@ let fsc (setParams : FscParams -> FscParams) (inputFiles : string list) : int =
     let inputFiles = inputFiles |> Seq.toList
     let taskDesc = inputFiles |> separated ", "
     let fscParams = setParams FscParams.Default
-    let output = fscParams.Output
-    
-    let argList = 
-        if output <> "" then [ "-o"; output ]
-        else [] 
-        @ match fscParams.FscTarget with
-          | Exe -> [ "--target:exe" ]
-          | Winexe -> [ "--target:winexe" ]
-          | Library -> [ "-a" ]
-          | Module -> [ "--target:module" ] 
-          @ match fscParams.Platform with
-            | X86 -> [ "--platform:x86" ]
-            | Itanium -> [ "--platform:itanium" ]
-            | X64 -> [ "--platform:x64" ]
-            | AnyCpu32BitPreferred -> [ "--platform:anycpu32bitpreferred" ]
-            | AnyCpu -> [ "--platform:anycpu" ] 
-            @ List.map (fun r -> "--reference:" + r) fscParams.References @ if fscParams.Debug then [ "-g" ]
-                                                                            else [] @ fscParams.OtherParams
+
+    let output = if fscParams.Output <> "" then [ "-o"; fscParams.Output ] else []
+    let target =
+        match fscParams.FscTarget with
+        | Exe -> [ "--target:exe" ]
+        | Winexe -> [ "--target:winexe" ]
+        | Library -> [ "-a" ]
+        | Module -> [ "--target:module" ]
+    let platform =
+        match fscParams.Platform with
+        | X86 -> [ "--platform:x86" ]
+        | Itanium -> [ "--platform:itanium" ]
+        | X64 -> [ "--platform:x64" ]
+        | AnyCpu32BitPreferred -> [ "--platform:anycpu32bitpreferred" ]
+        | AnyCpu -> [ "--platform:anycpu" ]
+    let references =
+        let refs =
+            fscParams.References
+            |> List.map (fun r -> sprintf "--reference:%s" r)
+        let isNonDefaultFramework =
+            fscParams.References
+            |> List.exists (fun r->
+                r.IndexOf("FSharp.Core.dll", System.StringComparison.InvariantCultureIgnoreCase) >= 0
+                || r.IndexOf("mscorlib.dll", System.StringComparison.InvariantCultureIgnoreCase) >= 0)
+        if isNonDefaultFramework then "--noframework"::refs else refs
+    let debug = if fscParams.Debug then [ "-g" ] else []
+    let argList =
+        output @ target @ platform @ references @ debug @ fscParams.OtherParams
     traceStartTask "Fsc " taskDesc
     let res = fscList inputFiles argList
     traceEndTask "Fsc " taskDesc
