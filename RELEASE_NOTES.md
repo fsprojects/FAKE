@@ -1,3 +1,6 @@
+#### 3.2.14 - 01.08.2014
+* New AppVeyor properties
+
 #### 3.2.13 - 29.07.2014
 * FSC - support of compilation for different versions of F#
  
