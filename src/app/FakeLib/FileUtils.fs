@@ -37,6 +37,18 @@ let cd path = chdir path
 /// Gets working directory
 let pwd = Directory.GetCurrentDirectory
 
+/// The stack of directories operated on by pushd and popd
+let dirStack = new System.Collections.Generic.Stack<string>()
+
+/// Store the current directory in the directory stack before changing to a new one
+let pushd path = 
+    dirStack.Push(pwd())
+    cd path
+
+/// Restore the previous directory stored in the stack
+let popd () = 
+    cd <| dirStack.Pop()
+
 /// Like "mv" in a shell. Moves/renames a file
 /// <param name="src">The source</param>
 /// <param name="dest">The destination</param>
