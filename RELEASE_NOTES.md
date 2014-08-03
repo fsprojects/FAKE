@@ -1,3 +1,6 @@
+#### 3.2.15 - 03.08.2014
+* New pushd/popd command in FileUtils - https://github.com/fsharp/FAKE/pull/513
+
 #### 3.2.14 - 01.08.2014
 * New AppVeyor properties
 
