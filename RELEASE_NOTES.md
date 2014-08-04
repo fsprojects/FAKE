@@ -1,3 +1,6 @@
+#### 3.2.16 - 04.08.2014
+* NuGet: support fallback framework groups - https://github.com/fsharp/FAKE/pull/514
+
 #### 3.2.15 - 03.08.2014
 * New pushd/popd command in FileUtils - https://github.com/fsharp/FAKE/pull/513
 
