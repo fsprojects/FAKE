@@ -144,18 +144,24 @@ let inline (!!) x = Include x
 let inline (!+) x = Include x
 
 /// Looks for a tool in all subfolders - returns the tool file name.
-let findToolInSubPath toolname defaultPath = 
-    let tools = !! ("./**/" @@ toolname)
-    if Seq.isEmpty tools then defaultPath @@ toolname
-    else Seq.head tools
+let findToolInSubPath toolname defaultPath =
+    try
+        let tools = !! ("./**/" @@ toolname)
+        if Seq.isEmpty tools then defaultPath @@ toolname
+        else Seq.head tools
+    with
+    | _ -> defaultPath @@ toolname
 
 /// Looks for a tool in all subfolders - returns the folder where the tool was found.
-let findToolFolderInSubPath toolname defaultPath = 
-    let tools = !! ("./**/" @@ toolname)
-    if Seq.isEmpty tools then defaultPath
-    else 
-        let fi = fileInfo (Seq.head tools)
-        fi.Directory.FullName
+let findToolFolderInSubPath toolname defaultPath =
+    try
+        let tools = !! ("./**/" @@ toolname)
+        if Seq.isEmpty tools then defaultPath
+        else 
+            let fi = fileInfo (Seq.head tools)
+            fi.Directory.FullName
+    with
+    | _ -> defaultPath
 
 /// Includes a single pattern and scans the files - !! x = AllFilesMatching x
 [<Obsolete>]
