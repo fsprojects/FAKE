@@ -1,3 +1,6 @@
+#### 3.2.17 - 07.08.2014
+* Don't crash during tool discovery
+
 #### 3.2.16 - 04.08.2014
 * NuGet: support fallback framework groups - https://github.com/fsharp/FAKE/pull/514
 
