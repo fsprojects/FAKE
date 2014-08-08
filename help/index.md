@@ -38,6 +38,7 @@ Some of our users are:
 * [Visual F# Power Tools](https://github.com/fsprojects/VisualFSharpPowerTools)
 * [Deedle](https://github.com/BlueMountainCapital/Deedle) by BlueMountainCapital
 * [FSharp.Data](https://github.com/fsharp/FSharp.Data)
+* [CHECK24 Vergleichsportal GmbH](http://www.check24.de)
 
 You can find more user [here](users.html).
 
