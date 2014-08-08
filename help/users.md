@@ -25,3 +25,5 @@ Some of our users are:
 * [FsCheck](https://github.com/fsharp/FsCheck)
 * [FundApps](http://www.fundapps.co)
 * [Road Ranger, LLC](http://www.roadrangerusa.com)
+* [CHECK24 Vergleichsportal GmbH](http://www.check24.de)
+
