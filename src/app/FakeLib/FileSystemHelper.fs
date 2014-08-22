@@ -3,7 +3,16 @@
 module Fake.FileSystemHelper
 
 open System
+open System.Text
 open System.IO
+open System.Runtime.InteropServices
+
+module Interop =
+
+    [<DllImport("kernel32.dll")>]
+    extern uint32 GetFullPathName(string lpFileName, uint32 nBufferLength, [<Out>] StringBuilder lpBuffer, [<Out>] StringBuilder lpFilePart);
+
+
 
 /// Creates a DirectoryInfo for the given path.
 let inline directoryInfo path = new DirectoryInfo(path)
@@ -18,6 +27,21 @@ let inline fileSystemInfo path : FileSystemInfo =
 
 /// Converts a filename to it's full file system name.
 let inline FullName fileName = Path.GetFullPath fileName
+
+///Allows file paths longer than MAX_PATH (260 chars) but has a whole load of caveats
+/// see here (http://blogs.msdn.com/b/bclteam/archive/2007/02/13/long-paths-in-net-part-1-of-3-kim-hamilton.aspx)
+let inline FullNameLong fileName = 
+    
+    let getSize fileName = 
+        Interop.GetFullPathName(@"\\?\" + fileName, 1u, new StringBuilder(1), new StringBuilder(1))
+    
+    let size = (getSize fileName) + 10u
+
+    let fullPath = new StringBuilder(size |> int)
+    let fname = new StringBuilder(size |> int)
+    ignore(Interop.GetFullPathName(@"\\?\" + fileName, size, fullPath, fname))
+
+    fullPath.ToString()
 
 /// Gets the directory part of a filename.
 let inline DirectoryName fileName = Path.GetDirectoryName fileName
