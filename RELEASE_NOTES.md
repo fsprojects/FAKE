@@ -1,3 +1,9 @@
+#### 3.3.0 - 25.08.2014
+* Using JSON.NET 6.0.4
+* FAKE.Deploy switched to FCS - https://github.com/fsharp/FAKE/pull/519 
+* FAKE.Deploy WorkDirectory fix - https://github.com/fsharp/FAKE/pull/520
+* HipChat notification helper - https://github.com/fsharp/FAKE/pull/523
+
 #### 3.2.17 - 07.08.2014
 * Don't crash during tool discovery
 
