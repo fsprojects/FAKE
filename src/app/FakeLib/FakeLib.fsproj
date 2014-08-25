@@ -139,6 +139,7 @@
     <Compile Include="ReportGeneratorHelper.fs" />
     <Compile Include="RoundhouseHelper.fs" />
     <Compile Include="FscHelper.fs" />
+    <Compile Include="HipChatNotificationHelper.fs" />
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
@@ -186,6 +187,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
