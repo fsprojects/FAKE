@@ -50,6 +50,42 @@ let traceFAKE fmt = Printf.ksprintf (fun text -> postMessage (ImportantMessage t
 /// Traces an error (in red)
 let traceError error = postMessage (ErrorMessage error)
 
+open Microsoft.FSharp.Core.Printf
+/// Traces an exception details (in red)
+let traceException (ex:Exception) =
+    let sb = Text.StringBuilder()
+    let delimeter = String.replicate 50 "*"
+    let nl = Environment.NewLine
+    let rec printException (e:Exception) count =
+        if (e :? TargetException && e.InnerException <> null)
+        then printException (e.InnerException) count
+        else
+            if (count = 1) then bprintf sb "Exception Message:%s%s%s" e.Message nl delimeter
+            else bprintf sb "%s%s%d)Exception Message:%s%s%s" nl nl count e.Message nl delimeter
+            bprintf sb "%sType: %s" nl (e.GetType().FullName)
+            // Loop through the public properties of the exception object
+            // and record their values.
+            e.GetType().GetProperties()
+            |> Array.iter (fun p ->
+                // Do not log information for the InnerException or StackTrace.
+                // This information is captured later in the process.
+                if (p.Name <> "InnerException" && p.Name <> "StackTrace" &&
+                    p.Name <> "Message" && p.Name <> "Data") then
+                    try
+                        let value = p.GetValue(e, null)
+                        if (value <> null)
+                        then bprintf sb "%s%s: %s" nl p.Name (value.ToString())
+                    with
+                    | e2 -> bprintf sb "%s%s: %s" nl p.Name e2.Message
+            )
+            if (e.StackTrace <> null) then
+                bprintf sb "%s%sStackTrace%s%s%s" nl nl nl delimeter nl
+                bprintf sb "%s%s" nl e.StackTrace
+            if (e.InnerException <> null)
+            then printException e.InnerException (count+1)
+    printException ex 1
+    sb.ToString() |> traceError
+
 /// Traces the EnvironmentVariables
 let TraceEnvironmentVariables() = 
     [ EnvironTarget.Machine; EnvironTarget.Process; EnvironTarget.User ] 
