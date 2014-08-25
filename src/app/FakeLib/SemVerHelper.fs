@@ -8,9 +8,9 @@ open System.Text.RegularExpressions
 type PreRelease = 
     { Origin: string
       Name: string
-      Number: int option }
+      Number: string option }
     static member TryParse str = 
-        let m = Regex("^(?<name>[a-zA-Z]+)(?<number>\d*)$").Match(str)
+        let m = Regex("^(?<name>[a-zA-Z]+)(?<number>[0-9A-Za-z-]+)$").Match(str)
         match m.Success, m.Groups.["name"].Value, m.Groups.["number"].Value with
         | true, name, "" -> Some { Origin = str; Name = name; Number = None }
         | true, name, number -> Some { Origin = str; Name = name; Number = Some (int number) }
