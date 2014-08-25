@@ -36,11 +36,20 @@ type FakeDeployService() as self =
             if success then port' else 8080
                     
         DeploymentAgent.workDir <-
-            if args <> null && args.Length > 3 then args.[3]
-            else ConfigurationManager.AppSettings.["WorkDirectory"]
+            let path =
+                if args <> null && args.Length > 3 then args.[3]
+                else ConfigurationManager.AppSettings.["WorkDirectory"]
+            match Uri.TryCreate(path, UriKind.RelativeOrAbsolute) with
+            | false, _ -> failwithf "Incorrect path '%s'" path
+            | true, uri when uri.IsAbsoluteUri -> path
+            | true, _ ->
+                let exeLocation = typedefof<FakeDeployService>.Assembly.Location
+                let directory = IO.Path.GetDirectoryName(exeLocation)
+                directory @@ path
         
         let uri = sprintf "http://%s:%i/" serverName port
         logger(sprintf "Listening on %s" uri, EventLogEntryType.Information)
+        logger(sprintf "WorkDirectory is %s" DeploymentAgent.workDir, EventLogEntryType.Information)
         nancyHost <- DeploymentAgent.createNancyHost ([| Uri uri |])
         nancyHost.Start()
     
