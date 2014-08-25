@@ -55,7 +55,7 @@ let HipChatNotification (setParams: HipChatNotificationParams -> HipChatNotifica
          "notify", Convert.ToInt32(param.Notify).ToString()
          "color", param.Color
          "format", "json"]
-        |> List.map(fun (key, value) -> key + "=" + HttpUtility.UrlEncode(value))
+        |> List.map(fun (key, value) -> key + "=" + Uri.EscapeDataString(value))
         |> String.concat "&"
         |> fun curlData -> String.Format("-s -d {0} https://api.hipchat.com/v1/rooms/message?auth_token={1}&format=json", curlData, param.AuthToken)
         |> fun curlArgs -> Shell.Exec("curl", curlArgs)
