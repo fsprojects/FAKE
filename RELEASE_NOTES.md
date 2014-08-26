@@ -1,3 +1,6 @@
+#### 3.3.1 - 26.08.2014
+* Disable FSI output for now
+
 #### 3.3.0 - 25.08.2014
 * Using JSON.NET 6.0.4
 * FAKE.Deploy switched to FCS - https://github.com/fsharp/FAKE/pull/519 

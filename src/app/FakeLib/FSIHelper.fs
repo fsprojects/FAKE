@@ -124,7 +124,8 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages workingDirectory printD
 
         try
             session.EvalScript script
-            handleMessages()
+            // TODO: Reactivate when FCS don't show output any more 
+            // handleMessages()
             true
         with
         | _ ->
