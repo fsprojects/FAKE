@@ -140,6 +140,7 @@
     <Compile Include="RoundhouseHelper.fs" />
     <Compile Include="FscHelper.fs" />
     <Compile Include="HipChatNotificationHelper.fs" />
+    <Compile Include="XamarinHelper.fs" />
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
