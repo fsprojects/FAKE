@@ -1,3 +1,6 @@
+#### 3.4.0 - 28.08.2014
+* New Xamarin.iOS and Xamarin.Android helpers - https://github.com/fsharp/FAKE/pull/527
+
 #### 3.3.1 - 26.08.2014
 * Disable FSI output for now
 
