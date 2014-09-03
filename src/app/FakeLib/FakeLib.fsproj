@@ -142,6 +142,7 @@
     <Compile Include="HipChatNotificationHelper.fs" />
     <Compile Include="XamarinHelper.fs" />
     <None Include="app.config" />
+    <Compile Include="SignToolHelper.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Compiler.Service">
