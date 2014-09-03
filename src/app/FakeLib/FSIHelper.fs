@@ -77,8 +77,6 @@ let executeFSIWithArgs workingDirectory script extraFsiArgs args =
     Thread.Sleep 1000
     result = 0
 
-open Microsoft.FSharp.Compiler.Interactive.Shell
-
 /// Run the given build script with fsi.exe and allows for extra arguments to the script. Returns output.
 let executeFSIWithScriptArgsAndReturnMessages workingDirectory script (scriptArgs: string[]) =
     let (result, messages) =
@@ -88,43 +86,76 @@ let executeFSIWithScriptArgsAndReturnMessages workingDirectory script (scriptArg
     Thread.Sleep 1000
     (result, messages)
 
-/// Run the given buildscript with fsi.exe at the given working directory.  Provides full access to Fsi options and args.
-let runBuildScriptWithFsiArgsAt workingDirectory printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args =    
+open Microsoft.FSharp.Compiler.Interactive.Shell
+
+/// Run the given FAKE script with fsi.exe at the given working directory. Provides full access to Fsi options and args. Redirect output and error messages.
+let internal runFAKEScriptWithFsiArgsAndRedirectMessages workingDirectory printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args onErrMsg onOutMsg =
     if printDetails then traceFAKE "Running Buildscript: %s" script
 
     // Add arguments to the Environment
     for (k,v) in args do
       Environment.SetEnvironmentVariable(k, v, EnvironmentVariableTarget.Process)
 
+    // Create an env var that only contains the build script args part from the --fsiargs (or "").
+    Environment.SetEnvironmentVariable("fsiargs-buildscriptargs", String.Join(" ", scriptArgs))
+
     let fsiConfig = FsiEvaluationSession.GetDefaultConfiguration()
 
-    let commonOptions = 
-        [ "fsi.exe"; "--noninteractive" ] @ fsiOptions @ scriptArgs
+    let commonOptions =
+        [ "fsi.exe"; "--noninteractive" ] @ fsiOptions
         |> List.toArray
 
-    let sbOut = new Text.StringBuilder()
-    let sbErr = new Text.StringBuilder()
-    let outStream = new StringWriter(sbOut)
-    let errStream = new StringWriter(sbErr)
+    let sbOut = Text.StringBuilder()
+    let sbErr = Text.StringBuilder()
+    let handleMessages() =
+        let handleMessagesFrom (sb:Text.StringBuilder) onMsg =
+            let s = sb.ToString()
+            if not <| String.IsNullOrEmpty s
+                then onMsg s
+        handleMessagesFrom sbOut onOutMsg
+        handleMessagesFrom sbErr onErrMsg
 
-    let stdin = new StreamReader(Stream.Null)   
-    
+    use outStream = new StringWriter(sbOut)
+    use errStream = new StringWriter(sbErr)
+    use stdin = new StreamReader(Stream.Null)
+
     try
         let session = FsiEvaluationSession.Create(fsiConfig, commonOptions, stdin, outStream, errStream)
 
-        try 
+        try
             session.EvalScript script
+            // TODO: Reactivate when FCS don't show output any more 
+            // handleMessages()
             true
-        with    
-        | _ -> 
-            traceError <| sbErr.ToString()
-            false       
-    with    
+        with
+        | _ ->
+            handleMessages()
+            false
+    with
     | exn ->
         traceError "FsiEvaluationSession could not be created."
         traceError <| sbErr.ToString()
         raise exn
-    
+
+/// Run the given buildscript with fsi.exe and allows for extra arguments to the script. Returns output.
+let executeBuildScriptWithArgsAndReturnMessages workingDirectory script (scriptArgs: string[]) =
+    let messages = ref []
+    let appendMessage isError msg =
+        messages := { IsError = isError
+                      Message = msg
+                      Timestamp = DateTimeOffset.UtcNow } :: !messages
+    let result =
+        runFAKEScriptWithFsiArgsAndRedirectMessages
+            workingDirectory true (FsiArgs([], script, scriptArgs |> List.ofArray)) []
+            (appendMessage true) (appendMessage false)
+    (result, !messages)
+
+/// Run the given buildscript with fsi.exe at the given working directory.  Provides full access to Fsi options and args.
+let runBuildScriptWithFsiArgsAt workingDirectory printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args =
+    runFAKEScriptWithFsiArgsAndRedirectMessages
+        workingDirectory printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args
+        traceError (fun s-> traceFAKE "%s" s)
+
 /// Run the given buildscript with fsi.exe at the given working directory.
 let runBuildScriptAt workingDirectory printDetails script extraFsiArgs args =
     runBuildScriptWithFsiArgsAt workingDirectory printDetails (FsiArgs(extraFsiArgs, script, [])) args

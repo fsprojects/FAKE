@@ -15,6 +15,10 @@ let startedProcesses = HashSet()
 
 /// [omit]
 let start (proc : Process) = 
+    if isMono && proc.StartInfo.FileName.ToLowerInvariant().EndsWith(".exe") then
+        proc.StartInfo.Arguments <- proc.StartInfo.FileName + " " + proc.StartInfo.Arguments
+        proc.StartInfo.FileName <- "mono"
+
     proc.Start() |> ignore
     startedProcesses.Add(proc.Id, proc.StartTime) |> ignore
 
@@ -328,6 +332,16 @@ let findFile dirs file =
     match tryFindFile dirs file with
     | Some found -> found
     | None -> failwithf "%s not found in %A." file dirs
+
+/// Searches the current directory and the directories within the PATH
+/// environment variable for the given file. If successful returns the full
+/// path to the file.
+/// ## Parameters
+///  - `exe` - The executable file to locate
+let tryFindFileOnPath (file : string) : string option =
+    Environment.GetEnvironmentVariable("PATH").Split([| Path.PathSeparator |])
+    |> Seq.append ["."]
+    |> fun path -> tryFindFile path file
 
 /// Returns the AppSettings for the key - Splitted on ;
 /// [omit]

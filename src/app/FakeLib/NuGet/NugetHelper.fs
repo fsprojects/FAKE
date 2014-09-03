@@ -50,6 +50,7 @@ type NuGetParams =
       DependenciesByFramework : NugetFrameworkDependencies list
       References : NugetReferences
       ReferencesByFramework : NugetFrameworkReferences list
+      IncludeReferencedProjects : bool
       PublishTrials : int
       Publish : bool
       SymbolPackage : NugetSymbolPackage
@@ -76,6 +77,7 @@ let NuGetDefaults() =
       DependenciesByFramework = []
       References = []
       ReferencesByFramework = []
+      IncludeReferencedProjects = false
       OutputPath = "./NuGet"
       WorkingDir = "./NuGet"
       PublishUrl = null
@@ -114,16 +116,18 @@ let private createNuspecFile parameters nuSpec =
                    |> FullName
     tracefn "Creating .nuspec file at %s" specFile
     fi.CopyTo(specFile, true) |> ignore
-    let getFrameworkGroup (frameworkTags : (string * string) seq) = 
+
+    let getFrameworkGroup (frameworkTags : (string * string) seq) =
         frameworkTags
-        |> Seq.map 
-               (fun (frameworkVersion, tags) -> sprintf "<group targetFramework=\"%s\">%s</group>" frameworkVersion tags)
+        |> Seq.map (fun (frameworkVersion, tags) ->
+                    if isNullOrEmpty frameworkVersion then sprintf "<group>%s</group>" tags
+                    else sprintf "<group targetFramework=\"%s\">%s</group>" frameworkVersion tags)
         |> toLines
-    
-    let getGroup items toTags = 
+
+    let getGroup items toTags =
         if items = [] then ""
         else sprintf "<group>%s</group>" (items |> toTags)
-    
+
     let getReferencesTags references = 
         references
         |> Seq.map (fun assembly -> sprintf "<reference file=\"%s\" />" assembly)
@@ -207,6 +211,10 @@ let private pack parameters nuspecFile =
     let properties = propertiesParam parameters.Properties
     let outputPath = (FullName(parameters.OutputPath.TrimEnd('\\').TrimEnd('/')))
     let packageAnalysis = if parameters.NoPackageAnalysis then "-NoPackageAnalysis" else ""
+    let includeReferencedProjects = if parameters.IncludeReferencedProjects then "-IncludeReferencedProjects" else ""
+    
+    if Directory.Exists parameters.OutputPath |> not then 
+        failwithf "OutputDir %s does not exist." parameters.OutputPath
 
     let execute args =
         let result =
@@ -216,22 +224,29 @@ let private pack parameters nuspecFile =
                 info.Arguments <- args) parameters.TimeOut
         if result <> 0 then failwithf "Error during NuGet package creation. %s %s" parameters.ToolPath args
 
+    let nuspecFile = 
+        let fi = fileInfo nuspecFile
+        if fi.Directory.FullName = FullName parameters.WorkingDir then
+            fi.Name
+        else
+            FullName nuspecFile
+
     match parameters.SymbolPackage with
     | NugetSymbolPackage.ProjectFile ->
         if not (isNullOrEmpty parameters.ProjectFile) then
-            sprintf "pack -Symbols -Version %s -OutputDirectory \"%s\" \"%s\" %s %s"
-                parameters.Version outputPath (FullName parameters.ProjectFile) packageAnalysis properties
+            sprintf "pack -Symbols -Version %s -OutputDirectory \"%s\" \"%s\" %s %s %s"
+                parameters.Version outputPath (FullName parameters.ProjectFile) packageAnalysis includeReferencedProjects properties
             |> execute
-        sprintf "pack -Version %s -OutputDirectory \"%s\" \"%s\" %s %s"
-            parameters.Version outputPath (FullName nuspecFile) packageAnalysis properties
+        sprintf "pack -Version %s -OutputDirectory \"%s\" \"%s\" %s %s %s"
+            parameters.Version outputPath nuspecFile packageAnalysis includeReferencedProjects properties
         |> execute
     | NugetSymbolPackage.Nuspec ->
-        sprintf "pack -Symbols -Version %s -OutputDirectory \"%s\" \"%s\" %s %s"
-            parameters.Version outputPath (FullName nuspecFile) packageAnalysis properties
+        sprintf "pack -Symbols -Version %s -OutputDirectory \"%s\" \"%s\" %s %s %s"
+            parameters.Version outputPath nuspecFile packageAnalysis includeReferencedProjects properties
         |> execute
     | _ ->
-        sprintf "pack -Version %s -OutputDirectory \"%s\" \"%s\" %s %s"
-            parameters.Version outputPath (FullName nuspecFile) packageAnalysis properties
+        sprintf "pack -Version %s -OutputDirectory \"%s\" \"%s\" %s %s %s"
+            parameters.Version outputPath nuspecFile packageAnalysis includeReferencedProjects properties
         |> execute
     
 

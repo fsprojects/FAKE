@@ -24,3 +24,6 @@ Some of our users are:
 * [Math.NET Numerics](http://numerics.mathdotnet.com)
 * [FsCheck](https://github.com/fsharp/FsCheck)
 * [FundApps](http://www.fundapps.co)
+* [Road Ranger, LLC](http://www.roadrangerusa.com)
+* [CHECK24 Vergleichsportal GmbH](http://www.check24.de)
+* [Olo](http://www.olo.com)

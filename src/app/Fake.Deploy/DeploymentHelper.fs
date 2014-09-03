@@ -76,7 +76,7 @@ let doDeployment packageName scriptFileName scriptArgs =
     try 
         let workingDirectory = DirectoryName scriptFileName
         let (result, messages) = 
-            FSIHelper.executeFSIWithScriptArgsAndReturnMessages workingDirectory (FullName scriptFileName) scriptArgs
+            FSIHelper.executeBuildScriptWithArgsAndReturnMessages workingDirectory (FullName scriptFileName) scriptArgs
         if result then 
             Success { Messages = messages
                       IsError = false
@@ -86,6 +86,7 @@ let doDeployment packageName scriptFileName scriptArgs =
                       IsError = true
                       Exception = (Exception "Deployment script didn't run successfully") }
     with e -> 
+        traceException e
         Failure { Messages = Seq.empty
                   IsError = true
                   Exception = e }

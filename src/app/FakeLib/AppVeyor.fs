@@ -28,6 +28,12 @@ type AppVeyorEnvironment =
     /// Build version
     static member BuildVersion = environVar "APPVEYOR_BUILD_VERSION"
     
+    /// GitHub Pull Request number
+    static member PullRequestNumber = environVar "APPVEYOR_PULL_REQUEST_NUMBER"
+    
+    /// GitHub Pull Request title
+    static member PullRequestTitle = environVar "APPVEYOR_PULL_REQUEST_TITLE"
+    
     /// AppVeyor unique job ID
     static member JobId = environVar "APPVEYOR_JOB_ID"
     

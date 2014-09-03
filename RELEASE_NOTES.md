@@ -1,3 +1,63 @@
+#### 3.4.0 - 28.08.2014
+* New Xamarin.iOS and Xamarin.Android helpers - https://github.com/fsharp/FAKE/pull/527
+
+#### 3.3.1 - 26.08.2014
+* Disable FSI output for now
+
+#### 3.3.0 - 25.08.2014
+* Using JSON.NET 6.0.4
+* FAKE.Deploy switched to FCS - https://github.com/fsharp/FAKE/pull/519 
+* FAKE.Deploy WorkDirectory fix - https://github.com/fsharp/FAKE/pull/520
+* HipChat notification helper - https://github.com/fsharp/FAKE/pull/523
+
+#### 3.2.17 - 07.08.2014
+* Don't crash during tool discovery
+
+#### 3.2.16 - 04.08.2014
+* NuGet: support fallback framework groups - https://github.com/fsharp/FAKE/pull/514
+
+#### 3.2.15 - 03.08.2014
+* New pushd/popd command in FileUtils - https://github.com/fsharp/FAKE/pull/513
+
+#### 3.2.14 - 01.08.2014
+* New AppVeyor properties
+
+#### 3.2.13 - 29.07.2014
+* FSC - support of compilation for different versions of F#
+ 
+#### 3.2.12 - 29.07.2014
+* Provide env var access to --fsiargs build script args so works on FAKE 
+
+#### 3.2.11 - 22.07.2014
+* Adding NGen Install task
+
+#### 3.2.10 - 22.07.2014
+* Allow to use gacutil
+* Allow to use ngen.exe
+
+#### 3.2.8 - 22.07.2014
+* Allow to use all sn.exe features
+* Adding DisableVerification for StrongNames
+
+#### 3.2.7 - 22.07.2014
+* Adding helpers which allow to strong name assemblies
+
+#### 3.2.6 - 22.07.2014
+* Allow to use empty MSBuild targets
+
+#### 3.2.5 - 22.07.2014
+* Adding setProcessEnvironVar and clearProcessEnvironVar
+
+#### 3.2.3 - 17.07.2014
+* Try to reference local nuspec in order to fix https://github.com/fsprojects/FSharp.TypeProviders.StarterPack/pull/33
+
+#### 3.2.2 - 17.07.2014
+* Better log messages to fix https://github.com/fsprojects/FSharp.TypeProviders.StarterPack/pull/33
+
+#### 3.2.1 - 16.07.2014
+* Fix fsiargs and -d options - https://github.com/fsharp/FAKE/pull/498 https://github.com/fsharp/FAKE/pull/500
+* Change RemoveDuplicateFiles & FixMissingFiles to only save on change - https://github.com/fsharp/FAKE/pull/499
+
 #### 3.2.0 - 07.07.2014
 * BREAKING CHANGE: API for CreateAssemblyInfoWithConfig was set back to original version
   This resets the breaking change introduced in https://github.com/fsharp/FAKE/pull/471
