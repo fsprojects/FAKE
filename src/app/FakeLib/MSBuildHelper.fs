@@ -3,10 +3,8 @@
 module Fake.MSBuildHelper
 
 open System
-open System.Text
 open System.IO
 open System.Configuration
-open System.Xml
 open System.Xml.Linq
 
 /// An type to represent MSBuild project files.
@@ -122,7 +120,8 @@ type MSBuildParams =
       ToolsVersion : string option
       Verbosity : MSBuildVerbosity option
       NoConsoleLogger : bool
-      FileLoggers : MSBuildFileLoggerConfig list option }
+      FileLoggers : MSBuildFileLoggerConfig list option
+      DistributedLoggers : (MSBuildFileLoggerConfig * MSBuildFileLoggerConfig option) list option }
 
 /// Defines a default for MSBuild task parameters
 let mutable MSBuildDefaults = 
@@ -133,12 +132,13 @@ let mutable MSBuildDefaults =
       ToolsVersion = None
       Verbosity = None
       NoConsoleLogger = false
-      FileLoggers = None }
+      FileLoggers = None 
+      DistributedLoggers = None }
 
 /// [omit]
-let getAllParameters targets maxcpu nodeReuse tools verbosity noconsolelogger fileLoggers properties =
-    if isUnix then [ targets; tools; verbosity; noconsolelogger ] @ fileLoggers @ properties
-    else [ targets; maxcpu; nodeReuse; tools; verbosity; noconsolelogger ] @ fileLoggers @ properties
+let getAllParameters targets maxcpu nodeReuse tools verbosity noconsolelogger fileLoggers distributedFileLoggers properties =
+    if isUnix then [ targets; tools; verbosity; noconsolelogger ] @ fileLoggers @ distributedFileLoggers @ properties
+    else [ targets; maxcpu; nodeReuse; tools; verbosity; noconsolelogger ] @ fileLoggers @ distributedFileLoggers @ properties
 
 let private serializeArgs args =
     args
@@ -150,7 +150,7 @@ let private serializeArgs args =
     |> separated " "
 
 /// [omit]
-let serializeMSBuildParams (p : MSBuildParams) = 
+let serializeMSBuildParams (p : MSBuildParams) =    
     let verbosityName v =
         match v with
         | Quiet -> "q"
@@ -158,6 +158,38 @@ let serializeMSBuildParams (p : MSBuildParams) =
         | Normal -> "n"
         | Detailed -> "d"
         | Diagnostic -> "diag"
+
+    let serializeLogger fl =    
+        let logParams param =
+            match param with
+            | Append -> "Append"
+            | PerformanceSummary -> "PerformanceSummary"
+            | Summary -> "Summary"
+            | NoSummary -> "NoSummary"
+            | ErrorsOnly -> "ErrorsOnly"
+            | WarningsOnly -> "WarningsOnly"
+            | NoItemAndPropertyList -> "NoItemAndPropertyList"
+            | ShowCommandLine -> "ShowCommandLine"
+            | ShowTimestamp -> "ShowTimestamp"
+            | ShowEventId -> "ShowEventId"
+            | ForceNoAlign -> "ForceNoAlign"
+            | DisableConsoleColor -> "DisableConsoleColor"
+            | DisableMPLogging -> "DisableMPLogging"
+            | EnableMPLogging -> "EnableMPLogging"
+
+        sprintf "%s%s%s" 
+            (match fl.Filename with
+            | None -> ""
+            | Some f -> sprintf "logfile=%s;" f)
+            (match fl.Verbosity with
+            | None -> ""
+            | Some v -> sprintf "Verbosity=%s;" (verbosityName v)) 
+            (match fl.Parameters with
+            | None -> ""
+            | Some ps -> 
+                ps
+                |> List.map (fun p -> sprintf "%s;" (logParams p))
+                |> String.concat "")
     
     let targets = 
         match p.Targets with
@@ -194,45 +226,25 @@ let serializeMSBuildParams (p : MSBuildParams) =
         else None
 
     let fileLoggers =
-        let logParams param =
-            match param with
-            | Append -> "Append"
-            | PerformanceSummary -> "PerformanceSummary"
-            | Summary -> "Summary"
-            | NoSummary -> "NoSummary"
-            | ErrorsOnly -> "ErrorsOnly"
-            | WarningsOnly -> "WarningsOnly"
-            | NoItemAndPropertyList -> "NoItemAndPropertyList"
-            | ShowCommandLine -> "ShowCommandLine"
-            | ShowTimestamp -> "ShowTimestamp"
-            | ShowEventId -> "ShowEventId"
-            | ForceNoAlign -> "ForceNoAlign"
-            | DisableConsoleColor -> "DisableConsoleColor"
-            | DisableMPLogging -> "DisableMPLogging"
-            | EnableMPLogging -> "EnableMPLogging"
         match p.FileLoggers with
         | None -> []
         | Some fls ->
             fls 
-            |> List.map 
-                   (fun fl -> 
-                   Some
-                       ("flp" + (string fl.Number),                         
-                        sprintf "%s%s%s" 
-                         (match fl.Filename with
-                          | None -> ""
-                          | Some f -> sprintf "logfile=%s;" f)
-                         (match fl.Verbosity with
-                          | None -> ""
-                          | Some v -> sprintf "Verbosity=%s;" (verbosityName v)) 
-                         (match fl.Parameters with
-                          | None -> ""
-                          | Some ps -> 
-                                ps
-                                |> List.map (fun p -> sprintf "%s;" (logParams p))
-                                |> String.concat "")))
+            |> List.map (fun fl -> Some ("flp" + (string fl.Number), serializeLogger fl) )
 
-    getAllParameters targets maxcpu nodeReuse tools verbosity noconsolelogger fileLoggers properties
+    let distributedFileLoggers = 
+        let createLoggerString cl fl =
+            match fl with
+            | None -> serializeLogger cl
+            | Some l -> sprintf "%s*%s" (serializeLogger cl) (serializeLogger l)
+
+        match p.DistributedLoggers with
+        | None -> []
+        | Some dfls ->
+            dfls
+            |> List.map(fun (cl, fl) -> Some("dl", createLoggerString cl fl))
+
+    getAllParameters targets maxcpu nodeReuse tools verbosity noconsolelogger fileLoggers distributedFileLoggers properties
     |> serializeArgs
 
 /// [omit]
@@ -252,7 +264,7 @@ let mutable MSBuildLoggers =
 match buildServer with
 | BuildServer.AppVeyor ->
     MSBuildLoggers <- @"""C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll""" :: MSBuildLoggers
-| BuildServer.TeamCity  -> MSBuildLoggers <- sprintf "%s,\"%s\"" TeamCityLoggerName pathToLogger :: MSBuildLoggers
+| BuildServer.TeamCity -> MSBuildLoggers <- sprintf "%s,\"%s\"" TeamCityLoggerName pathToLogger :: MSBuildLoggers
 | _ -> ()
 
 /// Runs a MSBuild project
@@ -395,8 +407,8 @@ let BuildWebsite outputPath projectFile =
     let projectDir = (fileInfo projectFile).Directory.FullName
     let mutable prefix = ""
     let diff = slashes projectDir - slashes currentDir
-    for i in 1..diff do
-        prefix <- prefix + "../"
+    prefix <- prefix + (String.replicate diff "../")
+
     MSBuildDebug "" "Rebuild" [ projectFile ] |> ignore
     MSBuild "" "_CopyWebApplication;_BuiltWebOutputGroupOutput" 
         [ "OutDir", prefix + outputPath
