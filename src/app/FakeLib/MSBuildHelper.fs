@@ -248,8 +248,8 @@ let serializeMSBuildParams (p : MSBuildParams) =
                 (match dlogger.Parameters with 
                     | None -> "" 
                     | Some vars -> vars 
-                                    |> List.fold (fun acc (k,v) -> sprintf "%s%s=%s," acc k v) ""
-                                    |> sprintf ";\"%s;\""
+                                    |> List.fold (fun acc (k,v) -> sprintf "%s%s=%s;" acc k v) ""
+                                    |> sprintf ";\"%s\""
                 )
 
         let createLoggerString cl fl =
