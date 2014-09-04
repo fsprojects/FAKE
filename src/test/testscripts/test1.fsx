@@ -2,11 +2,31 @@
 
 open Fake
 
-#if MONO
-failwith "mono was set"
-#else
-failwith "mono was not set"
-#endif
+Target "blah" (fun _ ->
+    let simpleConfig = {
+        ClassName = None
+        AssemblyPath = "test.dll"
+        Parameters = None
+    }
+    
+    let nameConfig = {simpleConfig with ClassName = Some "simpleClass"}
+    let simpleWithParams = {simpleConfig with Parameters = Some [("Verbosity", "High")]}
+    let fullConfig = {simpleConfig with 
+                        ClassName = nameConfig.ClassName 
+                        Parameters = simpleWithParams.Parameters}
 
-if hasBuildParam "test" |> not then
-    failwith "test param is missing"
+    let simpleRun = 
+        [simpleConfig; nameConfig; simpleWithParams; fullConfig]
+        |> List.map (fun x -> (x, None))
+    let complexRun = 
+        [simpleConfig; nameConfig; simpleWithParams; fullConfig]
+        |> List.map (fun x -> (x, Some fullConfig))
+
+    simpleRun @ complexRun
+    |> List.map (fun x -> {MSBuildDefaults with DistributedLoggers = Some [x; x]})
+    |> List.map MSBuildHelper.serializeMSBuildParams
+    |> List.iter (logfn "%s")
+)
+
+RunTargetOrDefault "blah"
+

@@ -111,6 +111,12 @@ type MSBuildFileLoggerConfig =
       Verbosity : MSBuildVerbosity option
       Parameters : MSBuildLogParameter list option }
 
+type MSBuildDistributedLoggerConfig = 
+    {
+        ClassName : string option
+        AssemblyPath : string
+        Parameters : (string * string) list option }
+
 /// A type for MSBuild task parameters
 type MSBuildParams = 
     { Targets : string list
@@ -121,7 +127,7 @@ type MSBuildParams =
       Verbosity : MSBuildVerbosity option
       NoConsoleLogger : bool
       FileLoggers : MSBuildFileLoggerConfig list option
-      DistributedLoggers : (MSBuildFileLoggerConfig * MSBuildFileLoggerConfig option) list option }
+      DistributedLoggers : (MSBuildDistributedLoggerConfig * MSBuildDistributedLoggerConfig option) list option }
 
 /// Defines a default for MSBuild task parameters
 let mutable MSBuildDefaults = 
@@ -159,37 +165,7 @@ let serializeMSBuildParams (p : MSBuildParams) =
         | Detailed -> "d"
         | Diagnostic -> "diag"
 
-    let serializeLogger fl =    
-        let logParams param =
-            match param with
-            | Append -> "Append"
-            | PerformanceSummary -> "PerformanceSummary"
-            | Summary -> "Summary"
-            | NoSummary -> "NoSummary"
-            | ErrorsOnly -> "ErrorsOnly"
-            | WarningsOnly -> "WarningsOnly"
-            | NoItemAndPropertyList -> "NoItemAndPropertyList"
-            | ShowCommandLine -> "ShowCommandLine"
-            | ShowTimestamp -> "ShowTimestamp"
-            | ShowEventId -> "ShowEventId"
-            | ForceNoAlign -> "ForceNoAlign"
-            | DisableConsoleColor -> "DisableConsoleColor"
-            | DisableMPLogging -> "DisableMPLogging"
-            | EnableMPLogging -> "EnableMPLogging"
-
-        sprintf "%s%s%s" 
-            (match fl.Filename with
-            | None -> ""
-            | Some f -> sprintf "logfile=%s;" f)
-            (match fl.Verbosity with
-            | None -> ""
-            | Some v -> sprintf "Verbosity=%s;" (verbosityName v)) 
-            (match fl.Parameters with
-            | None -> ""
-            | Some ps -> 
-                ps
-                |> List.map (fun p -> sprintf "%s;" (logParams p))
-                |> String.concat "")
+    
     
     let targets = 
         match p.Targets with
@@ -226,6 +202,38 @@ let serializeMSBuildParams (p : MSBuildParams) =
         else None
 
     let fileLoggers =
+        let serializeLogger fl =    
+            let logParams param =
+                match param with
+                | Append -> "Append"
+                | PerformanceSummary -> "PerformanceSummary"
+                | Summary -> "Summary"
+                | NoSummary -> "NoSummary"
+                | ErrorsOnly -> "ErrorsOnly"
+                | WarningsOnly -> "WarningsOnly"
+                | NoItemAndPropertyList -> "NoItemAndPropertyList"
+                | ShowCommandLine -> "ShowCommandLine"
+                | ShowTimestamp -> "ShowTimestamp"
+                | ShowEventId -> "ShowEventId"
+                | ForceNoAlign -> "ForceNoAlign"
+                | DisableConsoleColor -> "DisableConsoleColor"
+                | DisableMPLogging -> "DisableMPLogging"
+                | EnableMPLogging -> "EnableMPLogging"
+
+            sprintf "%s%s%s" 
+                (match fl.Filename with
+                | None -> ""
+                | Some f -> sprintf "logfile=%s;" f)
+                (match fl.Verbosity with
+                | None -> ""
+                | Some v -> sprintf "Verbosity=%s;" (verbosityName v)) 
+                (match fl.Parameters with
+                | None -> ""
+                | Some ps -> 
+                    ps
+                    |> List.map (fun p -> sprintf "%s;" (logParams p))
+                    |> String.concat "")
+
         match p.FileLoggers with
         | None -> []
         | Some fls ->
@@ -233,10 +241,21 @@ let serializeMSBuildParams (p : MSBuildParams) =
             |> List.map (fun fl -> Some ("flp" + (string fl.Number), serializeLogger fl) )
 
     let distributedFileLoggers = 
+        let serializeDLogger (dlogger : MSBuildDistributedLoggerConfig) =
+            sprintf "%s%s%s" 
+                (match dlogger.ClassName with | None -> "" | Some name -> sprintf "%s," name) 
+                (sprintf "\"%s\"" dlogger.AssemblyPath)
+                (match dlogger.Parameters with 
+                    | None -> "" 
+                    | Some vars -> vars 
+                                    |> List.fold (fun acc (k,v) -> sprintf "%s%s=%s," acc k v) ""
+                                    |> sprintf ";\"%s;\""
+                )
+
         let createLoggerString cl fl =
             match fl with
-            | None -> serializeLogger cl
-            | Some l -> sprintf "%s*%s" (serializeLogger cl) (serializeLogger l)
+            | None -> serializeDLogger cl
+            | Some l -> sprintf "%s*%s" (serializeDLogger cl) (serializeDLogger l)
 
         match p.DistributedLoggers with
         | None -> []
