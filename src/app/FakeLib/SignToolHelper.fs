@@ -13,8 +13,10 @@ open System.IO
 
 /// Represents a certificate file and an optional password
 type SignCert = {
-    File : string
-    Password : string option
+    /// The certificate files
+    CertFile : string
+    /// The file containing the password
+    PasswordFile : string option
 }
 
 /// Parameters used for signing.
@@ -37,16 +39,16 @@ let Sign (toolsPath : string) (parameters : SignParams) =
     let signPath = toolsPath @@ "signtool.exe"
 
     let certToUse = match parameters.Certificate with
-                        | Some cert -> if File.Exists cert.File then cert else parameters.DevCertificate
+                        | Some cert -> if File.Exists cert.CertFile then cert else parameters.DevCertificate
                         | None -> parameters.DevCertificate
     
-    let baseCall = sprintf "sign /a /f \"%s\"" certToUse.File
+    let baseCall = sprintf "sign /a /f \"%s\"" certToUse.CertFile
 
     let withTimeStamp = baseCall + match parameters.TimeStampUrl with
                                         | Some url -> sprintf " /t \"%s\"" url.AbsoluteUri
                                         | None -> ""
 
-    let withPassword = withTimeStamp + match certToUse.Password with
+    let withPassword = withTimeStamp + match certToUse.PasswordFile with
                                            | Some pass -> sprintf " /p \"%s\"" (ReadLine pass)
                                            | None -> ""
 
@@ -61,3 +63,22 @@ let Sign (toolsPath : string) (parameters : SignParams) =
         if result <> 0 then failwithf "Error during sign call ")
 
     traceEndTask "SignTool" "Successfully signed the specified assemblies"
+
+/// Signs all files in filesToSign with the certification file certFile, 
+/// protected with the password in the file passFile. 
+/// The signtool will be search in the toolPath.
+[<Obsolete>]
+let SignTool toolsPath certFile passFile filesToSign =
+    let certToUse = {
+        CertFile = certFile
+        PasswordFile = passFile
+    }
+
+    let signParams = {
+        FilesToSign = filesToSign
+        Certificate = Some certToUse
+        DevCertificate = certToUse
+        TimeStampUrl = None
+    }
+
+    Sign toolsPath signParams
