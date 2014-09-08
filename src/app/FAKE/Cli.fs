@@ -32,7 +32,7 @@ type FakeArg =
 let parsedArgsOrEx args = 
     try
         let args = args |> Seq.skip 1 |> Array.ofSeq
-        let parser = UnionArgParser<FakeArg>()
+        let parser = UnionArgParser.Create<FakeArg>()
         Choice1Of2(parser.Parse(args))
     with | ex -> Choice2Of2(ex)
 
@@ -46,7 +46,7 @@ let printUsage () =
     targetName: Optional.  Name of the target you wish to run.  This will override the target you specifed to run in the build script.
 
     Options:
-    %s" (UnionArgParser<FakeArg>().Usage())
+    %s" (UnionArgParser.Create<FakeArg>().Usage())
     
 type Args = { Script: string option; Target: string option; Rest: string [] }
 
