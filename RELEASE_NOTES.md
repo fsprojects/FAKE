@@ -1,3 +1,6 @@
+#### 3.4.1 - 08.09.2014
+* Don't fail on nuget path scanning - https://github.com/fsharp/FAKE/pull/537
+
 #### 3.4.0 - 28.08.2014
 * New Xamarin.iOS and Xamarin.Android helpers - https://github.com/fsharp/FAKE/pull/527
 
