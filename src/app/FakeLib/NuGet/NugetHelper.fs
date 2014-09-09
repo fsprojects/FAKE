@@ -1,4 +1,4 @@
-﻿[<AutoOpen>]
+[<AutoOpen>]
 /// Contains helper functions and task which allow to inspect, create and publish [NuGet](https://www.nuget.org/) packages.
 /// There is also a tutorial about [nuget package creating](../create-nuget-package.html) available.
 module Fake.NuGetHelper
@@ -173,7 +173,7 @@ let private createNuspecFile parameters nuSpec =
     
     let xmlEncode (notEncodedText : string) = 
         if System.String.IsNullOrWhiteSpace notEncodedText then ""
-        else XText(notEncodedText).ToString().Replace("&amp;szlig","&szlig;")
+        else XText(notEncodedText).ToString().Replace("ß","&szlig;")
 
     let toSingleLine (text:string) =
         if text = null then null 
