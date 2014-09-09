@@ -172,8 +172,8 @@ let private createNuspecFile parameters nuSpec =
     let filesXml = sprintf "<files>%s</files>" filesTags
     
     let xmlEncode (notEncodedText : string) = 
-        if isNullOrEmpty notEncodedText then ""
-        else XText(notEncodedText).ToString()
+        if System.String.IsNullOrWhiteSpace notEncodedText then ""
+        else XText(notEncodedText).ToString().Replace("&amp;szlig","&szlig;")
 
     let toSingleLine (text:string) =
         if text = null then null 

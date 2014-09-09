@@ -1,3 +1,6 @@
+#### 3.4.2 - 09.09.2014
+* Try to support ß in authors
+
 #### 3.4.1 - 08.09.2014
 * Don't fail on nuget path scanning - https://github.com/fsharp/FAKE/pull/537
 
