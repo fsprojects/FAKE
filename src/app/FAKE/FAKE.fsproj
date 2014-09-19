@@ -68,7 +68,7 @@
     <Compile Include="Cli.fs" />
     <Compile Include="Program.fs" />
     <Content Include="app.config" />
-    <None Include="packages.config" />
+    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
@@ -80,15 +80,15 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="UnionArgParser">
-      <HintPath>..\..\..\packages\UnionArgParser.0.6.4\lib\net40\UnionArgParser.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <ProjectReference Include="..\FakeLib\FakeLib.fsproj">
       <Name>FakeLib</Name>
       <Project>{13d56521-772a-41db-9772-1da1a4aa8e3a}</Project>
       <Private>True</Private>
     </ProjectReference>
+    <Reference Include="UnionArgParser">
+      <HintPath>..\..\..\packages\UnionArgParser.0.8.0\lib\net40\UnionArgParser.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
