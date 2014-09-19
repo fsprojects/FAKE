@@ -1,3 +1,8 @@
+#### 3.5.0 - 19.09.2014
+* Added new SignToolHelper - https://github.com/fsharp/FAKE/pull/535
+* Look first in default path for a tool - https://github.com/fsharp/FAKE/pull/542
+* Add support for MSBuild Distributed Loggers - https://github.com/fsharp/FAKE/pull/536
+
 #### 3.4.3 - 09.09.2014
 * Try to support ß in authors
 
