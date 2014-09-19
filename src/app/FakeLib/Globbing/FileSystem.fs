@@ -143,12 +143,15 @@ let inline (!!) x = Include x
 [<Obsolete("!+ is obsolete - use !! instead")>]
 let inline (!+) x = Include x
 
-/// Looks for a tool in all subfolders - returns the tool file name.
+/// Looks for a tool first in its default path, if not found in all subfolders of the root folder - returns the tool file name.
 let findToolInSubPath toolname defaultPath =
     try
-        let tools = !! ("./**/" @@ toolname)
-        if Seq.isEmpty tools then defaultPath @@ toolname
-        else Seq.head tools
+        let tools = !! (defaultPath @@ "/**/" @@ toolname)
+        if  Seq.isEmpty tools then 
+            let root = !! ("./**/" @@ toolname)
+            Seq.head root
+        else
+            Seq.head tools
     with
     | _ -> defaultPath @@ toolname
 
