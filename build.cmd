@@ -2,12 +2,12 @@
 
 cls
 
-"tools\nuget\nuget.exe" "install" "FAKE" "-OutputDirectory" "tools" "-ExcludeVersion" "-Prerelease"
-"tools\nuget\nuget.exe" "install" "FSharp.Formatting.CommandTool" "-OutputDirectory" "tools" "-ExcludeVersion" "-Prerelease"
-"tools\nuget\nuget.exe" "install" "SourceLink.Fake" "-OutputDirectory" "tools" "-ExcludeVersion"
+".nuget\nuget.exe" install Paket -OutputDirectory packages -Prerelease -ExcludeVersion
+
+packages\Paket\tools\Paket.exe install
 
 SET TARGET="Default"
 
 IF NOT [%1]==[] (set TARGET="%1")
 
-"tools\FAKE\tools\Fake.exe" "build.fsx" "target=%TARGET%"
+"packages\FAKE\tools\Fake.exe" "build.fsx" "target=%TARGET%"

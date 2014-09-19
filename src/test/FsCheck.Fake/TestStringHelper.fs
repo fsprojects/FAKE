@@ -1,8 +1,8 @@
 ﻿module FsCheck.Fake.TestStringHelper
 
-open FsCheck
+open Xunit
 open Fake
-open global.Xunit
+open FsCheck
 
 [<Fact>]
 let ``NormalizeVersion removes tralining .0`` () =
