@@ -1,3 +1,6 @@
+#### 3.5.1 - 19.09.2014
+* Update FSharp.Compiler.Service to 0.0.62
+
 #### 3.5.0 - 19.09.2014
 * Added new SignToolHelper - https://github.com/fsharp/FAKE/pull/535
 * Look first in default path for a tool - https://github.com/fsharp/FAKE/pull/542
