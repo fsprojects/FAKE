@@ -1,3 +1,6 @@
+#### 3.5.2 - 20.09.2014
+* Make GetPackageVersion work with Paket
+
 #### 3.5.1 - 19.09.2014
 * Update FSharp.Compiler.Service to 0.0.62
 

@@ -93,18 +93,30 @@ let NuGetDefaults() =
 let RequireExactly version = sprintf "[%s]" version
 
 let private packageFileName parameters = sprintf "%s.%s.nupkg" parameters.Project parameters.Version
-let private symbolsPackageFileName parameters = sprintf "%s.%s.symbols.nupkg" parameters.Project parameters.Version
+
 
 /// Gets the version no. for a given package in the deployments folder
 let GetPackageVersion deploymentsDir package = 
-    if Directory.Exists deploymentsDir |> not then 
-        failwithf "Package %s was not found, because the deployment directory %s doesn't exist." package deploymentsDir
-    let version = 
-        let files = Directory.GetDirectories(deploymentsDir, sprintf "%s.*" package)
-        if Seq.isEmpty files then failwithf "Package %s was not found." package
-        Seq.head files |> fun full -> full.Substring(full.LastIndexOf package + package.Length + 1)
-    logfn "Version %s found for package %s" version package
-    version
+    try
+        if Directory.Exists deploymentsDir |> not then 
+            failwithf "Package %s was not found, because the deployment directory %s doesn't exist." package deploymentsDir
+        let version = 
+            let dirs = Directory.GetDirectories(deploymentsDir, sprintf "%s.*" package)
+            if Seq.isEmpty dirs then failwithf "Package %s was not found." package
+            let folder = Seq.head dirs 
+            let index = folder.LastIndexOf package + package.Length + 1
+            if index < folder.Length then
+                folder.Substring index
+            else
+                let files = Directory.GetFiles(folder, sprintf "%s.*.nupkg" package)
+                let file = (Seq.head files).Replace(".nupkg","")
+                let index = file.LastIndexOf package + package.Length + 1
+                file.Substring index
+               
+        logfn "Version %s found for package %s" version package
+        version
+    with
+    | exn -> new Exception("Could not detect package version for " + package, exn) |> raise
 
 let private replaceAccessKey key (text : string) = 
     if isNullOrEmpty key then text
