@@ -12,6 +12,8 @@ type MSpecParams =
       ToolPath : string
       /// Output directory for html reports (optional).
       HtmlOutputDir : string
+      /// Output file path for xml reports (optional).
+      XmlOutputPath : string
       /// Working directory (optional)
       WorkingDir : string
       /// Can be used to run MSpec in silent mode.
@@ -29,6 +31,7 @@ type MSpecParams =
 let MSpecDefaults = 
     { ToolPath = findToolInSubPath "mspec-clr4.exe" (currentDirectory @@ "tools" @@ "MSpec")
       HtmlOutputDir = null
+      XmlOutputPath = null
       WorkingDir = null
       Silent = false
       ExcludeTags = []
@@ -43,6 +46,11 @@ let buildMSpecArgs parameters assemblies =
         if isNotNullOrEmpty parameters.HtmlOutputDir then 
             true, sprintf "--html\" \"%s" <| parameters.HtmlOutputDir.TrimEnd Path.DirectorySeparatorChar
         else false, ""
+
+    let xml, xmlText = 
+        if isNotNullOrEmpty parameters.XmlOutputPath then 
+            true, sprintf "--xml\" \"%s" <| parameters.XmlOutputPath.TrimEnd Path.DirectorySeparatorChar
+        else false, ""
     
     let includes = parameters.IncludeTags |> separated ","
     let excludes = parameters.ExcludeTags |> separated ","
@@ -51,6 +59,8 @@ let buildMSpecArgs parameters assemblies =
     |> appendIfTrue parameters.Silent "-s"
     |> appendIfTrue html "-t"
     |> appendIfTrue html htmlText
+    |> appendIfTrue xml "-t"
+    |> appendIfTrue xml xmlText
     |> appendIfTrue (isNotNullOrEmpty excludes) (sprintf "-x\" \"%s" excludes)
     |> appendIfTrue (isNotNullOrEmpty includes) (sprintf "-i\" \"%s" includes)
     |> appendFileNamesIfNotNull assemblies
@@ -66,6 +76,10 @@ let buildMSpecArgs parameters assemblies =
 ///
 ///     !! (testDir @@ "Test.*.dll") 
 ///       |> MSpec (fun p -> {p with ExcludeTags = ["HTTP"]; HtmlOutputDir = reportDir})
+///
+/// ## Hint
+/// 
+/// XmlOutputPath expects a full file path whereas the HtmlOutputDir expects a directory name
 let MSpec setParams assemblies = 
     let details = separated ", " assemblies
     traceStartTask "MSpec" details
