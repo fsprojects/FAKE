@@ -1,3 +1,6 @@
+#### 3.5.3 - 21.09.2014
+* Support for MSpec --xml parameter - https://github.com/fsharp/FAKE/pull/545
+
 #### 3.5.2 - 20.09.2014
 * Make GetPackageVersion work with Paket
 
