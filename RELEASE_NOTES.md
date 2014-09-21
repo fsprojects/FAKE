@@ -1,3 +1,6 @@
+#### 3.5.4 - 21.09.2014
+* Messages in FSC task to stderr stream can break the build - https://github.com/fsharp/FAKE/pull/546
+
 #### 3.5.3 - 21.09.2014
 * Support for MSpec --xml parameter - https://github.com/fsharp/FAKE/pull/545
 
