@@ -1,3 +1,6 @@
+#### 3.5.5 - 25.09.2014
+* If site exists then the site will be modified with the given parameters - https://github.com/fsharp/FAKE/pull/548
+
 #### 3.5.4 - 21.09.2014
 * Messages in FSC task to stderr stream can break the build - https://github.com/fsharp/FAKE/pull/546
 
