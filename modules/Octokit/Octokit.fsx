@@ -1,4 +1,4 @@
-#r @"../../../../packages/Octokit/lib/net45/Octokit.dll"
+#r @"../../../../../packages/Octokit/lib/net45/Octokit.dll"
 
 open Octokit
 open System
