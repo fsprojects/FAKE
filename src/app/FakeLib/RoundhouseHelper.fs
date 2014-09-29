@@ -151,6 +151,45 @@ let RoundhouseDefaults = {
     WorkingDir = null
     TimeOut = TimeSpan.FromMinutes 5.}
 
+let private getStringParam k (v : string)=
+    match isNullOrEmpty v with
+    | true -> None
+    | false -> Some (k, v)
+
+let getBoolParam k (v : bool) =
+    match v with
+    | true -> Some (k, String.Empty)
+    | false -> None
+
+let getIntParam k (v : int) =
+    Some(k, v.ToString())
+
+let private serializeArgs args =
+    args
+    |> Seq.map (function 
+           | None -> ""
+           | Some(k, v) -> 
+               "/" + k + (if isNullOrEmpty v then ""
+                          else ":" + v))
+    |> separated " "
+    
+
+let private getParamPairs (rh: RoundhouseParams) =
+    let dbName = getStringParam "d" rh.DatabaseName
+    let sqlFilesDir = getStringParam "f" rh.SqlFilesDirectory
+    let server = getStringParam "s" rh.ServerDatabase
+    let connString = getStringParam "cs" rh.ConnectionString
+    let connStringAdmin = getStringParam "csa" rh.ConnectionStringAdmin
+    let cmdTimeout = getIntParam "ct" rh.CommandTimeout
+    let drop = getBoolParam "drop" rh.Drop
+    let simple = getBoolParam "simple" rh.Simple
+    let transaction = getBoolParam "t" rh.WithTransaction
+    let restore = getBoolParam "restore" rh.Restore
+    let silent = getBoolParam "silent" rh.Silent
+    let warn = getBoolParam "w" rh.WarnOnOneTimeScriptChanges
+
+
+
 /// This task to can be used to run [RoundhousE](http://projectroundhouse.org/) for database migrations.
 /// ## Parameters
 ///
@@ -167,14 +206,10 @@ let RoundhouseDefaults = {
 let Roundhouse setParams = 
     let parameters = setParams RoundhouseDefaults
 
-    let drop = if parameters.Drop then "/drop" else ""
-    let simple = if parameters.Simple then "/simple" else ""
-    let transaction = if parameters.WithTransaction then "/t" else ""
-    let restore = if parameters.Restore then "/restore" else ""
-    let silent = if parameters.Silent then "/silent" else ""
-    let warn = if parameters.WarnOnOneTimeScriptChanges then "/w" else ""
+    
 
-    let args = sprintf "/d=%s /f=%s /s=%s /cs=%s /csa=%s /ct=%i /cta=%i /dt=%s /o=%s /vf=%s /vx=%s /r=%s /env=%s /cds=%s /rfp=%s /ad=%s /ra=%s /racd=%s /rb=%s /u=%s /rf=%s /fu=%s /vw=%s /sp=%s /ix=%s /p=%s %s %s %s %s %s %s" parameters.DatabaseName parameters.SqlFilesDirectory parameters.ServerDatabase parameters.ConnectionString parameters.ConnectionStringAdmin parameters.CommandTimeout parameters.CommandTimeoutAdmin parameters.DatabaseType parameters.OutputPath parameters.VersionFile parameters.VersionXPath parameters.RepositoryPath parameters.Environment parameters.CustomCreateScript parameters.RestoreFilePath parameters.AlterDatabaseFolderName parameters.RunAfterOtherAnyTimeScriptsFolderName parameters.RunAfterCreateDatabaseFolderName parameters.RunBeforeUpFolderName parameters.UpFolderName parameters.RunFirstAfterUpdateFolderName parameters.FunctionsFolderName parameters.ViewsFolderName parameters.SprocsFolderName parameters.IndexesFolderName parameters.PermissionsFolderName drop simple transaction restore silent warn
+    //let args = sprintf "/d=%s /f=%s /s=%s /cs=%s /csa=%s /ct=%i /cta=%i /dt=%s /o=%s /vf=%s /vx=%s /r=%s /env=%s /cds=%s /rfp=%s /ad=%s /ra=%s /racd=%s /rb=%s /u=%s /rf=%s /fu=%s /vw=%s /sp=%s /ix=%s /p=%s %s %s %s %s %s %s" parameters.DatabaseName parameters.SqlFilesDirectory parameters.ServerDatabase parameters.ConnectionString parameters.ConnectionStringAdmin parameters.CommandTimeout parameters.CommandTimeoutAdmin parameters.DatabaseType parameters.OutputPath parameters.VersionFile parameters.VersionXPath parameters.RepositoryPath parameters.Environment parameters.CustomCreateScript parameters.RestoreFilePath parameters.AlterDatabaseFolderName parameters.RunAfterOtherAnyTimeScriptsFolderName parameters.RunAfterCreateDatabaseFolderName parameters.RunBeforeUpFolderName parameters.UpFolderName parameters.RunFirstAfterUpdateFolderName parameters.FunctionsFolderName parameters.ViewsFolderName parameters.SprocsFolderName parameters.IndexesFolderName parameters.PermissionsFolderName drop simple transaction restore silent warn
+    let args = parameters |> getParamPairs |> serializeArgs
 
     traceStartTask "Roundhouse" args
 
