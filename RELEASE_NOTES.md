@@ -1,3 +1,6 @@
+#### 3.5.6 - 29.09.2014
+* Roundhouse Cleanup - https://github.com/fsharp/FAKE/pull/550
+
 #### 3.5.5 - 25.09.2014
 * If site exists then the site will be modified with the given parameters - https://github.com/fsharp/FAKE/pull/548
 
