@@ -18,44 +18,47 @@ namespace Test.FAKECore.PackageMgt
             pkgFile = Path.Combine(tempDir, "fake.0.0.1.nupkg");
             nuspecFile = Path.Combine(TestData.TestDataDir, "fake.nuspec");
 
+            try { File.Delete(pkgFile); } catch (FileNotFoundException) {}
+
             nugetParams = FSharpFuncUtil.ToFSharpFunc<NuGetHelper.NuGetParams, NuGetHelper.NuGetParams>(
-                p => {
-                    return new NuGetHelper.NuGetParams(
-                        Authors: ListModule.OfSeq(new [] { "author" }),
-                        Project: "fake",
-                        Description: "decription",
-                        OutputPath: tempDir,
-                        Summary: "summary",
-                        WorkingDir: TestData.TestDataDir,
-                        Version: "0.0.1",
+                p => new NuGetHelper.NuGetParams(
+                    authors: ListModule.OfSeq(new [] { "author" }),
+                    project: "fake",
+                    description: "decription",
+                    outputPath: tempDir,
+                    summary: "summary",
+                    workingDir: TestData.TestDataDir,
+                    version: "0.0.1",
 
-                        Files: p.Files,
+                    files: p.Files,
 
-                        AccessKey: p.AccessKey,
-                        Copyright: p.Copyright,
-                        Dependencies: p.Dependencies,
-                        DependenciesByFramework: p.DependenciesByFramework,
-                        IncludeReferencedProjects: p.IncludeReferencedProjects,
-                        NoPackageAnalysis: p.NoPackageAnalysis,
-                        ProjectFile: p.ProjectFile,
-                        Properties: p.Properties,
-                        Publish: p.Publish,
-                        PublishTrials: p.PublishTrials,
-                        PublishUrl: p.PublishUrl,
-                        References: p.References,
-                        ReferencesByFramework: p.ReferencesByFramework,
-                        ReleaseNotes: p.ReleaseNotes,
-                        SymbolPackage: p.SymbolPackage,
-                        Tags: p.Tags,
-                        TimeOut: p.TimeOut,
-                        Title: p.Title,
-                        ToolPath: p.ToolPath
-                    );
-                }
+                    accessKey: p.AccessKey,
+                    copyright: p.Copyright,
+                    dependencies: p.Dependencies,
+                    dependenciesByFramework: p.DependenciesByFramework,
+                    includeReferencedProjects: p.IncludeReferencedProjects,
+                    noPackageAnalysis: p.NoPackageAnalysis,
+                    projectFile: p.ProjectFile,
+                    properties: p.Properties,
+                    publish: p.Publish,
+                    publishTrials: p.PublishTrials,
+                    publishUrl: p.PublishUrl,
+                    references: p.References,
+                    referencesByFramework: p.ReferencesByFramework,
+                    releaseNotes: p.ReleaseNotes,
+                    symbolPackage: p.SymbolPackage,
+                    tags: p.Tags,
+                    timeOut: p.TimeOut,
+                    title: p.Title,
+                    toolPath: p.ToolPath
+                )
             );
         };
 
         Because of = () => NuGetHelper.NuGetPack(nugetParams, nuspecFile);
-        It should_create_nupkg_file = () => File.Exists(pkgFile).ShouldBeTrue();
+        It should_create_nupkg_file = () =>
+        {
+            File.Exists(pkgFile).ShouldBeTrue();
+        };
     }
 }
