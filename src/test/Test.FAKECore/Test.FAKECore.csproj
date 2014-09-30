@@ -249,9 +249,8 @@
     <Content Include="MessageFiles\Message1.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="\\localhost\C%24\%40GMT-2014.09.13-19.19.29\Code\FAKE\tools\NuGet\nuget.exe">
-      <Link>PackageMgt\nuget.exe</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Include="TestData\nuget.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
