@@ -111,7 +111,11 @@ type RoundhouseParams = {
     WorkingDir: string
 
     /// A timeout for the runner.
-    TimeOut: TimeSpan}
+    TimeOut: TimeSpan
+    
+    ///  The schema where RH stores it's tables
+    SchemaName :string
+    }
 
 /// Roundhouse default parameters - tries to locate rh.exe in any subfolder.
 let RoundhouseDefaults = { 
@@ -149,7 +153,8 @@ let RoundhouseDefaults = {
     WarnOnOneTimeScriptChanges = false
     ToolPath = findToolInSubPath "rh.exe" (currentDirectory @@ "tools" @@ "rh")
     WorkingDir = null
-    TimeOut = TimeSpan.FromMinutes 5.}
+    TimeOut = TimeSpan.FromMinutes 5.
+    SchemaName = null}
 
 let private getStringParam k (v : string)=
     match isNullOrEmpty v with
@@ -210,10 +215,11 @@ let private getParamPairs (rh: RoundhouseParams) =
     let restore = getBoolParam "restore" rh.Restore
     let silent = getBoolParam "silent" rh.Silent
     let warn = getBoolParam "w" rh.WarnOnOneTimeScriptChanges
+    let schemaName = getStringParam "sc" rh.SchemaName
 
     [dbName;sqlFilesDir;server;connString;connStringAdmin;cmdTimeout;cmdTimeoutAdmin;dbType;outPath;versionFile;versionXPath;repoPath;env;customCreateScript;restoreFilePath;alterFolderPath;
     runAfterOtherTimeFolderPath;runAfterCreateFolderPath;runBeforeUpFolderPath;upFolderPath;runFirstAfterUpdateFolderPath;funcFolderPath;viewsFolderPath;sprocsFolderPath;indexFolderPath;
-    permissionsFolderPath;drop;simple;transaction;restore;silent;warn;]
+    permissionsFolderPath;drop;simple;transaction;restore;silent;warn;schemaName]
 
 
 /// This task to can be used to run [RoundhousE](http://projectroundhouse.org/) for database migrations.
