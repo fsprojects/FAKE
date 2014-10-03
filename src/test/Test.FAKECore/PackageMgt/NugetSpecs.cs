@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using Fake;
 using Machine.Specifications;
@@ -24,13 +25,13 @@ namespace Test.FAKECore.PackageMgt
                 p => new NuGetHelper.NuGetParams(
                     authors: ListModule.OfSeq(new [] { "author" }),
                     project: "fake",
-                    description: "decription",
+                    description: "description",
                     outputPath: tempDir,
                     summary: "summary",
                     workingDir: TestData.TestDataDir,
                     version: "0.0.1",
 
-                    files: p.Files,
+                    files: ListModule.OfSeq(new [] { new Tuple<string, FSharpOption<string>, FSharpOption<string>>("*.*", FSharpOption<string>.None, FSharpOption<string>.None) }),
 
                     accessKey: p.AccessKey,
                     copyright: p.Copyright,
