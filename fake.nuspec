@@ -13,5 +13,6 @@
     <releaseNotes>@releaseNotes@</releaseNotes>
     <tags>build, fake, f#</tags>
     @dependencies@
+    @files@
   </metadata>
 </package>
