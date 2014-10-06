@@ -14,5 +14,4 @@
     <tags>build, fake, f#</tags>
     @dependencies@
   </metadata>
-  @files@
 </package>
