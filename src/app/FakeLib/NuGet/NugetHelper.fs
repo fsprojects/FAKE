@@ -312,11 +312,19 @@ let rec private publishSymbols parameters =
 /// 
 ///  - `setParams` - Function used to manipulate the default NuGet parameters.
 ///  - `nuspecFile` - The .nuspec file name.
-let NuGetPack setParams nuspecFile = 
-    traceStartTask "NuGet-Pack" nuspecFile
+let NuGetPack setParams nuspecFile =
+    traceStartTask "NuGetPack" nuspecFile
     let parameters = NuGetDefaults() |> setParams
-    pack parameters nuspecFile
-    traceEndTask "NuGet-Pack" nuspecFile
+    try
+        let nuspecFile = createNuspecFile parameters nuspecFile
+        pack parameters nuspecFile
+        DeleteFile nuspecFile
+    with exn ->
+        (if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message
+         else exn.Message)
+        |> replaceAccessKey parameters.AccessKey
+        |> failwith
+    traceEndTask "NuGetPack" nuspecFile
 
 /// Publishes a NuGet package to the nuget server.
 /// ## Parameters

@@ -125,6 +125,7 @@
     <Compile Include="PackageMgt\FeedSpecs.cs" />
     <Compile Include="PackageMgt\NugetData.cs" />
     <Compile Include="PackageMgt\NuSpecFileSpecs.cs" />
+    <Compile Include="PackageMgt\NugetSpecs.cs" />
     <Compile Include="ReleaseNotesSpecs.cs" />
     <Compile Include="RestorePackageHelperSpecs.cs" />
     <Compile Include="SideBySideSpecification\ReferencesScanningSpecs.cs" />
@@ -245,8 +246,14 @@
     <Content Include="TestData\AllObjects_2.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="TestData\fake_complete.nuspec">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="MessageFiles\Message1.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\nuget.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
