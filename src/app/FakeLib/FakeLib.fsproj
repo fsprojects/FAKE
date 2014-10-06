@@ -143,6 +143,7 @@
     <Compile Include="FscHelper.fs" />
     <Compile Include="HipChatNotificationHelper.fs" />
     <Compile Include="XamarinHelper.fs" />
+    <Compile Include="XDTHelper.fs" />
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
@@ -417,4 +418,5 @@
       </ItemGroup>
     </When>
   </Choose>
+</Project>
 </Project>
