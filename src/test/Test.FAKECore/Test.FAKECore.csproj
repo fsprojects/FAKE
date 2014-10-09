@@ -93,6 +93,7 @@
   <ItemGroup>
     <Compile Include="AssemblySpecs.cs" />
     <Compile Include="CliSpecs.cs" />
+    <Compile Include="FileHandling\CopyFileSpecs.cs" />
     <Compile Include="FixProjectFileSpecs.cs" />
     <Compile Include="CompareProjectFilesSpecs.cs" />
     <Compile Include="Globbing\SampeWithParens\SampleWithParensSpecs.cs" />
