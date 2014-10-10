@@ -96,20 +96,6 @@ let (|FileInfoFullName|) (f : FileInfo) = f.FullName
 /// Active Pattern for determining FileInfoNameSections.
 let (|FileInfoNameSections|) (f : FileInfo) = (f.Name, f.Extension, f.FullName)
 
-/// Copies a single file to a relative subfolder of the target.
-/// ## Parameters
-/// 
-///  - `target` - The target directory
-///  - `fileName` - The fileName
-let CopyFileIntoSubFolder target fileName = 
-    let relative = (toRelativePath fileName).TrimStart '.'
-    let fi = fileInfo fileName
-    let targetName = target + relative
-    let target = fileInfo targetName
-    ensureDirExists target.Directory
-    logVerbosefn "Copy %s to %s" fileName targetName
-    fi.CopyTo(targetName, true) |> ignore
-
 /// Copies a single file to the target and overwrites the existing file.
 /// ## Parameters
 /// 
@@ -126,6 +112,46 @@ let CopyFile target fileName =
         logVerbosefn "Copy %s to %s" fileName targetName
         f.CopyTo(targetName, true) |> ignore
     | Directory _ -> logVerbosefn "Ignoring %s, because it is a directory." fileName
+
+let private DoCopyFile targetName fileName =
+    let fi = fileInfo fileName
+    let target = fileInfo targetName
+    ensureDirExists target.Directory
+    logVerbosefn "Copy %s to %s" fileName targetName
+    fi.CopyTo(targetName, true) |> ignore
+
+/// Copies a single file to a relative subfolder of the target.
+/// ## Parameters
+///
+///  - `target` - The target directory
+///  - `fileName` - The fileName
+let CopyFileIntoSubFolder target fileName =
+    let relative = (toRelativePath fileName).TrimStart '.'
+    DoCopyFile (target + relative) fileName
+
+/// Copies a single file to the target folder preserving the folder structure
+/// starting from the specified base folder.
+/// ## Parameters
+///
+///  - `baseDir` - The base directory.
+///  - `target` - The target directory.
+///  - `fileName` - The file name.
+let CopyFileWithSubfolder baseDir target fileName =
+    let fileName = FullName fileName
+    let baseDir = FullName baseDir
+    let relative = (ProduceRelativePath baseDir fileName).TrimStart '.'
+    DoCopyFile (target + relative) fileName
+
+/// Copies several file groups, each represented by a FileIncludes object,
+/// to the target folder preserving the folder structure
+/// starting from the BaseDirectory of each FileIncludes.
+/// ## Parameters
+///
+///  - `target` - The target directory.
+///  - `files` - A sequence of file groups.
+let CopyWithSubfoldersTo target files =
+    let copyFiles dir inc = Seq.iter (CopyFileWithSubfolder dir target) inc
+    Seq.iter (fun inc -> copyFiles inc.BaseDirectory inc) files
 
 /// Copies the files to the target.
 /// ## Parameters
