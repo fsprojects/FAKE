@@ -114,6 +114,7 @@ Target "GenerateDocs" (fun _ ->
         !! "./build/**/Fake.*.dll"
           ++ "./build/FakeLib.dll"
           -- "./build/**/Fake.Experimental.dll"
+          -- "./build/**/Fake.IIS.dll"
           -- "./build/**/FSharp.Compiler.Service.dll"
           -- "./build/**/Fake.Deploy.Lib.dll"
 
