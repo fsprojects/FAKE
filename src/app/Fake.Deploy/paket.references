@@ -1,0 +1,6 @@
+Nancy
+Nancy.Authentication.Stateless
+Nancy.Hosting.Self
+Nancy.Serialization.JsonNet
+Newtonsoft.Json
+SSH.NET

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -37,9 +37,6 @@
     <DocumentationFile>..\..\..\build\FAKE.IIS\Fake.IIS.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Web.Administration">
-      <HintPath>..\..\..\packages\Microsoft.Web.Administration.7.0.0.0\lib\net20\Microsoft.Web.Administration.dll</HintPath>
-    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="FSharp.Core, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <Private>True</Private>
@@ -54,7 +51,7 @@
   <ItemGroup>
     <Compile Include="IISExpress.fs" />
     <Compile Include="IISHelper.fs" />
-    <None Include="packages.config" />
+    <None Include="paket.references" />
     <None Include="Script.fsx" />
     <None Include="app.config" />
   </ItemGroup>
@@ -82,4 +79,60 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v2.0'">
+      <ItemGroup>
+        <Reference Include="Microsoft.Web.Administration">
+          <HintPath>..\..\..\packages\Microsoft.Web.Administration\lib\net20\Microsoft.Web.Administration.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.Web.Administration">
+          <HintPath>..\..\..\packages\Microsoft.Web.Administration\lib\net20\Microsoft.Web.Administration.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.0' And $(TargetFrameworkProfile) == 'Client'">
+      <ItemGroup>
+        <Reference Include="Microsoft.Web.Administration">
+          <HintPath>..\..\..\packages\Microsoft.Web.Administration\lib\net20\Microsoft.Web.Administration.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.0'">
+      <ItemGroup>
+        <Reference Include="Microsoft.Web.Administration">
+          <HintPath>..\..\..\packages\Microsoft.Web.Administration\lib\net20\Microsoft.Web.Administration.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.Web.Administration">
+          <HintPath>..\..\..\packages\Microsoft.Web.Administration\lib\net20\Microsoft.Web.Administration.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5.1'">
+      <ItemGroup>
+        <Reference Include="Microsoft.Web.Administration">
+          <HintPath>..\..\..\packages\Microsoft.Web.Administration\lib\net20\Microsoft.Web.Administration.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
 </Project>

@@ -1,6 +1,6 @@
-#I @"tools/FAKE/tools/"
+#I @"packages/FAKE/tools/"
 #r @"FakeLib.dll"
-#load "tools/SourceLink.Fake/tools/SourceLink.fsx"
+#load "packages/SourceLink.Fake/tools/SourceLink.fsx"
 
 open Fake
 open Fake.Git
@@ -44,8 +44,6 @@ let additionalFiles = [
 
 // Targets
 Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDir; reportDir])
-
-Target "RestorePackages" RestorePackages
 
 open Fake.AssemblyInfoFile
 
@@ -114,7 +112,6 @@ Target "GenerateDocs" (fun _ ->
         !! "./build/**/Fake.*.dll"
           ++ "./build/FakeLib.dll"
           -- "./build/**/Fake.Experimental.dll"
-          -- "./build/**/Fake.IIS.dll"
           -- "./build/**/FSharp.Compiler.Service.dll"
           -- "./build/**/Fake.Deploy.Lib.dll"
 
@@ -225,7 +222,6 @@ Target "Default" DoNothing
 
 // Dependencies
 "Clean"
-    ==> "RestorePackages"
     ==> "SetAssemblyInfo"
     ==> "BuildSolution"
     ==> "Test"    
