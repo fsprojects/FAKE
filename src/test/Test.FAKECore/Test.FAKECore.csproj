@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -258,8 +258,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\fake.nuspec">
-      <Link>TestData\fake.nuspec</Link>
+    <None Include="TestData\fake.nuspec">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
