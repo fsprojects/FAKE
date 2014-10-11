@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -90,7 +90,9 @@
     <Compile Include="XpkgHelper.fs" />
     <Compile Include="MSBuild\ProjectSystem.fs" />
     <Compile Include="MSBuild\SpecsRemovement.fs" />
-    <Compile Include="MSBuild\SpecsRemover.fs" > <!-- blab blb --></Compile>
+    <Compile Include="MSBuild\SpecsRemover.fs">
+      <!-- blab blb -->
+    </Compile>
     <Compile Include="Git\CommandHelper.fs" />
     <Compile Include="Git\Sha1.fs" />
     <Compile Include="Git\Repository.fs" />
@@ -115,7 +117,7 @@
     <Compile Include="PermissionsHelper.fs" />
     <Compile Include="SpecFlowHelper.fs" />
     <Compile Include="OctoTools.fs" />
-    <None Include="packages.config" />
+    <None Include="paket.references" />
     <None Include="packages.config" />
     <Compile Include="SignHelper.fs" />
     <Compile Include="MageHelper.fs" />

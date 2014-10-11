@@ -57,3 +57,4 @@ tools/SourceLink.Fake
 release.cmd
 Samples/typescript/out/
 help/RELEASE_NOTES.md
+paket.exe
