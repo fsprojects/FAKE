@@ -194,8 +194,7 @@ Target "CreateNuGet" (fun _ ->
                        ["FAKE.Core", RequireExactly (NormalizeVersion release.AssemblyVersion)]
                      else p.Dependencies) 
                 AccessKey = getBuildParamOrDefault "nugetkey" ""
-                Publish = hasBuildParam "nugetkey"
-                ToolPath = "./tools/NuGet/nuget.exe"  }) "fake.nuspec"
+                Publish = hasBuildParam "nugetkey" }) "fake.nuspec"
 )
 
 Target "ReleaseDocs" (fun _ ->
