@@ -1,6 +1,7 @@
 source http://nuget.org/api/v2
 
 nuget FAKE
+nuget Nuget.CommandLine
 nuget FSharp.Formatting
 nuget SourceLink.Fake
 nuget RavenDB.Server
