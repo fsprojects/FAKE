@@ -10,7 +10,7 @@ NUGET
       FsCheck (>= 0)
       xunit (>= 1.9.2, <  3.0)
     FSharp.Compiler.Service (0.0.62)
-    FSharp.Formatting (2.4.31)
+    FSharp.Formatting (2.4.32)
       FSharp.Compiler.Service (>= 0.0.62)
       Microsoft.AspNet.Razor (2.0.30506.0)
       RazorEngine (3.3.0)
