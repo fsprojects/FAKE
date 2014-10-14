@@ -1,3 +1,6 @@
+#### 3.5.12 - 14.10.2014
+* Single target mode --single-target
+
 #### 3.5.11 - 11.10.2014
 * Use AppVeyor's build version instead of the build number - https://github.com/fsharp/FAKE/pull/560
 

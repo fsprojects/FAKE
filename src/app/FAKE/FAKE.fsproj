@@ -25,8 +25,8 @@
     <WarningLevel>3</WarningLevel>
     <StartAction>Project</StartAction>
     <StartProgram>C:\sources\FAKE\tools\FAKE\FAKE.exe</StartProgram>
-    <StartWorkingDirectory>C:\Code\FAKE\src\test\testscripts</StartWorkingDirectory>
-    <StartArguments>test1.fsx  -d:MONO</StartArguments>
+    <StartWorkingDirectory>d:\Code\Paket</StartWorkingDirectory>
+    <StartArguments>GenerateHelp -st</StartArguments>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -80,6 +80,8 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\FakeLib\FakeLib.fsproj">
       <Name>FakeLib</Name>
       <Project>{13d56521-772a-41db-9772-1da1a4aa8e3a}</Project>

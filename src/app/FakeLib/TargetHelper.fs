@@ -316,7 +316,10 @@ let run targetName =
             if errors = [] && ExecutedTargets.Contains (toLower targetName) |> not then
                 let target = getTarget targetName      
       
-                List.iter runTarget target.Dependencies
+                if hasBuildParam "single-target" then
+                    traceImportant "Single target mode ==> Skipping dependencies."
+                else
+                    List.iter runTarget target.Dependencies
       
                 if errors = [] then
                     traceStartTarget target.Name target.Description (dependencyString target)

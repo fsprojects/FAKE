@@ -87,6 +87,7 @@ try
                 let envVars =
                     seq { yield! fakeArgs.GetResults <@ Cli.EnvFlag @> |> Seq.map (fun name -> name, "true")
                           yield! fakeArgs.GetResults <@ Cli.EnvVar @>
+                          if fakeArgs.Contains <@ Cli.SingleTarget @> then yield "single-target", "true"
                           if args.Target.IsSome then yield "target", args.Target.Value }
 
                 //Get our fsiargs from somewhere!
