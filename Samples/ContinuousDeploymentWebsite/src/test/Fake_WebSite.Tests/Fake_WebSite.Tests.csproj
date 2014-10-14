@@ -63,11 +63,6 @@
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v2.0'">
       <ItemGroup>
-        <Reference Include="Machine.Specifications.TDNetRunner">
-          <HintPath>..\..\..\..\..\packages\Machine.Specifications\lib\net20\Machine.Specifications.TDNetRunner.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
         <Reference Include="Machine.Specifications">
           <HintPath>..\..\..\..\..\packages\Machine.Specifications\lib\net20\Machine.Specifications.dll</HintPath>
           <Private>True</Private>
@@ -77,11 +72,6 @@
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v3.5'">
       <ItemGroup>
-        <Reference Include="Machine.Specifications.TDNetRunner">
-          <HintPath>..\..\..\..\..\packages\Machine.Specifications\lib\net20\Machine.Specifications.TDNetRunner.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
         <Reference Include="Machine.Specifications">
           <HintPath>..\..\..\..\..\packages\Machine.Specifications\lib\net20\Machine.Specifications.dll</HintPath>
           <Private>True</Private>
@@ -91,11 +81,6 @@
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.0' And $(TargetFrameworkProfile) == 'Client'">
       <ItemGroup>
-        <Reference Include="Machine.Specifications.TDNetRunner">
-          <HintPath>..\..\..\..\..\packages\Machine.Specifications\lib\net20\Machine.Specifications.TDNetRunner.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
         <Reference Include="Machine.Specifications">
           <HintPath>..\..\..\..\..\packages\Machine.Specifications\lib\net20\Machine.Specifications.dll</HintPath>
           <Private>True</Private>
@@ -107,11 +92,6 @@
       <ItemGroup>
         <Reference Include="Machine.Specifications.Clr4">
           <HintPath>..\..\..\..\..\packages\Machine.Specifications\lib\net40\Machine.Specifications.Clr4.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="Machine.Specifications.TDNetRunner">
-          <HintPath>..\..\..\..\..\packages\Machine.Specifications\lib\net40\Machine.Specifications.TDNetRunner.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -129,11 +109,6 @@
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
-        <Reference Include="Machine.Specifications.TDNetRunner">
-          <HintPath>..\..\..\..\..\packages\Machine.Specifications\lib\net45\Machine.Specifications.TDNetRunner.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
         <Reference Include="Machine.Specifications">
           <HintPath>..\..\..\..\..\packages\Machine.Specifications\lib\net45\Machine.Specifications.dll</HintPath>
           <Private>True</Private>
@@ -145,11 +120,6 @@
       <ItemGroup>
         <Reference Include="Machine.Specifications.Clr4">
           <HintPath>..\..\..\..\..\packages\Machine.Specifications\lib\net45\Machine.Specifications.Clr4.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="Machine.Specifications.TDNetRunner">
-          <HintPath>..\..\..\..\..\packages\Machine.Specifications\lib\net45\Machine.Specifications.TDNetRunner.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
