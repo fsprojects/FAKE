@@ -1,36 +1,17 @@
-#### 3.5.12 - 14.10.2014
-* Single target mode --single-target
-
-#### 3.5.11 - 11.10.2014
-* Use AppVeyor's build version instead of the build number - https://github.com/fsharp/FAKE/pull/560
-
-#### 3.5.9 - 10.10.2014
-* New recursive copy functions - https://github.com/fsharp/FAKE/pull/559
-
-#### 3.5.8 - 06.10.2014
+#### 3.6.0 - 14.10.2014
 * FAKE got a new logo - https://github.com/fsharp/FAKE/pull/553
+* Use Paket to handle dependencies - http://fsprojects.github.io/Paket/
+* Single target mode --single-target - http://fsharp.github.io/FAKE/specifictargets.html
+* New recursive copy functions - https://github.com/fsharp/FAKE/pull/559
 * NuGetPack allows to manipulate nuspec files - https://github.com/fsharp/FAKE/pull/554
-
-#### 3.5.7 - 01.10.2014
-* Added missing schemaName parameter for roundhouse helper - https://github.com/fsharp/FAKE/pull/551
-
-#### 3.5.6 - 29.09.2014
-* Roundhouse Cleanup - https://github.com/fsharp/FAKE/pull/550
-
-#### 3.5.5 - 25.09.2014
-* If site exists then the site will be modified with the given parameters - https://github.com/fsharp/FAKE/pull/548
-
-#### 3.5.4 - 21.09.2014
-* Messages in FSC task to stderr stream can break the build - https://github.com/fsharp/FAKE/pull/546
-
-#### 3.5.3 - 21.09.2014
 * Support for MSpec --xml parameter - https://github.com/fsharp/FAKE/pull/545
-
-#### 3.5.2 - 20.09.2014
-* Make GetPackageVersion work with Paket
-
-#### 3.5.1 - 19.09.2014
+* Make GetPackageVersion work with Paket - http://fsprojects.github.io/Paket/
+* Added missing schemaName parameter for Roundhouse helper - https://github.com/fsharp/FAKE/pull/551
+* Roundhouse Cleanup - https://github.com/fsharp/FAKE/pull/550
 * Update FSharp.Compiler.Service to 0.0.62
+* BUGFIX: If site exists then the site will be modified by IISHelper with the given parameters - https://github.com/fsharp/FAKE/pull/548
+* BUGFIX: Messages in FSC task to stderr stream can break the build - https://github.com/fsharp/FAKE/pull/546
+* BUGFIX: Use AppVeyor's build version instead of the build number - https://github.com/fsharp/FAKE/pull/560
 
 #### 3.5.0 - 19.09.2014
 * Added new SignToolHelper - https://github.com/fsharp/FAKE/pull/535
