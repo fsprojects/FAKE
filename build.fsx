@@ -1,5 +1,5 @@
 // include Fake lib
-#r @"tools/FAKE/tools/FakeLib.dll"
+#r @"packages/FAKE/tools/FakeLib.dll"
 open Fake
 
 let buildDir = "./buildoutput/"
