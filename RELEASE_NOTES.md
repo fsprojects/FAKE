@@ -1,3 +1,6 @@
+#### 3.6.1 - 14.10.2014
+* BUGFIX: --single-target didn't work
+
 #### 3.6.0 - 14.10.2014
 * FAKE got a new logo - https://github.com/fsharp/FAKE/pull/553
 * Use Paket to handle dependencies - http://fsprojects.github.io/Paket/
