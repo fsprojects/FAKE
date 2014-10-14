@@ -27,7 +27,7 @@ let createClient user password =
 
 let createDraft owner project version prerelease (notes: string seq) (client : Async<GitHubClient>) =     
     async { 
-        let data = new ReleaseUpdate(version)
+        let data = new NewRelease(version)
         data.Name <- version
         data.Body <- String.Join(Environment.NewLine, notes)
         data.Draft <- true
@@ -59,7 +59,7 @@ let releaseDraft (draft : Async<Draft>) =
     async { 
         let! draft' = draft
         let update = draft'.DraftRelease.ToUpdate()
-        update.Draft <- false
+        update.Draft <- Nullable<bool>(false)
         let! released = Async.AwaitTask <| draft'.Client.Release.Edit(draft'.Owner, draft'.Project, draft'.DraftRelease.Id, update)
         printfn "Released %d on github" released.Id
     } |> retry 5
