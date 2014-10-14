@@ -12,4 +12,4 @@ if [ $exit_code -ne 0 ]; then
 	exit $exit_code
 fi
 
-mono packages/FAKE/tools/FAKE.exe "build.fsx"  $@
+mono packages/FAKE/tools/FAKE.exe "build.fsx" RunTests -st
