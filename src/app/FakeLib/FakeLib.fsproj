@@ -73,6 +73,7 @@
     <Compile Include="FXCopHelper.fs" />
     <Compile Include="FSharpFormattingHelper.fs" />
     <Compile Include="NCoverHelper.fs" />
+    <Compile Include="NDependHelper.fs" />
     <Compile Include="MsBuildLogger.fs" />
     <Compile Include="FileHelper.fs" />
     <Compile Include="MSBuildHelper.fs" />
