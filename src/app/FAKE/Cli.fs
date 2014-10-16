@@ -1,6 +1,4 @@
-﻿///
-/// New Command line interface for FAKE that utilises UnionArgParser.
-///
+﻿/// New Command line interface for FAKE that utilises UnionArgParser.
 [<RequireQualifiedAccessAttribute>]
 module Cli
 

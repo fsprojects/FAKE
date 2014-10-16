@@ -1,5 +1,6 @@
-#### 3.6.1 - 14.10.2014
+#### 3.7.0 - 16.10.2014
 * BUGFIX: --single-target didn't work
+* NDepend support - https://github.com/fsharp/FAKE/pull/564
 
 #### 3.6.0 - 14.10.2014
 * FAKE got a new logo - https://github.com/fsharp/FAKE/pull/553
