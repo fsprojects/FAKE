@@ -1,3 +1,6 @@
+#### 3.7.1 - 16.10.2014
+* BUGFIX: RoundhouseHelper was setting an incorrect switch for CommandTimoutAdmin - https://github.com/fsharp/FAKE/pull/566
+
 #### 3.7.0 - 16.10.2014
 * BUGFIX: --single-target didn't work
 * NDepend support - https://github.com/fsharp/FAKE/pull/564
