@@ -1,3 +1,6 @@
+#### 3.7.2 - 20.10.2014
+* Use latest FSharp.Foramatting
+
 #### 3.7.1 - 16.10.2014
 * BUGFIX: RoundhouseHelper was setting an incorrect switch for CommandTimoutAdmin - https://github.com/fsharp/FAKE/pull/566
 
