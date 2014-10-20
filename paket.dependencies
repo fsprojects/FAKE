@@ -18,7 +18,6 @@ nuget Nancy.Viewengines.Razor
 nuget Newtonsoft.Json
 nuget SSH.NET
 nuget Microsoft.Web.Administration
-nuget FSharp.Compiler.Service 
 nuget Microsoft.Web.Xdt 
 nuget Mono.Cecil
 nuget Nuget.Core
