@@ -307,9 +307,12 @@ let listTargets() =
             tracefn "  - %s %s" target.Name (if target.Description <> null then " - " + target.Description else "")
             tracefn "     Depends on: %A" target.Dependencies)
 
+// Instead of the target can be used the list dependencies graph parameter.
+let doesTargetMeansListTargets target = target = "--listTargets"  || target = "-lt"
+
 /// Runs a target and its dependencies.
 let run targetName =            
-    if isListMode then listTargets() else
+    if doesTargetMeansListTargets targetName then listTargets() else
     if LastDescription <> null then failwithf "You set a task description (%A) but didn't specify a task." LastDescription
     let rec runTarget targetName =
         try      
