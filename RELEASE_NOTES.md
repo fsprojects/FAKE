@@ -1,4 +1,4 @@
-#### 3.7.3 - 22.10.2014
+#### 3.7.4 - 22.10.2014
 * Use priority list for nuget.exe selection - https://github.com/fsharp/FAKE/issues/572
 
 #### 3.7.2 - 20.10.2014

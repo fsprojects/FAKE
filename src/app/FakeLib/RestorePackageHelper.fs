@@ -10,7 +10,8 @@ let findNuget defaultPath =
     try
         let priorityList = 
             [currentDirectory @@ "tools" @@ "NuGet"
-             currentDirectory @@ ".nuget"
+             currentDirectory @@ ".nuget"             
+             currentDirectory @@ "packages" @@ "NuGet.Commandline" @@ "tools"
              currentDirectory @@ "packages" @@ "Nuget.Commandline" @@ "tools"]
 
         let exeNames = ["nuget.exe"; "NuGet.exe"; "Nuget.exe"]
