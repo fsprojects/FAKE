@@ -4,11 +4,24 @@
 module Fake.RestorePackageHelper
 
 open System
-open System.IO
 
 /// Looks for a tool in all subfolders - returns the tool file name.
 let findNuget defaultPath = 
     try
+        let priorityList = 
+            [currentDirectory @@ "tools" @@ "NuGet"
+             currentDirectory @@ ".nuget"
+             currentDirectory @@ "packages" @@ "Nuget.Commandline" @@ "tools"]
+
+        let exeNames = ["nuget.exe"; "NuGet.exe"; "Nuget.exe"]
+
+        let priorityPaths =
+            seq { for path in priorityList do
+                    for name in exeNames do
+                      let fi = fileInfo(path @@ name)
+                      if fi.Exists then yield fi.FullName }
+        if not <| Seq.isEmpty priorityPaths then Seq.head priorityPaths else
+
         let tools = !! ("./**/" @@ "nuget.exe")
         if Seq.isEmpty tools then 
             let tools = !! ("./**/" @@ "NuGet.exe")
