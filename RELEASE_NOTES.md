@@ -1,5 +1,8 @@
+#### 3.7.3 - 22.10.2014
+* Use priority list for nuget.exe selection - https://github.com/fsharp/FAKE/issues/572
+
 #### 3.7.2 - 20.10.2014
-* Use latest FSharp.Foramatting
+* Use latest FSharp.Formatting
 
 #### 3.7.1 - 16.10.2014
 * BUGFIX: RoundhouseHelper was setting an incorrect switch for CommandTimoutAdmin - https://github.com/fsharp/FAKE/pull/566
