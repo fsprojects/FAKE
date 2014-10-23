@@ -1,3 +1,6 @@
+#### 3.7.5 - 22.10.2014
+* Feature/list targets in command line - http://fsharp.github.io/FAKE/specifictargets.html
+
 #### 3.7.4 - 22.10.2014
 * Use priority list for nuget.exe selection - https://github.com/fsharp/FAKE/issues/572
 
