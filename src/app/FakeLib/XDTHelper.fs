@@ -1,5 +1,4 @@
-﻿[<AutoOpen>]
-/// Contains functions used to transform config (or any XML) files using Microsoft's XML Document Transformations.
+﻿/// Contains functions used to transform config (or any XML) files using Microsoft's XML Document Transformations.
 module Fake.XDTHelper
 
 open System
