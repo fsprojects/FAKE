@@ -35,4 +35,5 @@ It turns `*.md` (Markdown with embedded code snippets) and `*.fsx` files (F# scr
 * if you need to rebase you can do:
     git fetch upstream
     git rebase upstream/master
-* to update the pull request push to your origin - the pull request will be updated automatically   
+    git push origin myfeature -f
+* the pull request will be updated automatically   
