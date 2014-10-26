@@ -1,4 +1,4 @@
-#### 3.7.6 - 26.10.2014
+#### 3.7.7 - 26.10.2014
 * Version NAV 800 added - https://github.com/fsharp/FAKE/pull/576
 
 #### 3.7.5 - 22.10.2014
