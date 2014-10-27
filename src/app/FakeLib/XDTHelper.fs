@@ -64,8 +64,8 @@ type FakeXmlTransformationLogger() =
 
 /// Reads XML file (typically a config file), makes changes according to XDT transform syntax, saves result.
 let TransformFile (inXmlFile:string) (transformFile:string) (outXmlFile:string) =
-    if not <| File.Exists inXmlFile then new FileNotFoundException(sprintf "XML file %s does not exist." inXmlFile) |> raise
-    if not <| File.Exists transformFile then new FileNotFoundException(sprintf "XML Document Transform file %s does not exist." transformFile) |> raise
+    if not <| File.Exists inXmlFile then postMessage <| ErrorMessage(sprintf "XML file %s does not exist." inXmlFile)
+    if not <| File.Exists transformFile then postMessage <| ImportantMessage(sprintf "XML Document Transform file %s does not exist." transformFile)
     use xdtStream = new FileStream(Path.GetFullPath transformFile, FileMode.Open, FileAccess.Read)
     let fakeLogger = new FakeXmlTransformationLogger()
     use xdt = new XmlTransformation(xdtStream, fakeLogger)
@@ -76,7 +76,11 @@ let TransformFile (inXmlFile:string) (transformFile:string) (outXmlFile:string) 
 
 /// Modifies an XML file in place using an XDT file named by inserting a .configName in between the filename and .extension.
 let TransformFileWithConfigName (configName:string) (xmlFile:string) =
-    TransformFile xmlFile (Path.ChangeExtension(xmlFile, configName + (Path.GetExtension(xmlFile)))) xmlFile
+    let xdt = Path.ChangeExtension(xmlFile, configName + (Path.GetExtension(xmlFile)))
+    if File.Exists xdt then
+        TransformFile xmlFile xdt xmlFile
+    else
+        postMessage <| ImportantMessage(sprintf "No %s config file found for '%s'. Skipping." configName xmlFile)
 
 /// Modifies XML files in place using an XDT file named by inserting a .configName in between each filename and .extension.
 let TransformFilesWithConfigName (configName:string) (files:FileIncludes) = 

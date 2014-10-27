@@ -115,6 +115,7 @@
     <Compile Include="MessageFiles\MessageFileSpecs.cs" />
     <Compile Include="ConfigFiles\ConfigSpecs.cs" />
     <Compile Include="AssemblyInfoSpecs.cs" />
+    <Compile Include="XdtSpecs.cs" />
     <Compile Include="XmlSpecs.cs" />
     <Compile Include="TestData.cs" />
     <Compile Include="FileHandling\CleanDirectorySpecs.cs" />
@@ -345,6 +346,18 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="TestData\Form_5227779.nav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\web.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\web.original.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\web.test.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\web.transformed.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
