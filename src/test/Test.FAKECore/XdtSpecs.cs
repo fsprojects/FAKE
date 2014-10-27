@@ -15,7 +15,7 @@ namespace Test.FAKECore.XDTHandling
 
         Cleanup after = () => File.Delete(@"TestData\web.new.config");
 
-        Establish context = () => TransformedFile = StringHelper.ReadFileAsString(@"TestData\web.transformed.config");
+        Establish context = () => TransformedFile = StringHelper.ReadFileAsString(Path.Combine("TestData","web.transformed.config"));
 
         Because of = () => XDTHelper.TransformFile(@"TestData\web.config", @"TestData\web.test.config", @"TestData\web.new.config");
 
@@ -28,7 +28,7 @@ namespace Test.FAKECore.XDTHandling
 
         Cleanup after = () => File.Copy(@"TestData\web.original.config", @"TestData\web.config", true);
 
-        Establish context = () => TransformedFile = StringHelper.ReadFileAsString(@"TestData\web.transformed.config");
+        Establish context = () => TransformedFile = StringHelper.ReadFileAsString(Path.Combine("TestData","web.transformed.config"));
 
         Because of = () => XDTHelper.TransformFileWithConfigName("test", @"TestData\web.config");
 
@@ -41,7 +41,7 @@ namespace Test.FAKECore.XDTHandling
 
         Cleanup after = () => File.Copy(@"TestData\web.original.config", @"TestData\web.config", true);
 
-        Establish context = () => TransformedFile = StringHelper.ReadFileAsString(@"TestData\web.transformed.config");
+        Establish context = () => TransformedFile = StringHelper.ReadFileAsString(Path.Combine("TestData","web.transformed.config"));
 
         Because of = () => XDTHelper.TransformFilesWithConfigName("test", new FileSystem.FileIncludes("TestData", 
             new FSharpList<string>("web.config", FSharpList<string>.Empty), FSharpList<string>.Empty));
