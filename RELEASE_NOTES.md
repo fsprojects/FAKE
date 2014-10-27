@@ -1,3 +1,6 @@
+#### 3.7.8 - 27.10.2014
+* New XDTHelper - https://github.com/fsharp/FAKE/pull/556
+ 
 #### 3.7.7 - 26.10.2014
 * Version NAV 800 added - https://github.com/fsharp/FAKE/pull/576
 
