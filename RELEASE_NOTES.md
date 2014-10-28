@@ -1,3 +1,6 @@
+#### 3.7.9 - 27.10.2014
+* New RegistryKey helpers for a 64bit System - https://github.com/fsharp/FAKE/pull/580
+
 #### 3.7.8 - 27.10.2014
 * New XDTHelper - https://github.com/fsharp/FAKE/pull/556
  
