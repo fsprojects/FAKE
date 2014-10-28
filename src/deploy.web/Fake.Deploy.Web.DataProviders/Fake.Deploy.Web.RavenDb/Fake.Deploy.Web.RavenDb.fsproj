@@ -99,6 +99,19 @@
               <Private>True</Private>
               <Paket>True</Paket>
             </Reference>
+            <Reference Include="Raven.Abstractions">
+              <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net40\Raven.Abstractions.dll</HintPath>
+              <Private>True</Private>
+              <Paket>True</Paket>
+            </Reference>
+            <Reference Include="Raven.Client.Lightweight">
+              <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net40\Raven.Client.Lightweight.dll</HintPath>
+              <Private>True</Private>
+              <Paket>True</Paket>
+            </Reference>
+            <Reference Include="System.ComponentModel.Composition">
+              <Paket>True</Paket>
+            </Reference>
           </ItemGroup>
         </When>
         <When Condition="$(TargetFrameworkVersion) == 'v4.0'">
@@ -108,12 +121,35 @@
               <Private>True</Private>
               <Paket>True</Paket>
             </Reference>
+            <Reference Include="Raven.Abstractions">
+              <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net40\Raven.Abstractions.dll</HintPath>
+              <Private>True</Private>
+              <Paket>True</Paket>
+            </Reference>
+            <Reference Include="Raven.Client.Lightweight">
+              <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net40\Raven.Client.Lightweight.dll</HintPath>
+              <Private>True</Private>
+              <Paket>True</Paket>
+            </Reference>
+            <Reference Include="System.ComponentModel.Composition">
+              <Paket>True</Paket>
+            </Reference>
           </ItemGroup>
         </When>
         <Otherwise>
           <ItemGroup>
             <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Net45">
               <HintPath>..\..\..\..\packages\Microsoft.CompilerServices.AsyncTargetingPack\lib\net45\Microsoft.CompilerServices.AsyncTargetingPack.Net45.dll</HintPath>
+              <Private>True</Private>
+              <Paket>True</Paket>
+            </Reference>
+            <Reference Include="Raven.Abstractions">
+              <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net45\Raven.Abstractions.dll</HintPath>
+              <Private>True</Private>
+              <Paket>True</Paket>
+            </Reference>
+            <Reference Include="Raven.Client.Lightweight">
+              <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net45\Raven.Client.Lightweight.dll</HintPath>
               <Private>True</Private>
               <Paket>True</Paket>
             </Reference>
@@ -128,12 +164,32 @@
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
+        <Reference Include="Raven.Abstractions">
+          <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net45\Raven.Abstractions.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="Raven.Client.Lightweight">
+          <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net45\Raven.Client.Lightweight.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
       </ItemGroup>
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == 'MonoTouch'">
       <ItemGroup>
         <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Net45">
           <HintPath>..\..\..\..\packages\Microsoft.CompilerServices.AsyncTargetingPack\lib\net45\Microsoft.CompilerServices.AsyncTargetingPack.Net45.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="Raven.Abstractions">
+          <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net45\Raven.Abstractions.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="Raven.Client.Lightweight">
+          <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net45\Raven.Client.Lightweight.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -148,12 +204,32 @@
               <Private>True</Private>
               <Paket>True</Paket>
             </Reference>
+            <Reference Include="Raven.Abstractions">
+              <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net45\Raven.Abstractions.dll</HintPath>
+              <Private>True</Private>
+              <Paket>True</Paket>
+            </Reference>
+            <Reference Include="Raven.Client.Lightweight">
+              <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net45\Raven.Client.Lightweight.dll</HintPath>
+              <Private>True</Private>
+              <Paket>True</Paket>
+            </Reference>
           </ItemGroup>
         </When>
         <When Condition="$(SilverlightVersion) == 'v4.0'">
           <ItemGroup>
             <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Net45">
               <HintPath>..\..\..\..\packages\Microsoft.CompilerServices.AsyncTargetingPack\lib\net45\Microsoft.CompilerServices.AsyncTargetingPack.Net45.dll</HintPath>
+              <Private>True</Private>
+              <Paket>True</Paket>
+            </Reference>
+            <Reference Include="Raven.Abstractions">
+              <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net45\Raven.Abstractions.dll</HintPath>
+              <Private>True</Private>
+              <Paket>True</Paket>
+            </Reference>
+            <Reference Include="Raven.Client.Lightweight">
+              <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net45\Raven.Client.Lightweight.dll</HintPath>
               <Private>True</Private>
               <Paket>True</Paket>
             </Reference>
@@ -166,159 +242,6 @@
               <Private>True</Private>
               <Paket>True</Paket>
             </Reference>
-          </ItemGroup>
-        </Otherwise>
-      </Choose>
-    </When>
-    <When Condition="$(TargetFrameworkIdentifier) == 'Windows'">
-      <ItemGroup>
-        <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Net45">
-          <HintPath>..\..\..\..\packages\Microsoft.CompilerServices.AsyncTargetingPack\lib\net45\Microsoft.CompilerServices.AsyncTargetingPack.Net45.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="$(TargetFrameworkIdentifier) == 'WindowsPhoneApp'">
-      <ItemGroup>
-        <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Net45">
-          <HintPath>..\..\..\..\packages\Microsoft.CompilerServices.AsyncTargetingPack\lib\net45\Microsoft.CompilerServices.AsyncTargetingPack.Net45.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <Otherwise>
-      <ItemGroup>
-        <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Net45">
-          <HintPath>..\..\..\..\packages\Microsoft.CompilerServices.AsyncTargetingPack\lib\net45\Microsoft.CompilerServices.AsyncTargetingPack.Net45.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </Otherwise>
-  </Choose>
-  <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework'">
-      <Choose>
-        <When Condition="$(TargetFrameworkVersion) == 'v1.0'">
-        </When>
-        <When Condition="$(TargetFrameworkVersion) == 'v1.1'">
-        </When>
-        <When Condition="$(TargetFrameworkVersion) == 'v2.0'">
-        </When>
-        <When Condition="$(TargetFrameworkVersion) == 'v3.5'">
-        </When>
-        <When Condition="$(TargetFrameworkVersion) == 'v4.0' And $(TargetFrameworkProfile) == 'Client'">
-          <ItemGroup>
-            <Reference Include="Raven.Abstractions">
-              <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net40\Raven.Abstractions.dll</HintPath>
-              <Private>True</Private>
-              <Paket>True</Paket>
-            </Reference>
-            <Reference Include="Raven.Client.Lightweight">
-              <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net40\Raven.Client.Lightweight.dll</HintPath>
-              <Private>True</Private>
-              <Paket>True</Paket>
-            </Reference>
-            <Reference Include="System.ComponentModel.Composition">
-              <Paket>True</Paket>
-            </Reference>
-          </ItemGroup>
-        </When>
-        <When Condition="$(TargetFrameworkVersion) == 'v4.0'">
-          <ItemGroup>
-            <Reference Include="Raven.Abstractions">
-              <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net40\Raven.Abstractions.dll</HintPath>
-              <Private>True</Private>
-              <Paket>True</Paket>
-            </Reference>
-            <Reference Include="Raven.Client.Lightweight">
-              <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net40\Raven.Client.Lightweight.dll</HintPath>
-              <Private>True</Private>
-              <Paket>True</Paket>
-            </Reference>
-            <Reference Include="System.ComponentModel.Composition">
-              <Paket>True</Paket>
-            </Reference>
-          </ItemGroup>
-        </When>
-        <Otherwise>
-          <ItemGroup>
-            <Reference Include="Raven.Abstractions">
-              <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net45\Raven.Abstractions.dll</HintPath>
-              <Private>True</Private>
-              <Paket>True</Paket>
-            </Reference>
-            <Reference Include="Raven.Client.Lightweight">
-              <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net45\Raven.Client.Lightweight.dll</HintPath>
-              <Private>True</Private>
-              <Paket>True</Paket>
-            </Reference>
-          </ItemGroup>
-        </Otherwise>
-      </Choose>
-    </When>
-    <When Condition="$(TargetFrameworkIdentifier) == 'MonoAndroid'">
-      <ItemGroup>
-        <Reference Include="Raven.Abstractions">
-          <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net45\Raven.Abstractions.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="Raven.Client.Lightweight">
-          <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net45\Raven.Client.Lightweight.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="$(TargetFrameworkIdentifier) == 'MonoTouch'">
-      <ItemGroup>
-        <Reference Include="Raven.Abstractions">
-          <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net45\Raven.Abstractions.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="Raven.Client.Lightweight">
-          <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net45\Raven.Client.Lightweight.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="$(TargetFrameworkIdentifier) == 'Silverlight'">
-      <Choose>
-        <When Condition="$(SilverlightVersion) == 'v3.0'">
-          <ItemGroup>
-            <Reference Include="Raven.Abstractions">
-              <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net45\Raven.Abstractions.dll</HintPath>
-              <Private>True</Private>
-              <Paket>True</Paket>
-            </Reference>
-            <Reference Include="Raven.Client.Lightweight">
-              <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net45\Raven.Client.Lightweight.dll</HintPath>
-              <Private>True</Private>
-              <Paket>True</Paket>
-            </Reference>
-          </ItemGroup>
-        </When>
-        <When Condition="$(SilverlightVersion) == 'v4.0'">
-          <ItemGroup>
-            <Reference Include="Raven.Abstractions">
-              <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net45\Raven.Abstractions.dll</HintPath>
-              <Private>True</Private>
-              <Paket>True</Paket>
-            </Reference>
-            <Reference Include="Raven.Client.Lightweight">
-              <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net45\Raven.Client.Lightweight.dll</HintPath>
-              <Private>True</Private>
-              <Paket>True</Paket>
-            </Reference>
-          </ItemGroup>
-        </When>
-        <Otherwise>
-          <ItemGroup>
             <Reference Include="Raven.Client.Silverlight">
               <HintPath>..\..\..\..\packages\RavenDB.Client\lib\sl50\Raven.Client.Silverlight.dll</HintPath>
               <Private>True</Private>
@@ -330,6 +253,11 @@
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == 'Windows'">
       <ItemGroup>
+        <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Net45">
+          <HintPath>..\..\..\..\packages\Microsoft.CompilerServices.AsyncTargetingPack\lib\net45\Microsoft.CompilerServices.AsyncTargetingPack.Net45.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
         <Reference Include="Raven.Abstractions">
           <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net45\Raven.Abstractions.dll</HintPath>
           <Private>True</Private>
@@ -344,6 +272,11 @@
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == 'WindowsPhoneApp'">
       <ItemGroup>
+        <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Net45">
+          <HintPath>..\..\..\..\packages\Microsoft.CompilerServices.AsyncTargetingPack\lib\net45\Microsoft.CompilerServices.AsyncTargetingPack.Net45.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
         <Reference Include="Raven.Abstractions">
           <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net45\Raven.Abstractions.dll</HintPath>
           <Private>True</Private>
@@ -358,6 +291,11 @@
     </When>
     <Otherwise>
       <ItemGroup>
+        <Reference Include="Microsoft.CompilerServices.AsyncTargetingPack.Net45">
+          <HintPath>..\..\..\..\packages\Microsoft.CompilerServices.AsyncTargetingPack\lib\net45\Microsoft.CompilerServices.AsyncTargetingPack.Net45.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
         <Reference Include="Raven.Abstractions">
           <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net45\Raven.Abstractions.dll</HintPath>
           <Private>True</Private>

@@ -88,6 +88,11 @@
         </When>
         <When Condition="$(TargetFrameworkVersion) == 'v2.0'">
           <ItemGroup>
+            <Reference Include="Machine.Specifications.Should">
+              <HintPath>..\..\..\packages\Machine.Specifications.Should\lib\net20\Machine.Specifications.Should.dll</HintPath>
+              <Private>True</Private>
+              <Paket>True</Paket>
+            </Reference>
             <Reference Include="Machine.Specifications">
               <HintPath>..\..\..\packages\Machine.Specifications\lib\net20\Machine.Specifications.dll</HintPath>
               <Private>True</Private>
@@ -97,6 +102,11 @@
         </When>
         <When Condition="$(TargetFrameworkVersion) == 'v3.5'">
           <ItemGroup>
+            <Reference Include="Machine.Specifications.Should">
+              <HintPath>..\..\..\packages\Machine.Specifications.Should\lib\net20\Machine.Specifications.Should.dll</HintPath>
+              <Private>True</Private>
+              <Paket>True</Paket>
+            </Reference>
             <Reference Include="Machine.Specifications">
               <HintPath>..\..\..\packages\Machine.Specifications\lib\net20\Machine.Specifications.dll</HintPath>
               <Private>True</Private>
@@ -106,6 +116,11 @@
         </When>
         <When Condition="$(TargetFrameworkVersion) == 'v4.0' And $(TargetFrameworkProfile) == 'Client'">
           <ItemGroup>
+            <Reference Include="Machine.Specifications.Should">
+              <HintPath>..\..\..\packages\Machine.Specifications.Should\lib\net40\Machine.Specifications.Should.dll</HintPath>
+              <Private>True</Private>
+              <Paket>True</Paket>
+            </Reference>
             <Reference Include="Machine.Specifications.Clr4">
               <HintPath>..\..\..\packages\Machine.Specifications\lib\net40\Machine.Specifications.Clr4.dll</HintPath>
               <Private>True</Private>
@@ -120,6 +135,11 @@
         </When>
         <When Condition="$(TargetFrameworkVersion) == 'v4.0'">
           <ItemGroup>
+            <Reference Include="Machine.Specifications.Should">
+              <HintPath>..\..\..\packages\Machine.Specifications.Should\lib\net40\Machine.Specifications.Should.dll</HintPath>
+              <Private>True</Private>
+              <Paket>True</Paket>
+            </Reference>
             <Reference Include="Machine.Specifications.Clr4">
               <HintPath>..\..\..\packages\Machine.Specifications\lib\net40\Machine.Specifications.Clr4.dll</HintPath>
               <Private>True</Private>
@@ -134,6 +154,11 @@
         </When>
         <Otherwise>
           <ItemGroup>
+            <Reference Include="Machine.Specifications.Should">
+              <HintPath>..\..\..\packages\Machine.Specifications.Should\lib\net45\Machine.Specifications.Should.dll</HintPath>
+              <Private>True</Private>
+              <Paket>True</Paket>
+            </Reference>
             <Reference Include="Machine.Specifications.Clr4">
               <HintPath>..\..\..\packages\Machine.Specifications\lib\net45\Machine.Specifications.Clr4.dll</HintPath>
               <Private>True</Private>
@@ -150,6 +175,11 @@
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == 'MonoAndroid'">
       <ItemGroup>
+        <Reference Include="Machine.Specifications.Should">
+          <HintPath>..\..\..\packages\Machine.Specifications.Should\lib\net45\Machine.Specifications.Should.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
         <Reference Include="Machine.Specifications.Clr4">
           <HintPath>..\..\..\packages\Machine.Specifications\lib\net45\Machine.Specifications.Clr4.dll</HintPath>
           <Private>True</Private>
@@ -164,6 +194,11 @@
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == 'MonoTouch'">
       <ItemGroup>
+        <Reference Include="Machine.Specifications.Should">
+          <HintPath>..\..\..\packages\Machine.Specifications.Should\lib\net45\Machine.Specifications.Should.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
         <Reference Include="Machine.Specifications.Clr4">
           <HintPath>..\..\..\packages\Machine.Specifications\lib\net45\Machine.Specifications.Clr4.dll</HintPath>
           <Private>True</Private>
@@ -178,6 +213,11 @@
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == 'Silverlight'">
       <ItemGroup>
+        <Reference Include="Machine.Specifications.Should">
+          <HintPath>..\..\..\packages\Machine.Specifications.Should\lib\net45\Machine.Specifications.Should.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
         <Reference Include="Machine.Specifications.Clr4">
           <HintPath>..\..\..\packages\Machine.Specifications\lib\net45\Machine.Specifications.Clr4.dll</HintPath>
           <Private>True</Private>
@@ -192,6 +232,11 @@
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == 'Windows'">
       <ItemGroup>
+        <Reference Include="Machine.Specifications.Should">
+          <HintPath>..\..\..\packages\Machine.Specifications.Should\lib\net45\Machine.Specifications.Should.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
         <Reference Include="Machine.Specifications.Clr4">
           <HintPath>..\..\..\packages\Machine.Specifications\lib\net45\Machine.Specifications.Clr4.dll</HintPath>
           <Private>True</Private>
@@ -206,6 +251,11 @@
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == 'WindowsPhoneApp'">
       <ItemGroup>
+        <Reference Include="Machine.Specifications.Should">
+          <HintPath>..\..\..\packages\Machine.Specifications.Should\lib\net45\Machine.Specifications.Should.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
         <Reference Include="Machine.Specifications.Clr4">
           <HintPath>..\..\..\packages\Machine.Specifications\lib\net45\Machine.Specifications.Clr4.dll</HintPath>
           <Private>True</Private>
@@ -220,6 +270,11 @@
     </When>
     <Otherwise>
       <ItemGroup>
+        <Reference Include="Machine.Specifications.Should">
+          <HintPath>..\..\..\packages\Machine.Specifications.Should\lib\net45\Machine.Specifications.Should.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
         <Reference Include="Machine.Specifications.Clr4">
           <HintPath>..\..\..\packages\Machine.Specifications\lib\net45\Machine.Specifications.Clr4.dll</HintPath>
           <Private>True</Private>
@@ -227,115 +282,6 @@
         </Reference>
         <Reference Include="Machine.Specifications">
           <HintPath>..\..\..\packages\Machine.Specifications\lib\net45\Machine.Specifications.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </Otherwise>
-  </Choose>
-  <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework'">
-      <Choose>
-        <When Condition="$(TargetFrameworkVersion) == 'v1.0'">
-        </When>
-        <When Condition="$(TargetFrameworkVersion) == 'v1.1'">
-        </When>
-        <When Condition="$(TargetFrameworkVersion) == 'v2.0'">
-          <ItemGroup>
-            <Reference Include="Machine.Specifications.Should">
-              <HintPath>..\..\..\packages\Machine.Specifications.Should\lib\net20\Machine.Specifications.Should.dll</HintPath>
-              <Private>True</Private>
-              <Paket>True</Paket>
-            </Reference>
-          </ItemGroup>
-        </When>
-        <When Condition="$(TargetFrameworkVersion) == 'v3.5'">
-          <ItemGroup>
-            <Reference Include="Machine.Specifications.Should">
-              <HintPath>..\..\..\packages\Machine.Specifications.Should\lib\net20\Machine.Specifications.Should.dll</HintPath>
-              <Private>True</Private>
-              <Paket>True</Paket>
-            </Reference>
-          </ItemGroup>
-        </When>
-        <When Condition="$(TargetFrameworkVersion) == 'v4.0' And $(TargetFrameworkProfile) == 'Client'">
-          <ItemGroup>
-            <Reference Include="Machine.Specifications.Should">
-              <HintPath>..\..\..\packages\Machine.Specifications.Should\lib\net40\Machine.Specifications.Should.dll</HintPath>
-              <Private>True</Private>
-              <Paket>True</Paket>
-            </Reference>
-          </ItemGroup>
-        </When>
-        <When Condition="$(TargetFrameworkVersion) == 'v4.0'">
-          <ItemGroup>
-            <Reference Include="Machine.Specifications.Should">
-              <HintPath>..\..\..\packages\Machine.Specifications.Should\lib\net40\Machine.Specifications.Should.dll</HintPath>
-              <Private>True</Private>
-              <Paket>True</Paket>
-            </Reference>
-          </ItemGroup>
-        </When>
-        <Otherwise>
-          <ItemGroup>
-            <Reference Include="Machine.Specifications.Should">
-              <HintPath>..\..\..\packages\Machine.Specifications.Should\lib\net45\Machine.Specifications.Should.dll</HintPath>
-              <Private>True</Private>
-              <Paket>True</Paket>
-            </Reference>
-          </ItemGroup>
-        </Otherwise>
-      </Choose>
-    </When>
-    <When Condition="$(TargetFrameworkIdentifier) == 'MonoAndroid'">
-      <ItemGroup>
-        <Reference Include="Machine.Specifications.Should">
-          <HintPath>..\..\..\packages\Machine.Specifications.Should\lib\net45\Machine.Specifications.Should.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="$(TargetFrameworkIdentifier) == 'MonoTouch'">
-      <ItemGroup>
-        <Reference Include="Machine.Specifications.Should">
-          <HintPath>..\..\..\packages\Machine.Specifications.Should\lib\net45\Machine.Specifications.Should.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="$(TargetFrameworkIdentifier) == 'Silverlight'">
-      <ItemGroup>
-        <Reference Include="Machine.Specifications.Should">
-          <HintPath>..\..\..\packages\Machine.Specifications.Should\lib\net45\Machine.Specifications.Should.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="$(TargetFrameworkIdentifier) == 'Windows'">
-      <ItemGroup>
-        <Reference Include="Machine.Specifications.Should">
-          <HintPath>..\..\..\packages\Machine.Specifications.Should\lib\net45\Machine.Specifications.Should.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="$(TargetFrameworkIdentifier) == 'WindowsPhoneApp'">
-      <ItemGroup>
-        <Reference Include="Machine.Specifications.Should">
-          <HintPath>..\..\..\packages\Machine.Specifications.Should\lib\net45\Machine.Specifications.Should.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <Otherwise>
-      <ItemGroup>
-        <Reference Include="Machine.Specifications.Should">
-          <HintPath>..\..\..\packages\Machine.Specifications.Should\lib\net45\Machine.Specifications.Should.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>

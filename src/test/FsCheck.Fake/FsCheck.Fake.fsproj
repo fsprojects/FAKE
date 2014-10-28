@@ -82,85 +82,22 @@
         <When Condition="$(TargetFrameworkVersion) == 'v1.1'">
         </When>
         <When Condition="$(TargetFrameworkVersion) == 'v2.0'">
-        </When>
-        <When Condition="$(TargetFrameworkVersion) == 'v3.5'">
-        </When>
-        <Otherwise>
           <ItemGroup>
-            <Reference Include="FsCheck">
-              <HintPath>..\..\..\packages\FsCheck\lib\net40-Client\FsCheck.dll</HintPath>
+            <Reference Include="xunit">
+              <HintPath>..\..\..\packages\xunit\lib\net20\xunit.dll</HintPath>
               <Private>True</Private>
               <Paket>True</Paket>
             </Reference>
           </ItemGroup>
-        </Otherwise>
-      </Choose>
-    </When>
-    <When Condition="$(TargetFrameworkIdentifier) == 'MonoAndroid'">
-      <ItemGroup>
-        <Reference Include="FsCheck">
-          <HintPath>..\..\..\packages\FsCheck\lib\net40-Client\FsCheck.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="$(TargetFrameworkIdentifier) == 'MonoTouch'">
-      <ItemGroup>
-        <Reference Include="FsCheck">
-          <HintPath>..\..\..\packages\FsCheck\lib\net40-Client\FsCheck.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="$(TargetFrameworkIdentifier) == 'Silverlight'">
-      <ItemGroup>
-        <Reference Include="FsCheck">
-          <HintPath>..\..\..\packages\FsCheck\lib\net40-Client\FsCheck.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="$(TargetFrameworkIdentifier) == 'Windows'">
-      <ItemGroup>
-        <Reference Include="FsCheck">
-          <HintPath>..\..\..\packages\FsCheck\lib\net40-Client\FsCheck.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="$(TargetFrameworkIdentifier) == 'WindowsPhoneApp'">
-      <ItemGroup>
-        <Reference Include="FsCheck">
-          <HintPath>..\..\..\packages\FsCheck\lib\net40-Client\FsCheck.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <Otherwise>
-      <ItemGroup>
-        <Reference Include="FsCheck">
-          <HintPath>..\..\..\packages\FsCheck\lib\net40-Client\FsCheck.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </Otherwise>
-  </Choose>
-  <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework'">
-      <Choose>
-        <When Condition="$(TargetFrameworkVersion) == 'v1.0'">
-        </When>
-        <When Condition="$(TargetFrameworkVersion) == 'v1.1'">
-        </When>
-        <When Condition="$(TargetFrameworkVersion) == 'v2.0'">
         </When>
         <When Condition="$(TargetFrameworkVersion) == 'v3.5'">
+          <ItemGroup>
+            <Reference Include="xunit">
+              <HintPath>..\..\..\packages\xunit\lib\net20\xunit.dll</HintPath>
+              <Private>True</Private>
+              <Paket>True</Paket>
+            </Reference>
+          </ItemGroup>
         </When>
         <Otherwise>
           <ItemGroup>
@@ -169,74 +106,11 @@
               <Private>True</Private>
               <Paket>True</Paket>
             </Reference>
-          </ItemGroup>
-        </Otherwise>
-      </Choose>
-    </When>
-    <When Condition="$(TargetFrameworkIdentifier) == 'MonoAndroid'">
-      <ItemGroup>
-        <Reference Include="FsCheck.Xunit">
-          <HintPath>..\..\..\packages\FsCheck.Xunit\lib\net40-Client\FsCheck.Xunit.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="$(TargetFrameworkIdentifier) == 'MonoTouch'">
-      <ItemGroup>
-        <Reference Include="FsCheck.Xunit">
-          <HintPath>..\..\..\packages\FsCheck.Xunit\lib\net40-Client\FsCheck.Xunit.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="$(TargetFrameworkIdentifier) == 'Silverlight'">
-      <ItemGroup>
-        <Reference Include="FsCheck.Xunit">
-          <HintPath>..\..\..\packages\FsCheck.Xunit\lib\net40-Client\FsCheck.Xunit.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="$(TargetFrameworkIdentifier) == 'Windows'">
-      <ItemGroup>
-        <Reference Include="FsCheck.Xunit">
-          <HintPath>..\..\..\packages\FsCheck.Xunit\lib\net40-Client\FsCheck.Xunit.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <When Condition="$(TargetFrameworkIdentifier) == 'WindowsPhoneApp'">
-      <ItemGroup>
-        <Reference Include="FsCheck.Xunit">
-          <HintPath>..\..\..\packages\FsCheck.Xunit\lib\net40-Client\FsCheck.Xunit.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </When>
-    <Otherwise>
-      <ItemGroup>
-        <Reference Include="FsCheck.Xunit">
-          <HintPath>..\..\..\packages\FsCheck.Xunit\lib\net40-Client\FsCheck.Xunit.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-      </ItemGroup>
-    </Otherwise>
-  </Choose>
-  <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework'">
-      <Choose>
-        <When Condition="$(TargetFrameworkVersion) == 'v1.0'">
-        </When>
-        <When Condition="$(TargetFrameworkVersion) == 'v1.1'">
-        </When>
-        <Otherwise>
-          <ItemGroup>
+            <Reference Include="FsCheck">
+              <HintPath>..\..\..\packages\FsCheck\lib\net40-Client\FsCheck.dll</HintPath>
+              <Private>True</Private>
+              <Paket>True</Paket>
+            </Reference>
             <Reference Include="xunit">
               <HintPath>..\..\..\packages\xunit\lib\net20\xunit.dll</HintPath>
               <Private>True</Private>
@@ -248,6 +122,16 @@
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == 'MonoAndroid'">
       <ItemGroup>
+        <Reference Include="FsCheck.Xunit">
+          <HintPath>..\..\..\packages\FsCheck.Xunit\lib\net40-Client\FsCheck.Xunit.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="FsCheck">
+          <HintPath>..\..\..\packages\FsCheck\lib\net40-Client\FsCheck.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
         <Reference Include="xunit">
           <HintPath>..\..\..\packages\xunit\lib\net20\xunit.dll</HintPath>
           <Private>True</Private>
@@ -257,6 +141,16 @@
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == 'MonoTouch'">
       <ItemGroup>
+        <Reference Include="FsCheck.Xunit">
+          <HintPath>..\..\..\packages\FsCheck.Xunit\lib\net40-Client\FsCheck.Xunit.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="FsCheck">
+          <HintPath>..\..\..\packages\FsCheck\lib\net40-Client\FsCheck.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
         <Reference Include="xunit">
           <HintPath>..\..\..\packages\xunit\lib\net20\xunit.dll</HintPath>
           <Private>True</Private>
@@ -266,6 +160,16 @@
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == 'Silverlight'">
       <ItemGroup>
+        <Reference Include="FsCheck.Xunit">
+          <HintPath>..\..\..\packages\FsCheck.Xunit\lib\net40-Client\FsCheck.Xunit.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="FsCheck">
+          <HintPath>..\..\..\packages\FsCheck\lib\net40-Client\FsCheck.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
         <Reference Include="xunit">
           <HintPath>..\..\..\packages\xunit\lib\net20\xunit.dll</HintPath>
           <Private>True</Private>
@@ -275,6 +179,16 @@
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == 'Windows'">
       <ItemGroup>
+        <Reference Include="FsCheck.Xunit">
+          <HintPath>..\..\..\packages\FsCheck.Xunit\lib\net40-Client\FsCheck.Xunit.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="FsCheck">
+          <HintPath>..\..\..\packages\FsCheck\lib\net40-Client\FsCheck.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
         <Reference Include="xunit">
           <HintPath>..\..\..\packages\xunit\lib\net20\xunit.dll</HintPath>
           <Private>True</Private>
@@ -284,6 +198,16 @@
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == 'WindowsPhoneApp'">
       <ItemGroup>
+        <Reference Include="FsCheck.Xunit">
+          <HintPath>..\..\..\packages\FsCheck.Xunit\lib\net40-Client\FsCheck.Xunit.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="FsCheck">
+          <HintPath>..\..\..\packages\FsCheck\lib\net40-Client\FsCheck.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
         <Reference Include="xunit">
           <HintPath>..\..\..\packages\xunit\lib\net20\xunit.dll</HintPath>
           <Private>True</Private>
@@ -293,6 +217,16 @@
     </When>
     <Otherwise>
       <ItemGroup>
+        <Reference Include="FsCheck.Xunit">
+          <HintPath>..\..\..\packages\FsCheck.Xunit\lib\net40-Client\FsCheck.Xunit.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+        <Reference Include="FsCheck">
+          <HintPath>..\..\..\packages\FsCheck\lib\net40-Client\FsCheck.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
         <Reference Include="xunit">
           <HintPath>..\..\..\packages\xunit\lib\net20\xunit.dll</HintPath>
           <Private>True</Private>
