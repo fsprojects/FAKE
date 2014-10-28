@@ -1,5 +1,4 @@
-﻿[<AutoOpen>]
-/// Contains tasks to run [xUnit](http://xunit.codeplex.com/) unit tests.
+﻿/// Contains tasks to run [xUnit](http://xunit.codeplex.com/) unit tests.
 module Fake.XUnit2Helper
 
 open System
