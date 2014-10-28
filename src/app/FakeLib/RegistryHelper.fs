@@ -24,6 +24,17 @@ let getKey name =
     | HKEYCurrentConfig -> Registry.CurrentConfig
     | HKEYPerformanceData -> Registry.PerformanceData
 
+/// Maps the RegistryBaseKey to a RegistryKey for a 64bit System
+/// [omit]
+let get64BitKey name = 
+    match name with
+    | HKEYLocalMachine -> RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)
+    | HKEYClassesRoot -> RegistryKey.OpenBaseKey(RegistryHive.ClassesRoot, RegistryView.Registry64)
+    | HKEYUsers -> RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry64)
+    | HKEYCurrentUser -> RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry64)
+    | HKEYCurrentConfig -> RegistryKey.OpenBaseKey(RegistryHive.CurrentConfig, RegistryView.Registry64)
+    | HKEYPerformanceData -> RegistryKey.OpenBaseKey(RegistryHive.PerformanceData, RegistryView.Registry64)
+
 /// Maps the RegistryBaseKey to a RegistryKey for a 32bit System
 /// [omit]
 let get32BitKey name = 
@@ -35,6 +46,10 @@ let get32BitKey name =
     | HKEYCurrentConfig -> RegistryKey.OpenBaseKey(RegistryHive.CurrentConfig, RegistryView.Registry32)
     | HKEYPerformanceData -> RegistryKey.OpenBaseKey(RegistryHive.PerformanceData, RegistryView.Registry32)   
 
+/// Gets a 64-bit registy key
+let getRegistryKey64 baseKey subKey (writePermission : bool) =     
+    (get64BitKey baseKey).OpenSubKey(subKey, writePermission)
+    
 /// Gets a registy key and falls back to 32 bit if the 64bit key is not there
 let getRegistryKey baseKey subKey (writePermission : bool) =     
     let x64BitKey = (getKey baseKey).OpenSubKey(subKey, writePermission)
@@ -44,6 +59,16 @@ let getRegistryKey baseKey subKey (writePermission : bool) =
 /// Gets a registy value as string
 let getRegistryValue baseKey subKey value = 
     use key = getRegistryKey baseKey subKey false
+    if key = null then
+        failwithf "Registry subkey %s could not be found for key %A" subKey baseKey
+    let value = key.GetValue value
+    if value = null then
+        failwithf "Registry value is null for key %s" (key.ToString())
+    value.ToString()
+
+/// Gets a registy value as string
+let getRegistryValue64 baseKey subKey value = 
+    use key = getRegistryKey64 baseKey subKey false
     if key = null then
         failwithf "Registry subkey %s could not be found for key %A" subKey baseKey
     let value = key.GetValue value
