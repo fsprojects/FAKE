@@ -65,6 +65,7 @@
     <Compile Include="UnitTest\NUnit\Sequential.fs" />
     <Compile Include="UnitTest\NUnit\Parallel.fs" />
     <Compile Include="UnitTest\XUnitHelper.fs" />
+    <Compile Include="UnitTest\XUnit2Helper.fs" />
     <Compile Include="UnitTest\MSpecHelper.fs" />
     <Compile Include="UnitTest\MSTest.fs" />
     <Compile Include="UnitTest\ProcessTestRunner.fs" />
