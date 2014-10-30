@@ -1,25 +1,10 @@
 #### 3.8.0 - 30.10.2014
 * [xUnit 2](http://xunit.github.io/) support - https://github.com/fsharp/FAKE/pull/575
-
-#### 3.7.9 - 27.10.2014
 * New RegistryKey helpers for a 64bit System - https://github.com/fsharp/FAKE/pull/580
-
-#### 3.7.8 - 27.10.2014
 * New XDTHelper - https://github.com/fsharp/FAKE/pull/556
- 
-#### 3.7.7 - 26.10.2014
 * Version NAV 800 added - https://github.com/fsharp/FAKE/pull/576
-
-#### 3.7.5 - 22.10.2014
 * Feature/list targets in command line - http://fsharp.github.io/FAKE/specifictargets.html
-
-#### 3.7.4 - 22.10.2014
 * Use priority list for nuget.exe selection - https://github.com/fsharp/FAKE/issues/572
-
-#### 3.7.2 - 20.10.2014
-* Use latest FSharp.Formatting
-
-#### 3.7.1 - 16.10.2014
 * BUGFIX: RoundhouseHelper was setting an incorrect switch for CommandTimoutAdmin - https://github.com/fsharp/FAKE/pull/566
 
 #### 3.7.0 - 16.10.2014
