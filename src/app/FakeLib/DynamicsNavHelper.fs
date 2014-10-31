@@ -61,8 +61,7 @@ let createConnectionInfo navClientVersion serverMode serverName targetDatabase =
         | NavisionServerType.SqlServer -> "finsql.exe"
         | NavisionServerType.NativeServer -> "fin.exe"
     
-    let finExe = getNAVClassicPath navClientVersion @@ clientExe
-    { ToolPath = finExe
+    { ToolPath = navServicePath @@ clientExe
       WorkingDir = null
       ServerName = serverName
       Database = targetDatabase

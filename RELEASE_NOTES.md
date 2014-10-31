@@ -1,3 +1,6 @@
+#### 3.8.1 - 31.10.2014
+* DynamicsNAV helper should use the correct ServiveTier
+
 #### 3.8.0 - 30.10.2014
 * [xUnit 2](http://xunit.github.io/) support - https://github.com/fsharp/FAKE/pull/575
 * New RegistryKey helpers for a 64bit System - https://github.com/fsharp/FAKE/pull/580
