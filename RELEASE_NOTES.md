@@ -1,4 +1,4 @@
-#### 3.8.1 - 31.10.2014
+#### 3.8.2 - 31.10.2014
 * DynamicsNAV helper should use the correct ServiveTier
 
 #### 3.8.0 - 30.10.2014
