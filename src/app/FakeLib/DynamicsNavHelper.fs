@@ -4,7 +4,6 @@ module Fake.DynamicsNav
 open System
 open System.Diagnostics
 open System.IO
-open System.Text
 open System.Threading
 open System.Xml
 open Fake.UnitTestHelper
@@ -28,13 +27,15 @@ type DynamicsNavParams =
 let getNAVClassicPath navClientVersion = 
     let subKey = 
         match navClientVersion with
-        | "601" | "602" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\60\Classic Client\W1 6.0"
+        | "601"
+        | "602" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\60\Classic Client\W1 6.0"
         | "700" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\70\RoleTailored Client"
         | "701" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\71\RoleTailored Client"
         | "800" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\80\RoleTailored Client"
         | "501" -> @"software\microsoft\Dynamics Nav\Cside Client\W1 5.0 SP1"
         | "403" -> @"SOFTWARE\Navision\Microsoft Business Solutions-Navision\W1 4.00"
-        | _ -> failwithf "Unknown NAV-Version %s" navClientVersion
+        | _     -> failwithf "Unknown NAV-Version (Client) %s" navClientVersion
+
     getRegistryValue HKEYLocalMachine subKey "Path"
 
 /// Gets the directory of the Dynamics NAV ClassicClient for the given version from the registry.
