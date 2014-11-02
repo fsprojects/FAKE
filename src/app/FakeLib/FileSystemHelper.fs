@@ -51,13 +51,6 @@ let FindFirstMatchingFile pattern dir =
 /// Gets the current directory.
 let currentDirectory = Path.GetFullPath "."
 
-/// Supports `use dir = new WorkingDirectory(path)` construct that restores the working directory when disposed.
-type WorkingDirectory(dir) =
-    let prevdir = Directory.GetCurrentDirectory()
-    let _ = Directory.SetCurrentDirectory(dir)
-    interface IDisposable with
-        member x.Dispose() = Directory.SetCurrentDirectory(prevdir)
-
 /// Get the full location of the current assembly.
 let fullAssemblyPath = System.Reflection.Assembly.GetAssembly(typeof<RegistryBaseKey>).Location
 
@@ -102,3 +95,10 @@ let isDirectory path =
 
 /// Detects whether the given path is a file.
 let isFile path = isDirectory path |> not
+
+/// Changes to the given directory, calls the given function, then restores the previous working directory.
+let runInWorkingDir dir f =
+    let prevdir = Directory.GetCurrentDirectory()
+    f ()
+    Directory.SetCurrentDirectory prevdir
+    
