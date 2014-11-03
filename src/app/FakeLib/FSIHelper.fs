@@ -27,9 +27,9 @@ let fsiPath =
         | None -> "fsharpi"
     else
         let dir = Path.GetDirectoryName fullAssemblyPath
-        let fi = fileInfo (Path.Combine(dir, "fsi.exe"))
+        let fi = fileInfo (Path.Combine(dir, "fsianycpu.exe"))
         if fi.Exists then fi.FullName else
-        findPath "FSIPath" FSIPath "fsi.exe"
+        findPath "FSIPath" FSIPath "fsianycpu.exe"
 
 type FsiArgs =
     FsiArgs of string list * string * string list with
@@ -62,7 +62,7 @@ let private FsiStartInfo workingDirectory (FsiArgs(fsiOptions, scriptPath, scrip
 let fsiStartInfo script workingDirectory args info =
     FsiStartInfo workingDirectory (FsiArgs([], script, [])) args info
 
-/// Run the given buildscript with fsi.exe
+/// Run the given buildscript with fsianycpu.exe
 let executeFSI workingDirectory script args =
     let (result, messages) =
         ExecProcessRedirected
@@ -71,13 +71,13 @@ let executeFSI workingDirectory script args =
     Thread.Sleep 1000
     (result, messages)
 
-/// Run the given build script with fsi.exe and allows for extra arguments to FSI.
+/// Run the given build script with fsianycpu.exe and allows for extra arguments to FSI.
 let executeFSIWithArgs workingDirectory script extraFsiArgs args =
     let result = ExecProcess (FsiStartInfo workingDirectory (FsiArgs(extraFsiArgs, script, [])) args) TimeSpan.MaxValue
     Thread.Sleep 1000
     result = 0
 
-/// Run the given build script with fsi.exe and allows for extra arguments to the script. Returns output.
+/// Run the given build script with fsianycpu.exe and allows for extra arguments to the script. Returns output.
 let executeFSIWithScriptArgsAndReturnMessages workingDirectory script (scriptArgs: string[]) =
     let (result, messages) =
         ExecProcessRedirected (fun si ->
@@ -88,7 +88,7 @@ let executeFSIWithScriptArgsAndReturnMessages workingDirectory script (scriptArg
 
 open Microsoft.FSharp.Compiler.Interactive.Shell
 
-/// Run the given FAKE script with fsi.exe at the given working directory. Provides full access to Fsi options and args. Redirect output and error messages.
+/// Run the given FAKE script with fsianycpu.exe at the given working directory. Provides full access to Fsi options and args. Redirect output and error messages.
 let internal runFAKEScriptWithFsiArgsAndRedirectMessages workingDirectory printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args onErrMsg onOutMsg =
     if printDetails then traceFAKE "Running Buildscript: %s" script
 
@@ -102,7 +102,7 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages workingDirectory printD
     let fsiConfig = FsiEvaluationSession.GetDefaultConfiguration()
 
     let commonOptions =
-        [ "fsi.exe"; "--noninteractive" ] @ fsiOptions
+        [ "fsianycpu.exe"; "--noninteractive" ] @ fsiOptions
         |> List.toArray
 
     let sbOut = Text.StringBuilder()
@@ -137,7 +137,7 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages workingDirectory printD
         traceError <| sbErr.ToString()
         raise exn
 
-/// Run the given buildscript with fsi.exe and allows for extra arguments to the script. Returns output.
+/// Run the given buildscript with fsianycpu.exe and allows for extra arguments to the script. Returns output.
 let executeBuildScriptWithArgsAndReturnMessages workingDirectory script (scriptArgs: string[]) =
     let messages = ref []
     let appendMessage isError msg =
@@ -150,16 +150,16 @@ let executeBuildScriptWithArgsAndReturnMessages workingDirectory script (scriptA
             (appendMessage true) (appendMessage false)
     (result, !messages)
 
-/// Run the given buildscript with fsi.exe at the given working directory.  Provides full access to Fsi options and args.
+/// Run the given buildscript with fsianycpu.exe at the given working directory.  Provides full access to Fsi options and args.
 let runBuildScriptWithFsiArgsAt workingDirectory printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args =
     runFAKEScriptWithFsiArgsAndRedirectMessages
         workingDirectory printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args
         traceError (fun s-> traceFAKE "%s" s)
 
-/// Run the given buildscript with fsi.exe at the given working directory.
+/// Run the given buildscript with fsianycpu.exe at the given working directory.
 let runBuildScriptAt workingDirectory printDetails script extraFsiArgs args =
     runBuildScriptWithFsiArgsAt workingDirectory printDetails (FsiArgs(extraFsiArgs, script, [])) args
 
-/// Run the given buildscript with fsi.exe
+/// Run the given buildscript with fsianycpu.exe
 let runBuildScript printDetails script extraFsiArgs args =
     runBuildScriptAt "" printDetails script extraFsiArgs args
