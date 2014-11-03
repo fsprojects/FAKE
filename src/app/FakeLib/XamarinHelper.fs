@@ -158,3 +158,38 @@ let AndroidSignAndAlign setParams apkFile =
     |> setParams
     |> validateParams
     |> signAndAlign apkFile  
+
+/// The iOS archive paramater type
+type iOSArchiveParams = {
+    /// (Required) Path to project file
+    ProjectPath: string
+    /// Build configuration, defaults to 'Debug|iPhoneSimulator'
+    Configuration: string
+    /// Path to mdtool, defaults to Xamarin Studio's usual path
+    MDToolPath: string
+}
+
+/// The default iOS archive parameters
+let iOSArchiveDefaults = {
+    ProjectPath = ""
+    Configuration = "Debug|iPhoneSimulator"
+    MDToolPath = "/Applications/Xamarin Studio.app/Contents/MacOS/mdtool"
+}
+    
+/// Archive a project using Xamarin's iOS archive tools
+/// ## Parameters
+///  - `setParams` - Function used to override the default archive parameters
+let iOSArchive setParams =
+    let validateParams param =
+        if param.ProjectPath = "" then failwith "You must specify a project to archive"
+
+        param
+
+    let archiveProject param =
+        let args = String.Format(@"-v archive ""-c:{0}"" -p:{1}", param.Configuration, param.ProjectPath)
+        executeCommand param.MDToolPath args
+
+    iOSArchiveDefaults
+        |> setParams
+        |> validateParams
+        |> archiveProject
