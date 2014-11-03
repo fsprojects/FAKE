@@ -70,7 +70,7 @@ let ExecProcessWithLambdas configProcessStartInfoF (timeOut : TimeSpan) silent e
         proc.OutputDataReceived.Add(fun d -> 
             if d.Data <> null then messageF d.Data)
     try 
-        if enableProcessTracing && (not <| proc.StartInfo.FileName.EndsWith "fsi.exe") then 
+        if enableProcessTracing && (not <| proc.StartInfo.FileName.EndsWith "fsianycpu.exe") then 
             tracefn "%s %s" proc.StartInfo.FileName proc.StartInfo.Arguments
         start proc
     with exn -> failwithf "Start of process %s failed. %s" proc.StartInfo.FileName exn.Message
@@ -452,7 +452,7 @@ let killProcess name =
     getProcessesByName name |> Seq.iter kill
 
 /// Kills the F# Interactive (FSI) process.
-let killFSI() = killProcess "fsi.exe"
+let killFSI() = killProcess "fsianycpu.exe"
 
 /// Kills the MSBuild process.
 let killMSBuild() = killProcess "msbuild"
