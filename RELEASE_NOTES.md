@@ -1,3 +1,6 @@
+#### 3.8.5 - 03.11.2014
+* Added a Xamarin.iOS Archiving helper - https://github.com/fsharp/FAKE/pull/581
+
 #### 3.8.4 - 31.10.2014
 * DynamicsNAV helper should use the correct ServiveTier
 
