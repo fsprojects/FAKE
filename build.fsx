@@ -159,6 +159,22 @@ Target "SourceLink" (fun _ ->
 )
 
 Target "CreateNuGet" (fun _ ->
+    let set64BitCorFlags files =
+        files
+        |> Seq.iter (fun file -> 
+            let args =
+                { Program = "lib" @@ "corflags.exe"
+                  WorkingDirectory = directory file
+                  CommandLine = "/32BIT- /32BITPREF- " + quoteIfNeeded file
+                  Args = [] }
+            printfn "%A" args
+            shellExec args |> ignore)
+
+    let x64ify package = 
+        { package with
+            Dependencies = package.Dependencies |> List.map (fun (pkg, ver) -> pkg + ".x64", ver)
+            Project = package.Project + ".x64" }
+
     for package,description in packages do
         let nugetDocsDir = nugetDir @@ "docs"
         let nugetToolsDir = nugetDir @@ "tools"
@@ -180,7 +196,7 @@ Target "CreateNuGet" (fun _ ->
             CopyTo nugetToolsDir additionalFiles
         !! (nugetToolsDir @@ "*.srcsv") |> DeleteFiles
 
-        NuGet (fun p ->
+        let setParams p =
             {p with
                 Authors = authors
                 Project = package
@@ -194,7 +210,11 @@ Target "CreateNuGet" (fun _ ->
                        ["FAKE.Core", RequireExactly (NormalizeVersion release.AssemblyVersion)]
                      else p.Dependencies) 
                 AccessKey = getBuildParamOrDefault "nugetkey" ""
-                Publish = hasBuildParam "nugetkey" }) "fake.nuspec"
+                Publish = hasBuildParam "nugetkey" }
+
+        NuGet setParams "fake.nuspec"
+        !! (nugetToolsDir @@ "FAKE.exe") |> set64BitCorFlags
+        NuGet (setParams >> x64ify) "fake.nuspec"
 )
 
 Target "ReleaseDocs" (fun _ ->
