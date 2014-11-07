@@ -213,9 +213,8 @@ Target "CreateNuGet" (fun _ ->
                 Publish = hasBuildParam "nugetkey" }
 
         NuGet setParams "fake.nuspec"
-        if package = "FAKE.Core" || package = "FAKE" || package = "FAKE.Deploy.Lib" then
-            !! (nugetToolsDir @@ "FAKE.exe") |> set64BitCorFlags
-            NuGet (setParams >> x64ify) "fake.nuspec"
+        !! (nugetToolsDir @@ "FAKE.exe") |> set64BitCorFlags
+        NuGet (setParams >> x64ify) "fake.nuspec"
 )
 
 Target "ReleaseDocs" (fun _ ->
