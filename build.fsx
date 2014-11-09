@@ -159,7 +159,7 @@ Target "SourceLink" (fun _ ->
 )
 
 Target "CreateNuGet" (fun _ ->
-    let set64BitCorFlags files =
+    let set32BitCorFlags files =
         files
         |> Seq.iter (fun file -> 
             let args =
@@ -211,10 +211,10 @@ Target "CreateNuGet" (fun _ ->
                      else p.Dependencies) 
                 AccessKey = getBuildParamOrDefault "nugetkey" ""
                 Publish = hasBuildParam "nugetkey" }
-
-        NuGet setParams "fake.nuspec"
-        !! (nugetToolsDir @@ "FAKE.exe") |> set64BitCorFlags
+        
         NuGet (setParams >> x64ify) "fake.nuspec"
+        !! (nugetToolsDir @@ "FAKE.exe") |> set32BitCorFlags
+        NuGet setParams "fake.nuspec"        
 )
 
 Target "ReleaseDocs" (fun _ ->

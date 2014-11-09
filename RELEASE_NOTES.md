@@ -1,3 +1,6 @@
+#### 3.9.1 - 09.11.2014
+* Fix 64bit mode
+
 #### 3.9.0 - 07.11.2014
 * Create a new package with a x64 version - https://github.com/fsharp/FAKE/pull/582
 * Added a Xamarin.iOS Archiving helper - https://github.com/fsharp/FAKE/pull/581
