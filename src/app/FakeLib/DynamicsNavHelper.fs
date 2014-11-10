@@ -14,6 +14,11 @@ type NavisionServerType =
     | SqlServer
     | NativeServer
 
+    member this.ToTypeString() =
+        match this with
+        | NavisionServerType.SqlServer -> "MSSQL"
+        | NavisionServerType.NativeServer -> "NAVISION"
+
 /// A parameter type to interact with Dynamics NAV
 type DynamicsNavParams = 
     { ToolPath : string

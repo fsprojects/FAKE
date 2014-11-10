@@ -1,3 +1,6 @@
+#### 3.9.5 - 10.11.2014
+* Port some DynamicsNAV helpers from gitnav
+
 #### 3.9.4 - 09.11.2014
 * Fix 64bit mode
 
