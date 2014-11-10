@@ -48,7 +48,7 @@ namespace Test.FAKECore.XDTHandling
 		}
 	}
 
-    [Ignore]
+    [Ignore("Doesn't work on mono")]
     public class when_transforming_file_explicitly
     {
         static string TransformedFile;
@@ -64,7 +64,7 @@ namespace Test.FAKECore.XDTHandling
         It should_equal_the_transformed_file = () => TestData.Read("web.new.config").ShouldEqual(TransformedFile);
     }
 
-    [Ignore]
+    [Ignore("Doesn't work on mono")]
     public class when_transforming_file_with_config_name
     {
         static string TransformedFile;
@@ -78,7 +78,7 @@ namespace Test.FAKECore.XDTHandling
         It should_equal_the_transformed_file = () => TestData.Read("web.config").ShouldEqual(TransformedFile);
     }
 
-    [Ignore]
+    [Ignore("Doesn't work on mono")]
     public class when_transforming_files_with_config_name
     {
         static string TransformedFile;
