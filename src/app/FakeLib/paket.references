@@ -1,4 +1,4 @@
 FSharp.Compiler.Service
-Microsoft.Web.Xdt
+Mono.Web.Xdt
 Mono.Cecil
 Nuget.Core

@@ -190,6 +190,57 @@
         <When Condition="$(TargetFrameworkVersion) == 'v1.1'">
         </When>
         <When Condition="$(TargetFrameworkVersion) == 'v2.0'">
+        </When>
+        <When Condition="$(TargetFrameworkVersion) == 'v3.5'">
+        </When>
+        <When Condition="$(TargetFrameworkVersion) == 'v4.0' And $(TargetFrameworkProfile) == 'Client'">
+        </When>
+        <When Condition="$(TargetFrameworkVersion) == 'v4.0'">
+          <ItemGroup>
+            <Reference Include="FSharp.Compiler.Service">
+              <HintPath>..\..\..\packages\FSharp.Compiler.Service\lib\net40\FSharp.Compiler.Service.dll</HintPath>
+              <Private>True</Private>
+              <Paket>True</Paket>
+            </Reference>
+          </ItemGroup>
+        </When>
+        <Otherwise>
+          <ItemGroup>
+            <Reference Include="FSharp.Compiler.Service">
+              <HintPath>..\..\..\packages\FSharp.Compiler.Service\lib\net45\FSharp.Compiler.Service.dll</HintPath>
+              <Private>True</Private>
+              <Paket>True</Paket>
+            </Reference>
+          </ItemGroup>
+        </Otherwise>
+      </Choose>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework'">
+      <Choose>
+        <When Condition="$(TargetFrameworkVersion) == 'v1.0'">
+        </When>
+        <When Condition="$(TargetFrameworkVersion) == 'v1.1'">
+        </When>
+        <When Condition="$(TargetFrameworkVersion) == 'v2.0'">
+        </When>
+        <When Condition="$(TargetFrameworkVersion) == 'v3.5'">
+        </When>
+        <When Condition="$(TargetFrameworkVersion) == 'v4.0' And $(TargetFrameworkProfile) == 'Client'">
+        </When>
+        <Otherwise />
+      </Choose>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework'">
+      <Choose>
+        <When Condition="$(TargetFrameworkVersion) == 'v1.0'">
+        </When>
+        <When Condition="$(TargetFrameworkVersion) == 'v1.1'">
+        </When>
+        <When Condition="$(TargetFrameworkVersion) == 'v2.0'">
           <ItemGroup>
             <Reference Include="Mono.Cecil.Mdb">
               <HintPath>..\..\..\packages\Mono.Cecil\lib\net20\Mono.Cecil.Mdb.dll</HintPath>
@@ -586,4 +637,137 @@
       </ItemGroup>
     </Otherwise>
   </Choose>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="CSharpHelper.fs" />
+    <Compile Include="EnvironmentHelper.fs" />
+    <Compile Include="RegistryHelper.fs" />
+    <Compile Include="FileSystemHelper.fs" />
+    <Compile Include="StringHelper.fs" />
+    <Compile Include="TemplateHelper.fs" />
+    <Compile Include="CacheHelper.fs" />
+    <Compile Include="XMLHelper.fs" />
+    <Compile Include="REST.fs" />
+    <Compile Include="BuildServerHelper.fs" />
+    <Compile Include="TraceListener.fs" />
+    <Compile Include="TeamCityHelper.fs" />
+    <Compile Include="TeamCityRESTHelper.fs" />
+    <Compile Include="TraceHelper.fs" />
+    <Compile Include="ServiceControllerHelper.fs" />
+    <Compile Include="GuardedAwaitObservable.fs" />
+    <Compile Include="ProcessHelper.fs" />
+    <Compile Include="AppVeyor.fs" />
+    <Compile Include="TaskRunnerHelper.fs" />
+    <Compile Include="Globbing\FileSystem.fs" />
+    <Compile Include="UnitTest\UnitTestCommon.fs" />
+    <Compile Include="UnitTest\UnitTestHelper.fs" />
+    <Compile Include="UnitTest\NUnit\Xml.fs" />
+    <Compile Include="UnitTest\NUnit\Common.fs" />
+    <Compile Include="UnitTest\NUnit\Sequential.fs" />
+    <Compile Include="UnitTest\NUnit\Parallel.fs" />
+    <Compile Include="UnitTest\XUnitHelper.fs" />
+    <Compile Include="UnitTest\MSpecHelper.fs" />
+    <Compile Include="UnitTest\MSTest.fs" />
+    <Compile Include="UnitTest\ProcessTestRunner.fs" />
+    <Compile Include="AssemblyInfoFile.fs" />
+    <Compile Include="AssemblyInfoHelper.fs" />
+    <Compile Include="FXCopHelper.fs" />
+    <Compile Include="FSharpFormattingHelper.fs" />
+    <Compile Include="NCoverHelper.fs" />
+    <Compile Include="NDependHelper.fs" />
+    <Compile Include="MsBuildLogger.fs" />
+    <Compile Include="FileHelper.fs" />
+    <Compile Include="MSBuildHelper.fs" />
+    <Compile Include="ZipHelper.fs" />
+    <Compile Include="StrongNamingHelper.fs" />
+    <Compile Include="GACHelper.fs" />
+    <Compile Include="NGenHelper.fs" />
+    <Compile Include="FileUtils.fs" />
+    <Compile Include="DocuHelper.fs" />
+    <Compile Include="ILMergeHelper.fs" />
+    <Compile Include="WiXHelper.fs" />
+    <Compile Include="MSIHelper.fs" />
+    <Compile Include="RegAsmHelper.fs" />
+    <Compile Include="RestorePackageHelper.fs" />
+    <Compile Include="VSSHelper.fs" />
+    <Compile Include="DynamicsNavHelper.fs" />
+    <Compile Include="DynamicsNavFile.fs" />
+    <Compile Include="SCPHelper.fs" />
+    <Compile Include="XCopyHelper.fs" />
+    <Compile Include="XpkgHelper.fs" />
+    <Compile Include="VersionHelper.fs" />
+    <Compile Include="MSBuild\ProjectSystem.fs" />
+    <Compile Include="MSBuild\SpecsRemovement.fs" />
+    <Compile Include="Git\CommandHelper.fs" />
+    <Compile Include="Git\Sha1.fs" />
+    <Compile Include="Git\Repository.fs" />
+    <Compile Include="Git\Submodule.fs" />
+    <Compile Include="Git\Branches.fs" />
+    <Compile Include="Git\Reset.fs" />
+    <Compile Include="Git\Merge.fs" />
+    <Compile Include="Git\Stash.fs" />
+    <Compile Include="Git\SanityChecks.fs" />
+    <Compile Include="Git\Information.fs" />
+    <Compile Include="Git\FileStatus.fs" />
+    <Compile Include="Git\Rebase.fs" />
+    <Compile Include="Git\CommitMessage.fs" />
+    <Compile Include="Git\Staging.fs" />
+    <Compile Include="Git\Commit.fs" />
+    <Compile Include="FSIHelper.fs" />
+    <Compile Include="Boot.fs" />
+    <Compile Include="MessageHelper.fs" />
+    <Compile Include="HTMLHelpWorkShopHelper.fs" />
+    <Compile Include="ConfigurationHelper.fs" />
+    <Compile Include="TargetHelper.fs" />
+    <Compile Include="AdditionalSyntax.fs" />
+    <Compile Include="PermissionsHelper.fs" />
+    <Compile Include="SpecFlowHelper.fs" />
+    <Compile Include="OctoTools.fs" />
+    <None Include="paket.references" />
+    <Compile Include="SignHelper.fs" />
+    <Compile Include="MageHelper.fs" />
+    <Compile Include="SemVerHelper.fs" />
+    <Compile Include="ReleaseNotesHelper.fs" />
+    <None Include="Targets.fsx" />
+    <Compile Include="FixieHelper.fs" />
+    <Compile Include="NuGet\NugetHelper.fs" />
+    <Compile Include="NuGet\Update.fs" />
+    <Compile Include="NuGet\Install.fs" />
+    <Compile Include="TestFlightHelper.fs" />
+    <Compile Include="DotCover.fs" />
+    <Compile Include="AzureHelper.fs" />
+    <Compile Include="FtpHelper.fs" />
+    <Compile Include="TypeScript.fs" />
+    <Compile Include="OpenCoverHelper.fs" />
+    <Compile Include="ReportGeneratorHelper.fs" />
+    <Compile Include="RoundhouseHelper.fs" />
+    <Compile Include="FscHelper.fs" />
+    <Compile Include="HipChatNotificationHelper.fs" />
+    <Compile Include="XamarinHelper.fs" />
+    <Compile Include="XDTHelper.fs" />
+    <None Include="app.config" />
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="FSharp.Core, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Private>True</Private>
+      <HintPath>..\..\..\lib\FSharp\FSharp.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\..\..\lib\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="Microsoft.Web.XmlTransform">
+      <HintPath>..\..\..\packages\Mono.Web.Xdt.1.0.0\lib\Net40\Microsoft.Web.XmlTransform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
 </Project>
