@@ -60,6 +60,9 @@
       <Private>True</Private>
       <HintPath>..\..\..\lib\FSharp\FSharp.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Web.XmlTransform">
+      <HintPath>..\..\..\packages\Mono.Web.Xdt.1.0.0\lib\Net40\Microsoft.Web.XmlTransform.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -239,6 +242,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="TestData\fake.nuspec">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -509,15 +513,7 @@
         </When>
         <When Condition="$(TargetFrameworkVersion) == 'v4.0' And $(TargetFrameworkProfile) == 'Client'">
         </When>
-        <Otherwise>
-          <ItemGroup>
-            <Reference Include="Microsoft.Web.XmlTransform">
-              <HintPath>..\..\..\packages\Microsoft.Web.Xdt\lib\net40\Microsoft.Web.XmlTransform.dll</HintPath>
-              <Private>True</Private>
-              <Paket>True</Paket>
-            </Reference>
-          </ItemGroup>
-        </Otherwise>
+        <Otherwise />
       </Choose>
     </When>
   </Choose>
