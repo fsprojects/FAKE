@@ -1,3 +1,4 @@
+#I __SOURCE_DIRECTORY__
 #r @"../../../../../packages/Octokit/lib/net45/Octokit.dll"
 
 open Octokit
