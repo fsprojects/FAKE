@@ -1,3 +1,6 @@
+#### 3.9.6 - 10.11.2014
+* Dynamics NAV - Ignored should report the message
+
 #### 3.9.5 - 10.11.2014
 * Port some DynamicsNAV helpers from gitnav
 

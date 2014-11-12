@@ -313,7 +313,7 @@ let analyzeTestResults fileName =
                                 Failure(msg.[0], msg.[1])
                             | Some error when error.StartsWith "Ignored;" -> 
                                 let msg = error.Replace("Ignored;", "").Split [| ';' |]
-                                if msg.Length > 2 then Ignored(msg.[0], msg.[1])
+                                if msg.Length >= 2 then Ignored(msg.[0], msg.[1])
                                 else Ignored("", "")
                             | _ -> Ok
                         
