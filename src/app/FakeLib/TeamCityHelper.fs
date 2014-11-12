@@ -53,6 +53,11 @@ let IgnoreTestCase name message =
     sprintf "##teamcity[testIgnored name='%s' message='%s']" (EncapsulateSpecialChars name) 
         (EncapsulateSpecialChars message) |> sendStrToTeamCity
 
+
+/// Ignores the test case.      
+let IgnoreTestCaseWithDetails name message details = 
+    IgnoreTestCase name (message + " " + details)
+
 /// Finishes the test suite.
 let FinishTestSuite testSuiteName = 
     EncapsulateSpecialChars testSuiteName |> sendToTeamCity "##teamcity[testSuiteFinished name='%s']"

@@ -1,3 +1,6 @@
+#### 3.9.8 - 12.11.2014
+* Dynamics NAV - Ignored should report the message
+
 #### 3.9.7 - 12.11.2014
 * Added support for NUnit Fixture parameter - https://github.com/fsharp/FAKE/pull/591
 
