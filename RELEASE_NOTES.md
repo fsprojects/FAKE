@@ -1,4 +1,4 @@
-#### 3.9.8 - 12.11.2014
+#### 3.9.9 - 13.11.2014
 * Dynamics NAV - Ignored should report the message
 
 #### 3.9.7 - 12.11.2014
