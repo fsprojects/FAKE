@@ -142,6 +142,7 @@
     <Compile Include="ReportGeneratorHelper.fs" />
     <Compile Include="RoundhouseHelper.fs" />
     <Compile Include="FscHelper.fs" />
+    <Compile Include="CscHelper.fs" />
     <Compile Include="HipChatNotificationHelper.fs" />
     <Compile Include="XamarinHelper.fs" />
     <Compile Include="XDTHelper.fs" />
