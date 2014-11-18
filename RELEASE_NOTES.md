@@ -1,3 +1,7 @@
+#### 3.10.0 - 18.11.2014
+* Support for MSBuild 14.0 - https://github.com/fsharp/FAKE/pull/595
+* New CSC helper - https://github.com/fsharp/FAKE/pull/592/files
+
 #### 3.9.9 - 13.11.2014
 * Dynamics NAV - Ignored should report the message
 
