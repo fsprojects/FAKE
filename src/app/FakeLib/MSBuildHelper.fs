@@ -22,6 +22,7 @@ let msBuildExe =
     if isUnix then "xbuild"
     else
         let MSBuildPath = 
+            (ProgramFilesX86 @@ @"\MSBuild\14.0\Bin") + ";" +
             (ProgramFilesX86 @@ @"\MSBuild\12.0\Bin") + ";" +
             (ProgramFilesX86 @@ @"\MSBuild\12.0\Bin\amd64") + ";" + 
             @"c:\Windows\Microsoft.NET\Framework\v4.0.30319\;" + 
