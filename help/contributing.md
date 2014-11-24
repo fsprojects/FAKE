@@ -6,6 +6,9 @@ This page should provide you with some basic information if you're thinking abou
 
  * If you want to discuss a feature (a good idea!), or if you want to look at suggestions how you might contribute, check out the [Issue list](https://github.com/fsharp/FAKE/issues) on GitHub or send an email to the [FAKE mailing list](http://groups.google.com/group/fsharpMake).
    
+ * Unless you explicitly state otherwise, any contribution intentionally 
+submitted for inclusion in the Project shall be under the terms and 
+conditions of the Apache 2.0 license. See License.txt for details.
 
 ## Documentation
 
