@@ -1,6 +1,7 @@
 ﻿/// Contains tasks to compile C# source files with CSC.EXE (C# Compiler).
 module Fake.CscHelper
 open System
+open System.IO
 
 /// Supported output types
 type CscTarget =
@@ -21,6 +22,8 @@ type CscPlatform =
 type CscParams =
     { /// Specifies the output file name and path.
       Output : string
+      /// Specifies the tool path to csc.exe.
+      ToolPath : string
       /// Specifies the compiled artifact target type.
       Target : CscTarget
       /// Specifies the compiled artifact target platform.
@@ -36,15 +39,16 @@ type CscParams =
     static member Default =
         { Output = ""
           Target = Exe
+          ToolPath = if isMono then "mcs" else Path.GetDirectoryName(MSBuildHelper.msBuildExe) @@ "csc.exe"
           Platform = AnyCpu
           References = []
           Debug = false
           OtherParams = [] }
 
-let cscExe (srcFiles : string list) (opts : string list) : int =
+let cscExe toolPath (srcFiles : string list) (opts : string list) : int =
     let processResult =
         ExecProcessAndReturnMessages (fun p ->
-            p.FileName <- if isMono then "mcs" else "csc"
+            p.FileName <- toolPath
             p.Arguments <- [
                 opts |> separated " "
                 srcFiles |> separated " "
@@ -99,7 +103,7 @@ let csc (setParams : CscParams -> CscParams) (inputFiles : string list) : int =
     let argList =
         output @ target @ platform @ references @ debug @ cscParams.OtherParams
     traceStartTask "Csc " taskDesc
-    let res = cscExe inputFiles argList
+    let res = cscExe cscParams.ToolPath inputFiles argList
     traceEndTask "Csc " taskDesc
     res
 

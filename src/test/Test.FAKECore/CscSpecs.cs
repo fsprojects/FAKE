@@ -47,6 +47,7 @@ namespace Test {
             cscParams = FSharpFuncUtil.ToFSharpFunc<CscHelper.CscParams, CscHelper.CscParams>(
                 p => new CscHelper.CscParams(
                     output: outFile,
+                    toolPath: p.ToolPath,
                     target: CscHelper.CscTarget.Library,
                     platform: p.Platform,
                     references: p.References,
