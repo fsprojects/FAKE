@@ -1,21 +1,10 @@
 #### 3.10.0 - 18.11.2014
 * Support for MSBuild 14.0 - https://github.com/fsharp/FAKE/pull/595
-* New CSC helper - https://github.com/fsharp/FAKE/pull/592/files
-
-#### 3.9.9 - 13.11.2014
-* Dynamics NAV - Ignored should report the message
-
-#### 3.9.7 - 12.11.2014
+* New C# compiler helper - https://github.com/fsharp/FAKE/pull/592/files
 * Added support for NUnit Fixture parameter - https://github.com/fsharp/FAKE/pull/591
-
-#### 3.9.6 - 12.11.2014
-* Dynamics NAV - Ignored should report the message
-
-#### 3.9.5 - 10.11.2014
-* Port some DynamicsNAV helpers from gitnav
-
-#### 3.9.4 - 09.11.2014
-* Fix 64bit mode
+* OpenSourcing some DynamicsNAV helpers from gitnav
+* BUGFIX: Fix 64bit mode
+* BUGFIX: Dynamics NAV helper - "Ignored" tests should report the message
 
 #### 3.9.0 - 07.11.2014
 * Create a new package with a x64 version - https://github.com/fsharp/FAKE/pull/582
