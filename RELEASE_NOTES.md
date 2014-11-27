@@ -1,4 +1,4 @@
-#### 3.10.0 - 18.11.2014
+#### 3.10.0 - 27.11.2014
 * Support for MSBuild 14.0 - https://github.com/fsharp/FAKE/pull/595
 * New C# compiler helper - https://github.com/fsharp/FAKE/pull/592/files
 * Added support for NUnit Fixture parameter - https://github.com/fsharp/FAKE/pull/591
