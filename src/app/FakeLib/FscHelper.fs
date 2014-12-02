@@ -61,6 +61,8 @@ let fscList (srcFiles : string list) (opts : string list) : int =
         |> Array.ofList
 
     trace <| sprintf "FSC with args:%A" optsArr
+    // Always prepend "fsc.exe" since fsc compiler skips the first argument
+    let optsArr = Array.append [|"fsc.exe"|] optsArr
     let errors, exitCode = scs.Compile(optsArr)
     // Better compile reporting thanks to:
     // https://github.com/jbtule/ComposableExtensions/blob/5b961b30668bb7f4d17238770869b5a884bc591f/tools/CompilerHelper.fsx#L233
