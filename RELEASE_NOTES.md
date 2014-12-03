@@ -1,4 +1,5 @@
-#### 3.10.1 - 03.12.2014
+#### 3.11.0 - 03.12.2014
+* Dual-license under Apache 2 and MS-PL, with Apache as default - https://github.com/fsharp/FAKE/pull/598
 * BUGFIX: FSC compilation fix - https://github.com/fsharp/FAKE/pull/601
 * BUGFIX: Unescape special MSBuild characters - https://github.com/fsharp/FAKE/pull/600
 
