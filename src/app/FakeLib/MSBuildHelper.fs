@@ -45,13 +45,22 @@ let xname name = XName.Get(name, msbuildNamespace)
 let loadProject (projectFileName : string) : MSBuildProject = 
     MSBuildProject.Load(projectFileName, LoadOptions.PreserveWhitespace)
 
+// See: http://msdn.microsoft.com/en-us/library/ms228186.aspx
+let internal unescapeMSBuildSpecialChars s =
+    let replExpr = new Text.RegularExpressions.Regex("%..")
+    replExpr.Replace(s, new Text.RegularExpressions.MatchEvaluator(
+                            fun _match -> match _match.Value with
+                                          | "%24" -> "$" | "%25" -> "%" | "%27" -> "'" | "%40" -> "@"
+                                          | "%3B" -> ";" | "%3F" -> "?" | "%2A" -> "*" 
+                                          | _ -> _match.Value))
+
 /// [omit]
 let internal getReferenceElements elementName projectFileName (doc : XDocument) = 
     let fi = fileInfo projectFileName
     doc.Descendants(xname "Project").Descendants(xname "ItemGroup").Descendants(xname elementName) 
     |> Seq.map (fun e -> 
         let a = e.Attribute(XName.Get "Include")
-        let value = convertWindowsToCurrentPath a.Value
+        let value = a.Value |> unescapeMSBuildSpecialChars |> convertWindowsToCurrentPath 
            
         let fileName =
             if value.StartsWith(".." + directorySeparator) || (not <| value.Contains directorySeparator) then
