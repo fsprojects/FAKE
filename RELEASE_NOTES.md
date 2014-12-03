@@ -1,3 +1,7 @@
+#### 3.10.1 - 03.12.2014
+* BUGFIX: FSC compilation fix - https://github.com/fsharp/FAKE/pull/601
+* BUGFIX: Unescape special MSBuild characters - https://github.com/fsharp/FAKE/pull/600
+
 #### 3.10.0 - 27.11.2014
 * Support for MSBuild 14.0 - https://github.com/fsharp/FAKE/pull/595
 * New C# compiler helper - https://github.com/fsharp/FAKE/pull/592/files
