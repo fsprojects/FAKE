@@ -1,4 +1,4 @@
-#### 3.11.2 - 04.12.2014
+#### 3.11.3 - 04.12.2014
 * Use FSharp.Core from NuGet - https://github.com/fsharp/FAKE/pull/602
 
 #### 3.11.0 - 03.12.2014
