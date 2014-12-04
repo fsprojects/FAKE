@@ -206,9 +206,7 @@ Target "CreateNuGet" (fun _ ->
                 Summary = projectSummary
                 ReleaseNotes = release.Notes |> toLines
                 Dependencies =                    
-                    (if package = "FAKE.Core" then
-                       p.Dependencies @ ["FSharp.Core", GetPackageVersion "packages" "FSharp.Core"]
-                     else if package <> projectName then
+                    (if package <> "FAKE.Core" && package <> projectName then
                        ["FAKE.Core", RequireExactly (NormalizeVersion release.AssemblyVersion)]
                      else p.Dependencies )
                 AccessKey = getBuildParamOrDefault "nugetkey" ""
