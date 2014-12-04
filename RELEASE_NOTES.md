@@ -1,3 +1,6 @@
+#### 3.11.1 - 04.12.2014
+* Use FSharp.Core from NuGet - https://github.com/fsharp/FAKE/pull/602
+
 #### 3.11.0 - 03.12.2014
 * Dual-license under Apache 2 and MS-PL, with Apache as default - https://github.com/fsharp/FAKE/pull/598
 * BUGFIX: FSC compilation fix - https://github.com/fsharp/FAKE/pull/601
