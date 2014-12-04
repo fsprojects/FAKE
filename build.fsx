@@ -39,8 +39,8 @@ let additionalFiles = [
     "License.txt"
     "README.markdown"
     "RELEASE_NOTES.md"
-    "./lib/FSharp/FSharp.Core.sigdata"
-    "./lib/FSharp/FSharp.Core.optdata"]
+    "./packages/FSharp.Core/lib/net40/FSharp.Core.sigdata"
+    "./packages/FSharp.Core/lib/net40/FSharp.Core.optdata"]
 
 // Targets
 Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDir; reportDir])
@@ -206,9 +206,11 @@ Target "CreateNuGet" (fun _ ->
                 Summary = projectSummary
                 ReleaseNotes = release.Notes |> toLines
                 Dependencies =                    
-                    (if package <> "FAKE.Core" && package <> projectName then
+                    (if package = "FAKE.Core" then
+                       p.Dependencies @ ["FSharp.Core", GetPackageVersion "packages" "FSharp.Core"]
+                     else if package <> projectName then
                        ["FAKE.Core", RequireExactly (NormalizeVersion release.AssemblyVersion)]
-                     else p.Dependencies) 
+                     else p.Dependencies )
                 AccessKey = getBuildParamOrDefault "nugetkey" ""
                 Publish = hasBuildParam "nugetkey" }
 

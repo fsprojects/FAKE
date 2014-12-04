@@ -1,3 +1,4 @@
+FSharp.Core
 Nancy
 Nancy.Authentication.Stateless
 Nancy.Hosting.Self

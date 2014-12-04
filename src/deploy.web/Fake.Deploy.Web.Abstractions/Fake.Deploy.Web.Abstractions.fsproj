@@ -10,7 +10,6 @@
     <RootNamespace>Fake.Deploy.Web.Abstractions</RootNamespace>
     <AssemblyName>Fake.Deploy.Web.Abstractions</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFSharpCoreVersion>4.3.0.0</TargetFSharpCoreVersion>
     <FileAlignment>512</FileAlignment>
     <Name>Fake.Deploy.Web.Abstractions</Name>
     <TargetFrameworkProfile />
@@ -40,10 +39,6 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
-    <Reference Include="FSharp.Core, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <Private>True</Private>
-      <HintPath>..\..\..\lib\FSharp\FSharp.Core.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
