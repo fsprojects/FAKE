@@ -1,3 +1,6 @@
+#### 3.11.4 - 11.12.2014
+* New AppVeyor properties - https://github.com/fsharp/FAKE/pull/605
+
 #### 3.11.3 - 04.12.2014
 * Use FSharp.Core from NuGet - https://github.com/fsharp/FAKE/pull/602
 
