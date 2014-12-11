@@ -68,7 +68,7 @@ type AppVeyorEnvironment =
     static member Platform = environVar "PLATFORM"
 
     /// Configuration name set on Build tab of project settings (or through configuration parameter in appveyor.yml).  
-    static member CONFIGURATION  = environVar "PLATFORM"
+    static member Configuration  = environVar "CONFIGURATION"
     
 let private sendToAppVeyor args = 
     ExecProcess (fun info -> 
