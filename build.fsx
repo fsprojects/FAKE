@@ -25,6 +25,7 @@ let packages =
      "FAKE.SQL",projectDescription + " Extensions for SQL Server"
      "FAKE.Experimental",projectDescription + " Experimental Extensions"
      "FAKE.Deploy.Lib",projectDescription + " Extensions for FAKE Deploy"
+     "FAKE.Lib",projectDescription + " FAKE helper functions as library"
      projectName,projectDescription + " This package bundles all extensions."]
 
 let buildDir = "./build"
@@ -178,9 +179,11 @@ Target "CreateNuGet" (fun _ ->
     for package,description in packages do
         let nugetDocsDir = nugetDir @@ "docs"
         let nugetToolsDir = nugetDir @@ "tools"
+        let nugetLibDir = nugetDir @@ "lib" @@ "net451"
 
         CleanDir nugetDocsDir
         CleanDir nugetToolsDir
+        DeleteDir nugetLibDir
 
         DeleteFile "./build/FAKE.Gallio/Gallio.dll"
 
@@ -191,6 +194,9 @@ Target "CreateNuGet" (fun _ ->
         | p when p = "FAKE.Core" ->
             !! (buildDir @@ "*.*") |> Copy nugetToolsDir
             CopyDir nugetDocsDir docsDir allFiles
+        | p when p = "FAKE.Lib" ->
+            CleanDir nugetLibDir
+            !! (buildDir @@ "FakeLib.dll") |> Copy nugetLibDir
         | _ ->
             CopyDir nugetToolsDir (buildDir @@ package) allFiles
             CopyTo nugetToolsDir additionalFiles
@@ -206,7 +212,7 @@ Target "CreateNuGet" (fun _ ->
                 Summary = projectSummary
                 ReleaseNotes = release.Notes |> toLines
                 Dependencies =                    
-                    (if package <> "FAKE.Core" && package <> projectName then
+                    (if package <> "FAKE.Core" && package <> projectName && package <> "FAKE.Lib" then
                        ["FAKE.Core", RequireExactly (NormalizeVersion release.AssemblyVersion)]
                      else p.Dependencies )
                 AccessKey = getBuildParamOrDefault "nugetkey" ""
