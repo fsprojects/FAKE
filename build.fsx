@@ -24,9 +24,9 @@ let packages =
      "FAKE.IIS",projectDescription + " Extensions for IIS"
      "FAKE.SQL",projectDescription + " Extensions for SQL Server"
      "FAKE.Experimental",projectDescription + " Experimental Extensions"
-     "FAKE.Deploy.Lib",projectDescription + " Extensions for FAKE Deploy"
-     "FAKE.Lib",projectDescription + " FAKE helper functions as library"
-     projectName,projectDescription + " This package bundles all extensions."]
+     "FAKE.Deploy.Lib",projectDescription + " Extensions for FAKE Deploy"     
+     projectName,projectDescription + " This package bundles all extensions."
+     "FAKE.Lib",projectDescription + " FAKE helper functions as library"]
 
 let buildDir = "./build"
 let testDir = "./test"

@@ -1,4 +1,4 @@
-#### 3.12.1 - 17.12.2014
+#### 3.12.2 - 17.12.2014
 * New FAKE.Lib nuget package which contains the FakeLib - https://github.com/fsharp/FAKE/pull/607
 
 #### 3.11.4 - 11.12.2014
