@@ -179,10 +179,12 @@ Target "CreateNuGet" (fun _ ->
     for package,description in packages do
         let nugetDocsDir = nugetDir @@ "docs"
         let nugetToolsDir = nugetDir @@ "tools"
-        let nugetLibDir = nugetDir @@ "lib" @@ "net451"
+        let nugetLibDir = nugetDir @@ "lib"
+        let nugetLib451Dir = nugetLibDir @@ "net451"
 
         CleanDir nugetDocsDir
         CleanDir nugetToolsDir
+        CleanDir nugetLibDir
         DeleteDir nugetLibDir
 
         DeleteFile "./build/FAKE.Gallio/Gallio.dll"
@@ -194,9 +196,9 @@ Target "CreateNuGet" (fun _ ->
         | p when p = "FAKE.Core" ->
             !! (buildDir @@ "*.*") |> Copy nugetToolsDir
             CopyDir nugetDocsDir docsDir allFiles
-        | p when p = "FAKE.Lib" ->
-            CleanDir nugetLibDir
-            !! (buildDir @@ "FakeLib.dll") |> Copy nugetLibDir
+        | p when p = "FAKE.Lib" -> 
+            CleanDir nugetLib451Dir
+            !! (buildDir @@ "FakeLib.dll") |> Copy nugetLib451Dir
         | _ ->
             CopyDir nugetToolsDir (buildDir @@ package) allFiles
             CopyTo nugetToolsDir additionalFiles
