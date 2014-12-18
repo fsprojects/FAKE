@@ -155,16 +155,14 @@ let findToolInSubPath toolname defaultPath =
     with
     | _ -> defaultPath @@ toolname
 
-let findFirstToolInSubPath (toolnames : seq<string>) defaultPath =
+let findToolsInSubPath (toolnames : seq<string>) defaultPath =
     toolnames
      |> Seq.map (fun toolname ->
         let path = findToolInSubPath toolname defaultPath
         let isResolved = path.Equals(defaultPath @@ toolname)
-        (isResolved, path)
-        )
+        (isResolved, path))
      |> Seq.filter(fun elem -> fst elem)
      |> Seq.map(fun elem -> snd elem)
-     |> Seq.head
 
 /// Looks for a tool in all subfolders - returns the folder where the tool was found.
 let findToolFolderInSubPath toolname defaultPath =
