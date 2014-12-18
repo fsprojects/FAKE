@@ -47,7 +47,7 @@ let xUnitToolPaths : seq<string> =
     else
       Seq.ofList [ "xunit.console.x86.exe"; "xunit.console.clr4.exe" ]
 
-let defaultXunitDirectory = (currentDirectory @@ "tools" @@ "xUnit")
+let defaultXunitDirectory = (currentDirectory @@ "tools")
 
 let foundXUnitTools = findToolsInSubPath xUnitToolPaths defaultXunitDirectory
 
