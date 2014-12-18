@@ -43,9 +43,9 @@ let emptyTrait : (string * string) option = None
 
 let xUnitToolPaths =
     if getMachineEnvironment().Is64bit then
-      Seq.ofList [ "xunit.console.exe"; "xunit.console.clr4.exe" ]
+      seq { yield "xunit.console.exe"; yield "xunit.console.clr4.exe" }
     else
-      Seq.ofList [ "xunit.console.x86.exe"; "xunit.console.clr4.exe" ]
+      seq { yield "xunit.console.x86.exe"; yield "xunit.console.clr4.exe" }
 
 let defaultXunitDirectory = (currentDirectory @@ "tools")
 
