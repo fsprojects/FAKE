@@ -155,7 +155,7 @@ let findToolInSubPath toolname defaultPath =
     with
     | _ -> defaultPath @@ toolname
 
-let findToolsInSubPath (toolnames : seq<string>) defaultPath =
+let findToolsInSubPath toolnames defaultPath =
     toolnames
      |> Seq.map (fun toolname ->
         let path = findToolInSubPath toolname defaultPath

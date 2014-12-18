@@ -41,7 +41,7 @@ type XUnitParams =
 /// The xUnit default parameters
 let emptyTrait : (string * string) option = None
 
-let xUnitToolPaths : seq<string> = 
+let xUnitToolPaths =
     if getMachineEnvironment().Is64bit then
       Seq.ofList [ "xunit.console.exe"; "xunit.console.clr4.exe" ]
     else
