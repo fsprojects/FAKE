@@ -41,8 +41,14 @@ type XUnitParams =
 /// The xUnit default parameters
 let emptyTrait : (string * string) option = None
 
+let xUnitToolPaths : seq<string> = 
+    if getMachineEnvironment().Is64bit then
+      Seq.ofList [ "xunit.console.exe"; "xunit.console.clr4.exe" ]
+    else
+      Seq.ofList [ "xunit.console.x86.exe"; "xunit.console.clr4.exe" ]
+
 let XUnitDefaults = 
-    { ToolPath = findToolInSubPath "xunit.console.clr4.exe" (currentDirectory @@ "tools" @@ "xUnit")
+    { ToolPath = findFirstToolInSubPath xUnitToolPaths (currentDirectory @@ "tools" @@ "xUnit")
       ConfigFile = null
       HtmlOutput = false
       NUnitXmlOutput = false
