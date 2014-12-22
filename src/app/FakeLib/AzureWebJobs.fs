@@ -1,8 +1,13 @@
 ﻿/// Contains tasks to package and deploy [Azure Web Jobs](http://azure.microsoft.com/en-gb/documentation/articles/web-sites-create-web-jobs/) via the [Kudu](https://github.com/projectkudu/kudu) Zip controller
-module Fake.AzureWebJobs
+module Fake.Azure.WebJobs
 
+open Fake
 open System.IO
 open System
+open System.Net
+
+type Uri with
+    member this.SubDomain = this.Host.Split([|'.'|],2).[0]
 
 /// The running modes of webjobs
 [<RequireQualifiedAccess>]
@@ -42,21 +47,50 @@ type WebJobParams =
 let WebJobDefaultParams = 
     { OutputPath = null}
 
+let private jobTypePath webJob = 
+    match webJob.JobType with
+    | WebJobType.Continuous -> "continuous"
+    | WebJobType.Triggered -> "triggered"
+
+let private webJobPath outputPath webSite webJob = 
+    sprintf "%s/%s/webjobs/%s/%s.zip" outputPath webSite.Url.SubDomain (jobTypePath webJob) webJob.Name
+
+let private zipWebJob outputPath webSite webJob = 
+    let releaseDirectory = directoryInfo ("src/" + webJob.Project + "/bin/Release")
+    let zipDirectory = directoryInfo (webJobPath outputPath webSite webJob)
+    ensureDirExists zipDirectory
+    let zipName = Path.Combine(zipDirectory.FullName, webJob.Name + ".zip")
+    let fileToZip = releaseDirectory.GetFiles() |> Array.map (fun f -> f.FullName)
+    tracefn "Zipping %s webjob to %O" webJob.Project zipDirectory
+    CreateZip releaseDirectory.FullName zipName "" 0 false fileToZip
+
 /// This task to can be used create a zip for each webjob to deploy to a website
 /// The output structure is: `outputpath/{websitename}/webjobs/{continuous/triggered}/{webjobname}.zip`
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to overwrite webjobs outputpath.
-///  - `websites` - The websites and webjobs to build zips from.
-let BuildZip setParams websites =
+///  - `webSites` - The websites and webjobs to build zips from.
+let BuildZip setParams webSites =
     let parameters = setParams WebJobDefaultParams 
-    let zipWebJob siteOutputPath webJob = 
-        let releaseDirectory = directoryInfo ("src/" + webJob.Project + "/bin/Release")
-        let zipDirectory = directoryInfo siteOutputPath
-        ensureDirExists zipDirectory
-        let zipName = Path.Combine(zipDirectory.FullName, webJob.Name + ".zip")
-        let fileToZip = releaseDirectory.GetFiles() |> Array.map (fun f -> f.FullName)
-        CreateZip releaseDirectory.FullName zipName "" 0 false fileToZip
-    websites |> List.iter (fun website -> 
-                    let siteOutputPath = parameters.OutputPath + "/" + website.Url.Host
-                    website.WebJobs |> List.iter (zipWebJob siteOutputPath))
+    webSites |> List.iter (fun webSite -> webSite.WebJobs |> List.iter (zipWebJob parameters.OutputPath webSite))
+
+let private deployWebJobToWebSite outputPath webSite webJob =
+    let uploadApi = Uri(webSite.Url, sprintf"api/zip/site/wwwroot/App_Data/jobs/%s/%s" (jobTypePath webJob) webJob.Name)
+    let filePath = (webJobPath outputPath webSite webJob)
+    tracefn "Deploying %s webjob to %O" filePath uploadApi
+    use client = new WebClient()
+
+    client.Credentials <-NetworkCredential(webSite.UserName, webSite.Password)
+    client.UploadData(uploadApi,"PUT",File.ReadAllBytes(filePath)) |> ignore
+
+let private deployWebJobsToWebSite outputPath webSite = 
+    webSite.WebJobs |> List.iter (deployWebJobToWebSite outputPath webSite)
+
+/// This task to can be used deploy a prebuilt webjob zip to a website
+/// ## Parameters
+///
+///  - `setParams` - Function used to overwrite webjobs outputpath.
+///  - `webSites` - The websites and webjobs to deploy.
+let DeployWebJobs setParams webSites = 
+    let parameters = setParams WebJobDefaultParams 
+    webSites |> List.iter(deployWebJobsToWebSite parameters.OutputPath)
