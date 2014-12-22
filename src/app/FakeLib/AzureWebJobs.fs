@@ -39,13 +39,16 @@ type WebSite =
 
 /// TypeScript task parameter type
 type WebJobParams =
-    { 
+    {
+      /// Specifies the directory of the files to
+      InputPath : string  
       /// Specifies the zip output path.
       OutputPath : string }
 
 /// Default parameters for the WebJobs task
-let WebJobDefaultParams = 
-    { OutputPath = null}
+let WebJobDefaultParams webJobProject = 
+    { OutputPath = "bin"
+      InputPath = "src/" + webJobProject + "/bin/Release"}
 
 let private jobTypePath webJob = 
     match webJob.JobType with
@@ -53,16 +56,19 @@ let private jobTypePath webJob =
     | WebJobType.Triggered -> "triggered"
 
 let private webJobPath outputPath webSite webJob = 
-    sprintf "%s/%s/webjobs/%s/%s.zip" outputPath webSite.Url.SubDomain (jobTypePath webJob) webJob.Name
+    sprintf "%s/%s/webjobs/%s" outputPath webSite.Url.SubDomain (jobTypePath webJob)
 
-let private zipWebJob outputPath webSite webJob = 
-    let releaseDirectory = directoryInfo ("src/" + webJob.Project + "/bin/Release")
-    let zipDirectory = directoryInfo (webJobPath outputPath webSite webJob)
+let private webJobZipPath outputPath webSite webJob = 
+    sprintf "%s/%s.zip" (webJobPath outputPath webSite webJob) webJob.Name
+
+let private zipWebJob setParams webSite webJob = 
+    let parameters = setParams (WebJobDefaultParams webJob.Project)
+    let zipDirectory = directoryInfo (webJobPath parameters.OutputPath webSite webJob)
     ensureDirExists zipDirectory
     let zipName = Path.Combine(zipDirectory.FullName, webJob.Name + ".zip")
-    let fileToZip = releaseDirectory.GetFiles() |> Array.map (fun f -> f.FullName)
+    let filesToZip = Directory.GetFiles(parameters.InputPath, "*.*", SearchOption.AllDirectories)
     tracefn "Zipping %s webjob to %O" webJob.Project zipDirectory
-    CreateZip releaseDirectory.FullName zipName "" 0 false fileToZip
+    CreateZip parameters.InputPath zipName "" 0 false filesToZip
 
 /// This task to can be used create a zip for each webjob to deploy to a website
 /// The output structure is: `outputpath/{websitename}/webjobs/{continuous/triggered}/{webjobname}.zip`
@@ -70,21 +76,21 @@ let private zipWebJob outputPath webSite webJob =
 ///
 ///  - `setParams` - Function used to overwrite webjobs outputpath.
 ///  - `webSites` - The websites and webjobs to build zips from.
-let BuildZip setParams webSites =
-    let parameters = setParams WebJobDefaultParams 
-    webSites |> List.iter (fun webSite -> webSite.WebJobs |> List.iter (zipWebJob parameters.OutputPath webSite))
+let PackageWebJobs setParams webSites =
+    webSites |> List.iter (fun webSite -> webSite.WebJobs |> List.iter (zipWebJob setParams webSite))
 
-let private deployWebJobToWebSite outputPath webSite webJob =
+let private deployWebJobToWebSite setParams webSite webJob =
+    let parameters = setParams WebJobDefaultParams webJob.Project
     let uploadApi = Uri(webSite.Url, sprintf"api/zip/site/wwwroot/App_Data/jobs/%s/%s" (jobTypePath webJob) webJob.Name)
-    let filePath = (webJobPath outputPath webSite webJob)
+    let filePath = (webJobZipPath parameters.OutputPath webSite webJob)
     tracefn "Deploying %s webjob to %O" filePath uploadApi
     use client = new WebClient()
 
     client.Credentials <-NetworkCredential(webSite.UserName, webSite.Password)
     client.UploadData(uploadApi,"PUT",File.ReadAllBytes(filePath)) |> ignore
 
-let private deployWebJobsToWebSite outputPath webSite = 
-    webSite.WebJobs |> List.iter (deployWebJobToWebSite outputPath webSite)
+let private deployWebJobsToWebSite setParams webSite = 
+    webSite.WebJobs |> List.iter (deployWebJobToWebSite setParams webSite)
 
 /// This task to can be used deploy a prebuilt webjob zip to a website
 /// ## Parameters
@@ -92,5 +98,4 @@ let private deployWebJobsToWebSite outputPath webSite =
 ///  - `setParams` - Function used to overwrite webjobs outputpath.
 ///  - `webSites` - The websites and webjobs to deploy.
 let DeployWebJobs setParams webSites = 
-    let parameters = setParams WebJobDefaultParams 
-    webSites |> List.iter(deployWebJobsToWebSite parameters.OutputPath)
+    webSites |> List.iter(deployWebJobsToWebSite setParams)
