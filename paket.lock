@@ -29,7 +29,6 @@ NUGET
     Microsoft.AspNet.Razor (2.0.30506)
     Microsoft.CompilerServices.AsyncTargetingPack (1.0.1)
     Microsoft.Web.Administration (7.0.0.0)
-    Microsoft.Web.Xdt (2.1.1)
     Mono.Cecil (0.9.5.4)
     Mono.Web.Xdt (1.0.0)
     Nancy (0.23.2)
@@ -53,8 +52,6 @@ NUGET
       Nancy
     Newtonsoft.Json (6.0.7)
     NuGet.CommandLine (2.8.3)
-    Nuget.Core (2.8.3)
-      Microsoft.Web.Xdt (>= 2.1.0)
     RavenDB.Client (2.5.2946)
       Microsoft.CompilerServices.AsyncTargetingPack
     RavenDB.Server (3.0.3528)

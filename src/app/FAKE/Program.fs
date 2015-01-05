@@ -57,23 +57,15 @@ try
             //Break to allow a debugger to be attached here
             if fakeArgs.Contains <@ Cli.Break @> then Diagnostics.Debugger.Break()
 
-            //Boot and version force us to ignore other args, so check for them and handle.
-            let isBoot, bootArgs = fakeArgs.Contains <@ Cli.Boot @>, fakeArgs.GetResults <@ Cli.Boot @>
             let isVersion = fakeArgs.Contains <@ Cli.Version @>
             let printDetails = fakeArgs.Contains <@ Cli.PrintDetails @>
 
-            match isVersion, isBoot with
+            match isVersion with
 
             //Version.
-            | true, _ -> printVersion()
-
-            //Boot.
-            | false, true ->
-                let handler = Boot.HandlerForArgs bootArgs//Could be List.empty, but let Boot handle this.
-                handler.Interact()
-
+            | true -> printVersion()
             //Try and run a build script! 
-            | false, false ->
+            | false ->
 
                 traceStartBuild()
                 if printDetails then printVersion()
@@ -124,21 +116,17 @@ try
         //None of the new style args parsed, so revert to the old skool.
         | Choice2Of2(ex) ->
             if (cmdArgs.Length = 2 && paramIsHelp cmdArgs.[1]) || (cmdArgs.Length = 1 && List.length buildScripts = 0) then printUsage () else
-            match Boot.ParseCommandLine(cmdArgs) with
-            | None ->
-                let buildScriptArg = if cmdArgs.Length > 1 && cmdArgs.[1].EndsWith ".fsx" then cmdArgs.[1] else Seq.head buildScripts
-                let fakeArgs = cmdArgs |> Array.filter (fun x -> x.StartsWith "-d:" = false)
-                let fsiArgs = cmdArgs |> Array.filter (fun x -> x.StartsWith "-d:") |> Array.toList
-                let args = CommandlineParams.parseArgs (fakeArgs |> Seq.filter ((<>) buildScriptArg) |> Seq.filter ((<>) "details"))
+            let buildScriptArg = if cmdArgs.Length > 1 && cmdArgs.[1].EndsWith ".fsx" then cmdArgs.[1] else Seq.head buildScripts
+            let fakeArgs = cmdArgs |> Array.filter (fun x -> x.StartsWith "-d:" = false)
+            let fsiArgs = cmdArgs |> Array.filter (fun x -> x.StartsWith "-d:") |> Array.toList
+            let args = CommandlineParams.parseArgs (fakeArgs |> Seq.filter ((<>) buildScriptArg) |> Seq.filter ((<>) "details"))
 
-                traceStartBuild()
-                let printDetails = containsParam "details" cmdArgs
-                if printDetails then
-                    printEnvironment cmdArgs args
-                if not (runBuildScript printDetails buildScriptArg fsiArgs args) then Environment.ExitCode <- 1
-                else if printDetails then log "Ready."
-            | Some handler ->
-                handler.Interact()
+            traceStartBuild()
+            let printDetails = containsParam "details" cmdArgs
+            if printDetails then
+                printEnvironment cmdArgs args
+            if not (runBuildScript printDetails buildScriptArg fsiArgs args) then Environment.ExitCode <- 1
+            else if printDetails then log "Ready."
     with
     | exn -> 
         if exn.InnerException <> null then
