@@ -78,8 +78,9 @@ let runSimpleGitCommand repositoryDir command =
     try
         let ok,msg,errors = runGitCommand repositoryDir command
                
-        if msg |> Seq.exists (fun m -> m.StartsWith("fatal: ")) then
-            failwith <| toLines msg + Environment.NewLine + errors
+        let errorText = toLines msg + Environment.NewLine + errors
+        if errorText.Contains "fatal: " then
+            failwith errorText
 
         if msg.Count = 0 then "" else
         msg |> Seq.iter (logfn "%s")
