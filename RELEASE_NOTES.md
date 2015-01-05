@@ -1,3 +1,6 @@
+#### 3.13.1 - 05.01.2015
+* Report fatal git errors
+
 #### 3.13.0 - 03.01.2015
 * New FAKE.Lib nuget package which contains the FakeLib - https://github.com/fsharp/FAKE/pull/607
 * New AppVeyor properties - https://github.com/fsharp/FAKE/pull/605

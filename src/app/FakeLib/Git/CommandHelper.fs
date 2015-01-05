@@ -77,12 +77,13 @@ let showGitCommand repositoryDir command =
 let runSimpleGitCommand repositoryDir command =
     try
         let ok,msg,errors = runGitCommand repositoryDir command
+               
+        if not ok || msg |> Seq.exists (fun m -> m.StartsWith("fatal: ")) then
+            failwith <| toLines msg + Environment.NewLine + errors
+
         if msg.Count = 0 then "" else
-        try
-            msg |> Seq.iter (logfn "%s")
-            msg.[0]
-        with 
-        | exn -> failwithf "Git didn't return a msg.\r\n%s" errors
+        msg |> Seq.iter (logfn "%s")
+        msg.[0]
     with 
     | exn -> failwithf "Could not run \"git %s\".\r\nError: %s" command exn.Message
 
