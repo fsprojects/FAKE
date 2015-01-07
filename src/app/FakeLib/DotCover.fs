@@ -66,6 +66,7 @@ let buildDotCoverArgs parameters =
     |> appendIfNotNullOrEmpty parameters.TargetExecutable "/TargetExecutable="
     |> appendIfNotNullOrEmpty (parameters.TargetArguments.Trim()) "/TargetArguments="
     |> appendIfNotNullOrEmpty parameters.TargetWorkingDir "/TargetWorkingDir="
+    |> appendIfNotNullOrEmpty parameters.Filters "/Filters="
     |> appendIfNotNullOrEmpty parameters.Output "/Output="
     |> toText
 
