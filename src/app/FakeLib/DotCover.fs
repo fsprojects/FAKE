@@ -20,7 +20,8 @@ type DotCoverParams =
       TargetArguments: string
       TargetWorkingDir: string
       Output: string
-      Filters: string }
+      Filters: string
+      CustomParameters: string }
 
 /// The DotCover defaeult parameters
 let DotCoverDefaults = 
@@ -30,35 +31,40 @@ let DotCoverDefaults =
       TargetArguments = ""
       TargetWorkingDir = ""
       Output = "DotCover.snapshot"
-      Filters = "" }
+      Filters = "" 
+      CustomParameters = "" }
 
 type DotCoverMergeParams = 
     { ToolPath: string
       WorkingDir: string
       Source: string list
       Output: string
-      TempDir: string }
+      TempDir: string
+      CustomParameters: string }
 
 let DotCoverMergeDefaults =
      { ToolPath = findToolInSubPath "dotcover.exe" (currentDirectory @@ "tools" @@ "DotCover")
        WorkingDir = ""
        Source = []
        Output = "DotCover.snapshot"
-       TempDir = "" }
+       TempDir = ""
+       CustomParameters = "" }
 
 type DotCoverReportParams = 
     { ToolPath: string
       WorkingDir: string
       Source: string
       Output: string
-      ReportType: DotCoverReportType }
+      ReportType: DotCoverReportType
+      CustomParameters: string }
       
 let DotCoverReportDefaults : DotCoverReportParams =
      { ToolPath = findToolInSubPath "dotcover.exe" (currentDirectory @@ "tools" @@ "DotCover")
        WorkingDir = ""
        Source = ""
        Output = "DotCover.xml"
-       ReportType = DotCoverReportType.Xml }
+       ReportType = DotCoverReportType.Xml
+       CustomParameters = "" }
 
 let buildDotCoverArgs parameters =
     new StringBuilder()
@@ -68,6 +74,7 @@ let buildDotCoverArgs parameters =
     |> appendIfNotNullOrEmpty parameters.TargetWorkingDir "/TargetWorkingDir="
     |> appendIfNotNullOrEmpty parameters.Filters "/Filters="
     |> appendIfNotNullOrEmpty parameters.Output "/Output="
+    |> appendWithoutQuotes parameters.CustomParameters
     |> toText
 
 let buildDotCoverMergeArgs (parameters:DotCoverMergeParams) =
@@ -76,6 +83,7 @@ let buildDotCoverMergeArgs (parameters:DotCoverMergeParams) =
     |> appendIfNotNullOrEmpty (parameters.Source |> String.concat ";") "/Source="
     |> appendIfNotNullOrEmpty parameters.Output "/Output="
     |> appendIfNotNullOrEmpty parameters.TempDir "/TempDir="
+    |> appendWithoutQuotes parameters.CustomParameters
     |> toText
     
 let buildDotCoverReportArgs parameters =
@@ -84,6 +92,7 @@ let buildDotCoverReportArgs parameters =
     |> appendIfNotNullOrEmpty parameters.Source "/Source="
     |> appendIfNotNullOrEmpty parameters.Output "/Output="
     |> appendIfNotNullOrEmpty (parameters.ReportType.ToString()) "/ReportType="
+    |> appendWithoutQuotes parameters.CustomParameters
     |> toText
 
 
