@@ -1,3 +1,7 @@
+#### 3.13.4 - 09.01.2015
+* BUGFIX: fix Jenkins detection - https://github.com/fsharp/FAKE/pull/620
+* BUGFIX: fix DotCover support - https://github.com/fsharp/FAKE/pull/618
+
 #### 3.13.3 - 05.01.2015
 * Report fatal git errors
 
