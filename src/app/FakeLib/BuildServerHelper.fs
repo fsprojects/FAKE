@@ -50,8 +50,8 @@ let appVeyorBuildVersion = environVar "APPVEYOR_BUILD_VERSION"
 
 /// The current build server
 let buildServer = 
-    if hasBuildParam "jenkins_home" then Jenkins
-    elif not (isNullOrEmpty tcBuildNumber) then TeamCity
+    if hasBuildParam "JENKINS_HOME" then Jenkins
+    elif hasBuildParam "TEAMCITY_VERSION" then TeamCity
     elif not (isNullOrEmpty ccBuildLabel) then CCNet
     elif not (isNullOrEmpty travisBuildNumber) then Travis
     elif not (isNullOrEmpty appVeyorBuildVersion) then AppVeyor
