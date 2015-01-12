@@ -48,6 +48,15 @@ let ExecutedTargets = new HashSet<_>()
 /// [omit]
 let ExecutedTargetTimes = new List<_>()
 
+/// Resets the state so that a deployment can be invoked multiple times
+/// [omit]
+let reset() = 
+    TargetDict.Clear()
+    ExecutedTargets.Clear()
+    BuildFailureTargets.Clear()
+    ExecutedTargetTimes.Clear()
+    FinalTargets.Clear()
+
 /// Returns a list with all target names.
 let getAllTargetsNames() = TargetDict |> Seq.map (fun t -> t.Key) |> Seq.toList
 
