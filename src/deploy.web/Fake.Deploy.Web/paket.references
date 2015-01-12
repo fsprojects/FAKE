@@ -1,10 +1,6 @@
 bootstrap
-jQuery
 Knockout.Mapping
-knockoutjs
 log4net
-Microsoft.AspNet.Razor
-Nancy
 Nancy.Authentication.Forms
 Nancy.Hosting.Aspnet
 Nancy.Viewengines.Razor
