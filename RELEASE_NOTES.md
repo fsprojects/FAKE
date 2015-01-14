@@ -1,5 +1,6 @@
-#### 3.13.3 - 05.01.2015
-* Report fatal git errors
+#### 3.14.0 - 14.01.2015
+* BUGFIX: Added a reset step before starting a deployment - https://github.com/fsharp/FAKE/pull/621
+* Report fatal git errors to command line
 
 #### 3.13.0 - 03.01.2015
 * New FAKE.Lib nuget package which contains the FakeLib - https://github.com/fsharp/FAKE/pull/607
