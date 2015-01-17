@@ -1,4 +1,4 @@
-#### 3.14.1 - 17.01.2015
+#### 3.14.2 - 17.01.2015
 * PERFORMANCE: Introduce `FAKE install` command to NGEN Fake.exe
 
 #### 3.14.0 - 14.01.2015

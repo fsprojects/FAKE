@@ -42,8 +42,10 @@ let paramIsHelp param = containsParam param ["help"; "?"; "/?"; "-h"; "--help"; 
 let buildScripts = !! "*.fsx" |> Seq.toList
 
 let ngenFake() = 
-    let startupPath = Reflection.Assembly.GetExecutingAssembly().Location
-    NGenHelper.Install (fun p -> { p with WorkingDir = FileInfo(startupPath).Directory.FullName }) [ startupPath ]
+    let startupPath = FileInfo(Reflection.Assembly.GetExecutingAssembly().Location).Directory.FullName
+    !! (startupPath @@ "*.dll")
+      ++ (startupPath @@ "*.exe")
+      |> NGenHelper.Install (fun p -> { p with WorkingDir = startupPath }) 
 
 try
     try
