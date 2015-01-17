@@ -41,11 +41,16 @@ let paramIsHelp param = containsParam param ["help"; "?"; "/?"; "-h"; "--help"; 
 
 let buildScripts = !! "*.fsx" |> Seq.toList
 
+let ngenFake() = 
+    let startupPath = Reflection.Assembly.GetExecutingAssembly().Location
+    NGenHelper.Install (fun p -> { p with WorkingDir = FileInfo(startupPath).Directory.FullName }) [ startupPath ]
+
 try
     try
         AutoCloseXmlWriter <- true
 
         let cmdArgs = System.Environment.GetCommandLineArgs()
+        if cmdArgs.Length > 1 && cmdArgs.[1] = "install" then ngenFake() else
 
         let args = Cli.parsePositionalArgs cmdArgs
 

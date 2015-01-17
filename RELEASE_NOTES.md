@@ -1,3 +1,6 @@
+#### 3.14.1 - 17.01.2015
+* PERFORMANCE: Introduce `FAKE install` command to NGEN Fake.exe
+
 #### 3.14.0 - 14.01.2015
 * BUGFIX: Added a reset step before starting a deployment - https://github.com/fsharp/FAKE/pull/621
 * Report fatal git errors to command line

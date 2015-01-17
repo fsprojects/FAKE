@@ -46,9 +46,13 @@ let Install setParams assemblies =
     traceStartTask taskName ""
 
     let param = setParams NGenDefaults
-    for assembly in assemblies do
-        ngen param (sprintf "install \"%s\" /queue:1" assembly)
+    match assemblies |> Seq.toList with
+    | [] -> ()
+    | [ assembly ]  -> ngen param (sprintf "install \"%s\" /nologo" assembly)
+    | assemblies -> 
+        for assembly in assemblies do
+            ngen param (sprintf "install \"%s\" /queue:1 /nologo" assembly)
 
-    ngen param "executeQueuedItems 1"
+        ngen param "executeQueuedItems 1 /nologo"
 
     traceEndTask taskName ""
