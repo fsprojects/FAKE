@@ -43,8 +43,8 @@ let buildScripts = !! "*.fsx" |> Seq.toList
 
 let ngenFake() = 
     let startupPath = FileInfo(Reflection.Assembly.GetExecutingAssembly().Location).Directory.FullName
-    !! (startupPath @@ "*.dll")
-      ++ (startupPath @@ "*.exe")
+    [startupPath @@ "FakeLib.dll"
+     startupPath @@ "Fake.exe"]
       |> NGenHelper.Install (fun p -> { p with WorkingDir = startupPath }) 
 
 try

@@ -15,8 +15,6 @@ type NGenParams =
 let private winDir = Environment.GetFolderPath Environment.SpecialFolder.Windows
 let mutable NGen32 = winDir @@ "Microsoft.NET/Framework/v4.0.30319/ngen.exe"
 let mutable NGen64 = winDir @@ "Microsoft.NET/Framework64/v4.0.30319/ngen.exe"
-
-
 let UseNGen64 p : NGenParams = { p with ToolPath = NGen64 }
 
 /// NGen default parameters
@@ -31,7 +29,7 @@ let private ngen param command =
             info.FileName <- param.ToolPath
             if param.WorkingDir <> String.Empty then info.WorkingDirectory <- param.WorkingDir
             info.Arguments <- command) param.TimeOut
-    if not ok then failwithf "NGenutil reported errors."
+    if not ok then failwith "NGen reported errors."
 
 /// Runs ngen.exe with the given command.
 let NGen setParams command = 
@@ -44,15 +42,12 @@ let NGen setParams command =
 let Install setParams assemblies = 
     let taskName = "NGen Install"
     traceStartTask taskName ""
-
     let param = setParams NGenDefaults
     match assemblies |> Seq.toList with
     | [] -> ()
-    | [ assembly ]  -> ngen param (sprintf "install \"%s\" /nologo" assembly)
+    | [ assembly ] -> ngen param (sprintf "install \"%s\" /nologo" assembly)
     | assemblies -> 
         for assembly in assemblies do
             ngen param (sprintf "install \"%s\" /queue:1 /nologo" assembly)
-
         ngen param "executeQueuedItems 1 /nologo"
-
     traceEndTask taskName ""
