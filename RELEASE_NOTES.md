@@ -1,5 +1,5 @@
-#### 3.14.4 - 17.01.2015
-* Dependencies updated
+#### 3.14.5 - 19.01.2015
+* Ignore unknown project references in MSBuild task - https://github.com/fsharp/FAKE/pull/630
 
 #### 3.14.0 - 14.01.2015
 * BUGFIX: Added a reset step before starting a deployment - https://github.com/fsharp/FAKE/pull/621
