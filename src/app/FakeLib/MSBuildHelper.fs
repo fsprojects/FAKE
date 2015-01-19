@@ -82,7 +82,7 @@ let rec getProjectReferences (projectFileName : string) =
     else // exclude .sln-files since the are not XML
          
     let doc = loadProject projectFileName
-    let references = getReferenceElements "ProjectReference" projectFileName doc |> Seq.map snd
+    let references = getReferenceElements "ProjectReference" projectFileName doc |> Seq.map snd |> Seq.filter File.Exists
     references
       |> Seq.map getProjectReferences
       |> Seq.concat
