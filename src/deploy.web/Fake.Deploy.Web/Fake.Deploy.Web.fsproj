@@ -210,7 +210,7 @@
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v3.5'">
       <ItemGroup>
         <Reference Include="log4net">
-          <HintPath>..\..\..\packages\log4net\lib\net35-full\log4net.dll</HintPath>
+          <HintPath>..\..\..\packages\log4net\lib\net35-client\log4net.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
