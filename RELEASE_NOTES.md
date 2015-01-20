@@ -1,3 +1,6 @@
+#### 3.14.6 - 20.01.2015
+* Allow to run gacutil on mono
+
 #### 3.14.5 - 19.01.2015
 * Ignore unknown project references in MSBuild task - https://github.com/fsharp/FAKE/pull/630
 

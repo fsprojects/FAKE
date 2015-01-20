@@ -12,7 +12,9 @@ type GACParams =
       /// The directory where the process will be started.
       WorkingDir : string }
 
-let mutable GACUtil = ProgramFilesX86 @@ "Microsoft SDKs/Windows/v8.0A/bin/NETFX 4.0 Tools/gacutil.exe"
+let mutable GACUtil = 
+    if isMono then "gacutil" else
+    ProgramFilesX86 @@ "Microsoft SDKs/Windows/v8.0A/bin/NETFX 4.0 Tools/gacutil.exe"
 
 /// GACutil default parameters
 let GACDefaults = 
