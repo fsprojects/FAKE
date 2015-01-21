@@ -1,3 +1,6 @@
+#### 3.14.7 - 21.01.2015
+* Adding `SpecificMachines` option to OctoTools - https://github.com/fsharp/FAKE/pull/631
+
 #### 3.14.6 - 20.01.2015
 * Allow to run gacutil on mono
 
