@@ -131,10 +131,10 @@ type TestResultsType =
 
 /// Uploads the test results .xml file to the Test tab of the build console.
 let UploadTestResultsXml testResultsType outputDir =
-    let resultsType = (sprintf "%A" testResultsType).ToLower()
-    let url = sprintf "https://ci.appveyor.com/api/testresults/%s/%s" resultsType AppVeyorEnvironment.JobId
-    let files = System.IO.Directory.GetFiles(path = outputDir, searchPattern = "*.xml")
-    if buildServer = BuildServer.AppVeyor then 
+    if buildServer = BuildServer.AppVeyor then
+        let resultsType = (sprintf "%A" testResultsType).ToLower()
+        let url = sprintf "https://ci.appveyor.com/api/testresults/%s/%s" resultsType AppVeyorEnvironment.JobId
+        let files = System.IO.Directory.GetFiles(path = outputDir, searchPattern = "*.xml")
         use wc = new System.Net.WebClient()
         files
         |> Seq.iter (fun file ->
