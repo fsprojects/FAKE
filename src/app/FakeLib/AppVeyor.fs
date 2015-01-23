@@ -124,20 +124,15 @@ let FinishTestCase testSuiteName testCaseName (duration : System.TimeSpan) =
     sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Duration %s" (testSuiteName + " - " + testCaseName) duration
 
 /// Union type representing the available test result formats accepted by AppVeyor.
-type ResultsType =
+type TestResultsType =
     | MsTest
     | NUnit
     | Xunit
 
 /// Uploads the test results .xml file to the Test tab of the build console.
-let UploadTestResultsXml resultsType outputDir =
-    let runnerType =
-        match resultsType with
-        | MsTest -> "mstest"
-        | NUnit -> "nunit"
-        | Xunit -> "xunit"
-
-    let url = sprintf "https://ci.appveyor.com/api/testresults/%s/%s" runnerType AppVeyorEnvironment.JobId
+let UploadTestResultsXml testResultsType outputDir =
+    let resultsType = (sprintf "%A" testResultsType).ToLower()
+    let url = sprintf "https://ci.appveyor.com/api/testresults/%s/%s" resultsType AppVeyorEnvironment.JobId
     let files = System.IO.Directory.GetFiles(path = outputDir, searchPattern = "*.xml")
     if buildServer = BuildServer.AppVeyor then 
         use wc = new System.Net.WebClient()
