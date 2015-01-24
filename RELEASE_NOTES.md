@@ -1,3 +1,7 @@
+#### 3.14.8 - 24.01.2015
+* Adding UploadTestResultsXml function to the AppVeyor module - https://github.com/fsharp/FAKE/pull/636
+* Adding the NoDefaultExcludes NugGet parameter - https://github.com/fsharp/FAKE/pull/637
+
 #### 3.14.7 - 21.01.2015
 * Adding `SpecificMachines` option to OctoTools - https://github.com/fsharp/FAKE/pull/631
 
