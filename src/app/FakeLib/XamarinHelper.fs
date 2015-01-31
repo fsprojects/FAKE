@@ -142,10 +142,14 @@ let AndroidSignAndAlign setParams apkFile =
         if param.KeystoreAlias = "" then failwith "You must provide the keystore's alias"
 
         param
-
+    
+    let quotesSurround (s:string) = if EnvironmentHelper.isMono then sprintf "'%s'" s else sprintf "\"%s\"" s
+    
     let signAndAlign (file:FileInfo) (param:AndroidSignAndAlignParams) =
         let fullSignedFilePath = Regex.Replace(file.FullName, ".apk$", "-Signed.apk")
-        let jarsignerArgs = String.Format("-sigalg SHA1withRSA -digestalg SHA1 -keystore '{0}' -storepass {1} -signedjar '{2}' {3} {4}", param.KeystorePath, param.KeystorePassword, fullSignedFilePath, file.FullName, param.KeystoreAlias)
+        let jarsignerArgs = String.Format("-sigalg SHA1withRSA -digestalg SHA1 -keystore {0} -storepass {1} -signedjar {2} {3} {4}", 
+                                quotesSurround(param.KeystorePath), param.KeystorePassword, quotesSurround(fullSignedFilePath), file.FullName, param.KeystoreAlias)
+        
         executeCommand param.JarsignerPath jarsignerArgs
 
         let fullAlignedFilePath = Regex.Replace(fullSignedFilePath, "-Signed.apk$", "-SignedAndAligned.apk")
