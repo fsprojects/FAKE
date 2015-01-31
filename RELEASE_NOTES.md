@@ -1,3 +1,6 @@
+#### 3.14.9 - 31.01.2015
+* BUGFIX: Fix jarsigner executing on Windows environment - https://github.com/fsharp/FAKE/pull/640
+
 #### 3.14.8 - 24.01.2015
 * Adding UploadTestResultsXml function to the AppVeyor module - https://github.com/fsharp/FAKE/pull/636
 * Adding the NoDefaultExcludes NugGet parameter - https://github.com/fsharp/FAKE/pull/637
