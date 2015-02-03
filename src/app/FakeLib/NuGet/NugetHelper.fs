@@ -124,7 +124,7 @@ let private replaceAccessKey key (text : string) =
     if isNullOrEmpty key then text
     else text.Replace(key, "PRIVATEKEY")
 
-let private createNuSpecFromTemplate parameters nuSpecOrProjFile (templateNuSpec:FileInfo) =
+let private createNuSpecFromTemplate parameters (templateNuSpec:FileInfo) =
     let specFile = parameters.WorkingDir @@ (templateNuSpec.Name.Replace("nuspec", "") + parameters.Version + ".nuspec")
                     |> FullName
     tracefn "Creating .nuspec file at %s" specFile
@@ -211,7 +211,6 @@ let private createNuSpecFromTemplate parameters nuSpecOrProjFile (templateNuSpec
     
     processTemplates replacements [ specFile ]
     tracefn "Created nuspec file %s" specFile
-    nuSpecOrProjFile
 
 let private createNuspecFile parameters nuSpecOrProjFile = 
     let nuSpecOrProjFileInfo = fileInfo nuSpecOrProjFile
@@ -222,8 +221,10 @@ let private createNuspecFile parameters nuSpecOrProjFile =
             (fileInfo (Path.GetFileNameWithoutExtension(nuSpecOrProjFileInfo.Name) + ".nuspec"))
 
     match templateNuSpec.Exists with
-    | true -> createNuSpecFromTemplate parameters nuSpecOrProjFile templateNuSpec
-    | false -> nuSpecOrProjFile
+    | true -> createNuSpecFromTemplate parameters templateNuSpec
+    | false -> ()
+
+    nuSpecOrProjFile
 
 let private propertiesParam = function 
     | [] -> ""
