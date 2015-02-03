@@ -328,11 +328,11 @@ let rec private publishSymbols parameters =
 /// 
 ///  - `setParams` - Function used to manipulate the default NuGet parameters.
 ///  - `nuspecFile` - The .nuspec file name.
-let NuGetPack setParams nuspecFile =
-    traceStartTask "NuGetPack" nuspecFile
+let NuGetPack setParams nuspecOrProjectFile =
+    traceStartTask "NuGetPack" nuspecOrProjectFile
     let parameters = NuGetDefaults() |> setParams
     try
-        let nuspecFile = createNuspecFile parameters nuspecFile
+        let nuspecFile = createNuspecFile parameters nuspecOrProjectFile
         pack parameters nuspecFile
         DeleteFile nuspecFile
     with exn ->
@@ -340,7 +340,7 @@ let NuGetPack setParams nuspecFile =
          else exn.Message)
         |> replaceAccessKey parameters.AccessKey
         |> failwith
-    traceEndTask "NuGetPack" nuspecFile
+    traceEndTask "NuGetPack" nuspecOrProjectFile
 
 /// Publishes a NuGet package to the nuget server.
 /// ## Parameters
@@ -357,11 +357,11 @@ let NuGetPublish setParams =
 /// 
 ///  - `setParams` - Function used to manipulate the default NuGet parameters.
 ///  - `nuspecFile` - The .nuspec file name.
-let NuGet setParams nuspecFile = 
-    traceStartTask "NuGet" nuspecFile
+let NuGet setParams nuspecOrProjectFile = 
+    traceStartTask "NuGet" nuspecOrProjectFile
     let parameters = NuGetDefaults() |> setParams
     try 
-        let nuspecFile = createNuspecFile parameters nuspecFile
+        let nuspecFile = createNuspecFile parameters nuspecOrProjectFile
         pack parameters nuspecFile
         if parameters.Publish then 
             publish parameters
@@ -372,7 +372,7 @@ let NuGet setParams nuspecFile =
          else exn.Message)
         |> replaceAccessKey parameters.AccessKey
         |> failwith
-    traceEndTask "NuGet" nuspecFile
+    traceEndTask "NuGet" nuspecOrProjectFile
 
 /// NuSpec metadata type
 type NuSpecPackage = 
