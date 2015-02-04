@@ -21,7 +21,7 @@ type NugetUpdateParams =
       RepositoryPath: string
       /// Looks for updates with the highest version available within the same major and minor version as the installed package. Default `false`.
       Safe: bool
-      /// Show verbose output while updating.
+      /// Show verbose output while updating. Default `false`.
       Verbose: bool
       /// Allows updating to prerelease versions. Default `false`.
       Prerelease: bool
