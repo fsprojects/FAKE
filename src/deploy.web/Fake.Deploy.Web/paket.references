@@ -6,4 +6,5 @@ Nancy.Hosting.Aspnet
 Nancy.Viewengines.Razor
 Newtonsoft.Json
 System.Web.Razor.Unofficial
+FSharp.Core
 toastr
