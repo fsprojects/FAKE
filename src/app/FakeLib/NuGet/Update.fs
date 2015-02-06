@@ -21,6 +21,8 @@ type NugetUpdateParams =
       RepositoryPath: string
       /// Looks for updates with the highest version available within the same major and minor version as the installed package. Default `false`.
       Safe: bool
+      /// Show verbose output while updating. Default `false`.
+      Verbose: bool
       /// Allows updating to prerelease versions. Default `false`.
       Prerelease: bool
       /// Do not prompt for user input or confirmations. Default `true`.
@@ -37,6 +39,7 @@ let NugetUpdateDefaults =
       Ids = []
       RepositoryPath = "./packages"
       Safe = false
+      Verbose = false
       Prerelease = false
       NonInteractive = true
       ConfigFile = None }
@@ -49,6 +52,7 @@ let buildArgs (param: NugetUpdateParams) =
         (if param.Safe then "-safe" else "")
         (if param.Prerelease then "-prerelease" else "")
         (if param.NonInteractive then "-nonInteractive" else "")
+        (if param.Verbose then "-verbose" else "")
         param.ConfigFile |> Option.toList |> argList "configFile"
     ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
 
