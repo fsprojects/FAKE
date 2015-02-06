@@ -1,3 +1,6 @@
+#### 3.14.10 - 06.02.2015
+* Add Verbose to argument list for NuGet update - https://github.com/fsharp/FAKE/pull/645
+
 #### 3.14.9 - 31.01.2015
 * BUGFIX: Fix jarsigner executing on Windows environment - https://github.com/fsharp/FAKE/pull/640
 
