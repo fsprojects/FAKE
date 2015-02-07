@@ -1,20 +1,11 @@
-#### 3.14.10 - 06.02.2015
+#### 3.15.0 - 07.02.2015
+* New VSTest module for working with VSTest.Console - https://github.com/fsharp/FAKE/pull/648
 * Add Verbose to argument list for NuGet update - https://github.com/fsharp/FAKE/pull/645
-
-#### 3.14.9 - 31.01.2015
 * BUGFIX: Fix jarsigner executing on Windows environment - https://github.com/fsharp/FAKE/pull/640
-
-#### 3.14.8 - 24.01.2015
 * Adding UploadTestResultsXml function to the AppVeyor module - https://github.com/fsharp/FAKE/pull/636
 * Adding the NoDefaultExcludes NugGet parameter - https://github.com/fsharp/FAKE/pull/637
-
-#### 3.14.7 - 21.01.2015
 * Adding `SpecificMachines` option to OctoTools - https://github.com/fsharp/FAKE/pull/631
-
-#### 3.14.6 - 20.01.2015
 * Allow to run gacutil on mono
-
-#### 3.14.5 - 19.01.2015
 * Ignore unknown project references in MSBuild task - https://github.com/fsharp/FAKE/pull/630
 
 #### 3.14.0 - 14.01.2015
