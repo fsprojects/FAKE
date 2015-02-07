@@ -6,9 +6,9 @@ open System.Text
 
 /// [omit]
 let mstestPaths = 
-    [| "[ProgramFilesX86]\Microsoft Visual Studio 12.0\Common7\IDE"; 
-       "[ProgramFilesX86]\Microsoft Visual Studio 11.0\Common7\IDE"; 
-       "[ProgramFilesX86]\Microsoft Visual Studio 10.0\Common7\IDE" |]
+    [| @"[ProgramFilesX86]\Microsoft Visual Studio 12.0\Common7\IDE";
+       @"[ProgramFilesX86]\Microsoft Visual Studio 11.0\Common7\IDE";
+       @"[ProgramFilesX86]\Microsoft Visual Studio 10.0\Common7\IDE" |]
 
 /// [omit]
 let mstestexe = 
