@@ -69,6 +69,7 @@
     <Compile Include="UnitTest\MSpecHelper.fs" />
     <Compile Include="UnitTest\MSTest.fs" />
     <Compile Include="UnitTest\ProcessTestRunner.fs" />
+    <Compile Include="UnitTest\VSTest.fs" />
     <Compile Include="AssemblyInfoFile.fs" />
     <Compile Include="AssemblyInfoHelper.fs" />
     <Compile Include="FXCopHelper.fs" />
