@@ -75,7 +75,7 @@ let NUnitParallel (setParams : NUnitParams -> NUnitParams) (assemblies : string 
     | [] -> ()
     | _ -> 
         File.WriteAllText(getWorkingDir parameters @@ parameters.OutputFile, sprintf "%O" (NUnitMerge.mergeXDocs docs))
-        sendTeamCityNUnitImport (getWorkingDir parameters @@ parameters.OutputFile)
+        sendTeamCityNUnitImport parameters.OutputFile
     // Make sure we delete the temp files
     testRunResults
     |> List.map (fun x -> x.OutputFile)
