@@ -2,13 +2,10 @@
 
 open System
 open System.IO
-open System.Net
-open System.Threading
 open System.Diagnostics
 open Fake
 open Fake.DeploymentHelper
 open Fake.DeployAgentModule
-open Fake.HttpListenerHelper
 open Nancy
 open Nancy.Hosting.Self
 open Nancy.Security
@@ -30,7 +27,7 @@ let  runDeployment workDir (ctx : Nancy.Request) =
     let packageBytes = getBodyFromNancyRequest ctx
     let package, scriptFile = unpack workDir false packageBytes
     let scriptArguments = getScriptArgumentsFromNancyRequest ctx
-    let response = doDeployment package.Name scriptFile scriptArguments
+    let response = doDeployment scriptFile scriptArguments
     match response with
     | FakeDeployAgentHelper.Success _ -> 
         logger (sprintf "Successfully deployed %s %s" package.Id package.Version, EventLogEntryType.Information)
@@ -62,10 +59,10 @@ type DeployAgentModule() as http =
         http.RequiresAuthentication()
 
 
-        http.post "/" (fun p -> 
+        http.post "/" (fun _ -> 
             runDeployment workDir http.Request)
 
-        http.get "/deployments/" (fun p -> 
+        http.get "/deployments/" (fun _ -> 
             let status = http.Request.Query ?> "status"
             match status with
                 | "active" -> getActiveReleases workDir
@@ -92,4 +89,4 @@ type DeployAgentModule() as http =
                 .AsJson result
         )
 
-        http.get "/statistics/" (fun p -> getStatistics() |> http.Response.AsJson)
+        http.get "/statistics/" (fun _ -> getStatistics() |> http.Response.AsJson)
