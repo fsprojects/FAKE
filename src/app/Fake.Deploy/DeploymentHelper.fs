@@ -73,9 +73,7 @@ let unpack workDir isRollback packageBytes =
 let doDeployment scriptFileName scriptArgs = 
     try 
         TargetHelper.reset()
-        let workingDirectory = DirectoryName scriptFileName
-        let (result, messages) = 
-            FSIHelper.executeBuildScriptWithArgsAndReturnMessages workingDirectory (FullName scriptFileName) scriptArgs
+        let (result, messages) = FSIHelper.executeFSIWithScriptArgsAndReturnMessages (FullName scriptFileName) scriptArgs
         if result then 
             Success { Messages = messages
                       IsError = false

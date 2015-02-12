@@ -116,7 +116,7 @@ try
                     
                 //TODO if printDetails then printEnvironment cmdArgs args
 
-                if not (runBuildScriptWithFsiArgsAt "" printDetails fsiArgs envVars) then Environment.ExitCode <- 1
+                if not (runBuildScriptWithFsiArgsAt printDetails fsiArgs envVars) then Environment.ExitCode <- 1
                 else if printDetails then log "Ready."
 
                 ()
