@@ -1,4 +1,4 @@
-#### 3.16.0 - 12.02.2015
+#### 3.16.1 - 12.02.2015
 * Revert to fsi in Fake.Deploy - https://github.com/fsharp/FAKE/pull/653
 
 #### 3.15.0 - 07.02.2015
