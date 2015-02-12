@@ -1,3 +1,6 @@
+#### 3.16.0 - 12.02.2015
+* Revert to fsi in Fake.Deploy - https://github.com/fsharp/FAKE/pull/653
+
 #### 3.15.0 - 07.02.2015
 * New VSTest module for working with VSTest.Console - https://github.com/fsharp/FAKE/pull/648
 * Add Verbose to argument list for NuGet update - https://github.com/fsharp/FAKE/pull/645
