@@ -422,6 +422,28 @@ let WriteConfigFile configFileName parameters =
 ///  - `files` - The files to process.
 let ReplaceInFiles replacements files = processTemplates replacements files
 
+/// Replace all occurences of the regex pattern with the given replacement in the specified file
+/// ## Parameters
+///
+/// - `pattern` - The string to search for a match
+/// - `replacement` - The replacement string
+/// - `encoding` - The encoding to use when reading and writing the file
+/// - `file` - The path of the file to process
+let RegexReplaceInFileWithEncoding pattern (replacement:string) encoding file =
+    let oldContent = File.ReadAllText(file, encoding)
+    let newContent = System.Text.RegularExpressions.Regex.Replace(oldContent, pattern, replacement)
+    File.WriteAllText(file, newContent, encoding)
+
+/// Replace all occurences of the regex pattern with the given replacement in the specified files
+/// ## Parameters
+///
+/// - `pattern` - The string to search for a match
+/// - `replacement` - The replacement string
+/// - `encoding` - The encoding to use when reading and writing the files
+/// - `files` - The paths of the files to process
+let RegexReplaceInFilesWithEncoding pattern (replacement:string) encoding files =
+    files |> Seq.iter (RegexReplaceInFileWithEncoding pattern replacement encoding)
+
 /// Get the version a file.
 /// ## Parameters
 ///
