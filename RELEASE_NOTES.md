@@ -1,5 +1,9 @@
-#### 3.16.2 - 12.02.2015
-* Revert to fsi in Fake.Deploy - https://github.com/fsharp/FAKE/pull/653
+#### 3.17.0 - 12.02.2015
+* Revert to fsi in Fake.Deploy - https://github.com/fsharp/FAKE/pull/653    
+* Added MergeByHash option for OpenCover - https://github.com/fsharp/FAKE/pull/650
+* New functions to replace text in one or more files using regular expressions - https://github.com/fsharp/FAKE/pull/649
+* BUGFIX: Fix SpecFlow MSTest integration - https://github.com/fsharp/FAKE/pull/652
+* BUGFIX: Fix TeamCity integration - https://github.com/fsharp/FAKE/pull/651
 
 #### 3.15.0 - 07.02.2015
 * New VSTest module for working with VSTest.Console - https://github.com/fsharp/FAKE/pull/648
