@@ -26,7 +26,12 @@ type OpenCoverParams =
       /// The timeout for the OpenCover process.
       TimeOut : TimeSpan
       /// The directory where the OpenCover process will be started.
-      WorkingDir : string }
+      WorkingDir : string 
+      /// This option is used to merge the coverage results for an assembly regardless of where it was loaded 
+      /// assuming the assembly has the same file-hash in each location. 
+      MergeByHash : bool
+      /// This options is used to add additional optional arguments, could be somthing like "-returntargetcode "
+      OptionalArguments : string }
 
 /// OpenCover default parameters
 let OpenCoverDefaults = 
@@ -36,7 +41,28 @@ let OpenCoverDefaults =
       Register = Manual
       Filter = String.Empty
       TimeOut = TimeSpan.FromMinutes 5.
-      WorkingDir = currentDirectory }
+      WorkingDir = currentDirectory
+      MergeByHash = false
+      OptionalArguments = String.Empty }
+
+/// Builds the command line arguments from the given parameter record
+/// [omit]
+let buildOpenCoverArgs param targetArgs = 
+        let quote arg = sprintf "\"%s\"" arg
+
+        new StringBuilder()
+        |> appendWithoutQuotes (sprintf "-target:%s" (quote (param.TestRunnerExePath |> FullName)))
+        |> appendWithoutQuotes (sprintf "-targetargs:%s" (quote targetArgs))
+        |> appendIfTrueWithoutQuotes (isNotNullOrEmpty param.Output) (sprintf "-output:%s" (quote param.Output))
+        |> appendWithoutQuotes (match param.Register with
+                                | Manual -> String.Empty
+                                | Register -> "-register "
+                                | RegisterUser -> "-register:user")
+        |> appendIfTrueWithoutQuotes (isNotNullOrEmpty param.Filter) (sprintf "-filter:%s" (quote param.Filter))
+        |> appendIfTrueWithoutQuotes param.MergeByHash "-mergebyhash"
+        |> appendIfTrueWithoutQuotes (isNotNullOrEmpty param.OptionalArguments) param.OptionalArguments
+        |> toText
+    
 
 /// Runs OpenCover on a group of assemblies.
 /// ## Parameters
@@ -54,27 +80,7 @@ let OpenCover setParams targetArgs =
     traceStartTask taskName description
     let param = setParams OpenCoverDefaults
     
-    let processArgs = 
-        let args = ref (new StringBuilder())
-        let append (s : string) = args := (!args).Append(s)
-        let appendQuoted (s : string) = args := (!args).Append("\"").Append(s).Append("\" ")
-        append "-target:"
-        param.TestRunnerExePath
-        |> FullName
-        |> appendQuoted
-        append "-targetargs:"
-        appendQuoted targetArgs
-        if param.Output <> String.Empty then 
-            append "-output:"
-            appendQuoted param.Output
-        append (match param.Register with
-                | Manual -> String.Empty
-                | Register -> "-register "
-                | RegisterUser -> "-register:user ")
-        if param.Filter <> String.Empty then 
-            append "-filter:"
-            appendQuoted param.Filter
-        (!args).ToString()
+    let processArgs = buildOpenCoverArgs param targetArgs
     tracefn "OpenCover command\n%s %s" param.ExePath processArgs
     let ok = 
         execProcess (fun info -> 
