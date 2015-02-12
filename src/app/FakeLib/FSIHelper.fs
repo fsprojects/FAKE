@@ -5,7 +5,6 @@ module Fake.FSIHelper
 
 open System
 open System.IO
-open System.Linq
 open System.Diagnostics
 open System.Threading
 
@@ -78,7 +77,7 @@ let executeFSIWithArgs workingDirectory script extraFsiArgs args =
     result = 0
 
 /// Run the given build script with fsi.exe and allows for extra arguments to the script. Returns output.
-let executeFSIWithScriptArgsAndReturnMessages workingDirectory script (scriptArgs: string[]) =
+let executeFSIWithScriptArgsAndReturnMessages script (scriptArgs: string[]) =
     let (result, messages) =
         ExecProcessRedirected (fun si ->
             FsiStartInfo "" (FsiArgs([], script, scriptArgs |> List.ofArray)) [] si)
@@ -89,7 +88,7 @@ let executeFSIWithScriptArgsAndReturnMessages workingDirectory script (scriptArg
 open Microsoft.FSharp.Compiler.Interactive.Shell
 
 /// Run the given FAKE script with fsi.exe at the given working directory. Provides full access to Fsi options and args. Redirect output and error messages.
-let internal runFAKEScriptWithFsiArgsAndRedirectMessages workingDirectory printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args onErrMsg onOutMsg =
+let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args onErrMsg onOutMsg =
     if printDetails then traceFAKE "Running Buildscript: %s" script
 
     // Add arguments to the Environment
@@ -138,7 +137,7 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages workingDirectory printD
         raise exn
 
 /// Run the given buildscript with fsi.exe and allows for extra arguments to the script. Returns output.
-let executeBuildScriptWithArgsAndReturnMessages workingDirectory script (scriptArgs: string[]) =
+let executeBuildScriptWithArgsAndReturnMessages script (scriptArgs: string[]) =
     let messages = ref []
     let appendMessage isError msg =
         messages := { IsError = isError
@@ -146,20 +145,20 @@ let executeBuildScriptWithArgsAndReturnMessages workingDirectory script (scriptA
                       Timestamp = DateTimeOffset.UtcNow } :: !messages
     let result =
         runFAKEScriptWithFsiArgsAndRedirectMessages
-            workingDirectory true (FsiArgs([], script, scriptArgs |> List.ofArray)) []
+            true (FsiArgs([], script, scriptArgs |> List.ofArray)) []
             (appendMessage true) (appendMessage false)
     (result, !messages)
 
 /// Run the given buildscript with fsi.exe at the given working directory.  Provides full access to Fsi options and args.
-let runBuildScriptWithFsiArgsAt workingDirectory printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args =
+let runBuildScriptWithFsiArgsAt printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args =
     runFAKEScriptWithFsiArgsAndRedirectMessages
-        workingDirectory printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args
+        printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args
         traceError (fun s-> traceFAKE "%s" s)
 
 /// Run the given buildscript with fsi.exe at the given working directory.
-let runBuildScriptAt workingDirectory printDetails script extraFsiArgs args =
-    runBuildScriptWithFsiArgsAt workingDirectory printDetails (FsiArgs(extraFsiArgs, script, [])) args
+let runBuildScriptAt printDetails script extraFsiArgs args =
+    runBuildScriptWithFsiArgsAt printDetails (FsiArgs(extraFsiArgs, script, [])) args
 
 /// Run the given buildscript with fsi.exe
 let runBuildScript printDetails script extraFsiArgs args =
-    runBuildScriptAt "" printDetails script extraFsiArgs args
+    runBuildScriptAt printDetails script extraFsiArgs args
