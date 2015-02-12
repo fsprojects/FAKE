@@ -28,7 +28,7 @@ let NUnit (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) =
             info.FileName <- tool
             info.WorkingDirectory <- getWorkingDir parameters
             info.Arguments <- args) parameters.TimeOut
-    sendTeamCityNUnitImport (getWorkingDir parameters @@ parameters.OutputFile)
+    sendTeamCityNUnitImport parameters.OutputFile
     let errorDescription error = 
         match error with
         | OK -> "OK"
