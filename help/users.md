@@ -30,3 +30,4 @@ Some of our users are:
 * [Papers](http://www.papersapp.com)
 * [NEST & Elasticsearch.NET](http://github.com/elasticsearch/elasticsearch-net) by Elasticsearch
 * [Elastacloud](http://elastacloud.com/)
+* [Digital Furnace Games](http://digitalfurnacegames.com/)
