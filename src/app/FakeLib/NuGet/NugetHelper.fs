@@ -211,6 +211,7 @@ let private createNuSpecFromTemplate parameters (templateNuSpec:FileInfo) =
     
     processTemplates replacements [ specFile ]
     tracefn "Created nuspec file %s" specFile
+    specFile
 
 let private createNuspecFile parameters nuSpecOrProjFile = 
     let nuSpecOrProjFileInfo = fileInfo nuSpecOrProjFile
@@ -222,9 +223,8 @@ let private createNuspecFile parameters nuSpecOrProjFile =
 
     match templateNuSpec.Exists with
     | true -> createNuSpecFromTemplate parameters templateNuSpec
-    | false -> ()
-
-    nuSpecOrProjFile
+    | false -> nuSpecOrProjFile
+    
 
 let private propertiesParam = function 
     | [] -> ""
