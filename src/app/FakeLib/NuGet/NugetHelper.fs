@@ -215,14 +215,8 @@ let private createNuSpecFromTemplate parameters (templateNuSpec:FileInfo) =
 
 let private createNuspecFile parameters nuSpecOrProjFile = 
     let nuSpecOrProjFileInfo = fileInfo nuSpecOrProjFile
-    let templateNuSpec = 
-        if nuSpecOrProjFileInfo.Extension = ".nuspec" then 
-            nuSpecOrProjFileInfo 
-        else
-            (fileInfo (Path.GetFileNameWithoutExtension(nuSpecOrProjFileInfo.Name) + ".nuspec"))
-
-    match templateNuSpec.Exists with
-    | true -> createNuSpecFromTemplate parameters templateNuSpec
+    match nuSpecOrProjFileInfo.Extension = ".nuspec" with
+    | true -> createNuSpecFromTemplate parameters nuSpecOrProjFileInfo
     | false -> nuSpecOrProjFile
     
 
