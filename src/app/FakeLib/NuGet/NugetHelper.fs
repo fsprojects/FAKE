@@ -240,11 +240,11 @@ let private pack parameters nuspecFile =
 
     let execute args =
         let result =
-            ExecProcess (fun info ->
+            ExecProcessAndReturnMessages (fun info ->
                 info.FileName <- parameters.ToolPath
                 info.WorkingDirectory <- FullName parameters.WorkingDir
                 info.Arguments <- args) parameters.TimeOut
-        if result <> 0 then failwithf "Error during NuGet package creation. %s %s" parameters.ToolPath args
+        if result.ExitCode <> 0 then failwithf "Error during NuGet package creation. %s %s\r\n%s" parameters.ToolPath args (toLines result.Errors)
 
     let nuspecFile = 
         let fi = fileInfo nuspecFile
