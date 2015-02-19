@@ -3,3 +3,4 @@ FSharp.Compiler.Service
 Mono.Web.Xdt
 Mono.Cecil
 Nuget.Core
+Newtonsoft.Json
