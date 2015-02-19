@@ -67,6 +67,6 @@ namespace Test.FAKECore.FileHandling
 
         It should_not_find_fsx_file =
             () => Catch.Exception(() => FileSystemHelper.FindFirstMatchingFile("*.fsx", TestData.TestDir))
-                      .ShouldBeOfType<FileNotFoundException>();
+                      .ShouldBeAssignableTo<FileNotFoundException>();
     }
 }
