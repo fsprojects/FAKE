@@ -1,3 +1,6 @@
+#### 3.17.1 - 19.02.2015
+* Helper for uploading mobile apps to HockeyApp - https://github.com/fsharp/FAKE/pull/656  
+
 #### 3.17.0 - 12.02.2015
 * Revert to fsi in Fake.Deploy - https://github.com/fsharp/FAKE/pull/653    
 * Added MergeByHash option for OpenCover - https://github.com/fsharp/FAKE/pull/650
