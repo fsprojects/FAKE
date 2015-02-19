@@ -124,12 +124,12 @@ let private replaceAccessKey key (text : string) =
     if isNullOrEmpty key then text
     else text.Replace(key, "PRIVATEKEY")
 
-let private createNuspecFile parameters nuSpec = 
-    let fi = fileInfo nuSpec
-    let specFile = parameters.WorkingDir @@ (fi.Name.Replace("nuspec", "") + parameters.Version + ".nuspec")
-                   |> FullName
+let private createNuSpecFromTemplate parameters (templateNuSpec:FileInfo) =
+    let specFile = parameters.WorkingDir @@ (templateNuSpec.Name.Replace("nuspec", "") + parameters.Version + ".nuspec")
+                    |> FullName
     tracefn "Creating .nuspec file at %s" specFile
-    fi.CopyTo(specFile, true) |> ignore
+
+    templateNuSpec.CopyTo(specFile, true) |> ignore
 
     let getFrameworkGroup (frameworkTags : (string * string) seq) =
         frameworkTags
@@ -213,6 +213,13 @@ let private createNuspecFile parameters nuSpec =
     tracefn "Created nuspec file %s" specFile
     specFile
 
+let private createNuSpecFromTemplateIfNuSpecFile parameters nuSpecOrProjFile = 
+    let nuSpecOrProjFileInfo = fileInfo nuSpecOrProjFile
+    match nuSpecOrProjFileInfo.Extension = ".nuspec" with
+    | true -> Some (createNuSpecFromTemplate parameters nuSpecOrProjFileInfo)
+    | false -> None
+    
+
 let private propertiesParam = function 
     | [] -> ""
     | lst -> 
@@ -233,11 +240,11 @@ let private pack parameters nuspecFile =
 
     let execute args =
         let result =
-            ExecProcess (fun info ->
+            ExecProcessAndReturnMessages (fun info ->
                 info.FileName <- parameters.ToolPath
                 info.WorkingDirectory <- FullName parameters.WorkingDir
                 info.Arguments <- args) parameters.TimeOut
-        if result <> 0 then failwithf "Error during NuGet package creation. %s %s" parameters.ToolPath args
+        if result.ExitCode <> 0 then failwithf "Error during NuGet package creation. %s %s\r\n%s" parameters.ToolPath args (toLines result.Errors)
 
     let nuspecFile = 
         let fi = fileInfo nuspecFile
@@ -315,19 +322,21 @@ let rec private publishSymbols parameters =
 /// 
 ///  - `setParams` - Function used to manipulate the default NuGet parameters.
 ///  - `nuspecFile` - The .nuspec file name.
-let NuGetPack setParams nuspecFile =
-    traceStartTask "NuGetPack" nuspecFile
+let NuGetPack setParams nuspecOrProjectFile =
+    traceStartTask "NuGetPack" nuspecOrProjectFile
     let parameters = NuGetDefaults() |> setParams
     try
-        let nuspecFile = createNuspecFile parameters nuspecFile
-        pack parameters nuspecFile
-        DeleteFile nuspecFile
+        match (createNuSpecFromTemplateIfNuSpecFile parameters nuspecOrProjectFile) with
+        | Some nuspecTemplateFile -> 
+            pack parameters nuspecTemplateFile
+            DeleteFile nuspecTemplateFile
+        | None -> pack parameters nuspecOrProjectFile
     with exn ->
         (if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message
          else exn.Message)
         |> replaceAccessKey parameters.AccessKey
         |> failwith
-    traceEndTask "NuGetPack" nuspecFile
+    traceEndTask "NuGetPack" nuspecOrProjectFile
 
 /// Publishes a NuGet package to the nuget server.
 /// ## Parameters
@@ -344,22 +353,25 @@ let NuGetPublish setParams =
 /// 
 ///  - `setParams` - Function used to manipulate the default NuGet parameters.
 ///  - `nuspecFile` - The .nuspec file name.
-let NuGet setParams nuspecFile = 
-    traceStartTask "NuGet" nuspecFile
+let NuGet setParams nuspecOrProjectFile = 
+    traceStartTask "NuGet" nuspecOrProjectFile
     let parameters = NuGetDefaults() |> setParams
     try 
-        let nuspecFile = createNuspecFile parameters nuspecFile
-        pack parameters nuspecFile
+        match (createNuSpecFromTemplateIfNuSpecFile parameters nuspecOrProjectFile) with
+        | Some nuspecTemplateFile -> 
+            pack parameters nuspecTemplateFile
+            DeleteFile nuspecTemplateFile
+        | None -> pack parameters nuspecOrProjectFile
+
         if parameters.Publish then 
             publish parameters
             if parameters.ProjectFile <> null then publishSymbols parameters
-        DeleteFile nuspecFile
     with exn -> 
         (if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message
          else exn.Message)
         |> replaceAccessKey parameters.AccessKey
         |> failwith
-    traceEndTask "NuGet" nuspecFile
+    traceEndTask "NuGet" nuspecOrProjectFile
 
 /// NuSpec metadata type
 type NuSpecPackage = 
