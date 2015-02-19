@@ -213,11 +213,11 @@ let private createNuSpecFromTemplate parameters (templateNuSpec:FileInfo) =
     tracefn "Created nuspec file %s" specFile
     specFile
 
-let private createNuspecFile parameters nuSpecOrProjFile = 
+let private createNuSpecFromTemplateIfNuSpecFile parameters nuSpecOrProjFile = 
     let nuSpecOrProjFileInfo = fileInfo nuSpecOrProjFile
     match nuSpecOrProjFileInfo.Extension = ".nuspec" with
-    | true -> createNuSpecFromTemplate parameters nuSpecOrProjFileInfo
-    | false -> nuSpecOrProjFile
+    | true -> Some (createNuSpecFromTemplate parameters nuSpecOrProjFileInfo)
+    | false -> None
     
 
 let private propertiesParam = function 
@@ -326,9 +326,11 @@ let NuGetPack setParams nuspecOrProjectFile =
     traceStartTask "NuGetPack" nuspecOrProjectFile
     let parameters = NuGetDefaults() |> setParams
     try
-        let nuspecFile = createNuspecFile parameters nuspecOrProjectFile
-        pack parameters nuspecFile
-        DeleteFile nuspecFile
+        match (createNuSpecFromTemplateIfNuSpecFile parameters nuspecOrProjectFile) with
+        | Some nuspecTemplateFile -> 
+            pack parameters nuspecTemplateFile
+            DeleteFile nuspecTemplateFile
+        | None -> pack parameters nuspecOrProjectFile
     with exn ->
         (if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message
          else exn.Message)
@@ -355,12 +357,15 @@ let NuGet setParams nuspecOrProjectFile =
     traceStartTask "NuGet" nuspecOrProjectFile
     let parameters = NuGetDefaults() |> setParams
     try 
-        let nuspecFile = createNuspecFile parameters nuspecOrProjectFile
-        pack parameters nuspecFile
+        match (createNuSpecFromTemplateIfNuSpecFile parameters nuspecOrProjectFile) with
+        | Some nuspecTemplateFile -> 
+            pack parameters nuspecTemplateFile
+            DeleteFile nuspecTemplateFile
+        | None -> pack parameters nuspecOrProjectFile
+
         if parameters.Publish then 
             publish parameters
             if parameters.ProjectFile <> null then publishSymbols parameters
-        DeleteFile nuspecFile
     with exn -> 
         (if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message
          else exn.Message)

@@ -2,7 +2,7 @@
 <package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <description>description</description>
-    <id>fake_complete</id>
+    <id>fake_no_template</id>
     <version>0.0.1</version>
     <authors>author</authors>
     <language>en-US</language>

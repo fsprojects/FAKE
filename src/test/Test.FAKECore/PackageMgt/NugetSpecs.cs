@@ -72,7 +72,7 @@ namespace Test.FAKECore.PackageMgt
         Establish context = () =>
         {
             tempDir = Path.GetTempPath();
-            pkgFile = Path.Combine(tempDir, "fake.0.0.1.nupkg");
+            pkgFile = Path.Combine(tempDir, "fake_no_template.0.0.1.nupkg");
             projectFile = Path.Combine(TestData.TestDataDir, "fake_no_template.csproj");
 
             try { File.Delete(pkgFile); } catch (FileNotFoundException) { }
