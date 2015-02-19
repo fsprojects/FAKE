@@ -58,10 +58,8 @@ namespace Test.FAKECore.PackageMgt
         };
 
         Because of = () => NuGetHelper.NuGetPack(nugetParams, nuspecFile);
-        It should_create_nupkg_file = () =>
-        {
-            File.Exists(pkgFile).ShouldBeTrue();
-        };
+
+        It should_create_nupkg_file = () => File.Exists(pkgFile).ShouldBeTrue();
     }
 
     public class when_packing_with_csproj_and_complete_nuspec_alongside
@@ -113,10 +111,20 @@ namespace Test.FAKECore.PackageMgt
             );
         };
 
-        Because of = () => NuGetHelper.NuGetPack(nugetParams, projectFile);
+
+        private Because of = () =>
+        {
+            if (!EnvironmentHelper.isMono)
+            {
+                NuGetHelper.NuGetPack(nugetParams, projectFile);
+            };
+        };
         It should_create_nupkg_file = () =>
         {
-            File.Exists(pkgFile).ShouldBeTrue();
+            if (!EnvironmentHelper.isMono)
+            {
+                File.Exists(pkgFile).ShouldBeTrue();
+            }
         };
     }
 
