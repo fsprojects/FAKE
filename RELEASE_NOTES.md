@@ -1,3 +1,6 @@
+#### 3.17.3 - 20.02.2015
+* New tasks for `paket pack` and `paket push`- http://fsprojects.github.io/Paket/index.html
+
 #### 3.17.2 - 19.02.2015
 * Allow csproj being passed as a NuSpec file - https://github.com/fsharp/FAKE/pull/644 
 

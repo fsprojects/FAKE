@@ -135,6 +135,7 @@
     <Compile Include="NuGet\Install.fs" />
     <Compile Include="TestFlightHelper.fs" />
     <Compile Include="DotCover.fs" />
+    <Compile Include="PaketHelper.fs" />
     <Compile Include="AzureHelper.fs" />
     <Compile Include="FtpHelper.fs" />
     <Compile Include="TypeScript.fs" />
