@@ -150,7 +150,10 @@ try
             |> traceError
             printUsage()
 
-        sendTeamCityError exn.Message
+        let isFailedTestsException = exn :? UnitTestCommon.FailedTestsException
+        if not isFailedTestsException  then
+            sendTeamCityError exn.Message
+
         Environment.ExitCode <- 1
 
     if buildServer = BuildServer.TeamCity then
