@@ -38,7 +38,6 @@ let PaketPushDefaults() : PaketPushParams =
       PublishUrl = "https://nuget.org"
       AccessKey = null }
 
-
 /// Creates a new NuGet package by using Paket pack on all paket.template files in the given root directory.
 /// ## Parameters
 /// 
@@ -47,36 +46,34 @@ let PaketPushDefaults() : PaketPushParams =
 let Pack setParams rootDir = 
     traceStartTask "PaketPack" rootDir
     let parameters : PaketPackParams = PaketPackDefaults() |> setParams
-
+    
     let xmlEncode (notEncodedText : string) = 
         if System.String.IsNullOrWhiteSpace notEncodedText then ""
-        else XText(notEncodedText).ToString().Replace("ß","&szlig;")
-
-    let packResult =
-        ExecProcess (fun info ->
+        else XText(notEncodedText).ToString().Replace("ß", "&szlig;")
+    
+    let packResult = 
+        ExecProcess 
+            (fun info -> 
             info.FileName <- parameters.ToolPath
-            info.Arguments <- sprintf "pack output %s version \"%s\" releaseNotes \"%s\"" parameters.OutputPath parameters.Version (xmlEncode parameters.ReleaseNotes)) parameters.TimeOut
-
+            info.Arguments <- sprintf "pack output %s version \"%s\" releaseNotes \"%s\"" parameters.OutputPath 
+                                  parameters.Version (xmlEncode parameters.ReleaseNotes)) parameters.TimeOut
+    
     if packResult <> 0 then failwithf "Error during packing %s." rootDir
-
     traceEndTask "PaketPack" rootDir
-
 
 /// Pushes a NuGet package to the server by using Paket push.
 /// ## Parameters
 /// 
 ///  - `setParams` - Function used to manipulate the default parameters.
 ///  - `packages` - The .nupkg files.
-let Push setParams packages =
+let Push setParams packages = 
     let packages = Seq.toList packages
     traceStartTask "PaketPush" (separated ", " packages)
     let parameters : PaketPushParams = PaketPushDefaults() |> setParams
-
     for package in packages do
-        let pushResult =
-            ExecProcess (fun info ->
+        let pushResult = 
+            ExecProcess (fun info -> 
                 info.FileName <- parameters.ToolPath
                 info.Arguments <- sprintf "push url %s file %s" parameters.PublishUrl package) System.TimeSpan.MaxValue
         if pushResult <> 0 then failwithf "Error during pushing %s." package
-
     traceEndTask "PaketPush" (separated ", " packages)

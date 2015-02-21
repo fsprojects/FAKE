@@ -148,8 +148,8 @@
     <Compile Include="XamarinHelper.fs" />
     <Compile Include="XDTHelper.fs" />
     <Compile Include="AzureWebJobs.fs" />
-    <None Include="app.config" />
     <Compile Include="HockeyAppHelper.fs" />
+    <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
