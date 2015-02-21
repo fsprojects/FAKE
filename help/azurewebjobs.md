@@ -4,7 +4,7 @@ FAKE can be used to zip the output directory of a project and push it to Azure v
 
 You'll need to know the ftp details of the website to publish the web jobs to. Also the web jobs need to already exist on the azure dashboard.
 
-In your build.fsx add the following:
+In your `build.fsx` add the following:
 
     type Uri with
         member this.SubDomain = this.Host.Split([|'.'|],2).[0]
@@ -49,7 +49,7 @@ In the dependencies section add the targets to the build order after the build a
       ==> "DeployWebJobs"
       ==> "Default"
 
-The effect of this create a zip in the "bin" folder in the root which contains the contents of the "bin/release" folder of each web job to deploy and push it to azure.
+The effect of this create a zip in the `bin` folder in the root which contains the contents of the `bin/release` folder of each web job to deploy and push it to azure.
 
 ## Caveats
 The zip controller will not remove files
