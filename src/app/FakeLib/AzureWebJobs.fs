@@ -24,7 +24,7 @@ type WebJob =
       Project : string
       /// The directory path of the webjob to zip
       DirectoryToPackage : string
-      // The package path to once zipped
+      /// The package path to once zipped
       PackageLocation: string }
 
 /// The website that webjobs are deployed to
