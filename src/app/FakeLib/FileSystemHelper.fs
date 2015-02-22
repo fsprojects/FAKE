@@ -95,3 +95,10 @@ let isDirectory path =
 
 /// Detects whether the given path is a file.
 let isFile path = isDirectory path |> not
+
+/// Changes to the given directory, calls the given function, then restores the previous working directory.
+let runInWorkingDir dir f =
+    let prevdir = Directory.GetCurrentDirectory()
+    f ()
+    Directory.SetCurrentDirectory prevdir
+    
