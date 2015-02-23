@@ -83,15 +83,18 @@ let runNuGet toolPath timeOut args failWith =
 let rec runNuGetTrial retries toolPath timeOut args failWith =
     let f() = runNuGet toolPath timeOut args failWith
     TaskRunnerHelper.runWithRetries f retries
+
+// [omit]
+let buildSources sources = 
+    sources
+    |> List.map (fun source -> " \"-Source\" \"" + source + "\"")
+    |> separated ""
         
 /// [omit]
 let buildNuGetArgs setParams packageId = 
     let parameters = RestoreSinglePackageDefaults |> setParams
-    let sources =
-        parameters.Sources
-        |> List.map (fun source -> " \"-Source\" \"" + source + "\"")
-        |> separated ""
-
+    let sources = parameters.Sources |> buildSources
+        
     let args = " \"install\" \"" + packageId + "\" \"-OutputDirectory\" \"" + (parameters.OutputPath |> FullName) + "\"" + sources
 
     match parameters.ExcludeVersion, parameters.IncludePreRelease, parameters.Version with
@@ -132,10 +135,7 @@ let RestorePackage setParams packageFile =
     traceStartTask "RestorePackage" packageFile
     let (parameters:RestorePackageParams) = RestorePackageDefaults |> setParams
 
-    let sources =
-        parameters.Sources
-        |> List.map (fun source -> " \"-Source\" \"" + source + "\"")
-        |> separated ""
+    let sources = parameters.Sources |> buildSources
 
     let args =
         " \"install\" \"" + (packageFile |> FullName) + "\"" +
@@ -149,3 +149,33 @@ let RestorePackage setParams packageFile =
 let RestorePackages() = 
     !! "./**/packages.config"
     |> Seq.iter (RestorePackage id)
+
+/// Restores the packages in the given solution file file from NuGet.
+/// ## Parameters
+/// 
+///  - `setParams` - Function used to manipulate the default NuGet parameters.
+///  - `solutionFile` - The microsoft sln file name.
+///
+/// ## Sample
+///
+///     Target "RestorePackages" (fun _ -> 
+///          "./scr/Everything.sln"
+///          |> RestoreMSSolutionPackages (fun p ->
+///              { p with
+///                  Sources = "http:://myNugetSources.com" :: p.Sources
+///                  OutputPath = outputDir
+///                  Retries = 4 })
+///      )
+let RestoreMSSolutionPackages setParams solutionFile =
+    traceStartTask "RestoreSolutionPackages" solutionFile
+    let (parameters:RestorePackageParams) = RestorePackageDefaults |> setParams
+
+    let sources = parameters.Sources |> buildSources
+
+    let args = 
+        "\"restore\" \"" + (solutionFile |> FullName) + "\"" +
+        " \"-OutputDirectory\" \"" + (parameters.OutputPath |> FullName) + "\"" + sources
+
+    runNuGetTrial parameters.Retries parameters.ToolPath parameters.TimeOut args (fun () -> failwithf "Package restore of %s failed" solutionFile)
+
+    traceEndTask "RestoreSolutionPackages" solutionFile
