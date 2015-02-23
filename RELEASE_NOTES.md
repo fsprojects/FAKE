@@ -1,4 +1,4 @@
-#### 3.17.4 - 21.02.2015
+#### 3.17.5 - 23.02.2015
 * Don't report unit test failure twice to TeamCity - https://github.com/fsharp/FAKE/pull/659
 
 #### 3.17.3 - 20.02.2015

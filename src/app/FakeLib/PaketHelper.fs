@@ -17,7 +17,7 @@ type PaketPackParams =
 
 /// Paket pack default parameters  
 let PaketPackDefaults() : PaketPackParams = 
-    { ToolPath = findToolFolderInSubPath "paket.exe" (currentDirectory @@ ".paket" @@ "paket.exe")
+    { ToolPath = (findToolFolderInSubPath "paket.exe" (currentDirectory @@ ".paket")) @@ "paket.exe"
       TimeOut = TimeSpan.FromMinutes 5.
       Version = 
           if not isLocalBuild then buildVersion
@@ -36,7 +36,7 @@ type PaketPushParams =
 
 /// Paket push default parameters
 let PaketPushDefaults() : PaketPushParams = 
-    { ToolPath = findToolFolderInSubPath "paket.exe" (currentDirectory @@ ".paket" @@ "paket.exe")
+    { ToolPath = (findToolFolderInSubPath "paket.exe" (currentDirectory @@ ".paket")) @@ "paket.exe"
       TimeOut = TimeSpan.FromMinutes 5.
       PublishUrl = "https://nuget.org"
       WorkingDir = "."
