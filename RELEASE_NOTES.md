@@ -1,3 +1,6 @@
+#### 3.17.6 - 23.02.2015
+* Add OwnerId, type docs, and better error handling for HockeyAppHelper - https://github.com/fsharp/FAKE/pull/661
+
 #### 3.17.5 - 23.02.2015
 * Don't report unit test failure twice to TeamCity - https://github.com/fsharp/FAKE/pull/659
 
