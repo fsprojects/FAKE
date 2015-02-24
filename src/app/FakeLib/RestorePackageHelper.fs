@@ -84,7 +84,7 @@ let rec runNuGetTrial retries toolPath timeOut args failWith =
     let f() = runNuGet toolPath timeOut args failWith
     TaskRunnerHelper.runWithRetries f retries
 
-// [omit]
+/// [omit]
 let buildSources sources = 
     sources
     |> List.map (fun source -> " \"-Source\" \"" + source + "\"")
