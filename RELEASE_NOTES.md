@@ -1,3 +1,6 @@
+#### 3.17.9 - 24.02.2015
+* BUGFIX: Use correct apikey for paket push - https://github.com/fsharp/FAKE/pull/664
+
 #### 3.17.8 - 24.02.2015
 * Adding ability to run nuget package restore on a visual studio solution - https://github.com/fsharp/FAKE/pull/662
 
