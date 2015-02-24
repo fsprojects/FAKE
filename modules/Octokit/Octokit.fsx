@@ -46,10 +46,7 @@ let uploadFile fileName (draft : Async<Draft>) =
     async { 
         let fi = FileInfo(fileName)
         let archiveContents = File.OpenRead(fi.FullName)
-        let assetUpload = new ReleaseAssetUpload()
-        assetUpload.FileName <- fi.Name
-        assetUpload.ContentType <- "application/octet-stream"
-        assetUpload.RawData <- archiveContents
+        let assetUpload = new ReleaseAssetUpload(fi.Name,"application/octet-stream",archiveContents,Nullable<TimeSpan>())
         let! draft' = draft
         let! asset = Async.AwaitTask <| draft'.Client.Release.UploadAsset(draft'.DraftRelease, assetUpload)
         printfn "Uploaded %s" asset.Name
