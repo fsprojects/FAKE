@@ -32,7 +32,7 @@ type PaketPushParams =
       TimeOut : TimeSpan
       PublishUrl : string
       WorkingDir : string
-      AccessKey : string }
+      ApiKey : string }
 
 /// Paket push default parameters
 let PaketPushDefaults() : PaketPushParams = 
@@ -40,7 +40,7 @@ let PaketPushDefaults() : PaketPushParams =
       TimeOut = TimeSpan.FromMinutes 5.
       PublishUrl = "https://nuget.org"
       WorkingDir = "."
-      AccessKey = null }
+      ApiKey = null }
 
 /// Creates a new NuGet package by using Paket pack on all paket.template files in the working directory.
 /// ## Parameters
@@ -77,6 +77,8 @@ let Push setParams =
         let pushResult = 
             ExecProcess (fun info -> 
                 info.FileName <- parameters.ToolPath
-                info.Arguments <- sprintf "push url %s file %s" parameters.PublishUrl package) System.TimeSpan.MaxValue
+                info.Arguments <- sprintf "push url %s file %s" parameters.PublishUrl package
+                if parameters.ApiKey <> null then
+                  info.Arguments <- sprintf "%s apikey %s" info.Arguments parameters.ApiKey) System.TimeSpan.MaxValue
         if pushResult <> 0 then failwithf "Error during pushing %s." package
     traceEndTask "PaketPush" (separated ", " packages)
