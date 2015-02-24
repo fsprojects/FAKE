@@ -1,4 +1,4 @@
-#### 3.17.7 - 24.02.2015
+#### 3.17.8 - 24.02.2015
 * Adding ability to run nuget package restore on a visual studio solution - https://github.com/fsharp/FAKE/pull/662
 
 #### 3.17.6 - 23.02.2015
