@@ -1,3 +1,6 @@
+#### 3.17.12 - 25.02.2015
+* BUGFIX: Paket helper should not override version for project packages - https://github.com/fsharp/FAKE/issues/666
+
 #### 3.17.11 - 25.02.2015
 * BUGFIX: Allow endpoint in push task - https://github.com/fsprojects/Paket/pull/652
 

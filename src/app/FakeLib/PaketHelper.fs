@@ -19,9 +19,7 @@ type PaketPackParams =
 let PaketPackDefaults() : PaketPackParams = 
     { ToolPath = (findToolFolderInSubPath "paket.exe" (currentDirectory @@ ".paket")) @@ "paket.exe"
       TimeOut = TimeSpan.FromMinutes 5.
-      Version = 
-          if not isLocalBuild then buildVersion
-          else "0.1.0.0"
+      Version = null
       ReleaseNotes = null
       WorkingDir = "."
       OutputPath = "./temp" }
@@ -53,15 +51,17 @@ let Pack setParams =
     traceStartTask "PaketPack" parameters.WorkingDir
 
     let xmlEncode (notEncodedText : string) = 
-        if System.String.IsNullOrWhiteSpace notEncodedText then ""
+        if String.IsNullOrWhiteSpace notEncodedText then ""
         else XText(notEncodedText).ToString().Replace("ß", "&szlig;")
-    
+
+    let version = if String.IsNullOrWhiteSpace parameters.Version then "" else sprintf " version \"%s\"" parameters.Version
+    let releaseNotes = if String.IsNullOrWhiteSpace parameters.ReleaseNotes then "" else sprintf " releaseNotes \"%s\"" (xmlEncode parameters.ReleaseNotes)
+      
     let packResult = 
         ExecProcess 
             (fun info -> 
             info.FileName <- parameters.ToolPath
-            info.Arguments <- sprintf "pack output %s version \"%s\" releaseNotes \"%s\"" parameters.OutputPath 
-                                  parameters.Version (xmlEncode parameters.ReleaseNotes)) parameters.TimeOut
+            info.Arguments <- sprintf "pack output %s%s%s" parameters.OutputPath version releaseNotes) parameters.TimeOut
     
     if packResult <> 0 then failwithf "Error during packing %s." parameters.WorkingDir
     traceEndTask "PaketPack" parameters.WorkingDir
@@ -74,12 +74,12 @@ let Push setParams =
     let parameters : PaketPushParams = PaketPushDefaults() |> setParams
 
     let packages = !! (parameters.WorkingDir @@ "/**/*.nupkg") |> Seq.toList
-    let key = if parameters.ApiKey = null then "" else sprintf " apikey %s" parameters.ApiKey
+    let key = if String.IsNullOrWhiteSpace parameters.ApiKey then "" else sprintf " apikey \"%s\"" parameters.ApiKey
     traceStartTask "PaketPush" (separated ", " packages)
     for package in packages do
         let pushResult = 
             ExecProcess (fun info -> 
                 info.FileName <- parameters.ToolPath
-                info.Arguments <- sprintf "push url %s endpoint %s file %s%s" parameters.PublishUrl parameters.EndPoint package key) System.TimeSpan.MaxValue
+                info.Arguments <- sprintf "push url %s endpoint %s file \"%s\"%s" parameters.PublishUrl parameters.EndPoint package key) System.TimeSpan.MaxValue
         if pushResult <> 0 then failwithf "Error during pushing %s." package
     traceEndTask "PaketPush" (separated ", " packages)
