@@ -74,13 +74,12 @@ let Push setParams =
     let parameters : PaketPushParams = PaketPushDefaults() |> setParams
 
     let packages = !! (parameters.WorkingDir @@ "/**/*.nupkg") |> Seq.toList
+    let key = if parameters.ApiKey = null then "" else sprintf " apikey %s" parameters.ApiKey
     traceStartTask "PaketPush" (separated ", " packages)
     for package in packages do
         let pushResult = 
             ExecProcess (fun info -> 
                 info.FileName <- parameters.ToolPath
-                info.Arguments <- sprintf "push url %s endpoint %s file %s" parameters.PublishUrl package
-                if parameters.ApiKey <> null then
-                  info.Arguments <- sprintf "%s apikey %s" info.Arguments parameters.ApiKey) System.TimeSpan.MaxValue
+                info.Arguments <- sprintf "push url %s endpoint %s file %s%s" parameters.PublishUrl parameters.EndPoint package key) System.TimeSpan.MaxValue
         if pushResult <> 0 then failwithf "Error during pushing %s." package
     traceEndTask "PaketPush" (separated ", " packages)
