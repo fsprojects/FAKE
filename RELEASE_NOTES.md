@@ -1,3 +1,6 @@
+#### 3.17.10 - 25.02.2015
+* BUGFIX: Allow endpoint in push task - https://github.com/fsprojects/Paket/pull/652
+
 #### 3.17.9 - 24.02.2015
 * BUGFIX: Use correct apikey for paket push - https://github.com/fsharp/FAKE/pull/664
 
