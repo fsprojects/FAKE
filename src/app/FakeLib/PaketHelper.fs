@@ -39,7 +39,7 @@ let PaketPushDefaults() : PaketPushParams =
       TimeOut = TimeSpan.FromMinutes 5.
       PublishUrl = "https://nuget.org"
       EndPoint =  "/api/v2/package"
-      WorkingDir = "."
+      WorkingDir = "./temp"
       ApiKey = null }
 
 /// Creates a new NuGet package by using Paket pack on all paket.template files in the working directory.
