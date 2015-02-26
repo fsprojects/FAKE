@@ -1,3 +1,6 @@
+#### 3.17.13 - 26.02.2015
+* BUGFIX: Paket helper should not submit the endpoint if no endpoint was given - https://github.com/fsharp/FAKE/issues/667
+
 #### 3.17.12 - 25.02.2015
 * BUGFIX: Paket helper should not override version for project packages - https://github.com/fsharp/FAKE/issues/666
 

@@ -37,8 +37,8 @@ type PaketPushParams =
 let PaketPushDefaults() : PaketPushParams = 
     { ToolPath = (findToolFolderInSubPath "paket.exe" (currentDirectory @@ ".paket")) @@ "paket.exe"
       TimeOut = TimeSpan.FromMinutes 5.
-      PublishUrl = "https://nuget.org"
-      EndPoint =  "/api/v2/package"
+      PublishUrl = null
+      EndPoint =  null
       WorkingDir = "./temp"
       ApiKey = null }
 
@@ -73,13 +73,16 @@ let Pack setParams =
 let Push setParams = 
     let parameters : PaketPushParams = PaketPushDefaults() |> setParams
 
-    let packages = !! (parameters.WorkingDir @@ "/**/*.nupkg") |> Seq.toList
+    let packages = !! (parameters.WorkingDir @@ "/**/*.nupkg") |> Seq.toList    
+    let url = if String.IsNullOrWhiteSpace parameters.PublishUrl then "" else sprintf " url \"%s\"" parameters.PublishUrl
+    let endpoint = if String.IsNullOrWhiteSpace parameters.EndPoint then "" else sprintf " endpoint \"%s\"" parameters.EndPoint
     let key = if String.IsNullOrWhiteSpace parameters.ApiKey then "" else sprintf " apikey \"%s\"" parameters.ApiKey
+
     traceStartTask "PaketPush" (separated ", " packages)
     for package in packages do
         let pushResult = 
             ExecProcess (fun info -> 
                 info.FileName <- parameters.ToolPath
-                info.Arguments <- sprintf "push url %s endpoint %s file \"%s\"%s" parameters.PublishUrl parameters.EndPoint package key) System.TimeSpan.MaxValue
+                info.Arguments <- sprintf "push %s%s%s file \"%s\"" url endpoint key package) System.TimeSpan.MaxValue
         if pushResult <> 0 then failwithf "Error during pushing %s." package
     traceEndTask "PaketPush" (separated ", " packages)
