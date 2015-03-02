@@ -94,6 +94,7 @@
     <Compile Include="DynamicsNavFile.fs" />
     <Compile Include="SCPHelper.fs" />
     <Compile Include="XCopyHelper.fs" />
+    <Compile Include="RSyncHelper.fs" />
     <Compile Include="XpkgHelper.fs" />
     <Compile Include="VersionHelper.fs" />
     <Compile Include="MSBuild\ProjectSystem.fs" />
