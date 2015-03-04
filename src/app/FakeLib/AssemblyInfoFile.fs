@@ -181,16 +181,7 @@ let CreateVisualBasicAssemblyInfoWithConfig outputFileName attributes (config : 
              |> Seq.toList
              |> List.map (fun (attr : Attribute) -> sprintf "<assembly: %sAttribute(%s)>" attr.Name attr.Value))
 
-    let sourceLines =
-        if generateClass then
-            [ sprintf "Namespace %s" useNamespace
-              "    Friend NotInheritable Class"
-              sprintf "        Friend Const Version As String = %s" (getAssemblyVersionInfo attributes)
-              "    End Class"
-              "End Namespace" ]
-        else []
-
-    attributeLines @ sourceLines
+    attributeLines 
     |> writeToFile outputFileName
     traceEndTask "AssemblyInfo" outputFileName
 
