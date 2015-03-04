@@ -1,35 +1,17 @@
-#### 3.17.14 - 03.03.2015
-* SCPHelper does allow copying single files - https://github.com/fsharp/FAKE/issues/671
-
-#### 3.17.13 - 26.02.2015
-* BUGFIX: Paket helper should not submit the endpoint if no endpoint was given - https://github.com/fsharp/FAKE/issues/667
-
-#### 3.17.12 - 25.02.2015
-* BUGFIX: Paket helper should not override version for project packages - https://github.com/fsharp/FAKE/issues/666
-
-#### 3.17.11 - 25.02.2015
-* BUGFIX: Allow endpoint in push task - https://github.com/fsprojects/Paket/pull/652
-
-#### 3.17.9 - 24.02.2015
-* BUGFIX: Use correct apikey for paket push - https://github.com/fsharp/FAKE/pull/664
-
-#### 3.17.8 - 24.02.2015
+#### 3.18.0 - 04.03.2015
+* Remvoved internal class generated in AssemblyInfo.Vb - https://github.com/fsharp/FAKE/pull/673
+* Adding ability to control type library export (/tlb flag) of RegAsm - https://github.com/fsharp/FAKE/pull/668
 * Adding ability to run nuget package restore on a visual studio solution - https://github.com/fsharp/FAKE/pull/662
-
-#### 3.17.6 - 23.02.2015
 * Add OwnerId, type docs, and better error handling for HockeyAppHelper - https://github.com/fsharp/FAKE/pull/661
-
-#### 3.17.5 - 23.02.2015
 * Don't report unit test failure twice to TeamCity - https://github.com/fsharp/FAKE/pull/659
-
-#### 3.17.3 - 20.02.2015
 * New tasks for `paket pack` and `paket push`- http://fsprojects.github.io/Paket/index.html
-
-#### 3.17.2 - 19.02.2015
 * Allow csproj being passed as a NuSpec file - https://github.com/fsharp/FAKE/pull/644 
-
-#### 3.17.1 - 19.02.2015
 * Helper for uploading mobile apps to HockeyApp - https://github.com/fsharp/FAKE/pull/656  
+* SCPHelper does allow copying single files - https://github.com/fsharp/FAKE/issues/671
+* BUGFIX: Paket helper should not submit the endpoint if no endpoint was given - https://github.com/fsharp/FAKE/issues/667
+* BUGFIX: Paket helper should not override version for project packages - https://github.com/fsharp/FAKE/issues/666
+* BUGFIX: Allow endpoint in push task - https://github.com/fsprojects/Paket/pull/652
+* BUGFIX: Use correct apikey for paket push - https://github.com/fsharp/FAKE/pull/664
 
 #### 3.17.0 - 12.02.2015
 * Revert to fsi in Fake.Deploy - https://github.com/fsharp/FAKE/pull/653    
