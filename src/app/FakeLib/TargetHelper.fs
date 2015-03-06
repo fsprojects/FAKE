@@ -348,6 +348,7 @@ let determineBuildOrder (d : TargetTemplate<unit>) =
 
     traverse [d] 0
 
+
     let result = 
         levels |> Seq.map (fun (KeyValue(l,p)) -> (l,p))
                 |> Seq.groupBy snd
@@ -362,55 +363,91 @@ let determineBuildOrder (d : TargetTemplate<unit>) =
 let run targetName =            
     if doesTargetMeansListTargets targetName then listTargets() else
     if LastDescription <> null then failwithf "You set a task description (%A) but didn't specify a task." LastDescription
-//    let rec runTarget targetName =
-//        try      
-//            if errors = [] && ExecutedTargets.Contains (toLower targetName) |> not then
-//                let target = getTarget targetName      
-//      
-//                if hasBuildParam "single-target" then
-//                    traceImportant "Single target mode ==> Skipping dependencies."
-//                else
-//                    List.iter runTarget target.Dependencies
-//      
-//                if errors = [] then
-//                    traceStartTarget target.Name target.Description (dependencyString target)
-//                    let watch = new System.Diagnostics.Stopwatch()
-//                    watch.Start()
-//                    target.Function()
-//                    addExecutedTarget targetName watch.Elapsed
-//                    traceEndTarget target.Name                
-//        with
-//        | exn -> targetError targetName exn
-//      
+    let rec runTarget targetName =
+        try      
+            if errors = [] && ExecutedTargets.Contains (toLower targetName) |> not then
+                let target = getTarget targetName      
+      
+                if hasBuildParam "single-target" then
+                    traceImportant "Single target mode ==> Skipping dependencies."
+                else
+                    List.iter runTarget target.Dependencies
+      
+                if errors = [] then
+                    traceStartTarget target.Name target.Description (dependencyString target)
+                    let watch = new System.Diagnostics.Stopwatch()
+                    watch.Start()
+                    target.Function()
+                    addExecutedTarget targetName watch.Elapsed
+                    traceEndTarget target.Name                
+        with
+        | exn -> targetError targetName exn
+
+    let parallelJobs = environVarOrDefault "fake-parallel-jobs" "1" |> Int32.Parse
+      
     let watch = new System.Diagnostics.Stopwatch()
     watch.Start()        
     try
         tracefn "Building project with version: %s" buildVersion
 
-        let order = determineBuildOrder (getTarget targetName)
+        if parallelJobs > 1 then
+            // multi threaded build
 
-        for par in order do
-            let sem = new System.Threading.SemaphoreSlim(0)
+            tracefn "Running parallel build with %d workers" parallelJobs
 
-            for target in par do
-                System.Threading.Tasks.Task.Factory.StartNew(fun () ->
-                    try
-                        traceStartTarget target.Name target.Description (dependencyString target)
-                        let watch = new System.Diagnostics.Stopwatch()
-                        watch.Start()
-                        target.Function()
-                        addExecutedTarget target.Name watch.Elapsed
-                        traceEndTarget target.Name       
-                    finally
-                        sem.Release() |> ignore
-                ) |> ignore
+            let queue = System.Collections.Concurrent.ConcurrentBag()
+            let finished = new System.Threading.CountdownEvent(0)
+            let cancel = new System.Threading.CancellationTokenSource()
+            let ct = cancel.Token
 
-            for _ in par do
-                sem.Wait()
-            sem.Dispose()
+            let order = determineBuildOrder (getTarget targetName)
 
-        //PrintDependencyGraph false targetName
-        //runTarget targetName
+            let worker (threadState : obj) =
+                try
+                    while true do
+                        ct.ThrowIfCancellationRequested()
+                        match queue.TryTake() with
+                            | (true, target) -> 
+                                try
+                                    traceStartTarget target.Name target.Description (dependencyString target)
+                                    let watch = new System.Diagnostics.Stopwatch()
+                                    watch.Start()
+                                    target.Function()
+                                    addExecutedTarget target.Name watch.Elapsed
+                                    traceEndTarget target.Name       
+                                finally
+                                    finished.Signal() |> ignore
+                            | _ ->
+                                System.Threading.Thread.Sleep(100)
+                with :? System.OperationCanceledException ->
+                    ()
+
+            let workers =
+                Array.init parallelJobs (fun i -> 
+                    let thread = new System.Threading.Thread(System.Threading.ThreadStart(worker), IsBackground = true)
+                    thread.Start()
+                    thread
+                )
+
+            
+            for par in order do
+                finished.Reset(par.Length)
+
+                for e in par do queue.Add e
+                    
+                finished.Wait()
+
+            cancel.Cancel()
+            workers |> Array.iter (fun t -> t.Join())
+
+            finished.Dispose()
+            cancel.Dispose()
+
+        else
+            // single threaded build
+            PrintDependencyGraph false targetName
+            runTarget targetName
+
     finally
         if errors <> [] then
             runBuildFailureTargets()    
