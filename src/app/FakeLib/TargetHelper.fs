@@ -202,8 +202,10 @@ let targetError targetName (exn:System.Exception) =
         sendTeamCityError <| error exn
 
 let addExecutedTarget target time =
-    ExecutedTargets.Add (toLower target) |> ignore
-    ExecutedTargetTimes.Add(toLower target,time) |> ignore
+    lock ExecutedTargets (fun () ->
+        ExecutedTargets.Add (toLower target) |> ignore
+        ExecutedTargetTimes.Add(toLower target,time) |> ignore
+    )
 
 /// Runs all activated final targets (in alphabetically order).
 /// [omit]
@@ -322,36 +324,93 @@ let listTargets() =
 // Instead of the target can be used the list dependencies graph parameter.
 let doesTargetMeansListTargets target = target = "--listTargets"  || target = "-lt"
 
+
+let determineBuildOrder (d : TargetTemplate<unit>) =
+    let levels = Dictionary<string, int>()
+        
+    let found (d : TargetTemplate<unit>) (level : int) =
+        match levels.TryGetValue d.Name with
+            | (true, old) ->
+                if old < level then
+                    levels.[d.Name] <- level
+            | _ ->
+                levels.[d.Name] <- level
+
+    let rec traverse (graphs : seq<TargetTemplate<unit>>) (level : int) =
+        for g in graphs do
+            found g level
+
+        let allDependencies = graphs |> Seq.collect (fun g -> g.Dependencies) |> Set.ofSeq
+
+        if not <| Set.isEmpty allDependencies then
+            traverse (allDependencies |> Seq.map getTarget) (level + 1)
+        
+
+    traverse [d] 0
+
+    let result = 
+        levels |> Seq.map (fun (KeyValue(l,p)) -> (l,p))
+                |> Seq.groupBy snd
+                |> Seq.sortBy (fun (l,_) -> -l)
+                |> Seq.map snd
+                |> Seq.map (fun v -> v |> Seq.map fst |> Set.ofSeq |> Seq.map getTarget |> Seq.toArray)
+                |> Seq.toList
+
+    result
+
 /// Runs a target and its dependencies.
 let run targetName =            
     if doesTargetMeansListTargets targetName then listTargets() else
     if LastDescription <> null then failwithf "You set a task description (%A) but didn't specify a task." LastDescription
-    let rec runTarget targetName =
-        try      
-            if errors = [] && ExecutedTargets.Contains (toLower targetName) |> not then
-                let target = getTarget targetName      
-      
-                if hasBuildParam "single-target" then
-                    traceImportant "Single target mode ==> Skipping dependencies."
-                else
-                    List.iter runTarget target.Dependencies
-      
-                if errors = [] then
-                    traceStartTarget target.Name target.Description (dependencyString target)
-                    let watch = new System.Diagnostics.Stopwatch()
-                    watch.Start()
-                    target.Function()
-                    addExecutedTarget targetName watch.Elapsed
-                    traceEndTarget target.Name                
-        with
-        | exn -> targetError targetName exn
-      
+//    let rec runTarget targetName =
+//        try      
+//            if errors = [] && ExecutedTargets.Contains (toLower targetName) |> not then
+//                let target = getTarget targetName      
+//      
+//                if hasBuildParam "single-target" then
+//                    traceImportant "Single target mode ==> Skipping dependencies."
+//                else
+//                    List.iter runTarget target.Dependencies
+//      
+//                if errors = [] then
+//                    traceStartTarget target.Name target.Description (dependencyString target)
+//                    let watch = new System.Diagnostics.Stopwatch()
+//                    watch.Start()
+//                    target.Function()
+//                    addExecutedTarget targetName watch.Elapsed
+//                    traceEndTarget target.Name                
+//        with
+//        | exn -> targetError targetName exn
+//      
     let watch = new System.Diagnostics.Stopwatch()
     watch.Start()        
     try
         tracefn "Building project with version: %s" buildVersion
-        PrintDependencyGraph false targetName
-        runTarget targetName
+
+        let order = determineBuildOrder (getTarget targetName)
+
+        for par in order do
+            let sem = new System.Threading.SemaphoreSlim(0)
+
+            for target in par do
+                System.Threading.Tasks.Task.Factory.StartNew(fun () ->
+                    try
+                        traceStartTarget target.Name target.Description (dependencyString target)
+                        let watch = new System.Diagnostics.Stopwatch()
+                        watch.Start()
+                        target.Function()
+                        addExecutedTarget target.Name watch.Elapsed
+                        traceEndTarget target.Name       
+                    finally
+                        sem.Release() |> ignore
+                ) |> ignore
+
+            for _ in par do
+                sem.Wait()
+            sem.Dispose()
+
+        //PrintDependencyGraph false targetName
+        //runTarget targetName
     finally
         if errors <> [] then
             runBuildFailureTargets()    
