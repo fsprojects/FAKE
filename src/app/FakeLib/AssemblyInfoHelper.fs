@@ -231,6 +231,7 @@ let ReplaceAssemblyInfoVersions param =
         |> replaceAttribute "AssemblyConfiguration" parameters.AssemblyConfiguration
         |> replaceAttribute "AssemblyFileVersion" parameters.AssemblyFileVersion
         |> replaceAttribute "AssemblyInformationalVersion" parameters.AssemblyInformationalVersion
+        |> replaceAttribute "AssemblyMetadata" parameters.AssemblyMetadata
     
     ReadFile parameters.OutputFileName
     |> Seq.map replaceLine
