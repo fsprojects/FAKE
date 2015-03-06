@@ -216,7 +216,8 @@ let AssemblyInfoReplacementDefaults =
       AssemblyConfiguration = null
       AssemblyVersion = null
       AssemblyFileVersion = null
-      AssemblyInformationalVersion = null }
+      AssemblyInformationalVersion = null 
+      AssemblyMetadata = null}
 
 let ReplaceAssemblyInfoVersions param = 
     let (parameters : AssemblyInfoReplacementParams) = param AssemblyInfoReplacementDefaults
