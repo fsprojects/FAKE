@@ -324,10 +324,11 @@ let listTargets() =
 // Instead of the target can be used the list dependencies graph parameter.
 let doesTargetMeansListTargets target = target = "--listTargets"  || target = "-lt"
 
-
+/// Determines a parallel build order for the given set of targets
 let determineBuildOrder (d : TargetTemplate<unit>) =
     let levels = Dictionary<string, int>()
         
+    // store the maximal level for each target
     let found (d : TargetTemplate<unit>) (level : int) =
         match levels.TryGetValue d.Name with
             | (true, old) ->
@@ -336,28 +337,90 @@ let determineBuildOrder (d : TargetTemplate<unit>) =
             | _ ->
                 levels.[d.Name] <- level
 
+    // traverse the given target-graph and store the maximal level
+    // for each target.
     let rec traverse (graphs : seq<TargetTemplate<unit>>) (level : int) =
         for g in graphs do
             found g level
 
-        let allDependencies = graphs |> Seq.collect (fun g -> g.Dependencies) |> Set.ofSeq
+        let allDependencies = graphs |> Seq.collect (fun g -> g.Dependencies) |> Seq.distinct
 
-        if not <| Set.isEmpty allDependencies then
+        if not <| Seq.isEmpty allDependencies then
             traverse (allDependencies |> Seq.map getTarget) (level + 1)
-        
-
+  
     traverse [d] 0
 
-
+    // the results are grouped by their level, sorted descending (by level) and 
+    // finally grouped together in a list<TargetTemplate<unit>[]>
     let result = 
         levels |> Seq.map (fun (KeyValue(l,p)) -> (l,p))
-                |> Seq.groupBy snd
-                |> Seq.sortBy (fun (l,_) -> -l)
-                |> Seq.map snd
-                |> Seq.map (fun v -> v |> Seq.map fst |> Set.ofSeq |> Seq.map getTarget |> Seq.toArray)
-                |> Seq.toList
+               |> Seq.groupBy snd
+               |> Seq.sortBy (fun (l,_) -> -l)
+               |> Seq.map snd
+               |> Seq.map (fun v -> v |> Seq.map fst |> Seq.distinct |> Seq.map getTarget |> Seq.toArray)
+               |> Seq.toList
 
     result
+
+/// starts the given number of threads working on targets in the queue.
+let startTargetWorkers (parallelJobs : int) (bag : System.Collections.Concurrent.ConcurrentBag<Target>) (finished : System.Threading.CountdownEvent) =
+    let cancel = new System.Threading.CancellationTokenSource()
+    let ct = cancel.Token
+    
+    // worker thread function  
+    let worker (threadState : obj) =
+        try
+            while true do
+                ct.ThrowIfCancellationRequested()
+                match bag.TryTake() with
+                    | (true, target) -> 
+                        try
+                            traceStartTarget target.Name target.Description (dependencyString target)
+                            let watch = new System.Diagnostics.Stopwatch()
+                            watch.Start()
+                            target.Function()
+                            addExecutedTarget target.Name watch.Elapsed
+                            traceEndTarget target.Name       
+                        finally
+                            finished.Signal() |> ignore
+                    | _ ->
+                        System.Threading.Thread.Sleep(100)
+        with :? System.OperationCanceledException ->
+            ()
+
+    let workers =
+        Array.init parallelJobs (fun i -> 
+            let thread = new System.Threading.Thread(System.Threading.ThreadStart(worker), IsBackground = true)
+            thread.Start()
+            thread
+        )
+
+    workers, cancel
+
+/// runs the given target-order in parallel using the given number of threads
+let runParallelTargets (parallelJobs : int) (order : list<TargetTemplate<unit>[]>) =
+    // create a concurrent bag for holding the targets
+    // currently runnable.
+    let bag = System.Collections.Concurrent.ConcurrentBag()
+    let finished = new System.Threading.CountdownEvent(0)
+
+    // start a number of worker threads running all targets
+    // in the bag and signaling the finished event when done.
+    let workers, cancel = startTargetWorkers parallelJobs bag finished
+
+    // sequentially enqueue all parallel targets and wait for each
+    // parallel "level".
+    for par in order do
+        finished.Reset(par.Length)
+        for e in par do bag.Add e
+        finished.Wait()
+
+    // cancel the created threads
+    cancel.Cancel()
+
+    // release the synchronization stuff
+    finished.Dispose()
+    cancel.Dispose()
 
 /// Runs a target and its dependencies.
 let run targetName =            
@@ -383,65 +446,22 @@ let run targetName =
         with
         | exn -> targetError targetName exn
 
-    let parallelJobs = environVarOrDefault "fake-parallel-jobs" "1" |> Int32.Parse
-      
+    
     let watch = new System.Diagnostics.Stopwatch()
     watch.Start()        
     try
         tracefn "Building project with version: %s" buildVersion
+        let parallelJobs = environVarOrDefault "fake-parallel-jobs" "1" |> int
+      
 
         if parallelJobs > 1 then
-            // multi threaded build
-
             tracefn "Running parallel build with %d workers" parallelJobs
 
-            let queue = System.Collections.Concurrent.ConcurrentBag()
-            let finished = new System.Threading.CountdownEvent(0)
-            let cancel = new System.Threading.CancellationTokenSource()
-            let ct = cancel.Token
-
+            // determine a parallel build order
             let order = determineBuildOrder (getTarget targetName)
 
-            let worker (threadState : obj) =
-                try
-                    while true do
-                        ct.ThrowIfCancellationRequested()
-                        match queue.TryTake() with
-                            | (true, target) -> 
-                                try
-                                    traceStartTarget target.Name target.Description (dependencyString target)
-                                    let watch = new System.Diagnostics.Stopwatch()
-                                    watch.Start()
-                                    target.Function()
-                                    addExecutedTarget target.Name watch.Elapsed
-                                    traceEndTarget target.Name       
-                                finally
-                                    finished.Signal() |> ignore
-                            | _ ->
-                                System.Threading.Thread.Sleep(100)
-                with :? System.OperationCanceledException ->
-                    ()
-
-            let workers =
-                Array.init parallelJobs (fun i -> 
-                    let thread = new System.Threading.Thread(System.Threading.ThreadStart(worker), IsBackground = true)
-                    thread.Start()
-                    thread
-                )
-
-            
-            for par in order do
-                finished.Reset(par.Length)
-
-                for e in par do queue.Add e
-                    
-                finished.Wait()
-
-            cancel.Cancel()
-            workers |> Array.iter (fun t -> t.Join())
-
-            finished.Dispose()
-            cancel.Dispose()
+            // run the target-order in parallel 
+            runParallelTargets parallelJobs order
 
         else
             // single threaded build
