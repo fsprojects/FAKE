@@ -1,3 +1,6 @@
+#### 3.18.1 - 08.03.2015
+* Added metadata property for AssemblyInfoReplacementParams - https://github.com/fsharp/FAKE/pull/675
+
 #### 3.18.0 - 04.03.2015
 * Remvoved internal class generated in AssemblyInfo.Vb - https://github.com/fsharp/FAKE/pull/673
 * Adding ability to control type library export (/tlb flag) of RegAsm - https://github.com/fsharp/FAKE/pull/668
