@@ -378,16 +378,17 @@ let runTargetsParallel (count : int) (targets : Target[]) =
     // since Async.Parallel may or may not create Tasks
     // plain TPL is used here (ensuring that all targets
     // are executed in their own task)
+    let startAndAwait = Async.StartAsTask >> Async.AwaitTask
+
     targets |> Seq.map (fun t -> 
-                System.Threading.Tasks.Task.Factory.StartNew<unit> (fun () ->
-                    sem.Wait()
+                async {
                     try
+                        sem.Wait()
                         runSingleTarget t
                     finally
                         sem.Release() |> ignore
-                )
+                } |> startAndAwait
             )
-            |> Seq.map Async.AwaitTask
             |> Async.Parallel
             |> Async.RunSynchronously
             |> ignore
