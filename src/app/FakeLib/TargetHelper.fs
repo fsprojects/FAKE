@@ -326,125 +326,87 @@ let doesTargetMeansListTargets target = target = "--listTargets"  || target = "-
 
 /// Determines a parallel build order for the given set of targets
 let determineBuildOrder (d : TargetTemplate<unit>) =
-    let levels = Dictionary<string, int>()
-        
-    // store the maximal level for each target
-    let found (d : TargetTemplate<unit>) (level : int) =
-        match levels.TryGetValue d.Name with
-            | (true, old) ->
-                if old < level then
-                    levels.[d.Name] <- level
-            | _ ->
-                levels.[d.Name] <- level
+          
+    // determines the maximal level at which a target occurs
+    let rec determineLevels (currentLevel : int) (levels : Map<string, int>) (t : seq<TargetTemplate<unit>>) =
+        let levels = 
+            t |> Seq.fold (fun m t -> 
+                match Map.tryFind t.Name m with
+                    | Some mapLevel when mapLevel >= currentLevel -> m
+                    | _ -> Map.add t.Name currentLevel m
+            ) levels
+            
+        t |> Seq.map (fun t -> t.Dependencies |> Seq.map getTarget) 
+          |> Seq.fold (determineLevels (currentLevel + 1)) levels
 
-    // traverse the given target-graph and store the maximal level
-    // for each target.
-    let rec traverse (graphs : seq<TargetTemplate<unit>>) (level : int) =
-        for g in graphs do
-            found g level
-
-        let allDependencies = graphs |> Seq.collect (fun g -> g.Dependencies) |> Seq.distinct
-
-        if not <| Seq.isEmpty allDependencies then
-            traverse (allDependencies |> Seq.map getTarget) (level + 1)
-  
-    traverse [d] 0
+    let levels = determineLevels 0 Map.empty [d]
 
     // the results are grouped by their level, sorted descending (by level) and 
     // finally grouped together in a list<TargetTemplate<unit>[]>
     let result = 
-        levels |> Seq.map (fun (KeyValue(l,p)) -> (l,p))
+        levels |> Map.toSeq
                |> Seq.groupBy snd
                |> Seq.sortBy (fun (l,_) -> -l)
                |> Seq.map snd
                |> Seq.map (fun v -> v |> Seq.map fst |> Seq.distinct |> Seq.map getTarget |> Seq.toArray)
                |> Seq.toList
 
+    // Note that this build order cannot be considered "optimal" 
+    // since it may introduce order where actually no dependencies
+    // exist. However it yields a "good" execution order in practice.
     result
 
-/// starts the given number of threads working on targets in the queue.
-let startTargetWorkers (parallelJobs : int) (bag : System.Collections.Concurrent.ConcurrentBag<Target>) (finished : System.Threading.CountdownEvent) =
-    let cancel = new System.Threading.CancellationTokenSource()
-    let ct = cancel.Token
-    
-    // worker thread function  
-    let worker (threadState : obj) =
-        try
-            while true do
-                ct.ThrowIfCancellationRequested()
-                match bag.TryTake() with
-                    | (true, target) -> 
-                        try
-                            traceStartTarget target.Name target.Description (dependencyString target)
-                            let watch = new System.Diagnostics.Stopwatch()
-                            watch.Start()
-                            target.Function()
-                            addExecutedTarget target.Name watch.Elapsed
-                            traceEndTarget target.Name       
-                        finally
-                            finished.Signal() |> ignore
-                    | _ ->
-                        System.Threading.Thread.Sleep(100)
-        with :? System.OperationCanceledException ->
-            ()
+/// Runs a single target without its dependencies
+let runSingleTarget (target : TargetTemplate<unit>) =
+    try
+        if errors = [] then
+            traceStartTarget target.Name target.Description (dependencyString target)
+            let watch = new System.Diagnostics.Stopwatch()
+            watch.Start()
+            target.Function()
+            addExecutedTarget target.Name watch.Elapsed
+            traceEndTarget target.Name     
+    with exn ->
+        targetError target.Name exn
 
-    let workers =
-        Array.init parallelJobs (fun i -> 
-            let thread = new System.Threading.Thread(System.Threading.ThreadStart(worker), IsBackground = true)
-            thread.Start()
-            thread
-        )
+/// Runs the given array of targets in parallel using count tasks
+let runTargetsParallel (count : int) (targets : Target[]) =
+    // use a semaphore to limit the maximal number of parallel
+    // tasks working on targets.
+    use sem = new System.Threading.SemaphoreSlim(count)
 
-    workers, cancel
-
-/// runs the given target-order in parallel using the given number of threads
-let runParallelTargets (parallelJobs : int) (order : list<TargetTemplate<unit>[]>) =
-    // create a concurrent bag for holding the targets
-    // currently runnable.
-    let bag = System.Collections.Concurrent.ConcurrentBag()
-    let finished = new System.Threading.CountdownEvent(0)
-
-    // start a number of worker threads running all targets
-    // in the bag and signaling the finished event when done.
-    let workers, cancel = startTargetWorkers parallelJobs bag finished
-
-    // sequentially enqueue all parallel targets and wait for each
-    // parallel "level".
-    for par in order do
-        finished.Reset(par.Length)
-        for e in par do bag.Add e
-        finished.Wait()
-
-    // cancel the created threads
-    cancel.Cancel()
-
-    // release the synchronization stuff
-    finished.Dispose()
-    cancel.Dispose()
+    // since Async.Parallel may or may not create Tasks
+    // plain TPL is used here (ensuring that all targets
+    // are executed in their own task)
+    targets |> Seq.map (fun t -> 
+                System.Threading.Tasks.Task.Factory.StartNew<unit> (fun () ->
+                    sem.Wait()
+                    try
+                        runSingleTarget t
+                    finally
+                        sem.Release() |> ignore
+                )
+            )
+            |> Seq.map Async.AwaitTask
+            |> Async.Parallel
+            |> Async.RunSynchronously
+            |> ignore
 
 /// Runs a target and its dependencies.
 let run targetName =            
     if doesTargetMeansListTargets targetName then listTargets() else
     if LastDescription <> null then failwithf "You set a task description (%A) but didn't specify a task." LastDescription
+
     let rec runTarget targetName =
-        try      
-            if errors = [] && ExecutedTargets.Contains (toLower targetName) |> not then
-                let target = getTarget targetName      
+        if errors = [] && ExecutedTargets.Contains (toLower targetName) |> not then
+            let target = getTarget targetName      
       
-                if hasBuildParam "single-target" then
-                    traceImportant "Single target mode ==> Skipping dependencies."
-                else
-                    List.iter runTarget target.Dependencies
+            if hasBuildParam "single-target" then
+                traceImportant "Single target mode ==> Skipping dependencies."
+            else
+                List.iter runTarget target.Dependencies
       
-                if errors = [] then
-                    traceStartTarget target.Name target.Description (dependencyString target)
-                    let watch = new System.Diagnostics.Stopwatch()
-                    watch.Start()
-                    target.Function()
-                    addExecutedTarget targetName watch.Elapsed
-                    traceEndTarget target.Name                
-        with
-        | exn -> targetError targetName exn
+            runSingleTarget target            
 
     
     let watch = new System.Diagnostics.Stopwatch()
@@ -460,8 +422,9 @@ let run targetName =
             // determine a parallel build order
             let order = determineBuildOrder (getTarget targetName)
 
-            // run the target-order in parallel 
-            runParallelTargets parallelJobs order
+            // run every level in parallel
+            for par in order do
+                runTargetsParallel parallelJobs par
 
         else
             // single threaded build
