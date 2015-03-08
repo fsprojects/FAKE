@@ -1,6 +1,5 @@
 ﻿[<AutoOpen>]
 /// Generates an AssemblyInfo file
-/// **Obsolete - Please use the new AssemblyInfoFile tasks**
 module Fake.AssemblyInfoHelper
 
 open System
