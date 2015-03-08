@@ -207,7 +207,8 @@ type AssemblyInfoReplacementParams =
       AssemblyVersion : string
       AssemblyFileVersion : string
       AssemblyInformationalVersion : string
-      AssemblyConfiguration : string }
+      AssemblyConfiguration : string
+      AssemblyMetadata : string}
 
 /// AssemblyInfoReplacement default params
 let AssemblyInfoReplacementDefaults = 
@@ -215,7 +216,8 @@ let AssemblyInfoReplacementDefaults =
       AssemblyConfiguration = null
       AssemblyVersion = null
       AssemblyFileVersion = null
-      AssemblyInformationalVersion = null }
+      AssemblyInformationalVersion = null 
+      AssemblyMetadata = null}
 
 let ReplaceAssemblyInfoVersions param = 
     let (parameters : AssemblyInfoReplacementParams) = param AssemblyInfoReplacementDefaults
@@ -230,6 +232,7 @@ let ReplaceAssemblyInfoVersions param =
         |> replaceAttribute "AssemblyConfiguration" parameters.AssemblyConfiguration
         |> replaceAttribute "AssemblyFileVersion" parameters.AssemblyFileVersion
         |> replaceAttribute "AssemblyInformationalVersion" parameters.AssemblyInformationalVersion
+        |> replaceAttribute "AssemblyMetadata" parameters.AssemblyMetadata
     
     ReadFile parameters.OutputFileName
     |> Seq.map replaceLine
