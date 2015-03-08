@@ -148,6 +148,7 @@
     <Compile Include="XDTHelper.fs" />
     <Compile Include="AzureWebJobs.fs" />
     <None Include="app.config" />
+    <Compile Include="AzureCloudServices.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
