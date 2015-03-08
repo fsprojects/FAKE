@@ -4,6 +4,7 @@ module Fake.TargetHelper
     
 open System
 open System.Collections.Generic
+open System.Linq
 
 /// [omit]
 type TargetDescription = string
@@ -371,27 +372,12 @@ let runSingleTarget (target : TargetTemplate<unit>) =
 
 /// Runs the given array of targets in parallel using count tasks
 let runTargetsParallel (count : int) (targets : Target[]) =
-    // use a semaphore to limit the maximal number of parallel
-    // tasks working on targets.
-    use sem = new System.Threading.SemaphoreSlim(count)
+    targets.AsParallel()
+        .WithDegreeOfParallelism(count)
+        .Select(runSingleTarget)
+        .ToArray()
+    |> ignore
 
-    // since Async.Parallel may or may not create Tasks
-    // plain TPL is used here (ensuring that all targets
-    // are executed in their own task)
-    let startAndAwait = Async.StartAsTask >> Async.AwaitTask
-
-    targets |> Seq.map (fun t -> 
-                async {
-                    try
-                        sem.Wait()
-                        runSingleTarget t
-                    finally
-                        sem.Release() |> ignore
-                } |> startAndAwait
-            )
-            |> Async.Parallel
-            |> Async.RunSynchronously
-            |> ignore
 
 /// Runs a target and its dependencies.
 let run targetName =            
