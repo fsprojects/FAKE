@@ -1,4 +1,4 @@
-#### 3.18.1 - 08.03.2015
+#### 3.18.2 - 08.03.2015
 * Added metadata property for AssemblyInfoReplacementParams - https://github.com/fsharp/FAKE/pull/675
 
 #### 3.18.0 - 04.03.2015
