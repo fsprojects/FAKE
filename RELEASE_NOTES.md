@@ -1,5 +1,5 @@
-#### 3.19.0 - 09.03.2015
-* Added basic support for creating Azure Cloud Services - https://github.com/fsharp/FAKE/pull/677
+#### 3.19.1 - 09.03.2015
+* Added basic support for creating Azure Cloud Services - http://fsharp.github.io/FAKE/apidocs/fake-azure-cloudservices.html
 * Added metadata property for AssemblyInfoReplacementParams - https://github.com/fsharp/FAKE/pull/675
 
 #### 3.18.0 - 04.03.2015
