@@ -158,19 +158,61 @@ let targetFromTemplate template name parameters =
     name <== template.Dependencies
     LastDescription <- null
 
-/// Creates a TargetTemplate with dependencies-
-let TargetTemplateWithDependecies dependencies body =
-    { Name = String.Empty;
-      Dependencies = dependencies;
-      Description = LastDescription;
-      Function = body}     
-        |> targetFromTemplate
+/// Creates a TargetTemplate with dependencies.
+///
+/// ## Sample
+///
+/// The following sample creates 4 targets using TargetTemplateWithDependencies and hooks them into the build pipeline.
+///
+///     // Create target creation functions
+///     let createCompileTarget name strategy = 
+///     TargetTemplateWithDependencies 
+///         ["Clean"; "ResolveDependencies"] // dependencies to other targets 
+///         (fun targetParameter -> 
+///           tracefn "--- start compile product..."  
+///           if targetParameter = "a" then
+///             tracefn "    ---- Strategy A"
+///           else
+///             tracefn "    ---- Strategy B"
+///           tracefn "--- finish compile product ..."    
+///         ) name strategy
+///     
+///     let createTestTarget name dependencies filePattern = 
+///       TargetTemplateWithDependencies 
+///         dependencies 
+///         (fun filePattern ->   
+///           tracefn "--- start compile tests ..."
+///           !! filePattern
+///           |> RunTests
+///           tracefn "--- finish compile tests ...")
+///         name filePattern
+///     
+///     // create some targets
+///     createCompileTarget "C1" "a"
+///     createCompileTarget "C2" "b"
+///     
+///     createTestTarget "T1" ["C1"] "**/C1/*.*"
+///     createTestTarget "T2" ["C1"; "C2"] "**/C?/*.*"
+///     
+///     // hook targets to normal build pipeline
+///     "T1" ==> "T2" ==> "Test"
+///
+let TargetTemplateWithDependencies dependencies body name parameters = 
+    let template = 
+        { Name = String.Empty
+          Dependencies = dependencies
+          Description = LastDescription
+          Function = body }
+    targetFromTemplate template name parameters
+
+[<Obsolete("Use TargetTemplateWithDependencies")>]
+let TargetTemplateWithDependecies dependencies = TargetTemplateWithDependencies dependencies
 
 /// Creates a TargetTemplate.
-let TargetTemplate body = TargetTemplateWithDependecies [] body 
+let TargetTemplate body = TargetTemplateWithDependencies [] body 
   
 /// Creates a Target.
-let Target name body = TargetTemplate body name ()  
+let Target name body = TargetTemplate body name ()
 
 /// Represents build errors
 type BuildError = { 
