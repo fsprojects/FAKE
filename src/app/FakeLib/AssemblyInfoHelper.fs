@@ -227,7 +227,7 @@ let ReplaceAssemblyInfoVersions param =
     
     let metadaData =
         if parameters.AssemblyMetadata = [] then "" else
-        "\"" + String.Join("\", \"", parameters.AssemblyMetadata) + "\""
+        (String.Join("\", \"", parameters.AssemblyMetadata))
 
     let replaceLine line = 
         line
