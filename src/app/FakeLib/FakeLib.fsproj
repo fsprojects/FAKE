@@ -150,6 +150,7 @@
     <Compile Include="AzureWebJobs.fs" />
     <Compile Include="HockeyAppHelper.fs" />
     <None Include="app.config" />
+    <Compile Include="AzureCloudServices.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
