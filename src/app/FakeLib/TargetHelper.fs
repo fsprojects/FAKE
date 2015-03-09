@@ -323,11 +323,13 @@ let listTargets() =
             tracefn "     Depends on: %A" target.Dependencies)
 
 // Instead of the target can be used the list dependencies graph parameter.
-let doesTargetMeansListTargets target = target = "--listTargets"  || target = "-lt"
+let doesTargetMeanListTargets target = target = "--listTargets"  || target = "-lt"
 
 /// Determines a parallel build order for the given set of targets
-let determineBuildOrder (d : TargetTemplate<unit>) =
-          
+let determineBuildOrder (target : string) =
+    
+    let t = getTarget target
+
     // determines the maximal level at which a target occurs
     let rec determineLevels (currentLevel : int) (levels : Map<string, int>) (t : seq<TargetTemplate<unit>>) =
         let levels = 
@@ -340,7 +342,7 @@ let determineBuildOrder (d : TargetTemplate<unit>) =
         t |> Seq.map (fun t -> t.Dependencies |> Seq.map getTarget) 
           |> Seq.fold (determineLevels (currentLevel + 1)) levels
 
-    let levels = determineLevels 0 Map.empty [d]
+    let levels = determineLevels 0 Map.empty [t]
 
     // the results are grouped by their level, sorted descending (by level) and 
     // finally grouped together in a list<TargetTemplate<unit>[]>
@@ -381,7 +383,7 @@ let runTargetsParallel (count : int) (targets : Target[]) =
 
 /// Runs a target and its dependencies.
 let run targetName =            
-    if doesTargetMeansListTargets targetName then listTargets() else
+    if doesTargetMeanListTargets targetName then listTargets() else
     if LastDescription <> null then failwithf "You set a task description (%A) but didn't specify a task." LastDescription
 
     let rec runTarget targetName =
@@ -407,7 +409,7 @@ let run targetName =
             tracefn "Running parallel build with %d workers" parallelJobs
 
             // determine a parallel build order
-            let order = determineBuildOrder (getTarget targetName)
+            let order = determineBuildOrder targetName
 
             // run every level in parallel
             for par in order do
