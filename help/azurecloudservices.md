@@ -27,7 +27,7 @@ You can package this cloud service thus: -
               SdkVersion = None
               OutputPath = None })
 
-This will build ``MyCloudService.cspkg" in the current directory (override using ``OutputPath``).
+This will build ``MyCloudService.cspkg`` in the current directory (override using ``OutputPath``).
 
 When packaging occurs, the task will scan the local machine for installed Azure SDK versions; if none is specified,
 it will pick the highest version installed. You can override this with the SdkVersion property e.g. ``Some 2.4``.
