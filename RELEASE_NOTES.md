@@ -1,4 +1,4 @@
-#### 3.19.3 - 10.03.2015
+#### 3.19.4 - 10.03.2015
 * Modify VM size on a .csdef for Azure Cloud Services - https://github.com/fsharp/FAKE/pull/687
 
 #### 3.19.2 - 10.03.2015
