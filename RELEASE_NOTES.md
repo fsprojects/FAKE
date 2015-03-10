@@ -1,3 +1,6 @@
+#### 3.20.1 - 10.03.2015
+* Proper source index - https://github.com/fsharp/FAKE/issues/678
+
 #### 3.20.0 - 10.03.2015
 * Always use FCS in FAKE and FSI in FAke.Deploy
 * Modify VM size on a .csdef for Azure Cloud Services - https://github.com/fsharp/FAKE/pull/687
