@@ -174,6 +174,6 @@ let CreateZipOfIncludes fileName comment level (files : (string * FileIncludes) 
 ///             @"app_data\jobs\continuous\MyWebJob", !! "MyWebJob/bin/Release/*.*"
 ///         ]
 ///         |> ZipOfIncludes (sprintf @"bin\MyWebApp.%s.zip" buildVersion)
-///    )
+///     )
 ///
 let ZipOfIncludes fileName files = CreateZipOfIncludes fileName "" DefaultZipLevel files
