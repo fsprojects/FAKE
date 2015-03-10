@@ -157,4 +157,23 @@ let CreateZipOfIncludes fileName comment level (files : (string * FileIncludes) 
 /// ## Parameters
 ///  - `fileName` - The file name of the resulting zip file.
 ///  - `files` - A sequence of target folders and files to include relative to their base directory.
+///
+/// ## Sample
+///
+/// The following sample creates 4 targets using TargetTemplateWithDependencies and hooks them into the build pipeline.
+///
+///     Target "Zip" (fun _ ->
+///         [   "", !! "MyWebApp/*.html"
+///                 ++ "MyWebApp/bin/**/*.dll"
+///                 ++ "MyWebApp/bin/**/*.pdb"
+///                 ++ "MyWebApp/fonts/**"
+///                 ++ "MyWebApp/img/**"
+///                 ++ "MyWebApp/js/**"
+///                 -- "MyWebApp/js/_references.js"
+///                 ++ "MyWebApp/web.config"
+///             @"app_data\jobs\continuous\MyWebJob", !! "MyWebJob/bin/Release/*.*"
+///         ]
+///         |> ZipOfIncludes (sprintf @"bin\MyWebApp.%s.zip" buildVersion)
+///    )
+///
 let ZipOfIncludes fileName files = CreateZipOfIncludes fileName "" DefaultZipLevel files
