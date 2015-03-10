@@ -1,3 +1,6 @@
+#### 3.19.3 - 10.03.2015
+* Modify VM size on a .csdef for Azure Cloud Services - https://github.com/fsharp/FAKE/pull/687
+
 #### 3.19.2 - 10.03.2015
 * Added ZipHelper.ZipOfIncludes - https://github.com/fsharp/FAKE/pull/686
 * Added AppVeyorEnvironment.RepoTag & .RepoTagName - https://github.com/fsharp/FAKE/pull/685
