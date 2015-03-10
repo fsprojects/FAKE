@@ -64,6 +64,14 @@ type AppVeyorEnvironment =
     /// Commit message
     static member RepoCommitMessage = environVar "APPVEYOR_REPO_COMMIT_MESSAGE"
     
+    /// true if build has started by pushed tag; otherwise false
+    static member RepoTag =
+        let rt = environVar "APPVEYOR_REPO_TAG"
+        rt <> null && rt.Equals("true", System.StringComparison.OrdinalIgnoreCase)
+
+    /// contains tag name for builds started by tag
+    static member RepoTagName = environVar "APPVEYOR_REPO_TAG_NAME"
+
     /// Platform name set on Build tab of project settings (or through platform parameter in appveyor.yml).
     static member Platform = environVar "PLATFORM"
 
