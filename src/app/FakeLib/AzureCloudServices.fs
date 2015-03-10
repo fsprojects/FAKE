@@ -16,7 +16,32 @@ type PackageCloudServiceParams =
       OutputPath : string option }
     
 let DefaultCloudServiceParams = { CloudService = ""; WorkerRole = ""; SdkVersion = None; OutputPath = None }
-    
+
+module VmSizes =
+    type VmSize = | VmSize of size:string
+    let ExtraSmall = VmSize "ExtraSmall"
+    let Small = VmSize "Small"
+    let Medium = VmSize "Medium"
+    let Large = VmSize "Large"
+    let ExtraLarge = VmSize "ExtraLarge"
+    let A5 = VmSize "A5"
+    let A6 = VmSize "A6"
+    let A7 = VmSize "A7"
+    let A8 = VmSize "A8"
+    let A9 = VmSize "A9"
+
+/// Modifies the size of the Worker Role in the csdef.
+let ModifyVMSize (VmSizes.VmSize vmSize) cloudService =
+    let csdefPath = sprintf @"%s\ServiceDefinition.csdef" cloudService
+    csdefPath
+    |> File.ReadAllText 
+    |> XMLHelper.XMLDoc
+    |> XMLHelper.XPathReplaceNS
+        "/svchost:ServiceDefinition/svchost:WorkerRole/@vmsize"
+        vmSize
+        [ "svchost", "http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" ]
+    |> fun doc -> doc.Save csdefPath
+        
 /// Packages a cloud service role into a .cspkg, ready for deployment.
 let PackageRole packageCloudServiceParams =
     let csPack =
@@ -27,7 +52,7 @@ let PackageRole packageCloudServiceParams =
         let availableCsPacks = 
             sdkRoots
             |> Seq.collect(fun sdkRoot ->    
-                !! (sdkRoot + "**\cspack.exe")
+                !! (sdkRoot + @"**\cspack.exe")
                 |> Seq.filter(fun path -> path.Substring(sdkRoot.Length).StartsWith "v")
                 |> Seq.map(fun path -> sdkRoot, path))
             |> Seq.map(fun (sdkRoot, cspackPath) ->
