@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8">
     <!-- 
-      The Integrating a FAKE build script into TeamCity
+      The Using FAKE's parallel option
  parameters will be replaced with the 
       document title extracted from the <h1> element or
       file name, if there is no <h1> heading
     -->
-    <title>Integrating a FAKE build script into TeamCity
+    <title>Using FAKE's parallel option
 </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="FAKE - F# Make">
@@ -37,54 +37,33 @@
       <hr />
       <div class="row">
         <div class="span9" id="main">
-          <h1>Integrating a FAKE build script into TeamCity</h1>
+          <h1>Using FAKE's parallel option</h1>
 
-<p>Easy <a href="http://www.jetbrains.com/teamcity/">TeamCity</a> integration was one of the major goals for the FAKE build system.</p>
+<p>Since multithreading is beneficial (especially for large projects) FAKE allows to specify the
+number of threads used for traversing the dependency tree.
+This option of course only affects independent targets whereas dependent targets will
+still be exectued in order.</p>
 
-<p>In this article you will learn how to set up a FAKE build script in TeamCity. We will use the CalculatorSample which you can build from the <a href="gettingstarted.html">getting started guide</a>.</p>
+<h2>Setting the number of threads</h2>
 
-<h2>Installing TeamCity</h2>
+<p>The number of threads used can be set using the environment variable <code>parallel-jobs</code>.
+This can be achieved in various ways where the easiest one is to use FAKE's built-in support for 
+setting environment variables:</p>
 
-<p>You can download the free professional edition of TeamCity from <a href="http://www.jetbrains.com/teamcity/"><a href="http://www.jetbrains.com/teamcity/">http://www.jetbrains.com/teamcity/</a></a>. After the installation process you should be ready to configure your first build.</p>
+<p><code>FAKE.exe *YourBuildScript* "parallel-jobs=8"</code></p>
 
-<h2>Creating a FAKE project on TeamCity</h2>
+<p>Note that the dependency tree will be traversed as usual whenever setting <code>parallel-jobs</code> to a value <code>&lt;= 1</code> or omiting it entirely.</p>
 
-<p>Now create a new project and add a build configuration:</p>
+<h2>Issues</h2>
 
-<p><img src="pics/teamcity/createproject.png" alt="alt text" title="Creating a FAKE project on TeamCity" /></p>
+<ul>
+<li>Running targets in parallel is of course only possible when the target-functions themselves are thread-safe.</li>
+<li>Parallel execution may also cause races on stdout and build-logs may therefore be quite obfuscated.</li>
+<li>Error detection may suffer since it's not possible to determine a first error when targets are running in parallel</li>
+</ul>
 
-<p>You also need to set the artifacts paths:</p>
-
-<p><img src="pics/teamcity/generalsettings.png" alt="alt text" title="Set the settings" /></p>
-
-<h2>Attach a VCS root</h2>
-
-<p>The next step is to attach a VCS root. For this sample we will use the official FAKE repository at <a href="https://github.com/forki/FAKE/"><a href="https://github.com/forki/FAKE/">https://github.com/forki/FAKE/</a></a>.</p>
-
-<p><img src="pics/teamcity/vcsroot.png" alt="alt text" title="Set up the VCS root" />
-<img src="pics/teamcity/auth.png" alt="alt text" title="Set up the VCS root authentication" />
-<img src="pics/teamcity/checkoutrules.png" alt="alt text" title="Set up the VCS root checkout rules" /></p>
-
-<h2>Creating the build step</h2>
-
-<p>Now is the time to create two build steps. The first one downloads FAKE via Nuget and the second one runs the build script:</p>
-
-<p><img src="pics/teamcity/buildstep1.png" alt="alt text" title="Download FAKE" />
-<img src="pics/teamcity/buildstep2.png" alt="alt text" title="Run FAKE script" /></p>
-
-<p>If you want you could also add a build trigger to your build script:</p>
-
-<p><img src="pics/teamcity/trigger.png" alt="alt text" title="Set up the build trigger" /></p>
-
-<h2>Running the build</h2>
-
-<p>Now if everything is configured correctly, you can run your build and the output should look like:</p>
-
-<p><img src="pics/teamcity/output.png" alt="alt text" title="Build output" /></p>
-
-<p>You can also inspect the NUnit results:</p>
-
-<p><img src="pics/teamcity/nunit.png" alt="alt text" title="NUnit results" /></p>
+<p>Due to these limitations it is recommended to use the standard sequential build whenever checking for errors (CI, etc.)
+However when a fast build is desired (and the project is e.g. known to build successfully) the parallel option might be helpful</p>
 
                     
         </div>
