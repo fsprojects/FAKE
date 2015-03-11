@@ -1,4 +1,16 @@
-#### 3.18.1 - 08.03.2015
+#### 3.21.0 - 11.03.2015
+* FAKE allows to run parallel builds - http://fsharp.github.io/FAKE/parallel-build.html
+
+#### 3.20.1 - 10.03.2015
+* Proper source index - https://github.com/fsharp/FAKE/issues/678
+
+#### 3.20.0 - 10.03.2015
+* Always use FCS in FAKE and FSI in FAke.Deploy
+* Modify VM size on a .csdef for Azure Cloud Services - https://github.com/fsharp/FAKE/pull/687
+* Added ZipHelper.ZipOfIncludes - https://github.com/fsharp/FAKE/pull/686
+* Added AppVeyorEnvironment.RepoTag & .RepoTagName - https://github.com/fsharp/FAKE/pull/685
+* New tutorial about Azure Cloud Service - http://fsharp.github.io/FAKE/azurecloudservices.html
+* Added basic support for creating Azure Cloud Services - http://fsharp.github.io/FAKE/apidocs/fake-azure-cloudservices.html
 * Added metadata property for AssemblyInfoReplacementParams - https://github.com/fsharp/FAKE/pull/675
 
 #### 3.18.0 - 04.03.2015

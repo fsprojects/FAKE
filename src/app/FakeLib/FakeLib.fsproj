@@ -149,6 +149,7 @@
     <Compile Include="XDTHelper.fs" />
     <Compile Include="AzureWebJobs.fs" />
     <Compile Include="HockeyAppHelper.fs" />
+    <Compile Include="AzureCloudServices.fs" />
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>

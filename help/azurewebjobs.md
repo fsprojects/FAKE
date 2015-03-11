@@ -22,9 +22,9 @@ In your `build.fsx` add the following:
           Project = project
           DirectoryToPackage = sprintf "src/%s/bin/Release" project
           PackageLocation = sprintf "bin/%s/webjobs/%s/%s.zip" site path project }
-
-    let webJobs site = [createWebJob site "webjob1" WebJobType.Continuous "WebJob1"
-                        createWebJob site "webjob2" WebJobType.Triggered "WebJob2"]
+    
+    let webJobs site = [createWebJob site "webjob1" WebJobType.Continuous "MyProject.WebJob1"
+                        createWebJob site "webjob2" WebJobType.Triggered "MyProject.WebJob2"]
 
     let site = Uri("https://yoursite.scm.azurewebsites.net")
     let webSite = {WebSite.Url = site
@@ -49,7 +49,7 @@ In the dependencies section add the targets to the build order after the build a
       ==> "DeployWebJobs"
       ==> "Default"
 
-The effect of this create a zip in the `bin` folder in the root which contains the contents of the `bin/release` folder of each web job to deploy and push it to azure.
+The will create a zip file in the `bin` folder in the root which contains the contents of the `bin/release` folder of each web job to deploy and push it to azure.
 
 ## Caveats
-The zip controller will not remove files
+The zip controller will not remove files. 
