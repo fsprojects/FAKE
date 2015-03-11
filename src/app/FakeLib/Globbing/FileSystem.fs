@@ -5,7 +5,6 @@ module Fake.FileSystem
 open System
 open System.Collections.Generic
 open System.IO
-open Fake
 open System.Text.RegularExpressions
 
 type private SearchOption = 
@@ -90,7 +89,7 @@ type FileIncludes =
     member this.ButNot pattern = { this with Excludes = pattern :: this.Excludes }
     
     /// Sets a directory as BaseDirectory.
-    member this.SetBaseDirectory(dir : string) = { this with BaseDirectory = dir.TrimEnd(directorySeparator.[0]) }
+    member this.SetBaseDirectory(dir : string) = { this with BaseDirectory = dir.TrimEnd(Path.DirectorySeparatorChar) }
     
     interface IEnumerable<string> with
         
@@ -117,9 +116,6 @@ type FileIncludes =
         member this.GetEnumerator() = (this :> IEnumerable<string>).GetEnumerator() :> System.Collections.IEnumerator
 
 let private defaultBaseDir = Path.GetFullPath "."
-
-/// Logs the given files with the message.
-let Log message files = files |> Seq.iter (log << sprintf "%s%s" message)
 
 /// Include files
 let Include x = 
@@ -161,7 +157,7 @@ let findToolFolderInSubPath toolname defaultPath =
         let tools = !! ("./**/" @@ toolname)
         if Seq.isEmpty tools then defaultPath
         else 
-            let fi = fileInfo (Seq.head tools)
+            let fi = FileInfo (Seq.head tools)
             fi.Directory.FullName
     with
     | _ -> defaultPath

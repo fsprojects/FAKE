@@ -161,3 +161,6 @@ let logToConsole (msg, eventLogEntry : EventLogEntryType) =
     | EventLogEntryType.Warning -> ImportantMessage msg
     | _ -> LogMessage(msg, true)
     |> console.Write
+
+/// Logs the given files with the message.
+let Log message files = files |> Seq.iter (log << sprintf "%s%s" message)
