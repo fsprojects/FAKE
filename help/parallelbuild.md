@@ -7,13 +7,13 @@ still be exectued in order.
 
 
 ## Setting the number of threads
-The number of threads used can be set using the environment variable ``fake-parallel-jobs``.
+The number of threads used can be set using the environment variable ``parallel-jobs``.
 This can be achieved in various ways where the easiest one is to use FAKE's built-in support for 
 setting environment variables:
 
-``FAKE.exe *YourBuildScript* "fake-parallel-jobs=8"``
+``FAKE.exe *YourBuildScript* "parallel-jobs=8"``
 
-Note that the dependency tree will be traversed as usual whenever setting ``fake-parallel-jobs`` to a value ``<= 1`` or omiting it entirely.
+Note that the dependency tree will be traversed as usual whenever setting ``parallel-jobs`` to a value ``<= 1`` or omiting it entirely.
 
 ## Issues
 * Running targets in parallel is of course only possible when the target-functions themselves are thread-safe.

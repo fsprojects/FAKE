@@ -402,7 +402,7 @@ let run targetName =
     watch.Start()        
     try
         tracefn "Building project with version: %s" buildVersion
-        let parallelJobs = environVarOrDefault "fake-parallel-jobs" "1" |> int
+        let parallelJobs = environVarOrDefault "parallel-jobs" "1" |> int
       
 
         if parallelJobs > 1 then
