@@ -141,10 +141,6 @@ let inline (--) (x : FileIncludes) pattern = x.ButNot pattern
 /// Includes a single pattern and scans the files - !! x = AllFilesMatching x
 let inline (!!) x = Include x
 
-/// Include prefix operator
-[<Obsolete("!+ is obsolete - use !! instead")>]
-let inline (!+) x = Include x
-
 /// Looks for a tool first in its default path, if not found in all subfolders of the root folder - returns the tool file name.
 let findToolInSubPath toolname defaultPath =
     try
@@ -167,16 +163,3 @@ let findToolFolderInSubPath toolname defaultPath =
             fi.Directory.FullName
     with
     | _ -> defaultPath
-
-/// Includes a single pattern and scans the files - !! x = AllFilesMatching x
-[<Obsolete>]
-let AllFilesMatching x = Include x
-
-/// Lazy scan for include files.
-/// Will be processed at the time when needed.
-[<Obsolete("FileIncludes implement IEnumerable<string> so explicit scanning is not needed")>]
-let Scan files = files
-
-/// Scans immediately for include files - all matching files will be memoized.
-[<Obsolete("FileIncludes implement IEnumerable<string> so explicit scanning is not needed. Just use Seq.toList")>]
-let ScanImmediately includes = includes |> Seq.toList
