@@ -8,6 +8,13 @@ open FsCheck
 
 let inline (==>) a b = global.Fake.AdditionalSyntax.(==>) a b
 
+let (|Target|) (t : Target) =
+    Target t.Name
+
+let (|TargetSet|) (t : seq<Target>) =
+    let list = t |> Seq.map (fun t -> t.Name) |> Seq.sort |> Seq.toList
+    TargetSet list
+
 // checks whether the given order is consistent with all dependencies
 let validateBuildOrder (order : list<Target[]>) (rootTarget : string) =
     let rootTarget = getTarget rootTarget
@@ -62,16 +69,9 @@ let ``Independent targets are parallel``() =
     validateBuildOrder order "dep"
 
     match order with
-        | [f; [|d|]] ->
-            
-            let set = f |> Seq.map (fun a -> a.Name) |> Set.ofSeq
-            let valid = set = Set.ofList ["a"; "b"; "c"]
-
-            if not valid then 
-                failwithf "unexpected build order: %A" order
-
-            if d.Name <> "dep" then
-                failwithf "unexpected build order: %A" order
+        | [TargetSet ["a"; "b"; "c"]; [|Target "dep"|]] ->
+            // as expected
+            ()
 
         | _ ->
             failwithf "inconsitent order: %A" order
@@ -130,14 +130,9 @@ let ``Diamonds are resolved correctly``() =
     validateBuildOrder order "d"
 
     match order with
-        | [[|a|];[|b;c|];[|d|]] ->
-            let bcNamesCorrect =
-                if b.Name = "b" then c.Name = "c"
-                elif c.Name = "b" then b.Name = "c"
-                else false
-
-            if a.Name <> "a" || d.Name <> "d" || not bcNamesCorrect then
-                failwithf "unexpected order: %A" order
+        | [[|Target "a"|];TargetSet ["b"; "c"];[|Target "d"|]] ->
+            // as expected
+            ()
 
         | _ ->
             failwithf "unexpected order: %A" order
