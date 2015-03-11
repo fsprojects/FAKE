@@ -7,6 +7,12 @@ open System.Collections.Generic
 open System.IO
 open System.Text.RegularExpressions
 
+/// Combines two path strings using Path.Combine
+let inline private combinePaths path1 (path2 : string) = Path.Combine(path1, path2.TrimStart [| '\\'; '/' |])
+
+/// Combines two path strings using Path.Combine
+let inline private (@@) path1 path2 = combinePaths path1 path2
+
 type private SearchOption = 
     | Directory of string
     | Drive of string
