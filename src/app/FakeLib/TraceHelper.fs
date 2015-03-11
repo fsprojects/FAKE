@@ -5,6 +5,7 @@ module Fake.TraceHelper
 open System
 open System.IO
 open System.Reflection
+open System.Threading
 
 /// Gets the path of the current FAKE instance
 let fakePath = productName.GetType().Assembly.Location
@@ -12,7 +13,7 @@ let fakePath = productName.GetType().Assembly.Location
 /// Gets the FAKE version no.
 let fakeVersion = AssemblyVersionInformation.Version
 
-let mutable private openTags = []
+let private openTags = new ThreadLocal<list<string>>(fun _ -> [])
 
 /// Logs the specified string        
 let log message = LogMessage(message, true) |> postMessage
@@ -113,16 +114,16 @@ let traceStartBuild() = postMessage StartMessage
 let traceEndBuild() = postMessage FinishedMessage
 
 /// Puts an opening tag on the internal tag stack
-let openTag tag = openTags <- tag :: openTags
+let openTag tag = openTags.Value <- tag :: openTags.Value
 
 /// Removes an opening tag from the internal tag stack
 let closeTag tag = 
-    match openTags with
-    | x :: rest when x = tag -> openTags <- rest
+    match openTags.Value with
+    | x :: rest when x = tag -> openTags.Value <- rest
     | _ -> failwithf "Invalid tag structure. Trying to close %s tag but stack is %A" tag openTags
     CloseTag tag |> postMessage
 
-let closeAllOpenTags() = Seq.iter closeTag openTags
+let closeAllOpenTags() = Seq.iter closeTag openTags.Value
 
 /// Traces the begin of a target
 let traceStartTarget name description dependencyString = 
