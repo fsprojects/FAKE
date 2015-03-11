@@ -1,3 +1,6 @@
+#### 3.21.0 - 11.03.2015
+* FAKE allows to run parallel builds - http://fsharp.github.io/FAKE/parallel-build.html
+
 #### 3.20.1 - 10.03.2015
 * Proper source index - https://github.com/fsharp/FAKE/issues/678
 
