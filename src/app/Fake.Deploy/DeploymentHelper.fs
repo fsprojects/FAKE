@@ -29,7 +29,7 @@ let getActiveReleases dir = !!(dir @@ deploymentRootDir @@ "**/active/*.nupkg") 
 
 /// Retrieves the NuSpec information for the active release of the given app.
 let getActiveReleaseFor dir (app : string) = 
-    !!(dir @@ deploymentRootDir @@ app @@ "/active/*.nupkg")
+    !!(dir @@ deploymentRootDir @@ app @@ "active/*.nupkg")
     |> Seq.map GetMetaDataFromPackageFile
     |> Seq.head
 
@@ -38,7 +38,7 @@ let getAllReleases dir = !!(dir @@ deploymentRootDir @@ "**/*.nupkg") |> Seq.map
 
 /// Retrieves the NuSpec information for all releases of the given app.
 let getAllReleasesFor dir (app : string) = 
-    !!(dir @@ deploymentRootDir @@ app @@ "/**/*.nupkg") |> Seq.map GetMetaDataFromPackageFile
+    !!(dir @@ deploymentRootDir @@ app @@ "**/*.nupkg") |> Seq.map GetMetaDataFromPackageFile
 
 /// Returns statistics about the machine environment.
 let getStatistics() = getMachineEnvironment()
@@ -102,7 +102,7 @@ let runDeploymentFromPackageFile workDir packageFileName scriptArgs =
 /// Rolls the given app back to the specified version
 let rollback workDir (app : string) (version : string) = 
     try 
-        let currentPackageFileName = !!(workDir @@ deploymentRootDir @@ app @@ "/active/*.nupkg") |> Seq.head
+        let currentPackageFileName = !!(workDir @@ deploymentRootDir @@ app @@ "active/*.nupkg") |> Seq.head
         let backupPackageFileName = getBackupFor workDir app version
         if currentPackageFileName = backupPackageFileName then 
             Failure { Messages = Seq.empty
@@ -138,10 +138,10 @@ let getVersionFromNugetFileName (app : string) (fileName : string) =
 /// Returns the version no. of the latest backup of the given app
 let getPreviousPackageVersionFromBackup dir app versions = 
     let currentPackageFileName = 
-        !!(dir @@ deploymentRootDir @@ app @@ "/active/*.nupkg")
+        !!(dir @@ deploymentRootDir @@ app @@ "active/*.nupkg")
         |> Seq.head
         |> getVersionFromNugetFileName app
-    !!(dir @@ deploymentRootDir @@ app @@ "/backups/*.nupkg")
+    !!(dir @@ deploymentRootDir @@ app @@ "backups/*.nupkg")
     |> Seq.map (getVersionFromNugetFileName app)
     |> Seq.filter (fun x -> x < currentPackageFileName)
     |> Seq.toList
