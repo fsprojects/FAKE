@@ -3,6 +3,7 @@
 Some of our users are:
 
 * [msu solutions GmbH](http://www.msu-solutions.de/)
+* [SEEK](http://www.seek.com.au)
 * [E.On Global Commodities UK](http://www.eon.com/en/about-us/structure/company-finder/e-dot-on-global-commodities.html)
 * [Octokit.NET](https://github.com/octokit/octokit.net/) by GitHub
 * [Akka.net](https://github.com/akkadotnet/akka.net)
