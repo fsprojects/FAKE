@@ -207,7 +207,7 @@ type AssemblyInfoReplacementParams =
       AssemblyFileVersion : string
       AssemblyInformationalVersion : string
       AssemblyConfiguration : string
-      AssemblyMetadata : string list }
+      AssemblyMetadata : (string * string) list }
 
 /// AssemblyInfoReplacement default params
 let AssemblyInfoReplacementDefaults = 
