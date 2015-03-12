@@ -64,6 +64,12 @@ let internal search (baseDir : string) (input : string) =
     let baseDir = normalizePath baseDir
     let input = normalizePath input
     let input = input.Replace(baseDir, "")
+
+    let input = 
+        if not (input.EndsWith("/") && DirectoryInfo(Path.Combine(baseDir, input)).Exists) then input + "/"
+        else input
+    
+    
     let filePattern = Path.GetFileName(input)
     input.Split([| '/'; '\\' |], StringSplitOptions.RemoveEmptyEntries)
     |> Seq.map (function 
