@@ -151,6 +151,8 @@
     <Compile Include="AzureWebJobs.fs" />
     <Compile Include="HockeyAppHelper.fs" />
     <Compile Include="AzureCloudServices.fs" />
+    <Compile Include="Sxshelper.fs" />
+    <Compile Include="Vb6helper.fs" />
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
