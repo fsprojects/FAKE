@@ -1,3 +1,7 @@
+#### 3.22.0 - 12.03.2015
+* Globbing allows to grab folders without a trailing slash
+* Removed long time obsolete globbing functions
+
 #### 3.21.0 - 11.03.2015
 * FAKE allows to run parallel builds - http://fsharp.github.io/FAKE/parallel-build.html
 
