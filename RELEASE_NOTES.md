@@ -1,3 +1,7 @@
+#### 3.23.0 - 12.03.2015
+* BREAKING CHANGE: Adjusted Xamarin.iOS archive helper params - https://github.com/fsharp/FAKE/pull/693
+* New operator </> allows to combine paths similar to @@ but with no trimming operations - https://github.com/fsharp/FAKE/pull/695
+
 #### 3.22.0 - 12.03.2015
 * Globbing allows to grab folders without a trailing slash
 * Removed long time obsolete globbing functions
