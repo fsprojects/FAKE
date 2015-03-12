@@ -108,6 +108,7 @@
     <Compile Include="SideBySideSpecification\ReferencesScanningSpecs.cs" />
     <Compile Include="SideBySideSpecification\SpecsRemovementSpecs.cs" />
     <Compile Include="StringHelperSpecs.cs" />
+    <Compile Include="EnvironmentHelperSpecs.cs" />
     <Compile Include="MessageFiles\MessageFileSpecs.cs" />
     <Compile Include="ConfigFiles\ConfigSpecs.cs" />
     <Compile Include="AssemblyInfoSpecs.cs" />
