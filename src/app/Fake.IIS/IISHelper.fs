@@ -8,11 +8,46 @@ open Fake.ProcessHelper
 let private bindApplicationPool (appPool : ApplicationPool) (app : Application) =
     app.ApplicationPoolName <- appPool.Name
 
-let Site (name : string) (protocol : string) (binding : string) (physicalPath : string) (appPool : string) (mgr : ServerManager) =
+let private doWithManager (f : ServerManager->unit) (mgr : ServerManager option) =
+    match mgr with
+    | Some m -> f m
+    | None ->
+        let m = new ServerManager()
+        f m
+        m.CommitChanges()
+
+let SetPhysicalPath (virtualPath : string) physicalPath (siteName : string) (manager : ServerManager option) =
+    doWithManager (fun m ->
+        let site = m.Sites.[siteName]
+        let app = site.Applications.[virtualPath]
+        let virtDir = app.VirtualDirectories.[virtualPath]
+        virtDir.PhysicalPath <- physicalPath
+    ) manager
+
+let RemoveBindingFromSite bindingInformation bindingProtocol (siteName : string) (manager : ServerManager option) =
+    doWithManager (fun m ->
+        let site = m.Sites.[siteName]
+        match site.Bindings |> Seq.tryFind( fun b -> b.Protocol = bindingProtocol && b.BindingInformation = bindingInformation) with    
+        | Some b -> site.Bindings.Remove b
+        | None -> ()
+    ) manager
+
+let  AddBindingToSite (bindingInformation : string) (bindingProtocol : string) (siteName : string) (manager : ServerManager option) =
+    doWithManager (fun m ->
+        let site = m.Sites.[siteName]
+        match site.Bindings |> Seq.exists( fun b -> b.Protocol = bindingProtocol && b.BindingInformation = bindingInformation) with
+        | false -> site.Bindings.Add(bindingInformation, bindingProtocol) |> ignore
+        | true -> ()
+    ) manager
+
+let Site (name : string) protocol binding (physicalPath : string) appPool (mgr : ServerManager) =
     let mutable site = mgr.Sites.[name] 
     match (site) with
     | null -> site <- mgr.Sites.Add(name, protocol, binding, physicalPath)
-    | _ -> ()
+    | _ -> 
+        SetPhysicalPath "/" physicalPath name (Some mgr)
+        AddBindingToSite binding protocol name (Some mgr)
+
     site.ApplicationDefaults.ApplicationPoolName <- appPool
     site
 

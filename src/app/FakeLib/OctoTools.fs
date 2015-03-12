@@ -29,7 +29,8 @@ type DeployReleaseOptions = {
     Force                       : bool
     WaitForDeployment           : bool
     DeploymentTimeout           : TimeSpan option
-    DeploymentCheckSleepCycle   : TimeSpan option }
+    DeploymentCheckSleepCycle   : TimeSpan option
+    SpecificMachines            : string option }
 
 /// Options for deleting a range of releases in a project
 type DeleteReleaseOptions = {
@@ -66,7 +67,7 @@ let releaseOptions = {
 /// Default options for 'DeployRelease'
 let deployOptions = {
     Project = ""; DeployTo = ""; Version = ""; Force = false; WaitForDeployment = false; 
-    DeploymentTimeout = None; DeploymentCheckSleepCycle = None }
+    DeploymentTimeout = None; DeploymentCheckSleepCycle = None; SpecificMachines = None }
 
 /// Default options for 'DeleteReleases'
 let deleteOptions = { 
@@ -119,7 +120,8 @@ let deployCommandLine (opts:DeployReleaseOptions) =
       (flag "force" opts.Force)
       (flag "waitfordeployment" opts.WaitForDeployment)
       (optionalObjParam "deploymenttimeout" opts.DeploymentTimeout)
-      (optionalObjParam "deploymentchecksleepcycle" opts.DeploymentCheckSleepCycle) ] 
+      (optionalObjParam "deploymentchecksleepcycle" opts.DeploymentCheckSleepCycle)
+      (optionalStringParam "specificmachines" opts.SpecificMachines) ] 
     |> List.fold (+) ""
 
 /// [omit]

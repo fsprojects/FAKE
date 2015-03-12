@@ -75,7 +75,7 @@ let NUnitParallel (setParams : NUnitParams -> NUnitParams) (assemblies : string 
     | [] -> ()
     | _ -> 
         File.WriteAllText(getWorkingDir parameters @@ parameters.OutputFile, sprintf "%O" (NUnitMerge.mergeXDocs docs))
-        sendTeamCityNUnitImport (getWorkingDir parameters @@ parameters.OutputFile)
+        sendTeamCityNUnitImport parameters.OutputFile
     // Make sure we delete the temp files
     testRunResults
     |> List.map (fun x -> x.OutputFile)
@@ -96,12 +96,12 @@ let NUnitParallel (setParams : NUnitParams -> NUnitParams) (assemblies : string 
             List.fold (fun acc x -> 
                 { acc with WorseReturnCode = min acc.WorseReturnCode x.ReturnCode
                            Messages = acc.Messages @ formatErrorMessages x }) AggFailedResult.Empty failedResults
-        
+
         let fail() = 
             List.iter traceError aggResult.Messages
-            failwithf "NUnitParallel test runs failed (%d of %d assemblies are failed)." (List.length failedResults) 
-                (List.length testRunResults)
-        
+            raise (FailedTestsException (sprintf "NUnitParallel test runs failed (%d of %d assemblies are failed)." 
+                    (List.length failedResults) (List.length testRunResults)))
+
         match parameters.ErrorLevel with
         | DontFailBuild -> 
             match aggResult.WorseReturnCode with

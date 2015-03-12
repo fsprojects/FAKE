@@ -1,6 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+# Visual Studio Express 2013 for Windows Desktop
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0F0488CC-2580-4C07-9E16-3997480F0221}"
 	ProjectSection(SolutionItems) = preProject
@@ -29,19 +30,9 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.SQL", "src\app\Fake.SQ
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Gallio", "src\app\Fake.Gallio\Fake.Gallio.fsproj", "{AA2BB7A4-B590-40E7-A749-BCC87B68FEAC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{4609456B-C12B-444C-AE55-AE96E096D7F1}"
-	ProjectSection(SolutionItems) = preProject
-		scripts\install.ps1 = scripts\install.ps1
-	EndProjectSection
-EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Deploy", "src\app\Fake.Deploy\Fake.Deploy.fsproj", "{ED164049-BCFD-4837-96F4-9A5FA417931D}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.IIS", "src\app\Fake.IIS\Fake.IIS.fsproj", "{6C2097C0-C2EA-410F-B4BB-A58C63A08709}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4A02B2CD-BBE1-4E4F-A490-95C6CF5BF672}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\packages.config = .nuget\packages.config
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "help", "help", "{564BD198-09CB-45D1-87F2-E2153FE6D62F}"
 	ProjectSection(SolutionItems) = preProject
@@ -271,7 +262,6 @@ Global
 		{AD03BF13-802D-4E5F-A939-24484299E014} = {B774DC6A-F933-4EC3-A61F-E07344EF8ED2}
 		{12319188-8893-4FE4-BF1D-62B85661DEA9} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
 		{AA2BB7A4-B590-40E7-A749-BCC87B68FEAC} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
-		{4609456B-C12B-444C-AE55-AE96E096D7F1} = {0F0488CC-2580-4C07-9E16-3997480F0221}
 		{ED164049-BCFD-4837-96F4-9A5FA417931D} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
 		{6C2097C0-C2EA-410F-B4BB-A58C63A08709} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
 		{75162148-B884-4575-8E14-5320DD137760} = {564BD198-09CB-45D1-87F2-E2153FE6D62F}

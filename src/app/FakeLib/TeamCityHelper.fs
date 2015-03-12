@@ -34,6 +34,45 @@ let sendTeamCityNUnitImport path = sendToTeamCity "##teamcity[importData type='n
 /// Sends an FXCop results filename to TeamCity    
 let sendTeamCityFXCopImport path = sendToTeamCity "##teamcity[importData type='FxCop' path='%s']" path
 
+/// Sends an JUnit Ant task results filename to TeamCity    
+let sendTeamCityJUnitImport path = sendToTeamCity "##teamcity[importData type='junit' path='%s']" path
+
+/// Sends an Maven Surefire results filename to TeamCity    
+let sendTeamCitySurefireImport path = sendToTeamCity "##teamcity[importData type='surefire' path='%s']" path
+
+/// Sends an MSTest results filename to TeamCity    
+let sendTeamCityMSTestImport path = sendToTeamCity "##teamcity[importData type='mstest' path='%s']" path
+
+/// Sends an Google Test results filename to TeamCity    
+let sendTeamCityGTestImport path = sendToTeamCity "##teamcity[importData type='gtest' path='%s']" path
+
+/// Sends an Checkstyle results filename to TeamCity    
+let sendTeamCityCheckstyleImport path = sendToTeamCity "##teamcity[importData type='checkstyle' path='%s']" path
+
+/// Sends an FindBugs results filename to TeamCity    
+let sendTeamCityFindBugsImport path = sendToTeamCity "##teamcity[importData type='findBugs' path='%s']" path
+
+/// Sends an JSLint results filename to TeamCity    
+let sendTeamCityJSLintImport path = sendToTeamCity "##teamcity[importData type='jslint' path='%s']" path
+
+/// Sends an ReSharper inspectCode.exe results filename to TeamCity    
+let sendTeamCityReSharperInspectCodeImport path = sendToTeamCity "##teamcity[importData type='ReSharperInspectCode' path='%s']" path
+
+/// Sends an FxCop inspection results filename to TeamCity    
+let sendTeamCityFxCopImport path = sendToTeamCity "##teamcity[importData type='FxCop' path='%s']" path
+
+/// Sends an PMD inspections results filename to TeamCity    
+let sendTeamCityPmdImport path = sendToTeamCity "##teamcity[importData type='pmd' path='%s']" path
+
+/// Sends an PMD Copy/Paste Detector results filename to TeamCity    
+let sendTeamCityPmdCpdImport path = sendToTeamCity "##teamcity[importData type='pmdCpd' path='%s']" path
+
+/// Sends an ReSharper dupfinder.exe results filename to TeamCity    
+let sendTeamCityDotNetDupFinderImport path = sendToTeamCity "##teamcity[importData type='DotNetDupFinder' path='%s']" path
+
+/// Sends an dotcover, partcover, ncover or ncover3 results filename to TeamCity    
+let sendTeamCityDotNetCoverageImport path = sendToTeamCity "##teamcity[importData type='dotNetCoverage' path='%s']" path
+
 /// Starts the test case.
 let StartTestCase testCaseName = 
     sendToTeamCity "##teamcity[testStarted name='%s' captureStandardOutput='true']" testCaseName
@@ -52,6 +91,11 @@ let IgnoreTestCase name message =
     StartTestCase name
     sprintf "##teamcity[testIgnored name='%s' message='%s']" (EncapsulateSpecialChars name) 
         (EncapsulateSpecialChars message) |> sendStrToTeamCity
+
+
+/// Ignores the test case.      
+let IgnoreTestCaseWithDetails name message details = 
+    IgnoreTestCase name (message + " " + details)
 
 /// Finishes the test suite.
 let FinishTestSuite testSuiteName = 

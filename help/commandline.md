@@ -60,7 +60,7 @@ The entire argument string *following* the build script path is set as the value
 
 ### `--boot [-b] <string>`
 
-Boostrapp your FAKE script.  A bootstrapping `build.fsx` script executes twice (in two stages), allowing you to download dependencies with NuGet and do other preparatory work in the first stage, and have these dependencies available in the second stage.
+Bootstrap your FAKE script.  A bootstrapping `build.fsx` script executes twice (in two stages), allowing you to download dependencies with NuGet and do other preparatory work in the first stage, and have these dependencies available in the second stage.
 
 ### `--help [-h|/h|/help|/?]`
 

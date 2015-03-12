@@ -4,7 +4,6 @@ module Fake.DynamicsNav
 open System
 open System.Diagnostics
 open System.IO
-open System.Text
 open System.Threading
 open System.Xml
 open Fake.UnitTestHelper
@@ -14,6 +13,11 @@ open Fake.UnitTestHelper
 type NavisionServerType = 
     | SqlServer
     | NativeServer
+
+    member this.ToTypeString() =
+        match this with
+        | NavisionServerType.SqlServer -> "MSSQL"
+        | NavisionServerType.NativeServer -> "NAVISION"
 
 /// A parameter type to interact with Dynamics NAV
 type DynamicsNavParams = 
@@ -28,32 +32,37 @@ type DynamicsNavParams =
 let getNAVClassicPath navClientVersion = 
     let subKey = 
         match navClientVersion with
-        | "601" | "602" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\60\Classic Client\W1 6.0"
+        | "601"
+        | "602" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\60\Classic Client\W1 6.0"
         | "700" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\70\RoleTailored Client"
         | "701" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\71\RoleTailored Client"
+        | "800" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\80\RoleTailored Client"
         | "501" -> @"software\microsoft\Dynamics Nav\Cside Client\W1 5.0 SP1"
         | "403" -> @"SOFTWARE\Navision\Microsoft Business Solutions-Navision\W1 4.00"
-        | _ -> failwithf "Unknown NAV-Version %s" navClientVersion
+        | _     -> failwithf "Unknown NAV-Version (Client) %s" navClientVersion
+
     getRegistryValue HKEYLocalMachine subKey "Path"
 
 /// Gets the directory of the Dynamics NAV ClassicClient for the given version from the registry.
 let getNAVPath navClientVersion = (directoryInfo (getNAVClassicPath navClientVersion)).Parent.FullName
 
+let getNAVServicePath navClientVersion = 
+    let navServiceRootPath =
+        let subKey = 
+            match navClientVersion with
+            | "601"| "602" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\60\Classic Client\W1 6.0"
+            | "700" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\70\Service"
+            | "701" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\71\Service"
+            | "800" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\80\Service"
+            | _     -> failwithf "Unknown NAV-Version (Service) %s" navClientVersion
+        match navClientVersion with
+            | "601" | "602" -> getRegistryValue HKEYLocalMachine subKey "Path"
+            | "700"| "701"| "800" ->  getRegistryValue64 HKEYLocalMachine subKey "Path"
+            | _     -> failwithf "Unknown NAV-Version (Service) %s" navClientVersion
+    (directoryInfo navServiceRootPath).Parent.FullName @@ "Service"
+
 /// Creates the connection information to a Dynamics NAV instance.
-let createConnectionInfo navClientVersion serverMode serverName targetDatabase = 
-    let navServicePath = 
-        try 
-            let navServiceRootPath = 
-                let subKey = 
-                    match navClientVersion with
-                    | "601" | "602" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\60\Classic Client\W1 6.0"
-                    | "700" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\70\Service"
-                    | "701" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\71\Service"
-                    | _ -> failwithf "Unknown NAV-Version %s" navClientVersion
-                getRegistryValue HKEYLocalMachine subKey "Path"
-            (directoryInfo navServiceRootPath).Parent.FullName @@ "Service"
-        with exn -> @"C:\Program Files\Navision701\71\Service"
-    
+let createConnectionInfo navClientVersion serverMode serverName targetDatabase =     
     let clientExe = 
         match serverMode with
         | NavisionServerType.SqlServer -> "finsql.exe"
@@ -304,7 +313,8 @@ let analyzeTestResults fileName =
                                 Failure(msg.[0], msg.[1])
                             | Some error when error.StartsWith "Ignored;" -> 
                                 let msg = error.Replace("Ignored;", "").Split [| ';' |]
-                                if msg.Length > 2 then Ignored(msg.[0], msg.[1])
+                                if msg.Length >= 2 then Ignored(msg.[0], msg.[1])
+                                elif msg.Length >= 1 then Ignored(msg.[0], "")
                                 else Ignored("", "")
                             | _ -> Ok
                         

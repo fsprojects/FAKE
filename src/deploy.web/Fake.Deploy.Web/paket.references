@@ -1,0 +1,10 @@
+bootstrap
+Knockout.Mapping
+log4net
+Nancy.Authentication.Forms
+Nancy.Hosting.Aspnet
+Nancy.Viewengines.Razor
+Newtonsoft.Json
+System.Web.Razor.Unofficial
+FSharp.Core
+toastr

@@ -87,6 +87,7 @@ try
                 let envVars =
                     seq { yield! fakeArgs.GetResults <@ Cli.EnvFlag @> |> Seq.map (fun name -> name, "true")
                           yield! fakeArgs.GetResults <@ Cli.EnvVar @>
+                          if fakeArgs.Contains <@ Cli.Single_Target @> then yield "single-target", "true"
                           if args.Target.IsSome then yield "target", args.Target.Value }
 
                 //Get our fsiargs from somewhere!
@@ -115,7 +116,7 @@ try
                     
                 //TODO if printDetails then printEnvironment cmdArgs args
 
-                if not (runBuildScriptWithFsiArgsAt "" printDetails fsiArgs envVars) then Environment.ExitCode <- 1
+                if not (runBuildScriptWithFsiArgsAt printDetails fsiArgs envVars) then Environment.ExitCode <- 1
                 else if printDetails then log "Ready."
 
                 ()
@@ -149,7 +150,10 @@ try
             |> traceError
             printUsage()
 
-        sendTeamCityError exn.Message
+        let isFailedTestsException = exn :? UnitTestCommon.FailedTestsException
+        if not isFailedTestsException  then
+            sendTeamCityError exn.Message
+
         Environment.ExitCode <- 1
 
     if buildServer = BuildServer.TeamCity then

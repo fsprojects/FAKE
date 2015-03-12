@@ -63,7 +63,21 @@ type AppVeyorEnvironment =
     
     /// Commit message
     static member RepoCommitMessage = environVar "APPVEYOR_REPO_COMMIT_MESSAGE"
+    
+    /// true if build has started by pushed tag; otherwise false
+    static member RepoTag =
+        let rt = environVar "APPVEYOR_REPO_TAG"
+        rt <> null && rt.Equals("true", System.StringComparison.OrdinalIgnoreCase)
 
+    /// contains tag name for builds started by tag
+    static member RepoTagName = environVar "APPVEYOR_REPO_TAG_NAME"
+
+    /// Platform name set on Build tab of project settings (or through platform parameter in appveyor.yml).
+    static member Platform = environVar "PLATFORM"
+
+    /// Configuration name set on Build tab of project settings (or through configuration parameter in appveyor.yml).  
+    static member Configuration  = environVar "CONFIGURATION"
+    
 let private sendToAppVeyor args = 
     ExecProcess (fun info -> 
         info.FileName <- "appveyor"
@@ -116,3 +130,25 @@ let FinishTestCase testSuiteName testCaseName (duration : System.TimeSpan) =
         |> string
 
     sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Duration %s" (testSuiteName + " - " + testCaseName) duration
+
+/// Union type representing the available test result formats accepted by AppVeyor.
+type TestResultsType =
+    | MsTest
+    | NUnit
+    | Xunit
+
+/// Uploads the test results .xml file to the Test tab of the build console.
+let UploadTestResultsXml testResultsType outputDir =
+    if buildServer = BuildServer.AppVeyor then
+        let resultsType = (sprintf "%A" testResultsType).ToLower()
+        let url = sprintf "https://ci.appveyor.com/api/testresults/%s/%s" resultsType AppVeyorEnvironment.JobId
+        let files = System.IO.Directory.GetFiles(path = outputDir, searchPattern = "*.xml")
+        use wc = new System.Net.WebClient()
+        files
+        |> Seq.iter (fun file ->
+            try
+                wc.UploadFile(url, file) |> ignore
+                printfn "Successfully uploaded test results %s" file
+            with
+            | ex -> printfn "An error occurred while uploading %s:\r\n%O" file ex
+        )

@@ -38,7 +38,9 @@ let reportToTeamCity testResults =
         match test.Status with
         | Ok -> ()
         | Failure(msg, details) -> TestFailed test.Name msg details
-        | Ignored(msg, details) -> IgnoreTestCase test.Name msg
+        | Ignored(msg, details) -> 
+            tracef "ignored with %s %s %s" test.Name msg details
+            IgnoreTestCaseWithDetails test.Name msg details
         FinishTestCase test.Name test.RunTime
     FinishTestSuite testResults.SuiteName
 

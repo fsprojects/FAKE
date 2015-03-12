@@ -12,7 +12,7 @@ type DotCoverReportType =
   | Xml = 2
   | NDependXml = 3
 
-/// The DotCover parameter type for running coverage
+/// The dotCover parameter type for running coverage
 type DotCoverParams = 
     { ToolPath: string
       WorkingDir: string
@@ -20,45 +20,51 @@ type DotCoverParams =
       TargetArguments: string
       TargetWorkingDir: string
       Output: string
-      Filters: string }
+      Filters: string
+      CustomParameters: string }
 
-/// The DotCover defaeult parameters
+/// The dotCover default parameters
 let DotCoverDefaults = 
-    { ToolPath = findToolInSubPath "dotcover.exe" (currentDirectory @@ "tools" @@ "DotCover")
+    { ToolPath = findToolInSubPath "dotCover.exe" (currentDirectory @@ "tools" @@ "DotCover")
       WorkingDir = ""
       TargetExecutable = ""
       TargetArguments = ""
       TargetWorkingDir = ""
-      Output = "DotCover.snapshot"
-      Filters = "" }
+      Filters = ""
+      Output = "dotCoverSnapshot.dcvr"
+      CustomParameters = "" } 
 
 type DotCoverMergeParams = 
     { ToolPath: string
       WorkingDir: string
       Source: string list
       Output: string
-      TempDir: string }
+      TempDir: string
+      CustomParameters: string }
 
 let DotCoverMergeDefaults =
-     { ToolPath = findToolInSubPath "dotcover.exe" (currentDirectory @@ "tools" @@ "DotCover")
+     { ToolPath = findToolInSubPath "dotCover.exe" (currentDirectory @@ "tools" @@ "DotCover")
        WorkingDir = ""
        Source = []
-       Output = "DotCover.snapshot"
-       TempDir = "" }
+       Output = "dotCoverSnapshot.dcvr"
+       TempDir = ""
+       CustomParameters = "" }
 
 type DotCoverReportParams = 
     { ToolPath: string
       WorkingDir: string
       Source: string
       Output: string
-      ReportType: DotCoverReportType }
+      ReportType: DotCoverReportType
+      CustomParameters: string }
       
 let DotCoverReportDefaults : DotCoverReportParams =
-     { ToolPath = findToolInSubPath "dotcover.exe" (currentDirectory @@ "tools" @@ "DotCover")
+     { ToolPath = findToolInSubPath "dotCover.exe" (currentDirectory @@ "tools" @@ "DotCover")
        WorkingDir = ""
        Source = ""
-       Output = "DotCover.xml"
-       ReportType = DotCoverReportType.Xml }
+       Output = "dotCoverReport.xml"
+       ReportType = DotCoverReportType.Xml
+       CustomParameters = "" }
 
 let buildDotCoverArgs parameters =
     new StringBuilder()
@@ -66,7 +72,9 @@ let buildDotCoverArgs parameters =
     |> appendIfNotNullOrEmpty parameters.TargetExecutable "/TargetExecutable="
     |> appendIfNotNullOrEmpty (parameters.TargetArguments.Trim()) "/TargetArguments="
     |> appendIfNotNullOrEmpty parameters.TargetWorkingDir "/TargetWorkingDir="
+    |> appendIfNotNullOrEmpty parameters.Filters "/Filters="
     |> appendIfNotNullOrEmpty parameters.Output "/Output="
+    |> appendWithoutQuotes parameters.CustomParameters
     |> toText
 
 let buildDotCoverMergeArgs (parameters:DotCoverMergeParams) =
@@ -75,6 +83,7 @@ let buildDotCoverMergeArgs (parameters:DotCoverMergeParams) =
     |> appendIfNotNullOrEmpty (parameters.Source |> String.concat ";") "/Source="
     |> appendIfNotNullOrEmpty parameters.Output "/Output="
     |> appendIfNotNullOrEmpty parameters.TempDir "/TempDir="
+    |> appendWithoutQuotes parameters.CustomParameters
     |> toText
     
 let buildDotCoverReportArgs parameters =
@@ -83,6 +92,7 @@ let buildDotCoverReportArgs parameters =
     |> appendIfNotNullOrEmpty parameters.Source "/Source="
     |> appendIfNotNullOrEmpty parameters.Output "/Output="
     |> appendIfNotNullOrEmpty (parameters.ReportType.ToString()) "/ReportType="
+    |> appendWithoutQuotes parameters.CustomParameters
     |> toText
 
 
@@ -99,50 +109,50 @@ let buildParamsAndExecute parameters buildArguments toolPath workingDir =
               info.Arguments <- args) TimeSpan.MaxValue
     if result <> 0 then failwithf "Error running %s" toolPath
 
-/// Runs the DotCover "cover" command, using a target executable (such as NUnit or MSpec) and generates a snapshot file.
+/// Runs the dotCover "cover" command, using a target executable (such as NUnit or MSpec) and generates a snapshot file.
 ///
 /// ## Parameters
 ///
-///  - `setParams` - Function used to overwrite the DotCover default parameters.
+///  - `setParams` - Function used to overwrite the dotCover default parameters.
 let DotCover (setParams: DotCoverParams -> DotCoverParams) =
     let parameters = (DotCoverDefaults |> setParams)
     buildParamsAndExecute parameters buildDotCoverArgs parameters.ToolPath parameters.WorkingDir
 
-/// Runs the DotCover "merge" command. This combines dotCover snaphots into a single
+/// Runs the dotCover "merge" command. This combines dotCover snaphots into a single
 /// snapshot, enabling you to merge test coverage from multiple test running frameworks
 /// ## Parameters
 ///
-///  - `setParams` - Function used to overwrite the DotCover merge default parameters.
+///  - `setParams` - Function used to overwrite the dotCover merge default parameters.
 ///
 /// ## Sample
 ///
 ///     DotCoverMerge (fun p -> { p with 
-///                         Source = [artifactsDir @@ "NUnitDotCover.snapshot"
-///                                   artifactsDir @@ "MSpecDotCover.snapshot"]
-///                         Output = artifactsDir @@ "DotCover.snapshot" }) 
+///                         Source = [artifactsDir @@ "NUnitDotCoverSnapshot.dcvr"
+///                                   artifactsDir @@ "MSpecDotCoverSnapshot.dcvr"]
+///                         Output = artifactsDir @@ "dotCoverSnapshot.dcvr" }) 
 let DotCoverMerge (setParams: DotCoverMergeParams -> DotCoverMergeParams) =
     let parameters = (DotCoverMergeDefaults |> setParams)
     buildParamsAndExecute parameters buildDotCoverMergeArgs parameters.ToolPath parameters.WorkingDir
    
-/// Runs the DotCover "report" command. This generates a report from a DotCover snapshot
+/// Runs the dotCover "report" command. This generates a report from a dotCover snapshot
 /// ## Parameters
 ///
-///  - `setParams` - Function used to overwrite the DotCover report default parameters.
+///  - `setParams` - Function used to overwrite the dotCover report default parameters.
 ///
 /// ## Sample
 ///
 ///     DotCoverReport (fun p -> { p with 
-///                         Source = artifactsDir @@ "DotCover.snapshot"
-///                         Output = artifactsDir @@ "DotCover.xml"
+///                         Source = artifactsDir @@ "dotCoverSnapshot.dcvr"
+///                         Output = artifactsDir @@ "dotCoverReport.xml"
 ///                         ReportType = DotCoverReportType.Xml })
 let DotCoverReport (setParams: DotCoverReportParams -> DotCoverReportParams) =
     let parameters = (DotCoverReportDefaults |> setParams)
     buildParamsAndExecute parameters buildDotCoverReportArgs parameters.ToolPath parameters.WorkingDir
 
-/// Runs the DotCover "cover" command against the NUnit test runner.
+/// Runs the dotCover "cover" command against the NUnit test runner.
 /// ## Parameters
 ///
-///  - `setDotCoverParams` - Function used to overwrite the DotCover report default parameters.
+///  - `setDotCoverParams` - Function used to overwrite the dotCover report default parameters.
 ///  - `setNUnitParams` - Function used to overwrite the NUnit default parameters.
 ///
 /// ## Sample
@@ -150,7 +160,7 @@ let DotCoverReport (setParams: DotCoverReportParams -> DotCoverReportParams) =
 ///     !! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll") 
 ///         |> DotCoverNUnit 
 ///             (fun dotCoverOptions -> { dotCoverOptions with 
-///                     Output = artifactsDir @@ "NUnitDotCover.snapshot" }) 
+///                     Output = artifactsDir @@ "NUnitDotCoverSnapshot.dcvr" }) 
 ///             (fun nUnitOptions -> { nUnitOptions with
 ///                     DisableShadowCopy = true })
 let DotCoverNUnit (setDotCoverParams: DotCoverParams -> DotCoverParams) (setNUnitParams: NUnitParams -> NUnitParams) (assemblies: string seq) =
@@ -169,10 +179,10 @@ let DotCoverNUnit (setDotCoverParams: DotCoverParams -> DotCoverParams) (setNUni
 
     traceEndTask "DotCoverNUnit" details
 
-/// Runs the DotCover "cover" command against the MSpec test runner.
+/// Runs the dotCover "cover" command against the MSpec test runner.
 /// ## Parameters
 ///
-///  - `setDotCoverParams` - Function used to overwrite the DotCover report default parameters.
+///  - `setDotCoverParams` - Function used to overwrite the dotCover report default parameters.
 ///  - `setMSpecParams` - Function used to overwrite the MSpec default parameters.
 ///
 /// ## Sample
@@ -180,7 +190,7 @@ let DotCoverNUnit (setDotCoverParams: DotCoverParams -> DotCoverParams) (setNUni
 ///     !! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll") 
 ///         |> DotCoverMSpec 
 ///             (fun dotCoverOptions -> { dotCoverOptions with 
-///                     Output = artifactsDir @@ "MSpecDotCover.snapshot" }) 
+///                     Output = artifactsDir @@ "MSpecDotCoverSnapshot.dcvr" }) 
 ///             (fun mSpecOptions -> { mSpecOptions with
 ///                     Silent = true })
 let DotCoverMSpec (setDotCoverParams: DotCoverParams -> DotCoverParams) (setMSpecParams: MSpecParams -> MSpecParams) (assemblies: string seq) =

@@ -3,10 +3,8 @@
 module Fake.MSBuildHelper
 
 open System
-open System.Text
 open System.IO
 open System.Configuration
-open System.Xml
 open System.Xml.Linq
 
 /// An type to represent MSBuild project files.
@@ -24,6 +22,7 @@ let msBuildExe =
     if isUnix then "xbuild"
     else
         let MSBuildPath = 
+            (ProgramFilesX86 @@ @"\MSBuild\14.0\Bin") + ";" +
             (ProgramFilesX86 @@ @"\MSBuild\12.0\Bin") + ";" +
             (ProgramFilesX86 @@ @"\MSBuild\12.0\Bin\amd64") + ";" + 
             @"c:\Windows\Microsoft.NET\Framework\v4.0.30319\;" + 
@@ -46,13 +45,22 @@ let xname name = XName.Get(name, msbuildNamespace)
 let loadProject (projectFileName : string) : MSBuildProject = 
     MSBuildProject.Load(projectFileName, LoadOptions.PreserveWhitespace)
 
+// See: http://msdn.microsoft.com/en-us/library/ms228186.aspx
+let internal unescapeMSBuildSpecialChars s =
+    let replExpr = new Text.RegularExpressions.Regex("%..")
+    replExpr.Replace(s, new Text.RegularExpressions.MatchEvaluator(
+                            fun _match -> match _match.Value with
+                                          | "%24" -> "$" | "%25" -> "%" | "%27" -> "'" | "%40" -> "@"
+                                          | "%3B" -> ";" | "%3F" -> "?" | "%2A" -> "*" 
+                                          | _ -> _match.Value))
+
 /// [omit]
 let internal getReferenceElements elementName projectFileName (doc : XDocument) = 
     let fi = fileInfo projectFileName
     doc.Descendants(xname "Project").Descendants(xname "ItemGroup").Descendants(xname elementName) 
     |> Seq.map (fun e -> 
         let a = e.Attribute(XName.Get "Include")
-        let value = convertWindowsToCurrentPath a.Value
+        let value = a.Value |> unescapeMSBuildSpecialChars |> convertWindowsToCurrentPath 
            
         let fileName =
             if value.StartsWith(".." + directorySeparator) || (not <| value.Contains directorySeparator) then
@@ -74,7 +82,7 @@ let rec getProjectReferences (projectFileName : string) =
     else // exclude .sln-files since the are not XML
          
     let doc = loadProject projectFileName
-    let references = getReferenceElements "ProjectReference" projectFileName doc |> Seq.map snd
+    let references = getReferenceElements "ProjectReference" projectFileName doc |> Seq.map snd |> Seq.filter File.Exists
     references
       |> Seq.map getProjectReferences
       |> Seq.concat
@@ -113,6 +121,12 @@ type MSBuildFileLoggerConfig =
       Verbosity : MSBuildVerbosity option
       Parameters : MSBuildLogParameter list option }
 
+type MSBuildDistributedLoggerConfig = 
+    {
+        ClassName : string option
+        AssemblyPath : string
+        Parameters : (string * string) list option }
+
 /// A type for MSBuild task parameters
 type MSBuildParams = 
     { Targets : string list
@@ -122,7 +136,8 @@ type MSBuildParams =
       ToolsVersion : string option
       Verbosity : MSBuildVerbosity option
       NoConsoleLogger : bool
-      FileLoggers : MSBuildFileLoggerConfig list option }
+      FileLoggers : MSBuildFileLoggerConfig list option
+      DistributedLoggers : (MSBuildDistributedLoggerConfig * MSBuildDistributedLoggerConfig option) list option }
 
 /// Defines a default for MSBuild task parameters
 let mutable MSBuildDefaults = 
@@ -133,12 +148,13 @@ let mutable MSBuildDefaults =
       ToolsVersion = None
       Verbosity = None
       NoConsoleLogger = false
-      FileLoggers = None }
+      FileLoggers = None 
+      DistributedLoggers = None }
 
 /// [omit]
-let getAllParameters targets maxcpu nodeReuse tools verbosity noconsolelogger fileLoggers properties =
-    if isUnix then [ targets; tools; verbosity; noconsolelogger ] @ fileLoggers @ properties
-    else [ targets; maxcpu; nodeReuse; tools; verbosity; noconsolelogger ] @ fileLoggers @ properties
+let getAllParameters targets maxcpu nodeReuse tools verbosity noconsolelogger fileLoggers distributedFileLoggers properties =
+    if isUnix then [ targets; tools; verbosity; noconsolelogger ] @ fileLoggers @ distributedFileLoggers @ properties
+    else [ targets; maxcpu; nodeReuse; tools; verbosity; noconsolelogger ] @ fileLoggers @ distributedFileLoggers @ properties
 
 let private serializeArgs args =
     args
@@ -150,7 +166,7 @@ let private serializeArgs args =
     |> separated " "
 
 /// [omit]
-let serializeMSBuildParams (p : MSBuildParams) = 
+let serializeMSBuildParams (p : MSBuildParams) =    
     let verbosityName v =
         match v with
         | Quiet -> "q"
@@ -158,6 +174,8 @@ let serializeMSBuildParams (p : MSBuildParams) =
         | Normal -> "n"
         | Detailed -> "d"
         | Diagnostic -> "diag"
+
+    
     
     let targets = 
         match p.Targets with
@@ -194,45 +212,68 @@ let serializeMSBuildParams (p : MSBuildParams) =
         else None
 
     let fileLoggers =
-        let logParams param =
-            match param with
-            | Append -> "Append"
-            | PerformanceSummary -> "PerformanceSummary"
-            | Summary -> "Summary"
-            | NoSummary -> "NoSummary"
-            | ErrorsOnly -> "ErrorsOnly"
-            | WarningsOnly -> "WarningsOnly"
-            | NoItemAndPropertyList -> "NoItemAndPropertyList"
-            | ShowCommandLine -> "ShowCommandLine"
-            | ShowTimestamp -> "ShowTimestamp"
-            | ShowEventId -> "ShowEventId"
-            | ForceNoAlign -> "ForceNoAlign"
-            | DisableConsoleColor -> "DisableConsoleColor"
-            | DisableMPLogging -> "DisableMPLogging"
-            | EnableMPLogging -> "EnableMPLogging"
+        let serializeLogger fl =    
+            let logParams param =
+                match param with
+                | Append -> "Append"
+                | PerformanceSummary -> "PerformanceSummary"
+                | Summary -> "Summary"
+                | NoSummary -> "NoSummary"
+                | ErrorsOnly -> "ErrorsOnly"
+                | WarningsOnly -> "WarningsOnly"
+                | NoItemAndPropertyList -> "NoItemAndPropertyList"
+                | ShowCommandLine -> "ShowCommandLine"
+                | ShowTimestamp -> "ShowTimestamp"
+                | ShowEventId -> "ShowEventId"
+                | ForceNoAlign -> "ForceNoAlign"
+                | DisableConsoleColor -> "DisableConsoleColor"
+                | DisableMPLogging -> "DisableMPLogging"
+                | EnableMPLogging -> "EnableMPLogging"
+
+            sprintf "%s%s%s" 
+                (match fl.Filename with
+                | None -> ""
+                | Some f -> sprintf "logfile=%s;" f)
+                (match fl.Verbosity with
+                | None -> ""
+                | Some v -> sprintf "Verbosity=%s;" (verbosityName v)) 
+                (match fl.Parameters with
+                | None -> ""
+                | Some ps -> 
+                    ps
+                    |> List.map (fun p -> sprintf "%s;" (logParams p))
+                    |> String.concat "")
+
         match p.FileLoggers with
         | None -> []
         | Some fls ->
             fls 
-            |> List.map 
-                   (fun fl -> 
-                   Some
-                       ("flp" + (string fl.Number),                         
-                        sprintf "%s%s%s" 
-                         (match fl.Filename with
-                          | None -> ""
-                          | Some f -> sprintf "logfile=%s;" f)
-                         (match fl.Verbosity with
-                          | None -> ""
-                          | Some v -> sprintf "Verbosity=%s;" (verbosityName v)) 
-                         (match fl.Parameters with
-                          | None -> ""
-                          | Some ps -> 
-                                ps
-                                |> List.map (fun p -> sprintf "%s;" (logParams p))
-                                |> String.concat "")))
+            |> List.map (fun fl -> Some ("flp" + (string fl.Number), serializeLogger fl) )
 
-    getAllParameters targets maxcpu nodeReuse tools verbosity noconsolelogger fileLoggers properties
+    let distributedFileLoggers = 
+        let serializeDLogger (dlogger : MSBuildDistributedLoggerConfig) =
+            sprintf "%s%s%s" 
+                (match dlogger.ClassName with | None -> "" | Some name -> sprintf "%s," name) 
+                (sprintf "\"%s\"" dlogger.AssemblyPath)
+                (match dlogger.Parameters with 
+                    | None -> "" 
+                    | Some vars -> vars 
+                                    |> List.fold (fun acc (k,v) -> sprintf "%s%s=%s;" acc k v) ""
+                                    |> sprintf ";\"%s\""
+                )
+
+        let createLoggerString cl fl =
+            match fl with
+            | None -> serializeDLogger cl
+            | Some l -> sprintf "%s*%s" (serializeDLogger cl) (serializeDLogger l)
+
+        match p.DistributedLoggers with
+        | None -> []
+        | Some dfls ->
+            dfls
+            |> List.map(fun (cl, fl) -> Some("dl", createLoggerString cl fl))
+
+    getAllParameters targets maxcpu nodeReuse tools verbosity noconsolelogger fileLoggers distributedFileLoggers properties
     |> serializeArgs
 
 /// [omit]
@@ -252,7 +293,7 @@ let mutable MSBuildLoggers =
 match buildServer with
 | BuildServer.AppVeyor ->
     MSBuildLoggers <- @"""C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll""" :: MSBuildLoggers
-| BuildServer.TeamCity  -> MSBuildLoggers <- sprintf "%s,\"%s\"" TeamCityLoggerName pathToLogger :: MSBuildLoggers
+| BuildServer.TeamCity -> MSBuildLoggers <- sprintf "%s,\"%s\"" TeamCityLoggerName pathToLogger :: MSBuildLoggers
 | _ -> ()
 
 /// Runs a MSBuild project
@@ -395,8 +436,8 @@ let BuildWebsite outputPath projectFile =
     let projectDir = (fileInfo projectFile).Directory.FullName
     let mutable prefix = ""
     let diff = slashes projectDir - slashes currentDir
-    for i in 1..diff do
-        prefix <- prefix + "../"
+    prefix <- prefix + (String.replicate diff "../")
+
     MSBuildDebug "" "Rebuild" [ projectFile ] |> ignore
     MSBuild "" "_CopyWebApplication;_BuiltWebOutputGroupOutput" 
         [ "OutDir", prefix + outputPath

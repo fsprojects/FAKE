@@ -4,6 +4,7 @@ module Fake.TargetHelper
     
 open System
 open System.Collections.Generic
+open System.Linq
 
 /// [omit]
 type TargetDescription = string
@@ -47,6 +48,15 @@ let ExecutedTargets = new HashSet<_>()
 /// The executed target time.
 /// [omit]
 let ExecutedTargetTimes = new List<_>()
+
+/// Resets the state so that a deployment can be invoked multiple times
+/// [omit]
+let reset() = 
+    TargetDict.Clear()
+    ExecutedTargets.Clear()
+    BuildFailureTargets.Clear()
+    ExecutedTargetTimes.Clear()
+    FinalTargets.Clear()
 
 /// Returns a list with all target names.
 let getAllTargetsNames() = TargetDict |> Seq.map (fun t -> t.Key) |> Seq.toList
@@ -149,19 +159,61 @@ let targetFromTemplate template name parameters =
     name <== template.Dependencies
     LastDescription <- null
 
-/// Creates a TargetTemplate with dependencies-
-let TargetTemplateWithDependecies dependencies body =
-    { Name = String.Empty;
-      Dependencies = dependencies;
-      Description = LastDescription;
-      Function = body}     
-        |> targetFromTemplate
+/// Creates a TargetTemplate with dependencies.
+///
+/// ## Sample
+///
+/// The following sample creates 4 targets using TargetTemplateWithDependencies and hooks them into the build pipeline.
+///
+///     // Create target creation functions
+///     let createCompileTarget name strategy = 
+///     TargetTemplateWithDependencies 
+///         ["Clean"; "ResolveDependencies"] // dependencies to other targets 
+///         (fun targetParameter -> 
+///           tracefn "--- start compile product..."  
+///           if targetParameter = "a" then
+///             tracefn "    ---- Strategy A"
+///           else
+///             tracefn "    ---- Strategy B"
+///           tracefn "--- finish compile product ..."    
+///         ) name strategy
+///     
+///     let createTestTarget name dependencies filePattern = 
+///       TargetTemplateWithDependencies 
+///         dependencies 
+///         (fun filePattern ->   
+///           tracefn "--- start compile tests ..."
+///           !! filePattern
+///           |> RunTests
+///           tracefn "--- finish compile tests ...")
+///         name filePattern
+///     
+///     // create some targets
+///     createCompileTarget "C1" "a"
+///     createCompileTarget "C2" "b"
+///     
+///     createTestTarget "T1" ["C1"] "**/C1/*.*"
+///     createTestTarget "T2" ["C1"; "C2"] "**/C?/*.*"
+///     
+///     // hook targets to normal build pipeline
+///     "T1" ==> "T2" ==> "Test"
+///
+let TargetTemplateWithDependencies dependencies body name parameters = 
+    let template = 
+        { Name = String.Empty
+          Dependencies = dependencies
+          Description = LastDescription
+          Function = body }
+    targetFromTemplate template name parameters
+
+[<Obsolete("Use TargetTemplateWithDependencies")>]
+let TargetTemplateWithDependecies dependencies = TargetTemplateWithDependencies dependencies
 
 /// Creates a TargetTemplate.
-let TargetTemplate body = TargetTemplateWithDependecies [] body 
+let TargetTemplate body = TargetTemplateWithDependencies [] body 
   
 /// Creates a Target.
-let Target name body = TargetTemplate body name ()  
+let Target name body = TargetTemplate body name ()
 
 /// Represents build errors
 type BuildError = { 
@@ -187,11 +239,16 @@ let targetError targetName (exn:System.Exception) =
     let msg = sprintf "%s%s" (error exn) (if exn.InnerException <> null then "\n" + (exn.InnerException |> error) else "")
             
     traceError <| sprintf "Running build failed.\nError:\n%s" msg
-    sendTeamCityError <| error exn
- 
+
+    let isFailedTestsException = exn :? UnitTestCommon.FailedTestsException
+    if not isFailedTestsException  then
+        sendTeamCityError <| error exn
+
 let addExecutedTarget target time =
-    ExecutedTargets.Add (toLower target) |> ignore
-    ExecutedTargetTimes.Add(toLower target,time) |> ignore
+    lock ExecutedTargets (fun () ->
+        ExecutedTargets.Add (toLower target) |> ignore
+        ExecutedTargetTimes.Add(toLower target,time) |> ignore
+    )
 
 /// Runs all activated final targets (in alphabetically order).
 /// [omit]
@@ -307,33 +364,104 @@ let listTargets() =
             tracefn "  - %s %s" target.Name (if target.Description <> null then " - " + target.Description else "")
             tracefn "     Depends on: %A" target.Dependencies)
 
+// Instead of the target can be used the list dependencies graph parameter.
+let doesTargetMeanListTargets target = target = "--listTargets"  || target = "-lt"
+
+/// Determines a parallel build order for the given set of targets
+let determineBuildOrder (target : string) =
+    
+    let t = getTarget target
+
+    // determines the maximal level at which a target occurs
+    let rec determineLevels (currentLevel : int) (levels : Map<string, int>) (t : seq<TargetTemplate<unit>>) =
+        let levels = 
+            t |> Seq.fold (fun m t -> 
+                match Map.tryFind t.Name m with
+                    | Some mapLevel when mapLevel >= currentLevel -> m
+                    | _ -> Map.add t.Name currentLevel m
+            ) levels
+            
+        t |> Seq.map (fun t -> t.Dependencies |> Seq.map getTarget) 
+          |> Seq.fold (determineLevels (currentLevel + 1)) levels
+
+    let levels = determineLevels 0 Map.empty [t]
+
+    // the results are grouped by their level, sorted descending (by level) and 
+    // finally grouped together in a list<TargetTemplate<unit>[]>
+    let result = 
+        levels |> Map.toSeq
+               |> Seq.groupBy snd
+               |> Seq.sortBy (fun (l,_) -> -l)
+               |> Seq.map snd
+               |> Seq.map (fun v -> v |> Seq.map fst |> Seq.distinct |> Seq.map getTarget |> Seq.toArray)
+               |> Seq.toList
+
+    // Note that this build order cannot be considered "optimal" 
+    // since it may introduce order where actually no dependencies
+    // exist. However it yields a "good" execution order in practice.
+    result
+
+/// Runs a single target without its dependencies
+let runSingleTarget (target : TargetTemplate<unit>) =
+    try
+        if errors = [] then
+            traceStartTarget target.Name target.Description (dependencyString target)
+            let watch = new System.Diagnostics.Stopwatch()
+            watch.Start()
+            target.Function()
+            addExecutedTarget target.Name watch.Elapsed
+            traceEndTarget target.Name     
+    with exn ->
+        targetError target.Name exn
+
+/// Runs the given array of targets in parallel using count tasks
+let runTargetsParallel (count : int) (targets : Target[]) =
+    targets.AsParallel()
+        .WithDegreeOfParallelism(count)
+        .Select(runSingleTarget)
+        .ToArray()
+    |> ignore
+
+
 /// Runs a target and its dependencies.
 let run targetName =            
-    if isListMode then listTargets() else
+    if doesTargetMeanListTargets targetName then listTargets() else
     if LastDescription <> null then failwithf "You set a task description (%A) but didn't specify a task." LastDescription
+
     let rec runTarget targetName =
-        try      
-            if errors = [] && ExecutedTargets.Contains (toLower targetName) |> not then
-                let target = getTarget targetName      
+        if errors = [] && ExecutedTargets.Contains (toLower targetName) |> not then
+            let target = getTarget targetName      
       
+            if hasBuildParam "single-target" then
+                traceImportant "Single target mode ==> Skipping dependencies."
+            else
                 List.iter runTarget target.Dependencies
       
-                if errors = [] then
-                    traceStartTarget target.Name target.Description (dependencyString target)
-                    let watch = new System.Diagnostics.Stopwatch()
-                    watch.Start()
-                    target.Function()
-                    addExecutedTarget targetName watch.Elapsed
-                    traceEndTarget target.Name                
-        with
-        | exn -> targetError targetName exn
-      
+            runSingleTarget target            
+
+    
     let watch = new System.Diagnostics.Stopwatch()
     watch.Start()        
     try
         tracefn "Building project with version: %s" buildVersion
-        PrintDependencyGraph false targetName
-        runTarget targetName
+        let parallelJobs = environVarOrDefault "parallel-jobs" "1" |> int
+      
+
+        if parallelJobs > 1 then
+            tracefn "Running parallel build with %d workers" parallelJobs
+
+            // determine a parallel build order
+            let order = determineBuildOrder targetName
+
+            // run every level in parallel
+            for par in order do
+                runTargetsParallel parallelJobs par
+
+        else
+            // single threaded build
+            PrintDependencyGraph false targetName
+            runTarget targetName
+
     finally
         if errors <> [] then
             runBuildFailureTargets()    

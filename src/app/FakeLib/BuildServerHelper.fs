@@ -46,15 +46,15 @@ let ccBuildLabel = environVar "CCNETLABEL"
 
 /// AppVeyor build number
 /// [omit]
-let appVeyorBuildNumber = environVar "APPVEYOR_BUILD_NUMBER"
+let appVeyorBuildVersion = environVar "APPVEYOR_BUILD_VERSION"
 
 /// The current build server
 let buildServer = 
-    if hasBuildParam "jenkins_home" then Jenkins
-    elif not (isNullOrEmpty tcBuildNumber) then TeamCity
+    if hasBuildParam "JENKINS_HOME" then Jenkins
+    elif hasBuildParam "TEAMCITY_VERSION" then TeamCity
     elif not (isNullOrEmpty ccBuildLabel) then CCNet
     elif not (isNullOrEmpty travisBuildNumber) then Travis
-    elif not (isNullOrEmpty appVeyorBuildNumber) then AppVeyor
+    elif not (isNullOrEmpty appVeyorBuildVersion) then AppVeyor
     else LocalBuild
 
 /// The current build version as detected from the current build server.
@@ -65,7 +65,7 @@ let buildVersion =
     | TeamCity -> getVersion tcBuildNumber
     | CCNet -> getVersion ccBuildLabel
     | Travis -> getVersion travisBuildNumber
-    | AppVeyor -> getVersion appVeyorBuildNumber
+    | AppVeyor -> getVersion appVeyorBuildVersion
     | LocalBuild -> getVersion localBuildLabel
 
 /// Is true when the current build is a local build.

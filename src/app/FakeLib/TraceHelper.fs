@@ -5,6 +5,7 @@ module Fake.TraceHelper
 open System
 open System.IO
 open System.Reflection
+open System.Threading
 
 /// Gets the path of the current FAKE instance
 let fakePath = productName.GetType().Assembly.Location
@@ -12,7 +13,7 @@ let fakePath = productName.GetType().Assembly.Location
 /// Gets the FAKE version no.
 let fakeVersion = AssemblyVersionInformation.Version
 
-let mutable private openTags = []
+let private openTags = new ThreadLocal<list<string>>(fun _ -> [])
 
 /// Logs the specified string        
 let log message = LogMessage(message, true) |> postMessage
@@ -50,6 +51,42 @@ let traceFAKE fmt = Printf.ksprintf (fun text -> postMessage (ImportantMessage t
 /// Traces an error (in red)
 let traceError error = postMessage (ErrorMessage error)
 
+open Microsoft.FSharp.Core.Printf
+/// Traces an exception details (in red)
+let traceException (ex:Exception) =
+    let sb = Text.StringBuilder()
+    let delimeter = String.replicate 50 "*"
+    let nl = Environment.NewLine
+    let rec printException (e:Exception) count =
+        if (e :? TargetException && e.InnerException <> null)
+        then printException (e.InnerException) count
+        else
+            if (count = 1) then bprintf sb "Exception Message:%s%s%s" e.Message nl delimeter
+            else bprintf sb "%s%s%d)Exception Message:%s%s%s" nl nl count e.Message nl delimeter
+            bprintf sb "%sType: %s" nl (e.GetType().FullName)
+            // Loop through the public properties of the exception object
+            // and record their values.
+            e.GetType().GetProperties()
+            |> Array.iter (fun p ->
+                // Do not log information for the InnerException or StackTrace.
+                // This information is captured later in the process.
+                if (p.Name <> "InnerException" && p.Name <> "StackTrace" &&
+                    p.Name <> "Message" && p.Name <> "Data") then
+                    try
+                        let value = p.GetValue(e, null)
+                        if (value <> null)
+                        then bprintf sb "%s%s: %s" nl p.Name (value.ToString())
+                    with
+                    | e2 -> bprintf sb "%s%s: %s" nl p.Name e2.Message
+            )
+            if (e.StackTrace <> null) then
+                bprintf sb "%s%sStackTrace%s%s%s" nl nl nl delimeter nl
+                bprintf sb "%s%s" nl e.StackTrace
+            if (e.InnerException <> null)
+            then printException e.InnerException (count+1)
+    printException ex 1
+    sb.ToString() |> traceError
+
 /// Traces the EnvironmentVariables
 let TraceEnvironmentVariables() = 
     [ EnvironTarget.Machine; EnvironTarget.Process; EnvironTarget.User ] 
@@ -77,16 +114,16 @@ let traceStartBuild() = postMessage StartMessage
 let traceEndBuild() = postMessage FinishedMessage
 
 /// Puts an opening tag on the internal tag stack
-let openTag tag = openTags <- tag :: openTags
+let openTag tag = openTags.Value <- tag :: openTags.Value
 
 /// Removes an opening tag from the internal tag stack
 let closeTag tag = 
-    match openTags with
-    | x :: rest when x = tag -> openTags <- rest
+    match openTags.Value with
+    | x :: rest when x = tag -> openTags.Value <- rest
     | _ -> failwithf "Invalid tag structure. Trying to close %s tag but stack is %A" tag openTags
     CloseTag tag |> postMessage
 
-let closeAllOpenTags() = Seq.iter closeTag openTags
+let closeAllOpenTags() = Seq.iter closeTag openTags.Value
 
 /// Traces the begin of a target
 let traceStartTarget name description dependencyString = 
@@ -125,3 +162,6 @@ let logToConsole (msg, eventLogEntry : EventLogEntryType) =
     | EventLogEntryType.Warning -> ImportantMessage msg
     | _ -> LogMessage(msg, true)
     |> console.Write
+
+/// Logs the given files with the message.
+let Log message files = files |> Seq.iter (log << sprintf "%s%s" message)

@@ -1,6 +1,6 @@
-#I @"tools/FAKE/tools/"
+#I @"packages/FAKE/tools/"
 #r @"FakeLib.dll"
-#load "tools/SourceLink.Fake/tools/SourceLink.fsx"
+#load "packages/SourceLink.Fake/tools/SourceLink.fsx"
 
 open Fake
 open Fake.Git
@@ -24,8 +24,9 @@ let packages =
      "FAKE.IIS",projectDescription + " Extensions for IIS"
      "FAKE.SQL",projectDescription + " Extensions for SQL Server"
      "FAKE.Experimental",projectDescription + " Experimental Extensions"
-     "FAKE.Deploy.Lib",projectDescription + " Extensions for FAKE Deploy"
-     projectName,projectDescription + " This package bundles all extensions."]
+     "FAKE.Deploy.Lib",projectDescription + " Extensions for FAKE Deploy"     
+     projectName,projectDescription + " This package bundles all extensions."
+     "FAKE.Lib",projectDescription + " FAKE helper functions as library"]
 
 let buildDir = "./build"
 let testDir = "./test"
@@ -39,13 +40,11 @@ let additionalFiles = [
     "License.txt"
     "README.markdown"
     "RELEASE_NOTES.md"
-    "./lib/FSharp/FSharp.Core.sigdata"
-    "./lib/FSharp/FSharp.Core.optdata"]
+    "./packages/FSharp.Core/lib/net40/FSharp.Core.sigdata"
+    "./packages/FSharp.Core/lib/net40/FSharp.Core.optdata"]
 
 // Targets
 Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDir; reportDir])
-
-Target "RestorePackages" RestorePackages
 
 open Fake.AssemblyInfoFile
 
@@ -115,6 +114,7 @@ Target "GenerateDocs" (fun _ ->
           ++ "./build/FakeLib.dll"
           -- "./build/**/Fake.Experimental.dll"
           -- "./build/**/FSharp.Compiler.Service.dll"
+          -- "./build/**/Fake.IIS.dll"                      
           -- "./build/**/Fake.Deploy.Lib.dll"
 
     CreateDocsForDlls apidocsDir templatesDir projInfo (githubLink + "/blob/master") dllFiles
@@ -160,12 +160,32 @@ Target "SourceLink" (fun _ ->
 )
 
 Target "CreateNuGet" (fun _ ->
+    let set64BitCorFlags files =
+        files
+        |> Seq.iter (fun file -> 
+            let args =
+                { Program = "lib" @@ "corflags.exe"
+                  WorkingDirectory = directory file
+                  CommandLine = "/32BIT- /32BITPREF- " + quoteIfNeeded file
+                  Args = [] }
+            printfn "%A" args
+            shellExec args |> ignore)
+
+    let x64ify package = 
+        { package with
+            Dependencies = package.Dependencies |> List.map (fun (pkg, ver) -> pkg + ".x64", ver)
+            Project = package.Project + ".x64" }
+
     for package,description in packages do
         let nugetDocsDir = nugetDir @@ "docs"
         let nugetToolsDir = nugetDir @@ "tools"
+        let nugetLibDir = nugetDir @@ "lib"
+        let nugetLib451Dir = nugetLibDir @@ "net451"
 
         CleanDir nugetDocsDir
         CleanDir nugetToolsDir
+        CleanDir nugetLibDir
+        DeleteDir nugetLibDir
 
         DeleteFile "./build/FAKE.Gallio/Gallio.dll"
 
@@ -176,12 +196,15 @@ Target "CreateNuGet" (fun _ ->
         | p when p = "FAKE.Core" ->
             !! (buildDir @@ "*.*") |> Copy nugetToolsDir
             CopyDir nugetDocsDir docsDir allFiles
+        | p when p = "FAKE.Lib" -> 
+            CleanDir nugetLib451Dir
+            !! (buildDir @@ "FakeLib.dll") |> Copy nugetLib451Dir
         | _ ->
             CopyDir nugetToolsDir (buildDir @@ package) allFiles
             CopyTo nugetToolsDir additionalFiles
         !! (nugetToolsDir @@ "*.srcsv") |> DeleteFiles
 
-        NuGet (fun p ->
+        let setParams p =
             {p with
                 Authors = authors
                 Project = package
@@ -191,12 +214,15 @@ Target "CreateNuGet" (fun _ ->
                 Summary = projectSummary
                 ReleaseNotes = release.Notes |> toLines
                 Dependencies =                    
-                    (if package <> "FAKE.Core" && package <> projectName then
+                    (if package <> "FAKE.Core" && package <> projectName && package <> "FAKE.Lib" then
                        ["FAKE.Core", RequireExactly (NormalizeVersion release.AssemblyVersion)]
-                     else p.Dependencies) 
+                     else p.Dependencies )
                 AccessKey = getBuildParamOrDefault "nugetkey" ""
-                Publish = hasBuildParam "nugetkey"
-                ToolPath = "./tools/NuGet/nuget.exe"  }) "fake.nuspec"
+                Publish = hasBuildParam "nugetkey" }
+
+        NuGet setParams "fake.nuspec"
+        !! (nugetToolsDir @@ "FAKE.exe") |> set64BitCorFlags
+        NuGet (setParams >> x64ify) "fake.nuspec"
 )
 
 Target "ReleaseDocs" (fun _ ->
@@ -224,7 +250,6 @@ Target "Default" DoNothing
 
 // Dependencies
 "Clean"
-    ==> "RestorePackages"
     ==> "SetAssemblyInfo"
     ==> "BuildSolution"
     ==> "Test"    

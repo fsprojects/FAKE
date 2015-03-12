@@ -111,7 +111,11 @@ type RoundhouseParams = {
     WorkingDir: string
 
     /// A timeout for the runner.
-    TimeOut: TimeSpan}
+    TimeOut: TimeSpan
+    
+    ///  The schema where RH stores it's tables
+    SchemaName :string
+    }
 
 /// Roundhouse default parameters - tries to locate rh.exe in any subfolder.
 let RoundhouseDefaults = { 
@@ -149,7 +153,74 @@ let RoundhouseDefaults = {
     WarnOnOneTimeScriptChanges = false
     ToolPath = findToolInSubPath "rh.exe" (currentDirectory @@ "tools" @@ "rh")
     WorkingDir = null
-    TimeOut = TimeSpan.FromMinutes 5.}
+    TimeOut = TimeSpan.FromMinutes 5.
+    SchemaName = null}
+
+let private getStringParam k (v : string)=
+    match isNullOrEmpty v with
+    | true -> None
+    | false -> Some (k, sprintf "\"%s\"" v) //string escape
+
+let private getBoolParam k (v : bool) =
+    match v with
+    | true -> Some (k, String.Empty)
+    | false -> None
+
+let private getIntParam k (v : int) =
+    Some(k, v.ToString())
+
+let private formatArgs args pre split delim =
+    args
+    |> Seq.filter Option.isSome
+    |> Seq.map (function 
+           | None -> ""
+           | Some(k, v) -> 
+               pre + k + (if isNullOrEmpty v then ""
+                          else sprintf "%s%s" split v))
+    |> separated delim
+
+let private serializeArgs args =
+    formatArgs args "/" "=" " "   
+
+let private getParamPairs (rh: RoundhouseParams) =
+    let dbName = getStringParam "d" rh.DatabaseName
+    let sqlFilesDir = getStringParam "f" rh.SqlFilesDirectory
+    let server = getStringParam "s" rh.ServerDatabase
+    let connString = getStringParam "cs" rh.ConnectionString
+    let connStringAdmin = getStringParam "csa" rh.ConnectionStringAdmin
+    let cmdTimeout = getIntParam "ct" rh.CommandTimeout
+    let cmdTimeoutAdmin = getIntParam "cta" rh.CommandTimeoutAdmin
+    let dbType = getStringParam "dt" rh.DatabaseType
+    let outPath = getStringParam "o" rh.OutputPath
+    let versionFile = getStringParam "vf" rh.VersionFile
+    let versionXPath = getStringParam "vx" rh.VersionXPath
+    let repoPath = getStringParam "r" rh.RepositoryPath
+    let env = getStringParam "env" rh.Environment
+    let customCreateScript = getStringParam "cds" rh.CustomCreateScript
+    let restoreFilePath = getStringParam "rfp" rh.RestoreFilePath
+    let alterFolderPath = getStringParam "ad" rh.AlterDatabaseFolderName
+    let runAfterOtherTimeFolderPath = getStringParam "ra" rh.RunAfterOtherAnyTimeScriptsFolderName
+    let runAfterCreateFolderPath = getStringParam "racd" rh.RunAfterCreateDatabaseFolderName
+    let runBeforeUpFolderPath = getStringParam "rb" rh.RunBeforeUpFolderName
+    let upFolderPath = getStringParam "u" rh.UpFolderName
+    let runFirstAfterUpdateFolderPath = getStringParam "rf" rh.RunFirstAfterUpdateFolderName
+    let funcFolderPath = getStringParam "fu" rh.FunctionsFolderName
+    let viewsFolderPath = getStringParam "vw" rh.ViewsFolderName
+    let sprocsFolderPath = getStringParam "sp" rh.SprocsFolderName
+    let indexFolderPath = getStringParam "ix" rh.IndexesFolderName
+    let permissionsFolderPath = getStringParam "p" rh.PermissionsFolderName
+    let drop = getBoolParam "drop" rh.Drop
+    let simple = getBoolParam "simple" rh.Simple
+    let transaction = getBoolParam "t" rh.WithTransaction
+    let restore = getBoolParam "restore" rh.Restore
+    let silent = getBoolParam "silent" rh.Silent
+    let warn = getBoolParam "w" rh.WarnOnOneTimeScriptChanges
+    let schemaName = getStringParam "sc" rh.SchemaName
+
+    [dbName;sqlFilesDir;server;connString;connStringAdmin;cmdTimeout;cmdTimeoutAdmin;dbType;outPath;versionFile;versionXPath;repoPath;env;customCreateScript;restoreFilePath;alterFolderPath;
+    runAfterOtherTimeFolderPath;runAfterCreateFolderPath;runBeforeUpFolderPath;upFolderPath;runFirstAfterUpdateFolderPath;funcFolderPath;viewsFolderPath;sprocsFolderPath;indexFolderPath;
+    permissionsFolderPath;drop;simple;transaction;restore;silent;warn;schemaName]
+
 
 /// This task to can be used to run [RoundhousE](http://projectroundhouse.org/) for database migrations.
 /// ## Parameters
@@ -167,14 +238,7 @@ let RoundhouseDefaults = {
 let Roundhouse setParams = 
     let parameters = setParams RoundhouseDefaults
 
-    let drop = if parameters.Drop then "/drop" else ""
-    let simple = if parameters.Simple then "/simple" else ""
-    let transaction = if parameters.WithTransaction then "/t" else ""
-    let restore = if parameters.Restore then "/restore" else ""
-    let silent = if parameters.Silent then "/silent" else ""
-    let warn = if parameters.WarnOnOneTimeScriptChanges then "/w" else ""
-
-    let args = sprintf "/d=%s /f=%s /s=%s /cs=%s /csa=%s /ct=%i /cta=%i /dt=%s /o=%s /vf=%s /vx=%s /r=%s /env=%s /cds=%s /rfp=%s /ad=%s /ra=%s /racd=%s /rb=%s /u=%s /rf=%s /fu=%s /vw=%s /sp=%s /ix=%s /p=%s %s %s %s %s %s %s" parameters.DatabaseName parameters.SqlFilesDirectory parameters.ServerDatabase parameters.ConnectionString parameters.ConnectionStringAdmin parameters.CommandTimeout parameters.CommandTimeoutAdmin parameters.DatabaseType parameters.OutputPath parameters.VersionFile parameters.VersionXPath parameters.RepositoryPath parameters.Environment parameters.CustomCreateScript parameters.RestoreFilePath parameters.AlterDatabaseFolderName parameters.RunAfterOtherAnyTimeScriptsFolderName parameters.RunAfterCreateDatabaseFolderName parameters.RunBeforeUpFolderName parameters.UpFolderName parameters.RunFirstAfterUpdateFolderName parameters.FunctionsFolderName parameters.ViewsFolderName parameters.SprocsFolderName parameters.IndexesFolderName parameters.PermissionsFolderName drop simple transaction restore silent warn
+    let args = parameters |> getParamPairs |> serializeArgs
 
     traceStartTask "Roundhouse" args
 

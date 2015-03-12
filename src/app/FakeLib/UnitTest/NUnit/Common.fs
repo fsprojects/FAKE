@@ -53,7 +53,8 @@ type NUnitParams =
       TimeOut : TimeSpan
       DisableShadowCopy : bool
       Domain : NUnitDomainModel
-      ErrorLevel : NUnitErrorLevel }
+      ErrorLevel : NUnitErrorLevel 
+      Fixture: string}
 
 /// NUnit default parameters. FAKE tries to locate nunit-console.exe in any subfolder.
 let NUnitDefaults = 
@@ -75,7 +76,8 @@ let NUnitDefaults =
       TimeOut = TimeSpan.FromMinutes 5.0
       DisableShadowCopy = false
       Domain = DefaultDomainModel
-      ErrorLevel = Error }
+      ErrorLevel = Error 
+      Fixture = ""}
 
 /// Builds the command line arguments from the given parameter record and the given assemblies.
 /// [omit]
@@ -96,6 +98,7 @@ let buildNUnitdArgs parameters assemblies =
     |> appendIfNotNullOrEmpty parameters.ProcessModel.ParamString "-process:"
     |> appendIfNotNullOrEmpty parameters.ErrorOutputFile "-err:"
     |> appendIfNotNullOrEmpty parameters.Domain.ParamString "-domain:"
+    |> appendIfNotNullOrEmpty parameters.Fixture "-fixture:"
     |> toText
 
 /// Tries to detect the working directory as specified in the parameters or via TeamCity settings

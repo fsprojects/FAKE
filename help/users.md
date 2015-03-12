@@ -3,6 +3,7 @@
 Some of our users are:
 
 * [msu solutions GmbH](http://www.msu-solutions.de/)
+* [SEEK](http://www.seek.com.au)
 * [E.On Global Commodities UK](http://www.eon.com/en/about-us/structure/company-finder/e-dot-on-global-commodities.html)
 * [Octokit.NET](https://github.com/octokit/octokit.net/) by GitHub
 * [Akka.net](https://github.com/akkadotnet/akka.net)
@@ -26,4 +27,8 @@ Some of our users are:
 * [FundApps](http://www.fundapps.co)
 * [Road Ranger, LLC](http://www.roadrangerusa.com)
 * [CHECK24 Vergleichsportal GmbH](http://www.check24.de)
-
+* [Olo](http://www.olo.com)
+* [Papers](http://www.papersapp.com)
+* [NEST & Elasticsearch.NET](http://github.com/elasticsearch/elasticsearch-net) by Elasticsearch
+* [Elastacloud](http://elastacloud.com/)
+* [Digital Furnace Games](http://digitalfurnacegames.com/)
