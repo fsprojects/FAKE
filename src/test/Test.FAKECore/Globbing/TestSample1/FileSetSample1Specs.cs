@@ -155,7 +155,6 @@ namespace Test.FAKECore.Globbing.TestSample1
                 .Include("temptest/SampleApp/obj/")
                 .ToArray();
 
-     //   It should_find_dir = () => Files.First().ShouldEndWith(@"temptest\SampleApp\obj");
         It should_match_1_file = () => Files.Length.ShouldEqual(1);
     }
 
@@ -166,7 +165,6 @@ namespace Test.FAKECore.Globbing.TestSample1
                 .Include("temptest/SampleApp/obj")
                 .ToArray();
 
-        //   It should_find_dir = () => Files.First().ShouldEndWith(@"temptest\SampleApp\obj");
         It should_match_1_file = () => Files.Length.ShouldEqual(1);
     }
 }
