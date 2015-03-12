@@ -165,8 +165,9 @@ let AndroidSignAndAlign setParams apkFile =
 
 /// The iOS archive paramater type
 type iOSArchiveParams = {
-    /// Path to desired project or solution file. If not provided, mdtool finds the first solution in the current directory.
-    ProjectOrSolutionPath: string
+    /// Path to desired solution file. If not provided, mdtool finds the first solution in the current directory.
+    /// Although mdtool can take a project file, the archiving seems to fail to work without a solution.
+    SolutionPath: string
     /// Project name within a solution file
     ProjectName: string
     /// Build configuration, defaults to 'Debug|iPhoneSimulator'
@@ -177,7 +178,7 @@ type iOSArchiveParams = {
 
 /// The default iOS archive parameters
 let iOSArchiveDefaults = {
-    ProjectOrSolutionPath = ""
+    SolutionPath = ""
     ProjectName = ""
     Configuration = "Debug|iPhoneSimulator"
     MDToolPath = "/Applications/Xamarin Studio.app/Contents/MacOS/mdtool"
@@ -189,7 +190,7 @@ let iOSArchiveDefaults = {
 let iOSArchive setParams =
     let archiveProject param =
         let projectNameArg = if param.ProjectName <> "" then String.Format("-p:{0} ", param.ProjectName) else ""
-        let args = String.Format(@"-v archive ""-c:{0}"" {1}{2}", param.Configuration, projectNameArg, param.ProjectOrSolutionPath)
+        let args = String.Format(@"-v archive ""-c:{0}"" {1}{2}", param.Configuration, projectNameArg, param.SolutionPath)
         executeCommand param.MDToolPath args
 
     iOSArchiveDefaults
