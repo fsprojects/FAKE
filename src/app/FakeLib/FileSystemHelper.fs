@@ -3,7 +3,9 @@
 module Fake.FileSystemHelper
 
 open System
+open System.Text
 open System.IO
+open System.Runtime.InteropServices
 
 /// Creates a DirectoryInfo for the given path.
 let inline directoryInfo path = new DirectoryInfo(path)
