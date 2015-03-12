@@ -7,17 +7,6 @@ open System.Text
 open System.IO
 open System.Runtime.InteropServices
 
-module Interop =
-
-    [<DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetFullPathNameW")>]
-    extern uint32 GetFullPathName(string lpFileName, uint32 nBufferLength, [<Out>] StringBuilder lpBuffer, IntPtr lpFilePart);
-
-    [<DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetLongPathNameW")>]
-    extern int GetLongPathName(string lpszShortPath,  StringBuilder lpszLongPath,  uint32 cchBuffer);
-
-    [<DllImport("kernel32.dll")>]
-    extern int GetShortPathName(string lpszShortPath,  StringBuilder lpszLongPath,  int cchBuffer);
-
 /// Creates a DirectoryInfo for the given path.
 let inline directoryInfo path = new DirectoryInfo(path)
 
@@ -31,18 +20,6 @@ let inline fileSystemInfo path : FileSystemInfo =
 
 /// Converts a filename to it's full file system name.
 let inline FullName fileName = Path.GetFullPath fileName
-
-///Allows file paths longer than MAX_PATH (260 chars) but has a whole load of caveats
-/// see here (http://blogs.msdn.com/b/bclteam/archive/2007/02/13/long-paths-in-net-part-1-of-3-kim-hamilton.aspx)
-let inline FullNameLong fileName = 
-    
-    let fullPath = new StringBuilder(32768)
-    let longPath = new StringBuilder(260)
-    let size = (Interop.GetFullPathName(@"\\?\" + fileName, 32768u, fullPath, IntPtr.Zero))
-    printfn "%A %s" size (fullPath.ToString())
-    let size = Interop.GetLongPathName(fullPath.ToString(), longPath, 32768u)
-    printfn "%A" size
-    longPath.ToString()
 
 /// Gets the directory part of a filename.
 let inline DirectoryName fileName = Path.GetDirectoryName fileName
