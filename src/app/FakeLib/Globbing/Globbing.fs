@@ -48,7 +48,11 @@ let rec private buildPaths acc (input : SearchOption list) =
             Seq.collect (fun dir -> Directory.EnumerateDirectories(dir, "*", SearchOption.AllDirectories)) acc 
             |> Seq.toList
         buildPaths (acc @ dirs) t
-    | FilePattern(pattern) :: t -> Seq.collect (fun dir -> Directory.EnumerateFiles(dir, pattern)) acc |> Seq.toList
+    | FilePattern(pattern) :: t -> 
+         Seq.collect (fun dir -> 
+                            if Directory.Exists(Path.Combine(dir, pattern))
+                            then seq { yield Path.Combine(dir, pattern) }
+                            else Directory.EnumerateFiles(dir, pattern)) acc |> Seq.toList
 
 let private isDrive = 
     let regex = Regex(@"^[A-Za-z]:$", RegexOptions.Compiled)
@@ -65,11 +69,6 @@ let internal search (baseDir : string) (input : string) =
     let input = normalizePath input
     let input = input.Replace(baseDir, "")
 
-    let input = 
-        if not (input.EndsWith("/") && DirectoryInfo(Path.Combine(baseDir, input)).Exists) then input + "/"
-        else input
-    
-    
     let filePattern = Path.GetFileName(input)
     input.Split([| '/'; '\\' |], StringSplitOptions.RemoveEmptyEntries)
     |> Seq.map (function 
