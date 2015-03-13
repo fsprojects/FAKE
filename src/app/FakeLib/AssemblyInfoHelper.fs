@@ -225,8 +225,8 @@ let ReplaceAssemblyInfoVersions param =
         if isNullOrEmpty value then line
         else regex_replace (sprintf "%s\\s*[(][^)]*[)]" attributeName) (sprintf "%s(\"%s\")" attributeName value) line
 
-    let rec replaceMetadataAttribute metadata line =
-        let replaceMetadataAttribute' key value line =
+    let rec replaceMetadataAttributes metadata line =
+        let replaceSingleMetadataAttribute key value line =
             if isNullOrEmpty key then line
             else
                 regex_replace
@@ -236,8 +236,8 @@ let ReplaceAssemblyInfoVersions param =
         match metadata with
         | (key, value) :: rest ->
             line
-            |> replaceMetadataAttribute' key value
-            |> replaceMetadataAttribute rest
+            |> replaceSingleMetadataAttribute key value
+            |> replaceMetadataAttributes rest
         | _ -> line
 
     let replaceLine line = 
@@ -246,7 +246,7 @@ let ReplaceAssemblyInfoVersions param =
         |> replaceAttribute "AssemblyConfiguration" parameters.AssemblyConfiguration
         |> replaceAttribute "AssemblyFileVersion" parameters.AssemblyFileVersion
         |> replaceAttribute "AssemblyInformationalVersion" parameters.AssemblyInformationalVersion
-        |> replaceMetadataAttribute parameters.AssemblyMetadata
+        |> replaceMetadataAttributes parameters.AssemblyMetadata
     
     ReadFile parameters.OutputFileName
     |> Seq.map replaceLine
