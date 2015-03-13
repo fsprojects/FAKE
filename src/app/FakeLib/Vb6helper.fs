@@ -227,6 +227,53 @@ let public GetVb6ApplicationProjDetails (projects: string seq) =
     |> Async.RunSynchronously
     |> Seq.ofArray
 
+/// Determines which of the provided assemblies are referenced by the
+/// provided VB6 projects, and registers them so the VB6 ide can
+/// find them.
+///
+/// ## Paramteters
+///  - `getConfig`- function to alter default VB6 build parameters
+///  - `vb6Projects` - Paths to all `.vbp` files to build
+///  - `possibleAssemblies` - Paths to assemblies that may be referenced by the VB6 projects
+let public RegisterDependenciesForDevelopment (getConfig: Vb6BuildParams->Vb6BuildParams) (vb6Projects: string seq) (possibleAssemblies: string seq) =
+    traceStartTask "RegisterDependenciesForDevelopment" (sprintf "Registering dependenices for %i projects" (vb6Projects |> Seq.length))
+    let config = defaultVb6BuildParams |> getConfig 
+    let details = vb6Projects |> GetVb6ApplicationProjDetails
+    let interopReferences = possibleAssemblies |> GetInteropAssemblyData config.Logdir
+    let applications = details |> Seq.map (fun a -> 
+        { ExecutablePath = config.Outdir @@ a.BinaryName
+          Version = a.Version
+          Dependencies = a.References 
+                         |> Seq.filter (fun g -> interopReferences |> Seq.exists (fun r -> r.Guid = g))
+                         |> Seq.map (fun g -> interopReferences |> Seq.find (fun r -> r.Guid = g))
+        })
+    let dependenciesToRegister = applications |> Seq.collect (fun a -> a.Dependencies) |> Seq.distinct |> Seq.map (fun d -> d.Path)
+    dependenciesToRegister |> RegisterAssembliesWithCodebase config.Logdir 
+    traceEndTask "RegisterDependenciesForDevelopment" (sprintf "Registering dependenices for %i projects" (vb6Projects |> Seq.length))
+
+/// Determins which of the provided assemblies are referenced by the 
+/// provided VB6 projects, and __un-registers__ them
+///
+/// ## Paramteters
+///  - `getConfig`- function to alter default VB6 build parameters
+///  - `vb6Projects` - Paths to all `.vbp` files to build
+///  - `possibleAssemblies` - Paths to assemblies that may be referenced by the VB6 projects
+let public UnRegisterDependenciesForDevelopment (getConfig: Vb6BuildParams->Vb6BuildParams) (vb6Projects: string seq) (possibleAssemblies: string seq) =
+    traceStartTask "UnRegisterDependenciesForDevelopment" (sprintf "Un-registering dependenices for %i projects" (vb6Projects |> Seq.length))
+    let config = defaultVb6BuildParams |> getConfig 
+    let details = vb6Projects |> GetVb6ApplicationProjDetails
+    let interopReferences = possibleAssemblies |> GetInteropAssemblyData config.Logdir
+    let applications = details |> Seq.map (fun a -> 
+        { ExecutablePath = config.Outdir @@ a.BinaryName
+          Version = a.Version
+          Dependencies = a.References 
+                         |> Seq.filter (fun g -> interopReferences |> Seq.exists (fun r -> r.Guid = g))
+                         |> Seq.map (fun g -> interopReferences |> Seq.find (fun r -> r.Guid = g))
+        })
+    let dependenciesToRegister = applications |> Seq.collect (fun a -> a.Dependencies) |> Seq.distinct |> Seq.map (fun d -> d.Path)
+    dependenciesToRegister |> UnregisterAssemblies config.Logdir
+    traceEndTask "UnRegisterDependenciesForDevelopment" (sprintf "Un-registering dependenices for %i projects" (vb6Projects |> Seq.length))
+
 
 /// All-In-one build and manifest function for VB6 __applications__ referencing .net __libraries__
 ///
