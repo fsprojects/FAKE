@@ -79,7 +79,7 @@ let private defaultVb6BuildParams = {
 ///  - `vb6Projects`- `Seq` of paths to `.vbp` files to build
 let public Vb6Make (getConfig: Vb6BuildParams->Vb6BuildParams) (vb6Projects: string seq) =
      let config = defaultVb6BuildParams |> getConfig
-     
+     traceStartTask "Vb6Make" (sprintf "Building %i projects" (vb6Projects |> Seq.length))
      let jobs = vb6Projects 
                 |> List.ofSeq 
                 |>  List.map (fun p -> 
@@ -151,7 +151,7 @@ let public Vb6Make (getConfig: Vb6BuildParams->Vb6BuildParams) (vb6Projects: str
 
      let failedJobs = completedWork |> List.filter (fun j -> not j.IsSuccessful)
      match failedJobs with
-     | [] -> printfn "Vb6 build completed successfully in %A" (System.DateTime.Now - startTime)
+     | [] -> traceEndTask "Vb6Make" (sprintf "Building %i projects" (vb6Projects |> Seq.length))
      | _  -> failwith "Vb6 build failed after %A" (System.DateTime.Now - startTime)
 
 /// Returns application details for provided `.vbp` files.
@@ -246,6 +246,7 @@ let public GetVb6ApplicationProjDetails (projects: string seq) =
 /// 5. Generate and embed Side-By-Side interop appplication manifests in all generated VB6 executables
 /// 6. Generate and embed Side-By-Side interop assembly manifest in all referenced assemblies 
 let public BuildAndEmbedInteropManifests (getConfig: Vb6BuildParams->Vb6BuildParams) (vb6Projects: string seq) (possibleAssemblies: string seq) =
+    traceStartTask "BuildAndEmbedInteropManifests" (sprintf "Building and embedding for %i projects" (vb6Projects |> Seq.length))
     let config = defaultVb6BuildParams |> getConfig 
     let details = vb6Projects |> GetVb6ApplicationProjDetails
     let interopReferences = possibleAssemblies |> GetInteropAssemblyData config.Logdir
@@ -262,3 +263,4 @@ let public BuildAndEmbedInteropManifests (getConfig: Vb6BuildParams->Vb6BuildPar
     dependenciesToRegister |> UnregisterAssemblies config.Logdir
     applications |> AddEmbeddedApplicationManifest config.Logdir
     dependenciesToRegister |> AddEmbeddedAssemblyManifest config.Logdir
+    traceEndTask "BuildAndEmbedInteropManifests" (sprintf "Building and embedding for %i projects" (vb6Projects |> Seq.length))
