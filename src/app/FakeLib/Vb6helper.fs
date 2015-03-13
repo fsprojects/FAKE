@@ -227,49 +227,6 @@ let public GetVb6ApplicationProjDetails (projects: string seq) =
     |> Async.RunSynchronously
     |> Seq.ofArray
 
-/// Executes `RegAsm.exe` with the `/codebase` `/tlb` option
-///
-/// Used to temporarily register any .net dependencies before running 
-/// a VB6 build
-let public RegisterAssembliesWithCodebase workingDir (assemblies:string seq) =
-    let registerAssemblyWithCodebase assembly =
-        async {
-            let! regAsmResult = 
-                asyncShellExec {defaultParams with 
-                                    Program = regAsmToolPath
-                                    WorkingDirectory = workingDir
-                                    CommandLine = (sprintf "\"%s\" /tlb:%s /codebase" assembly ((Path.GetFileName assembly) + ".tlb"))
-                                }
-            if regAsmResult <> 0 then failwith (sprintf "Register %s with codebase failed" assembly)
-            return ()
-        }
-    assemblies
-    |> Seq.map registerAssemblyWithCodebase
-    |> Async.Parallel
-    |> Async.RunSynchronously
-    |> ignore
-
-/// Executes `Regasm.exe` with the `/codebase /tlb /unregister` options
-///
-/// Used to unregegister any temporarily registerd .net dependencies
-/// _after_ running a VB6 build
-let public UnregisterAssemblies workingDir (assemblies:string seq) =
-    let registerAssemblyWithCodebase assembly =
-        async {
-            let! regAsmResult = 
-                asyncShellExec {defaultParams with 
-                                    Program = regAsmToolPath
-                                    WorkingDirectory = workingDir
-                                    CommandLine = (sprintf "\"%s\" /tlb:%s /codebase /unregister"  assembly ((Path.GetFileName assembly) + ".tlb"))
-                                }
-            if regAsmResult <> 0 then failwith (sprintf "Unregister %s with codebase failed" assembly)
-            return ()
-        }
-    assemblies
-    |> Seq.map registerAssemblyWithCodebase
-    |> Async.Parallel
-    |> Async.RunSynchronously
-    |> ignore
 
 /// All-In-one build and manifest function for VB6 __applications__ referencing .net __libraries__
 ///

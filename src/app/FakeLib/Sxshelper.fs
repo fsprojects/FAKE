@@ -48,29 +48,10 @@ type private ILparsingResult =
     /// Includes an error message
     | Failed of string
 
-let private sdkBasePath = ProgramFilesX86 @@ "Microsoft SDKs\Windows"
-let private netFxDir = (Environment.GetEnvironmentVariable("WINDIR")) @@ "Microsoft.NET\Framework"
-
-/// Helper function to help find framework or sdk tools from the 
-/// newest toolkit available
-let private getNewestTool toolPaths = 
-       toolPaths 
-       |> Seq.sortBy (fun p -> p) 
-       |> Array.ofSeq 
-       |> Array.rev 
-       |> Seq.ofArray 
-       |> Seq.head
-
 /// Path to `mt.exe`
 /// ref: https://msdn.microsoft.com/en-us/library/aa375649(v=vs.85).aspx
 let private  mtToolPath = !! (sdkBasePath + "/**/mt.exe") -- (sdkBasePath + "/**/x64/*.*") 
                           |> getNewestTool
-
-/// Path to `regasm.exe`
-/// Reason for this to be public is that the VB6 helpe uses this
-/// but the `getNewestToll` function is in this module
-let regAsmToolPath = !! (netFxDir + "/**/RegAsm.exe")  
-                             |> getNewestTool
 
 /// Path to `ildasm.exe
 /// .net fx dissasembly tool
