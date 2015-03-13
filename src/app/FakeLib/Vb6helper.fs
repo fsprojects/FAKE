@@ -2,10 +2,10 @@
 /// Also includes a do-it-all function that will embed interop
 /// side-by-side manifest to executables from Vb6 using
 /// functions from the Side-by-side helper module
-module Fake.Vb6helper
+module Fake.Vb6Helper
 
 open Fake
-open Fake.Sxshelper
+open Fake.SxsHelper
 open System
 open System.IO
 

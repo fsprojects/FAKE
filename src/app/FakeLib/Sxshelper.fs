@@ -1,6 +1,6 @@
 ﻿/// Module that enables creating and embedding Side-by-Side interop
 /// manifests for registration free deployment of Com-.net interop projects
-module Fake.Sxshelper
+module Fake.SxsHelper
 
 open Fake
 open System
@@ -8,7 +8,7 @@ open System.IO
 open System.Linq
 open System.Xml.Linq
 
-/// Represents a `.net` assembly that may be used in COM interop projects` 
+/// Represents a `.NET` assembly that may be used in COM interop projects
 type InteropAssemblyData = 
     {
         /// Assembly name
@@ -33,7 +33,7 @@ type InteropApplicationData =
         /// Version of the executable
         Version:String
 
-        /// Depandant `.net`assemblies of the executable
+        /// Dependent `.NET` assemblies of the executable
         Dependencies:InteropAssemblyData seq 
     }
 
