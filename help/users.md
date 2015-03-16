@@ -32,3 +32,4 @@ Some of our users are:
 * [NEST & Elasticsearch.NET](http://github.com/elasticsearch/elasticsearch-net) by Elasticsearch
 * [Elastacloud](http://elastacloud.com/)
 * [Digital Furnace Games](http://digitalfurnacegames.com/)
+* [Recognos Romania](http://www.recognos.ro/en)
