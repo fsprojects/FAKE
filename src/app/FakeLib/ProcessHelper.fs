@@ -258,7 +258,7 @@ let StartRemoteService host serviceName =
 
 /// Adds quotes around the string
 /// [omit]
-let quote str = "\"" + str + "\""
+let quote (str:string) = "\"" + str.Replace("\"","\\\"") + "\""
 
 /// Adds quotes around the string if needed
 /// [omit]

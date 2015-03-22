@@ -54,8 +54,8 @@ let Pack setParams =
         if String.IsNullOrWhiteSpace notEncodedText then ""
         else XText(notEncodedText).ToString().Replace("ß", "&szlig;")
 
-    let version = if String.IsNullOrWhiteSpace parameters.Version then "" else sprintf " version \"%s\"" parameters.Version
-    let releaseNotes = if String.IsNullOrWhiteSpace parameters.ReleaseNotes then "" else sprintf " releaseNotes \"%s\"" (xmlEncode parameters.ReleaseNotes)
+    let version = if String.IsNullOrWhiteSpace parameters.Version then "" else " version " + toParam parameters.Version
+    let releaseNotes = if String.IsNullOrWhiteSpace parameters.ReleaseNotes then "" else " releaseNotes " + toParam (xmlEncode parameters.ReleaseNotes)
       
     let packResult = 
         ExecProcess 
@@ -74,15 +74,15 @@ let Push setParams =
     let parameters : PaketPushParams = PaketPushDefaults() |> setParams
 
     let packages = !! (parameters.WorkingDir @@ "/**/*.nupkg") |> Seq.toList    
-    let url = if String.IsNullOrWhiteSpace parameters.PublishUrl then "" else sprintf " url \"%s\"" parameters.PublishUrl
-    let endpoint = if String.IsNullOrWhiteSpace parameters.EndPoint then "" else sprintf " endpoint \"%s\"" parameters.EndPoint
-    let key = if String.IsNullOrWhiteSpace parameters.ApiKey then "" else sprintf " apikey \"%s\"" parameters.ApiKey
+    let url = if String.IsNullOrWhiteSpace parameters.PublishUrl then "" else " url " + toParam parameters.PublishUrl
+    let endpoint = if String.IsNullOrWhiteSpace parameters.EndPoint then "" else " endpoint " + toParam parameters.EndPoint
+    let key = if String.IsNullOrWhiteSpace parameters.ApiKey then "" else " apikey " + toParam parameters.ApiKey
 
     traceStartTask "PaketPush" (separated ", " packages)
     for package in packages do
         let pushResult = 
             ExecProcess (fun info -> 
                 info.FileName <- parameters.ToolPath
-                info.Arguments <- sprintf "push %s%s%s file \"%s\"" url endpoint key package) System.TimeSpan.MaxValue
+                info.Arguments <- sprintf "push %s%s%s file %s" url endpoint key (toParam package)) System.TimeSpan.MaxValue
         if pushResult <> 0 then failwithf "Error during pushing %s." package
     traceEndTask "PaketPush" (separated ", " packages)

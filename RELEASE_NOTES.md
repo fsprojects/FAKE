@@ -1,6 +1,7 @@
 #### 3.24.0 - 22.03.2015
 * BREAKING CHANGE: Better support for AssemblyMetadata in AssemblyInfoHelper - https://github.com/fsharp/FAKE/pull/694
 * Added modules for building VB6 projects with SxS manifest - https://github.com/fsharp/FAKE/pull/697
+* Use parameter quoting for Paket helpers
 
 #### 3.23.0 - 12.03.2015
 * BREAKING CHANGE: Adjusted Xamarin.iOS archive helper params - https://github.com/fsharp/FAKE/pull/693
