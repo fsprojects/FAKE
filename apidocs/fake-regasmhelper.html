@@ -70,15 +70,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '386', 386)" onmouseover="showTip(event, '386', 386)">
+          <code onmouseout="hideTip(event, '388', 388)" onmouseover="showTip(event, '388', 388)">
             RegAsm setParams lib
           </code>
-          <div class="tip" id="386">
+          <div class="tip" id="388">
             <strong>Signature:</strong> setParams:(RegAsmParams -&gt; RegAsmParams) -&gt; lib:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RegAsmHelper.fs#L26-26" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RegAsmHelper.fs#L31-31" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -96,19 +96,82 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '387', 387)" onmouseover="showTip(event, '387', 387)">
+          <code onmouseout="hideTip(event, '389', 389)" onmouseover="showTip(event, '389', 389)">
             RegAsmDefaults 
           </code>
-          <div class="tip" id="387">
+          <div class="tip" id="389">
             <strong>Signature:</strong> RegAsmParams<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RegAsmHelper.fs#L15-15" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RegAsmHelper.fs#L20-20" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>RegAsm default params</p>
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '390', 390)" onmouseover="showTip(event, '390', 390)">
+            regAsmToolPath 
+          </code>
+          <div class="tip" id="390">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RegAsmHelper.fs#L9-9" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Path to newest <code>regasm.exe</code></p>
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '391', 391)" onmouseover="showTip(event, '391', 391)">
+            RegisterAssembliesWithCodebase (...)
+          </code>
+          <div class="tip" id="391">
+            <strong>Signature:</strong> workingDir:string -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RegAsmHelper.fs#L49-49" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Executes <code>RegAsm.exe</code> with the <code>/codebase</code> <code>/tlb</code> option</p>
+
+<p>Used to temporarily register any .net dependencies before running 
+a VB6 build</p>
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '392', 392)" onmouseover="showTip(event, '392', 392)">
+            UnregisterAssemblies (...)
+          </code>
+          <div class="tip" id="392">
+            <strong>Signature:</strong> workingDir:string -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RegAsmHelper.fs#L73-73" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Executes <code>Regasm.exe</code> with the <code>/codebase /tlb /unregister</code> options</p>
+
+<p>Used to unregegister any temporarily registerd .net dependencies
+<em>after</em> running a VB6 build</p>
 
         </td>
       </tr>
