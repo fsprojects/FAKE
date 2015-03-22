@@ -3,6 +3,11 @@
 module Fake.RegAsmHelper
 
 open System
+open System.IO
+
+/// Path to newest `regasm.exe`
+let regAsmToolPath = !! (TargetPlatformPrefix + "/**/RegAsm.exe")  
+                             |> getNewestTool
 
 /// RegAsm parameter type
 type RegAsmParams = 
@@ -13,7 +18,7 @@ type RegAsmParams =
 
 /// RegAsm default params
 let RegAsmDefaults = 
-    { ToolPath = @"C:\Windows\Microsoft.NET\Framework\v2.0.50727\regasm.exe"
+    { ToolPath = regAsmToolPath
       WorkingDir = "."
       TimeOut = TimeSpan.FromMinutes 5.
       ExportTypeLibrary = true }
@@ -36,3 +41,51 @@ let RegAsm setParams lib =
                 info.Arguments <- args) parameters.TimeOut
     then failwithf "RegAsm %s failed." args
     traceEndTask "RegAsm" lib
+
+/// Executes `RegAsm.exe` with the `/codebase` `/tlb` option
+///
+/// Used to temporarily register any .net dependencies before running 
+/// a VB6 build
+let public RegisterAssembliesWithCodebase workingDir (assemblies:string seq) =
+    traceStartTask "Regasm with codebase" "Registering assemblies with codebase, expect warnings"
+    let registerAssemblyWithCodebase assembly =
+        async {
+            let! regAsmResult = 
+                asyncShellExec {defaultParams with 
+                                    Program = regAsmToolPath
+                                    WorkingDirectory = workingDir
+                                    CommandLine = (sprintf "\"%s\" /tlb:%s /codebase" assembly ((Path.GetFileName assembly) + ".tlb"))
+                                }
+            if regAsmResult <> 0 then failwith (sprintf "Register %s with codebase failed" assembly)
+            return ()
+        }
+    assemblies
+    |> Seq.map registerAssemblyWithCodebase
+    |> Async.Parallel
+    |> Async.RunSynchronously
+    |> ignore
+    traceEndTask "Regasm with codebase" "Registering assemblies with codebase, expect warnings"
+
+/// Executes `Regasm.exe` with the `/codebase /tlb /unregister` options
+///
+/// Used to unregegister any temporarily registerd .net dependencies
+/// _after_ running a VB6 build
+let public UnregisterAssemblies workingDir (assemblies:string seq) =
+    traceStartTask "Regasm /unregister with codebase" "Registering assemblies with codebase, expect warnings"
+    let registerAssemblyWithCodebase assembly =
+        async {
+            let! regAsmResult = 
+                asyncShellExec {defaultParams with 
+                                    Program = regAsmToolPath
+                                    WorkingDirectory = workingDir
+                                    CommandLine = (sprintf "\"%s\" /tlb:%s /codebase /unregister"  assembly ((Path.GetFileName assembly) + ".tlb"))
+                                }
+            if regAsmResult <> 0 then failwith (sprintf "Unregister %s with codebase failed" assembly)
+            return ()
+        }
+    assemblies
+    |> Seq.map registerAssemblyWithCodebase
+    |> Async.Parallel
+    |> Async.RunSynchronously
+    |> ignore
+    traceEndTask "Regasm /unregister with codebase" "Registering assemblies with codebase, expect warnings"

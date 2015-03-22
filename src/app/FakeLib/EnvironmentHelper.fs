@@ -119,6 +119,19 @@ let mutable TargetPlatformPrefix =
         else Some @"C:\Windows\Microsoft.NET\Framework"
     |> Option.get
 
+/// Base path for getting tools from windows SDKs
+let sdkBasePath = ProgramFilesX86 @@ "Microsoft SDKs\Windows"
+
+/// Helper function to help find framework or sdk tools from the 
+/// newest toolkit available
+let getNewestTool possibleToolPaths = 
+       possibleToolPaths 
+       |> Seq.sortBy (fun p -> p) 
+       |> Array.ofSeq 
+       |> Array.rev 
+       |> Seq.ofArray 
+       |> Seq.head
+
 /// Gets the local directory for the given target platform
 let getTargetPlatformDir platformVersion = 
     if Directory.Exists(TargetPlatformPrefix + "64") then (TargetPlatformPrefix + "64") @@ platformVersion
