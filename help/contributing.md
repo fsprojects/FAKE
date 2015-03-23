@@ -39,4 +39,10 @@ It turns `*.md` (Markdown with embedded code snippets) and `*.fsx` files (F# scr
     git fetch upstream
     git rebase upstream/master
     git push origin myfeature -f
-* the pull request will be updated automatically   
+* the pull request will be updated automatically
+
+## Code style
+
+* Read the [F# component design guidelines](http://fsharp.org/specs/component-design-guidelines/)
+* Install the [EditorConfig](http://editorconfig.org/) extension in your text editor(s). List available [here](http://editorconfig.org/#download).
+* Visual Studio users can also install the [CodeMaid](http://www.codemaid.net/) extension.
