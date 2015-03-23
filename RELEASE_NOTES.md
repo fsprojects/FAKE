@@ -1,3 +1,6 @@
+#### 3.25.0 - 23.03.2015
+* Look into PATH when scanning for tools - https://github.com/fsharp/FAKE/pull/703
+
 #### 3.24.0 - 22.03.2015
 * BREAKING CHANGE: Better support for AssemblyMetadata in AssemblyInfoHelper - https://github.com/fsharp/FAKE/pull/694
 * Added modules for building VB6 projects with SxS manifest - https://github.com/fsharp/FAKE/pull/697
