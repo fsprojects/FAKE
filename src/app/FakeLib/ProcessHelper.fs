@@ -359,7 +359,9 @@ let appSettings (key : string) (fallbackValue : string) =
 /// [omit]
 let tryFindPath settingsName fallbackValue tool = 
     let paths = appSettings settingsName fallbackValue
-    tryFindFile paths tool
+    match tryFindFile paths tool with
+    | Some path -> Some path
+    | None -> tryFindFileOnPath tool
 
 /// Tries to find the tool via AppSettings. If no path has the right tool we are trying the PATH system variable.
 /// [omit]
