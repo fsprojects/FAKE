@@ -13,6 +13,7 @@ let findNuget defaultPath =
              currentDirectory @@ ".nuget"             
              currentDirectory @@ "packages" @@ "NuGet.Commandline" @@ "tools"
              currentDirectory @@ "packages" @@ "Nuget.Commandline" @@ "tools"]
+            |> Seq.append pathDirectories
 
         let exeNames = ["nuget.exe"; "NuGet.exe"; "Nuget.exe"]
 
