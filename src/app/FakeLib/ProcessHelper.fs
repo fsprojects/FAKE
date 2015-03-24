@@ -180,6 +180,13 @@ let ExecProcessElevated cmd args timeOut =
         si.FileName <- cmd
         si.UseShellExecute <- true) timeOut
 
+/// Gets the list of valid directories included in the PATH environment variable.
+let pathDirectories =
+    splitEnvironVar "PATH"
+    |> Seq.map (fun value -> value.Trim())
+    |> Seq.filter (fun value -> not <| isNullOrEmpty value)
+    |> Seq.filter isValidPath
+
 /// Sets the environment Settings for the given startInfo.
 /// Existing values will be overriden.
 /// [omit]
@@ -339,8 +346,8 @@ let findFile dirs file =
 /// ## Parameters
 ///  - `exe` - The executable file to locate
 let tryFindFileOnPath (file : string) : string option =
-    Environment.GetEnvironmentVariable("PATH").Split([| Path.PathSeparator |])
-    |> Seq.append ["."]
+    pathDirectories
+    |> Seq.append [ "." ]
     |> fun path -> tryFindFile path file
 
 /// Returns the AppSettings for the key - Splitted on ;
