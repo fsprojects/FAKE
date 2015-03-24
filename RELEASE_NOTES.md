@@ -1,3 +1,6 @@
+#### 3.25.1 - 24.03.2015
+* More AppVeyor properties added - https://github.com/fsharp/FAKE/pull/704
+
 #### 3.25.0 - 23.03.2015
 * Look into PATH when scanning for tools - https://github.com/fsharp/FAKE/pull/703
 
