@@ -1,6 +1,7 @@
-#### 3.25.1 - 24.03.2015
+#### 3.25.2 - 24.03.2015
 * Look into PATH when scanning for NuGet.exe - https://github.com/fsharp/FAKE/pull/708
 * SystemRoot also works on mono - https://github.com/fsharp/FAKE/pull/706
+* Use EditorConfig - http://editorconfig.org/
 
 #### 3.25.1 - 24.03.2015
 * More AppVeyor properties added - https://github.com/fsharp/FAKE/pull/704
