@@ -337,7 +337,7 @@ let findFile dirs file =
 /// environment variable for the given file. If successful returns the full
 /// path to the file.
 /// ## Parameters
-///  - `exe` - The executable file to locate
+///  - `file` - The file to locate
 let tryFindFileOnPath (file : string) : string option =
     Environment.GetEnvironmentVariable("PATH").Split([| Path.PathSeparator |])
     |> Seq.append ["."]
