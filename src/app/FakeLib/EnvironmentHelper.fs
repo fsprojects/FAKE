@@ -52,6 +52,12 @@ let environVarOrNone name =
     if String.IsNullOrEmpty var then None
     else Some var
 
+/// Splits the entries of an environment variable and removes the empty ones.
+let splitEnvironVar name =
+    let var = environVarOrNone name
+    if var = None then [ ]
+    else var.Value.Split([| Path.PathSeparator |]) |> Array.toList
+
 /// Retrieves the application settings variable with the given name
 let appSetting (name : string) = ConfigurationManager.AppSettings.[name]
 
