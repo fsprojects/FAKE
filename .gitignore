@@ -58,3 +58,7 @@ release.cmd
 Samples/typescript/out/
 help/RELEASE_NOTES.md
 paket.exe
+
+# Ignore the Vagrant local directories
+.vagrant/*
+*/.vagrant/*
