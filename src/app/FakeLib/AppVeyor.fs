@@ -6,6 +6,9 @@ type AppVeyorEnvironment =
     
     /// AppVeyor Build Agent API URL
     static member ApiUrl = environVar "APPVEYOR_API_URL"
+
+    /// AppVeyor Account Name
+    static member AccountName = environVar "APPVEYOR_ACCOUNT_NAME"
     
     /// AppVeyor unique project ID
     static member ProjectId = environVar "APPVEYOR_PROJECT_ID"
@@ -63,6 +66,18 @@ type AppVeyorEnvironment =
     
     /// Commit message
     static member RepoCommitMessage = environVar "APPVEYOR_REPO_COMMIT_MESSAGE"
+
+    /// The rest of the commit message after line break (if exists)
+    static member RepoCommitMessageExtended = environVar "APPVEYOR_REPO_COMMIT_MESSAGE_EXTENDED"
+
+    /// If the build runs by scheduler;
+    static member ScheduledBuild = environVar "APPVEYOR_SCHEDULED_BUILD"
+
+    /// If the build has been started by the "New Build" button or from the same API
+    static member ForcedBuild = environVar "APPVEYOR_FORCED_BUILD"
+
+    /// If the build has been started by the "Re-Build commit/PR" button or from the same API
+    static member ReBuild = environVar "APPVEYOR_RE_BUILD"
     
     /// true if build has started by pushed tag; otherwise false
     static member RepoTag =
