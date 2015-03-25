@@ -9,6 +9,7 @@ type BuildServer =
     | Jenkins
     | Travis
     | AppVeyor
+    | GitLabCI
     | LocalBuild
 
 /// The trace mode option.
@@ -36,6 +37,14 @@ let tcBuildNumber = environVar "BUILD_NUMBER"
 /// [omit]
 let travisBuildNumber = environVar "TRAVIS_BUILD_NUMBER"
 
+/// Checks if we are on GitLab CI
+/// [omit]
+let isGitlabCI = environVar "CI_SERVER_NAME" = "GitLab CI"
+
+/// Build number retrieved from GitLab CI
+/// [omit]
+let gitlabCIBuildNumber = if isGitlabCI then environVar "CI_BUILD_ID" else ""
+
 /// Build number retrieved from Jenkins
 /// [omit]
 let jenkinsBuildNumber = tcBuildNumber
@@ -55,6 +64,7 @@ let buildServer =
     elif not (isNullOrEmpty ccBuildLabel) then CCNet
     elif not (isNullOrEmpty travisBuildNumber) then Travis
     elif not (isNullOrEmpty appVeyorBuildVersion) then AppVeyor
+    elif isGitlabCI then GitLabCI
     else LocalBuild
 
 /// The current build version as detected from the current build server.
@@ -66,6 +76,7 @@ let buildVersion =
     | CCNet -> getVersion ccBuildLabel
     | Travis -> getVersion travisBuildNumber
     | AppVeyor -> getVersion appVeyorBuildVersion
+    | GitLabCI -> getVersion gitlabCIBuildNumber
     | LocalBuild -> getVersion localBuildLabel
 
 /// Is true when the current build is a local build.
