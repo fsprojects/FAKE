@@ -2,7 +2,7 @@ content: none
 source http://nuget.org/api/v2
 
 nuget FSharp.Core
-nuget FAKE prerelease
+nuget FAKE
 nuget Knockout
 nuget Nuget.CommandLine
 nuget FSharp.Formatting
@@ -32,8 +32,7 @@ nuget FsCheck.Xunit
 nuget Machine.Specifications.Should
 nuget Machine.Specifications.Runner.Console
 nuget Nancy.Testing
-nuget xunit.extensions ~> 1.9
-nuget xunit.runners ~> 1.9
+nuget xunit.runner.console
 nuget Newtonsoft.Json
 nuget Microsoft.AspNet.Razor 2.0.30506
 nuget Microsoft.AspNet.WebPages 2.0.30506
