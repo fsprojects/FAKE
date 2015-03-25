@@ -1,3 +1,6 @@
+#### 3.26.0 - 25.03.2015
+* Detect GitLab CI as build server - https://github.com/fsharp/FAKE/pull/712
+
 #### 3.25.2 - 24.03.2015
 * Look into PATH when scanning for NuGet.exe - https://github.com/fsharp/FAKE/pull/708
 * SystemRoot also works on mono - https://github.com/fsharp/FAKE/pull/706
