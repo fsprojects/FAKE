@@ -89,7 +89,7 @@ let ProgramFilesX86 =
     |> fun detected -> if detected = null then @"C:\Program Files (x86)\" else detected
 
 /// The system root environment variable. Typically "C:\Windows"
-let SystemRoot = Environment.SystemDirectory
+let SystemRoot = environVar "SystemRoot"
 
 /// Determines if the current system is an Unix system
 let isUnix = Environment.OSVersion.Platform = PlatformID.Unix
