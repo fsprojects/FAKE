@@ -10,6 +10,9 @@
 *.fsproj merge=union
 *.dbproj merge=union
 
+# Custom for Vagrant
+*.sh diff=bash text=auto eol=lf
+
 # Standard to msysgit
 *.doc diff=astextplain
 *.DOC diff=astextplain
