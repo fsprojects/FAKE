@@ -117,7 +117,7 @@ Target "GenerateDocs" (fun _ ->
           -- "./build/**/Fake.IIS.dll"                      
           -- "./build/**/Fake.Deploy.Lib.dll"
 
-    CreateDocsForDlls apidocsDir templatesDir projInfo (githubLink + "/blob/master") dllFiles
+    CreateDocsForDlls apidocsDir templatesDir (projInfo @ ["--libDirs", "./build"]) (githubLink + "/blob/master") dllFiles
 
     WriteStringToFile false "./docs/.nojekyll" ""
 
