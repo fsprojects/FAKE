@@ -19,6 +19,10 @@ type NugetFrameworkReferences =
     { FrameworkVersion : string
       References : NugetReferences }
 
+type NugetFrameworkAssemblyReferences =
+    { FrameworkVersion : string
+      AssemblyName : string }
+
 type NugetSymbolPackage =
     /// Do not build symbol packages
     | None = 0
@@ -51,6 +55,7 @@ type NuGetParams =
       DependenciesByFramework : NugetFrameworkDependencies list
       References : NugetReferences
       ReferencesByFramework : NugetFrameworkReferences list
+      FrameworkAssemblies : NugetFrameworkAssemblyReferences list
       IncludeReferencedProjects : bool
       PublishTrials : int
       Publish : bool
@@ -78,6 +83,7 @@ let NuGetDefaults() =
       DependenciesByFramework = []
       References = []
       ReferencesByFramework = []
+      FrameworkAssemblies = []
       IncludeReferencedProjects = false
       OutputPath = "./NuGet"
       WorkingDir = "./NuGet"
@@ -153,9 +159,18 @@ let private createNuSpecFromTemplate parameters (templateNuSpec:FileInfo) =
         parameters.ReferencesByFramework
         |> Seq.map (fun x -> (x.FrameworkVersion, getReferencesTags x.References))
         |> getFrameworkGroup
-    
+
     let referencesXml = sprintf "<references>%s</references>" (references + referencesByFramework)
     
+    let getFrameworkAssemblyTags references =
+        references
+        |> Seq.map (fun x -> sprintf "<frameworkAssembly assemblyName=\"%s\" targetFramework=\"%s\" />" x.AssemblyName x.FrameworkVersion)
+        |> toLines
+
+    let frameworkAssembliesXml =
+        if parameters.FrameworkAssemblies = [] then ""
+        else sprintf "<frameworkAssemblies>%s</frameworkAssemblies>" (parameters.FrameworkAssemblies |> getFrameworkAssemblyTags)
+
     let getDependenciesTags dependencies = 
         dependencies
         |> Seq.map (fun (package, version) -> sprintf "<dependency id=\"%s\" version=\"%s\" />" package version)
@@ -207,6 +222,7 @@ let private createNuSpecFromTemplate parameters (templateNuSpec:FileInfo) =
         |> List.map (fun (placeholder, replacement) -> placeholder, xmlEncode replacement)
         |> List.append [ "@dependencies@", dependenciesXml
                          "@references@", referencesXml
+                         "@frameworkAssemblies@", frameworkAssembliesXml
                          "@files@", filesXml ]
     
     processTemplates replacements [ specFile ]
