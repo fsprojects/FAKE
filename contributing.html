@@ -56,41 +56,88 @@ It turns <code>*.md</code> (Markdown with embedded code snippets) and <code>*.fs
 
 <ul>
 <li><p>The code for all the documents can be found in the <code>help</code> directory <a href="https://github.com/fsharp/FAKE/tree/master/help">on GitHub</a>. If you find a bug or add a new feature, make sure you document it!</p></li>
-<li><p>If you want to build the documentation, simply run the build script <a href="https://github.com/fsharp/FAKE/blob/master/build.fsx">GitHub link</a>) which builds the documentation.</p></li>
+<li><p>If you want to build the documentation, simply run the build script (<a href="https://github.com/fsharp/FAKE/blob/master/build.fsx">GitHub link</a>) which builds the documentation.</p></li>
 </ul>
 
 <h2>Creating pull requests</h2>
 
+<h3>Prerequisites</h3>
+
+<h4>Git / GitHub</h4>
+
 <ul>
-<li>fork the <a href="https://github.com/fsharp/FAKE">FAKE repo on GitHub</a></li>
-<li>add a new git remote in order to retrieve upstream changes
-git remote add upstream <a href="https://github.com/fsharp/FAKE.git">https://github.com/fsharp/FAKE.git</a></li>
-<li>checkout the <code>master</code> branch</li>
-<li>run the build in order to check if everything works
-<ul>
-<li>on Mono run <em>build.sh</em></li>
-<li>on Windows run <em>build.cmd</em></li>
-</ul></li>
-<li>create a new feature branch
-git checkout -b myfeature</li>
-<li>implement your bugfix/feature</li>
-<li>add a bit of documentation (see above)</li>
-<li>commit and push to your fork</li>
-<li>use GitHub's UI to create a pull request
-write "WIP" into the pull request description if it's not completely ready</li>
-<li>if you need to rebase you can do:
-git fetch upstream
-git rebase upstream/master
-git push origin myfeature -f</li>
-<li>the pull request will be updated automatically</li>
+<li><p>Fork the <a href="https://github.com/fsharp/FAKE">FAKE repo on GitHub</a>.</p></li>
+<li><p>Clone your personal fork locally.</p></li>
+<li><p>Add a new git remote in order to retrieve upstream changes.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="i">git</span> <span class="i">remote</span> <span class="i">add</span> <span class="i">upstream</span> <span class="i">https</span><span class="o">:</span><span class="c">//github.com/fsharp/FAKE.git</span></pre>
+</td>
+</tr>
+</table></li>
 </ul>
 
-<h2>Code style</h2>
+<h4>Build tools</h4>
 
 <ul>
-<li>Read the <a href="http://fsharp.org/specs/component-design-guidelines/">F# component design guidelines</a></li>
-<li>Install the <a href="http://editorconfig.org/">EditorConfig</a> extension in your text editor(s). List available <a href="http://editorconfig.org/#download">here</a>.</li>
-<li>Visual Studio users can also install the <a href="http://www.codemaid.net/">CodeMaid</a> extension.</li>
+<li><p>Windows users can install Visual Studio 2013 (the <a href="https://www.visualstudio.com/products/visual-studio-community-vs">Community Edition</a>
+is freely available for open-source projects).</p></li>
+<li><p>Linux and Mac users can read "<a href="http://fsharp.org/guides/mac-linux-cross-platform/">Guide - Cross-Platform Development with F#</a>"
+to find out the required tools.</p></li>
+<li><p>Alternately, you can use <a href="https://www.vagrantup.com/">Vagrant</a> in-pair with <a href="https://www.virtualbox.org/">VirtualBox</a>
+to automatically deploy a preconfigured virtual machine. See the <a href="vagrant.html">Vagrant docs</a> to get in touch with the tool.</p></li>
+</ul>
+
+<h3>Programming</h3>
+
+<ul>
+<li><p>Checkout the <code>master</code> branch.</p></li>
+<li>Run the build in order to check if everything works.
+<ul>
+<li>On Mono run <code>build.sh</code></li>
+<li><p>On Windows run <code>build.cmd</code></p></li>
+</ul></li>
+<li><p>Create a new feature branch.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="i">git</span> <span class="i">checkout</span> <span class="o">-</span><span class="i">b</span> <span class="i">myfeature</span></pre>
+</td>
+</tr>
+</table></li>
+<li><p>Implement your bugfix/feature.</p></li>
+<li><p>Add a bit of documentation (see above).</p></li>
+<li><p>Commit and push to your fork.</p></li>
+<li><p>Use GitHub's UI to create a pull request.
+Write "WIP" into the pull request description if it's not completely ready</p></li>
+<li><p>If you need to rebase you can do:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip">
+<span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre>
+</td>
+<td class="snippet"><pre class="fssnip">
+<span class="i">git</span> <span class="i">fetch</span> <span class="i">upstream</span>
+<span class="i">git</span> <span class="i">rebase</span> <span class="i">upstream</span><span class="o">/</span><span class="i">master</span>
+<span class="i">git</span> <span class="i">push</span> <span class="i">origin</span> <span class="i">myfeature</span> <span class="o">-</span><span class="i">f</span></pre>
+</td>
+</tr>
+</table></li>
+<li><p>The pull request will be updated automatically.</p></li>
+</ul>
+
+<h4>Text editor / Code style</h4>
+
+<ul>
+<li><p>Install the <a href="http://editorconfig.org/">EditorConfig</a> extension in your text editor(s). List available <a href="http://editorconfig.org/#download">here</a>.</p></li>
+<li><p>Visual Studio users can also install the <a href="http://www.codemaid.net/">CodeMaid</a> extension.</p></li>
+<li>Read the <a href="http://fsharp.org/specs/component-design-guidelines/">F# component design guidelines</a>.</li>
 </ul>
 
                     
