@@ -42,8 +42,7 @@ is freely available for open-source projects).
 to find out the required tools.
 
 * Alternately, you can use [Vagrant](https://www.vagrantup.com/) in-pair with [VirtualBox](https://www.virtualbox.org/)
-to automatically deploy a preconfigured virtual machine. See the `help/vagrant.md` file to get in
-touch with the tool.
+to automatically deploy a preconfigured virtual machine. See the [Vagrant docs](vagrant.html) to get in touch with the tool.
 
 ### Programming
 
