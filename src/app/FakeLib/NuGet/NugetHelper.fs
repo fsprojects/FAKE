@@ -227,7 +227,7 @@ let private propertiesParam = function
                           |> List.map (fun p -> (fst p) + "=\"" + (snd p) + "\"")
                           |> String.concat ";")
 
-/// create package (including symbols package if enabled)
+/// Creates a NuGet package without templating (including symbols package if enabled)
 let private pack parameters nuspecFile =
     let properties = propertiesParam parameters.Properties
     let outputPath = (FullName(parameters.OutputPath.TrimEnd('\\').TrimEnd('/')))
@@ -321,7 +321,24 @@ let rec private publishSymbols parameters =
 /// ## Parameters
 /// 
 ///  - `setParams` - Function used to manipulate the default NuGet parameters.
-///  - `nuspecFile` - The .nuspec file name.
+///  - `nuspecOrProjectFile` - The .nuspec or project file name.
+let NuGetPackDirectly setParams nuspecOrProjectFile =
+    traceStartTask "NuGetPackDirectly" nuspecOrProjectFile
+    let parameters = NuGetDefaults() |> setParams
+    try
+         pack parameters nuspecOrProjectFile
+    with exn ->
+        (if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message
+         else exn.Message)
+        |> replaceAccessKey parameters.AccessKey
+        |> failwith
+    traceEndTask "NuGetPackDirectly" nuspecOrProjectFile
+
+/// Creates a new NuGet package based on the given .nuspec file.
+/// ## Parameters
+/// 
+///  - `setParams` - Function used to manipulate the default NuGet parameters.
+///  - `nuspecOrProjectFile` - The .nuspec or project file name.
 let NuGetPack setParams nuspecOrProjectFile =
     traceStartTask "NuGetPack" nuspecOrProjectFile
     let parameters = NuGetDefaults() |> setParams

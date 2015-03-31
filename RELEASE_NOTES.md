@@ -1,3 +1,6 @@
+#### 3.26.4 - 31.03.2015
+* New task `NuGetPackDirectly` works without template files.
+
 #### 3.26.3 - 31.03.2015
 * Find NuGet.exe in current folder (and sub-folders) first, then look in PATH - https://github.com/fsharp/FAKE/pull/718
 * NEw tutorial about Vagrant - http://fsharp.github.io/FAKE/vagrant.html
