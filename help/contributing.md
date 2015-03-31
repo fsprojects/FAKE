@@ -17,32 +17,67 @@ It turns `*.md` (Markdown with embedded code snippets) and `*.fsx` files (F# scr
 
  * The code for all the documents can be found in the `help` directory [on GitHub](https://github.com/fsharp/FAKE/tree/master/help). If you find a bug or add a new feature, make sure you document it!
 
- * If you want to build the documentation, simply run the build script [GitHub link](https://github.com/fsharp/FAKE/blob/master/build.fsx)) which builds the documentation.
+ * If you want to build the documentation, simply run the build script ([GitHub link](https://github.com/fsharp/FAKE/blob/master/build.fsx)) which builds the documentation.
  
 ## Creating pull requests
 
-* fork the [FAKE repo on GitHub](https://github.com/fsharp/FAKE)
-* add a new git remote in order to retrieve upstream changes
-    git remote add upstream https://github.com/fsharp/FAKE.git   
-* checkout the `master` branch
-* run the build in order to check if everything works
-  * on Mono run *build.sh*
-  * on Windows run *build.cmd*
-* create a new feature branch
-    git checkout -b myfeature
-* implement your bugfix/feature
-* add a bit of documentation (see above)
-* commit and push to your fork
-* use GitHub's UI to create a pull request
-    write "WIP" into the pull request description if it's not completely ready
-* if you need to rebase you can do:
-    git fetch upstream
-    git rebase upstream/master
-    git push origin myfeature -f
-* the pull request will be updated automatically
+### Prerequisites
 
-## Code style
+#### Git / GitHub
 
-* Read the [F# component design guidelines](http://fsharp.org/specs/component-design-guidelines/)
+* Fork the [FAKE repo on GitHub](https://github.com/fsharp/FAKE).
+
+* Clone your personal fork locally.
+
+* Add a new git remote in order to retrieve upstream changes.
+
+        git remote add upstream https://github.com/fsharp/FAKE.git
+
+#### Build tools
+
+* Windows users can install Visual Studio 2013 (the [Community Edition](https://www.visualstudio.com/products/visual-studio-community-vs)
+is freely available for open-source projects).
+
+* Linux and Mac users can read "[Guide - Cross-Platform Development with F#](http://fsharp.org/guides/mac-linux-cross-platform/)"
+to find out the required tools.
+
+* Alternately, you can use [Vagrant](https://www.vagrantup.com/) in-pair with [VirtualBox](https://www.virtualbox.org/)
+to automatically deploy a preconfigured virtual machine. See the `help/vagrant.md` file to get in
+touch with the tool.
+
+### Programming
+
+* Checkout the `master` branch.
+
+* Run the build in order to check if everything works.
+  * On Mono run `build.sh`
+  * On Windows run `build.cmd`
+
+* Create a new feature branch.
+
+        git checkout -b myfeature
+
+* Implement your bugfix/feature.
+
+* Add a bit of documentation (see above).
+
+* Commit and push to your fork.
+
+* Use GitHub's UI to create a pull request.
+    Write "WIP" into the pull request description if it's not completely ready
+
+* If you need to rebase you can do:
+
+        git fetch upstream
+        git rebase upstream/master
+        git push origin myfeature -f
+
+* The pull request will be updated automatically.
+
+#### Text editor / Code style
+
 * Install the [EditorConfig](http://editorconfig.org/) extension in your text editor(s). List available [here](http://editorconfig.org/#download).
+
 * Visual Studio users can also install the [CodeMaid](http://www.codemaid.net/) extension.
+
+* Read the [F# component design guidelines](http://fsharp.org/specs/component-design-guidelines/).
