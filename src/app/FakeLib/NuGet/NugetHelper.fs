@@ -20,7 +20,7 @@ type NugetFrameworkReferences =
       References : NugetReferences }
 
 type NugetFrameworkAssemblyReferences =
-    { FrameworkVersion : string
+    { FrameworkVersions : string list
       AssemblyName : string }
 
 type NugetSymbolPackage =
@@ -164,7 +164,9 @@ let private createNuSpecFromTemplate parameters (templateNuSpec:FileInfo) =
     
     let getFrameworkAssemblyTags references =
         references
-        |> Seq.map (fun x -> sprintf "<frameworkAssembly assemblyName=\"%s\" targetFramework=\"%s\" />" x.AssemblyName x.FrameworkVersion)
+        |> Seq.map (fun x ->
+                    if x.FrameworkVersions = [] then sprintf "<frameworkAssembly assemblyName=\"%s\" />" x.AssemblyName
+                    else sprintf "<frameworkAssembly assemblyName=\"%s\" targetFramework=\"%s\" />" x.AssemblyName (x.FrameworkVersions |> separated ", "))
         |> toLines
 
     let frameworkAssembliesXml =
