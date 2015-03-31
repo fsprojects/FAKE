@@ -1,3 +1,6 @@
+#### 3.26.5 - 31.03.2015
+* `NuGetPack` task allows to set framework references - https://github.com/fsharp/FAKE/pull/721
+
 #### 3.26.4 - 31.03.2015
 * New task `NuGetPackDirectly` works without template files.
 
