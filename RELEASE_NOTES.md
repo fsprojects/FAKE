@@ -1,3 +1,7 @@
+#### 3.26.3 - 31.03.2015
+* Find NuGet.exe in current folder (and sub-folders) first, then look in PATH - https://github.com/fsharp/FAKE/pull/718
+* NEw tutorial about Vagrant - http://fsharp.github.io/FAKE/vagrant.html
+
 #### 3.26.1 - 26.03.2015
 * REVERTING: SystemRoot also works on mono - https://github.com/fsharp/FAKE/pull/706 (see https://github.com/fsharp/FAKE/issues/715)
 
