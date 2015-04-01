@@ -1,3 +1,6 @@
+#### 3.26.7 - 01.04.2015
+* Added more parameters for HockeyApp Upload API - https://github.com/fsharp/FAKE/pull/723
+
 #### 3.26.6 - 31.03.2015
 * `NuGetPack` task allows to set framework references - https://github.com/fsharp/FAKE/pull/721
 
