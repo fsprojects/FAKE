@@ -1,8 +1,9 @@
-content none
+content: none
 source http://nuget.org/api/v2
 
 nuget FSharp.Core
 nuget FAKE
+nuget Knockout
 nuget Nuget.CommandLine
 nuget FSharp.Formatting
 nuget FSharp.Formatting.CommandTool

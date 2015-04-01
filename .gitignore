@@ -62,3 +62,6 @@ paket.exe
 # Ignore the Vagrant local directories
 .vagrant/*
 */.vagrant/*
+# Ignore VS2015 folder
+.vs/
+

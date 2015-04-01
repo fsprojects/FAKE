@@ -1,4 +1,5 @@
 bootstrap
+Knockout
 Knockout.Mapping
 log4net
 Nancy.Authentication.Forms
