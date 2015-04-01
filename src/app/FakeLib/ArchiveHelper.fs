@@ -1,9 +1,7 @@
 ﻿/// Provides utility tasks for storing and compressing files in archives.
 module Fake.ArchiveHelper
 
-open System
 open System.IO
-open ICSharpCode.SharpZipLib.Core
 
 [<Literal>]
 let private DefaultBufferSize = 32768
@@ -81,24 +79,36 @@ let private allFilesInDirectory (baseDir : DirectoryInfo) =
     !! (baseDir.FullName @@ "**" @@ "*")
     |> Seq.map fileInfo
 
+/// Provides validation of comression levels used for the zip and gzip compression algorithms.
 module CompressionLevel =
+    /// Defines the compression level type.
     type T = CompressionLevel of int
 
     let private clipLevel = max 0 >> min 9
 
+    /// The default compression level.
     let Default = CompressionLevel 7
 
+    /// Constructs a `CompressionLevel`. Level is clipped to a value between 0 and 9.
     let create level = CompressionLevel (clipLevel level)
 
+    /// Retrieves the numeric compression level.
     let value (CompressionLevel l) = l
 
+/// Operations and tasks for working with zip archives.
 module Zip =
     open ICSharpCode.SharpZipLib.Zip
     
+    /// The zip archive compression parameters.
     type ZipCompressionParams = { Comment : string option; Level : CompressionLevel.T }
 
+    /// The default zip archive compression parameters
+    /// ## Defaults
+    ///  - `Level` - `CompressionLevel.Default`
+    ///  - `Comment` - `None`
     let ZipCompressionDefaults = { Comment = None; Level = CompressionLevel.Default }
 
+    /// Adds a file, specified by an `ArchiveFileSpec`, to a `ZipOutputStream`.
     let addZipEntry (outStream : ZipOutputStream) =
         let prepareEntry (fileInfo : FileInfo) itemSpec =
             let entry = new ZipEntry(ZipEntry.CleanName itemSpec)
@@ -110,22 +120,33 @@ module Zip =
             outStream.CloseEntry()
         addEntry prepareEntry afterEntry outStream
 
+    /// Wraps an output stream with a zip compressor.
     let compressStream { Level = level; Comment = comment } inner =
         let zipStream = new ZipOutputStream(inner)
         zipStream.SetLevel <| CompressionLevel.value level
         match comment with | Some c -> zipStream.SetComment <| c | _ -> ()
         zipStream
 
+    /// Wraps an input stream with a zip decompressor.
     let extractStream inner = new ZipInputStream(inner)
 
+    /// Creates a `ZipOutputStream` wrapping a file using the given parameters.
+    /// ## Parameters
+    ///  - `zipParams` - The zip compression parameters.
+    ///  - `file` - The `FileInfo` describing the location to which the archive should be written. Will be overwritten if it exists.
     let createFile zipParams (file : FileInfo) =
         tracefn "Creating zip archive: %s (%A)" file.FullName zipParams.Level
         createArchiveStream (compressStream zipParams) file
 
+    /// Constructs a function that will create a zip archive from a set of files.
     let compress zipParams =
         createArchive (createFile zipParams) addZipEntry
 
-    let extract (extractDir : DirectoryInfo) (archiveFile : FileInfo) =
+    /// Extracts a zip archive to a given directory.
+    /// ## Parameters
+    ///  - `extractDir` - The directory into which the archived files will be extracted.
+    ///  - `archiveFile` - The archive to be extracted.
+    let Extract (extractDir : DirectoryInfo) (archiveFile : FileInfo) =
         let rec getNextEntry (stream : ZipInputStream) =
             let entry = stream.GetNextEntry()
             match entry with
@@ -138,13 +159,6 @@ module Zip =
         openArchiveStream extractStream archiveFile
         |> extractEntries getNextEntry 
         logfn "Extracted %s" archiveFile.FullName
-
-    /// Extracts a zip archive to a given directory.
-    /// ## Parameters
-    ///  - `targetDir` - The directory into which the archived files will be extracted.
-    ///  - `archivePath` - The archive to be extracted.
-    let Extract targetDir archivePath =
-        extract targetDir archivePath
 
     /// Creates a zip archive with the given files.
     /// ## Parameters
@@ -188,20 +202,31 @@ module Zip =
     let CompressDirWithDefaults (baseDir : DirectoryInfo) archiveFile =
         allFilesInDirectory baseDir |> CompressWithDefaults baseDir archiveFile
 
+/// Operations and tasks for working with gzip compressed files.
 module GZip =
     open ICSharpCode.SharpZipLib.GZip
 
+    /// The gzip archive compression parameters.
     type GZipCompressionParams = { Level : CompressionLevel.T }
 
+    /// The default gzip archive compression parameters
+    /// ## Defaults
+    ///  - `Level` - `CompressionLevel.Default`
     let GZipCompressionDefaults = { Level = CompressionLevel.Default }
 
+    /// Wraps an output stream with a gzip compressor.
     let compressStream { Level = level } inner =
         let gzipStream = new GZipOutputStream(inner)
         gzipStream.SetLevel <| CompressionLevel.value level
         gzipStream
 
+    /// Wraps an input stream with a zip decompressor.
     let extractStream inner = new GZipInputStream(inner)
 
+    /// Creates a `GZipOutputStream` wrapping a file using the given parameters.
+    /// ## Parameters
+    ///  - `gzipParams` - The gzip compression parameters.
+    ///  - `file` - The `FileInfo` describing the location to which the compressed file should be written. Will be overwritten if it exists.
     let createFile gzipParams (file : FileInfo) =
         tracefn "Creating gz archive: %s (%A)" file.FullName gzipParams.Level
         createArchiveStream (compressStream gzipParams) file
@@ -231,13 +256,19 @@ module GZip =
         use inStream = file.OpenRead()
         createArchive (createFile GZipCompressionDefaults) (copyFileBuffered DefaultBufferSize) outFile (Seq.singleton inStream)
 
+/// Operations and tasks for working with gzip compressed files.
 module BZip2 =
     open ICSharpCode.SharpZipLib.BZip2
 
+    /// Wraps an output stream with a bzip2 compressor.
     let compressStream inner = new BZip2OutputStream(inner)
 
+    /// Wraps an input stream with a bzip2 decompressor.
     let extractStream inner = new BZip2InputStream(inner)
 
+    /// Creates a `BZip2OutputStream` wrapping a file.
+    /// ## Parameters
+    ///  - `file` - The `FileInfo` describing the location to which the compressed file should be written. Will be overwritten if it exists.
     let createFile (file : FileInfo) =
         tracefn "Creating bz2 archive: %s" file.FullName
         createArchiveStream compressStream file
@@ -258,9 +289,11 @@ module BZip2 =
         use inStream = file.OpenRead()
         createArchive createFile (copyFileBuffered DefaultBufferSize) outFile (Seq.singleton inStream)
 
+/// Operations and tasks for working with tar archives.
 module Tar =
     open ICSharpCode.SharpZipLib.Tar
 
+    /// Adds a file, specified by an `ArchiveFileSpec`, to a `TarOutputStream`.
     let addEntry (outStream : TarOutputStream) =
         let prepareEntry (fileInfo : FileInfo) itemSpec =
             let entry = TarEntry.CreateTarEntry itemSpec
@@ -272,15 +305,21 @@ module Tar =
             outStream.CloseEntry()
         addEntry prepareEntry afterEntry outStream
 
-    let compressStream inner = new TarOutputStream(inner)
+    /// Wraps an output stream with a tar container store.
+    let storeStream inner = new TarOutputStream(inner)
 
+    /// Wraps an input stream with a tar container extractor.
     let extractStream inner = new TarInputStream(inner)
 
+    /// Creates a `TarOutputStream` wrapping a file using the given parameters.
+    /// ## Parameters
+    ///  - `file` - The `FileInfo` describing the location to which the archive should be written. Will be overwritten if it exists.
     let createFile (file : FileInfo) =
         tracefn "Creating tar archive: %s" file.FullName
-        createArchiveStream compressStream file
+        createArchiveStream storeStream file
 
-    let compress file items =
+    /// Constructs a function that will create a tar archive from a set of files.
+    let store file items =
         createArchive createFile addEntry file items
 
     let rec private getNextEntry (extractDir : DirectoryInfo) (stream : TarInputStream) =
@@ -292,17 +331,14 @@ module Tar =
             let outFile = extractDir.FullName @@ entry.Name |> fileInfo
             Some { OutputFile = outFile; ArchiveEntryPath = entry.Name; EntrySize = entry.Size }
 
-    let extract (extractDir : DirectoryInfo) (archiveFile : FileInfo) =
-        openArchiveStream extractStream archiveFile
-        |> extractEntries (getNextEntry extractDir)
-        logfn "Extracted %s" archiveFile.FullName
-
     /// Extracts a tar archive to a given directory.
     /// ## Parameters
     ///  - `targetDir` - The directory into which the archived files will be extracted.
-    ///  - `archivePath` - The archive to be extracted.
-    let Extract targetDir archivePath =
-        extract targetDir archivePath
+    ///  - `archiveFile` - The archive to be extracted.
+    let Extract (extractDir : DirectoryInfo) (archiveFile : FileInfo) =
+        openArchiveStream extractStream archiveFile
+        |> extractEntries (getNextEntry extractDir)
+        logfn "Extracted %s" archiveFile.FullName
 
     /// Creates a tar archive with the given files.
     /// ## Parameters
@@ -311,14 +347,14 @@ module Tar =
     ///  - `archiveFile` - The output archive file. If existing, will be overwritten.
     ///  - `files` - A sequence of files to store.
     let Store flatten baseDir archiveFile files =
-        doCompression compress archiveFile (buildFileSpec flatten baseDir) files
+        doCompression store archiveFile (buildFileSpec flatten baseDir) files
 
     /// Creates a tar archive with the given archive file specifications.
     /// ## Parameters
     ///  - `archiveFile` - The output archive file. If existing, will be overwritten.
     ///  - `fileSpecs` - A sequence of archive file specifications.
     let StoreSpecs archiveFile fileSpecs =
-        doCompression compress archiveFile id fileSpecs
+        doCompression store archiveFile id fileSpecs
 
     /// Creates a tar archive with the given files with default parameters.
     /// ## Parameters
@@ -343,29 +379,34 @@ module Tar =
     let CompressDirWithDefaults (baseDir : DirectoryInfo) archiveFile =
         allFilesInDirectory baseDir |> StoreWithDefaults baseDir archiveFile
 
+    /// Operations and tasks for working with tar archives compressed with GZip.
     module GZip =
-        let compressStream gzipParams = GZip.compressStream gzipParams >> compressStream
+        /// Wraps an output stream with a tar.gz compressor.
+        let compressStream gzipParams = GZip.compressStream gzipParams >> storeStream
 
+        /// Wraps an input stream with a tar.gz decompressor.
         let extractStream = GZip.extractStream >> extractStream
 
+        /// Creates a `TarOutputStream` wrapping a file using the given parameters.
+        /// ## Parameters
+        ///  - `gzipParams` - The gzip compression parameters.
+        ///  - `file` - The `FileInfo` describing the location to which the archive should be written. Will be overwritten if it exists.
         let createFile (gzipParams : GZip.GZipCompressionParams) (file : FileInfo) =
             tracefn "Creating tar.gz archive: %s (%A)" file.FullName gzipParams.Level
             createArchiveStream (compressStream gzipParams) file
     
+        /// Constructs a function that will create a tar.gz archive from a set of files.
         let compress gzipParam =
             createArchive (createFile gzipParam) addEntry
 
-        let extract extractDir archiveFile =
+        /// Extracts a tar.gz archive to a given directory.
+        /// ## Parameters
+        ///  - `extractDir` - The directory into which the archived files will be extracted.
+        ///  - `archiveFile` - The archive to be extracted.
+        let Extract extractDir archiveFile =
             openArchiveStream extractStream archiveFile
             |> extractEntries (getNextEntry extractDir)
             logfn "Extracted %s" archiveFile.FullName
-
-        /// Extracts a tar.gz archive to a given directory.
-        /// ## Parameters
-        ///  - `targetDir` - The directory into which the archived files will be extracted.
-        ///  - `archivePath` - The archive to be extracted.
-        let Extract targetDir archivePath =
-            extract targetDir archivePath
 
         /// Creates a tar.gz archive with the given files.
         /// ## Parameters
@@ -409,29 +450,33 @@ module Tar =
         let CompressDirWithDefaults (baseDir : DirectoryInfo) archiveFile =
             allFilesInDirectory baseDir |> CompressWithDefaults baseDir archiveFile
 
+    /// Operations and tasks for working with tar archives compressed with BZip2.
     module BZip2 =
-        let compressStream = BZip2.compressStream >> compressStream
+        /// Wraps an output stream with a tar.bz2 compressor.
+        let compressStream = BZip2.compressStream >> storeStream
 
+        /// Wraps an input stream with a tar.gz decompressor.
         let extractStream = BZip2.extractStream >> extractStream
 
+        /// Creates a `TarOutputStream` wrapping a file.
+        /// ## Parameters
+        ///  - `file` - The `FileInfo` describing the location to which the archive should be written. Will be overwritten if it exists.
         let createFile (file : FileInfo) =
             tracefn "Creating tar.bz2 archive: %s" file.FullName
             createArchiveStream compressStream file
 
+        /// Constructs a function that will create a tar.bz2 archive from a set of files.
         let compress =
             createArchive createFile addEntry
 
+        /// Extracts a tar.bz2 archive to a given directory.
+        /// ## Parameters
+        ///  - `extractDir` - The directory into which the archived files will be extracted.
+        ///  - `archiveFile` - The archive to be extracted.
         let extract extractDir archiveFile =
             openArchiveStream extractStream archiveFile
             |> extractEntries (getNextEntry extractDir)
             logfn "Extracted %s" archiveFile.FullName
-
-        /// Extracts a tar.bz2 archive to a given directory.
-        /// ## Parameters
-        ///  - `targetDir` - The directory into which the archived files will be extracted.
-        ///  - `archivePath` - The archive to be extracted.
-        let Extract targetDir archivePath =
-            extract targetDir archivePath
 
         /// Creates a tar.bz2 archive with the given files.
         /// ## Parameters
