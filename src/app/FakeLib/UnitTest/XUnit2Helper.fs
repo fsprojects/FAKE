@@ -165,7 +165,7 @@ let buildXUnit2Args parameters assembly =
 ///
 ///     Target "Test" (fun _ ->
 ///         !! (testDir + @"\xUnit.Test.*.dll") 
-///           |> xUnit (fun p -> {p with OutputDir = testDir })
+///           |> xUnit2 (fun p -> {p with OutputDir = testDir })
 ///     )
 let xUnit2 setParams assemblies = 
     let details = separated ", " assemblies
