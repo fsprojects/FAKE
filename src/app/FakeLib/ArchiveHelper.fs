@@ -9,6 +9,26 @@ let private DefaultBufferSize = 32768
 /// A description of a file to be added to an archive.
 type ArchiveFileSpec = { InputFile : FileInfo; ArchiveEntryPath : string }
 
+/// Constructs a file specification which will archive the file at the root.
+let archiveFileSpec file =
+    { InputFile = file; ArchiveEntryPath = file.Name }
+
+/// Constructs a file specification which will archive the file with a path relative to the `baseDir`.
+let archiveFileSpecWithAltBaseDir archiveBasePath (baseDir : DirectoryInfo) (file : FileInfo) =
+    let archiveBasePath =
+        match archiveBasePath with
+        | _ when isNullOrEmpty archiveBasePath -> ""
+        | _ when not <| endsWithSlash archiveBasePath -> archiveBasePath + directorySeparator
+        | _ -> archiveBasePath
+
+    if not baseDir.Exists then failwithf "Directory not found: %s" baseDir.FullName
+    if not <| isInFolder baseDir file then failwithf "File not in base directory: (BaseDir: %s, File: %s)" baseDir.FullName file.FullName
+    { InputFile = file; ArchiveEntryPath = replace (baseDir.FullName + directorySeparator) archiveBasePath file.FullName }
+
+/// Constructs a file specification which will archive the file with a path relative to the `baseDir`.
+let archiveFileSpecWithBaseDir baseDir file =
+    archiveFileSpecWithAltBaseDir "" baseDir file
+
 type private ExtractEntrySpec = { OutputFile : FileInfo; ArchiveEntryPath : string; EntrySize : int64 }
 
 let private copyStreamBuffered bufferSize (outStream : #Stream) (inStream : #Stream) length =
@@ -57,16 +77,6 @@ let rec private extractEntries getNextEntry (inStream : #Stream) =
         extractEntry inStream entry
         extractEntries getNextEntry inStream
     | None -> ()
-
-/// Constructs a file specification which will archive the file at the root.
-let archiveFileSpec (file : FileInfo) =
-    { InputFile = file; ArchiveEntryPath = file.Name }
-
-/// Constructs a file specification which will archive the file with a path relative to the `baseDir`.
-let archiveFileSpecWithBaseDir (baseDir : DirectoryInfo) (file : FileInfo) =
-    if not baseDir.Exists then failwithf "Directory not found: %s" baseDir.FullName
-    if not <| isInFolder baseDir file then failwithf "File not in base directory: (BaseDir: %s, File: %s)" baseDir.FullName file.FullName
-    { InputFile = file; ArchiveEntryPath = replace (baseDir.FullName + directorySeparator) "" file.FullName }
 
 let private doCompression compressor archivePath fileSpecGenerator =
     Seq.map fileSpecGenerator
