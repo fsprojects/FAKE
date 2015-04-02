@@ -1,12 +1,12 @@
 ﻿(*
-    This module will help android developers to publish automatically their APKs
+    this module helps android developers to publish automatically their apks
 
-    Usefull links:
+    useful links:
 
     https://developers.google.com/accounts/docs/OAuth2ServiceAccount#formingheader
     https://developers.google.com/android-publisher/api-ref/edits/insert
 
-    Note:
+    note:
         I would like to use a JsonProvider to parse json but i don't know if it causes a problem with dependency "FSharp.Data.DesignTime.dll"
         So i used Newtonsoft.Json
 *)
@@ -27,18 +27,22 @@ open ICSharpCode.SharpZipLib.Zip
 open ICSharpCode.SharpZipLib.Core
 open System.Xml.Linq
 
-type AndroidPublishParams = {
+type AndroidPublishConfig = {
     Certificate: X509Certificate2;
     PackageName: string;
     AccountId: string;
     Apk: string;
-    Track: string;
 }
 
-let ProductionSettings = {Certificate = null; PackageName = null; AccountId = null; Apk = null; Track = "production"; }
-let AlphaSettings = { ProductionSettings with  Track = "alpha"; }
-let BetaSettings = { ProductionSettings with  Track = "beta"; }
-let RolloutSettings = { ProductionSettings with  Track = "rollout"; }
+type AndroidPublishParams = {
+    Track: string;
+    Config: AndroidPublishConfig;
+}
+
+let ProductionSettings = { Track = "production"; Config = { Certificate = null; PackageName = null; AccountId = null; Apk = null; } }
+let AlphaSettings = { ProductionSettings with Track = "alpha"; }
+let BetaSettings = { ProductionSettings with Track = "beta"; }
+let RolloutSettings = { ProductionSettings with Track = "rollout"; }
 
 type private ServiceCredentials = { 
     Certificate: X509Certificate2;
@@ -129,9 +133,11 @@ type private HttpClient() as x =
     member x.CreateRequest (address:Uri) =
         x.GetWebRequest (address)
 
-let private AndroidPublisherScope = "https://www.googleapis.com/auth/androidpublisher"
-let private TokenServerUrl = "https://www.googleapis.com/oauth2/v3/token"
-let private androidPublisherBaseUrl = "https://www.googleapis.com/androidpublisher/v2/applications"
+let mutable public AndroidPublisherScope = "https://www.googleapis.com/auth/androidpublisher"
+let mutable public TokenServerUrl = "https://www.googleapis.com/oauth2/v3/token"
+let mutable public AndroidPublisherBaseUrl = "https://www.googleapis.com/androidpublisher/v2/applications"
+let mutable public AndroidUploadApkBaseUrl = "https://www.googleapis.com/upload/androidpublisher/v2/applications"
+
 let private ServiceAccountHeader = {Algo = "RS256"; Type = "JWT"}
 
 let private toJson = JsonConvert.SerializeObject
@@ -267,22 +273,22 @@ let PublishApk (param:AndroidPublishParams)=
     let appEditInsert (session:ServiceSession, packageName:string) =
         let client = new WebClient()
         client.Headers << session
-        client.UploadString(androidPublisherBaseUrl + "/" + packageName + "/edits", "") |> fromJson<EditResourceModel>
+        client.UploadString(AndroidPublisherBaseUrl + "/" + packageName + "/edits", "") |> fromJson<EditResourceModel>
 
     let appListApks (session:ServiceSession, packageName:string, editId:string) =
         let client = new WebClient()
         client.Headers << session
-        client.DownloadString(androidPublisherBaseUrl + "/" + packageName + "/edits/" + editId + "/apks") |> fromJson<AppEditListApksResult>
+        client.DownloadString(AndroidPublisherBaseUrl + "/" + packageName + "/edits/" + editId + "/apks") |> fromJson<AppEditListApksResult>
     
     let validateAppEdit (session:ServiceSession, packageName:string, editId:string) =
         let client = new WebClient()
         client.Headers << session
-        client.UploadString(androidPublisherBaseUrl + "/" + packageName + "/edits/" + editId + ":validate", "") |> fromJson<EditResourceModel>
+        client.UploadString(AndroidPublisherBaseUrl + "/" + packageName + "/edits/" + editId + ":validate", "") |> fromJson<EditResourceModel>
 
     let commitAppEdit (session:ServiceSession, packageName:string, editId:string) =
         let client = new WebClient()
         client.Headers << session
-        client.UploadString(androidPublisherBaseUrl + "/" + packageName + "/edits/" + editId + ":commit", "") |> fromJson<EditResourceModel>
+        client.UploadString(AndroidPublisherBaseUrl + "/" + packageName + "/edits/" + editId + ":commit", "") |> fromJson<EditResourceModel>
 
     let setAppTrack (session:ServiceSession, packageName:string, editId:string, track:string, versionCode:int) =
         let client = new WebClient()
@@ -290,12 +296,12 @@ let PublishApk (param:AndroidPublishParams)=
         client.Headers.Add ("Content-Type", "application/json")
         let m = { Track = track; VersionCodes = [versionCode];(* UserFraction = 1.*) }
         let data = JsonConvert.SerializeObject(m)
-        client.UploadString(androidPublisherBaseUrl + "/" + packageName + "/edits/" + editId + "/tracks/" + track, "PUT", data) |> fromJson<EditResourceModel>
+        client.UploadString(AndroidPublisherBaseUrl + "/" + packageName + "/edits/" + editId + "/tracks/" + track, "PUT", data) |> fromJson<EditResourceModel>
     
     let fopen fn = File.Open(fn, FileMode.Open)
 
     let uploadApk (session:ServiceSession, packageName:string, editId:string, apkPath:string) =
-        let url = new Uri("https://www.googleapis.com/upload/androidpublisher/v2/applications/" + packageName + "/edits/" + editId + "/apks?uploadType=media")
+        let url = new Uri(AndroidUploadApkBaseUrl + "/" + packageName + "/edits/" + editId + "/apks?uploadType=media")
         let client = new HttpClient()
         let watch = Stopwatch.StartNew()
         let rq = client.CreateRequest (url)
@@ -337,26 +343,26 @@ let PublishApk (param:AndroidPublishParams)=
             | e -> { Content=None; Error=Some(e.Message) }
 
 
-    let credentials = { Certificate = param.Certificate; AccountId = param.AccountId; }
+    let credentials = { Certificate = param.Config.Certificate; AccountId = param.Config.AccountId; }
     let session = credentials |> googleAuthenticate
-    let resource = appEditInsert (session, param.PackageName)
-    let apkList = appListApks (session, param.PackageName, resource.Id)
-    let manifest = match param.Apk |> getManifest with | Some xml -> xml | None -> failwithf "cannot parse apk AndroidManifest"
+    let resource = appEditInsert (session, param.Config.PackageName)
+    let apkList = appListApks (session, param.Config.PackageName, resource.Id)
+    let manifest = match param.Config.Apk |> getManifest with | Some xml -> xml | None -> failwithf "cannot parse apk AndroidManifest"
     let versionCode = (manifest.Element("manifest" |> XName.Get).Attributes() |> Seq.filter(fun a -> a.Name.LocalName = "versionCode") |> Seq.exactlyOne).Value |> Convert.ToInt32
     
     if apkList.Apks.Length > 0 && (apkList.Apks |> Seq.maxBy (fun a -> a.Code)).Code >= versionCode then
         failwithf "You must increase versionCode"                         
 
-    let upResult = uploadApk (session, param.PackageName, resource.Id, param.Apk)
+    let upResult = uploadApk (session, param.Config.PackageName, resource.Id, param.Config.Apk)
     match (upResult.Content, upResult.Error) with 
         | Some content, None -> 
             tracefn "upload success: version code %d \n" content.Code
             tracefn "setting track %s \n" param.Track
-            setAppTrack (session, param.PackageName, resource.Id, param.Track, content.Code) |> ignore
+            setAppTrack (session, param.Config.PackageName, resource.Id, param.Track, content.Code) |> ignore
             tracefn "validating \n"
-            validateAppEdit (session, param.PackageName, resource.Id) |> ignore
+            validateAppEdit (session, param.Config.PackageName, resource.Id) |> ignore
             tracefn "committing app \n"
-            commitAppEdit (session, param.PackageName, resource.Id) |> ignore
+            commitAppEdit (session, param.Config.PackageName, resource.Id) |> ignore
         | None, Some error -> failwith error
         | _, _ -> failwith "upload failed"
 
