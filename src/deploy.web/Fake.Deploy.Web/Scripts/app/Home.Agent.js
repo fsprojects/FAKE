@@ -46,7 +46,8 @@ function AgentViewModel() {
                 contentType: 'application/json'
             }).done(function (data) {
                 self.deployments([]);
-                $.each(data.values, function (i, d) {
+                  
+                $.each(data.values || [], function (i, d) {
                     $.each(d, function (i2, dep) {
                         var deployment = ko.mapping.fromJS(dep);
                         self.deployments.push(deployment);
