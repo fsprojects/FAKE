@@ -71,7 +71,7 @@ type ApiPackage (dataProvider : IDataProvider) as http =
                     |> Seq.map(fun file ->
                         match postDeploymentPackage url file [||] with
                         | Failure(err) -> 
-                            file, Some err, HttpStatusCode.InternalServerError, None
+                            file, Some err, HttpStatusCode.InternalServerError, Some(err)
                         | Success a -> 
                             if File.Exists(file) then File.Delete(file)
                             file, None, HttpStatusCode.Created, Some a
