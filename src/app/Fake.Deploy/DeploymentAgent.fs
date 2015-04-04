@@ -17,12 +17,20 @@ let getBodyFromNancyRequest (ctx : Nancy.Request) =
     ctx.Body.CopyTo ms
     ms.ToArray()
 
-let getScriptArgumentsFromNancyRequest (ctx : Nancy.Request) =
-    ctx.Headers 
-    |> Seq.choose (fun pair -> if pair.Key = FakeDeployAgentHelper.scriptArgumentsHeaderName then Some <| pair.Value else None)
-    |> Seq.head
-    |> Seq.head
-    |> fromHeaderValue
+let getScriptArgumentsFromNancyRequest (ctx : Nancy.Request) : string [] =
+    let args = 
+        ctx.Headers 
+        |> Seq.choose (fun pair -> 
+            if pair.Key = FakeDeployAgentHelper.scriptArgumentsHeaderName then 
+                Some pair.Value 
+            else None
+        ) 
+        |> List.ofSeq
+
+    match args with 
+    | [] -> [||]
+    | _ -> args |> Seq.collect id |> Seq.map fromHeaderValue |> Seq.collect id |> Array.ofSeq
+    
 
 let  runDeployment workDir (ctx : Nancy.Request) = 
     let packageBytes = getBodyFromNancyRequest ctx

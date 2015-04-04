@@ -48,11 +48,13 @@ type ApiPackage (dataProvider : IDataProvider) as http =
                 let agent = dataProvider.GetAgents [agentId] |> Seq.head
                 let url = agent.Address.AbsoluteUri + "fake/"
                 let env = 
-                    [agent.EnvironmentId] 
-                    |>dataProvider.GetEnvironments 
-                    |> Seq.head
-                    |> fun x -> x.Name
-                    |> sprintf "env=%s"
+                    match [agent.EnvironmentId] 
+                          |>dataProvider.GetEnvironments with
+                    | [||] -> None
+                    | envs -> envs |> Seq.head |> fun x -> x.Name |> sprintf "env=%s" |> Some
+
+                let args = Seq.choose id [env] |> Array.ofSeq
+
                 Directory.CreateDirectory(packageTemp) |> ignore
                 let files = 
                     http.Request.Files
@@ -64,7 +66,7 @@ type ApiPackage (dataProvider : IDataProvider) as http =
                 let code, message = 
                     files
                     |> Seq.map(fun file ->
-                        match postDeploymentPackage url file [|env|] with
+                        match postDeploymentPackage url file args with
                         | Failure(err) -> 
                             file, Some err, HttpStatusCode.InternalServerError, Some(err)
                         | Success a -> 
