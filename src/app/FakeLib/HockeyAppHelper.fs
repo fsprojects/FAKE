@@ -34,6 +34,11 @@ type MandatoryOption =
     | NotMandatory = 0 
     | Mandatory = 1
 
+/// The release download status
+type DownloadStatusOption =
+    | NotDownloadable = 1
+    | Downloadable = 2
+
 /// HockeyApp's success response
 type HockeyResponse = {
     Title : string
@@ -105,6 +110,9 @@ type HockeyAppUploadParams = {
 
     /// Set to your source repository
     RepositoryUrl: string
+
+    /// Release download status (can only be set with full-access tokens)
+    DownloadStatus: DownloadStatusOption
 }
 
 /// The default HockeyApp parameters
@@ -122,6 +130,7 @@ let HockeyAppUploadDefaults = {
     CommitSHA = String.Empty
     BuildServerUrl = String.Empty
     RepositoryUrl = String.Empty
+    DownloadStatus = DownloadStatusOption.NotDownloadable
 }
 
 /// [omit]
@@ -160,6 +169,7 @@ let private toCurlArgs param = seq {
     yield sprintf "-F \"release_type=%i\"" (int param.ReleaseType)
     yield sprintf "-F \"notify=%i\"" (int param.Notify)
     yield sprintf "-F \"mandatory=%i\"" (int param.Mandatory)
+    yield sprintf "-F \"status=%i\"" (int param.DownloadStatus)
     yield sprintf "-F \"private=%b\"" param.Private
     if not (String.IsNullOrEmpty param.OwnerId) then yield sprintf "-F \"owner_id=%s\"" param.OwnerId
     if not (String.IsNullOrEmpty param.CommitSHA) then yield sprintf "-F \"commit_sha=%s\"" param.CommitSHA
