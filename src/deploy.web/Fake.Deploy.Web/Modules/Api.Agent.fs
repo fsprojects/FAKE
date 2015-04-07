@@ -16,7 +16,7 @@ open Fake.Deploy.Web.Module.NancyOp
 
 type AgentResponse<'t> = 
     { case : string
-      values : 't [] }
+      fields : 't [] }
 
 type ApiAgent(dataProvider : IDataProvider, agentProxy : AgentProxy) as http = 
     inherit FakeModule("/api/v1/agent")

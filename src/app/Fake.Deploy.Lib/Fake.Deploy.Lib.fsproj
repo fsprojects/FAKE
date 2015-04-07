@@ -49,6 +49,7 @@
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="SshRsaModule.fs" />
     <Compile Include="Json.fs" />
+    <Compile Include="HttpHeaderHelper.fs" />
     <Compile Include="HttpListenerHelper.fs" />
     <Compile Include="FakeDeployAgentHelper.fs" />
     <None Include="app.config" />

@@ -22,17 +22,6 @@ type ApiPackage (dataProvider : IDataProvider) as http =
 
     let packageTemp = Path.Combine(appdata.FullName, "Package_Temp")
 
-    let deploy packageFileName agent =
-        let toStr (msgs:seq<ConsoleMessage>) = 
-            msgs |> Seq.map(fun msg -> sprintf "%s: %s" (msg.Timestamp.ToString("yyyy-MM-dd HH:mm:ss")) msg.Message )
-
-        let url = Uri(agent.Address, "/fake/")
-        let response = postDeploymentPackage url.AbsoluteUri packageFileName [||]
-        match response with
-        | Failure x -> { Agent = agent.Name; Messages = toStr x.Messages; Success = not <| x.IsError; Error = x.Exception.ToString() }
-        | Success x -> { Agent = agent.Name; Messages = toStr x.Messages; Success = not <| x.IsError; Error = "" }
-        | _ -> { Agent = agent.Name; Messages = []; Success = false; Error = "Unexpected response from agent" }
-
     do
         http.post "/rollback" (fun p ->
             let body = http.Bind<ApiModels.RollbackRequest>()
@@ -58,6 +47,12 @@ type ApiPackage (dataProvider : IDataProvider) as http =
                 let agentId = http.Request.Form ?> "agentId"
                 let agent = dataProvider.GetAgents [agentId] |> Seq.head
                 let url = agent.Address.AbsoluteUri + "fake/"
+                let env = 
+                    [agent.EnvironmentId] 
+                    |>dataProvider.GetEnvironments 
+                    |> Seq.head
+                    |> fun x -> x.Name
+                    |> sprintf "env=%s"
                 Directory.CreateDirectory(packageTemp) |> ignore
                 let files = 
                     http.Request.Files
@@ -69,9 +64,9 @@ type ApiPackage (dataProvider : IDataProvider) as http =
                 let code, message = 
                     files
                     |> Seq.map(fun file ->
-                        match postDeploymentPackage url file [||] with
+                        match postDeploymentPackage url file [|env|] with
                         | Failure(err) -> 
-                            file, Some err, HttpStatusCode.InternalServerError, None
+                            file, Some err, HttpStatusCode.InternalServerError, Some(err)
                         | Success a -> 
                             if File.Exists(file) then File.Delete(file)
                             file, None, HttpStatusCode.Created, Some a

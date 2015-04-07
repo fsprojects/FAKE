@@ -93,7 +93,7 @@ let uploadData (action: Action) (url: Url) (body: byte[]) =
 
 let uploadFile (action: Action) (url: Url) (file: FilePath) (args: string[]) = 
     let req = webRequest url action
-    req.Headers.Add(scriptArgumentsHeaderName, String.Join (";", args))
+    req.Headers.Add(scriptArgumentsHeaderName, args |> toHeaderValue)
     req.AllowWriteStreamBuffering <- false
     use fileStream = File.OpenRead file
     req.ContentLength <- fileStream.Length

@@ -19,9 +19,10 @@ let getBodyFromNancyRequest (ctx : Nancy.Request) =
 
 let getScriptArgumentsFromNancyRequest (ctx : Nancy.Request) =
     ctx.Headers 
-    |> Seq.choose (fun pair -> if pair.Key = FakeDeployAgentHelper.scriptArgumentsHeaderName then Some pair.Value else None)
-    |> Seq.concat
-    |> Seq.toArray
+    |> Seq.choose (fun pair -> if pair.Key = FakeDeployAgentHelper.scriptArgumentsHeaderName then Some <| pair.Value else None)
+    |> Seq.head
+    |> Seq.head
+    |> fromHeaderValue
 
 let  runDeployment workDir (ctx : Nancy.Request) = 
     let packageBytes = getBodyFromNancyRequest ctx
