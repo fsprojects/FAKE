@@ -46,81 +46,120 @@
 <p>Before using this module, you will need an android keystore for apk signing.</p>
 
 <p>Next, you will need a Google service account described here: 
-<a href="https://developers.google.com/accounts/docs/OAuth2ServiceAccount#creatinganaccount
-and">https://developers.google.com/accounts/docs/OAuth2ServiceAccount#creatinganaccount
-and</a> here: 
+<a href="https://developers.google.com/accounts/docs/OAuth2ServiceAccount#creatinganaccount">https://developers.google.com/accounts/docs/OAuth2ServiceAccount#creatinganaccount</a></p>
+
+<p>and here: 
 <a href="https://developers.google.com/android-publisher/getting_started">https://developers.google.com/android-publisher/getting_started</a></p>
 
 <h2>Usage example:</h2>
 
 <table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l"> 1: </span>
-<span class="l"> 2: </span>
-<span class="l"> 3: </span>
-<span class="l"> 4: </span>
-<span class="l"> 5: </span>
-<span class="l"> 6: </span>
-<span class="l"> 7: </span>
-<span class="l"> 8: </span>
-<span class="l"> 9: </span>
-<span class="l">10: </span>
-<span class="l">11: </span>
-<span class="l">12: </span>
-<span class="l">13: </span>
-<span class="l">14: </span>
-<span class="l">15: </span>
-<span class="l">16: </span>
-<span class="l">17: </span>
-<span class="l">18: </span>
-<span class="l">19: </span>
-<span class="l">20: </span>
-<span class="l">21: </span>
-<span class="l">22: </span>
-<span class="l">23: </span>
-<span class="l">24: </span>
-<span class="l">25: </span>
-<span class="l">26: </span>
-<span class="l">27: </span>
-<span class="l">28: </span>
-<span class="l">29: </span>
-<span class="l">30: </span>
-<span class="l">31: </span>
-<span class="l">32: </span>
-<span class="l">33: </span>
-<span class="l">34: </span>
-<span class="l">35: </span>
-<span class="l">36: </span>
-<span class="l">37: </span>
-<span class="l">38: </span>
-<span class="l">39: </span>
-<span class="l">40: </span>
-<span class="l">41: </span>
-<span class="l">42: </span>
-<span class="l">43: </span>
-<span class="l">44: </span>
-<span class="l">45: </span>
-<span class="l">46: </span>
-<span class="l">47: </span>
-<span class="l">48: </span>
-<span class="l">49: </span>
-<span class="l">50: </span>
-<span class="l">51: </span>
-<span class="l">52: </span>
-<span class="l">53: </span>
-<span class="l">54: </span>
-<span class="l">55: </span>
-<span class="l">56: </span>
-<span class="l">57: </span>
-<span class="l">58: </span>
-<span class="l">59: </span>
-<span class="l">60: </span>
-<span class="l">61: </span>
-<span class="l">62: </span>
-<span class="l">63: </span>
-<span class="l">64: </span>
-<span class="l">65: </span>
-<span class="l">66: </span>
-<span class="l">67: </span>
+<span class="l">  1: </span>
+<span class="l">  2: </span>
+<span class="l">  3: </span>
+<span class="l">  4: </span>
+<span class="l">  5: </span>
+<span class="l">  6: </span>
+<span class="l">  7: </span>
+<span class="l">  8: </span>
+<span class="l">  9: </span>
+<span class="l"> 10: </span>
+<span class="l"> 11: </span>
+<span class="l"> 12: </span>
+<span class="l"> 13: </span>
+<span class="l"> 14: </span>
+<span class="l"> 15: </span>
+<span class="l"> 16: </span>
+<span class="l"> 17: </span>
+<span class="l"> 18: </span>
+<span class="l"> 19: </span>
+<span class="l"> 20: </span>
+<span class="l"> 21: </span>
+<span class="l"> 22: </span>
+<span class="l"> 23: </span>
+<span class="l"> 24: </span>
+<span class="l"> 25: </span>
+<span class="l"> 26: </span>
+<span class="l"> 27: </span>
+<span class="l"> 28: </span>
+<span class="l"> 29: </span>
+<span class="l"> 30: </span>
+<span class="l"> 31: </span>
+<span class="l"> 32: </span>
+<span class="l"> 33: </span>
+<span class="l"> 34: </span>
+<span class="l"> 35: </span>
+<span class="l"> 36: </span>
+<span class="l"> 37: </span>
+<span class="l"> 38: </span>
+<span class="l"> 39: </span>
+<span class="l"> 40: </span>
+<span class="l"> 41: </span>
+<span class="l"> 42: </span>
+<span class="l"> 43: </span>
+<span class="l"> 44: </span>
+<span class="l"> 45: </span>
+<span class="l"> 46: </span>
+<span class="l"> 47: </span>
+<span class="l"> 48: </span>
+<span class="l"> 49: </span>
+<span class="l"> 50: </span>
+<span class="l"> 51: </span>
+<span class="l"> 52: </span>
+<span class="l"> 53: </span>
+<span class="l"> 54: </span>
+<span class="l"> 55: </span>
+<span class="l"> 56: </span>
+<span class="l"> 57: </span>
+<span class="l"> 58: </span>
+<span class="l"> 59: </span>
+<span class="l"> 60: </span>
+<span class="l"> 61: </span>
+<span class="l"> 62: </span>
+<span class="l"> 63: </span>
+<span class="l"> 64: </span>
+<span class="l"> 65: </span>
+<span class="l"> 66: </span>
+<span class="l"> 67: </span>
+<span class="l"> 68: </span>
+<span class="l"> 69: </span>
+<span class="l"> 70: </span>
+<span class="l"> 71: </span>
+<span class="l"> 72: </span>
+<span class="l"> 73: </span>
+<span class="l"> 74: </span>
+<span class="l"> 75: </span>
+<span class="l"> 76: </span>
+<span class="l"> 77: </span>
+<span class="l"> 78: </span>
+<span class="l"> 79: </span>
+<span class="l"> 80: </span>
+<span class="l"> 81: </span>
+<span class="l"> 82: </span>
+<span class="l"> 83: </span>
+<span class="l"> 84: </span>
+<span class="l"> 85: </span>
+<span class="l"> 86: </span>
+<span class="l"> 87: </span>
+<span class="l"> 88: </span>
+<span class="l"> 89: </span>
+<span class="l"> 90: </span>
+<span class="l"> 91: </span>
+<span class="l"> 92: </span>
+<span class="l"> 93: </span>
+<span class="l"> 94: </span>
+<span class="l"> 95: </span>
+<span class="l"> 96: </span>
+<span class="l"> 97: </span>
+<span class="l"> 98: </span>
+<span class="l"> 99: </span>
+<span class="l">100: </span>
+<span class="l">101: </span>
+<span class="l">102: </span>
+<span class="l">103: </span>
+<span class="l">104: </span>
+<span class="l">105: </span>
+<span class="l">106: </span>
 </pre>
 </td>
 <td class="snippet"><pre class="fssnip">
@@ -158,21 +197,60 @@ and</a> here:
 <span class="i">Target</span> <span class="s">&quot;</span><span class="s">Publish</span><span class="s">&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span> 
     <span class="c">// I like verbose script</span>
     <span class="i">trace</span> <span class="s">&quot;</span><span class="s">publishing</span><span class="s"> </span><span class="s">Android</span><span class="s"> </span><span class="s">App</span><span class="s">&quot;</span>
-    <span class="k">let</span> <span class="i">apk</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 9)" onmouseover="showTip(event, 'fs2', 9)" class="i">androidProdDir</span> <span class="o">|&gt;</span> <span class="i">directoryInfo</span> <span class="o">|&gt;</span> <span class="i">filesInDir</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs4', 10)" onmouseover="showTip(event, 'fs4', 10)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs5', 11)" onmouseover="showTip(event, 'fs5', 11)" class="i">filter</span>(<span class="k">fun</span> <span class="i">f</span> <span class="k">-&gt;</span> <span class="i">f</span><span class="o">.</span><span class="i">Name</span><span class="o">.</span><span class="i">EndsWith</span>(<span class="s">&quot;</span><span class="s">.</span><span class="s">apk</span><span class="s">&quot;</span>)) <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs4', 12)" onmouseover="showTip(event, 'fs4', 12)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs6', 13)" onmouseover="showTip(event, 'fs6', 13)" class="i">exactlyOne</span>
+    <span class="k">let</span> <span class="i">apk</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 9)" onmouseover="showTip(event, 'fs2', 9)" class="i">androidProdDir</span> 
+                    <span class="o">|&gt;</span> <span class="i">directoryInfo</span> 
+                    <span class="o">|&gt;</span> <span class="i">filesInDir</span> 
+                    <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs4', 10)" onmouseover="showTip(event, 'fs4', 10)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs5', 11)" onmouseover="showTip(event, 'fs5', 11)" class="i">filter</span>(<span class="k">fun</span> <span class="i">f</span> <span class="k">-&gt;</span> <span class="i">f</span><span class="o">.</span><span class="i">Name</span><span class="o">.</span><span class="i">EndsWith</span>(<span class="s">&quot;</span><span class="s">.</span><span class="s">apk</span><span class="s">&quot;</span>))
+                    <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs4', 12)" onmouseover="showTip(event, 'fs4', 12)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs6', 13)" onmouseover="showTip(event, 'fs6', 13)" class="i">exactlyOne</span>
     <span class="k">let</span> <span class="i">apkPath</span> <span class="o">=</span> <span class="i">apk</span><span class="o">.</span><span class="i">FullName</span>
     <span class="i">tracefn</span> <span class="s">&quot;</span><span class="s">Apk</span><span class="s"> </span><span class="s">found</span><span class="s">:</span><span class="s"> </span><span class="s">%</span><span class="s">s</span><span class="s">&quot;</span> <span class="i">apkPath</span>
     <span class="k">let</span> <span class="i">mail</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">my</span><span class="s"> </span><span class="s">service</span><span class="s"> </span><span class="s">account</span><span class="s"> </span><span class="s">mail</span><span class="s">@</span><span class="s">developer</span><span class="s">.</span><span class="s">gserviceaccount</span><span class="s">.</span><span class="s">com</span><span class="s">&quot;</span>
-    <span class="k">let</span> <span class="i">certificate</span> <span class="o">=</span> <span class="k">new</span> <span class="i">X509Certificate2</span>(<span class="s">@&quot;</span><span class="s">Path</span><span class="s"> </span><span class="s">to</span><span class="s"> </span><span class="s">my</span><span class="s"> </span><span class="s">certificate</span><span class="s"> </span><span class="s">file</span><span class="s"> </span><span class="s">probably</span><span class="s"> </span><span class="s">named</span><span class="s"> </span><span class="s">&#39;</span><span class="s">Google</span><span class="s"> </span><span class="s">Play</span><span class="s"> </span><span class="s">Android</span><span class="s"> </span><span class="s">Developer</span><span class="s">-</span><span class="s">xxxxxxxxxxxx</span><span class="s">.</span><span class="s">p12&#39;</span><span class="s">&quot;</span>, <span class="s">&quot;</span><span class="s">notasecret</span><span class="s">&quot;</span>, <span class="i">X509KeyStorageFlags</span><span class="o">.</span><span class="i">Exportable</span>)
+    <span class="c">// Path to the certificate file probably named &#39;Google Play Android Developer-xxxxxxxxxxxx.p12&#39;</span>
+    <span class="k">let</span> <span class="i">certificate</span> <span class="o">=</span> <span class="k">new</span> <span class="i">X509Certificate2</span>
+                                (
+                                    <span class="s">@&quot;</span><span class="s">Google</span><span class="s"> </span><span class="s">Play</span><span class="s"> </span><span class="s">Android</span><span class="s"> </span><span class="s">Developer</span><span class="s">-</span><span class="s">xxxxxxxxxxxx</span><span class="s">.</span><span class="s">p12</span><span class="s">&quot;</span>,
+                                    <span class="s">&quot;</span><span class="s">notasecret</span><span class="s">&quot;</span>,
+                                    <span class="i">X509KeyStorageFlags</span><span class="o">.</span><span class="i">Exportable</span>
+                                )
     <span class="k">let</span> <span class="i">packageName</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">my</span><span class="s"> </span><span class="s">Android</span><span class="s"> </span><span class="s">package</span><span class="s"> </span><span class="s">name</span><span class="s">&quot;</span>
 
     <span class="c">// to publish an alpha version: </span>
-    <span class="i">PublishApk</span> { <span class="i">AlphaSettings</span> <span class="k">with</span> <span class="i">Config</span> <span class="o">=</span> { <span class="i">Certificate</span> <span class="o">=</span> <span class="i">certificate</span>; <span class="i">PackageName</span> <span class="o">=</span> <span class="i">packageName</span>; <span class="i">AccountId</span> <span class="o">=</span> <span class="i">mail</span>; <span class="i">Apk</span> <span class="o">=</span> <span class="i">apkPath</span>; } }
+    <span class="i">PublishApk</span> 
+        { <span class="i">AlphaSettings</span> <span class="k">with</span> 
+            <span class="i">Config</span> <span class="o">=</span> 
+                { 
+                    <span class="i">Certificate</span> <span class="o">=</span> <span class="i">certificate</span>;
+                    <span class="i">PackageName</span> <span class="o">=</span> <span class="i">packageName</span>;
+                    <span class="i">AccountId</span> <span class="o">=</span> <span class="i">mail</span>;
+                    <span class="i">Apk</span> <span class="o">=</span> <span class="i">apkPath</span>; 
+                }
+        }
 
     <span class="c">// to publish a beta version: </span>
-    <span class="c">// PublishApk { BetaSettings with Config = { Certificate = certificate; PackageName = packageName; AccountId = mail; Apk = apkPath; } }</span>
+    <span class="c">//</span>
+    <span class="c">//PublishApk </span>
+    <span class="c">//    { BetaSettings with </span>
+    <span class="c">//        Config = </span>
+    <span class="c">//            { </span>
+    <span class="c">//                Certificate = certificate;</span>
+    <span class="c">//                PackageName = packageName;</span>
+    <span class="c">//                AccountId = mail;</span>
+    <span class="c">//                Apk = apkPath; </span>
+    <span class="c">//            }</span>
+    <span class="c">//    }</span>
 
     <span class="c">// to publish a production version: </span>
-    <span class="c">// PublishApk { ProductionSettings with Config = { Certificate = certificate; PackageName = packageName; AccountId = mail; Apk = apkPath; } }</span>
+    <span class="c">//</span>
+    <span class="c">//PublishApk </span>
+    <span class="c">//    { ProductionSettings with </span>
+    <span class="c">//        Config = </span>
+    <span class="c">//            { </span>
+    <span class="c">//                Certificate = certificate;</span>
+    <span class="c">//                PackageName = packageName;</span>
+    <span class="c">//                AccountId = mail;</span>
+    <span class="c">//                Apk = apkPath; </span>
+    <span class="c">//            }</span>
+    <span class="c">//    }</span>
 )
 
 <span class="i">Target</span> <span class="s">&quot;</span><span class="s">Android</span><span class="s">-</span><span class="s">Build</span><span class="s">&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
