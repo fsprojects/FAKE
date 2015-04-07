@@ -1,6 +1,5 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-# Visual Studio Express 2013 for Windows Desktop
 VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0F0488CC-2580-4C07-9E16-3997480F0221}"
@@ -36,6 +35,7 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.IIS", "src\app\Fake.II
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "help", "help", "{564BD198-09CB-45D1-87F2-E2153FE6D62F}"
 	ProjectSection(SolutionItems) = preProject
+		help\androidpublisher.md = help\androidpublisher.md
 		help\assemblyinfo.md = help\assemblyinfo.md
 		help\commandline.md = help\commandline.md
 		help\contributing.md = help\contributing.md
