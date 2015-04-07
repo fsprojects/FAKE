@@ -1,18 +1,12 @@
-#### 3.26.7 - 01.04.2015
+#### 3.27.0 - 07.04.2015
+* Download Status Parameter for HockeyAppHelper - https://github.com/fsharp/FAKE/pull/741
 * Added more parameters for HockeyApp Upload API - https://github.com/fsharp/FAKE/pull/723
-
-#### 3.26.6 - 31.03.2015
 * `NuGetPack` task allows to set framework references - https://github.com/fsharp/FAKE/pull/721
-
-#### 3.26.4 - 31.03.2015
 * New task `NuGetPackDirectly` works without template files.
-
-#### 3.26.3 - 31.03.2015
 * Find NuGet.exe in current folder (and sub-folders) first, then look in PATH - https://github.com/fsharp/FAKE/pull/718
-* NEw tutorial about Vagrant - http://fsharp.github.io/FAKE/vagrant.html
-
-#### 3.26.1 - 26.03.2015
+* New tutorial about Vagrant - http://fsharp.github.io/FAKE/vagrant.html
 * REVERTING: SystemRoot also works on mono - https://github.com/fsharp/FAKE/pull/706 (see https://github.com/fsharp/FAKE/issues/715)
+* BUGFIX: use DocumentNamespace for Nuspec files - https://github.com/fsharp/FAKE/pull/736
 
 #### 3.26.0 - 25.03.2015
 * Detect GitLab CI as build server - https://github.com/fsharp/FAKE/pull/712
