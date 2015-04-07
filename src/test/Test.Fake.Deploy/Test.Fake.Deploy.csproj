@@ -62,6 +62,7 @@
     <Compile Include="..\Test.FAKECore\Extensions.cs">
       <Link>Extensions.cs</Link>
     </Compile>
+    <Compile Include="PackageMgt\GettingNuspecProperties.cs" />
     <Compile Include="PackageMgt\ReleaseDiscoveringSpecs.cs" />
     <Compile Include="PackageMgt\RollbackSpecs.cs" />
     <Compile Include="PackageMgt\RoutingSpecs.cs" />

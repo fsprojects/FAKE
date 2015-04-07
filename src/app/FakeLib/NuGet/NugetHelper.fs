@@ -442,6 +442,7 @@ let getNuspecProperties (nuspec : string) =
         [ "x", "http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"
           "y", "http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd" 
           "default", ""
+          "inDoc", doc.DocumentElement.NamespaceURI
           ]
     
     let getValue name = 
