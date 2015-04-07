@@ -16,7 +16,7 @@ let startedProcesses = HashSet()
 /// [omit]
 let start (proc : Process) = 
     if isMono && proc.StartInfo.FileName.ToLowerInvariant().EndsWith(".exe") then
-        proc.StartInfo.Arguments <- "\"" + proc.StartInfo.FileName + "\" " + proc.StartInfo.Arguments
+        proc.StartInfo.Arguments <- "--debug \"" + proc.StartInfo.FileName + "\" " + proc.StartInfo.Arguments
         proc.StartInfo.FileName <- "mono"
 
     proc.Start() |> ignore
