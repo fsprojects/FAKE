@@ -79,6 +79,7 @@
     <Compile Include="MsBuildLogger.fs" />
     <Compile Include="FileHelper.fs" />
     <Compile Include="MSBuildHelper.fs" />
+    <Compile Include="ArchiveHelper.fs" />
     <Compile Include="ZipHelper.fs" />
     <Compile Include="StrongNamingHelper.fs" />
     <Compile Include="GACHelper.fs" />
@@ -153,6 +154,7 @@
     <Compile Include="AzureCloudServices.fs" />
     <Compile Include="Sxshelper.fs" />
     <Compile Include="Vb6helper.fs" />
+    <Compile Include="AndroidPublisher.fs" />
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
