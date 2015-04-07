@@ -38,7 +38,7 @@
 
 <h1>XUnit2Helper</h1>
 <div class="xmldoc">
-<p>Contains tasks to run <a href="http://xunit.codeplex.com/">xUnit</a> unit tests.</p>
+<p>Contains tasks to run <a href="https://github.com/xunit/xunit">xUnit</a> unit tests.</p>
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -83,10 +83,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '688', 688)" onmouseover="showTip(event, '688', 688)">
+          <code onmouseout="hideTip(event, '758', 758)" onmouseover="showTip(event, '758', 758)">
             empty2Trait 
           </code>
-          <div class="tip" id="688">
+          <div class="tip" id="758">
             <strong>Signature:</strong> (string * string) option<br />
                       </div>
         </td>
@@ -102,10 +102,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '689', 689)" onmouseover="showTip(event, '689', 689)">
+          <code onmouseout="hideTip(event, '759', 759)" onmouseover="showTip(event, '759', 759)">
             xUnit2 setParams assemblies
           </code>
-          <div class="tip" id="689">
+          <div class="tip" id="759">
             <strong>Signature:</strong> setParams:(XUnit2Params -&gt; XUnit2Params) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -132,7 +132,7 @@ in the given assembly fail.</p>
 
 <pre><code>Target "Test" (fun _ -&gt;
     !! (testDir + @"\xUnit.Test.*.dll") 
-      |&gt; xUnit (fun p -&gt; {p with OutputDir = testDir })
+      |&gt; xUnit2 (fun p -&gt; {p with OutputDir = testDir })
 )
 </code></pre>
 
@@ -141,10 +141,10 @@ in the given assembly fail.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '690', 690)" onmouseover="showTip(event, '690', 690)">
+          <code onmouseout="hideTip(event, '760', 760)" onmouseover="showTip(event, '760', 760)">
             XUnit2Defaults 
           </code>
-          <div class="tip" id="690">
+          <div class="tip" id="760">
             <strong>Signature:</strong> XUnit2Params<br />
                       </div>
         </td>
