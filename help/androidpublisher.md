@@ -8,6 +8,7 @@ Before using this module, you will need an android keystore for apk signing.
 
 Next, you will need a Google service account described here: 
 https://developers.google.com/accounts/docs/OAuth2ServiceAccount#creatinganaccount
+
 and here: 
 https://developers.google.com/android-publisher/getting_started
 
@@ -48,21 +49,60 @@ https://developers.google.com/android-publisher/getting_started
     Target "Publish" (fun _ -> 
         // I like verbose script
         trace "publishing Android App"
-        let apk = androidProdDir |> directoryInfo |> filesInDir |> Seq.filter(fun f -> f.Name.EndsWith(".apk")) |> Seq.exactlyOne
+        let apk = androidProdDir 
+                        |> directoryInfo 
+                        |> filesInDir 
+                        |> Seq.filter(fun f -> f.Name.EndsWith(".apk"))
+                        |> Seq.exactlyOne
         let apkPath = apk.FullName
         tracefn "Apk found: %s" apkPath
         let mail = "my service account mail@developer.gserviceaccount.com"
-        let certificate = new X509Certificate2(@"Path to my certificate file probably named 'Google Play Android Developer-xxxxxxxxxxxx.p12'", "notasecret", X509KeyStorageFlags.Exportable)
+        // Path to the certificate file probably named 'Google Play Android Developer-xxxxxxxxxxxx.p12'
+        let certificate = new X509Certificate2
+                                    (
+                                        @"Google Play Android Developer-xxxxxxxxxxxx.p12",
+                                        "notasecret",
+                                        X509KeyStorageFlags.Exportable
+                                    )
         let packageName = "my Android package name"
 
         // to publish an alpha version: 
-        PublishApk { AlphaSettings with Config = { Certificate = certificate; PackageName = packageName; AccountId = mail; Apk = apkPath; } }
+        PublishApk 
+            { AlphaSettings with 
+                Config = 
+                    { 
+                        Certificate = certificate;
+                        PackageName = packageName;
+                        AccountId = mail;
+                        Apk = apkPath; 
+                    }
+            }
 
         // to publish a beta version: 
-        // PublishApk { BetaSettings with Config = { Certificate = certificate; PackageName = packageName; AccountId = mail; Apk = apkPath; } }
-
+        //
+        //PublishApk 
+        //    { BetaSettings with 
+        //        Config = 
+        //            { 
+        //                Certificate = certificate;
+        //                PackageName = packageName;
+        //                AccountId = mail;
+        //                Apk = apkPath; 
+        //            }
+        //    }
+        
         // to publish a production version: 
-        // PublishApk { ProductionSettings with Config = { Certificate = certificate; PackageName = packageName; AccountId = mail; Apk = apkPath; } }
+        //
+        //PublishApk 
+        //    { ProductionSettings with 
+        //        Config = 
+        //            { 
+        //                Certificate = certificate;
+        //                PackageName = packageName;
+        //                AccountId = mail;
+        //                Apk = apkPath; 
+        //            }
+        //    }
     )
 
     Target "Android-Build" (fun _ ->
