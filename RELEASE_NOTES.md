@@ -1,3 +1,6 @@
+#### 3.27.3 - 07.04.2015
+* Reverting 0df4569b3bdeef99edf2eec6013dab784e338b7e due to backwards compat issues
+
 #### 3.27.2 - 07.04.2015
 * Improvements for FAKE.Deploy - https://github.com/fsharp/FAKE/pull/745
 
