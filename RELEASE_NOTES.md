@@ -1,4 +1,6 @@
 #### 3.27.0 - 07.04.2015
+* New Android publisher - http://fsharp.github.io/FAKE/androidpublisher.html
+* New Archive helpers allow to build zip, gzip, bzip2, tar, and tar.gz/tar.bz2 - https://github.com/fsharp/FAKE/pull/727
 * Download Status Parameter for HockeyAppHelper - https://github.com/fsharp/FAKE/pull/741
 * Added more parameters for HockeyApp Upload API - https://github.com/fsharp/FAKE/pull/723
 * `NuGetPack` task allows to set framework references - https://github.com/fsharp/FAKE/pull/721
@@ -6,7 +8,9 @@
 * Find NuGet.exe in current folder (and sub-folders) first, then look in PATH - https://github.com/fsharp/FAKE/pull/718
 * New tutorial about Vagrant - http://fsharp.github.io/FAKE/vagrant.html
 * REVERTING: SystemRoot also works on mono - https://github.com/fsharp/FAKE/pull/706 (see https://github.com/fsharp/FAKE/issues/715)
-* BUGFIX: use DocumentNamespace for Nuspec files - https://github.com/fsharp/FAKE/pull/736
+* BUGFIX: Use DocumentNamespace for Nuspec files - https://github.com/fsharp/FAKE/pull/736
+* BUGFIX: Display agent success / error messages in UI for FAKE.Deploy - https://github.com/fsharp/FAKE/pull/735
+* BUGFIX: Add build directory for doc generation - https://github.com/fsharp/FAKE/pull/734
 
 #### 3.26.0 - 25.03.2015
 * Detect GitLab CI as build server - https://github.com/fsharp/FAKE/pull/712
