@@ -1,3 +1,6 @@
+#### 3.27.1 - 07.04.2015
+* Set debug flag on mono - https://github.com/fsharp/FAKE/pull/744
+
 #### 3.27.0 - 07.04.2015
 * New Android publisher - http://fsharp.github.io/FAKE/androidpublisher.html
 * New Archive helpers allow to build zip, gzip, bzip2, tar, and tar.gz/tar.bz2 - https://github.com/fsharp/FAKE/pull/727
