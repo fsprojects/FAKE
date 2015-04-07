@@ -9,26 +9,23 @@ let toHeaderValue (values:string []) : string =
         x.Replace("\"", "%22")
         |> sprintf "\"%s\""
     )
-    |> fun strs -> System.String.Join(",", strs
-    )
+    |> String.concat ","
 
 let private regex = Regex("(\"[^\"]*\")(?:,(\"[^\"]*\"))*", RegexOptions.Compiled)
-let fromHeaderValue (value:string) : string [] = 
-    let matches = regex.Matches(value)
-    //back compat: existing agents not expecting quoted params will continue to function.
-    if matches.Count = 0 then [|value|]
-    else
-    matches |> Seq.cast
-    |> Seq.collect (fun (m:Match) -> m.Groups |> Seq.cast)
-    |> Seq.skip 1
-    |> Seq.collect (fun (g:Group) ->
-        g.Captures |> Seq.cast |> Seq.map (fun (c:Capture) -> c.Value)
-        |> Seq.map (fun (x:string) -> 
-            x.Substring(1, x.Length - 2)
-            |> fun y -> y.Replace("%22", "\"")
-        )
-    )
-    |> Array.ofSeq
+
+let fromHeaderValue (value: string) = 
+    match regex.Matches value |> Seq.cast<Match> |> Seq.toList with
+    | [] ->
+        //back compat: existing agents not expecting quoted params will continue to function.
+        [|value|]
+    | matches ->
+        match [ for m in matches do
+                    for x in m.Groups -> x ] with
+        | _ :: gs ->
+            [| for g in gs do
+                    for c in g.Captures do
+                    yield c.Value.[1..c.Value.Length - 2].Replace("%22", "\"") |]
+        | _ -> [|value|]
         
     
     
