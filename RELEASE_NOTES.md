@@ -1,3 +1,6 @@
+#### 3.27.2 - 07.04.2015
+* Improvements for FAKE.Deploy - https://github.com/fsharp/FAKE/pull/745
+
 #### 3.27.1 - 07.04.2015
 * Set debug flag on mono - https://github.com/fsharp/FAKE/pull/744
 
