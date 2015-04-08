@@ -138,8 +138,8 @@ let buildXUnit2Args parameters assembly =
     |> append "-maxthreads"
     |> append (sprintf "%i" parameters.MaxThreads)
     |> appendIfFalse parameters.ShadowCopy "-noshadow"
-    |> appendIfTrue (buildServer = TeamCity) "-teamcity"
-    |> appendIfTrue (buildServer = AppVeyor) "-appveyor"
+    |> appendIfTrue (buildServer = TeamCity || parameters.Teamcity) "-teamcity"
+    |> appendIfTrue (buildServer = AppVeyor || parameters.Appveyor) "-appveyor"
     |> appendIfTrue parameters.Wait "-wait"
     |> appendIfTrue parameters.Silent "-silent"
     |> appendIfTrue parameters.XmlOutput (sprintf "-xml\" \"%s" (dir @@ (name + ".xml")))
