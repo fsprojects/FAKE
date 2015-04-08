@@ -1,3 +1,6 @@
+#### 3.27.4 - 08.04.2015
+* Force build server output in xUnit2 if the user wishes to - https://github.com/fsharp/FAKE/pull/749
+
 #### 3.27.3 - 07.04.2015
 * Reverting 0df4569b3bdeef99edf2eec6013dab784e338b7e due to backwards compat issues
 
