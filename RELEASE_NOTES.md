@@ -1,4 +1,4 @@
-#### 3.27.4 - 08.04.2015
+#### 3.27.5 - 08.04.2015
 * Force build server output in xUnit2 if the user wishes to - https://github.com/fsharp/FAKE/pull/749
 
 #### 3.27.3 - 07.04.2015
