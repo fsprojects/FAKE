@@ -1,16 +1,9 @@
-#### 3.27.7 - 09.04.2015
+#### 3.28.0 - 09.04.2015
+* Don't run package restore during MSBuild run from FAKE - https://github.com/fsharp/FAKE/pull/753
 * Added support for Mage's CertHash parameter - https://github.com/fsharp/FAKE/pull/750
-
-#### 3.27.5 - 08.04.2015
 * Force build server output in xUnit2 if the user wishes to - https://github.com/fsharp/FAKE/pull/749
-
-#### 3.27.3 - 07.04.2015
 * Reverting 0df4569b3bdeef99edf2eec6013dab784e338b7e due to backwards compat issues
-
-#### 3.27.2 - 07.04.2015
 * Improvements for FAKE.Deploy - https://github.com/fsharp/FAKE/pull/745
-
-#### 3.27.1 - 07.04.2015
 * Set debug flag on mono - https://github.com/fsharp/FAKE/pull/744
 
 #### 3.27.0 - 07.04.2015
