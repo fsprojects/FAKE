@@ -1,4 +1,4 @@
-#### 3.27.6 - 09.04.2015
+#### 3.27.7 - 09.04.2015
 * Added support for Mage's CertHash parameter - https://github.com/fsharp/FAKE/pull/750
 
 #### 3.27.5 - 08.04.2015
