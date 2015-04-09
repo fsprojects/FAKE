@@ -133,6 +133,7 @@ type MSBuildParams =
       Properties : (string * string) list
       MaxCpuCount : int option option
       NodeReuse : bool
+      RestorePackagesFlag : bool
       ToolsVersion : string option
       Verbosity : MSBuildVerbosity option
       NoConsoleLogger : bool
@@ -148,6 +149,7 @@ let mutable MSBuildDefaults =
       ToolsVersion = None
       Verbosity = None
       NoConsoleLogger = false
+      RestorePackagesFlag = false
       FileLoggers = None 
       DistributedLoggers = None }
 
@@ -182,7 +184,7 @@ let serializeMSBuildParams (p : MSBuildParams) =
         | [] -> None
         | t -> Some("t", t |> Seq.map (replace "." "_") |> separated ";")
     
-    let properties = p.Properties |> List.map (fun (k, v) -> Some("p", sprintf "%s=\"%s\"" k v))
+    let properties = ("RestorePackages",p.RestorePackagesFlag.ToString()) :: p.Properties |> List.map (fun (k, v) -> Some("p", sprintf "%s=\"%s\"" k v))
     
     let maxcpu = 
         match p.MaxCpuCount with
