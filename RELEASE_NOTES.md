@@ -1,3 +1,6 @@
+#### 3.28.1 - 13.04.2015
+* New environment variable helpers
+
 #### 3.28.0 - 09.04.2015
 * Don't run package restore during MSBuild run from FAKE - https://github.com/fsharp/FAKE/pull/753
 * Added support for Mage's CertHash parameter - https://github.com/fsharp/FAKE/pull/750
