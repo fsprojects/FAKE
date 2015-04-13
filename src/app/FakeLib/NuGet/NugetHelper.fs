@@ -233,7 +233,7 @@ let private createNuSpecFromTemplate parameters (templateNuSpec:FileInfo) =
 
 let private createNuSpecFromTemplateIfNuSpecFile parameters nuSpecOrProjFile = 
     let nuSpecOrProjFileInfo = fileInfo nuSpecOrProjFile
-    match nuSpecOrProjFileInfo.Extension = ".nuspec" with
+    match nuSpecOrProjFileInfo.Extension.ToLower() = ".nuspec" with
     | true -> Some (createNuSpecFromTemplate parameters nuSpecOrProjFileInfo)
     | false -> None
     
