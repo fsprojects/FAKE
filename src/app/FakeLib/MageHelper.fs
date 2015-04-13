@@ -34,6 +34,7 @@ type MageParams =
     CertFile : string option
     TmpCertFile : string
     Password : string option
+    CertHash : string option
     IncludeProvider : bool option
     Install : bool option
     UseManifest : bool option
@@ -66,6 +67,10 @@ let MageSerializeParams (action: MageCall) (mp : MageParams) =
     match mp.Password with
     | None -> ""
     | Some (p) -> if isNullOrEmpty certFile then "" else if not (File.Exists p) then "" else "-pwd " + ReadLine p
+  let certHash =
+    match mp.CertHash with
+    | None -> ""
+    | Some (p) -> "-ch " + "\"" + p + "\""
   let trustlevelStr = 
     match mp.TrustLevel with
     | None -> ""
@@ -106,10 +111,10 @@ let MageSerializeParams (action: MageCall) (mp : MageParams) =
     match action with
     | NewApp -> [processor; name; iconFile; version; fromDir; trustlevel; algorithm]
     | UpdateApp -> [processor; name; iconFile; version; fromDir; trustlevel; algorithm]
-    | Sign -> [certFile; password] 
+    | Sign -> [certFile; password; certHash] 
     | Deploy -> [processor; name; version; manifest; includeProvider; install; useManifest; publisher; providerUrl; supportUrl; codeBase; trustlevel; algorithm]
     | UpdateDeploy -> [processor; name; version; manifest; includeProvider; install; useManifest; publisher; providerUrl; supportUrl; codeBase; trustlevel; algorithm]
-    | SignDeploy -> [certFile; password] 
+    | SignDeploy -> [certFile; password; certHash] 
 
   allParameters
   |> separated " "
