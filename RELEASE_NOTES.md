@@ -1,3 +1,6 @@
+#### 3.28.4 - 14.04.2015
+* Use Microsoft.AspNet.Razor 2.0.30506 for FAKE.Deploy - https://github.com/fsharp/FAKE/pull/756
+
 #### 3.28.3 - 14.04.2015
 * New build parameter functions
 
