@@ -40,6 +40,9 @@ let setProcessEnvironVar name value = Environment.SetEnvironmentVariable(name, v
 /// Clears the environment variable with the given name for the current process.
 let clearProcessEnvironVar name = Environment.SetEnvironmentVariable(name, null, EnvironmentVariableTarget.Process)
 
+/// Sets the build parameter with the given name for the current process.
+let setBuildParam name value = setProcessEnvironVar name value
+
 /// Retrieves the environment variable with the given name or returns the default if no value was set
 let environVarOrDefault name defaultValue = 
     let var = environVar name

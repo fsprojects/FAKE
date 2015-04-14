@@ -1,3 +1,6 @@
+#### 3.28.3 - 14.04.2015
+* New build parameter functions
+
 #### 3.28.2 - 13.04.2015
 * Fix http://stackoverflow.com/questions/29572870/f-fake-unable-to-get-fake-to-merge-placeholder-arguments-in-nuspec-file
 
