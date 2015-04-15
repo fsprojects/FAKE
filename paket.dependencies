@@ -9,7 +9,9 @@ nuget FSharp.Formatting
 nuget FSharp.Formatting.CommandTool
 nuget SourceLink.Fake
 nuget RavenDB.Server
-nuget xunit.runners
+nuget xunit
+nuget xunit.abstractions
+nuget xunit.runner.console
 nuget UnionArgParser
 nuget Nancy.Authentication.Stateless
 nuget Nancy.Hosting.Self
@@ -32,7 +34,7 @@ nuget FsCheck.Xunit
 nuget Machine.Specifications.Should
 nuget Machine.Specifications.Runner.Console
 nuget Nancy.Testing
-nuget xunit.extensions
+nuget xunit.extensions 2.0.0
 nuget Newtonsoft.Json
 nuget Microsoft.AspNet.Razor 2.0.30506
 nuget Microsoft.AspNet.WebPages 2.0.30506

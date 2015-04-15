@@ -139,7 +139,10 @@ Target "Test" (fun _ ->
 
     !! (testDir @@ "Test.*.dll")
       ++ (testDir @@ "FsCheck.Fake.dll")
-    |>  xUnit (fun p -> p)
+    |>  xUnit (fun p ->
+            {p with
+                ToolPath = findToolInSubPath "xunit.console.exe" (currentDirectory @@ "xunit.runner.console" @@ "tools")
+            })
 )
 
 Target "SourceLink" (fun _ ->
