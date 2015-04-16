@@ -1,3 +1,6 @@
+#### 3.28.4 - 16.04.2015
+* OpenSourced DynamicsNAV replacement helpers
+
 #### 3.28.3 - 14.04.2015
 * New build parameter functions
 
