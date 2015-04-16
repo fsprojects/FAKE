@@ -35,7 +35,7 @@ NUGET
       Microsoft.AspNet.Razor (>= 2.0.20710.0)
       Microsoft.AspNet.WebPages (>= 2.0.20710.0)
     Microsoft.AspNet.Razor (2.0.30506)
-    Microsoft.AspNet.WebPages (2.0.30506.0)
+    Microsoft.AspNet.WebPages (2.0.30506)
       Microsoft.AspNet.Razor (>= 2.0.20710.0)
       Microsoft.Web.Infrastructure (>= 1.0.0.0)
     Microsoft.CompilerServices.AsyncTargetingPack (1.0.1)
