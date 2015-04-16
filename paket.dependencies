@@ -34,3 +34,5 @@ nuget Machine.Specifications.Runner.Console
 nuget Nancy.Testing
 nuget xunit.extensions
 nuget Newtonsoft.Json
+nuget Microsoft.AspNet.Razor 2.0.30506
+nuget Microsoft.AspNet.WebPages 2.0.30506

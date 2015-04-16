@@ -8,6 +8,50 @@ open System.Threading
 open System.Xml
 open Fake.UnitTestHelper
 
+module Replacements =
+    let isWin8 = 
+        Environment.OSVersion.Platform = PlatformID.Win32NT &&
+          Environment.OSVersion.Version >= new Version(6, 2, 9200, 0)
+
+    let win8Replacements =
+        ["4.0:{F6D90F11-9C73-11D3-B32E-00C04F990BB4}:'Microsoft XML, v4.0'.DOMDocument","6.0:{88D96A05-F192-11D4-A65F-0040963251E5}:'Microsoft XML, v6.0'.DOMDocument60"
+         "4.0:{2933BF80-7B36-11D2-B20E-00C04F983E60}:'Microsoft XML, v4.0'","6.0:{2933BF80-7B36-11D2-B20E-00C04F983E60}:'Microsoft XML, v6.0'"
+         "{F6D90F11-9C73-11D3-B32E-00C04F990BB4}:'Microsoft XML, v6.0'.DOMDocument","{88D96A05-F192-11D4-A65F-0040963251E5}:'Microsoft XML, v6.0'.DOMDocument60"]
+
+    let Win8ToWin7 (s:string) =
+        if isWin8 then
+            win8Replacements
+            |> Seq.fold (fun (s:string) (r,p) -> s.Replace(p,r)) s
+        else
+            s
+
+    let Win7ToWin8 (s:string) =
+        if isWin8 then
+            win8Replacements
+            |> Seq.fold (fun (s:string) (p,r) -> s.Replace(p,r)) s
+        else
+            s
+
+    let ConvertFileFromWin7ToWin8 fileName =
+        if isWin8 then
+            Fake.StringHelper.ReadFileAsString fileName
+            |> Win7ToWin8
+            |> Fake.StringHelper.WriteStringToFile false fileName    
+
+    let shortcutReplacements =
+        ["ShortCutKey=Strg","ShortCutKey=Ctrl"     
+         "ShortCutKey=Umschalt+Strg","ShortCutKey=Shift+Ctrl"
+         "ShortCutKey=Umschalt","ShortCutKey=Shift"]
+
+    let replaceShortcuts (s:string) =
+        shortcutReplacements
+        |> Seq.fold (fun (s:string) (r,p) -> s.Replace(p,r)) s
+
+    let NormalizeShortcuts fileName =
+        Fake.StringHelper.ReadFileAsString fileName
+        |> replaceShortcuts        
+        |> Fake.StringHelper.WriteStringToFile false fileName
+
 [<RequireQualifiedAccess>]
 /// A Dynamics NAV server type
 type NavisionServerType = 
