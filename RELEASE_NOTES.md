@@ -1,3 +1,6 @@
+#### 3.28.6 - 20.04.2015
+* Automatically replace Win7ToWin8 import files for Dynamics NAV during Import
+
 #### 3.28.5 - 16.04.2015
 * OpenSourced DynamicsNAV replacement helpers
 

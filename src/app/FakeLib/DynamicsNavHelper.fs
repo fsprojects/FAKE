@@ -140,23 +140,30 @@ let private reportError text logFile =
                       else sprintf " with %d errors." errors))
 
 let private import connectionInfo fileName =
-    let fi = fileInfo fileName
+    let originalFile = fileInfo fileName
     
-    let deleteFile, fi = 
-        if fi.Extension = ".nav" then true, fi.CopyTo(Path.Combine(fi.Directory.FullName, fi.Name + ".txt"))
-        else false, fi
-    
-    let args = 
-        sprintf "command=importobjects, file=\"%s\", logfile=\"%s\", servername=\"%s\", database=\"%s\"" fi.FullName 
+    let importFile = 
+        let importFileName = 
+            let tempFI = fileInfo(Path.GetTempFileName())
+            tempFI.FullName.Replace(tempFI.Extension,"") + ".txt"
+        let fi = originalFile.CopyTo(importFileName)
+        Replacements.ConvertFileFromWin7ToWin8 importFileName
+        fi
+
+
+    let args =
+        sprintf "command=importobjects, file=\"%s\", logfile=\"%s\", servername=\"%s\", database=\"%s\"" importFile.FullName 
             (FullName connectionInfo.TempLogFile) connectionInfo.ServerName connectionInfo.Database
+
     if 0 <> ExecProcess (fun info -> 
                 info.FileName <- connectionInfo.ToolPath
                 info.WorkingDirectory <- connectionInfo.WorkingDir
                 info.Arguments <- args) connectionInfo.TimeOut
     then 
-        if deleteFile then fi.Delete()
+        importFile.Delete()
         reportError "ImportFile failed" connectionInfo.TempLogFile
-    if deleteFile then fi.Delete()
+
+    importFile.Delete()
 
 let private export connectionInfo filter fileName = 
     let fi = fileInfo fileName
