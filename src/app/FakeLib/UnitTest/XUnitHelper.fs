@@ -11,7 +11,7 @@ type XUnitErrorLevel = TestRunnerErrorLevel // a type alias to keep backwards co
 
 /// The xUnit parameter type
 type XUnitParams = 
-    { /// The path to the xunit.console.clr4.exe - FAKE will scan all subfolders to find it automatically.
+    { /// The path to the xunit.console.exe - FAKE will scan all subfolders to find it automatically.
       ToolPath : string
       /// The file name of the config file (optional).
       ConfigFile : string
@@ -42,7 +42,7 @@ type XUnitParams =
 let emptyTrait : (string * string) option = None
 
 let XUnitDefaults = 
-    { ToolPath = findToolInSubPath "xunit.console.clr4.exe" (currentDirectory @@ "tools" @@ "xUnit")
+    { ToolPath = findToolInSubPath "xunit.console.exe" (currentDirectory @@ "tools" @@ "xUnit")
       ConfigFile = null
       HtmlOutput = false
       NUnitXmlOutput = false
