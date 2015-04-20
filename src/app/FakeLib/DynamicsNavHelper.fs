@@ -34,6 +34,7 @@ module Replacements =
 
     let ConvertFileFromWin7ToWin8 fileName =
         if isWin8 then
+            traceVerbose "Converting from Win7 format to Win8"
             Fake.StringHelper.ReadFileAsString fileName
             |> Win7ToWin8
             |> Fake.StringHelper.WriteStringToFile false fileName    
