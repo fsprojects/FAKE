@@ -426,3 +426,30 @@ let analyzeXmlTestResults (fileName : string) (testSuite : string) =
         |> List.ofSeq
     Some { SuiteName = testSuite
            Tests = tests }
+
+let StartNavServiceTier serverMode navClientVersion =
+    traceStartTask "StartNavServiceTier" ""
+    match serverMode with
+    | NavisionServerType.NativeServer -> ()
+    | NavisionServerType.SqlServer ->
+        match navClientVersion with
+        | "700" ->
+            StartService "MicrosoftDynamicsNavServer$DynamicsNAV70"
+        | "701" ->
+            StartService "MicrosoftDynamicsNavServer$DynamicsNAV71"
+        | "800" ->
+            StartService "MicrosoftDynamicsNavServer$DynamicsNAV80"
+        | _ -> failwithf "NavServiceTier of version %s unknown." navClientVersion
+    | _ -> failwithf "ServerMode %A unknown." serverMode
+    traceEndTask "StartNavServiceTier" ""
+
+let StopNavServiceTier serverMode navClientVersion =
+    traceStartTask "StopNavServiceTier" ""
+    match serverMode with
+    | NavisionServerType.NativeServer -> ()
+    | NavisionServerType.SqlServer -> 
+        StopService "MicrosoftDynamicsNavServer$DynamicsNAV71"
+        StopService "MicrosoftDynamicsNavServer$DynamicsNAV70"
+        StopService "MicrosoftDynamicsNavServer$DynamicsNAV80"
+    | _ -> failwithf "ServerMode %A unknown." serverMode
+    traceEndTask "StopNavServiceTier" ""

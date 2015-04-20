@@ -1,3 +1,6 @@
+#### 3.28.7 - 20.04.2015
+* New helpers to start and stop DynamicsNAV ServiceTiers
+
 #### 3.28.6 - 20.04.2015
 * Automatically replace Win7ToWin8 import files for Dynamics NAV during Import
 
