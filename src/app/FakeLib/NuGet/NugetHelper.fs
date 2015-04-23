@@ -233,9 +233,9 @@ let private createNuSpecFromTemplate parameters (templateNuSpec:FileInfo) =
 
 let private createNuSpecFromTemplateIfNuSpecFile parameters nuSpecOrProjFile = 
     let nuSpecOrProjFileInfo = fileInfo nuSpecOrProjFile
-    match nuSpecOrProjFileInfo.Extension.ToLower() = ".nuspec" with
-    | true -> Some (createNuSpecFromTemplate parameters nuSpecOrProjFileInfo)
-    | false -> None
+    match nuSpecOrProjFileInfo.Extension.ToLower() = ".csproj" with
+    | true -> None
+    | false -> Some (createNuSpecFromTemplate parameters nuSpecOrProjFileInfo)
     
 
 let private propertiesParam = function 
