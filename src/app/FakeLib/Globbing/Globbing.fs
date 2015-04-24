@@ -64,6 +64,19 @@ let inline private normalizeOutputPath (p : string) =
     p.Replace('\\', Path.DirectorySeparatorChar).Replace('/', Path.DirectorySeparatorChar)
      .TrimEnd(Path.DirectorySeparatorChar)
 
+let internal getRoot (baseDirectory : string) (pattern : string) =
+    let baseDirectory = (normalizePath baseDirectory)
+
+    let globRoot = 
+        (normalizePath pattern).Split([| '/'; '\\' |], StringSplitOptions.RemoveEmptyEntries) |> 
+        Seq.takeWhile(fun p -> not (p.Contains("*"))) |> 
+        String.concat(Path.DirectorySeparatorChar.ToString())
+
+    if Path.IsPathRooted globRoot then
+        globRoot
+    else
+        Path.Combine(baseDirectory, globRoot)
+
 let internal search (baseDir : string) (input : string) = 
     let baseDir = normalizePath baseDir
     let input = normalizePath input
@@ -79,3 +92,31 @@ let internal search (baseDir : string) (input : string) =
     |> Seq.toList
     |> buildPaths [ baseDir ]
     |> List.map normalizeOutputPath
+
+let internal isMatch pattern path : bool = 
+    let pattern = normalizePath pattern
+    let path = normalizePath path
+
+    let escapedPattern = (Regex.Escape pattern)
+    let regexPattern = 
+        let xTOy = 
+            [
+                "dirwildcard", (@"\\\*\\\*(/|\\\\)", @"(.*(/|\\))?")
+                "stardotstar", (@"\\\*\\.\\\*", @"([^\\/]*)")
+                "wildcard", (@"\\\*", @"([^.\\/]*)")
+            ] |> List.map(fun (key, reg) ->
+                let pattern, replace = reg
+                let pattern = sprintf "(?<%s>%s)" key pattern
+                key, (pattern, replace)
+            )
+        let xTOyMap = xTOy |> Map.ofList
+        let replacePattern = xTOy |> List.map(fun x -> x |> snd |> fst) |> String.concat("|")
+        let replaced = Regex(replacePattern).Replace(escapedPattern, fun m -> 
+            let matched = xTOy |> Seq.map(fst) |> Seq.find(fun n -> 
+                m.Groups.Item(n).Success
+            )
+            (xTOyMap |> Map.tryFind matched).Value |> snd
+        )
+        "^" + replaced + "$"
+
+    Regex(regexPattern).IsMatch(path)

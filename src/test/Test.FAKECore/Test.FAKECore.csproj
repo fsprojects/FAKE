@@ -71,6 +71,7 @@
     <Compile Include="FileHandling\CopyFileSpecs.cs" />
     <Compile Include="FixProjectFileSpecs.cs" />
     <Compile Include="CompareProjectFilesSpecs.cs" />
+    <Compile Include="Globbing\GlobbingSpecs.cs" />
     <Compile Include="Globbing\SampeWithParens\SampleWithParensSpecs.cs" />
     <Compile Include="Globbing\TestSample7\CountersRegressionSpecs.cs" />
     <Compile Include="Globbing\TestSample6\CurlRegressionSpecs.cs" />
