@@ -231,9 +231,9 @@ let private createNuSpecFromTemplate parameters (templateNuSpec:FileInfo) =
     tracefn "Created nuspec file %s" specFile
     specFile
 
-let private createNuSpecFromTemplateIfNotCsprojFile parameters nuSpecOrProjFile = 
+let private createNuSpecFromTemplateIfNotProjFile parameters nuSpecOrProjFile = 
     let nuSpecOrProjFileInfo = fileInfo nuSpecOrProjFile
-    match nuSpecOrProjFileInfo.Extension.ToLower() = ".csproj" with
+    match nuSpecOrProjFileInfo.Extension.ToLower().EndsWith("proj") with
     | true -> None
     | false -> Some (createNuSpecFromTemplate parameters nuSpecOrProjFileInfo)
     
@@ -361,7 +361,7 @@ let NuGetPack setParams nuspecOrProjectFile =
     traceStartTask "NuGetPack" nuspecOrProjectFile
     let parameters = NuGetDefaults() |> setParams
     try
-        match (createNuSpecFromTemplateIfNotCsprojFile parameters nuspecOrProjectFile) with
+        match (createNuSpecFromTemplateIfNotProjFile parameters nuspecOrProjectFile) with
         | Some nuspecTemplateFile -> 
             pack parameters nuspecTemplateFile
             DeleteFile nuspecTemplateFile
@@ -392,7 +392,7 @@ let NuGet setParams nuspecOrProjectFile =
     traceStartTask "NuGet" nuspecOrProjectFile
     let parameters = NuGetDefaults() |> setParams
     try 
-        match (createNuSpecFromTemplateIfNotCsprojFile parameters nuspecOrProjectFile) with
+        match (createNuSpecFromTemplateIfNotProjFile parameters nuspecOrProjectFile) with
         | Some nuspecTemplateFile -> 
             pack parameters nuspecTemplateFile
             DeleteFile nuspecTemplateFile
