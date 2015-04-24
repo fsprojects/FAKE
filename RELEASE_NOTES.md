@@ -1,3 +1,6 @@
+#### 3.28.8 - 24.04.2015
+NuGet pack task treats non csproj files as nuspec files  - https://github.com/fsharp/FAKE/pull/767
+
 #### 3.28.7 - 20.04.2015
 * New helpers to start and stop DynamicsNAV ServiceTiers
 
