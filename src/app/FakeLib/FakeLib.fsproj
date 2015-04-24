@@ -155,6 +155,7 @@
     <Compile Include="Sxshelper.fs" />
     <Compile Include="Vb6helper.fs" />
     <Compile Include="AndroidPublisher.fs" />
+    <Compile Include="ChangeWatcher.fs" />
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
