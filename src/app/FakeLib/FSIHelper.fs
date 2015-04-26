@@ -98,30 +98,22 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
     Environment.SetEnvironmentVariable("fsiargs-buildscriptargs", String.Join(" ", scriptArgs))
 
     let commonOptions =
-        [ "fsi.exe"; "--noninteractive" ] @ fsiOptions
+        (FsiOptions.Default.AsArgs |> Array.toList) @ fsiOptions
         |> FsiOptions.ofArgs
 
-    let handleMessages { Output = out; Error = err } =
-        let handleMessagesFrom msg onMsg =
-            if String.IsNullOrEmpty msg then
-              onMsg msg
-        handleMessagesFrom out onOutMsg
-        handleMessagesFrom err onErrMsg
-
     let session =
-        try ScriptHost.Create(commonOptions)
+        try ScriptHost.Create
+              (commonOptions, preventStdOut = true,
+               outWriter = ScriptHost.CreateForwardWriter onOutMsg,
+               errWriter = ScriptHost.CreateForwardWriter onErrMsg)
         with :? FsiEvaluationException as e ->
             traceError "FsiEvaluationSession could not be created."
-            traceError e.Result.Error
+            traceError e.Result.Error.Merged
             reraise ()
 
     try session.EvalScript script
-        // TODO: Reactivate when FCS don't show output any more
-        // let msgs = session.EvalScriptWithOutput script
-        // handleMessages msgs
         true
     with :? FsiEvaluationException as eval ->
-        handleMessages eval.Result
         false
 
 /// Run the given buildscript with fsi.exe and allows for extra arguments to the script. Returns output.
