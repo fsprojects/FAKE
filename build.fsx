@@ -151,9 +151,11 @@ Target "SourceLink" (fun _ ->
         let files = 
             proj.CompilesNotLinked 
                 -- "**/AssemblyInfo.fs"
-
-        repo.VerifyChecksums files
-        proj.VerifyPdbChecksums files
+        try
+            repo.VerifyChecksums files
+            proj.VerifyPdbChecksums files
+        with
+        | _ -> ()
         proj.CreateSrcSrv (sprintf "%s/%s/{0}/%%var2%%" gitRaw projectName) repo.Revision (repo.Paths files)
         Pdbstr.exec proj.OutputFilePdb proj.OutputFilePdbSrcSrv
     )

@@ -1,4 +1,4 @@
-#### 3.29.0 - 27.04.2015
+#### 3.29.1 - 27.04.2015
 * New file system change watcher - https://github.com/fsharp/FAKE/pull/766
 * Paket push task runs in parallel - https://github.com/fsharp/FAKE/pull/768
 * NuGet pack task treats non csproj files as nuspec files - https://github.com/fsharp/FAKE/pull/767
