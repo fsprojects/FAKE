@@ -32,6 +32,7 @@ type PaketPushParams =
       EndPoint : string
       WorkingDir : string
       RunInParallel : bool
+      DegreeOfParallelism : int
       ApiKey : string }
 
 /// Paket push default parameters
@@ -42,6 +43,7 @@ let PaketPushDefaults() : PaketPushParams =
       EndPoint =  null
       WorkingDir = "./temp"
       RunInParallel = true
+      DegreeOfParallelism = 5
       ApiKey = null }
 
 /// Creates a new NuGet package by using Paket pack on all paket.template files in the working directory.
@@ -82,22 +84,40 @@ let Push setParams =
 
     traceStartTask "PaketPush" (separated ", " packages)
 
-    let tasks = 
-        packages
-        |> Seq.toArray
-        |> Array.map (fun package -> async {
-                let pushResult = 
-                    ExecProcess (fun info -> 
-                        info.FileName <- parameters.ToolPath
-                        info.Arguments <- sprintf "push %s%s%s file %s" url endpoint key (toParam package)) parameters.TimeOut
-                if pushResult <> 0 then failwithf "Error during pushing %s." package }) 
+    if parameters.RunInParallel then
+        /// Returns a sequence that yields chunks of length n.
+        /// Each chunk is returned as a list.
+        let split length (xs: seq<'T>) =
+            let rec loop xs =
+                [
+                    yield Seq.truncate length xs |> Seq.toList
+                    match Seq.length xs <= length with
+                    | false -> yield! loop (Seq.skip length xs)
+                    | true -> ()
+                ]
+            loop xs
+    
+        for chunk in split parameters.DegreeOfParallelism packages do
+            let tasks = 
+                chunk
+                |> Seq.toArray
+                |> Array.map (fun package -> async {
+                        let pushResult = 
+                            ExecProcess (fun info -> 
+                                info.FileName <- parameters.ToolPath
+                                info.Arguments <- sprintf "push %s%s%s file %s" url endpoint key (toParam package)) parameters.TimeOut
+                        if pushResult <> 0 then failwithf "Error during pushing %s." package })
 
-    if parameters.RunInParallel then         
-        Async.Parallel tasks
-        |> Async.RunSynchronously
-        |> ignore
+            Async.Parallel tasks
+            |> Async.RunSynchronously
+            |> ignore
+
     else
-        for task in tasks do
-            Async.RunSynchronously task
+        for package in packages do
+            let pushResult = 
+                ExecProcess (fun info -> 
+                    info.FileName <- parameters.ToolPath
+                    info.Arguments <- sprintf "push %s%s%s file %s" url endpoint key (toParam package)) parameters.TimeOut
+            if pushResult <> 0 then failwithf "Error during pushing %s." package 
 
     traceEndTask "PaketPush" (separated ", " packages)
