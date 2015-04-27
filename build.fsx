@@ -221,12 +221,17 @@ Target "CreateNuGet" (fun _ ->
                     (if package <> "FAKE.Core" && package <> projectName && package <> "FAKE.Lib" then
                        ["FAKE.Core", RequireExactly (NormalizeVersion release.AssemblyVersion)]
                      else p.Dependencies )
-                AccessKey = getBuildParamOrDefault "nugetkey" ""
-                Publish = hasBuildParam "nugetkey" }
+                Publish = false }
 
         NuGet setParams "fake.nuspec"
         !! (nugetToolsDir @@ "FAKE.exe") |> set64BitCorFlags
         NuGet (setParams >> x64ify) "fake.nuspec"
+)
+
+Target "PublishNuget" (fun _ ->
+    Paket.Push(fun p -> 
+        { p with
+            WorkingDir = "bin" })
 )
 
 Target "ReleaseDocs" (fun _ ->
@@ -263,6 +268,7 @@ Target "Default" DoNothing
     =?> ("SourceLink", isLocalBuild && not isLinux)
     =?> ("CreateNuGet", not isLinux)
     =?> ("ReleaseDocs", isLocalBuild && not isLinux)
+    ==> "PublishNuget"
     ==> "Release"
 
 // start build
