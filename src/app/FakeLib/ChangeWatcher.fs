@@ -1,5 +1,5 @@
 ﻿[<AutoOpen>]
-/// This module contains helper function to create and extract zip archives.
+/// This module contains helpers to react to file system events.
 module Fake.ChangeWatcher
 
 open System.IO
@@ -19,14 +19,29 @@ let private handleWatcherEvents (status : FileStatus) (onChange : FileChange -> 
                 Name = e.Name
                 Status = status })
 
-/// Watches the for changes matching in the mathcing files.
+/// Watches the for changes in the matching files.
+/// Returns an IDisposable which allows to dispose all FileSystemWatchers.
+///
 /// ## Parameters
 ///  - `onChange` - function to call when a change is detected.
 ///  - `fileIncludes` - The glob pattern for files to watch for changes.
+///
+/// ## Sample
+///
+///     Target "Watch" (fun _ ->
+///         use watcher = !! "c:/projects/watchDir/*.txt" |> WatchChanges (fun changes -> 
+///             // do something
+///         )
+///     
+///         System.Console.ReadLine() |> ignore
+///     
+///         watcher.Dispose() // if you need to cleanup the watches.
+///     )
+///
 let WatchChanges (onChange : FileChange seq -> unit) (fileIncludes : FileIncludes) = 
-    let dirsToWatch = fileIncludes.Includes |> Seq.map (fun file -> Globbing.getRoot fileIncludes.BaseDirectory (file))
+    let dirsToWatch = fileIncludes.Includes |> Seq.map (fun file -> Globbing.getRoot fileIncludes.BaseDirectory file)
     
-    // remove children directoryss from watch list so that we dont get duplicate file watchers running
+    // remove subdirectories from watch list so that we don't get duplicate file watchers running
     let dirsToWatch = 
         dirsToWatch |> Seq.filter (fun d -> 
                            dirsToWatch
@@ -54,10 +69,11 @@ let WatchChanges (onChange : FileChange seq -> unit) (fileIncludes : FileInclude
                            |> Seq.head)
                 unNotifiedChanges := List.empty<FileChange>
                 onChange changes))
-    printfn "dirs to watch: %A" dirsToWatch
+
+    tracefn "dirs to watch: %A" dirsToWatch
     let watchers = 
         dirsToWatch |> Seq.map (fun dir -> 
-                           printfn "watching dir: %s" dir
+                           tracefn "watching dir: %s" dir
                            let watcher = new FileSystemWatcher(FullName dir, "*.*")
                            watcher.EnableRaisingEvents <- true
                            watcher.IncludeSubdirectories <- true
@@ -75,9 +91,12 @@ let WatchChanges (onChange : FileChange seq -> unit) (fileIncludes : FileInclude
     watchers
     |> Seq.length
     |> ignore //force iteration
+
     timer.Start()
-    fun () -> 
-        for watcher in watchers do
-            watcher.EnableRaisingEvents <- false
-            watcher.Dispose()
-        timer.Dispose()
+
+    { new System.IDisposable with
+          member this.Dispose() = 
+              for watcher in watchers do
+                  watcher.EnableRaisingEvents <- false
+                  watcher.Dispose()
+              timer.Dispose() }
