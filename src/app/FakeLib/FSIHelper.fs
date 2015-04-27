@@ -7,7 +7,6 @@ open System
 open System.IO
 open System.Diagnostics
 open System.Threading
-open Yaaf.FSharp.Scripting
 
 let private FSIPath = @".\tools\FSharp\;.\lib\FSharp\;[ProgramFilesX86]\Microsoft SDKs\F#\3.1\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\3.0\Framework\v4.0;[ProgramFiles]\Microsoft F#\v4.0\;[ProgramFilesX86]\Microsoft F#\v4.0\;[ProgramFiles]\FSharp-2.0.0.0\bin\;[ProgramFilesX86]\FSharp-2.0.0.0\bin\;[ProgramFiles]\FSharp-1.9.9.9\bin\;[ProgramFilesX86]\FSharp-1.9.9.9\bin\"
 
@@ -86,6 +85,8 @@ let executeFSIWithScriptArgsAndReturnMessages script (scriptArgs: string[]) =
     Thread.Sleep 1000
     (result, messages)
 
+open Microsoft.FSharp.Compiler.Interactive.Shell
+
 /// Run the given FAKE script with fsi.exe at the given working directory. Provides full access to Fsi options and args. Redirect output and error messages.
 let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args onErrMsg onOutMsg =
     if printDetails then traceFAKE "Running Buildscript: %s" script
@@ -97,24 +98,43 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
     // Create an env var that only contains the build script args part from the --fsiargs (or "").
     Environment.SetEnvironmentVariable("fsiargs-buildscriptargs", String.Join(" ", scriptArgs))
 
+    let fsiConfig = FsiEvaluationSession.GetDefaultConfiguration()
+
     let commonOptions =
-        (FsiOptions.Default.AsArgs |> Array.toList) @ fsiOptions
-        |> FsiOptions.ofArgs
+        [ "fsi.exe"; "--noninteractive" ] @ fsiOptions
+        |> List.toArray
 
-    let session =
-        try ScriptHost.Create
-              (commonOptions, preventStdOut = true,
-               outWriter = ScriptHost.CreateForwardWriter onOutMsg,
-               errWriter = ScriptHost.CreateForwardWriter onErrMsg)
-        with :? FsiEvaluationException as e ->
-            traceError "FsiEvaluationSession could not be created."
-            traceError e.Result.Error.Merged
-            reraise ()
+    let sbOut = Text.StringBuilder()
+    let sbErr = Text.StringBuilder()
+    let handleMessages() =
+        let handleMessagesFrom (sb:Text.StringBuilder) onMsg =
+            let s = sb.ToString()
+            if not <| String.IsNullOrEmpty s
+                then onMsg s
+        handleMessagesFrom sbOut onOutMsg
+        handleMessagesFrom sbErr onErrMsg
 
-    try session.EvalScript script
-        true
-    with :? FsiEvaluationException as eval ->
-        false
+    use outStream = new StringWriter(sbOut)
+    use errStream = new StringWriter(sbErr)
+    use stdin = new StreamReader(Stream.Null)
+
+    try
+        let session = FsiEvaluationSession.Create(fsiConfig, commonOptions, stdin, outStream, errStream)
+
+        try
+            session.EvalScript script
+            // TODO: Reactivate when FCS don't show output any more 
+            // handleMessages()
+            true
+        with
+        | _ ->
+            handleMessages()
+            false
+    with
+    | exn ->
+        traceError "FsiEvaluationSession could not be created."
+        traceError <| sbErr.ToString()
+        raise exn
 
 /// Run the given buildscript with fsi.exe and allows for extra arguments to the script. Returns output.
 let executeBuildScriptWithArgsAndReturnMessages script (scriptArgs: string[]) =

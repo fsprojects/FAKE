@@ -1,4 +1,4 @@
-#### 3.29.1 - 27.04.2015
+#### 3.29.2 - 27.04.2015
 * New file system change watcher - https://github.com/fsharp/FAKE/pull/766
 * Paket push task runs in parallel - https://github.com/fsharp/FAKE/pull/768
 * NuGet pack task treats non csproj files as nuspec files - https://github.com/fsharp/FAKE/pull/767
@@ -8,7 +8,6 @@
 * Use Microsoft.AspNet.Razor 2.0.30506 for FAKE.Deploy - https://github.com/fsharp/FAKE/pull/756
 * New build parameter functions
 * Fix http://stackoverflow.com/questions/29572870/f-fake-unable-to-get-fake-to-merge-placeholder-arguments-in-nuspec-file
-* Simplified FCS integration - https://github.com/fsharp/FAKE/pull/771
 * New environment variable helpers
 
 #### 3.28.0 - 09.04.2015
