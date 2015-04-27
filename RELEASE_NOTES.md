@@ -1,4 +1,4 @@
-#### 3.29.3 - 27.04.2015
+#### 3.29.4 - 27.04.2015
 * Paket push task runs in parallel - https://github.com/fsharp/FAKE/pull/768
 
 #### 3.29.2 - 27.04.2015
