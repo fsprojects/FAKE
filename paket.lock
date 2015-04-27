@@ -80,3 +80,7 @@ NUGET
     xunit.extensions (1.9.2)
       xunit (1.9.2)
     xunit.runners (1.9.2)
+GITHUB
+  remote: matthid/Yaaf.FSharp.Scripting
+  specs:
+    src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs (253b322f7da2922c01685a02db45b3f3923d627e)
