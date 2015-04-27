@@ -31,7 +31,6 @@ type PaketPushParams =
       PublishUrl : string
       EndPoint : string
       WorkingDir : string
-      RunInParallel : bool
       DegreeOfParallelism : int
       ApiKey : string }
 
@@ -42,7 +41,6 @@ let PaketPushDefaults() : PaketPushParams =
       PublishUrl = null
       EndPoint =  null
       WorkingDir = "./temp"
-      RunInParallel = true
       DegreeOfParallelism = 5
       ApiKey = null }
 
@@ -84,7 +82,7 @@ let Push setParams =
 
     traceStartTask "PaketPush" (separated ", " packages)
 
-    if parameters.RunInParallel then
+    if parameters.DegreeOfParallelism > 0 then
         /// Returns a sequence that yields chunks of length n.
         /// Each chunk is returned as a list.
         let split length (xs: seq<'T>) =
