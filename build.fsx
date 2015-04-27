@@ -232,7 +232,7 @@ Target "CreateNuGet" (fun _ ->
 Target "PublishNuget" (fun _ ->
     Paket.Push(fun p -> 
         { p with
-            WorkingDir = "bin" })
+            WorkingDir = nugetDir })
 )
 
 Target "ReleaseDocs" (fun _ ->
