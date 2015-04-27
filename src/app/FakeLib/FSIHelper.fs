@@ -101,11 +101,16 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
         (FsiOptions.Default.AsArgs |> Array.toList) @ fsiOptions
         |> FsiOptions.ofArgs
 
+    // onErrMsg expects finished lines, disposing ensures we print unfinished lines.
+    use forwarder = ScriptHost.CreateForwardWriter(onErrMsg, removeNewLines = true)
     let session =
         try ScriptHost.Create
-              (commonOptions, preventStdOut = true,
-               outWriter = ScriptHost.CreateForwardWriter onOutMsg,
-               errWriter = ScriptHost.CreateForwardWriter onErrMsg)
+              (commonOptions,
+               // We could prevent StdOut and forward to onOutMsg, 
+               // but we would loose coloring
+               preventStdOut = false,
+               // This are compiler errors and warnings.
+               fsiErrWriter = forwarder)
         with :? FsiEvaluationException as e ->
             traceError "FsiEvaluationSession could not be created."
             traceError e.Result.Error.Merged
@@ -113,7 +118,7 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
 
     try session.EvalScript script
         true
-    with :? FsiEvaluationException as eval ->
+    with :? FsiEvaluationException ->
         false
 
 /// Run the given buildscript with fsi.exe and allows for extra arguments to the script. Returns output.
