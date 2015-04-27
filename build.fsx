@@ -148,7 +148,11 @@ Target "SourceLink" (fun _ ->
     |> Seq.iter (fun f ->
         let proj = VsProj.LoadRelease f
         logfn "source linking %s" proj.OutputFilePdb
-        let files = proj.Compiles -- "**/AssemblyInfo.fs"
+        let files = 
+            proj.Compiles 
+                -- "**/AssemblyInfo.fs"
+                -- "**/YaafFSharpScripting.fs"
+
         repo.VerifyChecksums files
         proj.VerifyPdbChecksums files
         proj.CreateSrcSrv (sprintf "%s/%s/{0}/%%var2%%" gitRaw projectName) repo.Revision (repo.Paths files)
