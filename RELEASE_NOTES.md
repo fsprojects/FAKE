@@ -1,6 +1,8 @@
+#### 3.29.3 - 27.04.2015
+* Paket push task runs in parallel - https://github.com/fsharp/FAKE/pull/768
+
 #### 3.29.2 - 27.04.2015
 * New file system change watcher - https://github.com/fsharp/FAKE/pull/766
-* Paket push task runs in parallel - https://github.com/fsharp/FAKE/pull/768
 * NuGet pack task treats non csproj files as nuspec files - https://github.com/fsharp/FAKE/pull/767
 * New helpers to start and stop DynamicsNAV ServiceTiers
 * Automatically replace Win7ToWin8 import files for Dynamics NAV during Import
