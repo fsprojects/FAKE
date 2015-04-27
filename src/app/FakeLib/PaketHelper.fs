@@ -31,6 +31,7 @@ type PaketPushParams =
       PublishUrl : string
       EndPoint : string
       WorkingDir : string
+      RunInParallel : bool
       ApiKey : string }
 
 /// Paket push default parameters
@@ -40,6 +41,7 @@ let PaketPushDefaults() : PaketPushParams =
       PublishUrl = null
       EndPoint =  null
       WorkingDir = "./temp"
+      RunInParallel = true
       ApiKey = null }
 
 /// Creates a new NuGet package by using Paket pack on all paket.template files in the working directory.
@@ -79,10 +81,23 @@ let Push setParams =
     let key = if String.IsNullOrWhiteSpace parameters.ApiKey then "" else " apikey " + toParam parameters.ApiKey
 
     traceStartTask "PaketPush" (separated ", " packages)
-    for package in packages do
-        let pushResult = 
-            ExecProcess (fun info -> 
-                info.FileName <- parameters.ToolPath
-                info.Arguments <- sprintf "push %s%s%s file %s" url endpoint key (toParam package)) System.TimeSpan.MaxValue
-        if pushResult <> 0 then failwithf "Error during pushing %s." package
+
+    let tasks = 
+        packages
+        |> Seq.toArray
+        |> Array.map (fun package -> async {
+                let pushResult = 
+                    ExecProcess (fun info -> 
+                        info.FileName <- parameters.ToolPath
+                        info.Arguments <- sprintf "push %s%s%s file %s" url endpoint key (toParam package)) System.TimeSpan.MaxValue
+                if pushResult <> 0 then failwithf "Error during pushing %s." package })
+
+    if parameters.RunInParallel then         
+        Async.Parallel tasks
+        |> Async.RunSynchronously
+        |> ignore
+    else
+        for task in tasks do
+            Async.RunSynchronously task
+
     traceEndTask "PaketPush" (separated ", " packages)
