@@ -22,6 +22,21 @@ type FileIncludes =
     /// Sets a directory as BaseDirectory.
     member this.SetBaseDirectory(dir : string) = { this with BaseDirectory = dir.TrimEnd(Path.DirectorySeparatorChar) }
     
+    /// Checks if a particular file is matched
+    member this.IsMatch (path : string) =
+        let included = 
+            this.Includes
+            |> Seq.exists(fun fileInclude ->
+                Globbing.isMatch fileInclude path
+            )
+        let excluded = 
+            this.Excludes
+            |> Seq.exists(fun fileInclude ->
+                Globbing.isMatch fileInclude path
+            )
+
+        included && not excluded
+
     interface IEnumerable<string> with
         
         member this.GetEnumerator() = 
