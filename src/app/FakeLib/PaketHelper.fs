@@ -37,7 +37,7 @@ type PaketPushParams =
 /// Paket push default parameters
 let PaketPushDefaults() : PaketPushParams = 
     { ToolPath = (findToolFolderInSubPath "paket.exe" (currentDirectory @@ ".paket")) @@ "paket.exe"
-      TimeOut = TimeSpan.FromMinutes 5.
+      TimeOut = System.TimeSpan.MaxValue
       PublishUrl = null
       EndPoint =  null
       WorkingDir = "./temp"
@@ -89,8 +89,8 @@ let Push setParams =
                 let pushResult = 
                     ExecProcess (fun info -> 
                         info.FileName <- parameters.ToolPath
-                        info.Arguments <- sprintf "push %s%s%s file %s" url endpoint key (toParam package)) System.TimeSpan.MaxValue
-                if pushResult <> 0 then failwithf "Error during pushing %s." package })
+                        info.Arguments <- sprintf "push %s%s%s file %s" url endpoint key (toParam package)) parameters.TimeOut
+                if pushResult <> 0 then failwithf "Error during pushing %s." package }) 
 
     if parameters.RunInParallel then         
         Async.Parallel tasks
