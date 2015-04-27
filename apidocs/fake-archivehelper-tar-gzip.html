@@ -185,7 +185,7 @@
             compressStream gzipParams
           </code>
           <div class="tip" id="75">
-            <strong>Signature:</strong> gzipParams:GZipCompressionParams -&gt; Stream -&gt; (type)<br />
+            <strong>Signature:</strong> gzipParams:GZipCompressionParams -&gt; Stream -&gt; TarOutputStream<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -231,7 +231,7 @@
             createFile gzipParams file
           </code>
           <div class="tip" id="77">
-            <strong>Signature:</strong> gzipParams:GZipCompressionParams -&gt; file:FileInfo -&gt; (type)<br />
+            <strong>Signature:</strong> gzipParams:GZipCompressionParams -&gt; file:FileInfo -&gt; TarOutputStream<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -283,7 +283,7 @@
             extractStream 
           </code>
           <div class="tip" id="79">
-            <strong>Signature:</strong> Stream -&gt; (type)<br />
+            <strong>Signature:</strong> Stream -&gt; TarInputStream<br />
                       </div>
         </td>
         <td class="xmldoc">

@@ -74,7 +74,7 @@
             addZipEntry outStream
           </code>
           <div class="tip" id="80">
-            <strong>Signature:</strong> outStream:(type) -&gt; ArchiveFileSpec -&gt; unit<br />
+            <strong>Signature:</strong> outStream:ZipOutputStream -&gt; ArchiveFileSpec -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -222,7 +222,7 @@
             compressStream arg1 inner
           </code>
           <div class="tip" id="86">
-            <strong>Signature:</strong> ZipCompressionParams -&gt; inner:Stream -&gt; (type)<br />
+            <strong>Signature:</strong> ZipCompressionParams -&gt; inner:Stream -&gt; ZipOutputStream<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -268,7 +268,7 @@
             createFile zipParams file
           </code>
           <div class="tip" id="88">
-            <strong>Signature:</strong> zipParams:ZipCompressionParams -&gt; file:FileInfo -&gt; (type)<br />
+            <strong>Signature:</strong> zipParams:ZipCompressionParams -&gt; file:FileInfo -&gt; ZipOutputStream<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -320,7 +320,7 @@
             extractStream inner
           </code>
           <div class="tip" id="90">
-            <strong>Signature:</strong> inner:Stream -&gt; (type)<br />
+            <strong>Signature:</strong> inner:Stream -&gt; ZipInputStream<br />
                       </div>
         </td>
         <td class="xmldoc">

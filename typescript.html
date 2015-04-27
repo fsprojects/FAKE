@@ -44,7 +44,20 @@ In this tutorial we are looking at the TypeScript support.</p>
 
 <p>Consider a greetings.ts file:</p>
 
-<table class="pre"><tr><td><pre lang="javascript"><span class="k">interface</span> Person {
+<table class="pre"><tr><td class="lines"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+</td>
+<td class="snippet"><pre lang="javascript"><span class="k">interface</span> Person {
     firstname: <span class="k">string</span>;
     lastname: <span class="k">string</span>;
 }
@@ -55,7 +68,8 @@ In this tutorial we are looking at the TypeScript support.</p>
 
 <span class="k">var</span> user <span class="o">=</span> {firstname: <span class="s">"Jane"</span>, lastname: <span class="s">"User"</span>};
 
-document.body.innerHTML <span class="o">=</span> greeter(user);</pre></td></tr></table>
+document.body.innerHTML <span class="o">=</span> greeter(user);
+</pre></td></tr></table>
 
 <p>Now create a build.fsx and run it via FAKE.exe:</p>
 
@@ -76,32 +90,42 @@ document.body.innerHTML <span class="o">=</span> greeter(user);</pre></td></tr><
 </pre>
 </td>
 <td class="snippet"><pre class="fssnip">
-<span class="prep">#I</span> <span class="s">@&quot;</span><span class="s">.</span><span class="s">.</span><span class="s">/</span><span class="s">.</span><span class="s">.</span><span class="s">/</span><span class="s">tools</span><span class="s">/</span><span class="s">FAKE</span><span class="s">/</span><span class="s">tools</span><span class="s">/</span><span class="s">&quot;</span>
-<span class="prep">#r</span> <span class="s">@&quot;</span><span class="s">FakeLib</span><span class="s">.</span><span class="s">dll</span><span class="s">&quot;</span>
+<span class="prep">#I</span> <span class="s">@&quot;../../tools/FAKE/tools/&quot;</span>
+<span class="prep">#r</span> <span class="s">@&quot;FakeLib.dll&quot;</span>
 
 <span class="k">open</span> <span class="i">Fake</span>
 <span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">System</span>
 <span class="k">open</span> <span class="i">TypeScript</span>
 
-<span class="i">Target</span> <span class="s">&quot;</span><span class="s">CompileTypeScript</span><span class="s">&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="o">!!</span> <span class="s">&quot;</span><span class="s">*</span><span class="s">*</span><span class="s">/</span><span class="s">*</span><span class="s">.</span><span class="s">ts</span><span class="s">&quot;</span>
-      <span class="o">|&gt;</span> <span class="i">TypeScriptCompiler</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> { <span class="i">p</span> <span class="k">with</span> <span class="i">OutputPath</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">.</span><span class="s">/</span><span class="s">out</span><span class="s">&quot;</span> }) 
+<span class="i">Target</span> <span class="s">&quot;CompileTypeScript&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+    <span class="o">!!</span> <span class="s">&quot;**/*.ts&quot;</span>
+      <span class="o">|&gt;</span> <span class="i">TypeScriptCompiler</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> { <span class="i">p</span> <span class="k">with</span> <span class="i">OutputPath</span> <span class="o">=</span> <span class="s">&quot;./out&quot;</span> }) 
 )
 
-<span class="i">RunTargetOrDefault</span> <span class="s">&quot;</span><span class="s">CompileTypeScript</span><span class="s">&quot;</span></pre>
+<span class="i">RunTargetOrDefault</span> <span class="s">&quot;CompileTypeScript&quot;</span>
+</pre>
 </td>
 </tr>
 </table>
 
 <p>This small script will run all *.ts files through the TypeScript compiler and put them into the ./out/ folder. In this case we will find a greetings.js:</p>
 
-<table class="pre"><tr><td><pre lang="javascript"><span class="k">function</span> greeter(person) {
+<table class="pre"><tr><td class="lines"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+</td>
+<td class="snippet"><pre lang="javascript"><span class="k">function</span> greeter(person) {
     <span class="k">return</span> <span class="s">"Hello, "</span> <span class="o">+</span> person.firstname <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> person.lastname;
 }
 
 <span class="k">var</span> user <span class="o">=</span> { firstname: <span class="s">"Jane"</span>, lastname: <span class="s">"User"</span> };
 
-document.body.innerHTML <span class="o">=</span> greeter(user);</pre></td></tr></table>
+document.body.innerHTML <span class="o">=</span> greeter(user);
+</pre></td></tr></table>
 
 <p>If you need more details please see the <a href="apidocs/fake-typescript.html">API docs for the TypeScript</a> task.</p>
 

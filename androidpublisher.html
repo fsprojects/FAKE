@@ -163,56 +163,56 @@
 </pre>
 </td>
 <td class="snippet"><pre class="fssnip">
-<span class="prep">#r</span> <span class="s">&quot;</span><span class="s">packages</span><span class="s">/</span><span class="s">FAKE</span><span class="s">/</span><span class="s">tools</span><span class="s">/</span><span class="s">FakeLib</span><span class="s">.</span><span class="s">dll</span><span class="s">&quot;</span>
+<span class="prep">#r</span> <span class="s">&quot;packages/FAKE/tools/FakeLib.dll&quot;</span>
 
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">androidBuildDir</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">.</span><span class="s">/</span><span class="s">build</span><span class="s">/</span><span class="s">&quot;</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">androidProdDir</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">.</span><span class="s">/</span><span class="s">pack</span><span class="s">/</span><span class="s">&quot;</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">androidBuildDir</span> <span class="o">=</span> <span class="s">&quot;./build/&quot;</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">androidProdDir</span> <span class="o">=</span> <span class="s">&quot;./pack/&quot;</span>
 
 <span onmouseout="hideTip(event, 'fs2', 3)" onmouseover="showTip(event, 'fs2', 3)" class="i">androidProdDir</span> <span class="o">|&gt;</span> <span class="i">ensureDirectory</span>
 
 <span class="c">//Clean old apk</span>
-<span class="i">Target</span> <span class="s">&quot;</span><span class="s">Clean</span><span class="s">&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+<span class="i">Target</span> <span class="s">&quot;Clean&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
     <span class="i">CleanDir</span> <span onmouseout="hideTip(event, 'fs1', 4)" onmouseover="showTip(event, 'fs1', 4)" class="i">androidBuildDir</span>
     <span class="i">CleanDir</span> <span onmouseout="hideTip(event, 'fs2', 5)" onmouseover="showTip(event, 'fs2', 5)" class="i">androidProdDir</span>
 )
 
-<span class="i">Target</span> <span class="s">&quot;</span><span class="s">Android</span><span class="s">-</span><span class="s">Package</span><span class="s">&quot;</span> (<span class="k">fun</span> () <span class="k">-&gt;</span>
+<span class="i">Target</span> <span class="s">&quot;Android-Package&quot;</span> (<span class="k">fun</span> () <span class="k">-&gt;</span>
     <span class="i">AndroidPackage</span>(<span class="k">fun</span> <span class="i">defaults</span> <span class="k">-&gt;</span>
                     { <span class="i">defaults</span> <span class="k">with</span> 
-                        <span class="i">ProjectPath</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">Path</span><span class="s"> </span><span class="s">to</span><span class="s"> </span><span class="s">my</span><span class="s"> </span><span class="s">project</span><span class="s"> </span><span class="s">Droid</span><span class="s">.</span><span class="s">csproj</span><span class="s">&quot;</span>
-                        <span class="i">Configuration</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">Release</span><span class="s">&quot;</span>
+                        <span class="i">ProjectPath</span> <span class="o">=</span> <span class="s">&quot;Path to my project Droid.csproj&quot;</span>
+                        <span class="i">Configuration</span> <span class="o">=</span> <span class="s">&quot;Release&quot;</span>
                         <span class="i">OutputPath</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 6)" onmouseover="showTip(event, 'fs1', 6)" class="i">androidBuildDir</span>
                     })
 
     <span class="o">|&gt;</span> <span class="i">AndroidSignAndAlign</span> (<span class="k">fun</span> <span class="i">defaults</span> <span class="k">-&gt;</span>
         { <span class="i">defaults</span> <span class="k">with</span> 
-            <span class="i">KeystorePath</span> <span class="o">=</span> <span class="s">@&quot;</span><span class="s">path</span><span class="s"> </span><span class="s">to</span><span class="s"> </span><span class="s">my</span><span class="s"> </span><span class="s">file</span><span class="s">.</span><span class="s">keystore</span><span class="s">&quot;</span>
-            <span class="i">KeystorePassword</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">my</span><span class="s"> </span><span class="s">password</span><span class="s">&quot;</span>
-            <span class="i">KeystoreAlias</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">my</span><span class="s"> </span><span class="s">key</span><span class="s"> </span><span class="s">alias</span><span class="s">&quot;</span>
+            <span class="i">KeystorePath</span> <span class="o">=</span> <span class="s">@&quot;path to my file.keystore&quot;</span>
+            <span class="i">KeystorePassword</span> <span class="o">=</span> <span class="s">&quot;my password&quot;</span>
+            <span class="i">KeystoreAlias</span> <span class="o">=</span> <span class="s">&quot;my key alias&quot;</span>
         })
     <span class="o">|&gt;</span> <span class="k">fun</span> <span class="i">file</span> <span class="k">-&gt;</span> <span class="i">file</span><span class="o">.</span><span class="i">CopyTo</span>(<span class="i">Path</span><span class="o">.</span><span class="i">Combine</span>(<span onmouseout="hideTip(event, 'fs2', 7)" onmouseover="showTip(event, 'fs2', 7)" class="i">androidProdDir</span>, <span class="i">file</span><span class="o">.</span><span class="i">Name</span>)) <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs3', 8)" onmouseover="showTip(event, 'fs3', 8)" class="i">ignore</span>
 
 )
 
-<span class="i">Target</span> <span class="s">&quot;</span><span class="s">Publish</span><span class="s">&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span> 
+<span class="i">Target</span> <span class="s">&quot;Publish&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span> 
     <span class="c">// I like verbose script</span>
-    <span class="i">trace</span> <span class="s">&quot;</span><span class="s">publishing</span><span class="s"> </span><span class="s">Android</span><span class="s"> </span><span class="s">App</span><span class="s">&quot;</span>
+    <span class="i">trace</span> <span class="s">&quot;publishing Android App&quot;</span>
     <span class="k">let</span> <span class="i">apk</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 9)" onmouseover="showTip(event, 'fs2', 9)" class="i">androidProdDir</span> 
                     <span class="o">|&gt;</span> <span class="i">directoryInfo</span> 
                     <span class="o">|&gt;</span> <span class="i">filesInDir</span> 
-                    <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs4', 10)" onmouseover="showTip(event, 'fs4', 10)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs5', 11)" onmouseover="showTip(event, 'fs5', 11)" class="i">filter</span>(<span class="k">fun</span> <span class="i">f</span> <span class="k">-&gt;</span> <span class="i">f</span><span class="o">.</span><span class="i">Name</span><span class="o">.</span><span class="i">EndsWith</span>(<span class="s">&quot;</span><span class="s">.</span><span class="s">apk</span><span class="s">&quot;</span>))
+                    <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs4', 10)" onmouseover="showTip(event, 'fs4', 10)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs5', 11)" onmouseover="showTip(event, 'fs5', 11)" class="i">filter</span>(<span class="k">fun</span> <span class="i">f</span> <span class="k">-&gt;</span> <span class="i">f</span><span class="o">.</span><span class="i">Name</span><span class="o">.</span><span class="i">EndsWith</span>(<span class="s">&quot;.apk&quot;</span>))
                     <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs4', 12)" onmouseover="showTip(event, 'fs4', 12)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs6', 13)" onmouseover="showTip(event, 'fs6', 13)" class="i">exactlyOne</span>
     <span class="k">let</span> <span class="i">apkPath</span> <span class="o">=</span> <span class="i">apk</span><span class="o">.</span><span class="i">FullName</span>
-    <span class="i">tracefn</span> <span class="s">&quot;</span><span class="s">Apk</span><span class="s"> </span><span class="s">found</span><span class="s">:</span><span class="s"> </span><span class="s">%</span><span class="s">s</span><span class="s">&quot;</span> <span class="i">apkPath</span>
-    <span class="k">let</span> <span class="i">mail</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">my</span><span class="s"> </span><span class="s">service</span><span class="s"> </span><span class="s">account</span><span class="s"> </span><span class="s">mail</span><span class="s">@</span><span class="s">developer</span><span class="s">.</span><span class="s">gserviceaccount</span><span class="s">.</span><span class="s">com</span><span class="s">&quot;</span>
+    <span class="i">tracefn</span> <span class="s">&quot;Apk found: %s&quot;</span> <span class="i">apkPath</span>
+    <span class="k">let</span> <span class="i">mail</span> <span class="o">=</span> <span class="s">&quot;my service account mail@developer.gserviceaccount.com&quot;</span>
     <span class="c">// Path to the certificate file probably named &#39;Google Play Android Developer-xxxxxxxxxxxx.p12&#39;</span>
     <span class="k">let</span> <span class="i">certificate</span> <span class="o">=</span> <span class="k">new</span> <span class="i">X509Certificate2</span>
                                 (
-                                    <span class="s">@&quot;</span><span class="s">Google</span><span class="s"> </span><span class="s">Play</span><span class="s"> </span><span class="s">Android</span><span class="s"> </span><span class="s">Developer</span><span class="s">-</span><span class="s">xxxxxxxxxxxx</span><span class="s">.</span><span class="s">p12</span><span class="s">&quot;</span>,
-                                    <span class="s">&quot;</span><span class="s">notasecret</span><span class="s">&quot;</span>,
+                                    <span class="s">@&quot;Google Play Android Developer-xxxxxxxxxxxx.p12&quot;</span>,
+                                    <span class="s">&quot;notasecret&quot;</span>,
                                     <span class="i">X509KeyStorageFlags</span><span class="o">.</span><span class="i">Exportable</span>
                                 )
-    <span class="k">let</span> <span class="i">packageName</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">my</span><span class="s"> </span><span class="s">Android</span><span class="s"> </span><span class="s">package</span><span class="s"> </span><span class="s">name</span><span class="s">&quot;</span>
+    <span class="k">let</span> <span class="i">packageName</span> <span class="o">=</span> <span class="s">&quot;my Android package name&quot;</span>
 
     <span class="c">// to publish an alpha version: </span>
     <span class="i">PublishApk</span> 
@@ -253,22 +253,23 @@
     <span class="c">//    }</span>
 )
 
-<span class="i">Target</span> <span class="s">&quot;</span><span class="s">Android</span><span class="s">-</span><span class="s">Build</span><span class="s">&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="o">!!</span> <span class="s">&quot;</span><span class="s">*</span><span class="s">*</span><span class="s">/</span><span class="s">my</span><span class="s"> </span><span class="s">project</span><span class="s"> </span><span class="s">Droid</span><span class="s">.</span><span class="s">csproj</span><span class="s">&quot;</span>
-        <span class="o">|&gt;</span> <span class="i">MSBuildRelease</span> <span onmouseout="hideTip(event, 'fs1', 14)" onmouseover="showTip(event, 'fs1', 14)" class="i">androidBuildDir</span> <span class="s">&quot;</span><span class="s">Build</span><span class="s">&quot;</span>
-        <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;</span><span class="s">BuildAndroidLib</span><span class="s">-</span><span class="s">Output</span><span class="s">:</span><span class="s"> </span><span class="s">&quot;</span>
+<span class="i">Target</span> <span class="s">&quot;Android-Build&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+    <span class="o">!!</span> <span class="s">&quot;**/my project Droid.csproj&quot;</span>
+        <span class="o">|&gt;</span> <span class="i">MSBuildRelease</span> <span onmouseout="hideTip(event, 'fs1', 14)" onmouseover="showTip(event, 'fs1', 14)" class="i">androidBuildDir</span> <span class="s">&quot;Build&quot;</span>
+        <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;BuildAndroidLib-Output: &quot;</span>
 )
 
-<span class="i">Target</span> <span class="s">&quot;</span><span class="s">Default</span><span class="s">&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="i">trace</span> <span class="s">&quot;</span><span class="s">Building</span><span class="s"> </span><span class="s">default</span><span class="s"> </span><span class="s">target</span><span class="s">&quot;</span>
+<span class="i">Target</span> <span class="s">&quot;Default&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+    <span class="i">trace</span> <span class="s">&quot;Building default target&quot;</span>
     <span class="i">RestorePackages</span>()
 )
 
-<span class="s">&quot;</span><span class="s">Clean</span><span class="s">&quot;</span>
-    <span class="o">==&gt;</span> <span class="s">&quot;</span><span class="s">Android</span><span class="s">-</span><span class="s">Package</span><span class="s">&quot;</span>
-    <span class="o">==&gt;</span> <span class="s">&quot;</span><span class="s">Default</span><span class="s">&quot;</span>
+<span class="s">&quot;Clean&quot;</span>
+    <span class="o">==&gt;</span> <span class="s">&quot;Android-Package&quot;</span>
+    <span class="o">==&gt;</span> <span class="s">&quot;Default&quot;</span>
 
-<span class="i">RunTargetOrDefault</span> <span class="s">&quot;</span><span class="s">Default</span><span class="s">&quot;</span></pre>
+<span class="i">RunTargetOrDefault</span> <span class="s">&quot;Default&quot;</span>
+</pre>
 </td>
 </tr>
 </table>
@@ -282,7 +283,8 @@
 </pre>
 </td>
 <td class="snippet"><pre class="fssnip">
-<span class="i">PS</span><span class="o">&gt;</span> <span class="i">Fake</span><span class="o">.</span><span class="i">exe</span> <span class="o">.</span></pre>
+<span class="i">PS</span><span class="o">&gt;</span> <span class="i">Fake</span><span class="o">.</span><span class="i">exe</span> <span class="o">.</span>
+</pre>
 </td>
 </tr>
 </table>

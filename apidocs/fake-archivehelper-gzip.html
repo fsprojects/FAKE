@@ -127,7 +127,7 @@
             compressStream arg1 inner
           </code>
           <div class="tip" id="44">
-            <strong>Signature:</strong> GZipCompressionParams -&gt; inner:Stream -&gt; (type)<br />
+            <strong>Signature:</strong> GZipCompressionParams -&gt; inner:Stream -&gt; GZipOutputStream<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -146,7 +146,7 @@
             createFile gzipParams file
           </code>
           <div class="tip" id="45">
-            <strong>Signature:</strong> gzipParams:GZipCompressionParams -&gt; file:FileInfo -&gt; (type)<br />
+            <strong>Signature:</strong> gzipParams:GZipCompressionParams -&gt; file:FileInfo -&gt; GZipOutputStream<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -198,7 +198,7 @@
             extractStream inner
           </code>
           <div class="tip" id="47">
-            <strong>Signature:</strong> inner:Stream -&gt; (type)<br />
+            <strong>Signature:</strong> inner:Stream -&gt; GZipInputStream<br />
                       </div>
         </td>
         <td class="xmldoc">

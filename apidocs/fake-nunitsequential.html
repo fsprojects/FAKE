@@ -52,10 +52,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '413', 413)" onmouseover="showTip(event, '413', 413)">
+          <code onmouseout="hideTip(event, '414', 414)" onmouseover="showTip(event, '414', 414)">
             NUnit setParams assemblies
           </code>
-          <div class="tip" id="413">
+          <div class="tip" id="414">
             <strong>Signature:</strong> setParams:(NUnitParams -&gt; NUnitParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -78,8 +78,7 @@
 <pre><code>Target "Test" (fun _ -&gt;
     !! (testDir + @"\Test.*.dll") 
       |&gt; NUnit (fun p -&gt; { p with ErrorLevel = DontFailBuild })
-)
-</code></pre>
+)</code></pre>
 
         </td>
       </tr>

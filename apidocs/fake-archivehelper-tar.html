@@ -81,7 +81,7 @@
             addEntry outStream
           </code>
           <div class="tip" id="49">
-            <strong>Signature:</strong> outStream:(type) -&gt; ArchiveFileSpec -&gt; unit<br />
+            <strong>Signature:</strong> outStream:TarOutputStream -&gt; ArchiveFileSpec -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -153,7 +153,7 @@
             createFile file
           </code>
           <div class="tip" id="52">
-            <strong>Signature:</strong> file:FileInfo -&gt; (type)<br />
+            <strong>Signature:</strong> file:FileInfo -&gt; TarOutputStream<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -204,7 +204,7 @@
             extractStream inner
           </code>
           <div class="tip" id="54">
-            <strong>Signature:</strong> inner:Stream -&gt; (type)<br />
+            <strong>Signature:</strong> inner:Stream -&gt; TarInputStream<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -296,7 +296,7 @@
             storeStream inner
           </code>
           <div class="tip" id="58">
-            <strong>Signature:</strong> inner:Stream -&gt; (type)<br />
+            <strong>Signature:</strong> inner:Stream -&gt; TarOutputStream<br />
                       </div>
         </td>
         <td class="xmldoc">

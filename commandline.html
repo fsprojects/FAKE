@@ -128,35 +128,45 @@
 </pre>
 </td>
 <td class="snippet"><pre class="fssnip">
-<span class="prep">#r</span> <span class="s">&quot;</span><span class="s">FAKE</span><span class="s">/</span><span class="s">tools</span><span class="s">/</span><span class="s">FakeLib</span><span class="s">.</span><span class="s">dll</span><span class="s">&quot;</span>
+<span class="prep">#r</span> <span class="s">&quot;FAKE/tools/FakeLib.dll&quot;</span>
 <span class="k">open</span> <span class="i">Fake</span> 
 
-<span class="i">Target</span> <span class="s">&quot;</span><span class="s">Clean</span><span class="s">&quot;</span> (<span class="k">fun</span> () <span class="k">-&gt;</span>  <span class="i">trace</span> <span class="s">&quot;</span><span class="s"> </span><span class="s">-</span><span class="s">-</span><span class="s">-</span><span class="s"> </span><span class="s">Cleaning</span><span class="s"> </span><span class="s">stuff</span><span class="s"> </span><span class="s">-</span><span class="s">-</span><span class="s">-</span><span class="s"> </span><span class="s">&quot;</span>)
+<span class="i">Target</span> <span class="s">&quot;Clean&quot;</span> (<span class="k">fun</span> () <span class="k">-&gt;</span>  <span class="i">trace</span> <span class="s">&quot; --- Cleaning stuff --- &quot;</span>)
 
-<span class="i">Target</span> <span class="s">&quot;</span><span class="s">Build</span><span class="s">&quot;</span> (<span class="k">fun</span> () <span class="k">-&gt;</span>  <span class="i">trace</span> <span class="s">&quot;</span><span class="s"> </span><span class="s">-</span><span class="s">-</span><span class="s">-</span><span class="s"> </span><span class="s">Building</span><span class="s"> </span><span class="s">the</span><span class="s"> </span><span class="s">app</span><span class="s"> </span><span class="s">-</span><span class="s">-</span><span class="s">-</span><span class="s"> </span><span class="s">&quot;</span>)
+<span class="i">Target</span> <span class="s">&quot;Build&quot;</span> (<span class="k">fun</span> () <span class="k">-&gt;</span>  <span class="i">trace</span> <span class="s">&quot; --- Building the app --- &quot;</span>)
 
-<span class="i">Target</span> <span class="s">&quot;</span><span class="s">Deploy</span><span class="s">&quot;</span> (<span class="k">fun</span> () <span class="k">-&gt;</span> <span class="i">trace</span> <span class="s">&quot;</span><span class="s"> </span><span class="s">-</span><span class="s">-</span><span class="s">-</span><span class="s"> </span><span class="s">Deploying</span><span class="s"> </span><span class="s">app</span><span class="s"> </span><span class="s">-</span><span class="s">-</span><span class="s">-</span><span class="s"> </span><span class="s">&quot;</span>)
+<span class="i">Target</span> <span class="s">&quot;Deploy&quot;</span> (<span class="k">fun</span> () <span class="k">-&gt;</span> <span class="i">trace</span> <span class="s">&quot; --- Deploying app --- &quot;</span>)
 
 
-<span class="s">&quot;</span><span class="s">Clean</span><span class="s">&quot;</span>
-  <span class="o">==&gt;</span> <span class="s">&quot;</span><span class="s">Build</span><span class="s">&quot;</span>
-  <span class="o">==&gt;</span> <span class="s">&quot;</span><span class="s">Deploy</span><span class="s">&quot;</span>
+<span class="s">&quot;Clean&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;Build&quot;</span>
+  <span class="o">==&gt;</span> <span class="s">&quot;Deploy&quot;</span>
 
-<span class="i">RunTargetOrDefault</span> <span class="s">&quot;</span><span class="s">Deploy</span><span class="s">&quot;</span></pre>
+<span class="i">RunTargetOrDefault</span> <span class="s">&quot;Deploy&quot;</span>
+</pre>
 </td>
 </tr>
 </table>
 
 <p>If you are on windows then create this small redirect script:</p>
 
-<table class="pre"><tr><td><pre lang="batchfile">@echo off
-&quot;tools\Fake.exe&quot; &quot;%1&quot;
-exit /b %errorlevel%</pre></td></tr></table>
+<table class="pre"><tr><td class="lines"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</td>
+<td class="snippet"><pre lang="batchfile">@echo off
+"tools\Fake.exe" "%1"
+exit /b %errorlevel%
+</pre></td></tr></table>
 
 <p>On mono you can use:</p>
 
-<table class="pre"><tr><td><pre lang="batchfile">#!/bin/bash
-mono ./tools/FAKE.exe &quot;$@&quot;</pre></td></tr></table>
+<table class="pre"><tr><td class="lines"><span class="l">1: </span>
+<span class="l">2: </span>
+</td>
+<td class="snippet"><pre lang="batchfile">#!/bin/bash
+mono ./tools/FAKE.exe "$@"
+</pre></td></tr></table>
 
 <p>Now you can run FAKE targets easily from the command line:</p>
 
