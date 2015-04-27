@@ -1,25 +1,14 @@
-#### 3.28.8 - 24.04.2015
-NuGet pack task treats non csproj files as nuspec files  - https://github.com/fsharp/FAKE/pull/767
-
-#### 3.28.7 - 20.04.2015
+#### 3.29.0 - 27.04.2015
+* New file system change watcher - https://github.com/fsharp/FAKE/pull/766
+* Paket push task runs in parallel - https://github.com/fsharp/FAKE/pull/768
+* NuGet pack task treats non csproj files as nuspec files - https://github.com/fsharp/FAKE/pull/767
 * New helpers to start and stop DynamicsNAV ServiceTiers
-
-#### 3.28.6 - 20.04.2015
 * Automatically replace Win7ToWin8 import files for Dynamics NAV during Import
-
-#### 3.28.5 - 16.04.2015
 * OpenSourced DynamicsNAV replacement helpers
-
-#### 3.28.4 - 15.04.2015
 * Use Microsoft.AspNet.Razor 2.0.30506 for FAKE.Deploy - https://github.com/fsharp/FAKE/pull/756
-
-#### 3.28.3 - 14.04.2015
 * New build parameter functions
-
-#### 3.28.2 - 13.04.2015
 * Fix http://stackoverflow.com/questions/29572870/f-fake-unable-to-get-fake-to-merge-placeholder-arguments-in-nuspec-file
-
-#### 3.28.1 - 13.04.2015
+* Simplified FCS integration - https://github.com/fsharp/FAKE/pull/771
 * New environment variable helpers
 
 #### 3.28.0 - 09.04.2015
