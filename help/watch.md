@@ -8,12 +8,12 @@ watch for changes, and automatticly run a function or another target.
 Add a new target named "Watch" to your build:
 
     Target "GenerateDocs" (fun _ ->
-        printfn "Generating docs."
+        tracefn "Generating docs."
     )
 
     Target "Watch" (fun _ ->
         use watcher = !! "docs/**/*.*" |> WatchChanges (fun changes -> 
-            printfn "%A" changes
+            tracefn "%A" changes
             RunTarget "GenerateDocs"
         )
     
@@ -28,12 +28,12 @@ and the GenerateDocs target should be rerun.
 If you need to watch only a subset of the files, say you want to rerun tests as soon as the compiled dlls change:
 
     Target "RunTests" (fun _ ->
-        printfn "Running tests."
+        tracefn "Running tests."
     )
     
     Target "Watch" (fun _ ->
         use watcher = !! "tests/**/bin/debug/*.dll" |> WatchChanges (fun changes -> 
-            printfn "%A" changes
+            tracefn "%A" changes
             RunTarget "RunTests"
         )
     
