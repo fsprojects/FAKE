@@ -103,7 +103,7 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
 
     // onErrMsg and onOutMsg expect finished lines, disposing ensures we print unfinished lines.
     // We don't use onErrMsg because it makes AppVeyor build fail: https://github.com/fsharp/FAKE/pull/773
-    use forwarder = ScriptHost.CreateForwardWriter(onOutMsg, removeNewLines = true)
+    use forwarder = ScriptHost.CreateForwardWriter(trace, removeNewLines = true)
     let session =
         try ScriptHost.Create
               (commonOptions,
