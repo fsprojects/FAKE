@@ -72,7 +72,7 @@
             Attach serverInfo attachOptions files
           </code>
           <div class="tip" id="1">
-            <strong>Signature:</strong> serverInfo:ServerInfo -&gt; attachOptions:AttachOptions -&gt; files:seq&lt;string&gt; -&gt; ServerInfo<br />
+            <strong>Signature:</strong> serverInfo:ServerInfo -&gt; attachOptions:(type) -&gt; files:seq&lt;string&gt; -&gt; ServerInfo<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -205,7 +205,7 @@
             getDatabase serverInfo
           </code>
           <div class="tip" id="8">
-            <strong>Signature:</strong> serverInfo:ServerInfo -&gt; Database<br />
+            <strong>Signature:</strong> serverInfo:ServerInfo -&gt; (type)<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -243,7 +243,7 @@
             getDatabasesFromServer serverInfo
           </code>
           <div class="tip" id="10">
-            <strong>Signature:</strong> serverInfo:ServerInfo -&gt; seq&lt;Database&gt;<br />
+            <strong>Signature:</strong> serverInfo:ServerInfo -&gt; seq&lt;(type)&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -357,7 +357,7 @@
             ReplaceDatabaseFiles (...)
           </code>
           <div class="tip" id="16">
-            <strong>Signature:</strong> connectionString:string -&gt; targetDir:string -&gt; files:seq&lt;string&gt; -&gt; attachOptions:AttachOptions -&gt; unit<br />
+            <strong>Signature:</strong> connectionString:string -&gt; targetDir:string -&gt; files:seq&lt;string&gt; -&gt; attachOptions:(type) -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -376,7 +376,7 @@
             ReplaceDatabaseFilesWithCache (...)
           </code>
           <div class="tip" id="17">
-            <strong>Signature:</strong> connectionString:string -&gt; targetDir:string -&gt; cacheDir:string -&gt; files:seq&lt;string&gt; -&gt; attachOptions:AttachOptions -&gt; unit<br />
+            <strong>Signature:</strong> connectionString:string -&gt; targetDir:string -&gt; cacheDir:string -&gt; files:seq&lt;string&gt; -&gt; attachOptions:(type) -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
