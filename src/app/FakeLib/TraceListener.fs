@@ -58,7 +58,9 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap) =
             | FinishedMessage -> ()
 
 /// The default TraceListener for Console.
-let defaultConsoleTraceListener = ConsoleTraceListener(buildServer <> CCNet, colorMap)
+let defaultConsoleTraceListener =
+  // If we write the stderr on those build servers the build will fail.
+  ConsoleTraceListener(buildServer <> CCNet && buildServer <> AppVeyor, colorMap)
 
 /// Specifies if the XmlWriter should close tags automatically
 let mutable AutoCloseXmlWriter = false
