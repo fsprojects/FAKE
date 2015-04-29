@@ -1,4 +1,4 @@
-#### 3.30.0 - 29.04.2015
+#### 3.30.1 - 29.04.2015
 * FCS simplification - https://github.com/fsharp/FAKE/pull/773
 * Paket push task runs in parallel - https://github.com/fsharp/FAKE/pull/768
 
