@@ -1,4 +1,4 @@
-﻿/// Contains helper functions and task which allow to inspect, create and publish [NuGet](https://www.nuget.org/) packages with [Paket](http://fsprojects.github.io/Paket/index.html).
+/// Contains helper functions and task which allow to inspect, create and publish [NuGet](https://www.nuget.org/) packages with [Paket](http://fsprojects.github.io/Paket/index.html).
 module Fake.Paket
 
 open System
@@ -41,7 +41,7 @@ let PaketPushDefaults() : PaketPushParams =
       PublishUrl = null
       EndPoint =  null
       WorkingDir = "./temp"
-      DegreeOfParallelism = 5
+      DegreeOfParallelism = 8
       ApiKey = null }
 
 /// Creates a new NuGet package by using Paket pack on all paket.template files in the working directory.
