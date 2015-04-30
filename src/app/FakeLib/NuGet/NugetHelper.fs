@@ -503,15 +503,18 @@ let getRepoUrl() = discoverRepoUrl.Force()
 /// [omit]
 let extractFeedPackageFromXml (entry : Xml.XmlNode) = 
     let properties = entry.["m:properties"]
-    let property name = properties.["d:" + name].InnerText
+    let property name = 
+        let p = properties.["d:" + name]
+        if p = null || p.IsEmpty then "" else p.InnerText
     let boolProperty name = (property name).ToLower() = "true"
+    let author = entry.["author"].InnerText
     let dateTimeProperty name = DateTime.Parse(property name)
-    { Id = property "Id"
+    { Id = entry.["title"].InnerText
       Version = property "Version"
       Description = property "Description"
       IsLatestVersion = boolProperty "IsLatestVersion"
-      Authors = property "Authors"
-      Owners = property "Authors"
+      Authors = author
+      Owners = author
       Language = property "Language"
       Tags = property "Tags"
       ProjectUrl = property "ProjectUrl"
