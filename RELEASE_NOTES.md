@@ -1,3 +1,6 @@
+#### 3.30.2 - 30.04.2015
+* Fix package id parsing and avoid NPE when feed is missing some properties - https://github.com/fsharp/FAKE/pull/776
+
 #### 3.30.1 - 29.04.2015
 * FCS simplification - https://github.com/fsharp/FAKE/pull/773
 * Paket push task runs in parallel - https://github.com/fsharp/FAKE/pull/768
