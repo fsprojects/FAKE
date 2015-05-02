@@ -14,7 +14,7 @@ Add a new target named "Watch" to your build:
     Target "Watch" (fun _ ->
         use watcher = !! "docs/**/*.*" |> WatchChanges (fun changes -> 
             tracefn "%A" changes
-            RunTarget "GenerateDocs"
+            Run "GenerateDocs"
         )
     
         System.Console.ReadLine() |> ignore //Needed to keep FAKE from exiting
@@ -34,7 +34,7 @@ If you need to watch only a subset of the files, say you want to rerun tests as 
     Target "Watch" (fun _ ->
         use watcher = !! "tests/**/bin/debug/*.dll" |> WatchChanges (fun changes -> 
             tracefn "%A" changes
-            RunTarget "RunTests"
+            Run "RunTests"
         )
     
         System.Console.ReadLine() |> ignore //Needed to keep FAKE from exiting
