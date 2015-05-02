@@ -71,7 +71,7 @@ watch for changes, and automatticly run a function or another target.</p>
 <span class="i">Target</span> <span class="s">&quot;Watch&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
     <span class="k">use</span> <span class="i">watcher</span> <span class="o">=</span> <span class="o">!!</span> <span class="s">&quot;docs/**/*.*&quot;</span> <span class="o">|&gt;</span> <span class="i">WatchChanges</span> (<span class="k">fun</span> <span class="i">changes</span> <span class="k">-&gt;</span> 
         <span class="i">tracefn</span> <span class="s">&quot;%A&quot;</span> <span class="i">changes</span>
-        <span class="i">RunTarget</span> <span class="s">&quot;GenerateDocs&quot;</span>
+        <span class="i">Run</span> <span class="s">&quot;GenerateDocs&quot;</span>
     )
 
     <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">System</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">Console</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="i">ReadLine</span>() <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="i">ignore</span> <span class="c">//Needed to keep FAKE from exiting</span>
@@ -113,7 +113,7 @@ and the GenerateDocs target should be rerun.</p>
 <span class="i">Target</span> <span class="s">&quot;Watch&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
     <span class="k">use</span> <span class="i">watcher</span> <span class="o">=</span> <span class="o">!!</span> <span class="s">&quot;tests/**/bin/debug/*.dll&quot;</span> <span class="o">|&gt;</span> <span class="i">WatchChanges</span> (<span class="k">fun</span> <span class="i">changes</span> <span class="k">-&gt;</span> 
         <span class="i">tracefn</span> <span class="s">&quot;%A&quot;</span> <span class="i">changes</span>
-        <span class="i">RunTarget</span> <span class="s">&quot;RunTests&quot;</span>
+        <span class="i">Run</span> <span class="s">&quot;RunTests&quot;</span>
     )
 
     <span onmouseout="hideTip(event, 'fs1', 5)" onmouseover="showTip(event, 'fs1', 5)" class="i">System</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs2', 6)" onmouseover="showTip(event, 'fs2', 6)" class="i">Console</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs3', 7)" onmouseover="showTip(event, 'fs3', 7)" class="i">ReadLine</span>() <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs4', 8)" onmouseover="showTip(event, 'fs4', 8)" class="i">ignore</span> <span class="c">//Needed to keep FAKE from exiting</span>
