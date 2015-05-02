@@ -24,15 +24,21 @@ type FileIncludes =
     
     /// Checks if a particular file is matched
     member this.IsMatch (path : string) =
+        let fullDir pattern = 
+            if Path.IsPathRooted(pattern) then
+                pattern
+            else
+                System.IO.Path.Combine(this.BaseDirectory, pattern)
+
         let included = 
             this.Includes
             |> Seq.exists(fun fileInclude ->
-                Globbing.isMatch fileInclude path
+                Globbing.isMatch (fullDir fileInclude) path
             )
         let excluded = 
             this.Excludes
-            |> Seq.exists(fun fileInclude ->
-                Globbing.isMatch fileInclude path
+            |> Seq.exists(fun fileExclude ->
+                Globbing.isMatch (fullDir fileExclude) path
             )
 
         included && not excluded
