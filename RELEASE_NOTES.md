@@ -1,3 +1,6 @@
+#### 3.30.3 - 02.05.2015
+* Fix for watching files via relative paths - https://github.com/fsharp/FAKE/pull/782
+
 #### 3.30.2 - 30.04.2015
 * Fix package id parsing and avoid NPE when feed is missing some properties - https://github.com/fsharp/FAKE/pull/776
 
