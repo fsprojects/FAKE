@@ -158,6 +158,7 @@
     <Compile Include="Vb6helper.fs" />
     <Compile Include="AndroidPublisher.fs" />
     <Compile Include="ChangeWatcher.fs" />
+    <Compile Include="CMake.fs" />
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
