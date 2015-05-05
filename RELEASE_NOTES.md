@@ -1,7 +1,6 @@
-#### 3.30.3 - 02.05.2015
+#### 3.31.0 - 05.05.2015
+* Fix FAKE not working on machines with only F# 4.0 installed - https://github.com/fsharp/FAKE/pull/784
 * Fix for watching files via relative paths - https://github.com/fsharp/FAKE/pull/782
-
-#### 3.30.2 - 30.04.2015
 * Fix package id parsing and avoid NPE when feed is missing some properties - https://github.com/fsharp/FAKE/pull/776
 
 #### 3.30.1 - 29.04.2015
