@@ -416,7 +416,8 @@ let asyncShellExec (args : ExecParams) =
         let commandLine = args.CommandLine + " " + formatArgs args.Args
         let info = 
             ProcessStartInfo
-                (args.Program, UseShellExecute = false, RedirectStandardError = true, RedirectStandardOutput = true, 
+                (args.Program, UseShellExecute = false, 
+                 RedirectStandardError = true, RedirectStandardOutput = true, RedirectStandardInput = true,
                  WindowStyle = ProcessWindowStyle.Hidden, WorkingDirectory = args.WorkingDirectory, 
                  Arguments = commandLine)
         use proc = new Process(StartInfo = info)
@@ -427,6 +428,7 @@ let asyncShellExec (args : ExecParams) =
         start proc
         proc.BeginOutputReadLine()
         proc.BeginErrorReadLine()
+        proc.StandardInput.Close()
         // attaches handler to Exited event, enables raising events, then awaits event
         // the event gets triggered even if process has already finished
         let! _ = Async.GuardedAwaitObservable proc.Exited (fun _ -> proc.EnableRaisingEvents <- true)
