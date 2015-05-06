@@ -1,4 +1,5 @@
-#### 3.31.0 - 05.05.2015
+#### 3.31.0 - 06.05.2015
+* BUGFIX: close stdin in asyncShellExec to avoid hangs - https://github.com/fsharp/FAKE/pull/786
 * Fix FAKE not working on machines with only F# 4.0 installed - https://github.com/fsharp/FAKE/pull/784
 * Fix for watching files via relative paths - https://github.com/fsharp/FAKE/pull/782
 * Fix package id parsing and avoid NPE when feed is missing some properties - https://github.com/fsharp/FAKE/pull/776
