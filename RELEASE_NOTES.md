@@ -1,6 +1,3 @@
-#### 3.31.2 - 07.05.2015
-* Create CleanDirExceptGitFolder helper
-
 #### 3.31.1 - 07.05.2015
 * BUGFIX: Improved detection of MSBuild.exe on TeamCity - https://github.com/fsharp/FAKE/pull/789
 
