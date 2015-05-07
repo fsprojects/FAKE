@@ -1,3 +1,6 @@
+#### 3.31.1 - 07.05.2015
+* BUGFIX: Improved detection of MSBuild.exe on TeamCity - https://github.com/fsharp/FAKE/pull/789
+
 #### 3.31.0 - 06.05.2015
 * BUGFIX: close stdin in asyncShellExec to avoid hangs - https://github.com/fsharp/FAKE/pull/786
 * Fix FAKE not working on machines with only F# 4.0 installed - https://github.com/fsharp/FAKE/pull/784
