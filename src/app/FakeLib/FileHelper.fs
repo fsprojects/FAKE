@@ -264,14 +264,37 @@ let CleanDir path =
     if di.Exists then 
         logfn "Deleting contents of %s" path
         // delete all files
-        Directory.GetFiles(path, "*.*", SearchOption.AllDirectories) |> Seq.iter (fun file -> 
-                                                                            let fi = fileInfo file
-                                                                            fi.IsReadOnly <- false
-                                                                            fi.Delete())
+        Directory.GetFiles(path, "*.*", SearchOption.AllDirectories) 
+        |> Seq.iter (fun file -> 
+                        let fi = fileInfo file
+                        fi.IsReadOnly <- false
+                        fi.Delete())
         // deletes all subdirectories
         let rec deleteDirs actDir = 
             Directory.GetDirectories(actDir) |> Seq.iter deleteDirs
             Directory.Delete(actDir, true)
+        Directory.GetDirectories path |> Seq.iter deleteDirs
+    else CreateDir path
+    // set writeable
+    File.SetAttributes(path, FileAttributes.Normal)
+
+/// Cleans a directory by removing all files and sub-directories except .git folder
+let CleanDirExceptGitFolder path = 
+    let di = directoryInfo path
+    if di.Exists then 
+        logfn "Deleting contents of %s" path
+        // delete all files
+        Directory.GetFiles(path, "*.*", SearchOption.AllDirectories) 
+        |> Seq.iter (fun file -> 
+                        let fi = fileInfo file
+                        fi.IsReadOnly <- false
+                        fi.Delete())
+        // deletes all subdirectories
+        let rec deleteDirs actDir = 
+            let di = directoryInfo actDir
+            if di.Name <> ".git" then
+                Directory.GetDirectories(actDir) |> Seq.iter deleteDirs            
+                Directory.Delete(actDir, true)
         Directory.GetDirectories path |> Seq.iter deleteDirs
     else CreateDir path
     // set writeable
