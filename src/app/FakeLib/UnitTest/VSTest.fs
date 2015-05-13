@@ -54,7 +54,9 @@ type VSTestParams =
       /// A timeout for the test runner (optional).
       TimeOut : TimeSpan
       /// Error level for controlling how VSTest failures should break the build (optional).
-      ErrorLevel : ErrorLevel }
+      ErrorLevel : ErrorLevel 
+      /// Path to test adapter e.g. xUnit (optional)
+      TestAdapterPath: string}
 
 /// VSTest default parameters.
 let VSTestDefaults = 
@@ -78,7 +80,8 @@ let VSTestDefaults =
           | None -> ""
       WorkingDir = null
       TimeOut = TimeSpan.MaxValue
-      ErrorLevel = ErrorLevel.Error }
+      ErrorLevel = ErrorLevel.Error
+      TestAdapterPath = null }
 
 /// Builds the command line arguments from the given parameter record and the given assemblies.
 /// [omit]
@@ -103,6 +106,7 @@ let buildVSTestArgs (parameters : VSTestParams) assembly =
     |> appendIfTrue parameters.ListExecutors "/ListExecutors"
     |> appendIfTrue parameters.ListLoggers "/ListLoggers"
     |> appendIfTrue parameters.ListSettingsProviders "/ListSettingsProviders"
+    |> appendIfNotNull parameters.TestAdapterPath "/TestAdapterPath:"
     |> toText
 
 /// Runs VSTest command line tool (VSTest.Console.exe) on a group of assemblies.
