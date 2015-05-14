@@ -9,7 +9,6 @@ open System.IO
 open SourceLink
 open Fake.ReleaseNotesHelper
 
-
 // properties
 let projectName = "FAKE"
 let projectSummary = "FAKE - F# Make - Get rid of the noise in your build scripts."
@@ -143,16 +142,6 @@ Target "Test" (fun _ ->
     |>  xUnit (fun p -> p)
 )
 
-Target "Bootstrap" (fun _ ->
-    // Check if we can build ourself with the new binaries.
-    let result = 
-        ExecProcess (fun info -> 
-            info.FileName <- "build/FAKE.exe"
-            info.WorkingDirectory <- "."
-            info.Arguments <- "build.fsx DoNothing") (System.TimeSpan.FromMinutes 3.0)
-    if result <> 0 then failwith "Bootstrapping failed"
-)
-
 Target "SourceLink" (fun _ ->
     use repo = new GitRepo(__SOURCE_DIRECTORY__)
     !! "src/app/**/*.fsproj" 
@@ -267,15 +256,13 @@ Target "Release" (fun _ ->
     Branches.pushTag "" "origin" release.NugetVersion
 )
 
-Target "DoNothing" DoNothing
 Target "Default" DoNothing
 
 // Dependencies
 "Clean"
     ==> "SetAssemblyInfo"
     ==> "BuildSolution"
-    ==> "Test"  
-    ==> "Bootstrap"  
+    ==> "Test"    
     ==> "Default"
     ==> "CopyLicense"
     =?> ("GenerateDocs", isLocalBuild && not isLinux)

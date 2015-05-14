@@ -1,3 +1,6 @@
+#### 3.31.4 - 14.05.2015
+* REVERT: FCS simplification - https://github.com/fsharp/FAKE/pull/773
+
 #### 3.31.3 - 14.05.2015
 * BUGFIX: Don't use MSBuild from invalid path
 
