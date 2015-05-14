@@ -31,7 +31,7 @@ let msBuildExe =
 
         let ev = environVar "MSBuild"
         if not (isNullOrEmpty ev) then
-            if isDirectory ev then ev @@ "MSBuild.exe" else ev
+            if isDirectory ev && Directory.Exists ev then ev @@ "MSBuild.exe" else ev
         else if "true".Equals(ConfigurationManager.AppSettings.["IgnoreMSBuild"], StringComparison.OrdinalIgnoreCase) then 
                 String.Empty 
         else findPath "MSBuildPath" MSBuildPath "MSBuild.exe"

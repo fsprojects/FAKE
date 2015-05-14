@@ -1,3 +1,6 @@
+#### 3.31.3 - 14.05.2015
+* BUGFIX: Don't use MSBuild from invalid path
+
 #### 3.31.1 - 07.05.2015
 * BUGFIX: Improved detection of MSBuild.exe on TeamCity - https://github.com/fsharp/FAKE/pull/789
 
