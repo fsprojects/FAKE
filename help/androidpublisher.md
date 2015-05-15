@@ -34,6 +34,8 @@ https://developers.google.com/android-publisher/getting_started
                             ProjectPath = "Path to my project Droid.csproj"
                             Configuration = "Release"
                             OutputPath = androidBuildDir
+							//PackageAbiTargets = AllAndroidAbiTargets
+							// you can specify ABI Targets (read http://developer.xamarin.com/guides/android/advanced_topics/build-abi-specific-apks/ for more informations)
                         })
 
         |> AndroidSignAndAlign (fun defaults ->
@@ -42,7 +44,7 @@ https://developers.google.com/android-publisher/getting_started
                 KeystorePassword = "my password"
                 KeystoreAlias = "my key alias"
             })
-        |> fun file -> file.CopyTo(Path.Combine(androidProdDir, file.Name)) |> ignore
+        |> Seq.iter(fun file -> file.CopyTo(Path.Combine(androidProdDir, file.Name)) |> ignore)
 
     )
 
@@ -126,5 +128,5 @@ Default target will not start "Publish" target because apps do not need to be up
 
 To publish your app, you can run
 
-    PS> Fake.exe .\build.fsx "target=publish"
+    PS> Fake.exe .\\build.fsx "target=publish"
 
