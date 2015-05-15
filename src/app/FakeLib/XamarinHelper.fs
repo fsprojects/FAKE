@@ -69,6 +69,23 @@ let iOSBuild setParams =
     |> validateParams
     |> buildProject
 
+type AndroidAbiTarget = 
+    | X86
+    | ArmEabi
+    | ArmEabiV7a
+    | Universal
+
+type AndroidPackageAbiParam = 
+    | OneApkForAll
+    | SpecificAbis of AndroidAbiTarget list
+
+let AllAndroidAbiTargets = 
+    AndroidPackageAbiParam.SpecificAbis
+        ( [ AndroidAbiTarget.X86
+            AndroidAbiTarget.ArmEabi
+            AndroidAbiTarget.ArmEabiV7a
+            AndroidAbiTarget.Universal ] )
+
 /// The Android packaging parameter type
 type AndroidPackageParams = {
     /// (Required) Path to the Android project file (not the solution file!)
@@ -77,6 +94,8 @@ type AndroidPackageParams = {
     Configuration: string
     /// Output path for build, defaults to 'bin/Release'
     OutputPath: string
+    /// Build an APK Targetting One ABI (used to reduce the size of the APK and support different CPU architectures)
+    PackageAbiTargets : AndroidPackageAbiParam
 }
 
 /// The default Android packaging parameters
@@ -84,6 +103,7 @@ let AndroidPackageDefaults = {
     ProjectPath = ""
     Configuration = "Release"
     OutputPath = "bin/Release"
+    PackageAbiTargets = AndroidPackageAbiParam.OneApkForAll
 }
 
 /// Packages a Xamarin.Android app, returning a FileInfo object for the unsigned APK file
@@ -92,21 +112,47 @@ let AndroidPackageDefaults = {
 let AndroidPackage setParams =
     let validateParams param =
         if param.ProjectPath = "" then failwith "You must specify a project to package"
-
         param
 
-    let createPackage param =
+    let buildPackages param = 
         MSBuild param.OutputPath "PackageForAndroid" [ "Configuration", param.Configuration ] [ param.ProjectPath ] |> ignore
 
-        directoryInfo param.OutputPath
-        |> filesInDirMatching "*.apk"
+    let getPattern target = 
+        match target with
+            | AndroidAbiTarget.X86 -> "*-x86.apk"
+            | AndroidAbiTarget.ArmEabi -> "*-armeabi.apk"
+            | AndroidAbiTarget.ArmEabiV7a -> "*-armeabi-v7a.apk"
+            | _ -> "*.apk"
+
+    let mostRecentFileInDirMatching path target = 
+        let pattern = target |> getPattern
+        directoryInfo path
+        |> filesInDirMatching pattern
+        |> Seq.filter (
+                fun file -> if target = AndroidAbiTarget.Universal then 
+                                file.Name.EndsWith("-x86.apk") |> not 
+                                    && file.Name.EndsWith("-armeabi.apk") |> not
+                                    && file.Name.EndsWith("-armeabi-v7a.apk") |> not
+                            else true )
         |> Seq.sortBy (fun file -> file.LastWriteTime)
         |> Seq.last
 
-    AndroidPackageDefaults
-    |> setParams
-    |> validateParams
-    |> createPackage
+    let createPackage param =
+        param |> buildPackages |> ignore
+        [ mostRecentFileInDirMatching param.OutputPath  AndroidAbiTarget.Universal ]
+
+    let createPackageAbiSpecificApk (param, targets) =
+        param |> buildPackages |> ignore
+        let dir = directoryInfo param.OutputPath
+        seq { for t in targets do 
+                yield mostRecentFileInDirMatching param.OutputPath t
+            } |> Seq.toList
+
+    let param = AndroidPackageDefaults |> setParams |> validateParams
+
+    match param.PackageAbiTargets with
+        | AndroidPackageAbiParam.OneApkForAll -> param |> createPackage
+        | AndroidPackageAbiParam.SpecificAbis targets -> (param,targets) |> createPackageAbiSpecificApk 
 
 // Parameters for signing and aligning an Android package
 type AndroidSignAndAlignParams = {
@@ -135,7 +181,7 @@ let AndroidSignAndAlignDefaults = {
 /// ## Parameters
 ///  - `setParams` - Function used to override the default build parameters
 ///  - `apkFile` - FileInfo object for an unsigned APK file to sign and align
-let AndroidSignAndAlign setParams apkFile =
+let AndroidSignAndAlign setParams apkFiles =
     let validateParams param =
         if param.KeystorePath = "" then failwith "You must specify a keystore to use"
         if param.KeystorePassword = "" then failwith "You must provide the keystore's password"
@@ -158,10 +204,11 @@ let AndroidSignAndAlign setParams apkFile =
 
         fileInfo fullAlignedFilePath
 
-    AndroidSignAndAlignDefaults
-    |> setParams
-    |> validateParams
-    |> signAndAlign apkFile  
+    [ for apkFile in apkFiles ->
+        AndroidSignAndAlignDefaults
+            |> setParams
+            |> validateParams
+            |> signAndAlign apkFile ]
 
 /// The iOS archive paramater type
 type iOSArchiveParams = {

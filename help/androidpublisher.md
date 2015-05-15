@@ -34,6 +34,8 @@ https://developers.google.com/android-publisher/getting_started
                             ProjectPath = "Path to my project Droid.csproj"
                             Configuration = "Release"
                             OutputPath = androidBuildDir
+							//PackageAbiTargets = AllAndroidAbiTargets
+							// you can specify ABI Targets (read http://developer.xamarin.com/guides/android/advanced_topics/build-abi-specific-apks/ for more informations)
                         })
 
         |> AndroidSignAndAlign (fun defaults ->
@@ -42,67 +44,67 @@ https://developers.google.com/android-publisher/getting_started
                 KeystorePassword = "my password"
                 KeystoreAlias = "my key alias"
             })
-        |> fun file -> file.CopyTo(Path.Combine(androidProdDir, file.Name)) |> ignore
+        |> Seq.iter(fun file -> file.CopyTo(Path.Combine(androidProdDir, file.Name)) |> ignore)
 
     )
 
     Target "Publish" (fun _ -> 
         // I like verbose script
         trace "publishing Android App"
-        let apk = androidProdDir 
+        let apks = androidProdDir 
                         |> directoryInfo 
                         |> filesInDir 
                         |> Seq.filter(fun f -> f.Name.EndsWith(".apk"))
-                        |> Seq.exactlyOne
-        let apkPath = apk.FullName
-        tracefn "Apk found: %s" apkPath
-        let mail = "my service account mail@developer.gserviceaccount.com"
-        // Path to the certificate file probably named 'Google Play Android Developer-xxxxxxxxxxxx.p12'
-        let certificate = new X509Certificate2
-                                    (
-                                        @"Google Play Android Developer-xxxxxxxxxxxx.p12",
-                                        "notasecret",
-                                        X509KeyStorageFlags.Exportable
-                                    )
-        let packageName = "my Android package name"
+	    for apk in apks do        
+			let apkPath = apk.FullName
+			tracefn "Apk found: %s" apkPath
+			let mail = "my service account mail@developer.gserviceaccount.com"
+			// Path to the certificate file probably named 'Google Play Android Developer-xxxxxxxxxxxx.p12'
+			let certificate = new X509Certificate2
+										(
+											@"Google Play Android Developer-xxxxxxxxxxxx.p12",
+											"notasecret",
+											X509KeyStorageFlags.Exportable
+										)
+			let packageName = "my Android package name"
 
-        // to publish an alpha version: 
-        PublishApk 
-            { AlphaSettings with 
-                Config = 
-                    { 
-                        Certificate = certificate;
-                        PackageName = packageName;
-                        AccountId = mail;
-                        Apk = apkPath; 
-                    }
-            }
+			// to publish an alpha version: 
+			PublishApk 
+				{ AlphaSettings with 
+					Config = 
+						{ 
+							Certificate = certificate;
+							PackageName = packageName;
+							AccountId = mail;
+							Apk = apkPath; 
+						}
+				}
 
-        // to publish a beta version: 
-        //
-        //PublishApk 
-        //    { BetaSettings with 
-        //        Config = 
-        //            { 
-        //                Certificate = certificate;
-        //                PackageName = packageName;
-        //                AccountId = mail;
-        //                Apk = apkPath; 
-        //            }
-        //    }
+			// to publish a beta version: 
+			//
+			//PublishApk 
+			//    { BetaSettings with 
+			//        Config = 
+			//            { 
+			//                Certificate = certificate;
+			//                PackageName = packageName;
+			//                AccountId = mail;
+			//                Apk = apkPath; 
+			//            }
+			//    }
         
-        // to publish a production version: 
-        //
-        //PublishApk 
-        //    { ProductionSettings with 
-        //        Config = 
-        //            { 
-        //                Certificate = certificate;
-        //                PackageName = packageName;
-        //                AccountId = mail;
-        //                Apk = apkPath; 
-        //            }
-        //    }
+			// to publish a production version: 
+			//
+			//PublishApk 
+			//    { ProductionSettings with 
+			//        Config = 
+			//            { 
+			//                Certificate = certificate;
+			//                PackageName = packageName;
+			//                AccountId = mail;
+			//                Apk = apkPath; 
+			//            }
+			//    }
     )
 
     Target "Android-Build" (fun _ ->
@@ -126,5 +128,5 @@ Default target will not start "Publish" target because apps do not need to be up
 
 To publish your app, you can run
 
-    PS> Fake.exe .\build.fsx "target=publish"
+    PS> Fake.exe .\\build.fsx "target=publish"
 
