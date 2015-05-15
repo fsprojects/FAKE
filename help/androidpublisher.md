@@ -51,60 +51,60 @@ https://developers.google.com/android-publisher/getting_started
     Target "Publish" (fun _ -> 
         // I like verbose script
         trace "publishing Android App"
-        let apk = androidProdDir 
+        let apks = androidProdDir 
                         |> directoryInfo 
                         |> filesInDir 
                         |> Seq.filter(fun f -> f.Name.EndsWith(".apk"))
-                        |> Seq.exactlyOne
-        let apkPath = apk.FullName
-        tracefn "Apk found: %s" apkPath
-        let mail = "my service account mail@developer.gserviceaccount.com"
-        // Path to the certificate file probably named 'Google Play Android Developer-xxxxxxxxxxxx.p12'
-        let certificate = new X509Certificate2
-                                    (
-                                        @"Google Play Android Developer-xxxxxxxxxxxx.p12",
-                                        "notasecret",
-                                        X509KeyStorageFlags.Exportable
-                                    )
-        let packageName = "my Android package name"
+	    for apk in apks do        
+			let apkPath = apk.FullName
+			tracefn "Apk found: %s" apkPath
+			let mail = "my service account mail@developer.gserviceaccount.com"
+			// Path to the certificate file probably named 'Google Play Android Developer-xxxxxxxxxxxx.p12'
+			let certificate = new X509Certificate2
+										(
+											@"Google Play Android Developer-xxxxxxxxxxxx.p12",
+											"notasecret",
+											X509KeyStorageFlags.Exportable
+										)
+			let packageName = "my Android package name"
 
-        // to publish an alpha version: 
-        PublishApk 
-            { AlphaSettings with 
-                Config = 
-                    { 
-                        Certificate = certificate;
-                        PackageName = packageName;
-                        AccountId = mail;
-                        Apk = apkPath; 
-                    }
-            }
+			// to publish an alpha version: 
+			PublishApk 
+				{ AlphaSettings with 
+					Config = 
+						{ 
+							Certificate = certificate;
+							PackageName = packageName;
+							AccountId = mail;
+							Apk = apkPath; 
+						}
+				}
 
-        // to publish a beta version: 
-        //
-        //PublishApk 
-        //    { BetaSettings with 
-        //        Config = 
-        //            { 
-        //                Certificate = certificate;
-        //                PackageName = packageName;
-        //                AccountId = mail;
-        //                Apk = apkPath; 
-        //            }
-        //    }
+			// to publish a beta version: 
+			//
+			//PublishApk 
+			//    { BetaSettings with 
+			//        Config = 
+			//            { 
+			//                Certificate = certificate;
+			//                PackageName = packageName;
+			//                AccountId = mail;
+			//                Apk = apkPath; 
+			//            }
+			//    }
         
-        // to publish a production version: 
-        //
-        //PublishApk 
-        //    { ProductionSettings with 
-        //        Config = 
-        //            { 
-        //                Certificate = certificate;
-        //                PackageName = packageName;
-        //                AccountId = mail;
-        //                Apk = apkPath; 
-        //            }
-        //    }
+			// to publish a production version: 
+			//
+			//PublishApk 
+			//    { ProductionSettings with 
+			//        Config = 
+			//            { 
+			//                Certificate = certificate;
+			//                PackageName = packageName;
+			//                AccountId = mail;
+			//                Apk = apkPath; 
+			//            }
+			//    }
     )
 
     Target "Android-Build" (fun _ ->
