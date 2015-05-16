@@ -123,6 +123,7 @@
     <Compile Include="FileHandling\GlobbingSpecs.cs" />
     <Compile Include="XUnit2HelperSpecs.cs" />
     <Compile Include="XUnitHelperSpecs.cs" />
+    <Compile Include="XUnitSpecs.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
