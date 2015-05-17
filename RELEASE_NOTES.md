@@ -1,4 +1,4 @@
-#### 3.32.0 - 17.05.2015
+#### 3.32.1 - 17.05.2015
 * Add test adapter path to vs test params - https://github.com/fsharp/FAKE/pull/793
 * BUGFIX: Fix WatchChanges on Mac, fix Dispose, improve Timer usage - https://github.com/fsharp/FAKE/pull/799
 * REVERT: FCS simplification - https://github.com/fsharp/FAKE/pull/773
