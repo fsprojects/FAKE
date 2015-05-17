@@ -1,10 +1,8 @@
-#### 3.31.4 - 14.05.2015
+#### 3.32.0 - 17.05.2015
+* Add test adapter path to vs test params - https://github.com/fsharp/FAKE/pull/793
+* BUGFIX: Fix WatchChanges on Mac, fix Dispose, improve Timer usage - https://github.com/fsharp/FAKE/pull/799
 * REVERT: FCS simplification - https://github.com/fsharp/FAKE/pull/773
-
-#### 3.31.3 - 14.05.2015
 * BUGFIX: Don't use MSBuild from invalid path
-
-#### 3.31.1 - 07.05.2015
 * BUGFIX: Improved detection of MSBuild.exe on TeamCity - https://github.com/fsharp/FAKE/pull/789
 
 #### 3.31.0 - 06.05.2015
