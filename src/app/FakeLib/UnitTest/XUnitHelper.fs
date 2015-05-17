@@ -61,11 +61,12 @@ let XUnitDefaults =
 let buildXUnitArgs parameters assembly = 
     let fi = fileInfo assembly
     let name = fi.Name
-    
-    let dir = 
+
+    let dir =
         if isNullOrEmpty parameters.OutputDir then String.Empty
         else Path.GetFullPath parameters.OutputDir
-    
+        |> replace currentDirectory "."
+
     let traits includeExclude (name, values : string) = 
         values.Split([| ',' |], System.StringSplitOptions.RemoveEmptyEntries)
         |> Seq.collect (fun value -> 
