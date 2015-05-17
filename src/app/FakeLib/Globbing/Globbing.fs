@@ -65,17 +65,29 @@ let inline private normalizeOutputPath (p : string) =
      .TrimEnd(Path.DirectorySeparatorChar)
 
 let internal getRoot (baseDirectory : string) (pattern : string) =
-    let baseDirectory = (normalizePath baseDirectory)
+    let baseDirectory = normalizePath baseDirectory
+    let normPattern = normalizePath pattern
+
+    let patternParts = normPattern.Split([| '/'; '\\' |], StringSplitOptions.RemoveEmptyEntries)
+    let patternPathParts = 
+        patternParts
+        |> Seq.takeWhile(fun p -> not (p.Contains("*")))
+        |> Seq.toArray
 
     let globRoot = 
-        (normalizePath pattern).Split([| '/'; '\\' |], StringSplitOptions.RemoveEmptyEntries) |> 
-        Seq.takeWhile(fun p -> not (p.Contains("*"))) |> 
-        String.concat(Path.DirectorySeparatorChar.ToString())
+        // If we did not find any "*", then drop the last bit (it is a file name, not a pattern)
+        ( if patternPathParts.Length = patternParts.Length then
+              patternPathParts.[0 .. patternPathParts.Length-2]     
+          else patternPathParts )
+        |> String.concat (Path.DirectorySeparatorChar.ToString())
 
-    if Path.IsPathRooted globRoot then
-        globRoot
-    else
-        Path.Combine(baseDirectory, globRoot)
+    let globRoot = 
+        // If we dropped "/" from the beginning of the path in the 'Split' call, put it back!
+        if normPattern.StartsWith("/") then "/" + globRoot
+        else globRoot
+
+    if Path.IsPathRooted globRoot then globRoot
+    else Path.Combine(baseDirectory, globRoot)
 
 let internal search (baseDir : string) (input : string) = 
     let baseDir = normalizePath baseDir
