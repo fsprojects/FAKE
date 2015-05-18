@@ -232,6 +232,7 @@ Target "CreateNuGet" (fun _ ->
 Target "PublishNuget" (fun _ ->
     Paket.Push(fun p -> 
         { p with
+            DegreeOfParallelism = 2
             WorkingDir = nugetDir })
 )
 
