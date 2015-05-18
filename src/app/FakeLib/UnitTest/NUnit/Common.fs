@@ -40,24 +40,44 @@ type NUnitDomainModel =
 ///
 /// For reference, see: [NUnit-Console Command Line Options](http://www.nunit.org/index.php?p=consoleCommandLine&r=2.6.4)
 type NUnitParams = 
-    { IncludeCategory : string
+    { 
+      /// Default: ""
+      IncludeCategory : string
+      /// Default: ""
       ExcludeCategory : string
+      /// Default FAKE will try to locate nunit-console.exe in any subfolder of the current directory.
       ToolPath : string
+      /// Default:"nunit-console.exe"
       ToolName : string
+      /// Default: false
       DontTestInNewThread : bool
+      /// Default: false
       StopOnError : bool
+      /// Default: ".\TestResult.xml"
       OutputFile : string
+      /// Default: ""
       Out : string
+      /// Default: ""
       ErrorOutputFile : string
+      /// Default: ""
       Framework : string
+      /// Default: [NUnitProcessModel](fake-nunitcommon-nunitprocessmodel.html).DefaultProcessModel
       ProcessModel : NUnitProcessModel
+      /// Default: true
       ShowLabels : bool
+      /// Default: ""
       WorkingDir : string
+      /// Default: ""
       XsltTransformFile : string
+      /// Default: 5 minutes
       TimeOut : TimeSpan
+      /// Default: false
       DisableShadowCopy : bool
+      /// Default: [NUnitDomainModel](fake-nunitcommon-nunitdomainmodel.html).DefaultDomainModel
       Domain : NUnitDomainModel
+      /// Default: [TestRunnerErrorLevel](fake-unittestcommon-testrunnererrorlevel.html).Error
       ErrorLevel : NUnitErrorLevel 
+      /// Default: ""
       Fixture: string}
 
 /// The [NUnit](http://www.nunit.org/) default parameters. FAKE tries to locate nunit-console.exe in any subfolder.
