@@ -9,7 +9,7 @@ open System.Text
 /// Option which allows to specify if a NUnit error should break the build.
 type NUnitErrorLevel = TestRunnerErrorLevel // a type alias to keep backwards compatibility
 
-/// Process model for nunit to use, see http://www.nunit.org/index.php?p=projectEditor&r=2.5
+/// Process model for nunit to use, see [Project Editor](http://www.nunit.org/index.php?p=projectEditor&r=2.6.4)
 type NUnitProcessModel = 
     | DefaultProcessModel
     | SingleProcessModel
@@ -21,7 +21,7 @@ type NUnitProcessModel =
         | SingleProcessModel -> "Single"
         | SeparateProcessModel -> "Separate" 
         | MultipleProcessModel -> "Multiple"
-/// The /domain option controls of the creation of AppDomains for running tests. See http://www.nunit.org/index.php?p=consoleCommandLine&r=2.4.6
+/// The /domain option controls of the creation of AppDomains for running tests. See [NUnit-Console Command Line Options](http://www.nunit.org/index.php?p=consoleCommandLine&r=2.6.4)
 type NUnitDomainModel = 
     /// No domain is created - the tests are run in the primary domain. This normally requires copying the NUnit assemblies into the same directory as your tests.
     | DefaultDomainModel
@@ -34,7 +34,11 @@ type NUnitDomainModel =
         | DefaultDomainModel -> ""
         | SingleDomainModel -> "Single"
         | MultipleDomainModel -> "Multiple"
-/// Parameter type for NUnit.
+
+/// The [NUnit](http://www.nunit.org/) Console Parameters type.
+/// FAKE will use [NUnitDefaults](fake-nunitcommon.html) for values not provided.
+///
+/// For reference, see: [NUnit-Console Command Line Options](http://www.nunit.org/index.php?p=consoleCommandLine&r=2.6.4)
 type NUnitParams = 
     { IncludeCategory : string
       ExcludeCategory : string
@@ -56,7 +60,7 @@ type NUnitParams =
       ErrorLevel : NUnitErrorLevel 
       Fixture: string}
 
-/// NUnit default parameters. FAKE tries to locate nunit-console.exe in any subfolder.
+/// The [NUnit](http://www.nunit.org/) default parameters. FAKE tries to locate nunit-console.exe in any subfolder.
 let NUnitDefaults = 
     let toolname = "nunit-console.exe"
     { IncludeCategory = ""
