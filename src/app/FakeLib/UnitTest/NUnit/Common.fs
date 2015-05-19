@@ -41,46 +41,83 @@ type NUnitDomainModel =
 /// For reference, see: [NUnit-Console Command Line Options](http://www.nunit.org/index.php?p=consoleCommandLine&r=2.6.4)
 type NUnitParams = 
     { 
-      /// Default: ""
+      /// The [Categories](http://www.nunit.org/index.php?p=category&r=2.6.4) to be included in a test run. Multiple categories may be specified on either option, by using commas to separate them.
       IncludeCategory : string
-      /// Default: ""
+
+      /// The [Categories](http://www.nunit.org/index.php?p=category&r=2.6.4) to be excluded in a test run. Multiple categories may be specified on either option, by using commas to separate them.
       ExcludeCategory : string
-      /// Default FAKE will try to locate nunit-console.exe in any subfolder of the current directory.
+
+      /// The path to the NUnit console runner: `nunit-console.exe`
       ToolPath : string
-      /// Default:"nunit-console.exe"
+
+      /// NUnit console runner name. ( `nunit-console.exe`)
       ToolName : string
-      /// Default: false
+
+      /// Suppresses use of a separate thread for running the tests and uses the main thread instead.
       DontTestInNewThread : bool
-      /// Default: false
+
+      /// Causes execution of the test run to terminate immediately on the first test failure or error.
       StopOnError : bool
-      /// Default: ".\TestResult.xml"
+
+      /// The output path of the nUnit XML report.
       OutputFile : string
-      /// Default: ""
+
+      /// Redirects output created by the tests from standard output (console) to the file specified as value.
       Out : string
-      /// Default: ""
+
+      /// Redirects error output created by the tests from standard error output (console) to the file specified as value.
       ErrorOutputFile : string
-      /// Default: ""
+
+      /// Allows you to specify the version of the runtime to be used in executing tests.
       Framework : string
-      /// Default: [NUnitProcessModel](fake-nunitcommon-nunitprocessmodel.html).DefaultProcessModel
+
+      /// Controls how NUnit loads tests in processes. See: [NUnitProcessModel](fake-nunitcommon-nunitprocessmodel.html).
       ProcessModel : NUnitProcessModel
-      /// Default: true
+
+      /// Causes an identifying label to be displayed at the start of each test case.
       ShowLabels : bool
-      /// Default: ""
+
+      /// The working directory.
       WorkingDir : string
-      /// Default: ""
+
+      /// The path to a custom XSLT transform file to be used to process the XML report.
       XsltTransformFile : string
-      /// Default: 5 minutes
+
+      /// The default timeout to be used for test cases. If any test exceeds the timeout value, it is cancelled and reported as an error.
       TimeOut : TimeSpan
-      /// Default: false
+
+      /// Disables shadow copying of the assembly in order to provide improved performance.
       DisableShadowCopy : bool
-      /// Default: [NUnitDomainModel](fake-nunitcommon-nunitdomainmodel.html).DefaultDomainModel
+
+      /// See [NUnitDomainModel](fake-nunitcommon-nunitdomainmodel.html).
       Domain : NUnitDomainModel
       /// Default: [TestRunnerErrorLevel](fake-unittestcommon-testrunnererrorlevel.html).Error
       ErrorLevel : NUnitErrorLevel 
       /// Default: ""
       Fixture: string}
 
-/// The [NUnit](http://www.nunit.org/) default parameters. FAKE tries to locate nunit-console.exe in any subfolder.
+/// The [NUnitParams](fake-nunitcommon-nunitparams.html) default parameters. 
+///
+/// ## Defaults
+/// - `IncludeCategory` - `""`
+/// - `ExcludeCategory` - `""`
+/// - `ToolPath` - `""`
+/// - `ToolName` - `"nunit-console.exe"`
+/// - `DontTestInNewThread`- `false`
+/// - `StopOnError` - `false`
+/// - `OutputFile` - The `nunit-console.exe` path if it exists in a subdirectory of the current directory.
+/// - `Out` - `""`
+/// - `ErrorOutputFile` - `""`
+/// - `WorkingDir` - `""`
+/// - `Framework` - `""`
+/// - `ProcessModel` - `DefaultProcessModel`
+/// - `ShowLabels` - `true`
+/// - `XsltTransformFile` - `""`
+/// - `TimeOut` - 5 minutes
+/// - `DisableShadowCopy` - `false`
+/// - `Domain` - `DefaultDomainModel`
+/// - `ErrorLevel` - `Error`
+/// - `Fixture` - `""`
 let NUnitDefaults = 
     let toolname = "nunit-console.exe"
     { IncludeCategory = ""
