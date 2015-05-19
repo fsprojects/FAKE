@@ -1,8 +1,5 @@
 FSharp.Core
-CsQuery
-Machine.Specifications
 Machine.Specifications.Should
-Nancy
 Nancy.Testing
 Newtonsoft.Json
 SSH.NET

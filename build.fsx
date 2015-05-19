@@ -24,8 +24,9 @@ let packages =
      "FAKE.IIS",projectDescription + " Extensions for IIS"
      "FAKE.SQL",projectDescription + " Extensions for SQL Server"
      "FAKE.Experimental",projectDescription + " Experimental Extensions"
-     "FAKE.Deploy.Lib",projectDescription + " Extensions for FAKE Deploy"
-     projectName,projectDescription + " This package bundles all extensions."]
+     "FAKE.Deploy.Lib",projectDescription + " Extensions for FAKE Deploy"     
+     projectName,projectDescription + " This package bundles all extensions."
+     "FAKE.Lib",projectDescription + " FAKE helper functions as library"]
 
 let buildDir = "./build"
 let testDir = "./test"
@@ -178,9 +179,13 @@ Target "CreateNuGet" (fun _ ->
     for package,description in packages do
         let nugetDocsDir = nugetDir @@ "docs"
         let nugetToolsDir = nugetDir @@ "tools"
+        let nugetLibDir = nugetDir @@ "lib"
+        let nugetLib451Dir = nugetLibDir @@ "net451"
 
         CleanDir nugetDocsDir
         CleanDir nugetToolsDir
+        CleanDir nugetLibDir
+        DeleteDir nugetLibDir
 
         DeleteFile "./build/FAKE.Gallio/Gallio.dll"
 
@@ -191,6 +196,9 @@ Target "CreateNuGet" (fun _ ->
         | p when p = "FAKE.Core" ->
             !! (buildDir @@ "*.*") |> Copy nugetToolsDir
             CopyDir nugetDocsDir docsDir allFiles
+        | p when p = "FAKE.Lib" -> 
+            CleanDir nugetLib451Dir
+            !! (buildDir @@ "FakeLib.dll") |> Copy nugetLib451Dir
         | _ ->
             CopyDir nugetToolsDir (buildDir @@ package) allFiles
             CopyTo nugetToolsDir additionalFiles
@@ -206,9 +214,7 @@ Target "CreateNuGet" (fun _ ->
                 Summary = projectSummary
                 ReleaseNotes = release.Notes |> toLines
                 Dependencies =                    
-                    (if package = "FAKE.Core" then
-                       p.Dependencies @ ["FSharp.Core", GetPackageVersion "packages" "FSharp.Core"]
-                     else if package <> projectName then
+                    (if package <> "FAKE.Core" && package <> projectName && package <> "FAKE.Lib" then
                        ["FAKE.Core", RequireExactly (NormalizeVersion release.AssemblyVersion)]
                      else p.Dependencies )
                 AccessKey = getBuildParamOrDefault "nugetkey" ""

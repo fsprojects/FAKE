@@ -63,7 +63,13 @@ type AppVeyorEnvironment =
     
     /// Commit message
     static member RepoCommitMessage = environVar "APPVEYOR_REPO_COMMIT_MESSAGE"
+    
+    /// Platform name set on Build tab of project settings (or through platform parameter in appveyor.yml).
+    static member Platform = environVar "PLATFORM"
 
+    /// Configuration name set on Build tab of project settings (or through configuration parameter in appveyor.yml).  
+    static member Configuration  = environVar "CONFIGURATION"
+    
 let private sendToAppVeyor args = 
     ExecProcess (fun info -> 
         info.FileName <- "appveyor"

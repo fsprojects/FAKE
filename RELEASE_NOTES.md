@@ -1,5 +1,11 @@
-#### 3.11.1 - 04.12.2014
+#### 3.13.3 - 05.01.2015
+* Report fatal git errors
+
+#### 3.13.0 - 03.01.2015
+* New FAKE.Lib nuget package which contains the FakeLib - https://github.com/fsharp/FAKE/pull/607
+* New AppVeyor properties - https://github.com/fsharp/FAKE/pull/605
 * Use FSharp.Core from NuGet - https://github.com/fsharp/FAKE/pull/602
+* Build and deploy Azure web jobs - https://github.com/fsharp/FAKE/pull/613
 
 #### 3.11.0 - 03.12.2014
 * Dual-license under Apache 2 and MS-PL, with Apache as default - https://github.com/fsharp/FAKE/pull/598
