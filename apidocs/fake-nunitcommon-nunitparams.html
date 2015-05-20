@@ -38,7 +38,10 @@
 
 <h1>NUnitParams</h1>
 <div class="xmldoc">
-<p>Parameter type for NUnit.</p>
+<p>The <a href="http://www.nunit.org/">NUnit</a> Console Parameters type.
+FAKE will use <a href="fake-nunitcommon.html">NUnitDefaults</a> for values not provided.</p>
+
+<p>For reference, see: <a href="http://www.nunit.org/index.php?p=consoleCommandLine&amp;r=2.6.4">NUnit-Console Command Line Options</a></p>
 </div>
   <h3>Record Fields</h3>
   <table class="table table-bordered member-list">
@@ -57,11 +60,12 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L54-54" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L90-90" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Disables shadow copying of the assembly in order to provide improved performance.</p>
+
         </td>
       </tr>
       <tr>
@@ -75,11 +79,12 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L55-55" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L93-93" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>See <a href="fake-nunitcommon-nunitdomainmodel.html">NUnitDomainModel</a>.</p>
+
         </td>
       </tr>
       <tr>
@@ -93,11 +98,12 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L43-43" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L57-57" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Suppresses use of a separate thread for running the tests and uses the main thread instead.</p>
+
         </td>
       </tr>
       <tr>
@@ -111,11 +117,12 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L56-56" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L95-95" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Default: <a href="fake-unittestcommon-testrunnererrorlevel.html">TestRunnerErrorLevel</a>.Error</p>
+
         </td>
       </tr>
       <tr>
@@ -129,11 +136,12 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L47-47" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L69-69" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Redirects error output created by the tests from standard error output (console) to the file specified as value.</p>
+
         </td>
       </tr>
       <tr>
@@ -147,11 +155,12 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L40-40" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L48-48" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>The <a href="http://www.nunit.org/index.php?p=category&amp;r=2.6.4">Categories</a> to be excluded in a test run. Multiple categories may be specified on either option, by using commas to separate them.</p>
+
         </td>
       </tr>
       <tr>
@@ -165,11 +174,12 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L57-57" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L97-97" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Default: ""</p>
+
         </td>
       </tr>
       <tr>
@@ -183,11 +193,12 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L48-48" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L72-72" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Allows you to specify the version of the runtime to be used in executing tests.</p>
+
         </td>
       </tr>
       <tr>
@@ -201,11 +212,12 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L39-39" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L45-45" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>The <a href="http://www.nunit.org/index.php?p=category&amp;r=2.6.4">Categories</a> to be included in a test run. Multiple categories may be specified on either option, by using commas to separate them.</p>
+
         </td>
       </tr>
       <tr>
@@ -219,11 +231,12 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L46-46" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L66-66" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Redirects output created by the tests from standard output (console) to the file specified as value.</p>
+
         </td>
       </tr>
       <tr>
@@ -237,11 +250,12 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L45-45" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L63-63" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>The output path of the nUnit XML report.</p>
+
         </td>
       </tr>
       <tr>
@@ -255,11 +269,12 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L49-49" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L75-75" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Controls how NUnit loads tests in processes. See: <a href="fake-nunitcommon-nunitprocessmodel.html">NUnitProcessModel</a>.</p>
+
         </td>
       </tr>
       <tr>
@@ -273,11 +288,12 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L50-50" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L78-78" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Causes an identifying label to be displayed at the start of each test case.</p>
+
         </td>
       </tr>
       <tr>
@@ -291,11 +307,12 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L44-44" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L60-60" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Causes execution of the test run to terminate immediately on the first test failure or error.</p>
+
         </td>
       </tr>
       <tr>
@@ -309,11 +326,12 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L53-53" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L87-87" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>The default timeout to be used for test cases. If any test exceeds the timeout value, it is cancelled and reported as an error.</p>
+
         </td>
       </tr>
       <tr>
@@ -327,11 +345,12 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L42-42" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L54-54" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>NUnit console runner name. ( <code>nunit-console.exe</code>)</p>
+
         </td>
       </tr>
       <tr>
@@ -345,11 +364,12 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L41-41" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L51-51" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>The path to the NUnit console runner: <code>nunit-console.exe</code></p>
+
         </td>
       </tr>
       <tr>
@@ -363,11 +383,12 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L51-51" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L81-81" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>The working directory.</p>
+
         </td>
       </tr>
       <tr>
@@ -381,11 +402,12 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L52-52" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/NUnit/Common.fs#L84-84" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>The path to a custom XSLT transform file to be used to process the XML report.</p>
+
         </td>
       </tr>
     </tbody>
