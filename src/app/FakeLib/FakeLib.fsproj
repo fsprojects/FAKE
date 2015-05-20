@@ -159,6 +159,7 @@
     <Compile Include="AndroidPublisher.fs" />
     <Compile Include="ChangeWatcher.fs" />
     <None Include="app.config" />
+    <Compile Include="ReFake.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
