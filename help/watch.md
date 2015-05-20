@@ -44,6 +44,10 @@ If you need to watch only a subset of the files, say you want to rerun tests as 
 
 ## Running on Linux or Mac OSX
 
+`WatchChanges` requires additional care when running on Linux or Mac OSX. The following sections describe potential issues you may encounter.
+
+### Maximum Number of Files to Watch Exception
+
 When running on Linux or Mac OSX, you should add the following export to your `.bashrc` or `.bash_profile`:
 
 ```
@@ -61,3 +65,9 @@ System.IO.IOException: kqueue() FileSystemWatcher has reached the maximum nunmbe
   at System.IO.KqueueMonitor.Setup () [0x00000] in <filename unknown>:0
   at System.IO.KqueueMonitor.DoMonitor () [0x00000] in <filename unknown>:0
 ```
+
+### Watching Changes from Windows over Parallels
+
+The Windows file watcher does not appear to be able to correctly identify changes that occur within a folder shared by Parallels between Mac OSX and Windows. If you want to run `WatchChanges`, you will need to run your FAKE script from Mac OSX.
+
+At this time, only Parallels is known to have this problem, but you should assume that any other virtualization solutions will have the same problem. If you confirm a similar problem with other Linux distros or VM platforms, please update this document accordingly.
