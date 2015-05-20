@@ -1,3 +1,7 @@
+#### 3.33.0 - 20.05.2015
+* IMPORTANT: Rewrite of the xUnit tasks. Deprecating existing xUnit and xUnit2 tasks - https://github.com/fsharp/FAKE/pull/800
+* Better NUnit docs - https://github.com/fsharp/FAKE/pull/802
+
 #### 3.32.4 - 18.05.2015
 * Add test adapter path to vs test params - https://github.com/fsharp/FAKE/pull/793
 * BUGFIX: Fix WatchChanges on Mac, fix Dispose, improve Timer usage - https://github.com/fsharp/FAKE/pull/799
