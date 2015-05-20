@@ -38,6 +38,8 @@
 
 <h1>XUnitHelper</h1>
 <div class="xmldoc">
+<p>DEPRECATED. See <a href="fake-testing-xunit.html"><code>Fake.Testing.XUnit</code></a>.</p>
+
 <p>Contains tasks to run <a href="https://github.com/xunit/xunit">xUnit</a> unit tests.</p>
 </div>
 
@@ -53,14 +55,16 @@
           <td class="type-name">
             <a href="fake-xunithelper-xuniterrorlevel.html">XUnitErrorLevel</a>
           </td>
-          <td class="xmldoc"><p>Option which allows to specify if an xUnit error should break the build.</p>
+          <td class="xmldoc"><p>DEPRECATED.
+Option which allows to specify if an xUnit error should break the build.</p>
 </td>
         </tr>
         <tr>
           <td class="type-name">
             <a href="fake-xunithelper-xunitparams.html">XUnitParams</a>
           </td>
-          <td class="xmldoc"><p>The xUnit parameter type</p>
+          <td class="xmldoc"><p>DEPRECATED.
+The xUnit parameter type</p>
 </td>
         </tr>
     </tbody>
@@ -85,11 +89,12 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/XUnitHelper.fs#L42-42" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/XUnit/XUnitHelper.fs#L53-53" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>The xUnit default parameters</p>
+          <p>DEPRECATED.
+The xUnit default parameters</p>
 
         </td>
       </tr>
@@ -104,11 +109,13 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/XUnitHelper.fs#L105-105" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/XUnit/XUnitHelper.fs#L123-123" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Runs xUnit unit tests in the given assemblies via the given xUnit runner.
+          <p>DEPRECATED. See <a href="fake-testing-xunit.html"><code>Fake.Testing.XUnit.xUnit</code></a>.</p>
+
+<p>Runs xUnit unit tests in the given assemblies via the given xUnit runner.
 Will fail if the runner terminates with non-zero exit code for any of the assemblies.
 Offending assemblies will be listed in the error message.</p>
 
@@ -125,7 +132,7 @@ in the given assembly fail.</p>
 <h2>Sample usage</h2>
 
 <pre><code>Target "Test" (fun _ -&gt;
-    !! (testDir + @"\xUnit.Test.*.dll") 
+    !! (testDir + @"\xUnit.Test.*.dll")
       |&gt; xUnit (fun p -&gt; {p with OutputDir = testDir })
 )</code></pre>
 
@@ -142,11 +149,12 @@ in the given assembly fail.</p>
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/XUnitHelper.fs#L44-44" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/UnitTest/XUnit/XUnitHelper.fs#L57-57" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>DEPRECATED.</p>
+
         </td>
       </tr>
     </tbody>
