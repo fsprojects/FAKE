@@ -123,6 +123,318 @@ let WiXDefaults : WiXParams =
       AdditionalCandleArgs = [ "-ext WiXNetFxExtension" ]
       AdditionalLightArgs = [ "-ext WiXNetFxExtension"; "-ext WixUIExtension.dll"; "-ext WixUtilExtension.dll" ] }
 
+/// Parameters for creating WiX Feature, use ToString for creating the string xml nodes
+type WiXFeatureParams = 
+    {
+        Id : string
+        Title : string
+        Level : int
+        Description : string
+        Display : string
+        InnerContent : string 
+    }
+    override f.ToString() = "<Feature Id=\"" + f.Id + "\" Title=\"" + f.Title + "\" Level=\"" + f.Level.ToString() + "\" Description=\"" + f.Description + "\" Display=\"" 
+                            + f.Display + "\" ConfigurableDirectory=\"INSTALLDIR\">" + f.InnerContent + "</Feature>"
+
+/// Default values for creating WiX Feature
+let WiXFeatureDefaults =
+    {   
+        Id = ""
+        Title = "Default Feature"
+        Level = 1
+        Description = "Default Feature"
+        Display = "expand"
+        InnerContent = ""
+    }
+
+/// Parameters for WiX Script properties, use ToString for creating the string xml nodes
+type WiXScriptParams =
+    {
+        ProductCode : Guid
+        ProductName : string
+        Description : string
+        ProductLanguage : string
+        ProductVersion : string
+        ProductPublisher : string
+        UpgradeGuid : Guid
+        UIRefs : string
+        WiXVariables : string
+        Directories : string
+        BuildNumber : string
+        Features : string
+        CustomActions : string
+        ActionSequences : string
+    }
+
+/// Default values for WiX Script properties
+let WiXScriptDefaults = 
+    {
+        ProductCode = Guid.Empty
+        ProductName = ""
+        Description = ""
+        ProductLanguage = ""
+        ProductVersion = ""
+        ProductPublisher = ""
+        UpgradeGuid = Guid.Empty
+        UIRefs = ""
+        WiXVariables = ""
+        Directories = ""
+        BuildNumber = "1.0.0"
+        Features = ""
+        CustomActions = ""
+        ActionSequences = ""
+    }
+
+/// Parameters for WiX custom action, use ToString for creating the string xml nodes
+type WiXCustomAction = 
+    {
+        Id : string
+        FileKey : string
+        Execute : string
+        Impersonate : string
+        ExeCommand : string
+        Return : string
+    } 
+    override w.ToString() = "<CustomAction Id=\"" + w.Id + "\" FileKey=\"" + w.FileKey + "\" Execute=\"" + w.Execute + "\" Impersonate=\"" + w.Impersonate + "\" ExeCommand=\""
+                            + w.ExeCommand + "\" Return=\"" + w.Return + "\" />"
+
+/// Default values for WiX custom actions
+let WiXCustomActionDefaults = 
+    {
+        Id = ""
+        FileKey = ""
+        Execute = ""
+        Impersonate = ""
+        ExeCommand = ""
+        Return = ""
+    }
+
+/// Parameters for WiX Custom Action executions (In InstallExecuteSequence), use ToString for creating the string xml nodes
+type WiXCustomActionExecution = 
+    {
+        ActionId : string
+        Verb : string
+        Target : string
+        Condition : string
+    }
+    override w.ToString() = "<Custom Action=\"" + w.ActionId + "\" " + w.Verb + "=\"" + w.Target + "\"> " + w.Condition + " </Custom>"
+
+/// Default values for WiX custom action executions
+let WixCustomActionExecutionDefaults = 
+    {
+        ActionId = ""
+        Verb = ""
+        Target = ""
+        Condition = ""
+    }
+
+/// Parameters for WiX UI Reference, use ToString for creating the string xml nodes
+type WiXUIRef = 
+    {
+        Id : string
+    }
+    override w.ToString() = "<UIRef Id=\"" + w.Id + "\" />"
+
+/// Default value for WiX UI Reference (WixUI_Minimal)
+let WiXUIRefDefaults = 
+    {
+        Id = "WixUI_Minimal"
+    }
+
+/// Parameters for WiX Variable, use ToString for creating the string xml nodes
+type WiXVariable = 
+    {
+        Id : string
+        Overridable : string
+        Value : string
+    }
+    override w.ToString() = "<WixVariable Id=\"" + w.Id + "\" Value=\"" + w.Value + "\" Overridable=\"" + w.Overridable + "\"/>"
+
+/// Default value for WiX Variable
+let WiXVariableDefaults = 
+    {
+        Id = ""
+        Overridable = "no"
+        Value = ""
+    }
+
+/// Generates WiX Template with specified file name (you can prepend location too)
+/// You need to run this once every build an then use FillInWiXScript to replace placeholders
+/// ## Parameters
+///  - `fileName` - Pass desired fileName for your wiXScript file
+/// ## Sample
+///     generateWiXScript "Setup.wxs"
+let generateWiXScript fileName =
+    let scriptTemplate = 
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+        <Wix xmlns=\"http://schemas.microsoft.com/wix/2006/wi\">
+          <!-- Values will be set by build script, use processTemplates function. UpgradeGuid may never change -->
+            
+          <!-- Version uses Major.Minor.Build format -->
+          <Product
+            Id=\"@Product.ProductCode@\"
+            Name=\"@Product.ProductName@\"
+            Language=\"@Product.Language@\"
+            Version=\"@Product.Version@\"
+            Manufacturer=\"@Product.Publisher@\"
+            UpgradeCode=\"@Product.UpgradeGuid@\"
+            >
+        
+            <!-- Auto Increment Package Id for every release -->
+            <Package
+              Id=\"*\"
+              InstallerVersion=\"200\"
+              Compressed=\"yes\"
+              Description=\"@Product.Description@\"
+              Manufacturer=\"@Product.Publisher@\"
+            />
+
+            <!-- Include user interface -->
+            @Product.UIRefs@
+
+            <!-- Add various WiXVariables -->
+            @Product.Variables@
+
+            <!-- WiX uses media for splitting up files if using CDs for publishing. We make just one. All files will be embedded in it. -->
+            <Media Id=\"1\" Cabinet=\"media1.cab\" EmbedCab=\"yes\" />
+
+            <Directory Id=\"TARGETDIR\" Name=\"SourceDir\">
+              <Directory Id=\"ProgramFilesFolder\" Name=\"ProgramFiles\">
+                <Directory Id=\"PUBLISHERDIR\" Name=\"@Product.Publisher@\">
+                  <Directory Id=\"INSTALLDIR\" Name=\"@Product.ProductName@\">
+                    @Product.Directories@
+                  </Directory>
+                </Directory>
+              </Directory>
+            </Directory>
+
+            @Product.Features@
+        
+            @Product.CustomActions@
+
+            <InstallExecuteSequence>
+              @Product.ActionSequences@
+            </InstallExecuteSequence>
+          </Product>
+        </Wix>"
+    WriteStringToFile false fileName scriptTemplate
+    
+/// Takes path where script files reside and sets all parameters as defined
+/// ## Parameters
+///  - `wiXPath` - Pass path where your script is located at. Function will search for all Scripts in that location and fill in parameters
+///  - `setParams` - Function used to manipulate the WiX default parameters.
+/// ## Sample
+/// FillInWixScript "" (fun f ->
+///                            {f with
+///                                ProductCode = WiXProductCode
+///                                ProductName = WiXProductName
+///                                Description = projectDescription
+///                                ProductLanguage = WiXProductLanguage
+///                                ProductVersion = WiXProductVersion
+///                                ProductPublisher = WixProductPublisher
+///                                UpgradeGuid = WixProductUpgradeGuid
+///                                UIRefs = uiRef1.ToString() + uiRef2.ToString()
+///                                WiXVariables = wiXLicense.ToString()
+///                                Directories = directories
+///                                BuildNumber = "1.0.0"
+///                                Features = rootFeature.ToString()
+///                                CustomActions = action1.ToString() + action2.ToString()
+///                                ActionSequences = actionExecution1.ToString() + actionExecution2.ToString()
+///                            })
+let internal FillInWixScript wiXPath setParams =
+    let parameters = WiXScriptDefaults |> setParams
+    let wixScript = !!("*.wxs" @@ wiXPath)
+    let replacements = [
+        "@Product.ProductCode@", parameters.ProductCode.ToString("D")
+        "@Product.ProductName@", parameters.ProductName
+        "@Product.Description@", parameters.Description
+        "@Product.UIRefs@", parameters.UIRefs
+        "@Product.Language@", parameters.ProductLanguage
+        "@Product.Version@", parameters.ProductVersion
+        "@Product.Variables@", parameters.WiXVariables
+        "@Product.Publisher@", parameters.ProductPublisher
+        "@Product.UpgradeGuid@", parameters.UpgradeGuid.ToString("D")
+        "@Product.Directories@", parameters.Directories
+        "@Product.Features@", parameters.Features
+        "@Product.CustomActions@", parameters.CustomActions
+        "@Product.ActionSequences@", parameters.ActionSequences
+        "@Build.number@", parameters.BuildNumber]
+    processTemplates replacements wixScript
+    
+/// Generates a feature based on the given parameters, use toString on it when embedding it
+/// You can pass other features into InnerContent for making a hierarchy
+/// ## Parameters
+///  - `setParams` - Function used to manipulate the WiX default parameters.
+/// ## Sample
+///     let feature = generateFeature (fun f -> 
+///                                        {f with  
+///                                            Id = "UniqueName"
+///                                            Title = "Title which is shown"
+///                                            Level = 1 
+///                                            Description = "Somewhat longer description" 
+///                                            Display = "expand" 
+///                                            InnerContent = otherFeature.ToString()
+///                                        })
+let generateFeature setParams =
+    let parameters : WiXFeatureParams = WiXFeatureDefaults |> setParams
+    if parameters.Id = "" then 
+        failwith "No parameter passed for feature Id!"
+    parameters
+
+/// Generates a customAction based on the given parameters, use toString on it when embedding it
+/// Be careful to make Id unique. FileKey is a reference to a file Id which you added by using wixDir or wixFile
+/// Set impersonate to no if your action needs elevated privileges, you should then also set execute as "deferred"
+/// ExeCommand are the parameters passed to your executable
+/// ## Parameters
+///  - `setParams` - Function used to manipulate the WiX default parameters.
+/// ## Sample
+///     let action = generateCustomAction (fun f ->
+///                                            {f with
+///                                                Id = "UniqueActionId"
+///                                                FileKey = "fi_5"
+///                                                Execute = "deferred"
+///                                                Impersonate = "no"
+///                                                ExeCommand = "install"
+///                                                Return = "check"
+///                                            })
+let generateCustomAction setParams =
+    let parameters : WiXCustomAction = WiXCustomActionDefaults |> setParams
+    if parameters.Id = "" then 
+        failwith "No parameter passed for feature Id!"
+    parameters
+
+/// Generates a custom action execution based on the given parameters, use toString on it when embedding it
+/// Condition in sample makes execute only on install
+/// ## Parameters
+///  - `setParams` - Function used to manipulate the WiX default parameters.
+/// ## Sample
+///     let actionExecution = generateCustomActionExecution (fun f ->
+///                                                                {f with 
+///                                                                    ActionId = action.Id
+///                                                                    Verb = "After"
+///                                                                    Target = "InstallFiles"                                                                        
+///                                                                    Condition = "<![CDATA[(&" + feature.Id + " = 3) AND NOT (!" + feature.Id + " = 3)]]>"
+///                                                                })
+let generateCustomActionExecution setParams =
+    let parameters : WiXCustomActionExecution = WixCustomActionExecutionDefaults |> setParams
+    if parameters.ActionId = "" then 
+        failwith "No parameter passed for action Id!"
+    parameters
+
+/// Generates a ui ref based on the given parameters, use toString on it when embedding it
+/// ## Parameters
+///  - `setParams` - Function used to manipulate the WiX default parameters.
+/// ## Sample
+///     let UIRef = generateUIRef (fun f ->
+///                                    {f with
+///                                        Id = "WixUI_Mondo"
+///                                    })
+let generateUIRef setParams =
+    let parameters : WiXUIRef = WiXUIRefDefaults |> setParams
+    if parameters.Id = "" then 
+        failwith "No parameter passed for action Id!"
+    parameters
+
 /// Runs the [Candle tool](http://wixtoolset.org/documentation/manual/v3/overview/candle.html) on the given WiX script with the given parameters
 let Candle (parameters : WiXParams) wixScript = 
     traceStartTask "Candle" wixScript
