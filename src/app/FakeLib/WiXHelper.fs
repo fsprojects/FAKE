@@ -313,8 +313,8 @@ type WiXMajorUpgrade =
 /// Default value for WiX Major Upgrade
 let WiXMajorUpgradeDefaults =
     {
-        Schedule = ""
-        AllowDowngrades = ""
+        Schedule = "afterInstallValidate"
+        AllowDowngrades = "no"
         DowngradeErrorMessage = ""
     }
 
@@ -340,10 +340,6 @@ let generateWiXScript fileName =
             UpgradeCode=\"@Product.UpgradeGuid@\"
             >
             
-            @Product.MajorUpgrade@
-
-            @Product.Upgrade@
-
             <!-- Auto Increment Package Id for every release -->
             <Package
               Id=\"*\"
@@ -374,6 +370,10 @@ let generateWiXScript fileName =
 
             @Product.Features@
         
+            @Product.MajorUpgrade@
+
+            @Product.Upgrade@
+
             @Product.CustomActions@
 
             <InstallExecuteSequence>
