@@ -157,6 +157,8 @@ type WiXScriptParams =
         ProductVersion : string
         ProductPublisher : string
         UpgradeGuid : Guid
+        Upgrade : string
+        MajorUpgrade : string
         UIRefs : string
         WiXVariables : string
         Directories : string
@@ -176,6 +178,8 @@ let WiXScriptDefaults =
         ProductVersion = ""
         ProductPublisher = ""
         UpgradeGuid = Guid.Empty
+        Upgrade = ""
+        MajorUpgrade = ""
         UIRefs = ""
         WiXVariables = ""
         Directories = ""
@@ -258,6 +262,62 @@ let WiXVariableDefaults =
         Value = ""
     }
 
+/// Parameters for WiX Upgrade
+type WiXUpgrade =
+    {
+        Id: Guid
+        UpgradeVersion: string
+    }
+    override w.ToString() = "<Upgrade Id=\"" + w.Id.ToString("D") + "\">" + w.UpgradeVersion + "</Upgrade>"
+
+/// Default value for WiX Upgrade
+let WiXUpgradeDefaults = 
+    {
+        Id = Guid.Empty
+        UpgradeVersion = ""
+    }
+
+/// Parameters for WiX Upgrade Version
+type WiXUpgradeVersion =
+    {
+        OnlyDetect : string
+        Minimum : string
+        Maximum : string
+        Property : string
+        IncludeMinimum : string
+        IncludeMaximum : string
+    }
+    override w.ToString() = "<UpgradeVersion Minimum=\"" + w.Minimum + "\" OnlyDetect=\"" + w.OnlyDetect + "\" IncludeMinimum=\"" + w.IncludeMinimum + "\" Maximum=\"" + w.Maximum 
+                            + "\" IncludeMaximum=\"" + w.IncludeMaximum + "\" Property=\"" + w.Property + "\" />"
+
+/// Default value for WiX Upgrade
+let WiXUpgradeVersionDefaults = 
+    {
+        OnlyDetect = ""
+        Minimum = ""
+        Maximum = ""
+        Property = ""
+        IncludeMinimum = ""
+        IncludeMaximum = ""
+    }
+
+/// Parameters for WiX Major Upgrade
+type WiXMajorUpgrade = 
+    {
+        Schedule : string
+        AllowDowngrades : string
+        DowngradeErrorMessage : string
+    }
+    override w.ToString() = "<MajorUpgrade Schedule=\"" + w.Schedule + "\" AllowDowngrades=\"" + w.AllowDowngrades + "\" DowngradeErrorMessage=\"" + w.DowngradeErrorMessage + "\" />"
+
+/// Default value for WiX Major Upgrade
+let WiXMajorUpgradeDefaults =
+    {
+        Schedule = ""
+        AllowDowngrades = ""
+        DowngradeErrorMessage = ""
+    }
+
 /// Generates WiX Template with specified file name (you can prepend location too)
 /// You need to run this once every build an then use FillInWiXScript to replace placeholders
 /// ## Parameters
@@ -279,7 +339,11 @@ let generateWiXScript fileName =
             Manufacturer=\"@Product.Publisher@\"
             UpgradeCode=\"@Product.UpgradeGuid@\"
             >
-        
+            
+            @Product.MajorUpgrade@
+
+            @Product.Upgrade@
+
             <!-- Auto Increment Package Id for every release -->
             <Package
               Id=\"*\"
@@ -354,6 +418,8 @@ let internal FillInWixScript wiXPath setParams =
         "@Product.Variables@", parameters.WiXVariables
         "@Product.Publisher@", parameters.ProductPublisher
         "@Product.UpgradeGuid@", parameters.UpgradeGuid.ToString("D")
+        "@Product.Upgrade@", parameters.Upgrade
+        "@Product.MajorUpgrade@", parameters.MajorUpgrade
         "@Product.Directories@", parameters.Directories
         "@Product.Features@", parameters.Features
         "@Product.CustomActions@", parameters.CustomActions
@@ -433,6 +499,47 @@ let generateUIRef setParams =
     let parameters : WiXUIRef = WiXUIRefDefaults |> setParams
     if parameters.Id = "" then 
         failwith "No parameter passed for action Id!"
+    parameters
+
+
+/// Generates an upgrade based on the given parameters, use toString on it when embedding it
+/// ## Parameters
+///  - `setParams` - Function used to manipulate the WiX default parameters.
+/// ## Sample
+///     let upgrade = generateUpgrade (fun f ->
+///                                       {f with
+///                                          Id = productUpgradeCode
+///                                       })
+let generateUpgrade setParams =
+    let parameters : WiXUpgrade = WiXUpgradeDefaults |> setParams
+    if parameters.Id = Guid.Empty then 
+        failwith "No parameter passed for action Id!"
+    parameters
+
+/// Generates an upgrade version based on the given parameters, use toString on it when embedding it
+/// ## Parameters
+///  - `setParams` - Function used to manipulate the WiX default parameters.
+/// ## Sample
+///     let upgradeVersion = generateUpgradeVersion (fun f ->
+///                                                     {f with
+///                                                        Minimum = productVersion
+///                                                        OnlyDetect = "yes"
+///                                                     })
+let generateUpgradeVersion setParams =
+    let parameters : WiXUpgradeVersion = WiXUpgradeVersionDefaults |> setParams
+    parameters
+
+
+/// Generates a major upgrade based on the given parameters, use toString on it when embedding it
+/// ## Parameters
+///  - `setParams` - Function used to manipulate the WiX default parameters.
+/// ## Sample
+///     let majorUpgradeVersion = generateMajorUpgradeVersion(fun f ->
+///                                                     {f with 
+///                                                         DowngradeErrorMessage = "A later version is already installed, exiting."
+///                                                     })
+let generateMajorUpgradeVersion setParams =
+    let parameters : WiXMajorUpgrade = WiXMajorUpgradeDefaults |> setParams
     parameters
 
 /// Runs the [Candle tool](http://wixtoolset.org/documentation/manual/v3/overview/candle.html) on the given WiX script with the given parameters
