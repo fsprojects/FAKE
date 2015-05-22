@@ -28,3 +28,4 @@ Some of our users are:
 * [CHECK24 Vergleichsportal GmbH](http://www.check24.de)
 * [Olo](http://www.olo.com)
 * [Papers](http://www.papersapp.com)
+* [Centigrade GmbH](http://www.centigrade.de)
