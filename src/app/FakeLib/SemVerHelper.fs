@@ -76,6 +76,15 @@ type SemVerInfo =
                     0
             | _ -> invalidArg "yobj" "cannot compare values of different types"
 
+
+let private SemVerPattern = "^(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)(?:-[\da-zA-Z\-]+(?:\.[\da-zA-Z\-]+)*)?(?:\+[\da-zA-Z\-]+(?:\.[\da-zA-Z\-]+)*)?$"
+
+/// Returns true if input appears to be a parsable semver string
+let isValidSemVer input =
+    let m = Regex.Match(input, SemVerPattern)
+    if m.Success then true
+    else false
+
 /// Parses the given version string into a SemVerInfo which can be printed using ToString() or compared
 /// according to the rules described in the [SemVer docs](http://semver.org/).
 /// ## Sample
@@ -100,3 +109,6 @@ let parse version =
       PreRelease = PreRelease.TryParse preRelease
       Build = if l > 3 then splitted.[3] else "" 
     }
+
+
+
