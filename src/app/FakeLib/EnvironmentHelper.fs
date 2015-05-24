@@ -49,6 +49,12 @@ let environVarOrDefault name defaultValue =
     if String.IsNullOrEmpty var then defaultValue
     else var
 
+/// Retrieves the environment variable with the given name or fails if not found
+let environVarOrFail name = 
+    let var = environVar name
+    if String.IsNullOrEmpty var then name |> failwith <| sprintf "Environment variable '%s' not found"
+    else var
+
 /// Retrieves the environment variable with the given name or returns the default bool if no value was set
 let getEnvironmentVarAsBoolOrDefault varName defaultValue=
     try  
