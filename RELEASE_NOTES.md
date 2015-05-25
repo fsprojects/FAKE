@@ -1,3 +1,9 @@
+#### 3.34.0 - 25.05.2015
+* Support for CMake configuration and builds - https://github.com/fsharp/FAKE/pull/785
+* New task to create C++ AssemblyInfo files - https://github.com/fsharp/FAKE/pull/812
+* New environVarOrFail helper - https://github.com/fsharp/FAKE/pull/814
+* New WiX helper functions - https://github.com/fsharp/FAKE/pull/804
+
 #### 3.33.0 - 20.05.2015
 * IMPORTANT: Rewrite of the xUnit tasks. Deprecating existing xUnit and xUnit2 tasks - https://github.com/fsharp/FAKE/pull/800
 * Better NUnit docs - https://github.com/fsharp/FAKE/pull/802
