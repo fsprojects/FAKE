@@ -38,6 +38,7 @@
 
 <h1>CustomActionReturn</h1>
 <div class="xmldoc">
+<p>Used in WiXCustomAction for determing the return type</p>
 </div>
   <h3>Union Cases</h3>
   <table class="table table-bordered member-list">
@@ -48,46 +49,8 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1834', 1834)" onmouseover="showTip(event, '1834', 1834)">
-            AsyncNoWait
-          </code>
-          <div class="tip" id="1834">
-            <strong>Signature:</strong> <br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/WiXHelper.fs#L315-315" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Indicates that the custom action will run asyncronously and execution may continue after the installer terminates.</p>
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1835', 1835)" onmouseover="showTip(event, '1835', 1835)">
-            AsyncWait
-          </code>
-          <div class="tip" id="1835">
-            <strong>Signature:</strong> <br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/WiXHelper.fs#L317-317" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Indicates that the custom action will run asynchronously but the installer will wait for the return code at sequence end.</p>
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
           <code onmouseout="hideTip(event, '1836', 1836)" onmouseover="showTip(event, '1836', 1836)">
-            Check
+            AsyncNoWait
           </code>
           <div class="tip" id="1836">
             <strong>Signature:</strong> <br />
@@ -98,7 +61,7 @@
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Indicates that the custom action will run synchronously and the return code will be checked for success. This is the default.</p>
+          <p>Indicates that the custom action will run asyncronously and execution may continue after the installer terminates.</p>
 
         </td>
       </tr>
@@ -106,7 +69,7 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1837', 1837)" onmouseover="showTip(event, '1837', 1837)">
-            Ignore
+            AsyncWait
           </code>
           <div class="tip" id="1837">
             <strong>Signature:</strong> <br />
@@ -114,6 +77,44 @@
         </td>
         <td class="xmldoc">
             <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/WiXHelper.fs#L321-321" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Indicates that the custom action will run asynchronously but the installer will wait for the return code at sequence end.</p>
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1838', 1838)" onmouseover="showTip(event, '1838', 1838)">
+            Check
+          </code>
+          <div class="tip" id="1838">
+            <strong>Signature:</strong> <br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/WiXHelper.fs#L323-323" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Indicates that the custom action will run synchronously and the return code will be checked for success. This is the default.</p>
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1839', 1839)" onmouseover="showTip(event, '1839', 1839)">
+            Ignore
+          </code>
+          <div class="tip" id="1839">
+            <strong>Signature:</strong> <br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/WiXHelper.fs#L325-325" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
