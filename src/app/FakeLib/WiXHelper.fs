@@ -127,13 +127,7 @@ let rec wixComponentRefs (directoryInfo : DirectoryInfo) =
 /// Take a component string and set "neverOverwrite" Tag
 /// This is useful for config files, since they are not replaced on upgrade like that
 let setComponentsNeverOverwrite (components : string) = 
-    let lines = split '\n' components
-
-    // Filter for lines which have a name tag matching the given regex, pick the first and return its ID
-    lines
-        |> Seq.filter(fun line -> Regex.IsMatch(line, "<Component"))
-        |> Seq.map(fun f -> f.Replace("/>", "NeverOverwrite=\"yes\" />"))
-        |> toLines
+    components.Replace("<Component", "<Component NeverOverwrite=\"yes\"")
 
 open System
 
@@ -151,18 +145,61 @@ let WiXDefaults : WiXParams =
       AdditionalCandleArgs = [ "-ext WiXNetFxExtension" ]
       AdditionalLightArgs = [ "-ext WiXNetFxExtension"; "-ext WixUIExtension.dll"; "-ext WixUtilExtension.dll" ] }
 
+type YesOrNo = 
+    | Yes
+    | No
+    override y.ToString() =
+        match y with
+        | Yes -> "yes"
+        | No -> "no"
+
+type FeatureDisplay = 
+    /// Initially shows the feature collapsed. This is the default value.
+    | Collapse
+    /// Initially shows the feature expanded.
+    | Expand
+    /// Prevents the feature from displaying in the user interface.
+    | Hidden
+    override f.ToString() =
+        match f with 
+        | Collapse -> "collapse"
+        | Expand -> "expand"
+        | Hidden -> "hidden"
+
 /// Parameters for creating WiX Feature, use ToString for creating the string xml nodes
-type WiXFeatureParams = 
+type WiXFeature = 
     {
+        /// Unique identifier of the feature.
         Id : string
+
+        /// Short string of text identifying the feature. 
+        /// This string is listed as an item by the SelectionTree control of the Selection Dialog. 
         Title : string
+
+        /// Sets the install level of this feature. A value of 0 will disable the feature. 
+        /// Processing the Condition Table can modify the level value (this is set via the Condition child element).
+        /// The default value is "1". 
         Level : int
+
+        /// Longer string of text describing the feature. This localizable string is displayed by the Text Control of the Selection Dialog. 
         Description : string
-        Display : string
+
+        ///Determines the initial display of this feature in the feature tree. This attribute's value should be one of the following:
+        ///collapse
+        ///    Initially shows the feature collapsed. This is the default value.
+        ///expand
+        ///    Initially shows the feature expanded.
+        ///hidden
+        ///    Prevents the feature from displaying in the user interface.
+        ///<an explicit integer value>
+        ///    For advanced users only, it is possible to directly set the integer value of the display value that will appear in the Feature row. 
+        Display : FeatureDisplay
+
+        /// Nest sub features or components in here
         InnerContent : string 
     }
     override f.ToString() = "<Feature Id=\"" + f.Id + "\" Title=\"" + f.Title + "\" Level=\"" + f.Level.ToString() + "\" Description=\"" + f.Description + "\" Display=\"" 
-                            + f.Display + "\" ConfigurableDirectory=\"INSTALLDIR\">" + f.InnerContent + "</Feature>"
+                            + f.Display.ToString() + "\" ConfigurableDirectory=\"INSTALLDIR\">" + f.InnerContent + "</Feature>"
 
 /// Default values for creating WiX Feature
 let WiXFeatureDefaults =
@@ -171,28 +208,59 @@ let WiXFeatureDefaults =
         Title = "Default Feature"
         Level = 1
         Description = "Default Feature"
-        Display = "expand"
+        Display = FeatureDisplay.Expand
         InnerContent = ""
     }
 
 /// Parameters for WiX Script properties, use ToString for creating the string xml nodes
-type WiXScriptParams =
+type WiXScript =
     {
+        /// The product code GUID for the product.
         ProductCode : Guid
+
+        /// The descriptive name of the product.
         ProductName : string
+
+        /// Product description
         Description : string
+
+        /// The decimal language ID (LCID) for the product.
         ProductLanguage : string
+
+        /// The product's version string.
         ProductVersion : string
+
+        /// The manufacturer of the product.
         ProductPublisher : string
+
+        /// The upgrade code GUID for the product.
         UpgradeGuid : Guid
+
+        /// You can nest upgrade elements in here
         Upgrade : string
+
+        /// Nest major upgrade elements in here
         MajorUpgrade : string
+
+        /// Nest UIRefs in here
         UIRefs : string
+
+        /// Nest WiXVariables in here
         WiXVariables : string
+
+        /// Nest directories in here
         Directories : string
+
+        /// Build Number of product
         BuildNumber : string
+
+        /// You can nest feature elements in here
         Features : string
+
+        /// You can nest custom actions in here
         CustomActions : string
+
+        /// You can nest InstallExecuteSequence actions in here
         ActionSequences : string
     }
 
@@ -217,52 +285,124 @@ let WiXScriptDefaults =
         ActionSequences = ""
     }
 
+type CustomActionExecute = 
+    /// Indicates that the custom action will run after successful completion of the installation script (at the end of the installation). 
+    | Commit
+    /// Indicates that the custom action runs in-script (possibly with elevated privileges). 
+    | Deferred
+    /// Indicates that the custom action will only run in the first sequence that runs it. 
+    | FirstSequence
+    /// Indicates that the custom action will run during normal processing time with user privileges. This is the default. 
+    | Immediate
+    /// Indicates that the custom action will only run in the first sequence that runs it in the same process. 
+    | OncePerProcess
+    /// Indicates that a custom action will run in the rollback sequence when a failure occurs during installation, usually to undo changes made by a deferred custom action. 
+    | Rollback
+    /// Indicates that a custom action should be run a second time if it was previously run in an earlier sequence. 
+    | SecondSequence
+    override c.ToString() =
+        match c with 
+        | Commit -> "commit"
+        | Deferred -> "deferred"
+        | FirstSequence -> "firstSequence"
+        | Immediate -> "immediate"
+        | OncePerProcess -> "oncePerProcess"
+        | Rollback -> "rollback"
+        | SecondSequence -> "secondSequence"
+
+type CustomActionReturn = 
+    /// Indicates that the custom action will run asyncronously and execution may continue after the installer terminates. 
+    | AsyncNoWait
+    /// Indicates that the custom action will run asynchronously but the installer will wait for the return code at sequence end. 
+    | AsyncWait
+    /// Indicates that the custom action will run synchronously and the return code will be checked for success. This is the default. 
+    | Check
+    /// Indicates that the custom action will run synchronously and the return code will not be checked. 
+    | Ignore
+    override c.ToString() =
+        match c with
+        | AsyncNoWait -> "asyncNoWait"
+        | AsyncWait -> "asyncWait"
+        | Check -> "check"
+        | Ignore -> "ignore"
+
 /// Parameters for WiX custom action, use ToString for creating the string xml nodes
 type WiXCustomAction = 
     {
+        ///	The identifier of the custom action. 
         Id : string
+
+        /// This attribute specifies a reference to a File element with matching Id attribute that will execute the custom action code 
+        /// in the file after the file is installed. This attribute is typically used with the ExeCommand attribute to specify 
+        /// a type 18 custom action that runs an installed executable, with the DllEntry attribute to specify an installed custom action 
+        /// DLL to use for a type 17 custom action, or with the VBScriptCall or JScriptCall attributes to specify a type 21 or 22 custom action. 
         FileKey : string
-        Execute : string
-        Impersonate : string
+
+        /// This attribute indicates the scheduling of the custom action.
+        Execute : CustomActionExecute
+        /// This attribute specifies whether the Windows Installer, which executes as LocalSystem, should impersonate the user context of 
+        /// the installing user when executing this custom action. Typically the value should be 'yes', except when the custom action needs 
+        /// elevated privileges to apply changes to the machine. 
+        Impersonate : YesOrNo
+        /// This attribute specifies the command line parameters to supply to an externally run executable. 
+        /// This attribute is typically used with the BinaryKey attribute for a type 2 custom action, the FileKey attribute for a type 18 
+        /// custom action, the Property attribute for a type 50 custom action, or the Directory attribute for a type 34 custom action that 
+        /// specify the executable to run. 
         ExeCommand : string
-        Return : string
+        /// Set this attribute to set the return behavior of the custom action. 
+        Return : CustomActionReturn
     } 
-    override w.ToString() = "<CustomAction Id=\"" + w.Id + "\" FileKey=\"" + w.FileKey + "\" Execute=\"" + w.Execute + "\" Impersonate=\"" + w.Impersonate + "\" ExeCommand=\""
-                            + w.ExeCommand + "\" Return=\"" + w.Return + "\" />"
+    override w.ToString() = "<CustomAction Id=\"" + w.Id + "\" FileKey=\"" + w.FileKey + "\" Execute=\"" + w.Execute.ToString() + "\" Impersonate=\"" + w.Impersonate.ToString() + "\" ExeCommand=\""
+                            + w.ExeCommand + "\" Return=\"" + w.Return.ToString() + "\" />"
 
 /// Default values for WiX custom actions
 let WiXCustomActionDefaults = 
     {
         Id = ""
         FileKey = ""
-        Execute = ""
-        Impersonate = ""
+        Execute = CustomActionExecute.Immediate
+        Impersonate = YesOrNo.Yes
         ExeCommand = ""
-        Return = ""
+        Return = CustomActionReturn.Check
     }
+
+type ActionExecutionVerb = 
+    /// Specifies that action should be executed after some standard or custom action
+    | After
+    /// Specifies that action should be executed before some standard or custom action
+    | Before
+    override a.ToString() =
+        match a with
+        | After -> "After"
+        | Before -> "Before"
 
 /// Parameters for WiX Custom Action executions (In InstallExecuteSequence), use ToString for creating the string xml nodes
 type WiXCustomActionExecution = 
     {
+        /// The action to which the Custom element applies.
         ActionId : string
-        Verb : string
+        /// Specify if action should be executed before or after target action
+        Verb : ActionExecutionVerb
+        /// Name of the standard or custom action that the verb points to
         Target : string
+        /// Conditions that have to be fulfilled for running execution
         Condition : string
     }
-    override w.ToString() = "<Custom Action=\"" + w.ActionId + "\" " + w.Verb + "=\"" + w.Target + "\"> " + w.Condition + " </Custom>"
+    override w.ToString() = "<Custom Action=\"" + w.ActionId + "\" " + w.Verb.ToString() + "=\"" + w.Target + "\"> " + w.Condition + " </Custom>"
 
 /// Default values for WiX custom action executions
 let WixCustomActionExecutionDefaults = 
     {
         ActionId = ""
-        Verb = ""
+        Verb = ActionExecutionVerb.After
         Target = ""
         Condition = ""
     }
 
 /// Parameters for WiX UI Reference, use ToString for creating the string xml nodes
 type WiXUIRef = 
-    {
+    {   
+        /// Name of referenced UI
         Id : string
     }
     override w.ToString() = "<UIRef Id=\"" + w.Id + "\" />"
@@ -276,24 +416,30 @@ let WiXUIRefDefaults =
 /// Parameters for WiX Variable, use ToString for creating the string xml nodes
 type WiXVariable = 
     {
+        /// The name of the variable.
         Id : string
-        Overridable : string
+        /// Set this value to 'yes' in order to make the variable's value overridable either by another WixVariable entry or via the command-line option -d<name>=<value> for light.exe.
+        /// If the same variable is declared overridable in multiple places it will cause an error (since WiX won't know which value is correct). The default value is 'no'. 
+        Overridable : YesOrNo
+        /// The value of the variable. The value cannot be an empty string because that would make it possible to accidentally set a column to null. 
         Value : string
     }
-    override w.ToString() = "<WixVariable Id=\"" + w.Id + "\" Value=\"" + w.Value + "\" Overridable=\"" + w.Overridable + "\"/>"
+    override w.ToString() = "<WixVariable Id=\"" + w.Id + "\" Value=\"" + w.Value + "\" Overridable=\"" + w.Overridable.ToString() + "\"/>"
 
 /// Default value for WiX Variable
 let WiXVariableDefaults = 
     {
         Id = ""
-        Overridable = "no"
+        Overridable = YesOrNo.No
         Value = ""
     }
 
 /// Parameters for WiX Upgrade
 type WiXUpgrade =
     {
+        /// This value specifies the upgrade code for the products that are to be detected by the FindRelatedProducts action.
         Id: Guid
+        /// You can nest WiXUpgradeVersion sequences in here
         UpgradeVersion: string
     }
     override w.ToString() = "<Upgrade Id=\"" + w.Id.ToString("D") + "\">" + w.UpgradeVersion + "</Upgrade>"
@@ -308,42 +454,85 @@ let WiXUpgradeDefaults =
 /// Parameters for WiX Upgrade Version
 type WiXUpgradeVersion =
     {
-        OnlyDetect : string
+        /// Set to "yes" to detect products and applications but do not uninstall.
+        OnlyDetect : YesOrNo
+        /// Specifies the lower bound on the range of product versions to be detected by FindRelatedProducts.
         Minimum : string
+        /// Specifies the upper boundary of the range of product versions detected by FindRelatedProducts.
         Maximum : string
+        /// When the FindRelatedProducts action detects a related product installed on the system, it appends the product code to the property specified in this field. 
+        /// Windows Installer documentation for the Upgrade table states that the property specified in this field must be a public property and must be added to the 
+        /// SecureCustomProperties property. WiX automatically appends the property specified in this field to the SecureCustomProperties property when creating an MSI. 
+        /// Each UpgradeVersion must have a unique Property value. After the FindRelatedProducts action is run, the value of this property is a list of product codes,
+        /// separated by semicolons (;), detected on the system.
         Property : string
-        IncludeMinimum : string
-        IncludeMaximum : string
+        /// Set to "no" to make the range of versions detected exclude the value specified in Minimum. This attribute is "yes" by default.
+        IncludeMinimum : YesOrNo
+        /// Set to "yes" to make the range of versions detected include the value specified in Maximum.
+        IncludeMaximum : YesOrNo
     }
-    override w.ToString() = "<UpgradeVersion Minimum=\"" + w.Minimum + "\" OnlyDetect=\"" + w.OnlyDetect + "\" IncludeMinimum=\"" + w.IncludeMinimum + "\" Maximum=\"" + w.Maximum 
-                            + "\" IncludeMaximum=\"" + w.IncludeMaximum + "\" Property=\"" + w.Property + "\" />"
+    override w.ToString() = "<UpgradeVersion Minimum=\"" + w.Minimum + "\" OnlyDetect=\"" + w.OnlyDetect.ToString() + "\" IncludeMinimum=\"" + w.IncludeMinimum.ToString() + "\" Maximum=\"" + w.Maximum 
+                            + "\" IncludeMaximum=\"" + w.IncludeMaximum.ToString() + "\" Property=\"" + w.Property + "\" />"
 
 /// Default value for WiX Upgrade
 let WiXUpgradeVersionDefaults = 
     {
-        OnlyDetect = ""
+        OnlyDetect = YesOrNo.No
         Minimum = ""
         Maximum = ""
         Property = ""
-        IncludeMinimum = ""
-        IncludeMaximum = ""
+        IncludeMinimum = YesOrNo.Yes
+        IncludeMaximum = YesOrNo.No
     }
+
+type MajorUpgradeSchedule =
+    /// (Default) Schedules RemoveExistingProducts after the InstallValidate standard action. This scheduling removes the installed product entirely before installing the upgrade product. 
+    /// It's slowest but gives the most flexibility in changing components and features in the upgrade product. Note that if the installation of the upgrade product fails, 
+    /// the machine will have neither version installed. 
+    | AfterInstallValidate
+    /// Schedules RemoveExistingProducts after the InstallInitialize standard action. This is similar to the afterInstallValidate scheduling, but if the installation of the upgrade product fails, 
+    /// Windows Installer also rolls back the removal of the installed product -- in other words, reinstalls it. 
+    | AfterInstallInitialize
+    /// Schedules RemoveExistingProducts between the InstallExecute and InstallFinalize standard actions. This scheduling installs the upgrade product "on top of" the installed product then lets 
+    /// RemoveExistingProducts uninstall any components that don't also exist in the upgrade product. Note that this scheduling requires strict adherence to the component rules because it relies 
+    /// on component reference counts to be accurate during installation of the upgrade product and removal of the installed product. For more information, see Bob Arnson's blog post 
+    /// "Paying for Upgrades" for details. If installation of the upgrade product fails, Windows Installer also rolls back the removal of the installed product -- in other words, reinstalls it. 
+    | AfterInstallExecute
+    /// Schedules RemoveExistingProducts between the InstallExecuteAgain and InstallFinalize standard actions. 
+    /// This is identical to the afterInstallExecute scheduling but after the InstallExecuteAgain standard action instead of InstallExecute. 
+    | AfterInstallExecuteAgain
+    /// Schedules RemoveExistingProducts after the InstallFinalize standard action. This is similar to the afterInstallExecute and afterInstallExecuteAgain schedulings but takes place outside 
+    /// the installation transaction so if installation of the upgrade product fails, Windows Installer does not roll back the removal of the installed product, 
+    /// so the machine will have both versions installed. 
+    | AfterInstallFinalize
+    override m.ToString() =
+        match m with
+        | AfterInstallValidate -> "afterInstallValidate"
+        | AfterInstallInitialize -> "afterInstallInitialize"
+        | AfterInstallExecute -> "afterInstallExecute"
+        | AfterInstallExecuteAgain -> "afterInstallExecuteAgain"
+        | AfterInstallFinalize -> "afterInstallFinalize"
 
 /// Parameters for WiX Major Upgrade
 type WiXMajorUpgrade = 
     {
-        Schedule : string
-        AllowDowngrades : string
+        /// Determines the scheduling of the RemoveExistingProducts standard action, which is when the installed product is removed. The default is "afterInstallValidate" which removes the 
+        /// installed product entirely before installing the upgrade product. It's slowest but gives the most flexibility in changing components and features in the upgrade product.
+        Schedule : MajorUpgradeSchedule
+        /// When set to no (the default), products with lower version numbers are blocked from installing when a product with a higher version is installed; the DowngradeErrorMessage 
+        /// attribute must also be specified. When set to yes, any version can be installed over any other version. 	 
+        AllowDowngrades : YesOrNo
+        /// The message displayed if users try to install a product with a lower version number when a product with a higher version is installed. Used only when AllowDowngrades is no (the default). 
         DowngradeErrorMessage : string
     }
-    override w.ToString() = "<MajorUpgrade Schedule=\"" + w.Schedule + "\" AllowDowngrades=\"" + w.AllowDowngrades + "\" DowngradeErrorMessage=\"" + w.DowngradeErrorMessage + "\" />"
+    override w.ToString() = "<MajorUpgrade Schedule=\"" + w.Schedule.ToString() + "\" AllowDowngrades=\"" + w.AllowDowngrades.ToString() + "\" DowngradeErrorMessage=\"" + w.DowngradeErrorMessage + "\" />"
 
 /// Default value for WiX Major Upgrade
 let WiXMajorUpgradeDefaults =
     {
-        Schedule = "afterInstallValidate"
-        AllowDowngrades = "no"
-        DowngradeErrorMessage = ""
+        Schedule = MajorUpgradeSchedule.AfterInstallValidate
+        AllowDowngrades = YesOrNo.No
+        DowngradeErrorMessage = "You can't downgrade this product!"
     }
 
 /// Generates WiX Template with specified file name (you can prepend location too)
@@ -470,7 +659,7 @@ let internal FillInWixScript wiXPath setParams =
 ///                                            InnerContent = otherFeature.ToString()
 ///                                        })
 let generateFeature setParams =
-    let parameters : WiXFeatureParams = WiXFeatureDefaults |> setParams
+    let parameters : WiXFeature = WiXFeatureDefaults |> setParams
     if parameters.Id = "" then 
         failwith "No parameter passed for feature Id!"
     parameters
