@@ -53,6 +53,10 @@ let getFilesAsWiXString files =
     |> toLines
 
 /// Creates recursive WiX directory and file tags from the given DirectoryInfo
+/// The function will create one component for each file [best practice](https://support.microsoft.com/de-de/kb/290997/en-us)
+/// and set the GUID to "*", which will make WiX produce consistent Component Guids if the Component's target path doesn't change.
+/// This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
+/// You can use the getComponentIdsFromWiXString function for getting all created component refs and adding them to features.
 let rec wixDir fileFilter asSubDir (directoryInfo : DirectoryInfo) = 
     let dirs = 
         directoryInfo
@@ -70,8 +74,9 @@ let rec wixDir fileFilter asSubDir (directoryInfo : DirectoryInfo) =
     let compo = 
         if files = "" then ""
         else 
-            sprintf "<Component Id=\"%s\" Guid=\"%s\">\r\n%s\r\n</Component>\r\n" (compName directoryInfo.Name) 
-                (Guid.NewGuid().ToString()) files
+            split '\n' files
+            |> Seq.map(fun f -> sprintf "<Component Id=\"%s\" Guid=\"%s\">\r\n%s\r\n</Component>\r\n" (compName directoryInfo.Name) "*" f)
+            |> toLines
     
     if asSubDir then 
         sprintf "<Directory Id=\"%s\" Name=\"%s\">\r\n%s%s\r\n</Directory>\r\n" (dirName directoryInfo.Name) 
