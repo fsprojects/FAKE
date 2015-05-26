@@ -19,6 +19,17 @@ let ``should find correct id`` () =
     Assert.Equal<string>("fi_5", executableId)
 
 [<Fact>]
+let ``should set components never overwrite true if desired`` () =
+    let componentDefault = "<Component Id=\"comp\" Guid=\"1290b30b-4242-4ed5-99z0-52e3ad1337e6\">
+                                <File Id=\"fi_2\" Name=\"Castle.Core.dll\" Source=\"C:\Git\Test\Publish\wixHelper\Castle.Core.dll\" />
+                            </Component>"
+    let componentExpected = "<Component NeverOverwrite=\"yes\" Id=\"comp\" Guid=\"1290b30b-4242-4ed5-99z0-52e3ad1337e6\">
+                                        <File Id=\"fi_2\" Name=\"Castle.Core.dll\" Source=\"C:\Git\Test\Publish\wixHelper\Castle.Core.dll\" />
+                                   </Component>"
+    let actualComponent = setComponentsNeverOverwrite componentDefault
+    Assert.Equal<string>(componentExpected, actualComponent)
+
+[<Fact>]
 let ``should create valid feature node`` () =
     let actualFeature = generateFeature (fun f -> 
                                                 {f with  
