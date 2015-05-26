@@ -622,7 +622,7 @@ let generateWiXScript fileName =
 ///                                CustomActions = action1.ToString() + action2.ToString()
 ///                                ActionSequences = actionExecution1.ToString() + actionExecution2.ToString()
 ///                            })
-let internal FillInWixScript wiXPath setParams =
+let FillInWixScript wiXPath setParams =
     let parameters = WiXScriptDefaults |> setParams
     let wixScript = !!("*.wxs" @@ wiXPath)
     let replacements = [
