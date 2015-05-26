@@ -545,6 +545,7 @@ let WiXMajorUpgradeDefaults =
 /// You need to run this once every build an then use FillInWiXScript to replace placeholders
 /// ## Parameters
 ///  - `fileName` - Pass desired fileName for your wiXScript file
+///
 /// ## Sample
 ///     generateWiXScript "Setup.wxs"
 let generateWiXScript fileName =
@@ -610,8 +611,9 @@ let generateWiXScript fileName =
 /// ## Parameters
 ///  - `wiXPath` - Pass path where your script is located at. Function will search for all Scripts in that location and fill in parameters
 ///  - `setParams` - Function used to manipulate the WiX default parameters.
+///
 /// ## Sample
-/// FillInWixScript "" (fun f ->
+///     FillInWixScript "" (fun f ->
 ///                            {f with
 ///                                ProductCode = WiXProductCode
 ///                                ProductName = WiXProductName
@@ -654,6 +656,7 @@ let FillInWixScript wiXPath setParams =
 /// You can pass other features into InnerContent for making a hierarchy
 /// ## Parameters
 ///  - `setParams` - Function used to manipulate the WiX default parameters.
+///
 /// ## Sample
 ///     let feature = generateFeature (fun f -> 
 ///                                        {f with  
@@ -676,6 +679,7 @@ let generateFeature setParams =
 /// ExeCommand are the parameters passed to your executable
 /// ## Parameters
 ///  - `setParams` - Function used to manipulate the WiX default parameters.
+///
 /// ## Sample
 ///     let action = generateCustomAction (fun f ->
 ///                                            {f with
@@ -696,6 +700,7 @@ let generateCustomAction setParams =
 /// Condition in sample makes execute only on install
 /// ## Parameters
 ///  - `setParams` - Function used to manipulate the WiX default parameters.
+///
 /// ## Sample
 ///     let actionExecution = generateCustomActionExecution (fun f ->
 ///                                                                {f with 
@@ -713,6 +718,7 @@ let generateCustomActionExecution setParams =
 /// Generates a ui ref based on the given parameters, use toString on it when embedding it
 /// ## Parameters
 ///  - `setParams` - Function used to manipulate the WiX default parameters.
+///
 /// ## Sample
 ///     let UIRef = generateUIRef (fun f ->
 ///                                    {f with
@@ -728,6 +734,7 @@ let generateUIRef setParams =
 /// Generates an upgrade based on the given parameters, use toString on it when embedding it
 /// ## Parameters
 ///  - `setParams` - Function used to manipulate the WiX default parameters.
+///
 /// ## Sample
 ///     let upgrade = generateUpgrade (fun f ->
 ///                                       {f with
@@ -742,6 +749,7 @@ let generateUpgrade setParams =
 /// Generates an upgrade version based on the given parameters, use toString on it when embedding it
 /// ## Parameters
 ///  - `setParams` - Function used to manipulate the WiX default parameters.
+///
 /// ## Sample
 ///     let upgradeVersion = generateUpgradeVersion (fun f ->
 ///                                                     {f with
@@ -756,6 +764,7 @@ let generateUpgradeVersion setParams =
 /// Generates a major upgrade based on the given parameters, use toString on it when embedding it
 /// ## Parameters
 ///  - `setParams` - Function used to manipulate the WiX default parameters.
+///
 /// ## Sample
 ///     let majorUpgradeVersion = generateMajorUpgradeVersion(fun f ->
 ///                                                     {f with 
