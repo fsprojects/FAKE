@@ -379,8 +379,8 @@ type ActionExecutionVerb =
     | Before
     override a.ToString() =
         match a with
-        | After -> "after"
-        | Before -> "before"
+        | After -> "After"
+        | Before -> "Before"
 
 /// Parameters for WiX Custom Action executions (In InstallExecuteSequence), use ToString for creating the string xml nodes
 type WiXCustomActionExecution = 

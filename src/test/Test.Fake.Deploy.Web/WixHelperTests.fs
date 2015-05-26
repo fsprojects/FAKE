@@ -72,7 +72,7 @@ let ``should create valid upgrade node`` () =
                                              UpgradeVersion = "<UpgradeVersion Minimum=\"1.0.0\" Property=\"SomeProperty\" IncludeMinimum=\"yes\" IncludeMaximum=\"no\" />"
                                           })
                                                  
-    let expectedUpgrade = "<Upgrade Id=\"E21A46F0-05AF-45D0-A2D6-5E2E3C77F615\"><UpgradeVersion Minimum=\"1.0.0\" Property=\"SomeProperty\" IncludeMinimum=\"yes\" IncludeMaximum=\"no\" /></Upgrade>"
+    let expectedUpgrade = "<Upgrade Id=\"e21a46f0-05af-45d0-a2d6-5e2e3c77f615\"><UpgradeVersion Minimum=\"1.0.0\" Property=\"SomeProperty\" IncludeMinimum=\"yes\" IncludeMaximum=\"no\" /></Upgrade>"
     Assert.Equal<string>(expectedUpgrade, actualUpgrade.ToString())
 [<Fact>]
 let ``should create valid upgrade version node`` () =
