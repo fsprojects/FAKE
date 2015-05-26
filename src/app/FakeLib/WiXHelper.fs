@@ -145,6 +145,7 @@ let WiXDefaults : WiXParams =
       AdditionalCandleArgs = [ "-ext WiXNetFxExtension" ]
       AdditionalLightArgs = [ "-ext WiXNetFxExtension"; "-ext WixUIExtension.dll"; "-ext WixUtilExtension.dll" ] }
 
+/// These are used in many methods for generating WiX nodes, regard them as booleans
 type YesOrNo = 
     | Yes
     | No
@@ -153,6 +154,7 @@ type YesOrNo =
         | Yes -> "yes"
         | No -> "no"
 
+/// Used for determing whether the feature should be visible in the select features installer pane or not
 type FeatureDisplay = 
     /// Initially shows the feature collapsed. This is the default value.
     | Collapse
@@ -285,6 +287,7 @@ let WiXScriptDefaults =
         ActionSequences = ""
     }
 
+/// Used in WiXCustomAction for determing when to run the custom action
 type CustomActionExecute = 
     /// Indicates that the custom action will run after successful completion of the installation script (at the end of the installation). 
     | Commit
@@ -310,6 +313,7 @@ type CustomActionExecute =
         | Rollback -> "rollback"
         | SecondSequence -> "secondSequence"
 
+/// Used in WiXCustomAction for determing the return type
 type CustomActionReturn = 
     /// Indicates that the custom action will run asyncronously and execution may continue after the installer terminates. 
     | AsyncNoWait
@@ -366,6 +370,7 @@ let WiXCustomActionDefaults =
         Return = CustomActionReturn.Check
     }
 
+/// Used for specifying the point of time for action execution in WiXCustomActionExecution
 type ActionExecutionVerb = 
     /// Specifies that action should be executed after some standard or custom action
     | After
@@ -485,6 +490,7 @@ let WiXUpgradeVersionDefaults =
         IncludeMaximum = YesOrNo.No
     }
 
+/// Used for determing when to run RemoveExistingProducts on major upgrade
 type MajorUpgradeSchedule =
     /// (Default) Schedules RemoveExistingProducts after the InstallValidate standard action. This scheduling removes the installed product entirely before installing the upgrade product. 
     /// It's slowest but gives the most flexibility in changing components and features in the upgrade product. Note that if the installation of the upgrade product fails, 
@@ -539,6 +545,7 @@ let WiXMajorUpgradeDefaults =
 /// You need to run this once every build an then use FillInWiXScript to replace placeholders
 /// ## Parameters
 ///  - `fileName` - Pass desired fileName for your wiXScript file
+///
 /// ## Sample
 ///     generateWiXScript "Setup.wxs"
 let generateWiXScript fileName =
@@ -604,8 +611,9 @@ let generateWiXScript fileName =
 /// ## Parameters
 ///  - `wiXPath` - Pass path where your script is located at. Function will search for all Scripts in that location and fill in parameters
 ///  - `setParams` - Function used to manipulate the WiX default parameters.
+///
 /// ## Sample
-/// FillInWixScript "" (fun f ->
+///     FillInWixScript "" (fun f ->
 ///                            {f with
 ///                                ProductCode = WiXProductCode
 ///                                ProductName = WiXProductName
@@ -648,6 +656,7 @@ let FillInWixScript wiXPath setParams =
 /// You can pass other features into InnerContent for making a hierarchy
 /// ## Parameters
 ///  - `setParams` - Function used to manipulate the WiX default parameters.
+///
 /// ## Sample
 ///     let feature = generateFeature (fun f -> 
 ///                                        {f with  
@@ -670,6 +679,7 @@ let generateFeature setParams =
 /// ExeCommand are the parameters passed to your executable
 /// ## Parameters
 ///  - `setParams` - Function used to manipulate the WiX default parameters.
+///
 /// ## Sample
 ///     let action = generateCustomAction (fun f ->
 ///                                            {f with
@@ -690,6 +700,7 @@ let generateCustomAction setParams =
 /// Condition in sample makes execute only on install
 /// ## Parameters
 ///  - `setParams` - Function used to manipulate the WiX default parameters.
+///
 /// ## Sample
 ///     let actionExecution = generateCustomActionExecution (fun f ->
 ///                                                                {f with 
@@ -707,6 +718,7 @@ let generateCustomActionExecution setParams =
 /// Generates a ui ref based on the given parameters, use toString on it when embedding it
 /// ## Parameters
 ///  - `setParams` - Function used to manipulate the WiX default parameters.
+///
 /// ## Sample
 ///     let UIRef = generateUIRef (fun f ->
 ///                                    {f with
@@ -722,6 +734,7 @@ let generateUIRef setParams =
 /// Generates an upgrade based on the given parameters, use toString on it when embedding it
 /// ## Parameters
 ///  - `setParams` - Function used to manipulate the WiX default parameters.
+///
 /// ## Sample
 ///     let upgrade = generateUpgrade (fun f ->
 ///                                       {f with
@@ -736,6 +749,7 @@ let generateUpgrade setParams =
 /// Generates an upgrade version based on the given parameters, use toString on it when embedding it
 /// ## Parameters
 ///  - `setParams` - Function used to manipulate the WiX default parameters.
+///
 /// ## Sample
 ///     let upgradeVersion = generateUpgradeVersion (fun f ->
 ///                                                     {f with
@@ -750,6 +764,7 @@ let generateUpgradeVersion setParams =
 /// Generates a major upgrade based on the given parameters, use toString on it when embedding it
 /// ## Parameters
 ///  - `setParams` - Function used to manipulate the WiX default parameters.
+///
 /// ## Sample
 ///     let majorUpgradeVersion = generateMajorUpgradeVersion(fun f ->
 ///                                                     {f with 
