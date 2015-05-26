@@ -145,6 +145,7 @@ let WiXDefaults : WiXParams =
       AdditionalCandleArgs = [ "-ext WiXNetFxExtension" ]
       AdditionalLightArgs = [ "-ext WiXNetFxExtension"; "-ext WixUIExtension.dll"; "-ext WixUtilExtension.dll" ] }
 
+/// These are used in many methods for generating WiX nodes, regard them as booleans
 type YesOrNo = 
     | Yes
     | No
@@ -153,6 +154,7 @@ type YesOrNo =
         | Yes -> "yes"
         | No -> "no"
 
+/// Used for determing whether the feature should be visible in the select features installer pane or not
 type FeatureDisplay = 
     /// Initially shows the feature collapsed. This is the default value.
     | Collapse
@@ -285,6 +287,7 @@ let WiXScriptDefaults =
         ActionSequences = ""
     }
 
+/// Used in WiXCustomAction for determing when to run the custom action
 type CustomActionExecute = 
     /// Indicates that the custom action will run after successful completion of the installation script (at the end of the installation). 
     | Commit
@@ -310,6 +313,7 @@ type CustomActionExecute =
         | Rollback -> "rollback"
         | SecondSequence -> "secondSequence"
 
+/// Used in WiXCustomAction for determing the return type
 type CustomActionReturn = 
     /// Indicates that the custom action will run asyncronously and execution may continue after the installer terminates. 
     | AsyncNoWait
@@ -366,6 +370,7 @@ let WiXCustomActionDefaults =
         Return = CustomActionReturn.Check
     }
 
+/// Used for specifying the point of time for action execution in WiXCustomActionExecution
 type ActionExecutionVerb = 
     /// Specifies that action should be executed after some standard or custom action
     | After
@@ -485,6 +490,7 @@ let WiXUpgradeVersionDefaults =
         IncludeMaximum = YesOrNo.No
     }
 
+/// Used for determing when to run RemoveExistingProducts on major upgrade
 type MajorUpgradeSchedule =
     /// (Default) Schedules RemoveExistingProducts after the InstallValidate standard action. This scheduling removes the installed product entirely before installing the upgrade product. 
     /// It's slowest but gives the most flexibility in changing components and features in the upgrade product. Note that if the installation of the upgrade product fails, 
