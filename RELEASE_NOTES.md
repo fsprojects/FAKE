@@ -1,3 +1,6 @@
+#### 3.34.1 - 26.05.2015
+* Wix Helper Improvements - https://github.com/fsharp/FAKE/pull/815
+
 #### 3.34.0 - 25.05.2015
 * Support for CMake configuration and builds - https://github.com/fsharp/FAKE/pull/785
 * New task to create C++ AssemblyInfo files - https://github.com/fsharp/FAKE/pull/812
