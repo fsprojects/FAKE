@@ -1,3 +1,6 @@
+#### 3.34.3 - 26.05.2015
+* Wix Helper Improvements - https://github.com/fsharp/FAKE/pull/818
+
 #### 3.34.2 - 26.05.2015
 * Wix Helper Improvements - https://github.com/fsharp/FAKE/pull/817
 * Added SemVerHelper.isValidSemVer - https://github.com/fsharp/FAKE/pull/811
