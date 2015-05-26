@@ -127,13 +127,7 @@ let rec wixComponentRefs (directoryInfo : DirectoryInfo) =
 /// Take a component string and set "neverOverwrite" Tag
 /// This is useful for config files, since they are not replaced on upgrade like that
 let setComponentsNeverOverwrite (components : string) = 
-    let lines = split '\n' components
-
-    // Filter for lines which have a name tag matching the given regex, pick the first and return its ID
-    lines
-        |> Seq.filter(fun line -> Regex.IsMatch(line, "<Component"))
-        |> Seq.map(fun f -> f.Replace("/>", "NeverOverwrite=\"yes\" />"))
-        |> toLines
+    components.Replace("<Component", "<Component NeverOverwrite=\"yes\"")
 
 open System
 
