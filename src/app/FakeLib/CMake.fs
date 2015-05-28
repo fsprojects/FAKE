@@ -1,5 +1,6 @@
-﻿namespace Fake
+﻿namespace Fake.CMakeSupport
 
+open Fake
 open System
 open System.Diagnostics
 open System.IO
@@ -185,7 +186,7 @@ module CMake =
         let toolset = argsIfNotEmpty "-T \"%s\"" [parameters.Toolset]
         let platform = argsIfNotEmpty "-A \"%s\"" [parameters.Platform]
         let caches = parameters.Caches |> List.map FormatCMakePath |> argsIfNotEmpty "-C \"%s\""
-        let installDir = argsIfNotEmpty "-D CMAKE_INSTALL_PREFIX:DIRPATH=\"%s\"" [FormatCMakePath parameters.InstallDirectory]
+        let installDir = argsIfNotEmpty "-D CMAKE_INSTALL_PREFIX:PATH=\"%s\"" [FormatCMakePath parameters.InstallDirectory]
         let variables =
             parameters.Variables
             |> List.map (fun option ->
