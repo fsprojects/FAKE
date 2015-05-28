@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>CMakeBuildParams - FAKE - F# Make</title>
+    <title>CMakeValue - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,131 +36,86 @@
 
 
 
-<h1>CMakeBuildParams</h1>
+<h1>CMakeValue</h1>
 <div class="xmldoc">
-<p>The CMakeBuild parameter type.</p>
+<p>The possible variable value types for CMake variables.</p>
 </div>
-  <h3>Record Fields</h3>
+  <h3>Union Cases</h3>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Record Field</td><td>Description</td></tr>
+      <tr><td>Union Case</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1970', 1970)" onmouseover="showTip(event, '1970', 1970)">
-            AdditionalArgs
+          <code onmouseout="hideTip(event, '2005', 2005)" onmouseover="showTip(event, '2005', 2005)">
+            CMakeBoolean(bool)
           </code>
-          <div class="tip" id="1970">
-            <strong>Signature:</strong> string<br />
+          <div class="tip" id="2005">
+            <strong>Signature:</strong> bool<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/CMake.fs#L82-82" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/CMake.fs#L10-10" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>A character string containing additional arguments to give to CMake.</p>
-
+          
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1971', 1971)" onmouseover="showTip(event, '1971', 1971)">
-            BinaryDirectory
+          <code onmouseout="hideTip(event, '2006', 2006)" onmouseover="showTip(event, '2006', 2006)">
+            CMakeDirPath(string)
           </code>
-          <div class="tip" id="1971">
+          <div class="tip" id="2006">
             <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/CMake.fs#L71-71" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/CMake.fs#L13-13" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>The binary build directory where CMake will generate the files.</p>
-
+          
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1972', 1972)" onmouseover="showTip(event, '1972', 1972)">
-            Config
+          <code onmouseout="hideTip(event, '2007', 2007)" onmouseover="showTip(event, '2007', 2007)">
+            CMakeFilePath(string)
           </code>
-          <div class="tip" id="1972">
+          <div class="tip" id="2007">
             <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/CMake.fs#L78-78" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/CMake.fs#L12-12" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>The build configuration to use (e.g. <code>Release</code>).
-Equivalent to the <code>--config &lt;cfg&gt;</code> option.
-Not supported by every generator.</p>
-
+          
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1973', 1973)" onmouseover="showTip(event, '1973', 1973)">
-            Target
+          <code onmouseout="hideTip(event, '2008', 2008)" onmouseover="showTip(event, '2008', 2008)">
+            CMakeString(string)
           </code>
-          <div class="tip" id="1973">
+          <div class="tip" id="2008">
             <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/CMake.fs#L74-74" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/CMake.fs#L11-11" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>The CMake target to build instead of the default one.
-Equivalent to the <code>--target &lt;target&gt;</code> option.</p>
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1974', 1974)" onmouseover="showTip(event, '1974', 1974)">
-            Timeout
-          </code>
-          <div class="tip" id="1974">
-            <strong>Signature:</strong> TimeSpan<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/CMake.fs#L80-80" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>The CMake execution timeout.</p>
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1975', 1975)" onmouseover="showTip(event, '1975', 1975)">
-            ToolPath
-          </code>
-          <div class="tip" id="1975">
-            <strong>Signature:</strong> string<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/CMake.fs#L69-69" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>The location of the CMake executable. Automatically found if null or empty.</p>
-
+          
         </td>
       </tr>
     </tbody>

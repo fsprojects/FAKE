@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>FSIHelper - FAKE - F# Make</title>
+    <title>CMakeGenerateParams - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,204 +36,272 @@
 
 
 
-<h1>FSIHelper</h1>
+<h1>CMakeGenerateParams</h1>
 <div class="xmldoc">
-<p>Contains helper functions which allow to interact with the F# Interactive.</p>
+<p>The CMakeGenerate parameter type.</p>
 </div>
-
-<!-- Render nested types and modules, if there are any -->
-  <h2>Nested types and modules</h2>
-  <div>
-      <table class="table table-bordered type-list">
-    <thead>
-      <tr><td>Type</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td class="type-name">
-            <a href="fake-fsihelper-fsiargs.html">FsiArgs</a>
-          </td>
-          <td class="xmldoc"></td>
-        </tr>
-    </tbody>
-  </table>
-
-  </div>
-
-  <h3>Functions and values</h3>
+  <h3>Record Fields</h3>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Function or value</td><td>Description</td></tr>
+      <tr><td>Record Field</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '240', 240)" onmouseover="showTip(event, '240', 240)">
-            executeBuildScriptWithArgsAndReturnMessages (...)
+          <code onmouseout="hideTip(event, '1992', 1992)" onmouseover="showTip(event, '1992', 1992)">
+            AdditionalArgs
           </code>
-          <div class="tip" id="240">
-            <strong>Signature:</strong> script:string -&gt; scriptArgs:string [] -&gt; bool * ConsoleMessage list<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FSIHelper.fs#L140-140" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Run the given buildscript with fsi.exe and allows for extra arguments to the script. Returns output.</p>
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '241', 241)" onmouseover="showTip(event, '241', 241)">
-            executeFSI workingDirectory script args
-          </code>
-          <div class="tip" id="241">
-            <strong>Signature:</strong> workingDirectory:string -&gt; script:string -&gt; args:seq&lt;string * string&gt; -&gt; bool * seq&lt;ConsoleMessage&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FSIHelper.fs#L65-65" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Run the given buildscript with fsi.exe</p>
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '242', 242)" onmouseover="showTip(event, '242', 242)">
-            executeFSIWithArgs (...)
-          </code>
-          <div class="tip" id="242">
-            <strong>Signature:</strong> workingDirectory:string -&gt; script:string -&gt; extraFsiArgs:string list -&gt; args:seq&lt;string * string&gt; -&gt; bool<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FSIHelper.fs#L74-74" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Run the given build script with fsi.exe and allows for extra arguments to FSI.</p>
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '243', 243)" onmouseover="showTip(event, '243', 243)">
-            executeFSIWithScriptArgsAndReturnMessages (...)
-          </code>
-          <div class="tip" id="243">
-            <strong>Signature:</strong> script:string -&gt; scriptArgs:string [] -&gt; bool * seq&lt;ConsoleMessage&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FSIHelper.fs#L80-80" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Run the given build script with fsi.exe and allows for extra arguments to the script. Returns output.</p>
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '244', 244)" onmouseover="showTip(event, '244', 244)">
-            fsiPath 
-          </code>
-          <div class="tip" id="244">
+          <div class="tip" id="1992">
             <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FSIHelper.fs#L14-14" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/CMake.fs#L64-64" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>The path to the F# Interactive tool.</p>
+          <p>A character string containing additional arguments to give to CMake.</p>
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '245', 245)" onmouseover="showTip(event, '245', 245)">
-            fsiStartInfo (...)
+          <code onmouseout="hideTip(event, '1993', 1993)" onmouseover="showTip(event, '1993', 1993)">
+            BinaryDirectory
           </code>
-          <div class="tip" id="245">
-            <strong>Signature:</strong> script:string -&gt; workingDirectory:string -&gt; args:seq&lt;string * string&gt; -&gt; info:ProcessStartInfo -&gt; unit<br />
+          <div class="tip" id="1993">
+            <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FSIHelper.fs#L61-61" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/CMake.fs#L32-32" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Creates a ProcessStartInfo which is configured to the F# Interactive.</p>
+          <p>The binary build directory where CMake will generate the files.</p>
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '246', 246)" onmouseover="showTip(event, '246', 246)">
-            runBuildScript (...)
+          <code onmouseout="hideTip(event, '1994', 1994)" onmouseover="showTip(event, '1994', 1994)">
+            CacheEntriesToRemove
           </code>
-          <div class="tip" id="246">
-            <strong>Signature:</strong> printDetails:bool -&gt; script:string -&gt; extraFsiArgs:string list -&gt; args:seq&lt;string * string&gt; -&gt; bool<br />
+          <div class="tip" id="1994">
+            <strong>Signature:</strong> string list<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FSIHelper.fs#L163-163" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/CMake.fs#L60-60" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Run the given buildscript with fsi.exe</p>
+          <p>Remove matching entries from CMake cache.
+Equivalent to the <code>-U &lt;globbing_expr&gt;</code> options.</p>
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '247', 247)" onmouseover="showTip(event, '247', 247)">
-            runBuildScriptAt (...)
+          <code onmouseout="hideTip(event, '1995', 1995)" onmouseover="showTip(event, '1995', 1995)">
+            Caches
           </code>
-          <div class="tip" id="247">
-            <strong>Signature:</strong> printDetails:bool -&gt; script:string -&gt; extraFsiArgs:string list -&gt; args:seq&lt;string * string&gt; -&gt; bool<br />
+          <div class="tip" id="1995">
+            <strong>Signature:</strong> string list<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FSIHelper.fs#L159-159" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/CMake.fs#L51-51" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Run the given buildscript with fsi.exe at the given working directory.</p>
+          <p>A list of the optional CMake cache files to load.
+Equivalent to the <code>-C &lt;initial-cache&gt;</code> options.</p>
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '248', 248)" onmouseover="showTip(event, '248', 248)">
-            runBuildScriptWithFsiArgsAt (...)
+          <code onmouseout="hideTip(event, '1996', 1996)" onmouseover="showTip(event, '1996', 1996)">
+            Generator
           </code>
-          <div class="tip" id="248">
-            <strong>Signature:</strong> printDetails:bool -&gt; FsiArgs -&gt; args:seq&lt;string * string&gt; -&gt; bool<br />
+          <div class="tip" id="1996">
+            <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FSIHelper.fs#L153-153" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/CMake.fs#L40-40" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Run the given buildscript with fsi.exe at the given working directory.  Provides full access to Fsi options and args.</p>
+          <p>The native build system generator to use for writing the files.
+See <code>cmake --help</code> for a list of the available entries.
+<em>To avoid unpredictable generator usage, it is recommended to define it.</em>
+Equivalent to the <code>-G &lt;generator-name&gt;</code> option.</p>
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1997', 1997)" onmouseover="showTip(event, '1997', 1997)">
+            InstallDirectory
+          </code>
+          <div class="tip" id="1997">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/CMake.fs#L54-54" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>The directory where CMake will install the generated files.
+Equivalent to the <code>-D CMAKE_INSTALL_PREFIX:DIRPATH="&lt;install-directory&gt;"</code> CMake option.</p>
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1998', 1998)" onmouseover="showTip(event, '1998', 1998)">
+            Platform
+          </code>
+          <div class="tip" id="1998">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/CMake.fs#L48-48" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>An optional CMake platform.
+Equivalent to the <code>-A &lt;platform-name&gt;</code> option.
+Not supported by every generator.</p>
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1999', 1999)" onmouseover="showTip(event, '1999', 1999)">
+            SourceDirectory
+          </code>
+          <div class="tip" id="1999">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/CMake.fs#L30-30" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>The source directory which should include a <code>CMakeLists.txt</code> file.</p>
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2000', 2000)" onmouseover="showTip(event, '2000', 2000)">
+            Timeout
+          </code>
+          <div class="tip" id="2000">
+            <strong>Signature:</strong> TimeSpan<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/CMake.fs#L62-62" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>The CMake execution timeout.</p>
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2001', 2001)" onmouseover="showTip(event, '2001', 2001)">
+            Toolchain
+          </code>
+          <div class="tip" id="2001">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/CMake.fs#L35-35" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>An optional toolchain file to load.
+Equivalent to the <code>-D CMAKE_TOOLCHAIN_FILE:FILEPATH="&lt;toolchain-file&gt;"</code> CMake option.</p>
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2002', 2002)" onmouseover="showTip(event, '2002', 2002)">
+            ToolPath
+          </code>
+          <div class="tip" id="2002">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/CMake.fs#L28-28" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>The location of the CMake executable. Automatically found if null or empty.</p>
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2003', 2003)" onmouseover="showTip(event, '2003', 2003)">
+            Toolset
+          </code>
+          <div class="tip" id="2003">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/CMake.fs#L44-44" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>An optional toolset (!= toolchain) to use.
+Equivalent to the <code>-T &lt;toolset-name&gt;</code> option.
+Not supported by every generator.</p>
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2004', 2004)" onmouseover="showTip(event, '2004', 2004)">
+            Variables
+          </code>
+          <div class="tip" id="2004">
+            <strong>Signature:</strong> CMakeVariable list<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/CMake.fs#L57-57" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>A list of every variable to pass as a CMake argument.
+Equivalent to the <code>-D &lt;var&gt;:&lt;type&gt;=&lt;value&gt;</code> options.</p>
 
         </td>
       </tr>

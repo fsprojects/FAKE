@@ -277,7 +277,7 @@ pause
 
 <p>We defined a new build target named "BuildApp" which compiles all csproj-files with the MSBuild task and the build output will be copied to buildDir.</p>
 
-<p>In order to find the right project files FAKEscans the folder <em>src/app/</em> and all subfolders with the given pattern. Therefore a similar FileSet definition like in NAnt or MSBuild (see <a href="https://github.com/fsharp/FAKE">project page</a> for details) is used.</p>
+<p>In order to find the right project files FAKE scans the folder <em>src/app/</em> and all subfolders with the given pattern. Therefore a similar FileSet definition like in NAnt or MSBuild (see <a href="https://github.com/fsharp/FAKE">project page</a> for details) is used.</p>
 
 <p>In addition the target dependencies are extended again. Now <em>Default</em> is dependent on <em>BuildApp</em> and <em>BuildApp</em> needs <em>Clean</em> as a prerequisite.</p>
 
