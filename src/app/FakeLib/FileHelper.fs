@@ -352,12 +352,16 @@ let TestDir path =
 ///  - `srcFiles` - The source files
 ///  - `findOldFileF` - A function which finds the old file
 let GeneratePatchWithFindOldFileFunction lastReleaseDir patchDir srcFiles findOldFileF = 
+    let i = ref 0
     for file in srcFiles do
         let newFile = toRelativePath file
         let oldFile = findOldFileF newFile (lastReleaseDir + newFile.TrimStart('.'))
         let fi = fileInfo oldFile
         if not fi.Exists then logVerbosefn "LastRelease has no file like %s" fi.FullName
-        if CompareFiles false oldFile newFile |> not then CopyFileIntoSubFolder patchDir newFile
+        if CompareFiles false oldFile newFile |> not then 
+            i := !i + 1
+            CopyFileIntoSubFolder patchDir newFile
+    tracefn "Patch contains %d files." !i
 
 /// Checks the srcFiles for changes to the last release.
 /// ## Parameters

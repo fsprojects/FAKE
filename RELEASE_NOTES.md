@@ -1,3 +1,6 @@
+#### 3.34.5 - 28.05.2015
+* Trace no. of files in a patch
+
 #### 3.34.4 - 28.05.2015
 * CMake support improvements - https://github.com/fsharp/FAKE/pull/821
 
