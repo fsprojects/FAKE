@@ -304,7 +304,7 @@ let PrintDependencyGraph verbose target =
             let addToOrder = not (printed.Contains (toLower act))
             printed.Add (toLower act) |> ignore
     
-            if addToOrder || verbose then log <| (sprintf "<== %s" act).PadLeft(3 * indent)
+            if addToOrder || verbose then log <| sprintf "%s<== %s" (String(' ', indent * 3)) act
             Seq.iter (printDependencies (indent+1)) target.Dependencies
             if addToOrder then order.Add act
         
