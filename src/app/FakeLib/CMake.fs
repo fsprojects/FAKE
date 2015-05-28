@@ -1,5 +1,6 @@
-﻿namespace Fake
+﻿namespace Fake.CMakeSupport
 
+open Fake
 open System
 open System.Diagnostics
 open System.IO
