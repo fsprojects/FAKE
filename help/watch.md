@@ -1,7 +1,7 @@
 # Watching for file changes with "FAKE - F# Make"
 
 FAKE makes it easy to setup monitoring for filesystem changes. Using the standard glob patterns you can
-watch for changes, and automatticly run a function or another target.
+watch for changes, and automatically run a function or another target.
 
 ## Using WatchChanges
 
@@ -25,7 +25,7 @@ Add a new target named "Watch" to your build:
 Now run build.fsx and make some changes to the docs directory. They should be printed out to the console as they happen,
 and the GenerateDocs target should be rerun.
 
-If you need to watch only a subset of the files, say you want to rerun tests as soon as the compiled dlls change:
+If you need to watch only a subset of the files, say you want to rerun tests as soon as the compiled DLLs change:
 
     Target "RunTests" (fun _ ->
         tracefn "Running tests."

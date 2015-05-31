@@ -1,5 +1,6 @@
 #r "../../../build/FakeLib.dll"
 open Fake
+open Fake.CMakeSupport
 
 // Out of source build: CMake separates the source code from what's being generated.
 let binaryDir = "./build"
