@@ -120,8 +120,8 @@ let dependency targetName dependentTargetName = dependencyAtEnd targetName depen
 /// [omit]
 let Dependencies targetName dependentTargetNames = dependentTargetNames |> List.iter (dependency targetName)
 
-/// Backwards dependencies operator - y is dependend on x.
-let inline (<==) x y = Dependencies x y
+/// Backwards dependencies operator - x is dependent on ys.
+let inline (<==) x ys = Dependencies x ys
 
 /// Set a dependency for all given targets.
 /// [omit]
