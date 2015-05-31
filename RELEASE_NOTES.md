@@ -1,3 +1,6 @@
+#### 3.34.6 - 31.05.2015
+* Fix FtpHelper
+
 #### 3.34.5 - 28.05.2015
 * Trace no. of files in a patch
 
