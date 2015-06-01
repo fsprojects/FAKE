@@ -1,3 +1,6 @@
+#### 3.34.7 - 01.06.2015
+* Allow test nUnit test assemblies containing SetupFixture attributes be compatible with NUnitParallel - https://github.com/fsharp/FAKE/pull/824
+
 #### 3.34.6 - 31.05.2015
 * Fix FtpHelper
 
