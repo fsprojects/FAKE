@@ -98,7 +98,7 @@ let private serialize data = JsonConvert.SerializeObject(data)
 ///
 /// * settings : Function that sets the raygun connection settings.
 /// * data : Function that sets the deployment data
-let reportDeployment (settings:RaygunConnectionSettings->RaygunConnectionSettings) (data:RaygunDeploymentData->RaygunDeploymentData) =
+let ReportDeployment (settings:RaygunConnectionSettings->RaygunConnectionSettings) (data:RaygunDeploymentData->RaygunDeploymentData) =
     traceStartTask "Raygun.io" "Report new deployment"
     let settings = defaultSettings |> settings
     let data = defaultData |> data
