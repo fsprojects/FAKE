@@ -1,24 +1,13 @@
-#### 3.34.7 - 01.06.2015
+#### 3.35.0 - 09.06.2015
+* Added Raygun.io helper - https://github.com/fsharp/FAKE/pull/826
 * Allow test nUnit test assemblies containing SetupFixture attributes be compatible with NUnitParallel - https://github.com/fsharp/FAKE/pull/824
-
-#### 3.34.6 - 31.05.2015
 * Fix FtpHelper
-
-#### 3.34.5 - 28.05.2015
 * Trace no. of files in a patch
-
-#### 3.34.4 - 28.05.2015
 * CMake support improvements - https://github.com/fsharp/FAKE/pull/821
-
-#### 3.34.3 - 26.05.2015
 * Wix Helper Improvements - https://github.com/fsharp/FAKE/pull/818
-
-#### 3.34.2 - 26.05.2015
 * Wix Helper Improvements - https://github.com/fsharp/FAKE/pull/817
-* Added SemVerHelper.isValidSemVer - https://github.com/fsharp/FAKE/pull/811
-
-#### 3.34.1 - 26.05.2015
 * Wix Helper Improvements - https://github.com/fsharp/FAKE/pull/815
+* Added SemVerHelper.isValidSemVer - https://github.com/fsharp/FAKE/pull/811
 
 #### 3.34.0 - 25.05.2015
 * Support for CMake configuration and builds - https://github.com/fsharp/FAKE/pull/785
