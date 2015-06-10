@@ -1,5 +1,6 @@
 #### 3.35.0 - 09.06.2015
 * Added Raygun.io helper - https://github.com/fsharp/FAKE/pull/826
+* Re-added internal class generated for AssemblyInfo.vb - https://github.com/fsharp/FAKE/pull/827
 * Allow test nUnit test assemblies containing SetupFixture attributes be compatible with NUnitParallel - https://github.com/fsharp/FAKE/pull/824
 * Fix FtpHelper
 * Trace no. of files in a patch
