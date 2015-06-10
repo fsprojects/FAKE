@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>iOSBuildParams - FAKE - F# Make</title>
+    <title>RaygunConnectionSettings - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,9 +36,9 @@
 
 
 
-<h1>iOSBuildParams</h1>
+<h1>RaygunConnectionSettings</h1>
 <div class="xmldoc">
-<p>The iOS build paramater type</p>
+<p>Connection configuration</p>
 </div>
   <h3>Record Fields</h3>
   <table class="table table-bordered member-list">
@@ -49,76 +49,41 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1960', 1960)" onmouseover="showTip(event, '1960', 1960)">
-            Configuration
+          <code onmouseout="hideTip(event, '1610', 1610)" onmouseover="showTip(event, '1610', 1610)">
+            endPoint
           </code>
-          <div class="tip" id="1960">
+          <div class="tip" id="1610">
             <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/XamarinHelper.fs#L41-41" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RaygunHelper.fs#L52-52" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Build configuration, defaults to 'Debug|iPhoneSimulator'</p>
+          <p>Endpoint to connect to
+Required, Defaults to: <a href="https://app.raygun.io/deployments">https://app.raygun.io/deployments</a></p>
 
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1961', 1961)" onmouseover="showTip(event, '1961', 1961)">
-            MDToolPath
+          <code onmouseout="hideTip(event, '1611', 1611)" onmouseover="showTip(event, '1611', 1611)">
+            externalToken
           </code>
-          <div class="tip" id="1961">
+          <div class="tip" id="1611">
             <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/XamarinHelper.fs#L43-43" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RaygunHelper.fs#L57-57" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Path to mdtool, defaults to Xamarin Studio's usual path</p>
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1962', 1962)" onmouseover="showTip(event, '1962', 1962)">
-            ProjectPath
-          </code>
-          <div class="tip" id="1962">
-            <strong>Signature:</strong> string<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/XamarinHelper.fs#L37-37" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>(Required) Path to solution or project file</p>
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1963', 1963)" onmouseover="showTip(event, '1963', 1963)">
-            Target
-          </code>
-          <div class="tip" id="1963">
-            <strong>Signature:</strong> string<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/XamarinHelper.fs#L39-39" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Build target, defaults to Build</p>
+          <p>Raygun user access token for allowing API
+access. (Creatd under User -&gt; My settings in the web application)
+Required, no sensible default</p>
 
         </td>
       </tr>

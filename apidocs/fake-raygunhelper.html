@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>iOSBuildParams - FAKE - F# Make</title>
+    <title>RaygunHelper - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,89 +36,72 @@
 
 
 
-<h1>iOSBuildParams</h1>
+<h1>RaygunHelper</h1>
 <div class="xmldoc">
-<p>The iOS build paramater type</p>
+<p>Enables deployment tracking using Raygun.io</p>
+
+<p>Thin wrapper around <a href="https://raygun.io/docs/deployments/api">the Raygun HTTP deployment API</a></p>
 </div>
-  <h3>Record Fields</h3>
+
+<!-- Render nested types and modules, if there are any -->
+  <h2>Nested types and modules</h2>
+  <div>
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="fake-raygunhelper-raygunconnectionsettings.html">RaygunConnectionSettings</a>
+          </td>
+          <td class="xmldoc"><p>Connection configuration</p>
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-raygunhelper-raygundeploymentdata.html">RaygunDeploymentData</a>
+          </td>
+          <td class="xmldoc"><p>Data describing a deployment to Raygun</p>
+</td>
+        </tr>
+    </tbody>
+  </table>
+
+  </div>
+
+  <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Record Field</td><td>Description</td></tr>
+      <tr><td>Function or value</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1960', 1960)" onmouseover="showTip(event, '1960', 1960)">
-            Configuration
+          <code onmouseout="hideTip(event, '478', 478)" onmouseover="showTip(event, '478', 478)">
+            ReportDeployment settings data
           </code>
-          <div class="tip" id="1960">
-            <strong>Signature:</strong> string<br />
+          <div class="tip" id="478">
+            <strong>Signature:</strong> settings:(RaygunConnectionSettings -&gt; RaygunConnectionSettings) -&gt; data:(RaygunDeploymentData -&gt; RaygunDeploymentData) -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/XamarinHelper.fs#L41-41" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RaygunHelper.fs#L101-101" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Build configuration, defaults to 'Debug|iPhoneSimulator'</p>
+          <h3>Report a deployment to raygun</h3>
 
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
+<p>Reports a deployment to raygun so reported errors can be
+correlated with deployments</p>
 
-          <code onmouseout="hideTip(event, '1961', 1961)" onmouseover="showTip(event, '1961', 1961)">
-            MDToolPath
-          </code>
-          <div class="tip" id="1961">
-            <strong>Signature:</strong> string<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/XamarinHelper.fs#L43-43" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Path to mdtool, defaults to Xamarin Studio's usual path</p>
+<h3>Paramteres</h3>
 
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1962', 1962)" onmouseover="showTip(event, '1962', 1962)">
-            ProjectPath
-          </code>
-          <div class="tip" id="1962">
-            <strong>Signature:</strong> string<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/XamarinHelper.fs#L37-37" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>(Required) Path to solution or project file</p>
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '1963', 1963)" onmouseover="showTip(event, '1963', 1963)">
-            Target
-          </code>
-          <div class="tip" id="1963">
-            <strong>Signature:</strong> string<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/XamarinHelper.fs#L39-39" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Build target, defaults to Build</p>
+<ul>
+<li>settings : Function that sets the raygun connection settings.</li>
+<li>data : Function that sets the deployment data</li>
+</ul>
 
         </td>
       </tr>
