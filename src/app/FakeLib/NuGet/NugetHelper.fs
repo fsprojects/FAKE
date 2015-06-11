@@ -262,7 +262,7 @@ let private pack parameters nuspecFile =
                 info.FileName <- parameters.ToolPath
                 info.WorkingDirectory <- FullName parameters.WorkingDir
                 info.Arguments <- args) parameters.TimeOut
-        if result.ExitCode <> 0 then failwithf "Error during NuGet package creation. %s %s\r\n%s" parameters.ToolPath args (toLines result.Errors)
+        if result.ExitCode <> 0 || result.Errors.Count > 0 then failwithf "Error during NuGet package creation. %s %s\r\n%s" parameters.ToolPath args (toLines result.Errors)
 
     let nuspecFile = 
         let fi = fileInfo nuspecFile
