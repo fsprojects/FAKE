@@ -160,6 +160,7 @@
     <Compile Include="ChangeWatcher.fs" />
     <Compile Include="CMake.fs" />
     <None Include="app.config" />
+    <Compile Include="RaygunHelper.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
