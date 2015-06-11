@@ -1,3 +1,6 @@
+#### 3.35.1 - 11.06.2015
+* Report all NuGet errors, even if ExitCode = 0
+
 #### 3.35.0 - 09.06.2015
 * Added Raygun.io helper - https://github.com/fsharp/FAKE/pull/826
 * Re-added internal class generated for AssemblyInfo.vb - https://github.com/fsharp/FAKE/pull/827
