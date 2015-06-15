@@ -116,10 +116,10 @@ let GetPackageVersion deploymentsDir package =
             if index < folder.Length then
                 folder.Substring index
             else
-                let files = Directory.GetFiles(folder, sprintf "%s.*.nupkg" package)
-                let file = (Seq.head files).Replace(".nupkg","")
-                let index = file.LastIndexOf package + package.Length + 1
-                file.Substring index
+                let nuspec = Directory.GetFiles(folder, sprintf "%s.nuspec" package) |> Seq.head
+                let doc = System.Xml.Linq.XDocument.Load(nuspec)
+                let vers = doc.Descendants(XName.Get("version", doc.Root.Name.NamespaceName))
+                (Seq.head vers).Value
                
         logfn "Version %s found for package %s" version package
         version
