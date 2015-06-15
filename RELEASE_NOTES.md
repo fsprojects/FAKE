@@ -1,3 +1,6 @@
+#### 3.35.2 - 15.06.2015
+* BUGFIX: Get package version from nuspec file - https://github.com/fsharp/FAKE/pull/829
+
 #### 3.35.1 - 11.06.2015
 * Report all NuGet errors, even if ExitCode = 0
 
