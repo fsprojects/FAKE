@@ -38,4 +38,5 @@ nuget xunit.runners ~> 1.9
 nuget Newtonsoft.Json
 nuget Microsoft.AspNet.Razor 2.0.30506
 nuget Microsoft.AspNet.WebPages 2.0.30506
+nuget FluentMigrator.Runner
 nuget HashLib
