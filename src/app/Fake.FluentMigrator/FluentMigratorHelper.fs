@@ -32,6 +32,7 @@ type internal FakeAnnouncer() =
     override this.Write (message, escaped) =
         log message
 
+/// <summary>MS SQL Server driver version</summary>
 type SqlServerVersion =
     | Default
     | V2000
@@ -41,11 +42,13 @@ type SqlServerVersion =
     | V2014
     | CE
 
+/// <summary>Oracle database driver version</summary>
 type OracleVersion =
     | Default
     | Managed
     | DotConnect
 
+/// <summary>Fluent Migrator SQL syntax provider</summary>
 type DatabaseProvider =
     | SqlServer of version: SqlServerVersion
     | Oracle of version: OracleVersion
@@ -57,6 +60,7 @@ type DatabaseProvider =
     | PostgreSQL
     | SQLite
 
+///<summary>Operation to execute over database</summary>
 type DatabaseTask =
     | MigrateUp of version : Option<int64>
     | MigrateDown of version: int64
@@ -64,16 +68,25 @@ type DatabaseTask =
     | ListMigrations
     | ValidateVersionOrder
 
+///<summary>Database connection configuration</summary>
 type DatabaseConnection =
+    ///<summary>Explicit connection string</summary>
     | ConnectionString of connectionString: string
+    ///<summary>Connection string specified in application config file</summary>
     | ConfigConnection of name: string * configPath: string
 
+///<summary>Fluent Migrator execution mode</summary>
 type MigrationRunningMode =
+    ///<summary>Execute migrations on the target database</summary>
     | Execute of connection: DatabaseConnection
+    ///<summary>Execute migrations on the target database and script SQL to the output file</summary>
     | ExecuteAndScript of connection: DatabaseConnection * outputFileName: string
+    ///<summary>Execute migrations in preview-only mode</summary>
     | Preview of connection: DatabaseConnection
+    ///<summary>Create migration script</summary>
     | Script of startVersion: int64 * outputFileName: string
 
+//Fluent Migrator options
 type MigrationOptions = {
     Mode: Option<MigrationRunningMode>;
     Assemblies: seq<string>
@@ -89,6 +102,7 @@ type MigrationOptions = {
     Verbose: bool
 }
 
+//Default Fluent Migrator options
 let DefaultMigrationOptions = {
     Mode = None
     Assemblies = null;
@@ -216,6 +230,9 @@ let private toRunnerContext task options =
     context.Database <- getProviderName provider
     (context, (snd announcer))
 
+/// <summary>Executes the specified task using configuration options</summary>
+/// <param name="task"><see cref="DatabaseTask"> to execute</param>
+/// <param name="options"><see cref="MigrationOptions"></param>
 let ExecuteDatabaseTask task options =
     let (context, writer) = toRunnerContext task options
     try
