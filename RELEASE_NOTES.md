@@ -1,3 +1,6 @@
+#### 3.35.3 - 23.06.2015
+* BUGFIX: Fix for single * glob not working - https://github.com/fsharp/FAKE/pull/836 
+
 #### 3.35.2 - 15.06.2015
 * BUGFIX: Get package version from nuspec file - https://github.com/fsharp/FAKE/pull/829
 
