@@ -1,3 +1,6 @@
+#### 3.35.4 - 23.06.2015
+* Add caching to globbing 
+
 #### 3.35.3 - 23.06.2015
 * BUGFIX: Fix for single * glob not working - https://github.com/fsharp/FAKE/pull/836 
 
