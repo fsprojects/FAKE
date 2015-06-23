@@ -115,7 +115,7 @@ let internal isMatch pattern path : bool =
             [
                 "dirwildcard", (@"\\\*\\\*(/|\\\\)", @"(.*(/|\\))?")
                 "stardotstar", (@"\\\*\\.\\\*", @"([^\\/]*)")
-                "wildcard", (@"\\\*", @"([^.\\/]*)")
+                "wildcard", (@"\\\*", @"([^\\/]*)")
             ] |> List.map(fun (key, reg) ->
                 let pattern, replace = reg
                 let pattern = sprintf "(?<%s>%s)" key pattern
