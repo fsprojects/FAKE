@@ -105,9 +105,8 @@ let internal search (baseDir : string) (input : string) =
     |> buildPaths [ baseDir ]
     |> List.map normalizeOutputPath
 
-let internal isMatch pattern path : bool = 
+let internal compileGlobToRegex pattern =
     let pattern = normalizePath pattern
-    let path = normalizePath path
 
     let escapedPattern = (Regex.Escape pattern)
     let regexPattern = 
@@ -131,4 +130,20 @@ let internal isMatch pattern path : bool =
         )
         "^" + replaced + "$"
 
-    Regex(regexPattern).IsMatch(path)
+    Regex(regexPattern)
+
+let globRegexCache = System.Collections.Concurrent.ConcurrentDictionary<string, Regex>()
+
+let internal isMatch pattern path : bool = 
+    let path = normalizePath path
+
+    let regex = 
+        let outRegex : ref<Regex> = ref null
+        if globRegexCache.TryGetValue(pattern, outRegex) then
+            !outRegex
+        else
+            let compiled = compileGlobToRegex pattern
+            globRegexCache.TryAdd(pattern, compiled) |> ignore
+            compiled
+
+    regex.IsMatch(path)
