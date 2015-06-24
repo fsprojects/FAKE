@@ -1,277 +1,566 @@
-#I @"packages/FAKE/tools/"
-#r @"FakeLib.dll"
-#load "packages/SourceLink.Fake/tools/SourceLink.fsx"
+﻿#I @"src/packages/FAKE/tools"
+#r "FakeLib.dll"
+#r "System.Xml.Linq"
 
-open Fake
-open Fake.Git
-open Fake.FSharpFormatting
+open System
 open System.IO
-open SourceLink
-open Fake.ReleaseNotesHelper
+open System.Text
+open Fake
+open Fake.FileUtils
+open Fake.MSTest
+open Fake.NUnitCommon
+open Fake.TaskRunnerHelper
+open Fake.ProcessHelper
 
-// properties
-let projectName = "FAKE"
-let projectSummary = "FAKE - F# Make - Get rid of the noise in your build scripts."
-let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. Tasks and dependencies are specified in a DSL which is integrated in F#."
-let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"]
-let gitRaw = environVarOrDefault "gitRaw" "https://raw.github.com/fsharp"
+cd __SOURCE_DIRECTORY__
 
-let release = LoadReleaseNotes "RELEASE_NOTES.md"
+//--------------------------------------------------------------------------------
+// Information about the project for Nuget and Assembly info files
+//--------------------------------------------------------------------------------
 
-let packages =
-    ["FAKE.Core",projectDescription
-     "FAKE.Gallio",projectDescription + " Extensions for Gallio"
-     "FAKE.IIS",projectDescription + " Extensions for IIS"
-     "FAKE.SQL",projectDescription + " Extensions for SQL Server"
-     "FAKE.Experimental",projectDescription + " Experimental Extensions"
-     "FAKE.Deploy.Lib",projectDescription + " Extensions for FAKE Deploy"     
-     projectName,projectDescription + " This package bundles all extensions."
-     "FAKE.Lib",projectDescription + " FAKE helper functions as library"]
 
-let buildDir = "./build"
-let testDir = "./test"
-let docsDir = "./docs"
-let apidocsDir = "./docs/apidocs/"
-let nugetDir = "./nuget"
-let reportDir = "./report"
-let packagesDir = "./packages"
+let product = "Akka.NET"
+let authors = [ "Akka.NET Team" ]
+let copyright = "Copyright © 2013-2015 Akka.NET Team"
+let company = "Akka.NET Team"
+let description = "Akka.NET is a port of the popular Java/Scala framework Akka to .NET"
+let tags = ["akka";"actors";"actor";"model";"Akka";"concurrency"]
+let configuration = "Release"
+let toolDir = "tools"
+let CloudCopyDir = toolDir @@ "CloudCopy"
+let AzCopyDir = toolDir @@ "AzCopy"
 
-let additionalFiles = [
-    "License.txt"
-    "README.markdown"
-    "RELEASE_NOTES.md"
-    "./packages/FSharp.Core/lib/net40/FSharp.Core.sigdata"
-    "./packages/FSharp.Core/lib/net40/FSharp.Core.optdata"]
+// Read release notes and version
 
-// Targets
-Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDir; reportDir])
+let parsedRelease =
+    File.ReadLines "RELEASE_NOTES.md"
+    |> ReleaseNotesHelper.parseReleaseNotes
 
-open Fake.AssemblyInfoFile
+let envBuildNumber = System.Environment.GetEnvironmentVariable("BUILD_NUMBER")
+let buildNumber = if String.IsNullOrWhiteSpace(envBuildNumber) then "0" else envBuildNumber
 
-Target "SetAssemblyInfo" (fun _ ->
-    let common = [
-         Attribute.Product "FAKE - F# Make"
-         Attribute.Version release.AssemblyVersion
-         Attribute.InformationalVersion release.AssemblyVersion
-         Attribute.FileVersion release.AssemblyVersion]
+let version = parsedRelease.AssemblyVersion + "." + buildNumber
+let preReleaseVersion = version + "-beta"
 
-    [Attribute.Title "FAKE - F# Make Command line tool"
-     Attribute.Guid "fb2b540f-d97a-4660-972f-5eeff8120fba"] @ common
-    |> CreateFSharpAssemblyInfo "./src/app/FAKE/AssemblyInfo.fs"
+let isUnstableDocs = hasBuildParam "unstable"
+let isPreRelease = hasBuildParam "nugetprerelease"
+let release = if isPreRelease then ReleaseNotesHelper.ReleaseNotes.New(version, version + "-beta", parsedRelease.Notes) else parsedRelease
 
-    [Attribute.Title "FAKE - F# Make Deploy tool"
-     Attribute.Guid "413E2050-BECC-4FA6-87AA-5A74ACE9B8E1"] @ common
-    |> CreateFSharpAssemblyInfo "./src/app/Fake.Deploy/AssemblyInfo.fs"
+printfn "Assembly version: %s\nNuget version; %s\n" release.AssemblyVersion release.NugetVersion
+//--------------------------------------------------------------------------------
+// Directories
 
-    [Attribute.Title "FAKE - F# Make Deploy Web"
-     Attribute.Guid "27BA7705-3F57-47BE-B607-8A46B27AE876"] @ common
-    |> CreateFSharpAssemblyInfo "./src/deploy.web/Fake.Deploy.Web/AssemblyInfo.fs"
+let binDir = "bin"
+let testOutput = "TestResults"
 
-    [Attribute.Title "FAKE - F# Make Deploy Lib"
-     Attribute.Guid "AA284C42-1396-42CB-BCAC-D27F18D14AC7"] @ common
-    |> CreateFSharpAssemblyInfo "./src/app/Fake.Deploy.Lib/AssemblyInfo.fs"
+let nugetDir = binDir @@ "nuget"
+let workingDir = binDir @@ "build"
+let libDir = workingDir @@ @"lib\net45\"
+let nugetExe = FullName @"src\.nuget\NuGet.exe"
+let docDir = "bin" @@ "doc"
 
-    [Attribute.Title "FAKE - F# Make Lib"
-     Attribute.InternalsVisibleTo "Test.FAKECore"
-     Attribute.Guid "d6dd5aec-636d-4354-88d6-d66e094dadb5"] @ common
-    |> CreateFSharpAssemblyInfo "./src/app/FakeLib/AssemblyInfo.fs"
+open Fake.RestorePackageHelper
+Target "RestorePackages" (fun _ -> 
+     "./src/Akka.sln"
+     |> RestoreMSSolutionPackages (fun p ->
+         { p with
+             OutputPath = "./src/packages"
+             Retries = 4 })
+ )
 
-    [Attribute.Title "FAKE - F# Make SQL Lib"
-     Attribute.Guid "A161EAAF-EFDA-4EF2-BD5A-4AD97439F1BE"] @ common
-    |> CreateFSharpAssemblyInfo "./src/app/Fake.SQL/AssemblyInfo.fs"
+//--------------------------------------------------------------------------------
+// Clean build results
 
-    [Attribute.Title "FAKE - F# Make Experimental Lib"
-     Attribute.Guid "5AA28AED-B9D8-4158-A594-32FE5ABC5713"] @ common
-    |> CreateFSharpAssemblyInfo "./src/app/Fake.Experimental/AssemblyInfo.fs"
+Target "Clean" <| fun _ ->
+    DeleteDir binDir
+
+//--------------------------------------------------------------------------------
+// Generate AssemblyInfo files with the version for release notes 
+
+open AssemblyInfoFile
+
+Target "AssemblyInfo" <| fun _ ->
+    CreateCSharpAssemblyInfoWithConfig "src/SharedAssemblyInfo.cs" [
+        Attribute.Company company
+        Attribute.Copyright copyright
+        Attribute.Trademark ""
+        Attribute.Version version
+        Attribute.FileVersion version ] <| AssemblyInfoFileConfig(false)
+
+    for file in !! "src/**/AssemblyInfo.fs" do
+        let title =
+            file
+            |> Path.GetDirectoryName
+            |> Path.GetDirectoryName
+            |> Path.GetFileName
+
+        CreateFSharpAssemblyInfo file [ 
+            Attribute.Title title
+            Attribute.Product product
+            Attribute.Description description
+            Attribute.Copyright copyright
+            Attribute.Company company
+            Attribute.ComVisible false
+            Attribute.CLSCompliant true
+            Attribute.Version version
+            Attribute.FileVersion version ]
+
+
+//--------------------------------------------------------------------------------
+// Build the solution
+
+Target "Build" <| fun _ ->
+
+    !!"src/Akka.sln"
+    |> MSBuildRelease "" "Rebuild"
+    |> ignore
+
+Target "BuildMono" <| fun _ ->
+
+    !!"src/Akka.sln"
+    |> MSBuild "" "Rebuild" [("Configuration","Release Mono")]
+    |> ignore
+
+//--------------------------------------------------------------------------------
+// Build the docs
+Target "Docs" <| fun _ ->
+    !! "documentation/akkadoc.shfbproj"
+    |> MSBuildRelease "" "Rebuild"
+    |> ignore
+
+//--------------------------------------------------------------------------------
+// Push DOCs content to Windows Azure blob storage
+Target "AzureDocsDeploy" (fun _ ->
+    let rec pushToAzure docDir azureUrl container azureKey trialsLeft =
+        let tracing = enableProcessTracing
+        enableProcessTracing <- false
+        let arguments = sprintf "/Source:%s /Dest:%s /DestKey:%s /S /Y /SetContentType" (Path.GetFullPath docDir) (azureUrl @@ container) azureKey
+        tracefn "Pushing docs to %s. Attempts left: %d" (azureUrl) trialsLeft
+        try 
+            
+            let result = ExecProcess(fun info ->
+                info.FileName <- AzCopyDir @@ "AzCopy.exe"
+                info.Arguments <- arguments) (TimeSpan.FromMinutes 120.0) //takes a very long time to upload
+            if result <> 0 then failwithf "Error during AzCopy.exe upload to azure."
+        with exn -> 
+            if (trialsLeft > 0) then (pushToAzure docDir azureUrl container azureKey (trialsLeft-1))
+            else raise exn
+    let canPush = hasBuildParam "azureKey" && hasBuildParam "azureUrl"
+    if (canPush) then
+         printfn "Uploading API docs to Azure..."
+         let azureUrl = getBuildParam "azureUrl"
+         let azureKey = (getBuildParam "azureKey") + "==" //hack, because it looks like FAKE arg parsing chops off the "==" that gets tacked onto the end of each Azure storage key
+         if(isUnstableDocs) then
+            pushToAzure docDir azureUrl "unstable" azureKey 3
+         if(not isUnstableDocs) then
+            pushToAzure docDir azureUrl "stable" azureKey 3
+            pushToAzure docDir azureUrl release.NugetVersion azureKey 3
+    if(not canPush) then
+        printfn "Missing required paraments to push docs to Azure. Run build HelpDocs to find out!"
+            
 )
 
-Target "BuildSolution" (fun _ ->
-    MSBuildWithDefaults "Build" ["./FAKE.sln"; "./FAKE.Deploy.Web.sln"]
-    |> Log "AppBuild-Output: "
-)
+Target "PublishDocs" DoNothing
 
-Target "GenerateDocs" (fun _ ->
-    let source = "./help"
-    let template = "./help/literate/templates/template-project.html"
-    let templatesDir = "./help/templates/reference/" 
-    let githubLink = "https://github.com/fsharp/FAKE"
-    let projInfo =
-      [ "page-description", "FAKE - F# Make"
-        "page-author", separated ", " authors
-        "project-author", separated ", " authors
-        "github-link", githubLink
-        "project-github", "http://github.com/fsharp/fake"
-        "project-nuget", "https://www.nuget.org/packages/FAKE"
-        "root", "http://fsharp.github.io/FAKE"
-        "project-name", "FAKE - F# Make" ]
+//--------------------------------------------------------------------------------
+// Copy the build output to bin directory
+//--------------------------------------------------------------------------------
 
-    Copy source ["RELEASE_NOTES.md"]
+Target "CopyOutput" <| fun _ ->
+    
+    let copyOutput project =
+        let src = "src" @@ project @@ @"bin/Release/"
+        let dst = binDir @@ project
+        CopyDir dst src allFiles
+    [ "core/Akka"
+      "core/Akka.FSharp"
+      "core/Akka.TestKit"
+      "core/Akka.Remote"
+      "core/Akka.Remote.TestKit"
+      "core/Akka.Cluster"
+      "core/Akka.MultiNodeTestRunner"
+      "core/Akka.Persistence"
+      "core/Akka.Persistence.FSharp"
+      "core/Akka.Persistence.TestKit"
+      "contrib/loggers/Akka.Logger.slf4net"
+      "contrib/loggers/Akka.Logger.NLog" 
+      "contrib/loggers/Akka.Logger.Serilog" 
+      "contrib/dependencyinjection/Akka.DI.Core"
+      "contrib/dependencyinjection/Akka.DI.AutoFac"
+      "contrib/dependencyinjection/Akka.DI.CastleWindsor"
+      "contrib/dependencyinjection/Akka.DI.Ninject"
+      "contrib/testkits/Akka.TestKit.Xunit" 
+      "contrib/testkits/Akka.TestKit.NUnit" 
+      "contrib/testkits/Akka.TestKit.Xunit2" 
+      ]
+    |> List.iter copyOutput
 
-    CreateDocs source docsDir template projInfo
+Target "BuildRelease" DoNothing
 
-    let dllFiles =
-        !! "./build/**/Fake.*.dll"
-          ++ "./build/FakeLib.dll"
-          -- "./build/**/Fake.Experimental.dll"
-          -- "./build/**/FSharp.Compiler.Service.dll"
-          -- "./build/**/Fake.IIS.dll"                      
-          -- "./build/**/Fake.Deploy.Lib.dll"
 
-    CreateDocsForDlls apidocsDir templatesDir (projInfo @ ["--libDirs", "./build"]) (githubLink + "/blob/master") dllFiles
 
-    WriteStringToFile false "./docs/.nojekyll" ""
+//--------------------------------------------------------------------------------
+// Tests targets
+//--------------------------------------------------------------------------------
 
-    CopyDir (docsDir @@ "content") "help/content" allFiles
-    CopyDir (docsDir @@ "pics") "help/pics" allFiles
-)
+//--------------------------------------------------------------------------------
+// Clean test output
 
-Target "CopyLicense" (fun _ ->
-    CopyTo buildDir additionalFiles
-)
+Target "CleanTests" <| fun _ ->
+    DeleteDir testOutput
+//--------------------------------------------------------------------------------
+// Run tests
 
-Target "Test" (fun _ ->
-    !! (testDir @@ "Test.*.dll")
-    |> MSpec (fun p ->
-            {p with
-                ToolPath = findToolInSubPath "mspec-x86-clr4.exe" (currentDirectory @@ "tools" @@ "MSpec")
-                ExcludeTags = ["HTTP"]
-                HtmlOutputDir = reportDir})
+open XUnit2Helper
+Target "RunTests" <| fun _ ->  
+    let msTestAssemblies = !! "src/**/bin/Release/Akka.TestKit.VsTest.Tests.dll"
+    let nunitTestAssemblies = !! "src/**/bin/Release/Akka.TestKit.NUnit.Tests.dll"
+    let xunitTestAssemblies = !! "src/**/bin/Release/*.Tests.dll" -- 
+                                    "src/**/bin/Release/Akka.TestKit.VsTest.Tests.dll" -- 
+                                    "src/**/bin/Release/Akka.TestKit.NUnit.Tests.dll" --
+                                    "src/**/bin/Release/Akka.Persistence.SqlServer.Tests.dll" --
+                                    "src/**/bin/Release/Akka.Persistence.PostgreSql.Tests.dll" --
+                                    "src/**/bin/Release/Akka.Persistence.Cassandra.Tests.dll"
 
-    !! (testDir @@ "Test.*.dll")
-      ++ (testDir @@ "FsCheck.Fake.dll")
-    |>  xUnit (fun p -> p)
-)
+    mkdir testOutput
 
-Target "SourceLink" (fun _ ->
-    use repo = new GitRepo(__SOURCE_DIRECTORY__)
-    !! "src/app/**/*.fsproj" 
-    |> Seq.iter (fun f ->
-        let proj = VsProj.LoadRelease f
-        logfn "source linking %s" proj.OutputFilePdb
-        let files = 
-            proj.CompilesNotLinked 
-                -- "**/AssemblyInfo.fs"
-        try
-            repo.VerifyChecksums files
-            proj.VerifyPdbChecksums files
-        with
-        | _ -> ()
-        proj.CreateSrcSrv (sprintf "%s/%s/{0}/%%var2%%" gitRaw projectName) repo.Commit (repo.Paths files)
-        Pdbstr.exec proj.OutputFilePdb proj.OutputFilePdbSrcSrv
-    )
-    let pdbFakeLib = "./build/FakeLib.pdb"
-    CopyFile "./build/FAKE.Deploy" pdbFakeLib
-    CopyFile "./build/FAKE.Deploy.Lib" pdbFakeLib
-)
+    MSTest (fun p -> p) msTestAssemblies
+    nunitTestAssemblies
+    |> NUnit (fun p -> 
+        {p with
+            DisableShadowCopy = true; 
+            OutputFile = testOutput + @"\NUnitTestResults.xml"})
 
-Target "CreateNuGet" (fun _ ->
-    let set64BitCorFlags files =
-        files
-        |> Seq.iter (fun file -> 
-            let args =
-                { Program = "lib" @@ "corflags.exe"
-                  WorkingDirectory = directory file
-                  CommandLine = "/32BIT- /32BITPREF- " + quoteIfNeeded file
-                  Args = [] }
-            printfn "%A" args
-            shellExec args |> ignore)
+    let xunitToolPath = findToolInSubPath "xunit.console.exe" "src/packages/xunit.runner.console*/tools"
+    printfn "Using XUnit runner: %s" xunitToolPath
+    xUnit2
+        (fun p -> { p with OutputDir = testOutput; ToolPath = xunitToolPath })
+        xunitTestAssemblies
 
-    let x64ify package = 
-        { package with
-            Dependencies = package.Dependencies |> List.map (fun (pkg, ver) -> pkg + ".x64", ver)
-            Project = package.Project + ".x64" }
+Target "RunTestsMono" <| fun _ ->  
+    let xunitTestAssemblies = !! "src/**/bin/Release Mono/*.Tests.dll"
 
-    for package,description in packages do
-        let nugetDocsDir = nugetDir @@ "docs"
-        let nugetToolsDir = nugetDir @@ "tools"
-        let nugetLibDir = nugetDir @@ "lib"
-        let nugetLib451Dir = nugetLibDir @@ "net451"
+    mkdir testOutput
 
-        CleanDir nugetDocsDir
-        CleanDir nugetToolsDir
-        CleanDir nugetLibDir
-        DeleteDir nugetLibDir
+    let xunitToolPath = findToolInSubPath "xunit.console.exe" "src/packages/xunit.runner.console*/tools"
+    printfn "Using XUnit runner: %s" xunitToolPath
+    xUnit2
+        (fun p -> { p with OutputDir = testOutput; ToolPath = xunitToolPath })
+        xunitTestAssemblies
 
-        DeleteFile "./build/FAKE.Gallio/Gallio.dll"
+Target "MultiNodeTests" <| fun _ ->
+    let multiNodeTestPath = findToolInSubPath "Akka.MultiNodeTestRunner.exe" "bin/core/Akka.MultiNodeTestRunner*"
+    printfn "Using MultiNodeTestRunner: %s" multiNodeTestPath
 
-        match package with
-        | p when p = projectName ->
-            !! (buildDir @@ "**/*.*") |> Copy nugetToolsDir
-            CopyDir nugetDocsDir docsDir allFiles
-        | p when p = "FAKE.Core" ->
-            !! (buildDir @@ "*.*") |> Copy nugetToolsDir
-            CopyDir nugetDocsDir docsDir allFiles
-        | p when p = "FAKE.Lib" -> 
-            CleanDir nugetLib451Dir
-            !! (buildDir @@ "FakeLib.dll") |> Copy nugetLib451Dir
-        | _ ->
-            CopyDir nugetToolsDir (buildDir @@ package) allFiles
-            CopyTo nugetToolsDir additionalFiles
-        !! (nugetToolsDir @@ "*.srcsv") |> DeleteFiles
+    let spec = getBuildParam "spec"
 
-        let setParams p =
-            {p with
-                Authors = authors
-                Project = package
-                Description = description
-                Version = release.NugetVersion
-                OutputPath = nugetDir
-                Summary = projectSummary
-                ReleaseNotes = release.Notes |> toLines
-                Dependencies =                    
-                    (if package <> "FAKE.Core" && package <> projectName && package <> "FAKE.Lib" then
-                       ["FAKE.Core", RequireExactly (NormalizeVersion release.AssemblyVersion)]
-                     else p.Dependencies )
-                Publish = false }
+    let args = new StringBuilder()
+                |> append "Akka.MultiNodeTests.dll"
+                |> append "-Dmultinode.enable-filesink=on"
+                |> appendIfNotNullOrEmpty spec "-Dmultinode.test-spec="
+                |> toText
 
-        NuGet setParams "fake.nuspec"
-        !! (nugetToolsDir @@ "FAKE.exe") |> set64BitCorFlags
-        NuGet (setParams >> x64ify) "fake.nuspec"
-)
+    let result = ExecProcess(fun info -> 
+        info.FileName <- multiNodeTestPath
+        info.WorkingDirectory <- (Path.GetDirectoryName (FullName multiNodeTestPath))
+        info.Arguments <- args) (System.TimeSpan.FromMinutes 60.0) (* This is a VERY long running task. *)
+    if result <> 0 then failwithf "MultiNodeTestRunner failed. %s %s" multiNodeTestPath args
 
-Target "PublishNuget" (fun _ ->
-    Paket.Push(fun p -> 
-        { p with
-            DegreeOfParallelism = 2
-            WorkingDir = nugetDir })
-)
+Target "RunSqlServerTests" <| fun _ ->
+    let sqlServerTests = !! "src/**/bin/Release/Akka.Persistence.SqlServer.Tests.dll"
+    let xunitToolPath = findToolInSubPath "xunit.console.clr4.exe" "src/packages/xunit.runners*"
+    printfn "Using XUnit runner: %s" xunitToolPath
+    xUnit
+        (fun p -> { p with OutputDir = testOutput; ToolPath = xunitToolPath })
+        sqlServerTests
 
-Target "ReleaseDocs" (fun _ ->
-    CleanDir "gh-pages"
-    cloneSingleBranch "" "https://github.com/fsharp/FAKE.git" "gh-pages" "gh-pages"
+Target "RunPostgreSqlTests" <| fun _ ->
+    let postgreSqlTests = !! "src/**/bin/Release/Akka.Persistence.PostgreSql.Tests.dll"
+    let xunitToolPath = findToolInSubPath "xunit.console.exe" "src/packages/xunit.runner.console*/tools"
+    printfn "Using XUnit runner: %s" xunitToolPath
+    xUnit2
+        (fun p -> { p with OutputDir = testOutput; ToolPath = xunitToolPath })
+        postgreSqlTests
 
-    fullclean "gh-pages"
-    CopyRecursive "docs" "gh-pages" true |> printfn "%A"
-    CopyFile "gh-pages" "./Samples/FAKE-Calculator.zip"
-    StageAll "gh-pages"
-    Commit "gh-pages" (sprintf "Update generated documentation %s" release.NugetVersion)
-    Branches.push "gh-pages"
-)
+Target "RunCassandraTests" <| fun _ ->
+    let cassandraTests = !! "src/**/bin/Release/Akka.Persistence.Cassandra.Tests.dll"
+    let xunitToolPath = findToolInSubPath "xunit.console.exe" "src/packages/xunit.runner.console*/tools"
+    printfn "Using XUnit runner: %s" xunitToolPath
+    xUnit2
+        (fun p -> { p with OutputDir = testOutput; ToolPath = xunitToolPath })
+        cassandraTests
 
-Target "Release" (fun _ ->
-    StageAll ""
-    Commit "" (sprintf "Bump version to %s" release.NugetVersion)
-    Branches.push ""
+//--------------------------------------------------------------------------------
+// Nuget targets 
+//--------------------------------------------------------------------------------
 
-    Branches.tag "" release.NugetVersion
-    Branches.pushTag "" "origin" release.NugetVersion
-)
+module Nuget = 
+    // add Akka dependency for other projects
+    let getAkkaDependency project =
+        match project with
+        | "Akka" -> []
+        | "Akka.Cluster" -> ["Akka.Remote", release.NugetVersion]
+        | persistence when (persistence.Contains("Sql") && not (persistence.Equals("Akka.Persistence.Sql.Common"))) -> ["Akka.Persistence.Sql.Common", preReleaseVersion]
+        | persistence when (persistence.StartsWith("Akka.Persistence.")) -> ["Akka.Persistence", preReleaseVersion]
+        | di when (di.StartsWith("Akka.DI.") && not (di.EndsWith("Core"))) -> ["Akka.DI.Core", release.NugetVersion]
+        | testkit when testkit.StartsWith("Akka.TestKit.") -> ["Akka.TestKit", release.NugetVersion]
+        | _ -> ["Akka", release.NugetVersion]
 
-Target "Default" DoNothing
+    // used to add -pre suffix to pre-release packages
+    let getProjectVersion project =
+      match project with
+      | "Akka.Cluster" -> preReleaseVersion
+      | persistence when persistence.StartsWith("Akka.Persistence") -> preReleaseVersion
+      | _ -> release.NugetVersion
 
-// Dependencies
-"Clean"
-    ==> "SetAssemblyInfo"
-    ==> "BuildSolution"
-    ==> "Test"    
-    ==> "Default"
-    ==> "CopyLicense"
-    =?> ("GenerateDocs", isLocalBuild && not isLinux)
-    =?> ("SourceLink", isLocalBuild && not isLinux)
-    =?> ("CreateNuGet", not isLinux)
-    =?> ("ReleaseDocs", isLocalBuild && not isLinux)
-    ==> "PublishNuget"
-    ==> "Release"
+open Nuget
 
-// start build
-RunTargetOrDefault "Default"
+//--------------------------------------------------------------------------------
+// Clean nuget directory
+
+Target "CleanNuget" <| fun _ ->
+    CleanDir nugetDir
+
+//--------------------------------------------------------------------------------
+// Pack nuget for all projects
+// Publish to nuget.org if nugetkey is specified
+
+let createNugetPackages _ =
+    let removeDir dir = 
+        let del _ = 
+            DeleteDir dir
+            not (directoryExists dir)
+        runWithRetries del 3 |> ignore
+
+    ensureDirectory nugetDir
+    for nuspec in !! "src/**/*.nuspec" do
+        printfn "Creating nuget packages for %s" nuspec
+        
+        CleanDir workingDir
+
+        let project = Path.GetFileNameWithoutExtension nuspec 
+        let projectDir = Path.GetDirectoryName nuspec
+        let projectFile = (!! (projectDir @@ project + ".*sproj")) |> Seq.head
+        let releaseDir = projectDir @@ @"bin\Release"
+        let packages = projectDir @@ "packages.config"
+        let packageDependencies = if (fileExists packages) then (getDependencies packages) else []
+        let dependencies = packageDependencies @ getAkkaDependency project
+        let releaseVersion = getProjectVersion project
+
+        let pack outputDir symbolPackage =
+            NuGetHelper.NuGet
+                (fun p ->
+                    { p with
+                        Description = description
+                        Authors = authors
+                        Copyright = copyright
+                        Project =  project
+                        Properties = ["Configuration", "Release"]
+                        ReleaseNotes = release.Notes |> String.concat "\n"
+                        Version = releaseVersion
+                        Tags = tags |> String.concat " "
+                        OutputPath = outputDir
+                        WorkingDir = workingDir
+                        SymbolPackage = symbolPackage
+                        Dependencies = dependencies })
+                nuspec
+
+        // Copy dll, pdb and xml to libdir = workingDir/lib/net45/
+        ensureDirectory libDir
+        !! (releaseDir @@ project + ".dll")
+        ++ (releaseDir @@ project + ".pdb")
+        ++ (releaseDir @@ project + ".xml")
+        ++ (releaseDir @@ project + ".ExternalAnnotations.xml")
+        |> CopyFiles libDir
+
+        // Copy all src-files (.cs and .fs files) to workingDir/src
+        let nugetSrcDir = workingDir @@ @"src/"
+        // CreateDir nugetSrcDir
+
+        let isCs = hasExt ".cs"
+        let isFs = hasExt ".fs"
+        let isAssemblyInfo f = (filename f).Contains("AssemblyInfo")
+        let isSrc f = (isCs f || isFs f) && not (isAssemblyInfo f) 
+        CopyDir nugetSrcDir projectDir isSrc
+        
+        //Remove workingDir/src/obj and workingDir/src/bin
+        removeDir (nugetSrcDir @@ "obj")
+        removeDir (nugetSrcDir @@ "bin")
+
+        // Create both normal nuget package and symbols nuget package. 
+        // Uses the files we copied to workingDir and outputs to nugetdir
+        pack nugetDir NugetSymbolPackage.Nuspec
+        
+        removeDir workingDir
+
+let publishNugetPackages _ = 
+    let rec publishPackage url accessKey trialsLeft packageFile =
+        let tracing = enableProcessTracing
+        enableProcessTracing <- false
+        let args p =
+            match p with
+            | (pack, key, "") -> sprintf "push \"%s\" %s" pack key
+            | (pack, key, url) -> sprintf "push \"%s\" %s -source %s" pack key url
+
+        tracefn "Pushing %s Attempts left: %d" (FullName packageFile) trialsLeft
+        try 
+            let result = ExecProcess (fun info -> 
+                    info.FileName <- nugetExe
+                    info.WorkingDirectory <- (Path.GetDirectoryName (FullName packageFile))
+                    info.Arguments <- args (packageFile, accessKey,url)) (System.TimeSpan.FromMinutes 1.0)
+            enableProcessTracing <- tracing
+            if result <> 0 then failwithf "Error during NuGet symbol push. %s %s" nugetExe (args (packageFile, accessKey,url))
+        with exn -> 
+            if (trialsLeft > 0) then (publishPackage url accessKey (trialsLeft-1) packageFile)
+            else raise exn
+    let shouldPushNugetPackages = hasBuildParam "nugetkey"
+    let shouldPushSymbolsPackages = (hasBuildParam "symbolspublishurl") && (hasBuildParam "symbolskey")
+    
+    if (shouldPushNugetPackages || shouldPushSymbolsPackages) then
+        printfn "Pushing nuget packages"
+        if shouldPushNugetPackages then
+            let normalPackages= 
+                !! (nugetDir @@ "*.nupkg") 
+                -- (nugetDir @@ "*.symbols.nupkg") |> Seq.sortBy(fun x -> x.ToLower())
+            for package in normalPackages do
+                publishPackage (getBuildParamOrDefault "nugetpublishurl" "") (getBuildParam "nugetkey") 3 package
+
+        if shouldPushSymbolsPackages then
+            let symbolPackages= !! (nugetDir @@ "*.symbols.nupkg") |> Seq.sortBy(fun x -> x.ToLower())
+            for package in symbolPackages do
+                publishPackage (getBuildParam "symbolspublishurl") (getBuildParam "symbolskey") 3 package
+
+
+Target "Nuget" <| fun _ -> 
+    createNugetPackages()
+    publishNugetPackages()
+
+Target "CreateNuget" <| fun _ -> 
+    createNugetPackages()
+
+Target "PublishNuget" <| fun _ -> 
+    publishNugetPackages()
+
+
+
+//--------------------------------------------------------------------------------
+// Help 
+//--------------------------------------------------------------------------------
+
+Target "Help" <| fun _ ->
+    List.iter printfn [
+      "usage:"
+      "build [target]"
+      ""
+      " Targets for building:"
+      " * Build      Builds"
+      " * Nuget      Create and optionally publish nugets packages"
+      " * RunTests   Runs tests"
+      " * All        Builds, run tests, creates and optionally publish nuget packages"
+      ""
+      " Other Targets"
+      " * Help       Display this help" 
+      " * HelpNuget  Display help about creating and pushing nuget packages" 
+      " * HelpDocs   Display help about creating and pushing API docs" 
+      ""]
+
+Target "HelpNuget" <| fun _ ->
+    List.iter printfn [
+      "usage: "
+      "build Nuget [nugetkey=<key> [nugetpublishurl=<url>]] "
+      "            [symbolskey=<key> symbolspublishurl=<url>] "
+      "            [nugetprerelease=<prefix>]"
+      ""
+      "Arguments for Nuget target:"
+      "   nugetprerelease=<prefix>   Creates a pre-release package."
+      "                              The version will be version-prefix<date>"
+      "                              Example: nugetprerelease=dev =>"
+      "                                       0.6.3-dev1408191917"
+      ""
+      "In order to publish a nuget package, keys must be specified."
+      "If a key is not specified the nuget packages will only be created on disk"
+      "After a build you can find them in bin/nuget"
+      ""
+      "For pushing nuget packages to nuget.org and symbols to symbolsource.org"
+      "you need to specify nugetkey=<key>"
+      "   build Nuget nugetKey=<key for nuget.org>"
+      ""
+      "For pushing the ordinary nuget packages to another place than nuget.org specify the url"
+      "  nugetkey=<key>  nugetpublishurl=<url>  "
+      ""
+      "For pushing symbols packages specify:"
+      "  symbolskey=<key>  symbolspublishurl=<url> "
+      ""
+      "Examples:"
+      "  build Nuget                      Build nuget packages to the bin/nuget folder"
+      ""
+      "  build Nuget nugetprerelease=dev  Build pre-release nuget packages"
+      ""
+      "  build Nuget nugetkey=123         Build and publish to nuget.org and symbolsource.org"
+      ""
+      "  build Nuget nugetprerelease=dev nugetkey=123 nugetpublishurl=http://abc"
+      "              symbolskey=456 symbolspublishurl=http://xyz"
+      "                                   Build and publish pre-release nuget packages to http://abc"
+      "                                   and symbols packages to http://xyz"
+      ""]
+
+Target "HelpDocs" <| fun _ ->
+    List.iter printfn [
+      "usage: "
+      "build Docs"
+      "Just builds the API docs for Akka.NET locally. Does not attempt to publish."
+      ""
+      "build PublishDocs azureKey=<key> "
+      "                  azureUrl=<url> "
+      "                 [unstable=true]"
+      ""
+      "Arguments for PublishDocs target:"
+      "   azureKey=<key>             Azure blob storage key."
+      "                              Used to authenticate to the storage account."
+      ""
+      "   azureUrl=<url>             Base URL for Azure storage container."
+      "                              FAKE will automatically set container"
+      "                              names based on build parameters."
+      ""
+      "   [unstable=true]            Indicates that we'll publish to an Azure"
+      "                              container named 'unstable'. If this param"
+      "                              is not present we'll publish to containers"
+      "                              'stable' and the 'release.version'"
+      ""
+      "In order to publish documentation all of these values must be provided."
+      "Examples:"
+      "  build PublishDocs azureKey=1s9HSAHA+..."
+      "                    azureUrl=http://fooaccount.blob.core.windows.net/docs"
+      "                                   Build and publish docs to http://fooaccount.blob.core.windows.net/docs/stable"
+      "                                   and http://fooaccount.blob.core.windows.net/docs/{release.version}"
+      ""
+      "  build PublishDocs azureKey=1s9HSAHA+..."
+      "                    azureUrl=http://fooaccount.blob.core.windows.net/docs"
+      "                    unstable=true"
+      "                                   Build and publish docs to http://fooaccount.blob.core.windows.net/docs/unstable"
+      ""]
+
+//--------------------------------------------------------------------------------
+//  Target dependencies
+//--------------------------------------------------------------------------------
+
+// build dependencies
+"Clean" ==> "AssemblyInfo" ==> "RestorePackages" ==> "Build" ==> "CopyOutput" ==> "BuildRelease"
+
+// tests dependencies
+"CleanTests" ==> "RunTests"
+
+// nuget dependencies
+"CleanNuget" ==> "CreateNuget"
+"CleanNuget" ==> "BuildRelease" ==> "Nuget"
+
+//docs dependencies
+"BuildRelease" ==> "Docs" ==> "AzureDocsDeploy" ==> "PublishDocs"
+
+Target "All" DoNothing
+"BuildRelease" ==> "All"
+"RunTests" ==> "All"
+"MultiNodeTests" ==> "All"
+"Nuget" ==> "All"
+
+RunTargetOrDefault "Help"

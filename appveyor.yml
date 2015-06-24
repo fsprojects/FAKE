@@ -1,5 +1,0 @@
-build_script:
-  - ps: .\build.cmd
-test: off
-artifacts:
-  - path: bin\*.nupkg

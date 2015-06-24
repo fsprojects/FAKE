@@ -1,492 +1,707 @@
-#### 3.35.4 - 23.06.2015
-* Add caching to globbing 
-
-#### 3.35.3 - 23.06.2015
-* BUGFIX: Fix for single * glob not working - https://github.com/fsharp/FAKE/pull/836 
-
-#### 3.35.2 - 15.06.2015
-* BUGFIX: Get package version from nuspec file - https://github.com/fsharp/FAKE/pull/829
-
-#### 3.35.1 - 11.06.2015
-* Report all NuGet errors, even if ExitCode = 0
-
-#### 3.35.0 - 09.06.2015
-* Added Raygun.io helper - https://github.com/fsharp/FAKE/pull/826
-* Re-added internal class generated for AssemblyInfo.vb - https://github.com/fsharp/FAKE/pull/827
-* Allow test nUnit test assemblies containing SetupFixture attributes be compatible with NUnitParallel - https://github.com/fsharp/FAKE/pull/824
-* Fix FtpHelper
-* Trace no. of files in a patch
-* CMake support improvements - https://github.com/fsharp/FAKE/pull/821
-* Wix Helper Improvements - https://github.com/fsharp/FAKE/pull/818
-* Wix Helper Improvements - https://github.com/fsharp/FAKE/pull/817
-* Wix Helper Improvements - https://github.com/fsharp/FAKE/pull/815
-* Added SemVerHelper.isValidSemVer - https://github.com/fsharp/FAKE/pull/811
-
-#### 3.34.0 - 25.05.2015
-* Support for CMake configuration and builds - https://github.com/fsharp/FAKE/pull/785
-* New task to create C++ AssemblyInfo files - https://github.com/fsharp/FAKE/pull/812
-* New environVarOrFail helper - https://github.com/fsharp/FAKE/pull/814
-* New WiX helper functions - https://github.com/fsharp/FAKE/pull/804
-
-#### 3.33.0 - 20.05.2015
-* IMPORTANT: Rewrite of the xUnit tasks. Deprecating existing xUnit and xUnit2 tasks - https://github.com/fsharp/FAKE/pull/800
-* Better NUnit docs - https://github.com/fsharp/FAKE/pull/802
-
-#### 3.32.4 - 18.05.2015
-* Add test adapter path to vs test params - https://github.com/fsharp/FAKE/pull/793
-* BUGFIX: Fix WatchChanges on Mac, fix Dispose, improve Timer usage - https://github.com/fsharp/FAKE/pull/799
-* REVERT: FCS simplification - https://github.com/fsharp/FAKE/pull/773
-* BUGFIX: Don't use MSBuild from invalid path
-* BUGFIX: Improved detection of MSBuild.exe on TeamCity - https://github.com/fsharp/FAKE/pull/789
-
-#### 3.31.0 - 06.05.2015
-* BUGFIX: close stdin in asyncShellExec to avoid hangs - https://github.com/fsharp/FAKE/pull/786
-* Fix FAKE not working on machines with only F# 4.0 installed - https://github.com/fsharp/FAKE/pull/784
-* Fix for watching files via relative paths - https://github.com/fsharp/FAKE/pull/782
-* Fix package id parsing and avoid NPE when feed is missing some properties - https://github.com/fsharp/FAKE/pull/776
-
-#### 3.30.1 - 29.04.2015
-* FCS simplification - https://github.com/fsharp/FAKE/pull/773
-* Paket push task runs in parallel - https://github.com/fsharp/FAKE/pull/768
-
-#### 3.29.2 - 27.04.2015
-* New file system change watcher - http://fsharp.github.io/FAKE/watch.html
-* NuGet pack task treats non csproj files as nuspec files - https://github.com/fsharp/FAKE/pull/767
-* New helpers to start and stop DynamicsNAV ServiceTiers
-* Automatically replace Win7ToWin8 import files for Dynamics NAV during Import
-* OpenSourced DynamicsNAV replacement helpers
-* Use Microsoft.AspNet.Razor 2.0.30506 for FAKE.Deploy - https://github.com/fsharp/FAKE/pull/756
-* New build parameter functions
-* Fix http://stackoverflow.com/questions/29572870/f-fake-unable-to-get-fake-to-merge-placeholder-arguments-in-nuspec-file
-* New environment variable helpers
-
-#### 3.28.0 - 09.04.2015
-* Don't run package restore during MSBuild run from FAKE - https://github.com/fsharp/FAKE/pull/753
-* Added support for Mage's CertHash parameter - https://github.com/fsharp/FAKE/pull/750
-* Force build server output in xUnit2 if the user wishes to - https://github.com/fsharp/FAKE/pull/749
-* Reverting 0df4569b3bdeef99edf2eec6013dab784e338b7e due to backwards compat issues
-* Improvements for FAKE.Deploy - https://github.com/fsharp/FAKE/pull/745
-* Set debug flag on mono - https://github.com/fsharp/FAKE/pull/744
-
-#### 3.27.0 - 07.04.2015
-* New Android publisher - http://fsharp.github.io/FAKE/androidpublisher.html
-* New Archive helpers allow to build zip, gzip, bzip2, tar, and tar.gz/tar.bz2 - https://github.com/fsharp/FAKE/pull/727
-* Download Status Parameter for HockeyAppHelper - https://github.com/fsharp/FAKE/pull/741
-* Added more parameters for HockeyApp Upload API - https://github.com/fsharp/FAKE/pull/723
-* `NuGetPack` task allows to set framework references - https://github.com/fsharp/FAKE/pull/721
-* New task `NuGetPackDirectly` works without template files.
-* Find NuGet.exe in current folder (and sub-folders) first, then look in PATH - https://github.com/fsharp/FAKE/pull/718
-* New tutorial about Vagrant - http://fsharp.github.io/FAKE/vagrant.html
-* REVERTING: SystemRoot also works on mono - https://github.com/fsharp/FAKE/pull/706 (see https://github.com/fsharp/FAKE/issues/715)
-* BUGFIX: Use DocumentNamespace for Nuspec files - https://github.com/fsharp/FAKE/pull/736
-* BUGFIX: Display agent success / error messages in UI for FAKE.Deploy - https://github.com/fsharp/FAKE/pull/735
-* BUGFIX: Add build directory for doc generation - https://github.com/fsharp/FAKE/pull/734
-
-#### 3.26.0 - 25.03.2015
-* Detect GitLab CI as build server - https://github.com/fsharp/FAKE/pull/712
-
-#### 3.25.2 - 24.03.2015
-* Look into PATH when scanning for NuGet.exe - https://github.com/fsharp/FAKE/pull/708
-* SystemRoot also works on mono - https://github.com/fsharp/FAKE/pull/706
-* Use EditorConfig - http://editorconfig.org/
-
-#### 3.25.1 - 24.03.2015
-* More AppVeyor properties added - https://github.com/fsharp/FAKE/pull/704
-
-#### 3.25.0 - 23.03.2015
-* Look into PATH when scanning for tools - https://github.com/fsharp/FAKE/pull/703
-
-#### 3.24.0 - 22.03.2015
-* BREAKING CHANGE: Better support for AssemblyMetadata in AssemblyInfoHelper - https://github.com/fsharp/FAKE/pull/694
-* Added modules for building VB6 projects with SxS manifest - https://github.com/fsharp/FAKE/pull/697
-* Use parameter quoting for Paket helpers
-
-#### 3.23.0 - 12.03.2015
-* BREAKING CHANGE: Adjusted Xamarin.iOS archive helper params - https://github.com/fsharp/FAKE/pull/693
-* New operator </> allows to combine paths similar to @@ but with no trimming operations - https://github.com/fsharp/FAKE/pull/695
-
-#### 3.22.0 - 12.03.2015
-* Globbing allows to grab folders without a trailing slash
-* Removed long time obsolete globbing functions
-
-#### 3.21.0 - 11.03.2015
-* FAKE allows to run parallel builds - http://fsharp.github.io/FAKE/parallel-build.html
-
-#### 3.20.1 - 10.03.2015
-* Proper source index - https://github.com/fsharp/FAKE/issues/678
-
-#### 3.20.0 - 10.03.2015
-* Always use FCS in FAKE and FSI in FAke.Deploy
-* Modify VM size on a .csdef for Azure Cloud Services - https://github.com/fsharp/FAKE/pull/687
-* Added ZipHelper.ZipOfIncludes - https://github.com/fsharp/FAKE/pull/686
-* Added AppVeyorEnvironment.RepoTag & .RepoTagName - https://github.com/fsharp/FAKE/pull/685
-* New tutorial about Azure Cloud Service - http://fsharp.github.io/FAKE/azurecloudservices.html
-* Added basic support for creating Azure Cloud Services - http://fsharp.github.io/FAKE/apidocs/fake-azure-cloudservices.html
-* Added metadata property for AssemblyInfoReplacementParams - https://github.com/fsharp/FAKE/pull/675
-
-#### 3.18.0 - 04.03.2015
-* Remvoved internal class generated in AssemblyInfo.Vb - https://github.com/fsharp/FAKE/pull/673
-* Adding ability to control type library export (/tlb flag) of RegAsm - https://github.com/fsharp/FAKE/pull/668
-* Adding ability to run nuget package restore on a visual studio solution - https://github.com/fsharp/FAKE/pull/662
-* Add OwnerId, type docs, and better error handling for HockeyAppHelper - https://github.com/fsharp/FAKE/pull/661
-* Don't report unit test failure twice to TeamCity - https://github.com/fsharp/FAKE/pull/659
-* New tasks for `paket pack` and `paket push`- http://fsprojects.github.io/Paket/index.html
-* Allow csproj being passed as a NuSpec file - https://github.com/fsharp/FAKE/pull/644 
-* Helper for uploading mobile apps to HockeyApp - https://github.com/fsharp/FAKE/pull/656  
-* SCPHelper does allow copying single files - https://github.com/fsharp/FAKE/issues/671
-* BUGFIX: Paket helper should not submit the endpoint if no endpoint was given - https://github.com/fsharp/FAKE/issues/667
-* BUGFIX: Paket helper should not override version for project packages - https://github.com/fsharp/FAKE/issues/666
-* BUGFIX: Allow endpoint in push task - https://github.com/fsprojects/Paket/pull/652
-* BUGFIX: Use correct apikey for paket push - https://github.com/fsharp/FAKE/pull/664
-
-#### 3.17.0 - 12.02.2015
-* Revert to fsi in Fake.Deploy - https://github.com/fsharp/FAKE/pull/653    
-* Added MergeByHash option for OpenCover - https://github.com/fsharp/FAKE/pull/650
-* New functions to replace text in one or more files using regular expressions - https://github.com/fsharp/FAKE/pull/649
-* BUGFIX: Fix SpecFlow MSTest integration - https://github.com/fsharp/FAKE/pull/652
-* BUGFIX: Fix TeamCity integration - https://github.com/fsharp/FAKE/pull/651
-
-#### 3.15.0 - 07.02.2015
-* New VSTest module for working with VSTest.Console - https://github.com/fsharp/FAKE/pull/648
-* Add Verbose to argument list for NuGet update - https://github.com/fsharp/FAKE/pull/645
-* BUGFIX: Fix jarsigner executing on Windows environment - https://github.com/fsharp/FAKE/pull/640
-* Adding UploadTestResultsXml function to the AppVeyor module - https://github.com/fsharp/FAKE/pull/636
-* Adding the NoDefaultExcludes NugGet parameter - https://github.com/fsharp/FAKE/pull/637
-* Adding `SpecificMachines` option to OctoTools - https://github.com/fsharp/FAKE/pull/631
-* Allow to run gacutil on mono
-* Ignore unknown project references in MSBuild task - https://github.com/fsharp/FAKE/pull/630
-
-#### 3.14.0 - 14.01.2015
-* BUGFIX: Added a reset step before starting a deployment - https://github.com/fsharp/FAKE/pull/621
-* Report fatal git errors to command line
-
-#### 3.13.0 - 03.01.2015
-* New FAKE.Lib nuget package which contains the FakeLib - https://github.com/fsharp/FAKE/pull/607
-* New AppVeyor properties - https://github.com/fsharp/FAKE/pull/605
-* Use FSharp.Core from NuGet - https://github.com/fsharp/FAKE/pull/602
-* Build and deploy Azure web jobs - https://github.com/fsharp/FAKE/pull/613
-
-#### 3.11.0 - 03.12.2014
-* Dual-license under Apache 2 and MS-PL, with Apache as default - https://github.com/fsharp/FAKE/pull/598
-* BUGFIX: FSC compilation fix - https://github.com/fsharp/FAKE/pull/601
-* BUGFIX: Unescape special MSBuild characters - https://github.com/fsharp/FAKE/pull/600
-
-#### 3.10.0 - 27.11.2014
-* Support for MSBuild 14.0 - https://github.com/fsharp/FAKE/pull/595
-* New C# compiler helper - https://github.com/fsharp/FAKE/pull/592/files
-* Added support for NUnit Fixture parameter - https://github.com/fsharp/FAKE/pull/591
-* OpenSourcing some DynamicsNAV helpers from gitnav
-* BUGFIX: Fix 64bit mode
-* BUGFIX: Dynamics NAV helper - "Ignored" tests should report the message
-
-#### 3.9.0 - 07.11.2014
-* Create a new package with a x64 version - https://github.com/fsharp/FAKE/pull/582
-* Added a Xamarin.iOS Archiving helper - https://github.com/fsharp/FAKE/pull/581
-* DynamicsNAV helper should use the correct ServiveTier
-
-#### 3.8.0 - 30.10.2014
-* [xUnit 2](http://xunit.github.io/) support - https://github.com/fsharp/FAKE/pull/575
-* New RegistryKey helpers for a 64bit System - https://github.com/fsharp/FAKE/pull/580
-* New XDTHelper - https://github.com/fsharp/FAKE/pull/556
-* Version NAV 800 added - https://github.com/fsharp/FAKE/pull/576
-* Feature/list targets in command line - http://fsharp.github.io/FAKE/specifictargets.html
-* Use priority list for nuget.exe selection - https://github.com/fsharp/FAKE/issues/572
-* BUGFIX: RoundhouseHelper was setting an incorrect switch for CommandTimoutAdmin - https://github.com/fsharp/FAKE/pull/566
-
-#### 3.7.0 - 16.10.2014
-* BUGFIX: --single-target didn't work
-* NDepend support - https://github.com/fsharp/FAKE/pull/564
-
-#### 3.6.0 - 14.10.2014
-* FAKE got a new logo - https://github.com/fsharp/FAKE/pull/553
-* Use Paket to handle dependencies - http://fsprojects.github.io/Paket/
-* Single target mode --single-target - http://fsharp.github.io/FAKE/specifictargets.html
-* New recursive copy functions - https://github.com/fsharp/FAKE/pull/559
-* NuGetPack allows to manipulate nuspec files - https://github.com/fsharp/FAKE/pull/554
-* Support for MSpec --xml parameter - https://github.com/fsharp/FAKE/pull/545
-* Make GetPackageVersion work with Paket - http://fsprojects.github.io/Paket/
-* Added missing schemaName parameter for Roundhouse helper - https://github.com/fsharp/FAKE/pull/551
-* Roundhouse Cleanup - https://github.com/fsharp/FAKE/pull/550
-* Update FSharp.Compiler.Service to 0.0.62
-* BUGFIX: If site exists then the site will be modified by IISHelper with the given parameters - https://github.com/fsharp/FAKE/pull/548
-* BUGFIX: Messages in FSC task to stderr stream can break the build - https://github.com/fsharp/FAKE/pull/546
-* BUGFIX: Use AppVeyor's build version instead of the build number - https://github.com/fsharp/FAKE/pull/560
-
-#### 3.5.0 - 19.09.2014
-* Added new SignToolHelper - https://github.com/fsharp/FAKE/pull/535
-* Look first in default path for a tool - https://github.com/fsharp/FAKE/pull/542
-* Add support for MSBuild Distributed Loggers - https://github.com/fsharp/FAKE/pull/536
-* Don't fail on nuget path scanning - https://github.com/fsharp/FAKE/pull/537
-
-#### 3.4.0 - 28.08.2014
-* New Xamarin.iOS and Xamarin.Android helpers - https://github.com/fsharp/FAKE/pull/527
-
-#### 3.3.0 - 25.08.2014
-* Using JSON.NET 6.0.4
-* FAKE.Deploy switched to FCS - https://github.com/fsharp/FAKE/pull/519 
-* FAKE.Deploy WorkDirectory fix - https://github.com/fsharp/FAKE/pull/520
-* HipChat notification helper - https://github.com/fsharp/FAKE/pull/523
-* Don't crash during tool discovery
-* NuGet: support fallback framework groups - https://github.com/fsharp/FAKE/pull/514
-* New pushd/popd command in FileUtils - https://github.com/fsharp/FAKE/pull/513
-* New AppVeyor properties
-* FSC - support of compilation for different versions of F#
-* Provide env var access to --fsiargs build script args so works on FAKE
-* Adding NGen Install task
-* Allow to use gacutil
-* Allow to use ngen.exe
-* Allow to use all sn.exe features
-* Adding DisableVerification for StrongNames
-* Adding helpers which allow to strong name assemblies
-* Allow to use empty MSBuild targets
-* Adding setProcessEnvironVar and clearProcessEnvironVar
-* Try to reference local nuspec in order to fix https://github.com/fsprojects/FSharp.TypeProviders.StarterPack/pull/33
-* Better log messages to fix https://github.com/fsprojects/FSharp.TypeProviders.StarterPack/pull/33
-* Fix fsiargs and -d options - https://github.com/fsharp/FAKE/pull/498 https://github.com/fsharp/FAKE/pull/500
-* Change RemoveDuplicateFiles & FixMissingFiles to only save on change - https://github.com/fsharp/FAKE/pull/499
-
-#### 3.2.0 - 07.07.2014
-* BREAKING CHANGE: API for CreateAssemblyInfoWithConfig was set back to original version
-  This resets the breaking change introduced in https://github.com/fsharp/FAKE/pull/471
-* Automatic tool search for SpecFlowHelper - https://github.com/fsharp/FAKE/pull/496
-* GuardedAwaitObservable was made public by accident - this was fixed
-* Add support for remote service admin - https://github.com/fsharp/FAKE/pull/492
-
-#### 3.1.0 - 04.07.2014
-* New FSC helper allows to call F# compiler directly from FAKE - https://github.com/fsharp/FAKE/pull/485
-* "CustomDictionary" support for FxCop - https://github.com/fsharp/FAKE/pull/489
-* Check if file exists before delete in AssemblyInfoFile
-* Use FSharp.Compiler.Service 0.0.58
-* Report all targets if a target error occurs
-* Use FSharp.Compiler.Service with better FSharp.Core resolution - https://github.com/fsharp/FSharp.Compiler.Service/issues/156
-* Don't break in MSBuildHelper
-* Put FSharp.Core.optdata and FSharp.Core.sigdata into nuget package
-* Fixed TargetTracing
-* Fixed SourceLinking of FAKE
-* Added new exception trap for Fsi creation
-* -br in command line will run debugger in F# scripts - https://github.com/fsharp/FAKE/pull/483
-* Null check in NuGet helper - https://github.com/fsharp/FAKE/pull/482
-
-#### 3.0.0 - 27.06.2014
-* Use FSharp.Compiler.Service 0.0.57 instead of fsi.exe
-* Better error message for registry access
-* Fall back to 32bit registry keys if 64bit cannot be found
-* Improved SqlServer Disconnect error message
-* Log "kill all processes" only when needed
-* Try to run as x86 due to Dynamics NAV problems
-* Allow to use /gac for FxCop
-* Make NuGet description fit into single line
-* Use Nuget.Core 2.8.2
-* Fix NUnitProcessModel.SeparateProcessModel - https://github.com/fsharp/FAKE/pull/474
-* Improved CLI documentation - https://github.com/fsharp/FAKE/pull/472
-* Added Visual Basic support to AssemblyFileInfo task and make Namespace optional in config - https://github.com/fsharp/FAKE/pull/471
-* Added support for OctoTools ignoreExisting flag - https://github.com/fsharp/FAKE/pull/470
-* OctoTools samples fixed - https://github.com/fsharp/FAKE/pull/468 https://github.com/fsharp/FAKE/pull/469
-* Added support for FxCop /ignoregeneratedcode parameter - https://github.com/fsharp/FAKE/pull/467
-* CreateAssemblyInfo works with nonexisting directories - https://github.com/fsharp/FAKE/pull/466
-
-#### 2.18.0 - 11.06.2014
-* New (backwards compat) CLI for FAKE that includes FSI cmd args passing - https://github.com/fsharp/FAKE/pull/455
-* New updateApplicationSetting method - https://github.com/fsharp/FAKE/pull/462
-* Support for msbuild /noconlog - https://github.com/fsharp/FAKE/pull/463
-* RoundhouseHelper - https://github.com/fsharp/FAKE/pull/456
-* Pass optional arguments to deployment scripts
-* Support building source packages without project file
-* Display messages when deploy fails
-* Fix formatting in FAKE.Deploy docs
-* Fix memory usage in FAKE.Deploy
-* Increase WebClient's request timeout to 20 minutes - https://github.com/fsharp/FAKE/pull/442
-* Mainly Layout fixes and disabling authenticate in FAKE.Deploy https://github.com/fsharp/FAKE/pull/441
-* Deploy PDBs via nuget https://github.com/fsharp/FAKE/issues/435
-* Release Notes parser should not drop asterisk at end of lines
-* Corrected location of @files@ in nuspec sample
-* Allow to report tests to AppVeyor
-* fix appveyor msbuild logger
-* Don't add Teamcity logger if not needed
-
-#### 2.17.0 - 23.05.2014
-* Fake.Deploy agent requires user authentication
-* Remove AutoOpen von AppVeyor
-* fix order of arguments in call to CopyFile
-* Support MSTest test settings - https://github.com/fsharp/FAKE/pull/428
-* If the NAV error file contains no compile errors return the length
-
-#### 2.16.0 - 21.05.2014
-* Promoted the master branch as default branch and removed develop branch
-* Remove AutoOpen from TaskRunnerHelper
-* Adding Metadata to AsssemblyInfo
-* Analyze the Dynamics NAV log file and report the real error count
-* Allow to retrieve version no. from assemblies
-* Fix issue with symbol packages in NugetHelper
-* Fix issues in the ProcessHelper - https://github.com/fsharp/FAKE/pull/412 and https://github.com/fsharp/FAKE/pull/411
-* Allow to register BuildFailureTargets - https://github.com/fsharp/FAKE/issues/407
-* UnionConverter no longer needed for Json.Net
-
-#### 2.15.0 - 24.04.2014
-* Handle problems with ProgramFilesX86 on mono - https://github.com/tpetricek/FsLab/pull/32
-* Change the MSBuild 12.0 path settings according to https://github.com/tpetricek/FsLab/pull/32
-* Silent mode for MSIHelper - https://github.com/fsharp/FAKE/issues/400
-
-#### 2.14.0 - 22.04.2014
-* Support for OpenCover - https://github.com/fsharp/FAKE/pull/398
-* Support for ReportsGenerator - https://github.com/fsharp/FAKE/pull/399
-* Adding AppVeyor environment variables 
-* New BulkReplaceAssemblyInfoVersions task - https://github.com/fsharp/FAKE/pull/394
-* Fixed default nuspec file
-* "Getting started" tutorial uses better folder structure
-* Allows explicit file specification on the NuGetParams Type
-* Fix TypeScript output dir
-* Add better docs for the TypeScript compiler.
-* Don't call the TypeScript compiler more than once
-* New parameters for TypeScript
-
-#### 2.13.0 - 04.04.2014
-* Enumerate the files lazily in the File|Directory active pattern
-* Using Nuget 2.8.1
-* Added TypeScript 1.0 support
-* Added TypeScript support
-* Fixed ProcessTestRunner
-* Fixed mono build on Travis
-
-#### 2.12.0 - 31.03.2014
-* Add getDependencies to NugetHelper
-* SourceLink support
-* NancyFx instead of ASP.NET MVC for Fake.Deploy
-* Allows to execute processes as unit tests.
-* Adding SourceLinks
-* Move release management back to the local machine (using this document)
-* Allow to run MsTest test in isolation
-* Fixed Nuget.packSymbols
-* Fixed bug in SemVer parser
-* New title property in Nuspec parameters
-* Added option to disabled FAKE's automatic process killing
-* Better AppyVeyor integration
-* Added ability to define custom MSBuild loggers
-* Fix for getting the branch name with Git >= 1.9
-* Added functions to write and delete from registry
-* NUnit NoThread, Domain and StopOnError parameters
-* Add support for VS2013 MSTest
-* Lots of small fixes
-
-#### 2.2
-* Created new packages on nuget:
-	* Fake.Deploy - allows to use FAKE scripts in deployment.
-	* Fake.Experimental - new stuff where we aren't sure if we want to support it.
-	* Fake.Gallio - contains the Gallio runner support.
-	* Fake.SQL - Contains tasks for SQL Server.
-	* Fake.Core - All the basic features and FAKE.exe.
-* Created documentation and tutorials - see http://fsharp.github.io/FAKE/
-* New tasks:
-	* Added ReleaseNotes parser
-	* Added Dynamics NAV helper
-	* Added support for MSTest and fixie
-	* Parallel NUnit task
-	* New AssemblyInfoFile task
-	* Support for Octopus Deploy
-	* Support for MAGE
-	* Suppport for Xamarin's xpkg
-	* Many other new tasks
-* Fake.Boot
-* New Globbing system
-* Tons of bug fixes
-* Bundles F# 3.0 compiler and FSI.
-
-#### 1.72.0.0
-
-* "RestorePackages" allows to restore nuget packages
-
-#### 1.70.0.0
-
-* FAKE nuget package comes bundles with a fsi.exe
-* Self build downloads latest FAKE master via nuget
-
-#### 1.66.1.0
-
-* Fixed bug where FAKE.Deploy didn't run the deploy scripts where used as a windows service
-* It's possible to add file loggers for MSBuild
-* Fixed path resolution for fsi on *nix
-* BREAKING CHANGE: Removed version normalization from NuGet package creation
-* Fixes for NUNit compatibility on mono 
-* Fixes in ProcessHelper for mono compatibility
-* Fixes in the mono build
-* Improved error reporting in Fake.exe
-* Added a SpecFlow helper
-* Fixed some issues in file helper routines when working with no existing directory chain
-
-#### 1.64.1.0
-
-* Fixed bug where FAKE didn't run the correct build script
-
-#### 1.64.0.0
-
-* New conditional dependency operator =?>
-* BREAKING CHANGE: Some AssemblyInfo task parameters are now option types. See type hints.
-
-#### 1.62.0.0
-
-* New RegAsm task, allows to create TLBs from a dll.
-* New MSI task, allows to install or uninstall msi files.
-* StringHelper.NormalizeVersion fixed for WiX.
-
-#### 1.58.9.0
-
-* Allow to choose specific nunit-console runner.
-
-#### 1.58.6.0
-
-* Using nuget packages for mspec.
-* FAKE tries to kill all MSBuild and FSI processes at the end of a build.
-
-#### 1.58.1.0
-
-* Removed message system for build output. Back to simpler tracing.
-
-#### 1.58.0.0
-
-* ReplaceAssemblyInfoVersions task allows to replace version info in AssemblyVersion-files
-* New task ConvertFileToWindowsLineBreaks
-
-#### 1.56.10.0
-
-* Allows to build .sln files
-
-#### 1.56.0.0
-
-* Allows to publish symbols via nuget.exe
-* Autotrim trailing .0 from version in order to fullfill nuget standards.
-
-#### 1.54.0.0
-
-* If the publishment of a Nuget package fails, then FAKE will try it again.
-* Added Changelog.markdown to FAKE deployment
-* Added RequireExactly helper function in order to require a specific nuget dependency.
-* NugetHelper.GetPackageVersion - Gets the version no. for a given package in the packages folder.
-* EnvironmentHelper.getTargetPlatformDir - Gets the directory for the given target platform.
-
-#### 1.52.0.0
-
-* Some smaller bugfixes
-* New dependency syntax with ==> and <=>
-* Tracing of StackTrace only if TargetHelper.PrintStackTraceOnError was set to true
-
-#### 1.50.0.0
-
-* New task DeleteDirs allows to delete multiple directories.
-* New parameter for NuGet dependencies.
-
-#### 1.48.0.0
-
-* Bundled with docu.exe compiled against .Net 4.0.
-* Fixed docu calls to run with full filenames.
-* Added targetplatform, target and log switches for ILMerge task.
-* Added Git.Information.getLastTag() which gets the last git tag by calling git describe.
-* Added Git.Information.getCurrentHash() which gets the last current sha1.
-
-#### 1.46.0.0
-
-* Fixed Nuget support and allows automatic push.
-
-#### 1.44.0.0
-
-* Tracing of all external process starts.
-* MSpec support.
+#### 1.0.4 June 12 2015 ####
+
+#### 1.0.3 June 12 2015 ####
+**Bugfix release for Akka.NET v1.0.2.**
+
+This release addresses an issue with Akka.Persistence.SqlServer and Akka.Persistence.PostgreSql where both packages were missing a reference to Akka.Persistence.Sql.Common. 
+
+In Akka.NET v1.0.3 we've packaged Akka.Persistence.Sql.Common into its own NuGet package and referenced it in the affected packages.
+
+#### 1.0.2 June 2 2015
+**Bugfix release for Akka.NET v1.0.1.**
+
+Fixes & Changes - Akka.NET Core
+* [Routers seem ignore supervision strategy](https://github.com/akkadotnet/akka.net/issues/996)
+* [Replaced DateTime.Now with DateTime.UtcNow/MonotonicClock](https://github.com/akkadotnet/akka.net/pull/1009)
+* [DedicatedThreadScheduler](https://github.com/akkadotnet/akka.net/pull/1002)
+* [Add ability to specify scheduler implementation in configuration](https://github.com/akkadotnet/akka.net/pull/994)
+* [Added generic extensions to EventStream subscribe/unsubscribe.](https://github.com/akkadotnet/akka.net/pull/990)
+* [Convert null to NoSender.](https://github.com/akkadotnet/akka.net/pull/993)
+* [Supervisor strategy bad timeouts](https://github.com/akkadotnet/akka.net/pull/986)
+* [Updated Pigeon.conf throughput values](https://github.com/akkadotnet/akka.net/pull/980)
+* [Add PipeTo for non-generic Tasks for exception handling](https://github.com/akkadotnet/akka.net/pull/978)
+
+Fixes & Changes - Akka.NET Dependency Injection
+* [Added Extensions methods to ActorSystem and ActorContext to make DI more accessible](https://github.com/akkadotnet/akka.net/pull/966)
+* [DIActorProducer fixes](https://github.com/akkadotnet/akka.net/pull/961)
+* [closes akkadotnet/akka.net#1020 structuremap dependency injection](https://github.com/akkadotnet/akka.net/pull/1021)
+
+Fixes & Changes - Akka.Remote and Akka.Cluster
+* [Fixing up cluster rejoin behavior](https://github.com/akkadotnet/akka.net/pull/962)
+* [Added dispatcher fixes for remote and cluster ](https://github.com/akkadotnet/akka.net/pull/983)
+* [Fixes to ClusterRouterGroup](https://github.com/akkadotnet/akka.net/pull/953)
+* [Two actors are created by remote deploy using Props.WithDeploy](https://github.com/akkadotnet/akka.net/issues/1025)
+
+Fixes & Changes - Akka.Persistence
+* [Renamed GuaranteedDelivery classes to AtLeastOnceDelivery](https://github.com/akkadotnet/akka.net/pull/984)
+* [Changes in Akka.Persistence SQL backend](https://github.com/akkadotnet/akka.net/pull/963)
+* [PostgreSQL persistence plugin for both event journal and snapshot store](https://github.com/akkadotnet/akka.net/pull/971)
+* [Cassandra persistence plugin](https://github.com/akkadotnet/akka.net/pull/995)
+
+**New Features:**
+
+**Akka.TestKit.XUnit2**
+Akka.NET now has support for [XUnit 2.0](http://xunit.github.io/)! You can install Akka.TestKit.XUnit2 via the NuGet commandline:
+
+```
+PM> Install-Package Akka.TestKit.XUnit2
+```
+
+**Akka.Persistence.PostgreSql** and **Akka.Persistence.Cassandra**
+Akka.Persistence now has two additional concrete implementations for PostgreSQL and Cassandra! You can install either of the packages using the following commandline:
+
+[Akka.Persistence.PostgreSql Configuration Docs](https://github.com/akkadotnet/akka.net/tree/dev/src/contrib/persistence/Akka.Persistence.PostgreSql)
+```
+PM> Install-Package Akka.Persistence.PostgreSql
+```
+
+[Akka.Persistence.Cassandra Configuration Docs](https://github.com/akkadotnet/akka.net/tree/dev/src/contrib/persistence/Akka.Persistence.Cassandra)
+```
+PM> Install-Package Akka.Persistence.Cassandra
+```
+
+**Akka.DI.StructureMap**
+Akka.NET's dependency injection system now supports [StructureMap](http://structuremap.github.io/)! You can install Akka.DI.StructureMap via the NuGet commandline:
+
+```
+PM> Install-Package Akka.DI.StructureMap
+```
+
+#### 1.0.1 Apr 28 2015
+
+**Bugfix release for Akka.NET v1.0.**
+
+Fixes:
+* [v1.0 F# scheduling API not sending any scheduled messages](https://github.com/akkadotnet/akka.net/issues/831)
+* [PinnedDispatcher - uses single thread for all actors instead of creating persanal thread for every actor](https://github.com/akkadotnet/akka.net/issues/850)
+* [Hotfix async await when awaiting IO completion port based tasks](https://github.com/akkadotnet/akka.net/pull/843)
+* [Fix for async await suspend-resume mechanics](https://github.com/akkadotnet/akka.net/pull/836)
+* [Nested Ask async await causes null-pointer exception in ActorTaskScheduler](https://github.com/akkadotnet/akka.net/issues/855)
+* [Akka.Remote: can't reply back remotely to child of Pool router](https://github.com/akkadotnet/akka.net/issues/884)
+* [Context.DI().ActorOf shouldn't require a parameterless constructor](https://github.com/akkadotnet/akka.net/issues/832)
+* [DIActorContextAdapter uses typeof().Name instead of AssemblyQualifiedName](https://github.com/akkadotnet/akka.net/issues/833)
+* [IndexOutOfRangeException with RoundRobinRoutingLogic & SmallestMailboxRoutingLogic](https://github.com/akkadotnet/akka.net/issues/908)
+
+New Features:
+
+**Akka.TestKit.NUnit**
+Akka.NET now has support for [NUnit ](http://nunit.org/) inside its TestKit. You can install Akka.TestKit.NUnit via the NuGet commandline:
+
+```
+PM> Install-Package Akka.TestKit.NUnit
+```
+
+**Akka.Persistence.SqlServer**
+The first full implementation of Akka.Persistence is now available for SQL Server.
+
+[Read the full instructions for working with Akka.Persistence.SQLServer here](https://github.com/akkadotnet/akka.net/tree/dev/src/contrib/persistence/Akka.Persistence.SqlServer).
+
+#### 1.0.0 Apr 09 2015
+
+**Akka.NET is officially no longer in beta status**. The APIs introduced in Akka.NET v1.0 will enjoy long-term support from the Akka.NET development team and all of its professional support partners.
+
+Many breaking changes were introduced between v0.8 and v1.0 in order to provide better future extensibility and flexibility for Akka.NET, and we will outline the major changes in detail in these release notes.
+
+However, if you want full API documentation we recommend going to the following:
+
+* **[Latest Stable Akka.NET API Docs](http://api.getakka.net/docs/stable/index.html "Akka.NET Latest Stable API Docs")**
+* **[Akka.NET Wiki](http://getakka.net/wiki/ "Akka.NET Wiki")**
+
+----
+
+**Updated Packages with 1.0 Stable Release**
+
+All of the following NuGet packages have been upgraded to 1.0 for stable release:
+
+- Akka.NET Core
+- Akka.FSharp
+- Akka.Remote
+- Akka.TestKit
+- Akka.DI (dependency injection)
+- Akka.Loggers (logging)
+
+The following packages (and modules dependent on them) are still in *pre-release* status:
+
+- Akka.Cluster
+- Akka.Persistence
+
+----
+**Introducing Full Mono Support for Akka.NET**
+
+One of the biggest changes in Akka.NET v1.0 is the introduction of full Mono support across all modules; we even have [Raspberry PI machines talking to laptops over Akka.Remote](https://twitter.com/AkkaDotNET/status/584109606714093568)!
+
+We've tested everything using Mono v3.12.1 across OS X and Ubuntu. 
+
+**[Please let us know how well Akka.NET + Mono runs on your environment](https://github.com/akkadotnet/akka.net/issues/694)!**
+
+----
+
+**API Changes in v1.0**
+
+**All methods returning an `ActorRef` now return `IActorRef`**
+This is the most significant breaking change introduced in AKka.NET v1.0. Rather than returning the `ActorRef` abstract base class from all of the `ActorOf`, `Sender` and other methods we now return an instance of the `IActorRef` interface instead.
+
+This was done in order to guarantee greater future extensibility without additional breaking changes, so we decided to pay off that technical debt now that we're supporting these APIs long-term.
+
+Here's the set of breaking changes you need to be aware of:
+
+- Renamed:
+  - `ActorRef`          --> `IActorRef`
+  - `ActorRef.Nobody`   --> `ActorRefs.Nobody`
+  - `ActorRef.NoSender` --> `ActorRefs.NoSender`
+- `ActorRef`'s  operators `==` and `!=` has been removed. This means all expressions like `actorRef1 == actorRef2` must be replaced with `Equals(actorRef1, actorRef2)`
+- `Tell(object message)`, i.e. the implicit sender overload, has been moved
+to an extension method, and requires `using Akka.Actor;` to be accessible.
+- Implicit cast from `ActorRef` to `Routee` has been replaced with `Routee.FromActorRef(actorRef)`
+
+**`async` / `await` Support**
+
+`ReceiveActor`s now support Async/Await out of the box.
+
+```csharp
+public class MyActor : ReceiveActor
+{
+       public MyActor()
+       {
+             Receive<SomeMessage>(async some => {
+                    //we can now safely use await inside this receive handler
+                    await SomeAsyncIO(some.Data);
+                    Sender.Tell(new EverythingIsAllOK());                   
+             });
+       }
+}
+```
+
+It is also possible to specify the behavior for the async handler, using `AsyncBehavior.Suspend` and  `AsyncBehavior.Reentrant` as the first argument.
+When using `Suspend` the normal actor semantics will be preserved, the actor will not be able to process any new messages until the current async operation is completed.
+While using `Reentrant` will allow the actor to multiplex messages during the `await` period.
+This does not mean that messages are processed in parallel, we still stay true to "one message at a time", but each await continuation will be piped back to the actor as a message and continue under the actors concurrency constraint.
+
+However, `PipeTo` pattern is still the preferred way to perform async operations inside an actor, as it is more explicit and clearly states what is going on.
+
+
+**Switchable Behaviors**
+In order to make the switchable behavior APIs more understandable for both `UntypedActor` and `ReceiveActor` we've updated the methods to the following:
+
+``` C#
+Become(newHandler); // become newHandler, without adding previous behavior to the stack (default)
+BecomeStacked(newHandler); // become newHandler, without adding previous behavior to the stack (default)
+UnbecomeStacked(); //revert to the previous behavior in the stack
+```
+
+The underlying behavior-switching implementation hasn't changed at all - only the names of the methods.
+
+**Scheduler APIs**
+The `Context.System.Scheduler` API has been overhauled to be both more extensible and understandable going forward. All of the previous capabilities for the `Scheduler` are still available, only in different packaging than they were before.
+
+Here are the new APIs:
+
+``` C#
+Context.System.Scheduler
+  .ScheduleTellOnce(TimeSpan delay, ICanTell receiver, object message, ActorRef sender);
+  .ScheduleTellOnce(TimeSpan delay, ICanTell receiver, object message, ActorRef sender, ICancelable cancelable);
+  .ScheduleTellRepeatedly(TimeSpan initialDelay, TimeSpan interval, ICanTell receiver, object message, ActorRef sender);
+  .ScheduleTellRepeatedly(TimeSpan initialDelay, TimeSpan interval, ICanTell receiver, object message, ActorRef sender, ICancelable cancelable);
+
+Context.System.Scheduler.Advanced
+  .ScheduleOnce(TimeSpan delay, Action action);
+  .ScheduleOnce(TimeSpan delay, Action action, ICancelable cancelable);
+  .ScheduleRepeatedly(TimeSpan initialDelay, TimeSpan interval, Action action);
+  .ScheduleRepeatedly(TimeSpan initialDelay, TimeSpan interval, Action action, ICancelable cancelable);
+```
+
+There's also a set of extension methods for specifying delays and intervals in milliseconds as well as methods for all four variants (`ScheduleTellOnceCancelable`, `ScheduleTellRepeatedlyCancelable`, `ScheduleOnceCancelable`, `ScheduleRepeatedlyCancelable`) that creates a cancelable, schedules, and returns the cancelable. 
+
+**Akka.NET `Config` now loaded automatically from App.config and Web.config**
+In previous versions Akka.NET users had to do the following to load Akka.NET HOCON configuration sections from App.config or Web.config:
+
+```csharp
+var section = (AkkaConfigurationSection)ConfigurationManager.GetSection("akka");
+var config = section.AkkaConfig;
+var actorSystem = ActorSystem.Create("MySystem", config);
+```
+
+As of Akka.NET v1.0 this is now done for you automatically:
+
+```csharp
+var actorSystem = ActorSystem.Create("MySystem"); //automatically loads App/Web.config, if any
+```
+
+**Dispatchers**
+Akka.NET v1.0 introduces the `ForkJoinDispatcher` as well as general purpose dispatcher re-use.
+
+**Using ForkJoinDispatcher**
+ForkJoinDispatcher is special - it uses [`Helios.Concurrency.DedicatedThreadPool`](https://github.com/helios-io/DedicatedThreadPool) to create a dedicated set of threads for the exclusive use of the actors configured to use a particular `ForkJoinDispatcher` instance. All of the remoting actors depend on the `default-remote-dispatcher` for instance.
+
+Here's how you can create your own ForkJoinDispatcher instances via Config:
+
+```
+myapp{
+  my-forkjoin-dispatcher{
+    type = ForkJoinDispatcher
+    throughput = 100
+    dedicated-thread-pool{ #settings for Helios.DedicatedThreadPool
+      thread-count = 3 #number of threads
+      #deadlock-timeout = 3s #optional timeout for deadlock detection
+      threadtype = background #values can be "background" or "foreground"
+    }
+  }
+}
+}
+```
+
+You can then use this specific `ForkJoinDispatcher` instance by configuring specific actors to use it, whether it's via config or the fluent interface on `Props`:
+
+**Config**
+```
+akka.actor.deploy{
+     /myActor1{
+       dispatcher = myapp.my-forkjoin-dispatcher
+     }
+}
+```
+
+**Props**
+```csharp
+var actor = Sys.ActorOf(Props.Create<Foo>().WithDispatcher("myapp.my-forkjoin-dispatcher"));
+```
+
+**FluentConfiguration [REMOVED]**
+`FluentConfig` has been removed as we've decided to standardize on HOCON configuration, but if you still want to use the old FluentConfig bits you can find them here: https://github.com/rogeralsing/Akka.FluentConfig
+
+**F# API**
+The F# API has changed to reflect the other C# interface changes, as well as unique additions specific to F#.
+
+In addition to updating the F# API, we've also fixed a long-standing bug with being able to serialize discriminated unions over the wire. This has been resolved.
+
+**Interface Renames**
+In order to comply with .NET naming conventions and standards, all of the following interfaces have been renamed with the `I{InterfaceName}` prefix.
+
+The following interfaces have all been renamed to include the `I` prefix:
+
+- [X] `Akka.Actor.ActorRefProvider, Akka` (Public)
+- [X] `Akka.Actor.ActorRefScope, Akka` (Public)
+- [X] `Akka.Actor.AutoReceivedMessage, Akka` (Public)
+- [X] `Akka.Actor.Cell, Akka` (Public)
+- [X] `Akka.Actor.Inboxable, Akka` (Public)
+- [X] `Akka.Actor.IndirectActorProducer, Akka` (Public)
+- [X] `Akka.Actor.Internal.ChildrenContainer, Akka` (Public)
+- [X] `Akka.Actor.Internal.ChildStats, Akka` (Public)
+- [X] `Akka.Actor.Internal.InternalSupportsTestFSMRef`2, Akka` (Public)
+- [X] `Akka.Actor.Internal.SuspendReason+WaitingForChildren, Akka`
+- [X] `Akka.Actor.Internals.InitializableActor, Akka` (Public)
+- [X] `Akka.Actor.LocalRef, Akka`
+- [X] `Akka.Actor.LoggingFSM, Akka` (Public)
+- [X] `Akka.Actor.NoSerializationVerificationNeeded, Akka` (Public)
+- [X] `Akka.Actor.PossiblyHarmful, Akka` (Public)
+- [X] `Akka.Actor.RepointableRef, Akka` (Public)
+- [X] `Akka.Actor.WithBoundedStash, Akka` (Public)
+- [X] `Akka.Actor.WithUnboundedStash, Akka` (Public)
+- [X] `Akka.Dispatch.BlockingMessageQueueSemantics, Akka` (Public)
+- [X] `Akka.Dispatch.BoundedDequeBasedMessageQueueSemantics, Akka` (Public)
+- [X] `Akka.Dispatch.BoundedMessageQueueSemantics, Akka` (Public)
+- [X] `Akka.Dispatch.DequeBasedMailbox, Akka` (Public)
+- [X] `Akka.Dispatch.DequeBasedMessageQueueSemantics, Akka` (Public)
+- [X] `Akka.Dispatch.MessageQueues.MessageQueue, Akka` (Public)
+- [X] `Akka.Dispatch.MultipleConsumerSemantics, Akka` (Public)
+- [X] `Akka.Dispatch.RequiresMessageQueue`1, Akka` (Public)
+- [X] `Akka.Dispatch.Semantics, Akka` (Public)
+- [X] `Akka.Dispatch.SysMsg.SystemMessage, Akka` (Public)
+- [X] `Akka.Dispatch.UnboundedDequeBasedMessageQueueSemantics, Akka` (Public)
+- [X] `Akka.Dispatch.UnboundedMessageQueueSemantics, Akka` (Public)
+- [X] `Akka.Event.LoggingAdapter, Akka` (Public)
+- [X] `Akka.FluentConfigInternals, Akka` (Public)
+- [X] `Akka.Remote.InboundMessageDispatcher, Akka.Remote`
+- [X] `Akka.Remote.RemoteRef, Akka.Remote`
+- [X] `Akka.Routing.ConsistentHashable, Akka` (Public)
+
+**`ConsistentHashRouter` and `IConsistentHashable`**
+Akka.NET v1.0 introduces the idea of virtual nodes to the `ConsistentHashRouter`, which are designed to provide more even distributions of hash ranges across a relatively small number of routees. You can take advantage of virtual nodes via configuration:
+
+```xml
+akka.actor.deployment {
+	/router1 {
+		router = consistent-hashing-pool
+		nr-of-instances = 3
+		virtual-nodes-factor = 17
+	}
+}
+```
+
+Or via code:
+
+```csharp
+var router4 = Sys.ActorOf(Props.Empty.WithRouter(
+	new ConsistentHashingGroup(new[]{c},hashMapping: hashMapping)
+	.WithVirtualNodesFactor(5)), 
+	"router4");
+```
+
+**`ConsistentHashMapping` Delegate**
+There are three ways to instruct a router to hash a message:
+1. Wrap the message in a `ConsistentHashableEnvelope`;
+2. Implement the `IConsistentHashable` interface on your message types; or
+3. Or, write a `ConsistentHashMapper` delegate and pass it to a `ConsistentHashingGroup` or a `ConsistentHashingPool` programmatically at create time.
+
+Here's an example, taken from the `ConsistentHashSpecs`:
+
+```csharp
+ConsistentHashMapping hashMapping = msg =>
+{
+    if (msg is Msg2)
+    {
+        var m2 = msg as Msg2;
+        return m2.Key;
+    }
+
+    return null;
+};
+var router2 =
+    Sys.ActorOf(new ConsistentHashingPool(1, null, null, null, hashMapping: hashMapping)
+    .Props(Props.Create<Echo>()), "router2");
+```
+
+Alternatively, you don't have to pass the `ConsistentHashMapping` into the constructor - you can use the `WithHashMapping` fluent interface built on top of both `ConsistentHashingGroup` and `ConsistentHashingPool`:
+
+```csharp
+var router2 =
+    Sys.ActorOf(new ConsistentHashingPool(1).WithHashMapping(hashMapping)
+    .Props(Props.Create<Echo>()), "router2");
+```
+
+**`ConsistentHashable` renamed to `IConsistentHashable`**
+Any objects you may have decorated with the `ConsistentHashable` interface to work with `ConsistentHashRouter` instances will need to implement `IConsistentHashable` going forward, as all interfaces have been renamed with the `I-` prefix per .NET naming conventions.
+
+**Akka.DI.Unity NuGet Package**
+Akka.NET now ships with dependency injection support for [Unity](http://unity.codeplex.com/).
+
+You can install our Unity package via the following command in the NuGet package manager console:
+
+```
+PM> Install-Package Akka.DI.Unity
+```
+
+----
+
+#### 0.8.0 Feb 11 2015
+
+__Dependency Injection support for Ninject, Castle Windsor, and AutoFac__. Thanks to some amazing effort from individual contributor (**[@jcwrequests](https://github.com/jcwrequests "@jcwrequests")**), Akka.NET now has direct dependency injection support for [Ninject](http://www.ninject.org/), [Castle Windsor](http://docs.castleproject.org/Default.aspx?Page=MainPage&NS=Windsor&AspxAutoDetectCookieSupport=1), and [AutoFac](https://github.com/autofac/Autofac).
+
+Here's an example using Ninject, for instance:
+
+    // Create and build your container 
+    var container = new Ninject.StandardKernel(); 
+	container.Bind().To(typeof(TypedWorker)); 
+	container.Bind().To(typeof(WorkerService));
+    
+    // Create the ActorSystem and Dependency Resolver 
+	var system = ActorSystem.Create("MySystem"); 
+	var propsResolver = new NinjectDependencyResolver(container,system);
+
+	//Create some actors who need Ninject
+	var worker1 = system.ActorOf(propsResolver.Create<TypedWorker>(), "Worker1");
+	var worker2 = system.ActorOf(propsResolver.Create<TypedWorker>(), "Worker2");
+
+	//send them messages
+	worker1.Tell("hi!");
+
+You can install these DI plugins for Akka.NET via NuGet - here's how:
+
+* **Ninject** - `install-package Akka.DI.Ninject`
+* **Castle Windsor** - `install-package Akka.DI.CastleWindsor`
+* **AutoFac** - `install-package Akka.DI.AutoFac`
+
+**Read the [full Dependency Injection with Akka.NET documentation](http://getakka.net/wiki/Dependency%20injection "Dependency Injection with Akka.NET") here.**
+
+__Persistent Actors with Akka.Persistence (Alpha)__. Core contributor **[@Horusiath](https://github.com/Horusiath)** ported the majority of Akka's Akka.Persistence and Akka.Persistence.TestKit modules. 
+
+> Even in the core Akka project these modules are considered to be "experimental," but the goal is to provide actors with a way of automatically saving and recovering their internal state to a configurable durable store - such as a database or filesystem.
+
+Akka.Persistence also introduces the notion of *reliable delivery* of messages, achieved through the `GuaranteedDeliveryActor`.
+
+Akka.Persistence also ships with an FSharp API out of the box, so while this package is in beta you can start playing with it either F# or C# from day one.
+
+If you want to play with Akka.Persistence, please install any one of the following packages:
+
+* **Akka.Persistence** - `install-package Akka.Persistence -pre`
+* **Akka.Persistence.FSharp** - `install-package Akka.Persistence.FSharp -pre`
+* **Akka.Persistence.TestKit** - `install-package Akka.Persistence.TestKit -pre`
+
+**Read the [full Persistent Actors with Akka.NET documentation](http://getakka.net/wiki/Persistence "Persistent Actors with Akka.NET") here.**
+
+__Remote Deployment of Routers and Routees__. You can now remotely deploy routers and routees via configuration, like so:
+
+**Deploying _routees_ remotely via `Config`**:
+
+	actor.deployment {
+	    /blub {
+	      router = round-robin-pool
+	      nr-of-instances = 2
+	      target.nodes = [""akka.tcp://${sysName}@localhost:${port}""]
+	    }
+	}
+
+	var router = masterActorSystem.ActorOf(new RoundRobinPool(2).Props(Props.Create<Echo>()), "blub");
+
+When deploying a router via configuration, just specify the `target.nodes` property with a list of `Address` instances for each node you want to deploy your routees.
+
+> NOTE: Remote deployment of routees only works for `Pool` routers.
+
+**Deploying _routers_ remotely via `Config`**:
+
+	actor.deployment {
+	    /blub {
+	      router = round-robin-pool
+	      nr-of-instances = 2
+	      remote = ""akka.tcp://${sysName}@localhost:${port}""
+	    }
+	}
+
+	var router = masterActorSystem.ActorOf(Props.Create<Echo>().WithRouter(FromConfig.Instance), "blub");
+
+Works just like remote deployment of actors.
+
+If you want to deploy a router remotely via explicit configuration, you can do it in code like this via the `RemoteScope` and `RemoteRouterConfig`:
+
+**Deploying _routees_ remotely via explicit configuration**:
+
+    var intendedRemoteAddress = Address.Parse("akka.tcp://${sysName}@localhost:${port}"
+    .Replace("${sysName}", sysName)
+    .Replace("${port}", port.ToString()));
+    
+     var router = myActorSystem.ActorOf(new RoundRobinPool(2).Props(Props.Create<Echo>())
+    .WithDeploy(new Deploy(
+		new RemoteScope(intendedRemoteAddress.Copy()))), "myRemoteRouter");
+
+**Deploying _routers_ remotely via explicit configuration**:
+
+    var intendedRemoteAddress = Address.Parse("akka.tcp://${sysName}@localhost:${port}"
+    .Replace("${sysName}", sysName)
+    .Replace("${port}", port.ToString()));
+    
+     var router = myActorSystem.ActorOf(
+		new RemoteRouterConfig(
+		new RoundRobinPool(2), new[] { new Address("akka.tcp", sysName, "localhost", port) })
+        .Props(Props.Create<Echo>()), "blub2");
+
+**Improved Serialization and Remote Deployment Support**. All internals related to serialization and remote deployment have undergone vast improvements in order to support the other work that went into this release.
+
+**Pluggable Actor Creation Pipeline**. We reworked the plumbing that's used to provide automatic `Stash` support and exposed it as a pluggable actor creation pipeline for local actors.
+
+This release adds the `ActorProducerPipeline`, which is accessible from `ExtendedActorSystem` (to be able to configure by plugins) and allows you to inject custom hooks satisfying following interface:
+
+
+    interface IActorProducerPlugin {
+	    bool CanBeAppliedTo(ActorBase actor);
+	    void AfterActorCreated(ActorBase actor, IActorContext context);
+	    void BeforeActorTerminated(ActorBase actor, IActorContext context);
+    }
+
+- **CanBeAppliedTo** determines if plugin can be applied to specific actor instance.
+- **AfterActorCreated** is applied to actor after it has been instantiated by an `ActorCell` and before `InitializableActor.Init` method will (optionally) be invoked.
+- **BeforeActorTerminated** is applied before actor terminates and before `IDisposable.Dispose` method will be invoked (for disposable actors) - **auto handling disposable actors is second feature of this commit**.
+
+For common use it's better to create custom classes inheriting from `ActorProducerPluginBase` and `ActorProducerPluginBase<TActor>` classes.
+
+Pipeline itself provides following interface:
+
+    class ActorProducerPipeline : IEnumerable<IActorProducerPlugin> {
+	    int Count { get; } // current plugins count - 1 by default (ActorStashPlugin)
+	    bool Register(IActorProducerPlugin plugin)
+	    bool Unregister(IActorProducerPlugin plugin)
+	    bool IsRegistered(IActorProducerPlugin plugin)
+	    bool Insert(int index, IActorProducerPlugin plugin)
+    }
+
+- **Register** - registers a plugin if no other plugin of the same type has been registered already (plugins with generic types are counted separately). Returns true if plugin has been registered.
+- **Insert** - same as register, but plugin will be placed in specific place inside the pipeline - useful if any plugins precedence is required.
+- **Unregister** - unregisters specified plugin if it has been found. Returns true if plugin was found and unregistered.
+- **IsRegistered** - checks if plugin has been already registered.
+
+By default pipeline is filled with one already used plugin - `ActorStashPlugin`, which replaces stash initialization/unstashing mechanism used up to this moment.
+
+**MultiNodeTestRunner and Akka.Remote.TestKit**. The MultiNodeTestRunner and the Multi Node TestKit (Akka.Remote.TestKit) underwent some drastic changes in this update. They're still not quite ready for public use yet, but if you want to see what the experience is like you can [clone the Akka.NET Github repository](https://github.com/akkadotnet/akka.net) and run the following command:
+
+````
+C:\akkadotnet> .\build.cmd MultiNodeTests
+````
+
+This will automatically launch all `MultiNodeSpec` instances found inside `Akka.Cluster.Tests`. We'll need to make this more flexible to be able to run other assemblies that require multinode tests in the future.
+
+These tests are not enabled by default in normal build runs, but they will at some point in the future.
+
+Here's a sample of the output from the console, to give you a sense of what the reporting looks like:
+
+![image](https://cloud.githubusercontent.com/assets/326939/6075685/5f7c56b2-ad8c-11e4-9d93-8216a8cbabaf.png)
+
+The MultiNodeTestRunner uses XUnit internally and will dynamically deploy as many processes are needed to satisfy any individual test. Has been tested with up to 6 processes.
+
+
+#### 0.7.1 Dec 13 2014
+__Brand New F# API__. The entire F# API has been updated to give it a more native F# feel while still holding true to the Erlang / Scala conventions used in actor systems. [Read more about the F# API changes](https://github.com/akkadotnet/akka.net/pull/526).
+
+__Multi-Node TestKit (Alpha)__. Not available yet as a NuGet package, but the first pass at the Akka.Remote.TestKit is now available from source, which allow you to test your actor systems running on multiple machines or processes.
+
+A multi-node test looks like this
+
+    public class InitialHeartbeatMultiNode1 : InitialHeartbeatSpec
+    {
+    }
+    
+    public class InitialHeartbeatMultiNode2 : InitialHeartbeatSpec
+    {
+    }
+    
+    public class InitialHeartbeatMultiNode3 : InitialHeartbeatSpec
+    {
+    }
+    
+    public abstract class InitialHeartbeatSpec : MultiNodeClusterSpec
+The MultiNodeTestRunner looks at this, works out that it needs to create 3 processes to run 3 nodes for the test.
+It executes NodeTestRunner in each process to do this passing parameters on the command line. [Read more about the multi-node testkit here](https://github.com/akkadotnet/akka.net/pull/497).
+
+__Breaking Change to the internal api: The `Next` property on `IAtomicCounter<T>` has been changed into the function `Next()`__ This was done as it had side effects, i.e. the value was increased when the getter was called. This makes it very hard to debug as the debugger kept calling the property and causing the value to be increased.
+
+__Akka.Serilog__ `SerilogLogMessageFormatter` has been moved to the namespace `Akka.Logger.Serilog` (it used to be in `Akka.Serilog.Event.Serilog`).
+Update your `using` statements from `using Akka.Serilog.Event.Serilog;` to `using Akka.Logger.Serilog;`.
+
+__Breaking Change to the internal api: Changed signatures in the abstract class `SupervisorStrategy`__. The following methods has new signatures: `HandleFailure`, `ProcessFailure`. If you've inherited from `SupervisorStrategy`, `OneForOneStrategy` or `AllForOneStrategy` and overridden the aforementioned methods you need to update their signatures.
+
+__TestProbe can be implicitly casted to ActorRef__. New feature. Tests requiring the `ActorRef` of a `TestProbe` can now be simplified:
+``` C#
+var probe = CreateTestProbe();
+var sut = ActorOf<GreeterActor>();
+sut.Tell("Akka", probe); // previously probe.Ref was required
+probe.ExpectMsg("Hi Akka!");
+```
+
+__Bugfix for ConsistentHashableEvenlope__. When using `ConsistentHashableEvenlope` in conjunction with `ConsistentHashRouter`s, `ConsistentHashableEvenlope` now correctly extracts its inner message instead of sending the entire `ConsistentHashableEvenlope` directly to the intended routee.
+
+__Akka.Cluster group routers now work as expected__. New update of Akka.Cluster - group routers now work as expected on cluster deployments. Still working on pool routers. [Read more about Akka.Cluster routers here](https://github.com/akkadotnet/akka.net/pull/489).
+
+#### 0.7.0 Oct 16 2014
+Major new changes and additions in this release, including some breaking changes...
+
+__Akka.Cluster__ Support (pre-release) - Akka.Cluster is now available on NuGet as a pre-release package (has a `-pre` suffix) and is available for testing. After installing the the Akka.Cluster module you can add take advantage of clustering via configuration, like so:
+
+    akka {
+        actor {
+          provider = "Akka.Cluster.ClusterActorRefProvider, Akka.Cluster"
+        }
+
+        remote {
+          log-remote-lifecycle-events = DEBUG
+          helios.tcp {
+        hostname = "127.0.0.1"
+        port = 0
+          }
+        }
+
+        cluster {
+          seed-nodes = [
+        "akka.tcp://ClusterSystem@127.0.0.1:2551",
+        "akka.tcp://ClusterSystem@127.0.0.1:2552"]
+
+          auto-down-unreachable-after = 10s
+        }
+      }
+
+
+And then use cluster-enabled routing on individual, named routers:
+
+    /myAppRouter {
+     router = consistent-hashing-pool
+      nr-of-instances = 100
+      cluster {
+        enabled = on
+        max-nr-of-instances-per-node = 3
+        allow-local-routees = off
+        use-role = backend
+      }
+    }
+
+For more information on how clustering works, please see https://github.com/akkadotnet/akka.net/pull/400
+
+__Breaking Changes: Improved Stashing__ - The old `WithUnboundedStash` and `WithBoundedStash` interfaces have been slightly changed and the `CurrentStash` property has been renamed to `Stash`. Any old stashing code can be replaced with the following in order to continue working:
+
+    public IStash CurrentStash { get { return Stash; } set { Stash=value; } }
+
+The `Stash` field is now automatically populated with an appropriate stash during the actor creation process and there is no need to set this field at all yourself.
+
+__Breaking Changes: Renamed Logger Namespaces__ - The namespaces, DLL names, and NuGet packages for all logger add-ons have been changed to `Akka.Loggers.Xyz`. Please install the latest NuGet package (and uninstall the old ones) and update your Akka HOCON configurations accordingly.
+
+__Serilog Support__ - Akka.NET now has an official [Serilog](http://serilog.net/) logger that you can install via the `Akka.Logger.Serilog` package. You can register the serilog logger via your HOCON configuration like this:
+
+     akka.loggers=["Akka.Logger.Serilog.SerilogLogger, Akka.Logger.Serilog"]
+
+__New Feature: Priority Mailbox__ - The `PriorityMailbox` allows you to define the priority of messages handled by your actors, and this is done by creating your own subclass of either the `UnboundedPriorityMailbox` or `BoundedPriorityMailbox` class and implementing the `PriorityGenerator` method like so:
+
+    public class ReplayMailbox : UnboundedPriorityMailbox
+    {
+        protected override int PriorityGenerator(object message)
+        {
+            if (message is HttpResponseMessage) return 1;
+            if (!(message is LoggedHttpRequest)) return 2;
+            return 3;
+        }
+    }
+
+The smaller the return value from the `PriorityGenerator`, the higher the priority of the message. You can then configure your actors to use this mailbox via configuration, using a fully-qualified name:
+
+
+    replay-mailbox {
+     mailbox-type: "TrafficSimulator.PlaybackApp.Actors.ReplayMailbox,TrafficSimulator.PlaybackApp"
+    }
+
+And from this point onward, any actor can be configured to use this mailbox via `Props`:
+
+    Context.ActorOf(Props.Create<ReplayActor>()
+                        .WithRouter(new RoundRobinPool(3))
+                        .WithMailbox("replay-mailbox"));
+
+__New Feature: Test Your Akka.NET Apps Using Akka.TestKit__ - We've refactored the testing framework used for testing Akka.NET's internals into a test-framework-agnostic NuGet package you can use for unit and integration testing your own Akka.NET apps. Right now we're scarce on documentation so you'll want to take a look at the tests inside the Akka.NET source for reference.
+
+Right now we have Akka.TestKit adapters for both MSTest and XUnit, which you can install to your own project via the following:
+
+MSTest:
+
+    install-package Akka.TestKit.VsTest
+
+XUnit:
+
+    install-package Akka.TestKit.Xunit
+
+__New Feature: Logging to Standard Out is now done in color__ - This new feature can be disabled by setting `StandardOutLogger.UseColors = false;`.
+Colors can be customized: `StandardOutLogger.DebugColor = ConsoleColor.Green;`.
+If you need to print to stdout directly use `Akka.Util.StandardOutWriter.Write()` instead of `Console.WriteLine`, otherwise your messages might get printed in the wrong color.
+
+#### 0.6.4 Sep 9 2014
+* Introduced `TailChoppingRouter`
+* All `ActorSystem` extensions now take an `ExtendedActorSystem` as a dependency - all third party actor system extensions will need to update accordingly.
+* Fixed numerous bugs with remote deployment of actors.
+* Fixed a live-lock issue for high-traffic connections on Akka.Remote and introduced softer heartbeat failure deadlines.
+* Changed the configuration chaining process.
+* Removed obsolete attributes from `PatternMatch` and `UntypedActor`.
+* Laying groundwork for initial Mono support.
+
+#### 0.6.3 Aug 13 2014
+* Made it so HOCON config sections chain properly
+* Optimized actor memory footprint
+* Fixed a Helios bug that caused Akka.NET to drop messages larger than 32kb
+
+#### 0.6.2 Aug 05 2014
+* Upgraded Helios dependency
+* Bug fixes
+* Improved F# API
+* Resizeable Router support
+* Inbox support - an actor-like object that can be subscribed to by external objects
+* Web.config and App.config support for Akka HOCON configuration
+
+#### 0.6.1 Jul 09 2014
+* Upgraded Helios dependency
+* Added ConsistentHash router support
+* Numerous bug fixes
+* Added ReceiveBuilder support
+
+#### 0.2.1-beta Mars 22 2014
+* Nuget package

@@ -1,13 +1,11 @@
-# EditorConfig is awesome:
-http://EditorConfig.org
+; This file is for unifying the coding style for different editors and IDEs.
+; More information at http://EditorConfig.org
 
-# top-most EditorConfig file
 root = true
 
-# Default settings:
-# A newline ending every file
-# Use 4 spaces as indentation
 [*]
-insert_final_newline = true
+end_of_line = CRLF
+
+[*.cs]
 indent_style = space
 indent_size = 4
