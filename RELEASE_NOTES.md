@@ -1,3 +1,6 @@
+#### 3.35.5 - 29.06.2015
+* Look for MSTest in VS2015 location - https://github.com/fsharp/FAKE/pull/843
+
 #### 3.35.4 - 23.06.2015
 * Add caching to globbing 
 
