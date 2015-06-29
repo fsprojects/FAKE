@@ -147,7 +147,7 @@ Target "SourceLink" (fun _ ->
     |> Seq.iter (fun f ->
         let proj = VsProj.LoadRelease f
         let url = sprintf "%s/%s/{0}/%%var2%%" gitRaw projectName
-        proj.SourceIndex proj.CompilesNotLinked proj.OutputFilePdb __SOURCE_DIRECTORY__ url )
+        SourceLink.Index proj.CompilesNotLinked proj.OutputFilePdb __SOURCE_DIRECTORY__ url )
     let pdbFakeLib = "./build/FakeLib.pdb"
     CopyFile "./build/FAKE.Deploy" pdbFakeLib
     CopyFile "./build/FAKE.Deploy.Lib" pdbFakeLib
