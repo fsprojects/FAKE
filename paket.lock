@@ -81,4 +81,4 @@ NUGET
     xunit.runners (1.9.2)
   remote: https://ci.appveyor.com/nuget/sourcelink-helmesfwai2a
   specs:
-    SourceLink.Fake (0.6.0-b218)
+    SourceLink.Fake (0.6.0-b221)
