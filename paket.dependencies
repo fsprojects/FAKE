@@ -1,5 +1,6 @@
 content: none
 source http://nuget.org/api/v2
+source https://ci.appveyor.com/nuget/sourcelink-helmesfwai2a
 
 nuget FSharp.Core
 nuget FAKE
@@ -7,7 +8,7 @@ nuget Knockout
 nuget Nuget.CommandLine
 nuget FSharp.Formatting
 nuget FSharp.Formatting.CommandTool
-nuget SourceLink.Fake
+nuget SourceLink.Fake 0.6.0-b218
 nuget RavenDB.Server
 nuget xunit.runners
 nuget UnionArgParser
