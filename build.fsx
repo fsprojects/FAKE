@@ -253,15 +253,17 @@ Target "Default" DoNothing
 "Clean"
     ==> "SetAssemblyInfo"
     ==> "BuildSolution"
-    ==> "Test"    
+    ==> "Test"
+    =?> ("SourceLink", not isLinux)
     ==> "Default"
     ==> "CopyLicense"
     =?> ("GenerateDocs", isLocalBuild && not isLinux)
-    =?> ("SourceLink", not isLinux)
+//    =?> ("SourceLink", isLocalBuild && not isLinux)
+    ==> "Default"
     =?> ("CreateNuGet", not isLinux)
     =?> ("ReleaseDocs", isLocalBuild && not isLinux)
     ==> "PublishNuget"
     ==> "Release"
 
 // start build
-RunTargetOrDefault "SourceLink"
+RunTargetOrDefault "Default"
