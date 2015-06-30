@@ -50,7 +50,7 @@ let private parseCLIParams (args : string seq) =
 
 let private parsedParams = lazy(System.Environment.GetCommandLineArgs() |> parseCLIParams)
 
-let internal explicitReadCLIParam args name : string option =
+let internal explicitGetCLIParam args name : string option =
     match Map.tryFind (cleanKey name) args with
     | None -> None
     | Some opt -> 
@@ -58,7 +58,7 @@ let internal explicitReadCLIParam args name : string option =
         | String value -> Some value 
         | NoValue -> Some ""
 
-let internal explicitReadCLIFlag args name : bool option =
+let internal explicitGetCLIFlag args name : bool option =
     match Map.tryFind (cleanKey name) args with
     | None -> None
     | Some opt -> 
@@ -68,9 +68,9 @@ let internal explicitReadCLIFlag args name : bool option =
         | NoValue -> Some true
 
 /// Get a Command Line parametters value. Some if specified, None if not.
-let readCLIParam name =
-    explicitReadCLIParam parsedParams.Value name
+let getCLIParam name =
+    explicitGetCLIParam parsedParams.Value name
 
 /// Get a Command Line parametters value and convert it to a string.
-let readCLIFlag name : bool option =
-    explicitReadCLIFlag parsedParams.Value name
+let getCLIFlag name : bool option =
+    explicitGetCLIFlag parsedParams.Value name

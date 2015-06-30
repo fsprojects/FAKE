@@ -13,12 +13,12 @@ namespace Test.FAKECore
             {
                 System.Action<string[]> check = ((string[] args) => {
                     var parametters = CommandLineHelper.parseCLIParams(args);
-                    var fooVal = CommandLineHelper.explicitReadCLIParam(parametters, "foo");
-                    var bazVal = CommandLineHelper.explicitReadCLIParam(parametters, "baz");
-                    var noneVal = CommandLineHelper.explicitReadCLIParam(parametters, "none");
-                    var flagVal = CommandLineHelper.explicitReadCLIParam(parametters, "flag");
-                    var trueflagVal = CommandLineHelper.explicitReadCLIFlag(parametters, "trueflag");
-                    var falseflagVal = CommandLineHelper.explicitReadCLIFlag(parametters, "falseflag");
+                    var fooVal = CommandLineHelper.explicitGetCLIParam(parametters, "foo");
+                    var bazVal = CommandLineHelper.explicitGetCLIParam(parametters, "baz");
+                    var noneVal = CommandLineHelper.explicitGetCLIParam(parametters, "none");
+                    var flagVal = CommandLineHelper.explicitGetCLIParam(parametters, "flag");
+                    var trueflagVal = CommandLineHelper.explicitGetCLIFlag(parametters, "trueflag");
+                    var falseflagVal = CommandLineHelper.explicitGetCLIFlag(parametters, "falseflag");
                     fooVal.ShouldEqual(Microsoft.FSharp.Core.FSharpOption<string>.Some("bar"));
                     bazVal.ShouldEqual(Microsoft.FSharp.Core.FSharpOption<string>.Some("bill"));
                     noneVal.ShouldEqual(Microsoft.FSharp.Core.FSharpOption<string>.None);
