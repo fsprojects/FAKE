@@ -4,6 +4,15 @@ module Fake.SemVerHelper
 open System
 open System.Text.RegularExpressions
 
+let (|ParseRegex|_|) pattern input  =
+    let m = Regex.Match(input, pattern, RegexOptions.ExplicitCapture)
+
+    match m.Success with
+    | true ->
+        Some (List.tail [ for g in m.Groups -> g.Value ])
+    | false ->
+        None
+
 let (|SemVer|_|) version =
     let pattern =
         @"^(?<major>\d+)" +
@@ -12,25 +21,52 @@ let (|SemVer|_|) version =
         @"(\-(?<pre>[0-9A-Za-z\-\.]+))?" +
         @"(\+(?<build>[0-9A-Za-z\-\.]+))?$"
 
-    let m = Regex.Match(version, pattern, RegexOptions.ExplicitCapture)
-
-    match m.Success with
-    | true ->
-        Some (List.tail [ for g in m.Groups -> g.Value ])
-    | false ->
+    match version with
+    | ParseRegex pattern [major; minor; patch; pre; build] ->
+        Some [major; minor; patch; pre; build]
+    | _ ->
         None
+
+let (|ValidVersion|_|) = function
+    | null | "" -> None
+    | ver when ver.Length > 1 && ver.StartsWith("0") -> None
+    | _ -> Some ValidVersion
+
+let ComparePreRelease a b =
+    let (|Int|_|) str =
+       match System.Int32.TryParse(str) with
+       | (true, int) -> Some(int)
+       | _ -> None
+
+    let comp a b = 
+        match (a, b) with
+        | (Int a, Int b) -> a.CompareTo(b)
+        | (Int a, _) -> -1
+        | (_, Int b) -> 1
+        | _ -> match String.CompareOrdinal(a, b) with
+               | i when not (i = 0) -> i
+               | _ -> 0
+
+    let aEmpty = String.IsNullOrEmpty(a)
+    let bEmpty = String.IsNullOrEmpty(b)
+
+    match (aEmpty, bEmpty) with
+    | (true, true) -> 0
+    | (true, false) -> 1
+    | (false, true) -> -1
+    | _ -> Seq.compareWith comp (a.Split '.') (b.Split '.')
 
 [<CustomEquality; CustomComparison>]
 type PreRelease = 
     { Origin: string
-      Name: string
-      Number: int option }
+      Name: string }
     static member TryParse str = 
-        let m = Regex("^(?<name>[a-zA-Z]+)(?<number>\d*)$").Match(str)
-        match m.Success, m.Groups.["name"].Value, m.Groups.["number"].Value with
-        | true, name, "" -> Some { Origin = str; Name = name; Number = None }
-        | true, name, number -> Some { Origin = str; Name = name; Number = Some (int number) }
-        | _ -> None
+        match str with
+        | ParseRegex "^(?<name>[0-9A-Za-z\-\.]+)$" [name] ->
+            Some { Origin = str; Name = name }
+        | _ ->
+            None
+
     override x.Equals(yobj) =
         match yobj with
         | :? PreRelease as y -> x.Origin = y.Origin
@@ -40,8 +76,7 @@ type PreRelease =
         member x.CompareTo yobj =
             match yobj with
             | :? PreRelease as y ->
-                if x.Name <> y.Name then compare x.Name y.Name else
-                compare x.Number y.Number
+                ComparePreRelease x.Name y.Name
             | _ -> invalidArg "yobj" "cannot compare values of different types"
 
 /// Contains the version information.
@@ -97,7 +132,7 @@ type SemVerInfo =
 /// Returns true if input appears to be a parsable semver string
 let isValidSemVer version =
     match version with
-    | SemVer [] ->
+    | SemVer [ValidVersion major; ValidVersion minor; ValidVersion patch; pre; build] ->
         true
     | _ ->
         false
@@ -109,7 +144,7 @@ let isValidSemVer version =
 ///     parse "1.0.0-rc.1"     < parse "1.0.0"          // true
 ///     parse "1.2.3-alpha"    > parse "1.2.2"          // true
 ///     parse "1.2.3-alpha2"   > parse "1.2.3-alpha"    // true
-///     parse "1.2.3-alpha002" > parse "1.2.3-alpha1"   // true
+///     parse "1.2.3-alpha002" > parse "1.2.3-alpha1"   // false
 ///     parse "1.5.0-beta.2"   > parse "1.5.0-rc.1"     // false
 let parse version =
     match version with

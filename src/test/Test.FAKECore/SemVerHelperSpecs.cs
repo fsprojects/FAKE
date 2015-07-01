@@ -60,13 +60,13 @@ namespace Test.FAKECore
     public class when_parsing_semver_strings
     {
         static SemVerHelper.SemVerInfo semVer;
-        Because of = () => semVer = SemVerHelper.parse("1.2.3-alpha.beta");
+        Because of = () => semVer = SemVerHelper.parse("1.2.3-alpha+beta");
 
         It should_parse_major = () => semVer.Major.ShouldEqual(1);
         It should_parse_minor = () => semVer.Minor.ShouldEqual(2);
         It should_parse_patch = () => semVer.Patch.ShouldEqual(3);
         It should_parse_prerelease = () => semVer.PreRelease.ShouldEqual(
-            FSharpOption<SemVerHelper.PreRelease>.Some(new SemVerHelper.PreRelease("alpha", "alpha", FSharpOption<int>.None)));
+            FSharpOption<SemVerHelper.PreRelease>.Some(new SemVerHelper.PreRelease("alpha", "alpha")));
         It should_parse_build = () => semVer.Build.ShouldEqual("beta");
     }
 
@@ -128,9 +128,9 @@ namespace Test.FAKECore
             () => SemVerHelper.parse("2.3.4-alpha2")
                 .ShouldBeGreaterThan(SemVerHelper.parse("2.3.4-alpha"));
 
-        It should_assume_alpha003_is_greater_than_alpha2 =
-            () => SemVerHelper.parse("2.3.4-alpha003")
-                .ShouldBeGreaterThan(SemVerHelper.parse("2.3.4-alpha2"));
+        It should_assume_alpha2_is_greater_than_alpha003 =
+            () => SemVerHelper.parse("2.3.4-alpha2")
+                .ShouldBeGreaterThan(SemVerHelper.parse("2.3.4-alpha003"));
 
         It should_assume_rc_is_greater_than_beta2 =
             () => SemVerHelper.parse("2.3.4-rc")
