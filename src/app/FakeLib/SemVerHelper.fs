@@ -4,6 +4,22 @@ module Fake.SemVerHelper
 open System
 open System.Text.RegularExpressions
 
+let (|SemVer|_|) version =
+    let pattern =
+        @"^(?<major>\d+)" +
+        @"(\.(?<minor>\d+))?" +
+        @"(\.(?<patch>\d+))?" +
+        @"(\-(?<pre>[0-9A-Za-z\-\.]+))?" +
+        @"(\+(?<build>[0-9A-Za-z\-\.]+))?$"
+
+    let m = Regex.Match(version, pattern, RegexOptions.ExplicitCapture)
+
+    match m.Success with
+    | true ->
+        Some (List.tail [ for g in m.Groups -> g.Value ])
+    | false ->
+        None
+
 [<CustomEquality; CustomComparison>]
 type PreRelease = 
     { Origin: string
@@ -42,12 +58,13 @@ type SemVerInfo =
       /// The optional build no.
       Build: string }
     override x.ToString() =
-        sprintf "%d.%d.%d" x.Major x.Minor x.Patch +
-         (match x.PreRelease, isNotNullOrEmpty x.Build with
-          | Some preRelease, _ -> "-" + preRelease.Name 
-          | None, true -> "-"
-          | _ -> "") +
-         (if isNotNullOrEmpty x.Build then "." + x.Build else "")
+        sprintf "%d.%d.%d%s%s" x.Major x.Minor x.Patch
+            (match x.PreRelease with
+             | Some preRelease -> sprintf "-%s"preRelease.Name 
+             | _ -> "")
+            (match isNotNullOrEmpty x.Build with
+             | true -> sprintf "+%s" x.Build
+             | _ -> "")
 
     override x.Equals(yobj) =
         match yobj with
@@ -77,13 +94,13 @@ type SemVerInfo =
             | _ -> invalidArg "yobj" "cannot compare values of different types"
 
 
-let private SemVerPattern = "^(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)(?:-[\da-zA-Z\-]+(?:\.[\da-zA-Z\-]+)*)?(?:\+[\da-zA-Z\-]+(?:\.[\da-zA-Z\-]+)*)?$"
-
 /// Returns true if input appears to be a parsable semver string
-let isValidSemVer input =
-    let m = Regex.Match(input, SemVerPattern)
-    if m.Success then true
-    else false
+let isValidSemVer version =
+    match version with
+    | SemVer [] ->
+        true
+    | _ ->
+        false
 
 /// Parses the given version string into a SemVerInfo which can be printed using ToString() or compared
 /// according to the rules described in the [SemVer docs](http://semver.org/).
@@ -95,20 +112,17 @@ let isValidSemVer input =
 ///     parse "1.2.3-alpha002" > parse "1.2.3-alpha1"   // true
 ///     parse "1.5.0-beta.2"   > parse "1.5.0-rc.1"     // false
 let parse version =
-    let splitted = split '.' version
-    let l = splitted.Length
-    let patch,preRelease =
-        if l <= 2 then 0,"" else
-        let splitted' = split '-' splitted.[2]
-        Int32.Parse splitted'.[0], if splitted'.Length > 1 then splitted'.[1] else ""
-
-
-    { Major = if l > 0 then Int32.Parse splitted.[0] else 0
-      Minor = if l > 1 then Int32.Parse splitted.[1] else 0
-      Patch = patch
-      PreRelease = PreRelease.TryParse preRelease
-      Build = if l > 3 then splitted.[3] else "" 
-    }
+    match version with
+    | SemVer [major; minor; patch; pre; build] ->
+        {
+            Major = if isNullOrEmpty major then 1 else Int32.Parse major
+            Minor = if isNullOrEmpty minor then 0 else Int32.Parse minor
+            Patch = if isNullOrEmpty patch then 0 else Int32.Parse patch
+            PreRelease = PreRelease.TryParse pre
+            Build = build
+        }
+    | _ ->
+        failwithf "Unable to parse version %s" version
 
 
 
