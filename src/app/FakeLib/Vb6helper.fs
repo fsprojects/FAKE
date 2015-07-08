@@ -47,12 +47,15 @@ type private Vb6BuildResult =
 type Vb6Version = {MajorVer:int; MinorVer:int; RevisionVer:int; AutoIncrementVer:int;}
                     override x.ToString () = sprintf "%i.%i.%i.%i" x.MajorVer x.MinorVer x.RevisionVer x.AutoIncrementVer
 
+/// Represents the version of a VB6 reference
+/// References from VB6 projects only care about Major.Minor versions
 type Vb6ReferenceVersion = 
     {
         Major: int
         Minor: int
     }
 
+/// Represents a VB6 Reference
 type Vb6Reference =
     {
         Guid : Guid
@@ -62,6 +65,8 @@ type Vb6Reference =
 /// Represents a VB6 project
 type Vb6Project = 
     {
+        /// Path to the Propject file representing 
+        /// Representing this project
         ProjectFile:string
         /// Name of binary that will
         /// be generated from this project
@@ -71,7 +76,7 @@ type Vb6Project =
         /// in Major.Minor.Revision.Patch format
         Version: string 
         
-        /// GUIDs of all references and components used
+        /// All references and components used
         /// in this VBV6 project
         References: Vb6Reference seq
     }
