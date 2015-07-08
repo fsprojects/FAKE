@@ -47,9 +47,22 @@ type private Vb6BuildResult =
 type Vb6Version = {MajorVer:int; MinorVer:int; RevisionVer:int; AutoIncrementVer:int;}
                     override x.ToString () = sprintf "%i.%i.%i.%i" x.MajorVer x.MinorVer x.RevisionVer x.AutoIncrementVer
 
+type Vb6ReferenceVersion = 
+    {
+        Major: int
+        Minor: int
+    }
+
+type Vb6Reference =
+    {
+        Guid : Guid
+        Version: Vb6ReferenceVersion
+    }
+
 /// Represents a VB6 project
 type Vb6Project = 
     {
+        ProjectFile:string
         /// Name of binary that will
         /// be generated from this project
         BinaryName:string 
@@ -60,7 +73,7 @@ type Vb6Project =
         
         /// GUIDs of all references and components used
         /// in this VBV6 project
-        References: Guid seq
+        References: Vb6Reference seq
     }
 
 let private defaultVb6BuildParams = {
@@ -69,6 +82,26 @@ let private defaultVb6BuildParams = {
         Logdir = "temp"
         Timeout = System.TimeSpan.FromMinutes 10.0
      } 
+
+/// Helper methods for working with Vb6 project files 
+let private readProjectFileLines p = File.ReadAllLines(p, System.Text.Encoding.GetEncoding("ISO-8859-1"))
+let private writeProjectFileLines p (l:string seq) = File.WriteAllLines(p,l,System.Text.Encoding.GetEncoding("ISO-8859-1"))
+let private toChars (s:string) = s.ToCharArray () |> Seq.ofArray
+let private getValueBetween startChar endChar (line:string) = 
+        line
+        |> toChars
+        |> Seq.skipWhile (fun c -> c <> startChar)
+        |> Seq.skip 1
+        |> Seq.takeWhile (fun c -> c <> endChar)
+        |> String.Concat
+let private getReferenceLineParts (line:string) = 
+            line.Split([|"#"|], StringSplitOptions.RemoveEmptyEntries)
+let private createReferenceLine (lineParts:string[]) =
+            String.Join("#", lineParts)
+let private getReferenceLineGuid (lineParts:string[]) = 
+            lineParts.[0] |> getValueBetween '{' '}' |> Guid.Parse
+let private referenceLineFilter (l:string) = l.StartsWith("Reference") || l.StartsWith("Object")
+
 
 /// Executes a VB6 command line make on all provided VB6 projects
 ///
@@ -166,16 +199,7 @@ let public Vb6Make (getConfig: Vb6BuildParams->Vb6BuildParams) (vb6Projects: str
 /// This is used for creating Side-By-Side interop manifests.
 let public GetVb6ApplicationProjDetails (projects: string seq) =
     let defaultVb6Version = {MajorVer = 1; MinorVer = 0; RevisionVer = 0; AutoIncrementVer = 0}
-    let toChars (s:string) = s.ToCharArray () |> Seq.ofArray
-
-    let getValueBetween startChar endChar (line:string) = 
-        line
-        |> toChars
-        |> Seq.skipWhile (fun c -> c <> startChar)
-        |> Seq.skip 1
-        |> Seq.takeWhile (fun c -> c <> endChar)
-        |> String.Concat
-
+    
     let getVersionValue l = 
         l 
         |> toChars 
@@ -211,15 +235,24 @@ let public GetVb6ApplicationProjDetails (projects: string seq) =
         projectlines |> getVersionLines |> toVersion
     
     let getReferencesAndObjectGuids (projectLines: string seq) =
+        let getVersion (lineParts:string[]) = 
+            let versionParts = lineParts.[1].Split([|"."|], StringSplitOptions.RemoveEmptyEntries)
+            {Vb6ReferenceVersion.Major = Int32.Parse(versionParts.[0], Globalization.NumberStyles.HexNumber);
+                                 Minor = Int32.Parse(versionParts.[1], Globalization.NumberStyles.HexNumber)}
+
+        let createReference (lineParts:string[]) = 
+            {Vb6Reference.Guid = lineParts |> getReferenceLineGuid;
+                          Version = lineParts |> getVersion}
         projectLines
-        |> Seq.filter (fun l -> l.StartsWith("Reference") || l.StartsWith("Object"))
-        |> Seq.map (fun l -> l |> getValueBetween '{' '}' |> Guid.Parse)
+        |> Seq.filter referenceLineFilter
+        |> Seq.map (fun l -> l |> getReferenceLineParts |> createReference)
 
     projects 
-    |> Seq.map (fun p -> async {return (p, File.ReadAllLines(p, System.Text.Encoding.GetEncoding("ISO-8859-1")))})
+    |> Seq.map (fun p -> async {return (p, readProjectFileLines p)})
     |> Seq.map (fun asyncData -> async {
         let! (p, lines) = asyncData
-        return { BinaryName = getExename p lines
+        return { ProjectFile = p
+                 BinaryName = getExename p lines
                  Version = (lines |> getVersion).ToString()
                  References = lines |> getReferencesAndObjectGuids 
         }})
@@ -244,8 +277,8 @@ let public RegisterDependenciesForDevelopment (getConfig: Vb6BuildParams->Vb6Bui
         { ExecutablePath = config.Outdir @@ a.BinaryName
           Version = a.Version
           Dependencies = a.References 
-                         |> Seq.filter (fun g -> interopReferences |> Seq.exists (fun r -> r.Guid = g))
-                         |> Seq.map (fun g -> interopReferences |> Seq.find (fun r -> r.Guid = g))
+                         |> Seq.filter (fun r -> interopReferences |> Seq.exists (fun a -> a.Guid = r.Guid))
+                         |> Seq.map (fun r -> interopReferences |> Seq.find (fun a -> a.Guid = r.Guid))
         })
     let dependenciesToRegister = applications |> Seq.collect (fun a -> a.Dependencies) |> Seq.distinct |> Seq.map (fun d -> d.Path)
     dependenciesToRegister |> RegisterAssembliesWithCodebase config.Logdir 
@@ -267,8 +300,8 @@ let public UnRegisterDependenciesForDevelopment (getConfig: Vb6BuildParams->Vb6B
         { ExecutablePath = config.Outdir @@ a.BinaryName
           Version = a.Version
           Dependencies = a.References 
-                         |> Seq.filter (fun g -> interopReferences |> Seq.exists (fun r -> r.Guid = g))
-                         |> Seq.map (fun g -> interopReferences |> Seq.find (fun r -> r.Guid = g))
+                         |> Seq.filter (fun r -> interopReferences |> Seq.exists (fun a -> a.Guid = r.Guid))
+                         |> Seq.map (fun r -> interopReferences |> Seq.find (fun a -> a.Guid = r.Guid))
         })
     let dependenciesToRegister = applications |> Seq.collect (fun a -> a.Dependencies) |> Seq.distinct |> Seq.map (fun d -> d.Path)
     dependenciesToRegister |> UnregisterAssemblies config.Logdir
@@ -301,8 +334,8 @@ let public BuildAndEmbedInteropManifests (getConfig: Vb6BuildParams->Vb6BuildPar
         { ExecutablePath = config.Outdir @@ a.BinaryName
           Version = a.Version
           Dependencies = a.References 
-                         |> Seq.filter (fun g -> interopReferences |> Seq.exists (fun r -> r.Guid = g))
-                         |> Seq.map (fun g -> interopReferences |> Seq.find (fun r -> r.Guid = g))
+                         |> Seq.filter (fun r -> interopReferences |> Seq.exists (fun a -> a.Guid = r.Guid))
+                         |> Seq.map (fun r ->  interopReferences |> Seq.find (fun a -> a.Guid = r.Guid))
         })
     let dependenciesToRegister = applications |> Seq.collect (fun a -> a.Dependencies) |> Seq.distinct |> Seq.map (fun d -> d.Path)
     dependenciesToRegister |> RegisterAssembliesWithCodebase config.Logdir 
@@ -311,3 +344,63 @@ let public BuildAndEmbedInteropManifests (getConfig: Vb6BuildParams->Vb6BuildPar
     applications |> AddEmbeddedApplicationManifest config.Logdir
     dependenciesToRegister |> AddEmbeddedAssemblyManifest config.Logdir
     traceEndTask "BuildAndEmbedInteropManifests" (sprintf "Building and embedding for %i projects" (vb6Projects |> Seq.length))
+
+/// Fixes dependency versions in VB6 project files 
+///
+/// ## Paramteters
+///  - `getConfig`- function to alter default VB6 build parameters
+///  - `vb6Projects` - Paths to all `.vbp` to update references in
+///  - `possibleAssemblies` - Paths to assemblies that may be referenced by the VB6 projects
+///
+/// Running this task will:
+///
+/// 1. In all VB6 projects provided: Get all references that intersects with the provided assemblies arg
+/// 2. Check if there is a version difference
+/// 3. Update the VB6 project file to reflect the actual version used.
+///
+/// Note: Vb6 Reference versions are __hex numbers__ not decimals like .net verions. This task handles
+///       this difference automatically.
+let public UpdateDependencyVersions (getConfig: Vb6BuildParams->Vb6BuildParams) (vb6Projects: string seq) (possibleAssemblies: string seq) =
+    traceStartTask "UpdateDependencyVersion" (sprintf "Updating dependency versions for %i projects" (vb6Projects |> Seq.length))
+    let config = defaultVb6BuildParams |> getConfig 
+    let details = vb6Projects |> GetVb6ApplicationProjDetails
+    let interopReferences = possibleAssemblies |> GetInteropAssemblyData config.Logdir
+
+    //Filter to select only projects and references that needs updating
+    let projectNeedsUpdating (p:Vb6Project) = 
+        let transformInteropVersion (a:InteropAssemblyData) = 
+            let versionParts = a.Version.Split([|'.'|], StringSplitOptions.RemoveEmptyEntries) 
+                               |> Array.map (Int32.Parse)
+            {Vb6ReferenceVersion.Major = versionParts.[0];
+                                 Minor = versionParts.[1]}
+        let referencesToUpdate = 
+            p.References 
+            |> Seq.choose (fun r -> match interopReferences |> Seq.tryFind (fun a -> a.Guid = r.Guid) with
+                                    | Some(interop) -> Some(r, interop, interop |> transformInteropVersion)
+                                    | None -> None)
+            |> Seq.choose (fun (r,a,v) -> match r.Version <> v with
+                                          | true  -> Some(r,a,v)
+                                          | false -> None) 
+        if referencesToUpdate |> Seq.isEmpty then None else Some(p, referencesToUpdate)
+    
+    let updateProjectReferences (p:Vb6Project * (Vb6Reference * InteropAssemblyData * Vb6ReferenceVersion) seq) = 
+        let versionToString (v:Vb6ReferenceVersion) = 
+            sprintf "%X.%X" v.Major v.Minor   
+        let (project, references) = p
+        readProjectFileLines project.ProjectFile
+        |> Seq.map (fun l ->
+            let lineparts = getReferenceLineParts l
+            match referenceLineFilter l with
+            | true  -> 
+               let guid = getReferenceLineGuid lineparts
+               match references |> Seq.tryFind (fun (r,a,v) -> r.Guid = guid) with
+               | Some(r,a,v) -> 
+                   lineparts.[1] <- (versionToString v)
+                   tracefn "Updated %s to %i.%i for %s" a.Name v.Major v.Minor project.BinaryName 
+                   lineparts |> createReferenceLine 
+               | None -> l
+            | false -> l)
+        |> writeProjectFileLines project.ProjectFile
+
+    details |> Seq.choose projectNeedsUpdating |> Seq.iter updateProjectReferences
+    traceEndTask "UpdateDependencyVersion" (sprintf "Updating dependency versions for %i projects" (vb6Projects |> Seq.length))
