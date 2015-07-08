@@ -22,8 +22,7 @@ let internal readString (echo: bool) : string =
 /// Return a string entered by the user followed by enter. The input is echoed to the screen.
 let getUserInput prompt =
     printf "%s" prompt
-    let s = readString true
-    s
+    readString true
 
 /// Return a string entered by the user followed by enter. The input is not echoed to the screen.
 let getUserPassword prompt =
