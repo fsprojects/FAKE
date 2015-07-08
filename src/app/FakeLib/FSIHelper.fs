@@ -10,6 +10,19 @@ open System.Threading
 
 let private FSIPath = @".\tools\FSharp\;.\lib\FSharp\;[ProgramFilesX86]\Microsoft SDKs\F#\4.0\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\3.1\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\3.0\Framework\v4.0;[ProgramFiles]\Microsoft F#\v4.0\;[ProgramFilesX86]\Microsoft F#\v4.0\;[ProgramFiles]\FSharp-2.0.0.0\bin\;[ProgramFilesX86]\FSharp-2.0.0.0\bin\;[ProgramFiles]\FSharp-1.9.9.9\bin\;[ProgramFilesX86]\FSharp-1.9.9.9\bin\"
 
+let loadRegex = Text.RegularExpressions.Regex("^\s*#load\s*(@\"|\"\"\"|\")(?<path>.+?)(\"\"\"|\")", System.Text.RegularExpressions.RegexOptions.Compiled ||| System.Text.RegularExpressions.RegexOptions.Multiline)
+
+let rec getAllScriptContents scriptPath = 
+    let scriptContents = File.ReadAllText(scriptPath)
+    let loadedContents = 
+        loadRegex.Matches(scriptContents)
+        |> Seq.cast<Text.RegularExpressions.Match>
+        |> Seq.collect(fun m -> getAllScriptContents (m.Groups.Item("path").Value))
+    Seq.concat [List.toSeq [scriptContents]; loadedContents]
+let getScriptHash scriptPath =
+    let fullContents = getAllScriptContents scriptPath |> String.concat("\n")
+    let hasher = HashLib.HashFactory.Checksum.CreateCRC32a()
+    hasher.ComputeString(fullContents).ToString()
 /// The path to the F# Interactive tool.
 let fsiPath =
     let ev = environVar "FSI"
@@ -87,8 +100,9 @@ let executeFSIWithScriptArgsAndReturnMessages script (scriptArgs: string[]) =
 
 open Microsoft.FSharp.Compiler.Interactive.Shell
 
+let hashRegex = Text.RegularExpressions.Regex("(?<script>.+)_(?<hash>[a-zA-Z0-9]+\.dll$)", System.Text.RegularExpressions.RegexOptions.Compiled)
 /// Run the given FAKE script with fsi.exe at the given working directory. Provides full access to Fsi options and args. Redirect output and error messages.
-let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args onErrMsg onOutMsg =
+let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args onErrMsg onOutMsg useCache cleanCache =
     if printDetails then traceFAKE "Running Buildscript: %s" script
 
     // Add arguments to the Environment
@@ -118,26 +132,92 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
     use errStream = new StringWriter(sbErr)
     use stdin = new StreamReader(Stream.Null)
 
-    try
-        let session = FsiEvaluationSession.Create(fsiConfig, commonOptions, stdin, outStream, errStream)
+    let scriptHash = lazy (getScriptHash script)
+    //TODO this is only calculating the hash for the input file, not anything #load-ed
+    
+    let scriptFileName = lazy(Path.GetFileName(script))
+    let hashPath = lazy("./.fake/" + scriptFileName.Value + "_" + scriptHash.Value + ".dll")
+    let cacheValid = lazy (System.IO.File.Exists(hashPath.Value))
 
+    let getScriptAndHash fileName =
+        let matched = hashRegex.Match(fileName)
+        matched.Groups.Item("script").Value, matched.Groups.Item("hash").Value
+
+    if useCache && cacheValid.Value then
+        
+        trace ("Using cache")
+        let noExtension = Path.GetFileNameWithoutExtension(scriptFileName.Value)
+        let fullName = 
+            sprintf "<StartupCode$FSI_0001>.$FSI_0001_%s%s$%s" 
+                (noExtension.Substring(0, 1).ToUpper())
+                (noExtension.Substring(1))
+                (Path.GetExtension(scriptFileName.Value).Substring(1))
+
+        let assembly = Reflection.Assembly.LoadFrom(hashPath.Value)
+
+        let mainModule = assembly.GetType(fullName)
+        
         try
-            session.EvalScript script
-            // TODO: Reactivate when FCS don't show output any more 
-            // handleMessages()
+            let _result = 
+                mainModule.InvokeMember(
+                    "main@",  
+                    System.Reflection.BindingFlags.InvokeMethod ||| 
+                    System.Reflection.BindingFlags.Public ||| 
+                    System.Reflection.BindingFlags.Static, null, null, [||])
             true
         with
-        | _ ->
-            handleMessages()
-            false
-    with
-    | exn ->
-        traceError "FsiEvaluationSession could not be created."
-        traceError <| sbErr.ToString()
-        raise exn
+        | _ex ->
+                handleMessages()
+                false
+    else
+        if useCache then
+            let cacheDir = DirectoryInfo("./.fake")
+            if cacheDir.Exists then
+                let oldFiles = 
+                    cacheDir.GetFiles()
+                    |> Seq.filter(fun file -> 
+                        let oldScriptName, _ = getScriptAndHash(file.Name)
+                        oldScriptName = scriptFileName.Value
+                    )
+                if (oldFiles |> Seq.length) > 0 then
+                    if cleanCache then
+                        for file in oldFiles do
+                            file.Delete()
+                    trace "Cache is invalid, recompiling"
+                else 
+                    trace "Cache doesnt exist"
+            else
+                trace "Cache doesnt exist"
+        try
+            let session = FsiEvaluationSession.Create(fsiConfig, commonOptions, stdin, outStream, errStream)
+            try
+                session.EvalScript script
+
+                if useCache && not cacheValid.Value then
+                    let assemBuilder = session.DynamicAssembly :?> System.Reflection.Emit.AssemblyBuilder
+                    assemBuilder.Save("FSI-ASSEMBLY.dll")
+                    Directory.CreateDirectory("./.fake") |> ignore
+                    File.Move("./FSI-ASSEMBLY.dll", hashPath.Value)
+                    
+                    if File.Exists("./FSI-ASSEMBLY.pdb") then
+                        File.Delete("./FSI-ASSEMBLY.pdb")
+                    trace (System.Environment.NewLine + "Saved cache")
+         
+                // TODO: Reactivate when FCS don't show output any more 
+                // handleMessages()
+                true
+            with
+            | _ex ->
+                handleMessages()
+                false
+        with
+        | exn ->
+            traceError "FsiEvaluationSession could not be created."
+            traceError <| sbErr.ToString()
+            raise exn
 
 /// Run the given buildscript with fsi.exe and allows for extra arguments to the script. Returns output.
-let executeBuildScriptWithArgsAndReturnMessages script (scriptArgs: string[]) =
+let executeBuildScriptWithArgsAndReturnMessages script (scriptArgs: string[]) useCache cleanCache =
     let messages = ref []
     let appendMessage isError msg =
         messages := { IsError = isError
@@ -146,19 +226,21 @@ let executeBuildScriptWithArgsAndReturnMessages script (scriptArgs: string[]) =
     let result =
         runFAKEScriptWithFsiArgsAndRedirectMessages
             true (FsiArgs([], script, scriptArgs |> List.ofArray)) []
-            (appendMessage true) (appendMessage false)
+            (appendMessage true) (appendMessage false) useCache cleanCache
     (result, !messages)
 
 /// Run the given buildscript with fsi.exe at the given working directory.  Provides full access to Fsi options and args.
-let runBuildScriptWithFsiArgsAt printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args =
+let runBuildScriptWithFsiArgsAt printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args useCache cleanCache =
     runFAKEScriptWithFsiArgsAndRedirectMessages
         printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args
         traceError (fun s-> traceFAKE "%s" s)
+        useCache
+        cleanCache
 
 /// Run the given buildscript with fsi.exe at the given working directory.
-let runBuildScriptAt printDetails script extraFsiArgs args =
-    runBuildScriptWithFsiArgsAt printDetails (FsiArgs(extraFsiArgs, script, [])) args
+let runBuildScriptAt printDetails script extraFsiArgs args useCache cleanCache =
+    runBuildScriptWithFsiArgsAt printDetails (FsiArgs(extraFsiArgs, script, [])) args useCache cleanCache
 
 /// Run the given buildscript with fsi.exe
-let runBuildScript printDetails script extraFsiArgs args =
-    runBuildScriptAt printDetails script extraFsiArgs args
+let runBuildScript printDetails script extraFsiArgs args useCache cleanCache =
+    runBuildScriptAt printDetails script extraFsiArgs args useCache cleanCache
