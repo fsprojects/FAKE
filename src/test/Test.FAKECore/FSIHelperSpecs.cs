@@ -59,17 +59,22 @@ namespace Test.FAKECore
             return result;
         }
 
+        static string nl = System.Environment.NewLine;
+        static Tuple<string, string> sc(string path, string contents) {
+            return new Tuple<string, string>(path.Replace("\\", "/"), contents);
+        }
+
         It should_use_then_invalidate_cache =
-            () => {
+            () =>
+            {
                 var arguments = "";
                 var scriptFilePath = Path.GetTempFileName() + ".fsx";
                 var scriptFileName = Path.GetFileName(scriptFilePath);
                 try
                 {
                     File.WriteAllText(scriptFilePath, "printf \"foobar\"");
-                    var scriptHash = FSIHelper.getScriptHash(scriptFilePath);
+                    var scriptHash = FSIHelper.getScriptHash(new Tuple<string,string>[] { sc(scriptFilePath, "printf \"foobar\"") });
                     var cacheFilePath = "./.fake/" + scriptFileName + "_" + scriptHash + ".dll";
-                    var nl = System.Environment.NewLine;
 
                     File.Exists(cacheFilePath).ShouldEqual(false);
 
@@ -83,8 +88,8 @@ namespace Test.FAKECore
                     RunExplicit(scriptFilePath, arguments, true).ShouldEqual("Using cache" + nl + "foobar");
 
                     File.WriteAllText(scriptFilePath, "printf \"foobarbaz\"");
-                    
-                    var changedScriptHash = FSIHelper.getScriptHash(scriptFilePath);
+
+                    var changedScriptHash = FSIHelper.getScriptHash(new Tuple<string, string>[] { sc(scriptFilePath, "printf \"foobarbaz\"") });
                     RunExplicit(scriptFilePath, arguments, true).ShouldEqual("Cache is invalid, recompiling" + nl + "foobarbaz" + nl + "Saved cache" + nl);
                     //File.Exists(cacheFilePath).ShouldEqual(false);
                     File.Exists("./.fake/" + scriptFileName + "_" + changedScriptHash + ".dll").ShouldEqual(true);
@@ -98,7 +103,8 @@ namespace Test.FAKECore
             };
 
         It should_load_file =
-            () => {
+            () =>
+            {
                 var mainPath = Path.GetTempFileName() + ".fsx";
                 var loadedPath = Path.GetTempFileName() + ".fsx";
                 try
@@ -115,36 +121,72 @@ namespace Test.FAKECore
                     File.Delete(mainPath);
                     File.Delete(loadedPath);
                 }
-                
+
             };
 
         It should_change_hash_when_loaded_file_changes =
             () =>
             {
-                var mainPath = (Path.GetTempFileName() + ".fsx").Replace("\\","/");
-                var middle1Path = (Path.GetTempFileName() + ".fsx").Replace("\\","/");
-                var middle2Path = (Path.GetTempFileName() + ".fsx").Replace("\\","/");
-                var lastPath = (Path.GetTempFileName() + ".fsx").Replace("\\","/");
+                var middleDirName = Guid.NewGuid().ToString();
+                var middleDirPath = Path.Combine(Path.GetTempPath(), middleDirName);
+                Directory.CreateDirectory(middleDirPath);
+
+                var mainPath = (Path.GetTempFileName() + ".fsx");
+                var middle1Path = Path.Combine(middleDirPath, "middle1.fsx").Replace("\\", "/");
+                var middle2Path = Path.Combine(middleDirPath, "middle2.fsx").Replace("\\", "/");
+                var lastPath = (Path.GetTempFileName() + ".fsx").Replace("\\", "/");
 
                 var lastScript = "printfn \"foobar\"";
                 var middle2Script = "#load @\"" + lastPath + "\"";
-                var middle1Script = "#load \"\"\"" + middle2Path + "\"\"\"";
-                var mainScript = "#load \"" + middle1Path + "\"";
+                var middle1Script = "#load \"\"\"middle2.fsx\"\"\"";
+                var mainScript = "#load \"" + middleDirName + "/middle1.fsx\"";
 
                 File.WriteAllText(mainPath, mainScript);
                 File.WriteAllText(middle1Path, middle1Script);
                 File.WriteAllText(middle2Path, middle2Script);
                 File.WriteAllText(lastPath, lastScript);
 
-                var hash = FSIHelper.getScriptHash(mainPath);
+                var scriptContents = FSIHelper.getAllScripts(mainPath);
+                var hash = FSIHelper.getScriptHash(scriptContents);
 
                 File.WriteAllText(lastPath, "printfn \"foobarbaz\"");
-
-                var newHash = FSIHelper.getScriptHash(mainPath);
+                
+                scriptContents = FSIHelper.getAllScripts(mainPath);
+                var newHash = FSIHelper.getScriptHash(scriptContents);
                 hash.ShouldNotEqual(newHash);
             };
-            //() => Run("printfn \"foobar\"\n#load \"C:/Projects/test.fsx\"", "", false).ShouldEqual("foobar");
+        It should_get_included_assemblies =
+            () =>
+            {
+                var script = 
+                    "#r \"justname\"\n" + 
+                    "#r \"./relative/path\"\n" +
+                    "#r \"C:/absolute/path\"";
 
+                var included = FSIHelper.getIncludedAssembly(script);
+
+                included.ShouldEqual(new string[] { "justname", "./relative/path", "C:/absolute/path" });
+            };
+        //It should_load_assembly =
+        //    () =>
+        //    {
+        //        var scriptPath = (Path.GetTempFileName() + ".fsx").Replace("\\", "/");
+
+        //        var script = 
+        //                "#r \"HashLib\"\nlet " +
+        //                "hasher = HashLib.HashFactory.Checksum.CreateCRC32a()\n" +
+        //                "printf \"%s\" (hasher.ComputeString(\"foo\").ToString())";
+        //        File.WriteAllText(scriptPath, script);
+
+        //        RunExplicit(scriptPath, "", true).ShouldEqual(
+        //            "Cache doesnt exist" + nl + 
+        //            "D9DD4FEE" + nl + 
+        //            "Saved cache" + nl);
+
+        //        RunExplicit(scriptPath, "", true).ShouldEqual(
+        //            "Using cache" + nl +
+        //            "D9DD4FEE");
+        //    };
     }
 
     //public class when_running_the_fake_cli

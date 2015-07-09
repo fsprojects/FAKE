@@ -10,17 +10,47 @@ open System.Threading
 
 let private FSIPath = @".\tools\FSharp\;.\lib\FSharp\;[ProgramFilesX86]\Microsoft SDKs\F#\4.0\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\3.1\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\3.0\Framework\v4.0;[ProgramFiles]\Microsoft F#\v4.0\;[ProgramFilesX86]\Microsoft F#\v4.0\;[ProgramFiles]\FSharp-2.0.0.0\bin\;[ProgramFilesX86]\FSharp-2.0.0.0\bin\;[ProgramFiles]\FSharp-1.9.9.9\bin\;[ProgramFilesX86]\FSharp-1.9.9.9\bin\"
 
-let loadRegex = Text.RegularExpressions.Regex("^\s*#load\s*(@\"|\"\"\"|\")(?<path>.+?)(\"\"\"|\")", System.Text.RegularExpressions.RegexOptions.Compiled ||| System.Text.RegularExpressions.RegexOptions.Multiline)
+let createDirectiveRegex id = 
+    Text.RegularExpressions.Regex(
+        "^\s*#" + id + "\s*(@\"|\"\"\"|\")(?<path>.+?)(\"\"\"|\")", 
+        System.Text.RegularExpressions.RegexOptions.Compiled ||| 
+        System.Text.RegularExpressions.RegexOptions.Multiline)
+let loadRegex = createDirectiveRegex "load"
+let rAssemblyRegex = createDirectiveRegex "r"
+let searchPathRegex = createDirectiveRegex "I"
 
-let rec getAllScriptContents scriptPath = 
+let private extractDirectives (regex : System.Text.RegularExpressions.Regex) scriptContents = 
+    regex.Matches(scriptContents)
+    |> Seq.cast<Text.RegularExpressions.Match>
+    |> Seq.map(fun m ->
+        (m.Groups.Item("path").Value)
+    )
+let rec getAllScripts scriptPath : seq<string * string> = 
+    let scriptPath = 
+        if Path.IsPathRooted scriptPath then
+            scriptPath
+        else
+            Path.Combine(Directory.GetCurrentDirectory(), scriptPath)
     let scriptContents = File.ReadAllText(scriptPath)
     let loadedContents = 
-        loadRegex.Matches(scriptContents)
-        |> Seq.cast<Text.RegularExpressions.Match>
-        |> Seq.collect(fun m -> getAllScriptContents (m.Groups.Item("path").Value))
-    Seq.concat [List.toSeq [scriptContents]; loadedContents]
-let getScriptHash scriptPath =
-    let fullContents = getAllScriptContents scriptPath |> String.concat("\n")
+        extractDirectives loadRegex scriptContents
+        |> Seq.collect(fun path -> 
+            let path =
+                if Path.IsPathRooted path then
+                    path
+                else
+                    Path.Combine(Path.GetDirectoryName(scriptPath), path)
+            getAllScripts path
+        )
+    Seq.concat [List.toSeq [scriptPath, scriptContents]; loadedContents]
+
+let getAllScriptContents (pathsAndContents : seq<string * string>) = 
+    pathsAndContents |> Seq.map(snd)
+let getIncludedAssembly scriptContents = extractDirectives rAssemblyRegex scriptContents
+let getSearchPaths scriptContents = extractDirectives searchPathRegex scriptContents
+
+let getScriptHash pathsAndContents =
+    let fullContents = getAllScriptContents pathsAndContents |> String.concat("\n")
     let hasher = HashLib.HashFactory.Checksum.CreateCRC32a()
     hasher.ComputeString(fullContents).ToString()
 /// The path to the F# Interactive tool.
@@ -100,10 +130,14 @@ let executeFSIWithScriptArgsAndReturnMessages script (scriptArgs: string[]) =
 
 open Microsoft.FSharp.Compiler.Interactive.Shell
 
+type private AssemblySource = 
+| GAC
+| Disk
+
 let hashRegex = Text.RegularExpressions.Regex("(?<script>.+)_(?<hash>[a-zA-Z0-9]+\.dll$)", System.Text.RegularExpressions.RegexOptions.Compiled)
 /// Run the given FAKE script with fsi.exe at the given working directory. Provides full access to Fsi options and args. Redirect output and error messages.
-let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args onErrMsg onOutMsg useCache cleanCache =
-    if printDetails then traceFAKE "Running Buildscript: %s" script
+let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(fsiOptions, scriptPath, scriptArgs)) args onErrMsg onOutMsg useCache cleanCache =
+    if printDetails then traceFAKE "Running Buildscript: %s" scriptPath
 
     // Add arguments to the Environment
     for (k,v) in args do
@@ -127,17 +161,24 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
                 then onMsg s
         handleMessagesFrom sbOut onOutMsg
         handleMessagesFrom sbErr onErrMsg
+    let handleException (ex : Exception) = 
+        onErrMsg (ex.ToString())
 
     use outStream = new StringWriter(sbOut)
     use errStream = new StringWriter(sbErr)
     use stdin = new StreamReader(Stream.Null)
 
-    let scriptHash = lazy (getScriptHash script)
+    let allScriptContents = getAllScripts scriptPath
+    let scriptHash = lazy (getScriptHash allScriptContents)
     //TODO this is only calculating the hash for the input file, not anything #load-ed
     
-    let scriptFileName = lazy(Path.GetFileName(script))
-    let hashPath = lazy("./.fake/" + scriptFileName.Value + "_" + scriptHash.Value + ".dll")
-    let cacheValid = lazy (System.IO.File.Exists(hashPath.Value))
+    let scriptFileName = lazy(Path.GetFileName(scriptPath))
+    let hashPath = lazy("./.fake/" + scriptFileName.Value + "_" + scriptHash.Value)
+    let assemblyPath = lazy(hashPath.Value + ".dll")
+    let assemblyRefPath = lazy(hashPath.Value + "_references.txt")
+    let cacheValid = lazy (
+        System.IO.File.Exists(assemblyPath.Value) &&
+        System.IO.File.Exists(assemblyRefPath.Value))
 
     let getScriptAndHash fileName =
         let matched = hashRegex.Match(fileName)
@@ -153,7 +194,10 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
                 (noExtension.Substring(1))
                 (Path.GetExtension(scriptFileName.Value).Substring(1))
 
-        let assembly = Reflection.Assembly.LoadFrom(hashPath.Value)
+        for loc in File.ReadAllLines(assemblyRefPath.Value) do
+            Reflection.Assembly.LoadFrom(loc) |> ignore
+
+        let assembly = Reflection.Assembly.LoadFrom(assemblyPath.Value)
 
         let mainModule = assembly.GetType(fullName)
         
@@ -166,9 +210,9 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
                     System.Reflection.BindingFlags.Static, null, null, [||])
             true
         with
-        | _ex ->
-                handleMessages()
-                false
+        | ex ->
+            handleException ex
+            false
     else
         if useCache then
             let cacheDir = DirectoryInfo("./.fake")
@@ -191,18 +235,29 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
         try
             let session = FsiEvaluationSession.Create(fsiConfig, commonOptions, stdin, outStream, errStream)
             try
-                session.EvalScript script
+                session.EvalScript scriptPath
 
-                if useCache && not cacheValid.Value then
-                    let assemBuilder = session.DynamicAssembly :?> System.Reflection.Emit.AssemblyBuilder
-                    assemBuilder.Save("FSI-ASSEMBLY.dll")
-                    Directory.CreateDirectory("./.fake") |> ignore
-                    File.Move("./FSI-ASSEMBLY.dll", hashPath.Value)
+                try
+                    if useCache && not cacheValid.Value then
+                        let assemBuilder = session.DynamicAssembly :?> System.Reflection.Emit.AssemblyBuilder
+                        assemBuilder.Save("FSI-ASSEMBLY.dll")
+                        Directory.CreateDirectory("./.fake") |> ignore
+                        File.Move("./FSI-ASSEMBLY.dll", assemblyPath.Value)
                     
-                    if File.Exists("./FSI-ASSEMBLY.pdb") then
-                        File.Delete("./FSI-ASSEMBLY.pdb")
-                    trace (System.Environment.NewLine + "Saved cache")
-         
+                        if File.Exists("./FSI-ASSEMBLY.pdb") then
+                            File.Delete("./FSI-ASSEMBLY.pdb")
+
+                        let refedAssemblies = 
+                            System.AppDomain.CurrentDomain.GetAssemblies()
+                            |> Seq.filter(fun assem -> not assem.IsDynamic)
+                            |> Seq.map(fun assem -> assem.Location)
+                            
+                        File.WriteAllLines(assemblyRefPath.Value, refedAssemblies) |> ignore
+                        trace (System.Environment.NewLine + "Saved cache")
+                with 
+                | ex ->
+                    handleException ex
+                    reraise()
                 // TODO: Reactivate when FCS don't show output any more 
                 // handleMessages()
                 true
