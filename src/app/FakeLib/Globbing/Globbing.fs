@@ -105,7 +105,7 @@ let internal search (baseDir : string) (input : string) =
     |> buildPaths [ baseDir ]
     |> List.map normalizeOutputPath
 
-let internal isMatch pattern path : bool = 
+let isMatch pattern path : bool = 
     let pattern = normalizePath pattern
     let path = normalizePath path
 
