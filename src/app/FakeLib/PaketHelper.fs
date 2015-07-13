@@ -12,6 +12,8 @@ type PaketPackParams =
       TimeOut : TimeSpan
       Version : string
       ReleaseNotes : string
+      BuildConfig : string
+      TemplateFile : string
       WorkingDir : string
       OutputPath : string }
 
@@ -21,6 +23,8 @@ let PaketPackDefaults() : PaketPackParams =
       TimeOut = TimeSpan.FromMinutes 5.
       Version = null
       ReleaseNotes = null
+      BuildConfig = null
+      TemplateFile = null
       WorkingDir = "."
       OutputPath = "./temp" }
 
@@ -58,12 +62,14 @@ let Pack setParams =
 
     let version = if String.IsNullOrWhiteSpace parameters.Version then "" else " version " + toParam parameters.Version
     let releaseNotes = if String.IsNullOrWhiteSpace parameters.ReleaseNotes then "" else " releaseNotes " + toParam (xmlEncode parameters.ReleaseNotes)
+    let buildConfig = if String.IsNullOrWhiteSpace parameters.BuildConfig then "" else " buildconfig " + toParam parameters.BuildConfig
+    let templateFile = if String.IsNullOrWhiteSpace parameters.TemplateFile then "" else " templatefile " + toParam parameters.TemplateFile
       
     let packResult = 
         ExecProcess 
             (fun info -> 
             info.FileName <- parameters.ToolPath
-            info.Arguments <- sprintf "pack output %s%s%s" parameters.OutputPath version releaseNotes) parameters.TimeOut
+            info.Arguments <- sprintf "pack output %s%s%s%s%s" parameters.OutputPath version releaseNotes buildConfig templateFile) parameters.TimeOut
     
     if packResult <> 0 then failwithf "Error during packing %s." parameters.WorkingDir
     traceEndTask "PaketPack" parameters.WorkingDir
