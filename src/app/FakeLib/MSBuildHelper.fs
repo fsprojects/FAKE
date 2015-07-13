@@ -133,6 +133,7 @@ type MSBuildParams =
     { Targets : string list
       Properties : (string * string) list
       MaxCpuCount : int option option
+      NoLogo : bool
       NodeReuse : bool
       RestorePackagesFlag : bool
       ToolsVersion : string option
@@ -146,6 +147,7 @@ let mutable MSBuildDefaults =
     { Targets = []
       Properties = []
       MaxCpuCount = Some None
+      NoLogo = false
       NodeReuse = true
       ToolsVersion = None
       Verbosity = None
@@ -155,9 +157,9 @@ let mutable MSBuildDefaults =
       DistributedLoggers = None }
 
 /// [omit]
-let getAllParameters targets maxcpu nodeReuse tools verbosity noconsolelogger fileLoggers distributedFileLoggers properties =
+let getAllParameters targets maxcpu noLogo nodeReuse tools verbosity noconsolelogger fileLoggers distributedFileLoggers properties =
     if isUnix then [ targets; tools; verbosity; noconsolelogger ] @ fileLoggers @ distributedFileLoggers @ properties
-    else [ targets; maxcpu; nodeReuse; tools; verbosity; noconsolelogger ] @ fileLoggers @ distributedFileLoggers @ properties
+    else [ targets; maxcpu; noLogo; nodeReuse; tools; verbosity; noconsolelogger ] @ fileLoggers @ distributedFileLoggers @ properties
 
 let private serializeArgs args =
     args
@@ -195,6 +197,10 @@ let serializeMSBuildParams (p : MSBuildParams) =
                  match x with
                  | Some v -> v.ToString()
                  | _ -> "")
+   
+    let noLogo = 
+        if p.NoLogo then Some("nologo", "")
+        else None
     
     let nodeReuse = 
         if p.NodeReuse then None
@@ -276,7 +282,7 @@ let serializeMSBuildParams (p : MSBuildParams) =
             dfls
             |> List.map(fun (cl, fl) -> Some("dl", createLoggerString cl fl))
 
-    getAllParameters targets maxcpu nodeReuse tools verbosity noconsolelogger fileLoggers distributedFileLoggers properties
+    getAllParameters targets maxcpu noLogo nodeReuse tools verbosity noconsolelogger fileLoggers distributedFileLoggers properties
     |> serializeArgs
 
 /// [omit]
