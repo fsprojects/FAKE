@@ -167,64 +167,6 @@ namespace Test.FAKECore
 
                 included.ShouldEqual(new string[] { "justname", "./relative/path", "C:/absolute/path" });
             };
-        //It should_load_assembly =
-        //    () =>
-        //    {
-        //        var scriptPath = (Path.GetTempFileName() + ".fsx").Replace("\\", "/");
-
-        //        var script = 
-        //                "#r \"HashLib\"\nlet " +
-        //                "hasher = HashLib.HashFactory.Checksum.CreateCRC32a()\n" +
-        //                "printf \"%s\" (hasher.ComputeString(\"foo\").ToString())";
-        //        File.WriteAllText(scriptPath, script);
-
-        //        RunExplicit(scriptPath, "", true).ShouldEqual(
-        //            "Cache doesnt exist" + nl + 
-        //            "D9DD4FEE" + nl + 
-        //            "Saved cache" + nl);
-
-        //        RunExplicit(scriptPath, "", true).ShouldEqual(
-        //            "Using cache" + nl +
-        //            "D9DD4FEE");
-        //    };
     }
 
-    //public class when_running_the_fake_cli
-    //{
-    //    static string RunExplicit(string scriptFilePath, string arguments)
-    //    {
-            
-    //        var process = new System.Diagnostics.Process();
-    //        process.StartInfo.FileName = ".\\FAKE.exe";
-    //        process.StartInfo.Arguments = "\"" + scriptFilePath + "\" " + arguments;
-    //        process.StartInfo.UseShellExecute = false;
-    //        process.StartInfo.RedirectStandardOutput = true;
-    //        process.StartInfo.WorkingDirectory = Directory.GetCurrentDirectory();
-    //        process.StartInfo.RedirectStandardError = true;
-    //        process.Start();
-    //        //* Read the output (or the error)
-    //        string output = process.StandardOutput.ReadToEnd();
-    //        Console.WriteLine(output);
-    //        string err = process.StandardError.ReadToEnd();
-    //        //Console.WriteLine(err);
-    //        process.WaitForExit();
-    //        if (process.ExitCode != 0)
-    //        {
-    //            throw new Exception("Process exited with code " + process.ExitCode + ". Error: \n" + err);
-    //        }
-    //        return output;
-    //    }
-
-    //    static string Run(string script, string arguments) {
-    //        var scriptFilePath = Path.GetTempFileName() + ".fsx";
-    //        File.WriteAllText(scriptFilePath, script);
-    //        var result = RunExplicit(scriptFilePath, arguments);
-    //        File.Delete(scriptFilePath);
-    //        return result;
-    //    }
-
-        
-    //    It should_print_foobar =
-    //        () => Run("printfn \"foobar\"", "").ShouldEqual("foobar");
-    //}
 }
