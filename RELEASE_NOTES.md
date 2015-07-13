@@ -1,16 +1,13 @@
-#### 3.35.5 - 29.06.2015
+#### 3.36.0 - 13.07.2015
+* NoLogo parameter for MSBuildHelper - https://github.com/fsharp/FAKE/pull/850
+* Expose Globbing.isMatch for use by external code - https://github.com/fsharp/FAKE/pull/860
+* VB6 dependency updater - https://github.com/fsharp/FAKE/pull/857
+* Added BuildConfig/TemplateFile options to PaketHelper's Pack command - https://github.com/fsharp/FAKE/pull/854
+* Add a UserInputHelper to allow interactive input - https://github.com/fsharp/FAKE/pull/858
 * Look for MSTest in VS2015 location - https://github.com/fsharp/FAKE/pull/843
-
-#### 3.35.4 - 23.06.2015
 * Add caching to globbing 
-
-#### 3.35.3 - 23.06.2015
 * BUGFIX: Fix for single * glob not working - https://github.com/fsharp/FAKE/pull/836 
-
-#### 3.35.2 - 15.06.2015
 * BUGFIX: Get package version from nuspec file - https://github.com/fsharp/FAKE/pull/829
-
-#### 3.35.1 - 11.06.2015
 * Report all NuGet errors, even if ExitCode = 0
 
 #### 3.35.0 - 09.06.2015
