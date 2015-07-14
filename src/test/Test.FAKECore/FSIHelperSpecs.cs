@@ -94,9 +94,7 @@ namespace Test.FAKECore
                     File.Exists(cacheFilePath).ShouldEqual(false);
 
                     RunExplicit(scriptFilePath, arguments, true)
-                        .ShouldEqual(
-                            ("Cache doesnt exist" + nl + "foobar" + nl + "Saved cache" + nl)
-                            .Replace("\n", "").Replace("\r", ""));
+                        .ShouldStartWith("Cache doesn't exist");
 
                     File.Exists(cacheFilePath).ShouldEqual(true);
 
@@ -109,9 +107,7 @@ namespace Test.FAKECore
 
                     var changedScriptHash = FSIHelper.getScriptHash(new Tuple<string, string>[] { sc(scriptFilePath, "printf \"foobarbaz\"") });
                     RunExplicit(scriptFilePath, arguments, true)
-                        .ShouldEqual(
-                            ("Cache is invalid, recompiling" + nl + "foobarbaz" + nl + "Saved cache" + nl)
-                            .Replace("\n", "").Replace("\r", ""));
+                        .ShouldStartWith("Cache is invalid, recompiling");
 
                     File.Exists("./.fake/" + scriptFileName + "_" + changedScriptHash + ".dll").ShouldEqual(true);
                 }
