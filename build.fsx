@@ -143,22 +143,11 @@ Target "Test" (fun _ ->
 )
 
 Target "SourceLink" (fun _ ->
-    use repo = new GitRepo(__SOURCE_DIRECTORY__)
     !! "src/app/**/*.fsproj" 
     |> Seq.iter (fun f ->
         let proj = VsProj.LoadRelease f
-        logfn "source linking %s" proj.OutputFilePdb
-        let files = 
-            proj.CompilesNotLinked 
-                -- "**/AssemblyInfo.fs"
-        try
-            repo.VerifyChecksums files
-            proj.VerifyPdbChecksums files
-        with
-        | _ -> ()
-        proj.CreateSrcSrv (sprintf "%s/%s/{0}/%%var2%%" gitRaw projectName) repo.Commit (repo.Paths files)
-        Pdbstr.exec proj.OutputFilePdb proj.OutputFilePdbSrcSrv
-    )
+        let url = sprintf "%s/%s/{0}/%%var2%%" gitRaw projectName
+        SourceLink.Index proj.CompilesNotLinked proj.OutputFilePdb __SOURCE_DIRECTORY__ url )
     let pdbFakeLib = "./build/FakeLib.pdb"
     CopyFile "./build/FAKE.Deploy" pdbFakeLib
     CopyFile "./build/FAKE.Deploy.Lib" pdbFakeLib
@@ -263,7 +252,7 @@ Target "Default" DoNothing
 "Clean"
     ==> "SetAssemblyInfo"
     ==> "BuildSolution"
-    ==> "Test"    
+    ==> "Test"
     ==> "Default"
     ==> "CopyLicense"
     =?> ("GenerateDocs", isLocalBuild && not isLinux)
