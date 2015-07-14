@@ -253,11 +253,10 @@ Target "Default" DoNothing
     ==> "SetAssemblyInfo"
     ==> "BuildSolution"
     ==> "Test"
-    =?> ("SourceLink", not isLinux)
     ==> "Default"
     ==> "CopyLicense"
     =?> ("GenerateDocs", isLocalBuild && not isLinux)
-//    =?> ("SourceLink", isLocalBuild && not isLinux)
+    =?> ("SourceLink", isLocalBuild && not isLinux)
     =?> ("CreateNuGet", not isLinux)
     =?> ("ReleaseDocs", isLocalBuild && not isLinux)
     ==> "PublishNuget"
