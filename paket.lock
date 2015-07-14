@@ -70,7 +70,7 @@ NUGET
     RavenDB.Client (2.5.2956)
       Microsoft.CompilerServices.AsyncTargetingPack
     RavenDB.Server (3.0.3660)
-    SourceLink.Fake (0.5.0)
+	SourceLink.Fake (1.0.0)
     SSH.NET (2013.4.7)
     System.Web.Razor.Unofficial (2.0.2)
     toastr (2.1.1)
