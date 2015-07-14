@@ -186,7 +186,7 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
 
     if useCache && cacheValid.Value then
         
-        trace ("Using cache")
+        if printDetails then trace ("Using cache")
         let noExtension = Path.GetFileNameWithoutExtension(scriptFileName.Value)
         let fullName = 
             sprintf "<StartupCode$FSI_0001>.$FSI_0001_%s%s$%s" 
@@ -227,11 +227,11 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
                     if cleanCache then
                         for file in oldFiles do
                             file.Delete()
-                    trace "Cache is invalid, recompiling"
+                    if printDetails then trace "Cache is invalid, recompiling"
                 else 
-                    trace "Cache doesn't exist"
+                    if printDetails then trace "Cache doesn't exist"
             else
-                trace "Cache doesn't exist"
+                if printDetails then trace "Cache doesn't exist"
         try
             let session = FsiEvaluationSession.Create(fsiConfig, commonOptions, stdin, outStream, errStream)
             try
@@ -254,7 +254,7 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
                             |> Seq.map(fun assem -> assem.Location)
                             
                         File.WriteAllLines(assemblyRefPath.Value, refedAssemblies) |> ignore
-                        trace (System.Environment.NewLine + "Saved cache")
+                        if printDetails then trace (System.Environment.NewLine + "Saved cache")
                 with 
                 | ex ->
                     handleException ex
