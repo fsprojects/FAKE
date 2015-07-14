@@ -15,6 +15,7 @@ type FakeArg =
     | [<AltCommandLine("-b")>] [<Rest>] Boot of string
     | [<AltCommandLine("-br")>] Break
     | [<AltCommandLine("-st")>] Single_Target
+    | [<AltCommandLine("-nc")>] NoCache
     interface IArgParserTemplate with
         member x.Usage = 
             match x with
@@ -27,6 +28,7 @@ type FakeArg =
             | Boot _ -> "Boostrapp your FAKE script."
             | Break -> "Pauses FAKE with a Debugger.Break() near the start"
             | Single_Target -> "Runs only the specified target and not the dependencies."
+            | NoCache -> "Disables caching of compiled script"
 
 /// Return the parsed FAKE args or the parse exception.
 let parsedArgsOrEx args = 
