@@ -25,29 +25,39 @@ let private extractDirectives (regex : System.Text.RegularExpressions.Regex) scr
     |> Seq.map(fun m ->
         (m.Groups.Item("path").Value)
     )
-let rec getAllScripts scriptPath : seq<string * string> = 
-    let scriptPath = 
-        if Path.IsPathRooted scriptPath then
-            scriptPath
-        else
-            Path.Combine(Directory.GetCurrentDirectory(), scriptPath)
-    let scriptContents = File.ReadAllText(scriptPath)
-    let loadedContents = 
-        extractDirectives loadRegex scriptContents
-        |> Seq.collect(fun path -> 
-            let path =
-                if Path.IsPathRooted path then
-                    path
-                else
-                    Path.Combine(Path.GetDirectoryName(scriptPath), path)
-            getAllScripts path
-        )
-    Seq.concat [List.toSeq [scriptPath, scriptContents]; loadedContents]
 
 let getAllScriptContents (pathsAndContents : seq<string * string>) = 
     pathsAndContents |> Seq.map(snd)
 let getIncludedAssembly scriptContents = extractDirectives rAssemblyRegex scriptContents
 let getSearchPaths scriptContents = extractDirectives searchPathRegex scriptContents
+
+let rec getAllScripts scriptPath : seq<string * string> = 
+    
+    let scriptContents = File.ReadAllText(scriptPath)
+    let searchPaths = (getSearchPaths scriptContents |> Seq.toList)
+
+    let loadedContents = 
+        extractDirectives loadRegex scriptContents
+        |> Seq.collect(fun path -> 
+            let path = 
+                if Path.IsPathRooted path then
+                    path
+                else
+                    let pathMaybe = 
+                        ["./"] @ searchPaths
+                        |> List.map(fun searchPath ->
+                            if Path.IsPathRooted searchPath then
+                                Path.Combine(searchPath, path)
+                            else
+                                Path.Combine(Path.GetDirectoryName(scriptPath), searchPath, path)
+                        )
+                        |> List.tryFind(File.Exists)
+                    match pathMaybe with 
+                    | None -> failwithf "Could not find script '%s' in any paths searched. Searched paths:\n%A" path searchPaths
+                    | Some x -> x
+            getAllScripts path
+        )
+    Seq.concat [List.toSeq [scriptPath, scriptContents]; loadedContents]
 
 let getScriptHash pathsAndContents =
     let fullContents = getAllScriptContents pathsAndContents |> String.concat("\n")
@@ -137,6 +147,7 @@ type private AssemblySource =
 let hashRegex = Text.RegularExpressions.Regex("(?<script>.+)_(?<hash>[a-zA-Z0-9]+\.dll$)", System.Text.RegularExpressions.RegexOptions.Compiled)
 /// Run the given FAKE script with fsi.exe at the given working directory. Provides full access to Fsi options and args. Redirect output and error messages.
 let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(fsiOptions, scriptPath, scriptArgs)) args onErrMsg onOutMsg useCache cleanCache =
+
     if printDetails then traceFAKE "Running Buildscript: %s" scriptPath
 
     // Add arguments to the Environment
@@ -168,6 +179,12 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
     use errStream = new StringWriter(sbErr)
     use stdin = new StreamReader(Stream.Null)
 
+    let scriptPath =
+        if Path.IsPathRooted scriptPath then
+            scriptPath
+        else
+            Path.Combine(Directory.GetCurrentDirectory(), scriptPath)
+        
     let allScriptContents = getAllScripts scriptPath
     let scriptHash = lazy (getScriptHash allScriptContents)
     //TODO this is only calculating the hash for the input file, not anything #load-ed
