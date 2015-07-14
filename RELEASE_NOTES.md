@@ -1,4 +1,4 @@
-#### 4.0.0-alpha001 - 14.07.2015
+#### 4.0.0-alpha002 - 14.07.2015
 * Automatic caching of FAKE build scripts - https://github.com/fsharp/FAKE/pull/859
 
 #### 3.36.0 - 13.07.2015
