@@ -10,7 +10,7 @@ namespace Test.FAKECore
 {
     public class when_running_script
     {
-        
+
         static string RunExplicit(string scriptFilePath, string arguments, bool useCache)
         {
             var stdOut = Console.Out;
@@ -19,8 +19,10 @@ namespace Test.FAKECore
             var outStream = new StringWriter(sbOut);
             Console.SetOut(outStream);
             Tuple<bool, Microsoft.FSharp.Collections.FSharpList<ProcessHelper.ConsoleMessage>> result;
+            
             try
             {
+                
                 result = FSIHelper.executeBuildScriptWithArgsAndReturnMessages(scriptFilePath, new string[] { }, useCache, false);
             }
             finally
@@ -40,10 +42,14 @@ namespace Test.FAKECore
                 Console.WriteLine(x.Message);
             }
             var messages = result.Item2.Where(x => !x.IsError).Select(x => x.Message);
-            return sbOut.ToString();
+            return 
+                sbOut.ToString()
+                .Replace("Running Buildscript: " + scriptFilePath, "")
+                .Replace("\n", "").Replace("\r", "");
         }
 
-        static string Run(string script, string arguments, bool useCache) {
+        static string Run(string script, string arguments, bool useCache)
+        {
             var scriptFilePath = Path.GetTempFileName() + ".fsx";
             string result;
             try
@@ -55,12 +61,14 @@ namespace Test.FAKECore
             {
                 File.Delete(scriptFilePath);
             }
-            
+
             return result;
         }
 
         static string nl = System.Environment.NewLine;
-        static Tuple<string, string> sc(string path, string contents) {
+
+        static Tuple<string, string> sc(string path, string contents)
+        {
             return new Tuple<string, string>(path.Replace("\\", "/"), contents);
         }
 
@@ -73,32 +81,44 @@ namespace Test.FAKECore
                 try
                 {
                     File.WriteAllText(scriptFilePath, "printf \"foobar\"");
-                    var scriptHash = FSIHelper.getScriptHash(new Tuple<string,string>[] { sc(scriptFilePath, "printf \"foobar\"") });
-                    var cacheFilePath = "./.fake/" + scriptFileName + "_" + scriptHash + ".dll";
+                    var scriptHash =
+                            FSIHelper.getScriptHash(new Tuple<string, string>[] { sc(scriptFilePath, "printf \"foobar\"") });
+
+                    var cacheFilePath = Path.Combine(".", ".fake", scriptFileName + "_" + scriptHash + ".dll");
 
                     File.Exists(cacheFilePath).ShouldEqual(false);
 
-                    RunExplicit(scriptFilePath, arguments, false).ShouldEqual("foobar");
+                    RunExplicit(scriptFilePath, arguments, false)
+                       .ShouldEqual("foobar");
+
                     File.Exists(cacheFilePath).ShouldEqual(false);
 
-                    RunExplicit(scriptFilePath, arguments, true).ShouldEqual(
-                        "Cache doesnt exist" + nl + "foobar" + nl + "Saved cache" + nl);
+                    RunExplicit(scriptFilePath, arguments, true)
+                        .ShouldEqual(
+                            ("Cache doesnt exist" + nl + "foobar" + nl + "Saved cache" + nl)
+                            .Replace("\n", "").Replace("\r", ""));
+
                     File.Exists(cacheFilePath).ShouldEqual(true);
 
-                    RunExplicit(scriptFilePath, arguments, true).ShouldEqual("Using cache" + nl + "foobar");
+                    RunExplicit(scriptFilePath, arguments, true)
+                        .ShouldEqual(
+                            ("Using cache" + nl + "foobar")
+                            .Replace("\n", "").Replace("\r", ""));
 
                     File.WriteAllText(scriptFilePath, "printf \"foobarbaz\"");
 
                     var changedScriptHash = FSIHelper.getScriptHash(new Tuple<string, string>[] { sc(scriptFilePath, "printf \"foobarbaz\"") });
-                    RunExplicit(scriptFilePath, arguments, true).ShouldEqual("Cache is invalid, recompiling" + nl + "foobarbaz" + nl + "Saved cache" + nl);
-                    //File.Exists(cacheFilePath).ShouldEqual(false);
-                    File.Exists("./.fake/" + scriptFileName + "_" + changedScriptHash + ".dll").ShouldEqual(true);
+                    RunExplicit(scriptFilePath, arguments, true)
+                        .ShouldEqual(
+                            ("Cache is invalid, recompiling" + nl + "foobarbaz" + nl + "Saved cache" + nl)
+                            .Replace("\n", "").Replace("\r", ""));
 
+                    File.Exists("./.fake/" + scriptFileName + "_" + changedScriptHash + ".dll").ShouldEqual(true);
                 }
                 finally
                 {
-                    if (File.Exists(scriptFilePath)) File.Delete(scriptFilePath);
-                    //if (Directory.Exists("./.fake")) Directory.Delete("./.fake");
+                    if (File.Exists(scriptFilePath))
+                        File.Delete(scriptFilePath);
                 }
             };
 
@@ -109,19 +129,23 @@ namespace Test.FAKECore
                 var loadedPath = Path.GetTempFileName() + ".fsx";
                 try
                 {
-                    var mainScript = "printf \"main\"\n#load \"" + loadedPath.ToString().Replace("\\", "/") + "\"";
+                    var mainScript =
+                        "printf \"main\"\n#load \"" +
+                            loadedPath.ToString().Replace("\\", "/") + "\"";
                     var loadedScript = "printf \"loaded;\"";
-                    File.WriteAllText(mainPath, mainScript);
-                    File.WriteAllText(loadedPath, loadedScript);
+                    File.WriteAllText(mainPath, mainScript.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\r", nl));
+                    File.WriteAllText(loadedPath, loadedScript.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\r", nl));
 
-                    RunExplicit(mainPath, "", false).ShouldEqual("loaded;main");
+                    RunExplicit(mainPath, "", false)
+                        .ShouldEqual("loaded;main");
                 }
                 finally
                 {
-                    File.Delete(mainPath);
-                    File.Delete(loadedPath);
+                    if (File.Exists(mainPath))
+                        File.Delete(mainPath);
+                    if (File.Exists(loadedPath))
+                        File.Delete(loadedPath);
                 }
-
             };
 
         It should_change_hash_when_loaded_file_changes =
@@ -150,16 +174,17 @@ namespace Test.FAKECore
                 var hash = FSIHelper.getScriptHash(scriptContents);
 
                 File.WriteAllText(lastPath, "printfn \"foobarbaz\"");
-                
+
                 scriptContents = FSIHelper.getAllScripts(mainPath);
                 var newHash = FSIHelper.getScriptHash(scriptContents);
                 hash.ShouldNotEqual(newHash);
             };
+
         It should_get_included_assemblies =
             () =>
             {
-                var script = 
-                    "#r \"justname\"\n" + 
+                var script =
+                    "#r \"justname\"\n" +
                     "#r \"./relative/path\"\n" +
                     "#r \"C:/absolute/path\"";
 
@@ -168,5 +193,4 @@ namespace Test.FAKECore
                 included.ShouldEqual(new string[] { "justname", "./relative/path", "C:/absolute/path" });
             };
     }
-
 }
