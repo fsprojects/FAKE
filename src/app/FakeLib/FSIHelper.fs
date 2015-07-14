@@ -214,24 +214,24 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
             handleException ex
             false
     else
-        if useCache then
-            let cacheDir = DirectoryInfo("./.fake")
+        let cacheDir = DirectoryInfo(Path.Combine(".",".fake"))
+        if useCache then            
             if cacheDir.Exists then
                 let oldFiles = 
                     cacheDir.GetFiles()
                     |> Seq.filter(fun file -> 
                         let oldScriptName, _ = getScriptAndHash(file.Name)
-                        oldScriptName = scriptFileName.Value
-                    )
+                        oldScriptName = scriptFileName.Value)
+
                 if (oldFiles |> Seq.length) > 0 then
                     if cleanCache then
                         for file in oldFiles do
                             file.Delete()
                     trace "Cache is invalid, recompiling"
                 else 
-                    trace "Cache doesnt exist"
+                    trace "Cache doesn't exist"
             else
-                trace "Cache doesnt exist"
+                trace "Cache doesn't exist"
         try
             let session = FsiEvaluationSession.Create(fsiConfig, commonOptions, stdin, outStream, errStream)
             try
@@ -241,11 +241,11 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
                     if useCache && not cacheValid.Value then
                         let assemBuilder = session.DynamicAssembly :?> System.Reflection.Emit.AssemblyBuilder
                         assemBuilder.Save("FSI-ASSEMBLY.dll")
-                        Directory.CreateDirectory("./.fake") |> ignore
-                        File.Move("./FSI-ASSEMBLY.dll", assemblyPath.Value)
+                        FileHelper.CleanDir cacheDir.FullName
+                        File.Move("FSI-ASSEMBLY.dll", assemblyPath.Value)
                     
-                        if File.Exists("./FSI-ASSEMBLY.pdb") then
-                            File.Delete("./FSI-ASSEMBLY.pdb")
+                        if File.Exists("FSI-ASSEMBLY.pdb") then
+                            File.Delete("FSI-ASSEMBLY.pdb")
 
                         let refedAssemblies = 
                             System.AppDomain.CurrentDomain.GetAssemblies()

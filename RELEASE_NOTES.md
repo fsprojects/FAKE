@@ -1,4 +1,4 @@
-#### 3.37.0 - 14.07.2015
+#### 3.37.1 - 14.07.2015
 * Automatic caching of FAKE scripts - https://github.com/fsharp/FAKE/pull/859
 
 #### 3.36.0 - 13.07.2015
