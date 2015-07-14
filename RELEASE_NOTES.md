@@ -1,5 +1,5 @@
-#### 3.37.1 - 14.07.2015
-* Automatic caching of FAKE scripts - https://github.com/fsharp/FAKE/pull/859
+#### 4.0.0-alpha001 - 14.07.2015
+* Automatic caching of FAKE build scripts - https://github.com/fsharp/FAKE/pull/859
 
 #### 3.36.0 - 13.07.2015
 * NoLogo parameter for MSBuildHelper - https://github.com/fsharp/FAKE/pull/850
