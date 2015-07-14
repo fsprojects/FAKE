@@ -241,7 +241,8 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
                     if useCache && not cacheValid.Value then
                         let assemBuilder = session.DynamicAssembly :?> System.Reflection.Emit.AssemblyBuilder
                         assemBuilder.Save("FSI-ASSEMBLY.dll")
-                        FileHelper.CleanDir cacheDir.FullName
+                        if not (Directory.Exists cacheDir.FullName) then
+                            Directory.CreateDirectory cacheDir.FullName |> ignore
                         File.Move("FSI-ASSEMBLY.dll", assemblyPath.Value)
                     
                         if File.Exists("FSI-ASSEMBLY.pdb") then
