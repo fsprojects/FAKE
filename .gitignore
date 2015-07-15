@@ -65,3 +65,4 @@ paket.exe
 # Ignore VS2015 folder
 .vs/
 
+.fake/
