@@ -134,7 +134,7 @@ let internal compileGlobToRegex pattern =
 
 let globRegexCache = System.Collections.Concurrent.ConcurrentDictionary<string, Regex>()
 
-let internal isMatch pattern path : bool = 
+let isMatch pattern path : bool = 
     let path = normalizePath path
 
     let regex = 

@@ -1,3 +1,6 @@
+#### 4.0.0-alpha002 - 14.07.2015
+* Automatic caching of FAKE build scripts - https://github.com/fsharp/FAKE/pull/859
+
 #### 3.36.0 - 13.07.2015
 * NoLogo parameter for MSBuildHelper - https://github.com/fsharp/FAKE/pull/850
 * Expose Globbing.isMatch for use by external code - https://github.com/fsharp/FAKE/pull/860
