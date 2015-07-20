@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8">
     <!-- 
-      The Using FAKE's parallel option
+      The Caching of build scripts
  parameters will be replaced with the 
       document title extracted from the <h1> element or
       file name, if there is no <h1> heading
     -->
-    <title>Using FAKE's parallel option
+    <title>Caching of build scripts
 </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="FAKE - F# Make">
@@ -37,33 +37,21 @@
       <hr />
       <div class="row">
         <div class="span9" id="main">
-          <h1>Using FAKE's parallel option</h1>
+          <h1>Caching of build scripts</h1>
 
-<p>Since multithreading is beneficial (especially for large projects) FAKE allows to specify the
-number of threads used for traversing the dependency tree.
-This option of course only affects independent targets whereas dependent targets will
-still be exectued in order.</p>
+<p>Starting with version <code>4.0.0</code> of FAKE, the first time a script is run the
+compiled assembly that is generated is saved into the <code>.fake</code> directory. This
+allows FAKE to start in milliseconds instead of seconds. Your script files are
+cached with a crc32 key generated from the first scripts contents, and then each
+<code>#load</code>ed scripts contents. This prevents you from having to manually clear the
+cache whenever you are working on your script or pulling in changes from a
+remote repository. If for some reason you would like to disable saving the
+compiled assembly to disk, you can call FAKE with the <code>--nocache</code> argument,
+which stops FAKE from dumping the compiled assembly to disk. Do note that the
+assembly is still being compiled by FSI, all you are disabling is the saving
+to disk.</p>
 
-<h2>Setting the number of threads</h2>
-
-<p>The number of threads used can be set using the environment variable <code>parallel-jobs</code>.
-This can be achieved in various ways where the easiest one is to use FAKE's built-in support for 
-setting environment variables:</p>
-
-<p><code>FAKE.exe *YourBuildScript* "parallel-jobs=8"</code></p>
-
-<p>Note that the dependency tree will be traversed as usual whenever setting <code>parallel-jobs</code> to a value <code>&lt;= 1</code> or omiting it entirely.</p>
-
-<h2>Issues</h2>
-
-<ul>
-<li>Running targets in parallel is of course only possible when the target-functions themselves are thread-safe.</li>
-<li>Parallel execution may also cause races on stdout and build-logs may therefore be quite obfuscated.</li>
-<li>Error detection may suffer since it's not possible to determine a first error when targets are running in parallel</li>
-</ul>
-
-<p>Due to these limitations it is recommended to use the standard sequential build whenever checking for errors (CI, etc.)
-However when a fast build is desired (and the project is e.g. known to build successfully) the parallel option might be helpful</p>
+<p>You should add the <code>.fake</code> folder to your <code>.gitignore</code> file.</p>
 
                     
         </div>
