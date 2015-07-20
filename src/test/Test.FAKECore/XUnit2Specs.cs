@@ -46,6 +46,7 @@ namespace Test.FAKECore.XUnit2Specs
         {
             Arguments.ShouldNotContain(" -xml");
             Arguments.ShouldNotContain(" -xmlv1");
+            Arguments.ShouldNotContain(" -nunit");
             Arguments.ShouldNotContain(" -html");
         };
 
@@ -83,6 +84,7 @@ namespace Test.FAKECore.XUnit2Specs
                 XUnit2.XUnit2Defaults.HtmlOutputPath,
                 XUnit2.XUnit2Defaults.XmlOutputPath,
                 XUnit2.XUnit2Defaults.XmlV1OutputPath,
+                XUnit2.XUnit2Defaults.NUnitXmlOutputPath,
                 XUnit2.XUnit2Defaults.WorkingDir,
                 XUnit2.XUnit2Defaults.ShadowCopy,
                 XUnit2.XUnit2Defaults.Silent,
@@ -117,6 +119,7 @@ namespace Test.FAKECore.XUnit2Specs
                 FSharpOption<string>.Some("html.html"),
                 FSharpOption<string>.Some("xml.xml"),
                 FSharpOption<string>.Some("xmlv1.xml"),
+                FSharpOption<string>.Some("nunit.xml"),
                 XUnit2.XUnit2Defaults.WorkingDir,
                 XUnit2.XUnit2Defaults.ShadowCopy,
                 XUnit2.XUnit2Defaults.Silent,
@@ -137,6 +140,9 @@ namespace Test.FAKECore.XUnit2Specs
 
         It should_include_the_expected_XML_v1_reporting_argument = () =>
             Arguments.ShouldContain(@" -xmlv1 ""xmlv1.xml""");
+
+        It should_include_the_expected_NUnit_XML_reporting_argument = () =>
+            Arguments.ShouldContain(@" -nunit ""nunit.xml""");
     }
 
     internal class When_using_parameters_which_request_total_parallel_execution
@@ -151,6 +157,7 @@ namespace Test.FAKECore.XUnit2Specs
                 XUnit2.XUnit2Defaults.HtmlOutputPath,
                 XUnit2.XUnit2Defaults.XmlOutputPath,
                 XUnit2.XUnit2Defaults.XmlV1OutputPath,
+                XUnit2.XUnit2Defaults.NUnitXmlOutputPath,
                 XUnit2.XUnit2Defaults.WorkingDir,
                 XUnit2.XUnit2Defaults.ShadowCopy,
                 XUnit2.XUnit2Defaults.Silent,
@@ -182,6 +189,7 @@ namespace Test.FAKECore.XUnit2Specs
                 XUnit2.XUnit2Defaults.HtmlOutputPath,
                 XUnit2.XUnit2Defaults.XmlOutputPath,
                 XUnit2.XUnit2Defaults.XmlV1OutputPath,
+                XUnit2.XUnit2Defaults.NUnitXmlOutputPath,
                 XUnit2.XUnit2Defaults.WorkingDir,
                 XUnit2.XUnit2Defaults.ShadowCopy,
                 XUnit2.XUnit2Defaults.Silent,
@@ -213,6 +221,7 @@ namespace Test.FAKECore.XUnit2Specs
                 XUnit2.XUnit2Defaults.HtmlOutputPath,
                 XUnit2.XUnit2Defaults.XmlOutputPath,
                 XUnit2.XUnit2Defaults.XmlV1OutputPath,
+                XUnit2.XUnit2Defaults.NUnitXmlOutputPath,
                 XUnit2.XUnit2Defaults.WorkingDir,
                 XUnit2.XUnit2Defaults.ShadowCopy,
                 XUnit2.XUnit2Defaults.Silent,
@@ -245,6 +254,7 @@ namespace Test.FAKECore.XUnit2Specs
                 XUnit2.XUnit2Defaults.HtmlOutputPath,
                 XUnit2.XUnit2Defaults.XmlOutputPath,
                 XUnit2.XUnit2Defaults.XmlV1OutputPath,
+                XUnit2.XUnit2Defaults.NUnitXmlOutputPath,
                 XUnit2.XUnit2Defaults.WorkingDir,
                 !XUnit2.XUnit2Defaults.ShadowCopy,
                 !XUnit2.XUnit2Defaults.Silent,
