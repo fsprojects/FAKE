@@ -77,6 +77,8 @@ type AndroidPackageParams = {
     Configuration: string
     /// Output path for build, defaults to 'bin/Release'
     OutputPath: string
+    /// Additional MSBuild properties, defaults to empty list
+    Properties: (string * string) list
 }
 
 /// The default Android packaging parameters
@@ -84,6 +86,7 @@ let AndroidPackageDefaults = {
     ProjectPath = ""
     Configuration = "Release"
     OutputPath = "bin/Release"
+    Properties = []
 }
 
 /// Packages a Xamarin.Android app, returning a FileInfo object for the unsigned APK file
@@ -92,11 +95,16 @@ let AndroidPackageDefaults = {
 let AndroidPackage setParams =
     let validateParams param =
         if param.ProjectPath = "" then failwith "You must specify a project to package"
+        if param.Properties 
+            |> List.exists (fun (key, _) -> key.Equals("Configuration", StringComparison.OrdinalIgnoreCase))
+            then failwith "Cannot specify build configuration via additional parameters. Use Configuration field instead."
 
         param
 
     let createPackage param =
-        MSBuild param.OutputPath "PackageForAndroid" [ "Configuration", param.Configuration ] [ param.ProjectPath ] |> ignore
+        let effectiveProperties = [ "Configuration", param.Configuration ] @ param.Properties
+
+        MSBuild param.OutputPath "PackageForAndroid" effectiveProperties [ param.ProjectPath ] |> ignore
 
         directoryInfo param.OutputPath
         |> filesInDirMatching "*.apk"

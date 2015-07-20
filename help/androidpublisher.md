@@ -34,6 +34,7 @@ https://developers.google.com/android-publisher/getting_started
                             ProjectPath = "Path to my project Droid.csproj"
                             Configuration = "Release"
                             OutputPath = androidBuildDir
+							Properties = ["MSBuild property", "MSBuild property value"]
                         })
 
         |> AndroidSignAndAlign (fun defaults ->
