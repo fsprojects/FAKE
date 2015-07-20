@@ -33,6 +33,7 @@ Valid options:
                          : if specified more than once, acts as an AND operation
   -xml <filename>        : output results to xUnit.net v2 style XML file
   -xmlv1 <filename>      : output results to xUnit.net v1 style XML file
+  -nunit <filename>      : output results to NUnit-style XML file
   -html <filename>       : output results to HTML file
 *)
 
@@ -79,6 +80,8 @@ type XUnit2Params =
       XmlOutputPath : string option
       /// The output path of the xUnit XML report (in the xUnit v1 style).
       XmlV1OutputPath : string option
+      /// The output path of the NUnit XML report.
+      NUnitXmlOutputPath : string option
       /// The working directory for running the xunit console runner.
       WorkingDir : string option
       /// Run xUnit with shadow copy enabled.
@@ -126,6 +129,7 @@ let XUnit2Defaults =
       HtmlOutputPath = None
       XmlOutputPath = None
       XmlV1OutputPath = None
+      NUnitXmlOutputPath = None
       IncludeTraits = []
       ExcludeTraits = []
       ShadowCopy = true
@@ -157,6 +161,7 @@ let internal buildXUnit2Args assemblies parameters =
     |> appendIfTrueWithoutQuotes parameters.Silent "-silent"
     |> appendIfSome parameters.XmlOutputPath (sprintf @"-xml ""%s""")
     |> appendIfSome parameters.XmlV1OutputPath (sprintf @"-xmlv1 ""%s""")
+    |> appendIfSome parameters.NUnitXmlOutputPath (sprintf @"-nunit ""%s""")
     |> appendIfSome parameters.HtmlOutputPath (sprintf @"-html ""%s""")
     |> appendTraits parameters.IncludeTraits "-trait"
     |> appendTraits parameters.ExcludeTraits "-notrait"
