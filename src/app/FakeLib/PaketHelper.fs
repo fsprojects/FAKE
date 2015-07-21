@@ -11,6 +11,7 @@ type PaketPackParams =
     { ToolPath : string
       TimeOut : TimeSpan
       Version : string
+      LockDependencies : bool
       ReleaseNotes : string
       BuildConfig : string
       TemplateFile : string
@@ -22,6 +23,7 @@ let PaketPackDefaults() : PaketPackParams =
     { ToolPath = (findToolFolderInSubPath "paket.exe" (currentDirectory @@ ".paket")) @@ "paket.exe"
       TimeOut = TimeSpan.FromMinutes 5.
       Version = null
+      LockDependencies = false
       ReleaseNotes = null
       BuildConfig = null
       TemplateFile = null
@@ -64,12 +66,13 @@ let Pack setParams =
     let releaseNotes = if String.IsNullOrWhiteSpace parameters.ReleaseNotes then "" else " releaseNotes " + toParam (xmlEncode parameters.ReleaseNotes)
     let buildConfig = if String.IsNullOrWhiteSpace parameters.BuildConfig then "" else " buildconfig " + toParam parameters.BuildConfig
     let templateFile = if String.IsNullOrWhiteSpace parameters.TemplateFile then "" else " templatefile " + toParam parameters.TemplateFile
-      
+    let lockDependencies = if parameters.LockDependencies then " lock-dependencies" else ""
+
     let packResult = 
         ExecProcess 
             (fun info -> 
             info.FileName <- parameters.ToolPath
-            info.Arguments <- sprintf "pack output %s%s%s%s%s" parameters.OutputPath version releaseNotes buildConfig templateFile) parameters.TimeOut
+            info.Arguments <- sprintf "pack output %s%s%s%s%s%s" parameters.OutputPath version releaseNotes buildConfig templateFile lockDependencies) parameters.TimeOut
     
     if packResult <> 0 then failwithf "Error during packing %s." parameters.WorkingDir
     traceEndTask "PaketPack" parameters.WorkingDir
