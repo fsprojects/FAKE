@@ -40,7 +40,7 @@
           <h1>Caching of build scripts</h1>
 
 <p>Starting with version <code>4.0.0</code> of FAKE, the first time a script is run the
-compiled assembly that is generated is saved into the <code>.fake</code> directory. This
+compiled assembly that is generated is saved into the hidden <code>.fake</code> directory. This
 allows FAKE to start in milliseconds instead of seconds. Your script files are
 cached with a crc32 key generated from the first scripts contents, and then each
 <code>#load</code>ed scripts contents. This prevents you from having to manually clear the
