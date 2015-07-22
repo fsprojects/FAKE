@@ -139,6 +139,7 @@ let executeFSIWithScriptArgsAndReturnMessages script (scriptArgs: string[]) =
     (result, messages)
 
 open Microsoft.FSharp.Compiler.Interactive.Shell
+open System.Reflection
 
 type private AssemblySource = 
 | GAC
@@ -193,9 +194,7 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
     let hashPath = lazy("./.fake/" + scriptFileName.Value + "_" + scriptHash.Value)
     let assemblyPath = lazy(hashPath.Value + ".dll")
     let assemblyRefPath = lazy(hashPath.Value + "_references.txt")
-    let cacheValid = lazy (
-        System.IO.File.Exists(assemblyPath.Value) &&
-        System.IO.File.Exists(assemblyRefPath.Value))
+    let cacheValid = lazy (File.Exists(assemblyPath.Value) && File.Exists(assemblyRefPath.Value))
 
     let getScriptAndHash fileName =
         let matched = hashRegex.Match(fileName)
@@ -203,7 +202,7 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
 
     if useCache && cacheValid.Value then
         
-        if printDetails then trace ("Using cache")
+        if printDetails then trace "Using cache"
         let noExtension = Path.GetFileNameWithoutExtension(scriptFileName.Value)
         let fullName = 
             sprintf "<StartupCode$FSI_0001>.$FSI_0001_%s%s$%s" 
@@ -222,9 +221,8 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
             let _result = 
                 mainModule.InvokeMember(
                     "main@",  
-                    System.Reflection.BindingFlags.InvokeMethod ||| 
-                    System.Reflection.BindingFlags.Public ||| 
-                    System.Reflection.BindingFlags.Static, null, null, [||])
+                    BindingFlags.InvokeMethod ||| BindingFlags.Public ||| BindingFlags.Static, 
+                    null, null, [||])
             true
         with
         | ex ->
@@ -258,8 +256,10 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
                     if useCache && not cacheValid.Value then
                         let assemBuilder = session.DynamicAssembly :?> System.Reflection.Emit.AssemblyBuilder
                         assemBuilder.Save("FSI-ASSEMBLY.dll")
-                        if not (Directory.Exists cacheDir.FullName) then
-                            Directory.CreateDirectory cacheDir.FullName |> ignore
+                        if not <| Directory.Exists cacheDir.FullName then
+                            let di = Directory.CreateDirectory cacheDir.FullName 
+                            di.Attributes <- FileAttributes.Directory ||| FileAttributes.Hidden
+
                         File.Move("FSI-ASSEMBLY.dll", assemblyPath.Value)
                     
                         if File.Exists("FSI-ASSEMBLY.pdb") then
