@@ -69,10 +69,11 @@ let Pack setParams =
     let lockDependencies = if parameters.LockDependencies then " lock-dependencies" else ""
 
     let packResult = 
+        let cmdArgs = sprintf "%s%s%s%s%s" version releaseNotes buildConfig templateFile lockDependencies
         ExecProcess 
             (fun info -> 
             info.FileName <- parameters.ToolPath
-            info.Arguments <- sprintf "pack output %s%s%s%s%s%s" parameters.OutputPath version releaseNotes buildConfig templateFile lockDependencies) parameters.TimeOut
+            info.Arguments <- sprintf "pack output %s %s" parameters.OutputPath cmdArgs) parameters.TimeOut
     
     if packResult <> 0 then failwithf "Error during packing %s." parameters.WorkingDir
     traceEndTask "PaketPack" parameters.WorkingDir
