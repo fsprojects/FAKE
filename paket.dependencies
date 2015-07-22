@@ -2,7 +2,7 @@ content: none
 source http://nuget.org/api/v2
 
 nuget FSharp.Core
-nuget FAKE
+nuget FAKE prerelease
 nuget Knockout
 nuget Nuget.CommandLine
 nuget FSharp.Formatting
