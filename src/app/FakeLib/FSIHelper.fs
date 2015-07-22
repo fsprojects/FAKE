@@ -60,9 +60,10 @@ let rec getAllScripts scriptPath : seq<string * string> =
     Seq.concat [List.toSeq [scriptPath, scriptContents]; loadedContents]
 
 let getScriptHash pathsAndContents =
-    let fullContents = getAllScriptContents pathsAndContents |> String.concat("\n")
+    let fullContents = getAllScriptContents pathsAndContents |> String.concat "\n"
     let hasher = HashLib.HashFactory.Checksum.CreateCRC32a()
     hasher.ComputeString(fullContents).ToString()
+
 /// The path to the F# Interactive tool.
 let fsiPath =
     let ev = environVar "FSI"

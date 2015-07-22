@@ -66,7 +66,7 @@ NUGET
       Nancy (>= 1.2.0)
     Newtonsoft.Json (6.0.8)
     NuGet.CommandLine (2.8.5)
-    Nuget.Core (2.8.5)
+    NuGet.Core (2.8.5)
       Microsoft.Web.Xdt (>= 2.1.0)
     RavenDB.Client (2.5.2956)
       Microsoft.CompilerServices.AsyncTargetingPack
