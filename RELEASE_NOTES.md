@@ -1,3 +1,6 @@
+#### 4.0.1 - 23.07.2015
+* Loaded dlls versions are used to invalidate FAKE's cache - https://github.com/fsharp/FAKE/pull/882
+
 #### 4.0.0 - 23.07.2015
 * Automatic caching of FAKE build scripts - https://github.com/fsharp/FAKE/pull/859
 * Added MSBuild properties to AndroidPackageParams - https://github.com/fsharp/FAKE/pull/863
