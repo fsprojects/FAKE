@@ -7,7 +7,7 @@ NUGET
     bootstrap (3.3.4)
       jQuery (>= 1.9.1)
     CsQuery (1.3.4)
-    FAKE (4.0.0-alpha004)
+    FAKE (4.0.0)
     FsCheck (1.0.4)
     FsCheck.Xunit (1.0.4)
       FsCheck (>= 1.0.4)
