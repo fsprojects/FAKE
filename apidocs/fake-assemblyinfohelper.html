@@ -39,6 +39,8 @@
 <h1>AssemblyInfoHelper</h1>
 <div class="xmldoc">
 <p>Generates an AssemblyInfo file</p>
+
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -96,6 +98,8 @@
           <p>Generates an AssemblyInfo file for projects
 <strong>Obsolete - Please use the new AssemblyInfoFile tasks</strong></p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -115,6 +119,8 @@
             </a>
           <p>AssemblyInfo default params</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -133,6 +139,8 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>AssemblyInfoReplacement default params</p>
+
+
 
         </td>
       </tr>
@@ -162,10 +170,20 @@
 
 <h2>Sample</h2>
 
-<pre><code>   BulkReplaceAssemblyInfoVersions "test/" (fun f -&gt; 
-                                              {f with
-                                                  AssemblyVersion = "1.1.1.1"
-                                                  AssemblyInformationalVersion = "1.1.1.1"})</code></pre>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">   <span class="i">BulkReplaceAssemblyInfoVersions</span> <span class="s">&quot;test/&quot;</span> (<span class="k">fun</span> <span class="i">f</span> <span class="k">-&gt;</span> 
+                                              {<span class="i">f</span> <span class="k">with</span>
+                                                  <span class="i">AssemblyVersion</span> <span class="o">=</span> <span class="s">&quot;1.1.1.1&quot;</span>
+                                                  <span class="i">AssemblyInformationalVersion</span> <span class="o">=</span> <span class="s">&quot;1.1.1.1&quot;</span>})
+</code></pre></td>
+</tr>
+</table>
+
+
 
         </td>
       </tr>
@@ -185,6 +203,8 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>generates the assembly info file</p>
+
+
 
         </td>
       </tr>

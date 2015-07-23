@@ -39,6 +39,8 @@
 <h1>MSBuildHelper</h1>
 <div class="xmldoc">
 <p>Contains tasks which allow to use MSBuild (or xBuild on Linux/Unix) to build .NET project files or solution files.</p>
+
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -54,6 +56,8 @@
             <a href="fake-msbuildhelper-buildexception.html">BuildException</a>
           </td>
           <td class="xmldoc"><p>An exception type to signal build errors.</p>
+
+
 </td>
         </tr>
         <tr>
@@ -67,6 +71,8 @@
             <a href="fake-msbuildhelper-msbuildfileloggerconfig.html">MSBuildFileLoggerConfig</a>
           </td>
           <td class="xmldoc"><p>A type for MSBuild configuration</p>
+
+
 </td>
         </tr>
         <tr>
@@ -74,6 +80,8 @@
             <a href="fake-msbuildhelper-msbuildlogparameter.html">MSBuildLogParameter</a>
           </td>
           <td class="xmldoc"><p>MSBuild log option</p>
+
+
 </td>
         </tr>
         <tr>
@@ -81,6 +89,8 @@
             <a href="fake-msbuildhelper-msbuildparams.html">MSBuildParams</a>
           </td>
           <td class="xmldoc"><p>A type for MSBuild task parameters</p>
+
+
 </td>
         </tr>
         <tr>
@@ -88,6 +98,8 @@
             <a href="fake-msbuildhelper-msbuildproject.html">MSBuildProject</a>
           </td>
           <td class="xmldoc"><p>An type to represent MSBuild project files.</p>
+
+
 </td>
         </tr>
         <tr>
@@ -95,6 +107,8 @@
             <a href="fake-msbuildhelper-msbuildverbosity.html">MSBuildVerbosity</a>
           </td>
           <td class="xmldoc"><p>MSBuild verbosity option</p>
+
+
 </td>
         </tr>
     </tbody>
@@ -134,20 +148,44 @@
 
 <h2>Sample</h2>
 
-<pre><code>let buildMode = getBuildParamOrDefault "buildMode" "Release"
-let setParams defaults =
-        { defaults with
-            Verbosity = Some(Quiet)
-            Targets = ["Build"]
-            Properties =
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">buildMode</span> <span class="o">=</span> <span class="i">getBuildParamOrDefault</span> <span class="s">&quot;buildMode&quot;</span> <span class="s">&quot;Release&quot;</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="f">setParams</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="i">defaults</span> <span class="o">=</span>
+        { <span onmouseout="hideTip(event, 'fs3', 4)" onmouseover="showTip(event, 'fs3', 4)" class="i">defaults</span> <span class="k">with</span>
+            <span class="i">Verbosity</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs4', 5)" onmouseover="showTip(event, 'fs4', 5)" class="i">Some</span>(<span class="i">Quiet</span>)
+            <span class="i">Targets</span> <span class="o">=</span> [<span class="s">&quot;Build&quot;</span>]
+            <span class="i">Properties</span> <span class="o">=</span>
                 [
-                    "Optimize", "True"
-                    "DebugSymbols", "True"
-                    "Configuration", buildMode
+                    <span class="s">&quot;Optimize&quot;</span>, <span class="s">&quot;True&quot;</span>
+                    <span class="s">&quot;DebugSymbols&quot;</span>, <span class="s">&quot;True&quot;</span>
+                    <span class="s">&quot;Configuration&quot;</span>, <span onmouseout="hideTip(event, 'fs1', 6)" onmouseover="showTip(event, 'fs1', 6)" class="i">buildMode</span>
                 ]
          }
-build setParams "./MySolution.sln"
-      |&gt; DoNothing</code></pre>
+<span class="i">build</span> <span onmouseout="hideTip(event, 'fs2', 7)" onmouseover="showTip(event, 'fs2', 7)" class="i">setParams</span> <span class="s">&quot;./MySolution.sln&quot;</span>
+      <span class="o">|&gt;</span> <span class="i">DoNothing</span>
+</code></pre></td>
+</tr>
+</table>
+
+<div class="tip" id="fs1">val buildMode : obj<br /><br />Full name: docs.buildMode</div>
+<div class="tip" id="fs2">val setParams : defaults:&#39;a -&gt; &#39;a<br /><br />Full name: docs.setParams</div>
+<div class="tip" id="fs3">val defaults : &#39;a</div>
+<div class="tip" id="fs4">union case Option.Some: Value: &#39;T -&gt; Option&lt;&#39;T&gt;</div>
+
 
         </td>
       </tr>
@@ -175,6 +213,8 @@ build setParams "./MySolution.sln"
 <li><code>projectFile</code> - The project file path.</li>
 </ul>
 
+
+
         </td>
       </tr>
       <tr>
@@ -200,6 +240,8 @@ build setParams "./MySolution.sln"
 <li><code>outputPath</code> - The output path.</li>
 <li><code>projectFiles</code> - The project file paths.</li>
 </ul>
+
+
 
         </td>
       </tr>
@@ -229,6 +271,8 @@ build setParams "./MySolution.sln"
 <li><code>projects</code> - A list of project or solution files.</li>
 </ul>
 
+
+
         </td>
       </tr>
       <tr>
@@ -256,6 +300,8 @@ build setParams "./MySolution.sln"
 <li><code>projects</code> - A list of project or solution files.</li>
 </ul>
 
+
+
         </td>
       </tr>
       <tr>
@@ -274,6 +320,8 @@ build setParams "./MySolution.sln"
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Defines a default for MSBuild task parameters</p>
+
+
 
         </td>
       </tr>
@@ -296,6 +344,8 @@ build setParams "./MySolution.sln"
   - On Linux/Unix Systems we use xBuild.
   - On Windows we try to find a "MSBuild" build parameter or read the MSBuild tool location from the AppSettings file.</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -314,6 +364,8 @@ build setParams "./MySolution.sln"
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Defines the loggers to use for MSBuild task</p>
+
+
 
         </td>
       </tr>
@@ -341,6 +393,8 @@ build setParams "./MySolution.sln"
 <li><code>targets</code> - A string with the target names which should be run by MSBuild.</li>
 <li><code>projects</code> - A list of project or solution files.</li>
 </ul>
+
+
 
         </td>
       </tr>
@@ -370,6 +424,8 @@ build setParams "./MySolution.sln"
 <li><code>projects</code> - A list of project or solution files.</li>
 </ul>
 
+
+
         </td>
       </tr>
       <tr>
@@ -395,6 +451,8 @@ build setParams "./MySolution.sln"
 <li><code>targets</code> - A string with the target names which should be run by MSBuild.</li>
 <li><code>projects</code> - A list of project or solution files.</li>
 </ul>
+
+
 
         </td>
       </tr>
@@ -423,6 +481,8 @@ build setParams "./MySolution.sln"
 <li><code>properties</code> - A list with tuples of property name and property values.</li>
 <li><code>projects</code> - A list of project or solution files.</li>
 </ul>
+
+
 
         </td>
       </tr>

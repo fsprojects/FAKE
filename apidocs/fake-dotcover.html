@@ -39,6 +39,8 @@
 <h1>DotCover</h1>
 <div class="xmldoc">
 <p>Contains a task which can be used to run <a href="http://www.jetbrains.com/dotcover/">DotCover</a> on .NET assemblies.</p>
+
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -60,6 +62,8 @@
             <a href="fake-dotcover-dotcoverparams.html">DotCoverParams</a>
           </td>
           <td class="xmldoc"><p>The dotCover parameter type for running coverage</p>
+
+
 </td>
         </tr>
         <tr>
@@ -180,6 +184,8 @@
 <li><code>setParams</code> - Function used to overwrite the dotCover default parameters.</li>
 </ul>
 
+
+
         </td>
       </tr>
       <tr>
@@ -198,6 +204,8 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>The dotCover default parameters</p>
+
+
 
         </td>
       </tr>
@@ -227,10 +235,20 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
 
 <h2>Sample</h2>
 
-<pre><code>DotCoverMerge (fun p -&gt; { p with 
-                    Source = [artifactsDir @@ "NUnitDotCoverSnapshot.dcvr"
-                              artifactsDir @@ "MSpecDotCoverSnapshot.dcvr"]
-                    Output = artifactsDir @@ "dotCoverSnapshot.dcvr" }) </code></pre>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">DotCoverMerge</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> { <span class="i">p</span> <span class="k">with</span> 
+                    <span class="i">Source</span> <span class="o">=</span> [<span class="i">artifactsDir</span> <span class="o">@@</span> <span class="s">&quot;NUnitDotCoverSnapshot.dcvr&quot;</span>
+                              <span class="i">artifactsDir</span> <span class="o">@@</span> <span class="s">&quot;MSpecDotCoverSnapshot.dcvr&quot;</span>]
+                    <span class="i">Output</span> <span class="o">=</span> <span class="i">artifactsDir</span> <span class="o">@@</span> <span class="s">&quot;dotCoverSnapshot.dcvr&quot;</span> }) 
+</code></pre></td>
+</tr>
+</table>
+
+
 
         </td>
       </tr>
@@ -278,12 +296,24 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
 
 <h2>Sample</h2>
 
-<pre><code>!! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll") 
-    |&gt; DotCoverMSpec 
-        (fun dotCoverOptions -&gt; { dotCoverOptions with 
-                Output = artifactsDir @@ "MSpecDotCoverSnapshot.dcvr" }) 
-        (fun mSpecOptions -&gt; { mSpecOptions with
-                Silent = true })</code></pre>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="o">!!</span> (<span class="i">buildDir</span> <span class="o">@@</span> <span class="i">buildMode</span> <span class="o">@@</span> <span class="s">&quot;/*.Unit.Tests.dll&quot;</span>) 
+    <span class="o">|&gt;</span> <span class="i">DotCoverMSpec</span> 
+        (<span class="k">fun</span> <span class="i">dotCoverOptions</span> <span class="k">-&gt;</span> { <span class="i">dotCoverOptions</span> <span class="k">with</span> 
+                <span class="i">Output</span> <span class="o">=</span> <span class="i">artifactsDir</span> <span class="o">@@</span> <span class="s">&quot;MSpecDotCoverSnapshot.dcvr&quot;</span> }) 
+        (<span class="k">fun</span> <span class="i">mSpecOptions</span> <span class="k">-&gt;</span> { <span class="i">mSpecOptions</span> <span class="k">with</span>
+                <span class="i">Silent</span> <span class="o">=</span> <span class="k">true</span> })
+</code></pre></td>
+</tr>
+</table>
+
+
 
         </td>
       </tr>
@@ -313,12 +343,24 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
 
 <h2>Sample</h2>
 
-<pre><code>!! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll") 
-    |&gt; DotCoverNUnit 
-        (fun dotCoverOptions -&gt; { dotCoverOptions with 
-                Output = artifactsDir @@ "NUnitDotCoverSnapshot.dcvr" }) 
-        (fun nUnitOptions -&gt; { nUnitOptions with
-                DisableShadowCopy = true })</code></pre>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="o">!!</span> (<span class="i">buildDir</span> <span class="o">@@</span> <span class="i">buildMode</span> <span class="o">@@</span> <span class="s">&quot;/*.Unit.Tests.dll&quot;</span>) 
+    <span class="o">|&gt;</span> <span class="i">DotCoverNUnit</span> 
+        (<span class="k">fun</span> <span class="i">dotCoverOptions</span> <span class="k">-&gt;</span> { <span class="i">dotCoverOptions</span> <span class="k">with</span> 
+                <span class="i">Output</span> <span class="o">=</span> <span class="i">artifactsDir</span> <span class="o">@@</span> <span class="s">&quot;NUnitDotCoverSnapshot.dcvr&quot;</span> }) 
+        (<span class="k">fun</span> <span class="i">nUnitOptions</span> <span class="k">-&gt;</span> { <span class="i">nUnitOptions</span> <span class="k">with</span>
+                <span class="i">DisableShadowCopy</span> <span class="o">=</span> <span class="k">true</span> })
+</code></pre></td>
+</tr>
+</table>
+
+
 
         </td>
       </tr>
@@ -347,10 +389,20 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
 
 <h2>Sample</h2>
 
-<pre><code>DotCoverReport (fun p -&gt; { p with 
-                    Source = artifactsDir @@ "dotCoverSnapshot.dcvr"
-                    Output = artifactsDir @@ "dotCoverReport.xml"
-                    ReportType = DotCoverReportType.Xml })</code></pre>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">DotCoverReport</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> { <span class="i">p</span> <span class="k">with</span> 
+                    <span class="i">Source</span> <span class="o">=</span> <span class="i">artifactsDir</span> <span class="o">@@</span> <span class="s">&quot;dotCoverSnapshot.dcvr&quot;</span>
+                    <span class="i">Output</span> <span class="o">=</span> <span class="i">artifactsDir</span> <span class="o">@@</span> <span class="s">&quot;dotCoverReport.xml&quot;</span>
+                    <span class="i">ReportType</span> <span class="o">=</span> <span class="i">DotCoverReportType</span><span class="o">.</span><span class="i">Xml</span> })
+</code></pre></td>
+</tr>
+</table>
+
+
 
         </td>
       </tr>

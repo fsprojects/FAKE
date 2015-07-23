@@ -39,6 +39,8 @@
 <h1>MSpecHelper</h1>
 <div class="xmldoc">
 <p>Contains a task to run <a href="https://github.com/machine/machine.specifications">machine.specifications</a> tests.</p>
+
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -54,6 +56,8 @@
             <a href="fake-mspechelper-mspecparams.html">MSpecParams</a>
           </td>
           <td class="xmldoc"><p>Parameter type to configure the MSpec runner.</p>
+
+
 </td>
         </tr>
     </tbody>
@@ -93,13 +97,20 @@
 
 <h2>Sample</h2>
 
-<pre><code>!! (testDir @@ "Test.*.dll") 
-  |&gt; MSpec (fun p -&gt; {p with ExcludeTags = ["HTTP"]; HtmlOutputDir = reportDir})
-</code></pre>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="o">!!</span> (<span class="i">testDir</span> <span class="o">@@</span> <span class="s">&quot;Test.*.dll&quot;</span>) 
+  <span class="o">|&gt;</span> <span class="i">MSpec</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> {<span class="i">p</span> <span class="k">with</span> <span class="i">ExcludeTags</span> <span class="o">=</span> [<span class="s">&quot;HTTP&quot;</span>]; <span class="i">HtmlOutputDir</span> <span class="o">=</span> <span class="i">reportDir</span>})
+</code></pre></td>
+</tr>
+</table>
 
 <h2>Hint</h2>
 
 <p>XmlOutputPath expects a full file path whereas the HtmlOutputDir expects a directory name</p>
+
+
 
         </td>
       </tr>
@@ -119,6 +130,8 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>MSpec default parameters - tries to locate mspec-clr4.exe in any subfolder.</p>
+
+
 
         </td>
       </tr>

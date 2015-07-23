@@ -45,8 +45,7 @@ If you need more than the default functionality you can either write F# or simpl
 
 <h3>Simple Example</h3>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l"> 1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
 <span class="l"> 4: </span>
@@ -62,10 +61,8 @@ If you need more than the default functionality you can either write F# or simpl
 <span class="l">14: </span>
 <span class="l">15: </span>
 <span class="l">16: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="prep">#r</span> <span class="s">&quot;tools/FAKE/tools/FakeLib.dll&quot;</span> <span class="c">// include Fake lib</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="prep">#r</span> <span class="s">&quot;tools/FAKE/tools/FakeLib.dll&quot;</span> <span class="c">// include Fake lib</span>
 <span class="k">open</span> <span class="i">Fake</span> 
 
 
@@ -81,8 +78,7 @@ If you need more than the default functionality you can either write F# or simpl
    <span class="o">==&gt;</span> <span class="s">&quot;Deploy&quot;</span>
 
 <span class="i">Run</span> <span class="s">&quot;Deploy&quot;</span>
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
@@ -134,20 +130,16 @@ If you need more than the default functionality you can either write F# or simpl
 
 <p>Targets are the main unit of work in a "FAKE - F# Make" script. Targets have a name and an action (given as a code block).</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
 <span class="l">4: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="c">// The clean target cleans the build and deploy folders</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// The clean target cleans the build and deploy folders</span>
 <span class="i">Target</span> <span class="s">&quot;Clean&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span> 
     <span class="i">CleanDirs</span> [<span class="s">&quot;./build/&quot;</span>; <span class="s">&quot;./deploy/&quot;</span>]
 )
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
@@ -155,39 +147,31 @@ If you need more than the default functionality you can either write F# or simpl
 
 <p>You can specify the build order using the ==&gt; operator:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
 <span class="l">4: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="c">// &quot;FAKE - F# Make&quot; will run these targets in the order Clean, BuildApp, Default</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// &quot;FAKE - F# Make&quot; will run these targets in the order Clean, BuildApp, Default</span>
 <span class="s">&quot;Clean&quot;</span> 
   <span class="o">==&gt;</span> <span class="s">&quot;BuildApp&quot;</span> 
   <span class="o">==&gt;</span> <span class="s">&quot;Default&quot;</span>
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
 <p>If one target should only be run on a specific condition you can use the =?&gt; operator:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
 <span class="l">4: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="s">&quot;Clean&quot;</span> 
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="s">&quot;Clean&quot;</span> 
   <span class="o">==&gt;</span> <span class="s">&quot;BuildApp&quot;</span>
   <span class="o">=?&gt;</span> (<span class="s">&quot;Test&quot;</span>,<span class="i">hasBuildParam</span> <span class="s">&quot;test&quot;</span>)  <span class="c">// only if FAKE was called with parameter xUnitTest</span>
   <span class="o">==&gt;</span> <span class="s">&quot;Default&quot;</span>
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
@@ -195,14 +179,10 @@ If you need more than the default functionality you can either write F# or simpl
 
 <p>You can execute targets with the "RunTargetOrDefault"-function (for more details see <a href="specifictargets.html">Running specific targets</a>):</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="i">RunTargetOrDefault</span> <span class="s">&quot;Default&quot;</span>
-</pre>
-</td>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">RunTargetOrDefault</span> <span class="s">&quot;Default&quot;</span>
+</code></pre></td>
 </tr>
 </table>
 
@@ -212,41 +192,33 @@ If you need more than the default functionality you can either write F# or simpl
 
 <h3>File includes</h3>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
 <span class="l">4: </span>
 <span class="l">5: </span>
 <span class="l">6: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="c">// Includes all *.csproj files under /src/app by using the !! operator</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// Includes all *.csproj files under /src/app by using the !! operator</span>
 <span class="o">!!</span> <span class="s">&quot;src/app/**/*.csproj&quot;</span>
 
 <span class="c">// Includes all *.csproj files under /src/app and /test with the ++ operator</span>
 <span class="o">!!</span> <span class="s">&quot;src/app/**/*.csproj&quot;</span>
   <span class="o">++</span> <span class="s">&quot;test/**/*.csproj&quot;</span>
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
 <h3>File excludes</h3>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="c">// Includes all files under /src/app but excludes *.zip files</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// Includes all files under /src/app but excludes *.zip files</span>
 <span class="o">!!</span> <span class="s">&quot;src/app/**/*.*&quot;</span>
   <span class="o">--</span> <span class="s">&quot;*.zip&quot;</span>
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
@@ -254,8 +226,7 @@ If you need more than the default functionality you can either write F# or simpl
 
 <h3>NUnit</h3>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l"> 1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
 <span class="l"> 4: </span>
@@ -265,10 +236,8 @@ If you need more than the default functionality you can either write F# or simpl
 <span class="l"> 8: </span>
 <span class="l"> 9: </span>
 <span class="l">10: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="c">// define test dlls</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// define test dlls</span>
 <span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">testDlls</span> <span class="o">=</span> <span class="o">!!</span> (<span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;/Test.*.dll&quot;</span>)
 
 <span class="i">Target</span> <span class="s">&quot;NUnitTest&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
@@ -278,15 +247,13 @@ If you need more than the default functionality you can either write F# or simpl
                 <span class="i">DisableShadowCopy</span> <span class="o">=</span> <span class="k">true</span>; 
                 <span class="i">OutputFile</span> <span class="o">=</span> <span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;TestResults.xml&quot;</span>})
 )
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
 <h3>MSpec</h3>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l"> 1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
 <span class="l"> 4: </span>
@@ -296,10 +263,8 @@ If you need more than the default functionality you can either write F# or simpl
 <span class="l"> 8: </span>
 <span class="l"> 9: </span>
 <span class="l">10: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="c">// define test dlls</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// define test dlls</span>
 <span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="i">testDlls</span> <span class="o">=</span> <span class="o">!!</span> (<span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;/Test.*.dll&quot;</span>)
 
 <span class="i">Target</span> <span class="s">&quot;MSpecTest&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
@@ -309,15 +274,13 @@ If you need more than the default functionality you can either write F# or simpl
                 <span class="i">ExcludeTags</span> <span class="o">=</span> [<span class="s">&quot;LongRunning&quot;</span>]
                 <span class="i">HtmlOutputDir</span> <span class="o">=</span> <span class="i">testOutputDir</span>})
 )
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
 <h3>xUnit.net</h3>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l"> 1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
 <span class="l"> 4: </span>
@@ -329,10 +292,8 @@ If you need more than the default functionality you can either write F# or simpl
 <span class="l">10: </span>
 <span class="l">11: </span>
 <span class="l">12: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="c">// define test dlls</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// define test dlls</span>
 <span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 5)" onmouseover="showTip(event, 'fs1', 5)" class="i">testDlls</span> <span class="o">=</span> <span class="o">!!</span> (<span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;/Test.*.dll&quot;</span>)
 
 <span class="i">Target</span> <span class="s">&quot;xUnitTest&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
@@ -344,8 +305,7 @@ If you need more than the default functionality you can either write F# or simpl
                 <span class="i">XmlOutput</span> <span class="o">=</span> <span class="k">true</span>;
                 <span class="i">OutputDir</span> <span class="o">=</span> <span class="i">testDir</span> })
 )
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
@@ -365,8 +325,7 @@ If you need more than the default functionality you can either write F# or simpl
 
 <p>You can read the <a href="gettingstarted.html">getting started guide</a> to build such a script.</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l"> 1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
 <span class="l"> 4: </span>
@@ -465,10 +424,8 @@ If you need more than the default functionality you can either write F# or simpl
 <span class="l">97: </span>
 <span class="l">98: </span>
 <span class="l">99: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="c">// include Fake libs</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// include Fake libs</span>
 <span class="prep">#r</span> <span class="s">&quot;tools/FAKE/FakeLib.dll&quot;</span>
 
 <span class="k">open</span> <span class="i">Fake</span>
@@ -567,8 +524,7 @@ If you need more than the default functionality you can either write F# or simpl
 
 <span class="c">// start build</span>
 <span class="i">RunTargetOrDefault</span> <span class="s">&quot;Deploy&quot;</span>
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 

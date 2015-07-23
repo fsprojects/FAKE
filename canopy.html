@@ -48,8 +48,7 @@ In this tutorial we are looking at <a href="http://lefthandedgoat.github.io/cano
 
 <p>Consider a simple canopy program.fs file:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l"> 1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
 <span class="l"> 4: </span>
@@ -73,10 +72,8 @@ In this tutorial we are looking at <a href="http://lefthandedgoat.github.io/cano
 <span class="l">22: </span>
 <span class="l">23: </span>
 <span class="l">24: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="prep">#r</span> <span class="s">&quot;canopy.dll&quot;</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="prep">#r</span> <span class="s">&quot;canopy.dll&quot;</span>
 
 <span class="k">open</span> <span class="i">canopy</span>
 <span class="k">open</span> <span class="i">runner</span>
@@ -100,21 +97,16 @@ In this tutorial we are looking at <a href="http://lefthandedgoat.github.io/cano
 <span class="i">run</span>()
 
 <span class="i">quit</span>()
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
 <p>Although <a href="http://docs.seleniumhq.org/">Selenium</a> (which is the framework behind canopy) supports all browsers you might want to run your tests with the headless browser PhantomJS. To grab the latest version just install the NuGet package:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="i">install</span><span class="o">-</span><span class="i">package</span> <span class="i">PhantomJS</span>
-</pre>
-</td>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">install</span><span class="o">-</span><span class="i">package</span> <span class="i">PhantomJS</span>
+</code></pre></td>
 </tr>
 </table>
 
@@ -124,8 +116,7 @@ In this tutorial we are looking at <a href="http://lefthandedgoat.github.io/cano
 
 <p>The target in FAKE basically hosts the website in IIS Express and starts the canopy tests. IISExpress requires a configuration template ("iisexpress-template.config") which can be copied from %ProgramFiles%\IIS Express\AppServer\applicationhost.config.</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l"> 1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
 <span class="l"> 4: </span>
@@ -142,10 +133,8 @@ In this tutorial we are looking at <a href="http://lefthandedgoat.github.io/cano
 <span class="l">15: </span>
 <span class="l">16: </span>
 <span class="l">17: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="i">Target</span> <span class="s">&quot;CanopyTests&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;CanopyTests&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
     <span class="k">let</span> <span class="i">hostName</span> <span class="o">=</span> <span class="s">&quot;localhost&quot;</span>
     <span class="k">let</span> <span class="i">port</span> <span class="o">=</span> <span class="n">81</span>
 
@@ -162,8 +151,7 @@ In this tutorial we are looking at <a href="http://lefthandedgoat.github.io/cano
 
     <span class="k">if</span> <span class="i">result</span> <span class="o">&lt;&gt;</span> <span class="n">0</span> <span class="k">then</span> <span onmouseout="hideTip(event, 'fs5', 6)" onmouseover="showTip(event, 'fs5', 6)" class="i">failwith</span> <span class="s">&quot;Failed result from canopy tests&quot;</span>
 )
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 

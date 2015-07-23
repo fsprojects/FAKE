@@ -39,6 +39,8 @@
 <h1>ZipHelper</h1>
 <div class="xmldoc">
 <p>This module contains helper function to create and extract zip archives.</p>
+
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -77,6 +79,8 @@
 <li><code>files</code> - A sequence with files to zip.</li>
 </ul>
 
+
+
         </td>
       </tr>
       <tr>
@@ -105,6 +109,8 @@
 <li><code>files</code> - A sequence of target folders and files to include relative to their base directory.</li>
 </ul>
 
+
+
         </td>
       </tr>
       <tr>
@@ -123,6 +129,8 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>The default zip level</p>
+
+
 
         </td>
       </tr>
@@ -150,6 +158,8 @@
 <li><code>fileName</code> - The file name of the zip file.</li>
 </ul>
 
+
+
         </td>
       </tr>
       <tr>
@@ -176,6 +186,8 @@
 <li><code>zipFileName</code> - The file name of the zip file.</li>
 </ul>
 
+
+
         </td>
       </tr>
       <tr>
@@ -201,6 +213,8 @@
 <li><code>fileToUnzip</code> - The file inside the archive.</li>
 <li><code>zipFileName</code> - The file name of the zip file.</li>
 </ul>
+
+
 
         </td>
       </tr>
@@ -229,6 +243,8 @@
 <li><code>files</code> - A sequence with files to zip.</li>
 </ul>
 
+
+
         </td>
       </tr>
       <tr>
@@ -254,6 +270,8 @@
 <li><code>fileName</code> - The file name of the resulting zip file.</li>
 <li><code>targetFileName</code> - The file to zip.</li>
 </ul>
+
+
 
         </td>
       </tr>
@@ -285,19 +303,39 @@
 
 <p>The following sample creates 4 targets using TargetTemplateWithDependencies and hooks them into the build pipeline.</p>
 
-<pre><code>Target "Zip" (fun _ -&gt;
-    [   "", !! "MyWebApp/*.html"
-            ++ "MyWebApp/bin/**/*.dll"
-            ++ "MyWebApp/bin/**/*.pdb"
-            ++ "MyWebApp/fonts/**"
-            ++ "MyWebApp/img/**"
-            ++ "MyWebApp/js/**"
-            -- "MyWebApp/js/_references.js"
-            ++ "MyWebApp/web.config"
-        @"app_data\jobs\continuous\MyWebJob", !! "MyWebJob/bin/Release/*.*"
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;Zip&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+    [   <span class="s">&quot;&quot;</span>, <span class="o">!!</span> <span class="s">&quot;MyWebApp/*.html&quot;</span>
+            <span class="o">++</span> <span class="s">&quot;MyWebApp/bin/**/*.dll&quot;</span>
+            <span class="o">++</span> <span class="s">&quot;MyWebApp/bin/**/*.pdb&quot;</span>
+            <span class="o">++</span> <span class="s">&quot;MyWebApp/fonts/**&quot;</span>
+            <span class="o">++</span> <span class="s">&quot;MyWebApp/img/**&quot;</span>
+            <span class="o">++</span> <span class="s">&quot;MyWebApp/js/**&quot;</span>
+            <span class="o">--</span> <span class="s">&quot;MyWebApp/js/_references.js&quot;</span>
+            <span class="o">++</span> <span class="s">&quot;MyWebApp/web.config&quot;</span>
+        <span class="s">@&quot;app_data\jobs\continuous\MyWebJob&quot;</span>, <span class="o">!!</span> <span class="s">&quot;MyWebJob/bin/Release/*.*&quot;</span>
     ]
-    |&gt; ZipOfIncludes (sprintf @"bin\MyWebApp.%s.zip" buildVersion)
-)</code></pre>
+    <span class="o">|&gt;</span> <span class="i">ZipOfIncludes</span> (<span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">sprintf</span> <span class="s">@&quot;bin\MyWebApp.%s.zip&quot;</span> <span class="i">buildVersion</span>)
+)
+</code></pre></td>
+</tr>
+</table>
+
+<div class="tip" id="fs1">val sprintf : format:Printf.StringFormat&lt;&#39;T&gt; -&gt; &#39;T<br /><br />Full name: Microsoft.FSharp.Core.ExtraTopLevelOperators.sprintf</div>
+
 
         </td>
       </tr>

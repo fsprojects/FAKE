@@ -48,8 +48,7 @@ In this tutorial we will look at these compile tasks.</p>
 
 <p>The <code>Fsc</code> task can be used in standard FAKE targets:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l"> 1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
 <span class="l"> 4: </span>
@@ -77,10 +76,8 @@ In this tutorial we will look at these compile tasks.</p>
 <span class="l">26: </span>
 <span class="l">27: </span>
 <span class="l">28: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="prep">#r</span> <span class="s">&quot;/path/to/FakeLib.dll&quot;</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="prep">#r</span> <span class="s">&quot;/path/to/FakeLib.dll&quot;</span>
 <span class="k">open</span> <span class="i">Fake</span>
 <span class="k">open</span> <span class="i">Fake</span><span class="o">.</span><span class="i">FscHelper</span>
 
@@ -108,8 +105,7 @@ In this tutorial we will look at these compile tasks.</p>
   <span class="o">==&gt;</span> <span class="s">&quot;Otherthing.dll&quot;</span>
   <span class="o">==&gt;</span> <span class="s">&quot;Main.exe&quot;</span>
 <span class="i">RunTargetOrDefault</span> <span class="s">&quot;Main.exe&quot;</span>
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
@@ -138,8 +134,7 @@ function. Several of them, like <code>Output</code>, <code>References</code>, et
 directly available; the others can all be set inside the <code>OtherParams</code>
 slot as a list of strings:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
 <span class="l">4: </span>
@@ -148,10 +143,8 @@ slot as a list of strings:</p>
 <span class="l">7: </span>
 <span class="l">8: </span>
 <span class="l">9: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="i">Target</span> <span class="s">&quot;Something.dll&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>    
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;Something.dll&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>    
     [<span class="s">&quot;Something.fs&quot;</span>]
     <span class="o">|&gt;</span> <span class="i">Fsc</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
              { <span class="i">p</span> <span class="k">with</span> <span class="i">Output</span> <span class="o">=</span> <span class="s">&quot;Something.dll&quot;</span>
@@ -160,8 +153,7 @@ slot as a list of strings:</p>
                          [ <span class="s">&quot;--nooptimizationdata&quot;</span>
                            <span class="s">&quot;--checked+&quot;</span> ] })
 )
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
@@ -192,22 +184,18 @@ like the <code>OtherParams</code> slot shown above, only here it's used to speci
 <em>all</em> the parameters. It too prints warnings and errors, and returns a
 compile exit status code. E.g.:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
 <span class="l">4: </span>
 <span class="l">5: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="i">Target</span> <span class="s">&quot;Something.dll&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;Something.dll&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
     [<span class="s">&quot;Something.fs&quot;</span>]
     <span class="o">|&gt;</span> <span class="i">fscList</span> [<span class="s">&quot;-o&quot;</span>; <span class="s">&quot;Something.dll&quot;</span>; <span class="s">&quot;--target:library&quot;</span>]
     <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">ignore</span>
 )
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 

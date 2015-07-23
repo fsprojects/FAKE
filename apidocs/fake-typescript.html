@@ -39,6 +39,8 @@
 <h1>TypeScript</h1>
 <div class="xmldoc">
 <p>Contains code to call the typescript compiler. There is also a <a href="../typescript.html">tutorial</a> for this task available.</p>
+
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -54,6 +56,8 @@
             <a href="fake-typescript-ecmascript.html">ECMAScript</a>
           </td>
           <td class="xmldoc"><p>Generated ECMAScript version</p>
+
+
 </td>
         </tr>
         <tr>
@@ -61,6 +65,8 @@
             <a href="fake-typescript-modulegeneration.html">ModuleGeneration</a>
           </td>
           <td class="xmldoc"><p>Generated JavaScript module type</p>
+
+
 </td>
         </tr>
         <tr>
@@ -68,6 +74,8 @@
             <a href="fake-typescript-typescriptparams.html">TypeScriptParams</a>
           </td>
           <td class="xmldoc"><p>TypeScript task parameter type</p>
+
+
 </td>
         </tr>
     </tbody>
@@ -108,8 +116,16 @@ There is also a <a href="../typescript.html">tutorial</a> for this task availabl
 
 <h2>Sample</h2>
 
-<pre><code>    !! "src/**/*.ts"
-        |&gt; TypeScriptCompiler (fun p -&gt; { p with TimeOut = TimeSpan.MaxValue }) </code></pre>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">    <span class="o">!!</span> <span class="s">&quot;src/**/*.ts&quot;</span>
+        <span class="o">|&gt;</span> <span class="i">TypeScriptCompiler</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> { <span class="i">p</span> <span class="k">with</span> <span class="i">TimeOut</span> <span class="o">=</span> <span class="i">TimeSpan</span><span class="o">.</span><span class="i">MaxValue</span> }) 
+</code></pre></td>
+</tr>
+</table>
+
+
 
         </td>
       </tr>
@@ -129,6 +145,8 @@ There is also a <a href="../typescript.html">tutorial</a> for this task availabl
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Default parameters for the TypeScript task</p>
+
+
 
         </td>
       </tr>

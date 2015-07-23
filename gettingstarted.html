@@ -83,18 +83,18 @@
 
 <p>In the root of the project you will find a build.bat file:</p>
 
-<table class="pre"><tr><td class="lines"><span class="l">1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
 <span class="l">4: </span>
 <span class="l">5: </span>
-</td>
-<td class="snippet"><pre lang="batchfile">@echo off
+</pre></td>
+<td class="snippet"><pre class="fssnip"><code lang="batchfile">@echo off
 cls
 ".nuget\NuGet.exe" "Install" "FAKE" "-OutputDirectory" "packages" "-ExcludeVersion"
 "packages\FAKE\tools\Fake.exe" build.fsx
 pause
-</pre></td></tr></table>
+</code></pre></td></tr></table>
 
 <p>If you run this batch file from the command line then the latest FAKE version will be <a href="http://nuget.org/packages/FAKE/">downloaded via nuget</a> and your first FAKE script (build.fsx) will be executed. If everything works fine you will get the following output:</p>
 
@@ -102,8 +102,7 @@ pause
 
 <p>Now open the <em>build.fsx</em> in Visual Studio or any text editor. It should look like this:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l"> 1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
 <span class="l"> 4: </span>
@@ -114,10 +113,8 @@ pause
 <span class="l"> 9: </span>
 <span class="l">10: </span>
 <span class="l">11: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="c">// include Fake lib</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// include Fake lib</span>
 <span class="prep">#r</span> <span class="s">@&quot;packages/FAKE/tools/FakeLib.dll&quot;</span>
 <span class="k">open</span> <span class="i">Fake</span>
 
@@ -128,8 +125,7 @@ pause
 
 <span class="c">// start build</span>
 <span class="i">RunTargetOrDefault</span> <span class="s">&quot;Default&quot;</span>
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
@@ -143,8 +139,7 @@ pause
 
 <p>A typical first step in most build scenarios is to clean the output of the last build. We can achieve this by modifying the <em>build.fsx</em> to the following:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l"> 1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
 <span class="l"> 4: </span>
@@ -166,10 +161,8 @@ pause
 <span class="l">20: </span>
 <span class="l">21: </span>
 <span class="l">22: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="c">// include Fake lib</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// include Fake lib</span>
 <span class="prep">#r</span> <span class="s">&quot;packages/FAKE/tools/FakeLib.dll&quot;</span>
 <span class="k">open</span> <span class="i">Fake</span>
 
@@ -191,8 +184,7 @@ pause
 
 <span class="c">// start build</span>
 <span class="i">RunTargetOrDefault</span> <span class="s">&quot;Default&quot;</span>
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
@@ -208,8 +200,7 @@ pause
 
 <p>In the next step we want to compile our C# libraries, which means we want to compile all csproj-files under <em>/src/app</em> with MSBuild:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l"> 1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
 <span class="l"> 4: </span>
@@ -238,10 +229,8 @@ pause
 <span class="l">27: </span>
 <span class="l">28: </span>
 <span class="l">29: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="c">// include Fake lib</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// include Fake lib</span>
 <span class="prep">#r</span> <span class="s">&quot;packages/FAKE/tools/FakeLib.dll&quot;</span>
 <span class="k">open</span> <span class="i">Fake</span>
 
@@ -270,8 +259,7 @@ pause
 
 <span class="c">// start build</span>
 <span class="i">RunTargetOrDefault</span> <span class="s">&quot;Default&quot;</span>
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
@@ -289,8 +277,7 @@ pause
 
 <p>Now our main application will be built automatically and it's time to build the test project. We use the same concepts as before:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l"> 1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
 <span class="l"> 4: </span>
@@ -327,10 +314,8 @@ pause
 <span class="l">35: </span>
 <span class="l">36: </span>
 <span class="l">37: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="c">// include Fake lib</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// include Fake lib</span>
 <span class="prep">#r</span> <span class="s">&quot;packages/FAKE/tools/FakeLib.dll&quot;</span>
 <span class="k">open</span> <span class="i">Fake</span>
 
@@ -367,8 +352,7 @@ pause
 
 <span class="c">// start build</span>
 <span class="i">RunTargetOrDefault</span> <span class="s">&quot;Default&quot;</span>
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
@@ -380,24 +364,20 @@ pause
 
 <p>The problem is that we didn't download the NUnit package from nuget. So let's fix this in the build script:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
 <span class="l">4: </span>
 <span class="l">5: </span>
 <span class="l">6: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="c">// include Fake lib</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// include Fake lib</span>
 <span class="prep">#r</span> <span class="s">&quot;packages/FAKE/tools/FakeLib.dll&quot;</span>
 <span class="k">open</span> <span class="i">Fake</span>
 
 <span class="i">RestorePackages</span>()
 <span class="c">// ...</span>
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
@@ -407,8 +387,7 @@ pause
 
 <p>Now all our projects will be compiled and we can use FAKE's NUnit task in order to let NUnit test our assembly:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l"> 1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
 <span class="l"> 4: </span>
@@ -456,10 +435,8 @@ pause
 <span class="l">46: </span>
 <span class="l">47: </span>
 <span class="l">48: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="c">// include Fake lib</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// include Fake lib</span>
 <span class="prep">#r</span> <span class="s">&quot;packages/FAKE/tools/FakeLib.dll&quot;</span>
 <span class="k">open</span> <span class="i">Fake</span>
 
@@ -507,8 +484,7 @@ pause
 
 <span class="c">// start build</span>
 <span class="i">RunTargetOrDefault</span> <span class="s">&quot;Default&quot;</span>
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
@@ -520,26 +496,22 @@ pause
 
 <p>Alternatively you could also run the tests in parallel using the <a href="apidocs/fake-nunitparallel.html">NUnitParallel</a> task:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
 <span class="l">4: </span>
 <span class="l">5: </span>
 <span class="l">6: </span>
 <span class="l">7: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="i">Target</span> <span class="s">&quot;Test&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;Test&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
     <span class="o">!!</span> (<span onmouseout="hideTip(event, 'fs2', 20)" onmouseover="showTip(event, 'fs2', 20)" class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;/NUnit.Test.*.dll&quot;</span>)
       <span class="o">|&gt;</span> <span class="i">NUnitParallel</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
           {<span class="i">p</span> <span class="k">with</span>
              <span class="i">DisableShadowCopy</span> <span class="o">=</span> <span class="k">true</span>;
              <span class="i">OutputFile</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 21)" onmouseover="showTip(event, 'fs2', 21)" class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;TestResults.xml&quot;</span> })
 )
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
@@ -547,8 +519,7 @@ pause
 
 <p>Now we want to deploy a *.zip file containing our application:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l"> 1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
 <span class="l"> 4: </span>
@@ -607,10 +578,8 @@ pause
 <span class="l">57: </span>
 <span class="l">58: </span>
 <span class="l">59: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="c">// include Fake lib</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// include Fake lib</span>
 <span class="prep">#r</span> <span class="s">&quot;tools/FAKE/tools/FakeLib.dll&quot;</span>
 <span class="k">open</span> <span class="i">Fake</span>
 
@@ -669,8 +638,7 @@ pause
 
 <span class="c">// start build</span>
 <span class="i">RunTargetOrDefault</span> <span class="s">&quot;Default&quot;</span>
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 

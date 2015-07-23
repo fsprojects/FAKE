@@ -39,6 +39,8 @@
 <h1>MajorUpgradeSchedule</h1>
 <div class="xmldoc">
 <p>Used for determing when to run RemoveExistingProducts on major upgrade</p>
+
+
 </div>
   <h3>Union Cases</h3>
   <table class="table table-bordered member-list">
@@ -66,6 +68,8 @@ RemoveExistingProducts uninstall any components that don't also exist in the upg
 on component reference counts to be accurate during installation of the upgrade product and removal of the installed product. For more information, see Bob Arnson's blog post 
 "Paying for Upgrades" for details. If installation of the upgrade product fails, Windows Installer also rolls back the removal of the installed product -- in other words, reinstalls it.</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -85,6 +89,8 @@ on component reference counts to be accurate during installation of the upgrade 
             </a>
           <p>Schedules RemoveExistingProducts between the InstallExecuteAgain and InstallFinalize standard actions. 
 This is identical to the afterInstallExecute scheduling but after the InstallExecuteAgain standard action instead of InstallExecute.</p>
+
+
 
         </td>
       </tr>
@@ -107,6 +113,8 @@ This is identical to the afterInstallExecute scheduling but after the InstallExe
 the installation transaction so if installation of the upgrade product fails, Windows Installer does not roll back the removal of the installed product, 
 so the machine will have both versions installed.</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -126,6 +134,8 @@ so the machine will have both versions installed.</p>
             </a>
           <p>Schedules RemoveExistingProducts after the InstallInitialize standard action. This is similar to the afterInstallValidate scheduling, but if the installation of the upgrade product fails, 
 Windows Installer also rolls back the removal of the installed product -- in other words, reinstalls it.</p>
+
+
 
         </td>
       </tr>
@@ -147,6 +157,8 @@ Windows Installer also rolls back the removal of the installed product -- in oth
           <p>(Default) Schedules RemoveExistingProducts after the InstallValidate standard action. This scheduling removes the installed product entirely before installing the upgrade product. 
 It's slowest but gives the most flexibility in changing components and features in the upgrade product. Note that if the installation of the upgrade product fails, 
 the machine will have neither version installed.</p>
+
+
 
         </td>
       </tr>

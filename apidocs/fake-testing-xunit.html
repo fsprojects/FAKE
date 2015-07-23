@@ -39,6 +39,8 @@
 <h1>XUnit</h1>
 <div class="xmldoc">
 <p>Contains tasks to run <a href="https://github.com/xunit/xunit">xUnit</a> v1 unit tests.</p>
+
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -54,6 +56,8 @@
             <a href="fake-testing-xunit-xunitparams.html">XUnitParams</a>
           </td>
           <td class="xmldoc"><p>The xUnit parameter type.</p>
+
+
 </td>
         </tr>
     </tbody>
@@ -104,10 +108,20 @@ assembly tested.</p>
 <p>The sample below will generate HTML reports in <code>testDir</code> with names following the
 pattern <code>xUnit.Test.Example.dll.html</code>.</p>
 
-<pre><code>Target "Test" (fun _ -&gt;
-    !! (testDir @@ "xUnit.Test.*.dll")
-      |&gt; xUnit (fun p -&gt; {p with HtmlOutputPath = testDir @@ "html"})
-)</code></pre>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;Test&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+    <span class="o">!!</span> (<span class="i">testDir</span> <span class="o">@@</span> <span class="s">&quot;xUnit.Test.*.dll&quot;</span>)
+      <span class="o">|&gt;</span> <span class="i">xUnit</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> {<span class="i">p</span> <span class="k">with</span> <span class="i">HtmlOutputPath</span> <span class="o">=</span> <span class="i">testDir</span> <span class="o">@@</span> <span class="s">&quot;html&quot;</span>})
+)
+</code></pre></td>
+</tr>
+</table>
+
+
 
         </td>
       </tr>
@@ -145,6 +159,8 @@ pattern <code>xUnit.Test.Example.dll.html</code>.</p>
 <li><code>Silent</code> - <code>false</code></li>
 </ul>
 
+
+
         </td>
       </tr>
       <tr>
@@ -177,9 +193,18 @@ in the given assembly fail.</p>
 
 <h2>Sample usage</h2>
 
-<pre><code>Target "Test" (fun _ -&gt;
-    xUnit (fun p -&gt; {p with HtmlOutputPath = testDir @@ "xunit.html"}) "xUnit.Test.dll"
-)</code></pre>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;Test&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+    <span class="i">xUnit</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> {<span class="i">p</span> <span class="k">with</span> <span class="i">HtmlOutputPath</span> <span class="o">=</span> <span class="i">testDir</span> <span class="o">@@</span> <span class="s">&quot;xunit.html&quot;</span>}) <span class="s">&quot;xUnit.Test.dll&quot;</span>
+)
+</code></pre></td>
+</tr>
+</table>
+
+
 
         </td>
       </tr>

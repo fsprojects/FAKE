@@ -40,6 +40,8 @@
 <div class="xmldoc">
 <p>Module that enables creating and embedding Side-by-Side interop
 manifests for registration free deployment of Com-.net interop projects</p>
+
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -55,6 +57,8 @@ manifests for registration free deployment of Com-.net interop projects</p>
             <a href="fake-sxshelper-interopapplicationdata.html">InteropApplicationData</a>
           </td>
           <td class="xmldoc"><p>Represents an executable to create an <em>application manifest</em> for</p>
+
+
 </td>
         </tr>
         <tr>
@@ -62,6 +66,8 @@ manifests for registration free deployment of Com-.net interop projects</p>
             <a href="fake-sxshelper-interopassemblydata.html">InteropAssemblyData</a>
           </td>
           <td class="xmldoc"><p>Represents a <code>.NET</code> assembly that may be used in COM interop projects</p>
+
+
 </td>
         </tr>
     </tbody>
@@ -99,6 +105,8 @@ manifests for registration free deployment of Com-.net interop projects</p>
 <li><code>applications</code> - Metadata about executables to create manifests for.</li>
 </ul>
 
+
+
         </td>
       </tr>
       <tr>
@@ -133,6 +141,8 @@ to</a> create a manifest for each assembly. This created manifest is unfortunate
 interop Side-by-Side manifest, but it has the important <code>clrClass</code> elements, + <code>version</code> and <code>name</code>info that would be the most
 difficult to create through other means.
 The important info is then put into a valid base manifest and embedded into the assembly as a resource.</p>
+
+
 
         </td>
       </tr>
@@ -176,6 +186,8 @@ I ended up using the windows sdk dissasembler <code>ildasm.exe</code> (ref: <a h
 to">https://msdn.microsoft.com/en-us/library/f7dy01k1(v=vs.110).aspx)
 to</a> create the smallest dissasembly I could (Really only need the manifest part), and the parse the IL file to get the metadata
 (If anyone knows a cleaner / better way, pls improve on the code)</p>
+
+
 
         </td>
       </tr>

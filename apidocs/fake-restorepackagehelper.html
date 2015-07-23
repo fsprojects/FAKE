@@ -40,6 +40,8 @@
 <div class="xmldoc">
 <p>Contains tasks which allow to restore NuGet packages from a NuGet package feed like <a href="http://www.nuget.org">nuget.org</a>.
 There is also a tutorial about <a href="../nuget.html">nuget package restore</a> available.</p>
+
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -55,6 +57,8 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
             <a href="fake-restorepackagehelper-restorepackageparams.html">RestorePackageParams</a>
           </td>
           <td class="xmldoc"><p>RestorePackages parameter path</p>
+
+
 </td>
         </tr>
         <tr>
@@ -62,6 +66,8 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
             <a href="fake-restorepackagehelper-restoresinglepackageparams.html">RestoreSinglePackageParams</a>
           </td>
           <td class="xmldoc"><p>RestorePackages parameter path for single packages</p>
+
+
 </td>
         </tr>
     </tbody>
@@ -92,6 +98,8 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
             </a>
           <p>Looks for NuGet.exe in [1] the specified defaultPath, [2] a list of standard tool folders, [3] any subfolder in the current directory, [4] the PATH - returns the first path where NuGet.exe was found.</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -120,14 +128,28 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
 
 <h2>Sample</h2>
 
-<pre><code>Target "RestorePackages" (fun _ -&gt; 
-     "./scr/Everything.sln"
-     |&gt; RestoreMSSolutionPackages (fun p -&gt;
-         { p with
-             Sources = "http:://myNugetSources.com" :: p.Sources
-             OutputPath = outputDir
-             Retries = 4 })
- )</code></pre>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+<span class="l">8: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;RestorePackages&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span> 
+     <span class="s">&quot;./scr/Everything.sln&quot;</span>
+     <span class="o">|&gt;</span> <span class="i">RestoreMSSolutionPackages</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
+         { <span class="i">p</span> <span class="k">with</span>
+             <span class="i">Sources</span> <span class="o">=</span> <span class="s">&quot;http:://myNugetSources.com&quot;</span> <span class="o">::</span> <span class="i">p</span><span class="o">.</span><span class="i">Sources</span>
+             <span class="i">OutputPath</span> <span class="o">=</span> <span class="i">outputDir</span>
+             <span class="i">Retries</span> <span class="o">=</span> <span class="n">4</span> })
+ )
+</code></pre></td>
+</tr>
+</table>
+
+
 
         </td>
       </tr>
@@ -157,14 +179,28 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
 
 <h2>Sample</h2>
 
-<pre><code>Target "RestorePackages" (fun _ -&gt; 
-     "./scr/ProjectA/packages.config"
-     |&gt; RestorePackage (fun p -&gt;
-         { p with
-             Sources = "http:://myNugetSources.com" :: p.Sources
-             OutputPath = outputDir
-             Retries = 4 })
- )</code></pre>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+<span class="l">8: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;RestorePackages&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span> 
+     <span class="s">&quot;./scr/ProjectA/packages.config&quot;</span>
+     <span class="o">|&gt;</span> <span class="i">RestorePackage</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
+         { <span class="i">p</span> <span class="k">with</span>
+             <span class="i">Sources</span> <span class="o">=</span> <span class="s">&quot;http:://myNugetSources.com&quot;</span> <span class="o">::</span> <span class="i">p</span><span class="o">.</span><span class="i">Sources</span>
+             <span class="i">OutputPath</span> <span class="o">=</span> <span class="i">outputDir</span>
+             <span class="i">Retries</span> <span class="o">=</span> <span class="n">4</span> })
+ )
+</code></pre></td>
+</tr>
+</table>
+
+
 
         </td>
       </tr>
@@ -185,6 +221,8 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
             </a>
           <p>RestorePackage defaults parameters</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -203,6 +241,8 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Restores the given package from NuGet</p>
+
+
 
         </td>
       </tr>
@@ -223,6 +263,8 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
             </a>
           <p>Restores all packages from NuGet to the default directories by scanning for packages.config files in any subdirectory.</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -241,6 +283,8 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>RestoreSinglePackageParams defaults parameters</p>
+
+
 
         </td>
       </tr>

@@ -57,14 +57,10 @@
 
 <p>To run an agent in a console, simply run:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="i">Fake</span><span class="o">.</span><span class="i">Deploy</span>
-</pre>
-</td>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Fake</span><span class="o">.</span><span class="i">Deploy</span>
+</code></pre></td>
 </tr>
 </table>
 
@@ -78,16 +74,12 @@
 <p>By default the service starts a listener on port 8080. This can however be configured by editing the Fake.Deploy.exe.config file
 and changing</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="o">&lt;</span><span class="i">add</span> <span class="i">key</span><span class="o">=</span><span class="s">&quot;ServerName&quot;</span> <span class="i">value</span><span class="o">=</span><span class="s">&quot;localhost&quot;</span> <span class="o">/&gt;</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="o">&lt;</span><span class="i">add</span> <span class="i">key</span><span class="o">=</span><span class="s">&quot;ServerName&quot;</span> <span class="i">value</span><span class="o">=</span><span class="s">&quot;localhost&quot;</span> <span class="o">/&gt;</span>
 <span class="o">&lt;</span><span class="i">add</span> <span class="i">key</span><span class="o">=</span><span class="s">&quot;Port&quot;</span> <span class="i">value</span><span class="o">=</span><span class="s">&quot;8080&quot;</span> <span class="o">/&gt;</span>
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
@@ -111,14 +103,10 @@ status if the service</p>
 
 <p>If you want to learn about Fake.Deploy's command line switches then run:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="i">Fake</span><span class="o">.</span><span class="i">Deploy</span> <span class="o">/</span><span class="i">help</span>
-</pre>
-</td>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Fake</span><span class="o">.</span><span class="i">Deploy</span> <span class="o">/</span><span class="i">help</span>
+</code></pre></td>
 </tr>
 </table>
 
@@ -134,27 +122,19 @@ status if the service</p>
 
 <p>To run a package on the local machine located at C:\Appdev\MyDeployment.nupkg you would run the following command:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="i">Fake</span><span class="o">.</span><span class="i">Deploy</span> <span class="o">/</span><span class="i">deploy</span> <span class="i">C</span><span class="o">:</span>
-</pre>
-</td>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Fake</span><span class="o">.</span><span class="i">Deploy</span> <span class="o">/</span><span class="i">deploy</span> <span class="i">C</span><span class="o">:</span>
+</code></pre></td>
 </tr>
 </table>
 
 <p>To run the same package on a remote computer (e.g. integration-1) you can run:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="i">Fake</span><span class="o">.</span><span class="i">Deploy</span> <span class="o">/</span><span class="i">deployRemote</span> <span class="i">http</span><span class="o">:</span><span class="c">//integration-1:8080 C:\Appdev\MyDeployment.nupkg</span>
-</pre>
-</td>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Fake</span><span class="o">.</span><span class="i">Deploy</span> <span class="o">/</span><span class="i">deployRemote</span> <span class="i">http</span><span class="o">:</span><span class="c">//integration-1:8080 C:\Appdev\MyDeployment.nupkg</span>
+</code></pre></td>
 </tr>
 </table>
 
@@ -165,33 +145,25 @@ listening agent (see. Installing Fake deployment service)</p>
 
 <h2>Getting information about the deployments</h2>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="i">The</span> <span class="i">following</span> <span class="i">assumes</span> <span class="i">you</span> <span class="i">have</span> <span class="i">Fake</span><span class="o">.</span><span class="i">Deploy</span> <span class="i">running</span><span class="o">.</span>
-</pre>
-</td>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">The</span> <span class="i">following</span> <span class="i">assumes</span> <span class="i">you</span> <span class="i">have</span> <span class="i">Fake</span><span class="o">.</span><span class="i">Deploy</span> <span class="i">running</span><span class="o">.</span>
+</code></pre></td>
 </tr>
 </table>
 
 <p>It's easy to get information about the deployments. Just make a HTTP request to server with:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
 <span class="l">4: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="i">fake</span><span class="o">/</span><span class="i">deployments</span><span class="o">/</span>                     <span class="k">-&gt;</span> <span class="i">gives</span> <span class="i">all</span> <span class="i">releases</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">fake</span><span class="o">/</span><span class="i">deployments</span><span class="o">/</span>                     <span class="k">-&gt;</span> <span class="i">gives</span> <span class="i">all</span> <span class="i">releases</span>
 <span class="i">fake</span><span class="o">/</span><span class="i">deployments</span><span class="o">?</span><span class="i">status</span><span class="o">=</span><span class="i">active</span>        <span class="k">-&gt;</span> <span class="i">gives</span> <span class="i">all</span> <span class="i">active</span> <span class="i">releases</span>
 <span class="i">fake</span><span class="o">/</span><span class="i">deployments</span><span class="o">/</span>{<span class="i">app</span>}                <span class="k">-&gt;</span> <span class="i">gives</span> <span class="i">all</span> <span class="i">releases</span> <span class="k">of</span> <span class="i">app</span>
 <span class="i">fake</span><span class="o">/</span><span class="i">deployments</span><span class="o">/</span>{<span class="i">app</span>}<span class="o">?</span><span class="i">status</span><span class="o">=</span><span class="i">active</span>  <span class="k">-&gt;</span> <span class="i">gives</span> <span class="i">the</span> <span class="i">active</span> <span class="i">release</span> <span class="k">of</span> <span class="i">the</span> <span class="i">app</span>
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
@@ -199,16 +171,12 @@ listening agent (see. Installing Fake deployment service)</p>
 
 <p>If you want to perform a rollback of a release so do a HTTP-PUT to:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="i">fake</span><span class="o">/</span><span class="i">deployments</span><span class="o">/</span>{<span class="i">app</span>}<span class="o">?</span><span class="i">version</span><span class="o">=</span>{<span class="i">version</span>} <span class="k">-&gt;</span> <span class="i">rolls</span> <span class="i">the</span> <span class="i">app</span> <span class="i">back</span> <span class="k">to</span> <span class="i">the</span> <span class="i">given</span> <span class="i">version</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">fake</span><span class="o">/</span><span class="i">deployments</span><span class="o">/</span>{<span class="i">app</span>}<span class="o">?</span><span class="i">version</span><span class="o">=</span>{<span class="i">version</span>} <span class="k">-&gt;</span> <span class="i">rolls</span> <span class="i">the</span> <span class="i">app</span> <span class="i">back</span> <span class="k">to</span> <span class="i">the</span> <span class="i">given</span> <span class="i">version</span>
 <span class="i">fake</span><span class="o">/</span><span class="i">deployments</span><span class="o">/</span>{<span class="i">app</span>}<span class="o">?</span><span class="i">version</span><span class="o">=</span><span class="i">HEAD</span><span class="k">~</span><span class="n">2</span>    <span class="k">-&gt;</span> <span class="i">relative</span> <span class="i">rollback</span> <span class="k">of</span> <span class="i">the</span> <span class="i">app</span> (<span class="i">two</span> <span class="i">versions</span> <span class="i">earlier</span>)
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
@@ -217,16 +185,12 @@ listening agent (see. Installing Fake deployment service)</p>
 <p>To turn on authentication in Fake.Deploy set the configuration value for 'Authorization' to 'On' (default is 'Off') in fake.deploy.config.
 When you set this value to 'On' you must also set the configuration key 'AuthorizedKeysFile' to point to a file that that contains the mapping between keys and usernames.</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="o">&lt;</span><span class="i">add</span> <span class="i">key</span><span class="o">=</span><span class="s">&quot;Authorization&quot;</span> <span class="i">value</span><span class="o">=</span><span class="s">&quot;On&quot;</span> <span class="o">/&gt;</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="o">&lt;</span><span class="i">add</span> <span class="i">key</span><span class="o">=</span><span class="s">&quot;Authorization&quot;</span> <span class="i">value</span><span class="o">=</span><span class="s">&quot;On&quot;</span> <span class="o">/&gt;</span>
 <span class="o">&lt;</span><span class="i">add</span> <span class="i">key</span><span class="o">=</span><span class="s">&quot;AuthorizedKeysFile&quot;</span> <span class="i">value</span><span class="o">=</span><span class="s">&quot;c:\fake_deploy\authorized_keys&quot;</span> <span class="o">/&gt;</span>
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
@@ -237,31 +201,23 @@ When you set this value to 'On' you must also set the configuration key 'Authori
 
 <p>Is a rsa-pub key file where each line represents one user.</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="i">ssh</span><span class="o">-</span><span class="i">rsa</span> <span class="i">AAAAB3NzaC1yc2EAAAABJ_some_parts_removed_E91p</span><span class="o">+</span><span class="n">8JLFCaF3tLc8Aw</span><span class="o">==</span> <span class="i">Test</span><span class="o">@</span><span class="i">Fake</span><span class="o">.</span><span class="i">org</span>
-</pre>
-</td>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">ssh</span><span class="o">-</span><span class="i">rsa</span> <span class="i">AAAAB3NzaC1yc2EAAAABJ_some_parts_removed_E91p</span><span class="o">+</span><span class="n">8JLFCaF3tLc8Aw</span><span class="o">==</span> <span class="i">Test</span><span class="o">@</span><span class="i">Fake</span><span class="o">.</span><span class="i">org</span>
+</code></pre></td>
 </tr>
 </table>
 
 <p>Each row has 3 values separated by space</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="o">*</span> <span class="i">which</span> <span class="k">type</span> <span class="k">of</span> <span class="i">key</span> <span class="i">it</span> <span class="i">is</span>, <span class="i">it</span> <span class="i">must</span> <span class="i">be</span> <span class="o">&#39;</span><span class="i">ssh</span><span class="o">-</span><span class="i">rsa&#39;</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="o">*</span> <span class="i">which</span> <span class="k">type</span> <span class="k">of</span> <span class="i">key</span> <span class="i">it</span> <span class="i">is</span>, <span class="i">it</span> <span class="i">must</span> <span class="i">be</span> <span class="o">&#39;</span><span class="i">ssh</span><span class="o">-</span><span class="i">rsa&#39;</span>
 <span class="o">*</span> <span class="k">public</span> <span class="i">key</span> <span class="k">in</span> <span class="i">base64</span> <span class="i">format</span>
 <span class="o">*</span> <span class="i">username</span> <span class="i">the</span> <span class="i">key</span> <span class="i">maps</span> <span class="k">to</span><span class="o">.</span>
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 

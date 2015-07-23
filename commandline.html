@@ -109,8 +109,7 @@
 
 <p>For this short sample we assume you have the latest version of FAKE in <em>./tools/</em>. Now consider the following small FAKE script:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l"> 1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
 <span class="l"> 4: </span>
@@ -125,10 +124,8 @@
 <span class="l">13: </span>
 <span class="l">14: </span>
 <span class="l">15: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="prep">#r</span> <span class="s">&quot;FAKE/tools/FakeLib.dll&quot;</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="prep">#r</span> <span class="s">&quot;FAKE/tools/FakeLib.dll&quot;</span>
 <span class="k">open</span> <span class="i">Fake</span> 
 
 <span class="i">Target</span> <span class="s">&quot;Clean&quot;</span> (<span class="k">fun</span> () <span class="k">-&gt;</span>  <span class="i">trace</span> <span class="s">&quot; --- Cleaning stuff --- &quot;</span>)
@@ -143,30 +140,29 @@
   <span class="o">==&gt;</span> <span class="s">&quot;Deploy&quot;</span>
 
 <span class="i">RunTargetOrDefault</span> <span class="s">&quot;Deploy&quot;</span>
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
 <p>If you are on windows then create this small redirect script:</p>
 
-<table class="pre"><tr><td class="lines"><span class="l">1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
-</td>
-<td class="snippet"><pre lang="batchfile">@echo off
+</pre></td>
+<td class="snippet"><pre class="fssnip"><code lang="batchfile">@echo off
 "tools\Fake.exe" "%1"
 exit /b %errorlevel%
-</pre></td></tr></table>
+</code></pre></td></tr></table>
 
 <p>On mono you can use:</p>
 
-<table class="pre"><tr><td class="lines"><span class="l">1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
-</td>
-<td class="snippet"><pre lang="batchfile">#!/bin/bash
+</pre></td>
+<td class="snippet"><pre class="fssnip"><code lang="batchfile">#!/bin/bash
 mono ./tools/FAKE.exe "$@"
-</pre></td></tr></table>
+</code></pre></td></tr></table>
 
 <p>Now you can run FAKE targets easily from the command line:</p>
 

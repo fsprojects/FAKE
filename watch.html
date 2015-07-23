@@ -46,8 +46,7 @@ watch for changes, and automatically run a function or another target.</p>
 
 <p>Add a new target named "Watch" to your build:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l"> 1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
 <span class="l"> 4: </span>
@@ -61,10 +60,8 @@ watch for changes, and automatically run a function or another target.</p>
 <span class="l">12: </span>
 <span class="l">13: </span>
 <span class="l">14: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="i">Target</span> <span class="s">&quot;GenerateDocs&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;GenerateDocs&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
     <span class="i">tracefn</span> <span class="s">&quot;Generating docs.&quot;</span>
 )
 
@@ -78,8 +75,7 @@ watch for changes, and automatically run a function or another target.</p>
 
     <span class="i">watcher</span><span class="o">.</span><span class="i">Dispose</span>() <span class="c">// Use to stop the watch from elsewhere, ie another task.</span>
 )
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
@@ -88,8 +84,7 @@ and the GenerateDocs target should be rerun.</p>
 
 <p>If you need to watch only a subset of the files, say you want to rerun tests as soon as the compiled DLLs change:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l"> 1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
 <span class="l"> 4: </span>
@@ -103,10 +98,8 @@ and the GenerateDocs target should be rerun.</p>
 <span class="l">12: </span>
 <span class="l">13: </span>
 <span class="l">14: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="i">Target</span> <span class="s">&quot;RunTests&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;RunTests&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
     <span class="i">tracefn</span> <span class="s">&quot;Running tests.&quot;</span>
 )
 
@@ -120,8 +113,7 @@ and the GenerateDocs target should be rerun.</p>
 
     <span class="i">watcher</span><span class="o">.</span><span class="i">Dispose</span>() <span class="c">// Use to stop the watch from elsewhere, ie another task.</span>
 )
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
@@ -133,39 +125,31 @@ and the GenerateDocs target should be rerun.</p>
 
 <p>When running on Linux or Mac OSX, you should add the following export to your <code>.bashrc</code> or <code>.bash_profile</code>:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="i">export</span> <span class="i">MONO_MANAGED_WATCHER</span><span class="o">=</span><span class="k">false</span>
-</pre>
-</td>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">export</span> <span class="i">MONO_MANAGED_WATCHER</span><span class="o">=</span><span class="k">false</span>
+</code></pre></td>
 </tr>
 </table>
 
 <p>If you don't add this, you may see the following exception when attempting to run the <code>WatchChanges</code> task:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l">1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
 <span class="l">4: </span>
 <span class="l">5: </span>
 <span class="l">6: </span>
 <span class="l">7: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="i">Running</span> <span class="i">build</span> <span class="i">failed</span><span class="o">.</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Running</span> <span class="i">build</span> <span class="i">failed</span><span class="o">.</span>
 <span class="i">Error</span><span class="o">:</span>
 <span onmouseout="hideTip(event, 'fs1', 9)" onmouseover="showTip(event, 'fs1', 9)" class="i">System</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs5', 10)" onmouseover="showTip(event, 'fs5', 10)" class="i">IO</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs6', 11)" onmouseover="showTip(event, 'fs6', 11)" class="i">IOException</span><span class="o">:</span> <span class="i">kqueue</span>() <span class="i">FileSystemWatcher</span> <span class="i">has</span> <span class="i">reached</span> <span class="i">the</span> <span class="i">maximum</span> <span class="i">nunmber</span> <span class="k">of</span> <span class="i">files</span> <span class="k">to</span> <span class="i">watch</span><span class="o">.</span>
   <span class="i">at</span> <span onmouseout="hideTip(event, 'fs1', 12)" onmouseover="showTip(event, 'fs1', 12)" class="i">System</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs5', 13)" onmouseover="showTip(event, 'fs5', 13)" class="i">IO</span><span class="o">.</span><span class="i">KqueueMonitor</span><span class="o">.</span><span class="i">Add</span> (<span onmouseout="hideTip(event, 'fs1', 14)" onmouseover="showTip(event, 'fs1', 14)" class="i">System</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs7', 15)" onmouseover="showTip(event, 'fs7', 15)" class="i">String</span> <span class="i">path</span>, <span class="i">Boolean</span> <span class="i">postEvents</span>, <span onmouseout="hideTip(event, 'fs1', 16)" onmouseover="showTip(event, 'fs1', 16)" class="i">System</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs8', 17)" onmouseover="showTip(event, 'fs8', 17)" class="i">Collections</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs9', 18)" onmouseover="showTip(event, 'fs9', 18)" class="i">Generic</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs10', 19)" onmouseover="showTip(event, 'fs10', 19)" class="i">List</span><span class="k">`</span><span class="n">1</span><span class="o">&amp;</span> <span class="i">fds</span>) [<span class="n">0x00000</span>] <span class="k">in</span> <span class="o">&lt;</span><span class="i">filename</span> <span class="i">unknown</span><span class="o">&gt;</span><span class="n">0</span>
   <span class="i">at</span> <span onmouseout="hideTip(event, 'fs1', 20)" onmouseover="showTip(event, 'fs1', 20)" class="i">System</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs5', 21)" onmouseover="showTip(event, 'fs5', 21)" class="i">IO</span><span class="o">.</span><span class="i">KqueueMonitor</span><span class="o">.</span><span class="i">Scan</span> (<span onmouseout="hideTip(event, 'fs1', 22)" onmouseover="showTip(event, 'fs1', 22)" class="i">System</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs7', 23)" onmouseover="showTip(event, 'fs7', 23)" class="i">String</span> <span class="i">path</span>, <span class="i">Boolean</span> <span class="i">postEvents</span>, <span onmouseout="hideTip(event, 'fs1', 24)" onmouseover="showTip(event, 'fs1', 24)" class="i">System</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs8', 25)" onmouseover="showTip(event, 'fs8', 25)" class="i">Collections</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs9', 26)" onmouseover="showTip(event, 'fs9', 26)" class="i">Generic</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs10', 27)" onmouseover="showTip(event, 'fs10', 27)" class="i">List</span><span class="k">`</span><span class="n">1</span><span class="o">&amp;</span> <span class="i">fds</span>) [<span class="n">0x00000</span>] <span class="k">in</span> <span class="o">&lt;</span><span class="i">filename</span> <span class="i">unknown</span><span class="o">&gt;</span><span class="n">0</span>
   <span class="i">at</span> <span onmouseout="hideTip(event, 'fs1', 28)" onmouseover="showTip(event, 'fs1', 28)" class="i">System</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs5', 29)" onmouseover="showTip(event, 'fs5', 29)" class="i">IO</span><span class="o">.</span><span class="i">KqueueMonitor</span><span class="o">.</span><span class="i">Setup</span> () [<span class="n">0x00000</span>] <span class="k">in</span> <span class="o">&lt;</span><span class="i">filename</span> <span class="i">unknown</span><span class="o">&gt;</span><span class="n">0</span>
   <span class="i">at</span> <span onmouseout="hideTip(event, 'fs1', 30)" onmouseover="showTip(event, 'fs1', 30)" class="i">System</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs5', 31)" onmouseover="showTip(event, 'fs5', 31)" class="i">IO</span><span class="o">.</span><span class="i">KqueueMonitor</span><span class="o">.</span><span class="i">DoMonitor</span> () [<span class="n">0x00000</span>] <span class="k">in</span> <span class="o">&lt;</span><span class="i">filename</span> <span class="i">unknown</span><span class="o">&gt;</span><span class="n">0</span>
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 

@@ -39,6 +39,8 @@
 <h1>XpkgHelper</h1>
 <div class="xmldoc">
 <p>Contains tasks to create packages in <a href="http://components.xamarin.com/">Xamarin's xpkg format</a></p>
+
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -54,6 +56,8 @@
             <a href="fake-xpkghelper-xpkgparams.html">xpkgParams</a>
           </td>
           <td class="xmldoc"><p>Parameter type for xpkg tasks</p>
+
+
 </td>
         </tr>
     </tbody>
@@ -84,6 +88,8 @@
             </a>
           <p>Creates xpkg default parameters</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -105,28 +111,56 @@
 
 <h2>Sample</h2>
 
-<pre><code>Target "PackageXamarinDistribution" (fun _ -&gt; 
-     xpkgPack (fun p -&gt;
-         {p with
-             ToolPath = xpkgExecutable;
-             Package = "Portable.Licensing";
-             Version = assemblyFileVersion;
-             OutputPath = publishDir
-             Project = "Portable.Licensing"
-             Summary = "Portable.Licensing is a cross platform licensing tool"
-             Publisher = "Nauck IT KG"
-             Website = "http://dev.nauck-it.de"
-             Details = "./Xamarin/Details.md"
-             License = "License.md"
-             GettingStarted = "./Xamarin/GettingStarted.md"
-             Icons = ["./Xamarin/Portable.Licensing_512x512.png"
-                      "./Xamarin/Portable.Licensing_128x128.png"]
-             Libraries = ["mobile", "./Distribution/lib/Portable.Licensing.dll"]
-             Samples = ["Android Sample.", "./Samples/Android/Android.Sample.sln"
-                        "iOS Sample.", "./Samples/iOS/iOS.Sample.sln"]
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+<span class="l">21: </span>
+<span class="l">22: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;PackageXamarinDistribution&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span> 
+     <span class="i">xpkgPack</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
+         {<span class="i">p</span> <span class="k">with</span>
+             <span class="i">ToolPath</span> <span class="o">=</span> <span class="i">xpkgExecutable</span>;
+             <span class="i">Package</span> <span class="o">=</span> <span class="s">&quot;Portable.Licensing&quot;</span>;
+             <span class="i">Version</span> <span class="o">=</span> <span class="i">assemblyFileVersion</span>;
+             <span class="i">OutputPath</span> <span class="o">=</span> <span class="i">publishDir</span>
+             <span class="i">Project</span> <span class="o">=</span> <span class="s">&quot;Portable.Licensing&quot;</span>
+             <span class="i">Summary</span> <span class="o">=</span> <span class="s">&quot;Portable.Licensing is a cross platform licensing tool&quot;</span>
+             <span class="i">Publisher</span> <span class="o">=</span> <span class="s">&quot;Nauck IT KG&quot;</span>
+             <span class="i">Website</span> <span class="o">=</span> <span class="s">&quot;http://dev.nauck-it.de&quot;</span>
+             <span class="i">Details</span> <span class="o">=</span> <span class="s">&quot;./Xamarin/Details.md&quot;</span>
+             <span class="i">License</span> <span class="o">=</span> <span class="s">&quot;License.md&quot;</span>
+             <span class="i">GettingStarted</span> <span class="o">=</span> <span class="s">&quot;./Xamarin/GettingStarted.md&quot;</span>
+             <span class="i">Icons</span> <span class="o">=</span> [<span class="s">&quot;./Xamarin/Portable.Licensing_512x512.png&quot;</span>
+                      <span class="s">&quot;./Xamarin/Portable.Licensing_128x128.png&quot;</span>]
+             <span class="i">Libraries</span> <span class="o">=</span> [<span class="s">&quot;mobile&quot;</span>, <span class="s">&quot;./Distribution/lib/Portable.Licensing.dll&quot;</span>]
+             <span class="i">Samples</span> <span class="o">=</span> [<span class="s">&quot;Android Sample.&quot;</span>, <span class="s">&quot;./Samples/Android/Android.Sample.sln&quot;</span>
+                        <span class="s">&quot;iOS Sample.&quot;</span>, <span class="s">&quot;./Samples/iOS/iOS.Sample.sln&quot;</span>]
          }
      )
- )</code></pre>
+ )
+</code></pre></td>
+</tr>
+</table>
+
+
 
         </td>
       </tr>
@@ -146,6 +180,8 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Validates a xpkg package based on the package file name</p>
+
+
 
         </td>
       </tr>

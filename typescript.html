@@ -44,7 +44,7 @@ In this tutorial we are looking at the TypeScript support.</p>
 
 <p>Consider a greetings.ts file:</p>
 
-<table class="pre"><tr><td class="lines"><span class="l"> 1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
 <span class="l"> 4: </span>
@@ -56,8 +56,8 @@ In this tutorial we are looking at the TypeScript support.</p>
 <span class="l">10: </span>
 <span class="l">11: </span>
 <span class="l">12: </span>
-</td>
-<td class="snippet"><pre lang="javascript"><span class="k">interface</span> Person {
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="javascript"><span class="k">interface</span> Person {
     firstname: <span class="k">string</span>;
     lastname: <span class="k">string</span>;
 }
@@ -69,12 +69,11 @@ In this tutorial we are looking at the TypeScript support.</p>
 <span class="k">var</span> user <span class="o">=</span> {firstname: <span class="s">"Jane"</span>, lastname: <span class="s">"User"</span>};
 
 document.body.innerHTML <span class="o">=</span> greeter(user);
-</pre></td></tr></table>
+</code></pre></td></tr></table>
 
 <p>Now create a build.fsx and run it via FAKE.exe:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l"> 1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
 <span class="l"> 4: </span>
@@ -87,10 +86,8 @@ document.body.innerHTML <span class="o">=</span> greeter(user);
 <span class="l">11: </span>
 <span class="l">12: </span>
 <span class="l">13: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="prep">#I</span> <span class="s">@&quot;../../tools/FAKE/tools/&quot;</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="prep">#I</span> <span class="s">@&quot;../../tools/FAKE/tools/&quot;</span>
 <span class="prep">#r</span> <span class="s">@&quot;FakeLib.dll&quot;</span>
 
 <span class="k">open</span> <span class="i">Fake</span>
@@ -103,29 +100,28 @@ document.body.innerHTML <span class="o">=</span> greeter(user);
 )
 
 <span class="i">RunTargetOrDefault</span> <span class="s">&quot;CompileTypeScript&quot;</span>
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
 <p>This small script will run all *.ts files through the TypeScript compiler and put them into the ./out/ folder. In this case we will find a greetings.js:</p>
 
-<table class="pre"><tr><td class="lines"><span class="l">1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
 <span class="l">4: </span>
 <span class="l">5: </span>
 <span class="l">6: </span>
 <span class="l">7: </span>
-</td>
-<td class="snippet"><pre lang="javascript"><span class="k">function</span> greeter(person) {
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="javascript"><span class="k">function</span> greeter(person) {
     <span class="k">return</span> <span class="s">"Hello, "</span> <span class="o">+</span> person.firstname <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> person.lastname;
 }
 
 <span class="k">var</span> user <span class="o">=</span> { firstname: <span class="s">"Jane"</span>, lastname: <span class="s">"User"</span> };
 
 document.body.innerHTML <span class="o">=</span> greeter(user);
-</pre></td></tr></table>
+</code></pre></td></tr></table>
 
 <p>If you need more details please see the <a href="apidocs/fake-typescript.html">API docs for the TypeScript</a> task.</p>
 

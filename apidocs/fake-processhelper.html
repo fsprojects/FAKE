@@ -39,6 +39,8 @@
 <h1>ProcessHelper</h1>
 <div class="xmldoc">
 <p>Contains functions which can be used to start other tools.</p>
+
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -54,6 +56,8 @@
             <a href="fake-processhelper-consolemessage.html">ConsoleMessage</a>
           </td>
           <td class="xmldoc"><p>A record type which captures console messages</p>
+
+
 </td>
         </tr>
         <tr>
@@ -61,6 +65,8 @@
             <a href="fake-processhelper-execparams.html">ExecParams</a>
           </td>
           <td class="xmldoc"><p>Parameter type for process execution.</p>
+
+
 </td>
         </tr>
         <tr>
@@ -68,6 +74,8 @@
             <a href="fake-processhelper-processresult.html">ProcessResult</a>
           </td>
           <td class="xmldoc"><p>A process result including error code, message log and errors.</p>
+
+
 </td>
         </tr>
         <tr>
@@ -75,6 +83,8 @@
             <a href="fake-processhelper-shell.html">Shell</a>
           </td>
           <td class="xmldoc"><p>Allows to exec shell operations synchronously and asynchronously.</p>
+
+
 </td>
         </tr>
     </tbody>
@@ -108,6 +118,8 @@ logging output and error messages to FAKE output. You can compose the result
 with Async.Parallel to run multiple external programs at once, but be
 sure that none of them depend on the output of another.</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -127,6 +139,8 @@ sure that none of them depend on the output of another.</p>
             </a>
           <p>Default parameters for process execution.</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -145,6 +159,8 @@ sure that none of them depend on the output of another.</p>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Runs the given process, waits for its completion and returns if it succeeded.</p>
+
+
 
         </td>
       </tr>
@@ -171,6 +187,8 @@ sure that none of them depend on the output of another.</p>
 <li><code>name</code> - The name of the processes in question.</li>
 <li><code>timeout</code> - The timespan to time out after.</li>
 </ul>
+
+
 
         </td>
       </tr>
@@ -204,6 +222,8 @@ sure that none of them depend on the output of another.</p>
 <p>if result <> 0 then failwithf "MyProc.exe returned with a non-zero exit code"</p></li>
 </ul>
 
+
+
         </td>
       </tr>
       <tr>
@@ -229,6 +249,8 @@ sure that none of them depend on the output of another.</p>
 <li><code>configProcessStartInfoF</code> - A function which overwrites the default ProcessStartInfo.</li>
 <li><code>timeOut</code> - The timeout for the process.</li>
 </ul>
+
+
 
         </td>
       </tr>
@@ -257,6 +279,8 @@ sure that none of them depend on the output of another.</p>
 <li><code>timeOut</code> - The timeout for the process.</li>
 </ul>
 
+
+
         </td>
       </tr>
       <tr>
@@ -282,6 +306,8 @@ sure that none of them depend on the output of another.</p>
 <li><code>configProcessStartInfoF</code> - A function which overwrites the default ProcessStartInfo.</li>
 <li><code>timeOut</code> - The timeout for the process.</li>
 </ul>
+
+
 
         </td>
       </tr>
@@ -312,6 +338,8 @@ sure that none of them depend on the output of another.</p>
 <li><code>messageF</code> - A function which will be called with the message log.</li>
 </ul>
 
+
+
         </td>
       </tr>
       <tr>
@@ -330,6 +358,8 @@ sure that none of them depend on the output of another.</p>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Starts the given process and returns immediatly.</p>
+
+
 
         </td>
       </tr>
@@ -350,6 +380,8 @@ sure that none of them depend on the output of another.</p>
             </a>
           <p>Returns all processes with the given name</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -368,6 +400,8 @@ sure that none of them depend on the output of another.</p>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Kills the given process</p>
+
+
 
         </td>
       </tr>
@@ -388,6 +422,8 @@ sure that none of them depend on the output of another.</p>
             </a>
           <p>Kills all processes that are created by the FAKE build script unless "donotkill" flag was set.</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -406,6 +442,8 @@ sure that none of them depend on the output of another.</p>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Kills the F# Interactive (FSI) process.</p>
+
+
 
         </td>
       </tr>
@@ -426,6 +464,8 @@ sure that none of them depend on the output of another.</p>
             </a>
           <p>Kills the MSBuild process.</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -444,6 +484,8 @@ sure that none of them depend on the output of another.</p>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Kills all processes with the given name</p>
+
+
 
         </td>
       </tr>
@@ -464,6 +506,8 @@ sure that none of them depend on the output of another.</p>
             </a>
           <p>Kills all processes with the given id</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -482,6 +526,8 @@ sure that none of them depend on the output of another.</p>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Gets the list of valid directories included in the PATH environment variable.</p>
+
+
 
         </td>
       </tr>
@@ -502,6 +548,8 @@ sure that none of them depend on the output of another.</p>
             </a>
           <p>Sends a command to a remote windows service.</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -520,6 +568,8 @@ sure that none of them depend on the output of another.</p>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Sends a command to a local windows service.</p>
+
+
 
         </td>
       </tr>
@@ -540,6 +590,8 @@ sure that none of them depend on the output of another.</p>
             </a>
           <p>Starts the given process and forgets about it.</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -558,6 +610,8 @@ sure that none of them depend on the output of another.</p>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Starts a remote windows service. Waits up to two minutes for a response.</p>
+
+
 
         </td>
       </tr>
@@ -578,6 +632,8 @@ sure that none of them depend on the output of another.</p>
             </a>
           <p>Starts a local windows service. Waits up to two minutes for a response.</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -597,6 +653,8 @@ sure that none of them depend on the output of another.</p>
             </a>
           <p>Stops a remote windows service. Waits up to two minutes for a response.</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -615,6 +673,8 @@ sure that none of them depend on the output of another.</p>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Stops a local windows service. Waits up to two minutes for a response.</p>
+
+
 
         </td>
       </tr>
@@ -642,6 +702,8 @@ path to the file.</p>
 <ul>
 <li><code>file</code> - The file to locate</li>
 </ul>
+
+
 
         </td>
       </tr>

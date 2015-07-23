@@ -46,7 +46,7 @@ This tutorial shows how to create a (very simple) custom task in C#.</p>
 
 <p>Open Visual Studio and create a new C# class library called my MyCustomTask and create a class called RandomNumberTask:</p>
 
-<table class="pre"><tr><td class="lines"><span class="l"> 1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
 <span class="l"> 4: </span>
@@ -59,8 +59,8 @@ This tutorial shows how to create a (very simple) custom task in C#.</p>
 <span class="l">11: </span>
 <span class="l">12: </span>
 <span class="l">13: </span>
-</td>
-<td class="snippet"><pre lang="csharp"><span class="k">using</span> System;
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="csharp"><span class="k">using</span> System;
 
 <span class="k">namespace</span> MyCustomTask
 {
@@ -73,14 +73,13 @@ This tutorial shows how to create a (very simple) custom task in C#.</p>
         }
     }
 }
-</pre></td></tr></table>
+</code></pre></td></tr></table>
 
 <h2>Using the custom task</h2>
 
 <p>Compile the project and put the generated assembly into the <em>tools/FAKE</em> path of your project. Now you can use your CustomTask in the build script:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l"> 1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
 <span class="l"> 4: </span>
@@ -94,10 +93,8 @@ This tutorial shows how to create a (very simple) custom task in C#.</p>
 <span class="l">12: </span>
 <span class="l">13: </span>
 <span class="l">14: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="c">// include Fake libs</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// include Fake libs</span>
 <span class="prep">#I</span> <span class="s">@&quot;tools\FAKE&quot;</span>
 <span class="prep">#r</span> <span class="s">&quot;FakeLib.dll&quot;</span>
 
@@ -111,8 +108,7 @@ This tutorial shows how to create a (very simple) custom task in C#.</p>
 <span class="c">// use custom functionality</span>
 <span class="i">RandomNumberTask</span><span class="o">.</span><span class="i">RandomNumber</span>(<span class="n">2</span>,<span class="n">13</span>)
   <span class="o">|&gt;</span> <span class="i">tracefn</span> <span class="s">&quot;RandomNumber: %d&quot;</span>
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 

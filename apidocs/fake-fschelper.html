@@ -40,6 +40,8 @@
 <div class="xmldoc">
 <p>Contains tasks to compiles F# source file with the <a href="https://github.com/fsharp/FSharp.Compiler.Service">FSharp.Compiler.Service</a>.
 There is also a tutorial about the <a href="../fsc.html">F# compiler tasks</a> available.</p>
+
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -55,6 +57,8 @@ There is also a tutorial about the <a href="../fsc.html">F# compiler tasks</a> a
             <a href="fake-fschelper-fscparams.html">FscParams</a>
           </td>
           <td class="xmldoc"><p>'fsc.exe' command line parameters</p>
+
+
 </td>
         </tr>
         <tr>
@@ -62,6 +66,8 @@ There is also a tutorial about the <a href="../fsc.html">F# compiler tasks</a> a
             <a href="fake-fschelper-fscplatform.html">FscPlatform</a>
           </td>
           <td class="xmldoc"><p>The 'fsc.exe' output platforms</p>
+
+
 </td>
         </tr>
         <tr>
@@ -69,6 +75,8 @@ There is also a tutorial about the <a href="../fsc.html">F# compiler tasks</a> a
             <a href="fake-fschelper-fsctarget.html">FscTarget</a>
           </td>
           <td class="xmldoc"><p>The 'fsc.exe' output target types</p>
+
+
 </td>
         </tr>
     </tbody>
@@ -112,11 +120,22 @@ There is also a tutorial about the <a href="../fsc.html">F# compiler tasks</a> a
 
 <h2>Sample</h2>
 
-<pre><code>["file1.fs"; "file2.fs"]
-|&gt; fsc (fun parameters -&gt;
-         { parameters with Output = ...
-                           FscTarget = ...
-                           ... })</code></pre>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">[<span class="s">&quot;file1.fs&quot;</span>; <span class="s">&quot;file2.fs&quot;</span>]
+<span class="o">|&gt;</span> <span class="i">fsc</span> (<span class="k">fun</span> <span class="i">parameters</span> <span class="k">-&gt;</span>
+         { <span class="i">parameters</span> <span class="k">with</span> <span class="i">Output</span> <span class="o">=</span> <span class="o">..</span><span class="o">.</span>
+                           <span class="i">FscTarget</span> <span class="o">=</span> <span class="o">..</span><span class="o">.</span>
+                           <span class="o">..</span><span class="o">.</span> })
+</code></pre></td>
+</tr>
+</table>
+
+
 
         </td>
       </tr>
@@ -146,11 +165,22 @@ There is also a tutorial about the <a href="../fsc.html">F# compiler tasks</a> a
 
 <h2>Sample</h2>
 
-<pre><code>["file1.fs"; "file2.fs"]
-|&gt; Fsc (fun parameters -&gt;
-              { parameters with Output = ...
-                                FscTarget = ...
-                                ... })</code></pre>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">[<span class="s">&quot;file1.fs&quot;</span>; <span class="s">&quot;file2.fs&quot;</span>]
+<span class="o">|&gt;</span> <span class="i">Fsc</span> (<span class="k">fun</span> <span class="i">parameters</span> <span class="k">-&gt;</span>
+              { <span class="i">parameters</span> <span class="k">with</span> <span class="i">Output</span> <span class="o">=</span> <span class="o">..</span><span class="o">.</span>
+                                <span class="i">FscTarget</span> <span class="o">=</span> <span class="o">..</span><span class="o">.</span>
+                                <span class="o">..</span><span class="o">.</span> })
+</code></pre></td>
+</tr>
+</table>
+
+
 
         </td>
       </tr>
@@ -172,6 +202,8 @@ There is also a tutorial about the <a href="../fsc.html">F# compiler tasks</a> a
           <p>Compiles the given source file with the given options. If no options
 given (i.e. the second argument is an empty list), by default tries
 to behave the same way as would the command-line 'fsc.exe' tool.</p>
+
+
 
         </td>
       </tr>

@@ -39,6 +39,8 @@
 <h1>PermissionsHelper</h1>
 <div class="xmldoc">
 <p>Contains functions which allow to deal with permissions.</p>
+
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -72,6 +74,8 @@
 <li><code>identity</code> - The windows identity of the user in question.</li>
 </ul>
 
+
+
         </td>
       </tr>
       <tr>
@@ -99,9 +103,18 @@
 
 <h2>Sample</h2>
 
-<pre><code>Target "Install" (fun _ -&gt; 
-     requiresAdmin (fun _ -&gt; installMSI())
- )</code></pre>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;Install&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span> 
+     <span class="i">requiresAdmin</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span> <span class="i">installMSI</span>())
+ )
+</code></pre></td>
+</tr>
+</table>
+
+
 
         </td>
       </tr>

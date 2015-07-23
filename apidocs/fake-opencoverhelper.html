@@ -39,6 +39,8 @@
 <h1>OpenCoverHelper</h1>
 <div class="xmldoc">
 <p>Contains a task which can be used to run <a href="https://github.com/sawilde/opencover">OpenCover</a> on .NET assemblies.</p>
+
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -54,6 +56,8 @@
             <a href="fake-opencoverhelper-opencoverparams.html">OpenCoverParams</a>
           </td>
           <td class="xmldoc"><p>OpenCover parameters, for more details see: <a href="https://github.com/OpenCover/opencover/wiki/Usage#console-application-usage.">https://github.com/OpenCover/opencover/wiki/Usage#console-application-usage.</a></p>
+
+
 </td>
         </tr>
         <tr>
@@ -99,8 +103,16 @@
 
 <h2>Sample</h2>
 
-<pre><code> OpenCover (fun p -&gt; { p with TestRunnerExePath = "./Tools/NUnit/nunit-console.exe" }) 
-    "project-file.nunit /config:Release /noshadow /xml:artifacts/nunit.xml /framework:net-4.0"</code></pre>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"> <span class="i">OpenCover</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> { <span class="i">p</span> <span class="k">with</span> <span class="i">TestRunnerExePath</span> <span class="o">=</span> <span class="s">&quot;./Tools/NUnit/nunit-console.exe&quot;</span> }) 
+    <span class="s">&quot;project-file.nunit /config:Release /noshadow /xml:artifacts/nunit.xml /framework:net-4.0&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+
+
 
         </td>
       </tr>
@@ -120,6 +132,8 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>OpenCover default parameters</p>
+
+
 
         </td>
       </tr>

@@ -41,6 +41,8 @@
 <p>DEPRECATED. See <a href="fake-testing-xunit.html"><code>Fake.Testing.XUnit</code></a>.</p>
 
 <p>Contains tasks to run <a href="https://github.com/xunit/xunit">xUnit</a> unit tests.</p>
+
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -57,6 +59,8 @@
           </td>
           <td class="xmldoc"><p>DEPRECATED.
 Option which allows to specify if an xUnit error should break the build.</p>
+
+
 </td>
         </tr>
         <tr>
@@ -65,6 +69,8 @@ Option which allows to specify if an xUnit error should break the build.</p>
           </td>
           <td class="xmldoc"><p>DEPRECATED.
 The xUnit parameter type</p>
+
+
 </td>
         </tr>
     </tbody>
@@ -95,6 +101,8 @@ The xUnit parameter type</p>
             </a>
           <p>DEPRECATED.
 The xUnit default parameters</p>
+
+
 
         </td>
       </tr>
@@ -131,10 +139,20 @@ in the given assembly fail.</p>
 
 <h2>Sample usage</h2>
 
-<pre><code>Target "Test" (fun _ -&gt;
-    !! (testDir + @"\xUnit.Test.*.dll")
-      |&gt; xUnit (fun p -&gt; {p with OutputDir = testDir })
-)</code></pre>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;Test&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+    <span class="o">!!</span> (<span class="i">testDir</span> <span class="o">+</span> <span class="s">@&quot;\xUnit.Test.*.dll&quot;</span>)
+      <span class="o">|&gt;</span> <span class="i">xUnit</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> {<span class="i">p</span> <span class="k">with</span> <span class="i">OutputDir</span> <span class="o">=</span> <span class="i">testDir</span> })
+)
+</code></pre></td>
+</tr>
+</table>
+
+
 
         </td>
       </tr>
@@ -154,6 +172,8 @@ in the given assembly fail.</p>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>DEPRECATED.</p>
+
+
 
         </td>
       </tr>

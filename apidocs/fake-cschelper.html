@@ -39,6 +39,8 @@
 <h1>CscHelper</h1>
 <div class="xmldoc">
 <p>Contains tasks to compile C# source files with CSC.EXE (C# Compiler).</p>
+
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -54,6 +56,8 @@
             <a href="fake-cschelper-cscparams.html">CscParams</a>
           </td>
           <td class="xmldoc"><p>Compiler parameters</p>
+
+
 </td>
         </tr>
         <tr>
@@ -61,6 +65,8 @@
             <a href="fake-cschelper-cscplatform.html">CscPlatform</a>
           </td>
           <td class="xmldoc"><p>Supported platforms</p>
+
+
 </td>
         </tr>
         <tr>
@@ -68,6 +74,8 @@
             <a href="fake-cschelper-csctarget.html">CscTarget</a>
           </td>
           <td class="xmldoc"><p>Supported output types</p>
+
+
 </td>
         </tr>
     </tbody>
@@ -111,11 +119,22 @@
 
 <h2>Sample</h2>
 
-<pre><code>["file1.cs"; "file2.cs"]
-|&gt; csc (fun parameters -&gt;
-         { parameters with Output = ...
-                           Target = ...
-                           ... })</code></pre>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">[<span class="s">&quot;file1.cs&quot;</span>; <span class="s">&quot;file2.cs&quot;</span>]
+<span class="o">|&gt;</span> <span class="i">csc</span> (<span class="k">fun</span> <span class="i">parameters</span> <span class="k">-&gt;</span>
+         { <span class="i">parameters</span> <span class="k">with</span> <span class="i">Output</span> <span class="o">=</span> <span class="o">..</span><span class="o">.</span>
+                           <span class="i">Target</span> <span class="o">=</span> <span class="o">..</span><span class="o">.</span>
+                           <span class="o">..</span><span class="o">.</span> })
+</code></pre></td>
+</tr>
+</table>
+
+
 
         </td>
       </tr>
@@ -145,11 +164,22 @@
 
 <h2>Sample</h2>
 
-<pre><code>["file1.cs"; "file2.cs"]
-|&gt; Csc (fun parameters -&gt;
-              { parameters with Output = ...
-                                Target = ...
-                                ... })</code></pre>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">[<span class="s">&quot;file1.cs&quot;</span>; <span class="s">&quot;file2.cs&quot;</span>]
+<span class="o">|&gt;</span> <span class="i">Csc</span> (<span class="k">fun</span> <span class="i">parameters</span> <span class="k">-&gt;</span>
+              { <span class="i">parameters</span> <span class="k">with</span> <span class="i">Output</span> <span class="o">=</span> <span class="o">..</span><span class="o">.</span>
+                                <span class="i">Target</span> <span class="o">=</span> <span class="o">..</span><span class="o">.</span>
+                                <span class="o">..</span><span class="o">.</span> })
+</code></pre></td>
+</tr>
+</table>
+
+
 
         </td>
       </tr>

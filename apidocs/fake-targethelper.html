@@ -39,6 +39,8 @@
 <h1>TargetHelper</h1>
 <div class="xmldoc">
 <p>Contains infrastructure code and helper functions for FAKE's target feature.</p>
+
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -54,6 +56,8 @@
             <a href="fake-targethelper-builderror.html">BuildError</a>
           </td>
           <td class="xmldoc"><p>Represents build errors</p>
+
+
 </td>
         </tr>
         <tr>
@@ -61,6 +65,8 @@
             <a href="fake-targethelper-target.html">Target</a>
           </td>
           <td class="xmldoc"><p>A Target can be run during the build</p>
+
+
 </td>
         </tr>
     </tbody>
@@ -91,6 +97,8 @@
             </a>
           <p>Backwards dependencies operator - x is dependent on ys.</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -110,6 +118,8 @@
             </a>
           <p>Activates the BuildFailureTarget.</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -128,6 +138,8 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Activates the FinalTarget.</p>
+
+
 
         </td>
       </tr>
@@ -166,6 +178,8 @@
             </a>
           <p>Registers a BuildFailureTarget (not activated).</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -184,6 +198,8 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>BuildFailureTargets - stores build failure targets and if they are activated.</p>
+
+
 
         </td>
       </tr>
@@ -204,6 +220,8 @@
             </a>
           <p>Returns the DependencyString for the given target.</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -222,6 +240,8 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Determines a parallel build order for the given set of targets</p>
+
+
 
         </td>
       </tr>
@@ -260,6 +280,8 @@
             </a>
           <p>Do nothing - fun () -&gt; () - Can be used to define empty targets.</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -278,6 +300,8 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>The executed targets.</p>
+
+
 
         </td>
       </tr>
@@ -298,6 +322,8 @@
             </a>
           <p>Registers a final target (not activated).</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -316,6 +342,8 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Final Targets - stores final targets and if they are activated.</p>
+
+
 
         </td>
       </tr>
@@ -336,6 +364,8 @@
             </a>
           <p>Returns a list with all target names.</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -354,6 +384,8 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Gets a target with the given name from the target dictionary.</p>
+
+
 
         </td>
       </tr>
@@ -374,6 +406,8 @@
             </a>
           <p>Prints all available targets.</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -392,6 +426,8 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Writes a dependency graph.</p>
+
+
 
         </td>
       </tr>
@@ -412,6 +448,8 @@
             </a>
           <p>Prints all targets.</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -430,6 +468,8 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Runs a target and its dependencies.</p>
+
+
 
         </td>
       </tr>
@@ -450,6 +490,8 @@
             </a>
           <p>Runs a single target without its dependencies</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -468,6 +510,8 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Runs the given array of targets in parallel using count tasks</p>
+
+
 
         </td>
       </tr>
@@ -488,6 +532,8 @@
             </a>
           <p>Creates a Target.</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -506,6 +552,8 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Creates a TargetTemplate.</p>
+
+
 
         </td>
       </tr>
@@ -548,38 +596,82 @@
 
 <p>The following sample creates 4 targets using TargetTemplateWithDependencies and hooks them into the build pipeline.</p>
 
-<pre><code>// Create target creation functions
-let createCompileTarget name strategy = 
-TargetTemplateWithDependencies 
-    ["Clean"; "ResolveDependencies"] // dependencies to other targets 
-    (fun targetParameter -&gt; 
-      tracefn "--- start compile product..."  
-      if targetParameter = "a" then
-        tracefn "    ---- Strategy A"
-      else
-        tracefn "    ---- Strategy B"
-      tracefn "--- finish compile product ..."    
-    ) name strategy
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+<span class="l">21: </span>
+<span class="l">22: </span>
+<span class="l">23: </span>
+<span class="l">24: </span>
+<span class="l">25: </span>
+<span class="l">26: </span>
+<span class="l">27: </span>
+<span class="l">28: </span>
+<span class="l">29: </span>
+<span class="l">30: </span>
+<span class="l">31: </span>
+<span class="l">32: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// Create target creation functions</span>
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="f">createCompileTarget</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">name</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="i">strategy</span> <span class="o">=</span> 
+<span class="i">TargetTemplateWithDependencies</span> 
+    [<span class="s">&quot;Clean&quot;</span>; <span class="s">&quot;ResolveDependencies&quot;</span>] <span class="c">// dependencies to other targets </span>
+    (<span class="k">fun</span> <span class="i">targetParameter</span> <span class="k">-&gt;</span> 
+      <span class="i">tracefn</span> <span class="s">&quot;--- start compile product...&quot;</span>  
+      <span class="k">if</span> <span class="i">targetParameter</span> <span class="o">=</span> <span class="s">&quot;a&quot;</span> <span class="k">then</span>
+        <span class="i">tracefn</span> <span class="s">&quot;    ---- Strategy A&quot;</span>
+      <span class="k">else</span>
+        <span class="i">tracefn</span> <span class="s">&quot;    ---- Strategy B&quot;</span>
+      <span class="i">tracefn</span> <span class="s">&quot;--- finish compile product ...&quot;</span>    
+    ) <span onmouseout="hideTip(event, 'fs2', 4)" onmouseover="showTip(event, 'fs2', 4)" class="i">name</span> <span onmouseout="hideTip(event, 'fs3', 5)" onmouseover="showTip(event, 'fs3', 5)" class="i">strategy</span>
 
-let createTestTarget name dependencies filePattern = 
-  TargetTemplateWithDependencies 
-    dependencies 
-    (fun filePattern -&gt;   
-      tracefn "--- start compile tests ..."
-      !! filePattern
-      |&gt; RunTests
-      tracefn "--- finish compile tests ...")
-    name filePattern
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs4', 6)" onmouseover="showTip(event, 'fs4', 6)" class="f">createTestTarget</span> <span onmouseout="hideTip(event, 'fs2', 7)" onmouseover="showTip(event, 'fs2', 7)" class="i">name</span> <span onmouseout="hideTip(event, 'fs5', 8)" onmouseover="showTip(event, 'fs5', 8)" class="i">dependencies</span> <span onmouseout="hideTip(event, 'fs6', 9)" onmouseover="showTip(event, 'fs6', 9)" class="i">filePattern</span> <span class="o">=</span> 
+  <span class="i">TargetTemplateWithDependencies</span> 
+    <span onmouseout="hideTip(event, 'fs5', 10)" onmouseover="showTip(event, 'fs5', 10)" class="i">dependencies</span> 
+    (<span class="k">fun</span> <span onmouseout="hideTip(event, 'fs6', 11)" onmouseover="showTip(event, 'fs6', 11)" class="i">filePattern</span> <span class="k">-&gt;</span>   
+      <span class="i">tracefn</span> <span class="s">&quot;--- start compile tests ...&quot;</span>
+      <span class="o">!!</span> <span onmouseout="hideTip(event, 'fs6', 12)" onmouseover="showTip(event, 'fs6', 12)" class="i">filePattern</span>
+      <span class="o">|&gt;</span> <span class="i">RunTests</span>
+      <span class="i">tracefn</span> <span class="s">&quot;--- finish compile tests ...&quot;</span>)
+    <span onmouseout="hideTip(event, 'fs2', 13)" onmouseover="showTip(event, 'fs2', 13)" class="i">name</span> <span onmouseout="hideTip(event, 'fs6', 14)" onmouseover="showTip(event, 'fs6', 14)" class="i">filePattern</span>
 
-// create some targets
-createCompileTarget "C1" "a"
-createCompileTarget "C2" "b"
+<span class="c">// create some targets</span>
+<span class="i">createCompileTarget</span> <span class="s">&quot;C1&quot;</span> <span class="s">&quot;a&quot;</span>
+<span class="i">createCompileTarget</span> <span class="s">&quot;C2&quot;</span> <span class="s">&quot;b&quot;</span>
 
-createTestTarget "T1" ["C1"] "**/C1/*.*"
-createTestTarget "T2" ["C1"; "C2"] "**/C?/*.*"
+<span onmouseout="hideTip(event, 'fs4', 15)" onmouseover="showTip(event, 'fs4', 15)" class="f">createTestTarget</span> <span class="s">&quot;T1&quot;</span> [<span class="s">&quot;C1&quot;</span>] <span class="s">&quot;**/C1/*.*&quot;</span>
+<span onmouseout="hideTip(event, 'fs4', 16)" onmouseover="showTip(event, 'fs4', 16)" class="f">createTestTarget</span> <span class="s">&quot;T2&quot;</span> [<span class="s">&quot;C1&quot;</span>; <span class="s">&quot;C2&quot;</span>] <span class="s">&quot;**/C?/*.*&quot;</span>
 
-// hook targets to normal build pipeline
-"T1" ==&gt; "T2" ==&gt; "Test"</code></pre>
+<span class="c">// hook targets to normal build pipeline</span>
+<span class="s">&quot;T1&quot;</span> <span class="o">==&gt;</span> <span class="s">&quot;T2&quot;</span> <span class="o">==&gt;</span> <span class="s">&quot;Test&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+
+<div class="tip" id="fs1">val createCompileTarget : name:&#39;a -&gt; strategy:&#39;b -&gt; obj<br /><br />Full name: docs.createCompileTarget</div>
+<div class="tip" id="fs2">val name : &#39;a</div>
+<div class="tip" id="fs3">val strategy : &#39;a</div>
+<div class="tip" id="fs4">val createTestTarget : (&#39;a -&gt; &#39;b -&gt; &#39;c -&gt; &#39;d)</div>
+<div class="tip" id="fs5">val dependencies : &#39;a</div>
+<div class="tip" id="fs6">val filePattern : &#39;a</div>
+
 
         </td>
       </tr>
@@ -600,6 +692,8 @@ createTestTarget "T2" ["C1"; "C2"] "**/C?/*.*"
             </a>
           <p>Writes a summary of errors reported during build.</p>
 
+
+
         </td>
       </tr>
       <tr>
@@ -618,6 +712,8 @@ createTestTarget "T2" ["C1"; "C2"] "**/C?/*.*"
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Writes a build time report.</p>
+
+
 
         </td>
       </tr>

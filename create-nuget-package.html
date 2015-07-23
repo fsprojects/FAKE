@@ -44,7 +44,7 @@
 <p>The basic idea to create nuget packages is to create a .nuspec template and let FAKE fill out the missing parts.
 The following code shows such .nuspec file from the <a href="https://github.com/octokit/octokit.net">OctoKit</a> project.</p>
 
-<table class="pre"><tr><td class="lines"><span class="l"> 1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
 <span class="l"> 4: </span>
@@ -65,8 +65,8 @@ The following code shows such .nuspec file from the <a href="https://github.com/
 <span class="l">19: </span>
 <span class="l">20: </span>
 <span class="l">21: </span>
-</td>
-<td class="snippet"><pre lang="xml"><span class="prep">&lt;?</span>xml version=<span class="s">"1.0"</span> encoding=<span class="s">"utf-8"</span><span class="prep">?&gt;</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="xml"><span class="prep">&lt;?</span>xml version=<span class="s">"1.0"</span> encoding=<span class="s">"utf-8"</span><span class="prep">?&gt;</span>
 <span class="k">&lt;</span><span class="i">package</span> <span class="o">xmlns:xsi</span><span class="k">="http://www.w3.org/2001/XMLSchema-instance"</span> <span class="o">xmlns:xsd</span><span class="k">="http://www.w3.org/2001/XMLSchema"</span><span class="k">&gt;</span>
   <span class="k">&lt;</span><span class="i">metadata</span> <span class="o">xmlns</span><span class="k">="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"</span><span class="k">&gt;</span>    
     <span class="k">&lt;</span><span class="i">id</span><span class="k">&gt;</span>@project@<span class="k">&lt;/</span><span class="i">id</span><span class="k">&gt;</span>
@@ -87,7 +87,7 @@ The following code shows such .nuspec file from the <a href="https://github.com/
   <span class="k">&lt;/</span><span class="i">metadata</span><span class="k">&gt;</span>
   @files@
 <span class="k">&lt;/</span><span class="i">package</span><span class="k">&gt;</span>
-</pre></td></tr></table>
+</code></pre></td></tr></table>
 
 <p>The .nuspec template contains some placeholders like <code>@build.number@</code> which can be replaced later by the build script.
 It also contains some specific information like the copyright which is not handled by FAKE.</p>
@@ -154,8 +154,7 @@ It also contains some specific information like the copyright which is not handl
 
 <p>In the build script you need to create a target which executes the <a href="apidocs/fake-nugethelper.html">NuGet task</a>:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l"> 1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
 <span class="l"> 4: </span>
@@ -172,10 +171,8 @@ It also contains some specific information like the copyright which is not handl
 <span class="l">15: </span>
 <span class="l">16: </span>
 <span class="l">17: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="i">Target</span> <span class="s">&quot;CreatePackage&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;CreatePackage&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
     <span class="c">// Copy all the package files into a package folder</span>
     <span class="i">CopyFiles</span> <span class="i">packagingDir</span> <span class="i">allPackageFiles</span>
 
@@ -192,8 +189,7 @@ It also contains some specific information like the copyright which is not handl
             <span class="i">Publish</span> <span class="o">=</span> <span class="k">true</span> }) 
             <span class="s">&quot;myProject.nuspec&quot;</span>
 )
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
@@ -211,8 +207,7 @@ It also contains some specific information like the copyright which is not handl
 <p>If your project dependends on other projects it is possible to specify these dependencies in the .nuspec definition (see also <a href="http://docs.nuget.org/docs/reference/nuspec-reference#Specifying_Dependencies_in_version_2.0_and_above">Nuget docs</a>). 
 Here is a small sample which sets up dependencies for different framework versions:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l"> 1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
 <span class="l"> 4: </span>
@@ -232,10 +227,8 @@ Here is a small sample which sets up dependencies for different framework versio
 <span class="l">18: </span>
 <span class="l">19: </span>
 <span class="l">20: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-    <span class="i">NuGet</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> 
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">    <span class="i">NuGet</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> 
             {<span class="i">p</span> <span class="k">with</span>
                     <span class="i">Authors</span> <span class="o">=</span> <span class="i">authors</span>
                     <span class="c">// ...</span>
@@ -255,8 +248,7 @@ Here is a small sample which sets up dependencies for different framework versio
                     <span class="c">// ...</span>
                     <span class="i">Publish</span> <span class="o">=</span> <span class="k">true</span> }) 
                     <span class="s">&quot;myProject.nuspec&quot;</span>
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
@@ -265,8 +257,7 @@ Here is a small sample which sets up dependencies for different framework versio
 <p>If you want to have auxiliary assemblies next to the ones that get referenced by the target project, you can place  all the needed files in the <code>lib</code> directory and explicitly specify which of them should be referenced (see <a href="http://docs.nuget.org/docs/reference/nuspec-reference#Specifying_Explicit_Assembly_References_in_version_2.5_and_above">Nuget docs</a>) via the <code>References</code> and <code>ReferencesByFramework</code> fields.
 Here is a code snippet showing how to use these:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l"> 1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
 <span class="l"> 4: </span>
@@ -277,10 +268,8 @@ Here is a code snippet showing how to use these:</p>
 <span class="l"> 9: </span>
 <span class="l">10: </span>
 <span class="l">11: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="i">NuGet</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> 
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">NuGet</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> 
     {<span class="i">p</span> <span class="k">with</span>
         <span class="i">Authors</span> <span class="o">=</span> <span class="i">authors</span>
         <span class="c">// ...</span>
@@ -291,8 +280,7 @@ Here is a code snippet showing how to use these:</p>
         <span class="c">// ...</span>
         <span class="i">Publish</span> <span class="o">=</span> <span class="k">false</span> })
         <span class="s">&quot;template.nuspec&quot;</span>
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 
@@ -301,8 +289,7 @@ Here is a code snippet showing how to use these:</p>
 <p>If you want to specify exactly what files are packaged and where they are placed in the resulting NuGet package you can specify the Files property directly.  This is exactly like having the Files element of a nuspec filled out ahead of time.
 Here is a code snippet showing how to use this:</p>
 
-<table class="pre"><tr><td class="lines"><pre class="fssnip">
-<span class="l"> 1: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
 <span class="l"> 4: </span>
@@ -315,10 +302,8 @@ Here is a code snippet showing how to use this:</p>
 <span class="l">11: </span>
 <span class="l">12: </span>
 <span class="l">13: </span>
-</pre>
-</td>
-<td class="snippet"><pre class="fssnip">
-<span class="c">// Here we are specifically only taking the js and css folders from our project and placing them in matching target folder in the resulting nuspec.</span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// Here we are specifically only taking the js and css folders from our project and placing them in matching target folder in the resulting nuspec.</span>
 <span class="c">// Note that the include paths are relative to the location of the .nuspec file</span>
 <span class="c">// See [Nuget docs](http://docs.nuget.org/docs/reference/nuspec-reference#Specifying_Files_to_Include_in_the_Package) for more detailed examples of how to specify file includes, as this follows the same syntax.</span>
 <span class="i">NuGet</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
@@ -331,8 +316,7 @@ Here is a code snippet showing how to use this:</p>
         <span class="c">// ...</span>
     })
     <span class="s">&quot;template.nuspec&quot;</span>
-</pre>
-</td>
+</code></pre></td>
 </tr>
 </table>
 

@@ -39,6 +39,8 @@
 <h1>ConfigurationHelper</h1>
 <div class="xmldoc">
 <p>Contains functions which allow to read and write config files.</p>
+
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -75,7 +77,14 @@
 
 <h2>Sample</h2>
 
-<pre><code>applyXslOnConfig (navServicePath @@ DEV.xsl) (navServicePath @@ "CustomSettings.config")</code></pre>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">applyXslOnConfig</span> (<span class="i">navServicePath</span> <span class="o">@@</span> <span class="i">DEV</span><span class="o">.</span><span class="i">xsl</span>) (<span class="i">navServicePath</span> <span class="o">@@</span> <span class="s">&quot;CustomSettings.config&quot;</span>)
+</code></pre></td>
+</tr>
+</table>
+
+
 
         </td>
       </tr>
@@ -101,6 +110,8 @@
 <ul>
 <li><code>fileName</code> - The file name of the config file.</li>
 </ul>
+
+
 
         </td>
       </tr>
@@ -131,7 +142,14 @@
 
 <h2>Sample</h2>
 
-<pre><code>updateApplicationSetting "DatabaseName" targetDatabase (navServicePath @@ "CustomSettings.config")</code></pre>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">updateApplicationSetting</span> <span class="s">&quot;DatabaseName&quot;</span> <span class="i">targetDatabase</span> (<span class="i">navServicePath</span> <span class="o">@@</span> <span class="s">&quot;CustomSettings.config&quot;</span>)
+</code></pre></td>
+</tr>
+</table>
+
+
 
         </td>
       </tr>
@@ -162,7 +180,14 @@
 
 <h2>Sample</h2>
 
-<pre><code>updateAppSetting "DatabaseName" targetDatabase (navServicePath @@ "CustomSettings.config")</code></pre>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">updateAppSetting</span> <span class="s">&quot;DatabaseName&quot;</span> <span class="i">targetDatabase</span> (<span class="i">navServicePath</span> <span class="o">@@</span> <span class="s">&quot;CustomSettings.config&quot;</span>)
+</code></pre></td>
+</tr>
+</table>
+
+
 
         </td>
       </tr>
@@ -192,6 +217,8 @@
 <li><code>config</code> - The XElement representing the config.</li>
 </ul>
 
+
+
         </td>
       </tr>
       <tr>
@@ -220,6 +247,8 @@
 <li><code>value</code> - The new attribute value.</li>
 </ul>
 
+
+
         </td>
       </tr>
       <tr>
@@ -247,6 +276,8 @@
 <li><code>fileName</code> - The file name of the config file.</li>
 </ul>
 
+
+
         </td>
       </tr>
       <tr>
@@ -272,6 +303,8 @@
 <li><code>fileName</code> - The file name of the config file.</li>
 <li><code>config</code> - The XmlDocument representing the config.</li>
 </ul>
+
+
 
         </td>
       </tr>
