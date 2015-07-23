@@ -1,7 +1,9 @@
-#### 4.0.0-alpha004 - 22.07.2015
+#### 4.0.0-alpha005 - 23.07.2015
 * Automatic caching of FAKE build scripts - https://github.com/fsharp/FAKE/pull/859
 * Added MSBuild properties to AndroidPackageParams - https://github.com/fsharp/FAKE/pull/863
 * Add support for outputting NUnit style test result XML to Fake.Testing.XUnit2  - https://github.com/fsharp/FAKE/pull/870
+* Add support for VS2015 VSTest executable - https://github.com/fsharp/FAKE/pull/877
+* Add lock-dependencies parameter to Paket.Pack - https://github.com/fsharp/FAKE/pull/876
 
 #### 3.36.0 - 13.07.2015
 * NoLogo parameter for MSBuildHelper - https://github.com/fsharp/FAKE/pull/850
