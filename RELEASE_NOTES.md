@@ -1,4 +1,4 @@
-#### 4.0.0-alpha005 - 23.07.2015
+#### 4.0.0 - 23.07.2015
 * Automatic caching of FAKE build scripts - https://github.com/fsharp/FAKE/pull/859
 * Added MSBuild properties to AndroidPackageParams - https://github.com/fsharp/FAKE/pull/863
 * Add support for outputting NUnit style test result XML to Fake.Testing.XUnit2  - https://github.com/fsharp/FAKE/pull/870
