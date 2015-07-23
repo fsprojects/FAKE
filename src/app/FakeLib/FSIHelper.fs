@@ -7,38 +7,34 @@ open System
 open System.IO
 open System.Diagnostics
 open System.Threading
+open System.Text.RegularExpressions
 
 let private FSIPath = @".\tools\FSharp\;.\lib\FSharp\;[ProgramFilesX86]\Microsoft SDKs\F#\4.0\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\3.1\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\3.0\Framework\v4.0;[ProgramFiles]\Microsoft F#\v4.0\;[ProgramFilesX86]\Microsoft F#\v4.0\;[ProgramFiles]\FSharp-2.0.0.0\bin\;[ProgramFilesX86]\FSharp-2.0.0.0\bin\;[ProgramFiles]\FSharp-1.9.9.9\bin\;[ProgramFilesX86]\FSharp-1.9.9.9\bin\"
 
 let createDirectiveRegex id = 
-    Text.RegularExpressions.Regex(
-        "^\s*#" + id + "\s*(@\"|\"\"\"|\")(?<path>.+?)(\"\"\"|\")", 
-        System.Text.RegularExpressions.RegexOptions.Compiled ||| 
-        System.Text.RegularExpressions.RegexOptions.Multiline)
+    Regex("^\s*#" + id + "\s*(@\"|\"\"\"|\")(?<path>.+?)(\"\"\"|\")", RegexOptions.Compiled ||| RegexOptions.Multiline)
+
 let loadRegex = createDirectiveRegex "load"
 let rAssemblyRegex = createDirectiveRegex "r"
 let searchPathRegex = createDirectiveRegex "I"
 
-let private extractDirectives (regex : System.Text.RegularExpressions.Regex) scriptContents = 
-    regex.Matches(scriptContents)
-    |> Seq.cast<Text.RegularExpressions.Match>
-    |> Seq.map(fun m ->
-        (m.Groups.Item("path").Value)
-    )
+let private extractDirectives (regex : Regex) scriptContents = 
+    regex.Matches scriptContents
+    |> Seq.cast<Match>
+    |> Seq.map(fun m -> m.Groups.Item("path").Value)
 
-let getAllScriptContents (pathsAndContents : seq<string * string>) = 
-    pathsAndContents |> Seq.map(snd)
+let getAllScriptContents (pathsAndContents : seq<string * string>) = pathsAndContents |> Seq.map snd
+
 let getIncludedAssembly scriptContents = extractDirectives rAssemblyRegex scriptContents
 let getSearchPaths scriptContents = extractDirectives searchPathRegex scriptContents
 
-let rec getAllScripts scriptPath : seq<string * string> = 
-    
-    let scriptContents = File.ReadAllText(scriptPath)
-    let searchPaths = (getSearchPaths scriptContents |> Seq.toList)
+let rec getAllScripts scriptPath : seq<string * string> =     
+    let scriptContents = File.ReadAllText scriptPath
+    let searchPaths = getSearchPaths scriptContents |> Seq.toList
 
     let loadedContents = 
         extractDirectives loadRegex scriptContents
-        |> Seq.collect(fun path -> 
+        |> Seq.collect (fun path -> 
             let path = 
                 if Path.IsPathRooted path then
                     path
@@ -49,14 +45,14 @@ let rec getAllScripts scriptPath : seq<string * string> =
                             if Path.IsPathRooted searchPath then
                                 Path.Combine(searchPath, path)
                             else
-                                Path.Combine(Path.GetDirectoryName(scriptPath), searchPath, path)
-                        )
-                        |> List.tryFind(File.Exists)
+                                Path.Combine(Path.GetDirectoryName scriptPath, searchPath, path))
+                        |> List.tryFind File.Exists
+
                     match pathMaybe with 
                     | None -> failwithf "Could not find script '%s' in any paths searched. Searched paths:\n%A" path searchPaths
                     | Some x -> x
-            getAllScripts path
-        )
+            getAllScripts path)
+
     Seq.concat [List.toSeq [scriptPath, scriptContents]; loadedContents]
 
 let getScriptHash pathsAndContents =
