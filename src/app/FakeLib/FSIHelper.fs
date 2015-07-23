@@ -7,6 +7,7 @@ open System
 open System.IO
 open System.Diagnostics
 open System.Threading
+open System.Xml.Linq
 
 let private FSIPath = @".\tools\FSharp\;.\lib\FSharp\;[ProgramFilesX86]\Microsoft SDKs\F#\4.0\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\3.1\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\3.0\Framework\v4.0;[ProgramFiles]\Microsoft F#\v4.0\;[ProgramFilesX86]\Microsoft F#\v4.0\;[ProgramFiles]\FSharp-2.0.0.0\bin\;[ProgramFilesX86]\FSharp-2.0.0.0\bin\;[ProgramFiles]\FSharp-1.9.9.9\bin\;[ProgramFilesX86]\FSharp-1.9.9.9\bin\"
 
@@ -25,14 +26,20 @@ let private extractDirectives (regex : System.Text.RegularExpressions.Regex) scr
     |> Seq.map(fun m ->
         (m.Groups.Item("path").Value)
     )
+    
+type Script = {
+    Content : string
+    Location : string
+    SearchPaths : string seq
+    IncludedAssemblies : Lazy<string seq>
+}
 
-let getAllScriptContents (pathsAndContents : seq<string * string>) = 
-    pathsAndContents |> Seq.map(snd)
+let getAllScriptContents (pathsAndContents : seq<Script>) = 
+    pathsAndContents |> Seq.map(fun s -> s.Content)
 let getIncludedAssembly scriptContents = extractDirectives rAssemblyRegex scriptContents
 let getSearchPaths scriptContents = extractDirectives searchPathRegex scriptContents
 
-let rec getAllScripts scriptPath : seq<string * string> = 
-    
+let rec getAllScripts scriptPath : seq<Script> = 
     let scriptContents = File.ReadAllText(scriptPath)
     let searchPaths = (getSearchPaths scriptContents |> Seq.toList)
 
@@ -57,13 +64,62 @@ let rec getAllScripts scriptPath : seq<string * string> =
                     | Some x -> x
             getAllScripts path
         )
-    Seq.concat [List.toSeq [scriptPath, scriptContents]; loadedContents]
+    let s = 
+      { Location = scriptPath
+        Content = scriptContents
+        SearchPaths = searchPaths
+        IncludedAssemblies = lazy(getIncludedAssembly scriptContents) }
+    Seq.concat [List.toSeq [s]; loadedContents]
 
 let getScriptHash pathsAndContents =
     let fullContents = getAllScriptContents pathsAndContents |> String.concat "\n"
     let hasher = HashLib.HashFactory.Checksum.CreateCRC32a()
     hasher.ComputeString(fullContents).ToString()
 
+module private Cache =
+    let xname name = XName.Get(name)
+    let create (loadedAssemblies : Reflection.Assembly seq) =
+        let xelement name = XElement(xname name)
+        let xattribute name value = XAttribute(xname name, value)
+
+        let doc = XDocument()
+        let root = xelement "FAKECache"
+        doc.Add(root)
+        let assemblies = xelement "Assemblies"
+        root.Add(assemblies)
+
+        let assemNodes =
+            loadedAssemblies
+            |> Seq.map(fun assem ->
+                let ele = xelement "Assembly"
+                ele.Add(xattribute "Location" assem.Location)
+                ele.Add(xattribute "FullName" assem.FullName)
+                ele.Add(xattribute "Version" (assem.GetName().Version.ToString()))
+                ele)
+            |> Seq.iter(assemblies.Add)
+        doc
+
+    type AssemblyInfo = {
+        Location : string
+        FullName : string
+        Version : string
+    }
+
+    type CacheConfig = {
+        Assemblies : AssemblyInfo seq
+    }
+    let read (path : string) : CacheConfig = 
+        let doc = XDocument.Load(path)
+        //let root = doc.Descendants() |> Seq.exactlyOne
+        let assembliesEle = doc.Descendants(xname "Assemblies") |> Seq.exactlyOne
+        let assemblies = 
+            assembliesEle.Descendants()
+            |> Seq.map(fun assemblyEle ->
+                let get name = assemblyEle.Attribute(xname name).Value
+                { Location = get "Location"
+                  FullName = get "FullName"
+                  Version = get "Version" })
+        { Assemblies = assemblies }
 /// The path to the F# Interactive tool.
 let fsiPath =
     let ev = environVar "FSI"
@@ -194,8 +250,29 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
     let scriptFileName = lazy(Path.GetFileName(scriptPath))
     let hashPath = lazy("./.fake/" + scriptFileName.Value + "_" + scriptHash.Value)
     let assemblyPath = lazy(hashPath.Value + ".dll")
-    let assemblyRefPath = lazy(hashPath.Value + "_references.txt")
-    let cacheValid = lazy (File.Exists(assemblyPath.Value) && File.Exists(assemblyRefPath.Value))
+    let cacheConfigPath = lazy(hashPath.Value + "_config.xml")
+    let cacheConfig = lazy(Cache.read cacheConfigPath.Value)
+    let cacheValid = lazy (
+        let cacheFilesExist = 
+            System.IO.File.Exists(assemblyPath.Value) &&
+            System.IO.File.Exists(cacheConfigPath.Value) 
+        if cacheFilesExist then 
+            let assemVersionValidCount =
+                cacheConfig.Value.Assemblies
+                |> Seq.map(fun assemInfo ->
+                    let assem = 
+                        if assemInfo.Location <> "" then
+                            Reflection.Assembly.LoadFrom(assemInfo.Location)
+                        else
+                            Reflection.Assembly.Load(assemInfo.FullName)
+                    assem.GetName().Version.ToString() = assemInfo.Version)
+                |> Seq.filter(fun x -> x = true)
+                |> Seq.length
+
+            assemVersionValidCount = Seq.length cacheConfig.Value.Assemblies
+        else
+            false
+    )
 
     let getScriptAndHash fileName =
         let matched = hashRegex.Match(fileName)
@@ -210,9 +287,6 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
                 (noExtension.Substring(0, 1).ToUpper())
                 (noExtension.Substring(1))
                 (Path.GetExtension(scriptFileName.Value).Substring(1))
-
-        for loc in File.ReadAllLines(assemblyRefPath.Value) do
-            Reflection.Assembly.LoadFrom(loc) |> ignore
 
         let assembly = Reflection.Assembly.LoadFrom(assemblyPath.Value)
 
@@ -269,9 +343,11 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
                         let refedAssemblies = 
                             System.AppDomain.CurrentDomain.GetAssemblies()
                             |> Seq.filter(fun assem -> not assem.IsDynamic)
-                            |> Seq.map(fun assem -> assem.Location)
-                            
-                        File.WriteAllLines(assemblyRefPath.Value, refedAssemblies) |> ignore
+                            //|> Seq.map(fun assem -> assem.Location)
+                        
+                        let cacheConfig : XDocument = Cache.create refedAssemblies
+                        cacheConfig.Save(cacheConfigPath.Value) 
+                        //File.WriteAllLines(assemblyRefPath.Value, refedAssemblies) |> ignore
                         if printDetails then trace (System.Environment.NewLine + "Saved cache")
                 with 
                 | ex ->
