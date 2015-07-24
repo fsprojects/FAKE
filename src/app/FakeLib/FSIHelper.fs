@@ -342,14 +342,21 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
                         if File.Exists("FSI-ASSEMBLY.pdb") then
                             File.Delete("FSI-ASSEMBLY.pdb")
 
-                        let refedAssemblies = 
-                            System.AppDomain.CurrentDomain.GetAssemblies()
-                            |> Seq.filter(fun assem -> not assem.IsDynamic)                            
+                        let dynamicAssemblies = 
+                            System.AppDomain.CurrentDomain.GetAssemblies() 
+                            |> Seq.filter(fun assem -> assem.IsDynamic)
+                            |> Seq.filter(fun assem -> assem.GetName().Name <> "FSI-ASSEMBLY")
+                        if dynamicAssemblies |> Seq.length > 0 then
+                            if printDetails then 
+                                trace "Dynamic assemblies were generated during evaluation of script.\nCan not save cache." 
+                        else
+                            let assemblies = 
+                                System.AppDomain.CurrentDomain.GetAssemblies()
+                                |> Seq.filter(fun assem -> not assem.IsDynamic)
                         
-                        let cacheConfig : XDocument = Cache.create refedAssemblies
-                        cacheConfig.Save(cacheConfigPath.Value) 
-
-                        if printDetails then trace (System.Environment.NewLine + "Saved cache")
+                            let cacheConfig : XDocument = Cache.create assemblies
+                            cacheConfig.Save(cacheConfigPath.Value) 
+                            if printDetails then trace (System.Environment.NewLine + "Saved cache")
                 with 
                 | ex ->
                     handleException ex
