@@ -31,7 +31,7 @@ type NUnitDomainModel =
     | MultipleDomainModel with
     member x.ParamString =
         match x with
-        | DefaultDomainModel -> ""
+        | DefaultDomainModel -> "None"
         | SingleDomainModel -> "Single"
         | MultipleDomainModel -> "Multiple"
 
@@ -136,7 +136,7 @@ let NUnitDefaults =
       XsltTransformFile = ""
       TimeOut = TimeSpan.FromMinutes 5.0
       DisableShadowCopy = false
-      Domain = DefaultDomainModel
+      Domain = SingleDomainModel
       ErrorLevel = Error 
       Fixture = ""}
 
