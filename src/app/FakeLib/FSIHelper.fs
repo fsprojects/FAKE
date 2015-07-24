@@ -257,12 +257,17 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
             let assemVersionValidCount =
                 cacheConfig.Value.Assemblies
                 |> Seq.map(fun assemInfo ->
-                    let assem = 
-                        if assemInfo.Location <> "" then
-                            Reflection.Assembly.LoadFrom(assemInfo.Location)
-                        else
-                            Reflection.Assembly.Load(assemInfo.FullName)
-                    assem.GetName().Version.ToString() = assemInfo.Version)
+                    try
+                        let assem = 
+                            if assemInfo.Location <> "" then
+                                Reflection.Assembly.LoadFrom(assemInfo.Location)
+                            else
+                                Reflection.Assembly.Load(assemInfo.FullName)
+                        assem.GetName().Version.ToString() = assemInfo.Version
+                    with 
+                    | ex -> 
+                        if printDetails then tracef "Unable to find assembly %A" assemInfo
+                        false)
                 |> Seq.filter(fun x -> x = true)
                 |> Seq.length
 
