@@ -1,3 +1,7 @@
+#### 4.0.2 - 25.07.2015
+* Nunit Domain Fix - https://github.com/fsharp/FAKE/pull/883
+* Dynamic assembly handling for caching - https://github.com/fsharp/FAKE/pull/884
+
 #### 4.0.1 - 23.07.2015
 * Loaded dlls versions are used to invalidate FAKE's cache - https://github.com/fsharp/FAKE/pull/882
 
