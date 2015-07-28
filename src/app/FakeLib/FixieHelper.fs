@@ -1,4 +1,4 @@
-﻿/// Contains tasks to run [Fixie](http://patrick.lioi.net/fixie/) unit tests.
+﻿/// Contains tasks to run [Fixie](http://fixie.github.io/) unit tests.
 module Fake.FixieHelper
 
 open System
