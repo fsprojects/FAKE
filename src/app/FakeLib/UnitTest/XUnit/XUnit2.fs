@@ -60,7 +60,7 @@ type CollectionConcurrencyMode =
     /// Does not limit the number of concurrently executing collections.
     | Unlimited
     /// Limits the number of concurrently executing collections to `count`.
-    | MaxThreads of count : int
+    | MaxThreads of int
     static member internal ToArgument = function
         | Default -> None
         | Unlimited -> Some 0

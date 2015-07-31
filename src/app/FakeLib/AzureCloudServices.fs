@@ -18,7 +18,7 @@ type PackageCloudServiceParams =
 let DefaultCloudServiceParams = { CloudService = ""; WorkerRole = ""; SdkVersion = None; OutputPath = None }
 
 module VmSizes =
-    type VmSize = | VmSize of size:string
+    type VmSize = | VmSize of string
     let ExtraSmall = VmSize "ExtraSmall"
     let Small = VmSize "Small"
     let Medium = VmSize "Medium"
