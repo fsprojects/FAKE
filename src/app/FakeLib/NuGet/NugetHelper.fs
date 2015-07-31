@@ -425,6 +425,7 @@ type NuSpecPackage =
       RequireLicenseAcceptance : bool
       Description : string
       Language : string
+      ReleaseNotes : string
       Tags : string }
     member x.Name = sprintf "%s %s" x.Id x.Version
     override x.ToString() = x.Name
@@ -469,6 +470,7 @@ let getNuspecProperties (nuspec : string) =
       Description = getValue "description"
       Language = getValue "language"
       Tags = getValue "tags"
+      ReleaseNotes = getValue "releaseNotes"
       Url = String.Empty
       IsLatestVersion = false
       Created = DateTime.MinValue
@@ -517,6 +519,7 @@ let extractFeedPackageFromXml (entry : Xml.XmlNode) =
       Owners = author
       Language = property "Language"
       Tags = property "Tags"
+      ReleaseNotes = property "ReleaseNotes"
       ProjectUrl = property "ProjectUrl"
       LicenseUrl = property "LicenseUrl"
       RequireLicenseAcceptance = boolProperty "RequireLicenseAcceptance"

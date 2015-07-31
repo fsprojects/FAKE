@@ -11,6 +11,7 @@
     <iconUrl>@iconUrl@</iconUrl>
     <projectUrl>http://www.github.com/fsharp/Fake</projectUrl>
     <licenseUrl>http://www.github.com/fsharp/Fake/blob/master/License.txt</licenseUrl>
+    <releaseNotes>@releaseNotes@</releaseNotes>
     <tags>build</tags>
   </metadata>
 </package>
