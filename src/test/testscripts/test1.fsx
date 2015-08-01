@@ -8,11 +8,11 @@ Target "blah" (fun _ ->
         AssemblyPath = "test.dll"
         Parameters = None
     }
-    
+
     let nameConfig = {simpleConfig with ClassName = Some "simpleClass"}
     let simpleWithParams = {simpleConfig with Parameters = Some [("Verbosity", "High"); ("dupe2", "wat");]}
-    let fullConfig = {simpleConfig with 
-                        ClassName = nameConfig.ClassName 
+    let fullConfig = {simpleConfig with
+                        ClassName = nameConfig.ClassName
                         Parameters = simpleWithParams.Parameters}
 
     let wcl = Some [
@@ -28,7 +28,7 @@ Target "blah" (fun _ ->
                                 "TargetsNotLogged", "GetNativeManifest,GetCopyToOutputDirectoryItems,GetTargetPath"
                                 "TFSUrl", "https://ctaggart.visualstudio.com/DefaultCollection"
                             ]
-                    }, 
+                    },
                     Some {
                         ClassName = Some "WorkflowForwardingLogger"
                         AssemblyPath = "C:\Program Files\Microsoft Team Foundation Server 12.0\Tools\Microsoft.TeamFoundation.Build.Server.Logger.dll"
@@ -39,10 +39,10 @@ Target "blah" (fun _ ->
                     }
                 ]
 
-    let simpleRun = 
+    let simpleRun =
         [simpleConfig; nameConfig; simpleWithParams; fullConfig]
         |> List.map (fun x -> (x, None))
-    let complexRun = 
+    let complexRun =
         [simpleConfig; nameConfig; simpleWithParams; fullConfig]
         |> List.map (fun x -> (x, Some fullConfig))
 

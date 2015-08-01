@@ -1,8 +1,10 @@
-#r @"../../app/FAKE/bin/Debug/FakeLib.dll"
+#r @"../../app/FakeLib/bin/Debug/FakeLib.dll"
 
 open Fake
 open Fake.FileHelper
 open System
+open System.IO
+open TimeSignatures
 
 // helper function for processes
 let startProcess fileName args =
@@ -16,27 +18,22 @@ let startProcess fileName args =
 
 // a generic task generator based on file extensions
 let task_gen proc dir_from dir_to ext_from ext_to x =
-    let files_out = Seq.toList (Include(dir_from </> ("*." + ext_from)))
-    if not(List.forall (fun value -> value) (TimeSignatures.updateTimestamps files_out)) then
-        files_out 
-        |> Seq.iter (fun file_in ->
-                            let file_name = filename file_in
-                            let file_in = ext_from </> file_name
-                            let file_out = dir_to </> (changeExt ext_to file_name)
-                            traceFAKE "%s will be processed" file_out
-                            startProcess proc (sprintf " %s %s" file_in file_out))
+    let files_in = dir_from </> ("*." + ext_from) |> Include |> Seq.toList
+    let files_out = files_in |> List.map (fun filename -> changeExt ext_to filename)
+    let uptodate_in = updateMD5 files_in
+    traceFAKE "Changed input files: %A" uptodate_in
+    let uptodate_out = files_out |> List.filter (fun filename -> not(File.Exists(filename)))
+    traceFAKE "Changed output files: %A" uptodate_out
+    let uptodate = Set.union (Set.ofList uptodate_in) (Set.ofList uptodate_out)
+    traceFAKE "Files needing update: %A" uptodate
+    Set.iter (fun file -> ZipFile (changeExt "zip" file) file) uptodate
 
 let task_zip x =
-    let files = Seq.toList(Include("*.log"))
-    let uptodate = TimeSignatures.updateMD5 files
-    let files = List.filter (fun (file, uptodate_file) -> uptodate_file) (List.zip files uptodate)
-    List.iter (fun (file, _) -> ZipFile file (changeExt "zip" file)) files
+    task_gen (fun from to_ -> ZipFile to_ from) "." "." "fsx" "zip" x
 
+let xml = initTS
 
-let xml = TimeSignatures.initTS
-
-Description "Zip changed log files"
+Description "Zip changed fsx files"
 TargetTemplate task_zip "task_zip" xml
 
-RunTargetOrDefault "task_zip"
-
+Run "task_zip"

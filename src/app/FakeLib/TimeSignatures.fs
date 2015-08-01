@@ -63,28 +63,28 @@ let initTS : XmlDocument =
 type TimeStamp = int64
 
 /// [omit]
-let toTimeStamp(time: string) : TimeStamp = 
+let inline private toTimeStamp(time: string) : TimeStamp = 
     int64(time)
     
 /// [omit]
-let zeroTimeStamp = int64(0)
+let private zeroTimeStamp = int64(0)
 
 
 /// [omit]
 type MD5Hash = byte[]
 
 /// [omit]
-let toMD5Hash(signature: string) : MD5Hash = 
+let inline private toMD5Hash(signature: string) : MD5Hash = 
     Convert.FromBase64String(signature)
 
 /// Auxiliary function to convert a signature to a string
 /// ## Parameters
 ///  - `signature` - the signature to be converted
-let md5ToString(signature: MD5Hash) : string = 
+let inline md5ToString(signature: MD5Hash) : string = 
     Convert.ToBase64String(signature)
 
 /// [omit]
-let zeroSignature = Convert.FromBase64String("")
+let private zeroSignature = Convert.FromBase64String("")
 
 /// A structure to keep timestamps and MD5 signatures
 type TimeSignature = {
@@ -106,15 +106,14 @@ type GetTSFun = string -> TimeSignature * XmlElement
 ///    let {timestamp=timestamp; signature=_} = getConfigTimestamp "filename"
 ///    printfn "The recorded timestamp for '%s' is %s" "filename" (timestamp.ToString())
 let getConfigTimestamp (filename: string) : ((TimeSignature * XmlElement)) =
-    traceFAKE "\tgetting the timestamp for file '%s'" filename
+    traceFAKE "Getting the timestamp for file '%s'" filename
     let node = global_state.xml_conf.SelectSingleNode (sprintf "files/file[@name='%s']" filename) :?> XmlElement
     if node = null then
         let now = DateTime.Now.Ticks
-        traceFAKE "\ttimestamp set to %s" (now.ToString())
+        traceFAKE "New file: setting timestamp for file '%s' to %s" filename (now.ToString())
         ({timestamp=now; signature=zeroSignature}, null)
     else
         let ts = node.GetAttribute("timestamp")
-        traceFAKE "\ttimestamp = %s" ts
         ({timestamp=toTimeStamp(ts); signature=zeroSignature}, node)    
 
 
@@ -127,16 +126,15 @@ let getConfigTimestamp (filename: string) : ((TimeSignature * XmlElement)) =
 ///    let {timestamp=_; signature=md5} = getConfigTimestamp "filename"
 ///    printfn "The recorded MD5 signature for '%s' is %s" "filename" (md5ToString(md5))
 let getConfigMD5 (filename: string) : ((TimeSignature * XmlElement)) =
-    traceFAKE "\tgetting the MD5 for file '%s'" filename
+    traceFAKE "Getting the MD5 for file '%s'" filename
     let node = global_state.xml_conf.SelectSingleNode (sprintf "files/file[@name='%s']" filename) :?> XmlElement
     if node = null then
         use md5Hash = MD5.Create()  
         let md5 = md5Hash.ComputeHash(File.ReadAllBytes(filename))
-        traceFAKE "\tmd5 set to %s" (md5ToString(md5))
+        traceFAKE "New file: setting MD5 for file '%s' to %s" filename (md5ToString(md5))
         ({timestamp=zeroTimeStamp; signature=md5}, null)
     else
         let md5 = node.GetAttribute("md5")
-        traceFAKE "\tsignature = %s" md5
         ({timestamp=zeroTimeStamp; signature=toMD5Hash(md5)}, node)
 
 
@@ -144,7 +142,7 @@ let getConfigMD5 (filename: string) : ((TimeSignature * XmlElement)) =
 let private updateOrAddConfigNode (filename: string) (value: TimeSignature) (node: XmlElement) =
     match node with
     | null ->
-        traceFAKE "\tcreating node for file '%s'" filename
+        traceFAKE "Creating a XML node for file '%s'" filename
         let node' = global_state.xml_conf.CreateElement("file")
 
         let att = global_state.xml_conf.CreateAttribute("name")
@@ -161,9 +159,11 @@ let private updateOrAddConfigNode (filename: string) (value: TimeSignature) (nod
 
         global_state.xml_conf.FirstChild.AppendChild(node') |> ignore  
     | node ->
-        traceFAKE "\tupdating node for file '%s' to timestamp=%s and md5=%s" filename (value.timestamp.ToString()) (md5ToString(value.signature))
+        traceFAKE "Updating the XML node for file '%s' to timestamp=%s" filename (value.timestamp.ToString())
         node.SetAttribute("timestamp", value.timestamp.ToString())
-        node.SetAttribute("md5", md5ToString(value.signature))  
+        if value.signature <> zeroSignature then
+            traceFAKE "\tand md5=%s" (md5ToString(value.signature))
+            node.SetAttribute("md5", md5ToString(value.signature))  
 
 
 /// [omit]
@@ -229,85 +229,83 @@ let isUpToDateMD5 (filename: string) : bool =
 
 
 /// [omit]
-let rec private unzip4' (l: ('a * 'b * 'c * 'd) list) (accum: 'a list * 'b list * 'c list * 'd list) : ('a list * 'b list * 'c list * 'd list) =
+let rec private unzip5' (l: ('a * 'b * 'c * 'd * 'e) list) (accum: 'a list * 'b list * 'c list * 'd list * 'e list) : ('a list * 'b list * 'c list * 'd list * 'e list) =
     match l with
     | [] ->
         accum
     | head_l :: tail_l ->
-        let (head_st, head_nd, head_rd, head_th) = head_l
-        let (tail_st, tail_nd, tail_rd, tail_th) = accum
-        let accum = (head_st :: tail_st, head_nd :: tail_nd, head_rd :: tail_rd, head_th :: tail_th)
-        unzip4' tail_l accum
+        let (head_st, head_nd, head_rd, head_th, head_th') = head_l
+        let (tail_st, tail_nd, tail_rd, tail_th, tail_th') = accum
+        let accum = (head_st :: tail_st, head_nd :: tail_nd, head_rd :: tail_rd, head_th :: tail_th, head_th' :: tail_th')
+        unzip5' tail_l accum
 
 /// [omit]
-let private unzip4 (l: ('a * 'b * 'c * 'd) list) : ('a list * 'b list * 'c list * 'd list) =
-    let (a, b, c, d) = unzip4' l ([], [], [], [])
-    (List.rev a, List.rev b, List.rev c, List.rev d)
+let private unzip5 (l: ('a * 'b * 'c * 'd * 'e) list) : ('a list * 'b list * 'c list * 'd list * 'e list) =
+    let (a, b, c, d, e) = unzip5' l ([], [], [], [], [])
+    (List.rev a, List.rev b, List.rev c, List.rev d, List.rev e)
 
 /// [omit]
-let private updateTS (filenames: string list) (getConfigTS: GetTSFun) (last_timestamp: TimeStamp list option) : (TimeSignature * bool) list option =
+let inline private fst5  ((a, _, _, _, _): ('a * 'b * 'c * 'd * 'e)) : 'a = a
+    
+let inline private check_if_uptodate (value: TimeSignature) (file_value: TimeSignature) : bool = 
+    (((file_value.signature <> zeroSignature) && (value.signature = file_value.signature)) 
+    || ((file_value.signature = zeroSignature) && (value.timestamp = file_value.timestamp)))
+
+/// [omit]
+let private updateTS (filenames: string list) (getConfigTS: GetTSFun) (last_timestamp: TimeStamp list option) : (string list * TimeSignature list) option =
     let composite_values = 
         filenames 
         |> List.map (fun filename ->
                          let (value, node) = getConfigTS filename
                          let file_value = getTimesignature filename (last_timestamp <> None)
-                         (filename, node, value, file_value))
+                         let uptodate = check_if_uptodate value file_value
+                         (uptodate, filename, node, value, file_value))
 
-    let unchanged = composite_values 
-                      |> List.map (fun (_, _, value, file_value) -> (((file_value.signature <> zeroSignature) && (value.signature = file_value.signature)) 
-                                                                     || ((file_value.signature = zeroSignature) && (value.timestamp = file_value.timestamp))))
+    let changed_items = composite_values |> List.filter (fun item -> item |> fst5 |> not)
+    let (_, filenames, nodes, _, file_values) = unzip5 changed_items
 
-    let (filenames, nodes, values, last_values) = unzip4 composite_values
+    updateOrAddConfigNodeList filenames file_values nodes
+    Some(filenames, file_values)
 
-    if List.exists (fun value -> not(value)) unchanged then        
-        let file_values = List.map (fun (_, _, _, file_value) -> file_value) composite_values
+/// Update the MD5 timestamps of a list of files. Return a list of the changed files
+/// ## Parameters
+///  - `filenames` - a list with the names of the files
+///
+/// ## Sample
+///
+///    let changed_files = updateTimestamps filenames
+///    if changed_files.Length > 0 then
+///        // process changed_files
+let updateTimestamps (filenames: string list) : string list =
+    match updateTS filenames getConfigTimestamp None with
+    | Some((changed_files, _)) ->
+        changed_files
+    | None ->
+        []
 
-        traceFAKE "\tupdating %A to %A" filenames (last_values.ToString())
-        updateOrAddConfigNodeList filenames file_values nodes
-        Some(List.zip file_values unchanged)
-    else
-        traceFAKE "\tskipping %A (%A)" filename values
-        None
 
-
-/// Update the MD5 timestamps of a list of files. Return a list telling which files were up-to-date
+/// Update the MD5 signature of a list of files; first check their timestamps and, if they are the same, MD5s are not computed (more efficient). Return a list of the changed files
 /// ## Parameters
 ///  - `filename` - a list with the names of the files
 ///
 /// ## Sample
 ///
-///    if not(updateTS "filename") then
-///        printfn "%s is not up-to-date" "filename"
-///    else
-///        printfn "%s is up-to-date" "filename"
-let updateTimestamps (filenames: string list) : bool list =
+///    let changed_files = updateMD5 filenames
+///    if changed_files.Length > 0 then
+///        // process changed_files
+let updateMD5 (filenames: string list) : string list =    
     match updateTS filenames getConfigTimestamp None with
-    | Some(ts) ->
-        List.map (fun (_, value) -> value) ts
+    | Some((changed_files, ts)) ->
+        /// MD5 is heavy, therefore just check small files (< 1024KB ~)
+        if (List.exists (fun filename -> File.Exists(filename) && FileInfo(filename).Length >= int64(10e6)) filenames) then
+            traceFAKE "A file is greater than 10MB and so the MD5 signatures have been deactivated"
+            changed_files
+        else
+            let timestamps_option = Some(List.map (fun {timestamp=timestamp; signature=_} -> timestamp) ts)
+            match updateTS changed_files getConfigMD5 timestamps_option with
+            | Some((changed_files, ts)) ->
+                changed_files
+            | None ->
+                []
     | None ->
-        List.replicate filenames.Length true
-
-
-/// Update the MD5 signature of a list of files; first check the timestamps and if they are the same MD5s are not computed (more efficient). Return a list telling which files were up-to-date
-/// ## Parameters
-///  - `filename` - a list with the names of the files
-///
-/// ## Sample
-///
-///    if not(updateMD5 "filename") then
-///        printfn "%s is not up-to-date" "filename"
-///    else
-///        printfn "%s is up-to-date" "filename"
-let updateMD5 (filenames: string list) : bool list =
-    /// MD5 is heavy, therefore just let small files pass (< 1024KB ~)
-    assert(List.forall (fun filename -> FileInfo(filename).Length < int64(10240)) filenames)
-    match updateTS filenames getConfigTimestamp None with
-    | Some(ts) ->
-        let timestamps_option = Some(List.map (fun ({timestamp=timestamp; signature=_}, _) -> timestamp) ts)
-        match updateTS filenames getConfigTimestamp timestamps_option with
-        | Some(ts) ->
-            List.map (fun (_, value) -> value) ts
-        | None ->
-            List.replicate filenames.Length true
-    | None ->
-        List.replicate filenames.Length true
+        []
