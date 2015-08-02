@@ -1,3 +1,8 @@
+#### 4.0.3 - 02.08.2015
+* FAKE removes mono debug file after cache is saved - https://github.com/fsharp/FAKE/pull/891
+* Added ReleaseNotes to NugetHelper - https://github.com/fsharp/FAKE/pull/893
+* BUGFIX: running from a network drive - https://github.com/fsharp/FAKE/pull/892
+
 #### 4.0.2 - 25.07.2015
 * Nunit Domain Fix - https://github.com/fsharp/FAKE/pull/883
 * Dynamic assembly handling for caching - https://github.com/fsharp/FAKE/pull/884
