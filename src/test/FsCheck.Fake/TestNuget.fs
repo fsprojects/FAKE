@@ -29,6 +29,8 @@ let ``Can parse package information from nuget.org stream`` () =
         RequireLicenseAcceptance = false
         Description = "FAKE - F# Make - is a build automation tool for .NET. Tasks and dependencies are specified in a DSL which is integrated in F#. This package bundles all extensions."
         Language = "en-US"
+        ReleaseNotes = "FCS simplification - https://github.com/fsharp/FAKE/pull/773
+Paket push task runs in parallel - https://github.com/fsharp/FAKE/pull/768" 
         Tags = "build fake f#" }
 
     Assert.Equal<string>(expected.Id, result.Id)
@@ -47,4 +49,5 @@ let ``Can parse package information from nuget.org stream`` () =
     Assert.Equal<string>(expected.Description, result.Description)
     Assert.Equal<string>(expected.Language, result.Language)
     Assert.Equal<string>(expected.Tags, result.Tags)
+    Assert.Equal<string>(expected.ReleaseNotes, result.ReleaseNotes)
     
