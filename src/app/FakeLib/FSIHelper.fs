@@ -341,6 +341,8 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
                     
                         if File.Exists("FSI-ASSEMBLY.pdb") then
                             File.Delete("FSI-ASSEMBLY.pdb")
+                        if File.Exists("FSI-ASSEMBLY.dll.mdb") then
+                            File.Delete("FSI-ASSEMBLY.dll.mdb")
 
                         let dynamicAssemblies = 
                             System.AppDomain.CurrentDomain.GetAssemblies() 
