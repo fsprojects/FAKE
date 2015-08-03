@@ -23,15 +23,18 @@ type NUnitProcessModel =
         | MultipleProcessModel -> "Multiple"
 /// The /domain option controls of the creation of AppDomains for running tests. See [NUnit-Console Command Line Options](http://www.nunit.org/index.php?p=consoleCommandLine&r=2.6.4)
 type NUnitDomainModel = 
-    /// No domain is created - the tests are run in the primary domain. This normally requires copying the NUnit assemblies into the same directory as your tests.
+    /// The default is to use multiple domains if multiple assemblies are listed on the command line. Otherwise a single domain is used.
     | DefaultDomainModel
+    /// No domain is created - the tests are run in the primary domain. This normally requires copying the NUnit assemblies into the same directory as your tests.
+    | NoDomainModel
     /// A test domain is created - this is how NUnit worked prior to version 2.4
     | SingleDomainModel
     /// A separate test domain is created for each assembly
     | MultipleDomainModel with
     member x.ParamString =
         match x with
-        | DefaultDomainModel -> "None"
+        | DefaultDomainModel -> ""
+        | NoDomainModel -> "None"
         | SingleDomainModel -> "Single"
         | MultipleDomainModel -> "Multiple"
 
@@ -136,7 +139,7 @@ let NUnitDefaults =
       XsltTransformFile = ""
       TimeOut = TimeSpan.FromMinutes 5.0
       DisableShadowCopy = false
-      Domain = SingleDomainModel
+      Domain = DefaultDomainModel
       ErrorLevel = Error 
       Fixture = ""}
 
