@@ -84,6 +84,7 @@
     <Compile Include="Globbing\TestSample5\AbsoluteDirGlobbingSpecs.cs" />
     <Compile Include="NAVFiles\NAVSplitObjectSpecs.cs" />
     <Compile Include="NAVFiles\NavTestResultSpecs.cs" />
+    <Compile Include="NunitCommonSpecs.cs" />
     <Compile Include="OpenCoverHelperSpecs.cs" />
     <Compile Include="PackageMgt\PackagesConfigSpecs.cs" />
     <Compile Include="SemVerHelperSpecs.cs" />
