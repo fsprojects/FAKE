@@ -11,12 +11,19 @@ type Draft =
       Project : string
       DraftRelease : Release }
 
-let rec private retry count asyncF = 
-    async { 
-        try 
-            return! asyncF
-        with _ when count > 0 -> return! retry (count - 1) asyncF
-    }
+let private isRunningOnMono = System.Type.GetType ("Mono.Runtime") <> null
+
+let rec private retry count asyncF =
+    // This retry logic causes an exception on Mono:
+    // https://github.com/fsharp/fsharp/issues/440
+    if isRunningOnMono then
+        asyncF
+    else
+        async {
+            try
+                return! asyncF
+            with _ when count > 0 -> return! retry (count - 1) asyncF
+        }
 
 
 let createClient user password = 
