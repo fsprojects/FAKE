@@ -2,6 +2,8 @@
 * FAKE removes mono debug file after cache is saved - https://github.com/fsharp/FAKE/pull/891
 * Added ReleaseNotes to NugetHelper - https://github.com/fsharp/FAKE/pull/893
 * BUGFIX: running from a network drive - https://github.com/fsharp/FAKE/pull/892
+* BUGFIX: Align NUnitDomainModel with NUnit documentation - https://github.com/fsharp/FAKE/pull/897
+* BUGFIX: Skip Octokit retry logic on Mono where it causes a crash - https://github.com/fsharp/FAKE/pull/895
 
 #### 4.0.2 - 25.07.2015
 * Nunit Domain Fix - https://github.com/fsharp/FAKE/pull/883
