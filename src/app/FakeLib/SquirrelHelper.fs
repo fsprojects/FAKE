@@ -1,4 +1,3 @@
-[<AutoOpen>]
 /// Contains types and utility functions related to creating [Squirrel](https://github.com/Squirrel/Squirrel.Windows) installer.
 module Fake.Squirrel
 
