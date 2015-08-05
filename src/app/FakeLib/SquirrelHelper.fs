@@ -47,7 +47,7 @@ type SquirrelParams =
 /// - `BootstrapperExe` - `None`
 /// - `LoadingGif` - `None`
 /// - `ToolPath` - The `squirrel.exe` path if it exists in a subdirectory of the current directory.
-/// - `TimeOut` - 5 minutes
+/// - `TimeOut` - 10 minutes
 /// - `SignExecutable` - `None`
 /// - `SigningSecret` - `None`
 /// - `SigningSecret` - `None`
@@ -59,7 +59,7 @@ let SquirrelDefaults =
         BootstrapperExe = None
         LoadingGif = None
         ToolPath = findToolInSubPath toolname (currentDirectory @@ "tools" @@ "Squirrel")
-        TimeOut = TimeSpan.FromMinutes 5.
+        TimeOut = TimeSpan.FromMinutes 10.
         SignExecutable = None
         SigningKeyFile = None
         SigningSecret = None }
