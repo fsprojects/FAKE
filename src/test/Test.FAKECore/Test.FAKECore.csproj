@@ -89,6 +89,7 @@
     <Compile Include="PackageMgt\PackagesConfigSpecs.cs" />
     <Compile Include="SemVerHelperSpecs.cs" />
     <Compile Include="ProjectSystemSpecs.cs" />
+    <Compile Include="SquirrelHelperSpec.cs" />
     <Compile Include="TeamCitySpecs.cs" />
     <Compile Include="BasicStringHelperSpecs.cs" />
     <Compile Include="FileHandling\SubfolderSpecs.cs" />
