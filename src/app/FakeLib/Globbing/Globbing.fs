@@ -122,7 +122,7 @@ let internal compileGlobToRegex pattern =
             )
         let xTOyMap = xTOy |> Map.ofList
         let replacePattern = xTOy |> List.map(fun x -> x |> snd |> fst) |> String.concat("|")
-        let replaced = Regex(replacePattern).Replace(escapedPattern, fun m -> 
+        let replaced = Regex(replacePattern).Replace(escapedPattern, fun (m: Match) -> 
             let matched = xTOy |> Seq.map(fst) |> Seq.find(fun n -> 
                 m.Groups.Item(n).Success
             )
