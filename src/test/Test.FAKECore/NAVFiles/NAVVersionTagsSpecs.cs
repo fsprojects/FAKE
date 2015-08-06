@@ -29,6 +29,20 @@ namespace Test.FAKECore.NAVFiles
         }
     }
 
+    public class CanGetVersionNumbers
+    {
+        It should_find_version_number = () =>
+            DynamicsNavFile.getTagVersionInVersionTagList("VU", "VU2.40.03,NTI.Nienburg,ARC5.10,MCN,NIW,PRE,AUS01").ShouldEqual("2.40.03");
+
+        It should_not_find_version_for_non_existing_tag = () =>
+            DynamicsNavFile.getTagVersionInVersionTagList("NAVW1", "VU2.40.03,NTI.Nienburg,ARC5.10,MCN,NIW,PRE,AUS01").ShouldBeEmpty();
+
+        It should_find_the_highest_version_number = () => {
+            var sourceCode = File.ReadAllText(@"NAVFiles/Table_3_and_4.txt");
+            DynamicsNavFile.getHighestTagVersionInObjects("NAVW1", sourceCode).ShouldEqual("7.10");
+        };
+    }
+
     public class CanDetectInvalidTags
     {
         It should_find_invalid_IssueNo = () =>
