@@ -41,6 +41,12 @@ namespace Test.FAKECore.NAVFiles
             var sourceCode = File.ReadAllText(@"NAVFiles/Table_3_and_4.txt");
             DynamicsNavFile.getHighestTagVersionInObjects("NAVW1", sourceCode).ShouldEqual("7.10");
         };
+
+        It should_find_the_highest_version_number_in_files = () =>
+        {
+            var files = new[] { @"NAVFiles/Codeunit_1.txt", @"NAVFiles/Table_3.txt" };
+            DynamicsNavFile.getHighestTagVersionInFiles("NAVW1", files).ShouldEqual("7.00");
+        };
     }
 
     public class CanDetectInvalidTags

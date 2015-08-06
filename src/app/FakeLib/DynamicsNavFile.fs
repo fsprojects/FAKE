@@ -211,3 +211,11 @@ let getHighestTagVersionInObjects (versionTag : string) sourceCode =
     |> Seq.map (fun objectSourcecode -> getTagVersionInObject versionTag objectSourcecode.Source)
     |> Seq.filter (fun version -> not (String.IsNullOrWhiteSpace(version)))
     |> Seq.max
+
+/// Gets the highest version number for a specified version tag in a number of Dynamics NAV objects in a set of object files
+let getHighestTagVersionInFiles (versionTag : string) fileNames =
+    fileNames
+    |> Seq.map (fun fileName -> File.ReadAllText(fileName))
+    |> Seq.map (fun sourceCode -> getTagVersionInObject versionTag sourceCode)
+    |> Seq.filter (fun version -> not (String.IsNullOrWhiteSpace(version)))
+    |> Seq.max
