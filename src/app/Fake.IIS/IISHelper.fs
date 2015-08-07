@@ -51,19 +51,6 @@ let Site (name : string) protocol binding (physicalPath : string) appPool (mgr :
     site.ApplicationDefaults.ApplicationPoolName <- appPool
     site
 
-let ApplicationPool (name : string) (allow32on64:bool) (runtime:string) (mgr : ServerManager) = 
-    let appPool = mgr.ApplicationPools.[name]
-    match (appPool) with
-    | null -> 
-        let pool = mgr.ApplicationPools.Add(name)
-        pool.Enable32BitAppOnWin64 <- allow32on64
-        pool.ManagedRuntimeVersion <- runtime
-        pool
-    | _ ->
-        appPool.Enable32BitAppOnWin64 <- allow32on64
-        appPool.ManagedRuntimeVersion <- runtime
-        appPool
-
 let Application (virtualPath : string) (physicalPath : string) (site : Site) (mgr : ServerManager) =
     let app = site.Applications.[virtualPath]
     match (app) with
@@ -71,6 +58,28 @@ let Application (virtualPath : string) (physicalPath : string) (site : Site) (mg
     | _ -> app.VirtualDirectories.[0].PhysicalPath <- physicalPath; app
 
 let commit (mgr : ServerManager) = mgr.CommitChanges()
+
+type ApplicationPoolConfig(name : string, ?runtime:string, ?allow32on64:bool, ?identity : ProcessModelIdentityType) = class
+    member this.name = name
+    member this.runtime = defaultArg runtime "v4.0"
+    member this.allow32on64 = defaultArg allow32on64 false
+    member this.identity = defaultArg identity ProcessModelIdentityType.ApplicationPoolIdentity        
+end
+
+let private MergeAppPoolProperties (appPool:ApplicationPool)(config:ApplicationPoolConfig) = 
+        appPool.Enable32BitAppOnWin64 <- config.allow32on64
+        appPool.ManagedRuntimeVersion <- config.runtime
+        appPool.ProcessModel.IdentityType <- config.identity
+        appPool
+
+let ApplicationPool (config: ApplicationPoolConfig) (mgr : ServerManager) = 
+    let appPool = mgr.ApplicationPools.[config.name]
+    match (appPool) with
+    | null -> 
+        let pool = mgr.ApplicationPools.Add(config.name)
+        MergeAppPoolProperties pool config
+    | _ ->
+        MergeAppPoolProperties appPool config
 
 let IIS (site : ServerManager -> Site) 
         (appPool : ServerManager -> ApplicationPool) 
