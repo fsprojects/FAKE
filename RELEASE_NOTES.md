@@ -3,20 +3,14 @@
 * Added Squirrel helpers to generate Squirrel installers - https://github.com/fsharp/FAKE/pull/899
 * Added Ability to specify Identity for AppPool - https://github.com/fsharp/FAKE/pull/902
 * Dynamics NAV: version helpers - https://github.com/fsharp/FAKE/pull/900
-
-#### 4.0.3 - 02.08.2015
-* FAKE removes mono debug file after cache is saved - https://github.com/fsharp/FAKE/pull/891
 * Added ReleaseNotes to NugetHelper - https://github.com/fsharp/FAKE/pull/893
 * BUGFIX: running from a network drive - https://github.com/fsharp/FAKE/pull/892
 * BUGFIX: Align NUnitDomainModel with NUnit documentation - https://github.com/fsharp/FAKE/pull/897
 * BUGFIX: Skip Octokit retry logic on Mono where it causes a crash - https://github.com/fsharp/FAKE/pull/895
-
-#### 4.0.2 - 25.07.2015
-* Nunit Domain Fix - https://github.com/fsharp/FAKE/pull/883
-* Dynamic assembly handling for caching - https://github.com/fsharp/FAKE/pull/884
-
-#### 4.0.1 - 23.07.2015
-* Loaded dlls versions are used to invalidate FAKE's cache - https://github.com/fsharp/FAKE/pull/882
+* BUGFIX: FAKE removes mono debug file after cache is saved - https://github.com/fsharp/FAKE/pull/891
+* BUGFIX: Nunit Domain Fix - https://github.com/fsharp/FAKE/pull/883
+* BUGGFIX: Dynamic assembly handling for caching - https://github.com/fsharp/FAKE/pull/884
+* BUGFIX: Loaded dlls versions are used to invalidate FAKE's cache - https://github.com/fsharp/FAKE/pull/882
 
 #### 4.0.0 - 23.07.2015
 * Automatic caching of FAKE build scripts - https://github.com/fsharp/FAKE/pull/859
