@@ -1,4 +1,5 @@
-#### 4.0.4 - 10.08.2015
+#### 4.1.0 - 10.08.2015
+* Using FSharp.Compiler.Server for F# 4.0
 * Added Squirrel helpers to generate Squirrel installers - https://github.com/fsharp/FAKE/pull/899
 * Added Ability to specify Identity for AppPool - https://github.com/fsharp/FAKE/pull/902
 * Dynamics NAV: version helpers - https://github.com/fsharp/FAKE/pull/900
