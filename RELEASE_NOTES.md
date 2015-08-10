@@ -1,3 +1,8 @@
+#### 4.0.4 - 10.08.2015
+* Added Squirrel helpers to generate Squirrel installers - https://github.com/fsharp/FAKE/pull/899
+* Added Ability to specify Identity for AppPool - https://github.com/fsharp/FAKE/pull/902
+* Dynamics NAV: version helpers - https://github.com/fsharp/FAKE/pull/900
+
 #### 4.0.3 - 02.08.2015
 * FAKE removes mono debug file after cache is saved - https://github.com/fsharp/FAKE/pull/891
 * Added ReleaseNotes to NugetHelper - https://github.com/fsharp/FAKE/pull/893
