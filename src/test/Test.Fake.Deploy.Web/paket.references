@@ -1,3 +1,4 @@
+FSharp.Core
 Nancy.Testing
 Nancy.Viewengines.Razor
 Newtonsoft.Json
