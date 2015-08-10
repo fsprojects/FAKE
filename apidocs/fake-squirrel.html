@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Install - FAKE - F# Make</title>
+    <title>Squirrel - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,9 +36,9 @@
 
 
 
-<h1>Install</h1>
+<h1>Squirrel</h1>
 <div class="xmldoc">
-<p>Contains tasks for installing NuGet packages using the <a href="http://docs.nuget.org/docs/reference/command-line-reference#Install_Command">nuget.exe install command</a>.</p>
+<p>Contains types and utility functions related to creating <a href="https://github.com/Squirrel/Squirrel.Windows">Squirrel</a> installer.</p>
 
 
 </div>
@@ -53,18 +53,12 @@
     <tbody>
         <tr>
           <td class="type-name">
-            <a href="fake-nuget-install-nugetinstallparams.html">NugetInstallParams</a>
+            <a href="fake-squirrel-squirrelparams.html">SquirrelParams</a>
           </td>
-          <td class="xmldoc"><p>Nuget install parameters.</p>
+          <td class="xmldoc"><p>The <a href="https://github.com/Squirrel/Squirrel.Windows">Squirrel</a> Console Parameters type.
+FAKE will use <a href="fake-squirrel.html">SquirrelDefaults</a> for values not provided.</p>
 
-
-</td>
-        </tr>
-        <tr>
-          <td class="type-name">
-            <a href="fake-nuget-install-nugetinstallverbosity.html">NugetInstallVerbosity</a>
-          </td>
-          <td class="xmldoc"><p>Nuget install verbosity mode.</p>
+<p>For reference, see: <a href="https://github.com/Squirrel/Squirrel.Windows/blob/master/docs/advanced-releasify.md">Squirrel Command Line Options</a></p>
 
 
 </td>
@@ -83,25 +77,32 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '965', 965)" onmouseover="showTip(event, '965', 965)">
-            NugetInstall setParams packageName
+          <code onmouseout="hideTip(event, '547', 547)" onmouseover="showTip(event, '547', 547)">
+            SquirrelDefaults 
           </code>
-          <div class="tip" id="965">
-            <strong>Signature:</strong> setParams:(NugetInstallParams -&gt; NugetInstallParams) -&gt; packageName:string -&gt; unit<br />
+          <div class="tip" id="547">
+            <strong>Signature:</strong> SquirrelParams<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NuGet/Install.fs#L81-81" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SquirrelHelper.fs#L54-54" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Installs the given package.</p>
+          <p>The Squirrel default parameters.</p>
 
-<h2>Parameters</h2>
+<h2>Defaults</h2>
 
 <ul>
-<li><code>setParams</code> - Function used to manipulate the default parameters.</li>
-<li><code>packagesFile</code> - Path to the <code>*.sln</code>, <code>*.*proj</code> or <code>packages.config</code> file.</li>
+<li><code>ReleaseDir</code> - <code>""</code></li>
+<li><code>WorkingDir</code> - <code>None</code></li>
+<li><code>BootstrapperExe</code> - <code>None</code></li>
+<li><code>LoadingGif</code> - <code>None</code></li>
+<li><code>ToolPath</code> - The <code>squirrel.exe</code> path if it exists in a subdirectory of the current directory.</li>
+<li><code>TimeOut</code> - 10 minutes</li>
+<li><code>SignExecutable</code> - <code>None</code></li>
+<li><code>SigningSecret</code> - <code>None</code></li>
+<li><code>SigningSecret</code> - <code>None</code></li>
 </ul>
 
 
@@ -111,19 +112,40 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '966', 966)" onmouseover="showTip(event, '966', 966)">
-            NugetInstallDefaults 
+          <code onmouseout="hideTip(event, '548', 548)" onmouseover="showTip(event, '548', 548)">
+            SquirrelPack setParams nugetPackage
           </code>
-          <div class="tip" id="966">
-            <strong>Signature:</strong> NugetInstallParams<br />
+          <div class="tip" id="548">
+            <strong>Signature:</strong> setParams:(SquirrelParams -&gt; SquirrelParams) -&gt; nugetPackage:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NuGet/Install.fs#L42-42" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SquirrelHelper.fs#L112-112" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Parameter default values.</p>
+          <p>Creates a Squirrel installer for given NuGet package
+Will fail if Squirrel terminates with non-zero exit code.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>setParams</code> - Function used to manipulate the default <code>SquirrelParams</code> value.</li>
+<li><code>nugetPackage</code> - The package to create an installer for</li>
+</ul>
+
+<h2>Sample usage</h2>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;CreatePackage&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
+    <span class="i">SquirrelPack</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> {<span class="i">p</span> <span class="k">with</span> <span class="i">WorkingDir</span> <span class="o">=</span> <span class="s">&quot;./tmp&quot;</span>}) <span class="s">&quot;./my.nuget&quot;</span>
+)
+</code></pre></td>
+</tr>
+</table>
 
 
 
