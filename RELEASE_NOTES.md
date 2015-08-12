@@ -1,3 +1,6 @@
+#### 4.1.2 - 12.08.2015
+* Pass OutputDataReceived to logfn instead of trace in shellExec - https://github.com/fsharp/FAKE/pull/906 
+
 #### 4.1.1 - 12.08.2015
 * Add GetDependenciesForReferencesFile
 
