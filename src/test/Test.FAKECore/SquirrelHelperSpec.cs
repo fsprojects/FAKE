@@ -33,7 +33,7 @@ namespace Test.FAKECore.SquirrelHelperSpec
     internal class When_using_the_default_parameters
         : BuildArgumentsSpecsBase
     {
-        It should_not_include_releasify = () => Arguments.ShouldContain("--releasify=" + NuGetPackage);
+        It should_include_releasify = () => Arguments.ShouldContain("--releasify=" + NuGetPackage);
         It should_not_include_releasedir = () => Arguments.ShouldNotContain("--releaseDir=");
         It should_not_include_loading_gif = () => Arguments.ShouldNotContain("--loadingGif=");
         It should_not_include_setup_icon = () => Arguments.ShouldNotContain("--setupIcon=");
