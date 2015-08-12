@@ -23,6 +23,9 @@ type SquirrelParams =
         /// The full path to an optional animated gif to be displayed during installation
         LoadingGif : string option
 
+        /// The full path to an optional icon, which will be used for the generated installer.
+        SetupIcon : string option
+
         /// The path to Squirrel: `squirrel.exe`
         ToolPath : string
 
@@ -36,7 +39,7 @@ type SquirrelParams =
         SigningKeyFile : string option
 
         /// The secret key for the code signing certificate
-        SigningSecret : string option}
+        SigningSecret : string option }
 
 /// The Squirrel default parameters.
 ///
@@ -46,6 +49,7 @@ type SquirrelParams =
 /// - `WorkingDir` - `None`
 /// - `BootstrapperExe` - `None`
 /// - `LoadingGif` - `None`
+/// - `SetupIcon` - `None`
 /// - `ToolPath` - The `squirrel.exe` path if it exists in a subdirectory of the current directory.
 /// - `TimeOut` - 10 minutes
 /// - `SignExecutable` - `None`
@@ -58,6 +62,7 @@ let SquirrelDefaults =
         WorkingDir = None
         BootstrapperExe = None
         LoadingGif = None
+        SetupIcon = None
         ToolPath = findToolInSubPath toolname (currentDirectory @@ "tools" @@ "Squirrel")
         TimeOut = TimeSpan.FromMinutes 10.
         SignExecutable = None
@@ -73,11 +78,12 @@ let private createSigningArgs (parameters : SquirrelParams) =
     |> appendWithoutQuotes "\""
     |> toText
 
-let internal buildSquirrelArgs parameters nugetPackage=
+let internal buildSquirrelArgs parameters nugetPackage =
     new StringBuilder()
     |> appendIfNotNullOrEmpty nugetPackage "--releasify="
     |> appendIfNotNullOrEmpty parameters.ReleaseDir "--releaseDir="
     |> appendIfSome parameters.LoadingGif (sprintf "--loadingGif= %s")
+    |> appendIfSome parameters.SetupIcon (sprintf "--setupIcon=%s")
     |> appendIfSome parameters.BootstrapperExe (sprintf "--bootstrapperExe= %s")
     |> appendIfSome parameters.SignExecutable (fun s -> createSigningArgs parameters)
     |> toText
