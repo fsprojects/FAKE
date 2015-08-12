@@ -1,3 +1,6 @@
+#### 4.1.1 - 12.08.2015
+* Add GetDependenciesForReferencesFile
+
 #### 4.1.0 - 10.08.2015
 * Using FSharp.Compiler.Server for F# 4.0
 * Added Squirrel helpers to generate Squirrel installers - https://github.com/fsharp/FAKE/pull/899

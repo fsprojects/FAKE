@@ -564,7 +564,7 @@ let argList name values =
     |> String.concat " "
 
 
-/// loads the dependences from specified packages.config file
+/// Returns the dependencies from specified packages.config file
 let getDependencies (packagesFile:string) =
     let xname = XName.op_Implicit
     let attribute name (e:XElement) =

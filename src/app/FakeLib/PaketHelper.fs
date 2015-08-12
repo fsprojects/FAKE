@@ -129,3 +129,34 @@ let Push setParams =
             if pushResult <> 0 then failwithf "Error during pushing %s." package 
 
     traceEndTask "PaketPush" (separated ", " packages)
+
+/// Returns the dependencies from specified paket.references file
+let GetDependenciesForReferencesFile (referencesFile:string) =
+    let isSingleFile (line: string) = line.StartsWith "File:"
+    let notEmpty (line: string) = not <| String.IsNullOrWhiteSpace line
+    let parsePackageName (line: string) = 
+        let parts = line.Split(' ')            
+        parts.[0]
+
+    let nugetLines =
+        File.ReadAllLines(referencesFile)
+        |> Array.filter notEmpty 
+        |> Array.map (fun s -> s.Trim())
+        |> Array.filter (isSingleFile >> not)
+        |> Array.map parsePackageName
+
+    let lockFile =
+        let rec find dir =
+            let fi = FileInfo(dir </> "paket.lock")
+            if fi.Exists then fi.FullName else find fi.Directory.Parent.FullName
+        find <| FileInfo(referencesFile).Directory.FullName
+
+    let lines = File.ReadAllLines(lockFile)
+
+    let getVersion package =
+        let line = lines |> Array.find (fun l -> l.StartsWith("    " + package))
+        let start = line.Replace("    " + package + " (","")
+        start.Substring(0,start.IndexOf(")"))
+
+    nugetLines
+    |> Array.map (fun p -> p,getVersion p)
