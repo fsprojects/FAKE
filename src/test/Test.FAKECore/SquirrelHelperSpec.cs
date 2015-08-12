@@ -61,8 +61,7 @@ namespace Test.FAKECore.SquirrelHelperSpec
         const string LoadingGif = "spinner.gif";
         Establish context = () => Parameters = Parameters.With(p => p.LoadingGif, FSharpOption<string>.Some(LoadingGif));
 
-        It should_include_loading_gif_param = () => Arguments.ShouldContain("--loadingGif=");
-        It should_include_loading_gif_file = () => Arguments.ShouldContain(LoadingGif);
+        It should_include_loading_gif_param = () => Arguments.ShouldContain("--loadingGif=" + LoadingGif);
     }
 
     internal class When_specifying_setup_icon
@@ -80,8 +79,7 @@ namespace Test.FAKECore.SquirrelHelperSpec
         const string BootstrapperExe = "bootstrap.exe";
         Establish context = () => Parameters = Parameters.With(p => p.BootstrapperExe, FSharpOption<string>.Some(BootstrapperExe));
 
-        It should_include_bootstrapper_param = () => Arguments.ShouldContain("--bootstrapperExe=");
-        It should_include_bootstrapper_file = () => Arguments.ShouldContain(BootstrapperExe);
+        It should_include_bootstrapper_param = () => Arguments.ShouldContain("--bootstrapperExe=" + BootstrapperExe);
     }
 
     internal class When_requesting_package_signing_with_default_parameters
