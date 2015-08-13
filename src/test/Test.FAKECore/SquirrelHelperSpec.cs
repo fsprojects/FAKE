@@ -13,14 +13,12 @@ namespace Test.FAKECore.SquirrelHelperSpec
     internal abstract class BuildArgumentsSpecsBase
     {
         protected static Squirrel.SquirrelParams Parameters;
-        protected static string[] Assemblies;
         protected static string Arguments;
         protected static string NuGetPackage = "my.nuget";
 
         Establish context = () =>
         {
             Parameters = Squirrel.SquirrelDefaults;
-            Assemblies = new[] { "test.dll", "other.dll" };
         };
 
         Because of = () =>
