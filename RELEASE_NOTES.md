@@ -1,3 +1,6 @@
+#### 4.1.3 - 13.08.2015
+* Added ability to optionally pass in SiteId to configure IIS Site - https://github.com/fsharp/FAKE/pull/905
+
 #### 4.1.2 - 12.08.2015
 * Pass OutputDataReceived to logfn instead of trace in shellExec - https://github.com/fsharp/FAKE/pull/906 
 
