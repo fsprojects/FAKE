@@ -82,9 +82,9 @@ let internal buildSquirrelArgs parameters nugetPackage =
     new StringBuilder()
     |> appendIfNotNullOrEmpty nugetPackage "--releasify="
     |> appendIfNotNullOrEmpty parameters.ReleaseDir "--releaseDir="
-    |> appendIfSome parameters.LoadingGif (sprintf "--loadingGif=%s")
-    |> appendIfSome parameters.SetupIcon (sprintf "--setupIcon=%s")
-    |> appendIfSome parameters.BootstrapperExe (sprintf "--bootstrapperExe=%s")
+    |> appendIfSome parameters.LoadingGif (sprintf "\"--loadingGif=%s\"")
+    |> appendIfSome parameters.SetupIcon (sprintf "\"--setupIcon=%s\"")
+    |> appendIfSome parameters.BootstrapperExe (sprintf "\"--bootstrapperExe=%s\"")
     |> appendIfSome parameters.SignExecutable (fun s -> createSigningArgs parameters)
     |> toText
 
