@@ -19,6 +19,17 @@ let private handleWatcherEvents (status : FileStatus) (onChange : FileChange -> 
                 Name = e.Name
                 Status = status })
 
+let private calcDirsToWatch fileIncludes =
+    let dirsToWatch = fileIncludes.Includes |> Seq.map (fun file -> Globbing.getRoot fileIncludes.BaseDirectory file)
+    
+    // remove subdirectories from watch list so that we don't get duplicate file watchers running
+    dirsToWatch 
+    |> Seq.filter (fun d -> 
+                    dirsToWatch
+                    |> Seq.exists (fun p -> d.StartsWith p && p <> d)
+                    |> not)
+    |> Seq.toList
+
 /// Watches the for changes in the matching files.
 /// Returns an IDisposable which allows to dispose all FileSystemWatchers.
 ///
@@ -39,14 +50,8 @@ let private handleWatcherEvents (status : FileStatus) (onChange : FileChange -> 
 ///     )
 ///
 let WatchChanges (onChange : FileChange seq -> unit) (fileIncludes : FileIncludes) = 
-    let dirsToWatch = fileIncludes.Includes |> Seq.map (fun file -> Globbing.getRoot fileIncludes.BaseDirectory file)
-    
-    // remove subdirectories from watch list so that we don't get duplicate file watchers running
-    let dirsToWatch = 
-        dirsToWatch |> Seq.filter (fun d -> 
-                           dirsToWatch
-                           |> Seq.exists (fun p -> p.StartsWith d && p <> d)
-                           |> not)
+    let dirsToWatch = fileIncludes |> calcDirsToWatch
+
     tracefn "dirs to watch: %A" dirsToWatch
  
     // we collect changes in a mutable ref cell and wait for a few milliseconds to 
@@ -84,7 +89,7 @@ let WatchChanges (onChange : FileChange seq -> unit) (fileIncludes : FileInclude
               (timer:System.Timers.Timer).Start() )
     
     let watchers = 
-        dirsToWatch |> List.ofSeq |> List.map (fun dir -> 
+        dirsToWatch |> List.map (fun dir -> 
                            tracefn "watching dir: %s" dir
 
                            let watcher = new FileSystemWatcher(FullName dir, "*.*")
