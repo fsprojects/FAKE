@@ -424,7 +424,7 @@ let asyncShellExec (args : ExecParams) =
         proc.ErrorDataReceived.Add(fun e -> 
             if e.Data <> null then traceError e.Data)
         proc.OutputDataReceived.Add(fun e -> 
-            if e.Data <> null then logfn e.Data)
+            if e.Data <> null then log e.Data)
         start proc
         proc.BeginOutputReadLine()
         proc.BeginErrorReadLine()
