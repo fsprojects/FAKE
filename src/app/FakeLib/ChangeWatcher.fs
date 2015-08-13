@@ -45,7 +45,7 @@ let WatchChanges (onChange : FileChange seq -> unit) (fileIncludes : FileInclude
     let dirsToWatch = 
         dirsToWatch |> Seq.filter (fun d -> 
                            dirsToWatch
-                           |> Seq.exists (fun p -> p.StartsWith d && p <> d)
+                           |> Seq.exists (fun p -> d.StartsWith p && p <> d)
                            |> not)
     tracefn "dirs to watch: %A" dirsToWatch
  
