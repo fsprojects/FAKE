@@ -10,7 +10,7 @@ open Nancy
 open Nancy.Hosting.Self
 open Nancy.Security
 
-let mutable private logger : string * EventLogEntryType -> unit = ignore
+let mutable logger : string * EventLogEntryType -> unit = ignore
 
 let getBodyFromNancyRequest (ctx : Nancy.Request) = 
     use ms = new MemoryStream()
@@ -41,7 +41,7 @@ let  runDeployment workDir (ctx : Nancy.Request) =
     | FakeDeployAgentHelper.Success _ -> 
         logger (sprintf "Successfully deployed %s %s" package.Id package.Version, EventLogEntryType.Information)
     | response -> 
-        logger 
+        logger
             (sprintf "Deployment failed of %s %s failed\r\nDetails:\r\n%A" package.Id package.Version response, 
              EventLogEntryType.Information)
     response |> Json.serialize

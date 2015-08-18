@@ -35,6 +35,7 @@ type FakeDeployService() as self =
             let success, port' = Int32.TryParse(p)
             if success then port' else 8080
                     
+        DeploymentAgent.logger <- logger
         DeploymentAgent.workDir <-
             let path =
                 if args <> null && args.Length > 3 then args.[3]
