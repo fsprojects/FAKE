@@ -1,3 +1,7 @@
+#### 4.1.4 - 18.08.2015
+* New options in the SquirrelHelper - https://github.com/fsharp/FAKE/pull/910
+* Added `createClientWithToken` & `createRelease` to Octokit.fsx - https://github.com/fsharp/FAKE/pull/913
+
 #### 4.1.3 - 13.08.2015
 * Fixed WatchChanges not properly removing subdirectories from watch list - https://github.com/fsharp/FAKE/pull/908
 
