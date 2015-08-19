@@ -2,7 +2,6 @@
 
 open Fake
 open System
-open System.Diagnostics
 open System.ServiceProcess
 open System.Configuration
 
@@ -12,16 +11,15 @@ type FakeDeployService() as self =
     inherit ServiceBase()
     let mutable nancyHost = null
 
-    let logger = 
-        if Environment.UserInteractive then TraceHelper.logToConsole
-        else 
-            self.EventLog.Log <- "Application"
-            self.EventLog.Source <- ServiceName
-            self.EventLog.WriteEntry
-    
     do 
         self.AutoLog <- true
         self.ServiceName <- "Fake Deploy Agent"
+        self.EventLog.Log <- "Application"
+        self.EventLog.Source <- ServiceName
+        if Environment.UserInteractive then 
+            Logger.initLogAsConsole ()
+        else 
+            Logger.initLogAsService (fun s e -> self.EventLog.WriteEntry(s, e))
     
     override x.OnStart args = 
         let serverName = 
@@ -35,7 +33,6 @@ type FakeDeployService() as self =
             let success, port' = Int32.TryParse(p)
             if success then port' else 8080
                     
-        DeploymentAgent.logger <- logger
         DeploymentAgent.workDir <-
             let path =
                 if args <> null && args.Length > 3 then args.[3]
@@ -49,19 +46,29 @@ type FakeDeployService() as self =
                 directory @@ path
         
         let uri = sprintf "http://%s:%i/" serverName port
-        logger(sprintf "Listening on %s" uri, EventLogEntryType.Information)
-        logger(sprintf "WorkDirectory is %s" DeploymentAgent.workDir, EventLogEntryType.Information)
-        nancyHost <- DeploymentAgent.createNancyHost ([| Uri uri |])
-        nancyHost.Start()
-    
+        Logger.info "Listening on %s" uri
+        Logger.info "WorkDirectory is %s" DeploymentAgent.workDir
+        Logger.info "LogDirectory is %s" AppConfig.LogDirectory
+        Logger.info "Authorization is %A" AppConfig.Authorization
+        try
+            nancyHost <- DeploymentAgent.createNancyHost ([| Uri uri |])
+            nancyHost.Start()
+        with
+        | ex -> 
+            Logger.errorEx ex "Failed to start!"
+            reraise()
+
     override x.OnStop() =
+        Logger.info "Stopping..."
         nancyHost.Stop()
     
     member x.Start(args) = 
+        Logger.info "Starting..."
         if Environment.UserInteractive then x.OnStart args
         else ServiceBase.Run x
     
-    member x.Stop() = x.OnStop()
+    member x.Stop() = 
+        x.OnStop()
 
 let getFakeAgentService() = 
     ServiceController.GetServices() 

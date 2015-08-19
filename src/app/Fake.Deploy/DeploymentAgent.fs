@@ -1,16 +1,12 @@
 ﻿module Fake.DeploymentAgent
 
-open System
 open System.IO
-open System.Diagnostics
 open Fake
 open Fake.DeploymentHelper
 open Fake.DeployAgentModule
 open Nancy
 open Nancy.Hosting.Self
 open Nancy.Security
-
-let mutable logger : string * EventLogEntryType -> unit = ignore
 
 let getBodyFromNancyRequest (ctx : Nancy.Request) = 
     use ms = new MemoryStream()
@@ -39,11 +35,10 @@ let  runDeployment workDir (ctx : Nancy.Request) =
     let response = doDeployment scriptFile scriptArguments
     match response with
     | FakeDeployAgentHelper.Success _ -> 
-        logger (sprintf "Successfully deployed %s %s" package.Id package.Version, EventLogEntryType.Information)
+        Logger.info "Successfully deployed %s %s" package.Id package.Version
     | response -> 
-        logger
-            (sprintf "Deployment failed of %s %s failed\r\nDetails:\r\n%A" package.Id package.Version response, 
-             EventLogEntryType.Information)
+        Logger.info
+            "Deployment failed of %s %s failed\r\nDetails:\r\n%A" package.Id package.Version response
     response |> Json.serialize
 
 
@@ -52,9 +47,7 @@ let createNancyHost uri =
     config.UrlReservations.CreateAutomatically <- true
     new NancyHost(config, uri)
 
-
-let mutable workDir = Path.GetDirectoryName(Uri(typedefof<FakeModule>.Assembly.CodeBase).LocalPath)
-
+let mutable workDir = AppConfig.HomeDirectory
 
 type DeployAgentModule() as http =
     inherit FakeModule("/fake")
@@ -66,7 +59,6 @@ type DeployAgentModule() as http =
 
     do
         http.RequiresAuthentication()
-
 
         http.post "/" (fun _ -> 
             runDeployment workDir http.Request)
