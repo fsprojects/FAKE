@@ -23,7 +23,10 @@ let isGitVersionHigherOrEqual referenceVersion =
     isVersionHigherOrEqual versionParts referenceVersion
 
 /// Gets the git branch name
-let getBranchName repositoryDir = 
+let getBranchName repositoryDir =
+    if (repositoryDir = "" || repositoryDir = ".") && buildServer = TeamFoundation then
+        environVar "BUILD_SOURCEBRANCHNAME"
+    else
     let ok,msg,errors = runGitCommand repositoryDir "status"
     let s = msg |> Seq.head 
 
@@ -37,7 +40,10 @@ let getBranchName repositoryDir =
     if startsWith replaceNoBranchString s then noBranch else s.Replace(replaceBranchString,"")
 
 /// Returns the SHA1 of the current HEAD
-let getCurrentSHA1 repositoryDir = getSHA1 repositoryDir "HEAD"
+let getCurrentSHA1 repositoryDir =
+    if (repositoryDir = "" || repositoryDir = ".") && buildServer = TeamFoundation then
+        environVar "BUILD_SOURCEVERSION"
+    else getSHA1 repositoryDir "HEAD"
 
 /// Shows the git status
 let showStatus repositoryDir = showGitCommand repositoryDir "status"
@@ -74,8 +80,11 @@ let getLastTag() = (describe "").Split('-') |> Seq.head
 
 /// Gets the current hash of the current repository
 let getCurrentHash() =
-    let tmp =
-        (shortlog "").Split(' ') 
-          |> Seq.head
-          |> fun s -> s.Split('m')
-    if tmp |> Array.length > 2 then tmp.[1].Substring(0,6) else tmp.[0].Substring(0,6)
+    if buildServer = TeamFoundation then
+        environVar "BUILD_SOURCEVERSION"
+    else
+        let tmp =
+            (shortlog "").Split(' ')
+            |> Seq.head
+            |> fun s -> s.Split('m')
+        if tmp |> Array.length > 2 then tmp.[1].Substring(0,6) else tmp.[0].Substring(0,6)
