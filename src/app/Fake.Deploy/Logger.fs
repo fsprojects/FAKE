@@ -14,9 +14,10 @@ let private configureFileLogger (logConfig : LoggerConfiguration) =
         let dir = AppConfig.LogDirectory
         
         let dir' = 
-            if dir.StartsWith("~") then dir.Replace("~", AppConfig.HomeDirectory)
+            if dir.StartsWith("~") then dir.Replace("~", AppConfig.WorkDirectory)
             else dir
-        Path.Combine(dir', "{Date}.log") |> Path.GetFullPath
+            |> Path.GetFullPath
+        Path.Combine(dir', "{Date}.log")
     
     let minLogLevel = Events.LogEventLevel.Information
     let outputTemplate = "{Timestamp} [{Level}] {Message}{NewLine}{Exception}"

@@ -52,7 +52,7 @@ let createNancyHost uri =
     config.UrlReservations.CreateAutomatically <- true
     new NancyHost(config, uri)
 
-let mutable workDir = AppConfig.HomeDirectory
+let mutable workDir = AppConfig.WorkDirectory
 
 type DeployAgentModule() as http =
     inherit FakeModule("/fake")

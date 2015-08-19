@@ -3,7 +3,6 @@
 open Fake
 open System
 open System.ServiceProcess
-open System.Configuration
 
 let ServiceName = "Fake Deploy Agent"
 
@@ -24,19 +23,19 @@ type FakeDeployService() as self =
     override x.OnStart args = 
         let serverName = 
             if args <> null && args.Length > 1 then args.[1]
-            else ConfigurationManager.AppSettings.["ServerName"]
+            else AppConfig.ServerName
         
         let port = 
             let p =
                 if args <> null && args.Length > 2 then args.[2]
-                else ConfigurationManager.AppSettings.["Port"]
+                else AppConfig.Port
             let success, port' = Int32.TryParse(p)
             if success then port' else 8080
                     
         DeploymentAgent.workDir <-
             let path =
                 if args <> null && args.Length > 3 then args.[3]
-                else ConfigurationManager.AppSettings.["WorkDirectory"]
+                else AppConfig.WorkDirectory
             match Uri.TryCreate(path, UriKind.RelativeOrAbsolute) with
             | false, _ -> failwithf "Incorrect path '%s'" path
             | true, uri when uri.IsAbsoluteUri -> path

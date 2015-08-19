@@ -8,21 +8,30 @@ type Authorization =
     | Off
     | On
 
+let mutable appSettings = ConfigurationManager.AppSettings
+
 let HasKey name = 
     ConfigurationManager.AppSettings.AllKeys
     |> Seq.exists (fun key -> key = name)
 
 let Key<'T>(name : string) = 
-    let value = ConfigurationManager.AppSettings.[name]
+    let value = appSettings.[name]
     Convert.ChangeType(value, typedefof<'T>) :?> 'T
 
-let HomeDirectory = Path.GetDirectoryName(Uri(typedefof<Authorization>.Assembly.CodeBase).LocalPath)
+let WorkDirectory = 
+    match (HasKey "WorkDirectory") with
+    | false -> "."
+    | true -> Key<string> "WorkDirectory"
+    |> Path.GetFullPath
 
 let LogDirectory = 
-    let dir = Key<string> "LogDirectory"
-    if dir.StartsWith("~") then dir.Replace("~", HomeDirectory)
-    else dir
-    |> Path.GetFullPath
+    match (HasKey "LogDirectory") with
+    | false -> WorkDirectory
+    | true -> 
+        let dir = Key<string> "LogDirectory"
+        if dir.StartsWith("~") then dir.Replace("~", WorkDirectory)
+        else dir
+        |> Path.GetFullPath
 
 let AuthorizedKeysFile = Key<string> "AuthorizedKeysFile"
 
@@ -35,3 +44,7 @@ let Authorization =
         | "on" -> On
         | "off" -> Off
         | x -> failwith (sprintf "'%s' is not a valid value for Authorization" x)
+
+let ServerName = Key<string> "ServerName"
+
+let Port = Key<string> "Port"
