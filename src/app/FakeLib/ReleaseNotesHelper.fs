@@ -75,7 +75,7 @@ let parseVersions =
         assemblyVersion, nugetVersion
 
 let parseDate =
-    let dateRegex = getRegEx @"(19|20)\d\d([- /.])(0[1-9]|1[012])\2(0[1-9]|[12][0-9]|3[01])"
+    let dateRegex = getRegEx @"(19|20)\d\d([- /.])(0[1-9]|1[012]|[1-9])\2(0[1-9]|[12][0-9]|3[01]|[1-9])"
     fun line ->
         let possibleDate = dateRegex.Match line
         match possibleDate.Success with
