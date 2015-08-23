@@ -10,8 +10,8 @@ say that target B has a soft dependency on target A:
     // Or equivalently
     "B" <=? "A"
 
-With this soft dependency, running B will not force A to run, but it means that A must run before B *if* A will be 
-run during the build (due to other dependencies).
+With this soft dependency, running B will not require that A be run first. However it does mean that *if* A is run 
+(due to other dependencies) it must be run before B.
 
 ## Example
 
