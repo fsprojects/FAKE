@@ -56,7 +56,8 @@
     <Compile Include="FluentMigratorHelper.fs" />
     <Compile Include="AssemblyInfo.fs" />
     <None Include="paket.references" />
-    <None Include="LocalTest.fsx" />
+    <None Include="Sample\CatsDatabase.cs" />
+    <None Include="Sample\Sample.fsx" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />

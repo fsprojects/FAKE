@@ -60,20 +60,12 @@ type DatabaseProvider =
     | PostgreSQL
     | SQLite
 
-///<summary>Operation to execute over database</summary>
-type DatabaseTask =
-    | MigrateUp of version : Option<int64>
-    | MigrateDown of version: int64
-    | Rollback of steps : int
-    | ListMigrations
-    | ValidateVersionOrder
-
 ///<summary>Database connection configuration</summary>
 type DatabaseConnection =
     ///<summary>Explicit connection string</summary>
-    | ConnectionString of connectionString: string
+    | ConnectionString of connectionString: string * provider: DatabaseProvider
     ///<summary>Connection string specified in application config file</summary>
-    | ConfigConnection of name: string * configPath: string
+    | ConnectionStringFromConfig of name: string * configPath: string * provider: DatabaseProvider
 
 ///<summary>Fluent Migrator execution mode</summary>
 type MigrationRunningMode =
@@ -84,14 +76,18 @@ type MigrationRunningMode =
     ///<summary>Execute migrations in preview-only mode</summary>
     | Preview of connection: DatabaseConnection
     ///<summary>Create migration script</summary>
-    | Script of startVersion: int64 * outputFileName: string
+    | Script of startVersion: int64 * outputFileName: string * provider: DatabaseProvider
 
-//Fluent Migrator options
+/// <summary>Database operation to execute</summary>
+type DatabaseTask =
+    | MigrateUp of mode: MigrationRunningMode * version: Option<int64>
+    | MigrateDown of mode: MigrationRunningMode * version: int64
+    | Rollback of mode: MigrationRunningMode * steps: int
+    | ListAppliedMigrations of connection: DatabaseConnection
+
+/// <summary>Fluent Migrator options</summary>
 type MigrationOptions = {
-    Mode: Option<MigrationRunningMode>;
-    Assemblies: seq<string>
     Namespace: Option<string * bool>;
-    Provider: Option<DatabaseProvider>;
     Profile: string;
     Tags: seq<string>;
     Timeout: int;
@@ -102,12 +98,9 @@ type MigrationOptions = {
     Verbose: bool
 }
 
-//Default Fluent Migrator options
+/// <summary>Default migration options</summary>
 let DefaultMigrationOptions = {
-    Mode = None
-    Assemblies = null;
     Namespace = None;
-    Provider = None
     Profile = null;
     Tags = [];
     Timeout = 30;
@@ -138,45 +131,107 @@ let private getProviderName provider =
         | PostgreSQL -> "postgres"
         | SQLite -> "sqlite"
 
-let private validate options =
-    match options.Mode with
-        | None -> invalidOp "Migration mode with database connection is required"
-        | _ -> ()
-    match options.Provider with
-        | None -> invalidOp "Database provider is required"
-        | _ -> ()
-    if ((options.Assemblies = null) || (Seq.isEmpty options.Assemblies))
+let private validate assemblies =
+    if ((assemblies = null) || (Seq.isEmpty assemblies))
         then invalidOp "At least one migration assembly should be specified"
 
-let private toRunnerContext task options = 
-    validate options
-    let provider = options.Provider.Value
-    let mode = options.Mode.Value
-    let createAnnouncer (outputFileName: string) = 
-        let fakeAnnouncer = new FakeAnnouncer()
-        fakeAnnouncer.ShowSql <- options.Verbose
-        fakeAnnouncer.ShowElapsedTime <- options.Verbose
-        if (String.IsNullOrEmpty(outputFileName)) then
-            ((fakeAnnouncer :> IAnnouncer), null)
-        else
-            let sw = new StreamWriter(outputFileName)
-            let fileAnnouncer = 
-                match provider with
-                    | SqlServer(_) -> (new TextWriterWithGoAnnouncer(sw) :> TextWriterAnnouncer)
-                    | _ -> (new TextWriterAnnouncer(sw)) 
-            fileAnnouncer.ShowElapsedTime <- false
-            fileAnnouncer.ShowSql <- true
-            ((new CompositeAnnouncer(fakeAnnouncer, fileAnnouncer) :> IAnnouncer), sw)
-    let announcer = 
-        match mode with
-            | ExecuteAndScript(_, outputFileName) ->
+let private createAnnouncer outputFileName verbose provider = 
+    let fakeAnnouncer = new FakeAnnouncer()
+    fakeAnnouncer.ShowSql <- verbose
+    fakeAnnouncer.ShowElapsedTime <- verbose
+    if (String.IsNullOrEmpty(outputFileName)) then
+        ((fakeAnnouncer :> IAnnouncer), null)
+    else
+        let sw = new StreamWriter(outputFileName)
+        let fileAnnouncer = 
+            match provider with
+                | SqlServer(_) -> (new TextWriterWithGoAnnouncer(sw) :> TextWriterAnnouncer)
+                | _ -> (new TextWriterAnnouncer(sw)) 
+        fileAnnouncer.ShowElapsedTime <- false
+        fileAnnouncer.ShowSql <- true
+        ((new CompositeAnnouncer(fakeAnnouncer, fileAnnouncer) :> IAnnouncer), sw)
+
+let private getModeFromTask task = 
+    match task with
+        | MigrateUp(mode, _)
+        | MigrateDown(mode, _)  
+        | Rollback(mode, _) -> Some(mode)
+        | _ -> None
+
+let private getProviderFromConnection connection = 
+    match connection with
+        | ConnectionString(_, provider)
+        | ConnectionStringFromConfig(_, _, provider) ->
+            provider
+
+let private getProviderFromMode mode =
+    match mode with 
+        | Execute(connection)
+        | ExecuteAndScript(connection, _)
+        | Preview(connection) -> getProviderFromConnection connection
+        | Script(_, _, provider) -> provider
+
+let private getProviderFromTask task =
+    match task with
+        | MigrateUp(mode, _)
+        | MigrateDown(mode, _)  
+        | Rollback(mode, _) -> getProviderFromMode mode
+        | ListAppliedMigrations(connection) -> getProviderFromConnection connection
+
+let private setupConnection (context: IRunnerContext) connection = 
+    match connection with
+        | ConnectionString(connectionString, _) -> 
+            context.Connection <- connectionString
+        | ConnectionStringFromConfig(name, configPath, _) ->
+            context.Connection <- name
+            context.ConnectionStringConfigPath <- configPath
+
+let private setupConnectionForMode (context: IRunnerContext) mode =
+    match mode with 
+        | Execute(connection)
+        | ExecuteAndScript(connection, _) ->
+            setupConnection context connection
+        | Preview(connection) -> 
+            setupConnection context connection
+            context.PreviewOnly <- true
+        | Script(startVersion, _, _) ->
+            context.NoConnection <- true
+            context.StartVersion <- startVersion
+
+let private toRunnerContext task assemblies options = 
+    validate assemblies
+    let provider = getProviderFromTask task
+    let announcerFactory = 
+        match getModeFromTask task with
+            | Some(ExecuteAndScript(_, outputFileName)) ->
                 createAnnouncer outputFileName
-            | Script(_, outputFileName) ->
+            | Some(Script(_, outputFileName, _)) ->
                 createAnnouncer outputFileName
             | _ ->
                 createAnnouncer null
+    let announcer = announcerFactory options.Verbose provider
     let context = new RunnerContext(fst announcer)
-    context.Targets <- Seq.toArray options.Assemblies
+    context.Database <- getProviderName provider
+    match task with
+        | MigrateUp(mode, None) ->
+            context.Task <- "migrate"
+            setupConnectionForMode context mode
+        | MigrateUp(mode, Some(version)) -> 
+            context.Task <- "migrate"
+            setupConnectionForMode context mode
+            context.Version <- version
+        | MigrateDown(mode, version) ->
+            context.Task <- "migrate:down"
+            setupConnectionForMode context mode
+            context.Version <- version
+        | Rollback(mode, steps) -> 
+            context.Task <- "rollback"
+            setupConnectionForMode context mode
+            context.Steps <- steps
+        | ListAppliedMigrations(connection) -> 
+            context.Task <- "ListAppliedMigrations"
+            setupConnection context connection
+    context.Targets <- Seq.toArray assemblies
     context.Tags <- Seq.toList options.Tags
     context.ApplicationContext <- options.Context
     context.Profile <- options.Profile
@@ -184,95 +239,70 @@ let private toRunnerContext task options =
     context.Timeout <- options.Timeout
     context.TransactionPerSession <- options.TransactionPerSession
     context.WorkingDirectory <- options.WorkingDirectory
-
     match options.Namespace with
         | Some(name, nested) -> 
             context.Namespace <- name
             context.NestedNamespaces <- nested
-        | None -> "nothing" |> ignore
-    match mode with
-        | Execute(ConnectionString(connectionString)) ->
-            context.Connection <- connectionString
-        | Execute(ConfigConnection(name, configPath)) ->
-            context.Connection <- name
-            context.ConnectionStringConfigPath <- configPath
-        | Preview(ConnectionString(connectionString)) ->
-            context.Connection <- connectionString
-            context.PreviewOnly <- true
-        | Preview(ConfigConnection(name, configPath)) ->
-            context.Connection <- name
-            context.ConnectionStringConfigPath <- configPath
-            context.PreviewOnly <- true
-        | ExecuteAndScript(ConnectionString(connectionString), outputFileName) ->
-            context.Connection <- connectionString
-        | ExecuteAndScript(ConfigConnection(name, configPath), outputFileName) ->
-            context.Connection <- name
-            context.ConnectionStringConfigPath <- configPath
-        | Script(startVersion, outputFileName) ->
-            context.NoConnection <- true
-            context.StartVersion <- startVersion
-    match task with
-        | MigrateUp(None) ->
-            context.Task <- "migrate"
-        | MigrateUp(Some(version)) -> 
-            context.Task <- "migrate"
-            context.Version <- version
-        | MigrateDown(version) ->
-            context.Task <- "migrate:down"
-            context.Version <- version
-        | Rollback(steps) -> 
-            context.Task <- "rollback"
-            context.Steps <- steps
-        | ListMigrations -> 
-            context.Task <- "listmigrations"
-        | ValidateVersionOrder ->
-            context.Task <- "validateversionorder"
-    context.Database <- getProviderName provider
+        | None -> ()
     (context, (snd announcer))
 
 /// <summary>Executes the specified task using configuration options</summary>
-/// <param name="task"><see cref="DatabaseTask"> to execute</param>
-/// <param name="options"><see cref="MigrationOptions"></param>
-let ExecuteDatabaseTask task options =
-    let (context, writer) = toRunnerContext task options
+/// <param name="task"><see cref="DatabaseTask"/> to execute</param>
+/// <param name="assemblies">Assembly files which contain migrations</param>
+/// <param name="options"><see cref="MigrationOptions"/>options</param>
+let ExecuteDatabaseTask task (assemblies: seq<string>) options =
+    let (context, writer) = toRunnerContext task assemblies options
     try
         let executor = new TaskExecutor(context)
         executor.Execute()
     finally
         if (writer <> null) then writer.Dispose()
 
-let MigrateUp version assemblyPath connection database =
-    let task = DatabaseTask.MigrateUp(version)
-    let options = { 
-        DefaultMigrationOptions with
-            Assemblies = [assemblyPath];
-            Mode = Some(Execute(connection));
-            Provider = Some(database)
-    }
-    ExecuteDatabaseTask task options
+/// <summary>Migrates database up to the specified version</summary>
+/// <param name="version">Version to migrate to (use None for the latest available version).</param>
+/// <param name="connection">Database connection</param>
+/// <param name="assemblies">Assembly files which contain migrations</param>
+/// <param name="options"><see cref="MigrationOptions"/>options</param>
+let MigrateUp version connection assemblies options = 
+    let task = MigrateUp(Execute(connection), Some(version))
+    ExecuteDatabaseTask task assemblies options
 
-let MigrateToLatest = MigrateUp None
+/// <summary>Migrates database up to the latest version</summary>
+/// <param name="connection">Database connection</param>
+/// <param name="assemblies">Assembly files which contain migrations</param>
+/// <param name="options"><see cref="MigrationOptions"/>options</param>
+let MigrateToLatest connection assemblies options = 
+    let task = DatabaseTask.MigrateUp(Execute(connection), None)
+    ExecuteDatabaseTask task assemblies options
 
-let ScriptUp version startVersion assemblyPath outputFileName database = 
-    let task = DatabaseTask.MigrateUp(version)
-    let options = { 
-        DefaultMigrationOptions with
-            Assemblies = [assemblyPath];
-            Mode = Some(Script(startVersion, outputFileName));
-            Provider = Some(database)
-    }
-    ExecuteDatabaseTask task options
+/// <summary>Migrates database up to the specified version</summary>
+/// <param name="version">Version to migrate to</param>
+/// <param name="connection">Database connection</param>
+/// <param name="assemblies">Assembly files which contain migrations</param>
+/// <param name="options"><see cref="MigrationOptions"/>options</param>
+let MigrateDown version connection assemblies options =
+    let task = MigrateDown(Execute(connection), version)
+    ExecuteDatabaseTask task assemblies options
 
-let ScriptAll = ScriptUp None 1L
+/// <summary>Rollbacks several applied migrations</summary>
+/// <param name="steps">Number of migrations to revert</param>
+/// <param name="connection">Database connection</param>
+/// <param name="assemblies">Assembly files which contain migrations</param>
+/// <param name="options"><see cref="MigrationOptions"/>options</param>
+let Rollback steps connection assemblies options =
+    let task = Rollback(Execute(connection), steps)
+    ExecuteDatabaseTask task assemblies options
 
-let Rollback steps assemblyPath connection database =
-    let task = DatabaseTask.Rollback(steps)
-    let options = { 
-        DefaultMigrationOptions with
-            Assemblies = [assemblyPath];
-            Mode = Some(Execute(connection));
-            Provider = Some(database)
-    }
-    ExecuteDatabaseTask task options
+/// <summary>Rollbacks latest applied migration</summary>
+/// <param name="connection">Database connection</param>
+/// <param name="assemblies">Assembly files which contain migrations</param>
+/// <param name="options"><see cref="MigrationOptions"/>options</param>
+let RollbackLatest connection assemblies options = 
+    Rollback 1 connection assemblies options
 
-let RollbackToPrevious = Rollback 1
+/// <summary>Lists all migrations which were applied to the database</summary>
+/// <param name="connection">Database connection</param>
+/// <param name="assemblies">Assembly files which contain migrations</param>
+let ListAppliedMigrations connection assemblies =
+    let task = ListAppliedMigrations(connection)
+    ExecuteDatabaseTask task assemblies DefaultMigrationOptions
