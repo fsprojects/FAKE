@@ -1,17 +1,11 @@
-#### 4.1.4 - 18.08.2015
+#### 4.2.0 - 24.08.2015
 * New options in the SquirrelHelper - https://github.com/fsharp/FAKE/pull/910
+* Logging improvement in Fake.Deploy - https://github.com/fsharp/FAKE/pull/914
+* Added support for builds within Team Foundation Server (and VSO) - https://github.com/fsharp/FAKE/pull/915
 * Added `createClientWithToken` & `createRelease` to Octokit.fsx - https://github.com/fsharp/FAKE/pull/913
-
-#### 4.1.3 - 13.08.2015
 * Fixed WatchChanges not properly removing subdirectories from watch list - https://github.com/fsharp/FAKE/pull/908
-
-#### 4.1.3 - 13.08.2015
 * Added ability to optionally pass in SiteId to configure IIS Site - https://github.com/fsharp/FAKE/pull/905
-
-#### 4.1.2 - 12.08.2015
 * Pass OutputDataReceived to logfn instead of trace in shellExec - https://github.com/fsharp/FAKE/pull/906 
-
-#### 4.1.1 - 12.08.2015
 * Add GetDependenciesForReferencesFile
 
 #### 4.1.0 - 10.08.2015
