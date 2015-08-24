@@ -3,12 +3,12 @@
   <head>
     <meta charset="utf-8">
     <!-- 
-      The FAKE Command Line
+      The Soft dependencies
  parameters will be replaced with the 
       document title extracted from the <h1> element or
       file name, if there is no <h1> heading
     -->
-    <title>FAKE Command Line
+    <title>Soft dependencies
 </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="FAKE - F# Make">
@@ -37,77 +37,29 @@
       <hr />
       <div class="row">
         <div class="span9" id="main">
-          <h1>FAKE Command Line</h1>
+          <h1>Soft dependencies</h1>
 
-<p><strong>Note:  This documentation is for FAKE.exe version 2.18 or later.</strong></p>
+<p>Typically you will define dependencies among your targets using the <code>==&gt;</code> and <code>&lt;==</code> operators, and these 
+dependencies define the order in which the targets are executed during a build.</p>
 
-<p>The FAKE.exe command line interface (CLI) is defined as follows:</p>
+<p>You can also define soft dependencies among targets using the  <code>?=&gt;</code> and <code>&lt;=?</code> operators.  For example, you might
+say that target B has a soft dependency on target A:</p>
 
-<p><code>fake.exe [&lt;buildScriptPath&gt;] [&lt;targetName&gt;] [options]</code></p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="s">&quot;A&quot;</span> <span class="o">?=&gt;</span> <span class="s">&quot;B&quot;</span>
+<span class="c">// Or equivalently</span>
+<span class="s">&quot;B&quot;</span> <span class="o">&lt;=?</span> <span class="s">&quot;A&quot;</span>
+</code></pre></td>
+</tr>
+</table>
 
-<h2>Basic Examples</h2>
+<p>With this soft dependency, running B will not require that A be run first. However it does mean that <em>if</em> A is run 
+(due to other dependencies) it must be run before B.</p>
 
-<p><strong>No arguments:</strong> <code>fake.exe</code> (FAKE will try and locate your build script).</p>
-
-<p><strong>Specify build script only:</strong> <code>fake.exe mybuildscript.fsx</code></p>
-
-<p><strong>Specify target name only:</strong> <code>fake.exe clean</code> (runs the <code>clean</code> target).</p>
-
-<p><strong>Specify build script and target:</strong> <code>fake.exe mybuildscript.fsx clean</code></p>
-
-<h2><code>buildScriptPath</code></h2>
-
-<p>Optional.  The path to your <code>.fsx</code> build file.  If not specified, FAKE will pick the first <code>.fsx</code> it finds in your working directory (and fail if none exist).</p>
-
-<h2><code>targetName</code></h2>
-
-<p>Optional.  The name of the build script target you wish to run.  This will any target you specified to run in the build script.</p>
-
-<h2>Options</h2>
-
-<p>Options begin with -- (long name) or - (short name).</p>
-
-<h3><code>--envvar [-ev] &lt;name:string&gt; &lt;value:string&gt;</code></h3>
-
-<p>Set environment variable name value pair. Supports multiple.</p>
-
-<h3><code>--envflag [-ef] &lt;name:string&gt;</code></h3>
-
-<p>Set environment variable flag name to 'true'. Supports multiple.</p>
-
-<h3><code>--logfile [-lf] &lt;path:string&gt;</code></h3>
-
-<p>Set the build output log file path.</p>
-
-<h3><code>--printdetails [-pd]</code></h3>
-
-<p>Print details of FAKE's activity.</p>
-
-<h3><code>--version [-v]</code></h3>
-
-<p>Print FAKE version information.</p>
-
-<h3><code>--fsiargs [-fa] &lt;string&gt;</code></h3>
-
-<p>Pass args after this switch to FSI when running the build script.  This consumes all arguments after it.  See <a href="http://msdn.microsoft.com/en-us/library/dd233172.aspx">F# Interactive Options</a> for the fsi CLI details.</p>
-
-<p>Important:  If you use this option, you must include your build script path as one of the fsi args.  For example:</p>
-
-<p><code>--fsiargs --debug+ buildscript.fsx someArg1 anotherArg2</code></p>
-
-<p>The entire argument string <em>following</em> the build script path is set as the value of an environment variable named <code>fsiargs-buildscriptargs</code>.  This means you can access this specific set of arguments from within your build script.</p>
-
-<h3><code>--boot [-b] &lt;string&gt;</code></h3>
-
-<p>Bootstrap your FAKE script.  A bootstrapping <code>build.fsx</code> script executes twice (in two stages), allowing you to download dependencies with NuGet and do other preparatory work in the first stage, and have these dependencies available in the second stage.</p>
-
-<h3><code>--help [-h|/h|/help|/?]</code></h3>
-
-<p>Display CLI help.</p>
-
-<h1>Running FAKE targets from the command line</h1>
-
-<p>For this short sample we assume you have the latest version of FAKE in <em>./tools/</em>. Now consider the following small FAKE script:</p>
+<h2>Example</h2>
 
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
@@ -124,49 +76,27 @@
 <span class="l">13: </span>
 <span class="l">14: </span>
 <span class="l">15: </span>
+<span class="l">16: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="prep">#r</span> <span class="s">&quot;FAKE/tools/FakeLib.dll&quot;</span>
-<span class="k">open</span> <span class="i">Fake</span> 
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="c">// *** Define Targets ***</span>
+<span class="i">Target</span> <span class="s">&quot;Clean&quot;</span> (<span class="k">fun</span> () <span class="k">-&gt;</span> 
+    <span class="i">trace</span> <span class="s">&quot; --- Cleaning stuff --- &quot;</span>
+)
 
-<span class="i">Target</span> <span class="s">&quot;Clean&quot;</span> (<span class="k">fun</span> () <span class="k">-&gt;</span>  <span class="i">trace</span> <span class="s">&quot; --- Cleaning stuff --- &quot;</span>)
+<span class="i">Target</span> <span class="s">&quot;Build&quot;</span> (<span class="k">fun</span> () <span class="k">-&gt;</span> 
+    <span class="i">trace</span> <span class="s">&quot; --- Building the app --- &quot;</span>
+)
 
-<span class="i">Target</span> <span class="s">&quot;Build&quot;</span> (<span class="k">fun</span> () <span class="k">-&gt;</span>  <span class="i">trace</span> <span class="s">&quot; --- Building the app --- &quot;</span>)
+<span class="i">Target</span> <span class="s">&quot;Rebuild&quot;</span> <span class="i">DoNothing</span>
 
-<span class="i">Target</span> <span class="s">&quot;Deploy&quot;</span> (<span class="k">fun</span> () <span class="k">-&gt;</span> <span class="i">trace</span> <span class="s">&quot; --- Deploying app --- &quot;</span>)
-
-
-<span class="s">&quot;Clean&quot;</span>
-  <span class="o">==&gt;</span> <span class="s">&quot;Build&quot;</span>
-  <span class="o">==&gt;</span> <span class="s">&quot;Deploy&quot;</span>
-
-<span class="i">RunTargetOrDefault</span> <span class="s">&quot;Deploy&quot;</span>
+<span class="c">// *** Define Dependencies ***</span>
+<span class="s">&quot;Build&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;Rebuild&quot;</span>
+<span class="s">&quot;Clean&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;Rebuild&quot;</span>
+<span class="c">// Make sure &quot;Clean&quot; happens before &quot;Build&quot;, if &quot;Clean&quot; is is executed during a build.</span>
+<span class="s">&quot;Clean&quot;</span> <span class="o">?=&gt;</span> <span class="s">&quot;Build&quot;</span>
 </code></pre></td>
 </tr>
 </table>
-
-<p>If you are on windows then create this small redirect script:</p>
-
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip"><code lang="batchfile">@echo off
-"tools\Fake.exe" "%1"
-exit /b %errorlevel%
-</code></pre></td></tr></table>
-
-<p>On mono you can use:</p>
-
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip"><code lang="batchfile">#!/bin/bash
-mono ./tools/FAKE.exe "$@"
-</code></pre></td></tr></table>
-
-<p>Now you can run FAKE targets easily from the command line:</p>
-
-<p><img src="pics/commandline/cmd.png" alt="alt text" title="Running FAKE from cmd" /></p>
 
                     
         </div>
