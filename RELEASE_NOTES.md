@@ -2,6 +2,7 @@
 * New options in the SquirrelHelper - https://github.com/fsharp/FAKE/pull/910
 * Logging improvement in Fake.Deploy - https://github.com/fsharp/FAKE/pull/914
 * Added date to ReleaseNotes type definition - https://github.com/fsharp/FAKE/pull/917
+* Support for soft dependencies for targets - https://github.com/fsharp/FAKE/pull/920
 * Added support for builds within Team Foundation Server (and VSO) - https://github.com/fsharp/FAKE/pull/915
 * Added `createClientWithToken` & `createRelease` to Octokit.fsx - https://github.com/fsharp/FAKE/pull/913
 * Fixed WatchChanges not properly removing subdirectories from watch list - https://github.com/fsharp/FAKE/pull/908
