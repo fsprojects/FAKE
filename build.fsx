@@ -21,7 +21,7 @@ let release = LoadReleaseNotes "RELEASE_NOTES.md"
 let packages =
     ["FAKE.Core",projectDescription
      "FAKE.Gallio",projectDescription + " Extensions for Gallio"
-     "FAKE.IIS",projectDescription + " Extensions for IIS"
+     "FAKE.IIS",projectDescription + " Extensions for IIS Administration"
      "FAKE.SQL",projectDescription + " Extensions for SQL Server"
      "FAKE.Experimental",projectDescription + " Experimental Extensions"
      "FAKE.Deploy.Lib",projectDescription + " Extensions for FAKE Deploy"     
