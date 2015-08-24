@@ -62,6 +62,8 @@ type ReleaseNotes =
         Date = date
         Notes = notes }
 
+    static member New(assemblyVersion,nugetVersion,notes) = ReleaseNotes.New(assemblyVersion,nugetVersion,None,notes)
+
 let parseVersions =
     let nugetRegex = getRegEx @"([0-9]+.)+[0-9]+(-[a-zA-Z]+\d*)?(.[0-9]+)?"
     fun line ->
