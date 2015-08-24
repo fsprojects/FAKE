@@ -66,12 +66,17 @@ NUGET
       Microsoft.AspNet.Razor (>= 2.0.30506) - framework: >= net40
       Nancy (>= 1.2.0)
     Newtonsoft.Json (7.0.1)
+    NLog (4.0.1)
     NuGet.CommandLine (2.8.6)
     NuGet.Core (2.8.6)
       Microsoft.Web.Xdt (>= 2.1.0)
     RavenDB.Client (2.5.2962)
       Microsoft.CompilerServices.AsyncTargetingPack
     RavenDB.Server (3.0.3690)
+    Serilog (1.5.9)
+    Serilog.Sinks.NLog (1.5.4)
+      NLog (>= 3.0.0.0)
+      Serilog (>= 1.4.204 < 2.0)
     SourceLink.Fake (1.0.0)
     SSH.NET (2013.4.7)
     System.Web.Razor.Unofficial (2.0.2)
