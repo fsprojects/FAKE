@@ -1,9 +1,10 @@
 #### 4.2.0 - 24.08.2015
+* Support for soft dependencies for targets - http://fsharp.github.io/FAKE/soft-dependencies.html
+* Added support for builds within Team Foundation Server (and VSO) - https://github.com/fsharp/FAKE/pull/915
 * New options in the SquirrelHelper - https://github.com/fsharp/FAKE/pull/910
 * Logging improvement in Fake.Deploy - https://github.com/fsharp/FAKE/pull/914
+* New RunTargetOrListTargets function - https://github.com/fsharp/FAKE/pull/921
 * Added date to ReleaseNotes type definition - https://github.com/fsharp/FAKE/pull/917
-* Support for soft dependencies for targets - https://github.com/fsharp/FAKE/pull/920
-* Added support for builds within Team Foundation Server (and VSO) - https://github.com/fsharp/FAKE/pull/915
 * Added `createClientWithToken` & `createRelease` to Octokit.fsx - https://github.com/fsharp/FAKE/pull/913
 * Fixed WatchChanges not properly removing subdirectories from watch list - https://github.com/fsharp/FAKE/pull/908
 * Added ability to optionally pass in SiteId to configure IIS Site - https://github.com/fsharp/FAKE/pull/905
