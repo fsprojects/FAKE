@@ -27,8 +27,8 @@ With this soft dependency, running B will not require that A be run first. Howev
 	Target "Rebuild" DoNothing
 
 	// *** Define Dependencies ***
-	"Build" => "Rebuild"
-	"Clean" => "Rebuild"
-	// Make sure "Clean" happens before "Build", if "Clean" is is executed during a build.
+	"Build" ==> "Rebuild"
+	"Clean" ==> "Rebuild"
+	// Make sure "Clean" happens before "Build", if "Clean" is executed during a build.
 	"Clean" ?=> "Build"
    
