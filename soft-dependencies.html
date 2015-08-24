@@ -90,9 +90,9 @@ say that target B has a soft dependency on target A:</p>
 <span class="i">Target</span> <span class="s">&quot;Rebuild&quot;</span> <span class="i">DoNothing</span>
 
 <span class="c">// *** Define Dependencies ***</span>
-<span class="s">&quot;Build&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;Rebuild&quot;</span>
-<span class="s">&quot;Clean&quot;</span> <span class="o">=&gt;</span> <span class="s">&quot;Rebuild&quot;</span>
-<span class="c">// Make sure &quot;Clean&quot; happens before &quot;Build&quot;, if &quot;Clean&quot; is is executed during a build.</span>
+<span class="s">&quot;Build&quot;</span> <span class="o">==&gt;</span> <span class="s">&quot;Rebuild&quot;</span>
+<span class="s">&quot;Clean&quot;</span> <span class="o">==&gt;</span> <span class="s">&quot;Rebuild&quot;</span>
+<span class="c">// Make sure &quot;Clean&quot; happens before &quot;Build&quot;, if &quot;Clean&quot; is executed during a build.</span>
 <span class="s">&quot;Clean&quot;</span> <span class="o">?=&gt;</span> <span class="s">&quot;Build&quot;</span>
 </code></pre></td>
 </tr>
@@ -139,7 +139,7 @@ say that target B has a soft dependency on target A:</p>
               <li><a href="watch.html">File Watcher</a></li>
               <li class="divider"></li>
               <li><a href="deploy.html">Fake.Deploy</a></li>
-              <li><a href="iis.html">Fake.ISS</a></li>
+              <li><a href="iis.html">Fake.IIS</a></li>
               <li class="nav-header">Reference</li>
               <li><a href="apidocs/index.html">API Reference</a></li>
           </ul>
