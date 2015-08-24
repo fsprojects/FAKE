@@ -28,6 +28,11 @@ let RunParameterTargetOrDefault parameterName defaultTarget = getBuildParamOrDef
 /// Runs the target given by the target parameter or the given default target
 let RunTargetOrDefault defaultTarget = getBuildParamOrDefault "target" defaultTarget |> Run
 
+/// Runs the target given by the target parameter or lists the available targets
+let RunTargetOrListTargets() =
+    if hasBuildParam "target" then getBuildParam "target" |> Run
+    else listTargets()
+
 /// Runs the target given by the target parameter
 let RunTarget() = getBuildParam "target" |> Run
 
