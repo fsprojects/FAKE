@@ -41,7 +41,7 @@ let StopStorageEmulator = (fun _ ->
         failwithf "Azure Emulator Failure on stop Storage Emulator"
 )
 
-/// Starts the staorage emulator
+/// Starts the storage emulator
 let StartStorageEmulator = (fun _ ->
     let emulatorParameter = AzureEmulatorDefaults
 
