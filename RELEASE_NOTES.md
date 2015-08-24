@@ -1,3 +1,6 @@
+#### 4.2.1-alpha001 - 24.08.2015
+* REVERT: WiX change broke internal build 
+
 #### 4.2.0 - 24.08.2015
 * Support for soft dependencies for targets - http://fsharp.github.io/FAKE/soft-dependencies.html
 * Added support for builds within Team Foundation Server (and VSO) - https://github.com/fsharp/FAKE/pull/915
