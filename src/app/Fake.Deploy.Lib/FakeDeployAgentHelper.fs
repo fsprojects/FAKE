@@ -233,10 +233,6 @@ let DeployPackageWithArgs url packageFileName args =
 [<Obsolete("Use deployPackage")>]
 let DeployPackage url packageFileName = DeployPackageWithArgs url packageFileName [||]
 
-/// Deprecated, use DeployPackage
-[<Obsolete("Use DeployPackage")>]
-let PostDeploymentPackage = DeployPackage
-
 /// Performs a rollback of the given app at the given URL and handles the response.
 let RollbackPackage url appName version = 
     match rollbackTo url appName version with
