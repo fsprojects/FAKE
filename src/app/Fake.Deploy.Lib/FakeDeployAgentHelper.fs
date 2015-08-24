@@ -9,10 +9,11 @@ open System.Web
 open HttpListenerHelper
 open Fake.SshRsaModule
 
+/// Authentication token received from a successful login
 type AuthToken = 
     | AuthToken of Guid
 
-let mutable private authToken : Guid option = None
+let mutable private authToken : AuthToken option = None
 
 /// A http response type.
 type Response = 
@@ -44,31 +45,48 @@ type Url = string
 type Action = string
 type FilePath = string
 
-[<Literal>] 
+type Deployment = 
+    { PackageFileName : FilePath
+      Url : Url
+      Timeout : TimeSpan
+      Arguments : string list
+      AuthToken : AuthToken option }
+
+let private defaultTimeout = TimeSpan.FromMinutes(20.)
+
+let private defaultDeployment = 
+    { PackageFileName = ""
+      Url = ""
+      Timeout = defaultTimeout
+      Arguments = []
+      AuthToken = None }
+
+[<Literal>]
 let scriptArgumentsHeaderName = "X-FAKE-Script-Arguments"
 
-let private webRequest (url: Url) (action: Action) = 
+let private webRequest (url : Url) (action : Action) (timeout : TimeSpan) = 
     let req = WebRequest.Create url :?> HttpWebRequest
     req.Method <- action
-    req.Timeout <- 20 * 60 * 1000
+    req.Timeout <- int timeout.TotalMilliseconds
     req.ContentType <- "application/fake"
     req.Headers.Add("fake-deploy-use-http-response-messages", "true")
     match authToken with
     | None -> ()
-    | Some t -> req.Headers.Add("AuthToken", string t)
+    | Some t -> 
+        match t with
+        | AuthToken t -> req.Headers.Add("AuthToken", string t)
     req
 
-let private downloadString (request: HttpWebRequest) =
+let private downloadString (request : HttpWebRequest) = 
     use responseStream = request.GetRequestStream()
     use ms = new MemoryStream()
     responseStream.CopyTo ms
     Encoding.UTF8.GetString(ms.ToArray())
 
-
 /// Gets the http response from the given URL and runs it with the given function.
-let private get f url = 
+let private get timeout f url = 
     try 
-        let msg = webRequest url "GET" |> downloadString
+        let msg = webRequest url "GET" timeout |> downloadString
         try 
             match msg |> Json.deserialize with
             | Message msg -> 
@@ -82,17 +100,17 @@ let private get f url =
             |> Choice1Of2
     with exn -> Choice2Of2 exn
 
-let uploadData (action: Action) (url: Url) (body: byte[]) = 
-    let req = webRequest url action 
+let private uploadData (action : Action) (url : Url) (body : byte []) timeout = 
+    let req = webRequest url action timeout
     use reqStream = req.GetRequestStream()
-    reqStream.Write (body, 0, body.Length)
+    reqStream.Write(body, 0, body.Length)
     use respStream = req.GetResponse().GetResponseStream()
     let ms = new MemoryStream()
     respStream.CopyTo ms
     ms.ToArray()
 
-let uploadFile (action: Action) (url: Url) (file: FilePath) (args: string[]) = 
-    let req = webRequest url action
+let private uploadFile (action : Action) (url : Url) (file : FilePath) (args : string []) timeout = 
+    let req = webRequest url action timeout
     req.Headers.Add(scriptArgumentsHeaderName, args |> toHeaderValue)
     req.AllowWriteStreamBuffering <- false
     use fileStream = File.OpenRead file
@@ -103,10 +121,10 @@ let uploadFile (action: Action) (url: Url) (file: FilePath) (args: string[]) =
     let ms = new MemoryStream()
     respStream.CopyTo ms
     ms.ToArray()
-    
+
 /// sends the given body using the given action (POST or PUT) to the given url
-let private processResponse (response: byte[]) =
-    try
+let private processResponse (response : byte []) = 
+    try 
         use ms = new MemoryStream(response)
         use sr = new StreamReader(ms, Text.Encoding.UTF8)
         let msg = sr.ReadToEnd()
@@ -125,10 +143,10 @@ let private processResponse (response: byte[]) =
     with exn -> Choice2Of2 exn
 
 /// Posts the given file to the given URL.
-let private post url file = uploadFile "POST" url file >> processResponse
+let private post url file timeout = uploadFile "POST" url file timeout >> processResponse
 
 /// Puts the given body to the given URL.
-let private put url = uploadData "PUT" url >> processResponse
+let private put url timeout = uploadData "PUT" url timeout >> processResponse
 
 type DeployStatus = 
     | Active
@@ -138,35 +156,42 @@ type App =
     { Name : string
       Version : string }
 
-
-let buildExceptionString (r:Response) =
+let private buildExceptionString (r : Response) = 
     let msgs = 
         r.Messages
-        |> Seq.map(fun m -> sprintf "  %s %s" (m.Timestamp.ToString("yyyy-MM-dd hh::mm:ss.fff")) m.Message)
+        |> Seq.map (fun m -> sprintf "  %s %s" (m.Timestamp.ToString("yyyy-MM-dd hh::mm:ss.fff")) m.Message)
         |> fun arr -> String.Join("\r\n", arr)
-    sprintf "%O\r\n\r\nDeploy messages\r\n{\r\n%s\r\n}\r\n" r.Exception  msgs
-
+    sprintf "%O\r\n\r\nDeploy messages\r\n{\r\n%s\r\n}\r\n" r.Exception msgs
 
 /// Authenticate against the given server with the given userId and private key
 let authenticate server userId serverpathToPrivateKeyFile passwordForPrivateKey = 
     let privateKey = loadPrivateKey serverpathToPrivateKeyFile passwordForPrivateKey
     let challenge = REST.ExecuteGetCommand null null (server + "/login/" + userId)
-    let signature = challenge |> Convert.FromBase64String |> privateKey.Sign |> Convert.ToBase64String 
-
-    let postData = sprintf "challenge=%s&signature=%s" (HttpUtility.UrlEncode challenge) (HttpUtility.UrlEncode signature)
+    
+    let signature = 
+        challenge
+        |> Convert.FromBase64String
+        |> privateKey.Sign
+        |> Convert.ToBase64String
+    
+    let postData = 
+        sprintf "challenge=%s&signature=%s" (HttpUtility.UrlEncode challenge) (HttpUtility.UrlEncode signature)
     let response = REST.ExecutePost (server + "/login") "x" "x" postData
-    authToken <- response.Trim([|'"'|]) |> Guid.Parse |> Some
+    authToken <- response.Trim([| '"' |])
+                 |> Guid.Parse
+                 |> AuthToken
+                 |> Some
     authToken
 
 /// Returns all releases of the given app from the given server.
 let getReleasesFor server appname status = 
     if String.IsNullOrEmpty(appname) then server + "/deployments?status=" + status
     else server + "/deployments/" + appname + "?status=" + status
-    |> get (Json.deserialize<DeploymentResponse>)
+    |> get defaultTimeout (Json.deserialize<DeploymentResponse>)
 
 /// Performs a rollback of the given app on the server.
 let rollbackTo server appname version = 
-    put (server + "/deployments/" + appname + "?version=" + version) [||] |> wrapFailure
+    put (server + "/deployments/" + appname + "?version=" + version) [||] defaultTimeout |> wrapFailure
 
 /// Returns all active releases from the given server.
 let getAllActiveReleases server = getReleasesFor server null "active" |> wrapFailure
@@ -178,23 +203,34 @@ let getActiveReleasesFor server appname = getReleasesFor server appname "active"
 let getAllReleasesFor server appname = 
     if String.IsNullOrEmpty(appname) then server + "/deployments/"
     else server + "/deployments/" + appname + "/"
-    |> get (Json.deserialize<DeploymentResponse>)
+    |> get defaultTimeout (Json.deserialize<DeploymentResponse>)
     |> wrapFailure
 
 /// Returns all releases from the given server.
 let getAllReleases server = getAllReleasesFor server null
 
 /// Posts a deployment package to the given URL.
-let postDeploymentPackage url packageFileName args = post url packageFileName args |> wrapFailure
+let postDeploymentPackage url packageFileName args = post url packageFileName args defaultTimeout |> wrapFailure
 
 /// Posts a deployment package to the given URL, executes the script inside it with given arguments and handles the response.
-let DeployPackageWithArgs url packageFileName args =
-    match postDeploymentPackage url packageFileName args with
-    | Success _ -> tracefn "Deployment of %s successful" packageFileName
-    | Failure exn -> failwithf "Deployment of %A failed\r\n%s" packageFileName (buildExceptionString exn)
-    | response -> failwithf "Deployment of %A failed\r\n%A" packageFileName response
+let deployPackage (f : Deployment -> Deployment) =
+    let d = f { defaultDeployment with AuthToken = authToken }
+    authToken <- d.AuthToken 
+    let result = post d.Url d.PackageFileName (d.Arguments |> Array.ofList) d.Timeout |> wrapFailure
+    match result with
+    | Success _ -> tracefn "Deployment of %s successful" d.PackageFileName
+    | Failure exn -> failwithf "Deployment of %A failed\r\n%s" d.PackageFileName (buildExceptionString exn)
+    | response -> failwithf "Deployment of %A failed\r\n%A" d.PackageFileName response
+
+/// Posts a deployment package to the given URL, executes the script inside it with given arguments and handles the response.
+/// Deprecated, use DeployPackage
+[<Obsolete("Use deployPackage")>]
+let DeployPackageWithArgs url packageFileName args = 
+    deployPackage (fun x -> { x with Url = url; PackageFileName = packageFileName; Arguments = args |> List.ofArray })
 
 /// Posts a deployment package to the given URL and handles the response.
+/// Deprecated, use DeployPackage
+[<Obsolete("Use deployPackage")>]
 let DeployPackage url packageFileName = DeployPackageWithArgs url packageFileName [||]
 
 /// Deprecated, use DeployPackage
