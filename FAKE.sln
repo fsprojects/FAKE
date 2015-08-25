@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0F0488CC-2580-4C07-9E16-3997480F0221}"
 	ProjectSection(SolutionItems) = preProject
@@ -43,6 +43,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "help", "help", "{564BD198-0
 		help\create-nuget-package.md = help\create-nuget-package.md
 		help\customtasks.md = help\customtasks.md
 		help\deploy.md = help\deploy.md
+		help\fluentmigrator.md = help\fluentmigrator.md
 		help\fsc.md = help\fsc.md
 		help\fxcop.md = help\fxcop.md
 		help\gettingstarted.md = help\gettingstarted.md

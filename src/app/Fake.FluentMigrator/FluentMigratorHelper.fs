@@ -1,5 +1,4 @@
-﻿[<AutoOpen>]
-/// Contains functions to run FluentMigrator database migrations
+﻿/// Contains functions to run FluentMigrator
 module Fake.FluentMigratorHelper
 
 open System
@@ -32,7 +31,7 @@ type internal FakeAnnouncer() =
     override this.Write (message, escaped) =
         log message
 
-/// <summary>MS SQL Server driver version</summary>
+/// MS SQL Server driver version
 type SqlServerVersion =
     | Default
     | V2000
@@ -42,13 +41,13 @@ type SqlServerVersion =
     | V2014
     | CE
 
-/// <summary>Oracle database driver version</summary>
+/// Oracle database driver version
 type OracleVersion =
     | Default
     | Managed
     | DotConnect
 
-/// <summary>Fluent Migrator SQL syntax provider</summary>
+/// Fluent Migrator SQL syntax provider
 type DatabaseProvider =
     | SqlServer of version: SqlServerVersion
     | Oracle of version: OracleVersion
@@ -60,32 +59,32 @@ type DatabaseProvider =
     | PostgreSQL
     | SQLite
 
-///<summary>Database connection configuration</summary>
+///Database connection configuration
 type DatabaseConnection =
-    ///<summary>Explicit connection string</summary>
+    ///Explicit connection string
     | ConnectionString of connectionString: string * provider: DatabaseProvider
-    ///<summary>Connection string specified in application config file</summary>
+    ///Connection string specified in application config file
     | ConnectionStringFromConfig of name: string * configPath: string * provider: DatabaseProvider
 
-///<summary>Fluent Migrator execution mode</summary>
+///Fluent Migrator execution mode
 type MigrationRunningMode =
-    ///<summary>Execute migrations on the target database</summary>
+    ///Execute migrations on the target database
     | Execute of connection: DatabaseConnection
-    ///<summary>Execute migrations on the target database and script SQL to the output file</summary>
+    ///Execute migrations on the target database and script SQL to the output file
     | ExecuteAndScript of connection: DatabaseConnection * outputFileName: string
-    ///<summary>Execute migrations in preview-only mode</summary>
+    ///Execute migrations in preview-only mode
     | Preview of connection: DatabaseConnection
-    ///<summary>Create migration script</summary>
+    ///Create migration script
     | Script of startVersion: int64 * outputFileName: string * provider: DatabaseProvider
 
-/// <summary>Database operation to execute</summary>
+/// Database operation to execute
 type DatabaseTask =
     | MigrateUp of mode: MigrationRunningMode * version: Option<int64>
     | MigrateDown of mode: MigrationRunningMode * version: int64
     | Rollback of mode: MigrationRunningMode * steps: int
     | ListAppliedMigrations of connection: DatabaseConnection
 
-/// <summary>Fluent Migrator options</summary>
+/// Fluent Migrator options
 type MigrationOptions = {
     Namespace: Option<string * bool>;
     Profile: string;
@@ -98,7 +97,7 @@ type MigrationOptions = {
     Verbose: bool
 }
 
-/// <summary>Default migration options</summary>
+/// Default migration options
 let DefaultMigrationOptions = {
     Namespace = None;
     Profile = null;
@@ -246,10 +245,11 @@ let private toRunnerContext task assemblies options =
         | None -> ()
     (context, (snd announcer))
 
-/// <summary>Executes the specified task using configuration options</summary>
-/// <param name="task"><see cref="DatabaseTask"/> to execute</param>
-/// <param name="assemblies">Assembly files which contain migrations</param>
-/// <param name="options"><see cref="MigrationOptions"/>options</param>
+/// Executes the specified task using configuration options
+/// ## Parameters
+///  - `task` - Database task to execute
+///  - `assemblies` - Assembly files which contain migrations
+///  - `options` - Migration options which are passed to FluentMigrator
 let ExecuteDatabaseTask task (assemblies: seq<string>) options =
     let (context, writer) = toRunnerContext task assemblies options
     try
@@ -258,51 +258,55 @@ let ExecuteDatabaseTask task (assemblies: seq<string>) options =
     finally
         if (writer <> null) then writer.Dispose()
 
-/// <summary>Migrates database up to the specified version</summary>
-/// <param name="version">Version to migrate to (use None for the latest available version).</param>
-/// <param name="connection">Database connection</param>
-/// <param name="assemblies">Assembly files which contain migrations</param>
-/// <param name="options"><see cref="MigrationOptions"/>options</param>
+/// Migrates database up to the specified version
+/// ## Parameters
+///  - `version` - Target version
+///  - `connection` - Database connection
+///  - `assemblies` - Assembly files which contain migrations
+///  - `options` - Migration options which are passed to FluentMigrator
 let MigrateUp version connection assemblies options = 
     let task = MigrateUp(Execute(connection), Some(version))
     ExecuteDatabaseTask task assemblies options
 
-/// <summary>Migrates database up to the latest version</summary>
-/// <param name="connection">Database connection</param>
-/// <param name="assemblies">Assembly files which contain migrations</param>
-/// <param name="options"><see cref="MigrationOptions"/>options</param>
+/// Migrates database up to the latest version
+/// ## Parameters
+///  - `connection` - Database connection
+///  - `assemblies` - Assembly files which contain migrations
+///  - `options` - Migration options which are passed to FluentMigrator
 let MigrateToLatest connection assemblies options = 
     let task = DatabaseTask.MigrateUp(Execute(connection), None)
     ExecuteDatabaseTask task assemblies options
 
-/// <summary>Migrates database up to the specified version</summary>
-/// <param name="version">Version to migrate to</param>
-/// <param name="connection">Database connection</param>
-/// <param name="assemblies">Assembly files which contain migrations</param>
-/// <param name="options"><see cref="MigrationOptions"/>options</param>
+/// Migrates database up to the specified version
+/// ## Parameters
+///  - `version` - Target version
+///  - `connection` - Database connection
+///  - `assemblies` - Assembly files which contain migrations
+///  - `options` - Migration options which are passed to FluentMigrator
 let MigrateDown version connection assemblies options =
     let task = MigrateDown(Execute(connection), version)
     ExecuteDatabaseTask task assemblies options
 
-/// <summary>Rollbacks several applied migrations</summary>
-/// <param name="steps">Number of migrations to revert</param>
-/// <param name="connection">Database connection</param>
-/// <param name="assemblies">Assembly files which contain migrations</param>
-/// <param name="options"><see cref="MigrationOptions"/>options</param>
+/// Rollbacks several applied migrations
+/// ## Parameters
+///  - `steps` - Number of migrations to rollback
+///  - `connection` - Database connection
+///  - `assemblies` - Assembly files which contain migrations
+///  - `options` - Migration options which are passed to FluentMigrator
 let Rollback steps connection assemblies options =
     let task = Rollback(Execute(connection), steps)
     ExecuteDatabaseTask task assemblies options
 
-/// <summary>Rollbacks latest applied migration</summary>
-/// <param name="connection">Database connection</param>
-/// <param name="assemblies">Assembly files which contain migrations</param>
-/// <param name="options"><see cref="MigrationOptions"/>options</param>
+/// Rollbacks latest applied migration
+///  - `connection` - Database connection
+///  - `assemblies` - Assembly files which contain migrations
+///  - `options` - Migration options which are passed to FluentMigrator
 let RollbackLatest connection assemblies options = 
     Rollback 1 connection assemblies options
 
-/// <summary>Lists all migrations which were applied to the database</summary>
-/// <param name="connection">Database connection</param>
-/// <param name="assemblies">Assembly files which contain migrations</param>
+/// Lists all migrations which were applied to the database
+///  - `connection` - Database connection
+///  - `assemblies` - Assembly files which contain migrations
 let ListAppliedMigrations connection assemblies =
     let task = ListAppliedMigrations(connection)
     ExecuteDatabaseTask task assemblies DefaultMigrationOptions
