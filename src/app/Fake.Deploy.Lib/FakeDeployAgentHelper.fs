@@ -13,7 +13,7 @@ open Fake.SshRsaModule
 type AuthToken = 
     | AuthToken of Guid
 
-let mutable private authToken : AuthToken option = None
+let mutable private authToken : Guid option = None
 
 /// A http response type.
 type Response = 
@@ -72,9 +72,7 @@ let private webRequest (url : Url) (action : Action) (timeout : TimeSpan) =
     req.Headers.Add("fake-deploy-use-http-response-messages", "true")
     match authToken with
     | None -> ()
-    | Some t -> 
-        match t with
-        | AuthToken t -> req.Headers.Add("AuthToken", string t)
+    | Some t -> req.Headers.Add("AuthToken", string t)
     req
 
 let private downloadString (request : HttpWebRequest) = 
@@ -156,7 +154,7 @@ type App =
     { Name : string
       Version : string }
 
-let private buildExceptionString (r : Response) = 
+let buildExceptionString (r : Response) = 
     let msgs = 
         r.Messages
         |> Seq.map (fun m -> sprintf "  %s %s" (m.Timestamp.ToString("yyyy-MM-dd hh::mm:ss.fff")) m.Message)
@@ -179,7 +177,6 @@ let authenticate server userId serverpathToPrivateKeyFile passwordForPrivateKey 
     let response = REST.ExecutePost (server + "/login") "x" "x" postData
     authToken <- response.Trim([| '"' |])
                  |> Guid.Parse
-                 |> AuthToken
                  |> Some
     authToken
 
@@ -212,10 +209,18 @@ let getAllReleases server = getAllReleasesFor server null
 /// Posts a deployment package to the given URL.
 let postDeploymentPackage url packageFileName args = post url packageFileName args defaultTimeout |> wrapFailure
 
+
 /// Posts a deployment package to the given URL, executes the script inside it with given arguments and handles the response.
 let deployPackage (f : Deployment -> Deployment) =
-    let d = f { defaultDeployment with AuthToken = authToken }
-    authToken <- d.AuthToken 
+    let d = f { defaultDeployment with 
+                    AuthToken = 
+                        match authToken with
+                        | Some x -> Some ( AuthToken x)
+                        | None -> None }
+    authToken <- 
+        match d.AuthToken with
+        | Some a -> Some (match a with | AuthToken b -> b)
+        | None -> None
     let result = post d.Url d.PackageFileName (d.Arguments |> Array.ofList) d.Timeout |> wrapFailure
     match result with
     | Success _ -> tracefn "Deployment of %s successful" d.PackageFileName
