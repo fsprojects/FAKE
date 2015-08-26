@@ -5,7 +5,7 @@ The basic idea of the FAKE helper is to run FluentMigrator over the existing dat
 
 ## Migrating your database to the latest version
 
-FAKE's support for FluentMigrator ships with a separate NuGet package called [FAKE.FluentMigrator](nuget.org/packages/FAKE.FluentMigrator). 
+FAKE's support for FluentMigrator ships with a separate NuGet package called [FAKE.FluentMigrator](http://www.nuget.org/packages/FAKE.FluentMigrator). 
 Usually your FAKE setup will look as follows:
 
     // Reference required dlls
