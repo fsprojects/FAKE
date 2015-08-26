@@ -32,7 +32,7 @@ type internal FakeAnnouncer() =
         log message
 
 /// MS SQL Server driver version
-type SqlServerVersion =
+type SqlServerVersion = 
     | Default
     | V2000
     | V2005
@@ -59,22 +59,22 @@ type DatabaseProvider =
     | PostgreSQL
     | SQLite
 
-///Database connection configuration
+/// Database connection configuration
 type DatabaseConnection =
     ///Explicit connection string
     | ConnectionString of connectionString: string * provider: DatabaseProvider
     ///Connection string specified in application config file
     | ConnectionStringFromConfig of name: string * configPath: string * provider: DatabaseProvider
 
-///Fluent Migrator execution mode
+/// Fluent Migrator execution mode
 type MigrationRunningMode =
-    ///Execute migrations on the target database
+    /// Execute migrations on the target database
     | Execute of connection: DatabaseConnection
-    ///Execute migrations on the target database and script SQL to the output file
+    /// Execute migrations on the target database and script SQL to the output file
     | ExecuteAndScript of connection: DatabaseConnection * outputFileName: string
-    ///Execute migrations in preview-only mode
+    /// Execute migrations in preview-only mode
     | Preview of connection: DatabaseConnection
-    ///Create migration script
+    /// Create migration script
     | Script of startVersion: int64 * outputFileName: string * provider: DatabaseProvider
 
 /// Database operation to execute
