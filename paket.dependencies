@@ -11,7 +11,7 @@ nuget SourceLink.Fake
 nuget RavenDB.Server
 nuget serilog.sinks.nlog
 nuget xunit.runners
-nuget UnionArgParser
+nuget Argu
 nuget Nancy.Authentication.Stateless
 nuget Nancy.Hosting.Self
 nuget Nancy.Serialization.JsonNet

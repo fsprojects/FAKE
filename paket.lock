@@ -2,6 +2,7 @@ CONTENT: NONE
 NUGET
   remote: http://nuget.org/api/v2
   specs:
+    Argu (1.0.0)
     AspNetMvc (4.0.20710.0)
       Microsoft.AspNet.Mvc (>= 4.0.20710.0 < 4.1)
     bootstrap (3.3.5)
@@ -85,7 +86,6 @@ NUGET
     System.Web.Razor.Unofficial (2.0.2)
     toastr (2.1.1)
       jQuery (>= 1.6.3)
-    UnionArgParser (0.6.3)
     xunit (1.9.2)
     xunit.extensions (1.9.2)
       xunit (1.9.2)
