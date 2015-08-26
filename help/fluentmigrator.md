@@ -5,9 +5,9 @@ The basic idea of the FAKE helper is to run FluentMigrator over the existing dat
 
 ## Migrating your database to the latest version
 
-In 95% of cases your FAKE setup will look as follows:
+FAKE's support for FluentMigrator ships with a separate NuGet package called [FAKE.FluentMigrator](nuget.org/packages/FAKE.FluentMigrator). 
+Usually your FAKE setup will look as follows:
 
-    [lang=fsharp]
     // Reference required dlls
     #r @"packages/FAKE/tools/FakeLib.dll"
     #r @"packages/FAKE/tools/Fake.FluentMigrator.dll"
@@ -17,8 +17,13 @@ In 95% of cases your FAKE setup will look as follows:
 
     // Assemblies with migrations
     let assemblies = ["Migrations.dll"]
+    
     // Using SQL Server 2014 LocalDB
-    let connection = ConnectionString(@"Data Source=(localdb)\MSSQLLocalDb;Initial Catalog=MyDB;Integrated Security=True", SqlServer(V2014))
+    let connection = 
+      ConnectionString(
+          @"Data Source=(localdb)\MSSQLLocalDb;Initial Catalog=MyDB;Integrated Security=True", 
+          SqlServer(V2014))
+          
     // Specify additional options or just use the defaults
     let options = {DefaultMigrationOptions with Profile="Staging"; Tags = ["US"; "Canada"]}
 
@@ -34,34 +39,24 @@ In 95% of cases your FAKE setup will look as follows:
 
     RunTargetOrDefault "MigrateDatabase"
 
-## Connection Strings
+## ConnectionStrings
 
+Specify connection string in build script:
 
-- Specify connection string in build script
-
-    
-    [lang="fsharp"]
     let connection = ConnectionString("Server=.;Database=TestDb;User Id=admin;Password=pss;", SqlServer(V2008))
 
 
-- Use connection string from config file
+Use connection string from config file:
 
-
-    [lang="fsharp"]
     let connection = ConnectionStringFromConfig("ConnectionStringKey", "Project\\Web.config", SqlServer(V2012))
 
 ## Providers / drivers / SQL dialects
 
-- SqlServer(SqlServerVersion.Default) 
-- SqlServer(V2000) 
-- SqlServer(V2005) 
-- SqlServer(V2008) 
-- SqlServer(V2012) 
-- SqlServer(V2014) 
-- SqlServer(CE) 
-- Oracle(OracleVersion.Default) 
-- Oracle(Managed) 
-- Oracle(DotConnect) 
+The following drivers are supported:
+
+- SqlServer (SqlServerVersion.Default, V2000, V2005, V2008, V2012, V2014) 
+- SqlServer (CE) 
+- Oracle (OracleVersion.Default, Managed, DotConnect) 
 - DB2 
 - Firebird 
 - HANA 
@@ -72,7 +67,6 @@ In 95% of cases your FAKE setup will look as follows:
 
 ## Available commands
 
-    [lang="fsharp"]
     // Migrate to the latest available version
     MigrateToLatest connection assemblies options
 
