@@ -1,3 +1,6 @@
+#### 4.3.1 - 27.08.2015
+* Add support for new Xunit2 runner -noappdomain flag - https://github.com/fsharp/FAKE/pull/928
+
 #### 4.3.0 - 26.08.2015
 * FluentMigrator helper library - http://fsharp.github.io/FAKE/fluentmigrator.html
 
