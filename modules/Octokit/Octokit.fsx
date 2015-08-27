@@ -1,5 +1,7 @@
 #I __SOURCE_DIRECTORY__
-#r @"../../../../../packages/Octokit/lib/net45/Octokit.dll"
+#I @"../../../../../packages/Octokit/lib/net45"
+#I @"../../../../../packages/build/Octokit/lib/net45"
+#r "Octokit.dll"
 
 open Octokit
 open System
