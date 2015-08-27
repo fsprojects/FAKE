@@ -4,6 +4,7 @@ module Fake.Testing.XUnit2
 
 open System
 open System.IO
+open System.Linq
 open System.Text
 open Fake
 
@@ -14,6 +15,7 @@ Copyright (C) 2014 Outercurve Foundation.
 usage: xunit.console <assemblyFile> [configFile] [options]
 
 Valid options:
+  -noappdomain           : do not use app domains to run test code
   -parallel option       : set parallelization based on option
                          :   none - turn off all parallelization
                          :   collections - only parallelize collections
@@ -70,6 +72,8 @@ type CollectionConcurrencyMode =
 type XUnit2Params =
     { /// The path to the xUnit console runner: `xunit.console.exe`
       ToolPath : string
+      /// Do not use app domains to run test code.
+      NoAppDomain : bool
       /// The xUnit parallelization mode.
       Parallel : ParallelMode
       /// The xUnit thread limiting strategy.
@@ -107,6 +111,7 @@ type XUnit2Params =
 ///
 /// ## Defaults
 ///
+/// - `NoAppDomain` - `false`
 /// - `Parallel` - `NoParallelization`
 /// - `MaxThreads` - `Default`
 /// - `HtmlOutputPath` - `None`
@@ -124,7 +129,8 @@ type XUnit2Params =
 /// - `Silent` - `false`
 /// - `Wait` - `false`
 let XUnit2Defaults =
-    { Parallel = NoParallelization
+    { NoAppDomain = false
+      Parallel = NoParallelization
       MaxThreads = Default
       HtmlOutputPath = None
       XmlOutputPath = None
@@ -151,6 +157,7 @@ let internal buildXUnit2Args assemblies parameters =
 
     new StringBuilder()
     |> appendFileNamesIfNotNull assemblies
+    |> appendIfTrueWithoutQuotes parameters.NoAppDomain "-noappdomain"
     |> appendWithoutQuotes "-parallel"
     |> appendWithoutQuotes (ParallelMode.ToArgument parameters.Parallel)
     |> appendIfSome (CollectionConcurrencyMode.ToArgument parameters.MaxThreads) (sprintf "-maxthreads %d")
@@ -166,6 +173,16 @@ let internal buildXUnit2Args assemblies parameters =
     |> appendTraits parameters.IncludeTraits "-trait"
     |> appendTraits parameters.ExcludeTraits "-notrait"
     |> toText
+
+/// Helper method to detect if the xunit console runner supports the -noappdomain flag.
+/// If the xunit console runner does not support this flag, it will change the value to false
+/// so it does not interfere with older versions.
+let internal discoverNoAppDomainExists parameters =
+    let helpText =
+        ExecProcessAndReturnMessages (fun info ->
+            info.FileName <- parameters.ToolPath ) (TimeSpan.FromMinutes 1.)
+    let canSetNoAppDomain = helpText.Messages.Any(fun msg -> msg.Contains("-noappdomain"))
+    {parameters with NoAppDomain = canSetNoAppDomain}
 
 module internal ResultHandling =
     let (|OK|Failure|) = function
@@ -205,7 +222,12 @@ module internal ResultHandling =
 let xUnit2 setParams assemblies =
     let details = separated ", " assemblies
     traceStartTask "xUnit2" details
-    let parameters = setParams XUnit2Defaults
+    let parametersFirst = setParams XUnit2Defaults
+
+    let parameters =
+        if parametersFirst.NoAppDomain
+        then discoverNoAppDomainExists parametersFirst
+        else parametersFirst
 
     let result =
         ExecProcess (fun info ->
