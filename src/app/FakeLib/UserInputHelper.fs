@@ -19,17 +19,23 @@ let internal readString (echo: bool) : string =
     |> Array.ofList
     |> fun cs -> new String(cs)
 
+let internal color (color: ConsoleColor) (code : unit -> _) =
+    let before = Console.ForegroundColor
+    Console.ForegroundColor <- color
+    let result = code ()
+    Console.ForegroundColor <- before
+    result
+    
 /// Return a string entered by the user followed by enter. The input is echoed to the screen.
 let getUserInput prompt =
-    printf "%s" prompt
+    color ConsoleColor.White (fun _ -> printf "%s" prompt)
     let s = readString true
     printfn ""
     s
 
-/// Return a string entered by the user followed by enter. The input is not echoed to the screen.
+/// Return a string entered by the user followed by enter. The input is replaced by '*' on the screen.
 let getUserPassword prompt =
-    printf "%s" prompt
+    color ConsoleColor.White (fun _ -> printf "%s" prompt)
     let s = readString false
     printfn ""
     s
-
