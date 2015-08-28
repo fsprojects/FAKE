@@ -335,7 +335,9 @@ let PrintTargets() =
 let private withDependencyType (depType:DependencyType) targets =
     targets |> List.map (fun t -> depType, t)
 
-// Helper function for visiting targets in a dependency tree 
+// Helper function for visiting targets in a dependency tree. Retutrns a set containing the names of the all the 
+// visited targets, and a list containing the targets visited ordered such that dependencies of a target appear earlier
+// in the list than the target.
 let private visitDependencies fVisit targetName = 
     let visit fGetDependencies fVisit targetName = 
         let visited = new HashSet<_>()
@@ -353,17 +355,17 @@ let private visitDependencies fVisit targetName =
     // First pass is to accumulate targets in (hard) dependency graph 
     let visited, _ = visit (fun t -> t.Dependencies |> withDependencyType DependencyType.Hard) (fun _ -> ()) targetName
  
-    let getDependencies (t: TargetTemplate<unit>) = 
-        if visited.Contains t.Name then
-            (t.Dependencies |> withDependencyType DependencyType.Hard) @ 
-            (t.SoftDependencies |> List.filter visited.Contains |> withDependencyType DependencyType.Soft)
-        else 
-            t.Dependencies |> withDependencyType DependencyType.Hard 
+    let getAllDependencies (t: TargetTemplate<unit>) = 
+         (t.Dependencies |> withDependencyType DependencyType.Hard) @ 
+         // Note that we only include the soft dependency if it is present in the set of targets that were
+         // visited.
+         (t.SoftDependencies |> List.filter visited.Contains |> withDependencyType DependencyType.Soft)
 
-    // Now make second pass, adding in soft depencencies if approrpriate
-    visit getDependencies fVisit targetName
+    // Now make second pass, adding in soft depencencies if appropriate
+    visit getAllDependencies fVisit targetName
     
               
+
 /// <summary>Writes a dependency graph.</summary>
 /// <param name="verbose">Whether to print verbose output or not.</param>
 /// <param name="target">The target for which the dependencies should be printed.</param>
@@ -515,21 +517,25 @@ let run targetName =
         let parallelJobs = environVarOrDefault "parallel-jobs" "1" |> int
 
         // Figure out the order in in which targets can be run, and which can be run in parallel.
-        let order = determineBuildOrder targetName
-
         if parallelJobs > 1 then
             tracefn "Running parallel build with %d workers" parallelJobs
 
+            // determine a parallel build order
+            let order = determineBuildOrder targetName
+            
             // run every level in parallel
             for par in order do
                 runTargetsParallel parallelJobs par
 
         else
-            // single threaded build. We flatten out the groupings of targets that determineBuildOrder
-            // returns, since we don't care about parallel execution.
+            // single threaded build.
             PrintDependencyGraph false targetName
-            let flattenedOrder = order |> Seq.collect id |> Seq.toArray
-            runTargets flattenedOrder
+
+            // Note: we could use the ordering resulting from flattening the result of determineBuildOrder
+            // for a single threaded build (thereby centralizing the algorithm for build order), but that
+            // ordering is inconsistent with earlier versions of FAKE (and PrintDependencyGraph).
+            let _, ordered = visitDependencies ignore targetName
+            runTargets (ordered |> Seq.map getTarget |> Seq.toArray)
 
     finally
         if errors <> [] then
