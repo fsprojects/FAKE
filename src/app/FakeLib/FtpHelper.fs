@@ -25,7 +25,7 @@ let getServerInfo (serverNameIp : string) (user : string) (password : string) ft
 let rec private writeChunkToReqStream (chunk : byte []) (reqStrm : Stream) (br : BinaryReader) = 
     if chunk.Length <> 0 then 
         reqStrm.Write(chunk, 0, chunk.Length)
-        writeChunkToReqStream (br.ReadBytes 1024) reqStrm |> ignore
+        writeChunkToReqStream (br.ReadBytes 1024) reqStrm br
 
 let inline private getSubstring (fromPos : int) (str : string) (toPos : int) = str.Substring(fromPos, toPos)
 let inline private lastSlashPos (str : string) = str.LastIndexOf(@"\") + 1
