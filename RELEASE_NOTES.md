@@ -1,4 +1,4 @@
-#### 4.3.2 - 28.08.2015
+#### 4.3.3 - 28.08.2015
 * Fixed bug where only first 1024 bytes were uploaded using FTP - https://github.com/fsharp/FAKE/pull/932
 
 #### 4.3.2 - 28.08.2015
