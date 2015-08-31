@@ -1,3 +1,6 @@
+#### 4.3.4 - 31.08.2015
+* Deployment configurable timeouts in FAKE.Deploy - https://github.com/fsharp/FAKE/pull/927
+
 #### 4.3.3 - 28.08.2015
 * Fixed bug where only first 1024 bytes were uploaded using FTP - https://github.com/fsharp/FAKE/pull/932
 
