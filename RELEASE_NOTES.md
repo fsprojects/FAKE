@@ -1,4 +1,4 @@
-#### 4.3.5 - 02.09.2015
+#### 4.3.6 - 03.09.2015
 * Use TFS variables as fallback, fixes #933 - https://github.com/fsharp/FAKE/pull/937
 
 #### 4.3.4 - 31.08.2015
