@@ -113,6 +113,9 @@ type HockeyAppUploadParams = {
 
     /// Release download status (can only be set with full-access tokens)
     DownloadStatus: DownloadStatusOption
+
+    /// Restrict download to specific teams
+    Teams: string[]
 }
 
 /// The default HockeyApp parameters
@@ -131,6 +134,7 @@ let HockeyAppUploadDefaults = {
     BuildServerUrl = String.Empty
     RepositoryUrl = String.Empty
     DownloadStatus = DownloadStatusOption.NotDownloadable
+    Teams = Array.empty
 }
 
 /// [omit]
@@ -171,6 +175,7 @@ let private toCurlArgs param = seq {
     yield sprintf "-F \"mandatory=%i\"" (int param.Mandatory)
     yield sprintf "-F \"status=%i\"" (int param.DownloadStatus)
     yield sprintf "-F \"private=%b\"" param.Private
+    yield sprintf "-F \"teams=%s\"" (param.Teams |> String.concat ",")
     if not (String.IsNullOrEmpty param.OwnerId) then yield sprintf "-F \"owner_id=%s\"" param.OwnerId
     if not (String.IsNullOrEmpty param.CommitSHA) then yield sprintf "-F \"commit_sha=%s\"" param.CommitSHA
     if not (String.IsNullOrEmpty param.BuildServerUrl) then yield sprintf "-F \"build_server_url=%s\"" param.BuildServerUrl
