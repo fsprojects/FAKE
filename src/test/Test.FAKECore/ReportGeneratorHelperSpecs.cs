@@ -4,8 +4,26 @@ using Microsoft.FSharp.Collections;
 
 namespace Test.FAKECore
 {
-    class when_executing_with_default_arguments
+    internal abstract class BuildReportArgumentsSpecs
     {
-        //It should_have_default_arguments = () => ReportGeneratorHelper.ReportGeneratorDefaultParams.ShouldBeLike(ExpectedDefaults);
+        protected static ReportGeneratorHelper.ReportGeneratorParams Parameters;
+        protected static FSharpList<string> Reports;
+        protected static string Arguments;
+
+        Establish context = () =>
+        {
+            Parameters = ReportGeneratorHelper.ReportGeneratorDefaultParams;
+            Reports = FSharpList<string>.Empty;
+        };
+
+        Because of = () =>
+        {
+            Arguments = ReportGeneratorHelper.buildReportGeneratorArgs(Parameters, Reports);
+        };
+    }
+
+    internal class when_executing_with_default_arguments : BuildReportArgumentsSpecs
+    {
+        
     }
 }
