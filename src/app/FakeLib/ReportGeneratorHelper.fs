@@ -51,6 +51,16 @@ let ReportGeneratorDefaultParams =
       WorkingDir = currentDirectory
       TimeOut = TimeSpan.FromMinutes 5. }
 
+let buildReportGeneratorArgs parameters (reports : string list) =
+    new StringBuilder()
+    |> append (sprintf "\"-reports:%s" (String.Join(";", reports)))
+    |> append (sprintf "\" \"-targetDir:%s" parameters.TargetDir)
+    |> append (String.Join(";", parameters.ReportTypes |> List.map (fun rt -> rt.ToString())))
+    |> appendIfTrue (parameters.SourceDirs.Length > 0) (sprintf " \"-sourcedirs:%s\"" (String.Join(";", parameters.SourceDirs)))
+    |> appendIfTrue (parameters.Filters.Length > 0) (sprintf " \"-filters:%s\"" (String.Join(";", parameters.Filters)))
+    |> append (sprintf "-verbosity:%s" (parameters.LogVerbosity.ToString()))
+    |> toText
+
 /// Runs ReportGenerator on one or more coverage reports.
 /// ## Parameters
 ///

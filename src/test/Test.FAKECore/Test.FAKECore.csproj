@@ -88,6 +88,7 @@
     <Compile Include="NunitCommonSpecs.cs" />
     <Compile Include="OpenCoverHelperSpecs.cs" />
     <Compile Include="PackageMgt\PackagesConfigSpecs.cs" />
+    <Compile Include="ReportGeneratorHelperSpecs.cs" />
     <Compile Include="SemVerHelperSpecs.cs" />
     <Compile Include="ProjectSystemSpecs.cs" />
     <Compile Include="SquirrelHelperSpec.cs" />
