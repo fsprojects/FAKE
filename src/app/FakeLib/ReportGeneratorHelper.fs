@@ -5,21 +5,22 @@ module Fake.ReportGeneratorHelper
 open System
 open System.Text
 
-type ReportGeneratorReportType = 
+type ReportGeneratorReportType =
     | Html = 0
     | HtmlSummary = 1
     | Xml = 2
     | XmlSummary = 3
     | Latex = 4
     | LatexSummary = 5
+    | Badges = 6
 
-type ReportGeneratorLogVerbosity = 
+type ReportGeneratorLogVerbosity =
     | Verbose = 0
     | Info = 1
     | Error = 2
 
 /// ReportGenerator parameters, for more details see: https://reportgenerator.codeplex.com.
-type ReportGeneratorParams = 
+type ReportGeneratorParams =
     { /// (Required) Path to the ReportGenerator exe file.
       ExePath : string
       /// (Required) The directory where the generated report should be saved.
@@ -29,7 +30,7 @@ type ReportGeneratorParams =
       /// Optional directories which contain the corresponding source code.
       SourceDirs : string list
       /// Optional list of assemblies that should be included or excluded
-      /// in the report. Exclusion filters take precedence over inclusion 
+      /// in the report. Exclusion filters take precedence over inclusion
       /// filters. Wildcards are allowed.
       Filters : string list
       /// The verbosity level of the log messages.
@@ -40,7 +41,7 @@ type ReportGeneratorParams =
       TimeOut : TimeSpan }
 
 /// ReportGenerator default parameters
-let ReportGeneratorDefaultParams = 
+let ReportGeneratorDefaultParams =
     { ExePath = "./tools/ReportGenerator/bin/ReportGenerator.exe"
       TargetDir = currentDirectory
       ReportTypes = [ ReportGeneratorReportType.Html ]
@@ -59,13 +60,13 @@ let ReportGeneratorDefaultParams =
 /// ## Sample
 ///
 ///      ReportGenerator (fun p -> { p with TargetDir = "c:/reports/" }) [ "c:/opencover.xml" ]
-let ReportGenerator setParams (reports : string list) = 
+let ReportGenerator setParams (reports : string list) =
     let taskName = "ReportGenerator"
     let description = "Generating reports"
     traceStartTask taskName description
     let param = setParams ReportGeneratorDefaultParams
-    
-    let processArgs = 
+
+    let processArgs =
         let args = ref (new StringBuilder())
         let append (s : string) = args := (!args).Append(s)
         append "\"-reports:"
@@ -74,11 +75,11 @@ let ReportGenerator setParams (reports : string list) =
         append param.TargetDir
         append "\" -reporttypes:"
         append (String.Join(";", param.ReportTypes |> List.map (fun rt -> rt.ToString())))
-        if param.SourceDirs.Length > 0 then 
+        if param.SourceDirs.Length > 0 then
             append " \"-sourcedirs:"
             append (String.Join(";", param.SourceDirs))
             append "\""
-        if param.Filters.Length > 0 then 
+        if param.Filters.Length > 0 then
             append " \"-filters:"
             append (String.Join(";", param.Filters))
             append "\""
@@ -86,8 +87,8 @@ let ReportGenerator setParams (reports : string list) =
         append (param.LogVerbosity.ToString())
         (!args).ToString()
     tracefn "ReportGenerator command\n%s %s" param.ExePath processArgs
-    let ok = 
-        execProcess (fun info -> 
+    let ok =
+        execProcess (fun info ->
             info.FileName <- param.ExePath
             if param.WorkingDir <> String.Empty then info.WorkingDirectory <- param.WorkingDir
             info.Arguments <- processArgs) param.TimeOut
