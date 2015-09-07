@@ -52,13 +52,17 @@ let ReportGeneratorDefaultParams =
       TimeOut = TimeSpan.FromMinutes 5. }
 
 let buildReportGeneratorArgs parameters (reports : string list) =
+    let reportTypes = parameters.ReportTypes |> List.map (fun rt -> rt.ToString())
+    let sourceDirs = sprintf "-sourcedirs:%s" (String.Join(";", parameters.SourceDirs))
+    let filters = sprintf "-filters:%s" (String.Join(";", parameters.Filters))
+
     new StringBuilder()
     |> append (sprintf "-reports:%s" (String.Join(";", reports)))
     |> append (sprintf "-targetDir:%s" parameters.TargetDir)
-    |> append (sprintf "-reporttypes:%s" (String.Join(";", parameters.ReportTypes |> List.map (fun rt -> rt.ToString()))))
-    |> appendIfTrue (parameters.SourceDirs.Length > 0) (sprintf "-sourcedirs:%s" (String.Join(";", parameters.SourceDirs)))
-    |> appendIfTrue (parameters.Filters.Length > 0) (sprintf "-filters:%s" (String.Join(";", parameters.Filters)))
-    |> append (sprintf "-verbosity:%s" (parameters.LogVerbosity.ToString()))
+    |> appendWithoutQuotes (sprintf "-reporttypes:%s" (String.Join(";", reportTypes)))
+    |> appendIfTrueWithoutQuotes (parameters.SourceDirs.Length > 0) sourceDirs
+    |> appendIfTrue (parameters.Filters.Length > 0) filters
+    |> appendWithoutQuotes (sprintf "-verbosity:%s" (parameters.LogVerbosity.ToString()))
     |> toText
 
 /// Runs ReportGenerator on one or more coverage reports.
@@ -75,27 +79,6 @@ let ReportGenerator setParams (reports : string list) =
     let description = "Generating reports"
     traceStartTask taskName description
     let param = setParams ReportGeneratorDefaultParams
-
-    let processArgs =
-        let args = ref (new StringBuilder())
-        let append (s : string) = args := (!args).Append(s)
-        append "\"-reports:"
-        append (String.Join(";", reports))
-        append "\" \"-targetdir:"
-        append param.TargetDir
-        append "\" -reporttypes:"
-        append (String.Join(";", param.ReportTypes |> List.map (fun rt -> rt.ToString())))
-        if param.SourceDirs.Length > 0 then
-            append " \"-sourcedirs:"
-            append (String.Join(";", param.SourceDirs))
-            append "\""
-        if param.Filters.Length > 0 then
-            append " \"-filters:"
-            append (String.Join(";", param.Filters))
-            append "\""
-        append " -verbosity:"
-        append (param.LogVerbosity.ToString())
-        (!args).ToString()
 
     let processArgs = buildReportGeneratorArgs param reports
 
