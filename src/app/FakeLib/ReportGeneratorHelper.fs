@@ -53,11 +53,11 @@ let ReportGeneratorDefaultParams =
 
 let buildReportGeneratorArgs parameters (reports : string list) =
     new StringBuilder()
-    |> append (sprintf "\"-reports:%s" (String.Join(";", reports)))
-    |> append (sprintf "\" \"-targetDir:%s" parameters.TargetDir)
-    |> append (String.Join(";", parameters.ReportTypes |> List.map (fun rt -> rt.ToString())))
-    |> appendIfTrue (parameters.SourceDirs.Length > 0) (sprintf " \"-sourcedirs:%s\"" (String.Join(";", parameters.SourceDirs)))
-    |> appendIfTrue (parameters.Filters.Length > 0) (sprintf " \"-filters:%s\"" (String.Join(";", parameters.Filters)))
+    |> append (sprintf "-reports:%s" (String.Join(";", reports)))
+    |> append (sprintf "-targetDir:%s" parameters.TargetDir)
+    |> append (sprintf "-reporttypes:%s" (String.Join(";", parameters.ReportTypes |> List.map (fun rt -> rt.ToString()))))
+    |> appendIfTrue (parameters.SourceDirs.Length > 0) (sprintf "-sourcedirs:%s" (String.Join(";", parameters.SourceDirs)))
+    |> appendIfTrue (parameters.Filters.Length > 0) (sprintf "-filters:%s" (String.Join(";", parameters.Filters)))
     |> append (sprintf "-verbosity:%s" (parameters.LogVerbosity.ToString()))
     |> toText
 
@@ -96,6 +96,9 @@ let ReportGenerator setParams (reports : string list) =
         append " -verbosity:"
         append (param.LogVerbosity.ToString())
         (!args).ToString()
+
+    let processArgs = buildReportGeneratorArgs param reports
+
     tracefn "ReportGenerator command\n%s %s" param.ExePath processArgs
     let ok =
         execProcess (fun info ->
