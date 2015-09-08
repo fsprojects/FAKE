@@ -93,7 +93,8 @@ namespace Test.FAKECore
         Establish context =
             () => Parameters = Parameters.With(p => p.SourceDirs, new List<string> { "mydirectory" }.ToFSharpList());
 
-        It should_append_source_directory_argument = () => Arguments.ShouldContain("-sourcedirs:mydirectory");
+        It should_append_source_directories_with_quotes =
+            () => Arguments.ShouldContain("\"-sourcedirs:mydirectory\"");
     }
 
     internal class when_given_one_or_more_filters : BuildReportArgumentsSpecs
