@@ -58,7 +58,7 @@ let buildReportGeneratorArgs parameters (reports : string list) =
 
     new StringBuilder()
     |> append (sprintf "-reports:%s" (String.Join(";", reports)))
-    |> append (sprintf "-targetDir:%s" parameters.TargetDir)
+    |> append (sprintf "-targetdir:%s" parameters.TargetDir)
     |> appendWithoutQuotes (sprintf "-reporttypes:%s" (String.Join(";", reportTypes)))
     |> appendIfTrueWithoutQuotes (parameters.SourceDirs.Length > 0) sourceDirs
     |> appendIfTrue (parameters.Filters.Length > 0) filters

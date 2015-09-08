@@ -1,12 +1,16 @@
 ﻿using Fake;
 using Machine.Specifications;
 using Microsoft.FSharp.Collections;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
+using FSharp.Testing;
+
 namespace Test.FAKECore
 {
+    [Subject(typeof(ReportGeneratorHelper), "report generator argument construction")]
     internal abstract class BuildReportArgumentsSpecs
     {
         protected static ReportGeneratorHelper.ReportGeneratorParams Parameters;
@@ -34,6 +38,18 @@ namespace Test.FAKECore
             "LatexSummary",
             "Badges"
         };
+
+        protected static readonly IEnumerable<ReportGeneratorHelper.ReportGeneratorReportType> testR
+            = new List<ReportGeneratorHelper.ReportGeneratorReportType>
+            {
+                ReportGeneratorHelper.ReportGeneratorReportType.Html,
+                ReportGeneratorHelper.ReportGeneratorReportType.HtmlSummary,
+                ReportGeneratorHelper.ReportGeneratorReportType.Xml,
+                ReportGeneratorHelper.ReportGeneratorReportType.XmlSummary,
+                ReportGeneratorHelper.ReportGeneratorReportType.Latex,
+                ReportGeneratorHelper.ReportGeneratorReportType.LatexSummary,
+                ReportGeneratorHelper.ReportGeneratorReportType.Badges
+            };
     }
 
     internal class when_executing_with_default_arguments : BuildReportArgumentsSpecs
@@ -52,5 +68,14 @@ namespace Test.FAKECore
         It should_not_append_source_dirs = () => Arguments.ShouldNotContain("-sourcedirs:");
         It should_not_append_filters = () => Arguments.ShouldNotContain("-filters:");
         It should_have_a_log_verbosity_of_verbose = () => Arguments.ShouldContain("-verbosity:Verbose");
+    }
+
+    internal class when_given_multiple_report_types : BuildReportArgumentsSpecs
+    {
+        Establish context =
+            () => Parameters = Parameters.With(p => p.ReportTypes, testR.ToFSharpList());
+
+        It should_delimit_report_types_with_semi_colon =
+            () => Arguments.ShouldContain("-reporttypes:" + string.Join(";", SupportedReportTypes));
     }
 }
