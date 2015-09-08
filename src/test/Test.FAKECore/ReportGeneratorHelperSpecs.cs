@@ -1,13 +1,11 @@
 ﻿using Fake;
+using FSharp.Testing;
 using Machine.Specifications;
-using Microsoft.FSharp.Collections;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-
-using FSharp.Testing;
 
 namespace Test.FAKECore
 {
