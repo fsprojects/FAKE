@@ -19,7 +19,7 @@ type ReportGeneratorLogVerbosity =
     | Info = 1
     | Error = 2
 
-/// ReportGenerator parameters, for more details see: https://reportgenerator.codeplex.com.
+/// ReportGenerator parameters, for more details see: https://github.com/danielpalme/ReportGenerator.
 type ReportGeneratorParams =
     { /// (Required) Path to the ReportGenerator exe file.
       ExePath : string
