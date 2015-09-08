@@ -51,6 +51,8 @@ let ReportGeneratorDefaultParams =
       WorkingDir = currentDirectory
       TimeOut = TimeSpan.FromMinutes 5. }
 
+/// Builds the report generator command line arguments from the given parameters and reports
+/// [omit]
 let buildReportGeneratorArgs parameters (reports : string seq) =
     let reportTypes = parameters.ReportTypes |> List.map (fun rt -> rt.ToString())
     let sourceDirs = sprintf "-sourcedirs:%s" (String.Join(";", parameters.SourceDirs))
