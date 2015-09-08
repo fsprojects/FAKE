@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 using FSharp.Testing;
 
@@ -86,5 +87,24 @@ namespace Test.FAKECore
 
         It should_delimit_reports_with_semi_colon =
             () => Arguments.ShouldContain("-reports:" + string.Join(";", Reports));
+    }
+
+    internal class when_appending_arguments : BuildReportArgumentsSpecs
+    {
+        static string ArgumentsWithQuotes = string.Join("", from Match match in Regex.Matches(Arguments, "\"([^\"]*)\"")
+                                                            select match.ToString());
+
+        It should_surround_reports_with_quotes = () => ArgumentsWithQuotes.ShouldContain("-reports:");
+        It should_surround_target_directory_with_quotes = () => ArgumentsWithQuotes.ShouldContain("-targetdir:");
+        It should_not_surround_report_types_with_quotes = () => ArgumentsWithQuotes.ShouldNotContain("-reporttypes:");
+        It should_not_surround_verbosity_with_quotes = () => ArgumentsWithQuotes.ShouldNotContain("-verbosity:");
+    }
+
+    internal class when_given_one_or_more_source_directories : BuildReportArgumentsSpecs
+    {
+        Establish context =
+            () => Parameters = Parameters.With(p => p.SourceDirs, new List<string> { "mydirectory" }.ToFSharpList());
+
+        It should_append_source_directory_argument = () => Arguments.ShouldContain("-sourcedirs:mydirectory");
     }
 }
