@@ -83,7 +83,6 @@ let ReportGenerator setParams (reports : string list) =
     let param = setParams ReportGeneratorDefaultParams
 
     let processArgs = buildReportGeneratorArgs param reports
-
     tracefn "ReportGenerator command\n%s %s" param.ExePath processArgs
     let ok =
         execProcess (fun info ->
