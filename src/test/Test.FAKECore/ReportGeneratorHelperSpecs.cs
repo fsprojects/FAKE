@@ -29,28 +29,11 @@ namespace Test.FAKECore
             Arguments = ReportGeneratorHelper.buildReportGeneratorArgs(Parameters, Reports);
         };
 
-        protected static readonly IEnumerable<string> SupportedReportTypes = new List<string>
-        {
-            "Html",
-            "HtmlSummary",
-            "Xml",
-            "XmlSummary",
-            "Latex",
-            "LatexSummary",
-            "Badges"
-        };
+        protected static readonly IEnumerable<ReportGeneratorHelper.ReportGeneratorReportType> ReportTypes
+            = Enum.GetValues(typeof(ReportGeneratorHelper.ReportGeneratorReportType))
+                  .Cast<ReportGeneratorHelper.ReportGeneratorReportType>();
 
-        protected static readonly IEnumerable<ReportGeneratorHelper.ReportGeneratorReportType> testR
-            = new List<ReportGeneratorHelper.ReportGeneratorReportType>
-            {
-                ReportGeneratorHelper.ReportGeneratorReportType.Html,
-                ReportGeneratorHelper.ReportGeneratorReportType.HtmlSummary,
-                ReportGeneratorHelper.ReportGeneratorReportType.Xml,
-                ReportGeneratorHelper.ReportGeneratorReportType.XmlSummary,
-                ReportGeneratorHelper.ReportGeneratorReportType.Latex,
-                ReportGeneratorHelper.ReportGeneratorReportType.LatexSummary,
-                ReportGeneratorHelper.ReportGeneratorReportType.Badges
-            };
+        protected static readonly IEnumerable<string> ReportTypesAsText = ReportTypes.Select(rt => rt.ToString());
     }
 
     internal class when_executing_with_default_arguments : BuildReportArgumentsSpecs
@@ -61,7 +44,7 @@ namespace Test.FAKECore
             () =>
             {
                 Arguments.ShouldContain("-reporttypes:Html");
-                foreach (string reportType in SupportedReportTypes.Except(new List<string> { "Html" }))
+                foreach (string reportType in ReportTypesAsText.Except(new List<string> { "Html" }))
                 {
                     Arguments.ShouldNotContain(reportType);
                 }
@@ -71,13 +54,31 @@ namespace Test.FAKECore
         It should_have_a_log_verbosity_of_verbose = () => Arguments.ShouldContain("-verbosity:Verbose");
     }
 
+    internal class when_appending_arguments : BuildReportArgumentsSpecs
+    {
+        It should_surround_reports_with_quotes = () => ArgumentsWithQuotes.ShouldContain("-reports:");
+        It should_surround_target_directory_with_quotes = () => ArgumentsWithQuotes.ShouldContain("-targetdir:");
+        It should_not_surround_report_types_with_quotes = () => ArgumentsWithQuotes.ShouldNotContain("-reporttypes:");
+        It should_not_surround_verbosity_with_quotes = () => ArgumentsWithQuotes.ShouldNotContain("-verbosity:");
+
+        private static string ArgumentsWithQuotes = GetArgumentsWithQuotes();
+
+        private static string GetArgumentsWithQuotes()
+        {
+            var argumentsInQuotes = from Match match in Regex.Matches(Arguments, "\"([^\"]*)\"")
+                                    select match.ToString();
+
+            return string.Join("", argumentsInQuotes);
+        }
+    }
+
     internal class when_given_multiple_report_types : BuildReportArgumentsSpecs
     {
         Establish context =
-            () => Parameters = Parameters.With(p => p.ReportTypes, testR.ToFSharpList());
+            () => Parameters = Parameters.With(p => p.ReportTypes, ReportTypes.ToFSharpList());
 
         It should_delimit_report_types_with_semi_colon =
-            () => Arguments.ShouldContain("-reporttypes:" + string.Join(";", SupportedReportTypes));
+            () => Arguments.ShouldContain("-reporttypes:" + string.Join(";", ReportTypesAsText));
     }
 
     internal class when_given_multiple_reports : BuildReportArgumentsSpecs
@@ -89,22 +90,19 @@ namespace Test.FAKECore
             () => Arguments.ShouldContain("-reports:" + string.Join(";", Reports));
     }
 
-    internal class when_appending_arguments : BuildReportArgumentsSpecs
-    {
-        static string ArgumentsWithQuotes = string.Join("", from Match match in Regex.Matches(Arguments, "\"([^\"]*)\"")
-                                                            select match.ToString());
-
-        It should_surround_reports_with_quotes = () => ArgumentsWithQuotes.ShouldContain("-reports:");
-        It should_surround_target_directory_with_quotes = () => ArgumentsWithQuotes.ShouldContain("-targetdir:");
-        It should_not_surround_report_types_with_quotes = () => ArgumentsWithQuotes.ShouldNotContain("-reporttypes:");
-        It should_not_surround_verbosity_with_quotes = () => ArgumentsWithQuotes.ShouldNotContain("-verbosity:");
-    }
-
     internal class when_given_one_or_more_source_directories : BuildReportArgumentsSpecs
     {
         Establish context =
             () => Parameters = Parameters.With(p => p.SourceDirs, new List<string> { "mydirectory" }.ToFSharpList());
 
         It should_append_source_directory_argument = () => Arguments.ShouldContain("-sourcedirs:mydirectory");
+    }
+
+    internal class when_given_one_or_more_filters : BuildReportArgumentsSpecs
+    {
+        Establish context =
+            () => Parameters = Parameters.With(p => p.Filters, new List<string> { "+Included", "-Excluded" }.ToFSharpList());
+
+        It should_append_filters_with_quotes = () => Arguments.ShouldContain("\"-filters:+Included;-Excluded\"");
     }
 }
