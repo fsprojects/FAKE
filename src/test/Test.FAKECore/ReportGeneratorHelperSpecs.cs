@@ -14,13 +14,13 @@ namespace Test.FAKECore
     internal abstract class BuildReportArgumentsSpecs
     {
         protected static ReportGeneratorHelper.ReportGeneratorParams Parameters;
-        protected static FSharpList<string> Reports;
+        protected static IEnumerable<string> Reports;
         protected static string Arguments;
 
         Establish context = () =>
         {
             Parameters = ReportGeneratorHelper.ReportGeneratorDefaultParams;
-            Reports = FSharpList<string>.Empty;
+            Reports = Enumerable.Empty<string>();
         };
 
         Because of = () =>
@@ -77,5 +77,14 @@ namespace Test.FAKECore
 
         It should_delimit_report_types_with_semi_colon =
             () => Arguments.ShouldContain("-reporttypes:" + string.Join(";", SupportedReportTypes));
+    }
+
+    internal class when_given_multiple_reports : BuildReportArgumentsSpecs
+    {
+        Establish context =
+            () => Reports = new List<string> { "report.xml", "other-report.xml" };
+
+        It should_delimit_reports_with_semi_colon =
+            () => Arguments.ShouldContain("-reports:" + string.Join(";", Reports));
     }
 }
