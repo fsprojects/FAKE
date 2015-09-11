@@ -1,17 +1,13 @@
-#### 4.3.7 - 06.09.2015
+#### 4.4.0 - 11.09.2015
+* iOSBuild relies on xbuild instead of mdtool - https://github.com/fsharp/FAKE/pull/945
+* New method to return whether or not a value exists for a registry key - https://github.com/fsharp/FAKE/pull/944
+* Extended ReportGeneratorHelper to add Badges report type - https://github.com/fsharp/FAKE/pull/943
+* HockeyAppHelper download team restriction - https://github.com/fsharp/FAKE/pull/939
 * Use TFS variables as fallback, fixes #933 - https://github.com/fsharp/FAKE/pull/937
-
-#### 4.3.4 - 31.08.2015
 * Deployment configurable timeouts in FAKE.Deploy - https://github.com/fsharp/FAKE/pull/927
-
-#### 4.3.3 - 28.08.2015
 * Fixed bug where only first 1024 bytes were uploaded using FTP - https://github.com/fsharp/FAKE/pull/932
-
-#### 4.3.2 - 28.08.2015
 * FAKE 4.2 or newer started with wrong Target - https://github.com/fsharp/FAKE/pull/931
 * Better user input helper - https://github.com/fsharp/FAKE/pull/930
-
-#### 4.3.1 - 27.08.2015
 * Add support for new Xunit2 runner -noappdomain flag - https://github.com/fsharp/FAKE/pull/928
 
 #### 4.3.0 - 26.08.2015
