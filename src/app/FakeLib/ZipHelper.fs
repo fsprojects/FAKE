@@ -160,7 +160,11 @@ let CreateZipOfIncludes fileName comment level (files : (string * FileIncludes) 
 ///
 /// ## Sample
 ///
-/// The following sample creates 4 targets using TargetTemplateWithDependencies and hooks them into the build pipeline.
+/// The following sample creates a zip file containing the files from the two target folders and FileIncludes.
+///
+/// - The files from the first FileInclude will be placed in the root of the zip file.
+/// - The files from the second FileInclude will be placed under the directory `app_data\jobs\continuous\MyWebJob` in the zip file.
+///
 ///
 ///     Target "Zip" (fun _ ->
 ///         [   "", !! "MyWebApp/*.html"
