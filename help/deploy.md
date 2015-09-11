@@ -15,6 +15,13 @@ The FAKE deployment tool allows users to deploy applications to remote computers
 
 In order to deploy application to a remote computer a deployment agent needs to be running on that server.
 
+The simplest way to install the agent on a remote server is to use the [Nuget command line tool](http://docs.nuget.org/consume/installing-nuget) to download the FAKE nuget and extract the binaries into a _fake/tools_ subfolder.  Once  _nuget.exe_ is available on the path, use the following command in a command shell:
+
+    [lang=batchfile]
+    nuGet.exe Install FAKE -ExcludeVersion
+
+Adding the _.../fake/tools_ folder to the path will simplify executing the Fake.Deploy.exe.
+
 To run an agent in a console, simply run:
 
     Fake.Deploy
