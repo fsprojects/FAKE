@@ -86,7 +86,7 @@
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>create a registry subKey</p>
+          <p>Create a registry subKey</p>
 
 
 
@@ -213,6 +213,27 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Sets a registry value</p>
+
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '512', 512)" onmouseover="showTip(event, '512', 512)">
+            valueExistsForKey baseKey sub_key value
+          </code>
+          <div class="tip" id="512">
+            <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; sub_key:string -&gt; value:string -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RegistryHelper.fs#L93-93" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Returns whether or not a registry value exists for a key</p>
 
 
 

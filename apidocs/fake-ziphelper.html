@@ -54,10 +54,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '844', 844)" onmouseover="showTip(event, '844', 844)">
+          <code onmouseout="hideTip(event, '845', 845)" onmouseover="showTip(event, '845', 845)">
             CreateZip (...)
           </code>
-          <div class="tip" id="844">
+          <div class="tip" id="845">
             <strong>Signature:</strong> workingDir:string -&gt; fileName:string -&gt; comment:string -&gt; level:int -&gt; flatten:bool -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -86,10 +86,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '845', 845)" onmouseover="showTip(event, '845', 845)">
+          <code onmouseout="hideTip(event, '846', 846)" onmouseover="showTip(event, '846', 846)">
             CreateZipOfIncludes (...)
           </code>
-          <div class="tip" id="845">
+          <div class="tip" id="846">
             <strong>Signature:</strong> fileName:string -&gt; comment:string -&gt; level:int -&gt; files:seq&lt;string * FileIncludes&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -116,10 +116,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '846', 846)" onmouseover="showTip(event, '846', 846)">
+          <code onmouseout="hideTip(event, '847', 847)" onmouseover="showTip(event, '847', 847)">
             DefaultZipLevel 
           </code>
-          <div class="tip" id="846">
+          <div class="tip" id="847">
             <strong>Signature:</strong> int<br />
                       </div>
         </td>
@@ -137,10 +137,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '847', 847)" onmouseover="showTip(event, '847', 847)">
+          <code onmouseout="hideTip(event, '848', 848)" onmouseover="showTip(event, '848', 848)">
             Unzip target fileName
           </code>
-          <div class="tip" id="847">
+          <div class="tip" id="848">
             <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
@@ -165,10 +165,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '848', 848)" onmouseover="showTip(event, '848', 848)">
+          <code onmouseout="hideTip(event, '849', 849)" onmouseover="showTip(event, '849', 849)">
             UnzipFirstMatchingFileInMemory (...)
           </code>
-          <div class="tip" id="848">
+          <div class="tip" id="849">
             <strong>Signature:</strong> predicate:(ZipEntry -&gt; bool) -&gt; zipFileName:string -&gt; string<br />
                       </div>
         </td>
@@ -193,10 +193,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '849', 849)" onmouseover="showTip(event, '849', 849)">
+          <code onmouseout="hideTip(event, '850', 850)" onmouseover="showTip(event, '850', 850)">
             UnzipSingleFileInMemory (...)
           </code>
-          <div class="tip" id="849">
+          <div class="tip" id="850">
             <strong>Signature:</strong> fileToUnzip:string -&gt; zipFileName:string -&gt; string<br />
                       </div>
         </td>
@@ -221,10 +221,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '850', 850)" onmouseover="showTip(event, '850', 850)">
+          <code onmouseout="hideTip(event, '851', 851)" onmouseover="showTip(event, '851', 851)">
             Zip workingDir fileName files
           </code>
-          <div class="tip" id="850">
+          <div class="tip" id="851">
             <strong>Signature:</strong> workingDir:string -&gt; fileName:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -250,10 +250,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '851', 851)" onmouseover="showTip(event, '851', 851)">
+          <code onmouseout="hideTip(event, '852', 852)" onmouseover="showTip(event, '852', 852)">
             ZipFile fileName targetFileName
           </code>
-          <div class="tip" id="851">
+          <div class="tip" id="852">
             <strong>Signature:</strong> fileName:string -&gt; targetFileName:string -&gt; unit<br />
                       </div>
         </td>
@@ -278,15 +278,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '852', 852)" onmouseover="showTip(event, '852', 852)">
+          <code onmouseout="hideTip(event, '853', 853)" onmouseover="showTip(event, '853', 853)">
             ZipOfIncludes fileName files
           </code>
-          <div class="tip" id="852">
+          <div class="tip" id="853">
             <strong>Signature:</strong> fileName:string -&gt; files:seq&lt;string * FileIncludes&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/ZipHelper.fs#L179-179" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/ZipHelper.fs#L183-183" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -301,7 +301,12 @@
 
 <h2>Sample</h2>
 
-<p>The following sample creates 4 targets using TargetTemplateWithDependencies and hooks them into the build pipeline.</p>
+<p>The following sample creates a zip file containing the files from the two target folders and FileIncludes.</p>
+
+<ul>
+<li>The files from the first FileInclude will be placed in the root of the zip file.</li>
+<li>The files from the second FileInclude will be placed under the directory <code>app_data\jobs\continuous\MyWebJob</code> in the zip file.</li>
+</ul>
 
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
