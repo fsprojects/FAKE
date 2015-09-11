@@ -76,7 +76,7 @@ let getRegistryValue64 baseKey subKey value =
         failwithf "Registry value is null for key %s" (key.ToString())
     value.ToString()
 
-/// create a registry subKey
+/// Create a registry subKey
 let createRegistrySubKey baseKey subKey = (getKey baseKey).CreateSubKey subKey |> ignore
 
 /// Sets a registry value
@@ -88,3 +88,9 @@ let setRegistryValue<'T> baseKey subKey keyName (value : 'T) =
 let deleteRegistryValue baseKey subKey keyName = 
     use key = getRegistryKey baseKey subKey true
     key.DeleteValue keyName
+
+/// Returns whether or not a registry value exists for a key
+let valueExistsForKey = fun baseKey sub_key value ->
+    let key = getRegistryKey baseKey sub_key false
+    key.GetValueNames()
+    |> Seq.exists (fun v -> v = value) 
