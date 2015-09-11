@@ -30,12 +30,7 @@ let rec private retry count asyncF =
         async {
             try
                 return! asyncF
-            with ex ->
-                return!
-                    match (ex, ex.InnerException) with
-                    | (:? AggregateException, (:? AuthorizationException as ex)) -> captureAndReraise ex
-                    | _ when count > 0 -> retry (count - 1) asyncF
-                    | (ex, _) -> captureAndReraise ex
+            with _ when count > 0 -> return! retry (count - 1) asyncF
         }
 
 /// Retry the Octokit action count times after input succeed
