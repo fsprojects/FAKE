@@ -1,10 +1,91 @@
-#### 3.31.4 - 14.05.2015
+#### 4.4.0 - 11.09.2015
+* iOSBuild relies on xbuild instead of mdtool - https://github.com/fsharp/FAKE/pull/945
+* New method to return whether or not a value exists for a registry key - https://github.com/fsharp/FAKE/pull/944
+* Extended ReportGeneratorHelper to add Badges report type - https://github.com/fsharp/FAKE/pull/943
+* HockeyAppHelper download team restriction - https://github.com/fsharp/FAKE/pull/939
+* Use TFS variables as fallback, fixes #933 - https://github.com/fsharp/FAKE/pull/937
+* Deployment configurable timeouts in FAKE.Deploy - https://github.com/fsharp/FAKE/pull/927
+* Fixed bug where only first 1024 bytes were uploaded using FTP - https://github.com/fsharp/FAKE/pull/932
+* FAKE 4.2 or newer started with wrong Target - https://github.com/fsharp/FAKE/pull/931
+* Better user input helper - https://github.com/fsharp/FAKE/pull/930
+* Add support for new Xunit2 runner -noappdomain flag - https://github.com/fsharp/FAKE/pull/928
+
+#### 4.3.0 - 26.08.2015
+* FluentMigrator helper library - http://fsharp.github.io/FAKE/fluentmigrator.html
+
+#### 4.2.0 - 24.08.2015
+* Support for soft dependencies for targets - http://fsharp.github.io/FAKE/soft-dependencies.html
+* Added support for builds within Team Foundation Server (and VSO) - https://github.com/fsharp/FAKE/pull/915
+* New options in the SquirrelHelper - https://github.com/fsharp/FAKE/pull/910
+* Logging improvement in Fake.Deploy - https://github.com/fsharp/FAKE/pull/914
+* New RunTargetOrListTargets function - https://github.com/fsharp/FAKE/pull/921
+* Added date to ReleaseNotes type definition - https://github.com/fsharp/FAKE/pull/917
+* Added `createClientWithToken` & `createRelease` to Octokit.fsx - https://github.com/fsharp/FAKE/pull/913
+* Fixed WatchChanges not properly removing subdirectories from watch list - https://github.com/fsharp/FAKE/pull/908
+* Added ability to optionally pass in SiteId to configure IIS Site - https://github.com/fsharp/FAKE/pull/905
+* Pass OutputDataReceived to logfn instead of trace in shellExec - https://github.com/fsharp/FAKE/pull/906 
+* Add GetDependenciesForReferencesFile
+
+#### 4.1.0 - 10.08.2015
+* Using FSharp.Compiler.Server for F# 4.0
+* Added Squirrel helpers to generate Squirrel installers - https://github.com/fsharp/FAKE/pull/899
+* Added Ability to specify Identity for AppPool - https://github.com/fsharp/FAKE/pull/902
+* Dynamics NAV: version helpers - https://github.com/fsharp/FAKE/pull/900
+* Added ReleaseNotes to NugetHelper - https://github.com/fsharp/FAKE/pull/893
+* BUGFIX: running from a network drive - https://github.com/fsharp/FAKE/pull/892
+* BUGFIX: Align NUnitDomainModel with NUnit documentation - https://github.com/fsharp/FAKE/pull/897
+* BUGFIX: Skip Octokit retry logic on Mono where it causes a crash - https://github.com/fsharp/FAKE/pull/895
+* BUGFIX: FAKE removes mono debug file after cache is saved - https://github.com/fsharp/FAKE/pull/891
+* BUGFIX: Nunit Domain Fix - https://github.com/fsharp/FAKE/pull/883
+* BUGGFIX: Dynamic assembly handling for caching - https://github.com/fsharp/FAKE/pull/884
+* BUGFIX: Loaded dlls versions are used to invalidate FAKE's cache - https://github.com/fsharp/FAKE/pull/882
+
+#### 4.0.0 - 23.07.2015
+* Automatic caching of FAKE build scripts - https://github.com/fsharp/FAKE/pull/859
+* Added MSBuild properties to AndroidPackageParams - https://github.com/fsharp/FAKE/pull/863
+* Add support for outputting NUnit style test result XML to Fake.Testing.XUnit2  - https://github.com/fsharp/FAKE/pull/870
+* Add support for VS2015 VSTest executable - https://github.com/fsharp/FAKE/pull/877
+* Add lock-dependencies parameter to Paket.Pack - https://github.com/fsharp/FAKE/pull/876
+
+#### 3.36.0 - 13.07.2015
+* NoLogo parameter for MSBuildHelper - https://github.com/fsharp/FAKE/pull/850
+* Expose Globbing.isMatch for use by external code - https://github.com/fsharp/FAKE/pull/860
+* VB6 dependency updater - https://github.com/fsharp/FAKE/pull/857
+* Added BuildConfig/TemplateFile options to PaketHelper's Pack command - https://github.com/fsharp/FAKE/pull/854
+* Add a UserInputHelper to allow interactive input - https://github.com/fsharp/FAKE/pull/858
+* Look for MSTest in VS2015 location - https://github.com/fsharp/FAKE/pull/843
+* Add caching to globbing 
+* BUGFIX: Fix for single * glob not working - https://github.com/fsharp/FAKE/pull/836 
+* BUGFIX: Get package version from nuspec file - https://github.com/fsharp/FAKE/pull/829
+* Report all NuGet errors, even if ExitCode = 0
+
+#### 3.35.0 - 09.06.2015
+* Added Raygun.io helper - https://github.com/fsharp/FAKE/pull/826
+* Re-added internal class generated for AssemblyInfo.vb - https://github.com/fsharp/FAKE/pull/827
+* Allow test nUnit test assemblies containing SetupFixture attributes be compatible with NUnitParallel - https://github.com/fsharp/FAKE/pull/824
+* Fix FtpHelper
+* Trace no. of files in a patch
+* CMake support improvements - https://github.com/fsharp/FAKE/pull/821
+* Wix Helper Improvements - https://github.com/fsharp/FAKE/pull/818
+* Wix Helper Improvements - https://github.com/fsharp/FAKE/pull/817
+* Wix Helper Improvements - https://github.com/fsharp/FAKE/pull/815
+* Added SemVerHelper.isValidSemVer - https://github.com/fsharp/FAKE/pull/811
+
+#### 3.34.0 - 25.05.2015
+* Support for CMake configuration and builds - https://github.com/fsharp/FAKE/pull/785
+* New task to create C++ AssemblyInfo files - https://github.com/fsharp/FAKE/pull/812
+* New environVarOrFail helper - https://github.com/fsharp/FAKE/pull/814
+* New WiX helper functions - https://github.com/fsharp/FAKE/pull/804
+
+#### 3.33.0 - 20.05.2015
+* IMPORTANT: Rewrite of the xUnit tasks. Deprecating existing xUnit and xUnit2 tasks - https://github.com/fsharp/FAKE/pull/800
+* Better NUnit docs - https://github.com/fsharp/FAKE/pull/802
+
+#### 3.32.4 - 18.05.2015
+* Add test adapter path to vs test params - https://github.com/fsharp/FAKE/pull/793
+* BUGFIX: Fix WatchChanges on Mac, fix Dispose, improve Timer usage - https://github.com/fsharp/FAKE/pull/799
 * REVERT: FCS simplification - https://github.com/fsharp/FAKE/pull/773
-
-#### 3.31.3 - 14.05.2015
 * BUGFIX: Don't use MSBuild from invalid path
-
-#### 3.31.1 - 07.05.2015
 * BUGFIX: Improved detection of MSBuild.exe on TeamCity - https://github.com/fsharp/FAKE/pull/789
 
 #### 3.31.0 - 06.05.2015

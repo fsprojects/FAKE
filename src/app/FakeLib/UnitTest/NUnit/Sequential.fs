@@ -5,7 +5,7 @@ module Fake.NUnitSequential
 /// Runs NUnit on a group of assemblies.
 /// ## Parameters
 /// 
-///  - `setParams` - Function used to manipulate the default NUnitParams value.
+///  - `setParams` - Function used to manipulate the default [NUnitParams](fake-nunitcommon-nunitparams.html) value.
 ///  - `assemblies` - Sequence of one or more assemblies containing NUnit unit tests.
 /// 
 /// ## Sample usage

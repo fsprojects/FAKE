@@ -11,7 +11,10 @@ type PaketPackParams =
     { ToolPath : string
       TimeOut : TimeSpan
       Version : string
+      LockDependencies : bool
       ReleaseNotes : string
+      BuildConfig : string
+      TemplateFile : string
       WorkingDir : string
       OutputPath : string }
 
@@ -20,7 +23,10 @@ let PaketPackDefaults() : PaketPackParams =
     { ToolPath = (findToolFolderInSubPath "paket.exe" (currentDirectory @@ ".paket")) @@ "paket.exe"
       TimeOut = TimeSpan.FromMinutes 5.
       Version = null
+      LockDependencies = false
       ReleaseNotes = null
+      BuildConfig = null
+      TemplateFile = null
       WorkingDir = "."
       OutputPath = "./temp" }
 
@@ -58,12 +64,16 @@ let Pack setParams =
 
     let version = if String.IsNullOrWhiteSpace parameters.Version then "" else " version " + toParam parameters.Version
     let releaseNotes = if String.IsNullOrWhiteSpace parameters.ReleaseNotes then "" else " releaseNotes " + toParam (xmlEncode parameters.ReleaseNotes)
-      
+    let buildConfig = if String.IsNullOrWhiteSpace parameters.BuildConfig then "" else " buildconfig " + toParam parameters.BuildConfig
+    let templateFile = if String.IsNullOrWhiteSpace parameters.TemplateFile then "" else " templatefile " + toParam parameters.TemplateFile
+    let lockDependencies = if parameters.LockDependencies then " lock-dependencies" else ""
+
     let packResult = 
+        let cmdArgs = sprintf "%s%s%s%s%s" version releaseNotes buildConfig templateFile lockDependencies
         ExecProcess 
             (fun info -> 
             info.FileName <- parameters.ToolPath
-            info.Arguments <- sprintf "pack output %s%s%s" parameters.OutputPath version releaseNotes) parameters.TimeOut
+            info.Arguments <- sprintf "pack output %s %s" parameters.OutputPath cmdArgs) parameters.TimeOut
     
     if packResult <> 0 then failwithf "Error during packing %s." parameters.WorkingDir
     traceEndTask "PaketPack" parameters.WorkingDir
@@ -119,3 +129,34 @@ let Push setParams =
             if pushResult <> 0 then failwithf "Error during pushing %s." package 
 
     traceEndTask "PaketPush" (separated ", " packages)
+
+/// Returns the dependencies from specified paket.references file
+let GetDependenciesForReferencesFile (referencesFile:string) =
+    let isSingleFile (line: string) = line.StartsWith "File:"
+    let notEmpty (line: string) = not <| String.IsNullOrWhiteSpace line
+    let parsePackageName (line: string) = 
+        let parts = line.Split(' ')            
+        parts.[0]
+
+    let nugetLines =
+        File.ReadAllLines(referencesFile)
+        |> Array.filter notEmpty 
+        |> Array.map (fun s -> s.Trim())
+        |> Array.filter (isSingleFile >> not)
+        |> Array.map parsePackageName
+
+    let lockFile =
+        let rec find dir =
+            let fi = FileInfo(dir </> "paket.lock")
+            if fi.Exists then fi.FullName else find fi.Directory.Parent.FullName
+        find <| FileInfo(referencesFile).Directory.FullName
+
+    let lines = File.ReadAllLines(lockFile)
+
+    let getVersion package =
+        let line = lines |> Array.find (fun l -> l.StartsWith("    " + package))
+        let start = line.Replace("    " + package + " (","")
+        start.Substring(0,start.IndexOf(")"))
+
+    nugetLines
+    |> Array.map (fun p -> p,getVersion p)

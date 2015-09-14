@@ -25,7 +25,7 @@ let getServerInfo (serverNameIp : string) (user : string) (password : string) ft
 let rec private writeChunkToReqStream (chunk : byte []) (reqStrm : Stream) (br : BinaryReader) = 
     if chunk.Length <> 0 then 
         reqStrm.Write(chunk, 0, chunk.Length)
-        writeChunkToReqStream (br.ReadBytes 1024) reqStrm |> ignore
+        writeChunkToReqStream (br.ReadBytes 1024) reqStrm br
 
 let inline private getSubstring (fromPos : int) (str : string) (toPos : int) = str.Substring(fromPos, toPos)
 let inline private lastSlashPos (str : string) = str.LastIndexOf(@"\") + 1
@@ -43,8 +43,8 @@ let inline private dirNameIsValid (dirName : string) =
     let invalid5 = List.exists (fun s -> dirName.Contains(s)) invalidChars
     not (invalid1 && invalid2 && invalid3 && invalid4 && invalid5)
 
-/// Checks to see if the `ftp content` string containts the string `<DIR>    Given_Folder_Name`
-let inline regexCheck fname ftpContents = Regex.IsMatch(ftpContents, (sprintf @"\<DIR\>\s*%s\s+" fname))
+/// Checks to see if the `ftp content` string containts the string `Given_Folder_Name`
+let inline regexCheck fname ftpContents = Regex.IsMatch(ftpContents, (sprintf @"\s+%s\s+" fname))
 
 /// Gets the contents/listing of files and folders in a given FTP server folder
 /// ## Parameters

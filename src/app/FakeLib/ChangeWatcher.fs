@@ -19,6 +19,17 @@ let private handleWatcherEvents (status : FileStatus) (onChange : FileChange -> 
                 Name = e.Name
                 Status = status })
 
+let private calcDirsToWatch fileIncludes =
+    let dirsToWatch = fileIncludes.Includes |> Seq.map (fun file -> Globbing.getRoot fileIncludes.BaseDirectory file)
+    
+    // remove subdirectories from watch list so that we don't get duplicate file watchers running
+    dirsToWatch 
+    |> Seq.filter (fun d -> 
+                    dirsToWatch
+                    |> Seq.exists (fun p -> d.StartsWith p && p <> d)
+                    |> not)
+    |> Seq.toList
+
 /// Watches the for changes in the matching files.
 /// Returns an IDisposable which allows to dispose all FileSystemWatchers.
 ///
@@ -39,27 +50,22 @@ let private handleWatcherEvents (status : FileStatus) (onChange : FileChange -> 
 ///     )
 ///
 let WatchChanges (onChange : FileChange seq -> unit) (fileIncludes : FileIncludes) = 
-    let dirsToWatch = fileIncludes.Includes |> Seq.map (fun file -> Globbing.getRoot fileIncludes.BaseDirectory file)
-    
-    // remove subdirectories from watch list so that we don't get duplicate file watchers running
-    let dirsToWatch = 
-        dirsToWatch |> Seq.filter (fun d -> 
-                           dirsToWatch
-                           |> Seq.exists (fun p -> p.StartsWith d && p <> d)
-                           |> not)
-    
+    let dirsToWatch = fileIncludes |> calcDirsToWatch
+
+    tracefn "dirs to watch: %A" dirsToWatch
+ 
+    // we collect changes in a mutable ref cell and wait for a few milliseconds to 
+    // receive all notifications when the system sends them repetedly or sends multiple
+    // updates related to the same file; then we call 'onChange' with all cahnges
     let unNotifiedChanges = ref List.empty<FileChange>
-    
-    let acumChanges (fileChange : FileChange) = 
-        if fileIncludes.IsMatch fileChange.FullPath then 
-            lock unNotifiedChanges (fun () -> unNotifiedChanges := [ fileChange ] @ !unNotifiedChanges)
-    
-    let timer = new System.Timers.Timer(5.0)
+    // when running 'onChange' we ignore all notifications to avoid infinite loops
+    let runningHandlers = ref false
+
+    let timer = new System.Timers.Timer(50.0)
+    timer.AutoReset <- false
     timer.Elapsed.Add(fun _ -> 
         lock unNotifiedChanges (fun () -> 
-            if !unNotifiedChanges
-               |> Seq.length
-               > 0 then 
+            if not (Seq.isEmpty !unNotifiedChanges) then
                 let changes = 
                     !unNotifiedChanges
                     |> Seq.groupBy (fun c -> c.FullPath)
@@ -67,13 +73,25 @@ let WatchChanges (onChange : FileChange seq -> unit) (fileIncludes : FileInclude
                            changes
                            |> Seq.sortBy (fun c -> c.Status)
                            |> Seq.head)
-                unNotifiedChanges := List.empty<FileChange>
-                onChange changes))
+                unNotifiedChanges := []
+                try 
+                    runningHandlers := true
+                    onChange changes
+                finally
+                    runningHandlers := false ))
 
-    tracefn "dirs to watch: %A" dirsToWatch
+    let acumChanges (fileChange : FileChange) = 
+        // only record the changes if we are not currently running 'onChange' handler
+        if not !runningHandlers && fileIncludes.IsMatch fileChange.FullPath then 
+            lock unNotifiedChanges (fun () -> 
+              unNotifiedChanges := fileChange :: !unNotifiedChanges
+              // start the timer (ignores repeated calls) to trigger events in 50ms
+              (timer:System.Timers.Timer).Start() )
+    
     let watchers = 
-        dirsToWatch |> Seq.map (fun dir -> 
+        dirsToWatch |> List.map (fun dir -> 
                            tracefn "watching dir: %s" dir
+
                            let watcher = new FileSystemWatcher(FullName dir, "*.*")
                            watcher.EnableRaisingEvents <- true
                            watcher.IncludeSubdirectories <- true
@@ -88,11 +106,6 @@ let WatchChanges (onChange : FileChange seq -> unit) (fileIncludes : FileInclude
                                              Name = e.Name
                                              Status = Created })
                            watcher)
-    watchers
-    |> Seq.length
-    |> ignore //force iteration
-
-    timer.Start()
 
     { new System.IDisposable with
           member this.Dispose() = 

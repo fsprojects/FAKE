@@ -116,10 +116,10 @@ let GetPackageVersion deploymentsDir package =
             if index < folder.Length then
                 folder.Substring index
             else
-                let files = Directory.GetFiles(folder, sprintf "%s.*.nupkg" package)
-                let file = (Seq.head files).Replace(".nupkg","")
-                let index = file.LastIndexOf package + package.Length + 1
-                file.Substring index
+                let nuspec = Directory.GetFiles(folder, sprintf "%s.nuspec" package) |> Seq.head
+                let doc = System.Xml.Linq.XDocument.Load(nuspec)
+                let vers = doc.Descendants(XName.Get("version", doc.Root.Name.NamespaceName))
+                (Seq.head vers).Value
                
         logfn "Version %s found for package %s" version package
         version
@@ -262,7 +262,7 @@ let private pack parameters nuspecFile =
                 info.FileName <- parameters.ToolPath
                 info.WorkingDirectory <- FullName parameters.WorkingDir
                 info.Arguments <- args) parameters.TimeOut
-        if result.ExitCode <> 0 then failwithf "Error during NuGet package creation. %s %s\r\n%s" parameters.ToolPath args (toLines result.Errors)
+        if result.ExitCode <> 0 || result.Errors.Count > 0 then failwithf "Error during NuGet package creation. %s %s\r\n%s" parameters.ToolPath args (toLines result.Errors)
 
     let nuspecFile = 
         let fi = fileInfo nuspecFile
@@ -425,6 +425,7 @@ type NuSpecPackage =
       RequireLicenseAcceptance : bool
       Description : string
       Language : string
+      ReleaseNotes : string
       Tags : string }
     member x.Name = sprintf "%s %s" x.Id x.Version
     override x.ToString() = x.Name
@@ -469,6 +470,7 @@ let getNuspecProperties (nuspec : string) =
       Description = getValue "description"
       Language = getValue "language"
       Tags = getValue "tags"
+      ReleaseNotes = getValue "releaseNotes"
       Url = String.Empty
       IsLatestVersion = false
       Created = DateTime.MinValue
@@ -517,6 +519,7 @@ let extractFeedPackageFromXml (entry : Xml.XmlNode) =
       Owners = author
       Language = property "Language"
       Tags = property "Tags"
+      ReleaseNotes = property "ReleaseNotes"
       ProjectUrl = property "ProjectUrl"
       LicenseUrl = property "LicenseUrl"
       RequireLicenseAcceptance = boolProperty "RequireLicenseAcceptance"
@@ -561,7 +564,7 @@ let argList name values =
     |> String.concat " "
 
 
-/// loads the dependences from specified packages.config file
+/// Returns the dependencies from specified packages.config file
 let getDependencies (packagesFile:string) =
     let xname = XName.op_Implicit
     let attribute name (e:XElement) =

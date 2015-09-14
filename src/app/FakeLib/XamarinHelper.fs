@@ -37,18 +37,27 @@ type iOSBuildParams = {
     ProjectPath: string
     /// Build target, defaults to Build
     Target: string
-    /// Build configuration, defaults to 'Debug|iPhoneSimulator'
+    /// Build configuration, defaults to 'Debug'
     Configuration: string
-    /// Path to mdtool, defaults to Xamarin Studio's usual path
-    MDToolPath: string
+    /// Build platform, defaults to 'iPhoneSimulator'
+    Platform: string
+    /// Output path for build, defaults to project settings
+    OutputPath: string
+    /// Indicates if an IPA file should be generated
+    BuildIpa: bool
+    /// Additional MSBuild properties, defaults to empty list
+    Properties: (string * string) list
 }
 
 /// The default iOS build parameters
 let iOSBuildDefaults = {
     ProjectPath = ""
     Target = "Build"
-    Configuration = "Debug|iPhoneSimulator"
-    MDToolPath = "/Applications/Xamarin Studio.app/Contents/MacOS/mdtool"
+    Configuration = "Debug"
+    Platform = "iPhoneSimulator"
+    OutputPath = ""
+    BuildIpa = false
+    Properties = []
 }
 
 /// Builds a project or solution using Xamarin's iOS build tools
@@ -56,13 +65,20 @@ let iOSBuildDefaults = {
 ///  - `setParams` - Function used to override the default build parameters
 let iOSBuild setParams =
     let validateParams param =
-        if param.ProjectPath = "" then failwith "You must specify a project to build"
+        if param.ProjectPath = "" then failwith "You must specify a project to package"
+        let exists parameter = param.Properties |> List.exists (fun (key, _) -> key.Equals(parameter, StringComparison.OrdinalIgnoreCase))
+
+        if exists("Configuration") then failwith "Cannot specify build configuration via additional parameters. Use Configuration field instead."
+        if exists("Platform") then failwith "Cannot specify build platform via additional parameters. Use Platform field instead."
+        if exists("BuildIpa") then failwith "Cannot specify build IPA via additional parameters. Use BuildIpa field instead."
 
         param
 
     let buildProject param =
-        let args = String.Format(@"-v build -t:{0} ""-c:{1}"" {2}", param.Target, param.Configuration, param.ProjectPath)
-        executeCommand param.MDToolPath args
+        let properties = [ "Configuration", param.Configuration; "Platform" , param.Platform; "BuildIpa" , param.BuildIpa.ToString().ToLower(); ]
+        let effectiveProperties = properties @ param.Properties
+
+        MSBuild param.OutputPath param.Target effectiveProperties [ param.ProjectPath ] |> ignore
 
     iOSBuildDefaults
     |> setParams
@@ -77,6 +93,8 @@ type AndroidPackageParams = {
     Configuration: string
     /// Output path for build, defaults to 'bin/Release'
     OutputPath: string
+    /// Additional MSBuild properties, defaults to empty list
+    Properties: (string * string) list
 }
 
 /// The default Android packaging parameters
@@ -84,6 +102,7 @@ let AndroidPackageDefaults = {
     ProjectPath = ""
     Configuration = "Release"
     OutputPath = "bin/Release"
+    Properties = []
 }
 
 /// Packages a Xamarin.Android app, returning a FileInfo object for the unsigned APK file
@@ -92,11 +111,16 @@ let AndroidPackageDefaults = {
 let AndroidPackage setParams =
     let validateParams param =
         if param.ProjectPath = "" then failwith "You must specify a project to package"
+        if param.Properties 
+            |> List.exists (fun (key, _) -> key.Equals("Configuration", StringComparison.OrdinalIgnoreCase))
+            then failwith "Cannot specify build configuration via additional parameters. Use Configuration field instead."
 
         param
 
     let createPackage param =
-        MSBuild param.OutputPath "PackageForAndroid" [ "Configuration", param.Configuration ] [ param.ProjectPath ] |> ignore
+        let effectiveProperties = [ "Configuration", param.Configuration ] @ param.Properties
+
+        MSBuild param.OutputPath "PackageForAndroid" effectiveProperties [ param.ProjectPath ] |> ignore
 
         directoryInfo param.OutputPath
         |> filesInDirMatching "*.apk"

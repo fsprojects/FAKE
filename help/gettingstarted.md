@@ -137,7 +137,7 @@ In the next step we want to compile our C# libraries, which means we want to com
 
 We defined a new build target named "BuildApp" which compiles all csproj-files with the MSBuild task and the build output will be copied to buildDir.
 
-In order to find the right project files FAKEscans the folder *src/app/* and all subfolders with the given pattern. Therefore a similar FileSet definition like in NAnt or MSBuild (see [project page](https://github.com/fsharp/FAKE) for details) is used.
+In order to find the right project files FAKE scans the folder *src/app/* and all subfolders with the given pattern. Therefore a similar FileSet definition like in NAnt or MSBuild (see [project page](https://github.com/fsharp/FAKE) for details) is used.
 
 In addition the target dependencies are extended again. Now *Default* is dependent on *BuildApp* and *BuildApp* needs *Clean* as a prerequisite.
 
@@ -257,7 +257,7 @@ Now all our projects will be compiled and we can use FAKE's NUnit task in order 
 	// start build
 	RunTargetOrDefault "Default"
 
-Our new *Test* target scans the test directory for test assemblies and runs them with the NUnit runner. FAKE automatically tries to locate the runner in one of your subfolders. See the [NUnit task documentation](apidocs/fake-nunitparallel.html) if you need to specify the tool path explicitly.
+Our new *Test* target scans the test directory for test assemblies and runs them with the NUnit runner. FAKE automatically tries to locate the runner in one of your subfolders. See the [NUnit task documentation](apidocs/fake-nunitsequential.html) if you need to specify the tool path explicitly.
 
 The mysterious part **(fun p -> ...)** simply overrides the default parameters of the NUnit task and allows to specify concrete parameters.
 

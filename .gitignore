@@ -1,5 +1,6 @@
 #ignore thumbnails created by windows
 Thumbs.db
+.DS_Store
 #Ignore files build by Visual Studio
 docs/
 docsBuild/
@@ -65,3 +66,4 @@ paket.exe
 # Ignore VS2015 folder
 .vs/
 
+.fake

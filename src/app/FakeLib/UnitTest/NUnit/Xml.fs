@@ -20,7 +20,10 @@ let inline private elem name = XElement(imp name : XName)
 /// [omit]
 let GetTestAssemblies(xDoc : XDocument) = 
     xDoc.Descendants()
-    |> Seq.filter (fun el -> el.Name = (imp "test-suite") && el.Attribute(imp "type").Value = "Assembly")
+    |> Seq.filter 
+        (fun el -> 
+                el.Name = (imp "test-suite") && 
+                (el.Attribute(imp "type").Value = "Assembly" || el.Attribute(imp "type").Value = "SetUpFixture"))
     |> Seq.toList
 
 /// Returns whether all tests in the given test result have succeeded

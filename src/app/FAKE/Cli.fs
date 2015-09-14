@@ -1,9 +1,9 @@
-﻿/// New Command line interface for FAKE that utilises UnionArgParser.
+/// New Command line interface for FAKE that utilises Argu.
 [<RequireQualifiedAccessAttribute>]
 module Cli
 
 open System
-open Nessos.UnionArgParser
+open Nessos.Argu
 
 type FakeArg = 
     | [<AltCommandLine("-ev")>] EnvVar of string * string
@@ -15,6 +15,7 @@ type FakeArg =
     | [<AltCommandLine("-b")>] [<Rest>] Boot of string
     | [<AltCommandLine("-br")>] Break
     | [<AltCommandLine("-st")>] Single_Target
+    | [<AltCommandLine("-nc")>] NoCache
     interface IArgParserTemplate with
         member x.Usage = 
             match x with
@@ -27,12 +28,13 @@ type FakeArg =
             | Boot _ -> "Boostrapp your FAKE script."
             | Break -> "Pauses FAKE with a Debugger.Break() near the start"
             | Single_Target -> "Runs only the specified target and not the dependencies."
+            | NoCache -> "Disables caching of compiled script"
 
 /// Return the parsed FAKE args or the parse exception.
 let parsedArgsOrEx args = 
     try
         let args = args |> Seq.skip 1 |> Array.ofSeq
-        let parser = UnionArgParser.Create<FakeArg>()
+        let parser = ArgumentParser.Create<FakeArg>()
         Choice1Of2(parser.Parse(args))
     with | ex -> Choice2Of2(ex)
 
@@ -47,7 +49,7 @@ let printUsage () =
                            When targetName is equal --listTargets or -lt FAKE will list the targets with their dependencies.
 
     Options:
-    %s" (UnionArgParser.Create<FakeArg>().Usage())
+    %s" (ArgumentParser.Create<FakeArg>().Usage())
     
 type Args = { Script: string option; Target: string option; Rest: string [] }
 

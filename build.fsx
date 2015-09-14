@@ -22,6 +22,7 @@ let packages =
     ["FAKE.Core",projectDescription
      "FAKE.Gallio",projectDescription + " Extensions for Gallio"
      "FAKE.IIS",projectDescription + " Extensions for IIS"
+     "FAKE.FluentMigrator",projectDescription + " Extensions for FluentMigrator"
      "FAKE.SQL",projectDescription + " Extensions for SQL Server"
      "FAKE.Experimental",projectDescription + " Experimental Extensions"
      "FAKE.Deploy.Lib",projectDescription + " Extensions for FAKE Deploy"     
@@ -83,6 +84,10 @@ Target "SetAssemblyInfo" (fun _ ->
     [Attribute.Title "FAKE - F# Make Experimental Lib"
      Attribute.Guid "5AA28AED-B9D8-4158-A594-32FE5ABC5713"] @ common
     |> CreateFSharpAssemblyInfo "./src/app/Fake.Experimental/AssemblyInfo.fs"
+
+    [Attribute.Title "FAKE - F# Make FluentMigrator Lib"
+     Attribute.Guid "E18BDD6F-1AF8-42BB-AEB6-31CD1AC7E56D"] @ common
+    |> CreateFSharpAssemblyInfo "./src/app/Fake.FluentMigrator/AssemblyInfo.fs"
 )
 
 Target "BuildSolution" (fun _ ->
@@ -143,22 +148,11 @@ Target "Test" (fun _ ->
 )
 
 Target "SourceLink" (fun _ ->
-    use repo = new GitRepo(__SOURCE_DIRECTORY__)
     !! "src/app/**/*.fsproj" 
     |> Seq.iter (fun f ->
         let proj = VsProj.LoadRelease f
-        logfn "source linking %s" proj.OutputFilePdb
-        let files = 
-            proj.CompilesNotLinked 
-                -- "**/AssemblyInfo.fs"
-        try
-            repo.VerifyChecksums files
-            proj.VerifyPdbChecksums files
-        with
-        | _ -> ()
-        proj.CreateSrcSrv (sprintf "%s/%s/{0}/%%var2%%" gitRaw projectName) repo.Commit (repo.Paths files)
-        Pdbstr.exec proj.OutputFilePdb proj.OutputFilePdbSrcSrv
-    )
+        let url = sprintf "%s/%s/{0}/%%var2%%" gitRaw projectName
+        SourceLink.Index proj.CompilesNotLinked proj.OutputFilePdb __SOURCE_DIRECTORY__ url )
     let pdbFakeLib = "./build/FakeLib.pdb"
     CopyFile "./build/FAKE.Deploy" pdbFakeLib
     CopyFile "./build/FAKE.Deploy.Lib" pdbFakeLib
@@ -232,6 +226,7 @@ Target "CreateNuGet" (fun _ ->
 Target "PublishNuget" (fun _ ->
     Paket.Push(fun p -> 
         { p with
+            DegreeOfParallelism = 2
             WorkingDir = nugetDir })
 )
 
@@ -262,7 +257,7 @@ Target "Default" DoNothing
 "Clean"
     ==> "SetAssemblyInfo"
     ==> "BuildSolution"
-    ==> "Test"    
+    ==> "Test"
     ==> "Default"
     ==> "CopyLicense"
     =?> ("GenerateDocs", isLocalBuild && not isLinux)

@@ -49,6 +49,12 @@ let environVarOrDefault name defaultValue =
     if String.IsNullOrEmpty var then defaultValue
     else var
 
+/// Retrieves the environment variable with the given name or fails if not found
+let environVarOrFail name = 
+    let var = environVar name
+    if String.IsNullOrEmpty var then failwith <| sprintf "Environment variable '%s' not found" name
+    else var
+
 /// Retrieves the environment variable with the given name or returns the default bool if no value was set
 let getEnvironmentVarAsBoolOrDefault varName defaultValue=
     try  
@@ -77,7 +83,7 @@ let appSetting (name : string) = ConfigurationManager.AppSettings.[name]
 /// Returns if the build parameter with the given name was set
 let inline hasBuildParam name = environVar name <> null
 
-/// Returns the value of the build parameter with the given name was set if it was set and otherwise the given default value
+/// Returns the value of the build parameter with the given name if it was set and otherwise the given default value
 let inline getBuildParamOrDefault name defaultParam = 
     if hasBuildParam name then environVar name
     else defaultParam

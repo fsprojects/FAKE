@@ -102,5 +102,11 @@ namespace Test.FAKECore.Globbing
                 "root/subdir/more/another/foo.bar",
                 "root/another/subdir/more/foo.bar"
             });
+
+        It should_match_any_file_type =
+            () => IsMatch("/some/random/path/**/Properties/*", new[] {
+                "/some/random/path/somewhere/Properties/AssemblyInfo.cs"
+            });
+
     }
 }
