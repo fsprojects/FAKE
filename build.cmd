@@ -15,6 +15,6 @@ if errorlevel 1 (
 
 SET TARGET=Default
 
-IF NOT [%1]==[] (SET TARGET=%1)
+IF NOT [%1]==[] (SET TARGET=%~1)
 
-"packages\FAKE\tools\Fake.exe" "build.fsx" "target=%TARGET%"
+"packages\FAKE\tools\Fake.exe" "build.fsx" "target="%TARGET%""
