@@ -1,3 +1,6 @@
+#### 4.4.2 - 17.09.2015
+* Ignore group lines in paket.references parser
+
 #### 4.4.0 - 11.09.2015
 * iOSBuild relies on xbuild instead of mdtool - https://github.com/fsharp/FAKE/pull/945
 * New method to return whether or not a value exists for a registry key - https://github.com/fsharp/FAKE/pull/944
