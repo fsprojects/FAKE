@@ -52,12 +52,7 @@ let rec private buildPaths acc (input : SearchOption list) =
          Seq.collect (fun dir -> 
                             if Directory.Exists(Path.Combine(dir, pattern))
                             then seq { yield Path.Combine(dir, pattern) }
-                            else 
-                                try
-                                    Directory.EnumerateFiles(dir, pattern)
-                                with
-                                    | :? System.IO.PathTooLongException as ex -> Array.toSeq [| |]
-                            ) acc |> Seq.toList
+                            else Directory.EnumerateFiles(dir, pattern)) acc |> Seq.toList
 
 let private isDrive = 
     let regex = Regex(@"^[A-Za-z]:$", RegexOptions.Compiled)
