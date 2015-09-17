@@ -302,7 +302,7 @@ let runFinalTargets() =
                let watch = new System.Diagnostics.Stopwatch()
                watch.Start()
                tracefn "Starting FinalTarget: %s" name
-               TargetDict.[toLower name].Function()
+               (getTarget name).Function()
                addExecutedTarget name watch.Elapsed
            with
            | exn -> targetError name exn)
@@ -318,7 +318,7 @@ let runBuildFailureTargets() =
                let watch = new System.Diagnostics.Stopwatch()
                watch.Start()
                tracefn "Starting BuildFailureTarget: %s" name
-               TargetDict.[toLower name].Function()
+               (getTarget name).Function()
                addExecutedTarget name watch.Elapsed
            with
            | exn -> targetError name exn)
@@ -335,7 +335,7 @@ let PrintTargets() =
 let private withDependencyType (depType:DependencyType) targets =
     targets |> List.map (fun t -> depType, t)
 
-// Helper function for visiting targets in a dependency tree. Retutrns a set containing the names of the all the 
+// Helper function for visiting targets in a dependency tree. Returns a set containing the names of the all the 
 // visited targets, and a list containing the targets visited ordered such that dependencies of a target appear earlier
 // in the list than the target.
 let private visitDependencies fVisit targetName = 
@@ -343,7 +343,7 @@ let private visitDependencies fVisit targetName =
         let visited = new HashSet<_>()
         let ordered = new List<_>()
         let rec visitDependenciesAux level (depType,targetName) = 
-            let target = TargetDict.[toLower targetName]
+            let target = getTarget targetName
             let isVisited = visited.Contains targetName
             visited.Add targetName |> ignore
             fVisit (target, depType, level, isVisited)
