@@ -152,8 +152,8 @@ type TestResultsType =
     | NUnit
     | Xunit
 
-/// Uploads the test results .xml file to the Test tab of the build console.
-let UploadTestResultsXml testResultsType outputDir =
+/// Uploads all the test results ".xml" files in a directory to make them visible in Test tab of the build console.
+let UploadTestResultsXml (testResultsType : TestResultsType) outputDir =
     if buildServer = BuildServer.AppVeyor then
         let resultsType = (sprintf "%A" testResultsType).ToLower()
         let url = sprintf "https://ci.appveyor.com/api/testresults/%s/%s" resultsType AppVeyorEnvironment.JobId
