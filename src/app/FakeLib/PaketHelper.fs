@@ -133,6 +133,7 @@ let Push setParams =
 /// Returns the dependencies from specified paket.references file
 let GetDependenciesForReferencesFile (referencesFile:string) =
     let isSingleFile (line: string) = line.StartsWith "File:"
+    let isGroupLine (line: string) = line.StartsWith "group "
     let notEmpty (line: string) = not <| String.IsNullOrWhiteSpace line
     let parsePackageName (line: string) = 
         let parts = line.Split(' ')            
@@ -143,6 +144,7 @@ let GetDependenciesForReferencesFile (referencesFile:string) =
         |> Array.filter notEmpty 
         |> Array.map (fun s -> s.Trim())
         |> Array.filter (isSingleFile >> not)
+        |> Array.filter (isGroupLine >> not)
         |> Array.map parsePackageName
 
     let lockFile =

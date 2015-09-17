@@ -1,3 +1,6 @@
+#### 4.4.2 - 17.09.2015
+* Ignore group lines in paket.references parser
+
 #### 4.4.1 - 11.09.2015
 * Revert breaking change in FCS
 
