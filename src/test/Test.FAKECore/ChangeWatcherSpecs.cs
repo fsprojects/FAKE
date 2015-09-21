@@ -16,8 +16,8 @@ namespace Test.FAKECore
                 var dirsToWatch = ChangeWatcher.calcDirsToWatch(fileIncludes);
 
                 dirsToWatch.Length.ShouldEqual(2);
-                dirsToWatch.ShouldContain(Fake.Globbing.normalizePath(@"C:\Project\test1\bin"));
-                dirsToWatch.ShouldContain(Fake.Globbing.normalizePath(@"C:\Project\test2\bin"));
+                dirsToWatch.ShouldContain(Fake.EnvironmentHelper.normalizePath(@"C:\Project\test1\bin"));
+                dirsToWatch.ShouldContain(Fake.EnvironmentHelper.normalizePath(@"C:\Project\test2\bin"));
             };
 
         It should_only_take_the_most_root_path_when_multiple_directories_share_a_root =
@@ -29,7 +29,7 @@ namespace Test.FAKECore
                 var dirsToWatch = ChangeWatcher.calcDirsToWatch(fileIncludes);
 
                 dirsToWatch.Length.ShouldEqual(1);
-                dirsToWatch.ShouldContain(Fake.Globbing.normalizePath(@"C:\Project\tests"));
+                dirsToWatch.ShouldContain(Fake.EnvironmentHelper.normalizePath(@"C:\Project\tests"));
             };
     }
 }
