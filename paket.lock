@@ -17,7 +17,7 @@ NUGET
     FsCheck.Xunit (2.0.7)
       FsCheck (>= 2.0.7)
       xunit (>= 1.9.2)
-    FSharp.Compiler.Service (1.4.0.5)
+    FSharp.Compiler.Service (1.4.0.1)
     FSharp.Core (4.0.0.1)
     FSharp.Formatting (2.10.0)
       FSharp.Compiler.Service (>= 0.0.87)
