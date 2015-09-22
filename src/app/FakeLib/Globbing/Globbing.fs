@@ -1,6 +1,7 @@
 /// This module contains a file pattern globbing implementation.
 module Fake.Globbing
 
+open Fake.EnvironmentHelper
 open System
 open System.Collections.Generic
 open System.IO
@@ -58,8 +59,6 @@ let private isDrive =
     let regex = Regex(@"^[A-Za-z]:$", RegexOptions.Compiled)
     fun dir -> regex.IsMatch dir
 
-let inline private normalizePath (p : string) = 
-    p.Replace('\\', Path.DirectorySeparatorChar).Replace('/', Path.DirectorySeparatorChar)
 let inline private normalizeOutputPath (p : string) = 
     p.Replace('\\', Path.DirectorySeparatorChar).Replace('/', Path.DirectorySeparatorChar)
      .TrimEnd(Path.DirectorySeparatorChar)
