@@ -306,6 +306,13 @@ let AndroidSignAndAlign setParams apkFile =
     |> validateParams
     |> signAndAlign apkFile  
 
+/// Signs and aligns multiple Xamarin.Android packages, returning multiple FileInfo objects for the signed APK file
+/// ## Parameters
+///  - `setParams` - Function used to override the default build parameters
+///  - `apkFiles` - FileInfo object for an unsigned APK file to sign and align
+let AndroidSignAndAlignPackages setParams apkFiles =
+    apkFiles |> Seq.map (fun f -> AndroidSignAndAlign setParams f)
+
 /// The iOS archive paramater type
 type iOSArchiveParams = {
     /// Path to desired solution file. If not provided, mdtool finds the first solution in the current directory.
