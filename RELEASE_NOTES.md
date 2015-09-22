@@ -1,3 +1,6 @@
+#### 4.4.3 - 22.09.2015
+* Encode script path in cache - https://github.com/fsharp/FAKE/pull/956
+
 #### 4.4.2 - 17.09.2015
 * Ignore group lines in paket.references parser
 
