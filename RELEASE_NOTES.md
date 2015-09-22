@@ -1,3 +1,6 @@
+#### 4.4.4 - 22.09.2015
+* Better target handling - https://github.com/fsharp/FAKE/pull/954
+
 #### 4.4.3 - 22.09.2015
 * Encode script path in cache - https://github.com/fsharp/FAKE/pull/956
 
