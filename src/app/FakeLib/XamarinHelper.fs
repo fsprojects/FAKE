@@ -160,7 +160,9 @@ let AndroidBuildPackages setParams =
                                           [ "Configuration", param.Configuration
                                             "AndroidSupportedAbis", a
                                             "AndroidManifest", manifest ]
-                      | _, _ -> [ "Configuration", param.Configuration ] 
+                      | Some a, None   -> [ "Configuration", param.Configuration
+                                            "AndroidSupportedAbis", a]
+                      | _, _           -> [ "Configuration", param.Configuration ] 
         MSBuild param.OutputPath "PackageForAndroid" options [ param.ProjectPath ] |> ignore
 
     let rewriteManifestFile (manifestFile:string) outfile (transformVersion:IncrementerVersion) target =
