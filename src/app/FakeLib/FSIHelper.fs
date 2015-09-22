@@ -70,8 +70,10 @@ let rec getAllScripts scriptPath : seq<Script> =
 
 let getScriptHash pathsAndContents =
     let fullContents = getAllScriptContents pathsAndContents |> String.concat "\n"
+    let paths = pathsAndContents |> Seq.map(fun x -> x.Location |> EnvironmentHelper.normalizePath) |> String.concat "\n"
+    
     let hasher = HashLib.HashFactory.Checksum.CreateCRC32a()
-    hasher.ComputeString(fullContents).ToString()
+    hasher.ComputeString(fullContents + paths).ToString()
 
 module private Cache =
     let xname name = XName.Get(name)

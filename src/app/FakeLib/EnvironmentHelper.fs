@@ -25,6 +25,10 @@ let inline combinePathsNoTrim path1 path2 = Path.Combine(path1, path2)
 let inline (@@) path1 path2 = combinePaths path1 path2
 let inline (</>) path1 path2 = combinePathsNoTrim path1 path2
 
+// Normalizes path for different OS
+let inline normalizePath (path : string) = 
+    path.Replace('\\', Path.DirectorySeparatorChar).Replace('/', Path.DirectorySeparatorChar)
+
 /// Retrieves all environment variables from the given target
 let environVars target = 
     [ for e in Environment.GetEnvironmentVariables target -> 
