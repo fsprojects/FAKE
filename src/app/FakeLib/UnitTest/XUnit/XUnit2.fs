@@ -217,7 +217,7 @@ module internal ResultHandling =
 ///
 ///     Target "Test" (fun _ ->
 ///         !! (testDir @@ "xUnit.Test.*.dll")
-///           |> xUnit2 (fun p -> {p with HtmlOutputPath = (testDir @@ "xunit.html")})
+///         |> xUnit2 (fun p -> { p with HtmlOutputPath = Some (testDir @@ "xunit.html") })
 ///     )
 let xUnit2 setParams assemblies =
     let details = separated ", " assemblies
