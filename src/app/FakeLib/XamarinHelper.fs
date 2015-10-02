@@ -156,7 +156,7 @@ let AndroidBuildPackages setParams =
 
     let buildPackages param (abi:string option) (manifestFile:string option) = 
         let options = match (abi,manifestFile) with 
-                      | Some a, Some m -> let manifest = @"Properties\" + System.IO.Path.GetFileName(m)
+                      | Some a, Some m -> let manifest = @"Properties" @@ System.IO.Path.GetFileName(m)
                                           [ "Configuration", param.Configuration
                                             "AndroidSupportedAbis", a
                                             "AndroidManifest", manifest ]
@@ -218,7 +218,7 @@ let AndroidBuildPackages setParams =
         | _ -> buildPackages param None None
 
     let createPackageAbiSpecificApk param (targets:AndroidAbiTarget list) transformVersion =
-        let manifestPath = (param.ProjectPath |> Path.GetDirectoryName) @@ @"Properties\AndroidManifest.xml"
+        let manifestPath = (param.ProjectPath |> Path.GetDirectoryName) @@ @"Properties" @@ "AndroidManifest.xml"
         seq { for t in targets do
                 createTargetPackage param manifestPath t transformVersion
                 let apk = mostRecentFileInDirMatching param.OutputPath
