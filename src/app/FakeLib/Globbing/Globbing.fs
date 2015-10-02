@@ -61,8 +61,7 @@ let rec private buildPaths acc (input : SearchOption list) =
                                 try
                                     Directory.EnumerateFiles(dir, pattern)
                                 with
-                                    | :? System.IO.PathTooLongException as ex -> 
-                                        sprintf "The directory name %A is too long" dir |> traceImportant
+                                    | :? System.IO.PathTooLongException as ex ->
                                         Array.toSeq [| |]
                             ) acc |> Seq.toList
 
