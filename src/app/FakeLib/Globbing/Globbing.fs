@@ -1,11 +1,15 @@
 /// This module contains a file pattern globbing implementation.
 module Fake.Globbing
 
-open Fake.EnvironmentHelper
 open System
 open System.Collections.Generic
 open System.IO
 open System.Text.RegularExpressions
+
+
+// Normalizes path for different OS
+let inline normalizePath (path : string) = 
+    path.Replace('\\', Path.DirectorySeparatorChar).Replace('/', Path.DirectorySeparatorChar)
 
 type private SearchOption = 
     | Directory of string
