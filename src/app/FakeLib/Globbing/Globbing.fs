@@ -1,11 +1,15 @@
 /// This module contains a file pattern globbing implementation.
 module Fake.Globbing
 
-open Fake.EnvironmentHelper
 open System
 open System.Collections.Generic
 open System.IO
 open System.Text.RegularExpressions
+
+
+// Normalizes path for different OS
+let inline normalizePath (path : string) = 
+    path.Replace('\\', Path.DirectorySeparatorChar).Replace('/', Path.DirectorySeparatorChar)
 
 type private SearchOption = 
     | Directory of string
@@ -53,7 +57,14 @@ let rec private buildPaths acc (input : SearchOption list) =
          Seq.collect (fun dir -> 
                             if Directory.Exists(Path.Combine(dir, pattern))
                             then seq { yield Path.Combine(dir, pattern) }
-                            else Directory.EnumerateFiles(dir, pattern)) acc |> Seq.toList
+                            else 
+                                try
+                                    Directory.EnumerateFiles(dir, pattern)
+                                with
+                                    | :? System.IO.PathTooLongException as ex -> 
+                                        sprintf "The directory name %A is too long" dir |> traceImportant
+                                        Array.toSeq [| |]
+                            ) acc |> Seq.toList
 
 let private isDrive = 
     let regex = Regex(@"^[A-Za-z]:$", RegexOptions.Compiled)
