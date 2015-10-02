@@ -34,8 +34,7 @@ https://developers.google.com/android-publisher/getting_started
                             ProjectPath = "Path to my project Droid.csproj"
                             Configuration = "Release"
                             OutputPath = androidBuildDir
-							//PackageAbiTargets = AllAndroidAbiTargets
-							// you can specify ABI Targets (read http://developer.xamarin.com/guides/android/advanced_topics/build-abi-specific-apks/ for more informations)
+							Properties = ["MSBuild property", "MSBuild property value"]
                         })
 
         |> AndroidSignAndAlign (fun defaults ->
@@ -44,67 +43,98 @@ https://developers.google.com/android-publisher/getting_started
                 KeystorePassword = "my password"
                 KeystoreAlias = "my key alias"
             })
-        |> Seq.iter(fun file -> file.CopyTo(Path.Combine(androidProdDir, file.Name)) |> ignore)
-
+        |> fun file -> file.CopyTo(Path.Combine(androidProdDir, file.Name)) |> ignore
     )
+
+	// You can also build one APK per ABI
+	Target "Android-MultiPackages" (fun () ->
+		let versionStepper = (fun v t -> match t with
+										 | AndroidAbiTarget.X86 c -> v + 1
+										 | AndroidAbiTarget.X86And64 c -> v + 2
+										 | AndroidAbiTarget.ArmEabi c -> v + 3
+										 | AndroidAbiTarget.ArmEabiV7a c -> v + 4
+										 | AndroidAbiTarget.Arm64V8a c -> v + 5
+										 | _ -> v)
+		let abis = AndroidPackageAbiParam.SpecificAbis
+						([ AndroidAbiTarget.X86({ SuffixAndExtension="-x86.apk"; })
+						   AndroidAbiTarget.ArmEabi({ SuffixAndExtension="-armeabi.apk"; })
+						   AndroidAbiTarget.ArmEabiV7a({ SuffixAndExtension="-armeabi-v7a.apk"; })
+						   AndroidAbiTarget.X86And64({ SuffixAndExtension="-x86_64.apk"; })
+						 ])
+		let files = AndroidBuildPackages(fun defaults ->
+								{ defaults with 
+									ProjectPath = "Path to my project Droid.csproj"
+									Configuration = "Release"
+									OutputPath = androidBuildDir
+									PackageAbiTargets = abis
+									VersionStepper = Some(versionStepper)
+								})
+
+		for f in files do
+			printfn "- apk: %s" f.Name
+
+		files 
+		|> Seq.iter (fun file -> file.CopyTo(Path.Combine(androidProdDir, file.Name)) |> ignore)
+	)
+
 
     Target "Publish" (fun _ -> 
         // I like verbose script
         trace "publishing Android App"
-        let apks = androidProdDir 
+        let apk = androidProdDir 
                         |> directoryInfo 
                         |> filesInDir 
                         |> Seq.filter(fun f -> f.Name.EndsWith(".apk"))
-	    for apk in apks do        
-			let apkPath = apk.FullName
-			tracefn "Apk found: %s" apkPath
-			let mail = "my service account mail@developer.gserviceaccount.com"
-			// Path to the certificate file probably named 'Google Play Android Developer-xxxxxxxxxxxx.p12'
-			let certificate = new X509Certificate2
-										(
-											@"Google Play Android Developer-xxxxxxxxxxxx.p12",
-											"notasecret",
-											X509KeyStorageFlags.Exportable
-										)
-			let packageName = "my Android package name"
+                        |> Seq.exactlyOne
+        let apkPath = apk.FullName
+        tracefn "Apk found: %s" apkPath
+        let mail = "my service account mail@developer.gserviceaccount.com"
+        // Path to the certificate file probably named 'Google Play Android Developer-xxxxxxxxxxxx.p12'
+        let certificate = new X509Certificate2
+                                    (
+                                        @"Google Play Android Developer-xxxxxxxxxxxx.p12",
+                                        "notasecret",
+                                        X509KeyStorageFlags.Exportable
+                                    )
+        let packageName = "my Android package name"
 
-			// to publish an alpha version: 
-			PublishApk 
-				{ AlphaSettings with 
-					Config = 
-						{ 
-							Certificate = certificate;
-							PackageName = packageName;
-							AccountId = mail;
-							Apk = apkPath; 
-						}
-				}
+        // to publish an alpha version: 
+        PublishApk 
+            { AlphaSettings with 
+                Config = 
+                    { 
+                        Certificate = certificate;
+                        PackageName = packageName;
+                        AccountId = mail;
+                        Apk = apkPath; 
+                    }
+            }
 
-			// to publish a beta version: 
-			//
-			//PublishApk 
-			//    { BetaSettings with 
-			//        Config = 
-			//            { 
-			//                Certificate = certificate;
-			//                PackageName = packageName;
-			//                AccountId = mail;
-			//                Apk = apkPath; 
-			//            }
-			//    }
+        // to publish a beta version: 
+        //
+        //PublishApk 
+        //    { BetaSettings with 
+        //        Config = 
+        //            { 
+        //                Certificate = certificate;
+        //                PackageName = packageName;
+        //                AccountId = mail;
+        //                Apk = apkPath; 
+        //            }
+        //    }
         
-			// to publish a production version: 
-			//
-			//PublishApk 
-			//    { ProductionSettings with 
-			//        Config = 
-			//            { 
-			//                Certificate = certificate;
-			//                PackageName = packageName;
-			//                AccountId = mail;
-			//                Apk = apkPath; 
-			//            }
-			//    }
+        // to publish a production version: 
+        //
+        //PublishApk 
+        //    { ProductionSettings with 
+        //        Config = 
+        //            { 
+        //                Certificate = certificate;
+        //                PackageName = packageName;
+        //                AccountId = mail;
+        //                Apk = apkPath; 
+        //            }
+        //    }
     )
 
     Target "Android-Build" (fun _ ->
@@ -128,5 +158,4 @@ Default target will not start "Publish" target because apps do not need to be up
 
 To publish your app, you can run
 
-    PS> Fake.exe .\\build.fsx "target=publish"
-
+    PS> Fake.exe .\build.fsx "target=publish"
