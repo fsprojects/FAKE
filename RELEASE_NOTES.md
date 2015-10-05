@@ -1,3 +1,6 @@
+#### 4.4.6 - 05.10.2015
+* Make FAKE compatible with Microsoft Dynamics 2016
+
 #### 4.4.5 - 02.10.2015
 * Don't assume that mono is on the path for El Capitan - https://github.com/fsharp/FAKE/pull/963/files
 * BUGFIX: Exclude long directories from globbing - https://github.com/fsharp/FAKE/pull/955
