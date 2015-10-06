@@ -5,6 +5,7 @@ open Fake
 open System
 open System.IO
 open System.Text
+open Fake.Testing.XUnit2
 
 type DotCoverReportType = 
   | Html = 0
@@ -178,6 +179,23 @@ let DotCoverNUnit (setDotCoverParams: DotCoverParams -> DotCoverParams) (setNUni
                   } |> setDotCoverParams)
 
     traceEndTask "DotCoverNUnit" details
+
+let DotCoverXUnit2 (setDotCoverParams: DotCoverParams -> DotCoverParams) (setXUnit2Params: XUnit2Params -> XUnit2Params) (assemblies: string seq) =
+    let assemblies = assemblies |> Seq.toArray
+    let details =  assemblies |> separated ", "
+    traceStartTask "DotCoverXUnit2" details
+
+    let parameters = XUnit2Defaults |> setXUnit2Params
+    let args = buildXUnit2Args assemblies parameters 
+    
+    DotCover (fun p ->
+                  {p with
+                     TargetExecutable = parameters.ToolPath 
+                     TargetArguments = args
+                  } |> setDotCoverParams)
+
+    traceEndTask "DotCoverXUnit2" details
+
 
 /// Runs the dotCover "cover" command against the MSpec test runner.
 /// ## Parameters
