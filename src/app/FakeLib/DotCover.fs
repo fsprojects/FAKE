@@ -180,6 +180,18 @@ let DotCoverNUnit (setDotCoverParams: DotCoverParams -> DotCoverParams) (setNUni
 
     traceEndTask "DotCoverNUnit" details
 
+/// Runs the dotCover "cover" command against the XUnit2 test runner.
+/// ## Parameters
+///
+///  - `setDotCoverParams` - Function used to overwrite the dotCover report default parameters.
+///  - `setXUnit2Params` - Function used to overwrite the XUnit2 default parameters.
+///
+/// ## Sample
+///
+///     !! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll") 
+///         |> DotCoverXUnit2 
+///             (fun  -> dotCoverOptions )
+///             (fun nUnitOptions -> nUnitOptions) 
 let DotCoverXUnit2 (setDotCoverParams: DotCoverParams -> DotCoverParams) (setXUnit2Params: XUnit2Params -> XUnit2Params) (assemblies: string seq) =
     let assemblies = assemblies |> Seq.toArray
     let details =  assemblies |> separated ", "
