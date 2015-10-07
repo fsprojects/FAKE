@@ -44,8 +44,39 @@ https://developers.google.com/android-publisher/getting_started
                 KeystoreAlias = "my key alias"
             })
         |> fun file -> file.CopyTo(Path.Combine(androidProdDir, file.Name)) |> ignore
-
     )
+
+	// You can also build one APK per ABI
+	Target "Android-MultiPackages" (fun () ->
+		let versionStepper = (fun v t -> match t with
+										 | AndroidAbiTarget.X86 c -> v + 1
+										 | AndroidAbiTarget.X86And64 c -> v + 2
+										 | AndroidAbiTarget.ArmEabi c -> v + 3
+										 | AndroidAbiTarget.ArmEabiV7a c -> v + 4
+										 | AndroidAbiTarget.Arm64V8a c -> v + 5
+										 | _ -> v)
+		let abis = AndroidPackageAbiParam.SpecificAbis
+						([ AndroidAbiTarget.X86({ SuffixAndExtension="-x86.apk"; })
+						   AndroidAbiTarget.ArmEabi({ SuffixAndExtension="-armeabi.apk"; })
+						   AndroidAbiTarget.ArmEabiV7a({ SuffixAndExtension="-armeabi-v7a.apk"; })
+						   AndroidAbiTarget.X86And64({ SuffixAndExtension="-x86_64.apk"; })
+						 ])
+		let files = AndroidBuildPackages(fun defaults ->
+								{ defaults with 
+									ProjectPath = "Path to my project Droid.csproj"
+									Configuration = "Release"
+									OutputPath = androidBuildDir
+									PackageAbiTargets = abis
+									VersionStepper = Some(versionStepper)
+								})
+
+		for f in files do
+			printfn "- apk: %s" f.Name
+
+		files 
+		|> Seq.iter (fun file -> file.CopyTo(Path.Combine(androidProdDir, file.Name)) |> ignore)
+	)
+
 
     Target "Publish" (fun _ -> 
         // I like verbose script
@@ -128,4 +159,3 @@ Default target will not start "Publish" target because apps do not need to be up
 To publish your app, you can run
 
     PS> Fake.exe .\build.fsx "target=publish"
-
