@@ -1,21 +1,14 @@
-#### 4.4.6 - 05.10.2015
+#### 4.5.0 - 07.10.2015
+* Ensure FSI-ASSEMBLY.dll path exists - https://github.com/fsharp/FAKE/pull/969
+* New dotCover runner for Xunit2 - https://github.com/fsharp/FAKE/pull/965
 * Make FAKE compatible with Microsoft Dynamics 2016
-
-#### 4.4.5 - 02.10.2015
 * Don't assume that mono is on the path for El Capitan - https://github.com/fsharp/FAKE/pull/963/files
-* BUGFIX: Exclude long directories from globbing - https://github.com/fsharp/FAKE/pull/955
-
-#### 4.4.4 - 22.09.2015
 * Better target handling - https://github.com/fsharp/FAKE/pull/954
-
-#### 4.4.3 - 22.09.2015
-* Encode script path in cache - https://github.com/fsharp/FAKE/pull/956
-
-#### 4.4.2 - 17.09.2015
 * Ignore group lines in paket.references parser
-
-#### 4.4.1 - 11.09.2015
 * Revert breaking change in FCS
+* Support for Android-MultiPackages - https://github.com/fsharp/FAKE/pull/964
+* BUGFIX: Exclude long directories from globbing - https://github.com/fsharp/FAKE/pull/955
+* BUGFIX: Encode script path in cache - https://github.com/fsharp/FAKE/pull/956
 
 #### 4.4.0 - 11.09.2015
 * iOSBuild relies on xbuild instead of mdtool - https://github.com/fsharp/FAKE/pull/945

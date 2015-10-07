@@ -37,10 +37,10 @@ module Replacements =
             traceVerbose "Converting from Win7 format to Win8"
             Fake.StringHelper.ReadFileAsString fileName
             |> Win7ToWin8
-            |> Fake.StringHelper.WriteStringToFile false fileName    
+            |> Fake.StringHelper.WriteStringToFile false fileName
 
     let shortcutReplacements =
-        ["ShortCutKey=Strg","ShortCutKey=Ctrl"     
+        ["ShortCutKey=Strg","ShortCutKey=Ctrl"
          "ShortCutKey=Umschalt+Strg","ShortCutKey=Shift+Ctrl"
          "ShortCutKey=Umschalt","ShortCutKey=Shift"]
 
@@ -50,7 +50,7 @@ module Replacements =
 
     let NormalizeShortcuts fileName =
         Fake.StringHelper.ReadFileAsString fileName
-        |> replaceShortcuts        
+        |> replaceShortcuts
         |> Fake.StringHelper.WriteStringToFile false fileName
 
 [<RequireQualifiedAccess>]
