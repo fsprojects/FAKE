@@ -339,6 +339,12 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
                             let di = Directory.CreateDirectory cacheDir.FullName 
                             di.Attributes <- FileAttributes.Directory ||| FileAttributes.Hidden
 
+                        let destinationFile = FileInfo(assemblyPath.Value)
+                        let targetDirectory = destinationFile.Directory
+
+                        if (not <| targetDirectory.Exists) then targetDirectory.Create()
+                        if (destinationFile.Exists) then destinationFile.Delete()
+
                         File.Move("FSI-ASSEMBLY.dll", assemblyPath.Value)
                     
                         if File.Exists("FSI-ASSEMBLY.pdb") then
