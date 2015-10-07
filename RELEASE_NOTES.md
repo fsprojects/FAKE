@@ -1,3 +1,6 @@
+#### 4.5.1 - 07.10.2015
+* Adding TestFile helper - https://github.com/fsharp/FAKE/pull/962
+
 #### 4.5.0 - 07.10.2015
 * Ensure FSI-ASSEMBLY.dll path exists - https://github.com/fsharp/FAKE/pull/969
 * New dotCover runner for Xunit2 - https://github.com/fsharp/FAKE/pull/965
