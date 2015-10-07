@@ -7,7 +7,7 @@ open System.IO
 open System.Configuration
 open System.Xml.Linq
 
-/// An type to represent MSBuild project files.
+/// A type to represent MSBuild project files.
 type MSBuildProject = XDocument
 
 /// An exception type to signal build errors.
