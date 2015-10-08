@@ -1,3 +1,7 @@
+#### 4.4.5 - 02.10.2015
+* Don't assume that mono is on the path for El Capitan - https://github.com/fsharp/FAKE/pull/963/files
+* BUGFIX: Exclude long directories from globbing - https://github.com/fsharp/FAKE/pull/955
+
 #### 4.4.4 - 22.09.2015
 * Better target handling - https://github.com/fsharp/FAKE/pull/954
 

@@ -127,6 +127,12 @@ let isLinux = int System.Environment.OSVersion.Platform |> fun p -> (p = 4) || (
 /// Todo: Detect mono on windows
 let isMono = isLinux || isUnix || isMacOS
 
+let monoPath =
+    if isMacOS && File.Exists "/Library/Frameworks/Mono.framework/Commands/mono" then
+        "/Library/Frameworks/Mono.framework/Commands/mono"
+    else
+        "mono"
+
 /// Arguments on the Mono executable
 let mutable monoArguments = ""
 
@@ -134,7 +140,7 @@ let mutable monoArguments = ""
 let platformInfoAction (psi : ProcessStartInfo) = 
     if isMono && psi.FileName.EndsWith ".exe" then 
         psi.Arguments <- monoArguments + " " + psi.FileName + " " + psi.Arguments
-        psi.FileName <- "mono"
+        psi.FileName <- monoPath
 
 /// The path of the current target platform
 let mutable TargetPlatformPrefix = 
