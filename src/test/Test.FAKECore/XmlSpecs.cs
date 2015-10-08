@@ -66,7 +66,7 @@ namespace Test.FAKECore.XMLHandling
             "  <img src=\"madonna.jpg\" alt=\"Foligno Madonna, by Raphael\" />" +
             "  <caption>This is Raphael's \"Foligno\" Madonna, painted in <date year=\"1511\" /> - <date year=\"1512\" />.</caption>" +
             "  <note name=\"Type\">Oil on wood, transferred to canvas</note>" +
-            "  <note name=\"Dimensions\">320 cm × 194 cm (130 in × 76 in)</note>" +
+            "  <note name=\"Dimensions\">320 cm * 194 cm (130 in * 76 in)</note>" +
             "  <note name=\"Location\">Pinacoteca Vaticana, Vatican City</note>" +
             "</painting>";
 

@@ -1,3 +1,6 @@
+#### 4.5.2 - 08.10.2015
+* Added new functions: replace and poke for inner xml - https://github.com/fsharp/FAKE/pull/970
+
 #### 4.5.1 - 07.10.2015
 * Adding TestFile helper - https://github.com/fsharp/FAKE/pull/962
 
