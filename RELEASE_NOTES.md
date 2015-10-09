@@ -1,3 +1,6 @@
+#### 4.5.3 - 09.10.2015
+* DotCover support for MSTest - https://github.com/fsharp/FAKE/pull/972
+
 #### 4.5.2 - 08.10.2015
 * Added new functions: replace and poke for inner xml - https://github.com/fsharp/FAKE/pull/970
 
