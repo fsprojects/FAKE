@@ -78,6 +78,12 @@ let inline appendIfTrueWithoutQuotes p s builder =
 /// Appends a text if the predicate is false.
 let inline appendIfFalse p = appendIfTrue (not p)
 
+/// Appends a text without quoting if the value is not null.
+let inline appendWithoutQuotesIfNotNull (value : Object) s = 
+    appendIfTrueWithoutQuotes (value <> null) (match value with
+                                  | :? String as sv -> (sprintf "%s%s" s sv)
+                                  | _ -> (sprintf "%s%A" s value))
+
 /// Appends a text if the value is not null.
 let inline appendIfNotNull (value : Object) s = 
     appendIfTrue (value <> null) (match value with

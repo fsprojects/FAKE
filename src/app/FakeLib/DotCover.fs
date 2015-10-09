@@ -220,12 +220,12 @@ let internal buildMSTestArgsForDotCover parameters assemblies =
             sprintf @"%s\%s.trx" parameters.ResultsDir (DateTime.Now.ToString("yyyyMMdd-HHmmss.ff"))
         else null
     new StringBuilder()
-    |> appendIfNotNull testcontainers ""
-    |> appendIfNotNull parameters.Category "/category:"
-    |> appendIfNotNull parameters.TestMetadataPath "/testmetadata:"
-    |> appendIfNotNull parameters.TestSettingsPath "/testsettings:"
-    |> appendIfNotNull testResultsFile "/resultsfile:"
-    |> appendIfTrue parameters.NoIsolation "/noisolation"
+    |> appendWithoutQuotesIfNotNull testcontainers ""
+    |> appendWithoutQuotesIfNotNull parameters.Category "/category:"
+    |> appendWithoutQuotesIfNotNull parameters.TestMetadataPath "/testmetadata:"
+    |> appendWithoutQuotesIfNotNull parameters.TestSettingsPath "/testsettings:"
+    |> appendWithoutQuotesIfNotNull testResultsFile "/resultsfile:"
+    |> appendIfTrueWithoutQuotes parameters.NoIsolation "/noisolation"
     |> toText
 
 /// Runs the dotCover "cover" command against the MSTest test runner.
