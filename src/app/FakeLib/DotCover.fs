@@ -23,6 +23,7 @@ type DotCoverParams =
       TargetWorkingDir: string
       Output: string
       Filters: string
+      AttributeFilters: string
       CustomParameters: string }
 
 /// The dotCover default parameters
@@ -33,6 +34,7 @@ let DotCoverDefaults =
       TargetArguments = ""
       TargetWorkingDir = ""
       Filters = ""
+      AttributeFilters = ""
       Output = "dotCoverSnapshot.dcvr"
       CustomParameters = "" } 
 
@@ -75,6 +77,7 @@ let buildDotCoverArgs parameters =
     |> appendIfNotNullOrEmpty (parameters.TargetArguments.Trim()) "/TargetArguments="
     |> appendIfNotNullOrEmpty parameters.TargetWorkingDir "/TargetWorkingDir="
     |> appendIfNotNullOrEmpty parameters.Filters "/Filters="
+    |> appendIfNotNullOrEmpty parameters.AttributeFilters "/AttributeFilters="
     |> appendIfNotNullOrEmpty parameters.Output "/Output="
     |> appendWithoutQuotes parameters.CustomParameters
     |> toText
