@@ -5,6 +5,8 @@ open Fake
 open System
 open System.IO
 open System.Text
+open Fake.Testing.XUnit2
+open Fake.MSTest
 
 type DotCoverReportType = 
   | Html = 0
@@ -21,6 +23,7 @@ type DotCoverParams =
       TargetWorkingDir: string
       Output: string
       Filters: string
+      AttributeFilters: string
       CustomParameters: string }
 
 /// The dotCover default parameters
@@ -31,6 +34,7 @@ let DotCoverDefaults =
       TargetArguments = ""
       TargetWorkingDir = ""
       Filters = ""
+      AttributeFilters = ""
       Output = "dotCoverSnapshot.dcvr"
       CustomParameters = "" } 
 
@@ -73,6 +77,7 @@ let buildDotCoverArgs parameters =
     |> appendIfNotNullOrEmpty (parameters.TargetArguments.Trim()) "/TargetArguments="
     |> appendIfNotNullOrEmpty parameters.TargetWorkingDir "/TargetWorkingDir="
     |> appendIfNotNullOrEmpty parameters.Filters "/Filters="
+    |> appendIfNotNullOrEmpty parameters.AttributeFilters "/AttributeFilters="
     |> appendIfNotNullOrEmpty parameters.Output "/Output="
     |> appendWithoutQuotes parameters.CustomParameters
     |> toText
@@ -178,6 +183,81 @@ let DotCoverNUnit (setDotCoverParams: DotCoverParams -> DotCoverParams) (setNUni
                   } |> setDotCoverParams)
 
     traceEndTask "DotCoverNUnit" details
+
+/// Runs the dotCover "cover" command against the XUnit2 test runner.
+/// ## Parameters
+///
+///  - `setDotCoverParams` - Function used to overwrite the dotCover report default parameters.
+///  - `setXUnit2Params` - Function used to overwrite the XUnit2 default parameters.
+///
+/// ## Sample
+///
+///     !! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll") 
+///         |> DotCoverXUnit2 
+///             (fun  -> dotCoverOptions )
+///             (fun nUnitOptions -> nUnitOptions) 
+let DotCoverXUnit2 (setDotCoverParams: DotCoverParams -> DotCoverParams) (setXUnit2Params: XUnit2Params -> XUnit2Params) (assemblies: string seq) =
+    let assemblies = assemblies |> Seq.toArray
+    let details =  assemblies |> separated ", "
+    traceStartTask "DotCoverXUnit2" details
+
+    let parameters = XUnit2Defaults |> setXUnit2Params
+    let args = buildXUnit2Args assemblies parameters 
+    
+    DotCover (fun p ->
+                  {p with
+                     TargetExecutable = parameters.ToolPath 
+                     TargetArguments = args
+                  } |> setDotCoverParams)
+
+    traceEndTask "DotCoverXUnit2" details
+
+/// Builds the command line arguments from the given parameter record and the given assemblies.
+/// Runs all test assemblies in the same run for easier coverage management. 
+/// [omit]
+let internal buildMSTestArgsForDotCover parameters assemblies = 
+    let testcontainers = assemblies |>  Array.map (fun a -> "/testcontainer:" + a) |> String.concat " "
+
+    let testResultsFile = 
+        if parameters.ResultsDir <> null then 
+            sprintf @"%s\%s.trx" parameters.ResultsDir (DateTime.Now.ToString("yyyyMMdd-HHmmss.ff"))
+        else null
+    new StringBuilder()
+    |> appendWithoutQuotesIfNotNull testcontainers ""
+    |> appendWithoutQuotesIfNotNull parameters.Category "/category:"
+    |> appendWithoutQuotesIfNotNull parameters.TestMetadataPath "/testmetadata:"
+    |> appendWithoutQuotesIfNotNull parameters.TestSettingsPath "/testsettings:"
+    |> appendWithoutQuotesIfNotNull testResultsFile "/resultsfile:"
+    |> appendIfTrueWithoutQuotes parameters.NoIsolation "/noisolation"
+    |> toText
+
+/// Runs the dotCover "cover" command against the MSTest test runner.
+/// ## Parameters
+///
+///  - `setDotCoverParams` - Function used to overwrite the dotCover report default parameters.
+///  - `setMSTestParams` - Function used to overwrite the MSTest default parameters.
+///
+/// ## Sample
+///
+///     !! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll") 
+///         |> MSTest 
+///             (fun  -> dotCoverOptions )
+///             (fun MSTestOptions -> MSTestOptions) 
+let DotCoverMSTest (setDotCoverParams: DotCoverParams -> DotCoverParams) (setMSTestParams: MSTestParams -> MSTestParams) (assemblies: string seq) =
+    let assemblies = assemblies |> Seq.toArray
+    let details =  assemblies |> separated ", "
+    traceStartTask "DotCoverMSTest " details
+
+    let parameters = MSTestDefaults |> setMSTestParams
+    let args = buildMSTestArgsForDotCover parameters assemblies
+    
+    DotCover (fun p ->
+                  {p with
+                     TargetExecutable = parameters.ToolPath 
+                     TargetArguments = args
+                  } |> setDotCoverParams)
+
+    traceEndTask "DotCoverMSTest" details
 
 /// Runs the dotCover "cover" command against the MSpec test runner.
 /// ## Parameters
