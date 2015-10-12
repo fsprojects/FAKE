@@ -1,3 +1,6 @@
+#### 4.5.6 - 12.10.2015
+* Add attribute filters to DotCover - https://github.com/fsharp/FAKE/pull/974
+
 #### 4.5.5 - 12.10.2015
 * Update dependencies
 
