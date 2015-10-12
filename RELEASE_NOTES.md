@@ -1,3 +1,6 @@
+#### 4.5.5 - 12.10.2015
+* Update dependencies
+
 #### 4.5.4 - 12.10.2015
 * Always use FullName of nuspec for NuGet pack
 
