@@ -1,3 +1,6 @@
+#### 4.5.4 - 12.10.2015
+* Always use FullName of nuspec for NuGet pack
+
 #### 4.5.3 - 09.10.2015
 * DotCover support for MSTest - https://github.com/fsharp/FAKE/pull/972
 
