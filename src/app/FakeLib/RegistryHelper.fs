@@ -89,9 +89,23 @@ let deleteRegistryValue baseKey subKey keyName =
     use key = getRegistryKey baseKey subKey true
     key.DeleteValue keyName
 
-/// Returns whether or not a registry value exists for a key
-let valueExistsForKey = fun baseKey sub_key value ->
-    let key = getRegistryKey baseKey sub_key false
+/// Deletes a registry subKey
+let deleteRegistrySubKey baseKey subKey keyName =
+    use key = getRegistryKey baseKey subKey true
+    key.DeleteSubKey keyName
+
+/// Returns all the value names of a registry key
+let getRegistryValueNames baseKey subKey =
+    use key = getRegistryKey baseKey subKey false
     key.GetValueNames()
+
+/// Returns whether or not a registry value exists for a key
+let valueExistsForKey = fun baseKey subKey value ->
+    getRegistryValueNames baseKey subKey
     |> Seq.exists (fun v -> v = value)
+
+/// Returns all the subKey names of a registry key
+let getRegistrySubKeyNames baseKey subKey =
+    use key = getRegistryKey baseKey subKey false
+    key.GetSubKeyNames()
 
