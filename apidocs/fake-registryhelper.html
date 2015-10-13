@@ -96,9 +96,30 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '512', 512)" onmouseover="showTip(event, '512', 512)">
-            deleteRegistryValue (...)
+            deleteRegistrySubKey (...)
           </code>
           <div class="tip" id="512">
+            <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; keyName:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RegistryHelper.fs#L93-93" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Deletes a registry subKey</p>
+
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '513', 513)" onmouseover="showTip(event, '513', 513)">
+            deleteRegistryValue (...)
+          </code>
+          <div class="tip" id="513">
             <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; keyName:string -&gt; unit<br />
                       </div>
         </td>
@@ -116,10 +137,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '513', 513)" onmouseover="showTip(event, '513', 513)">
+          <code onmouseout="hideTip(event, '514', 514)" onmouseover="showTip(event, '514', 514)">
             getRegistryKey (...)
           </code>
-          <div class="tip" id="513">
+          <div class="tip" id="514">
             <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; writePermission:bool -&gt; RegistryKey<br />
                       </div>
         </td>
@@ -137,10 +158,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '514', 514)" onmouseover="showTip(event, '514', 514)">
+          <code onmouseout="hideTip(event, '515', 515)" onmouseover="showTip(event, '515', 515)">
             getRegistryKey64 (...)
           </code>
-          <div class="tip" id="514">
+          <div class="tip" id="515">
             <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; writePermission:bool -&gt; RegistryKey<br />
                       </div>
         </td>
@@ -158,10 +179,31 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '515', 515)" onmouseover="showTip(event, '515', 515)">
+          <code onmouseout="hideTip(event, '516', 516)" onmouseover="showTip(event, '516', 516)">
+            getRegistrySubKeyNames baseKey subKey
+          </code>
+          <div class="tip" id="516">
+            <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; string []<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RegistryHelper.fs#L108-108" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Returns all the subKey names of a registry key</p>
+
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '517', 517)" onmouseover="showTip(event, '517', 517)">
             getRegistryValue baseKey subKey value
           </code>
-          <div class="tip" id="515">
+          <div class="tip" id="517">
             <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; value:string -&gt; string<br />
                       </div>
         </td>
@@ -179,10 +221,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '516', 516)" onmouseover="showTip(event, '516', 516)">
+          <code onmouseout="hideTip(event, '518', 518)" onmouseover="showTip(event, '518', 518)">
             getRegistryValue64 baseKey subKey value
           </code>
-          <div class="tip" id="516">
+          <div class="tip" id="518">
             <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; value:string -&gt; string<br />
                       </div>
         </td>
@@ -200,10 +242,31 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '517', 517)" onmouseover="showTip(event, '517', 517)">
+          <code onmouseout="hideTip(event, '519', 519)" onmouseover="showTip(event, '519', 519)">
+            getRegistryValueNames baseKey subKey
+          </code>
+          <div class="tip" id="519">
+            <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; string []<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RegistryHelper.fs#L98-98" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Returns all the value names of a registry key</p>
+
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '520', 520)" onmouseover="showTip(event, '520', 520)">
             setRegistryValue (...)
           </code>
-          <div class="tip" id="517">
+          <div class="tip" id="520">
             <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; keyName:string -&gt; value:&#39;T -&gt; unit<br />
                           <strong>Type parameters:</strong> 'T          </div>
         </td>
@@ -221,15 +284,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '518', 518)" onmouseover="showTip(event, '518', 518)">
-            valueExistsForKey baseKey sub_key value
+          <code onmouseout="hideTip(event, '521', 521)" onmouseover="showTip(event, '521', 521)">
+            valueExistsForKey baseKey subKey value
           </code>
-          <div class="tip" id="518">
-            <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; sub_key:string -&gt; value:string -&gt; bool<br />
+          <div class="tip" id="521">
+            <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; value:string -&gt; bool<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RegistryHelper.fs#L93-93" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RegistryHelper.fs#L103-103" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
