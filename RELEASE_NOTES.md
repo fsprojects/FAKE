@@ -1,3 +1,6 @@
+#### 4.5.7 - 13.10.2015
+* New Registry functions - https://github.com/fsharp/FAKE/pull/976
+ 
 #### 4.5.6 - 12.10.2015
 * Add attribute filters to DotCover - https://github.com/fsharp/FAKE/pull/974
 

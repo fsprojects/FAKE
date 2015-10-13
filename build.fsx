@@ -144,7 +144,7 @@ Target "Test" (fun _ ->
 
     !! (testDir @@ "Test.*.dll")
       ++ (testDir @@ "FsCheck.Fake.dll")
-    |>  xUnit (fun p -> p)
+    |>  xUnit id
 )
 
 Target "SourceLink" (fun _ ->
