@@ -1,4 +1,4 @@
-#### 4.6.0-alpha001 - 14.10.2015
+#### 4.6.0-alpha002 - 14.10.2015
 * Internalize FSharp.Compiler.Service in FAKE.exe
 
 #### 4.5.7 - 13.10.2015
