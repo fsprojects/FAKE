@@ -1,4 +1,4 @@
-#### 4.6.0 - 14.10.2015
+#### 4.6.1 - 14.10.2015
 * Internalize FSharp.Compiler.Service in FAKE.exe
 * New Registry functions - https://github.com/fsharp/FAKE/pull/976
 * Add attribute filters to DotCover - https://github.com/fsharp/FAKE/pull/974

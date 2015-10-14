@@ -182,6 +182,8 @@ Target "ILRepack" (fun _ ->
     
     !! (buildDir </> "FSharp.Compiler.Service.**")
     |> Seq.iter DeleteFile
+    
+    DeleteDir buildMergedDir
 )
 
 Target "CreateNuGet" (fun _ ->
@@ -214,16 +216,23 @@ Target "CreateNuGet" (fun _ ->
 
         DeleteFile "./build/FAKE.Gallio/Gallio.dll"
 
+        let deleteFCS dir =
+          !! (dir </> "FSharp.Compiler.Service.**")
+          |> Seq.iter DeleteFile
+          
         match package with
         | p when p = projectName ->
             !! (buildDir @@ "**/*.*") |> Copy nugetToolsDir
             CopyDir nugetDocsDir docsDir allFiles
+            deleteFCS nugetToolsDir
         | p when p = "FAKE.Core" ->
             !! (buildDir @@ "*.*") |> Copy nugetToolsDir
             CopyDir nugetDocsDir docsDir allFiles
+            deleteFCS nugetToolsDir
         | p when p = "FAKE.Lib" -> 
             CleanDir nugetLib451Dir
             !! (buildDir @@ "FakeLib.dll") |> Copy nugetLib451Dir
+            deleteFCS nugetLib451Dir
         | _ ->
             CopyDir nugetToolsDir (buildDir @@ package) allFiles
             CopyTo nugetToolsDir additionalFiles
