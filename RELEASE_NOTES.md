@@ -1,3 +1,6 @@
+#### 4.6.3 - 14.10.2015
+* BUGFIX: support caching even when running RazorEngine as part of the build script - https://github.com/fsharp/FAKE/pull/979
+
 #### 4.6.2 - 14.10.2015
 * New Registry functions - https://github.com/fsharp/FAKE/pull/976
 * Add attribute filters to DotCover - https://github.com/fsharp/FAKE/pull/974
