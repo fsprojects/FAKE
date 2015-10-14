@@ -217,8 +217,9 @@ Target "CreateNuGet" (fun _ ->
         DeleteFile "./build/FAKE.Gallio/Gallio.dll"
 
         let deleteFCS dir =
-          !! (dir </> "FSharp.Compiler.Service.**")
-          |> Seq.iter DeleteFile
+          //!! (dir </> "FSharp.Compiler.Service.**")
+          //|> Seq.iter DeleteFile
+          ()
           
         match package with
         | p when p = projectName ->
@@ -292,7 +293,7 @@ Target "Default" DoNothing
 "Clean"
     ==> "SetAssemblyInfo"
     ==> "BuildSolution"
-    ==> "ILRepack"
+    //==> "ILRepack"
     ==> "Test"
     ==> "Default"
     ==> "CopyLicense"

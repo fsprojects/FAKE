@@ -1,5 +1,4 @@
-#### 4.6.1 - 14.10.2015
-* Internalize FSharp.Compiler.Service in FAKE.exe
+#### 4.6.2 - 14.10.2015
 * New Registry functions - https://github.com/fsharp/FAKE/pull/976
 * Add attribute filters to DotCover - https://github.com/fsharp/FAKE/pull/974
 * Always use FullName of nuspec for NuGet pack
