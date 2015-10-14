@@ -179,7 +179,6 @@ Target "ILRepack" (fun _ ->
         CopyFile (buildDir </> filename) targetFile
 
     internalizeIn "FAKE.exe"
-    internalizeIn "FAKE.Deploy.exe"
     
     !! (buildDir </> "FSharp.Compiler.Service.**")
     |> Seq.iter DeleteFile
