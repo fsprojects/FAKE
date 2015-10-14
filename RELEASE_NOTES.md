@@ -1,25 +1,10 @@
-#### 4.6.0-alpha002 - 14.10.2015
+#### 4.6.0 - 14.10.2015
 * Internalize FSharp.Compiler.Service in FAKE.exe
-
-#### 4.5.7 - 13.10.2015
 * New Registry functions - https://github.com/fsharp/FAKE/pull/976
- 
-#### 4.5.6 - 12.10.2015
 * Add attribute filters to DotCover - https://github.com/fsharp/FAKE/pull/974
-
-#### 4.5.5 - 12.10.2015
-* Update dependencies
-
-#### 4.5.4 - 12.10.2015
 * Always use FullName of nuspec for NuGet pack
-
-#### 4.5.3 - 09.10.2015
 * DotCover support for MSTest - https://github.com/fsharp/FAKE/pull/972
-
-#### 4.5.2 - 08.10.2015
 * Added new functions: replace and poke for inner xml - https://github.com/fsharp/FAKE/pull/970
-
-#### 4.5.1 - 07.10.2015
 * Adding TestFile helper - https://github.com/fsharp/FAKE/pull/962
 
 #### 4.5.0 - 07.10.2015
