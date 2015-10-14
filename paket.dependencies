@@ -47,3 +47,4 @@ nuget FAKE prerelease
 nuget FSharp.Formatting
 nuget FSharp.Formatting.CommandTool
 nuget SourceLink.Fake
+nuget ILRepack

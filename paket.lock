@@ -60,7 +60,7 @@ NUGET
       Nancy (>= 1.3.0)
     Nancy.Viewengines.Razor (1.3.0)
       Microsoft.AspNet.Razor
-      Microsoft.AspNet.Razor (>= 2.0.30506) - framework: >= net40
+      Microsoft.AspNet.Razor (>= 2.0.30506)
       Nancy (>= 1.3.0)
     Newtonsoft.Json (7.0.1)
     NLog (4.1.2)
@@ -95,5 +95,6 @@ NUGET
     FSharp.Formatting.CommandTool (2.11.0)
     FSharpVSPowerTools.Core (1.9.0)
       FSharp.Compiler.Service (>= 0.0.90)
+    ILRepack (2.0.8)
     NuGet.CommandLine (2.8.6)
     SourceLink.Fake (1.1.0)

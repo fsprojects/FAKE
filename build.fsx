@@ -36,6 +36,7 @@ let apidocsDir = "./docs/apidocs/"
 let nugetDir = "./nuget"
 let reportDir = "./report"
 let packagesDir = "./packages"
+let buildMergedDir = buildDir </> "merged"
 
 let additionalFiles = [
     "License.txt"
@@ -158,6 +159,32 @@ Target "SourceLink" (fun _ ->
     CopyFile "./build/FAKE.Deploy.Lib" pdbFakeLib
 )
 
+Target "ILRepack" (fun _ ->
+    CreateDir buildMergedDir
+
+    let internalizeIn filename = 
+        let toPack =
+            [filename; "FSharp.Compiler.Service.dll"]
+            |> List.map (fun l -> buildDir </> l)
+            |> separated " "
+        let targetFile = buildMergedDir </> filename
+
+        let result =
+            ExecProcess (fun info ->
+                info.FileName <- currentDirectory </> "packages" </> "build" </> "ILRepack" </> "tools" </> "ILRepack.exe"
+                info.Arguments <- sprintf "/verbose /lib:%s /ver:%s /out:%s %s" buildDir release.AssemblyVersion targetFile toPack) (System.TimeSpan.FromMinutes 5.)
+
+        if result <> 0 then failwithf "Error during ILRepack execution."
+
+        CopyFile (buildDir </> filename) targetFile
+
+    internalizeIn "FAKE.exe"
+    internalizeIn "FAKE.Deploy.exe"
+    
+    !! (buildDir </> "FSharp.Compiler.Service.**")
+    |> Seq.iter DeleteFile
+)
+
 Target "CreateNuGet" (fun _ ->
     let set64BitCorFlags files =
         files
@@ -257,6 +284,7 @@ Target "Default" DoNothing
 "Clean"
     ==> "SetAssemblyInfo"
     ==> "BuildSolution"
+    ==> "ILRepack"
     ==> "Test"
     ==> "Default"
     ==> "CopyLicense"
