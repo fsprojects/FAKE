@@ -363,11 +363,10 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
                             |> Seq.filter(fun assem -> assem <> "RazorEngine.Compilation.ImpromptuInterfaceDynamicAssembly")
                             |> Seq.cache
                         if dynamicAssemblies |> Seq.length > 0 then
-                            if printDetails then
-                                let msg =
-                                    sprintf "Dynamic assemblies were generated during evaluation of script (%s).\nCan not save cache." 
-                                        (System.String.Join(", ", dynamicAssemblies))
-                                trace msg
+                            let msg =
+                                sprintf "Dynamic assemblies were generated during evaluation of script (%s).\nCan not save cache." 
+                                    (System.String.Join(", ", dynamicAssemblies))
+                            trace msg
 
                         else
                             let assemblies = 
