@@ -57,52 +57,54 @@ let getRegistryKey baseKey subKey (writePermission : bool) =
     (get32BitKey baseKey).OpenSubKey(subKey, writePermission)  // fall back to 32 bit
 
 /// Gets a registy value as string
-let getRegistryValue baseKey subKey value =
+let getRegistryValue baseKey subKey name =
     use key = getRegistryKey baseKey subKey false
     if key = null then
         failwithf "Registry subkey %s could not be found for key %A" subKey baseKey
-    let value = key.GetValue value
+    let value = key.GetValue name
     if value = null then
         failwithf "Registry value is null for key %s" (key.ToString())
     value.ToString()
 
 /// Gets a registy value as string
-let getRegistryValue64 baseKey subKey value =
+let getRegistryValue64 baseKey subKey name =
     use key = getRegistryKey64 baseKey subKey false
     if key = null then
         failwithf "Registry subkey %s could not be found for key %A" subKey baseKey
-    let value = key.GetValue value
+    let value = key.GetValue name
     if value = null then
         failwithf "Registry value is null for key %s" (key.ToString())
     value.ToString()
 
-/// Create a registry subKey
-let createRegistrySubKey baseKey subKey = (getKey baseKey).CreateSubKey subKey |> ignore
-
 /// Sets a registry value
-let setRegistryValue<'T> baseKey subKey keyName (value : 'T) =
+let setRegistryValue<'T> baseKey subKey name (value : 'T) =
     use key = getRegistryKey baseKey subKey true
-    key.SetValue(keyName, value)
+    key.SetValue(name, value)
 
 /// Deletes the registry value from its key
-let deleteRegistryValue baseKey subKey keyName =
+let deleteRegistryValue baseKey subKey name =
     use key = getRegistryKey baseKey subKey true
-    key.DeleteValue keyName
-
-/// Deletes a registry subKey
-let deleteRegistrySubKey baseKey subKey keyName =
-    use key = getRegistryKey baseKey subKey true
-    key.DeleteSubKey keyName
+    key.DeleteValue name
 
 /// Returns all the value names of a registry key
 let getRegistryValueNames baseKey subKey =
     use key = getRegistryKey baseKey subKey false
     key.GetValueNames()
 
-/// Returns whether or not a registry value exists for a key
-let valueExistsForKey = fun baseKey subKey value ->
+/// Returns whether or not a registry value name exists for a key
+let valueExistsForKey = fun baseKey subKey name ->
     getRegistryValueNames baseKey subKey
-    |> Seq.exists (fun v -> v = value)
+    |> Seq.exists (fun n -> n = name)
+
+/// Create a registry subKey
+let createRegistrySubKey baseKey subKey =
+    use key = getKey baseKey
+    key.CreateSubKey subKey |> ignore
+
+/// Deletes a registry subKey
+let deleteRegistrySubKey baseKey subKey =
+    use key = getKey baseKey
+    key.DeleteSubKey subKey
 
 /// Returns all the subKey names of a registry key
 let getRegistrySubKeyNames baseKey subKey =
