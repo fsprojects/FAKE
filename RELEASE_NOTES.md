@@ -1,7 +1,11 @@
+#### 4.6.4 - 14.10.2015
+* Cleanup Registry helpers - https://github.com/fsharp/FAKE/pull/980
+* FAKE.Deploy scans for default scripts - https://github.com/fsharp/FAKE/pull/981
+
 #### 4.6.3 - 14.10.2015
 * BUGFIX: support caching even when running RazorEngine as part of the build script - https://github.com/fsharp/FAKE/pull/979
 
-#### 4.6.2 - 14.10.2015
+#### 4.6.0 - 14.10.2015
 * New Registry functions - https://github.com/fsharp/FAKE/pull/976
 * Add attribute filters to DotCover - https://github.com/fsharp/FAKE/pull/974
 * Always use FullName of nuspec for NuGet pack
