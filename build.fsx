@@ -178,7 +178,7 @@ Target "ILRepack" (fun _ ->
 
         CopyFile (buildDir </> filename) targetFile
 
-    internalizeIn "FAKE.exe"
+    internalizeIn "FakeLib.dll"
     
     !! (buildDir </> "FSharp.Compiler.Service.**")
     |> Seq.iter DeleteFile
@@ -217,9 +217,8 @@ Target "CreateNuGet" (fun _ ->
         DeleteFile "./build/FAKE.Gallio/Gallio.dll"
 
         let deleteFCS dir =
-          //!! (dir </> "FSharp.Compiler.Service.**")
-          //|> Seq.iter DeleteFile
-          ()
+          !! (dir </> "FSharp.Compiler.Service.**")
+          |> Seq.iter DeleteFile
           
         match package with
         | p when p = projectName ->
@@ -237,6 +236,8 @@ Target "CreateNuGet" (fun _ ->
         | _ ->
             CopyDir nugetToolsDir (buildDir @@ package) allFiles
             CopyTo nugetToolsDir additionalFiles
+            deleteFCS nugetToolsDir
+
         !! (nugetToolsDir @@ "*.srcsv") |> DeleteFiles
 
         let setParams p =
@@ -248,7 +249,7 @@ Target "CreateNuGet" (fun _ ->
                 OutputPath = nugetDir
                 Summary = projectSummary
                 ReleaseNotes = release.Notes |> toLines
-                Dependencies =                    
+                Dependencies =
                     (if package <> "FAKE.Core" && package <> projectName && package <> "FAKE.Lib" then
                        ["FAKE.Core", RequireExactly (NormalizeVersion release.AssemblyVersion)]
                      else p.Dependencies )
@@ -293,7 +294,7 @@ Target "Default" DoNothing
 "Clean"
     ==> "SetAssemblyInfo"
     ==> "BuildSolution"
-    //==> "ILRepack"
+    ==> "ILRepack"
     ==> "Test"
     ==> "Default"
     ==> "CopyLicense"
