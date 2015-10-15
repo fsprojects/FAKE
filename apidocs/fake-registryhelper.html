@@ -82,7 +82,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RegistryHelper.fs#L80-80" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RegistryHelper.fs#L100-100" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -96,14 +96,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '512', 512)" onmouseover="showTip(event, '512', 512)">
-            deleteRegistrySubKey (...)
+            deleteRegistrySubKey baseKey subKey
           </code>
           <div class="tip" id="512">
-            <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; keyName:string -&gt; unit<br />
+            <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RegistryHelper.fs#L93-93" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RegistryHelper.fs#L105-105" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -117,14 +117,14 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '513', 513)" onmouseover="showTip(event, '513', 513)">
-            deleteRegistryValue (...)
+            deleteRegistryValue baseKey subKey name
           </code>
           <div class="tip" id="513">
-            <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; keyName:string -&gt; unit<br />
+            <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; name:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RegistryHelper.fs#L88-88" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RegistryHelper.fs#L85-85" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -187,7 +187,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RegistryHelper.fs#L108-108" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RegistryHelper.fs#L110-110" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -201,10 +201,10 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '517', 517)" onmouseover="showTip(event, '517', 517)">
-            getRegistryValue baseKey subKey value
+            getRegistryValue baseKey subKey name
           </code>
           <div class="tip" id="517">
-            <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; value:string -&gt; string<br />
+            <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; name:string -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -222,10 +222,10 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '518', 518)" onmouseover="showTip(event, '518', 518)">
-            getRegistryValue64 baseKey subKey value
+            getRegistryValue64 baseKey subKey name
           </code>
           <div class="tip" id="518">
-            <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; value:string -&gt; string<br />
+            <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; name:string -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -250,7 +250,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RegistryHelper.fs#L98-98" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RegistryHelper.fs#L90-90" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -267,11 +267,11 @@
             setRegistryValue (...)
           </code>
           <div class="tip" id="520">
-            <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; keyName:string -&gt; value:&#39;T -&gt; unit<br />
+            <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; name:string -&gt; value:&#39;T -&gt; unit<br />
                           <strong>Type parameters:</strong> 'T          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RegistryHelper.fs#L83-83" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RegistryHelper.fs#L80-80" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -285,18 +285,18 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '521', 521)" onmouseover="showTip(event, '521', 521)">
-            valueExistsForKey baseKey subKey value
+            valueExistsForKey baseKey subKey name
           </code>
           <div class="tip" id="521">
-            <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; value:string -&gt; bool<br />
+            <strong>Signature:</strong> baseKey:RegistryBaseKey -&gt; subKey:string -&gt; name:string -&gt; bool<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RegistryHelper.fs#L103-103" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/RegistryHelper.fs#L95-95" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Returns whether or not a registry value exists for a key</p>
+          <p>Returns whether or not a registry value name exists for a key</p>
 
 
 
