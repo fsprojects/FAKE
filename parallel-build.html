@@ -65,6 +65,54 @@ setting environment variables:</p>
 <p>Due to these limitations it is recommended to use the standard sequential build whenever checking for errors (CI, etc.)
 However when a fast build is desired (and the project is e.g. known to build successfully) the parallel option might be helpful</p>
 
+<h2>Example</h2>
+
+<p>When using this parallel option, Fake resolves the build dependency hierearchies from the described paths and builds independend paths as parallel if you have multiple CPUs available.
+For example this dependency tree:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="s">&quot;Task 1&quot;</span>
+ <span class="o">==&gt;</span> <span class="s">&quot;Task A2&quot;</span>
+ <span class="o">==&gt;</span> <span class="s">&quot;Task 3&quot;</span>
+
+<span class="s">&quot;Task 1&quot;</span>
+ <span class="o">==&gt;</span> <span class="s">&quot;Task B2&quot;</span>
+ <span class="o">==&gt;</span> <span class="s">&quot;Task 3&quot;</span>
+
+<span class="s">&quot;Task C2&quot;</span>
+ <span class="o">==&gt;</span> <span class="s">&quot;Task 3&quot;</span>
+
+<span class="s">&quot;Task 3&quot;</span>
+ <span class="o">==&gt;</span> <span class="s">&quot;Task A4&quot;</span>
+
+<span class="s">&quot;Task 3&quot;</span>
+ <span class="o">==&gt;</span> <span class="s">&quot;Task B4&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+
+<p>...would be treated as follows:</p>
+
+<p><img src="pics/parallel/ParallelExample.png" alt="" /></p>
+
+<p>This is in addition to that that MsBuild may use multiple threads when building one solution having multiple independent project-files.</p>
+
                     
         </div>
         <div class="span3">
