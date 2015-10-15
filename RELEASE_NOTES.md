@@ -1,4 +1,4 @@
-#### 4.6.4 - 14.10.2015
+#### 4.6.4 - 15.10.2015
 * Cleanup Registry helpers - https://github.com/fsharp/FAKE/pull/980
 * FAKE.Deploy scans for default scripts - https://github.com/fsharp/FAKE/pull/981
 
