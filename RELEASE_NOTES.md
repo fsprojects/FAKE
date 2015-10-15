@@ -1,4 +1,4 @@
-#### 4.7.0-alpha002 - 15.10.2015
+#### 4.7.0 - 15.10.2015
 * Internalized FSharp.Compiler.Service.dll in FakeLib.dll
 * Cleanup Registry helpers - https://github.com/fsharp/FAKE/pull/980
 * FAKE.Deploy scans for default scripts - https://github.com/fsharp/FAKE/pull/981
