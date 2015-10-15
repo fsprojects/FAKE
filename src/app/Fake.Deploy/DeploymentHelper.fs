@@ -49,6 +49,18 @@ let getBackupFor dir (app : string) (version : string) =
     dir @@ deploymentRootDir @@ app @@ "backups"
     |> FindFirstMatchingFile backupFileName
 
+let findScriptFile dir =
+    let prioFiles = ["deploy.fsx",1; "install.fsx",2; "setup.fsx",3]
+    let getWeight s =
+        let idx = prioFiles |> List.tryFind(fun x -> (fst x) = s)
+        if idx.IsSome then snd idx.Value else 999
+    let pattern = "*.fsx"
+    let fsxFiles = filesInDirMatching pattern (DirectoryInfo(dir))
+    let weighted = fsxFiles |> Array.sortBy(fun n -> getWeight (Path.GetFileName(n.FullName).ToLower()))
+    if weighted.Length > 0
+    then weighted.[0].FullName
+    else new FileNotFoundException(sprintf "Could not find file matching %s in %s" pattern dir) |> raise
+
 /// Extracts the NuGet package
 let unpack workDir isRollback packageBytes = 
     let tempFile = Path.GetTempFileName()
@@ -66,12 +78,12 @@ let unpack workDir isRollback packageBytes =
     Unzip activeDir tempFile
     File.Delete tempFile
     WriteBytesToFile newActiveFilePath packageBytes
-    let scriptFile = FindFirstMatchingFile "*.fsx" activeDir
+    let scriptFile = findScriptFile activeDir
     package, scriptFile
 
 /// Runs a deployment script from the given package
-let doDeployment scriptFileName scriptArgs = 
-    try 
+let doDeployment scriptFileName scriptArgs =
+    try
         TargetHelper.reset()
         let (result, messages) = FSIHelper.executeFSIWithScriptArgsAndReturnMessages (FullName scriptFileName) scriptArgs
         if result then 
