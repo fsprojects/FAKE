@@ -113,6 +113,12 @@ type HockeyAppUploadParams = {
 
     /// Release download status (can only be set with full-access tokens)
     DownloadStatus: DownloadStatusOption
+
+    /// Time in seconds to connect to HockeyApp backend
+    ConnectTimeout: int
+
+    /// Max time in seconds for the upload
+    MaxTime: int
 }
 
 /// The default HockeyApp parameters
@@ -131,6 +137,8 @@ let HockeyAppUploadDefaults = {
     BuildServerUrl = String.Empty
     RepositoryUrl = String.Empty
     DownloadStatus = DownloadStatusOption.NotDownloadable
+    ConnectTimeout = 0
+    MaxTime = 0
 }
 
 /// [omit]
@@ -175,7 +183,9 @@ let private toCurlArgs param = seq {
     if not (String.IsNullOrEmpty param.CommitSHA) then yield sprintf "-F \"commit_sha=%s\"" param.CommitSHA
     if not (String.IsNullOrEmpty param.BuildServerUrl) then yield sprintf "-F \"build_server_url=%s\"" param.BuildServerUrl
     if not (String.IsNullOrEmpty param.RepositoryUrl) then yield sprintf "-F \"repository_url=%s\"" param.RepositoryUrl
-    yield "https://rink.hockeyapp.net/api/2/apps/upload"
+    if (param.ConnectTimeout > 0) then yield sprintf "-F \"connect-timeout=%i\"" param.ConnectTimeout
+    if (param.MaxTime > 0) then yield sprintf "-F \"m=%i\"" param.MaxTime
+    yield "https://upload.hockeyapp.net/api/2/apps/upload"
 }
 
 /// Uploads an app to HockeyApp
