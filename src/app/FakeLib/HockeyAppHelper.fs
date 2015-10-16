@@ -118,7 +118,7 @@ type HockeyAppUploadParams = {
     ConnectTimeout: int
 
     /// Max time in seconds for the upload
-    MaxTime: int
+    MaxTime: float
 }
 
 /// The default HockeyApp parameters
@@ -138,7 +138,7 @@ let HockeyAppUploadDefaults = {
     RepositoryUrl = String.Empty
     DownloadStatus = DownloadStatusOption.NotDownloadable
     ConnectTimeout = 0
-    MaxTime = 0
+    MaxTime = 120. // 2 minutes by default
 }
 
 /// [omit]
@@ -169,6 +169,8 @@ let private validateParams param =
 /// [omit]
 let private toCurlArgs param = seq {
     yield (String.Format("-sL -w \"{0}%{{http_code}}{0}\"", Regex.Escape(nl)))
+    if (param.ConnectTimeout > 0) then yield sprintf "--connect-timeout %i" param.ConnectTimeout
+    if (param.MaxTime > 0.) then yield sprintf "-m %f" param.MaxTime    
     yield sprintf "-H \"X-HockeyAppToken:%s\"" param.ApiToken
     yield sprintf "-F \"ipa=@%s\"" param.File
     if not (String.IsNullOrEmpty param.Dsym) then yield sprintf "-F \"dsym=@%s\"" param.Dsym
@@ -183,8 +185,6 @@ let private toCurlArgs param = seq {
     if not (String.IsNullOrEmpty param.CommitSHA) then yield sprintf "-F \"commit_sha=%s\"" param.CommitSHA
     if not (String.IsNullOrEmpty param.BuildServerUrl) then yield sprintf "-F \"build_server_url=%s\"" param.BuildServerUrl
     if not (String.IsNullOrEmpty param.RepositoryUrl) then yield sprintf "-F \"repository_url=%s\"" param.RepositoryUrl
-    if (param.ConnectTimeout > 0) then yield sprintf "-F \"connect-timeout=%i\"" param.ConnectTimeout
-    if (param.MaxTime > 0) then yield sprintf "-F \"m=%i\"" param.MaxTime
     yield "https://upload.hockeyapp.net/api/2/apps/upload"
 }
 
@@ -192,15 +192,17 @@ let private toCurlArgs param = seq {
 /// ## Parameters
 ///  - `setParams` - Function used to override the default parameters
 let HockeyApp (setParams: HockeyAppUploadParams -> HockeyAppUploadParams) =
-    HockeyAppUploadDefaults
+    let param = HockeyAppUploadDefaults
     |> setParams
+
+    param
     |> validateParams
     |> toCurlArgs
     |> fun args ->
         ExecProcessAndReturnMessages (fun p ->
             p.FileName <- "curl"
             p.Arguments <- (String.concat " " args)
-        ) (TimeSpan.FromMinutes 2.)
+        ) (TimeSpan.FromSeconds param.MaxTime)
     |> fun response ->
         let error = sprintf "Error while posting to HockeyApp.%sMessages: %s%sErrors: %s%s" nl (String.concat "; " response.Messages) nl (String.concat "; " response.Errors) nl
         match response.ExitCode with
