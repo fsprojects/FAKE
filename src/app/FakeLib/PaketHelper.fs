@@ -53,7 +53,7 @@ let PaketPushDefaults() : PaketPushParams =
 /// ## Parameters
 /// 
 ///  - `setParams` - Function used to manipulate the default parameters.
-let Pack setParams =     
+let Pack setParams =
     let parameters : PaketPackParams = PaketPackDefaults() |> setParams
     traceStartTask "PaketPack" parameters.WorkingDir
 
@@ -72,7 +72,7 @@ let Pack setParams =
         ExecProcess 
             (fun info -> 
                 info.FileName <- parameters.ToolPath
-                info.WorkingDir <- parameters.WorkingDir
+                info.WorkingDirectory <- parameters.WorkingDir
                 info.Arguments <- sprintf "pack output %s %s" parameters.OutputPath cmdArgs) parameters.TimeOut
     
     if packResult <> 0 then failwithf "Error during packing %s." parameters.WorkingDir
@@ -125,7 +125,7 @@ let Push setParams =
             let pushResult = 
                 ExecProcess (fun info -> 
                     info.FileName <- parameters.ToolPath
-                    info.WorkingDir <- parameters.WorkingDir
+                    info.WorkingDirectory <- parameters.WorkingDir
                     info.Arguments <- sprintf "push %s%s%s file %s" url endpoint key (toParam package)) parameters.TimeOut
             if pushResult <> 0 then failwithf "Error during pushing %s." package 
 
