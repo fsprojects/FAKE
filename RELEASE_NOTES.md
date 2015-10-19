@@ -1,3 +1,6 @@
+#### 4.7.2 - 19.10.2015
+* Use WorkingDir in Paket helpers
+
 #### 4.7.1 - 15.10.2015
 * Cleanup Registry helpers - https://github.com/fsharp/FAKE/pull/980
 * FAKE.Deploy scans for default scripts - https://github.com/fsharp/FAKE/pull/981

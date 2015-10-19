@@ -4,7 +4,6 @@ module Fake.Paket
 open System
 open System.IO
 open System.Xml.Linq
-open System.Xml.Linq
 
 /// Paket pack parameter type
 type PaketPackParams = 
@@ -72,8 +71,9 @@ let Pack setParams =
         let cmdArgs = sprintf "%s%s%s%s%s" version releaseNotes buildConfig templateFile lockDependencies
         ExecProcess 
             (fun info -> 
-            info.FileName <- parameters.ToolPath
-            info.Arguments <- sprintf "pack output %s %s" parameters.OutputPath cmdArgs) parameters.TimeOut
+                info.FileName <- parameters.ToolPath
+                info.WorkingDir <- parameters.WorkingDir
+                info.Arguments <- sprintf "pack output %s %s" parameters.OutputPath cmdArgs) parameters.TimeOut
     
     if packResult <> 0 then failwithf "Error during packing %s." parameters.WorkingDir
     traceEndTask "PaketPack" parameters.WorkingDir
@@ -125,6 +125,7 @@ let Push setParams =
             let pushResult = 
                 ExecProcess (fun info -> 
                     info.FileName <- parameters.ToolPath
+                    info.WorkingDir <- parameters.WorkingDir
                     info.Arguments <- sprintf "push %s%s%s file %s" url endpoint key (toParam package)) parameters.TimeOut
             if pushResult <> 0 then failwithf "Error during pushing %s." package 
 
