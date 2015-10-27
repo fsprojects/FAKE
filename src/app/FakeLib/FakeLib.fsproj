@@ -98,7 +98,7 @@
     <Compile Include="DynamicsNavHelper.fs" />
     <Compile Include="DynamicsNavFile.fs" />
     <Compile Include="SCPHelper.fs" />
-    <Compile Include="XCopyHelper.fs" />
+    <Compile Include="RoboCopyHelper.fs" />
     <Compile Include="XpkgHelper.fs" />
     <Compile Include="VersionHelper.fs" />
     <Compile Include="MSBuild\ProjectSystem.fs" />
@@ -163,6 +163,7 @@
     <None Include="app.config" />
     <Compile Include="RaygunHelper.fs" />
     <Compile Include="SquirrelHelper.fs" />
+    <Compile Include="XCopyHelper.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
