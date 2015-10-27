@@ -47,9 +47,7 @@ If you run this batch file from the command line then the latest FAKE version wi
 
 ### Paket Setup
 
-Alternatively you can configure [Paket](http://fsprojects.github.io/Paket) to install and manage FAKE as a dependency. Paket is a dependency manager for .NET and mono projects, which is designed to work well with NuGet packages and also enables referencing files directly from GitHub repositories.
-
-You will have to [setup Paket](http://fsprojects.github.io/Paket/installation.html) following the instructions specified in its documentation. In this example, the [installation per repository](http://fsprojects.github.io/Paket/installation.html#Installation-per-repository) will be used.
+Alternatively you can configure [Paket](http://fsprojects.github.io/Paket) to install and manage FAKE as a dependency. Paket is a dependency manager for .NET and mono projects. You will have to [setup Paket](http://fsprojects.github.io/Paket/installation.html) following the instructions specified in its documentation. In this example, the [installation per repository](http://fsprojects.github.io/Paket/installation.html#Installation-per-repository) will be used.
 
   * Create a `.paket` folder in the root of the `FAKE-Calculator` solution.
   * Download the latest [paket.bootstrapper.exe](https://github.com/fsprojects/Paket/releases/latest) into that folder.
@@ -94,8 +92,6 @@ You will have to replace the `build.bat` file contents with the following:
     
     packages\FAKE\tools\FAKE.exe build.fsx %*
     
-This will make sure that Paket is installed and that the paket dependencies are restored before running the build script.
-
 If you run this batch file from the command line, Paket will be bootstrapped and the paket dependencies will be restored before running the build script.
 In this case, then the latest FAKE version will be [downloaded via nuget](http://nuget.org/packages/FAKE/).
 If everything works fine you will get the following output:
