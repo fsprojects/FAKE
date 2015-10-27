@@ -149,7 +149,7 @@ let pushTag repositoryDir remote tag = directRunGitCommand repositoryDir (sprint
 ///
 ///  - `repositoryDir` - The git repository.
 ///  - `remote` - The remote.
-///  - `branch` - The tag.
+///  - `branch` - The branch.
 let pushBranch repositoryDir remote branch = directRunGitCommand repositoryDir (sprintf "push %s %s" remote branch) |> ignore
 
 /// Pulls a given branch from the given remote.
