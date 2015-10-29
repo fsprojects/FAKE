@@ -5,7 +5,7 @@ module Fake.RegistryHelper
 open Microsoft.Win32
 
 /// Registry base keys.
-type RegistryBaseKey = 
+type RegistryBaseKey =
     | HKEYLocalMachine
     | HKEYClassesRoot
     | HKEYUsers
@@ -15,7 +15,7 @@ type RegistryBaseKey =
 
 /// Maps the RegistryBaseKey to a RegistryKey
 /// [omit]
-let getKey name = 
+let getKey name =
     match name with
     | HKEYLocalMachine -> Registry.LocalMachine
     | HKEYClassesRoot -> Registry.ClassesRoot
@@ -26,7 +26,7 @@ let getKey name =
 
 /// Maps the RegistryBaseKey to a RegistryKey for a 64bit System
 /// [omit]
-let get64BitKey name = 
+let get64BitKey name =
     match name with
     | HKEYLocalMachine -> RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64)
     | HKEYClassesRoot -> RegistryKey.OpenBaseKey(RegistryHive.ClassesRoot, RegistryView.Registry64)
@@ -37,60 +37,77 @@ let get64BitKey name =
 
 /// Maps the RegistryBaseKey to a RegistryKey for a 32bit System
 /// [omit]
-let get32BitKey name = 
+let get32BitKey name =
     match name with
     | HKEYLocalMachine -> RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32)
     | HKEYClassesRoot -> RegistryKey.OpenBaseKey(RegistryHive.ClassesRoot, RegistryView.Registry32)
     | HKEYUsers -> RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32)
     | HKEYCurrentUser -> RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32)
     | HKEYCurrentConfig -> RegistryKey.OpenBaseKey(RegistryHive.CurrentConfig, RegistryView.Registry32)
-    | HKEYPerformanceData -> RegistryKey.OpenBaseKey(RegistryHive.PerformanceData, RegistryView.Registry32)   
+    | HKEYPerformanceData -> RegistryKey.OpenBaseKey(RegistryHive.PerformanceData, RegistryView.Registry32)
 
 /// Gets a 64-bit registy key
-let getRegistryKey64 baseKey subKey (writePermission : bool) =     
+let getRegistryKey64 baseKey subKey (writePermission : bool) =
     (get64BitKey baseKey).OpenSubKey(subKey, writePermission)
-    
+
 /// Gets a registy key and falls back to 32 bit if the 64bit key is not there
-let getRegistryKey baseKey subKey (writePermission : bool) =     
+let getRegistryKey baseKey subKey (writePermission : bool) =
     let x64BitKey = (getKey baseKey).OpenSubKey(subKey, writePermission)
-    if x64BitKey <> null then x64BitKey else  
+    if x64BitKey <> null then x64BitKey else
     (get32BitKey baseKey).OpenSubKey(subKey, writePermission)  // fall back to 32 bit
 
 /// Gets a registy value as string
-let getRegistryValue baseKey subKey value = 
+let getRegistryValue baseKey subKey name =
     use key = getRegistryKey baseKey subKey false
     if key = null then
         failwithf "Registry subkey %s could not be found for key %A" subKey baseKey
-    let value = key.GetValue value
+    let value = key.GetValue name
     if value = null then
         failwithf "Registry value is null for key %s" (key.ToString())
     value.ToString()
 
 /// Gets a registy value as string
-let getRegistryValue64 baseKey subKey value = 
+let getRegistryValue64 baseKey subKey name =
     use key = getRegistryKey64 baseKey subKey false
     if key = null then
         failwithf "Registry subkey %s could not be found for key %A" subKey baseKey
-    let value = key.GetValue value
+    let value = key.GetValue name
     if value = null then
         failwithf "Registry value is null for key %s" (key.ToString())
     value.ToString()
 
-/// Create a registry subKey
-let createRegistrySubKey baseKey subKey = (getKey baseKey).CreateSubKey subKey |> ignore
-
 /// Sets a registry value
-let setRegistryValue<'T> baseKey subKey keyName (value : 'T) = 
+let setRegistryValue<'T> baseKey subKey name (value : 'T) =
     use key = getRegistryKey baseKey subKey true
-    key.SetValue(keyName, value)
+    key.SetValue(name, value)
 
 /// Deletes the registry value from its key
-let deleteRegistryValue baseKey subKey keyName = 
+let deleteRegistryValue baseKey subKey name =
     use key = getRegistryKey baseKey subKey true
-    key.DeleteValue keyName
+    key.DeleteValue name
 
-/// Returns whether or not a registry value exists for a key
-let valueExistsForKey = fun baseKey sub_key value ->
-    let key = getRegistryKey baseKey sub_key false
+/// Returns all the value names of a registry key
+let getRegistryValueNames baseKey subKey =
+    use key = getRegistryKey baseKey subKey false
     key.GetValueNames()
-    |> Seq.exists (fun v -> v = value) 
+
+/// Returns whether or not a registry value name exists for a key
+let valueExistsForKey = fun baseKey subKey name ->
+    getRegistryValueNames baseKey subKey
+    |> Seq.exists (fun n -> n = name)
+
+/// Create a registry subKey
+let createRegistrySubKey baseKey subKey =
+    use key = getKey baseKey
+    key.CreateSubKey subKey |> ignore
+
+/// Deletes a registry subKey
+let deleteRegistrySubKey baseKey subKey =
+    use key = getKey baseKey
+    key.DeleteSubKey subKey
+
+/// Returns all the subKey names of a registry key
+let getRegistrySubKeyNames baseKey subKey =
+    use key = getRegistryKey baseKey subKey false
+    key.GetSubKeyNames()
+

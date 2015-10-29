@@ -353,16 +353,27 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
                             File.Delete("FSI-ASSEMBLY.dll.mdb")
 
                         let dynamicAssemblies = 
-                            System.AppDomain.CurrentDomain.GetAssemblies() 
+                            System.AppDomain.CurrentDomain.GetAssemblies()
                             |> Seq.filter(fun assem -> assem.IsDynamic)
-                            |> Seq.filter(fun assem -> assem.GetName().Name <> "FSI-ASSEMBLY")
+                            |> Seq.map(fun assem -> assem.GetName().Name)
+                            |> Seq.filter(fun assem -> assem <> "FSI-ASSEMBLY")
+                            // General Reflection.Emit helper (most likely harmless to ignore)
+                            |> Seq.filter(fun assem -> assem <> "Anonymously Hosted DynamicMethods Assembly")
+                            // RazorEngine generated
+                            |> Seq.filter(fun assem -> assem <> "RazorEngine.Compilation.ImpromptuInterfaceDynamicAssembly")
+                            |> Seq.cache
                         if dynamicAssemblies |> Seq.length > 0 then
-                            if printDetails then 
-                                trace "Dynamic assemblies were generated during evaluation of script.\nCan not save cache." 
+                            let msg =
+                                sprintf "Dynamic assemblies were generated during evaluation of script (%s).\nCan not save cache." 
+                                    (System.String.Join(", ", dynamicAssemblies))
+                            trace msg
+
                         else
                             let assemblies = 
                                 System.AppDomain.CurrentDomain.GetAssemblies()
                                 |> Seq.filter(fun assem -> not assem.IsDynamic)
+                                // They are not dynamic, but can't be re-used either.
+                                |> Seq.filter(fun assem -> not <| assem.GetName().Name.StartsWith("CompiledRazorTemplates.Dynamic.RazorEngine_"))
                         
                             let cacheConfig : XDocument = Cache.create assemblies
                             cacheConfig.Save(cacheConfigPath.Value) 
