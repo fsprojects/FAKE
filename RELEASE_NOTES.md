@@ -1,3 +1,7 @@
+#### 4.7.3 - 30.10.2015
+* Option ignore failing tests DotCover https://github.com/fsharp/FAKE/pull/990
+* Add code to replace new assemblyinfo attributes - https://github.com/fsharp/FAKE/pull/991
+
 #### 4.7.2 - 19.10.2015
 * Use WorkingDir in Paket helpers
 
