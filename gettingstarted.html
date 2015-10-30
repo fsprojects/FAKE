@@ -100,6 +100,98 @@ pause
 
 <p><img src="pics/gettingstarted/afterdownload.png" alt="alt text" title="Run the batch file" /></p>
 
+<h3>Paket Setup</h3>
+
+<p>Alternatively you can configure <a href="http://fsprojects.github.io/Paket">Paket</a> to install and manage FAKE as a dependency. You will have to <a href="http://fsprojects.github.io/Paket/installation.html">setup Paket</a> following the instructions specified in its documentation. In this example, the <a href="http://fsprojects.github.io/Paket/installation.html#Installation-per-repository">installation per repository</a> will be used.</p>
+
+<ul>
+<li>Create a <code>.paket</code> folder in the root of the <code>FAKE-Calculator</code> solution.</li>
+<li>Download the latest <a href="https://github.com/fsprojects/Paket/releases/latest">paket.bootstrapper.exe</a> into that folder.</li>
+<li>Run <code>$ .paket/paket.bootstrapper.exe</code> This will download the latest <code>paket.exe</code>.</li>
+<li>Commit <code>.paket/paket.bootstrapper.exe</code> into your repo and add <code>.paket/paket.exe</code> to your <code>.gitignore</code> file.</li>
+</ul>
+
+<h3>Specifying dependencies</h3>
+
+<p>Create a <a href="http://fsprojects.github.io/Paket/dependencies-file.html"><code>paket.dependencies</code> file</a> in your project's root and specify FAKE as a dependency in it.
+The file might look like this:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">source</span> <span class="i">https</span><span class="o">:</span><span class="c">//nuget.org/api/v2</span>
+
+<span class="i">nuget</span> <span class="i">FAKE</span>
+</code></pre></td>
+</tr>
+</table>
+
+<p>You can now run Paket from the command line:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="o">$</span> <span class="o">.</span><span class="i">paket</span><span class="o">/</span><span class="i">paket</span><span class="o">.</span><span class="i">exe</span> <span class="i">install</span>
+</code></pre></td>
+</tr>
+</table>
+
+<p>This will create the <a href="http://fsprojects.github.io/Paket/lock-file.html"><code>paket.lock</code> file</a> in your project's root. The file might look like this:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">NUGET</span>
+    <span class="i">remote</span><span class="o">:</span> <span class="i">https</span><span class="o">:</span><span class="c">//nuget.org/api/v2</span>
+    <span class="i">specs</span><span class="o">:</span>
+        <span class="i">FAKE</span> (<span class="n">4.7</span><span class="o">.</span><span class="n">2</span>)
+</code></pre></td>
+</tr>
+</table>
+
+<p>You will have to replace the <code>build.bat</code> file contents with the following:</p>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip"><code lang="batchfile">@echo off
+cls
+
+.paket\paket.bootstrapper.exe
+if errorlevel 1 (
+    exit /b %errorlevel%
+)
+
+.paket\paket.exe restore
+if errorlevel 1 (
+    exit /b %errorlevel%
+)
+
+packages\FAKE\tools\FAKE.exe build.fsx %*
+</code></pre></td></tr></table>
+
+<p>If you run this batch file from the command line, Paket will be bootstrapped and the paket dependencies will be restored before running the build script.
+In this case, then the latest FAKE version will be <a href="http://nuget.org/packages/FAKE/">downloaded via nuget</a>.
+If everything works fine you will get the following output:</p>
+
+<p><img src="pics/gettingstarted/afterdownloadpaket.png" alt="alt text" title="Run the batch file" /></p>
+
+<h3>The build script</h3>
+
 <p>Now open the <em>build.fsx</em> in Visual Studio or any text editor. It should look like this:</p>
 
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
@@ -167,11 +259,11 @@ pause
 <span class="k">open</span> <span class="i">Fake</span>
 
 <span class="c">// Properties</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">buildDir</span> <span class="o">=</span> <span class="s">&quot;./build/&quot;</span>
+<span class="k">let</span> <span class="i">buildDir</span> <span class="o">=</span> <span class="s">&quot;./build/&quot;</span>
 
 <span class="c">// Targets</span>
 <span class="i">Target</span> <span class="s">&quot;Clean&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="i">CleanDir</span> <span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="i">buildDir</span>
+    <span class="i">CleanDir</span> <span class="i">buildDir</span>
 )
 
 <span class="i">Target</span> <span class="s">&quot;Default&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
@@ -235,16 +327,16 @@ pause
 <span class="k">open</span> <span class="i">Fake</span>
 
 <span class="c">// Properties</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="i">buildDir</span> <span class="o">=</span> <span class="s">&quot;./build/&quot;</span>
+<span class="k">let</span> <span class="i">buildDir</span> <span class="o">=</span> <span class="s">&quot;./build/&quot;</span>
 
 <span class="c">// Targets</span>
 <span class="i">Target</span> <span class="s">&quot;Clean&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="i">CleanDir</span> <span onmouseout="hideTip(event, 'fs1', 4)" onmouseover="showTip(event, 'fs1', 4)" class="i">buildDir</span>
+    <span class="i">CleanDir</span> <span class="i">buildDir</span>
 )
 
 <span class="i">Target</span> <span class="s">&quot;BuildApp&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
     <span class="o">!!</span> <span class="s">&quot;src/app/**/*.csproj&quot;</span>
-      <span class="o">|&gt;</span> <span class="i">MSBuildRelease</span> <span onmouseout="hideTip(event, 'fs1', 5)" onmouseover="showTip(event, 'fs1', 5)" class="i">buildDir</span> <span class="s">&quot;Build&quot;</span>
+      <span class="o">|&gt;</span> <span class="i">MSBuildRelease</span> <span class="i">buildDir</span> <span class="s">&quot;Build&quot;</span>
       <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
 )
 
@@ -320,23 +412,23 @@ pause
 <span class="k">open</span> <span class="i">Fake</span>
 
 <span class="c">// Properties</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 6)" onmouseover="showTip(event, 'fs1', 6)" class="i">buildDir</span> <span class="o">=</span> <span class="s">&quot;./build/&quot;</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 7)" onmouseover="showTip(event, 'fs2', 7)" class="i">testDir</span>  <span class="o">=</span> <span class="s">&quot;./test/&quot;</span>
+<span class="k">let</span> <span class="i">buildDir</span> <span class="o">=</span> <span class="s">&quot;./build/&quot;</span>
+<span class="k">let</span> <span class="i">testDir</span>  <span class="o">=</span> <span class="s">&quot;./test/&quot;</span>
 
 <span class="c">// Targets</span>
 <span class="i">Target</span> <span class="s">&quot;Clean&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="i">CleanDirs</span> [<span onmouseout="hideTip(event, 'fs1', 8)" onmouseover="showTip(event, 'fs1', 8)" class="i">buildDir</span>; <span onmouseout="hideTip(event, 'fs2', 9)" onmouseover="showTip(event, 'fs2', 9)" class="i">testDir</span>]
+    <span class="i">CleanDirs</span> [<span class="i">buildDir</span>; <span class="i">testDir</span>]
 )
 
 <span class="i">Target</span> <span class="s">&quot;BuildApp&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
    <span class="o">!!</span> <span class="s">&quot;src/app/**/*.csproj&quot;</span>
-     <span class="o">|&gt;</span> <span class="i">MSBuildRelease</span> <span onmouseout="hideTip(event, 'fs1', 10)" onmouseover="showTip(event, 'fs1', 10)" class="i">buildDir</span> <span class="s">&quot;Build&quot;</span>
+     <span class="o">|&gt;</span> <span class="i">MSBuildRelease</span> <span class="i">buildDir</span> <span class="s">&quot;Build&quot;</span>
      <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
 )
 
 <span class="i">Target</span> <span class="s">&quot;BuildTest&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
     <span class="o">!!</span> <span class="s">&quot;src/test/**/*.csproj&quot;</span>
-      <span class="o">|&gt;</span> <span class="i">MSBuildDebug</span> <span onmouseout="hideTip(event, 'fs2', 11)" onmouseover="showTip(event, 'fs2', 11)" class="i">testDir</span> <span class="s">&quot;Build&quot;</span>
+      <span class="o">|&gt;</span> <span class="i">MSBuildDebug</span> <span class="i">testDir</span> <span class="s">&quot;Build&quot;</span>
       <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;TestBuild-Output: &quot;</span>
 )
 
@@ -443,32 +535,32 @@ pause
 <span class="i">RestorePackages</span>()
 
 <span class="c">// Properties</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 12)" onmouseover="showTip(event, 'fs1', 12)" class="i">buildDir</span> <span class="o">=</span> <span class="s">&quot;./build/&quot;</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 13)" onmouseover="showTip(event, 'fs2', 13)" class="i">testDir</span>  <span class="o">=</span> <span class="s">&quot;./test/&quot;</span>
+<span class="k">let</span> <span class="i">buildDir</span> <span class="o">=</span> <span class="s">&quot;./build/&quot;</span>
+<span class="k">let</span> <span class="i">testDir</span>  <span class="o">=</span> <span class="s">&quot;./test/&quot;</span>
 
 <span class="c">// Targets</span>
 <span class="i">Target</span> <span class="s">&quot;Clean&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="i">CleanDirs</span> [<span onmouseout="hideTip(event, 'fs1', 14)" onmouseover="showTip(event, 'fs1', 14)" class="i">buildDir</span>; <span onmouseout="hideTip(event, 'fs2', 15)" onmouseover="showTip(event, 'fs2', 15)" class="i">testDir</span>]
+    <span class="i">CleanDirs</span> [<span class="i">buildDir</span>; <span class="i">testDir</span>]
 )
 
 <span class="i">Target</span> <span class="s">&quot;BuildApp&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
    <span class="o">!!</span> <span class="s">&quot;src/app/**/*.csproj&quot;</span>
-     <span class="o">|&gt;</span> <span class="i">MSBuildRelease</span> <span onmouseout="hideTip(event, 'fs1', 16)" onmouseover="showTip(event, 'fs1', 16)" class="i">buildDir</span> <span class="s">&quot;Build&quot;</span>
+     <span class="o">|&gt;</span> <span class="i">MSBuildRelease</span> <span class="i">buildDir</span> <span class="s">&quot;Build&quot;</span>
      <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
 )
 
 <span class="i">Target</span> <span class="s">&quot;BuildTest&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
     <span class="o">!!</span> <span class="s">&quot;src/test/**/*.csproj&quot;</span>
-      <span class="o">|&gt;</span> <span class="i">MSBuildDebug</span> <span onmouseout="hideTip(event, 'fs2', 17)" onmouseover="showTip(event, 'fs2', 17)" class="i">testDir</span> <span class="s">&quot;Build&quot;</span>
+      <span class="o">|&gt;</span> <span class="i">MSBuildDebug</span> <span class="i">testDir</span> <span class="s">&quot;Build&quot;</span>
       <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;TestBuild-Output: &quot;</span>
 )
 
 <span class="i">Target</span> <span class="s">&quot;Test&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="o">!!</span> (<span onmouseout="hideTip(event, 'fs2', 18)" onmouseover="showTip(event, 'fs2', 18)" class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;/NUnit.Test.*.dll&quot;</span>)
+    <span class="o">!!</span> (<span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;/NUnit.Test.*.dll&quot;</span>)
       <span class="o">|&gt;</span> <span class="i">NUnit</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
           {<span class="i">p</span> <span class="k">with</span>
              <span class="i">DisableShadowCopy</span> <span class="o">=</span> <span class="k">true</span>;
-             <span class="i">OutputFile</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 19)" onmouseover="showTip(event, 'fs2', 19)" class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;TestResults.xml&quot;</span> })
+             <span class="i">OutputFile</span> <span class="o">=</span> <span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;TestResults.xml&quot;</span> })
 )
 
 <span class="i">Target</span> <span class="s">&quot;Default&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
@@ -505,11 +597,11 @@ pause
 <span class="l">7: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;Test&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="o">!!</span> (<span onmouseout="hideTip(event, 'fs2', 20)" onmouseover="showTip(event, 'fs2', 20)" class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;/NUnit.Test.*.dll&quot;</span>)
+    <span class="o">!!</span> (<span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;/NUnit.Test.*.dll&quot;</span>)
       <span class="o">|&gt;</span> <span class="i">NUnitParallel</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
           {<span class="i">p</span> <span class="k">with</span>
              <span class="i">DisableShadowCopy</span> <span class="o">=</span> <span class="k">true</span>;
-             <span class="i">OutputFile</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 21)" onmouseover="showTip(event, 'fs2', 21)" class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;TestResults.xml&quot;</span> })
+             <span class="i">OutputFile</span> <span class="o">=</span> <span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;TestResults.xml&quot;</span> })
 )
 </code></pre></td>
 </tr>
@@ -586,42 +678,42 @@ pause
 <span class="i">RestorePackages</span>()
 
 <span class="c">// Properties</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 22)" onmouseover="showTip(event, 'fs1', 22)" class="i">buildDir</span> <span class="o">=</span> <span class="s">&quot;./build/&quot;</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 23)" onmouseover="showTip(event, 'fs2', 23)" class="i">testDir</span>  <span class="o">=</span> <span class="s">&quot;./test/&quot;</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs3', 24)" onmouseover="showTip(event, 'fs3', 24)" class="i">deployDir</span> <span class="o">=</span> <span class="s">&quot;./deploy/&quot;</span>
+<span class="k">let</span> <span class="i">buildDir</span> <span class="o">=</span> <span class="s">&quot;./build/&quot;</span>
+<span class="k">let</span> <span class="i">testDir</span>  <span class="o">=</span> <span class="s">&quot;./test/&quot;</span>
+<span class="k">let</span> <span class="i">deployDir</span> <span class="o">=</span> <span class="s">&quot;./deploy/&quot;</span>
 
 <span class="c">// version info</span>
-<span class="k">let</span> <span onmouseout="hideTip(event, 'fs4', 25)" onmouseover="showTip(event, 'fs4', 25)" class="i">version</span> <span class="o">=</span> <span class="s">&quot;0.2&quot;</span>  <span class="c">// or retrieve from CI server</span>
+<span class="k">let</span> <span class="i">version</span> <span class="o">=</span> <span class="s">&quot;0.2&quot;</span>  <span class="c">// or retrieve from CI server</span>
 
 <span class="c">// Targets</span>
 <span class="i">Target</span> <span class="s">&quot;Clean&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="i">CleanDirs</span> [<span onmouseout="hideTip(event, 'fs1', 26)" onmouseover="showTip(event, 'fs1', 26)" class="i">buildDir</span>; <span onmouseout="hideTip(event, 'fs2', 27)" onmouseover="showTip(event, 'fs2', 27)" class="i">testDir</span>; <span onmouseout="hideTip(event, 'fs3', 28)" onmouseover="showTip(event, 'fs3', 28)" class="i">deployDir</span>]
+    <span class="i">CleanDirs</span> [<span class="i">buildDir</span>; <span class="i">testDir</span>; <span class="i">deployDir</span>]
 )
 
 <span class="i">Target</span> <span class="s">&quot;BuildApp&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
    <span class="o">!!</span> <span class="s">&quot;src/app/**/*.csproj&quot;</span>
-     <span class="o">|&gt;</span> <span class="i">MSBuildRelease</span> <span onmouseout="hideTip(event, 'fs1', 29)" onmouseover="showTip(event, 'fs1', 29)" class="i">buildDir</span> <span class="s">&quot;Build&quot;</span>
+     <span class="o">|&gt;</span> <span class="i">MSBuildRelease</span> <span class="i">buildDir</span> <span class="s">&quot;Build&quot;</span>
      <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
 )
 
 <span class="i">Target</span> <span class="s">&quot;BuildTest&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
     <span class="o">!!</span> <span class="s">&quot;src/test/**/*.csproj&quot;</span>
-      <span class="o">|&gt;</span> <span class="i">MSBuildDebug</span> <span onmouseout="hideTip(event, 'fs2', 30)" onmouseover="showTip(event, 'fs2', 30)" class="i">testDir</span> <span class="s">&quot;Build&quot;</span>
+      <span class="o">|&gt;</span> <span class="i">MSBuildDebug</span> <span class="i">testDir</span> <span class="s">&quot;Build&quot;</span>
       <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;TestBuild-Output: &quot;</span>
 )
 
 <span class="i">Target</span> <span class="s">&quot;Test&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="o">!!</span> (<span onmouseout="hideTip(event, 'fs2', 31)" onmouseover="showTip(event, 'fs2', 31)" class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;/NUnit.Test.*.dll&quot;</span>)
+    <span class="o">!!</span> (<span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;/NUnit.Test.*.dll&quot;</span>)
       <span class="o">|&gt;</span> <span class="i">NUnit</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
           {<span class="i">p</span> <span class="k">with</span>
              <span class="i">DisableShadowCopy</span> <span class="o">=</span> <span class="k">true</span>;
-             <span class="i">OutputFile</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 32)" onmouseover="showTip(event, 'fs2', 32)" class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;TestResults.xml&quot;</span> })
+             <span class="i">OutputFile</span> <span class="o">=</span> <span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;TestResults.xml&quot;</span> })
 )
 
 <span class="i">Target</span> <span class="s">&quot;Zip&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="o">!!</span> (<span onmouseout="hideTip(event, 'fs1', 33)" onmouseover="showTip(event, 'fs1', 33)" class="i">buildDir</span> <span class="o">+</span> <span class="s">&quot;/**/*.*&quot;</span>)
+    <span class="o">!!</span> (<span class="i">buildDir</span> <span class="o">+</span> <span class="s">&quot;/**/*.*&quot;</span>)
         <span class="o">--</span> <span class="s">&quot;*.zip&quot;</span>
-        <span class="o">|&gt;</span> <span class="i">Zip</span> <span onmouseout="hideTip(event, 'fs1', 34)" onmouseover="showTip(event, 'fs1', 34)" class="i">buildDir</span> (<span onmouseout="hideTip(event, 'fs3', 35)" onmouseover="showTip(event, 'fs3', 35)" class="i">deployDir</span> <span class="o">+</span> <span class="s">&quot;Calculator.&quot;</span> <span class="o">+</span> <span onmouseout="hideTip(event, 'fs4', 36)" onmouseover="showTip(event, 'fs4', 36)" class="i">version</span> <span class="o">+</span> <span class="s">&quot;.zip&quot;</span>)
+        <span class="o">|&gt;</span> <span class="i">Zip</span> <span class="i">buildDir</span> (<span class="i">deployDir</span> <span class="o">+</span> <span class="s">&quot;Calculator.&quot;</span> <span class="o">+</span> <span class="i">version</span> <span class="o">+</span> <span class="s">&quot;.zip&quot;</span>)
 )
 
 <span class="i">Target</span> <span class="s">&quot;Default&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
@@ -648,11 +740,7 @@ pause
 
 <p>If you want you could now <a href="fxcop.html">add a FxCop target</a> to your build in order to check specific naming rules or framework guidelines.</p>
 
-          <div class="tip" id="fs1">val buildDir : string<br /><br />Full name: gettingstarted.buildDir</div>
-<div class="tip" id="fs2">val testDir : string<br /><br />Full name: gettingstarted.testDir</div>
-<div class="tip" id="fs3">val deployDir : string<br /><br />Full name: gettingstarted.deployDir</div>
-<div class="tip" id="fs4">val version : string<br /><br />Full name: gettingstarted.version</div>
-          
+                    
         </div>
         <div class="span3">
           <a href="index.html">
