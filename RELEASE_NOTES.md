@@ -1,5 +1,6 @@
-#### 4.7.0-alpha002 - 15.10.2015
-* Internalized FSharp.Compiler.Service.dll in FakeLib.dll
+#### 4.7.0 - 30.10.2015
+* Option ignore failing tests DotCover https://github.com/fsharp/FAKE/pull/990
+* Add code to replace new assemblyinfo attributes - https://github.com/fsharp/FAKE/pull/991
 * Cleanup Registry helpers - https://github.com/fsharp/FAKE/pull/980
 * FAKE.Deploy scans for default scripts - https://github.com/fsharp/FAKE/pull/981
 * BUGFIX: support caching even when running RazorEngine as part of the build script - https://github.com/fsharp/FAKE/pull/979
