@@ -16,11 +16,28 @@ let private roboCopyWithOptions (source:string) (destination:string) (options:Ro
             if options.Mirror then " /MIR /IT"
             else " /IT"
 
-    let result = ExecProcess (fun info ->
+    let exitcode = ExecProcess (fun info ->
        info.FileName <- "CMD.exe"
        info.Arguments <- args) System.TimeSpan.MaxValue
-               
-    if result <> 0 then failwithf "Error during RoboCopy From: %s To: %s" source destination
+    
+    // Exit codes from https://support.microsoft.com/en-us/kb/954404
+    let exitCodeWithMessage = 
+        match exitcode with
+        | 0 -> (exitcode, "No files were copied. No failure was encountered. No files were mismatched. The files already exist in the destination directory; therefore, the copy operation was skipped.")
+        | 1 -> (exitcode, "All files were copied successfully.")
+        | 2 -> (exitcode, "There are some additional files in the destination directory that are not present in the source directory. No files were copied.")
+        | 3 -> (exitcode, "Some files were copied. Additional files were present. No failure was encountered.")
+        | 4 -> (exitcode, "Some Mismatched files or directories were detected. Examine the output log. Housekeeping might be required.")
+        | 5 -> (exitcode, "Some files were copied. Some files were mismatched. No failure was encountered.")
+        | 6 -> (exitcode, "Additional files and mismatched files exist. No files were copied and no failures were encountered. This means that the files already exist in the destination directory. ")
+        | 7 -> (exitcode, "Files were copied, a file mismatch was present, and additional files were present.")
+        | 8 -> (exitcode, "Several files did not copy.")
+        | _ -> (exitcode, "UNKNOWN ERROR")
+
+    match exitCodeWithMessage with
+    | (exitcode, message) when exitcode < 2 -> tracefn "Succeeded in RoboCopy From: %s To: %s \n%s\n" source destination message |> ignore
+    | (exitcode, message) when exitcode < 8 -> traceImportant <| sprintf "Important notice in RoboCopy From: %s To: %s \n%s\n" source destination message |> ignore
+    | (_, _) -> failwithf "Error during RoboCopy From: %s To: %s" source destination
 
 /// Executes a RoboCopy command
 /// ## Parameters
