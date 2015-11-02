@@ -1,5 +1,5 @@
 ﻿/// Contains function to run npm tasks
-module NpmHelper
+module Fake.NpmHelper
 open Fake
 open System
 open System.IO
@@ -58,9 +58,28 @@ let run npmParams =
             info.Arguments <- arguments) npmParams.Timeout
     if not ok then failwith (sprintf "'npm %s' task failed" arguments)
 
-/// Runs npm with the given modification function
+/// Runs npm with the given modification function. Make sure to have npm installed,
+/// you can install npm with nuget or a regular install. To change which `Npm` executable
+/// to use you can set the `NpmFilePath` parameter with the `setParams` function.
+///
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to overwrite the Npm default parameters.
+///
+/// ## Sample
+///
+///        Target "Web" (fun _ ->
+///            Npm (fun p ->
+///                   { p with
+///                       Command = Install Standard
+///                       WorkingDirectory = "./src/FAKESimple.Web/"
+///                   })
+///
+///            Npm (fun p ->
+///                   { p with
+///                       Command = (Run "build")
+///                       WorkingDirectory = "./src/FAKESimple.Web/"
+///                   })
+///        )
 let Npm setParams =
     defaultNpmParams |> setParams |> run
