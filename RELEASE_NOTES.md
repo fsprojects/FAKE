@@ -1,13 +1,11 @@
-#### 4.7.3 - 30.10.2015
+#### 4.8.0 - 04.11.2015
+* Basic npm support - https://github.com/fsharp/FAKE/pull/993
+* New RoboCopy helper - https://github.com/fsharp/FAKE/pull/988
 * Option ignore failing tests DotCover https://github.com/fsharp/FAKE/pull/990
 * Add code to replace new assemblyinfo attributes - https://github.com/fsharp/FAKE/pull/991
-
-#### 4.7.2 - 19.10.2015
-* Use WorkingDir in Paket helpers
-
-#### 4.7.1 - 15.10.2015
 * Cleanup Registry helpers - https://github.com/fsharp/FAKE/pull/980
 * FAKE.Deploy scans for default scripts - https://github.com/fsharp/FAKE/pull/981
+* BUGFIX: Use WorkingDir in Paket helpers
 * BUGFIX: support caching even when running RazorEngine as part of the build script - https://github.com/fsharp/FAKE/pull/979
 
 #### 4.6.0 - 14.10.2015
