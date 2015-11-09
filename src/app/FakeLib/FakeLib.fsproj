@@ -165,6 +165,7 @@
     <Compile Include="RaygunHelper.fs" />
     <Compile Include="SquirrelHelper.fs" />
     <Compile Include="XCopyHelper.fs" />
+    <Compile Include="IncrementalHelper.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
@@ -175,6 +176,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
