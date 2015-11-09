@@ -167,21 +167,21 @@ let private FsiStartInfo workingDirectory (FsiArgs(fsiOptions, scriptPath, scrip
         setVar "FSI" fsiPath)
 
 /// Creates a ProcessStartInfo which is configured to the F# Interactive.
-let fsiStartInfo script workingDirectory args info =
-    FsiStartInfo workingDirectory (FsiArgs([], script, [])) args info
+let fsiStartInfo script workingDirectory env info =
+    FsiStartInfo workingDirectory (FsiArgs([], script, [])) env info
 
 /// Run the given buildscript with fsi.exe
-let executeFSI workingDirectory script args =
+let executeFSI workingDirectory script env =
     let (result, messages) =
         ExecProcessRedirected
-            (fsiStartInfo script workingDirectory args)
+            (fsiStartInfo script workingDirectory env)
             TimeSpan.MaxValue
     Thread.Sleep 1000
     (result, messages)
 
 /// Run the given build script with fsi.exe and allows for extra arguments to FSI.
-let executeFSIWithArgs workingDirectory script extraFsiArgs args =
-    let result = ExecProcess (FsiStartInfo workingDirectory (FsiArgs(extraFsiArgs, script, [])) args) TimeSpan.MaxValue
+let executeFSIWithArgs workingDirectory script extraFsiArgs env =
+    let result = ExecProcess (FsiStartInfo workingDirectory (FsiArgs(extraFsiArgs, script, [])) env) TimeSpan.MaxValue
     Thread.Sleep 1000
     result = 0
 
@@ -203,12 +203,12 @@ type private AssemblySource =
 
 let hashRegex = Text.RegularExpressions.Regex("(?<script>.+)_(?<hash>[a-zA-Z0-9]+\.dll$)", System.Text.RegularExpressions.RegexOptions.Compiled)
 /// Run the given FAKE script with fsi.exe at the given working directory. Provides full access to Fsi options and args. Redirect output and error messages.
-let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(fsiOptions, scriptPath, scriptArgs)) args onErrMsg onOutMsg useCache cleanCache =
+let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(fsiOptions, scriptPath, scriptArgs)) env onErrMsg onOutMsg useCache cleanCache =
 
     if printDetails then traceFAKE "Running Buildscript: %s" scriptPath
 
     // Add arguments to the Environment
-    for (k,v) in args do
+    for (k,v) in env do
       Environment.SetEnvironmentVariable(k, v, EnvironmentVariableTarget.Process)
 
     // Create an env var that only contains the build script args part from the --fsiargs (or "").
@@ -409,17 +409,17 @@ let executeBuildScriptWithArgsAndReturnMessages script (scriptArgs: string[]) us
     (result, !messages)
 
 /// Run the given buildscript with fsi.exe at the given working directory.  Provides full access to Fsi options and args.
-let runBuildScriptWithFsiArgsAt printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args useCache cleanCache =
+let runBuildScriptWithFsiArgsAt printDetails (FsiArgs(fsiOptions, script, scriptArgs)) env useCache cleanCache =
     runFAKEScriptWithFsiArgsAndRedirectMessages
-        printDetails (FsiArgs(fsiOptions, script, scriptArgs)) args
+        printDetails (FsiArgs(fsiOptions, script, scriptArgs)) env
         traceError (fun s-> traceFAKE "%s" s)
         useCache
         cleanCache
 
 /// Run the given buildscript with fsi.exe at the given working directory.
-let runBuildScriptAt printDetails script extraFsiArgs args useCache cleanCache =
-    runBuildScriptWithFsiArgsAt printDetails (FsiArgs(extraFsiArgs, script, [])) args useCache cleanCache
+let runBuildScriptAt printDetails script extraFsiArgs env useCache cleanCache =
+    runBuildScriptWithFsiArgsAt printDetails (FsiArgs(extraFsiArgs, script, [])) env useCache cleanCache
 
 /// Run the given buildscript with fsi.exe
-let runBuildScript printDetails script extraFsiArgs args useCache cleanCache =
-    runBuildScriptAt printDetails script extraFsiArgs args useCache cleanCache
+let runBuildScript printDetails script extraFsiArgs env useCache cleanCache =
+    runBuildScriptAt printDetails script extraFsiArgs env useCache cleanCache
