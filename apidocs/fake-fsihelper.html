@@ -117,10 +117,10 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '254', 254)" onmouseover="showTip(event, '254', 254)">
-            executeFSI workingDirectory script args
+            executeFSI workingDirectory script env
           </code>
           <div class="tip" id="254">
-            <strong>Signature:</strong> workingDirectory:string -&gt; script:string -&gt; args:seq&lt;string * string&gt; -&gt; bool * seq&lt;ConsoleMessage&gt;<br />
+            <strong>Signature:</strong> workingDirectory:string -&gt; script:string -&gt; env:seq&lt;string * string&gt; -&gt; bool * seq&lt;ConsoleMessage&gt;<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -141,7 +141,7 @@
             executeFSIWithArgs (...)
           </code>
           <div class="tip" id="255">
-            <strong>Signature:</strong> workingDirectory:string -&gt; script:string -&gt; extraFsiArgs:string list -&gt; args:seq&lt;string * string&gt; -&gt; bool<br />
+            <strong>Signature:</strong> workingDirectory:string -&gt; script:string -&gt; extraFsiArgs:string list -&gt; env:seq&lt;string * string&gt; -&gt; bool<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -204,7 +204,7 @@
             fsiStartInfo (...)
           </code>
           <div class="tip" id="258">
-            <strong>Signature:</strong> script:string -&gt; workingDirectory:string -&gt; args:seq&lt;string * string&gt; -&gt; info:ProcessStartInfo -&gt; unit<br />
+            <strong>Signature:</strong> script:string -&gt; workingDirectory:string -&gt; env:seq&lt;string * string&gt; -&gt; info:ProcessStartInfo -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -369,7 +369,7 @@
             runBuildScript (...)
           </code>
           <div class="tip" id="267">
-            <strong>Signature:</strong> printDetails:bool -&gt; script:string -&gt; extraFsiArgs:string list -&gt; args:seq&lt;string * string&gt; -&gt; useCache:bool -&gt; cleanCache:bool -&gt; bool<br />
+            <strong>Signature:</strong> printDetails:bool -&gt; script:string -&gt; extraFsiArgs:string list -&gt; env:seq&lt;string * string&gt; -&gt; useCache:bool -&gt; cleanCache:bool -&gt; bool<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -390,7 +390,7 @@
             runBuildScriptAt (...)
           </code>
           <div class="tip" id="268">
-            <strong>Signature:</strong> printDetails:bool -&gt; script:string -&gt; extraFsiArgs:string list -&gt; args:seq&lt;string * string&gt; -&gt; useCache:bool -&gt; cleanCache:bool -&gt; bool<br />
+            <strong>Signature:</strong> printDetails:bool -&gt; script:string -&gt; extraFsiArgs:string list -&gt; env:seq&lt;string * string&gt; -&gt; useCache:bool -&gt; cleanCache:bool -&gt; bool<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -411,7 +411,7 @@
             runBuildScriptWithFsiArgsAt (...)
           </code>
           <div class="tip" id="269">
-            <strong>Signature:</strong> printDetails:bool -&gt; FsiArgs -&gt; args:seq&lt;string * string&gt; -&gt; useCache:bool -&gt; cleanCache:bool -&gt; bool<br />
+            <strong>Signature:</strong> printDetails:bool -&gt; FsiArgs -&gt; env:seq&lt;string * string&gt; -&gt; useCache:bool -&gt; cleanCache:bool -&gt; bool<br />
                       </div>
         </td>
         <td class="xmldoc">
