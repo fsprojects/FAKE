@@ -1,4 +1,4 @@
-#### 4.9.0 - 11.11.2015
+#### 4.9.1 - 11.11.2015
 * Added support for channels to OctoTools - https://github.com/fsharp/FAKE/pull/1001
 * BUGFIX: Create AssemblyInfo directory only where required - https://github.com/fsharp/FAKE/pull/997
 * COSMETICS: Renamed confusing parameter in FSI helper - https://github.com/fsharp/FAKE/pull/1000
