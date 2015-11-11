@@ -6,36 +6,86 @@ open Fake
 open System
 
 /// Octo.exe server options
-type OctoServerOptions = { 
+type OctoServerOptions = {
+    /// The base URL for your Octopus server
     Server: string
+
+    /// Your API key; retrieved from the user profile page.
     ApiKey: string }
     
 /// Options for creating a new release
 type CreateReleaseOptions = {
+    /// Name of the project
     Project                 : string
+
+    /// Release number to use for the new release
     Version                 : string
+
+    /// Default version of all packages to use for this release
     PackageVersion          : string
+
+    /// Version number to use for a package in the release
     Packages                : string list
+
+    /// A folder containing NuGet packages from which we should get versions
     PackagesFolder          : string option
+
+    /// Release Notes for the new release
     ReleaseNotes            : string
+
+    /// Path to a file that contains Release Notes for the new release
     ReleaseNotesFile        : string
-    IgnoreExisting          : bool }
+
+    /// If a release with the version number already exists, ignore it
+    IgnoreExisting          : bool
+
+    /// Channel to use for the new release
+    Channel                 : string option
+
+    /// Ignore package version matching rules
+    IgnoreChannelRules      : bool }
 
 /// Options for deploying a release to an environment
 type DeployReleaseOptions = {
+    /// Name of the project
     Project                     : string
+
+    /// Environment to deploy to
     DeployTo                    : string
+
+    /// Version number of the release to deploy; Specify "latest" for
+    /// the latest release
     Version                     : string
+
+    /// If a project is configured to skip packages with already-installed
+    /// versions, override this setting to force re-deployment
     Force                       : bool
+
+    /// Whether to wait synchronously for deployment to finish
     WaitForDeployment           : bool
+
+    /// Specifies maximum time that deployment can take
+    /// (default: 10 minutes)
     DeploymentTimeout           : TimeSpan option
+
+    /// Specifies how much time should elapse between deployment status
+    /// checks (default: 10 seconds)
     DeploymentCheckSleepCycle   : TimeSpan option
+
+    /// A comma-separated list of machine names to target in the
+    /// deployed environment. If not specified, all machines in
+    /// the environment will be considered.
     SpecificMachines            : string option }
 
 /// Options for deleting a range of releases in a project
 type DeleteReleaseOptions = {
+    /// Name of the project
     Project     : string
+
+    /// Minimum (inclusive) version number for the range of versions to delete
     MinVersion  : string
+
+    /// Maximum (inclusive) version number for the range of versions to delete
     MaxVersion  : string }
 
 /// Option type for selecting one command
@@ -62,7 +112,7 @@ let serverOptions = { Server = ""; ApiKey = ""; }
 let releaseOptions = {
     Project = ""; Version = ""; PackageVersion = ""; Packages = [];
     PackagesFolder = None; ReleaseNotes = ""; ReleaseNotesFile = "";
-    IgnoreExisting = false }
+    IgnoreExisting = false; Channel = None; IgnoreChannelRules = false }
 
 /// Default options for 'DeployRelease'
 let deployOptions = {
@@ -88,7 +138,7 @@ let optionalStringParam p o =
 let optionalObjParam p o = 
     match o with
     | Some x -> sprintf " --%s=\"%s\"" p (x.ToString())
-    | None -> ""     
+    | None -> ""
 
 /// [omit]
 let stringListParam p os =
@@ -109,7 +159,9 @@ let releaseCommandLine (opts:CreateReleaseOptions) =
       (optionalStringParam "packagesfolder" opts.PackagesFolder)
       (optionalStringParam "releasenotes" (liftString opts.ReleaseNotes))
       (optionalStringParam "releasenotesfile" (liftString opts.ReleaseNotesFile))
-      (flag "ignoreExisting" opts.IgnoreExisting) ] 
+      (flag "ignoreExisting" opts.IgnoreExisting)
+      (optionalStringParam "channel" opts.Channel)
+      (flag "ignorechannelrules" opts.IgnoreChannelRules) ] 
     |> List.fold (+) ""
 
 /// [omit]
@@ -138,7 +190,7 @@ let serverCommandLine (opts:OctoServerOptions) =
     |> List.fold (+) ""
 
 /// Maps a command to string input for the octopus tools cli.
-let commandLine command =       
+let commandLine command =
     match command with
     | CreateRelease (opts, None) ->        
         sprintf " create-release%s" (releaseCommandLine opts)
@@ -157,13 +209,13 @@ let commandLine command =
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to overwrite the OctoTools default parameters.
-let Octo setParams =        
+let Octo setParams =
     let octoParams = setParams(octoParams)
     let command = (octoParams.Command.ToString())
     let tool = octoParams.ToolPath @@ octoParams.ToolName
     let args = commandLine octoParams.Command |>(+)<| serverCommandLine octoParams.Server
 
-    traceStartTask "Octo " command       
+    traceStartTask "Octo " command
     trace (tool + args)
         
     let result = 
