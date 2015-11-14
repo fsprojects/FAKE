@@ -67,6 +67,7 @@ let buildReportGeneratorArgs parameters (reports : string seq) =
     |> append (sprintf "-targetdir:%s" parameters.TargetDir)
     |> appendWithoutQuotes (sprintf "-reporttypes:%s" (String.Join(";", reportTypes)))
     |> appendIfTrue (parameters.SourceDirs.Length > 0) sourceDirs
+    |> appendStringIfValueIsNotNullOrEmpty (parameters.HistoryDir) (sprintf "-historydir:%s" parameters.HistoryDir)
     |> appendIfTrue (parameters.Filters.Length > 0) filters
     |> appendWithoutQuotes (sprintf "-verbosity:%s" (parameters.LogVerbosity.ToString()))
     |> toText

@@ -57,8 +57,6 @@ namespace Test.FAKECore
     {
         It should_surround_reports_with_quotes = () => ArgumentsWithQuotes.ShouldContain("-reports:");
         It should_surround_target_directory_with_quotes = () => ArgumentsWithQuotes.ShouldContain("-targetdir:");
-
-        It should_not_surround_history_dir_with_quotes = () => ArgumentsWithQuotes.ShouldNotContain("-historydir:");
         It should_not_surround_report_types_with_quotes = () => ArgumentsWithQuotes.ShouldNotContain("-reporttypes:");
         It should_not_surround_verbosity_with_quotes = () => ArgumentsWithQuotes.ShouldNotContain("-verbosity:");
 
