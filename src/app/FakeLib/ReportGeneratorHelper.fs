@@ -29,6 +29,9 @@ type ReportGeneratorParams =
       ReportTypes : ReportGeneratorReportType list
       /// Optional directories which contain the corresponding source code.
       SourceDirs : string list
+      /// Optional directory for storing persistent coverage information.
+      /// Can be used in future reports to show coverage evolution.
+      HistoryDir : string
       /// Optional list of assemblies that should be included or excluded
       /// in the report. Exclusion filters take precedence over inclusion
       /// filters. Wildcards are allowed.
@@ -46,6 +49,7 @@ let ReportGeneratorDefaultParams =
       TargetDir = currentDirectory
       ReportTypes = [ ReportGeneratorReportType.Html ]
       SourceDirs = []
+      HistoryDir = String.Empty
       Filters = []
       LogVerbosity = ReportGeneratorLogVerbosity.Verbose
       WorkingDir = currentDirectory
