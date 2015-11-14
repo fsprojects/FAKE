@@ -49,6 +49,7 @@ namespace Test.FAKECore
             };
         It should_not_append_source_dirs = () => Arguments.ShouldNotContain("-sourcedirs:");
         It should_not_append_filters = () => Arguments.ShouldNotContain("-filters:");
+        It should_not_append_history_dir = () => Arguments.ShouldNotContain("-historydir:");
         It should_have_a_log_verbosity_of_verbose = () => Arguments.ShouldContain("-verbosity:Verbose");
     }
 
@@ -56,6 +57,8 @@ namespace Test.FAKECore
     {
         It should_surround_reports_with_quotes = () => ArgumentsWithQuotes.ShouldContain("-reports:");
         It should_surround_target_directory_with_quotes = () => ArgumentsWithQuotes.ShouldContain("-targetdir:");
+
+        It should_not_surround_history_dir_with_quotes = () => ArgumentsWithQuotes.ShouldNotContain("-historydir:");
         It should_not_surround_report_types_with_quotes = () => ArgumentsWithQuotes.ShouldNotContain("-reporttypes:");
         It should_not_surround_verbosity_with_quotes = () => ArgumentsWithQuotes.ShouldNotContain("-verbosity:");
 
@@ -103,5 +106,13 @@ namespace Test.FAKECore
             () => Parameters = Parameters.With(p => p.Filters, new List<string> { "+Included", "-Excluded" }.ToFSharpList());
 
         It should_append_filters_with_quotes = () => Arguments.ShouldContain("\"-filters:+Included;-Excluded\"");
+    }
+
+    internal class when_given_history_directory : BuildReportArgumentsSpecs
+    {
+        Establish context =
+            () => Parameters = Parameters.With(p => p.HistoryDir, "./history/");
+
+        It should_append_history_dir = () => Arguments.ShouldContain("-historydir:./history/");
     }
 }
