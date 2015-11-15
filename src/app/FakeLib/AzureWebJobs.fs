@@ -13,6 +13,15 @@ type WebJobType =
     | Continuous
     | Triggered
 
+type WebClientWithTimeout() =
+    inherit WebClient()
+    member val Timeout = 600000 with get, set
+
+    override x.GetWebRequest uri =
+        let r = base.GetWebRequest(uri)
+        r.Timeout <- x.Timeout
+        r
+
 /// WebJob type
 type WebJob = 
     { 
@@ -64,7 +73,7 @@ let private deployWebJobToWebSite webSite webJob =
     let uploadApi = Uri(webSite.Url, sprintf"api/zip/site/wwwroot/App_Data/jobs/%s/%s" (jobTypePath webJob.JobType) webJob.Name)
     let filePath = webJob.PackageLocation
     tracefn "Deploying %s webjob to %O" filePath uploadApi
-    use client = new WebClient()
+    use client = new WebClientWithTimeout()
 
     client.Credentials <-NetworkCredential(webSite.UserName, webSite.Password)
     client.UploadData(uploadApi,"PUT",File.ReadAllBytes(filePath)) |> ignore
