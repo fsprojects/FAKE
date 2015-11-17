@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Sha1Specs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="GitInformationSpec.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\app\FakeLib\FakeLib.fsproj">
