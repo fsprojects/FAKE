@@ -242,7 +242,7 @@ let serializeMSBuildParams (p : MSBuildParams) =
             sprintf "%s%s%s" 
                 (match fl.Filename with
                 | None -> ""
-                | Some f -> sprintf "logfile=%s;" f)
+                | Some f -> sprintf "LogFile=%s;" f)
                 (match fl.Verbosity with
                 | None -> ""
                 | Some v -> sprintf "Verbosity=%s;" (verbosityName v)) 
