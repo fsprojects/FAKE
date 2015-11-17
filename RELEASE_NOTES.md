@@ -1,4 +1,4 @@
-#### 4.9.3 - 17.11.2015
+#### 4.9.4 - 17.11.2015
 * BUGFIX: Fix case on MsBuild LogFile option - https://github.com/fsharp/FAKE/pull/1008
 
 #### 4.9.2 - 17.11.2015
