@@ -69,8 +69,8 @@ module Parser =
 
     let plowerArg:Parser<string> =
       satisfyL (( = ) '<') "<lower-case> identifier"
-  >>. many1SatisfyL (( <> ) '>') "any character except '>'"
-  .>> pchar '>'
+      >>. many1SatisfyL (( <> ) '>') "any character except '>'"
+      .>> pchar '>'
     ;;
 
     let ptype:Parser<string> =
@@ -83,13 +83,23 @@ module Parser =
       pidentifier .>>. poptType
     ;;
 
-    let poptDesc:Parser<_> =
+    let poptDescLine:Parser<_> =
       let psopt = satisfyL (( <> ) '-') "short option" in
       let plopt = let pred c' = isLetter(c') || (c' = '-') in
                   many1SatisfyL pred "long option" in
-      let space = skipChar ' ' <?> "space" in
-      let p2opt = psopt .>>. ((skipString "  " >>% None) <|> (opt (optional (skipChar ',') .>> space >>. (skipString "--" >>. plopt)))) in
-      spaces >>. skipChar '-' >>. (attempt ((skipChar '-' >>. plopt) |>> (fun s -> (EOS, s))) <|> (p2opt |>> (function c, Some(s) -> (c, s) | c, None -> (c, null))))
+      let p2opt = psopt .>>. ((skipString "  " >>% None)
+                          <|> (opt (optional (skipChar ',')
+                                .>> skipChar ' ' <?> "space"
+                                >>. (skipString "--" >>. plopt)))) in
+      spaces
+      >>. skipChar '-'
+      >>. (((skipChar '-' >>. plopt) |>> (fun s -> (EOS, s)))
+           <|> (p2opt |>> (function c, Some(s) -> (c, s) | c, None -> (c, null))))
+      .>>. (spaces >>. restOfLine false)
+    ;;
+
+    let parseOptDesc doc' =
+      ()
     ;;
 
     let popt = ()
