@@ -31,7 +31,6 @@ module Token =
             | "double"  -> Argument(name', typeof<System.Double>, val')
             | "decimal" -> Argument(name', typeof<decimal>, val')
             | "string"  -> Argument(name', typeof<string>, val')
-            | "time"
             | "date"    -> Argument(name', typeof<System.DateTime>, val')
             | _         -> Argument(name', System.Type.GetType(tname), val')
         override xx.ToString() =
@@ -61,7 +60,7 @@ module Parser =
 
     let pupperArg:Parser<string> =
       let start = isUpper in
-      let cont c = (isUpper c) || (c = '-') in
+      let cont c = isUpper c || c = '-' in
       identifier (IdentifierOptions(isAsciiIdStart=start,
                                     isAsciiIdContinue=cont,
                                     label="UPPER-CASE identifier"))
@@ -74,7 +73,7 @@ module Parser =
     ;;
 
     let ptype:Parser<string> =
-      many1SatisfyL (( <> ) ' ') "valid F# type"
+      many1SatisfyL (fun c' -> isLetter c' || c' = '.') "valid F# type"
     ;;
 
     let parg:Parser<string * string option> =
@@ -83,19 +82,8 @@ module Parser =
       pidentifier .>>. poptType
     ;;
 
-    let poptDescLine:Parser<_> =
-      let psopt = satisfyL (( <> ) '-') "short option" in
-      let plopt = let pred c' = isLetter(c') || (c' = '-') in
-                  many1SatisfyL pred "long option" in
-      let p2opt = psopt .>>. ((skipString "  " >>% None)
-                          <|> (opt (optional (skipChar ',')
-                                .>> skipChar ' ' <?> "space"
-                                >>. (skipString "--" >>. plopt)))) in
-      spaces
-      >>. skipChar '-'
-      >>. (((skipChar '-' >>. plopt) |>> (fun s -> (EOS, s)))
-           <|> (p2opt |>> (function c, Some(s) -> (c, s) | c, None -> (c, null))))
-      .>>. (spaces >>. restOfLine false)
+    let poptDescLine:Parser<_> = fun stream' ->
+      ()
     ;;
 
     let parseOptDesc doc' =
