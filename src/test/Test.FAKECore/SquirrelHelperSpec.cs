@@ -35,6 +35,7 @@ namespace Test.FAKECore.SquirrelHelperSpec
         It should_not_include_releasedir = () => Arguments.ShouldNotContain("--releaseDir=");
         It should_not_include_loading_gif = () => Arguments.ShouldNotContain("--loadingGif=");
         It should_not_include_setup_icon = () => Arguments.ShouldNotContain("--setupIcon=");
+        It should_not_include_nomsi = () => Arguments.ShouldNotContain("--no-msi");
         It should_not_include_bootstrapper_exe = () => Arguments.ShouldNotContain("--bootstrapperExe=");
     }
 
@@ -69,6 +70,14 @@ namespace Test.FAKECore.SquirrelHelperSpec
         Establish context = () => Parameters = Parameters.With(p => p.SetupIcon, FSharpOption<string>.Some(SetupIcon));
 
         It should_include_setup_icon = () => Arguments.ShouldContain("--setupIcon=" + SetupIcon);
+    }
+
+    internal class When_specifying_nomsi
+        : BuildArgumentsSpecsBase
+    {
+        Establish context = () => Parameters = Parameters.With(p => p.NoMsi, true);
+
+        It should_include_setup_icon = () => Arguments.ShouldContain("--no-msi");
     }
 
     internal class When_specifying_bootstrapper_exe
