@@ -51,6 +51,8 @@
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="Token.fs" />
+    <Compile Include="Parser.fs" />
     <Compile Include="Docopt.fs" />
     <Content Include="packages.config" />
   </ItemGroup>
