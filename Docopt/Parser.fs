@@ -37,7 +37,13 @@ type PoptDescLine(soptChars':string) =
 
     let loptPredicate c' = isLetter(c') || isDigit(c') || c' = '-'
 
-    let rec ``short or long option`` (stream':CharStream<_>) =
+    let rec ``start`` (stream':CharStream<_>) =
+      let _ = stream'.SkipWhitespace() in
+      if stream'.Match('-')
+      then ``short or long option`` stream'
+      else replyErr(Expected("'-'"))
+
+    and``short or long option`` stream' =
       let c = stream'.SkipAndPeek() in
       if isLetter(c) || (isAnyOf soptChars') c
       then ``short option`` stream' (c, null, None)
@@ -111,11 +117,12 @@ type PoptDescLine(soptChars':string) =
 
     and ``long option plus arg (+short?)`` tuple' = Reply(tuple')
 
-    member __.Parser = fun (stream':CharStream<_>) ->
+    member __.Parse:Parser<Token.Option> = fun stream' ->
       let state = stream'.State in
-      let _ = stream'.SkipWhitespace() in
-      if stream'.Match('-')
-      then ``short or long option`` stream'
-      else replyErr(Expected("'-'"))
+      let reply = ``start`` stream' in
+      match reply.Status with
+        | Ok      -> Reply(reply.Result |> Token.Option)
+        | status  -> let () = stream'.BacktrackTo(state) in
+                     Reply(status, reply.Error)
   end
 ;;
