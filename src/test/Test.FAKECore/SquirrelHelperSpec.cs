@@ -77,7 +77,7 @@ namespace Test.FAKECore.SquirrelHelperSpec
     {
         Establish context = () => Parameters = Parameters.With(p => p.NoMsi, true);
 
-        It should_include_setup_icon = () => Arguments.ShouldContain("--no-msi");
+        It should_include_nomsi = () => Arguments.ShouldContain("--no-msi");
     }
 
     internal class When_specifying_bootstrapper_exe
