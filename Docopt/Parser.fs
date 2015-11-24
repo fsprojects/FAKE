@@ -1,4 +1,4 @@
-﻿module Docopt.Parser
+﻿module public Docopt.Parser
 #nowarn "62"
 #light "off"
 
@@ -11,8 +11,8 @@ type Parser<'t> = Parser<'t, UserState>
 ;;
 
 let pupperArg:Parser<string> =
-  let start = isUpper in
-  let cont c = (isUpper c) || (c = '-') in
+  let start c' = isUpper c' || isDigit c' in
+  let cont c' = start c' || c' = '-' in
   identifier (IdentifierOptions(isAsciiIdStart=start,
                                 isAsciiIdContinue=cont,
                                 label="UPPER-CASE identifier"))
@@ -28,10 +28,10 @@ let parg:Parser<Token.Argument> =
   let pidentifier = pupperArg <|> plowerArg in
   let ptype = many1SatisfyL (fun c' -> c' <> ' ' && c' <> ',') "F# type" in
   let poptType = opt (skipChar ':' >>. ptype) in
-  pidentifier .>>. poptType |>> Token.Argument
+  pipe2 pidentifier poptType (fun a' b' -> Token.Argument(a', b'))
 ;;
 
-type PoptDescLine(soptChars':string) =
+type PoptDescLine(soptChars':string, raise':bool) =
   class
     let replyErr err' = Reply(Error, ErrorMessageList(err'))
 
@@ -103,26 +103,32 @@ type PoptDescLine(soptChars':string) =
         | ' ' -> ``expecting arg or space (long)`` stream' tuple'
         | _   -> Reply(tuple')
 
-    and ``expecting arg or space (long)`` stream' (s', l', a') =
-      if stream'.SkipAndPeek() = ' ' then Reply((s', l', a'))
+    and ``expecting arg or space (long)`` stream' tuple' =
+      if stream'.SkipAndPeek() = ' ' then Reply(tuple')
       else let r = parg stream' in match r.Status with
-        | Ok -> ``long option plus arg (+short?)`` (s', l', Some(r.Result))
+        | Ok -> ``long option plus arg (+short?)`` tuple' (Some(r.Result))
         | _  -> Reply(Error, ErrorMessageList(Expected("space"), r.Error))
 
-    and ``expecting arg (long)`` stream' (s', l', _) =
+    and ``expecting arg (long)`` stream' tuple' =
       let () = stream'.Skip() in
       let r = parg stream' in match r.Status with
-        | Ok -> ``long option plus arg (+short?)`` (s', l', Some(r.Result))
+        | Ok -> ``long option plus arg (+short?)`` tuple' (Some(r.Result))
         | _  -> Reply(Error, r.Error)
 
-    and ``long option plus arg (+short?)`` tuple' = Reply(tuple')
+    and ``long option plus arg (+short?)`` (s', l', a') newa' =
+      match a', newa' with
+        | _, None          -> Reply((s', l', a'))
+        | None, _          -> Reply((s', l', newa'))
+        | Some(l), Some(r) ->
+          try Reply((s', l', Some(Token.Argument.Merge(l, r))))
+          with _ -> replyErr(Message("Arguments differ!"))
 
     member __.Parse:Parser<Token.Option> = fun stream' ->
-      let state = stream'.State in
       let reply = ``start`` stream' in
-      match reply.Status with
-        | Ok      -> Reply(reply.Result |> Token.Option)
-        | status  -> let () = stream'.BacktrackTo(state) in
-                     Reply(status, reply.Error)
+      Reply(reply.Status,
+            (if reply.Status = Ok
+             then reply.Result |> Token.Option
+             else Unchecked.defaultof<_>),
+            reply.Error)
   end
 ;;
