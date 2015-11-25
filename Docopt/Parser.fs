@@ -52,7 +52,7 @@ type PoptDescLine(soptChars':string, raise':bool) =
 
     and ``short option`` stream' tuple' =
       match stream'.SkipAndPeek() with
-        | ' ' -> ``argument or hyphens`` stream' tuple'
+        | ' ' -> ``argument or hyphens or space`` stream' tuple'
         | '=' -> ``expecting arg (short)`` stream' tuple'
         | ',' -> ``expecting space`` stream' tuple'
         | _   -> Reply(tuple')
@@ -63,12 +63,13 @@ type PoptDescLine(soptChars':string, raise':bool) =
         | Ok -> ``short option plus arg`` stream' (s', l', Some(r.Result))
         | _  -> Reply(Error, r.Error)
 
-    and ``argument or hyphens`` stream' (s', l', a') =
-      if stream'.SkipAndPeek() = '-'
-      then ``expecting hyphen 2`` stream' (s', l', a')
-      else let r = parg stream' in match r.Status with
-        | Ok -> ``short option plus arg`` stream' (s', l', Some(r.Result))
-        | _  -> Reply(Error, ErrorMessageList(Expected("space"), r.Error))
+    and ``argument or hyphens or space`` stream' (s', l', a') =
+      match stream'.SkipAndPeek() with
+        | '-' -> ``expecting hyphen 2`` stream' (s', l', a')
+        | ' ' -> Reply((s', l', a'))
+        | _   -> let r = parg stream' in match r.Status with
+          | Ok -> ``short option plus arg`` stream' (s', l', Some(r.Result))
+          | _  -> Reply(Error, ErrorMessageList(Expected("space"), r.Error))
 
     and ``short option plus arg`` stream' tuple' =
       match stream'.Peek() with
