@@ -121,7 +121,8 @@ type PoptDescLine(soptChars':string, raise':bool) =
         | None, _          -> Reply((s', l', newa'))
         | Some(l), Some(r) ->
           try Reply((s', l', Some(Token.Argument.Merge(l, r))))
-          with _ -> replyErr(Message("Arguments differ!"))
+          with :? System.ArgumentException as e ->
+            replyErr(Message("Arguments differ!\n" + e.Message))
 
     member __.Parse:Parser<Token.Option> = fun stream' ->
       let reply = ``start`` stream' in

@@ -37,11 +37,11 @@ type Argument =
     static member Merge(lhs':Argument, rhs':Argument) =
       let name = if lhs'.Name = rhs'.Name then lhs'.Name
                  elif lhs'.TrueName = rhs'.TrueName then lhs'.Name
-                 else invalidArg "rhs" "Different name" in
-      let tyρe = if lhs'.Type.Equals(rhs'.Type) then lhs'.Type
-                 else invalidArg "rhs" "Different type" in
-      let dflt = if lhs'.Dflt.Equals(rhs'.Dflt) then lhs'.Dflt
-                 else invalidArg "rhs" "Different default" in
+                 else invalidArg null "Different name" in
+      let tyρe = if Unchecked.equals lhs'.Type rhs'.Type then lhs'.Type
+                 else invalidArg null "Different type" in
+      let dflt = if lhs'.Dflt = rhs'.Dflt then lhs'.Dflt
+                 else invalidArg null "Different default value" in
       Argument(name, tyρe, dflt)
     override xx.ToString() =
       sprintf "Argument { Name = %s; Type = %A; Dflt = %A }"
@@ -56,7 +56,7 @@ type Option =
     val Arg : Argument option
     new(sname', lname', arg') = { Sname=sname'; Lname=lname'; Arg=arg'; }
     override xx.ToString() =
-      sprintf "Option { Sname = %c; Lname = %s; Arg = %A"
+      sprintf "Option { Sname = %A; Lname = %A; Arg = %A }"
         xx.Sname xx.Lname xx.Arg
   end
 ;;
