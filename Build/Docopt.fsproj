@@ -50,10 +50,10 @@
   </Choose>
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
-    <Compile Include="AssemblyInfo.fs" />
-    <Compile Include="Token.fs" />
-    <Compile Include="Parser.fs" />
-    <Compile Include="Docopt.fs" />
+    <Compile Include="..\Docopt\AssemblyInfo.fs" />
+    <Compile Include="..\Docopt\Token.fs" />
+    <Compile Include="..\Docopt\Parser.fs" />
+    <Compile Include="..\Docopt\Docopt.fs" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
