@@ -4,6 +4,7 @@
 
 open System
 
+[<NoComparison>]
 type Argument =
   struct
     val Name : string
@@ -49,6 +50,7 @@ type Argument =
   end
 ;;
 
+[<NoComparison>]
 type Option =
   struct
     val Sname : char

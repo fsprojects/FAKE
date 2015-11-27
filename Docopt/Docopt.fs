@@ -7,22 +7,17 @@ open System
 type HelpCallback = unit -> string
 ;;
 
-type Docopt(doc', argv', help', version':obj) =
+type Docopt(doc', ?argv':string array, ?help':HelpCallback, ?version':obj) =
   class
-    new(doc', ?argv':string array, ?help':HelpCallback, ?version') =
-      let argv = defaultArg argv' (Environment.GetCommandLineArgs()) in
-      let help = defaultArg help' ( fun () -> doc' ) in
-      let version = defaultArg version' null in
-      Docopt(doc', argv, help, version)
-    new(doc', ?argv':string array, ?help':string, ?version') =
-      let argv = defaultArg argv' (Environment.GetCommandLineArgs()) in
-      let help = match help' with Some(str) -> ( fun () -> str)
-                                | None      -> ( fun () -> doc' ) in
-      let version = defaultArg version' null in
-      Docopt(doc', argv, help, version)
-    member __.Parse() =
-      begin
-        
-      end
+    static let noVersionObject =
+      { new Object() with member __.ToString() = "<ERROR: NO VERSION GIVEN>" }
+    let argv = defaultArg argv' (Environment.GetCommandLineArgs().[1..])
+    let help = defaultArg help' (fun () -> doc')
+    let version = defaultArg version' noVersionObject
+    member __.Parse(?argv':string array, ?args':Args) =
+      let args = if args'.IsSome then args'.Value else Args() in
+      match defaultArg argv' argv with
+        | [||] -> args
+        | argv -> args
   end
 ;;

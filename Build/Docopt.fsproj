@@ -19,10 +19,12 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <Tailcalls>false</Tailcalls>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <WarningLevel>3</WarningLevel>
-    <DocumentationFile>bin\Debug\Docopt.XML</DocumentationFile>
+    <WarningLevel>5</WarningLevel>
+    <DocumentationFile>..\bin\Docopt.XML</DocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -50,10 +52,20 @@
   </Choose>
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
-    <Compile Include="..\Docopt\AssemblyInfo.fs" />
-    <Compile Include="..\Docopt\Token.fs" />
-    <Compile Include="..\Docopt\Parser.fs" />
-    <Compile Include="..\Docopt\Docopt.fs" />
+    <Compile Include="..\Docopt\AssemblyInfo.fs">
+      <Link>AssemblyInfo.fs</Link>
+    </Compile>
+    <Compile Include="..\Docopt\Token.fs">
+      <Link>Token.fs</Link>
+    </Compile>
+    <Compile Include="..\Docopt\Parser.fs">
+      <Link>Parser.fs</Link>
+    </Compile>
+    <Compile Include="Args.fs" />
+    <Compile Include="Docopt.fsi" />
+    <Compile Include="..\Docopt\Docopt.fs">
+      <Link>Docopt.fs</Link>
+    </Compile>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
