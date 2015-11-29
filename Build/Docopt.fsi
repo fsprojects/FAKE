@@ -4,7 +4,8 @@ type HelpCallback = unit -> string
 
 type Docopt =
   class
-    /// <summary></summary>
+    /// <summary>Generate the parsers from <c>doc</c> and create a new <c>Docopt</c> instance.</summary>
+    /// <param name="doc">The usage string of the program, formatted with docopt's syntax.</param>
     /// <returns>A new instance of <c>Docopt</c>.</returns>
     new : doc:string
           * ?argv:string array

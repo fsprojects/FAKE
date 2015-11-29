@@ -5,9 +5,9 @@
 open Docopt
 open System
 
-[<Literal>]
-let doc = """Usage: arguments_example.fsx [-vqrh] [FILE] ...
-          arguments_example.fsx (--left | --right) CORRECTION FILE
+let ``arguments example`` () =
+  let doc = """Usage: arguments_example.fsx [-vqrh] [FILE] ...
+       arguments_example.fsx (--left | --right) CORRECTION FILE
 
 Process FILE and optionally apply correction to either left-hand side or
 right-hand side.
@@ -25,7 +25,6 @@ Options:
   --right  use right-hand side
 
 """
-
-let argv = fsi.CommandLineArgs.[1..]
-let args = Docopt(doc, argv).Parse()
-do printfn "%A" args
+  let argv = fsi.CommandLineArgs.[1..]
+  new Docopt(doc)
+``arguments example``()
