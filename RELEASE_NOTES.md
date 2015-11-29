@@ -1,3 +1,6 @@
+#### 4.9.5 - 29.11.2015
+* BASH completion for FAKE targets - https://github.com/fsharp/FAKE/pull/1020
+ 
 #### 4.9.4 - 17.11.2015
 * BUGFIX: Fix case on MsBuild LogFile option - https://github.com/fsharp/FAKE/pull/1008
 
