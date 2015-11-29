@@ -3,6 +3,8 @@
 #light "off"
 
 open FParsec
+open System
+open System.Text.RegularExpressions
 
 type UserState = unit
 ;;
@@ -133,4 +135,28 @@ type PoptDescLine(soptChars':string, raise':bool) =
              else Unchecked.defaultof<_>),
             reply.Error)
   end
+;;
+
+let usagesRegex = Regex(@"(?<=(?:\n|^)\s*usage:).*?(?=\n\r?\n|$)",
+                        RegexOptions.IgnoreCase ||| RegexOptions.Singleline)
+;;
+
+let optionsRegex = Regex(@"(?<=(?:\n|^)\s*options:).*?(?=\n\r?\n|$)",
+                         RegexOptions.IgnoreCase ||| RegexOptions.Singleline)
+;;
+
+let pdoc doc' =
+  let usageString = usagesRegex.Match(doc') in
+  let optionString = optionsRegex.Match(doc', usageString.Index
+                                              + usageString.Length).Value in
+  let parseAsync line' = async {
+      return match run (PoptDescLine("?", true).Parse) line' with
+               | Success(res, _, _) -> Some(res)
+               | Failure(err, _, _) -> None
+    } in
+  optionString
+  .Split([|'\n';'\r'|], StringSplitOptions.RemoveEmptyEntries)
+  |> Seq.map parseAsync
+  |> Async.Parallel
+  |> Async.RunSynchronously
 ;;
