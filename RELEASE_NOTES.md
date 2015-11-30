@@ -1,3 +1,8 @@
+#### 4.9.6 - 30.11.2015
+* Added APPVEYOR_JOB_NAME appveyor environment variable - https://github.com/fsharp/FAKE/pull/1022
+* Updated octopus sample to reflect 3.3.0 package - https://github.com/fsharp/FAKE/pull/1021
+* Added functionality for deleting files and folders in FTP Helper - https://github.com/fsharp/FAKE/pull/1018
+
 #### 4.9.5 - 29.11.2015
 * BASH completion for FAKE targets - https://github.com/fsharp/FAKE/pull/1020
  
