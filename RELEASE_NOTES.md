@@ -1,3 +1,7 @@
+#### 4.9.8 - 30.11.2015
+* Upload  has longer timeout - https://github.com/fsharp/FAKE/pull/1004
+* Added the History Directory argument of ReportGenerator - https://github.com/fsharp/FAKE/pull/1003
+
 #### 4.9.7 - 30.11.2015
 * Support for Bamboo build server - https://github.com/fsharp/FAKE/pull/1015
 
