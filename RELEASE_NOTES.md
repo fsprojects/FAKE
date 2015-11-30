@@ -1,3 +1,6 @@
+#### 4.9.7 - 30.11.2015
+* Support for Bamboo build server - https://github.com/fsharp/FAKE/pull/1015
+
 #### 4.9.6 - 30.11.2015
 * Added APPVEYOR_JOB_NAME appveyor environment variable - https://github.com/fsharp/FAKE/pull/1022
 * Updated octopus sample to reflect 3.3.0 package - https://github.com/fsharp/FAKE/pull/1021
