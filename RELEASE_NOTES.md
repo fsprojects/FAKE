@@ -1,22 +1,13 @@
-#### 4.9.8 - 30.11.2015
-* Upload  has longer timeout - https://github.com/fsharp/FAKE/pull/1004
+#### 4.10.0 - 30.11.2015
+* Added support for Squirrel's --no-msi option - https://github.com/fsharp/FAKE/pull/1013
+* Upload has longer timeout - https://github.com/fsharp/FAKE/pull/1004
 * Added the History Directory argument of ReportGenerator - https://github.com/fsharp/FAKE/pull/1003
-
-#### 4.9.7 - 30.11.2015
 * Support for Bamboo build server - https://github.com/fsharp/FAKE/pull/1015
-
-#### 4.9.6 - 30.11.2015
 * Added APPVEYOR_JOB_NAME appveyor environment variable - https://github.com/fsharp/FAKE/pull/1022
 * Updated octopus sample to reflect 3.3.0 package - https://github.com/fsharp/FAKE/pull/1021
 * Added functionality for deleting files and folders in FTP Helper - https://github.com/fsharp/FAKE/pull/1018
-
-#### 4.9.5 - 29.11.2015
 * BASH completion for FAKE targets - https://github.com/fsharp/FAKE/pull/1020
- 
-#### 4.9.4 - 17.11.2015
 * BUGFIX: Fix case on MsBuild LogFile option - https://github.com/fsharp/FAKE/pull/1008
-
-#### 4.9.2 - 17.11.2015
 * BUGFIX: Fix git version on Mac - https://github.com/fsharp/FAKE/pull/1006
 
 #### 4.9.1 - 11.11.2015
