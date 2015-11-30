@@ -92,6 +92,9 @@ type AppVeyorEnvironment =
 
     /// Configuration name set on Build tab of project settings (or through configuration parameter in appveyor.yml).  
     static member Configuration  = environVar "CONFIGURATION"
+
+    /// The job name
+    static member JobName = environVar "APPVEYOR_JOB_NAME"
     
 let private sendToAppVeyor args = 
     ExecProcess (fun info -> 
