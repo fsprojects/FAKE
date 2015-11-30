@@ -1,5 +1,6 @@
 ﻿namespace Docopt.Token
 #nowarn "62"
+#nowarn "52"
 #light "off"
 
 open System
@@ -9,7 +10,7 @@ type Argument =
   struct
     val Name : string
     val Type : Type
-    val Dflt : obj
+    val mutable Dflt : string
     new(name', type', val') = { Name=name'; Type=type'; Dflt=val'; }
     new(name', type', val') = match type' with
       | None        -> Argument(name', typeof<string>, val')
@@ -25,6 +26,7 @@ type Argument =
         | "date"    -> Argument(name', typeof<System.DateTime>, val')
         | _         -> Argument(name', Type.GetType(tname), val')
     new(name', type':option<_>) = Argument(name', type', null)
+    member xx.MutateDflt(val') = xx.Dflt <- val'
     member private xx.TrueName =
       (fun c' ->
          if Char.IsLetter(c')
@@ -60,5 +62,9 @@ type Option =
     override xx.ToString() =
       sprintf "Option { Sname = %A; Lname = %A; Arg = %A }"
         xx.Sname xx.Lname xx.Arg
+    member xx.MutateArgDflt(val':string) =
+      match xx.Arg with
+        | Some(arg) -> arg.MutateDflt(val')
+        | _         -> ()
   end
 ;;

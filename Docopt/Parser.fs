@@ -137,26 +137,47 @@ type PoptDescLine(soptChars':string, raise':bool) =
   end
 ;;
 
-let usagesRegex = Regex(@"(?<=(?:\n|^)\s*usage:).*?(?=\n\r?\n|$)",
+let usageRegex = Regex(@"(?<=(?:\n|^)\s*usage:).*?(?=\n\s*\n|$)",
+                       RegexOptions.IgnoreCase ||| RegexOptions.Singleline)
+;;
+
+let optionRegex = Regex(@"(?<=(?:\n|^)\s*options:).*?(?=\n\s*\n|$)",
                         RegexOptions.IgnoreCase ||| RegexOptions.Singleline)
 ;;
 
-let optionsRegex = Regex(@"(?<=(?:\n|^)\s*options:).*?(?=\n\r?\n|$)",
-                         RegexOptions.IgnoreCase ||| RegexOptions.Singleline)
+let defaultRegex = Regex(@"(?<=\[default:\s).*(?=]\s*$)",
+                         RegexOptions.RightToLeft);;
+;;
+
+[<NoComparison>]
+type PoptLineResult =
+  | Opt of Token.Option
+  | Val of string
+  | Nil
 ;;
 
 let pdoc doc' =
-  let usageString = usagesRegex.Match(doc') in
-  let optionString = optionsRegex.Match(doc', usageString.Index
-                                              + usageString.Length).Value in
+  let usageString = usageRegex.Match(doc') in
+  let optionString = optionRegex.Match(doc', usageString.Index
+                                             + usageString.Length).Value in
   let parseAsync line' = async {
+      let dflt = defaultRegex.Match(line') in
       return match run (PoptDescLine("?", true).Parse) line' with
-               | Success(res, _, _) -> Some(res)
-               | Failure(err, _, _) -> None
+        | Failure(_)       -> if dflt.Success then Val(dflt.Value) else Nil
+        | Success(r, _, _) -> let () = if dflt.Success
+                                       then r.MutateArgDflt(dflt.Value) in
+                              Opt(r)
     } in
-  optionString
-  .Split([|'\n';'\r'|], StringSplitOptions.RemoveEmptyEntries)
+  let acc = System.Collections.Generic.List<Token.Option>() in
+  optionString.Split([|'\n';'\r'|], StringSplitOptions.RemoveEmptyEntries)
   |> Seq.map parseAsync
   |> Async.Parallel
   |> Async.RunSynchronously
+  |> Seq.iter (function
+                 | Nil      -> ()
+                 | Opt(opt) -> acc.Add(opt)
+                 | Val(str) -> if acc.Count <= 0 then ()
+                               else let toMutate = acc.[acc.Count - 1] in
+                                    toMutate.MutateArgDflt(str) )
+  |> (fun _ -> Options(acc))
 ;;

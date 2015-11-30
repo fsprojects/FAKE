@@ -58,6 +58,9 @@
     <Compile Include="..\Docopt\Token.fs">
       <Link>Token.fs</Link>
     </Compile>
+    <Compile Include="..\Docopt\Options.fs">
+      <Link>Options.fs</Link>
+    </Compile>
     <Compile Include="..\Docopt\Parser.fs">
       <Link>Parser.fs</Link>
     </Compile>
