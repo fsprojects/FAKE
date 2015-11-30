@@ -38,7 +38,7 @@ So once you have created a project you are able to create and push a release int
 
 		Octo (fun octoParams ->
 			{ octoParams with
-				ToolPath = "./packages/octopustools"
+				ToolPath = "./packages/octopustools/tools"
 				Server   = server
 				Command  = CreateRelease (release, None) }
 		)
@@ -61,7 +61,7 @@ This is often a good idea when you want your FAKE build script to continue on to
 
 		Octo (fun octoParams ->
 			{ octoParams with
-				ToolPath = "./packages/octopustools"
+				ToolPath = "./packages/octopustools/tools"
 				Server   = server
 				Command  = CreateRelease (release, Some deploy) }
 		)
@@ -83,7 +83,7 @@ Finally when you are absolutely happy that your release is good to go the next s
 
 		Octo (fun octoParams ->
 			{ octoParams with
-				ToolPath = "./packages/octopustools"
+				ToolPath = "./packages/octopustools/tools"
 				Server   = server
 				Command  = DeployRelease (promote) }
 		)
