@@ -168,16 +168,17 @@ let pdoc doc' =
                                        then r.MutateArgDflt(dflt.Value) in
                               Opt(r)
     } in
-  let acc = System.Collections.Generic.List<Token.Option>() in
+  let options = Options() in
+  let lastOpt = ref Token.Option.Default in
   optionString.Split([|'\n';'\r'|], StringSplitOptions.RemoveEmptyEntries)
   |> Seq.map parseAsync
   |> Async.Parallel
   |> Async.RunSynchronously
   |> Seq.iter (function
                  | Nil      -> ()
-                 | Opt(opt) -> acc.Add(opt)
-                 | Val(str) -> if acc.Count <= 0 then ()
-                               else let toMutate = acc.[acc.Count - 1] in
-                                    toMutate.MutateArgDflt(str) )
-  |> (fun _ -> Options(acc))
+                 | Opt(opt) -> let () = lastOpt := opt in ()
+                 | Val(str) -> let lastOptCopy = !lastOpt in
+                               if lastOptCopy.IsDefault then ()
+                               else lastOptCopy.MutateArgDflt(str))
+  |> (fun _ -> options)
 ;;

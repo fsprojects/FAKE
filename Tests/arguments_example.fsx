@@ -1,6 +1,16 @@
-﻿#r @"../bin/FParsecCS.dll"
-#r @"../bin/FParsec.dll"
-#r @"../bin/Docopt.dll"
+﻿#I __SOURCE_DIRECTORY__
+#r "../packages/FParsec-Big-Data-Edition.1.0.2/lib/net45/FParsecCS.dll"
+#r "../packages/FParsec-Big-Data-Edition.1.0.2/lib/net45/FParsec.dll"
+#r "System.Core.dll"
+#r "System.dll"
+#r "System.Numerics.dll"
+#load "../Docopt/AssemblyInfo.fs"
+      "../Docopt/Token.fs"
+      "../Docopt/Options.fs"
+      "../Docopt/Parser.fs"
+      "../Docopt/Args.fs"
+      "../Docopt/Docopt.fsi"
+      "../Docopt/Docopt.fs"
 
 open Docopt
 open System

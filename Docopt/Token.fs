@@ -5,9 +5,8 @@
 
 open System
 
-[<NoComparison>]
 type Argument =
-  struct
+  class
     val Name : string
     val Type : Type
     val mutable Dflt : string
@@ -59,6 +58,7 @@ type Option =
     val Lname : string
     val Arg : Argument option
     new(sname', lname', arg') = { Sname=sname'; Lname=lname'; Arg=arg'; }
+    static member Default = Option('\000', null, None)
     override xx.ToString() =
       sprintf "Option { Sname = %A; Lname = %A; Arg = %A }"
         xx.Sname xx.Lname xx.Arg
@@ -66,5 +66,7 @@ type Option =
       match xx.Arg with
         | Some(arg) -> arg.MutateDflt(val')
         | _         -> ()
+    member xx.IsDefault =
+      xx.Sname = '\000' && xx.Lname = null && xx.Arg.IsNone
   end
 ;;
