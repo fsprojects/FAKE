@@ -176,7 +176,7 @@ let pdoc doc' =
   |> Async.RunSynchronously
   |> Seq.iter (function
                  | Nil      -> ()
-                 | Opt(opt) -> let () = lastOpt := opt in ()
+                 | Opt(opt) -> let () = lastOpt := opt in options.Add(opt)
                  | Val(str) -> let lastOptCopy = !lastOpt in
                                if lastOptCopy.IsDefault then ()
                                else lastOptCopy.MutateArgDflt(str))
