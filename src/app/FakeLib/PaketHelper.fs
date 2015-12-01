@@ -14,6 +14,7 @@ type PaketPackParams =
       ReleaseNotes : string
       BuildConfig : string
       TemplateFile : string
+      ExcludedTemplates : string list
       WorkingDir : string
       OutputPath : string }
 
@@ -26,6 +27,7 @@ let PaketPackDefaults() : PaketPackParams =
       ReleaseNotes = null
       BuildConfig = null
       TemplateFile = null
+      ExcludedTemplates = []
       WorkingDir = "."
       OutputPath = "./temp" }
 
@@ -66,9 +68,10 @@ let Pack setParams =
     let buildConfig = if String.IsNullOrWhiteSpace parameters.BuildConfig then "" else " buildconfig " + toParam parameters.BuildConfig
     let templateFile = if String.IsNullOrWhiteSpace parameters.TemplateFile then "" else " templatefile " + toParam parameters.TemplateFile
     let lockDependencies = if parameters.LockDependencies then " lock-dependencies" else ""
+    let excludedTemplates = parameters.ExcludedTemplates |> Seq.map (fun t -> " exclude " + t) |> String.concat " "
 
     let packResult = 
-        let cmdArgs = sprintf "%s%s%s%s%s" version releaseNotes buildConfig templateFile lockDependencies
+        let cmdArgs = sprintf "%s%s%s%s%s%s" version releaseNotes buildConfig templateFile lockDependencies excludedTemplates
         ExecProcess 
             (fun info -> 
                 info.FileName <- parameters.ToolPath
