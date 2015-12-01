@@ -165,6 +165,7 @@
     <Compile Include="RaygunHelper.fs" />
     <Compile Include="SquirrelHelper.fs" />
     <Compile Include="XCopyHelper.fs" />
+    <Compile Include="DynamicsCRMHelper.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
