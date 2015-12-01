@@ -261,6 +261,10 @@ type AndroidSignAndAlignParams = {
     KeystorePassword: string
     /// (Required) Alias for keystore
     KeystoreAlias: string
+    /// Specifies the name of the signature algorithm to use to sign the JAR file.
+    SignatureAlgorithm: string
+    /// Specifies the name of the message digest algorithm to use when digesting the entries of a JAR file. 
+    MessageDigestAlgorithm: string
     /// Path to jarsigner tool, defaults to assuming it is in your path
     JarsignerPath: string
     /// Path to zipalign tool, defaults to assuming it is in your path
@@ -272,6 +276,8 @@ let AndroidSignAndAlignDefaults = {
     KeystorePath = ""
     KeystorePassword = ""
     KeystoreAlias = ""
+    SignatureAlgorithm = "SHA1withRSA"
+    MessageDigestAlgorithm = "SHA1"
     JarsignerPath = "jarsigner"
     ZipalignPath = "zipalign"
 }
@@ -292,8 +298,8 @@ let AndroidSignAndAlign setParams apkFile =
     
     let signAndAlign (file:FileInfo) (param:AndroidSignAndAlignParams) =
         let fullSignedFilePath = Regex.Replace(file.FullName, ".apk$", "-Signed.apk")
-        let jarsignerArgs = String.Format("-sigalg SHA1withRSA -digestalg SHA1 -keystore {0} -storepass {1} -signedjar {2} {3} {4}", 
-                                quotesSurround(param.KeystorePath), param.KeystorePassword, quotesSurround(fullSignedFilePath), file.FullName, param.KeystoreAlias)
+        let jarsignerArgs = String.Format("-sigalg {0} -digestalg {1} -keystore {2} -storepass {3} -signedjar {4} {5} {6}", 
+                                param.SignatureAlgorithm, param.MessageDigestAlgorithm, quotesSurround(param.KeystorePath), param.KeystorePassword, quotesSurround(fullSignedFilePath), file.FullName, param.KeystoreAlias)
         
         executeCommand param.JarsignerPath jarsignerArgs
 
