@@ -1,5 +1,6 @@
 #### 4.10.1 - 01.12.2015
 * Expose excluded templates in Pack helper - https://github.com/fsharp/FAKE/pull/1026
+* Added initial implementation of DynamicsCRMHelper - https://github.com/fsharp/FAKE/pull/1009
 
 #### 4.10.0 - 30.11.2015
 * Added support for Squirrel's --no-msi option - https://github.com/fsharp/FAKE/pull/1013
