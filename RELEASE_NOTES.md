@@ -1,3 +1,6 @@
+#### 4.10.2 - 01.12.2015
+* Allow override of the signature algorithm and message digest algorithm in Xamarin helper - https://github.com/fsharp/FAKE/pull/1025
+
 #### 4.10.1 - 01.12.2015
 * Expose excluded templates in Pack helper - https://github.com/fsharp/FAKE/pull/1026
 * Added initial implementation of DynamicsCRMHelper - https://github.com/fsharp/FAKE/pull/1009
