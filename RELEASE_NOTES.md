@@ -1,3 +1,6 @@
+#### 4.10.1 - 01.12.2015
+* Expose excluded templates in Pack helper - https://github.com/fsharp/FAKE/pull/1026
+
 #### 4.10.0 - 30.11.2015
 * Added support for Squirrel's --no-msi option - https://github.com/fsharp/FAKE/pull/1013
 * Upload has longer timeout - https://github.com/fsharp/FAKE/pull/1004
