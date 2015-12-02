@@ -76,7 +76,7 @@ let Pack setParams =
             (fun info -> 
                 info.FileName <- parameters.ToolPath
                 info.WorkingDirectory <- parameters.WorkingDir
-                info.Arguments <- sprintf "pack output %s %s" parameters.OutputPath cmdArgs) parameters.TimeOut
+                info.Arguments <- sprintf "pack output \"%s\" %s" parameters.OutputPath cmdArgs) parameters.TimeOut
     
     if packResult <> 0 then failwithf "Error during packing %s." parameters.WorkingDir
     traceEndTask "PaketPack" parameters.WorkingDir
