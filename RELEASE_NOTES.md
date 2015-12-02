@@ -1,3 +1,6 @@
+#### 4.10.3 - 02.12.2015
+* Wrap OutputPath in quotes in paket helper - https://github.com/fsharp/FAKE/pull/1027
+
 #### 4.10.2 - 01.12.2015
 * Allow override of the signature algorithm and message digest algorithm in Xamarin helper - https://github.com/fsharp/FAKE/pull/1025
 
