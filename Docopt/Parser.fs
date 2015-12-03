@@ -156,10 +156,7 @@ type PoptLineResult =
   | Nil
 ;;
 
-let pdoc doc' =
-  let usageString = usageRegex.Match(doc') in
-  let optionString = optionRegex.Match(doc', usageString.Index
-                                             + usageString.Length).Value in
+let poptions (optionString':string) =
   let parseAsync line' = async {
       let dflt = defaultRegex.Match(line') in
       return match run (PoptDescLine("?", true).Parse) line' with
@@ -170,7 +167,7 @@ let pdoc doc' =
     } in
   let options = Options() in
   let lastOpt = ref Token.Option.Default in
-  optionString.Split([|'\n';'\r'|], StringSplitOptions.RemoveEmptyEntries)
+  optionString'.Split([|'\n';'\r'|], StringSplitOptions.RemoveEmptyEntries)
   |> Seq.map parseAsync
   |> Async.Parallel
   |> Async.RunSynchronously
@@ -181,4 +178,11 @@ let pdoc doc' =
                                if lastOptCopy.IsDefault then ()
                                else lastOptCopy.MutateArgDflt(str))
   |> (fun _ -> options)
+
+let pdoc doc' =
+  let usageString = usageRegex.Match(doc') in
+  let optionString = optionRegex.Match(doc', usageString.Index
+                                             + usageString.Length).Value in
+  let options = poptions optionString in
+  ()
 ;;
