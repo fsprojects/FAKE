@@ -6,13 +6,13 @@
 #r "System.Numerics.dll"
 #load "../Docopt/Token.fs"
       "../Docopt/Options.fs"
-      "../Docopt/Parser.fs"
+      "../Docopt/DocParser.fs"
 
 open FParsec
 open Docopt
 
 type Token =
-  | Arg of Token.Argument
+  | Arg of string
   | Sop of string
   | Lop of string
   | Cmd of string

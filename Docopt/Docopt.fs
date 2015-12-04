@@ -14,8 +14,6 @@ type Docopt(doc', ?argv':string array, ?help':HelpCallback, ?version':obj) =
     let argv = defaultArg argv' (Environment.GetCommandLineArgs().[1..])
     let help = defaultArg help' (fun () -> doc')
     let version = defaultArg version' noVersionObject
-    let res = Parser.pdoc doc'
-    do printfn "PARSED:\n%A" res
     member __.Parse(?argv':string array, ?args':Args) =
       let args = if args'.IsSome then args'.Value else Args() in
       match defaultArg argv' argv with

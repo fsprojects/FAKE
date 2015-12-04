@@ -10,11 +10,9 @@ type Options() =
     member __.Add(opt:Token.Option) =
       begin
         if opt.Sname <> Char.MaxValue then
-          match sopt.Add(String([|'-';opt.Sname|]), opt.Arg) with
-            | _ -> ()
+          sopt.Add(String([|'-';opt.Sname|]), opt.Arg) |> ignore
         if opt.Lname <> null then
-          match lopt.Add(opt.Lname, opt.Arg) with
-            | _ -> ()
+          lopt.Add(opt.Lname, opt.Arg) |> ignore
       end
     override __.ToString() =
       begin

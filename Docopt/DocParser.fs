@@ -1,4 +1,4 @@
-﻿module public Docopt.Parser
+﻿namespace Docopt
 #nowarn "62"
 #light "off"
 
@@ -6,35 +6,44 @@ open FParsec
 open System
 open System.Text.RegularExpressions
 
-type UserState = unit
-;;
+module internal IOPT =
+  begin
+    type UserState = unit
 
-type Parser<'t> = Parser<'t, UserState>
-;;
+    type Parser<'t> = Parser<'t, UserState>
 
-let pupperArg:Parser<string> =
-  let start c' = isUpper c' || isDigit c' in
-  let cont c' = start c' || c' = '-' in
-  identifier (IdentifierOptions(isAsciiIdStart=start,
-                                isAsciiIdContinue=cont,
-                                label="UPPER-CASE identifier"))
-;;
+    [<NoComparison>]
+    type PoptLineResult =
+      | Opt of Token.Option
+      | Val of string
+      | Nil
+  end
 
-let plowerArg:Parser<string> =
-  satisfyL (( = ) '<') "<lower-case> identifier"
-  >>. many1SatisfyL (( <> ) '>') "any character except '>'"
-  .>> pchar '>'
-;;
-
-let parg:Parser<Token.Argument> =
-  let pidentifier = pupperArg <|> plowerArg in
-  let ptype = many1SatisfyL (fun c' -> c' <> ' ' && c' <> ',') "F# type" in
-  let poptType = opt (skipChar ':' >>. ptype) in
-  pipe2 pidentifier poptType (fun a' b' -> Token.Argument(a', b'))
-;;
-
-type PoptDescLine(soptChars':string, raise':bool) =
+type internal DocParser(?soptChars':string) =
   class
+    let soptChars = defaultArg soptChars' "?"
+
+    let pupperArg:IOPT.Parser<string> =
+      let start c' = isUpper c' || isDigit c' in
+      let cont c' = start c' || c' = '-' in
+      identifier (IdentifierOptions(isAsciiIdStart=start,
+                                    isAsciiIdContinue=cont,
+                                    label="UPPER-CASE identifier"))
+
+    let plowerArg:IOPT.Parser<string> =
+      satisfyL (( = ) '<') "<lower-case> identifier"
+      >>. many1SatisfyL (( <> ) '>') "any character except '>'"
+      .>> pchar '>'
+
+    let parg:IOPT.Parser<string> =
+      pupperArg <|> plowerArg
+
+    let pargWithType:IOPT.Parser<Token.Argument> =
+      let pidentifier = parg in
+      let ptype = many1SatisfyL (fun c' -> c' <> ' ' && c' <> ',') "F# type" in
+      let poptType = opt (skipChar ':' >>. ptype) in
+      pipe2 pidentifier poptType (fun a' b' -> Token.Argument(a', b'))
+
     let replyErr err' = Reply(Error, ErrorMessageList(err'))
 
     let loptPredicate c' = isLetter(c') || isDigit(c') || c' = '-'
@@ -44,80 +53,67 @@ type PoptDescLine(soptChars':string, raise':bool) =
       if stream'.Match('-')
       then ``short or long option`` stream'
       else replyErr(Expected("'-'"))
-
     and``short or long option`` stream' =
       let c = stream'.SkipAndPeek() in
-      if isLetter(c) || (isAnyOf soptChars') c
+      if isLetter(c) || (isAnyOf soptChars) c
       then ``short option`` stream' (c, null, None)
       elif c = '-' then ``expecting long option`` stream' (EOS, null, None)
-      else replyErr(Expected(sprintf "letters or any of «%s»" soptChars'))
-
+      else replyErr(Expected(sprintf "letters or any of «%s»" soptChars))
     and ``short option`` stream' tuple' =
       match stream'.SkipAndPeek() with
         | ' ' -> ``argument or hyphens or space`` stream' tuple'
         | '=' -> ``expecting arg (short)`` stream' tuple'
         | ',' -> ``expecting space`` stream' tuple'
         | _   -> Reply(tuple')
-
     and ``expecting arg (short)`` stream' (s', l', _) =
       let () = stream'.Skip() in
-      let r = parg stream' in match r.Status with
+      let r = pargWithType stream' in match r.Status with
         | Ok -> ``short option plus arg`` stream' (s', l', Some(r.Result))
         | _  -> Reply(Error, r.Error)
-
     and ``argument or hyphens or space`` stream' (s', l', a') =
       match stream'.SkipAndPeek() with
         | '-' -> ``expecting hyphen 2`` stream' (s', l', a')
         | ' ' -> Reply((s', l', a'))
-        | _   -> let r = parg stream' in match r.Status with
+        | _   -> let r = pargWithType stream' in match r.Status with
           | Ok -> ``short option plus arg`` stream' (s', l', Some(r.Result))
           | _  -> Reply(Error, ErrorMessageList(Expected("space"), r.Error))
-
     and ``short option plus arg`` stream' tuple' =
       match stream'.Peek() with
         | ' ' -> ``expecting hyphen 1`` stream' tuple'
         | ',' -> ``expecting space`` stream' tuple'
         | _   -> Reply(tuple')
-
     and ``expecting space`` stream' tuple' =
       if stream'.SkipAndPeek() = ' '
       then ``expecting hyphen 1`` stream' tuple'
       else replyErr(Expected("space"))
-
     and ``expecting hyphen 1`` stream' tuple' =
       if stream'.SkipAndPeek() = '-'
       then ``expecting hyphen 2`` stream' tuple'
       else replyErr(Expected("'-'"))
-
     and ``expecting hyphen 2`` stream' tuple' =
       if stream'.SkipAndPeek() = '-'
       then ``expecting long option`` stream' tuple'
       else replyErr(Expected("'-'"))
-
     and ``expecting long option`` stream' (s', _, a') =
       let () = stream'.Skip() in
       match stream'.ReadCharsOrNewlinesWhile(loptPredicate, true) with
         | "" -> replyErr(Expected("long option (letters or hyphens)"))
         | id -> ``long option (+short?)`` stream' (s', id, a')
-
     and ``long option (+short?)`` stream' tuple' =
       match stream'.Peek() with
         | '=' -> ``expecting arg (long)`` stream' tuple'
         | ' ' -> ``expecting arg or space (long)`` stream' tuple'
         | _   -> Reply(tuple')
-
     and ``expecting arg or space (long)`` stream' tuple' =
       if stream'.SkipAndPeek() = ' ' then Reply(tuple')
-      else let r = parg stream' in match r.Status with
+      else let r = pargWithType stream' in match r.Status with
         | Ok -> ``long option plus arg (+short?)`` tuple' (Some(r.Result))
         | _  -> Reply(Error, ErrorMessageList(Expected("space"), r.Error))
-
     and ``expecting arg (long)`` stream' tuple' =
       let () = stream'.Skip() in
-      let r = parg stream' in match r.Status with
+      let r = pargWithType stream' in match r.Status with
         | Ok -> ``long option plus arg (+short?)`` tuple' (Some(r.Result))
         | _  -> Reply(Error, r.Error)
-
     and ``long option plus arg (+short?)`` (s', l', a') newa' =
       match a', newa' with
         | _, None          -> Reply((s', l', a'))
@@ -127,62 +123,54 @@ type PoptDescLine(soptChars':string, raise':bool) =
           with :? System.ArgumentException as e ->
             replyErr(Message("Arguments differ!\n" + e.Message))
 
-    member __.Parse:Parser<Token.Option> = fun stream' ->
+    let poptLine:IOPT.Parser<Token.Option> = fun stream' ->
       let reply = ``start`` stream' in
       Reply(reply.Status,
             (if reply.Status = Ok
-             then reply.Result |> Token.Option
-             else Unchecked.defaultof<_>),
+              then reply.Result |> Token.Option
+              else Unchecked.defaultof<_>),
             reply.Error)
+
+    let usageRegex = Regex(@"(?<=(?:\n|^)\s*usage:).*?(?=\n\s*\n|$)",
+                           RegexOptions.IgnoreCase
+                           ||| RegexOptions.Singleline)
+
+    let optionRegex = Regex(@"(?<=(?:\n|^)\s*options:).*?(?=\n\s*\n|$)",
+                            RegexOptions.IgnoreCase
+                            ||| RegexOptions.Singleline)
+
+    let defaultRegex = Regex(@"(?<=\[default:\s).*(?=]\s*$)",
+                             RegexOptions.RightToLeft)
+
+    let poptions (optionString':string) =
+      let parseAsync line' = async {
+          let dflt = defaultRegex.Match(line') in
+          return match run poptLine line' with
+            | Failure(_)       -> if dflt.Success then IOPT.Val(dflt.Value)
+                                  else IOPT.Nil
+            | Success(r, _, _) -> let () = if dflt.Success
+                                           then r.MutateArgDflt(dflt.Value) in
+                                  IOPT.Opt(r)
+        } in
+      let options = Options() in
+      let lastOpt = ref Token.Option.Default in
+      let action = function
+        | IOPT.Nil      -> ()
+        | IOPT.Opt(opt) -> let () = lastOpt := opt in options.Add(opt)
+        | IOPT.Val(str) -> let lastOptCopy = !lastOpt in
+                           if lastOptCopy.IsDefault then ()
+                           else lastOptCopy.MutateArgDflt(str)
+      in optionString'.Split([|'\n';'\r'|], StringSplitOptions.RemoveEmptyEntries)
+      |> Seq.map parseAsync
+      |> Async.Parallel
+      |> Async.RunSynchronously
+      |> Seq.iter action
+      |> (fun _ -> options)
+
+    member __.Parse(doc':string) =
+      let usageString = usageRegex.Match(doc') in
+      let optionString = optionRegex.Match(doc', usageString.Index
+                                                 + usageString.Length).Value in
+      ()
   end
-;;
-
-let usageRegex = Regex(@"(?<=(?:\n|^)\s*usage:).*?(?=\n\s*\n|$)",
-                       RegexOptions.IgnoreCase ||| RegexOptions.Singleline)
-;;
-
-let optionRegex = Regex(@"(?<=(?:\n|^)\s*options:).*?(?=\n\s*\n|$)",
-                        RegexOptions.IgnoreCase ||| RegexOptions.Singleline)
-;;
-
-let defaultRegex = Regex(@"(?<=\[default:\s).*(?=]\s*$)",
-                         RegexOptions.RightToLeft);;
-;;
-
-[<NoComparison>]
-type PoptLineResult =
-  | Opt of Token.Option
-  | Val of string
-  | Nil
-;;
-
-let poptions (optionString':string) =
-  let parseAsync line' = async {
-      let dflt = defaultRegex.Match(line') in
-      return match run (PoptDescLine("?", true).Parse) line' with
-        | Failure(_)       -> if dflt.Success then Val(dflt.Value) else Nil
-        | Success(r, _, _) -> let () = if dflt.Success
-                                       then r.MutateArgDflt(dflt.Value) in
-                              Opt(r)
-    } in
-  let options = Options() in
-  let lastOpt = ref Token.Option.Default in
-  optionString'.Split([|'\n';'\r'|], StringSplitOptions.RemoveEmptyEntries)
-  |> Seq.map parseAsync
-  |> Async.Parallel
-  |> Async.RunSynchronously
-  |> Seq.iter (function
-                 | Nil      -> ()
-                 | Opt(opt) -> let () = lastOpt := opt in options.Add(opt)
-                 | Val(str) -> let lastOptCopy = !lastOpt in
-                               if lastOptCopy.IsDefault then ()
-                               else lastOptCopy.MutateArgDflt(str))
-  |> (fun _ -> options)
-
-let pdoc doc' =
-  let usageString = usageRegex.Match(doc') in
-  let optionString = optionRegex.Match(doc', usageString.Index
-                                             + usageString.Length).Value in
-  let options = poptions optionString in
-  ()
 ;;
