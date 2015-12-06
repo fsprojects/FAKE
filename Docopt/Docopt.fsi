@@ -11,6 +11,7 @@ type Docopt =
           * ?argv:string array
           * ?help:HelpCallback
           * ?version:obj
+          * ?soptAllowedChars:string
           -> Docopt
 
     /// <summary>Parse argv and return the results in a new or existing <see cref="T:Docopt.Args"/> instance.</summary>
@@ -20,5 +21,8 @@ type Docopt =
     member Parse : ?argv:string array
                    * ?args:Docopt.Args
                    -> Docopt.Args
+
+    /// <summary>Get the <c>Usage:</c> part of the supplied documentation.</summary>
+    member Usage : string
   end
 ;;

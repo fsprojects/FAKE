@@ -19,10 +19,8 @@ module internal IOPT =
       | Nil
   end
 
-type internal DocParser(?soptChars':string) =
+type internal DocParser(soptChars':string) =
   class
-    let soptChars = defaultArg soptChars' "?"
-
     let pupperArg:IOPT.Parser<string> =
       let start c' = isUpper c' || isDigit c' in
       let cont c' = start c' || c' = '-' in
@@ -55,10 +53,10 @@ type internal DocParser(?soptChars':string) =
       else replyErr(Expected("'-'"))
     and``short or long option`` stream' =
       let c = stream'.SkipAndPeek() in
-      if isLetter(c) || (isAnyOf soptChars) c
+      if isLetter(c) || (isAnyOf soptChars') c
       then ``short option`` stream' (c, null, None)
       elif c = '-' then ``expecting long option`` stream' (EOS, null, None)
-      else replyErr(Expected(sprintf "letters or any of «%s»" soptChars))
+      else replyErr(Expected(sprintf "letters or any of «%s»" soptChars'))
     and ``short option`` stream' tuple' =
       match stream'.SkipAndPeek() with
         | ' ' -> ``argument or hyphens or space`` stream' tuple'
@@ -127,8 +125,8 @@ type internal DocParser(?soptChars':string) =
       let reply = ``start`` stream' in
       Reply(reply.Status,
             (if reply.Status = Ok
-              then reply.Result |> Token.Option
-              else Unchecked.defaultof<_>),
+             then reply.Result |> Token.Option
+             else Unchecked.defaultof<_>),
             reply.Error)
 
     let usageRegex = Regex(@"(?<=(?:\n|^)\s*usage:).*?(?=\n\s*\n|$)",
@@ -171,6 +169,7 @@ type internal DocParser(?soptChars':string) =
       let usageString = usageRegex.Match(doc') in
       let optionString = optionRegex.Match(doc', usageString.Index
                                                  + usageString.Length).Value in
-      ()
+      let options = poptions optionString in
+      (usageString.Value, options)
   end
 ;;
