@@ -7,6 +7,22 @@ open System
 type HelpCallback = unit -> string
 ;;
 
+module internal DocHelper =
+  begin
+    open System.Text.RegularExpressions
+    let uRegex = Regex(@"(?<=(?:\n|^)\s*usage:).*?(?=\n\s*\n|$)",
+                       RegexOptions.IgnoreCase ||| RegexOptions.Singleline)
+
+    let oRegex = Regex(@"(?<=(?:\n|^)\s*options:).*?(?=\n\s*\n|$)",
+                       RegexOptions.IgnoreCase ||| RegexOptions.Singleline)
+
+    let cut doc' =
+      let uStr = uRegex.Match(doc') in
+      let oStr = oRegex.Match(doc', uStr.Index + uStr.Length) in
+      (uStr.Value, oStr.Value)
+  end
+;;
+
 type Docopt(doc', ?argv':string array, ?help':HelpCallback, ?version':obj,
             ?soptChars':string) =
   class
@@ -16,12 +32,13 @@ type Docopt(doc', ?argv':string array, ?help':HelpCallback, ?version':obj,
     let help = defaultArg help' (fun () -> doc')
     let version = defaultArg version' noVersionObject
     let soptChars = defaultArg soptChars' "?"
-    let usage, options = DocParser(soptChars).Parse(doc')
+    let (uStr, oStr) = DocHelper.cut doc'
+    let options = OptionsParser(soptChars).Parse(oStr)
     member __.Parse(?argv':string array, ?args':Args) =
       let args = if args'.IsSome then args'.Value else Args() in
       match defaultArg argv' argv with
         | [||] -> args
         | argv -> args
-    member __.Usage = usage
+    member __.Usage = uStr
   end
 ;;

@@ -16,7 +16,7 @@ type Docopt =
 
     /// <summary>Parse argv and return the results in a new or existing <see cref="T:Docopt.Args"/> instance.</summary>
     /// <param name="argv">(optional) The <c>argv</c> value to use.</param>
-    /// <param name="args">(optional) An existing container to store the arguments in.</param>
+    /// <param name="args">(optional) Use this instance of Args.</param>
     /// <returns>The parsed arguments.</returns>
     member Parse : ?argv:string array
                    * ?args:Docopt.Args

@@ -19,7 +19,7 @@ module internal IOPT =
       | Nil
   end
 
-type internal DocParser(soptChars':string) =
+type internal OptionsParser(soptChars':string) =
   class
     let pupperArg:IOPT.Parser<string> =
       let start c' = isUpper c' || isDigit c' in
@@ -129,18 +129,10 @@ type internal DocParser(soptChars':string) =
              else Unchecked.defaultof<_>),
             reply.Error)
 
-    let usageRegex = Regex(@"(?<=(?:\n|^)\s*usage:).*?(?=\n\s*\n|$)",
-                           RegexOptions.IgnoreCase
-                           ||| RegexOptions.Singleline)
-
-    let optionRegex = Regex(@"(?<=(?:\n|^)\s*options:).*?(?=\n\s*\n|$)",
-                            RegexOptions.IgnoreCase
-                            ||| RegexOptions.Singleline)
-
     let defaultRegex = Regex(@"(?<=\[default:\s).*(?=]\s*$)",
                              RegexOptions.RightToLeft)
 
-    let poptions (optionString':string) =
+    member __.Parse(optionString':string) =
       let parseAsync line' = async {
           let dflt = defaultRegex.Match(line') in
           return match run poptLine line' with
@@ -164,12 +156,5 @@ type internal DocParser(soptChars':string) =
       |> Async.RunSynchronously
       |> Seq.iter action
       |> (fun _ -> options)
-
-    member __.Parse(doc':string) =
-      let usageString = usageRegex.Match(doc') in
-      let optionString = optionRegex.Match(doc', usageString.Index
-                                                 + usageString.Length).Value in
-      let options = poptions optionString in
-      (usageString.Value, options)
   end
 ;;
