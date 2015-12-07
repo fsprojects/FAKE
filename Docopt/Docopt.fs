@@ -34,11 +34,13 @@ type Docopt(doc', ?argv':string array, ?help':HelpCallback, ?version':obj,
     let soptChars = defaultArg soptChars' "?"
     let (uStr, oStr) = DocHelper.cut doc'
     let options = OptionsParser(soptChars).Parse(oStr)
+    let pusage = UsageParser(uStr, options)
     member __.Parse(?argv':string array, ?args':Args) =
       let args = if args'.IsSome then args'.Value else Args() in
       match defaultArg argv' argv with
         | [||] -> args
         | argv -> args
     member __.Usage = uStr
+    member __.Options = options
   end
 ;;

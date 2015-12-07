@@ -61,8 +61,11 @@
     <Compile Include="..\Docopt\Options.fs">
       <Link>Options.fs</Link>
     </Compile>
-    <Compile Include="..\Docopt\DocParser.fs">
-      <Link>DocParser.fs</Link>
+    <Compile Include="..\Docopt\OptionsParser.fs">
+      <Link>OptionsParser.fs</Link>
+    </Compile>
+    <Compile Include="..\Docopt\UsageParser.fs">
+      <Link>UsageParser.fs</Link>
     </Compile>
     <Compile Include="..\Docopt\Args.fs">
       <Link>Args.fs</Link>

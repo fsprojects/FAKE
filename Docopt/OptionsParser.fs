@@ -19,7 +19,7 @@ module internal IOPT =
       | Nil
   end
 
-type internal OptionsParser(soptChars':string) =
+type OptionsParser(soptChars':string) =
   class
     let pupperArg:IOPT.Parser<unit> =
       let start c' = isUpper c' || isDigit c' in

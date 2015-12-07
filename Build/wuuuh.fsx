@@ -6,13 +6,31 @@
 #r "System.Numerics.dll"
 #load "../Docopt/Token.fs"
       "../Docopt/Options.fs"
-      "../Docopt/DocParser.fs"
+      "../Docopt/OptionsParser.fs"
 
 open FParsec
 open Docopt
 
+let pupperArg:IOPT.Parser<unit> =
+  let start c' = isUpper c' || isDigit c' in
+  let cont c' = start c' || c' = '-' in
+  identifier (IdentifierOptions(isAsciiIdStart=start,
+                                isAsciiIdContinue=cont,
+                                label="UPPER-CASE identifier")) >>% ()
+;;
+
+let plowerArg:IOPT.Parser<unit> =
+  satisfyL (( = ) '<') "<lower-case> identifier"
+  >>. skipMany1SatisfyL (( <> ) '>') "any character except '>'"
+  .>> pchar '>'
+;;
+
+let parg:IOPT.Parser<unit> =
+  pupperArg <|> plowerArg
+;;
+
 type Token =
-  | Arg of string
+  | Arg of unit
   | Sop of string
   | Lop of string
   | Cmd of string
@@ -31,7 +49,7 @@ let popt = between (pchar '[' >>. spaces) (pchar ']') opp.ExpressionParser
 let pano = skipString "[options]"
 let pdsh = skipString "[--]"
 let pssh = skipString "[-]"
-let term = choice [|Parser.parg |>> Arg;
+let term = choice [|parg |>> Arg;
                     pcmd |>> Cmd;
                     preq |>> Req;
                     pano |>> Ano;
