@@ -13,7 +13,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D0079840-5A1B-4626-9574-A9CEC593AF1F}"
 	ProjectSection(SolutionItems) = preProject
 		..\Tests\arguments_example.fsx = ..\Tests\arguments_example.fsx
-		wuuuh.fsx = wuuuh.fsx
 	EndProjectSection
 EndProject
 Global
