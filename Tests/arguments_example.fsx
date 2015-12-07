@@ -7,7 +7,7 @@
 #load "../Docopt/AssemblyInfo.fs"
       "../Docopt/Token.fs"
       "../Docopt/Options.fs"
-      "../Docopt/Parser.fs"
+      "../Docopt/DocParser.fs"
       "../Docopt/Args.fs"
       "../Docopt/Docopt.fsi"
       "../Docopt/Docopt.fs"

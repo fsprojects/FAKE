@@ -21,26 +21,25 @@ module internal IOPT =
 
 type internal OptionsParser(soptChars':string) =
   class
-    let pupperArg:IOPT.Parser<string> =
+    let pupperArg:IOPT.Parser<unit> =
       let start c' = isUpper c' || isDigit c' in
       let cont c' = start c' || c' = '-' in
       identifier (IdentifierOptions(isAsciiIdStart=start,
                                     isAsciiIdContinue=cont,
-                                    label="UPPER-CASE identifier"))
+                                    label="UPPER-CASE identifier")) >>% ()
 
-    let plowerArg:IOPT.Parser<string> =
+    let plowerArg:IOPT.Parser<unit> =
       satisfyL (( = ) '<') "<lower-case> identifier"
-      >>. many1SatisfyL (( <> ) '>') "any character except '>'"
+      >>. skipMany1SatisfyL (( <> ) '>') "any character except '>'"
       .>> pchar '>'
 
-    let parg:IOPT.Parser<string> =
+    let parg:IOPT.Parser<unit> =
       pupperArg <|> plowerArg
 
     let pargWithType:IOPT.Parser<Token.Argument> =
-      let pidentifier = parg in
       let ptype = many1SatisfyL (fun c' -> c' <> ' ' && c' <> ',') "F# type" in
       let poptType = opt (skipChar ':' >>. ptype) in
-      pipe2 pidentifier poptType (fun a' b' -> Token.Argument(a', b'))
+      parg >>. poptType |>> Token.Argument
 
     let replyErr err' = Reply(Error, ErrorMessageList(err'))
 

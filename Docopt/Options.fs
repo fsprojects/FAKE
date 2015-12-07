@@ -5,21 +5,23 @@ open System.Collections.Generic
 
 type Options() =
   class
-    let sopt = HashSet<string * Token.Argument option>()
-    let lopt = HashSet<string * Token.Argument option>()
+    let sopt = Dictionary<char, Token.Argument option>()
+    let lopt = Dictionary<string, Token.Argument option>()
     member __.Add(opt:Token.Option) =
       begin
-        if opt.Sname <> Char.MaxValue then
-          sopt.Add(String([|'-';opt.Sname|]), opt.Arg) |> ignore
-        if opt.Lname <> null then
-          lopt.Add(opt.Lname, opt.Arg) |> ignore
+        if opt.Sname <> Char.MaxValue && not (sopt.ContainsKey(opt.Sname)) then
+          sopt.Add(opt.Sname, opt.Arg)
+        if opt.Lname <> null && not (lopt.ContainsKey(opt.Lname)) then
+          lopt.Add(opt.Lname, opt.Arg)
       end
+    member __.ContainsSopt = sopt.ContainsKey
+    member __.ContainsLopt = lopt.ContainsKey
     override __.ToString() =
       begin
         let ret = Text.StringBuilder("Options { sopt = [") in
-        for (str, _) in sopt do ignore (ret.Append(str).Append(';'));
+        for kv in sopt do ignore (ret.Append(kv.Key).Append(';'));
         ignore (ret.Append("]; lopt = ["));
-        for (str, _) in lopt do ignore (ret.Append(str).Append(';'));
+        for kv in lopt do ignore (ret.Append(kv.Key).Append(';'));
         ignore(ret.Append("] }"));
         ret.ToString()
       end
