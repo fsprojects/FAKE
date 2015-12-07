@@ -5,23 +5,24 @@
 open FParsec
 open System
 
-module internal USPH =
+module USPH =
   begin
     let inline λ f a b = f (a, b)
     let inline Λ f (a, b) = f a b
 
-    type Token =
+    type Ast =
       | Arg of unit
       | Sop of string
       | Lop of string
       | Cmd of string
-      | Xor of Token * Token
-      | Ell of Token
-      | Req of Token
-      | Opt of Token
+      | Xor of Ast * Ast
+      | Ell of Ast
+      | Req of Ast
+      | Opt of Ast
       | Ano of unit
       | Dsh of unit
       | Ssh of unit
+      | Seq of Ast list
 
     let opp = OperatorPrecedenceParser<_, unit, unit>()
     let pupperArg:IOPT.Parser<unit> =
@@ -52,7 +53,7 @@ module internal USPH =
                         popt |>> Opt|]
     let pxor = InfixOperator("|", spaces, 10, Associativity.Left, λ Xor)
     let pell = PostfixOperator("...", spaces, 20, false, Ell)
-    let _ = opp.TermParser <- term .>> spaces
+    let _ = opp.TermParser <- many (term .>> spaces) |>> Seq
     let _ = opp.AddOperator(pxor)
     let _ = opp.AddOperator(pell)
   end
@@ -60,7 +61,18 @@ module internal USPH =
 
 type UsageParser(u':string, opts':Options) =
   class
+    let parseAsync line' = async {
+        return match run USPH.opp.ExpressionParser line' with
+          | Success(r, _, _) -> r
+          | _                -> invalidArg null null
+      }
+    let ast = u'.Split([|'\n';'\r'|], StringSplitOptions.RemoveEmptyEntries)
+              |> Seq.map parseAsync
+              |> Async.Parallel
+              |> Async.RunSynchronously
+              |> Seq.reduce (USPH.λ USPH.Xor)
     member __.Parse(argv':string array) =
       ()
+    member __.Ast = ast
   end
 ;;
