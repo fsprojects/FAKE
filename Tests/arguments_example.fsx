@@ -8,16 +8,14 @@
       "../Docopt/Token.fs"
       "../Docopt/Options.fs"
       "../Docopt/OptionsParser.fs"
-      "../Docopt/UsageParser.fs"
       "../Docopt/Args.fs"
-      "../Docopt/Docopt.fsi"
+      "../Docopt/UsageParser.fs"
       "../Docopt/Docopt.fs"
 
 open Docopt
 open System
 
-let ``arguments example`` () =
-  let doc = """Usage: arguments_example.fsx [-vqrh] [FILE] ...
+let doc = """Usage: arguments_example.fsx [-vqrh] [FILE] ...
        arguments_example.fsx (--left | --right) CORRECTION FILE
 
 Process FILE and optionally apply correction to either left-hand side or
@@ -36,6 +34,5 @@ Options:
   --right  use right-hand side
 
 """
-  let argv = fsi.CommandLineArgs.[1..]
-  new Docopt(doc)
-``arguments example``()
+let argv = fsi.CommandLineArgs.[1..]
+let d = new Docopt(doc)

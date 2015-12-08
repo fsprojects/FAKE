@@ -39,8 +39,9 @@ type Docopt(doc', ?argv':string array, ?help':HelpCallback, ?version':obj,
       let args = if args'.IsSome then args'.Value else Args() in
       match defaultArg argv' argv with
         | [||] -> args
-        | argv -> args
+        | argv -> pusage.Parse(argv, args)
     member __.Usage = uStr
     member __.Options = options
+    member __.Pusage = pusage
   end
 ;;
