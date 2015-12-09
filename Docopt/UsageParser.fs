@@ -5,11 +5,14 @@
 open FParsec
 open System
 
+type 'a GList = System.Collections.Generic.LinkedList<'a>
+
 module USPH =
   begin
     let inline λ f a b = f (a, b)
     let inline Λ f (a, b) = f a b
 
+    [<NoComparison>]
     type Ast =
       | Arg of string    // Argument
       | Sop of string    // Short option pack
@@ -22,7 +25,8 @@ module USPH =
       | Ano              // Any options `[options]`
       | Dsh              // Double dash `[--]` (Bowser team is the best)
       | Ssh              // Single dash `[-]`
-      | Seq of Ast list  // Sequence
+      | Seq of Ast GList // Sequence
+      | Eps              // Epsilon, always succeds and doesn't consume tokens
 
     let opp = OperatorPrecedenceParser<_, unit, unit>()
     let pupperArg =
@@ -46,18 +50,27 @@ module USPH =
     let pano = skipString "[options]"
     let pdsh = skipString "[--]"
     let pssh = skipString "[-]"
-    let term = choice [|parg |>> Arg;
-                        plop |>> Lop;
-                        pcmd |>> Cmd;
-                        preq |>> Req;
+    let term = choice [|
                         pano >>% Ano;
                         pdsh >>% Dsh;
                         pssh >>% Ssh;
-                        popt |>> Opt|]
+                        popt |>> Opt;
+                        preq |>> Req;
+                        plop |>> Lop;
+                        parg |>> Arg;
+                        pcmd |>> Cmd;
+                        |]
     let pxor = InfixOperator("|", spaces, 10, Associativity.Left, λ Xor)
-    let pell = PostfixOperator("...", spaces, 20, false, Ell)
-    let _ = opp.TermParser <- many (term .>> spaces)
-                              |>> function [ast] -> ast | asts -> Seq asts
+    let pell = PostfixOperator("...", spaces, 30, false, Ell)
+//    let _ = opp.TermParser <- chainl term (spaces1 (fun l' r' -> match l' with
+//                               | Seq(seq) -> let _ = seq.AddLast(r') in Seq(seq)
+//                               | ast      -> Seq(GList<Ast>([ast])))) Eps
+    let _ = opp.TermParser <- chainl1 term (fun stream' ->
+                                             if stream'.SkipWhitespace()
+                                             then (while stream'.SkipWhitespace() do () done; Reply(fun l' (r':Ast) -> match l' with
+                               | Seq(seq) -> let _ = seq.AddLast(r') in Seq(seq)
+                               | ast      -> Seq(GList<Ast>([ast]))))
+                                             else Reply(Error, otherError(()))) <|> term
     let _ = opp.AddOperator(pxor)
     let _ = opp.AddOperator(pell)
   end
@@ -72,17 +85,18 @@ exception ArgvException of string
 type UsageParser(u':string, opts':Options) =
   class
     let parseAsync (line':string) = async {
-        let line' = line'.TrimStart() in
+        let line' = line'.Trim() in
         let line' = line'.Substring(line'.IndexOfAny([|' ';'\t'|])) in
+        let _ = printfn "LINE = %s" line' in
         return match run opp.ExpressionParser line' with
           | Success(res, _, _) -> res
           | Failure(err, _, _) -> raise (UsageException(err))
       }
     let ast = u'.Split([|'\n';'\r'|], StringSplitOptions.RemoveEmptyEntries)
-              |> Array.map parseAsync
+              |> Seq.map parseAsync
               |> Async.Parallel
               |> Async.RunSynchronously
-              |> Array.reduce (λ Xor)
+              |> Seq.reduce (λ Xor)
     let i = ref 0
     let len = ref 0
     let argv = ref<_ array> null
@@ -99,6 +113,7 @@ type UsageParser(u':string, opts':Options) =
       | Dsh      -> None
       | Ssh      -> None
       | Seq(seq) -> fseq seq
+      | Eps      -> None
     and farg arg' =
       if !i = !len
       then Some(Err.expected(String.Concat("Argument: `", arg', "`")))
@@ -129,7 +144,7 @@ type UsageParser(u':string, opts':Options) =
       let pred ast' = match eval ast' with
         | None -> false
         | err  -> e := err; true
-      in if List.exists pred seq'
+      in if Seq.exists pred seq'
       then !e
       else None
 

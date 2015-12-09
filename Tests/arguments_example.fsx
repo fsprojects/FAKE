@@ -1,6 +1,7 @@
 ﻿#I __SOURCE_DIRECTORY__
 #r "../packages/FParsec-Big-Data-Edition.1.0.2/lib/net45/FParsecCS.dll"
 #r "../packages/FParsec-Big-Data-Edition.1.0.2/lib/net45/FParsec.dll"
+//#r "../bin/Docopt.dll"
 #r "System.Core.dll"
 #r "System.dll"
 #r "System.Numerics.dll"
@@ -34,5 +35,4 @@ Options:
   --right  use right-hand side
 
 """
-let argv = fsi.CommandLineArgs.[1..]
 let d = new Docopt(doc)
