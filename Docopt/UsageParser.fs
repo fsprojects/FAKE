@@ -62,17 +62,15 @@ module USPH =
                         |]
     let pxor = InfixOperator("|", spaces, 10, Associativity.Left, λ Xor)
     let pell = PostfixOperator("...", spaces, 30, false, Ell)
-//    let _ = opp.TermParser <- chainl term (spaces1 (fun l' r' -> match l' with
-//                               | Seq(seq) -> let _ = seq.AddLast(r') in Seq(seq)
-//                               | ast      -> Seq(GList<Ast>([ast])))) Eps
     let _ = opp.TermParser <- chainl1 term (fun stream' ->
                                              if stream'.SkipWhitespace()
                                              then (while stream'.SkipWhitespace() do () done; Reply(fun l' (r':Ast) -> match l' with
                                | Seq(seq) -> let _ = seq.AddLast(r') in Seq(seq)
                                | ast      -> Seq(GList<Ast>([ast]))))
-                                             else Reply(Error, otherError(()))) <|> term
+                                             else Reply(Error, otherError(())))
     let _ = opp.AddOperator(pxor)
     let _ = opp.AddOperator(pell)
+    let pusageLine = spaces >>. opp.ExpressionParser
   end
 ;;
 
@@ -85,10 +83,10 @@ exception ArgvException of string
 type UsageParser(u':string, opts':Options) =
   class
     let parseAsync (line':string) = async {
-        let line' = line'.Trim() in
+        let line' = line'.TrimStart() in
         let line' = line'.Substring(line'.IndexOfAny([|' ';'\t'|])) in
         let _ = printfn "LINE = %s" line' in
-        return match run opp.ExpressionParser line' with
+        return match run pusageLine line' with
           | Success(res, _, _) -> res
           | Failure(err, _, _) -> raise (UsageException(err))
       }

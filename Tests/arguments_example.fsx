@@ -16,7 +16,7 @@
 open Docopt
 open System
 
-let doc = """Usage: arguments_example.fsx [-vqrh] [FILE] ...
+let doc = """Usage: arguments_example.fsx [options] [FILE] ...
        arguments_example.fsx (--left | --right) CORRECTION FILE
 
 Process FILE and optionally apply correction to either left-hand side or
@@ -35,4 +35,4 @@ Options:
   --right  use right-hand side
 
 """
-let d = new Docopt(doc)
+let d = try Some(Docopt(doc)) with UsageException(err) -> (printfn "Error: %s" err;None)
