@@ -4,6 +4,7 @@
 
 open FParsec
 open System
+open System.Text
 
 type 'a GList = System.Collections.Generic.LinkedList<'a>
 
@@ -44,7 +45,10 @@ module USPH =
     let plop = 
       let predicate c' = isLetter(c') || isDigit(c') || c' = '-' || c' = '_'
       in skipString "--" >>. many1Satisfy predicate
-    let pcmd = many1Satisfy (fun c' -> c' <> ' ' && c' <> '\t')
+    let psop =
+      skipChar '-'
+      >>. many1Satisfy (isLetter)
+    let pcmd = many1Satisfy (fun c' -> isLetter(c') || isDigit(c'))
     let preq = between (pchar '(' >>. spaces) (pchar ')') opp.ExpressionParser
     let popt = between (pchar '[' >>. spaces) (pchar ']') opp.ExpressionParser
     let pano = skipString "[options]"
@@ -57,17 +61,21 @@ module USPH =
                         popt |>> Opt;
                         preq |>> Req;
                         plop |>> Lop;
+                        psop |>> Sop;
                         parg |>> Arg;
                         pcmd |>> Cmd;
                         |]
     let pxor = InfixOperator("|", spaces, 10, Associativity.Left, λ Xor)
-    let pell = PostfixOperator("...", spaces, 30, false, Ell)
-    let _ = opp.TermParser <- chainl1 term (fun stream' ->
-                                             if stream'.SkipWhitespace()
-                                             then (while stream'.SkipWhitespace() do () done; Reply(fun l' (r':Ast) -> match l' with
-                               | Seq(seq) -> let _ = seq.AddLast(r') in Seq(seq)
-                               | ast      -> Seq(GList<Ast>([ast]))))
-                                             else Reply(Error, otherError(())))
+    let pell = PostfixOperator("...", spaces, 20, false, Ell)
+    let op (stream':CharStream<_>) =
+      match stream'.SkipWhitespace() with
+        | false -> Reply(Error, otherError(()))
+        | _     -> while stream'.SkipWhitespace() do () done;
+                   Reply(fun l' (r':Ast) ->
+                           match l' with
+                             | Seq(seq) -> let _ = seq.AddLast(r') in Seq(seq)
+                             | _        -> Seq(GList<Ast>([l';r'])))
+    let _ = opp.TermParser <- chainl1 term op
     let _ = opp.AddOperator(pxor)
     let _ = opp.AddOperator(pell)
     let pusageLine = spaces >>. opp.ExpressionParser
@@ -98,9 +106,9 @@ type UsageParser(u':string, opts':Options) =
     let i = ref 0
     let len = ref 0
     let argv = ref<_ array> null
-    let rec eval = function
+    let rec eval e = printfn "Eval: %A" e; match e with//function
       | Arg(arg) -> farg arg
-      | Sop(sop) -> None
+      | Sop(sop) -> fsop sop
       | Lop(lop) -> flop lop
       | Cmd(cmd) -> fcmd cmd
       | Xor(l,r) -> fxor l r
@@ -116,6 +124,8 @@ type UsageParser(u':string, opts':Options) =
       if !i = !len
       then Some(Err.expected(String.Concat("Argument: `", arg', "`")))
       else (incr i; None)
+    and fsop sop' =
+      (incr i;None)
     and flop lop' =
       let cell:string = (!argv).[!i] in
       if cell.Length <= 2 || cell.[0] <> '-' || cell.[1] <> '-'
@@ -127,7 +137,10 @@ type UsageParser(u':string, opts':Options) =
       then (incr i; None)
       else Some(Err.expectedString cmd')
     and fxor l' r' =
-      if (eval l').IsNone then None else eval r'
+      let oldi = !i in
+      if (eval l').IsNone
+      then None
+      else (i := oldi; eval r')
     and fell ast' =
       try match eval ast' with
             | None -> while (eval ast').IsNone do () done; None
@@ -150,6 +163,7 @@ type UsageParser(u':string, opts':Options) =
       i := 0;
       len := argv'.Length;
       argv := argv';
+      printfn "Parsing: %A" ast;
       match eval ast with
         | _ when !i <> !len -> ArgvException("") |> raise
         | None              -> args'

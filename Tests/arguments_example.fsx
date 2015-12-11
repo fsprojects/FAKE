@@ -1,22 +1,22 @@
 ﻿#I __SOURCE_DIRECTORY__
 #r "../packages/FParsec-Big-Data-Edition.1.0.2/lib/net45/FParsecCS.dll"
 #r "../packages/FParsec-Big-Data-Edition.1.0.2/lib/net45/FParsec.dll"
-//#r "../bin/Docopt.dll"
+#r "../bin/Docopt.dll"
 #r "System.Core.dll"
 #r "System.dll"
 #r "System.Numerics.dll"
-#load "../Docopt/AssemblyInfo.fs"
-      "../Docopt/Token.fs"
-      "../Docopt/Options.fs"
-      "../Docopt/OptionsParser.fs"
-      "../Docopt/Args.fs"
-      "../Docopt/UsageParser.fs"
-      "../Docopt/Docopt.fs"
+//#load "../Docopt/AssemblyInfo.fs"
+//      "../Docopt/Token.fs"
+//      "../Docopt/Options.fs"
+//      "../Docopt/OptionsParser.fs"
+//      "../Docopt/Args.fs"
+//      "../Docopt/UsageParser.fs"
+//      "../Docopt/Docopt.fs"
 
 open Docopt
 open System
 
-let doc = """Usage: arguments_example.fsx [options] [FILE] ...
+let doc = """Usage: arguments_example.fsx [-vqrh] [FILE] ...
        arguments_example.fsx (--left | --right) CORRECTION FILE
 
 Process FILE and optionally apply correction to either left-hand side or
@@ -35,4 +35,10 @@ Options:
   --right  use right-hand side
 
 """
-let d = try Some(Docopt(doc)) with UsageException(err) -> (printfn "Error: %s" err;None)
+try
+  let d = Docopt(doc) in
+  let argv = "--left corr file.txt".Split([|' '|], StringSplitOptions.RemoveEmptyEntries) in
+  let args = d.Parse(argv) in
+  ()
+with
+  | UsageException(err) -> printfn "Error: %s" err
