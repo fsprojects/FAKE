@@ -6,8 +6,6 @@ open FParsec
 open System
 open System.Text
 
-type 'a GList = System.Collections.Generic.LinkedList<'a>
-
 module USPH =
   begin
     let inline λ f a b = f (a, b)
@@ -26,7 +24,7 @@ module USPH =
       | Ano                // Any options `[options]`
       | Dsh                // Double dash `[--]` (Bowser team is the best)
       | Ssh                // Single dash `[-]`
-      | Seq of Ast GList   // Sequence
+      | Seq of Ast array   // Sequence
       | Eps                // Epsilon, always succeds and matches nothing
 
     let opp = OperatorPrecedenceParser<_, unit, unit>()
@@ -66,14 +64,16 @@ module USPH =
                         pcmd |>> Cmd;
                         |]
     let pxor = InfixOperator("|", spaces, 10, Associativity.Left, λ Xor)
-    let pell = PostfixOperator("...", spaces, 20, false, Ell)
-    let _ = let termParser =
-              sepEndBy1 term spaces1
-              |>> List.reduce (fun l' (r':Ast) ->
-                                 match l' with
-                                   | Seq(seq) -> let _ = seq.AddLast(r') in l'
-                                   | _        -> Seq(GList<Ast>([l';r'])))
-            in opp.TermParser <- termParser
+    let pell = let makeEll = function
+                 | Seq(seq) as ast -> let cell = seq.[seq.Length - 1] in
+                                      (seq.[seq.Length - 1] <- Ell(cell); ast)
+                 | ast             -> Ell(ast)
+               in PostfixOperator("...", spaces, 20, false, makeEll)
+    let _ = opp.TermParser <- sepEndBy1 term spaces1
+                              |>> function
+                                    | []    -> Eps
+                                    | [ast] -> ast
+                                    | asts  -> Seq(List.toArray asts)
     let _ = opp.AddOperator(pxor)
     let _ = opp.AddOperator(pell)
     let pusageLine = spaces >>. opp.ExpressionParser
@@ -135,7 +135,7 @@ type UsageParser(u':string, opts':Options) =
 //      let pred ast' = match eval ast' with
 //        | None -> false
 //        | err  -> e := err; true
-//      in if Seq.exists pred seq'
+//      in if List.exists pred seq'
 //      then !e
 //      else None
 
