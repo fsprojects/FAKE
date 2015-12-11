@@ -15,19 +15,19 @@ module USPH =
 
     [<NoComparison>]
     type Ast =
-      | Arg of string    // Argument
-      | Sop of string    // Short option pack
-      | Lop of string    // Long option
-      | Cmd of string    // Command
-      | Xor of Ast * Ast // Mutual exclusion (| operator)
-      | Ell of Ast       // One or more (... operator)
-      | Req of Ast       // Required (between parenthesis)
-      | Opt of Ast       // Optional (between square brackets)
-      | Ano              // Any options `[options]`
-      | Dsh              // Double dash `[--]` (Bowser team is the best)
-      | Ssh              // Single dash `[-]`
-      | Seq of Ast GList // Sequence
-      | Eps              // Epsilon, always succeds and doesn't consume tokens
+      | Arg of string      // Argument
+      | Sop of string      // Short option pack
+      | Lop of string      // Long option
+      | Cmd of string      // Command
+      | Xor of (Ast * Ast) // Mutual exclusion (| operator)
+      | Ell of Ast         // One or more (... operator)
+      | Req of Ast         // Required (between parenthesis)
+      | Opt of Ast         // Optional (between square brackets)
+      | Ano                // Any options `[options]`
+      | Dsh                // Double dash `[--]` (Bowser team is the best)
+      | Ssh                // Single dash `[-]`
+      | Seq of Ast GList   // Sequence
+      | Eps                // Epsilon, always succeds and matches nothing
 
     let opp = OperatorPrecedenceParser<_, unit, unit>()
     let pupperArg =
@@ -67,15 +67,13 @@ module USPH =
                         |]
     let pxor = InfixOperator("|", spaces, 10, Associativity.Left, λ Xor)
     let pell = PostfixOperator("...", spaces, 20, false, Ell)
-    let op (stream':CharStream<_>) =
-      match stream'.SkipWhitespace() with
-        | false -> Reply(Error, otherError(()))
-        | _     -> while stream'.SkipWhitespace() do () done;
-                   Reply(fun l' (r':Ast) ->
-                           match l' with
-                             | Seq(seq) -> let _ = seq.AddLast(r') in Seq(seq)
-                             | _        -> Seq(GList<Ast>([l';r'])))
-    let _ = opp.TermParser <- chainl1 term op
+    let _ = let termParser =
+              sepEndBy1 term spaces1
+              |>> List.reduce (fun l' (r':Ast) ->
+                                 match l' with
+                                   | Seq(seq) -> let _ = seq.AddLast(r') in l'
+                                   | _        -> Seq(GList<Ast>([l';r'])))
+            in opp.TermParser <- termParser
     let _ = opp.AddOperator(pxor)
     let _ = opp.AddOperator(pell)
     let pusageLine = spaces >>. opp.ExpressionParser
@@ -111,53 +109,35 @@ type UsageParser(u':string, opts':Options) =
       | Sop(sop) -> fsop sop
       | Lop(lop) -> flop lop
       | Cmd(cmd) -> fcmd cmd
-      | Xor(l,r) -> fxor l r
+      | Xor(xor) -> fxor xor
       | Ell(ast) -> fell ast
       | Req(ast) -> freq ast
       | Opt(ast) -> fopt ast
-      | Ano      -> None
-      | Dsh      -> None
-      | Ssh      -> None
+      | Ano      -> fano ( )
+      | Dsh      -> fdsh ( )
+      | Ssh      -> fssh ( )
       | Seq(seq) -> fseq seq
-      | Eps      -> None
-    and farg arg' =
-      if !i = !len
-      then Some(Err.expected(String.Concat("Argument: `", arg', "`")))
-      else (incr i; None)
-    and fsop sop' =
-      (incr i;None)
-    and flop lop' =
-      let cell:string = (!argv).[!i] in
-      if cell.Length <= 2 || cell.[0] <> '-' || cell.[1] <> '-'
-         || not (cell.EndsWith(lop'))
-      then Some(Err.expected(String.Concat("Long option: --", lop')))
-      else (incr i; None)
-    and fcmd cmd' =
-      if (!argv).[!i] = cmd'
-      then (incr i; None)
-      else Some(Err.expectedString cmd')
-    and fxor l' r' =
-      let oldi = !i in
-      if (eval l').IsNone
-      then None
-      else (i := oldi; eval r')
-    and fell ast' =
-      try match eval ast' with
-            | None -> while (eval ast').IsNone do () done; None
-            | err  -> err
-      with :? IndexOutOfRangeException -> None
-    and freq ast' =
-      eval ast'
-    and fopt ast' =
-      let _ = eval ast' in None
-    and fseq seq' =
-      let e = ref None in
-      let pred ast' = match eval ast' with
-        | None -> false
-        | err  -> e := err; true
-      in if Seq.exists pred seq'
-      then !e
-      else None
+      | Eps      -> feps ( )
+    and farg arg' = None
+    and fsop sop' = None
+    and flop lop' = None
+    and fcmd cmd' = None
+    and fxor xor' = None
+    and fell ast' = None
+    and freq ast' = None
+    and fopt ast' = None
+    and fano (  ) = None
+    and fdsh (  ) = None
+    and fssh (  ) = None
+    and fseq seq' = None
+    and feps (  ) = None
+//      let e = ref None in
+//      let pred ast' = match eval ast' with
+//        | None -> false
+//        | err  -> e := err; true
+//      in if Seq.exists pred seq'
+//      then !e
+//      else None
 
     member __.Parse(argv':string array, args':Args) =
       i := 0;

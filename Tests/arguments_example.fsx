@@ -1,17 +1,17 @@
 ﻿#I __SOURCE_DIRECTORY__
 #r "../packages/FParsec-Big-Data-Edition.1.0.2/lib/net45/FParsecCS.dll"
 #r "../packages/FParsec-Big-Data-Edition.1.0.2/lib/net45/FParsec.dll"
-#r "../bin/Docopt.dll"
+//#r "../bin/Docopt.dll"
 #r "System.Core.dll"
 #r "System.dll"
 #r "System.Numerics.dll"
-//#load "../Docopt/AssemblyInfo.fs"
-//      "../Docopt/Token.fs"
-//      "../Docopt/Options.fs"
-//      "../Docopt/OptionsParser.fs"
-//      "../Docopt/Args.fs"
-//      "../Docopt/UsageParser.fs"
-//      "../Docopt/Docopt.fs"
+#load "../Docopt/AssemblyInfo.fs"
+      "../Docopt/Token.fs"
+      "../Docopt/Options.fs"
+      "../Docopt/OptionsParser.fs"
+      "../Docopt/Args.fs"
+      "../Docopt/UsageParser.fs"
+      "../Docopt/Docopt.fs"
 
 open Docopt
 open System
@@ -35,10 +35,12 @@ Options:
   --right  use right-hand side
 
 """
+
 try
   let d = Docopt(doc) in
   let argv = "--left corr file.txt".Split([|' '|], StringSplitOptions.RemoveEmptyEntries) in
-  let args = d.Parse(argv) in
+  //let args = d.Parse(argv) in
+  printfn "Pusage:\n%A" d.Pusage.Ast
   ()
 with
   | UsageException(err) -> printfn "Error: %s" err
