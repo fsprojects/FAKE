@@ -3,6 +3,10 @@ module Fake.GACHelper
 
 open System
 
+/// Path to newest `gacutil.exe`
+let gacutilToolPath = !! (sdkBasePath + "/**/gacutil.exe")  
+                             |> getNewestTool
+
 /// GAC parameters
 type GACParams = 
     { /// (Required) Path to the gacutil
@@ -13,8 +17,7 @@ type GACParams =
       WorkingDir : string }
 
 let mutable GACUtil = 
-    if isMono then "gacutil" else
-    ProgramFilesX86 @@ "Microsoft SDKs/Windows/v8.0A/bin/NETFX 4.0 Tools/gacutil.exe"
+    if isMono then "gacutil" else gacutilToolPath
 
 /// GACutil default parameters
 let GACDefaults = 
