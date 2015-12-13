@@ -1,3 +1,7 @@
+#### 4.10.4 - 13.12.2015
+* Only add relative path prefix if not rooted path in MSBuildHelper - https://github.com/fsharp/FAKE/pull/1033
+* Replaced hard reference on gacutil path with automatic search  - https://github.com/fsharp/FAKE/pull/1040
+
 #### 4.10.3 - 02.12.2015
 * Wrap OutputPath in quotes in paket helper - https://github.com/fsharp/FAKE/pull/1027
 
