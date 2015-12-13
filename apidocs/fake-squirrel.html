@@ -77,10 +77,10 @@ FAKE will use <a href="fake-squirrel.html">SquirrelDefaults</a> for values not p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '576', 576)" onmouseover="showTip(event, '576', 576)">
+          <code onmouseout="hideTip(event, '577', 577)" onmouseover="showTip(event, '577', 577)">
             SquirrelDefaults 
           </code>
-          <div class="tip" id="576">
+          <div class="tip" id="577">
             <strong>Signature:</strong> SquirrelParams<br />
                       </div>
         </td>
@@ -114,10 +114,10 @@ FAKE will use <a href="fake-squirrel.html">SquirrelDefaults</a> for values not p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '577', 577)" onmouseover="showTip(event, '577', 577)">
+          <code onmouseout="hideTip(event, '578', 578)" onmouseover="showTip(event, '578', 578)">
             SquirrelPack setParams nugetPackage
           </code>
-          <div class="tip" id="577">
+          <div class="tip" id="578">
             <strong>Signature:</strong> setParams:(SquirrelParams -&gt; SquirrelParams) -&gt; nugetPackage:string -&gt; unit<br />
                       </div>
         </td>
@@ -143,12 +143,13 @@ Will fail if Squirrel terminates with non-zero exit code.</p>
 <span class="l">3: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;CreatePackage&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="i">SquirrelPack</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> {<span class="i">p</span> <span class="k">with</span> <span class="i">WorkingDir</span> <span class="o">=</span> <span class="s">&quot;./tmp&quot;</span>}) <span class="s">&quot;./my.nuget&quot;</span>
+    <span class="i">SquirrelPack</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> { <span class="i">p</span> <span class="k">with</span> <span class="i">WorkingDir</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">Some</span> <span class="s">&quot;./tmp&quot;</span> }) <span class="s">&quot;./my.nuget&quot;</span>
 )
 </code></pre></td>
 </tr>
 </table>
 
+<div class="tip" id="fs1">union case Option.Some: Value: &#39;T -&gt; Option&lt;&#39;T&gt;</div>
 
 
         </td>
