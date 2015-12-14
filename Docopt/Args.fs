@@ -50,8 +50,7 @@ type Dictionary internal(o':Docopt.Options) =
                       and set k' v' = dict.[k'] <- v'
     end
     member inline xx.AsDictionary() = xx :> IDictionary<string, Result>
-    member xx.AsList() = xx.SFDisplay
-    member private __.SFDisplay =
-      [for kv in dict do yield (kv.Key, kv.Value) done]
+    member __.AsList() = [for kv in dict do yield (kv.Key, kv.Value) done]
+    member inline private xx.SFDisplay = xx.AsList()
   end
 ;;

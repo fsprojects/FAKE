@@ -1,25 +1,32 @@
 ﻿open Docopt
 open System
+open System.Diagnostics
 
-let ``equals`` val' = fun (expr':Lazy<_>) ->
-  expr'.Value = val'
-
-let ``throws`` (exn':'Exn) = fun (expr':Lazy<_>) ->
-  try let _ = expr'.Value in false
-  with e -> e.GetType() = typeof<'Exn>
-
-let mutable doc = Docopt("")
-
-let ``assert`` (argv':string) fun' comparer' =
+// HELPER FUNCTIONS FOR ASSERTIONS
+type Assert =
+  static member Seq(usage':string, [<ParamArray>]statements':(Docopt -> string * bool)[]) =
+    let doc = Docopt(usage') in
+    Array.iter (fun assertion' -> let name, res = assertion' doc in
+                                  Debug.Assert(res, name)) statements'
+    ()
+let ( ->= ) (argv':string) val' (doc':Docopt) =
   let argv = argv'.Split([|' '|], StringSplitOptions.RemoveEmptyEntries) in
-  assert ((fun' comparer') (lazy doc.Parse(argv).AsList()))
+  let res = doc'.Parse(argv).AsList() = val' in
+  String.Concat(argv', " ->= ", val'.ToString()), res
+let ( ->! ) (argv':string) val' (doc':Docopt) =
+  let argv = argv'.Split([|' '|], StringSplitOptions.RemoveEmptyEntries) in
+  let res = try let _ = doc'.Parse(argv).AsList() in false
+            with e -> e.GetType() = val'
+  String.Concat(argv', " ->! ", val'.FullName), res
+// END HELPER FUNCTIONS FOR ASSERTIONS
 
-doc <- Docopt("""Usage: prog
+Assert.Seq("""\
+Usage: prog
 
-""")
-
-``assert`` "" ``equals`` []
-``assert`` "--xxx" ``throws`` ArgvException
+""",
+  ""      ->= [],
+  "--xxx" ->! typeof<Exception> 
+)
 
 (*
 let doc = Docopt("""Usage: prog [options]
