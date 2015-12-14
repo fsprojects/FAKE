@@ -4,7 +4,9 @@ open System
 let ``equals`` val' = fun (expr':Lazy<_>) ->
   expr'.Value = val'
 
-//let ``throws`` exn' = fun (expr':Lazy<_>) ->
+let ``throws`` (exn':'Exn) = fun (expr':Lazy<_>) ->
+  try let _ = expr'.Value in false
+  with e -> e.GetType() = typeof<'Exn>
 
 let mutable doc = Docopt("")
 
@@ -17,7 +19,7 @@ doc <- Docopt("""Usage: prog
 """)
 
 ``assert`` "" ``equals`` []
-//``assert`` "--xxx" ``throws`` ArgvException
+``assert`` "--xxx" ``throws`` ArgvException
 
 (*
 let doc = Docopt("""Usage: prog [options]

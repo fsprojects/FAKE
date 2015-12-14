@@ -101,14 +101,17 @@ type UsageParser(u':string, opts':Options) =
                         | Failure(err, _, _) -> raise (UsageException(err))
         }
     let ast = u'.Split([|'\n';'\r'|], StringSplitOptions.RemoveEmptyEntries)
-              |> Seq.map parseAsync
+              |> Array.map parseAsync
               |> Async.Parallel
               |> Async.RunSynchronously
-              |> Seq.reduce (λ Xor)
+              |> function
+                   | [||]    -> Eps
+                   | [|ast|] -> ast
+                   | asts    -> Array.reduce (λ Xor) asts
     let i = ref 0
     let len = ref 0
     let argv = ref<_ array> null
-    let rec eval e = printfn "Eval: %A" e; match e with//function
+    let rec eval = function
       | Arg(arg) -> farg arg
       | Sop(sop) -> fsop sop
       | Lop(lop) -> flop lop
@@ -147,7 +150,6 @@ type UsageParser(u':string, opts':Options) =
       i := 0;
       len := argv'.Length;
       argv := argv';
-      printfn "Parsing: %A" ast;
       match eval ast with
         | _ when !i < !len -> ArgvException("Illegal parameter: " + argv'.[!i])
                               |> raise
