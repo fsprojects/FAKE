@@ -11,9 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D0079840-5A1B-4626-9574-A9CEC593AF1F}"
-	ProjectSection(SolutionItems) = preProject
-		..\Tests\arguments_example.fsx = ..\Tests\arguments_example.fsx
-	EndProjectSection
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "TestCases", "Tests\TestCases\TestCases.fsproj", "{B510D520-923F-490A-83C6-3F5C4730DFBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,8 +24,15 @@ Global
 		{C35BB626-3DBC-416D-BFAD-C6DEAC782F48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C35BB626-3DBC-416D-BFAD-C6DEAC782F48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C35BB626-3DBC-416D-BFAD-C6DEAC782F48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B510D520-923F-490A-83C6-3F5C4730DFBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B510D520-923F-490A-83C6-3F5C4730DFBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B510D520-923F-490A-83C6-3F5C4730DFBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B510D520-923F-490A-83C6-3F5C4730DFBE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B510D520-923F-490A-83C6-3F5C4730DFBE} = {D0079840-5A1B-4626-9574-A9CEC593AF1F}
 	EndGlobalSection
 EndGlobal
