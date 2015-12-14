@@ -88,14 +88,18 @@ exception ArgvException of string
 
 type UsageParser(u':string, opts':Options) =
   class
-    let parseAsync (line':string) = async {
-        let line' = line'.TrimStart() in
-        let line' = line'.Substring(line'.IndexOfAny([|' ';'\t'|])) in
-        let _ = printfn "LINE = %s" line' in
-        return match run pusageLine line' with
-          | Success(res, _, _) -> res
-          | Failure(err, _, _) -> raise (UsageException(err))
-      }
+    let parseAsync = function
+      | ""   -> async {
+          return Eps
+        }
+      | line -> async {
+          let line = line.TrimStart() in
+          let index = line.IndexOfAny([|' ';'\t'|]) in
+          return if index = -1 then Eps
+                 else match run pusageLine (line.Substring(index)) with
+                        | Success(res, _, _) -> res
+                        | Failure(err, _, _) -> raise (UsageException(err))
+        }
     let ast = u'.Split([|'\n';'\r'|], StringSplitOptions.RemoveEmptyEntries)
               |> Seq.map parseAsync
               |> Async.Parallel
@@ -145,12 +149,13 @@ type UsageParser(u':string, opts':Options) =
       argv := argv';
       printfn "Parsing: %A" ast;
       match eval ast with
-        //| _ when !i <> !len -> ArgvException("") |> raise
-        | None              -> args'
-        | Some(err)         -> let pos = FParsec.Position("", 0L, 0L, 0L) in
-                               Err.ParserError(pos, null, err).ToString()
-                               |> ArgvException
-                               |> raise
+        | _ when !i < !len -> ArgvException("Illegal parameter: " + argv'.[!i])
+                              |> raise
+        | None             -> args'
+        | Some(err)        -> let pos = FParsec.Position("", 0L, 0L, 0L) in
+                              Err.ParserError(pos, null, err).ToString()
+                              |> ArgvException
+                              |> raise
     member __.Ast = ast
   end
 ;;
