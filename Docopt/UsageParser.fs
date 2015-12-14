@@ -139,13 +139,13 @@ type UsageParser(u':string, opts':Options) =
 //      then !e
 //      else None
 
-    member __.Parse(argv':string array, args':Args) =
+    member __.Parse(argv':string array, args':Arguments.Dictionary) =
       i := 0;
       len := argv'.Length;
       argv := argv';
       printfn "Parsing: %A" ast;
       match eval ast with
-        | _ when !i <> !len -> ArgvException("") |> raise
+        //| _ when !i <> !len -> ArgvException("") |> raise
         | None              -> args'
         | Some(err)         -> let pos = FParsec.Position("", 0L, 0L, 0L) in
                                Err.ParserError(pos, null, err).ToString()

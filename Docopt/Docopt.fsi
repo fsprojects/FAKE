@@ -19,8 +19,8 @@ type Docopt =
     /// <param name="args">(optional) Use this instance of Args.</param>
     /// <returns>The parsed arguments.</returns>
     member Parse : ?argv:string array
-                   * ?args:Docopt.Args
-                   -> Docopt.Args
+                   * ?args:Arguments.Dictionary
+                   -> Arguments.Dictionary
 
     /// <summary>Get the <c>Usage:</c> part of the supplied documentation.</summary>
     member Usage : string
