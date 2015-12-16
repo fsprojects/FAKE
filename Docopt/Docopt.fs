@@ -29,6 +29,7 @@ type Docopt(doc', ?argv':string array, ?help':HelpCallback, ?version':obj,
     static let noVersionObject =
       { new Object() with member __.ToString() = "<ERROR: NO VERSION GIVEN>" }
     let argv = defaultArg argv' (Environment.GetCommandLineArgs().[1..])
+               |> Array.copy
     let help = defaultArg help' (fun () -> doc')
     let version = defaultArg version' noVersionObject
     let soptChars = defaultArg soptChars' "?"
@@ -41,5 +42,7 @@ type Docopt(doc', ?argv':string array, ?help':HelpCallback, ?version':obj,
       let argv = defaultArg argv' argv in
       pusage.Parse(argv, args)
     member __.Usage = uStr
+    member __.UsageParser = pusage
+    member __.DefaultDictionary = defaultDict
   end
 ;;

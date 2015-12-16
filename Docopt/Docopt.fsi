@@ -24,5 +24,8 @@ type Docopt =
 
     /// <summary>Get the <c>Usage:</c> part of the supplied documentation.</summary>
     member Usage : string
+
+    member UsageParser : UsageParser
+    member DefaultDictionary : Arguments.Dictionary
   end
 ;;

@@ -11,21 +11,27 @@ module USPH =
     let inline λ f a b = f (a, b)
     let inline Λ f (a, b) = f a b
 
+    type Optpack =
+      class
+        
+      end
+
     [<NoComparison>]
     type Ast =
       | Arg of string      // Argument
-      | Sop of string      // Short option pack
-      | Lop of string      // Long option
+      | Sop of string      // Short option pack (not in ast)
+      | Lop of string      // Long option (not in ast)
       | Cmd of string      // Command
+      | Opt of Optpack     // Option pack
       | Xor of (Ast * Ast) // Mutual exclusion (| operator)
       | Ell of Ast         // One or more (... operator)
       | Req of Ast         // Required (between parenthesis)
-      | Opt of Ast         // Optional (between square brackets)
+      | Sqb of Ast         // Optional (between square brackets)
       | Ano                // Any options `[options]`
-      | Dsh                // Double dash `[--]` (Bowser team is the best)
+      | Dsh                // Double dash `[--]` (Bowser team > all)
       | Ssh                // Single dash `[-]`
-      | Seq of Ast array   // Sequence
-      | Eps                // Epsilon, always succeds and matches nothing
+      | Seq of Ast array   // Sequence of Ast's
+      | Eps                // Epsilon parser
 
     let opp = OperatorPrecedenceParser<_, unit, unit>()
     let pupperArg =
@@ -48,7 +54,7 @@ module USPH =
       >>. many1Satisfy (isLetter)
     let pcmd = many1Satisfy (fun c' -> isLetter(c') || isDigit(c'))
     let preq = between (pchar '(' >>. spaces) (pchar ')') opp.ExpressionParser
-    let popt = between (pchar '[' >>. spaces) (pchar ']') opp.ExpressionParser
+    let psqb = between (pchar '[' >>. spaces) (pchar ']') opp.ExpressionParser
     let pano = skipString "[options]"
     let pdsh = skipString "[--]"
     let pssh = skipString "[-]"
@@ -56,7 +62,7 @@ module USPH =
                         pano >>% Ano;
                         pdsh >>% Dsh;
                         pssh >>% Ssh;
-                        popt |>> Opt;
+                        psqb |>> Sqb;
                         preq |>> Req;
                         plop |>> Lop;
                         psop |>> Sop;
@@ -110,16 +116,19 @@ type UsageParser(u':string, opts':Options) =
                    | asts    -> Array.reduce (λ Xor) asts
     let i = ref 0
     let len = ref 0
-    let argv = ref<_ array> null
+    let argv = ref<string array> null
+    let args = ref<Arguments.Dictionary> null
+    let carg () = let argv = !argv in argv.[!i]
     let rec eval = function
       | Arg(arg) -> farg arg
       | Sop(sop) -> fsop sop
       | Lop(lop) -> flop lop
+      | Opt(opt) -> fopt opt
       | Cmd(cmd) -> fcmd cmd
       | Xor(xor) -> fxor xor
       | Ell(ast) -> fell ast
       | Req(ast) -> freq ast
-      | Opt(ast) -> fopt ast
+      | Sqb(ast) -> fsqb ast
       | Ano      -> fano ( )
       | Dsh      -> fdsh ( )
       | Ssh      -> fssh ( )
@@ -128,11 +137,12 @@ type UsageParser(u':string, opts':Options) =
     and farg arg' = None
     and fsop sop' = None
     and flop lop' = None
+    and fopt opt' = None
     and fcmd cmd' = None
     and fxor xor' = None
     and fell ast' = None
     and freq ast' = None
-    and fopt ast' = None
+    and fsqb ast' = None
     and fano (  ) = None
     and fdsh (  ) = None
     and fssh (  ) = None
@@ -150,6 +160,7 @@ type UsageParser(u':string, opts':Options) =
       i := 0;
       len := argv'.Length;
       argv := argv';
+      args := args';
       match eval ast with
         | _ when !i < !len -> ArgvException("Illegal parameter: " + argv'.[!i])
                               |> raise

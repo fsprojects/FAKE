@@ -1,4 +1,5 @@
 ﻿open Docopt
+open Docopt.Arguments
 open System
 open System.Diagnostics
 
@@ -6,43 +7,46 @@ open System.Diagnostics
 type Assert =
   static member Seq(usage':string, [<ParamArray>]statements':(Docopt -> string * bool)[]) =
     let doc = Docopt(usage') in
-    Array.iter (fun assertion' -> let name, res = assertion' doc in
-                                  Debug.Assert(res, name)) statements'
-    ()
+    printf "{\n  Testing %A\n" usage'
+    printfn "  Ast: %A" doc.UsageParser.Ast
+    printfn "  Dict: %A\n" doc.DefaultDictionary
+    Array.iter (fun assertion' -> let msg, res = assertion' doc in
+                                  printfn "    %s . . . %A" msg res
+                                  Debug.Assert(res, msg)) statements'
+    Console.WriteLine("}\n")
 let ( ->= ) (argv':string) val' (doc':Docopt) =
   let argv = argv'.Split([|' '|], StringSplitOptions.RemoveEmptyEntries) in
-  let res = doc'.Parse(argv).AsList() = val' in
-  String.Concat(argv', " ->= ", val'.ToString()), res
+  let args = doc'.Parse(argv) in
+  let res = (List.sort (args.AsList())) = List.sort val' in
+  (sprintf "%A ->= %A" argv' val'), res
 let ( ->! ) (argv':string) val' (doc':Docopt) =
   let argv = argv'.Split([|' '|], StringSplitOptions.RemoveEmptyEntries) in
   let res = try let _ = doc'.Parse(argv).AsList() in false
             with e -> e.GetType() = val'
-  String.Concat(argv', " ->! ", val'.FullName), res
+  (sprintf "%A ->! %s" argv' val'.FullName), res
 // END HELPER FUNCTIONS FOR ASSERTIONS
 
-Assert.Seq("""\
+Assert.Seq("""
 Usage: prog
 
 """,
   ""      ->= [],
-  "--xxx" ->! typeof<Exception> 
+  "--xxx" ->! typeof<ArgvException> 
 )
 
-(*
-let doc = Docopt("""Usage: prog [options]
+Assert.Seq("""
+Usage: prog [options]
 
 Options: -a  All.
 
-""")
-$ prog
-{"-a": false}
+""",
+  ""   ->= [("-a", Flag(false))],
+  "-a" ->= [("-a", Flag(true))],
+  "-x" ->! typeof<ArgvException>
+)
 
-$ prog -a
-{"-a": true}
 
-$ prog -x
-"user-error"
-
+(*
 
 let doc = Docopt("""Usage: prog [options]
 
