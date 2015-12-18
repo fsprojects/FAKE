@@ -10,6 +10,7 @@ type PaketPackParams =
     { ToolPath : string
       TimeOut : TimeSpan
       Version : string
+      SpecificVersions : (string * string) list
       LockDependencies : bool
       ReleaseNotes : string
       BuildConfig : string
@@ -23,6 +24,7 @@ let PaketPackDefaults() : PaketPackParams =
     { ToolPath = (findToolFolderInSubPath "paket.exe" (currentDirectory @@ ".paket")) @@ "paket.exe"
       TimeOut = TimeSpan.FromMinutes 5.
       Version = null
+      SpecificVersions = []
       LockDependencies = false
       ReleaseNotes = null
       BuildConfig = null
@@ -69,9 +71,10 @@ let Pack setParams =
     let templateFile = if String.IsNullOrWhiteSpace parameters.TemplateFile then "" else " templatefile " + toParam parameters.TemplateFile
     let lockDependencies = if parameters.LockDependencies then " lock-dependencies" else ""
     let excludedTemplates = parameters.ExcludedTemplates |> Seq.map (fun t -> " exclude " + t) |> String.concat " "
+    let specificVersions = parameters.SpecificVersions |> Seq.map (fun (id,v) -> sprintf " specific-version %s %s" id v) |> String.concat " "
 
     let packResult = 
-        let cmdArgs = sprintf "%s%s%s%s%s%s" version releaseNotes buildConfig templateFile lockDependencies excludedTemplates
+        let cmdArgs = sprintf "%s%s%s%s%s%s%s" version specificVersions releaseNotes buildConfig templateFile lockDependencies excludedTemplates
         ExecProcess 
             (fun info -> 
                 info.FileName <- parameters.ToolPath
