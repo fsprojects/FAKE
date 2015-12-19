@@ -1,4 +1,5 @@
 #### 4.11.0 - 19.12.2015
+* Add specific version parameter in PaketPackParams - https://github.com/fsharp/FAKE/pull/1046
 * Fixed isMacOS function - https://github.com/fsharp/FAKE/pull/1044
 * Added more comfortable types to WiXHelper, flagged old ones obsolete - https://github.com/fsharp/FAKE/pull/1036
 * Use FSharp.Compiler.Service 1.4.2.3
