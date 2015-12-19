@@ -118,7 +118,9 @@ let SystemRoot = environVar "SystemRoot"
 let isUnix = Environment.OSVersion.Platform = PlatformID.Unix
 
 /// Determines if the current system is a MacOs system
-let isMacOS = Environment.OSVersion.Platform = PlatformID.MacOSX
+let isMacOS =
+    // osascript is the AppleScript interpreter on OS X
+    File.Exists "/usr/bin/osascript"
 
 /// Determines if the current system is a Linux system
 let isLinux = int System.Environment.OSVersion.Platform |> fun p -> (p = 4) || (p = 6) || (p = 128)
