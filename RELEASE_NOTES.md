@@ -1,17 +1,11 @@
-#### 4.10.5 - 14.12.2015
+#### 4.11.0 - 19.12.2015
+* Fixed isMacOS function - https://github.com/fsharp/FAKE/pull/1044
+* Added more comfortable types to WiXHelper, flagged old ones obsolete - https://github.com/fsharp/FAKE/pull/1036
 * Use FSharp.Compiler.Service 1.4.2.3
-
-#### 4.10.4 - 13.12.2015
 * Only add relative path prefix if not rooted path in MSBuildHelper - https://github.com/fsharp/FAKE/pull/1033
 * Replaced hard reference on gacutil path with automatic search  - https://github.com/fsharp/FAKE/pull/1040
-
-#### 4.10.3 - 02.12.2015
 * Wrap OutputPath in quotes in paket helper - https://github.com/fsharp/FAKE/pull/1027
-
-#### 4.10.2 - 01.12.2015
 * Allow override of the signature algorithm and message digest algorithm in Xamarin helper - https://github.com/fsharp/FAKE/pull/1025
-
-#### 4.10.1 - 01.12.2015
 * Expose excluded templates in Pack helper - https://github.com/fsharp/FAKE/pull/1026
 * Added initial implementation of DynamicsCRMHelper - https://github.com/fsharp/FAKE/pull/1009
 
