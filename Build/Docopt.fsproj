@@ -56,9 +56,6 @@
     <Compile Include="..\Docopt\AssemblyInfo.fs">
       <Link>AssemblyInfo.fs</Link>
     </Compile>
-    <Compile Include="..\Docopt\Token.fs">
-      <Link>Token.fs</Link>
-    </Compile>
     <Compile Include="..\Docopt\Options.fs">
       <Link>Options.fs</Link>
     </Compile>

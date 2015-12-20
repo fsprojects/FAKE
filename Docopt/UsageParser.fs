@@ -34,11 +34,12 @@ module USPH =
       end
 
     [<NoComparison>]
+    type OptAst =
+      | Sopt
+
+    [<NoComparison>]
     type Ast =
       | Arg of string      // Argument
-      | Sop of string      // Short option pack (not in ast)
-      | Lop of string      // Long option (not in ast)
-      | Opt of Optpack     // Option pack, combines all Sop and Lop
       | Cmd of string      // Command
       | Xor of (Ast * Ast) // Mutual exclusion (| operator)
       | Ell of Ast         // One or more (... operator)
@@ -49,10 +50,6 @@ module USPH =
       | Ssh                // Single dash `[-]`
       | Seq of Ast array   // Sequence of Ast's
       | Eps                // Epsilon parser
-      with
-        static member Reduce = function
-          | a -> a
-      end
 
     let opp = OperatorPrecedenceParser<_, unit, unit>()
     let pupperArg =
@@ -67,12 +64,6 @@ module USPH =
       .>> pchar '>'
       |>> (fun name' -> String.Concat("<", name', ">"))
     let parg = pupperArg <|> plowerArg
-    let plop = 
-      let predicate c' = isLetter(c') || isDigit(c') || c' = '-' || c' = '_'
-      in skipString "--" >>. many1Satisfy predicate
-    let psop =
-      skipChar '-'
-      >>. many1Satisfy (isLetter)
     let pcmd = many1Satisfy (fun c' -> isLetter(c') || isDigit(c'))
     let preq = between (pchar '(' >>. spaces) (pchar ')') opp.ExpressionParser
     let psqb = between (pchar '[' >>. spaces) (pchar ']') opp.ExpressionParser
@@ -85,8 +76,6 @@ module USPH =
                         pssh >>% Ssh;
                         psqb |>> Sqb;
                         preq |>> Req;
-                        plop |>> Lop;
-                        psop |>> Sop;
                         parg |>> Arg;
                         pcmd |>> Cmd;
                         |]
@@ -103,9 +92,7 @@ module USPH =
                                     | asts  -> Seq(List.toArray asts)
     let _ = opp.AddOperator(pxor)
     let _ = opp.AddOperator(pell)
-    let pusageLine = spaces
-                     >>. opp.ExpressionParser
-                     |>> Ast.Reduce
+    let pusageLine = spaces >>. opp.ExpressionParser
   end
 ;;
 
@@ -144,7 +131,6 @@ type UsageParser(u':string, opts':Options) =
     let carg () = let argv = !argv in argv.[!i]
     let rec eval = function
       | Arg(arg) -> farg arg
-      | Opt(opt) -> fopt opt
       | Cmd(cmd) -> fcmd cmd
       | Xor(xor) -> fxor xor
       | Ell(ast) -> fell ast
@@ -155,9 +141,7 @@ type UsageParser(u':string, opts':Options) =
       | Ssh      -> fssh ( )
       | Seq(seq) -> fseq seq
       | Eps      -> feps ( )
-      | _        -> Some(Err.otherError "Error in AST")
     and farg arg' = None
-    and fopt opt' = None
     and fcmd cmd' = None
     and fxor xor' = None
     and fell ast' = None

@@ -14,32 +14,27 @@ module internal IOPT =
 
     [<NoComparison>]
     type PoptLineResult =
-      | Opt of Token.Option
+      | Opt of Option
       | Val of string
       | Nil
   end
 
 type OptionsParser(soptChars':string) =
   class
-    let pupperArg:IOPT.Parser<unit> =
+    let pupperArg:IOPT.Parser<string> =
       let start c' = isUpper c' || isDigit c' in
       let cont c' = start c' || c' = '-' in
       identifier (IdentifierOptions(isAsciiIdStart=start,
                                     isAsciiIdContinue=cont,
-                                    label="UPPER-CASE identifier")) >>% ()
+                                    label="UPPER-CASE identifier"))
 
-    let plowerArg:IOPT.Parser<unit> =
+    let plowerArg:IOPT.Parser<string> =
       satisfyL (( = ) '<') "<lower-case> identifier"
-      >>. skipMany1SatisfyL (( <> ) '>') "any character except '>'"
+      >>. many1SatisfyL (( <> ) '>') "any character except '>'"
       .>> pchar '>'
 
-    let parg:IOPT.Parser<unit> =
+    let parg:IOPT.Parser<string> =
       pupperArg <|> plowerArg
-
-    let pargWithType:IOPT.Parser<Token.Argument> =
-      let ptype = many1SatisfyL (fun c' -> c' <> ' ' && c' <> ',') "F# type" in
-      let poptType = opt (skipChar ':' >>. ptype) in
-      parg >>. poptType |>> Token.Argument
 
     let replyErr err' = Reply(Error, ErrorMessageList(err'))
 
@@ -64,14 +59,14 @@ type OptionsParser(soptChars':string) =
         | _   -> Reply(tuple')
     and ``expecting arg (short)`` stream' (s', l', _) =
       let () = stream'.Skip() in
-      let r = pargWithType stream' in match r.Status with
+      let r = parg stream' in match r.Status with
         | Ok -> ``short option plus arg`` stream' (s', l', Some(r.Result))
         | _  -> Reply(Error, r.Error)
     and ``argument or hyphens or space`` stream' (s', l', a') =
       match stream'.SkipAndPeek() with
         | '-' -> ``expecting hyphen 2`` stream' (s', l', a')
         | ' ' -> Reply((s', l', a'))
-        | _   -> let r = pargWithType stream' in match r.Status with
+        | _   -> let r = parg stream' in match r.Status with
           | Ok -> ``short option plus arg`` stream' (s', l', Some(r.Result))
           | _  -> Reply(Error, ErrorMessageList(Expected("space"), r.Error))
     and ``short option plus arg`` stream' tuple' =
@@ -103,28 +98,26 @@ type OptionsParser(soptChars':string) =
         | _   -> Reply(tuple')
     and ``expecting arg or space (long)`` stream' tuple' =
       if stream'.SkipAndPeek() = ' ' then Reply(tuple')
-      else let r = pargWithType stream' in match r.Status with
+      else let r = parg stream' in match r.Status with
         | Ok -> ``long option plus arg (+short?)`` tuple' (Some(r.Result))
         | _  -> Reply(Error, ErrorMessageList(Expected("space"), r.Error))
     and ``expecting arg (long)`` stream' tuple' =
       let () = stream'.Skip() in
-      let r = pargWithType stream' in match r.Status with
+      let r = parg stream' in match r.Status with
         | Ok -> ``long option plus arg (+short?)`` tuple' (Some(r.Result))
         | _  -> Reply(Error, r.Error)
     and ``long option plus arg (+short?)`` (s', l', a') newa' =
       match a', newa' with
         | _, None          -> Reply((s', l', a'))
         | None, _          -> Reply((s', l', newa'))
-        | Some(l), Some(r) ->
-          try Reply((s', l', Some(Token.Argument.Merge(l, r))))
-          with :? System.ArgumentException as e ->
-            replyErr(Message("Arguments differ!\n" + e.Message))
+        | Some(l), Some(r) -> Reply((s', l', Some(String.Concat(l, " or ", r))))
 
-    let poptLine:IOPT.Parser<Token.Option> = fun stream' ->
+    let poptLine:IOPT.Parser<Option> = fun stream' ->
       let reply = ``start`` stream' in
       Reply(reply.Status,
             (if reply.Status = Ok
-             then reply.Result |> Token.Option
+             then let (s, l, arg) = reply.Result in
+                  Option(s, l, defaultArg arg null)
              else Unchecked.defaultof<_>),
             reply.Error)
 
@@ -138,17 +131,17 @@ type OptionsParser(soptChars':string) =
             | Failure(_)       -> if dflt.Success then IOPT.Val(dflt.Value)
                                   else IOPT.Nil
             | Success(r, _, _) -> let () = if dflt.Success
-                                           then r.MutateArgDflt(dflt.Value) in
+                                           then r.Default <- dflt.Value in
                                   IOPT.Opt(r)
         } in
       let options = Options() in
-      let lastOpt = ref Token.Option.Default in
+      let lastOpt = ref Option.Empty in
       let action = function
         | IOPT.Nil      -> ()
         | IOPT.Opt(opt) -> let () = lastOpt := opt in options.Add(opt)
         | IOPT.Val(str) -> let lastOptCopy = !lastOpt in
-                           if lastOptCopy.IsDefault then ()
-                           else lastOptCopy.MutateArgDflt(str)
+                           if lastOptCopy.IsEmpty then ()
+                           else lastOptCopy.Default <- str
       in optionString'.Split([|'\n';'\r'|], StringSplitOptions.RemoveEmptyEntries)
       |> Seq.map parseAsync
       |> Async.Parallel

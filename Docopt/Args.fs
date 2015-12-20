@@ -15,47 +15,20 @@ type Result =
 
 [<StructuredFormatDisplay("Docopt.Arguments.Dictionary {SFDisplay}")>]
 [<AllowNullLiteral>]
-type Dictionary() =
+type Dictionary(options':Options) =
   class
-    member val private dict = Dictionary<string, Result>()
-    internal new(o':Docopt.Options) as xx = Dictionary()
-      then
-        for kv in o'.sopt do
-          xx.dict.Add(String([|'-';kv.Key|]), Flag(false)) done;
-        for kv in o'.lopt do
-          xx.dict.Add(kv.Key, Flag(false)) done
-    interface IDictionary<string, Result> with
-      member xx.Add(k':string, v':Result) = xx.dict.Add(k', v')
-      member xx.Add(kv':KeyValuePair<string,Result>) =
-        let idict = xx.dict :> IDictionary<string, Result> in
-        idict.Add(kv')
-      member xx.Clear() = xx.dict.Clear()
-      member xx.Contains(kv':KeyValuePair<string,Result>) =
-        let idict = xx.dict :> IDictionary<string, Result> in
-        idict.Contains(kv')
-      member xx.ContainsKey(k':string) = xx.dict.ContainsKey(k')
-      member xx.CopyTo(a':KeyValuePair<string,Result> [], i':int) = 
-        let idict = xx.dict :> IDictionary<string, Result> in
-        idict.CopyTo(a', i')
-      member xx.Count = xx.dict.Count
-      member xx.GetEnumerator() =
-        xx.dict.GetEnumerator() :> IEnumerator<KeyValuePair<string,Result>>
-      member xx.GetEnumerator() =
-        xx.dict.GetEnumerator() :> System.Collections.IEnumerator
-      member xx.Remove(k':string) = xx.dict.Remove(k')
-      member xx.Remove(kv':KeyValuePair<string,Result>) =
-        let idict = xx.dict :> IDictionary<string, Result> in
-        idict.Remove(kv')
-      member xx.TryGetValue(k':string, v':byref<Result>) =
-        xx.dict.TryGetValue(k', &v')
-      member __.IsReadOnly = false
-      member xx.Keys = upcast xx.dict.Keys
-      member xx.Values = upcast xx.dict.Values
-      member xx.Item with get k' = xx.dict.[k']
-                      and set k' v' = xx.dict.[k'] <- v'
-    end
-    member xx.AsDictionary() = xx :> IDictionary<string, Result>
-    member xx.AsList() = [for kv in xx.dict do yield (kv.Key, kv.Value) done]
+    let dict = Dictionary<string, Result ref>()
+    do for o in options' do
+         match o.Short, o.Long with
+           | short, null         -> dict.[String([|'-';short|])] <- ref (if o.Default = null then Flag(false) else Argument(o.Default))
+           | Char.MaxValue, long -> dict.[long] <- ref (if o.Default = null then Flag(false) else Argument(o.Default))
+           | short, long         -> let result = ref (if o.Default = null then Flag(false) else Argument(o.Default)) in
+                                    dict.[String([|'-';short|])] <- result;
+                                    dict.[long] <- result
+       done
+    member __.AsList() = [for kv in dict do yield (kv.Key, kv.Value) done]
+    member __.Item with get key' = !dict.[key']
+                    and set key' value' = dict.[key'] := value'
     member inline private xx.SFDisplay = xx.AsList()
   end
 ;;
