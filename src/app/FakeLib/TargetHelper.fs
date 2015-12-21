@@ -41,6 +41,14 @@ let Description text =
 /// [omit]
 let TargetDict = new Dictionary<_,_>()
 
+/// Alias List
+/// [omit]
+let Aliases = new List<_>()
+
+/// Alias List
+/// [omit]
+let Hidden = new List<_>()
+
 /// Final Targets - stores final targets and if they are activated.
 let FinalTargets = new Dictionary<_,_>()
 
@@ -73,7 +81,8 @@ let getTarget name =
     | _  -> 
         traceError <| sprintf "Target \"%s\" is not defined. Existing targets:" name
         for target in TargetDict do
-            traceError  <| sprintf "  - %s" target.Value.Name
+            if not (Hidden.Contains(target.Value.Name)) then
+                traceError  <| sprintf "  - %s" target.Value.Name
         failwithf "Target \"%s\" is not defined." name
 
 /// Returns the DependencyString for the given target.
@@ -256,6 +265,32 @@ let TargetTemplate body = TargetTemplateWithDependencies [] body
 /// Creates a Target.
 let Target name body = TargetTemplate body name ()
 
+/// Creates an alias
+///
+/// Example:
+///
+/// Target "T1" DoNothing
+/// Target "T2" DoNothing
+/// Alias "Alias1" (fun _ ->
+///     "T1" ==> "T2" |> Run
+/// )
+let Alias name body =
+    Target name body
+    Aliases.Add name
+
+/// Creates an alias
+///
+/// Example:
+///
+/// Target "T1" DoNothing
+/// Target "T2" DoNothing
+/// Alias "Alias1" (fun _ ->
+///     "T1" ==> "T2" |> Run
+/// )
+let HiddenTarget name body =
+    Target name body
+    Hidden.Add name
+
 /// Represents build errors
 type BuildError = { 
     Target : string
@@ -328,7 +363,8 @@ let runBuildFailureTargets() =
 let PrintTargets() =
     log "The following targets are available:"
     for t in TargetDict.Values do
-        logfn "   %s%s" t.Name (if isNullOrEmpty t.Description then "" else sprintf " - %s" t.Description)
+        if not (Hidden.Contains(t.Name)) then
+            logfn "   %s%s" t.Name (if isNullOrEmpty t.Description then "" else sprintf " - %s" t.Description)
  
 
 // Maps the specified dependency type into the list of targets
@@ -436,6 +472,7 @@ let isListMode = hasBuildParam "list"
 let listTargets() =
     tracefn "Available targets:"
     TargetDict.Values
+      |> Seq.filter (fun target -> not (Hidden.Contains(target.Name)))
       |> Seq.iter (fun target -> 
             tracefn "  - %s %s" target.Name (if target.Description <> null then " - " + target.Description else "")
             tracefn "     Depends on: %A" target.Dependencies)
@@ -542,7 +579,8 @@ let run targetName =
             runBuildFailureTargets()    
         runFinalTargets()
         killAllCreatedProcesses()
-        WriteTaskTimeSummary watch.Elapsed
+        if not (Aliases.Contains(targetName)) then
+            WriteTaskTimeSummary watch.Elapsed
         changeExitCodeIfErrorOccured()
 
 /// Registers a BuildFailureTarget (not activated).

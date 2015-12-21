@@ -52,5 +52,10 @@ Target "blah" (fun _ ->
     |> List.iter (logfn "%s")
 )
 
+HiddenTarget "T1" DoNothing
+HiddenTarget "T2" DoNothing
+Alias "A1" (fun _ -> "T1" ==> "T2" |> Run)
+Target "A2" (fun _ -> "T1" ==> "T2" |> Run)
+
 RunTargetOrDefault "blah"
 
