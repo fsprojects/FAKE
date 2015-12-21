@@ -1,10 +1,15 @@
 #I __SOURCE_DIRECTORY__
 #I @"../../../../../packages/Octokit/lib/net45"
 #I @"../../../../../../packages/build/Octokit/lib/net45"
+#r "System.Net.Http"
 #r "Octokit.dll"
 
 open Octokit
+open Octokit.Internal
 open System
+open System.Threading
+open System.Net.Http
+open System.Reflection
 open System.IO
 
 type Draft =
@@ -12,6 +17,25 @@ type Draft =
       Owner : string
       Project : string
       DraftRelease : Release }
+
+// wrapper re-implementation of HttpClientAdapter which works around
+// known Octokit bug in which user-supplied timeouts are not passed to HttpClient object
+// https://github.com/octokit/octokit.net/issues/963
+type private HttpClientWithTimeout(timeout : TimeSpan) as this =
+    inherit HttpClientAdapter(fun () -> HttpMessageHandlerFactory.CreateDefault())
+    let setter = lazy(
+        match typeof<HttpClientAdapter>.GetField("_http", BindingFlags.NonPublic ||| BindingFlags.Instance) with
+        | null -> ()
+        | f -> 
+            match f.GetValue(this) with
+            | :? HttpClient as http -> http.Timeout <- timeout
+            | _ -> ())
+
+    interface IHttpClient with
+        member __.Send(request : IRequest, ct : CancellationToken) =
+            setter.Force()
+            match request with :? Request as r -> r.Timeout <- timeout | _ -> ()
+            base.Send(request, ct)
 
 let private isRunningOnMono = System.Type.GetType ("Mono.Runtime") <> null
 
@@ -51,14 +75,18 @@ let private retryWithArg count input asycnF =
 
 let createClient user password =
     async {
-        let github = new GitHubClient(new ProductHeaderValue("FAKE"))
+        let httpClient = new HttpClientWithTimeout(TimeSpan.FromMinutes 20.)
+        let connection = new Connection(new ProductHeaderValue("FAKE"), httpClient)
+        let github = new GitHubClient(connection)
         github.Credentials <- Credentials(user, password)
         return github
     }
 
 let createClientWithToken token =
     async {
-        let github = new GitHubClient(new ProductHeaderValue("FAKE"))
+        let httpClient = new HttpClientWithTimeout(TimeSpan.FromMinutes 20.)
+        let connection = new Connection(new ProductHeaderValue("FAKE"), httpClient)
+        let github = new GitHubClient(connection)
         github.Credentials <- Credentials(token)
         return github
     }
@@ -92,6 +120,13 @@ let uploadFile fileName (draft : Async<Draft>) =
         printfn "Uploaded %s" asset.Name
         return draft'
     }
+
+let uploadFiles fileNames (draft : Async<Draft>) = async {
+    let! draft' = draft
+    let draftW = async { return draft' }
+    let! _ = Async.Parallel [for f in fileNames -> uploadFile f draftW ]
+    return draft'
+}
 
 let releaseDraft (draft : Async<Draft>) =
     retryWithArg 5 draft <| fun draft' -> async {
