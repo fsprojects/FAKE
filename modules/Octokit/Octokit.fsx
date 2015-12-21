@@ -5,6 +5,7 @@
 #r "Octokit.dll"
 
 open Octokit
+open Octokit.Internal
 open System
 open System.Threading
 open System.Net.Http
@@ -21,19 +22,19 @@ type Draft =
 // known Octokit bug in which user-supplied timeouts are not passed to HttpClient object
 // https://github.com/octokit/octokit.net/issues/963
 type private HttpClientWithTimeout(timeout : TimeSpan) as this =
-    inherit Internal.HttpClientAdapter(fun () -> Internal.HttpMessageHandlerFactory.CreateDefault())
+    inherit HttpClientAdapter(fun () -> HttpMessageHandlerFactory.CreateDefault())
     let setter = lazy(
-        match typeof<Internal.HttpClientAdapter>.GetField("_http", BindingFlags.NonPublic ||| BindingFlags.Instance) with
+        match typeof<HttpClientAdapter>.GetField("_http", BindingFlags.NonPublic ||| BindingFlags.Instance) with
         | null -> ()
         | f -> 
             match f.GetValue(this) with
             | :? HttpClient as http -> http.Timeout <- timeout
             | _ -> ())
 
-    interface Internal.IHttpClient with
-        member __.Send(request : Internal.IRequest, ct : CancellationToken) =
+    interface IHttpClient with
+        member __.Send(request : IRequest, ct : CancellationToken) =
             setter.Force()
-            match request with :? Internal.Request as r -> r.Timeout <- timeout | _ -> ()
+            match request with :? Request as r -> r.Timeout <- timeout | _ -> ()
             base.Send(request, ct)
 
 let private isRunningOnMono = System.Type.GetType ("Mono.Runtime") <> null
