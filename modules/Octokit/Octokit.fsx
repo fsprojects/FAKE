@@ -33,6 +33,7 @@ type private HttpClientWithTimeout(timeout : TimeSpan) as this =
     interface Internal.IHttpClient with
         member __.Send(request : Internal.IRequest, ct : CancellationToken) =
             setter.Force()
+            match request with :? Internal.Request as r -> r.Timeout <- timeout | _ -> ()
             base.Send(request, ct)
 
 let private isRunningOnMono = System.Type.GetType ("Mono.Runtime") <> null
