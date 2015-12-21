@@ -130,7 +130,7 @@
     <Compile Include="SpecFlowHelper.fs" />
     <Compile Include="OctoTools.fs" />
     <None Include="paket.references" />
-    <Compile Include="SignHelper.fs" />
+    <Compile Include="SignToolHelper.fs" />
     <Compile Include="MageHelper.fs" />
     <Compile Include="SemVerHelper.fs" />
     <Compile Include="ReleaseNotesHelper.fs" />
