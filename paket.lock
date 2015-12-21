@@ -43,7 +43,7 @@ NUGET
     Microsoft.Web.Xdt (2.1.1)
     Mono.Cecil (0.9.6.1)
     Mono.Web.Xdt (1.0.0)
-    Nancy (1.4.2)
+    Nancy (1.4.3)
     Nancy.Authentication.Forms (1.4.1)
       Nancy (>= 1.4.1)
     Nancy.Authentication.Stateless (1.4.1)
@@ -58,15 +58,15 @@ NUGET
     Nancy.Testing (1.4.1)
       CsQuery (>= 1.3.3)
       Nancy (>= 1.4.1)
-    Nancy.Viewengines.Razor (1.4.1)
+    Nancy.Viewengines.Razor (1.4.3)
       Microsoft.AspNet.Razor
       Microsoft.AspNet.Razor (>= 2.0.30506) - framework: >= net40
-      Nancy (>= 1.4.1)
+      Nancy (>= 1.4.3)
     Newtonsoft.Json (7.0.1)
-    NLog (4.2.2)
+    NLog (4.2.3)
     NuGet.Core (2.10.1)
       Microsoft.Web.Xdt (>= 2.1.0)
-    RavenDB.Client (2.5.2991)
+    RavenDB.Client (2.5.2992)
       Microsoft.CompilerServices.AsyncTargetingPack
     RavenDB.Server (3.0.30000)
     Serilog (1.5.14)
@@ -87,7 +87,7 @@ CONTENT: NONE
 NUGET
   remote: http://nuget.org/api/v2
   specs:
-    FAKE (4.10.4)
+    FAKE (4.11.0)
     FSharp.Compiler.Service (1.4.0.6)
     FSharp.Formatting (2.12.0)
       FSharp.Compiler.Service (1.4.0.6)
@@ -95,6 +95,6 @@ NUGET
     FSharp.Formatting.CommandTool (2.12.0)
     FSharpVSPowerTools.Core (2.1.0)
       FSharp.Compiler.Service (>= 1.4.0.6)
-    ILRepack (2.0.8)
+    ILRepack (2.0.9)
     NuGet.CommandLine (3.3.0)
     SourceLink.Fake (1.1.0)
