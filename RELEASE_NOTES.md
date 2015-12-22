@@ -1,3 +1,6 @@
+#### 4.11.2 - 22.12.2015
+* BUGFIX: Use UTF-8 encoding of AssemblyInfo as written by ReplaceAssemblyInfoVersions - https://github.com/fsharp/FAKE/pull/1055
+
 #### 4.11.1 - 22.12.2015
 * New Open/Close block helpers for TeamCity - https://github.com/fsharp/FAKE/pull/1049
 
