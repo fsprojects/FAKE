@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>NugetFrameworkAssemblyReferences - FAKE - F# Make</title>
+    <title>SignParams - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,8 +36,11 @@
 
 
 
-<h1>NugetFrameworkAssemblyReferences</h1>
+<h1>SignParams</h1>
 <div class="xmldoc">
+<p>Parameters used for signing.</p>
+
+
 </div>
   <h3>Record Fields</h3>
   <table class="table table-bordered member-list">
@@ -48,37 +51,64 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1648', 1648)" onmouseover="showTip(event, '1648', 1648)">
-            AssemblyName
+          <code onmouseout="hideTip(event, '1854', 1854)" onmouseover="showTip(event, '1854', 1854)">
+            Certificate
           </code>
-          <div class="tip" id="1648">
-            <strong>Signature:</strong> string<br />
+          <div class="tip" id="1854">
+            <strong>Signature:</strong> SignCert option<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NuGet/NugetHelper.fs#L24-24" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SignToolHelper.fs#L27-27" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>The optional real certificate that will be used when it is found</p>
+
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1649', 1649)" onmouseover="showTip(event, '1649', 1649)">
-            FrameworkVersions
+          <code onmouseout="hideTip(event, '1855', 1855)" onmouseover="showTip(event, '1855', 1855)">
+            DevCertificate
           </code>
-          <div class="tip" id="1649">
-            <strong>Signature:</strong> string list<br />
+          <div class="tip" id="1855">
+            <strong>Signature:</strong> SignCert<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NuGet/NugetHelper.fs#L23-23" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SignToolHelper.fs#L25-25" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>The dev certificate that will be used when the real certificate can not be found</p>
+
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1856', 1856)" onmouseover="showTip(event, '1856', 1856)">
+            TimeStampUrl
+          </code>
+          <div class="tip" id="1856">
+            <strong>Signature:</strong> Uri option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SignToolHelper.fs#L29-29" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>The optional url of the timestamp server to use</p>
+
+
+
         </td>
       </tr>
     </tbody>

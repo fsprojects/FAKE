@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>NugetFrameworkAssemblyReferences - FAKE - F# Make</title>
+    <title>SignCert - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,8 +36,11 @@
 
 
 
-<h1>NugetFrameworkAssemblyReferences</h1>
+<h1>SignCert</h1>
 <div class="xmldoc">
+<p>Represents a certificate file and an optional password</p>
+
+
 </div>
   <h3>Record Fields</h3>
   <table class="table table-bordered member-list">
@@ -48,37 +51,43 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1648', 1648)" onmouseover="showTip(event, '1648', 1648)">
-            AssemblyName
+          <code onmouseout="hideTip(event, '1852', 1852)" onmouseover="showTip(event, '1852', 1852)">
+            CertFile
           </code>
-          <div class="tip" id="1648">
+          <div class="tip" id="1852">
             <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NuGet/NugetHelper.fs#L24-24" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SignToolHelper.fs#L17-17" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>The certificate files</p>
+
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1649', 1649)" onmouseover="showTip(event, '1649', 1649)">
-            FrameworkVersions
+          <code onmouseout="hideTip(event, '1853', 1853)" onmouseover="showTip(event, '1853', 1853)">
+            PasswordFile
           </code>
-          <div class="tip" id="1649">
-            <strong>Signature:</strong> string list<br />
+          <div class="tip" id="1853">
+            <strong>Signature:</strong> string option<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NuGet/NugetHelper.fs#L23-23" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SignToolHelper.fs#L19-19" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>The file containing the password</p>
+
+
+
         </td>
       </tr>
     </tbody>
