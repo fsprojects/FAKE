@@ -28,19 +28,18 @@ let CreateDocs source outputDir template projectParameters =
     printfn "Successfully generated docs for %s" source
 
 let CreateDocsForDlls outputDir templatesDir projectParameters sourceRepo dllFiles = 
-    let commandPrefix = 
+    for file in dllFiles do
         projectParameters
         |> Seq.map (fun (k, v) -> [ k; v ])
         |> Seq.concat
         |> Seq.append 
-               ([ "metadataformat"; "--generate"; "--outdir"; outputDir; "--layoutroots"; "./help/templates/"; 
-                  templatesDir; "--sourceRepo"; sourceRepo; "--sourceFolder"; currentDirectory; "--parameters" ])
+                ([ "metadataformat"; "--generate"; "--outdir"; outputDir; "--layoutroots"; "./help/templates/"; 
+                    templatesDir; "--sourceRepo"; sourceRepo; "--sourceFolder"; currentDirectory; "--parameters" ])
         |> Seq.map (fun s -> 
-               if s.StartsWith "\"" then s
-               else sprintf "\"%s\"" s)
+                if s.StartsWith "\"" then s
+                else sprintf "\"%s\"" s)
         |> separated " "
+        |> fun prefix -> sprintf "%s --dllfiles \"%s\"" prefix file
+        |> run
 
-    for file in dllFiles do
-        let fileCommand = commandPrefix + (sprintf " --dllfiles \"%s\"" file)
-        run fileCommand
         printfn "Successfully generated docs for DLL %s" file
