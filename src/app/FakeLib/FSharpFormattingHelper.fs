@@ -28,7 +28,7 @@ let CreateDocs source outputDir template projectParameters =
     printfn "Successfully generated docs for %s" source
 
 let CreateDocsForDlls outputDir templatesDir projectParameters sourceRepo dllFiles = 
-    let command = 
+    let commandPrefix = 
         projectParameters
         |> Seq.map (fun (k, v) -> [ k; v ])
         |> Seq.concat
@@ -39,7 +39,8 @@ let CreateDocsForDlls outputDir templatesDir projectParameters sourceRepo dllFil
                if s.StartsWith "\"" then s
                else sprintf "\"%s\"" s)
         |> separated " "
+
     for file in dllFiles do
-        let command = command + sprintf " --dllfiles \"%s\"" file
-        run command
+        let fileCommand = commandPrefix + (sprintf " --dllfiles \"%s\"" file)
+        run fileCommand
         printfn "Successfully generated docs for DLL %s" file
