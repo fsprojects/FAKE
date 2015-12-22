@@ -1,3 +1,6 @@
+#### 4.11.1 - 22.12.2015
+* New Open/Close block helpers for TeamCity - https://github.com/fsharp/FAKE/pull/1049
+
 #### 4.11.0 - 19.12.2015
 * Add specific version parameter in PaketPackParams - https://github.com/fsharp/FAKE/pull/1046
 * Fixed isMacOS function - https://github.com/fsharp/FAKE/pull/1044
