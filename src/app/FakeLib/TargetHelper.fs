@@ -45,7 +45,7 @@ let TargetDict = new Dictionary<_,_>()
 /// [omit]
 let Aliases = new List<_>()
 
-/// Alias List
+/// Hidden Targets List
 /// [omit]
 let Hidden = new List<_>()
 
@@ -278,15 +278,11 @@ let Alias name body =
     Target name body
     Aliases.Add name
 
-/// Creates an alias
+/// Creates a hidden target
 ///
 /// Example:
 ///
-/// Target "T1" DoNothing
-/// Target "T2" DoNothing
-/// Alias "Alias1" (fun _ ->
-///     "T1" ==> "T2" |> Run
-/// )
+/// HiddenTarget "T1" DoNothing
 let HiddenTarget name body =
     Target name body
     Hidden.Add name
