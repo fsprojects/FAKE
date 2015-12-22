@@ -254,10 +254,16 @@ let ReplaceAssemblyInfoVersions param =
         |> replaceAttribute "AssemblyCopyright" parameters.AssemblyCopyright
         |> replaceMetadataAttributes parameters.AssemblyMetadata
     
-    ReadFile parameters.OutputFileName
+    let encoding = Text.Encoding.GetEncoding "UTF-8"
+
+    let fileContent = File.ReadAllLines(parameters.OutputFileName, encoding)
+
+    use writer = new StreamWriter(parameters.OutputFileName, false, encoding)
+
+    fileContent
     |> Seq.map replaceLine
     |> Seq.toList // break laziness
-    |> WriteFile parameters.OutputFileName
+    |> Seq.iter writer.WriteLine
 
 /// Update all AssemblyInfo.[fs|cs|vb] files in the specified directory and its subdirectories
 /// ## Parameters
