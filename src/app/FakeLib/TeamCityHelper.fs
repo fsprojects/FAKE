@@ -25,6 +25,12 @@ let sendToTeamCity format message =
 let sendStrToTeamCity s = 
     if buildServer = TeamCity then postMessage (LogMessage(RemoveLineBreaks s, true))
 
+/// Open Named Block
+let sendOpenBlock = sendToTeamCity "##teamcity[blockOpened name='%s']"
+
+/// Close Named Block
+let sendCloseBlock = sendToTeamCity "##teamcity[blockClosed name='%s']"
+
 /// Sends an error to TeamCity
 let sendTeamCityError error = sendToTeamCity "##teamcity[buildStatus status='FAILURE' text='%s']" error
 
