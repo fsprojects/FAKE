@@ -255,24 +255,46 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
         let cacheFilesExist = 
             System.IO.File.Exists(assemblyPath.Value) &&
             System.IO.File.Exists(cacheConfigPath.Value) 
-        if cacheFilesExist then 
-            let assemVersionValidCount =
+        if cacheFilesExist then
+            let loadedAssemblies =
                 cacheConfig.Value.Assemblies
-                |> Seq.map(fun assemInfo ->
+                |> Seq.choose (fun assemInfo ->
                     try
                         let assem = 
                             if assemInfo.Location <> "" then
                                 Reflection.Assembly.LoadFrom(assemInfo.Location)
                             else
                                 Reflection.Assembly.Load(assemInfo.FullName)
-                        assem.GetName().Version.ToString() = assemInfo.Version
-                    with 
+                        Some(assemInfo, assem)
+                    with
                     | ex -> 
                         if printDetails then tracef "Unable to find assembly %A" assemInfo
-                        false)
-                |> Seq.filter(fun x -> x = true)
+                        None)
+                |> Seq.toList
+            let knownAssemblies =
+                loadedAssemblies
+                |> List.map (fun (assemInfo, assem) -> assemInfo.FullName, assem)
+                |> dict
+            let assemVersionValidCount =
+                loadedAssemblies
+                |> Seq.filter(fun (assemInfo, assem) ->
+                    assem.GetName().Version.ToString() = assemInfo.Version)
                 |> Seq.length
-
+            AppDomain.CurrentDomain.add_AssemblyResolve(new ResolveEventHandler(fun sender ev ->
+              let name = AssemblyName(ev.Name)
+              match knownAssemblies.TryGetValue(ev.Name) with
+              | true, a ->
+                if printDetails then tracefn "Redirect assembly load to known assembly: %s" ev.Name
+                a
+              | _ ->
+                match loadedAssemblies
+                      |> Seq.map snd
+                      |> Seq.tryFind (fun asem -> asem.GetName().Name = name.Name) with
+                | Some (asem) ->
+                    traceFAKE "Redirect assembly from '%s' to '%s'" ev.Name asem.FullName
+                    asem
+                | _ ->
+                    null))
             assemVersionValidCount = Seq.length cacheConfig.Value.Assemblies
         else
             false
