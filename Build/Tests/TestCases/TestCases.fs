@@ -21,9 +21,9 @@ let ( ->= ) (argv':string) val' (doc':Docopt) =
   (sprintf "%A ->= %A" argv' val'), res
 let ( ->! ) (argv':string) val' (doc':Docopt) =
   let argv = argv'.Split([|' '|], StringSplitOptions.RemoveEmptyEntries) in
-  let res = try let _ = doc'.Parse(argv).AsList() in false
-            with e -> e.GetType() = val'
-  (sprintf "%A ->! %s" argv' val'.FullName), res
+  let msg, res = try let _ = doc'.Parse(argv).AsList() in (null, false)
+                 with e -> (e, e.GetType() = val')
+  (sprintf "%A ->! %A" argv' msg), res
 // END HELPER FUNCTIONS FOR ASSERTIONS
 
 Assert.Seq("""

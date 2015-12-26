@@ -140,9 +140,8 @@ type UsageParser(u':string, opts':Options) =
       and fseq seq' = None
       and fsop sop' = incr i;
                       if opt'.Ano
-                      then match Seq.tryFind (fun c' -> not ((!args).AddShort(c')) ) sop' with
-                           | Some(o) -> Some(Err.unexpected ("short option -" + (string o)))
-                           | None    -> None
+                      then Seq.tryFind ((!args).AddShort >> not) sop'
+                           |> Option.map (string >> ( + ) "short option -" >> Err.unexpected)
                       else None
       and flop lop' = None
       in eval ast'
