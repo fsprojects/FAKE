@@ -37,6 +37,10 @@ type AppcastItem = {
     shortVersion : string option;
     /// Mime type of the update file, usualy octetstream
     mimetype : MimeType
+    /// Optional DSA signature for the archive. It is recommended to use this if the app itself is not signed
+    dsaSignature : string option;
+    /// Optional miminal system version for the update
+    minimumSystemVersion : string option;
 }
 
 /// Configuration data for the appcast
