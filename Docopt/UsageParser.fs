@@ -8,34 +8,16 @@ open System.Text
 
 module USPH =
   begin
-    let inline λ f a b = f (a, b)
-    let inline Λ f (a, b) = f a b
-
-    type 'a GList = System.Collections.Generic.List<'a>
     [<NoComparison>]
-    type Optpack =
-      struct
-        val Sopt : GList<char * int>
-        val Lopt : GList<string * int>
-        member xx.MatchSopt(sopt:char) =
-          let idx = xx.Sopt.FindIndex(fun (s', _) -> s' = sopt) in
-          if idx = -1 then true
-          else match xx.Sopt.[idx] with
-                 | _, 1  -> let _ = xx.Sopt.RemoveAt(idx) in false
-                 | _, -2 -> false
-                 | c, n  -> let _ = xx.Sopt.[idx] <- (c, n - 1) in false
-        member xx.MatchLopt(lopt:string) =
-          let idx = xx.Lopt.FindIndex(fun (s', _) -> s' = lopt) in
-          if idx = -1 then true
-          else match xx.Lopt.[idx] with
-                 | _, 1  -> let _ = xx.Lopt.RemoveAt(idx) in false
-                 | _, -2 -> false
-                 | s, n  -> let _ = xx.Lopt.[idx] <- (s, n - 1) in false
+    type Opt =
+      {
+        Sop : string;
+        Lop : string list;
+        Ano : bool;
+      }
+      with
+        static member Default = { Sop=""; Lop=[]; Ano=false; }
       end
-
-    [<NoComparison>]
-    type OptAst =
-      | Sopt
 
     [<NoComparison>]
     type Ast =
@@ -45,13 +27,11 @@ module USPH =
       | Ell of Ast         // One or more (... operator)
       | Req of Ast         // Required (between parenthesis)
       | Sqb of Ast         // Optional (between square brackets)
-      | Ano                // Any options `[options]`
-      | Dsh                // Double dash `[--]` (Bowser team > all)
-      | Ssh                // Single dash `[-]`
       | Seq of Ast array   // Sequence of Ast's
       | Eps                // Epsilon parser
 
-    let opp = OperatorPrecedenceParser<_, unit, unit>()
+    let isLetterOrDigit c' = isLetter(c') || isDigit(c')
+    let opp = OperatorPrecedenceParser<_, unit, Opt>()
     let pupperArg =
       let start c' = isUpper c' || isDigit c' in
       let cont c' = start c' || c' = '-' in
@@ -63,23 +43,26 @@ module USPH =
       >>. many1SatisfyL (( <> ) '>') "any character except '>'"
       .>> pchar '>'
       |>> (fun name' -> String.Concat("<", name', ">"))
+    let psop = let sopt = ref<string> null in skipChar '-'
+               >>. many1SatisfyL ( isLetterOrDigit ) "Short option(s)"
+               |>> (( := ) sopt)
+               >>. updateUserState (fun o' -> { o' with Sop=o'.Sop + (!sopt) })
+    let pano = skipString "[options]"
+               >>. updateUserState (fun o' -> { o' with Ano=true })
+    let psqb = between (pchar '[' >>. spaces) (pchar ']') opp.ExpressionParser
+    let preq = between (pchar '(' >>. spaces) (pchar ')') opp.ExpressionParser
     let parg = pupperArg <|> plowerArg
     let pcmd = many1Satisfy (fun c' -> isLetter(c') || isDigit(c'))
-    let preq = between (pchar '(' >>. spaces) (pchar ')') opp.ExpressionParser
-    let psqb = between (pchar '[' >>. spaces) (pchar ']') opp.ExpressionParser
-    let pano = skipString "[options]"
-    let pdsh = skipString "[--]"
-    let pssh = skipString "[-]"
     let term = choice [|
-                        pano >>% Ano;
-                        pdsh >>% Dsh;
-                        pssh >>% Ssh;
+                        psop >>% Eps;
+                        pano >>% Eps;
                         psqb |>> Sqb;
                         preq |>> Req;
                         parg |>> Arg;
                         pcmd |>> Cmd;
                         |]
-    let pxor = InfixOperator("|", spaces, 10, Associativity.Left, λ Xor)
+    let pxor = InfixOperator("|", spaces, 10, Associativity.Left,
+                             fun x' y' -> Xor(x', y'))
     let pell = let makeEll = function
                  | Seq(seq) as ast -> let cell = seq.[seq.Length - 1] in
                                       (seq.[seq.Length - 1] <- Ell(cell); ast)
@@ -105,53 +88,64 @@ exception ArgvException of string
 type UsageParser(u':string, opts':Options) =
   class
     let parseAsync = function
-      | ""   -> async {
-          return Eps
-        }
-      | line -> async {
-          let line = line.TrimStart() in
-          let index = line.IndexOfAny([|' ';'\t'|]) in
-          return if index = -1 then Eps
-                 else match run pusageLine (line.Substring(index)) with
-                        | Success(res, _, _) -> res
-                        | Failure(err, _, _) -> raise (UsageException(err))
-        }
-    let ast = u'.Split([|'\n';'\r'|], StringSplitOptions.RemoveEmptyEntries)
-              |> Array.map parseAsync
-              |> Async.Parallel
-              |> Async.RunSynchronously
-              |> function
-                   | [||]    -> Eps
-                   | [|ast|] -> ast
-                   | asts    -> Array.reduce (λ Xor) asts
+    | ""   -> async { return (Eps, Opt.Default) }
+    | line -> async {
+        let line = line.TrimStart() in
+        let index = line.IndexOfAny([|' ';'\t'|]) in
+        return if index = -1 then (Eps, Opt.Default)
+               else match runParserOnString pusageLine Opt.Default "" (line.Substring(index)) with
+                    | Success(ast, opt, _) -> (ast, opt)
+                    | Failure(err, _, _)   -> raise (UsageException(err))
+      }
+    let asts =
+      u'.Split([|'\n';'\r'|], StringSplitOptions.RemoveEmptyEntries)
+      |> Array.map parseAsync
+      |> Async.Parallel
+      |> Async.RunSynchronously
+      |> function
+         | [||] -> [|Eps, Opt.Default|]
+         | res  -> res
     let i = ref 0
     let len = ref 0
     let argv = ref<string array> null
     let args = ref<Arguments.Dictionary> null
     let carg () = let argv = !argv in argv.[!i]
-    let rec eval = function
+    let eval ast' opt' =
+      let rec eval ast' =
+        if !i < !len
+        then let c = carg () in
+             if c <> null
+             then if c.Length > 1 && c.[0] = '-'
+                  then if c.Length > 2 && c.[1] = '-'
+                       then flop (c.Substring(2))
+                       else fsop (c.Substring(1))
+                  else evalast ast'
+             else evalast ast'
+        else evalast ast'
+      and evalast = function
       | Arg(arg) -> farg arg
       | Cmd(cmd) -> fcmd cmd
       | Xor(xor) -> fxor xor
       | Ell(ast) -> fell ast
       | Req(ast) -> freq ast
       | Sqb(ast) -> fsqb ast
-      | Ano      -> fano ( )
-      | Dsh      -> fdsh ( )
-      | Ssh      -> fssh ( )
       | Seq(seq) -> fseq seq
-      | Eps      -> feps ( )
-    and farg arg' = None
-    and fcmd cmd' = None
-    and fxor xor' = None
-    and fell ast' = None
-    and freq ast' = None
-    and fsqb ast' = None
-    and fano (  ) = None
-    and fdsh (  ) = None
-    and fssh (  ) = None
-    and fseq seq' = None
-    and feps (  ) = None
+      | Eps      -> None
+      and farg arg' = None
+      and fcmd cmd' = None
+      and fxor xor' = None
+      and fell ast' = None
+      and freq ast' = None
+      and fsqb ast' = None
+      and fseq seq' = None
+      and fsop sop' = incr i;
+                      if opt'.Ano
+                      then match Seq.tryFind (fun c' -> not ((!args).AddShort(c')) ) sop' with
+                           | Some(o) -> Some(Err.unexpected ("short option -" + (string o)))
+                           | None    -> None
+                      else None
+      and flop lop' = None
+      in eval ast'
 //      let e = ref None in
 //      let pred ast' = match eval ast' with
 //        | None -> false
@@ -161,18 +155,22 @@ type UsageParser(u':string, opts':Options) =
 //      else None
 
     member __.Parse(argv':string array, args':Arguments.Dictionary) =
-      i := 0;
       len := argv'.Length;
       argv := argv';
-      args := args';
-      match eval ast with
+      let predicate (ast, opt) =
+        i := 0;
+        args := args';
+        match eval ast opt with
         | _ when !i < !len -> ArgvException("Illegal parameter: " + argv'.[!i])
                               |> raise
-        | None             -> args'
+        | None             -> true
         | Some(err)        -> let pos = FParsec.Position("", 0L, 0L, 0L) in
                               Err.ParserError(pos, null, err).ToString()
                               |> ArgvException
                               |> raise
-    member __.Ast = ast
+      in if Array.exists ( predicate ) asts
+      then !args
+      else ArgvException("") |> raise
+    member __.Asts = asts
   end
 ;;
