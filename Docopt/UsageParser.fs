@@ -114,12 +114,12 @@ type UsageParser(u':string, opts':Options) =
       let rec eval ast' =
         if !i < !len
         then let c = carg () in
-             if c <> null
-             then if c.Length > 1 && c.[0] = '-'
-                  then if c.Length > 2 && c.[1] = '-'
-                       then flop (c.Substring(2))
-                       else fsop (c.Substring(1))
-                  else evalast ast'
+             if c.Length > 1 && c.[0] = '-'
+             then match if c.Length > 2 && c.[1] = '-'
+                        then flop (c.Substring(2))
+                        else fsop (c.Substring(1)) with
+                  | None -> evalast ast'
+                  | some -> some
              else evalast ast'
         else evalast ast'
       and evalast = function
@@ -138,12 +138,16 @@ type UsageParser(u':string, opts':Options) =
       and freq ast' = None
       and fsqb ast' = None
       and fseq seq' = None
-      and fsop sop' = incr i;
-                      if opt'.Ano
+      and fsop sop' = if opt'.Ano
                       then Seq.tryFind ((!args).AddShort >> not) sop'
-                           |> Option.map (string >> ( + ) "short option -" >> Err.unexpected)
-                      else None
-      and flop lop' = None
+                           |> Option.map (string >> ( + ) "short option -"
+                                                 >> Err.unexpected)
+                      else (incr i; None)
+      and flop lop' = if opt'.Ano
+                      then if (!args).AddLong(lop')
+                           then None
+                           else Some(Err.unexpected("long option --" + lop'))
+                      else (incr i; None)
       in eval ast'
 //      let e = ref None in
 //      let pred ast' = match eval ast' with
@@ -154,22 +158,21 @@ type UsageParser(u':string, opts':Options) =
 //      else None
 
     member __.Parse(argv':string array, args':Arguments.Dictionary) =
+      let lastError = ref (ArgvException(null)) in
       len := argv'.Length;
       argv := argv';
       let predicate (ast, opt) =
         i := 0;
         args := args';
         match eval ast opt with
-        | _ when !i < !len -> ArgvException("Illegal parameter: " + argv'.[!i])
-                              |> raise
         | None             -> true
         | Some(err)        -> let pos = FParsec.Position("", 0L, 0L, 0L) in
-                              Err.ParserError(pos, null, err).ToString()
-                              |> ArgvException
-                              |> raise
+                              lastError := Err.ParserError(pos, null, err).ToString()
+                                           |> ArgvException;
+                              false
       in if Array.exists ( predicate ) asts
       then !args
-      else ArgvException("") |> raise
+      else raise (!lastError)
     member __.Asts = asts
   end
 ;;

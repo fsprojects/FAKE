@@ -21,8 +21,9 @@ let ( ->= ) (argv':string) val' (doc':Docopt) =
   (sprintf "%A ->= %A" argv' val'), res
 let ( ->! ) (argv':string) val' (doc':Docopt) =
   let argv = argv'.Split([|' '|], StringSplitOptions.RemoveEmptyEntries) in
-  let msg, res = try let _ = doc'.Parse(argv).AsList() in (null, false)
-                 with e -> (e, e.GetType() = val')
+  let msg, res =
+    try let _ = doc'.Parse(argv).AsList() in (box "<NO EXN>", false)
+    with e -> (box e, e.GetType() = val') in
   (sprintf "%A ->! %A" argv' msg), res
 // END HELPER FUNCTIONS FOR ASSERTIONS
 
@@ -31,7 +32,7 @@ Usage: prog
 
 """,
   ""      ->= [],
-  "--xxx" ->! typeof<ArgvException> 
+  "--xxx" ->! typeof<ArgvException>
 )
 
 Assert.Seq("""
@@ -45,24 +46,17 @@ Options: -a  All.
   "-x" ->! typeof<ArgvException>
 )
 
-
-(*
-
-let doc = Docopt("""Usage: prog [options]
+Assert.Seq("""Usage: prog [options]
 
 Options: --all  All.
 
-""")
-$ prog
-{"--all": false}
+""",
+  ""      ->= [("--all", Flag(false))],
+  "--all" ->= [("--all", Flag(true))],
+  "--xxx" ->! typeof<ArgvException>
+)
 
-$ prog --all
-{"--all": true}
-
-$ prog --xxx
-"user-error"
-
-
+(*
 let doc = Docopt("""Usage: prog [options]
 
 Options: -v, --verbose  Verbose.
