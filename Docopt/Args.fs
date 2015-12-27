@@ -47,10 +47,16 @@ type Dictionary(options':Options) =
       in Seq.exists ( predicate ) options'
     member xx.AddLong(l':string, ?arg':string) =
       let predicate (o':Option) =
-        if o'.Long <> l'
-        then false
-        else (xx.UnsafeAdd(String.Concat("--", l'), ?arg'=arg'); true)
-      in Seq.exists ( predicate ) options'
+        if o'.Long = l'
+        then (xx.UnsafeAdd(String.Concat("--", l'), ?arg'=arg'); true)
+        else false
+      in let predicateTruncated (o':Option) =
+        if o'.Long.StartsWith(l')
+        then (xx.UnsafeAdd(String.Concat("--", o'.Long), ?arg'=arg'); true)
+        else false
+      in if Seq.exists ( predicate ) options'
+         then true
+         else Seq.exists ( predicateTruncated ) options'
     member inline private xx.SFDisplay = xx.AsList()
   end
 ;;
