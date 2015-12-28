@@ -1,8 +1,7 @@
-#### 4.11.3 - 22.12.2015
-* BUGFIX: Use UTF-8 encoding of AssemblyInfo as written by ReplaceAssemblyInfoVersions - https://github.com/fsharp/FAKE/pull/1055
-
-#### 4.11.1 - 22.12.2015
+#### 4.12.0 - 28.12.2015
+* Change SignToolHelper syntax to reflect common call syntax - https://github.com/fsharp/FAKE/pull/1051
 * New Open/Close block helpers for TeamCity - https://github.com/fsharp/FAKE/pull/1049
+* BUGFIX: Use UTF-8 encoding of AssemblyInfo as written by ReplaceAssemblyInfoVersions - https://github.com/fsharp/FAKE/pull/1055
 
 #### 4.11.0 - 19.12.2015
 * Add specific version parameter in PaketPackParams - https://github.com/fsharp/FAKE/pull/1046
