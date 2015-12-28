@@ -137,6 +137,7 @@ Target "CopyLicense" (fun _ ->
 
 Target "Test" (fun _ ->
     !! (testDir @@ "Test.*.dll")
+    |> Seq.filter (fun fileName -> if isMono then fileName.ToLower().Contains "deploy" |> not else true)
     |> MSpec (fun p ->
             {p with
                 ToolPath = findToolInSubPath "mspec-x86-clr4.exe" (currentDirectory @@ "tools" @@ "MSpec")
