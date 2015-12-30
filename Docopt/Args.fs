@@ -30,14 +30,21 @@ type Dictionary(options':Options) =
     member __.Item with get key' = !dict.[key']
                     and set key' value' = dict.[key'] := value'
     member xx.UnsafeAdd(key':string, ?arg':string) =
-      let newval = match xx.[key'] with
-      | None
-      | Flag(false)                      -> Flag(true)
-      | Flag(_)                          -> Flags(2)
-      | Flags(n)                         -> Flags(n + 1)
-      | Argument(arg) when arg'.IsSome   -> Arguments([arg'.Value;arg])
-      | Arguments(args) when arg'.IsSome -> Arguments(arg'.Value::args)
-      | value                            -> value in
+      let newval =
+        if arg'.IsNone
+        then match xx.[key'] with
+             | None
+             | Flag(false) -> Flag(true)
+             | Flag(_)     -> Flags(2)
+             | Flags(n)    -> Flags(n + 1)
+             | value       -> value
+        else match xx.[key'] with
+             | None
+             | Flag(_)
+             | Flags(_)        -> Argument(arg'.Value)
+             | Argument(arg)   -> Arguments([arg'.Value;arg])
+             | Arguments(args) -> Arguments(arg'.Value::args)
+             | value           -> value in
       xx.[key'] <- newval
     member xx.AddShort(s':char, ?arg':string) =
       let predicate (o':Option) =

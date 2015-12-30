@@ -117,7 +117,7 @@ type OptionsParser(soptChars':string) =
       Reply(reply.Status,
             (if reply.Status = Ok
              then let (s, l, arg) = reply.Result in
-                  Option(s, l, defaultArg arg null)
+                  Option(s, l, defaultArg arg null, null)
              else Unchecked.defaultof<_>),
             reply.Error)
 

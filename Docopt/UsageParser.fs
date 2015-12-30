@@ -80,7 +80,16 @@ module USPH =
 ;;
 
 open USPH
+
 module Err = FParsec.Error
+module Err =
+  begin
+    let unexpectedShort = string
+                          >> ( + ) "short option -"
+                          >> unexpected
+    let unexpectedLong = ( + ) "long option --"
+                         >> unexpected
+  end
 
 exception UsageException of string
 exception ArgvException of string
@@ -138,15 +147,29 @@ type UsageParser(u':string, opts':Options) =
       and freq ast' = None
       and fsqb ast' = None
       and fseq seq' = None
-      and fsop sop' = if opt'.Ano
-                      then Seq.tryFind ((!args).AddShort >> not) sop'
-                           |> Option.map (string >> ( + ) "short option -"
-                                                 >> Err.unexpected)
-                      else (incr i; None)
+      and fsop sop' = let mutable j = 0 in
+                      let mutable err = None in
+                      let add (s':char) =
+                        match opts'.Find(s') with
+                        | null -> err <- Some(Err.unexpectedShort s')
+                        | opt  -> if if opt.HasArgument
+                                     then if j + 1 >= sop'.Length
+                                          then (incr i; (!args).AddShort(s', carg ()))
+                                          else let oj = j + 1 in
+                                               (j <- sop'.Length; (!args).AddShort(s', sop'.Substring(oj)))
+                                     else (!args).AddShort(s')
+                                  then ()
+                                  else err <- Some(Err.unexpectedShort s')
+                      in while err.IsNone && j < sop'.Length do
+                        add sop'.[j];
+                        j <- j + 1
+                      done;
+                      incr i;
+                      err
       and flop lop' = if opt'.Ano
                       then if (!args).AddLong(lop')
                            then None
-                           else Some(Err.unexpected("long option --" + lop'))
+                           else Some(Err.unexpectedLong lop')
                       else (incr i; None)
       in eval ast'
 //      let e = ref None in
@@ -166,7 +189,7 @@ type UsageParser(u':string, opts':Options) =
         args := args';
         match eval ast opt with
         | None             -> true
-        | Some(err)        -> let pos = FParsec.Position("", 0L, 0L, 0L) in
+        | Some(err)        -> let pos = FParsec.Position(null, 0L, 0L, 0L) in
                               lastError := Err.ParserError(pos, null, err).ToString()
                                            |> ArgvException;
                               false

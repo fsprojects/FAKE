@@ -68,22 +68,17 @@ Options: -v, --verbose  Verbose.
   "-v"        ->= [("-v", Flag(true));("--verbose", Flag(true))]
 )
 
-(*
-let doc = Docopt("""Usage: prog [options]
+Assert.Seq("""Usage: prog [options]
 
 Options: -p PATH
 
-""")
-$ prog -p home/
-{"-p": "home/"}
+""",
+  "-p home/" ->= [("-p", Argument("home/"))],
+  "-phome/"  ->= [("-p", Argument("home/"))],
+  "-p"       ->! typeof<ArgvException>
+)
 
-$ prog -phome/
-{"-p": "home/"}
-
-$ prog -p
-"user-error"
-
-
+(*
 let doc = Docopt("""Usage: prog [options]
 
 Options: --path <path>
