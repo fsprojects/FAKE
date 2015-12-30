@@ -89,6 +89,8 @@ module Err =
                           >> unexpected
     let unexpectedLong = ( + ) "long option --"
                          >> unexpected
+    let expectedArg = ( + ) "argument "
+                      >> expected
   end
 
 exception UsageException of string
@@ -147,25 +149,29 @@ type UsageParser(u':string, opts':Options) =
       and freq ast' = None
       and fsqb ast' = None
       and fseq seq' = None
-      and fsop sop' = let mutable j = 0 in
-                      let mutable err = None in
-                      let add (s':char) =
-                        match opts'.Find(s') with
-                        | null -> err <- Some(Err.unexpectedShort s')
-                        | opt  -> if if opt.HasArgument
-                                     then if j + 1 >= sop'.Length
-                                          then (incr i; (!args).AddShort(s', carg ()))
-                                          else let oj = j + 1 in
-                                               (j <- sop'.Length; (!args).AddShort(s', sop'.Substring(oj)))
-                                     else (!args).AddShort(s')
-                                  then ()
-                                  else err <- Some(Err.unexpectedShort s')
-                      in while err.IsNone && j < sop'.Length do
-                        add sop'.[j];
-                        j <- j + 1
-                      done;
-                      incr i;
-                      err
+      and fsop sop' =
+        let mutable j = 0 in
+        let mutable err = None in
+        let add = function
+          | null -> false
+          | opt  -> let s = (opt:Option).Short in
+                    if opt.HasArgument
+                    then if j + 1 >= sop'.Length
+                         then (incr i;
+                               (!args).AddShort(s, carg ()))
+                         else let argpos = j + 1 in
+                              (j <- sop'.Length;
+                               (!args).AddShort(s, sop'.Substring(argpos)))
+                    else (!args).AddShort(s)
+        in while err.IsNone && j < sop'.Length do
+          let opt:Option = opts'.Find(sop'.[j]) in
+          (try if not (add opt) then err <- Some(Err.unexpectedShort sop'.[j])
+           with :? IndexOutOfRangeException ->
+             err <- Some(Err.expectedArg opt.ArgName));
+          j <- j + 1
+        done;
+        incr i;
+        err
       and flop lop' = if opt'.Ano
                       then if (!args).AddLong(lop')
                            then None

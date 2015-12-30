@@ -19,14 +19,15 @@ let ( ->= ) (argv':string) val' (doc':Docopt) =
   let argv = argv'.Split([|' '|], StringSplitOptions.RemoveEmptyEntries) in
   let args = doc'.Parse(argv) in
   let res = (List.sort (args.AsList())) = List.sort val' in
+  if not res then printfn "Got args = %A" args
   (sprintf "%A ->= %A" argv' val'), res
 let ( ->! ) (argv':string) val' (doc':Docopt) =
-//  let argv = argv'.Split([|' '|], StringSplitOptions.RemoveEmptyEntries) in
-//  let msg, res =
-//    try let _ = doc'.Parse(argv).AsList() in (box "<NO EXN>", false)
-//    with e -> (box e, e.GetType() = val') in
-//  (sprintf "%A ->! %A" argv' msg), res
-  (sprintf "%A ->! %A" argv' null), true
+  let argv = argv'.Split([|' '|], StringSplitOptions.RemoveEmptyEntries) in
+  let msg, res =
+    try let _ = doc'.Parse(argv).AsList() in (box "<NO EXN>", false)
+    with e -> (box e, e.GetType() = val') in
+  (sprintf "%A ->! %A" argv' msg), res
+//  (sprintf "%A ->! %A" argv' null), true
 // END HELPER FUNCTIONS FOR ASSERTIONS
 
 Assert.Seq("""
