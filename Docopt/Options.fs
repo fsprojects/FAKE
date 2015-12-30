@@ -24,5 +24,9 @@ type Options() =
   class
     inherit List<Option>()
     member __.Find(s':char) = base.Find(fun o' -> o'.Short = s')
+    member __.Find(l':string) =
+      match base.Find(fun o' -> o'.Long = l') with
+      | null -> base.Find(fun o' -> o'.Long.StartsWith(l'))
+      | opt  -> opt
   end
 ;;

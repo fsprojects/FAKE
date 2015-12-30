@@ -79,28 +79,19 @@ Options: -p PATH
   "-p"       ->! typeof<ArgvException>
 )
 
-(*
-let doc = Docopt("""Usage: prog [options]
+Assert.Seq("""Usage: prog [options]
 
 Options: --path <path>
 
-""")
-$ prog --path home/
-{"--path": "home/"}
+""",
+  "--path home/" ->= [("--path", Argument("home/"))],
+  "--path=home/" ->= [("--path", Argument("home/"))],
+  "--pa home/"   ->= [("--path", Argument("home/"))],
+  "--pa=home/"   ->= [("--path", Argument("home/"))],
+  "--path"       ->! typeof<ArgvException>
+)
 
-$ prog --path=home/
-{"--path": "home/"}
-
-$ prog --pa home/
-{"--path": "home/"}
-
-$ prog --pa=home/
-{"--path": "home/"}
-
-$ prog --path
-"user-error"
-
-
+(*
 let doc = Docopt("""Usage: prog [options]
 
 Options: -p PATH, --path=<path>  Path to files.

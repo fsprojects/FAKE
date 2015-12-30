@@ -91,6 +91,7 @@ module Err =
                          >> unexpected
     let expectedArg = ( + ) "argument "
                       >> expected
+    let unexpectedArg = unexpected "argument "
   end
 
 exception UsageException of string
@@ -172,11 +173,27 @@ type UsageParser(u':string, opts':Options) =
         done;
         incr i;
         err
-      and flop lop' = if opt'.Ano
-                      then if (!args).AddLong(lop')
-                           then None
-                           else Some(Err.unexpectedLong lop')
-                      else (incr i; None)
+      and flop lop' =
+        try
+          let opt, arg = match lop'.IndexOf('=') with
+                         | -1 -> let lop = opts'.Find(lop') in
+                                 if lop.HasArgument
+                                 then (incr i; lop, Some(carg ()))
+                                 else lop, None
+                         | eq -> let lop = opts'.Find(lop'.Substring(0, eq)) in
+                                 lop, Some(lop'.Substring(eq + 1)) in
+          if opt = null
+          then Some(Err.unexpectedLong lop')
+          else match opt.HasArgument, arg.IsSome with
+               | true, false -> Some(Err.expectedArg opt.ArgName)
+               | false, true -> Some(Err.unexpectedArg)
+               | _           -> if (!args).AddLong(opt.Long, ?arg'=arg)
+                                then None
+                                else Some(Err.unexpectedLong opt.Long)
+        with :? IndexOutOfRangeException -> decr i;
+                                            (carg ()).Substring(2)
+                                            |> Err.unexpectedLong
+                                            |> Some
       in eval ast'
 //      let e = ref None in
 //      let pred ast' = match eval ast' with
