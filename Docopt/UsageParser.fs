@@ -41,8 +41,9 @@ module USPH =
     let plowerArg =
       satisfyL (( = ) '<') "<lower-case> identifier"
       >>. many1SatisfyL (( <> ) '>') "any character except '>'"
-      .>> pchar '>'
+      .>> skipChar '>'
       |>> (fun name' -> String.Concat("<", name', ">"))
+    let parg = pupperArg <|> plowerArg
     let psop = let sopt = ref<string> null in skipChar '-'
                >>. many1SatisfyL ( isLetterOrDigit ) "Short option(s)"
                |>> (( := ) sopt)
@@ -51,7 +52,6 @@ module USPH =
                >>. updateUserState (fun o' -> { o' with Ano=true })
     let psqb = between (pchar '[' >>. spaces) (pchar ']') opp.ExpressionParser
     let preq = between (pchar '(' >>. spaces) (pchar ')') opp.ExpressionParser
-    let parg = pupperArg <|> plowerArg
     let pcmd = many1Satisfy (fun c' -> isLetter(c') || isDigit(c'))
     let term = choice [|
                         psop >>% Eps;
@@ -174,9 +174,11 @@ type UsageParser(u':string, opts':Options) =
         incr i;
         err
       and flop lop' =
+        let mutable ropt = null in
         try
           let opt, arg = match lop'.IndexOf('=') with
                          | -1 -> let lop = opts'.Find(lop') in
+                                 ropt <- lop;
                                  if lop.HasArgument
                                  then (incr i; lop, Some(carg ()))
                                  else lop, None
@@ -190,10 +192,7 @@ type UsageParser(u':string, opts':Options) =
                | _           -> if (!args).AddLong(opt.Long, ?arg'=arg)
                                 then None
                                 else Some(Err.unexpectedLong opt.Long)
-        with :? IndexOutOfRangeException -> decr i;
-                                            (carg ()).Substring(2)
-                                            |> Err.unexpectedLong
-                                            |> Some
+        with :? IndexOutOfRangeException -> Some(Err.expectedArg ropt.ArgName)
       in eval ast'
 //      let e = ref None in
 //      let pred ast' = match eval ast' with

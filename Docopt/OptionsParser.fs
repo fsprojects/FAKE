@@ -28,10 +28,11 @@ type OptionsParser(soptChars':string) =
                                     isAsciiIdContinue=cont,
                                     label="UPPER-CASE identifier"))
 
-    let plowerArg:IOPT.Parser<string> =
+    let plowerArg =
       satisfyL (( = ) '<') "<lower-case> identifier"
       >>. many1SatisfyL (( <> ) '>') "any character except '>'"
-      .>> pchar '>'
+      .>> skipChar '>'
+      |>> (fun name' -> String.Concat("<", name', ">"))
 
     let parg:IOPT.Parser<string> =
       pupperArg <|> plowerArg
