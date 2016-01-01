@@ -30,6 +30,7 @@ let ( ->! ) (argv':string) val' (doc':Docopt) =
 //  (sprintf "%A ->! %A" argv' null), true
 // END HELPER FUNCTIONS FOR ASSERTIONS
 
+(* Empty usage *)
 Assert.Seq("""
 Usage: prog
 
@@ -38,6 +39,7 @@ Usage: prog
   "--xxx" ->! typeof<ArgvException>
 )
 
+(* Basic short option *)
 Assert.Seq("""
 Usage: prog [options]
 
@@ -49,6 +51,7 @@ Options: -a  All.
   "-x" ->! typeof<ArgvException>
 )
 
+(* Basic long option *)
 Assert.Seq("""Usage: prog [options]
 
 Options: --all  All.
@@ -59,6 +62,7 @@ Options: --all  All.
   "--xxx" ->! typeof<ArgvException>
 )
 
+(* Synonymous short and long option, with truncation *)
 Assert.Seq("""Usage: prog [options]
 
 Options: -v, --verbose  Verbose.
@@ -69,6 +73,7 @@ Options: -v, --verbose  Verbose.
   "-v"        ->= [("-v", Flag(true));("--verbose", Flag(true))]
 )
 
+(* Short option with argument *)
 Assert.Seq("""Usage: prog [options]
 
 Options: -p PATH
@@ -79,6 +84,7 @@ Options: -p PATH
   "-p"       ->! typeof<ArgvException>
 )
 
+(* Long option with argument *)
 Assert.Seq("""Usage: prog [options]
 
 Options: --path <path>
@@ -91,28 +97,26 @@ Options: --path <path>
   "--path"       ->! typeof<ArgvException>
 )
 
-(*
-let doc = Docopt("""Usage: prog [options]
+(* Synonymous short and long option with both arguments declared *)
+Assert.Seq("""Usage: prog [options]
 
 Options: -p PATH, --path=<path>  Path to files.
 
-""")
-$ prog -proot
-{"--path": "root"}
+""",
+  "-proot" ->= [("-p", Argument("root"));("--path", Argument("root"))]
+)
 
-
-let doc = Docopt("""Usage: prog [options]
+(* Synonymous short and long option with one argument declared *)
+Assert.Seq("""Usage: prog [options]
 
 Options:    -p --path PATH  Path to files.
 
-""")
-$ prog -p root
-{"--path": "root"}
+""",
+  "-p root"     ->= [("-p", Argument("root"));("--path", Argument("root"))],
+  "--path root" ->= [("-p", Argument("root"));("--path", Argument("root"))]
+)
 
-$ prog --path root
-{"--path": "root"}
-
-
+(*
 let doc = Docopt("""Usage: prog [options]
 
 Options:
