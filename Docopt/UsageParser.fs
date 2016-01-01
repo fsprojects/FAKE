@@ -130,7 +130,7 @@ type UsageParser(u':string, opts':Options) =
              then match if c.Length > 2 && c.[1] = '-'
                         then flop (c.Substring(2))
                         else fsop (c.Substring(1)) with
-                  | None -> evalast ast'
+                  | None -> eval ast'
                   | some -> some
              else evalast ast'
         else evalast ast'
@@ -186,12 +186,13 @@ type UsageParser(u':string, opts':Options) =
                                  lop, Some(lop'.Substring(eq + 1)) in
           if opt = null
           then Some(Err.unexpectedLong lop')
-          else match opt.HasArgument, arg.IsSome with
-               | true, false -> Some(Err.expectedArg opt.ArgName)
-               | false, true -> Some(Err.unexpectedArg)
-               | _           -> if (!args).AddLong(opt.Long, ?arg'=arg)
-                                then None
-                                else Some(Err.unexpectedLong opt.Long)
+          else (incr i;
+                match opt.HasArgument, arg.IsSome with
+                | true, false -> Some(Err.expectedArg opt.ArgName)
+                | false, true -> Some(Err.unexpectedArg)
+                | _           -> if (!args).AddLong(opt.Long, ?arg'=arg)
+                                 then None
+                                 else Some(Err.unexpectedLong opt.Long))
         with :? IndexOutOfRangeException -> Some(Err.expectedArg ropt.ArgName)
       in eval ast'
 //      let e = ref None in

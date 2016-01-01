@@ -138,31 +138,21 @@ OpTiOnS: --path=<files>  Path to files
   "--path=home" ->= [("--path", Argument("home"))]
 )
 
-(*
-let doc = Docopt("""usage: prog [options]
+(* Multiple short options *)
+Assert.Seq("""usage: prog [options]
 
 options:
     -a        Add
     -r        Remote
     -m <msg>  Message
 
-""")
-$ prog -a -r -m Hello
-{"-a": true,
- "-r": true,
- "-m": "Hello"}
+""",
+  "-a -r -m Hello" ->= [("-a", Flag(true));("-r", Flag(true));("-m", Argument("Hello"))],
+  "-armyourass"    ->= [("-a", Flag(true));("-r", Flag(true));("-m", Argument("yourass"))],
+  "-a -r"          ->= [("-a", Flag(true));("-r", Flag(true));("-m", Flag(false))]
+)
 
-$ prog -armyourass
-{"-a": true,
- "-r": true,
- "-m": "yourass"}
-
-$ prog -a -r
-{"-a": true,
- "-r": true,
- "-m": null}
-
-
+(*
 let doc = Docopt("""Usage: prog [options]
 
 Options: --version
