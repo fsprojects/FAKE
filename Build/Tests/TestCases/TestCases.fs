@@ -127,20 +127,18 @@ Options:
   "-phome" ->= [("-p", Argument("home"))]
 )
 
-(*
-let doc = Docopt("""UsAgE: prog [options]
+(* Unusual formatting *)
+Assert.Seq("""UsAgE: prog [options]
 
 OpTiOnS: --path=<files>  Path to files
                 [dEfAuLt: /root]
 
-""")
-$ prog
-{"--path": "/root"}
+""",
+  ""            ->= [("--path", Default("/root"))],
+  "--path=home" ->= [("--path", Argument("home"))]
+)
 
-$ prog --path=home
-{"--path": "home"}
-
-
+(*
 let doc = Docopt("""usage: prog [options]
 
 options:

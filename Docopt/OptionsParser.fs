@@ -125,8 +125,7 @@ type OptionsParser(soptChars':string) =
           let dflt = defaultRegex.Match(line') in
           return
             match run poptLine line' with
-            | Failure(e, _, _) -> printfn "ERROR = %A"e;
-                                  if dflt.Success then Val(dflt.Value)
+            | Failure(e, _, _) -> if dflt.Success then Val(dflt.Value)
                                   else Nil
             | Success(r, _, _) -> (if dflt.Success then r.Default <- dflt.Value);
                                   Opt(r)
