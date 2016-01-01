@@ -17,6 +17,7 @@ type Option(short':char, long':string, argName':string, default':string) =
     static member Empty = Option()
     member xx.IsEmpty = xx = Option.Empty
     member xx.HasArgument = xx.ArgName <> null
+    member xx.HasDefault = xx.Default <> null
   end
 ;;
 

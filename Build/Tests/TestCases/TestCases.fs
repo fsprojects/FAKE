@@ -116,20 +116,18 @@ Options:    -p --path PATH  Path to files.
   "--path root" ->= [("-p", Argument("root"));("--path", Argument("root"))]
 )
 
-(*
-let doc = Docopt("""Usage: prog [options]
+(* Short option with default *)
+Assert.Seq("""Usage: prog [options]
 
 Options:
  -p PATH  Path to files [default: ./]
 
-""")
-$ prog
-{"-p": "./"}
+""",
+  ""       ->= [("-p", Default("./"))],
+  "-phome" ->= [("-p", Argument("home"))]
+)
 
-$ prog -phome
-{"-p": "home"}
-
-
+(*
 let doc = Docopt("""UsAgE: prog [options]
 
 OpTiOnS: --path=<files>  Path to files

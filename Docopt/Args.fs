@@ -10,6 +10,7 @@ type Result =
   | Flag of bool
   | Flags of int
   | Command of bool
+  | Default of string
   | Argument of string
   | Arguments of string list
 
@@ -19,11 +20,13 @@ type Dictionary(options':Options) =
   class
     let dict = Dictionary<string, Result ref>()
     do for o in options' do
+         let result = ref (if o.HasDefault
+                           then Default(o.Default)
+                           else Flag(false)) in
          match o.Short, o.Long with
-         | short, null         -> dict.[String([|'-';short|])] <- ref (if o.Default = null then Flag(false) else Argument(o.Default))
-         | Char.MaxValue, long -> dict.[String.Concat("--", long)] <- ref (if o.Default = null then Flag(false) else Argument(o.Default))
-         | short, long         -> let result = ref (if o.Default = null then Flag(false) else Argument(o.Default)) in
-                                  dict.[String([|'-';short|])] <- result;
+         | short, null         -> dict.[String([|'-';short|])] <- result
+         | Char.MaxValue, long -> dict.[String.Concat("--", long)] <- result
+         | short, long         -> dict.[String([|'-';short|])] <- result;
                                   dict.[String.Concat("--", long)] <- result
        done
     member __.AsList() = [for kv in dict do yield (kv.Key, !kv.Value) done]
@@ -41,7 +44,8 @@ type Dictionary(options':Options) =
         else match xx.[key'] with
              | None
              | Flag(_)
-             | Flags(_)        -> Argument(arg'.Value)
+             | Flags(_)
+             | Default(_)      -> Argument(arg'.Value)
              | Argument(arg)   -> Arguments([arg'.Value;arg])
              | Arguments(args) -> Arguments(arg'.Value::args)
              | value           -> value in

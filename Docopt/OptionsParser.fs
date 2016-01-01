@@ -6,22 +6,16 @@ open FParsec
 open System
 open System.Text.RegularExpressions
 
-module internal IOPT =
-  begin
-    type UserState = unit
-
-    type Parser<'t> = Parser<'t, UserState>
-
-    [<NoComparison>]
-    type PoptLineResult =
-      | Opt of Option
-      | Val of string
-      | Nil
-  end
+[<NoComparison>]
+type internal PoptLineResult =
+  | Opt of Option
+  | Val of string
+  | Nil
+;;
 
 type OptionsParser(soptChars':string) =
   class
-    let pupperArg:IOPT.Parser<string> =
+    let pupperArg =
       let start c' = isUpper c' || isDigit c' in
       let cont c' = start c' || c' = '-' in
       identifier (IdentifierOptions(isAsciiIdStart=start,
@@ -34,7 +28,7 @@ type OptionsParser(soptChars':string) =
       .>> skipChar '>'
       |>> (fun name' -> String.Concat("<", name', ">"))
 
-    let parg:IOPT.Parser<string> =
+    let parg =
       pupperArg <|> plowerArg
 
     let replyErr err' = Reply(Error, ErrorMessageList(err'))
@@ -82,7 +76,7 @@ type OptionsParser(soptChars':string) =
     and ``expecting hyphen 1`` stream' tuple' =
       if stream'.SkipAndPeek() = '-'
       then ``expecting hyphen 2`` stream' tuple'
-      else replyErr(Expected("'-'"))
+      else Reply(tuple') //////////////////// CHANGE DFA //////////////////////
     and ``expecting hyphen 2`` stream' tuple' =
       if stream'.SkipAndPeek() = '-'
       then ``expecting long option`` stream' tuple'
@@ -113,36 +107,38 @@ type OptionsParser(soptChars':string) =
         | None, _          -> Reply((s', l', newa'))
         | Some(l), Some(r) -> Reply((s', l', Some(String.Concat(l, " or ", r))))
 
-    let poptLine:IOPT.Parser<Option> = fun stream' ->
+    let poptLine = fun stream' ->
       let reply = ``start`` stream' in
       Reply(reply.Status,
             (if reply.Status = Ok
              then let (s, l, arg) = reply.Result in
                   Option(s, l, defaultArg arg null, null)
-             else Unchecked.defaultof<_>),
+             else null),
             reply.Error)
 
     let defaultRegex = Regex(@"(?<=\[default:\s).*(?=]\s*$)",
-                             RegexOptions.RightToLeft)
+                             RegexOptions.RightToLeft
+                             ||| RegexOptions.IgnoreCase)
 
     member __.Parse(optionString':string) =
       let parseAsync line' = async {
           let dflt = defaultRegex.Match(line') in
-          return match run poptLine line' with
-            | Failure(_)       -> if dflt.Success then IOPT.Val(dflt.Value)
-                                  else IOPT.Nil
-            | Success(r, _, _) -> let () = if dflt.Success
-                                           then r.Default <- dflt.Value in
-                                  IOPT.Opt(r)
+          return
+            match run poptLine line' with
+            | Failure(e, _, _) -> printfn "ERROR = %A"e;
+                                  if dflt.Success then Val(dflt.Value)
+                                  else Nil
+            | Success(r, _, _) -> (if dflt.Success then r.Default <- dflt.Value);
+                                  Opt(r)
         } in
       let options = Options() in
       let lastOpt = ref Option.Empty in
       let action = function
-        | IOPT.Nil      -> ()
-        | IOPT.Opt(opt) -> let () = lastOpt := opt in options.Add(opt)
-        | IOPT.Val(str) -> let lastOptCopy = !lastOpt in
-                           if lastOptCopy.IsEmpty then ()
-                           else lastOptCopy.Default <- str
+      | Nil      -> ()
+      | Opt(opt) -> let () = lastOpt := opt in options.Add(opt)
+      | Val(str) -> let lastOptCopy = !lastOpt in
+                    if not lastOptCopy.IsEmpty
+                    then lastOptCopy.Default <- str
       in optionString'.Split([|'\n';'\r'|], StringSplitOptions.RemoveEmptyEntries)
       |> Seq.map parseAsync
       |> Async.Parallel
