@@ -1,3 +1,6 @@
+#### 4.12.1 - 02.01.2016
+* Prefer git from cmd path to get ssh key - https://github.com/fsharp/FAKE/pull/1062
+
 #### 4.12.0 - 28.12.2015
 * Change SignToolHelper syntax to reflect common call syntax - https://github.com/fsharp/FAKE/pull/1051
 * New Open/Close block helpers for TeamCity - https://github.com/fsharp/FAKE/pull/1049
