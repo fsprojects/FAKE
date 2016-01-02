@@ -29,5 +29,9 @@ type Options() =
       match base.Find(fun o' -> o'.Long = l') with
       | null -> base.Find(fun o' -> o'.Long.StartsWith(l'))
       | opt  -> opt
+    member __.FindLast(l':string) =
+      match base.FindLast(fun o' -> o'.Long = l') with
+      | null -> base.FindLast(fun o' -> o'.Long.StartsWith(l'))
+      | opt  -> opt
   end
 ;;

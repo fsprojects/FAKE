@@ -92,6 +92,8 @@ module Err =
     let expectedArg = ( + ) "argument "
                       >> expected
     let unexpectedArg = unexpected "argument "
+    let ambiguousArg = ( + ) "ambiguous long option --"
+                       >> otherError
   end
 
 exception UsageException of string
@@ -176,15 +178,20 @@ type UsageParser(u':string, opts':Options) =
       and flop lop' =
         let mutable ropt = null in
         try
-          let opt, arg = match lop'.IndexOf('=') with
-                         | -1 -> let lop = opts'.Find(lop') in
-                                 ropt <- lop;
-                                 if lop.HasArgument
-                                 then (incr i; lop, Some(carg ()))
-                                 else lop, None
-                         | eq -> let lop = opts'.Find(lop'.Substring(0, eq)) in
-                                 lop, Some(lop'.Substring(eq + 1)) in
-          if opt = null
+          let opt, arg, dup = match lop'.IndexOf('=') with
+                              | -1 -> let lop = opts'.Find(lop') in
+                                      ropt <- lop;
+                                      if lop = null
+                                      then lop, None, false
+                                      elif lop.HasArgument
+                                      then (incr i; lop, Some(carg ()), lop <> opts'.FindLast(lop'))
+                                      else lop, None, lop <> opts'.FindLast(lop')
+                              | eq -> let name = lop'.Substring(0, eq) in
+                                      let lop = opts'.Find(name) in
+                                      lop, Some(lop'.Substring(eq + 1)), lop <> opts'.FindLast(name) in
+          if dup
+          then Some(Err.ambiguousArg opt.Long)
+          elif opt = null
           then Some(Err.unexpectedLong lop')
           else (incr i;
                 match opt.HasArgument, arg.IsSome with

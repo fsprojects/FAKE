@@ -152,29 +152,20 @@ options:
   "-a -r"          ->= [("-a", Flag(true));("-r", Flag(true));("-m", Flag(false))]
 )
 
-(*
-let doc = Docopt("""Usage: prog [options]
+(* Truncated long option disambiguation *)
+Assert.Seq("""Usage: prog [options]
 
 Options: --version
          --verbose
 
-""")
-$ prog --version
-{"--version": true,
- "--verbose": false}
+""",
+  "--version" ->= [("--version", Flag(true));("--verbose", Flag(false))],
+  "--verbose" ->= [("--version", Flag(false));("--verbose", Flag(true))],
+  "--ver"     ->! typeof<ArgvException>,
+  "--verb"    ->= [("--version", Flag(false));("--verbose", Flag(true))]
+)
 
-$ prog --verbose
-{"--version": false,
- "--verbose": true}
-
-$ prog --ver
-"user-error"
-
-$ prog --verb
-{"--version": false,
- "--verbose": true}
-
-
+(*
 let doc = Docopt("""usage: prog [-a -r -m <msg>]
 
 options:
