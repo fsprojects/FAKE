@@ -8,7 +8,7 @@ type Assert =
   static member Seq(usage':string, [<ParamArray>]statements':(Docopt -> string * bool)[]) =
     let mutable doc = Docopt(usage') in
     printf "{\n  Testing %A\n" usage'
-    printfn "  Asts: %A" doc.UsageParser.Asts
+    printfn "  Asts: %A" doc.UsageParser.Ast
     printfn "  Dict: %A\n" doc.DefaultDictionary
     Array.iter (fun assertion' -> let doc = Docopt(usage')
                                   let msg, res = assertion' doc in
@@ -27,9 +27,8 @@ let ( ->! ) (argv':string) val' (doc':Docopt) =
     try let _ = doc'.Parse(argv).AsList() in (box "<NO EXN>", false)
     with e -> (box e, e.GetType() = val') in
   (sprintf "%A ->! %A" argv' msg), res
-//  (sprintf "%A ->! %A" argv' null), true
 // END HELPER FUNCTIONS FOR ASSERTIONS
-
+(*
 (* Empty usage *)
 Assert.Seq("""
 Usage: prog
@@ -165,54 +164,43 @@ Options: --version
   "--verb"    ->= [("--version", Flag(false));("--verbose", Flag(true))]
 )
 
-(*
-let doc = Docopt("""usage: prog [-a -r -m <msg>]
+(* Short options in square brackets *)
+Assert.Seq("""usage: prog [-a -r -m <msg>]
 
 options:
  -a        Add
  -r        Remote
  -m <msg>  Message
 
-""")
-$ prog -armyourass
-{"-a": true,
- "-r": true,
- "-m": "yourass"}
+""",
+  "-armyourass" ->= [("-a", Flag(true));("-r", Flag(true));("-m", Argument("yourass"))]
+)
 
-
-let doc = Docopt("""usage: prog [-armmsg]
+(* Short option pack in square brackets *)
+Assert.Seq("""usage: prog [-armmsg]
 
 options: -a        Add
          -r        Remote
          -m <msg>  Message
 
-""")
-$ prog -a -r -m Hello
-{"-a": true,
- "-r": true,
- "-m": "Hello"}
-
-
-let doc = Docopt("""usage: prog -a -b
+""",
+  "-a -r -m Hello" ->= [("-a", Flag(true));("-r", Flag(true));("-m", Argument("Hello"))]
+)
+*)
+Assert.Seq("""usage: prog -a -b
 
 options:
  -a
  -b
 
-""")
-$ prog -a -b
-{"-a": true, "-b": true}
+""",
+  "-a -b" ->= [("-a", Flag(true));("-b", Flag(true))],
+  "-b -a" ->= [("-a", Flag(true));("-b", Flag(true))],
+  "-a"    ->! typeof<ArgvException>,
+  ""      ->! typeof<ArgvException>
+)
 
-$ prog -b -a
-{"-a": true, "-b": true}
-
-$ prog -a
-"user-error"
-
-$ prog
-"user-error"
-
-
+(*
 let doc = Docopt("""usage: prog (-a -b)
 
 options: -a
