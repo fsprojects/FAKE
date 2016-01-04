@@ -8,19 +8,38 @@ open System.Text
 
 module _Private =
   begin
-    type 'a GList = Collections.Generic.List<'a>
+    type 'a GList = System.Collections.Generic.List<'a>
 
     [<NoComparison>]
     type Ast =
-    | Eps
-    | Sop of char GList
-    | Sqb of Ast
-    | Req of Ast
-    | Arg of string
-    | Cmd of string
-    | Xor of Ast * Ast
-    | Seq of Ast GList
-    | Ell of Ast
+      | Eps
+      | Sop of char GList
+      | Sqb of Ast
+      | Req of Ast
+      | Arg of string
+      | Cmd of string
+      | Xor of Ast * Ast
+      | Xoq of Ast GList
+      | Seq of Ast GList
+      | Ell of Ast * bool
+      | Kln of Ast
+      with // consider experimenting with Seq for optimizations
+        member xx.Sops = match xx with
+        | Sop(sops) -> sops
+        | _         -> null
+        static member Reduce = function
+        | Seq(seq) when seq.Count = 1 -> Ast.Reduce (seq.[0])
+        | Seq(seq)         -> let sops = GList<char>() in
+                              let newseq = GList<Ast>() in
+                              Seq.iter (fun ast' -> match Ast.Reduce ast' with
+                                        | Sop(sop) -> sops.AddRange(sop)
+                                        | ast      -> newseq.Add(ast)) seq;
+                              if sops.Count <> 0 then newseq.Add(Sop(sops));
+                              newseq |> Seq |> Ast.Reduce
+        | Ell(Req(ast), _) -> Ell(ast, false)
+        | Ell(Sqb(ast), _) -> Kln(ast)
+        | ast              -> ast
+      end
 
     let isLetterOrDigit c' = isLetter(c') || isDigit(c')
     let opp = OperatorPrecedenceParser<_, unit, unit>()
@@ -54,14 +73,14 @@ module _Private =
                              fun x' y' -> Xor(x', y'))
     let pell = let makeEll = function
                | Seq(seq) as ast -> let cell = seq.[seq.Count - 1] in
-                                    seq.[seq.Count - 1] <- Ell(cell);
+                                    seq.[seq.Count - 1] <- Ell(cell, false);
                                     ast
-               | ast             -> Ell(ast)
+               | ast             -> Ell(ast, false)
                in PostfixOperator("...", spaces, 20, false, makeEll)
     let _ = opp.TermParser <- sepEndBy1 term spaces1 |>> (GList<Ast> >> Seq)
     let _ = opp.AddOperator(pxor)
     let _ = opp.AddOperator(pell)
-    let pusageLine = spaces >>. opp.ExpressionParser
+    let pusageLine = spaces >>. opp.ExpressionParser |>> Ast.Reduce
   end
 ;;
 
@@ -93,7 +112,8 @@ type UsageParser(u':string, opts':Options) =
         let line = line.TrimStart() in
         let index = line.IndexOfAny([|' ';'\t'|]) in
         return if index = -1 then Eps
-               else match run (spaces >>. opp.ExpressionParser) (line.Substring(index)) with
+               else match run (spaces >>. opp.ExpressionParser)
+                              (line.Substring(index)) with
                     | Success(ast, _, _) -> ast
                     | Failure(err, _, _) -> raise (UsageException(err))
       }
