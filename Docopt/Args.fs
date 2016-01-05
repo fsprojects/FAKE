@@ -50,12 +50,8 @@ type Dictionary(options':Options) =
              | Arguments(args) -> Arguments(arg'.Value::args)
              | value           -> value in
       xx.[key'] <- newval
-    member xx.AddShort(s':char, ?arg':string) =
-      let predicate (o':Option) =
-        if o'.Short <> s'
-        then false
-        else (xx.UnsafeAdd(String([|'-';s'|]), ?arg'=arg'); true)
-      in Seq.exists ( predicate ) options'
+    member xx.AddShort(o':Option, ?arg':string) =
+      xx.UnsafeAdd(String([|'-';o'.Short|]), ?arg'=arg')
     member xx.AddLong(l':string, ?arg':string) =
       let predicate (o':Option) =
         if o'.Long = l'

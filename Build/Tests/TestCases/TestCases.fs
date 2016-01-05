@@ -8,7 +8,7 @@ type Assert =
   static member Seq(usage':string, [<ParamArray>]statements':(Docopt -> string * bool)[]) =
     let mutable doc = Docopt(usage') in
     printf "{\n  Testing %A\n" usage'
-    printfn "  Asts: %A" doc.UsageParser.Ast
+    printfn "  Asts: %A" doc.UsageParser.Asts
     printfn "  Dict: %A\n" doc.DefaultDictionary
     Array.iter (fun assertion' -> let doc = Docopt(usage')
                                   let msg, res = assertion' doc in
