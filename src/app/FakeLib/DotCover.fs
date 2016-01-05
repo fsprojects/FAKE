@@ -23,6 +23,7 @@ type DotCoverParams =
       TargetWorkingDir: string
       Output: string
       Filters: string
+      ErrorLevel: TestRunnerErrorLevel
       AttributeFilters: string
       CustomParameters: string }
 
@@ -36,7 +37,8 @@ let DotCoverDefaults =
       Filters = ""
       AttributeFilters = ""
       Output = "dotCoverSnapshot.dcvr"
-      CustomParameters = "" } 
+      CustomParameters = "" 
+      ErrorLevel = ErrorLevel.Error} 
 
 type DotCoverMergeParams = 
     { ToolPath: string
@@ -105,14 +107,22 @@ let getWorkingDir workingDir =
     Seq.find isNotNullOrEmpty [workingDir; environVar("teamcity.build.workingDir"); "."]
     |> Path.GetFullPath
 
-let buildParamsAndExecute parameters buildArguments toolPath workingDir =
+let buildParamsAndExecute parameters buildArguments toolPath workingDir failBuild =
     let args = buildArguments parameters
     trace (toolPath + " " + args)
     let result = ExecProcess (fun info ->  
               info.FileName <- toolPath
               info.WorkingDirectory <- getWorkingDir workingDir
               info.Arguments <- args) TimeSpan.MaxValue
-    if result <> 0 then failwithf "Error running %s" toolPath
+    let ExitCodeForFailedTests = -3
+    if (result = ExitCodeForFailedTests && not failBuild) then 
+        trace (sprintf "DotCover %s exited with errorcode %d" toolPath result)
+    else if (result = ExitCodeForFailedTests && failBuild) then 
+        failwithf "Failing tests, use ErrorLevel.DontFailBuild to ignore failing tests. Exited %s with errorcode %d" toolPath result
+    else if (result <> 0) then 
+        failwithf "Error running %s with exitcode %d" toolPath result
+    else 
+        trace (sprintf "DotCover exited successfully")
 
 /// Runs the dotCover "cover" command, using a target executable (such as NUnit or MSpec) and generates a snapshot file.
 ///
@@ -121,7 +131,7 @@ let buildParamsAndExecute parameters buildArguments toolPath workingDir =
 ///  - `setParams` - Function used to overwrite the dotCover default parameters.
 let DotCover (setParams: DotCoverParams -> DotCoverParams) =
     let parameters = (DotCoverDefaults |> setParams)
-    buildParamsAndExecute parameters buildDotCoverArgs parameters.ToolPath parameters.WorkingDir
+    buildParamsAndExecute parameters buildDotCoverArgs parameters.ToolPath parameters.WorkingDir (parameters.ErrorLevel <> ErrorLevel.DontFailBuild)
 
 /// Runs the dotCover "merge" command. This combines dotCover snaphots into a single
 /// snapshot, enabling you to merge test coverage from multiple test running frameworks
@@ -137,7 +147,7 @@ let DotCover (setParams: DotCoverParams -> DotCoverParams) =
 ///                         Output = artifactsDir @@ "dotCoverSnapshot.dcvr" }) 
 let DotCoverMerge (setParams: DotCoverMergeParams -> DotCoverMergeParams) =
     let parameters = (DotCoverMergeDefaults |> setParams)
-    buildParamsAndExecute parameters buildDotCoverMergeArgs parameters.ToolPath parameters.WorkingDir
+    buildParamsAndExecute parameters buildDotCoverMergeArgs parameters.ToolPath parameters.WorkingDir false 
    
 /// Runs the dotCover "report" command. This generates a report from a dotCover snapshot
 /// ## Parameters

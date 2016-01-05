@@ -4,17 +4,18 @@ module Fake.Paket
 open System
 open System.IO
 open System.Xml.Linq
-open System.Xml.Linq
 
 /// Paket pack parameter type
 type PaketPackParams = 
     { ToolPath : string
       TimeOut : TimeSpan
       Version : string
+      SpecificVersions : (string * string) list
       LockDependencies : bool
       ReleaseNotes : string
       BuildConfig : string
       TemplateFile : string
+      ExcludedTemplates : string list
       WorkingDir : string
       OutputPath : string }
 
@@ -23,10 +24,12 @@ let PaketPackDefaults() : PaketPackParams =
     { ToolPath = (findToolFolderInSubPath "paket.exe" (currentDirectory @@ ".paket")) @@ "paket.exe"
       TimeOut = TimeSpan.FromMinutes 5.
       Version = null
+      SpecificVersions = []
       LockDependencies = false
       ReleaseNotes = null
       BuildConfig = null
       TemplateFile = null
+      ExcludedTemplates = []
       WorkingDir = "."
       OutputPath = "./temp" }
 
@@ -54,7 +57,7 @@ let PaketPushDefaults() : PaketPushParams =
 /// ## Parameters
 /// 
 ///  - `setParams` - Function used to manipulate the default parameters.
-let Pack setParams =     
+let Pack setParams =
     let parameters : PaketPackParams = PaketPackDefaults() |> setParams
     traceStartTask "PaketPack" parameters.WorkingDir
 
@@ -67,13 +70,16 @@ let Pack setParams =
     let buildConfig = if String.IsNullOrWhiteSpace parameters.BuildConfig then "" else " buildconfig " + toParam parameters.BuildConfig
     let templateFile = if String.IsNullOrWhiteSpace parameters.TemplateFile then "" else " templatefile " + toParam parameters.TemplateFile
     let lockDependencies = if parameters.LockDependencies then " lock-dependencies" else ""
+    let excludedTemplates = parameters.ExcludedTemplates |> Seq.map (fun t -> " exclude " + t) |> String.concat " "
+    let specificVersions = parameters.SpecificVersions |> Seq.map (fun (id,v) -> sprintf " specific-version %s %s" id v) |> String.concat " "
 
     let packResult = 
-        let cmdArgs = sprintf "%s%s%s%s%s" version releaseNotes buildConfig templateFile lockDependencies
+        let cmdArgs = sprintf "%s%s%s%s%s%s%s" version specificVersions releaseNotes buildConfig templateFile lockDependencies excludedTemplates
         ExecProcess 
             (fun info -> 
-            info.FileName <- parameters.ToolPath
-            info.Arguments <- sprintf "pack output %s %s" parameters.OutputPath cmdArgs) parameters.TimeOut
+                info.FileName <- parameters.ToolPath
+                info.WorkingDirectory <- parameters.WorkingDir
+                info.Arguments <- sprintf "pack output \"%s\" %s" parameters.OutputPath cmdArgs) parameters.TimeOut
     
     if packResult <> 0 then failwithf "Error during packing %s." parameters.WorkingDir
     traceEndTask "PaketPack" parameters.WorkingDir
@@ -125,6 +131,7 @@ let Push setParams =
             let pushResult = 
                 ExecProcess (fun info -> 
                     info.FileName <- parameters.ToolPath
+                    info.WorkingDirectory <- parameters.WorkingDir
                     info.Arguments <- sprintf "push %s%s%s file %s" url endpoint key (toParam package)) parameters.TimeOut
             if pushResult <> 0 then failwithf "Error during pushing %s." package 
 
