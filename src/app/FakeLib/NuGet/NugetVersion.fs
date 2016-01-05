@@ -27,14 +27,14 @@ let IncBuild:NugetVersionIncrement =
 let IncMinor:NugetVersionIncrement = 
     fun (version:string) ->
         let v = Version version
-        let n = sprintf "%d.%d.%d" (positive v.Major) (positive v.Minor+1) (positive v.Build)
+        let n = sprintf "%d.%d.0" (positive v.Major) (positive v.Minor+1)
         Version n
 
 /// Increment major version
 let IncMajor:NugetVersionIncrement = 
     fun (version:string) ->
         let v = Version version
-        sprintf "%d.%d.%d" (positive v.Major+1) (positive v.Minor) (positive v.Build)
+        sprintf "%d.0.0" (positive v.Major+1)
         |> Version
 
 /// Arguments for the next nuget version number computing
