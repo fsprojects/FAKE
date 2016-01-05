@@ -1,18 +1,28 @@
-#### 4.4.5 - 02.10.2015
+#### 4.7.0-alpha002 - 15.10.2015
+* Internalized FSharp.Compiler.Service.dll in FakeLib.dll
+* Cleanup Registry helpers - https://github.com/fsharp/FAKE/pull/980
+* FAKE.Deploy scans for default scripts - https://github.com/fsharp/FAKE/pull/981
+* BUGFIX: support caching even when running RazorEngine as part of the build script - https://github.com/fsharp/FAKE/pull/979
+
+#### 4.6.0 - 14.10.2015
+* New Registry functions - https://github.com/fsharp/FAKE/pull/976
+* Add attribute filters to DotCover - https://github.com/fsharp/FAKE/pull/974
+* Always use FullName of nuspec for NuGet pack
+* DotCover support for MSTest - https://github.com/fsharp/FAKE/pull/972
+* Added new functions: replace and poke for inner xml - https://github.com/fsharp/FAKE/pull/970
+* Adding TestFile helper - https://github.com/fsharp/FAKE/pull/962
+
+#### 4.5.0 - 07.10.2015
+* Ensure FSI-ASSEMBLY.dll path exists - https://github.com/fsharp/FAKE/pull/969
+* New dotCover runner for Xunit2 - https://github.com/fsharp/FAKE/pull/965
+* Make FAKE compatible with Microsoft Dynamics 2016
 * Don't assume that mono is on the path for El Capitan - https://github.com/fsharp/FAKE/pull/963/files
-* BUGFIX: Exclude long directories from globbing - https://github.com/fsharp/FAKE/pull/955
-
-#### 4.4.4 - 22.09.2015
 * Better target handling - https://github.com/fsharp/FAKE/pull/954
-
-#### 4.4.3 - 22.09.2015
-* Encode script path in cache - https://github.com/fsharp/FAKE/pull/956
-
-#### 4.4.2 - 17.09.2015
 * Ignore group lines in paket.references parser
-
-#### 4.4.1 - 11.09.2015
 * Revert breaking change in FCS
+* Support for Android-MultiPackages - https://github.com/fsharp/FAKE/pull/964
+* BUGFIX: Exclude long directories from globbing - https://github.com/fsharp/FAKE/pull/955
+* BUGFIX: Encode script path in cache - https://github.com/fsharp/FAKE/pull/956
 
 #### 4.4.0 - 11.09.2015
 * iOSBuild relies on xbuild instead of mdtool - https://github.com/fsharp/FAKE/pull/945

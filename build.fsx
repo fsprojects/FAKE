@@ -1,6 +1,6 @@
-#I @"packages/FAKE/tools/"
+#I @"packages/build/FAKE/tools/"
 #r @"FakeLib.dll"
-#load "packages/SourceLink.Fake/tools/SourceLink.fsx"
+#load "packages/build/SourceLink.Fake/tools/SourceLink.fsx"
 
 open Fake
 open Fake.Git
@@ -36,6 +36,7 @@ let apidocsDir = "./docs/apidocs/"
 let nugetDir = "./nuget"
 let reportDir = "./report"
 let packagesDir = "./packages"
+let buildMergedDir = buildDir </> "merged"
 
 let additionalFiles = [
     "License.txt"
@@ -144,7 +145,7 @@ Target "Test" (fun _ ->
 
     !! (testDir @@ "Test.*.dll")
       ++ (testDir @@ "FsCheck.Fake.dll")
-    |>  xUnit (fun p -> p)
+    |>  xUnit id
 )
 
 Target "SourceLink" (fun _ ->
@@ -156,6 +157,33 @@ Target "SourceLink" (fun _ ->
     let pdbFakeLib = "./build/FakeLib.pdb"
     CopyFile "./build/FAKE.Deploy" pdbFakeLib
     CopyFile "./build/FAKE.Deploy.Lib" pdbFakeLib
+)
+
+Target "ILRepack" (fun _ ->
+    CreateDir buildMergedDir
+
+    let internalizeIn filename = 
+        let toPack =
+            [filename; "FSharp.Compiler.Service.dll"]
+            |> List.map (fun l -> buildDir </> l)
+            |> separated " "
+        let targetFile = buildMergedDir </> filename
+
+        let result =
+            ExecProcess (fun info ->
+                info.FileName <- currentDirectory </> "packages" </> "build" </> "ILRepack" </> "tools" </> "ILRepack.exe"
+                info.Arguments <- sprintf "/verbose /lib:%s /ver:%s /out:%s %s" buildDir release.AssemblyVersion targetFile toPack) (System.TimeSpan.FromMinutes 5.)
+
+        if result <> 0 then failwithf "Error during ILRepack execution."
+
+        CopyFile (buildDir </> filename) targetFile
+
+    internalizeIn "FakeLib.dll"
+    
+    !! (buildDir </> "FSharp.Compiler.Service.**")
+    |> Seq.iter DeleteFile
+    
+    DeleteDir buildMergedDir
 )
 
 Target "CreateNuGet" (fun _ ->
@@ -188,19 +216,30 @@ Target "CreateNuGet" (fun _ ->
 
         DeleteFile "./build/FAKE.Gallio/Gallio.dll"
 
+        let deleteFCS dir =
+          !! (dir </> "FSharp.Compiler.Service.**")
+          |> Seq.iter DeleteFile
+          
         match package with
         | p when p = projectName ->
             !! (buildDir @@ "**/*.*") |> Copy nugetToolsDir
+            !! (buildDir @@ "*.*") |> Copy nugetToolsDir
+            
             CopyDir nugetDocsDir docsDir allFiles
+            deleteFCS nugetToolsDir
         | p when p = "FAKE.Core" ->
             !! (buildDir @@ "*.*") |> Copy nugetToolsDir
             CopyDir nugetDocsDir docsDir allFiles
+            deleteFCS nugetToolsDir
         | p when p = "FAKE.Lib" -> 
             CleanDir nugetLib451Dir
             !! (buildDir @@ "FakeLib.dll") |> Copy nugetLib451Dir
+            deleteFCS nugetLib451Dir
         | _ ->
             CopyDir nugetToolsDir (buildDir @@ package) allFiles
             CopyTo nugetToolsDir additionalFiles
+            deleteFCS nugetToolsDir
+
         !! (nugetToolsDir @@ "*.srcsv") |> DeleteFiles
 
         let setParams p =
@@ -212,7 +251,7 @@ Target "CreateNuGet" (fun _ ->
                 OutputPath = nugetDir
                 Summary = projectSummary
                 ReleaseNotes = release.Notes |> toLines
-                Dependencies =                    
+                Dependencies =
                     (if package <> "FAKE.Core" && package <> projectName && package <> "FAKE.Lib" then
                        ["FAKE.Core", RequireExactly (NormalizeVersion release.AssemblyVersion)]
                      else p.Dependencies )
@@ -257,6 +296,7 @@ Target "Default" DoNothing
 "Clean"
     ==> "SetAssemblyInfo"
     ==> "BuildSolution"
+    ==> "ILRepack"
     ==> "Test"
     ==> "Default"
     ==> "CopyLicense"

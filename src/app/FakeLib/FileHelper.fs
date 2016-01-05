@@ -343,6 +343,14 @@ let TestDir path =
     else 
         logfn "%s not found" di.FullName
         false
+        
+/// Checks if the file exists
+let TestFile path = 
+    let fi = fileInfo path
+    if fi.Exists then true
+    else 
+        logfn "%s not found" fi.FullName
+        false
 
 /// Checks the srcFiles for changes to the last release.
 /// ## Parameters

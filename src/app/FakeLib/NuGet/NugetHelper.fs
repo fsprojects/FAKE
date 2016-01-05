@@ -247,6 +247,7 @@ let private propertiesParam = function
 
 /// Creates a NuGet package without templating (including symbols package if enabled)
 let private pack parameters nuspecFile =
+    let nuspecFile = FullName nuspecFile
     let properties = propertiesParam parameters.Properties
     let outputPath = (FullName(parameters.OutputPath.TrimEnd('\\').TrimEnd('/')))
     let packageAnalysis = if parameters.NoPackageAnalysis then "-NoPackageAnalysis" else ""
@@ -263,13 +264,6 @@ let private pack parameters nuspecFile =
                 info.WorkingDirectory <- FullName parameters.WorkingDir
                 info.Arguments <- args) parameters.TimeOut
         if result.ExitCode <> 0 || result.Errors.Count > 0 then failwithf "Error during NuGet package creation. %s %s\r\n%s" parameters.ToolPath args (toLines result.Errors)
-
-    let nuspecFile = 
-        let fi = fileInfo nuspecFile
-        if fi.Directory.FullName = FullName parameters.WorkingDir then
-            fi.Name
-        else
-            FullName nuspecFile
 
     match parameters.SymbolPackage with
     | NugetSymbolPackage.ProjectFile ->
