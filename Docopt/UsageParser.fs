@@ -54,6 +54,7 @@ module _Private =
         static member Reduce(ast':Ast, opts':Options) =
           let rec impl = function
           | Sqb(ast)         -> Sqb(impl ast)
+          | Req(ast)         -> impl ast
           | Seq(seq) when seq.Count = 1 -> impl (seq.[0])
           | Seq(seq) as ast  -> let mutable i = 0 in
                                 while i < seq.Count do

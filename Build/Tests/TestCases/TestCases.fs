@@ -210,26 +210,19 @@ options:
   ""      ->! typeof<ArgvException>
 )
 
-(*
-let doc = Docopt("""usage: prog (-a -b)
+Assert.Seq("Multiple usage patterns", """
+usage: prog (-a -b)
 
 options: -a
          -b
 
-""")
-$ prog -a -b
-{"-a": true, "-b": true}
-
-$ prog -b -a
-{"-a": true, "-b": true}
-
-$ prog -a
-"user-error"
-
-$ prog
-"user-error"
-
-
+""",
+  "-a -b" ->= [("-a", Flag(true));("-b", Flag(true))],
+  "-b -a" ->= [("-a", Flag(true));("-b", Flag(true))],
+  "-a"    ->! typeof<ArgvException>,
+  ""      ->! typeof<ArgvException>
+)
+(*
 let doc = Docopt("""usage: prog [-a] -b
 
 options: -a
