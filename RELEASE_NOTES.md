@@ -1,3 +1,6 @@
+#### 4.12.1 - 06.01.2016
+* Automatic discovery of octo.exe - https://github.com/fsharp/FAKE/pull/1065
+
 #### 4.12.0 - 28.12.2015
 * Change SignToolHelper syntax to reflect common call syntax - https://github.com/fsharp/FAKE/pull/1051
 * New Open/Close block helpers for TeamCity - https://github.com/fsharp/FAKE/pull/1049
