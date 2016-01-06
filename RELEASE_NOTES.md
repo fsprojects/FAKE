@@ -1,3 +1,6 @@
+#### 4.12.2 - 06.01.2016
+* Automatic discovery of octo.exe - https://github.com/fsharp/FAKE/pull/1065
+
 #### 4.12.1 - 02.01.2016
 * Prefer git from cmd path to get ssh key - https://github.com/fsharp/FAKE/pull/1062
 
