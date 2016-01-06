@@ -52,18 +52,8 @@ type Dictionary(options':Options) =
       xx.[key'] <- newval
     member xx.AddShort(o':Option, ?arg':string) =
       xx.UnsafeAdd(String([|'-';o'.Short|]), ?arg'=arg')
-    member xx.AddLong(l':string, ?arg':string) =
-      let predicate (o':Option) =
-        if o'.Long = l'
-        then (xx.UnsafeAdd(String.Concat("--", l'), ?arg'=arg'); true)
-        else false
-      in let predicateTruncated (o':Option) =
-        if o'.Long.StartsWith(l')
-        then (xx.UnsafeAdd(String.Concat("--", o'.Long), ?arg'=arg'); true)
-        else false
-      in if Seq.exists ( predicate ) options'
-         then true
-         else Seq.exists ( predicateTruncated ) options'
+    member xx.AddLong(o':Option, ?arg':string) =
+      xx.UnsafeAdd(String.Concat("--", o'.Long), ?arg'=arg')
     member inline private xx.SFDisplay = xx.AsList()
   end
 ;;

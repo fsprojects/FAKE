@@ -3,34 +3,44 @@ open Docopt.Arguments
 open System
 open System.Diagnostics
 
+let mutable count = 0 in
+let stopwatch = Stopwatch() in
+
 // HELPER FUNCTIONS FOR ASSERTIONS
 type Assert =
-  static member Seq(usage':string, [<ParamArray>]statements':(Docopt -> string * bool)[]) =
-    let mutable doc = Docopt(usage') in
-    printf "{\n  Testing %A\n" usage'
-    printfn "  Asts: %A" doc.UsageParser.Asts
-    printfn "  Dict: %A\n" doc.DefaultDictionary
-    Array.iter (fun assertion' -> let doc = Docopt(usage')
-                                  let msg, res = assertion' doc in
-                                  printfn "    %s . . . %A" msg res
-                                  Debug.Assert(res, msg)) statements'
-    Console.WriteLine("}\n")
+  static member Seq(test':string, usage':string, [<ParamArray>]statements':(Docopt -> string * bool)[]) =
+    try
+      let mutable doc = Docopt(usage')
+      count <- count + 1
+      printf "%s\n{" test'
+      Console.WriteLine(usage')
+      printfn "  Asts: %A" doc.UsageParser.Asts
+      printfn "  Dict: %A\n" doc.DefaultDictionary
+      Array.iter (fun assertion' -> let doc = Docopt(usage')
+                                    count <- count + 1
+                                    let msg, res = assertion' doc
+                                    printfn "    %s . . . %A" msg res
+                                    Debug.Assert(res, msg)) statements'
+      Console.WriteLine("}\n")
+    with e -> printfn ">>> ERROR: %A" e;
+              reraise ()
 let ( ->= ) (argv':string) val' (doc':Docopt) =
-  let argv = argv'.Split([|' '|], StringSplitOptions.RemoveEmptyEntries) in
-  let args = doc'.Parse(argv) in
-  let res = (List.sort (args.AsList())) = List.sort val' in
+  let argv = argv'.Split([|' '|], StringSplitOptions.RemoveEmptyEntries)
+  let args = doc'.Parse(argv)
+  let res = (List.sort (args.AsList())) = List.sort val'
   if not res then printfn "Got args = %A" args
   (sprintf "%A ->= %A" argv' val'), res
 let ( ->! ) (argv':string) val' (doc':Docopt) =
-  let argv = argv'.Split([|' '|], StringSplitOptions.RemoveEmptyEntries) in
+  let argv = argv'.Split([|' '|], StringSplitOptions.RemoveEmptyEntries)
   let msg, res =
     try let _ = doc'.Parse(argv).AsList() in (box "<NO EXN>", false)
-    with e -> (box e, e.GetType() = val') in
+    with e -> (box e, e.GetType() = val')
   (sprintf "%A ->! %A" argv' msg), res
 // END HELPER FUNCTIONS FOR ASSERTIONS
-(*
-(* Empty usage *)
-Assert.Seq("""
+
+stopwatch.Start()
+
+Assert.Seq("Empty usage", """
 Usage: prog
 
 """,
@@ -38,8 +48,7 @@ Usage: prog
   "--xxx" ->! typeof<ArgvException>
 )
 
-(* Basic short option *)
-Assert.Seq("""
+Assert.Seq("Basic short option", """
 Usage: prog [options]
 
 Options: -a  All.
@@ -50,8 +59,8 @@ Options: -a  All.
   "-x" ->! typeof<ArgvException>
 )
 
-(* Basic long option *)
-Assert.Seq("""Usage: prog [options]
+Assert.Seq("Basic long option", """
+Usage: prog [options]
 
 Options: --all  All.
 
@@ -61,8 +70,8 @@ Options: --all  All.
   "--xxx" ->! typeof<ArgvException>
 )
 
-(* Synonymous short and long option, with truncation *)
-Assert.Seq("""Usage: prog [options]
+Assert.Seq("Synonymous short and long option, with truncation", """
+Usage: prog [options]
 
 Options: -v, --verbose  Verbose.
 
@@ -72,8 +81,8 @@ Options: -v, --verbose  Verbose.
   "-v"        ->= [("-v", Flag(true));("--verbose", Flag(true))]
 )
 
-(* Short option with argument *)
-Assert.Seq("""Usage: prog [options]
+Assert.Seq("Short option with argument", """
+Usage: prog [options]
 
 Options: -p PATH
 
@@ -83,8 +92,8 @@ Options: -p PATH
   "-p"       ->! typeof<ArgvException>
 )
 
-(* Long option with argument *)
-Assert.Seq("""Usage: prog [options]
+Assert.Seq("Long option with argument", """
+Usage: prog [options]
 
 Options: --path <path>
 
@@ -96,8 +105,8 @@ Options: --path <path>
   "--path"       ->! typeof<ArgvException>
 )
 
-(* Synonymous short and long option with both arguments declared *)
-Assert.Seq("""Usage: prog [options]
+Assert.Seq("Synonymous short and long option with both arguments declared", """
+Usage: prog [options]
 
 Options: -p PATH, --path=<path>  Path to files.
 
@@ -105,8 +114,8 @@ Options: -p PATH, --path=<path>  Path to files.
   "-proot" ->= [("-p", Argument("root"));("--path", Argument("root"))]
 )
 
-(* Synonymous short and long option with one argument declared *)
-Assert.Seq("""Usage: prog [options]
+Assert.Seq("Synonymous short and long option with one argument declared", """
+Usage: prog [options]
 
 Options:    -p --path PATH  Path to files.
 
@@ -115,8 +124,8 @@ Options:    -p --path PATH  Path to files.
   "--path root" ->= [("-p", Argument("root"));("--path", Argument("root"))]
 )
 
-(* Short option with default *)
-Assert.Seq("""Usage: prog [options]
+Assert.Seq("Short option with default", """
+Usage: prog [options]
 
 Options:
  -p PATH  Path to files [default: ./]
@@ -126,8 +135,8 @@ Options:
   "-phome" ->= [("-p", Argument("home"))]
 )
 
-(* Unusual formatting *)
-Assert.Seq("""UsAgE: prog [options]
+Assert.Seq("Unusual formatting", """
+UsAgE: prog [options]
 
 OpTiOnS: --path=<files>  Path to files
                 [dEfAuLt: /root]
@@ -137,8 +146,8 @@ OpTiOnS: --path=<files>  Path to files
   "--path=home" ->= [("--path", Argument("home"))]
 )
 
-(* Multiple short options *)
-Assert.Seq("""usage: prog [options]
+Assert.Seq("Multiple short options", """
+usage: prog [options]
 
 options:
     -a        Add
@@ -151,8 +160,8 @@ options:
   "-a -r"          ->= [("-a", Flag(true));("-r", Flag(true));("-m", Flag(false))]
 )
 
-(* Truncated long option disambiguation *)
-Assert.Seq("""Usage: prog [options]
+Assert.Seq("Truncated long option disambiguation", """
+Usage: prog [options]
 
 Options: --version
          --verbose
@@ -164,8 +173,8 @@ Options: --version
   "--verb"    ->= [("--version", Flag(false));("--verbose", Flag(true))]
 )
 
-(* Short options in square brackets *)
-Assert.Seq("""usage: prog [-a -r -m <msg>]
+Assert.Seq("Short options in square brackets", """
+usage: prog [-a -r -m <msg>]
 
 options:
  -a        Add
@@ -176,8 +185,8 @@ options:
   "-armyourass" ->= [("-a", Flag(true));("-r", Flag(true));("-m", Argument("yourass"))]
 )
 
-(* Short option pack in square brackets *)
-Assert.Seq("""usage: prog [-armmsg]
+Assert.Seq("Short option pack in square brackets", """
+usage: prog [-armmsg]
 
 options: -a        Add
          -r        Remote
@@ -186,8 +195,9 @@ options: -a        Add
 """,
   "-a -r -m Hello" ->= [("-a", Flag(true));("-r", Flag(true));("-m", Argument("Hello"))]
 )
-*)
-Assert.Seq("""usage: prog -a -b
+
+Assert.Seq("Required short options", """
+usage: prog -a -b
 
 options:
  -a
@@ -929,3 +939,6 @@ $ prog --baz --egg
 {"--foo": false, "--baz": true, "--bar": false, "--egg": true, "--spam": false}
 
 *)
+
+stopwatch.Stop()
+printfn "\n>>> %i Docopt calls in %A\nless than %fms per call" count stopwatch.Elapsed (float stopwatch.ElapsedMilliseconds / float count)
