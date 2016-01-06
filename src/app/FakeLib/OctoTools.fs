@@ -124,9 +124,14 @@ let deleteOptions = {
     Project = ""; MinVersion = ""; MaxVersion = "" }
 
 /// Default parameters to call octo.exe.
-let octoParams = {
-    ToolName = "Octo.exe"; ToolPath = ""; Command = ListEnvironments;
-    Server = serverOptions; Timeout = TimeSpan.MaxValue; WorkingDirectory = "" }
+let octoParams =
+    let toolName = "Octo.exe"
+    { ToolPath = findToolFolderInSubPath toolName (currentDirectory @@ "tools" @@ "OctopusTools")
+      ToolName = toolName
+      Command = ListEnvironments
+      Server = serverOptions
+      Timeout = TimeSpan.MaxValue
+      WorkingDirectory = "" }
 
 /// [omit]
 let optionalStringParam p o = 
