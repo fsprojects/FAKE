@@ -51,9 +51,11 @@ type Dictionary(options':Options) =
              | value           -> value in
       xx.[key'] <- newval
     member xx.AddShort(o':Option, ?arg':string) =
-      xx.UnsafeAdd(String([|'-';o'.Short|]), ?arg'=arg')
+      if o'.IsTrash then ()
+      else xx.UnsafeAdd(String([|'-';o'.Short|]), ?arg'=arg')
     member xx.AddLong(o':Option, ?arg':string) =
-      xx.UnsafeAdd(String.Concat("--", o'.Long), ?arg'=arg')
+      if o'.IsTrash then ()
+      else xx.UnsafeAdd(String.Concat("--", o'.Long), ?arg'=arg')
     member inline private xx.SFDisplay = xx.AsList()
   end
 ;;

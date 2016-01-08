@@ -223,49 +223,33 @@ options: -a
   ""      ->! typeof<ArgvException>
 )
 (*
-let doc = Docopt("""usage: prog [-a] -b
+Assert.Seq("Two options, one is optional","""
+usage: prog [-a] -b
 
 options: -a
  -b
 
-""")
-$ prog -a -b
-{"-a": true, "-b": true}
+""",
+  "-a -b" ->= [("-a", Flag(true));("-b", Flag(true))],
+  "-b -a" ->= [("-a", Flag(true));("-b", Flag(true))],
+  "-a"    ->! typeof<ArgvException>,
+  "-b"    ->= [("-a", Flag(false));("-b", Flag(true))],
+  ""      ->! typeof<ArgvException>
+)
 
-$ prog -b -a
-{"-a": true, "-b": true}
-
-$ prog -a
-"user-error"
-
-$ prog -b
-{"-a": false, "-b": true}
-
-$ prog
-"user-error"
-
-
-let doc = Docopt("""usage: prog [(-a -b)]
+Assert.Seq("Required in optional", """
+usage: prog [(-a -b)]
 
 options: -a
          -b
 
-""")
-$ prog -a -b
-{"-a": true, "-b": true}
-
-$ prog -b -a
-{"-a": true, "-b": true}
-
-$ prog -a
-"user-error"
-
-$ prog -b
-"user-error"
-
-$ prog
-{"-a": false, "-b": false}
-
+""",
+  "-a -b" ->= [("-a", Flag(true));("-b", Flag(true))],
+  "-b -a" ->= [("-a", Flag(true));("-b", Flag(true))],
+  "-a"    ->! typeof<ArgvException>,
+  "-b"    ->! typeof<ArgvException>,
+  ""      ->= [("-a", Flag(false));("-b", Flag(false))]
+)
 
 let doc = Docopt("""usage: prog (-a|-b)
 

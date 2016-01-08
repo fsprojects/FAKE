@@ -34,71 +34,9 @@ module _Private =
     let raiseUnexpectedArg a' = raiseInternal (unexpectedArg a')
     let raiseAmbiguousArg s' = raiseInternal (ambiguousArg s')
 
-    type 'a GList = System.Collections.Generic.List<'a>
-
-    [<NoComparison>]
-    type Ast =
-      | Eps
-      | Ano
-      | Sop of char GList
-      | Sqb of Ast
-      | Req of Ast
-      | Arg of string
-      | Cmd of string
-      | Xor of Ast * Ast
-      | Ell of Ast * bool ref
-      | Kln of Ast
-      | Xoq of Ast GList
-      | Seq of Ast GList
-      with
-        static member Reduce(ast':Ast, opts':Options) =
-          let rec impl = function
-          | Sqb(ast)         -> Sqb(impl ast)
-          | Req(ast)         -> impl ast
-          | Seq(seq) when seq.Count = 1 -> impl (seq.[0])
-          | Seq(seq) as ast  -> let mutable i = 0 in
-                                while i < seq.Count do
-                                  (match seq.[i] with
-                                   | Sop(sop) -> let last = sop.[sop.Count - 1] in
-                                                 (match opts'.Find(last) with
-                                                  | null -> unexpectedShort last
-                                                            |> raiseInternal
-                                                  | opt  -> if opt.HasArgument && i < seq.Count - 1 && seq.[i + 1].IsArgCase
-                                                            then seq.RemoveAt(i + 1))
-                                   | _        -> seq.[i] <- impl seq.[i]);
-                                  i <- i + 1
-                                done;
-                                ast
-          | Ell(Sqb(ast), _) -> Kln(ast)
-          | ast              -> ast
-          in impl ast'
-        static member MatchSopt(s':char) = function
-        | Ano      -> true
-        | Sqb(ast) -> Ast.MatchSopt s' ast
-        | Sop(sop) -> (match sop.FindIndex(fun x' -> x' = s') with
-                       | -1 -> false
-                       | i  -> sop.RemoveAt(i); true)
-        | Seq(seq) -> (match seq.FindIndex(fun ast' -> Ast.MatchSopt s' ast') with
-                       | -1 -> false
-                       | i  -> (match seq.[i] with
-                                | Sop(sop) when sop.Count = 0 -> seq.RemoveAt(i)
-                                | _                           -> ());
-                               true)
-        | _        -> false
-        static member MatchLopt(l':string) = function
-        | Ano      -> true
-        | Seq(seq) -> seq.Exists (fun ast' -> Ast.MatchLopt l' ast')
-        | _        -> false
-        static member Success = function
-        | Eps
-        | Ano
-        | Sqb(_)   -> true
-        | Seq(seq) -> seq.Count = 0 || Seq.forall (Ast.Success) seq
-        | Sop(sop) -> sop.Count = 0
-        | _        -> false
-        member xx.IsArgCase = match xx with Arg(_) -> true | _ -> false
-      end
-
+    let mutable opts = null
+    let mutable lastAst = Eps
+    let updatelastAst ast' = lastAst <- ast'; ast'
     let isLetterOrDigit c' = isLetter(c') || isDigit(c')
     let opp = OperatorPrecedenceParser<_, unit, unit>()
     let pupperArg =
@@ -113,28 +51,46 @@ module _Private =
       .>> skipChar '>'
       |>> (fun name' -> String.Concat("<", name', ">"))
     let parg = pupperArg <|> plowerArg
-    let pano = skipString "[options]"
-    let psop = skipChar '-'
-               >>. many1SatisfyL ( isLetterOrDigit ) "Short option(s)"
-    let psqb = between (skipChar '[' >>. spaces) (skipChar ']') opp.ExpressionParser
-    let preq = between (skipChar '(' >>. spaces) (skipChar ')') opp.ExpressionParser
+               |>> fun arg' -> if lastAst.IsSopCase then Eps else Arg(arg')
+    let pano = skipString "[options]" |>> fun () -> Ano(opts)
+    let psop = let filterSops (sops':string) =
+                 let sops = Options() in
+                 let mutable i = -1 in
+                 while (i <- i + 1; i < sops'.Length) do
+                   match opts.Find(sops'.[i]) with
+                   | null -> raiseUnexpectedShort sops'.[i]
+                   | opt  -> (if opt.HasArgument && i + 1 < sops'.Length
+                              then i <- sops'.Length);
+                             sops.Add(opt)
+                 done;
+                 Sop(sops)
+               in skipChar '-'
+                  >>. many1SatisfyL ( isLetterOrDigit ) "Short option(s)"
+                  |>> filterSops
+    let psqb = between (skipChar '[' >>. spaces) (skipChar ']')
+                       opp.ExpressionParser
+               |>> Sqb
+    let preq = between (skipChar '(' >>. spaces) (skipChar ')')
+                       opp.ExpressionParser
+               |>> Req
     let pcmd = many1Satisfy (fun c' -> isLetter(c') || isDigit(c') || c' = '-')
-    let term = choice [|
-                        pano >>% Ano;
-                        psop |>> (GList<char> >> Sop);
-                        psqb |>> Sqb;
-                        preq |>> Req;
-                        parg |>> Arg;
-                        pcmd |>> Cmd;
-                        |]
+               |>> Cmd
+    let term = choice [|pano;
+                        psop;
+                        psqb;
+                        preq;
+                        parg;
+                        pcmd|]
+               |>> updatelastAst
     let pxor = InfixOperator("|", spaces, 10, Associativity.Left,
-                             fun x' y' -> Xor(x', y'))
+                             fun x' y' -> updatelastAst (Xor(x', y')))
     let pell = let makeEll = function
                | Seq(seq) as ast -> let cell = seq.[seq.Count - 1] in
                                     seq.[seq.Count - 1] <- Ell(cell, ref false);
                                     ast
                | ast             -> Ell(ast, ref false)
-               in PostfixOperator("...", spaces, 20, false, makeEll)
+               in PostfixOperator("...", spaces, 20, false,
+                                  makeEll >> updatelastAst)
     let _ = opp.TermParser <- sepEndBy1 term spaces1 |>> (GList<Ast> >> Seq)
     let _ = opp.AddOperator(pxor)
     let _ = opp.AddOperator(pell)
@@ -146,6 +102,7 @@ open _Private
 
 type UsageParser(u':string, opts':Options) =
   class
+    do opts <- opts'
     let parseAsync = function
     | ""   -> async { return Eps }
     | line -> async {
@@ -154,7 +111,7 @@ type UsageParser(u':string, opts':Options) =
         return if index = -1 then Eps
                else match run (spaces >>. opp.ExpressionParser)
                               (line.Substring(index)) with
-                    | Success(ast, _, _) -> Ast.Reduce(ast, opts')
+                    | Success(ast, _, _) -> Ast.Reduce ast
                     | Failure(err, _, _) -> raise (UsageException(err))
       }
     let asts =
@@ -162,13 +119,6 @@ type UsageParser(u':string, opts':Options) =
       |> Array.map parseAsync
       |> Async.Parallel
       |> Async.RunSynchronously
-
-    let inspect method' =
-      let mutable acc = false in
-      for ast in asts do
-        acc <- acc || (method' ast)
-      done;
-      acc
 
     member __.Parse(argv':string array, args':Arguments.Dictionary) =
       let mutable i = -1 in
@@ -180,56 +130,46 @@ type UsageParser(u':string, opts':Options) =
         then if arg'.Length > 2 && arg'.[1] = '-'
              then match arg'.IndexOf('=') with
                   | -1 -> let name = arg'.Substring(2) in
-                          (match opts'.Find(name) with
-                           | null -> raiseUnexpectedLong name
-                           | opt  -> if opt <> opts'.FindLast(name)
-                                     then raiseAmbiguousArg name
-                                     elif opt.HasArgument
-                                     then Lopt(opt, Some(getNext (expectedArg opt.ArgName)))
-                                     else Lopt(opt, None))
+                          let getArg = getNext << expectedArg in
+                          Lopt(name, getArg)
                   | eq -> let name = arg'.Substring(2, eq - 3) in
-                          match opts'.Find(name) with
-                          | null -> raiseUnexpectedLong name
-                          | opt  -> if opt <> opts'.FindLast(name)
-                                    then raiseAmbiguousArg name
-                                    elif opt.HasArgument
-                                    then Lopt(opt, Some(arg'.Substring(eq + 1)))
-                                    else arg'.Substring(eq + 1)
-                                         |> raiseUnexpectedArg
-             else let mutable i = 1 in
-                  let opts = GList<Option>() in
-                  let mutable arg = None in
-                  while i < arg'.Length do
-                    (match opts'.Find(arg'.[i]) with
-                     | null -> raiseUnexpectedShort arg'.[i]
-                     | opt  -> (if opt.HasArgument
-                                then if i + 1 = arg'.Length
-                                     then arg <- Some(getNext (expectedArg opt.ArgName))
-                                     else (arg <- Some(arg'.Substring(i + 1));
-                                           i <- arg'.Length));
-                               opts.Add(opt));
-                    i <- i + 1
-                  done;
-                  Sopt(opts, arg)
+                          let arg = arg'.Substring(eq + 1) in
+                          let getArg _ = arg in
+                          Lopt(name, getArg)
+             else let names = arg'.Substring(1) in
+                  let getArg = getNext << expectedArg in
+                  Sopt(names, getArg)
         else Other
       in try while true do
           match getNext null with
-          | Sopt(sopts, arg) -> let mutable i = 1 in
-                                while i < sopts.Count do
-                                  let sopt = sopts.[i - 1] in
-                                  (if inspect (Ast.MatchSopt sopt.Short)
-                                   then args'.AddShort(sopt)
-                                   else raiseUnexpectedShort sopt.Short);
-                                  i <- i + 1
-                                done;
-                                let sopt = sopts.[i - 1] in
-                                if inspect (Ast.MatchSopt sopt.Short)
-                                then args'.AddShort(sopt, ?arg'=arg)
-                                else raiseUnexpectedShort sopt.Short
-          | Lopt(lopt, arg)  -> if inspect (Ast.MatchLopt lopt.Long)
-                                then args'.AddLong(lopt, ?arg'=arg)
-                                else raiseUnexpectedLong lopt.Long
-          | Other            -> ()
+          | Sopt(names, getArg) -> let mutable i = 0 in
+                                   for ast in asts do
+                                     i <- 0;
+                                     while i < names.Length do
+                                       (match Ast.MatchSopt(names.[i], ast) with
+                                        | null -> raiseUnexpectedShort names.[i]
+                                        | opt  -> let arg = if opt.HasArgument && i + 1 = names.Length
+                                                            then Some(getArg opt.ArgName)
+                                                            elif opt.HasArgument
+                                                            then let j = i in
+                                                                 i <- names.Length;
+                                                                 Some(names.Substring(j + 1))
+                                                            else None in
+                                                  args'.AddShort(opt, ?arg'=arg));
+                                       i <- i + 1
+                                     done
+                                   done
+          | Lopt(name, getArg)  -> for ast in asts do
+                                     match Ast.MatchLopt(name, ast) with
+                                     | null -> raiseUnexpectedLong name
+                                     | opt  -> (if opts'.FindLast(name) <> opt
+                                                then raiseAmbiguousArg (argv'.[i].Substring(2)));
+                                               let arg = if opt.HasArgument
+                                                         then Some(getArg opt.ArgName)
+                                                         else None in
+                                               args'.AddLong(opt, ?arg'=arg)
+                                   done
+          | Other               -> ()
         done;
         args'
       with InternalException(errlist) -> if errlist <> null
