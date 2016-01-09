@@ -250,26 +250,21 @@ options: -a
   "-b"    ->! typeof<ArgvException>,
   ""      ->= [("-a", Flag(false));("-b", Flag(false))]
 )
-(*
-let doc = Docopt("""usage: prog (-a|-b)
+
+Assert.Seq("Exclusive or", """
+usage: prog (-a|-b)
 
 options: -a
          -b
 
-""")
-$ prog -a -b
-"user-error"
+""",
+  "-a -b" ->! typeof<ArgvException>,
+  ""      ->! typeof<ArgvException>,
+  "-a"    ->= [("-a", Flag(true));("-b", Flag(false))],
+  "-b"    ->= [("-a", Flag(false));("-b", Flag(true))]
+)
 
-$ prog
-"user-error"
-
-$ prog -a
-{"-a": true, "-b": false}
-
-$ prog -b
-{"-a": false, "-b": true}
-
-
+(*
 let doc = Docopt("""usage: prog [ -a | -b ]
 
 options: -a

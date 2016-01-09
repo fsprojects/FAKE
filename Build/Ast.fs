@@ -38,6 +38,12 @@ type Ast =
     | Sop(sop)      -> sop.FindAndRemove(s')
     | Sqb(ast)      
     | Req(ast)      -> Ast.MatchSopt(s', ast)
+    | Xor(lft, rgt) -> (match Ast.MatchSopt(s', lft),
+                              Ast.MatchSopt(s', rgt) with
+                        | null, null -> null
+                        | optl, null -> optl
+                        | null, optr -> optr
+                        | optl, optr -> optl) // Maybe check if optl <> optr
     | Seq(seq)      -> let mutable ret = null in
                        let mutable i = 0 in
                        while i < seq.Count do
@@ -61,6 +67,9 @@ type Ast =
     | Sqb(_)        -> true
     | Req(ast)      -> Ast.Success ast
     | Sop(sop)      -> sop.Count = 0
+    | Xor(lft, rgt) -> let l = Ast.Success lft in
+                       let r = Ast.Success rgt in
+                       l <> r
     | Seq(seq)      -> seq.Count = 0 || Seq.forall (Ast.Success) seq
     | Aon(ast, ism) -> Ast.Success ast || not !ism // A←B
     | _             -> false
