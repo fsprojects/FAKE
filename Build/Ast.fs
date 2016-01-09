@@ -34,30 +34,35 @@ type Ast =
                           ast
     | ast              -> ast
     static member MatchSopt(s':char, ast':Ast) = match ast' with
-    | Ano(ano) -> ano.Find(s')
-    | Sop(sop) -> sop.FindAndRemove(s')
-    | Sqb(ast) -> Ast.MatchSopt(s', ast)
-    | Req(ast) -> Ast.MatchSopt(s', ast)
-    | Seq(seq) -> let mutable ret = null in
-                  let mutable i = 0 in
-                  while i < seq.Count do
-                    match Ast.MatchSopt(s', seq.[i]) with
-                    | null -> i <- i + 1;
-                    | opt  -> ret <- opt;
-                              i <- seq.Count
-                  done;
-                  ret
-    | _        -> null
+    | Ano(ano)      -> ano.Find(s')
+    | Sop(sop)      -> sop.FindAndRemove(s')
+    | Sqb(ast)      
+    | Req(ast)      -> Ast.MatchSopt(s', ast)
+    | Seq(seq)      -> let mutable ret = null in
+                       let mutable i = 0 in
+                       while i < seq.Count do
+                         match Ast.MatchSopt(s', seq.[i]) with
+                         | null -> i <- i + 1;
+                         | opt  -> ret <- opt;
+                                   i <- seq.Count
+                       done;
+                       ret
+    | Aon(ast, ism) -> (match Ast.MatchSopt(s', ast) with
+                        | null -> null
+                        | opt  -> ism := true;
+                                  opt)
+    | _             -> null
     static member MatchLopt(l':string, ast':Ast) = match ast' with
     | Ano(ano) -> ano.Find(l')
     | _        -> null
     static member Success = function
     | Eps
     | Ano(_)
-    | Sqb(_)    -> true
-    | Req(ast)  -> Ast.Success ast
-    | Sop(sop)  -> sop.Count = 0
-    | Seq(seq)  -> seq.Count = 0 || Seq.forall (Ast.Success) seq
-    | _         -> false
+    | Sqb(_)        -> true
+    | Req(ast)      -> Ast.Success ast
+    | Sop(sop)      -> sop.Count = 0
+    | Seq(seq)      -> seq.Count = 0 || Seq.forall (Ast.Success) seq
+    | Aon(ast, ism) -> Ast.Success ast || not !ism // A←B
+    | _             -> false
     member xx.IsSopCase = match xx with Sop(_) -> true | _ -> false
   end

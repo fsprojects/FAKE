@@ -236,7 +236,7 @@ options: -a
   "-b"    ->= [("-a", Flag(false));("-b", Flag(true))],
   ""      ->! typeof<ArgvException>
 )
-(*
+
 Assert.Seq("Required in optional", """
 usage: prog [(-a -b)]
 
@@ -250,7 +250,7 @@ options: -a
   "-b"    ->! typeof<ArgvException>,
   ""      ->= [("-a", Flag(false));("-b", Flag(false))]
 )
-
+(*
 let doc = Docopt("""usage: prog (-a|-b)
 
 options: -a
