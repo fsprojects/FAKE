@@ -69,7 +69,7 @@ module _Private =
                   |>> filterSops
     let psqb = between (skipChar '[' >>. spaces) (skipChar ']')
                        opp.ExpressionParser
-               |>> Sqb
+               |>> fun ast' -> Sqb(ast', ref false)
     let preq = between (skipChar '(' >>. spaces) (skipChar ')')
                        opp.ExpressionParser
                |>> Req
