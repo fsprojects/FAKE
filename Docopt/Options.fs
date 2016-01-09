@@ -15,9 +15,7 @@ type Option(short':char, long':string, argName':string, default':string) =
       lhs'.Short = rhs'.Short
       && lhs'.Long = rhs'.Long
     static member Empty = Option()
-    static member Trash = Option('\uFFFE', null, null, null)
     member xx.IsEmpty = xx = Option.Empty
-    member xx.IsTrash = xx = Option.Trash
     member xx.HasArgument = xx.ArgName <> null
     member xx.HasDefault = xx.Default <> null
     override xx.ToString() =

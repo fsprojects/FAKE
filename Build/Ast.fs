@@ -36,9 +36,7 @@ type Ast =
     static member MatchSopt(s':char, ast':Ast) = match ast' with
     | Ano(ano) -> ano.Find(s')
     | Sop(sop) -> sop.FindAndRemove(s')
-    | Sqb(ast) -> (match Ast.MatchSopt(s', ast) with
-                   | null -> Option.Trash
-                   | opt  -> opt)
+    | Sqb(ast) -> Ast.MatchSopt(s', ast)
     | Req(ast) -> Ast.MatchSopt(s', ast)
     | Seq(seq) -> let mutable ret = null in
                   let mutable i = 0 in
