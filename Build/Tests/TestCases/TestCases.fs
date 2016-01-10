@@ -277,18 +277,14 @@ options: -a
   "-b"    ->= [("-a", Flag(false));("-b", Flag(true))]
 )
 
+Assert.Seq("Argument", """
+usage: prog <arg>""",
+  "10" ->= [("<arg>", Argument("10"))],
+  "10 20" ->! typeof<ArgvException>,
+  ""      ->! typeof<ArgvException>
+)
+
 (*
-let doc = Docopt("""usage: prog <arg>""")
-$ prog 10
-{"<arg>": "10"}
-
-$ prog 10 20
-"user-error"
-
-$ prog
-"user-error"
-
-
 let doc = Docopt("""usage: prog [<arg>]""")
 $ prog 10
 {"<arg>": "10"}

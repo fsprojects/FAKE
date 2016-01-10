@@ -54,6 +54,10 @@ type Dictionary(options':Options) =
       xx.UnsafeAdd(String([|'-';o'.Short|]), ?arg'=arg')
     member xx.AddLong(o':Option, ?arg':string) =
       xx.UnsafeAdd(String.Concat("--", o'.Long), ?arg'=arg')
+    member xx.AddArg(a':string, val':string) =
+      if not (dict.ContainsKey(a'))
+      then dict.Add(a', ref (Argument(val')))
+      else xx.UnsafeAdd(a', val')
     member inline private xx.SFDisplay = xx.AsList()
   end
 ;;

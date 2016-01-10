@@ -11,7 +11,7 @@ type Ast =
   | Sop of Options
   | Sqb of Ast * bool ref  // bool holds if the list has been matched
   | Req of Ast
-  | Arg of string
+  | Arg of string ref
   | Cmd of string
   | Ell of Ast * bool ref
   | Kln of Ast
@@ -56,10 +56,16 @@ type Ast =
     static member MatchLopt(l':string, ast':Ast) = match ast' with
     | Ano(ano) -> ano.Find(l')
     | _        -> null
+    static member MatchArg = function
+    | Arg(arg) -> let ret = !arg in
+                  arg := null;
+                  ret
+    | _        -> null
     static member Success = function
     | Eps
     | Ano(_)        -> true
     | Req(ast)      -> Ast.Success ast
+    | Arg(arg)      -> !arg = null
     | Sop(sop)      -> sop.Count = 0
     | Xor(lft, rgt) -> let l = Ast.Success lft in
                        let r = Ast.Success rgt in
