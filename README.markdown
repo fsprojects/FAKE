@@ -24,3 +24,7 @@ See the [project home page](http://fsharp.github.com/FAKE/) for tutorials and [A
 ## How to contribute code
 
 See the [contributing page](http://fsharp.github.com/FAKE/contributing.html).
+
+## Maintainers
+
+Although this project is hosted in the [fsharp](https://github.com/fsharp) repository for historical reasons, it is _not_ maintained and managed by the F# Core Engineering Group. The F# Core Engineering Group acknowledges that the independent owner and maintainer of this project is [Steffen Forkmann](http://github.com/forki).
