@@ -20,6 +20,7 @@ type Ast =
   | Seq of Ast GList
   with
     static member Reduce = function
+    | Sqb(ast, ism)    -> Sqb(Ast.Reduce ast, ism)
     | Req(ast)         -> Req(Ast.Reduce ast)
     | Seq(seq) when seq.Count = 1 -> Ast.Reduce seq.[0]
     | Seq(seq) as ast  -> let mutable i = 0 in
@@ -57,10 +58,23 @@ type Ast =
     | Ano(ano) -> ano.Find(l')
     | _        -> null
     static member MatchArg = function
-    | Arg(arg) -> let ret = !arg in
-                  arg := null;
-                  ret
-    | _        -> null
+    | Sqb(ast, ism) -> (match Ast.MatchArg(ast) with
+                        | null -> null
+                        | opt  -> ism := true;
+                                  opt)
+    | Arg(arg)      -> let ret = !arg in
+                       arg := null;
+                       ret
+    | Seq(seq)      -> let mutable ret = null in
+                       let mutable i = 0 in
+                       while i < seq.Count do
+                         match Ast.MatchArg(seq.[i]) with
+                         | null -> i <- i + 1;
+                         | arg  -> ret <- arg;
+                                   i <- seq.Count
+                       done;
+                       ret
+    | _             -> null
     static member Success = function
     | Eps
     | Ano(_)        -> true
@@ -71,7 +85,9 @@ type Ast =
                        let r = Ast.Success rgt in
                        l <> r
     | Seq(seq)      -> seq.Count = 0 || Seq.forall (Ast.Success) seq
-    | Sqb(ast, ism) -> Ast.Success ast || not !ism // A←B
+    | Sqb(ast, ism) -> (match ast with
+                        | Seq(_) -> true
+                        | _      -> Ast.Success ast || not !ism) // A←B
     | _             -> false
     member xx.IsSopCase = match xx with Sop(_) -> true | _ -> false
   end

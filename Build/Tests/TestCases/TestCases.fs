@@ -279,54 +279,38 @@ options: -a
 
 Assert.Seq("Argument", """
 usage: prog <arg>""",
-  "10" ->= [("<arg>", Argument("10"))],
+  "10"    ->= [("<arg>", Argument("10"))],
   "10 20" ->! typeof<ArgvException>,
   ""      ->! typeof<ArgvException>
 )
 
+Assert.Seq("Optional argument", """
+usage: prog [<arg>]""",
+  "10"    ->= [("<arg>", Argument("10"))],
+  "10 20" ->! typeof<ArgvException>,
+  ""      ->= []
+)
+
+Assert.Seq("Multiple arguments", """
+usage: prog <kind> <name> <type>""",
+  "10 20 40" ->= [("<kind>", Argument("10"));("<name>", Argument("20"));("<type>", Argument("40"))],
+  "10 20"    ->! typeof<ArgvException>,
+  ""         ->! typeof<ArgvException>
+)
+
+Assert.Seq("Multiple arguments, two optional", """
+usage: prog <kind> [<name> <type>]""",
+  "10 20 40" ->= [("<kind>", Argument("10"));("<name>", Argument("20"));("<type>", Argument("40"))],
+  "10 20"    ->= [("<kind>", Argument("10"));("<name>", Argument("20"))],
+  ""         ->! typeof<ArgvException>
+)
 (*
-let doc = Docopt("""usage: prog [<arg>]""")
-$ prog 10
-{"<arg>": "10"}
-
-$ prog 10 20
-"user-error"
-
-$ prog
-{"<arg>": null}
-
-
-let doc = Docopt("""usage: prog <kind> <name> <type>""")
-$ prog 10 20 40
-{"<kind>": "10", "<name>": "20", "<type>": "40"}
-
-$ prog 10 20
-"user-error"
-
-$ prog
-"user-error"
-
-
-let doc = Docopt("""usage: prog <kind> [<name> <type>]""")
-$ prog 10 20 40
-{"<kind>": "10", "<name>": "20", "<type>": "40"}
-
-$ prog 10 20
-{"<kind>": "10", "<name>": "20", "<type>": null}
-
-$ prog
-"user-error"
-
-
-let doc = Docopt("""usage: prog [<kind> | <name> <type>]""")
-$ prog 10 20 40
-"user-error"
-
-$ prog 20 40
-{"<kind>": null, "<name>": "20", "<type>": "40"}
-
-$ prog
-{"<kind>": null, "<name>": null, "<type>": null}
+Assert.Seq("Multiple arguments xor'd in optional", """
+usage: prog [<kind> | <name> <type>]""",
+  "10 20 40" ->! typeof<ArgvException>,
+  "20 40"    ->= [("<name>", Argument("20"));("<type>", Argument("40"))],
+  ""         ->= []
+)
 
 
 let doc = Docopt("""usage: prog (<kind> --all | <name>)
