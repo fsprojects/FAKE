@@ -104,11 +104,11 @@ type NUnitParams =
 /// ## Defaults
 /// - `IncludeCategory` - `""`
 /// - `ExcludeCategory` - `""`
-/// - `ToolPath` - `""`
+/// - `ToolPath` - The `nunit-console.exe` path if it exists in a subdirectory of the current directory.
 /// - `ToolName` - `"nunit-console.exe"`
 /// - `DontTestInNewThread`- `false`
 /// - `StopOnError` - `false`
-/// - `OutputFile` - The `nunit-console.exe` path if it exists in a subdirectory of the current directory.
+/// - `OutputFile` - `"TestResult.xml"`
 /// - `Out` - `""`
 /// - `ErrorOutputFile` - `""`
 /// - `WorkingDir` - `""`
