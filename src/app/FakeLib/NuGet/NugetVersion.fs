@@ -4,6 +4,7 @@ module Fake.NugetVersion
 open System
 open System.Net
 open Newtonsoft.Json
+open Fake.SemVerHelper
 
 type NugetSearchItemResult =
     { Version:string
@@ -12,30 +13,22 @@ type NugetSearchResult =
     { results:NugetSearchItemResult list }
 type NugetSearchResponse = 
     { d:NugetSearchResult }
-type NugetVersionIncrement = string -> Version
-    
-let private positive i = Math.Max(0, i)
+type NugetVersionIncrement = SemVerInfo -> SemVerInfo
 
-/// Increment build number of a version
-let IncBuild:NugetVersionIncrement = 
-    fun (version:string) ->
-        let v = Version version
-        sprintf "%d.%d.%d" (positive v.Major) (positive v.Minor) (positive v.Build+1)
-        |> Version
+/// Increment patch version
+let IncPatch:NugetVersionIncrement = 
+    fun (v:SemVerInfo) ->
+        { v with Build=""; Patch=(v.Patch+1) }
 
 /// Increment minor version
 let IncMinor:NugetVersionIncrement = 
-    fun (version:string) ->
-        let v = Version version
-        let n = sprintf "%d.%d.0" (positive v.Major) (positive v.Minor+1)
-        Version n
+    fun (v:SemVerInfo) ->
+        { v with Build=""; Patch=0; Minor=(v.Minor+1) }
 
 /// Increment major version
 let IncMajor:NugetVersionIncrement = 
-    fun (version:string) ->
-        let v = Version version
-        sprintf "%d.0.0" (positive v.Major+1)
-        |> Version
+    fun (v:SemVerInfo) ->
+        { v with Build=""; Patch=0; Minor=0; Major=(v.Major+1) }
 
 /// Arguments for the next nuget version number computing
 type NugetVersionArg =
@@ -47,7 +40,7 @@ type NugetVersionArg =
     static member Default() =
         { Server="https://www.nuget.org/api/v2"
           PackageName=""
-          Increment=IncBuild
+          Increment=IncMinor
           DefaultVersion="1.0" }
 
 /// Retrieve current nuget version number
@@ -67,7 +60,10 @@ let getlastNugetVersion server (packageName:string) =
     json.d.results
     |> Seq.sortByDescending (fun i -> i.Published)
     |> Seq.tryHead
-    |> fun i -> match i with | Some v -> Some v.Version | None -> None
+    |> fun i -> 
+        match i with 
+        | Some v -> Some (SemVerHelper.parse v.Version)
+        | None -> None
 
 /// Compute next nuget version number
 let nextVersion (f : NugetVersionArg -> NugetVersionArg) =
