@@ -226,6 +226,58 @@
           
         </td>
       </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '110', 110)" onmouseover="showTip(event, '110', 110)">
+            ReplaceAssemblyInfoVersionsBulk (...)
+          </code>
+          <div class="tip" id="110">
+            <strong>Signature:</strong> fileIncludes:FileIncludes -&gt; replacementParameters:(AssemblyInfoReplacementParams -&gt; AssemblyInfoReplacementParams) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AssemblyInfoHelper.fs#L304-304" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Update all AssemblyInfos that were passed with given FileInclude</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li>'dir' - The directory (subdirectories will be included), which inhabits the AssemblyInfo files.</li>
+<li>'replacementParameters' - The replacement parameters for the AssemblyInfo files.</li>
+</ul>
+
+<h2>Sample</h2>
+
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+<span class="l">8: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">assemblyInfos</span> <span class="o">=</span> <span class="o">!!</span>(<span class="s">@&quot;.\src\**\AssemblyInfo.cs&quot;</span>) 
+                       <span class="o">--</span>(<span class="s">@&quot;**\*Scripts*\**&quot;</span>)
+
+<span class="i">ReplaceAssemblyInfoVersionsBulk</span> <span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="i">assemblyInfos</span> (<span class="k">fun</span> <span class="i">f</span> <span class="k">-&gt;</span> 
+    { <span class="i">f</span> <span class="k">with</span>
+            <span class="i">AssemblyVersion</span> <span class="o">=</span> <span class="i">asmVersion</span>
+            <span class="i">AssemblyInformationalVersion</span> <span class="o">=</span> <span class="i">asmInfoVersion</span>
+    })                          
+</code></pre></td>
+</tr>
+</table>
+
+<div class="tip" id="fs1">val assemblyInfos : obj<br /><br />Full name: docs.assemblyInfos</div>
+
+
+        </td>
+      </tr>
     </tbody>
   </table>
 
@@ -273,6 +325,7 @@
             <li><a href="http://fsharp.github.io/FAKE/fluentmigrator.html">FluentMigrator support</a></li>
             <li><a href="http://fsharp.github.io/FAKE/androidpublisher.html">Android publisher</a></li>
             <li><a href="http://fsharp.github.io/FAKE/watch.html">File Watcher</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/wix.html">WiX Setup Generation</a></li>
             <li class="divider"></li>
             <li><a href="http://fsharp.github.io/FAKE/deploy.html">Fake.Deploy</a></li>
             <li><a href="http://fsharp.github.io/FAKE/iis.html">Fake.IIS</a></li>
