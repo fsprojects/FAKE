@@ -289,7 +289,10 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
               | _ ->
                 match loadedAssemblies
                       |> Seq.map snd
-                      |> Seq.tryFind (fun asem -> asem.GetName().Name = name.Name) with
+                      |> Seq.tryFind (fun asem ->
+                          let n = asem.GetName()
+                          n.Name = name.Name &&
+                          n.GetPublicKeyToken() = name.GetPublicKeyToken()) with
                 | Some (asem) ->
                     traceFAKE "Redirect assembly from '%s' to '%s'" ev.Name asem.FullName
                     asem
