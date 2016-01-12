@@ -41,6 +41,8 @@ type AppcastItem = {
     dsaSignature : string option;
     /// Optional miminal system version for the update
     minimumSystemVersion : string option;
+    /// Length of the file in bytes
+    length : uint32;
 }
 
 /// Configuration data for the appcast
@@ -66,17 +68,28 @@ let writeAppcast (path : string) (cast : Appcast) =
             match a with 
                 | Some(c) -> c
                 | None -> b
-                
+        let appendSome option consequence content =
+            match option with
+                | Some(data) -> (consequence data) :: content
+                | None -> content
+
+        
         let item (e : AppcastItem) = 
+            let appendMinimumVersion = appendSome e.minimumSystemVersion (fun d ->  XAttributeXName (sparkle + "minimumSystemVersion") d)
+            let appendSig = appendSome e.dsaSignature (fun d ->  XAttributeXName (sparkle + "dsaSignature") d)
+
             XElement "item" [
                 XElement "title" e.title
                 XElement "pubDate" (e.pubdate.ToString("r"))
-                XElement "enclosure" [
+                XElement "enclosure" ([
                     XAttribute "url" e.url
                     XAttributeXName (sparkle + "version") e.version
                     XAttribute "type" (mtToString e.mimetype)
+                    XAttribute "length" e.length
                     XAttributeXName (sparkle + "shortVersionString") (choose e.shortVersion e.version)
-                ]
+                ] 
+                |> appendMinimumVersion
+                |> appendSig)
             ]
 
         let doc = XDocument (XDeclaration "1.0" "UTF-8" "no") [
