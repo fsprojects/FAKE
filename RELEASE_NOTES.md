@@ -1,3 +1,6 @@
+#### 4.13.1 - 12.01.2016
+* Added support for the Paket pack parameter buildPlatform - https://github.com/fsharp/FAKE/pull/1066
+
 #### 4.13.0 - 11.01.2016
 * NUnit 3 support - https://github.com/fsharp/FAKE/pull/1064
 * Automatic discovery of octo.exe - https://github.com/fsharp/FAKE/pull/1065
