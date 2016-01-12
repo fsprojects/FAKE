@@ -43,7 +43,7 @@ type NuGetVersionArg =
           DefaultVersion="1.0" }
 
 /// Retrieve current NuGet version number
-let getlastNuGetVersion server (packageName:string) = 
+let getLastNuGetVersion server (packageName:string) = 
     let escape = Uri.EscapeDataString
     let url = 
         sprintf "%s/Packages()?$filter=%s%s%s&$orderby=%s"
@@ -67,7 +67,7 @@ let getlastNuGetVersion server (packageName:string) =
 /// Compute next NuGet version number
 let nextVersion (f : NuGetVersionArg -> NuGetVersionArg) =
     let arg = f (NuGetVersionArg.Default())
-    match getlastNuGetVersion arg.Server arg.PackageName with
+    match getLastNuGetVersion arg.Server arg.PackageName with
     | Some v -> (arg.Increment v).ToString()
     | None -> arg.DefaultVersion
 
