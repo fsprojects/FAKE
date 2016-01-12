@@ -284,3 +284,24 @@ let BulkReplaceAssemblyInfoVersions (dir:string) (replacementParameters:Assembly
             |> Seq.iter(fun file ->
               ReplaceAssemblyInfoVersions ((fun p -> {p with OutputFileName = file }) >> replacementParameters))
     else logfn "%s does not exist." directory.FullName
+
+/// Update all AssemblyInfos that were passed with given FileInclude
+/// ## Parameters
+///
+/// - 'dir' - The directory (subdirectories will be included), which inhabits the AssemblyInfo files.
+/// - 'replacementParameters' - The replacement parameters for the AssemblyInfo files.
+///
+/// ## Sample
+///
+///     let assemblyInfos = !!(@".\src\**\AssemblyInfo.cs") 
+///                            --(@"**\*Scripts*\**")
+///
+///     ReplaceAssemblyInfoVersionsBulk assemblyInfos (fun f -> 
+///         { f with
+///                 AssemblyVersion = asmVersion
+///                 AssemblyInformationalVersion = asmInfoVersion
+///         })                          
+let ReplaceAssemblyInfoVersionsBulk (fileIncludes:FileIncludes) (replacementParameters:AssemblyInfoReplacementParams->AssemblyInfoReplacementParams) = 
+   fileIncludes
+    |> Seq.iter(fun file ->
+        ReplaceAssemblyInfoVersions ((fun p -> {p with OutputFileName = file }) >> replacementParameters))
