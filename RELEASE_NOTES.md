@@ -1,4 +1,5 @@
-#### 4.13.1 - 12.01.2016
+#### 4.14.0 - 12.01.2016
+* NugGet automatic version increment - https://github.com/fsharp/FAKE/pull/1063
 * Added support for the Paket pack parameter buildPlatform - https://github.com/fsharp/FAKE/pull/1066
 * Added possibility to bulk update assembly infos with file includes - https://github.com/fsharp/FAKE/pull/1067
 
