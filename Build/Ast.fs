@@ -2,8 +2,125 @@
 #nowarn "62"
 #light "off"
 
-type 'a GList = System.Collections.Generic.List<'a>
+type private 'a GList = System.Collections.Generic.List<'a>
 
+type (*private*) Tag =
+  | Eps = 0b00000000
+  | Ano = 0b00000001
+  | Sop = 0b00000010
+  | Sqb = 0b00000011
+  | Req = 0b00000100
+  | Arg = 0b00000101
+  | Xor = 0b00000110
+  | Seq = 0b00000111
+
+[<AllowNullLiteral>]
+type IAst =
+  interface
+    abstract Tag : Tag
+    abstract MatchSopt : sopt:char -> bool
+    abstract MatchLopt : lopt:string -> bool
+    abstract MatchArg : arg:string -> bool
+    abstract TryFill : args:Arguments.Dictionary -> bool
+  end
+
+type Eps() =
+  class
+    interface IAst with
+      member __.Tag = Tag.Eps
+      member __.MatchSopt(_) = false
+      member __.MatchLopt(_) = false
+      member __.MatchArg(_) = false
+      member __.TryFill(_) = true
+    end
+  end
+
+type Ano(o':Options) =
+  class
+    let matched = GList<Option>(o'.Count)
+    interface IAst with
+      member __.Tag = Tag.Ano
+      member __.MatchSopt(s':char) = match o'.Find(s') with
+                                     | null -> false
+                                     | opt  -> matched.Add(opt); true
+      member __.MatchLopt(l':string) = match o'.Find(l') with
+                                       | null -> false
+                                       | opt  -> matched.Add(opt); true
+      member __.MatchArg(_) = false
+      member __.TryFill(_) = false
+    end
+  end
+
+type Sop(o':Options) =
+  class
+    let matched = GList<Option>(o'.Count)
+    interface IAst with
+      member __.Tag = Tag.Sop
+      member __.MatchSopt(s':char) = match o'.Find(s') with
+                                     | null -> false
+                                     | opt  -> matched.Add(opt); true
+      member __.MatchLopt(_) = false
+      member __.MatchArg(_) = false
+      member __.TryFill(_) = false
+    end
+  end
+
+type Sqb(ast':IAst) =
+  class
+    interface IAst with
+      member __.Tag = Tag.Sqb
+      member __.MatchSopt(_) = false
+      member __.MatchLopt(_) = false
+      member __.MatchArg(_) = false
+      member __.TryFill(_) = false
+    end
+  end
+
+type Req(ast':IAst) =
+  class
+    interface IAst with
+      member __.Tag = Tag.Req
+      member __.MatchSopt(_) = false
+      member __.MatchLopt(_) = false
+      member __.MatchArg(_) = false
+      member __.TryFill(_) = false
+    end
+  end
+
+type Arg(ast':IAst) =
+  class
+    interface IAst with
+      member __.Tag = Tag.Arg
+      member __.MatchSopt(_) = false
+      member __.MatchLopt(_) = false
+      member __.MatchArg(_) = false
+      member __.TryFill(_) = false
+    end
+  end
+
+type Xor(ast':IAst) =
+  class
+    interface IAst with
+      member __.Tag = Tag.Xor
+      member __.MatchSopt(_) = false
+      member __.MatchLopt(_) = false
+      member __.MatchArg(_) = false
+      member __.TryFill(_) = false
+    end
+  end
+
+type Seq(ast':IAst) =
+  class
+    interface IAst with
+      member __.Tag = Tag.Seq
+      member __.MatchSopt(_) = false
+      member __.MatchLopt(_) = false
+      member __.MatchArg(_) = false
+      member __.TryFill(_) = false
+    end
+  end
+
+(*
 [<NoComparison>]
 type Ast =
   | Eps
@@ -19,17 +136,6 @@ type Ast =
   | Xoq of Ast GList
   | Seq of Ast GList
   with
-    static member Reduce = function
-    | Sqb(ast, ism)    -> Sqb(Ast.Reduce ast, ism)
-    | Req(ast)         -> Req(Ast.Reduce ast)
-    | Seq(seq) when seq.Count = 1 -> Ast.Reduce seq.[0]
-    | Seq(seq) as ast  -> let mutable i = 0 in
-                          while i < seq.Count do
-                            seq.[i] <- Ast.Reduce seq.[i];
-                            i <- i + 1
-                          done;
-                          ast
-    | ast              -> ast
     static member MatchSopt(s':char, ast':Ast) = match ast' with
     | Ano(ano)      -> ano.Find(s')
     | Sop(sop)      -> sop.FindAndRemove(s')
@@ -91,3 +197,4 @@ type Ast =
     | _             -> false
     member xx.IsSopCase = match xx with Sop(_) -> true | _ -> false
   end
+*)

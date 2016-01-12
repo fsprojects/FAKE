@@ -35,7 +35,7 @@ module _Private =
     let raiseAmbiguousArg s' = raiseInternal (ambiguousArg s')
 
     let mutable opts = null
-    let mutable lastAst = Eps
+    let mutable lastAst:IAst = null
     let updatelastAst ast' = lastAst <- ast'; ast'
     let isLetterOrDigit c' = isLetter(c') || isDigit(c')
     let opp = OperatorPrecedenceParser<_, unit, unit>()
@@ -51,7 +51,7 @@ module _Private =
       .>> skipChar '>'
       |>> (fun name' -> String.Concat("<", name', ">"))
     let parg = pupperArg <|> plowerArg
-               |>> fun arg' -> if lastAst.IsSopCase then Eps else Arg(ref arg')
+               |>> fun arg' -> if lastAst.Tag = Tag.Sop then Eps else Arg(ref arg')
     let pano = skipString "[options]" |>> fun () -> Ano(opts)
     let psop = let filterSops (sops':string) =
                  let sops = Options() in
@@ -111,7 +111,7 @@ type UsageParser(u':string, opts':Options) =
         return if index = -1 then Eps
                else match run (spaces >>. opp.ExpressionParser)
                               (line.Substring(index)) with
-                    | Success(ast, _, _) -> Ast.Reduce ast
+                    | Success(ast, _, _) -> ast
                     | Failure(err, _, _) -> raise (UsageException(err))
       }
     let asts =

@@ -304,7 +304,7 @@ usage: prog <kind> [<name> <type>]""",
   "10 20"    ->= [("<kind>", Argument("10"));("<name>", Argument("20"))],
   ""         ->! typeof<ArgvException>
 )
-(*
+
 Assert.Seq("Multiple arguments xor'd in optional", """
 usage: prog [<kind> | <name> <type>]""",
   "10 20 40" ->! typeof<ArgvException>,
@@ -312,7 +312,7 @@ usage: prog [<kind> | <name> <type>]""",
   ""         ->= []
 )
 
-
+(*
 let doc = Docopt("""usage: prog (<kind> --all | <name>)
 
 options:
