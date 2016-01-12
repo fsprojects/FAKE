@@ -1,4 +1,5 @@
-﻿module Fake.DynamicsCRMHelper
+﻿/// Contains various functions for interacting with Dynamics CRM. So far there is support for exporting and importing solutions, zipping and unzipping using the Solution Packager, as well as publishing customizations.
+module Fake.DynamicsCRMHelper
 
 open System
 open System.Configuration
@@ -87,6 +88,7 @@ type SolutionPackagerParams =
         Folder : string
     }
 
+/// Default values for invoking Solution Packager
 let SolutionPackagerDefaults =
     {
         ToolDirectory = currentDirectory @@ "tools" @@ "SolutionPackager"
