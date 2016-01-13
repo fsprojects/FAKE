@@ -1,4 +1,5 @@
 ﻿namespace Docopt
+#nowarn "42"
 #nowarn "62"
 #light "off"
 
@@ -12,6 +13,7 @@ exception ArgvException of string
 
 module _Private =
   begin
+    let inline toIAst obj' = (# "" obj' : IAst #)
     let raiseArgvException errlist' =
       let pos = Position(null, 0L, 0L, 0L) in
       let perror = ParserError(pos, null, errlist') in
@@ -35,8 +37,8 @@ module _Private =
     let raiseAmbiguousArg s' = raiseInternal (ambiguousArg s')
 
     let mutable opts = null
-    let mutable lastAst:IAst = null
-    let updatelastAst ast' = lastAst <- ast'; ast'
+    let mutable last:IAst = null
+    let updatelastAst ast' = last <- ast'; ast'
     let isLetterOrDigit c' = isLetter(c') || isDigit(c')
     let opp = OperatorPrecedenceParser<_, unit, unit>()
     let pupperArg =
@@ -51,8 +53,11 @@ module _Private =
       .>> skipChar '>'
       |>> (fun name' -> String.Concat("<", name', ">"))
     let parg = pupperArg <|> plowerArg
-               |>> fun arg' -> if lastAst.Tag = Tag.Sop then Eps else Arg(ref arg')
-    let pano = skipString "[options]" |>> fun () -> Ano(opts)
+               |>> fun arg' -> if last.Tag = Tag.Sop
+                               then Eps() |> toIAst
+                               else Arg(arg') |> toIAst
+    let pano = skipString "[options]"
+               |>> fun () -> Ano(opts) |> toIAst
     let psop = let filterSops (sops':string) =
                  let sops = Options() in
                  let mutable i = -1 in
@@ -63,18 +68,18 @@ module _Private =
                               then i <- sops'.Length);
                              sops.Add(opt)
                  done;
-                 Sop(sops)
+                 Sop(sops) |> toIAst
                in skipChar '-'
                   >>. many1SatisfyL ( isLetterOrDigit ) "Short option(s)"
                   |>> filterSops
     let psqb = between (skipChar '[' >>. spaces) (skipChar ']')
                        opp.ExpressionParser
-               |>> fun ast' -> Sqb(ast', ref false)
+               |>> (Sqb >> toIAst)
     let preq = between (skipChar '(' >>. spaces) (skipChar ')')
                        opp.ExpressionParser
-               |>> Req
+               |>> (Req >> toIAst)
     let pcmd = many1Satisfy (fun c' -> isLetter(c') || isDigit(c') || c' = '-')
-               |>> Cmd
+               >>% (Eps() |> toIAst) //|>> (Cmd >> toIAst)
     let term = choice [|pano;
                         psop;
                         psqb;
@@ -83,17 +88,19 @@ module _Private =
                         pcmd|]
                |>> updatelastAst
     let pxor = InfixOperator("|", spaces, 10, Associativity.Left,
-                             fun x' y' -> updatelastAst (Xor(x', y')))
-    let pell = let makeEll = function
-               | Seq(seq) as ast -> let cell = seq.[seq.Count - 1] in
-                                    seq.[seq.Count - 1] <- Ell(cell, ref false);
-                                    ast
-               | ast             -> Ell(ast, ref false)
-               in PostfixOperator("...", spaces, 20, false,
-                                  makeEll >> updatelastAst)
-    let _ = opp.TermParser <- sepEndBy1 term spaces1 |>> (GList<Ast> >> Seq)
+                             fun x' y' -> updatelastAst (Xor(x', y') |> toIAst))
+//    let pell = let makeEll (ast':IAst) =
+//                 match ast'.Tag with
+//                 | Tag.Seq -> let cell = seq.[seq.Count - 1] in
+//                              seq.[seq.Count - 1] <- Ell(cell, ref false);
+//                              ast
+//                 | _       -> Eps() //Ell(ast')
+//               in PostfixOperator("...", spaces, 20, false,
+//                                  makeEll >> updatelastAst)
+    let _ = opp.TermParser <- sepEndBy1 term spaces1
+                              |>> (GList<IAst> >> Seq >> toIAst)
     let _ = opp.AddOperator(pxor)
-    let _ = opp.AddOperator(pell)
+//    let _ = opp.AddOperator(pell)
     let pusageLine = spaces >>. opp.ExpressionParser
   end
 ;;
@@ -104,11 +111,11 @@ type UsageParser(u':string, opts':Options) =
   class
     do opts <- opts'
     let parseAsync = function
-    | ""   -> async { return Eps }
+    | ""   -> async { return Eps() |> toIAst }
     | line -> async {
         let line = line.TrimStart() in
         let index = line.IndexOfAny([|' ';'\t'|]) in
-        return if index = -1 then Eps
+        return if index = -1 then Eps() |> toIAst
                else match run (spaces >>. opp.ExpressionParser)
                               (line.Substring(index)) with
                     | Success(ast, _, _) -> ast
@@ -128,41 +135,21 @@ type UsageParser(u':string, opts':Options) =
       with :? IndexOutOfRangeException -> raiseInternal exn'
 
     let matchSopt (names':string) getArg' =
-      let mutable i = 0 in
       for ast in asts do
-        i <- 0;
-        while i < names'.Length do
-          (match Ast.MatchSopt(names'.[i], ast) with
-           | null -> raiseUnexpectedShort names'.[i]
-           | opt  -> let arg = if opt.HasArgument && i + 1 = names'.Length
-                               then Some(getArg' opt.ArgName)
-                               elif opt.HasArgument
-                               then let j = i in
-                                    i <- names'.Length;
-                                    Some(names'.Substring(j + 1))
-                               else None in
-                     args.AddShort(opt, ?arg'=arg));
-          i <- i + 1
-        done
+        if ast.MatchSopt(names', getArg')
+        then raiseUnexpectedShort '?'
       done
 
     let matchLopt (name':string) getArg' =
       for ast in asts do
-        match Ast.MatchLopt(name', ast) with
-        | null -> raiseUnexpectedLong name'
-        | opt  -> (if opts'.FindLast(name') <> opt
-                   then raiseAmbiguousArg (argv.[i].Substring(2)));
-                  let arg = if opt.HasArgument
-                            then Some(getArg' opt.ArgName)
-                            else None in
-                  args.AddLong(opt, ?arg'=arg)
+        if ast.MatchLopt(name', getArg')
+        then raiseUnexpectedLong name'
       done
 
     let matchArg (str:string) =
       for ast in asts do
-         match Ast.MatchArg(ast) with
-         | null -> raiseUnexpectedArg str
-         | arg  -> args.AddArg(arg, str)
+        if ast.MatchArg(str)
+        then raiseUnexpectedArg str
       done
 
     member __.Parse(argv':string array, args':Arguments.Dictionary) =
@@ -191,13 +178,12 @@ type UsageParser(u':string, opts':Options) =
           | Argument(str)       -> matchArg str
         done;
         args'
-      with InternalException(errlist) -> if errlist <> null
-                                         then raiseArgvException errlist
-                                         elif Array.exists (Ast.Success) asts
-                                         then args'
-                                         else "Usage:" + u'
-                                              |> ArgvException
-                                              |> raise
+      with InternalException(errlist) ->
+        if errlist <> null
+        then raiseArgvException errlist
+        elif Array.exists (fun (ast':IAst) -> ast'.TryFill(args')) asts
+        then args'
+        else raise (ArgvException("Usage:" + u'))
     member __.Asts = asts
   end
 ;;

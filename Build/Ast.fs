@@ -18,8 +18,8 @@ type (*private*) Tag =
 type IAst =
   interface
     abstract Tag : Tag
-    abstract MatchSopt : sopt:char -> bool
-    abstract MatchLopt : lopt:string -> bool
+    abstract MatchSopt : sopt:string * getArg:(string -> string) -> bool
+    abstract MatchLopt : lopt:string * getArg:(string -> string) -> bool
     abstract MatchArg : arg:string -> bool
     abstract TryFill : args:Arguments.Dictionary -> bool
   end
@@ -28,38 +28,62 @@ type Eps() =
   class
     interface IAst with
       member __.Tag = Tag.Eps
-      member __.MatchSopt(_) = false
-      member __.MatchLopt(_) = false
+      member __.MatchSopt(_, _) = false
+      member __.MatchLopt(_, _) = false
       member __.MatchArg(_) = false
       member __.TryFill(_) = true
     end
   end
 
-type Ano(o':Options) =
+type Sop(o':Options) =
   class
-    let matched = GList<Option>(o'.Count)
+    let matched = GList<Option * string>(o'.Count)
     interface IAst with
-      member __.Tag = Tag.Ano
-      member __.MatchSopt(s':char) = match o'.Find(s') with
-                                     | null -> false
-                                     | opt  -> matched.Add(opt); true
-      member __.MatchLopt(l':string) = match o'.Find(l') with
-                                       | null -> false
-                                       | opt  -> matched.Add(opt); true
+      member __.Tag = Tag.Sop
+      member __.MatchSopt(s', getArg') = 
+        let mutable ret = true in
+        let mutable i = 0 in
+        while i < s'.Length do
+          (match o'.FindAndRemove(s'.[i]) with
+           | null -> ret <- false; i <-s'.Length
+           | opt  -> matched.Add(opt, if opt.HasArgument && i = s'.Length - 1
+                                      then getArg' opt.ArgName
+                                      elif opt.HasArgument
+                                      then (let j = i + 1 in
+                                            i <- s'.Length;
+                                            s'.Substring(j))
+                                      else null));
+          i <- i + 1
+        done;
+        ret
+      member __.MatchLopt(_, _) = false
       member __.MatchArg(_) = false
       member __.TryFill(_) = false
     end
   end
 
-type Sop(o':Options) =
+type Ano(o':Options) =
   class
-    let matched = GList<Option>(o'.Count)
+    let matched = GList<Option * string>(o'.Count)
     interface IAst with
-      member __.Tag = Tag.Sop
-      member __.MatchSopt(s':char) = match o'.Find(s') with
-                                     | null -> false
-                                     | opt  -> matched.Add(opt); true
-      member __.MatchLopt(_) = false
+      member __.Tag = Tag.Ano
+      member __.MatchSopt(s', getArg') =
+        let mutable ret = true in
+        let mutable i = 0 in
+        while i < s'.Length do
+          (match o'.Find(s'.[i]) with
+           | null -> ret <- false; i <-s'.Length
+           | opt  -> matched.Add(opt, if opt.HasArgument && i = s'.Length - 1
+                                      then getArg' opt.ArgName
+                                      elif opt.HasArgument
+                                      then (let j = i + 1 in
+                                            i <- s'.Length;
+                                            s'.Substring(j))
+                                      else null));
+          i <- i + 1
+        done;
+        ret
+      member __.MatchLopt(_, _) = false
       member __.MatchArg(_) = false
       member __.TryFill(_) = false
     end
@@ -69,8 +93,8 @@ type Sqb(ast':IAst) =
   class
     interface IAst with
       member __.Tag = Tag.Sqb
-      member __.MatchSopt(_) = false
-      member __.MatchLopt(_) = false
+      member __.MatchSopt(_, _) = false
+      member __.MatchLopt(_, _) = false
       member __.MatchArg(_) = false
       member __.TryFill(_) = false
     end
@@ -80,41 +104,41 @@ type Req(ast':IAst) =
   class
     interface IAst with
       member __.Tag = Tag.Req
-      member __.MatchSopt(_) = false
-      member __.MatchLopt(_) = false
+      member __.MatchSopt(_, _) = false
+      member __.MatchLopt(_, _) = false
       member __.MatchArg(_) = false
       member __.TryFill(_) = false
     end
   end
 
-type Arg(ast':IAst) =
+type Arg(name':string) =
   class
     interface IAst with
       member __.Tag = Tag.Arg
-      member __.MatchSopt(_) = false
-      member __.MatchLopt(_) = false
+      member __.MatchSopt(_, _) = false
+      member __.MatchLopt(_, _) = false
       member __.MatchArg(_) = false
       member __.TryFill(_) = false
     end
   end
 
-type Xor(ast':IAst) =
+type Xor(l':IAst, r':IAst) =
   class
     interface IAst with
       member __.Tag = Tag.Xor
-      member __.MatchSopt(_) = false
-      member __.MatchLopt(_) = false
+      member __.MatchSopt(_, _) = false
+      member __.MatchLopt(_, _) = false
       member __.MatchArg(_) = false
       member __.TryFill(_) = false
     end
   end
 
-type Seq(ast':IAst) =
+type Seq(ast':GList<IAst>) =
   class
     interface IAst with
       member __.Tag = Tag.Seq
-      member __.MatchSopt(_) = false
-      member __.MatchLopt(_) = false
+      member __.MatchSopt(_, _) = false
+      member __.MatchLopt(_, _) = false
       member __.MatchArg(_) = false
       member __.TryFill(_) = false
     end
