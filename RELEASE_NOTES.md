@@ -1,5 +1,8 @@
+#### 4.14.1 - 13.01.2016
+* Tell the clr to use the cached assemblies even when it tries to reload them with a different context - https://github.com/fsharp/FAKE/pull/1056
+
 #### 4.14.0 - 12.01.2016
-* NugGet automatic version increment - https://github.com/fsharp/FAKE/pull/1063
+* NuGet automatic version increment - https://github.com/fsharp/FAKE/pull/1063
 * Added support for the Paket pack parameter buildPlatform - https://github.com/fsharp/FAKE/pull/1066
 * Added possibility to bulk update assembly infos with file includes - https://github.com/fsharp/FAKE/pull/1067
 
