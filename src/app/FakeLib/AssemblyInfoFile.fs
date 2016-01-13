@@ -2,7 +2,38 @@
 /// There is also a tutorial about the [AssemblyInfo tasks](../assemblyinfo.html) available.
 module Fake.AssemblyInfoFile
 
+open System
+open System.IO
+open System.Text.RegularExpressions
+
 let internal assemblyVersionRegex = getRegEx @"([0-9]+.)+[0-9]+"
+
+// matches [assembly: name(value)] and captures "name" and "value" as named captures. Variations for C#, F#, C++ and VB
+let private regexAttrNameValueCs = @"^\s*\[\s*assembly:\s*(?<name>\w+?)\s*\((?<value>.*)\)\s*\]\s*$"
+let private regexAttrNameValueFs = @"^\s*\[\<\s*assembly:\s*(?<name>\w+?)\s*\((?<value>.*)\)\s*\>\]\s*$"
+let private regexAttrNameValueCpp = @"^\s*\[\s*assembly:\s*(?<name>\w+?)\s*\((?<value>.*)\)\s*\]\s*;\s*$"
+let private regexAttrNameValueVb = @"^\s*\<\s*assembly:\s*(?<name>\w+?)\s*\((?<value>.*)\)\s*\>\s*$"
+
+// matches [assembly: name(value)] but only captures the value. Variations for C#, F#, C++ and VB
+let private regexAttrValueCs name =
+    @"(?<=^\s*\[\s*assembly:\s*" + name + @"(?:Attribute)?\s*\()" // look-behind for "[assembly: name[Attribute]("
+    + @"(.*)"                                       // value
+    + @"(?=\)\s*\]\s*$)"                            // look-ahead for ")]"
+
+let private regexAttrValueFs name =
+    @"(?<=^\s*\[\<\s*assembly:\s*" + name + @"(?:Attribute)?\s*\()" // look-behind for "[<assembly: name[Attribute]("
+    + @"(.*)"                                         // value
+    + @"(?=\)\s*\>\]\s*$)"                            // look-ahead for ")>]"
+
+let private regexAttrValueCpp name =
+    @"(?<=^\s*\[\s*assembly:\s*" + name + @"(?:Attribute)?\s*\()" // look-behind for "[assembly: name[Attribute]("
+    + @"(.*)"                                       // value
+    + @"(?=\)\s*\]\s*;\s*$)"                        // look-ahead for ")];"
+
+let private regexAttrValueVb name =
+    @"(?<=^\s*\<\s*assembly:\s*" + name + @"(?:Attribute)?\s*\()" // look-behind for "<assembly: name[Attribute]("
+    + @"(.*)"                                       // value
+    + @"(?=\)\s*\>\s*$)"                            // look-ahead for ")>"
 
 let private NormalizeVersion version = 
     let m = assemblyVersionRegex.Match(version)
@@ -231,3 +262,69 @@ let CreateVisualBasicAssemblyInfo outputFileName attributes =
 ///  Creates a C++/CLI AssemblyInfo file with the given attributes.
 let CreateCppCliAssemblyInfo outputFileName attributes =
     CreateCppCliAssemblyInfoWithConfig outputFileName attributes AssemblyInfoFileConfig.Default
+
+let private removeAtEnd (textToRemove:string) (text:string) =
+    if text.EndsWith(textToRemove) then
+        text.Substring(0, text.Length - textToRemove.Length)
+    else
+        text
+
+let GetAttributes assemblyInfoFile =
+    let text = File.ReadAllText assemblyInfoFile
+
+    let regex = 
+        if assemblyInfoFile.ToLower().EndsWith(".cs") then regexAttrNameValueCs
+        elif assemblyInfoFile.ToLower().EndsWith(".fs") then regexAttrNameValueFs
+        elif assemblyInfoFile.ToLower().EndsWith(".vb") then regexAttrNameValueVb
+        elif assemblyInfoFile.ToLower().EndsWith(".cpp") then regexAttrNameValueCpp
+        else
+            failwithf "Assembly info file type not supported: %s" assemblyInfoFile
+
+    Regex.Matches(text, regex, RegexOptions.Multiline)
+        |> Seq.cast<Match> 
+        |> Seq.map (fun m -> Attribute(m.Groups.["name"].Value |> removeAtEnd "Attribute",
+                                       m.Groups.["value"].Value,
+                                       ""))
+
+let GetAttribute attrName assemblyInfoFile =
+    assemblyInfoFile |> GetAttributes |> Seq.tryFind (fun a -> a.Name = attrName) 
+    
+let GetAttributeValue attrName assemblyInfoFile =
+    match GetAttribute attrName assemblyInfoFile with
+    | Some attr -> Some attr.Value
+    | None -> None
+    
+let private updateAttr regexFactory text (attribute:Attribute) =
+    let regex = regexFactory attribute.Name
+
+    let m = Regex.Match(text, regex, RegexOptions.Multiline)
+
+    // Replace if found with different value
+    if m.Success && m.Value <> attribute.Value then
+        tracefn "Attribute '%s' updated: %s" attribute.Name attribute.Value
+        Regex.Replace(text, regex, attribute.Value, RegexOptions.Multiline)
+
+    // Do nothing if found with the same value
+    elif m.Success then
+        tracefn "Attribute '%s' is already correct: %s" attribute.Name attribute.Value
+        text
+    
+    // Fail if not found
+    else
+        failwithf "Attribute '%s' not found" attribute.Name
+
+let UpdateAttributes assemblyInfoFile (attributes: seq<Attribute>) =
+    tracefn "Updating attributes in: %s" assemblyInfoFile
+
+    let regexFactory = 
+        if assemblyInfoFile.ToLower().EndsWith(".cs") then regexAttrValueCs
+        elif assemblyInfoFile.ToLower().EndsWith(".fs") then regexAttrValueFs
+        elif assemblyInfoFile.ToLower().EndsWith(".vb") then regexAttrValueVb
+        elif assemblyInfoFile.ToLower().EndsWith(".cpp") then regexAttrValueCpp
+        else
+            failwithf "Assembly info file type not supported: %s" assemblyInfoFile
+
+    let text = File.ReadAllText assemblyInfoFile
+    let newText = attributes |> Seq.fold (updateAttr regexFactory) text
+
+    File.WriteAllText(assemblyInfoFile, newText)
