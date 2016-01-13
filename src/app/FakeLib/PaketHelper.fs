@@ -18,7 +18,8 @@ type PaketPackParams =
       TemplateFile : string
       ExcludedTemplates : string list
       WorkingDir : string
-      OutputPath : string }
+      OutputPath : string 
+      Symbols: bool }
 
 /// Paket pack default parameters
 let PaketPackDefaults() : PaketPackParams =
@@ -33,7 +34,8 @@ let PaketPackDefaults() : PaketPackParams =
       TemplateFile = null
       ExcludedTemplates = []
       WorkingDir = "."
-      OutputPath = "./temp" }
+      OutputPath = "./temp" 
+      Symbols = false }
 
 /// Paket push parameter type
 type PaketPushParams =
@@ -75,9 +77,10 @@ let Pack setParams =
     let lockDependencies = if parameters.LockDependencies then " lock-dependencies" else ""
     let excludedTemplates = parameters.ExcludedTemplates |> Seq.map (fun t -> " exclude " + t) |> String.concat " "
     let specificVersions = parameters.SpecificVersions |> Seq.map (fun (id,v) -> sprintf " specific-version %s %s" id v) |> String.concat " "
+    let symbols = if parameters.Symbols then " symbols" else ""
 
     let packResult =
-        let cmdArgs = sprintf "%s%s%s%s%s%s%s%s" version specificVersions releaseNotes buildConfig buildPlatform templateFile lockDependencies excludedTemplates
+        let cmdArgs = sprintf "%s%s%s%s%s%s%s%s%s" version specificVersions releaseNotes buildConfig buildPlatform templateFile lockDependencies excludedTemplates symbols
         ExecProcess
             (fun info ->
                 info.FileName <- parameters.ToolPath
