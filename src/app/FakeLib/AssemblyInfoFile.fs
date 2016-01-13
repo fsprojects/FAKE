@@ -269,6 +269,9 @@ let private removeAtEnd (textToRemove:string) (text:string) =
     else
         text
 
+/// Read attributes from an AssemblyInfo file and return as a sequence of Attribute.
+/// ## Parameters
+///  - `assemblyInfoFile` - The file to read attributes from. Language C#, F#, VB or C++ is determined from the extension. 
 let GetAttributes assemblyInfoFile =
     let text = File.ReadAllText assemblyInfoFile
 
@@ -286,9 +289,17 @@ let GetAttributes assemblyInfoFile =
                                        m.Groups.["value"].Value,
                                        ""))
 
+/// Read a single attribute from an AssemblyInfo file.
+/// ## Parameters
+///  - `attrName` - Name of the attribute without "Attribute" at the end.
+///  - `assemblyInfoFile` - The file to read from. Language C#, F#, VB or C++ is determined from the extension. 
 let GetAttribute attrName assemblyInfoFile =
     assemblyInfoFile |> GetAttributes |> Seq.tryFind (fun a -> a.Name = attrName) 
     
+/// Read the value of a single attribute from an AssemblyInfo file. Note that string values are returned with surrounding "".
+/// ## Parameters
+///  - `attrName` - Name of the attribute without "Attribute" at the end.
+///  - `assemblyInfoFile` - The file to read from. Language C#, F#, VB or C++ is determined from the extension. 
 let GetAttributeValue attrName assemblyInfoFile =
     match GetAttribute attrName assemblyInfoFile with
     | Some attr -> Some attr.Value
@@ -313,6 +324,10 @@ let private updateAttr regexFactory text (attribute:Attribute) =
     else
         failwithf "Attribute '%s' not found" attribute.Name
 
+/// Update a set of attributes in an AssemblyInfo file. Fails if any attribute is not found.
+/// ## Parameters
+///  - `assemblyInfoFile` - The file to update. Language C#, F#, VB or C++ is determined from the extension. 
+///  - `attributes` - The Attributes that should be updated matched on Name (Namespace is not used).
 let UpdateAttributes assemblyInfoFile (attributes: seq<Attribute>) =
     tracefn "Updating attributes in: %s" assemblyInfoFile
 
