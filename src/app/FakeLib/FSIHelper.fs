@@ -1,4 +1,4 @@
-﻿
+
 [<AutoOpen>]
 /// Contains helper functions which allow to interact with the F# Interactive.
 module Fake.FSIHelper
@@ -217,7 +217,7 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
     let fsiConfig = FsiEvaluationSession.GetDefaultConfiguration()
 
     let options =
-        [ "fsi.exe"; "--noninteractive" ] @ fsiOptions @ scriptArgs
+        [ "fsi.exe"; "--noninteractive" ] @ fsiOptions
         |> List.toArray
 
     let sbOut = Text.StringBuilder()
