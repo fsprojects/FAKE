@@ -82,7 +82,7 @@ namespace Test.FAKECore
                 {
                     File.WriteAllText(scriptFilePath, "printf \"foobar\"");
                     var scriptHash =
-                            FSIHelper.getScriptHash(new FSIHelper.Script[] { script(scriptFilePath, "printf \"foobar\"") });
+                            FSIHelper.getScriptHash(new FSIHelper.Script[] { script(scriptFilePath, "printf \"foobar\"") }, new List<string>());
 
                     var cacheFilePath = Path.Combine(".", ".fake", scriptFileName + "_" + scriptHash + ".dll");
 
@@ -105,7 +105,7 @@ namespace Test.FAKECore
 
                     File.WriteAllText(scriptFilePath, "printf \"foobarbaz\"");
 
-                    var changedScriptHash = FSIHelper.getScriptHash(new FSIHelper.Script[] { script(scriptFilePath, "printf \"foobarbaz\"") });
+                    var changedScriptHash = FSIHelper.getScriptHash(new FSIHelper.Script[] { script(scriptFilePath, "printf \"foobarbaz\"") }, new List<string>());
                     RunExplicit(scriptFilePath, arguments, true)
                         .ShouldStartWith("Cache is invalid, recompiling");
 
@@ -167,12 +167,12 @@ namespace Test.FAKECore
                 File.WriteAllText(lastPath, lastScript);
 
                 var scriptContents = FSIHelper.getAllScripts(mainPath);
-                var hash = FSIHelper.getScriptHash(scriptContents);
+                var hash = FSIHelper.getScriptHash(scriptContents, new List<string>());
 
                 File.WriteAllText(lastPath, "printfn \"foobarbaz\"");
 
                 scriptContents = FSIHelper.getAllScripts(mainPath);
-                var newHash = FSIHelper.getScriptHash(scriptContents);
+                var newHash = FSIHelper.getScriptHash(scriptContents,new List<string>());
                 hash.ShouldNotEqual(newHash);
             };
 

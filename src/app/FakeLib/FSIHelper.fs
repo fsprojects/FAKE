@@ -68,12 +68,13 @@ let rec getAllScripts scriptPath : seq<Script> =
         IncludedAssemblies = lazy(getIncludedAssembly scriptContents) }
     Seq.concat [List.toSeq [s]; loadedContents]
 
-let getScriptHash pathsAndContents =
+let getScriptHash pathsAndContents fsiOptions =
     let fullContents = getAllScriptContents pathsAndContents |> String.concat "\n"
+    let fsiOptions = fsiOptions |> String.concat "\n"
     let paths = pathsAndContents |> Seq.map(fun x -> x.Location |> EnvironmentHelper.normalizePath) |> String.concat "\n"
     
     let hasher = HashLib.HashFactory.Checksum.CreateCRC32a()
-    hasher.ComputeString(fullContents + paths).ToString()
+    hasher.ComputeString(fullContents + paths + fsiOptions).ToString()
 
 module private Cache =
     let xname name = XName.Get(name)
@@ -243,7 +244,7 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
             Path.Combine(Directory.GetCurrentDirectory(), scriptPath)
         
     let allScriptContents = getAllScripts scriptPath
-    let scriptHash = lazy (getScriptHash allScriptContents)
+    let scriptHash = lazy (getScriptHash allScriptContents fsiOptions)
     //TODO this is only calculating the hash for the input file, not anything #load-ed
     
     let scriptFileName = lazy(Path.GetFileName(scriptPath))
@@ -324,7 +325,7 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
         try
             let _result = 
                 mainModule.InvokeMember(
-                    "main@",  
+                    "main@",
                     BindingFlags.InvokeMethod ||| BindingFlags.Public ||| BindingFlags.Static, 
                     null, null, [||])
             true
@@ -334,7 +335,7 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
             false
     else
         let cacheDir = DirectoryInfo(Path.Combine(".",".fake"))
-        if useCache then            
+        if useCache then
             if cacheDir.Exists then
                 let oldFiles = 
                     cacheDir.GetFiles()
