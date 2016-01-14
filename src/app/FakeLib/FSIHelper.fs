@@ -352,7 +352,7 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
             else
                 if printDetails then trace "Cache doesn't exist"
         try
-            let session = FsiEvaluationSession.Create(fsiConfig, commonOptions, stdin, outStream, errStream)
+            let session = FsiEvaluationSession.Create(fsiConfig, options, stdin, outStream, errStream)
             try
                 session.EvalScript scriptPath
 
