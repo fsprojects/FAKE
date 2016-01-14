@@ -1,5 +1,5 @@
-#### 4.14.3 - 13.01.2016
-* Use scriptArgs in FSI
+#### 4.14.4 - 13.01.2016
+* AssemblyInfoFile: added functions to read and update attributes -https://github.com/fsharp/FAKE/pull/1073
 
 #### 4.14.2 - 13.01.2016
 * Added support for packing symbols via PaketHelper - https://github.com/fsharp/FAKE/pull/1071
