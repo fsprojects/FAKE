@@ -216,8 +216,8 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
 
     let fsiConfig = FsiEvaluationSession.GetDefaultConfiguration()
 
-    let commonOptions =
-        [ "fsi.exe"; "--noninteractive" ] @ fsiOptions
+    let options =
+        [ "fsi.exe"; "--noninteractive" ] @ fsiOptions @ scriptArgs
         |> List.toArray
 
     let sbOut = Text.StringBuilder()
