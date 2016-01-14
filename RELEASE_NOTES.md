@@ -1,3 +1,6 @@
+#### 4.14.3 - 13.01.2016
+* Use scriptArgs in FSI
+
 #### 4.14.2 - 13.01.2016
 * Added support for packing symbols via PaketHelper - https://github.com/fsharp/FAKE/pull/1071
 
