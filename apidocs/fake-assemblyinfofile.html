@@ -92,7 +92,7 @@ There is also a tutorial about the <a href="../assemblyinfo.html">AssemblyInfo t
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AssemblyInfoFile.fs#L232-232" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AssemblyInfoFile.fs#L263-263" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -113,7 +113,7 @@ There is also a tutorial about the <a href="../assemblyinfo.html">AssemblyInfo t
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AssemblyInfoFile.fs#L199-199" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AssemblyInfoFile.fs#L230-230" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -135,7 +135,7 @@ Does not generate an AssemblyVersionInformation class.</p>
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AssemblyInfoFile.fs#L218-218" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AssemblyInfoFile.fs#L249-249" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -157,7 +157,7 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AssemblyInfoFile.fs#L124-124" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AssemblyInfoFile.fs#L155-155" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -179,7 +179,7 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AssemblyInfoFile.fs#L223-223" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AssemblyInfoFile.fs#L254-254" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -201,7 +201,7 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AssemblyInfoFile.fs#L150-150" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AssemblyInfoFile.fs#L181-181" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -223,7 +223,7 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AssemblyInfoFile.fs#L228-228" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AssemblyInfoFile.fs#L259-259" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -245,12 +245,123 @@ The generated AssemblyInfo file contains an AssemblyVersionInformation class whi
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AssemblyInfoFile.fs#L175-175" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AssemblyInfoFile.fs#L206-206" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Creates a VB AssemblyInfo file with the given attributes and configuration.
 The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.</p>
+
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '104', 104)" onmouseover="showTip(event, '104', 104)">
+            GetAttribute attrName assemblyInfoFile
+          </code>
+          <div class="tip" id="104">
+            <strong>Signature:</strong> attrName:string -&gt; assemblyInfoFile:string -&gt; Attribute option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AssemblyInfoFile.fs#L296-296" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Read a single attribute from an AssemblyInfo file.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>attrName</code> - Name of the attribute without "Attribute" at the end.</li>
+<li><code>assemblyInfoFile</code> - The file to read from. Language C#, F#, VB or C++ is determined from the extension.</li>
+</ul>
+
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '105', 105)" onmouseover="showTip(event, '105', 105)">
+            GetAttributes assemblyInfoFile
+          </code>
+          <div class="tip" id="105">
+            <strong>Signature:</strong> assemblyInfoFile:string -&gt; seq&lt;Attribute&gt;<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AssemblyInfoFile.fs#L275-275" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Read attributes from an AssemblyInfo file and return as a sequence of Attribute.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>assemblyInfoFile</code> - The file to read attributes from. Language C#, F#, VB or C++ is determined from the extension.</li>
+</ul>
+
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '106', 106)" onmouseover="showTip(event, '106', 106)">
+            GetAttributeValue (...)
+          </code>
+          <div class="tip" id="106">
+            <strong>Signature:</strong> attrName:string -&gt; assemblyInfoFile:string -&gt; string option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AssemblyInfoFile.fs#L303-303" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Read the value of a single attribute from an AssemblyInfo file. Note that string values are returned with surrounding "".</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>attrName</code> - Name of the attribute without "Attribute" at the end.</li>
+<li><code>assemblyInfoFile</code> - The file to read from. Language C#, F#, VB or C++ is determined from the extension.</li>
+</ul>
+
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '107', 107)" onmouseover="showTip(event, '107', 107)">
+            UpdateAttributes (...)
+          </code>
+          <div class="tip" id="107">
+            <strong>Signature:</strong> assemblyInfoFile:string -&gt; attributes:seq&lt;Attribute&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AssemblyInfoFile.fs#L331-331" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Update a set of attributes in an AssemblyInfo file. Fails if any attribute is not found.</p>
+
+<h2>Parameters</h2>
+
+<ul>
+<li><code>assemblyInfoFile</code> - The file to update. Language C#, F#, VB or C++ is determined from the extension.</li>
+<li><code>attributes</code> - The Attributes that should be updated matched on Name (Namespace is not used).</li>
+</ul>
 
 
 
