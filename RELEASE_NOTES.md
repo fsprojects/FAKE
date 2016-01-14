@@ -1,3 +1,6 @@
+#### 4.14.5 - 13.01.2016
+* BUGFIX: Cache invalidate on changing fsiOptions - https://github.com/fsprojects/ProjectScaffold/issues/231
+
 #### 4.14.4 - 13.01.2016
 * AssemblyInfoFile: added functions to read and update attributes -https://github.com/fsharp/FAKE/pull/1073
 
