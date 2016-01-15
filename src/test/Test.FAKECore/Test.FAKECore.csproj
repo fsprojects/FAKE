@@ -203,6 +203,9 @@
     <Content Include="NAVFiles\Table_4.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="ProjectTestFiles\CSharpApp.csproj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="SideBySideSpecification\Project1.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
