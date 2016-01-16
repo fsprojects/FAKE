@@ -1,3 +1,6 @@
+#### 4.14.6 - 16.01.2016
+* BUGFIX: Fix app.config files
+
 #### 4.14.5 - 13.01.2016
 * BUGFIX: Cache invalidate on changing fsiOptions - https://github.com/fsprojects/ProjectScaffold/issues/231
 
