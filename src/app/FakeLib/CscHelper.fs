@@ -79,20 +79,21 @@ let cscExe toolPath (srcFiles : string list) (opts : string list) : int =
 ///                                ... })
 let csc (setParams : CscParams -> CscParams) (inputFiles : string list) : int =
     // Helper to quote a path with spaces in it, if not already quoted.  See https://github.com/fsharp/FAKE/issues/992
-    let ensureQuotedPath (path : string) =
+    let ensureTrimQuotedPath (path : string) =
         // Sensitive to being backwards compatible with people that are using
         // Csc AND quoting their paths.  Only quote if space in path and quotes not detected.
         // MAYBE this should go in the FileSystemHelper module?
+        let path = path.Trim()
         if path.Contains(" ") then
             if (path.StartsWith("\"") && path.EndsWith("\"")) || (path.StartsWith("'") && path.EndsWith("'")) then path
             else sprintf "\"%s\"" path
         else path
         
-    let inputFiles = inputFiles |> Seq.map ensureQuotedPath |> Seq.toList
+    let inputFiles = inputFiles |> Seq.map ensureTrimQuotedPath |> Seq.toList
     let taskDesc = inputFiles |> separated ", "
     let cscParams = setParams CscParams.Default
 
-    let output = if cscParams.Output <> "" then [sprintf "/out:%s" (ensureQuotedPath cscParams.Output)] else []
+    let output = if cscParams.Output <> "" then [sprintf "/out:%s" (ensureTrimQuotedPath cscParams.Output)] else []
     let target =
         match cscParams.Target with
         | Exe -> [ "/target:exe" ]
@@ -108,7 +109,7 @@ let csc (setParams : CscParams -> CscParams) (inputFiles : string list) : int =
         | AnyCpu -> [ "/platform:anycpu" ]
     let references =
         cscParams.References
-        |> List.map (ensureQuotedPath >> (sprintf "/reference:%s"))
+        |> List.map (ensureTrimQuotedPath >> (sprintf "/reference:%s"))
     let debug = if cscParams.Debug then [ "/debug" ] else []
     let argList =
         output @ target @ platform @ references @ debug @ cscParams.OtherParams
