@@ -60,6 +60,8 @@ to automatically deploy a preconfigured virtual machine. See the [Vagrant docs](
 
 * Add a bit of documentation (see above).
 
+* Run the build script again, to confirm that all tests pass.
+
 * Commit and push to your fork.
 
 * Use GitHub's UI to create a pull request.
