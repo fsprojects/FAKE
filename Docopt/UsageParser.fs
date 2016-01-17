@@ -136,19 +136,19 @@ type UsageParser(u':string, opts':Options) =
 
     let matchSopt (names':string) getArg' =
       for ast in asts do
-        if ast.MatchSopt(names', getArg')
+        if not (ast.MatchSopt(names', getArg'))
         then raiseUnexpectedShort '?'
       done
 
     let matchLopt (name':string) getArg' =
       for ast in asts do
-        if ast.MatchLopt(name', getArg')
+        if not (ast.MatchLopt(name', getArg'))
         then raiseUnexpectedLong name'
       done
 
     let matchArg (str:string) =
       for ast in asts do
-        if ast.MatchArg(str)
+        if not (ast.MatchArg(str))
         then raiseUnexpectedArg str
       done
 

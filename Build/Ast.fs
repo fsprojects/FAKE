@@ -2,6 +2,9 @@
 #nowarn "62"
 #light "off"
 
+open System
+open System.Collections.Generic
+
 type private 'a GList = System.Collections.Generic.List<'a>
 
 type (*private*) Tag =
@@ -33,6 +36,7 @@ type Eps() =
       member __.MatchArg(_) = false
       member __.TryFill(_) = true
     end
+    override __.ToString() = "Eps"
   end
 
 type Sop(o':Options) =
@@ -64,7 +68,7 @@ type Sop(o':Options) =
 
 type Ano(o':Options) =
   class
-    let matched = GList<Option * string>(o'.Count)
+    let matched = GList<Option * string option>(o'.Count)
     interface IAst with
       member __.Tag = Tag.Ano
       member __.MatchSopt(s', getArg') =
@@ -74,19 +78,26 @@ type Ano(o':Options) =
           (match o'.Find(s'.[i]) with
            | null -> ret <- false; i <-s'.Length
            | opt  -> matched.Add(opt, if opt.HasArgument && i = s'.Length - 1
-                                      then getArg' opt.ArgName
+                                      then Some(getArg' opt.ArgName)
                                       elif opt.HasArgument
                                       then (let j = i + 1 in
                                             i <- s'.Length;
-                                            s'.Substring(j))
-                                      else null));
+                                            Some(s'.Substring(j)))
+                                      else None));
           i <- i + 1
         done;
         ret
-      member __.MatchLopt(_, _) = false
+      member __.MatchLopt(l', getArg') = false
       member __.MatchArg(_) = false
-      member __.TryFill(_) = false
+      member __.TryFill(args') =
+        try
+          for sopt, arg in matched do
+            args'.AddShort(sopt, ?arg'=arg)
+          done;
+          true
+        with :? KeyNotFoundException -> false
     end
+    override __.ToString() = "Ano"
   end
 
 type Sqb(ast':IAst) =
@@ -133,15 +144,18 @@ type Xor(l':IAst, r':IAst) =
     end
   end
 
-type Seq(ast':GList<IAst>) =
+type Seq(asts':GList<IAst>) =
   class
     interface IAst with
       member __.Tag = Tag.Seq
-      member __.MatchSopt(_, _) = false
+      member __.MatchSopt(s', a') =
+        Seq.exists (fun (ast':IAst) -> ast'.MatchSopt(s', a')) asts'
       member __.MatchLopt(_, _) = false
       member __.MatchArg(_) = false
-      member __.TryFill(_) = false
+      member __.TryFill(args') =
+        Seq.forall (fun (ast':IAst) -> ast'.TryFill(args')) asts'
     end
+    override __.ToString() = sprintf "Seq %A" (Seq.toList asts')
   end
 
 (*
