@@ -141,7 +141,7 @@ type UsageParser(u':string, opts':Options) =
       done
 
     let matchLopt (name':string) getArg' =
-      let folder acc' (ast':#IAst) =
+      let folder acc' (ast':IAst) =
         ast'.MatchLopt(name', getArg') || acc'
       in if Array.fold folder false asts
       then ()

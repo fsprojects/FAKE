@@ -55,9 +55,9 @@ type Dictionary(options':Options) =
     member xx.AddLong(o':Option, ?arg':string) =
       xx.UnsafeAdd(String.Concat("--", o'.Long), ?arg'=arg')
     member xx.AddOpt(o':Option, ?arg':string) =
-      (if o'.IsShort
-       then xx.AddShort(o', ?arg'=arg'));
-      if o'.IsLong
+      if o'.IsShort
+      then xx.AddShort(o', ?arg'=arg')
+      elif o'.IsLong
       then xx.AddLong(o', ?arg'=arg')
     member xx.AddArg(a':string, val':string) =
       if not (dict.ContainsKey(a'))
