@@ -158,9 +158,10 @@ Target "Bootstrap" (fun _ ->
         let clear () =
             // Will make sure the test call actually compiles the script.
             // Note: We cannot just clean .fake here as it might be locked by the currently executing code :)
-            Directory.EnumerateFiles(".fake")
-              |> Seq.filter (fun s -> (Path.GetFileName s).StartsWith script)
-              |> Seq.iter File.Delete
+            if Directory.Exists ".fake" then
+                Directory.EnumerateFiles(".fake")
+                  |> Seq.filter (fun s -> (Path.GetFileName s).StartsWith script)
+                  |> Seq.iter File.Delete
         let executeTarget target =
             if clearCache then clear ()
             ExecProcess (fun info ->
