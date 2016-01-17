@@ -58,6 +58,51 @@ type Appcast = {
 }
 
 /// writes an appcast to a file
+/// ##Parameters
+///
+///  - `path` - The file where the appcast should be written
+///  - `cast` - The appcast to write
+/// ##Sample
+///  // This target creates the app cast for our app. I contains two version 1.X and 2.X while 2.X requires at least OS X 10.10 Yosemite.
+///  Target "CreateAppcast" (fun _ ->
+///      let server = "https://example.com/files/"
+///      let fileLength file =
+///           let info = new System.IO.FileInfo(file)
+///           info.Length
+///           
+///      let latestSize = fileLength "build/download-2.0.1.zip"
+///      let legacySize = fileLength "build/download-1.1.4.zip"
+///      
+///      { 
+///          title = "My Awesome App"
+///          description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus."
+///          language = "en"
+///          items = [
+///                      {
+///                          title = "Hawk Nickel Greyhound"
+///                          pubdate = System.DateTime.Now
+///                          url = new System.Uri(server + "download-2.0.1.zip")
+///                          version = "2014" // This our internal build number
+///                          shortVersion = Some("2.0.1") //This is what we show to the user
+///                          mimetype = OctetStream
+///                          minimumSystemVersion = Some("10.10")
+///                          length = latestSize
+///                          dsaSignature = None
+///                      };
+///                      {
+///                          title = "Sparrow Platinum Beagle"
+///                          pubdate = System.DateTime.Now
+///                          url = new System.Uri(server + "download-1.1.4.zip")
+///                          version = "1142" // This our internal build number
+///                          shortVersion = Some("1.1.4") //This is what we show to the user
+///                          mimetype = OctetStream
+///                          length = legacySize
+///                          minimumSystemVersion = None
+///                          dsaSignature = None
+///                      }
+///          ]
+///      } |> writeAppcast "build/updates.xml"
+///  )
 let writeAppcast (path : string) (cast : Appcast) = 
     let toXml (cast : Appcast) =
         let mtToString mimetype = 
