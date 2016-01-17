@@ -11,6 +11,7 @@ type TraceData =
     | ErrorMessage of string
     | LogMessage of string * bool
     | TraceMessage of string * bool
+    | UnknownMessage of string * bool
     | FinishedMessage
     | OpenTag of string * string
     | CloseTag of string
@@ -26,6 +27,7 @@ let colorMap traceData =
     | ErrorMessage _ -> ConsoleColor.Red
     | LogMessage _ -> ConsoleColor.Gray
     | TraceMessage _ -> ConsoleColor.Green
+    | UnknownMessage _ -> Console.ForegroundColor
     | FinishedMessage -> ConsoleColor.White
     | _ -> ConsoleColor.Gray
 
@@ -37,13 +39,17 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap) =
     
     let writeText toStdErr color newLine text = 
         let curColor = Console.ForegroundColor
-        if curColor <> color then Console.ForegroundColor <- color
-        if toStdErr then 
-            if newLine then eprintfn "%s" text
-            else eprintf "%s" text
-        else if newLine then printfn "%s" text
-        else printf "%s" text
-        if curColor <> color then Console.ForegroundColor <- curColor
+        try
+          if curColor <> color then Console.ForegroundColor <- color
+          let printer =
+            match toStdErr, newLine with
+            | true, true -> eprintfn
+            | true, false -> eprintf
+            | false, true -> printfn
+            | false, false -> printf
+          printer "%s" text
+        finally
+          if curColor <> color then Console.ForegroundColor <- curColor
     
     interface ITraceListener with
         /// Writes the given message to the Console.
@@ -54,7 +60,8 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap) =
             | OpenTag _ -> ()
             | CloseTag _ -> ()
             | ImportantMessage text | ErrorMessage text -> writeText importantMessagesToStdErr color true text
-            | LogMessage(text, newLine) | TraceMessage(text, newLine) -> writeText false color newLine text
+            | UnknownMessage(text, newLine) | LogMessage(text, newLine) | TraceMessage(text, newLine) ->
+                writeText false color newLine text
             | FinishedMessage -> ()
 
 /// The default TraceListener for Console.
