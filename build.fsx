@@ -9,6 +9,7 @@ open System.IO
 open SourceLink
 open Fake.ReleaseNotesHelper
 
+
 // properties
 let projectName = "FAKE"
 let projectSummary = "FAKE - F# Make - Get rid of the noise in your build scripts."
@@ -149,6 +150,43 @@ Target "Test" (fun _ ->
     |>  xUnit id
 )
 
+Target "Bootstrap" (fun _ ->
+    let buildScript = "build.fsx"
+    let testScript = "testbuild.fsx"
+    // Check if we can build ourself with the new binaries.
+    let test clearCache script =
+        let clear () =
+            // Will make sure the test call actually compiles the script.
+            // Note: We cannot just clean .fake here as it might be locked by the currently executing code :)
+            if Directory.Exists ".fake" then
+                Directory.EnumerateFiles(".fake")
+                  |> Seq.filter (fun s -> (Path.GetFileName s).StartsWith script)
+                  |> Seq.iter File.Delete
+        let executeTarget target =
+            if clearCache then clear ()
+            ExecProcess (fun info ->
+                info.FileName <- "build/FAKE.exe"
+                info.WorkingDirectory <- "."
+                info.Arguments <- sprintf "%s %s -pd" script target) (System.TimeSpan.FromMinutes 3.0)
+
+        let result = executeTarget "PrintColors"
+        if result <> 0 then failwith "Bootstrapping failed"
+
+        let result = executeTarget "FailFast"
+        if result = 0 then failwith "Bootstrapping failed"
+
+    File.ReadAllText buildScript
+    |> fun s -> s.Replace("#I @\"packages/build/FAKE/tools/\"", "#I @\"build/\"")
+    |> fun text -> File.WriteAllText(testScript, text)
+
+    try
+      // Will compile the script.
+      test true testScript
+      // Will use the compiled/cached version.
+      test false testScript
+    finally File.Delete(testScript)
+)
+
 Target "SourceLink" (fun _ ->
     !! "src/app/**/*.fsproj" 
     |> Seq.iter (fun f ->
@@ -287,7 +325,18 @@ Target "Release" (fun _ ->
     Branches.tag "" release.NugetVersion
     Branches.pushTag "" "origin" release.NugetVersion
 )
-
+open System
+Target "PrintColors" (fun s ->
+  let color (color: ConsoleColor) (code : unit -> _) =
+      let before = Console.ForegroundColor
+      try
+        Console.ForegroundColor <- color
+        code ()
+      finally
+        Console.ForegroundColor <- before
+  color ConsoleColor.Magenta (fun _ -> printfn "TestMagenta")
+)
+Target "FailFast" (fun _ -> failwith "fail fast")
 Target "Default" DoNothing
 
 // Dependencies
@@ -296,6 +345,7 @@ Target "Default" DoNothing
     ==> "BuildSolution"
     //==> "ILRepack"
     ==> "Test"
+    ==> "Bootstrap"
     ==> "Default"
     ==> "CopyLicense"
     =?> ("GenerateDocs", isLocalBuild && not isLinux)

@@ -38,10 +38,11 @@ let internal readString (echo: bool) : string =
 
 let internal color (color: ConsoleColor) (code : unit -> _) =
     let before = Console.ForegroundColor
-    Console.ForegroundColor <- color
-    let result = code ()
-    Console.ForegroundColor <- before
-    result
+    try
+      Console.ForegroundColor <- color
+      code ()
+    finally
+      Console.ForegroundColor <- before
     
 /// Return a string entered by the user followed by enter. The input is echoed to the screen.
 let getUserInput prompt =
