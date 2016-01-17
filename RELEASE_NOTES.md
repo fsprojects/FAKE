@@ -1,3 +1,6 @@
+#### 4.14.7 - 17.01.2016
+* BUGFIX: Fix failure when space in temp path - https://github.com/fsharp/FAKE/pull/1076
+
 #### 4.14.6 - 16.01.2016
 * BUGFIX: Fix app.config files
 
