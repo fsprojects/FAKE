@@ -55,7 +55,9 @@ try
         | Choice1Of2(fakeArgs) ->
             
             //Break to allow a debugger to be attached here
-            if fakeArgs.Contains <@ Cli.Break @> then Diagnostics.Debugger.Break()
+            if fakeArgs.Contains <@ Cli.Break @> then
+                Diagnostics.Debugger.Launch() |> ignore
+                Diagnostics.Debugger.Break() |> ignore
 
             //Boot and version force us to ignore other args, so check for them and handle.
             let isBoot, bootArgs = fakeArgs.Contains <@ Cli.Boot @>, fakeArgs.GetResults <@ Cli.Boot @>
