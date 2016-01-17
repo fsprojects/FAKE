@@ -42,7 +42,7 @@ type AppcastItem = {
     /// Optional miminal system version for the update
     minimumSystemVersion : string option;
     /// Length of the file in bytes
-    length : uint32;
+    length : int64;
 }
 
 /// Configuration data for the appcast
