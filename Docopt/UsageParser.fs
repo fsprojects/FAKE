@@ -13,7 +13,7 @@ exception ArgvException of string
 
 module _Private =
   begin
-    let inline toIAst obj' = (# "" obj' : IAst #)
+    let inline toIAst obj' = (# "" obj' : IAst #) // maybe #IAst instead of IAst
     let raiseArgvException errlist' =
       let pos = Position(null, 0L, 0L, 0L) in
       let perror = ParserError(pos, null, errlist') in
@@ -141,10 +141,11 @@ type UsageParser(u':string, opts':Options) =
       done
 
     let matchLopt (name':string) getArg' =
-      for ast in asts do
-        if not (ast.MatchLopt(name', getArg'))
-        then raiseUnexpectedLong name'
-      done
+      let folder acc' (ast':#IAst) =
+        ast'.MatchLopt(name', getArg') || acc'
+      in if Array.fold folder false asts
+      then ()
+      else raiseUnexpectedLong name'
 
     let matchArg (str:string) =
       for ast in asts do
@@ -171,7 +172,8 @@ type UsageParser(u':string, opts':Options) =
                   let getArg = getNext << expectedArg in
                   Sopt(names, getArg)
         else Argument(arg')
-      in try while true do
+      in try
+        while true do
           match getNext null with
           | Sopt(names, getArg) -> matchSopt names getArg
           | Lopt(name, getArg)  -> matchLopt name getArg
@@ -186,4 +188,3 @@ type UsageParser(u':string, opts':Options) =
         else raise (ArgvException("Usage:" + u'))
     member __.Asts = asts
   end
-;;

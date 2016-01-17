@@ -10,7 +10,7 @@ type Option(short':char, long':string, argName':string, default':string) =
     member val Long = long'
     member val ArgName = argName'
     member val Default = default' with get, set
-    new() = Option('\uFFFF', null, null, null)
+    new() = Option(Char.MaxValue, null, null, null)
     static member op_Equality(lhs':Option, rhs':Option) =
       lhs'.Short = rhs'.Short
       && lhs'.Long = rhs'.Long
@@ -18,6 +18,8 @@ type Option(short':char, long':string, argName':string, default':string) =
     member xx.IsEmpty = xx = Option.Empty
     member xx.HasArgument = xx.ArgName <> null
     member xx.HasDefault = xx.Default <> null
+    member xx.IsShort = xx.Short <> Char.MaxValue
+    member xx.IsLong = xx.Long <> null
     override xx.ToString() =
       sprintf "Option { Short=%A; Long=%A; ArgName=%A; Default=%A }"
         xx.Short xx.Long xx.ArgName xx.Default

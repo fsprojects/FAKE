@@ -87,12 +87,18 @@ type Ano(o':Options) =
           i <- i + 1
         done;
         ret
-      member __.MatchLopt(l', getArg') = false
+      member __.MatchLopt(l', getArg') =
+        match o'.Find(l') with
+        | null -> false
+        | opt  -> matched.Add(opt, if opt.HasArgument
+                                   then Some(getArg' opt.ArgName)
+                                   else None);
+                  true
       member __.MatchArg(_) = false
       member __.TryFill(args') =
         try
-          for sopt, arg in matched do
-            args'.AddShort(sopt, ?arg'=arg)
+          for opt, arg in matched do
+            args'.AddOpt(opt, ?arg'=arg)
           done;
           true
         with :? KeyNotFoundException -> false
@@ -150,7 +156,8 @@ type Seq(asts':GList<IAst>) =
       member __.Tag = Tag.Seq
       member __.MatchSopt(s', a') =
         Seq.exists (fun (ast':IAst) -> ast'.MatchSopt(s', a')) asts'
-      member __.MatchLopt(_, _) = false
+      member __.MatchLopt(l', a') =
+        Seq.exists (fun (ast':IAst) -> ast'.MatchLopt(l', a')) asts'
       member __.MatchArg(_) = false
       member __.TryFill(args') =
         Seq.forall (fun (ast':IAst) -> ast'.TryFill(args')) asts'
