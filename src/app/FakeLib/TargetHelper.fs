@@ -278,7 +278,6 @@ let targetError targetName (exn:System.Exception) =
         | _ -> exn.ToString()
 
     let msg = sprintf "%s%s" (error exn) (if exn.InnerException <> null then "\n" + (exn.InnerException |> error) else "")
-            
     traceError <| sprintf "Running build failed.\nError:\n%s" msg
 
     let isFailedTestsException = exn :? UnitTestCommon.FailedTestsException
@@ -427,7 +426,9 @@ let WriteTaskTimeSummary total =
 
     traceLine()
 
-let private changeExitCodeIfErrorOccured() = if errors <> [] then exit 42 
+module ExitCode =
+    let exitCode = ref 0
+let private changeExitCodeIfErrorOccured() = if errors <> [] then Environment.ExitCode <- 42; ExitCode.exitCode := 42
    
 /// [omit]
 let isListMode = hasBuildParam "list"

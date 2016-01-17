@@ -152,6 +152,7 @@ Target "Test" (fun _ ->
 
 Target "Bootstrap" (fun _ ->
     let buildScript = "build.fsx"
+    let testScript = "testbuild.fsx"
     // Check if we can build ourself with the new binaries.
     let test clearCache script =
         let clear () =
@@ -160,7 +161,6 @@ Target "Bootstrap" (fun _ ->
             Directory.EnumerateFiles(".fake")
               |> Seq.filter (fun s -> (Path.GetFileName s).StartsWith script)
               |> Seq.iter File.Delete
-            File.Copy(buildScript, script, true)
         let executeTarget target =
             if clearCache then clear ()
             ExecProcess (fun info ->
@@ -173,7 +173,10 @@ Target "Bootstrap" (fun _ ->
 
         let result = executeTarget "FailFast"
         if result = 0 then failwith "Bootstrapping failed"
-    let testScript = "testbuild.fsx"
+
+    File.ReadAllText buildScript
+    |> fun s -> s.Replace("#I @\"packages/build/FAKE/tools/\"", "#I @\"build/\"")
+    |> fun text -> File.WriteAllText(testScript, text)
 
     try
       // Will compile the script.
