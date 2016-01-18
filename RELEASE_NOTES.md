@@ -1,3 +1,6 @@
+#### 4.14.8 - 18.01.2016
+* BUGFIX: Revert https://github.com/fsharp/FAKE/pull/1080
+
 #### 4.14.7 - 17.01.2016
 * BUGFIX: Fix failure when space in temp path - https://github.com/fsharp/FAKE/pull/1076
 

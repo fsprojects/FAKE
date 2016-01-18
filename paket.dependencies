@@ -38,8 +38,6 @@ nuget FluentMigrator.Runner
 nuget HashLib
 nuget FSharp.Compiler.Service
 
-github matthid/Yaaf.FSharp.Scripting src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs
-
 group Build
 content: none
 source http://nuget.org/api/v2

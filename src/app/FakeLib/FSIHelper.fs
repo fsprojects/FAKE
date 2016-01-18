@@ -9,7 +9,6 @@ open System.Diagnostics
 open System.Threading
 open System.Text.RegularExpressions
 open System.Xml.Linq
-open Yaaf.FSharp.Scripting
 
 let private FSIPath = @".\tools\FSharp\;.\lib\FSharp\;[ProgramFilesX86]\Microsoft SDKs\F#\4.0\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\3.1\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\3.0\Framework\v4.0;[ProgramFiles]\Microsoft F#\v4.0\;[ProgramFilesX86]\Microsoft F#\v4.0\;[ProgramFiles]\FSharp-2.0.0.0\bin\;[ProgramFilesX86]\FSharp-2.0.0.0\bin\;[ProgramFiles]\FSharp-1.9.9.9\bin\;[ProgramFilesX86]\FSharp-1.9.9.9\bin\"
 
@@ -204,33 +203,59 @@ type private AssemblySource =
 | Disk
 
 let hashRegex = Text.RegularExpressions.Regex("(?<script>.+)_(?<hash>[a-zA-Z0-9]+\.dll$)", System.Text.RegularExpressions.RegexOptions.Compiled)
+/// Run the given FAKE script with fsi.exe at the given working directory. Provides full access to Fsi options and args. Redirect output and error messages.
+let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(fsiOptions, scriptPath, scriptArgs)) env onErrMsg onOutMsg useCache cleanCache =
 
-type private CacheInfo =
-  {
-    ScriptFileName : string
-    AssemblyPath : string
-    AssemblyWarningsPath : string
-    CacheConfigPath : string
-    CacheConfig : Lazy<Cache.CacheConfig>
-    IsValid : bool
-  }
+    if printDetails then traceFAKE "Running Buildscript: %s" scriptPath
 
-let private getCacheInfoFromScript printDetails fsiOptions scriptPath =
+    // Add arguments to the Environment
+    for (k,v) in env do
+      Environment.SetEnvironmentVariable(k, v, EnvironmentVariableTarget.Process)
+
+    // Create an env var that only contains the build script args part from the --fsiargs (or "").
+    Environment.SetEnvironmentVariable("fsiargs-buildscriptargs", String.Join(" ", scriptArgs))
+
+    let fsiConfig = FsiEvaluationSession.GetDefaultConfiguration()
+
+    let options =
+        [ "fsi.exe"; "--noninteractive" ] @ fsiOptions
+        |> List.toArray
+
+    let sbOut = Text.StringBuilder()
+    let sbErr = Text.StringBuilder()
+    let handleMessages() =
+        let handleMessagesFrom (sb:Text.StringBuilder) onMsg =
+            let s = sb.ToString()
+            if not <| String.IsNullOrEmpty s
+                then onMsg s
+        handleMessagesFrom sbOut onOutMsg
+        handleMessagesFrom sbErr onErrMsg
+    let handleException (ex : Exception) = 
+        onErrMsg (ex.ToString())
+
+    use outStream = new StringWriter(sbOut)
+    use errStream = new StringWriter(sbErr)
+    use stdin = new StreamReader(Stream.Null)
+
+    let scriptPath =
+        if Path.IsPathRooted scriptPath then
+            scriptPath
+        else
+            Path.Combine(Directory.GetCurrentDirectory(), scriptPath)
+        
     let allScriptContents = getAllScripts scriptPath
     let scriptHash = lazy (getScriptHash allScriptContents fsiOptions)
     //TODO this is only calculating the hash for the input file, not anything #load-ed
     
-    let scriptFileName = Path.GetFileName(scriptPath)
-    let hashPath = "./.fake/" + scriptFileName + "_" + scriptHash.Value
-    let assemblyPath = hashPath + ".dll"
-    let assemblyWarningsPath = hashPath + "_warnings.txt"
-    let cacheConfigPath = hashPath + "_config.xml"
-    let cacheConfig = lazy Cache.read cacheConfigPath
-    let cacheValid =
+    let scriptFileName = lazy(Path.GetFileName(scriptPath))
+    let hashPath = lazy("./.fake/" + scriptFileName.Value + "_" + scriptHash.Value)
+    let assemblyPath = lazy(hashPath.Value + ".dll")
+    let cacheConfigPath = lazy(hashPath.Value + "_config.xml")
+    let cacheConfig = lazy(Cache.read cacheConfigPath.Value)
+    let cacheValid = lazy (
         let cacheFilesExist = 
-            File.Exists(assemblyPath) &&
-            File.Exists(cacheConfigPath) &&
-            File.Exists(assemblyWarningsPath)
+            System.IO.File.Exists(assemblyPath.Value) &&
+            System.IO.File.Exists(cacheConfigPath.Value) 
         if cacheFilesExist then
             let loadedAssemblies =
                 cacheConfig.Value.Assemblies
@@ -277,86 +302,37 @@ let private getCacheInfoFromScript printDetails fsiOptions scriptPath =
             assemVersionValidCount = Seq.length cacheConfig.Value.Assemblies
         else
             false
-    { ScriptFileName = scriptFileName
-      AssemblyPath = assemblyPath
-      AssemblyWarningsPath = assemblyWarningsPath
-      CacheConfigPath = cacheConfigPath
-      CacheConfig = cacheConfig
-      IsValid = cacheValid }
+    )
 
-/// Run the given FAKE script with fsi.exe at the given working directory. Provides full access to Fsi options and args. Redirect output and error messages.
-let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(fsiOptions, scriptPath, scriptArgs)) env onErrMsg onOutMsg useCache cleanCache =
-
-    if printDetails then traceFAKE "Running Buildscript: %s" scriptPath
-
-    // Add arguments to the Environment
-    for (k,v) in env do
-      Environment.SetEnvironmentVariable(k, v, EnvironmentVariableTarget.Process)
-
-    // Create an env var that only contains the build script args part from the --fsiargs (or "").
-    Environment.SetEnvironmentVariable("fsiargs-buildscriptargs", String.Join(" ", scriptArgs))
-
-    let options =
-        (FsiOptions.Default.AsArgs |> Array.toList) @ fsiOptions
-        |> FsiOptions.ofArgs
-
-    let handleException (ex : Exception) =
-        onErrMsg (ex.ToString())
-
-    let scriptPath =
-        if Path.IsPathRooted scriptPath then
-            scriptPath
-        else
-            Path.Combine(Directory.GetCurrentDirectory(), scriptPath)
-
-    let cacheInfo = getCacheInfoFromScript printDetails fsiOptions scriptPath
     let getScriptAndHash fileName =
         let matched = hashRegex.Match(fileName)
         matched.Groups.Item("script").Value, matched.Groups.Item("hash").Value
 
-    if useCache && cacheInfo.IsValid then
+    if useCache && cacheValid.Value then
         
         if printDetails then trace "Using cache"
-        let noExtension = Path.GetFileNameWithoutExtension(cacheInfo.ScriptFileName)
+        let noExtension = Path.GetFileNameWithoutExtension(scriptFileName.Value)
+        let fullName = 
+            sprintf "<StartupCode$FSI_0001>.$FSI_0001_%s%s$%s" 
+                (noExtension.Substring(0, 1).ToUpper())
+                (noExtension.Substring(1))
+                (Path.GetExtension(scriptFileName.Value).Substring(1))
 
-        let startString = "<StartupCode$FSI_"
-        let endString =
-          sprintf "_%s%s$%s"
-            (noExtension.Substring(0, 1).ToUpper())
-            (noExtension.Substring(1))
-            (Path.GetExtension(cacheInfo.ScriptFileName).Substring(1))
-        let fullName i = sprintf "%s%s>.$FSI_%s%s" startString i i endString
-        let exampleName = fullName "0001"
-        let parseName (n:string) =
-            if n.Length >= exampleName.Length &&
-               n.Substring(0, startString.Length) = startString &&
-               n.Substring(n.Length - endString.Length) = endString then
-                let num = n.Substring(startString.Length, 4)
-                assert (fullName num = n)
-                Some (num)
-            else None
+        let assembly = Reflection.Assembly.LoadFrom(assemblyPath.Value)
+
+        let mainModule = assembly.GetType(fullName)
+        
         try
-            match Reflection.Assembly.LoadFrom(cacheInfo.AssemblyPath)
-                  .GetTypes()
-                  |> Seq.filter (fun t -> parseName t.FullName |> Option.isSome)
-                  |> Seq.tryHead with
-            | Some mainModule ->
-              try
-                  mainModule.InvokeMember(
-                      "main@",
-                      BindingFlags.InvokeMethod ||| BindingFlags.Public ||| BindingFlags.Static,
-                      null, null, [||])
-                  |> ignore
-                  true
-              with
-              | ex ->
-                  handleException ex
-                  false
-            | None -> failwithf "We could not find a type similar to '%s' in the cached assembly!" exampleName
-        finally
-            try
-                traceFAKE "%s" (File.ReadAllText cacheInfo.AssemblyWarningsPath)
-            with e -> traceError (e.ToString())
+            let _result = 
+                mainModule.InvokeMember(
+                    "main@",
+                    BindingFlags.InvokeMethod ||| BindingFlags.Public ||| BindingFlags.Static, 
+                    null, null, [||])
+            true
+        with
+        | ex ->
+            handleException ex
+            false
     else
         let cacheDir = DirectoryInfo(Path.Combine(".",".fake"))
         if useCache then
@@ -365,7 +341,7 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
                     cacheDir.GetFiles()
                     |> Seq.filter(fun file -> 
                         let oldScriptName, _ = getScriptAndHash(file.Name)
-                        oldScriptName = cacheInfo.ScriptFileName)
+                        oldScriptName = scriptFileName.Value)
 
                 if (oldFiles |> Seq.length) > 0 then
                     if cleanCache then
@@ -376,92 +352,79 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
                     if printDetails then trace "Cache doesn't exist"
             else
                 if printDetails then trace "Cache doesn't exist"
-
-        // Contains warnings and errors about the build script.
-        let fsiErrorOutput = new System.Text.StringBuilder()
-        let session =
-          try ScriptHost.Create
-                (options, preventStdOut = true,
-                  fsiErrWriter = ScriptHost.CreateForwardWriter
-                    ((fun s ->
-                        if String.IsNullOrWhiteSpace s |> not then
-                            fsiErrorOutput.AppendLine s |> ignore),
-                      removeNewLines = true),
-                  outWriter = ScriptHost.CreateForwardWriter onOutMsg,
-                  errWriter = ScriptHost.CreateForwardWriter onErrMsg)
-          with :? FsiEvaluationException as e ->
-              traceError "FsiEvaluationSession could not be created."
-              traceError e.Result.Error.Merged
-              reraise ()
-
         try
+            let session = FsiEvaluationSession.Create(fsiConfig, options, stdin, outStream, errStream)
             try
                 session.EvalScript scriptPath
-                true
-            with :? FsiEvaluationException as eval ->
-                // Write Script Warnings & Errors at the end
-                handleException eval
-                false
-        finally
-            // Write Script Warnings & Errors at the end
-            traceFAKE "%O" fsiErrorOutput
-            // Cache in the error case as well.
-            try
-                if useCache && not cacheInfo.IsValid then
-                    session.DynamicAssemblyBuilder.Save("FSI-ASSEMBLY.dll")
-                    if not <| Directory.Exists cacheDir.FullName then
-                        let di = Directory.CreateDirectory cacheDir.FullName
-                        di.Attributes <- FileAttributes.Directory ||| FileAttributes.Hidden
 
-                    let destinationFile = FileInfo(cacheInfo.AssemblyPath)
-                    let targetDirectory = destinationFile.Directory
+                try
+                    if useCache && not cacheValid.Value then
+                        let assemBuilder = session.DynamicAssembly :?> System.Reflection.Emit.AssemblyBuilder
+                        assemBuilder.Save("FSI-ASSEMBLY.dll")
+                        if not <| Directory.Exists cacheDir.FullName then
+                            let di = Directory.CreateDirectory cacheDir.FullName 
+                            di.Attributes <- FileAttributes.Directory ||| FileAttributes.Hidden
 
-                    if (not <| targetDirectory.Exists) then targetDirectory.Create()
-                    if (destinationFile.Exists) then destinationFile.Delete()
+                        let destinationFile = FileInfo(assemblyPath.Value)
+                        let targetDirectory = destinationFile.Directory
 
-                    File.WriteAllText(cacheInfo.AssemblyWarningsPath, fsiErrorOutput.ToString())
-                    File.Move("FSI-ASSEMBLY.dll", cacheInfo.AssemblyPath)
+                        if (not <| targetDirectory.Exists) then targetDirectory.Create()
+                        if (destinationFile.Exists) then destinationFile.Delete()
+
+                        File.Move("FSI-ASSEMBLY.dll", assemblyPath.Value)
                     
-                    if File.Exists("FSI-ASSEMBLY.pdb") then
-                        File.Delete("FSI-ASSEMBLY.pdb")
-                    if File.Exists("FSI-ASSEMBLY.dll.mdb") then
-                        File.Delete("FSI-ASSEMBLY.dll.mdb")
+                        if File.Exists("FSI-ASSEMBLY.pdb") then
+                            File.Delete("FSI-ASSEMBLY.pdb")
+                        if File.Exists("FSI-ASSEMBLY.dll.mdb") then
+                            File.Delete("FSI-ASSEMBLY.dll.mdb")
 
-                    let dynamicAssemblies =
-                        System.AppDomain.CurrentDomain.GetAssemblies()
-                        |> Seq.filter(fun assem -> assem.IsDynamic)
-                        |> Seq.map(fun assem -> assem.GetName().Name)
-                        |> Seq.filter(fun assem -> assem <> "FSI-ASSEMBLY")
-                        // General Reflection.Emit helper (most likely harmless to ignore)
-                        |> Seq.filter(fun assem -> assem <> "Anonymously Hosted DynamicMethods Assembly")
-                        // RazorEngine generated
-                        |> Seq.filter(fun assem -> assem <> "RazorEngine.Compilation.ImpromptuInterfaceDynamicAssembly")
-                        |> Seq.cache
-                    if dynamicAssemblies |> Seq.length > 0 then
-                        let msg =
-                            sprintf "Dynamic assemblies were generated during evaluation of script (%s).\nCan not save cache."
-                                (System.String.Join(", ", dynamicAssemblies))
-                        trace msg
-
-                    else
-                        let assemblies =
+                        let dynamicAssemblies = 
                             System.AppDomain.CurrentDomain.GetAssemblies()
-                            |> Seq.filter(fun assem -> not assem.IsDynamic)
-                            // They are not dynamic, but can't be re-used either.
-                            |> Seq.filter(fun assem -> not <| assem.GetName().Name.StartsWith("CompiledRazorTemplates.Dynamic.RazorEngine_"))
+                            |> Seq.filter(fun assem -> assem.IsDynamic)
+                            |> Seq.map(fun assem -> assem.GetName().Name)
+                            |> Seq.filter(fun assem -> assem <> "FSI-ASSEMBLY")
+                            // General Reflection.Emit helper (most likely harmless to ignore)
+                            |> Seq.filter(fun assem -> assem <> "Anonymously Hosted DynamicMethods Assembly")
+                            // RazorEngine generated
+                            |> Seq.filter(fun assem -> assem <> "RazorEngine.Compilation.ImpromptuInterfaceDynamicAssembly")
+                            |> Seq.cache
+                        if dynamicAssemblies |> Seq.length > 0 then
+                            let msg =
+                                sprintf "Dynamic assemblies were generated during evaluation of script (%s).\nCan not save cache." 
+                                    (System.String.Join(", ", dynamicAssemblies))
+                            trace msg
+
+                        else
+                            let assemblies = 
+                                System.AppDomain.CurrentDomain.GetAssemblies()
+                                |> Seq.filter(fun assem -> not assem.IsDynamic)
+                                // They are not dynamic, but can't be re-used either.
+                                |> Seq.filter(fun assem -> not <| assem.GetName().Name.StartsWith("CompiledRazorTemplates.Dynamic.RazorEngine_"))
                         
-                        let cacheConfig : XDocument = Cache.create assemblies
-                        cacheConfig.Save(cacheInfo.CacheConfigPath)
-                        if printDetails then trace (System.Environment.NewLine + "Saved cache")
-            with ex ->
-                handleException ex
-                reraise()
+                            let cacheConfig : XDocument = Cache.create assemblies
+                            cacheConfig.Save(cacheConfigPath.Value) 
+                            if printDetails then trace (System.Environment.NewLine + "Saved cache")
+                with 
+                | ex ->
+                    handleException ex
+                    reraise()
+                // TODO: Reactivate when FCS don't show output any more 
+                // handleMessages()
+                true
+            with
+            | _ex ->
+                handleMessages()
+                false
+        with
+        | exn ->
+            traceError "FsiEvaluationSession could not be created."
+            traceError <| sbErr.ToString()
+            raise exn
 
 /// Run the given buildscript with fsi.exe and allows for extra arguments to the script. Returns output.
 let executeBuildScriptWithArgsAndReturnMessages script (scriptArgs: string[]) useCache cleanCache =
     let messages = ref []
     let appendMessage isError msg =
-        traceUnknown msg // Some test code expects that the executed script writes to stdout
         messages := { IsError = isError
                       Message = msg
                       Timestamp = DateTimeOffset.UtcNow } :: !messages
@@ -475,7 +438,7 @@ let executeBuildScriptWithArgsAndReturnMessages script (scriptArgs: string[]) us
 let runBuildScriptWithFsiArgsAt printDetails (FsiArgs(fsiOptions, script, scriptArgs)) env useCache cleanCache =
     runFAKEScriptWithFsiArgsAndRedirectMessages
         printDetails (FsiArgs(fsiOptions, script, scriptArgs)) env
-        traceError traceUnknown
+        traceError (fun s-> traceFAKE "%s" s)
         useCache
         cleanCache
 
