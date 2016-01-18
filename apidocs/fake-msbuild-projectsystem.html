@@ -91,7 +91,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuild/ProjectSystem.fs#L147-147" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuild/ProjectSystem.fs#L148-148" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -113,7 +113,7 @@ For F# projects it is also reporting unordered files.</p>
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuild/ProjectSystem.fs#L88-88" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuild/ProjectSystem.fs#L89-89" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -135,7 +135,7 @@ For F# projects it is also reporting unordered files.</p>
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuild/ProjectSystem.fs#L118-118" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuild/ProjectSystem.fs#L119-119" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -156,7 +156,7 @@ For F# projects it is also reporting unordered files.</p>
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuild/ProjectSystem.fs#L141-141" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuild/ProjectSystem.fs#L142-142" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -171,14 +171,53 @@ It also removes duplicate files from the project files.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1027', 1027)" onmouseover="showTip(event, '1027', 1027)">
-            RemoveDuplicateFiles projects
+            removeCompileNodesWithMissingFiles (...)
           </code>
           <div class="tip" id="1027">
+            <strong>Signature:</strong> includeExistsF:(string -&gt; bool) -&gt; project:ProjectFile -&gt; ProjectFile<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuild/ProjectSystem.fs#L165-165" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1028', 1028)" onmouseover="showTip(event, '1028', 1028)">
+            RemoveCompileNodesWithMissingFiles (...)
+          </code>
+          <div class="tip" id="1028">
+            <strong>Signature:</strong> project:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuild/ProjectSystem.fs#L177-177" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Removes projects Compile nodes that have Include attributes pointing to files missing from the file system.  Saves updated projects.</p>
+
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1029', 1029)" onmouseover="showTip(event, '1029', 1029)">
+            RemoveDuplicateFiles projects
+          </code>
+          <div class="tip" id="1029">
             <strong>Signature:</strong> projects:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuild/ProjectSystem.fs#L131-131" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuild/ProjectSystem.fs#L132-132" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
