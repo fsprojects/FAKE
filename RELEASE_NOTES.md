@@ -1,3 +1,6 @@
+#### 4.14.9 - 18.01.2016
+* Function to remove Compile elems missing files - https://github.com/fsharp/FAKE/pull/1078
+
 #### 4.14.8 - 18.01.2016
 * BUGFIX: Revert https://github.com/fsharp/FAKE/pull/1080
 
