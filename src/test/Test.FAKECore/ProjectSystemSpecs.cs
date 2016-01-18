@@ -1,4 +1,7 @@
-﻿using Fake.MSBuild;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using Fake.MSBuild;
 using Machine.Specifications;
 
 namespace Test.FAKECore
@@ -75,5 +78,30 @@ namespace Test.FAKECore
         It should_work_immutable = () =>
             _project.FindDuplicateFiles().ShouldContain("Git\\CommitMessage.fs");
 
+    }
+
+    public class when_removing_compile_nodes_with_missing_files
+    {
+        const string ProjectFilePath = @"ProjectTestFiles/CSharpApp.csproj";
+        private static ProjectSystem.ProjectFile _project;
+
+        private Because of = () =>
+        {
+            Func<string, bool> fileExists = s =>
+            {
+                // We have to use Path.Combine here to work x-plat.
+                var pathsToRemove = new List<string>() {Path.Combine("ProjectTestFiles", "Class1.cs"), Path.Combine("ProjectTestFiles", "Folder", "FolderFile2.cs")};
+                return !pathsToRemove.Exists(pathToRemove => s.Equals(pathToRemove, StringComparison.InvariantCulture));
+            };
+            var projectFile = ProjectSystem.ProjectFile.FromFile(ProjectFilePath);
+            _project = ProjectSystem.removeCompileNodesWithMissingFiles(fileExists.Convert(), projectFile);
+        };
+
+        It should_delete_missing_files_in_csharpapp = () =>
+        {
+            _project.Files.ShouldNotContain(new []{"Class1.cs", @"Folder\FolderFile2.cs"});
+            // We DON'T have to use Path.Combine here, because the CsProj paths are same on both plats for our test proj.
+            _project.Files.ShouldContain(new [] {@"Folder\FolderFile1.cs", @"Program.cs", @"Properties\AssemblyInfo.cs"});
+        };
     }
 }
