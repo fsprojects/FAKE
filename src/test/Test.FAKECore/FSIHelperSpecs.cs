@@ -5,24 +5,34 @@ using System.Text;
 using System.IO;
 using Fake;
 using Machine.Specifications;
+using Messages = Microsoft.FSharp.Collections.FSharpList<Fake.ProcessHelper.ConsoleMessage>;
 
 namespace Test.FAKECore
 {
     public class when_running_script
     {
         static string[] EmptyArgs = new string[0];
-        static string RunExplicit(string scriptFilePath, string[] scriptArguments, string[] fsiArguments, bool useCache)
+
+        static Messages IgnoreDateTimeOffset(Messages msgs)
+        {
+            // We don't care about the datetimeoffset.
+            var mapFunc = FSharpFuncUtil.ToFSharpFunc<Fake.ProcessHelper.ConsoleMessage, Fake.ProcessHelper.ConsoleMessage>(cm =>
+                new ProcessHelper.ConsoleMessage(cm.IsError, cm.Message, new DateTimeOffset()));
+            return Microsoft.FSharp.Collections.ListModule.Map(mapFunc, msgs);
+        }
+
+        static Tuple<Messages, string> RunExplicit(string scriptFilePath, string[] scriptArguments, string[] fsiArguments, bool useCache)
         {
             var stdOut = Console.Out;
 
             var sbOut = new System.Text.StringBuilder();
             var outStream = new StringWriter(sbOut);
             Console.SetOut(outStream);
-            Tuple<bool, Microsoft.FSharp.Collections.FSharpList<ProcessHelper.ConsoleMessage>> result;
-            
+            Tuple<bool, Messages> result;
+
             try
             {
-                
+
                 result = FSIHelper.executeBuildScriptWithArgsAndFsiArgsAndReturnMessages(
                     scriptFilePath, scriptArguments, fsiArguments, useCache, false);
             }
@@ -42,16 +52,16 @@ namespace Test.FAKECore
             {
                 Console.WriteLine(x.Message);
             }
-            var messages = result.Item2.Where(x => !x.IsError).Select(x => x.Message);
-            return 
+
+            return Tuple.Create(result.Item2,
                 sbOut.ToString()
                 .Replace("Running Buildscript: " + scriptFilePath, "")
-                .Replace("\n", "").Replace("\r", "");
+                .Replace("\n", "").Replace("\r", ""));
         }
 
         static string RunExplicit(string scriptFilePath, string[] scriptArguments, bool useCache)
         {
-            return RunExplicit(scriptFilePath, scriptArguments, EmptyArgs, useCache);
+            return RunExplicit(scriptFilePath, scriptArguments, EmptyArgs, useCache).Item2;
         }
 
         static string Run(string script, string[] scriptArguments, bool useCache)
@@ -77,6 +87,34 @@ namespace Test.FAKECore
         {
             return new FSIHelper.Script(contents, path.Replace("\\", "/"), null, null);
         }
+
+        It caching_and_non_caching_version_should_handle_stderr_and_stdout_equally =
+            () =>
+            {
+                var scriptFilePath = Path.GetTempFileName() + ".fsx";
+                var scriptFileName = Path.GetFileName(scriptFilePath);
+                try
+                {
+                    File.WriteAllText(scriptFilePath, "printf \"stdout\"; eprintf \"stderr\"");
+                    // without cache
+                    var res1 = RunExplicit(scriptFilePath, EmptyArgs, EmptyArgs, true);
+                    res1.Item2.ShouldStartWith("Cache doesn't exist");
+
+                    // with cache
+                    var res2 = RunExplicit(scriptFilePath, EmptyArgs, EmptyArgs, true);
+                    res2.Item2.ShouldEqual(
+                            ("Using cache" + nl + "")
+                            .Replace("\n", "").Replace("\r", ""));
+
+                    Microsoft.FSharp.Core.Operators.op_Equality(IgnoreDateTimeOffset(res1.Item1), IgnoreDateTimeOffset(res2.Item1))
+                        .ShouldBeTrue();
+                }
+                finally
+                {
+                    if (File.Exists(scriptFilePath))
+                        File.Delete(scriptFilePath);
+                }
+            };
 
         It should_be_able_to_use_system_xml =
             () =>
@@ -135,7 +173,7 @@ namespace Test.FAKECore
                             "--configuration", "Release",
                             "--csversion", "2007" },
                         false)
-                        .ShouldEqual("test");
+                        .Item1.Head.Message.ShouldEqual("test");
                 }
                 finally
                 {
@@ -159,8 +197,8 @@ namespace Test.FAKECore
 
                     File.Exists(cacheFilePath).ShouldEqual(false);
 
-                    RunExplicit(scriptFilePath, EmptyArgs, false)
-                       .ShouldEqual("foobar");
+                    RunExplicit(scriptFilePath, EmptyArgs, EmptyArgs, false)
+                       .Item1.Head.Message.ShouldEqual("foobar");
 
                     File.Exists(cacheFilePath).ShouldEqual(false);
 
@@ -169,16 +207,24 @@ namespace Test.FAKECore
 
                     File.Exists(cacheFilePath).ShouldEqual(true);
 
-                    RunExplicit(scriptFilePath, EmptyArgs, true)
-                        .ShouldEqual(
-                            ("Using cache" + nl + "foobar")
+                    var res1 = RunExplicit(scriptFilePath, EmptyArgs, EmptyArgs, true);
+                    res1.Item2.ShouldEqual(
+                            ("Using cache" + nl + "")
                             .Replace("\n", "").Replace("\r", ""));
+                    res1.Item1.Head.Message.ShouldEqual("foobar");
 
                     File.WriteAllText(scriptFilePath, "printf \"foobarbaz\"");
 
                     var changedScriptHash = FSIHelper.getScriptHash(new FSIHelper.Script[] { script(scriptFilePath, "printf \"foobarbaz\"") }, new List<string>());
-                    RunExplicit(scriptFilePath, EmptyArgs, true)
-                        .ShouldStartWith("Cache is invalid, recompiling");
+                    var res2 = RunExplicit(scriptFilePath, EmptyArgs, EmptyArgs, true);
+                    res2.Item2.ShouldStartWith("Cache is invalid, recompiling");
+                    res2.Item1.Head.Message.ShouldEqual("foobarbaz");
+
+                    // This last test is not strictly needed, but it is a good test to check if we can execute
+                    // multiple caching tests in the same session (see comment in FSIHelper.fs where we use Mono.Cecil to rename the assembly)
+                    var res3 = RunExplicit(scriptFilePath, EmptyArgs, EmptyArgs, true);
+                    res3.Item2.ShouldStartWith("Using cache");
+                    res3.Item1.Head.Message.ShouldEqual("foobarbaz");
 
                     File.Exists("./.fake/" + scriptFileName + "_" + changedScriptHash + ".dll").ShouldEqual(true);
                 }
@@ -203,8 +249,10 @@ namespace Test.FAKECore
                     File.WriteAllText(mainPath, mainScript.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\r", nl));
                     File.WriteAllText(loadedPath, loadedScript.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\r", nl));
 
-                    RunExplicit(mainPath, EmptyArgs, false)
-                        .ShouldEqual("loaded;main");
+                    var res = RunExplicit(mainPath, EmptyArgs, EmptyArgs, false);
+                    res.Item2.ShouldEqual(""); // output is redirected
+                    res.Item1.Head.Message.ShouldEqual("loaded;");
+                    res.Item1.Tail.Head.Message.ShouldEqual("main"); // list is never reverted
                 }
                 finally
                 {

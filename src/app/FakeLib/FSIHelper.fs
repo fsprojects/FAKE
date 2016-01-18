@@ -208,6 +208,7 @@ let hashRegex = Text.RegularExpressions.Regex("(?<script>.+)_(?<hash>[a-zA-Z0-9]
 type private CacheInfo =
   {
     ScriptFileName : string
+    ScriptHash : string
     AssemblyPath : string
     AssemblyWarningsPath : string
     CacheConfigPath : string
@@ -217,11 +218,11 @@ type private CacheInfo =
 
 let private getCacheInfoFromScript printDetails fsiOptions scriptPath =
     let allScriptContents = getAllScripts scriptPath
-    let scriptHash = lazy (getScriptHash allScriptContents fsiOptions)
+    let scriptHash = getScriptHash allScriptContents fsiOptions
     //TODO this is only calculating the hash for the input file, not anything #load-ed
     
     let scriptFileName = Path.GetFileName(scriptPath)
-    let hashPath = "./.fake/" + scriptFileName + "_" + scriptHash.Value
+    let hashPath = "./.fake/" + scriptFileName + "_" + scriptHash
     let assemblyPath = hashPath + ".dll"
     let assemblyWarningsPath = hashPath + "_warnings.txt"
     let cacheConfigPath = hashPath + "_config.xml"
@@ -278,6 +279,7 @@ let private getCacheInfoFromScript printDetails fsiOptions scriptPath =
         else
             false
     { ScriptFileName = scriptFileName
+      ScriptHash = scriptHash
       AssemblyPath = assemblyPath
       AssemblyWarningsPath = assemblyWarningsPath
       CacheConfigPath = cacheConfigPath
@@ -314,6 +316,9 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
         let matched = hashRegex.Match(fileName)
         matched.Groups.Item("script").Value, matched.Groups.Item("hash").Value
 
+    let wishName = "FAKE_CACHE_" + Path.GetFileNameWithoutExtension cacheInfo.ScriptFileName + "_" + cacheInfo.ScriptHash
+    use out = ScriptHost.CreateForwardWriter onOutMsg
+    use err = ScriptHost.CreateForwardWriter(onErrMsg, removeNewLines = true)
     if useCache && cacheInfo.IsValid then
         
         if printDetails then trace "Using cache"
@@ -336,23 +341,24 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
                 Some (num)
             else None
         try
-            match Reflection.Assembly.LoadFrom(cacheInfo.AssemblyPath)
-                  .GetTypes()
-                  |> Seq.filter (fun t -> parseName t.FullName |> Option.isSome)
-                  |> Seq.tryHead with
-            | Some mainModule ->
-              try
-                  mainModule.InvokeMember(
-                      "main@",
-                      BindingFlags.InvokeMethod ||| BindingFlags.Public ||| BindingFlags.Static,
-                      null, null, [||])
-                  |> ignore
-                  true
-              with
-              | ex ->
-                  handleException ex
-                  false
-            | None -> failwithf "We could not find a type similar to '%s' in the cached assembly!" exampleName
+            Yaaf.FSharp.Scripting.Helper.consoleCapture out err (fun () ->
+                let ass = Reflection.Assembly.LoadFrom(cacheInfo.AssemblyPath)
+                assert (ass.GetName().Name = wishName)
+                match ass.GetTypes()
+                      |> Seq.filter (fun t -> parseName t.FullName |> Option.isSome)
+                      |> Seq.tryHead with
+                | Some mainModule ->
+                  try mainModule.InvokeMember(
+                          "main@",
+                          BindingFlags.InvokeMethod ||| BindingFlags.Public ||| BindingFlags.Static,
+                          null, null, [||])
+                      |> ignore
+                      true
+                  with
+                  | ex ->
+                      handleException ex
+                      false
+                | None -> failwithf "We could not find a type similar to '%s' in the cached assembly!" exampleName)
         finally
             try
                 traceFAKE "%s" (File.ReadAllText cacheInfo.AssemblyWarningsPath)
@@ -387,8 +393,8 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
                         if String.IsNullOrWhiteSpace s |> not then
                             fsiErrorOutput.AppendLine s |> ignore),
                       removeNewLines = true),
-                  outWriter = ScriptHost.CreateForwardWriter onOutMsg,
-                  errWriter = ScriptHost.CreateForwardWriter onErrMsg)
+                  outWriter = out,
+                  errWriter = err)
           with :? FsiEvaluationException as e ->
               traceError "FsiEvaluationSession could not be created."
               traceError e.Result.Error.Merged
@@ -408,7 +414,9 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
             // Cache in the error case as well.
             try
                 if useCache && not cacheInfo.IsValid then
-                    session.DynamicAssemblyBuilder.Save("FSI-ASSEMBLY.dll")
+                    let d = session.DynamicAssemblyBuilder
+                    let name = "FSI-ASSEMBLY"
+                    d.Save(name + ".dll")
                     if not <| Directory.Exists cacheDir.FullName then
                         let di = Directory.CreateDirectory cacheDir.FullName
                         di.Attributes <- FileAttributes.Directory ||| FileAttributes.Hidden
@@ -420,18 +428,27 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
                     if (destinationFile.Exists) then destinationFile.Delete()
 
                     File.WriteAllText(cacheInfo.AssemblyWarningsPath, fsiErrorOutput.ToString())
-                    File.Move("FSI-ASSEMBLY.dll", cacheInfo.AssemblyPath)
-                    
-                    if File.Exists("FSI-ASSEMBLY.pdb") then
-                        File.Delete("FSI-ASSEMBLY.pdb")
-                    if File.Exists("FSI-ASSEMBLY.dll.mdb") then
-                        File.Delete("FSI-ASSEMBLY.dll.mdb")
+
+                    // Now we change the AssemblyName of the written Assembly via Mono.Cecil.
+                    // Strictly speaking this is not needed, however this helps with executing
+                    // the test suite, as the runtime will only load a single
+                    // FSI-ASSEMBLY with version 0.0.0.0 by using LoadFrom...
+                    let asem = Mono.Cecil.AssemblyDefinition.ReadAssembly(name + ".dll")
+                    asem.Name <- new Mono.Cecil.AssemblyNameDefinition(wishName, new Version(0,0,1))
+                    asem.Write(wishName + ".dll")
+                    File.Move(wishName + ".dll", cacheInfo.AssemblyPath)
+                    File.Delete(name + ".dll")
+                    for name in [ name; wishName ] do
+                        for ext in [ ".pdb"; ".dll.mdb" ] do
+                            if File.Exists(name + ext) then
+                                File.Delete(name + ext)
 
                     let dynamicAssemblies =
                         System.AppDomain.CurrentDomain.GetAssemblies()
                         |> Seq.filter(fun assem -> assem.IsDynamic)
                         |> Seq.map(fun assem -> assem.GetName().Name)
                         |> Seq.filter(fun assem -> assem <> "FSI-ASSEMBLY")
+                        |> Seq.filter(fun assem -> assem.StartsWith "FAKE_CACHE_")
                         // General Reflection.Emit helper (most likely harmless to ignore)
                         |> Seq.filter(fun assem -> assem <> "Anonymously Hosted DynamicMethods Assembly")
                         // RazorEngine generated
@@ -447,6 +464,7 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
                         let assemblies =
                             System.AppDomain.CurrentDomain.GetAssemblies()
                             |> Seq.filter(fun assem -> not assem.IsDynamic)
+                            |> Seq.filter(fun assem -> assem.GetName().Name.StartsWith "FAKE_CACHE_")
                             // They are not dynamic, but can't be re-used either.
                             |> Seq.filter(fun assem -> not <| assem.GetName().Name.StartsWith("CompiledRazorTemplates.Dynamic.RazorEngine_"))
                         
@@ -461,7 +479,6 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
 let executeBuildScriptWithArgsAndFsiArgsAndReturnMessages script (scriptArgs: string[]) (fsiArgs:string[]) useCache cleanCache =
     let messages = ref []
     let appendMessage isError msg =
-        traceUnknown msg // Some test code expects that the executed script writes to stdout
         messages := { IsError = isError
                       Message = msg
                       Timestamp = DateTimeOffset.UtcNow } :: !messages
@@ -469,7 +486,7 @@ let executeBuildScriptWithArgsAndFsiArgsAndReturnMessages script (scriptArgs: st
         runFAKEScriptWithFsiArgsAndRedirectMessages
             true (FsiArgs(fsiArgs |> List.ofArray, script, scriptArgs |> List.ofArray)) []
             (appendMessage true) (appendMessage false) useCache cleanCache
-    (result, !messages)
+    (result, !messages |> List.rev)
 
 /// Run the given buildscript with fsi.exe and allows for extra arguments to the script. Returns output.
 let executeBuildScriptWithArgsAndReturnMessages script (scriptArgs: string[]) useCache cleanCache =
