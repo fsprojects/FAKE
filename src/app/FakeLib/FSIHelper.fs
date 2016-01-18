@@ -297,7 +297,7 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
     Environment.SetEnvironmentVariable("fsiargs-buildscriptargs", String.Join(" ", scriptArgs))
 
     let options =
-        (FsiOptions.Default.AsArgs |> Array.toList) @ fsiOptions
+        fsiOptions
         |> FsiOptions.ofArgs
 
     let handleException (ex : Exception) =
