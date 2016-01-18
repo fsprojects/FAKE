@@ -7,7 +7,7 @@ open System.Collections.Generic
 
 type private 'a GList = System.Collections.Generic.List<'a>
 
-type (*private*) Tag =
+type Tag =
   | Eps = 0b00000000
   | Ano = 0b00000001
   | Sop = 0b00000010
@@ -41,7 +41,7 @@ type Eps() =
 
 type Sop(o':Options) =
   class
-    let matched = GList<Option * string>(o'.Count)
+    let matched = GList<Option * string option>(o'.Count)
     interface IAst with
       member __.Tag = Tag.Sop
       member __.MatchSopt(s', getArg') = 
@@ -49,21 +49,32 @@ type Sop(o':Options) =
         let mutable i = 0 in
         while i < s'.Length do
           (match o'.FindAndRemove(s'.[i]) with
-           | null -> ret <- false; i <-s'.Length
-           | opt  -> matched.Add(opt, if opt.HasArgument && i = s'.Length - 1
-                                      then getArg' opt.ArgName
+           | null -> ret <- false
+           | opt  -> ret <- true;
+                     matched.Add(opt, if opt.HasArgument && i = s'.Length - 1
+                                      then Some(getArg' opt.ArgName)
                                       elif opt.HasArgument
                                       then (let j = i + 1 in
                                             i <- s'.Length;
-                                            s'.Substring(j))
-                                      else null));
+                                            Some(s'.Substring(j)))
+                                      else None));
           i <- i + 1
         done;
         ret
       member __.MatchLopt(_, _) = false
       member __.MatchArg(_) = false
-      member __.TryFill(_) = false
+      member __.TryFill(args') =
+        if o'.Count <> 0
+        then false
+        else try
+          for sopt, arg in matched do
+            args'.AddShort(sopt, ?arg'=arg)
+          done;
+          true
+        with :? KeyNotFoundException -> false
     end
+    override __.ToString() = sprintf "Sop %A" (Seq.toList o')
+    member __.AddRange(range':#IEnumerable<Option>) = o'.AddRange(range')
   end
 
 type Ano(o':Options) =
@@ -76,7 +87,7 @@ type Ano(o':Options) =
         let mutable i = 0 in
         while i < s'.Length do
           (match o'.Find(s'.[i]) with
-           | null -> ret <- false; i <-s'.Length
+           | null -> ret <- false; i <- s'.Length
            | opt  -> matched.Add(opt, if opt.HasArgument && i = s'.Length - 1
                                       then Some(getArg' opt.ArgName)
                                       elif opt.HasArgument
@@ -90,10 +101,12 @@ type Ano(o':Options) =
       member __.MatchLopt(l', getArg') =
         match o'.Find(l') with
         | null -> false
-        | opt  -> matched.Add(opt, if opt.HasArgument
-                                   then Some(getArg' opt.ArgName)
-                                   else None);
-                  true
+        | opt  -> if o'.FindLast(l') = opt
+                  then (matched.Add(opt, if opt.HasArgument
+                                         then Some(getArg' opt.ArgName)
+                                         else None);
+                        true)
+                  else false
       member __.MatchArg(_) = false
       member __.TryFill(args') =
         try
@@ -110,11 +123,12 @@ type Sqb(ast':IAst) =
   class
     interface IAst with
       member __.Tag = Tag.Sqb
-      member __.MatchSopt(_, _) = false
-      member __.MatchLopt(_, _) = false
-      member __.MatchArg(_) = false
-      member __.TryFill(_) = false
+      member __.MatchSopt(s', a') = ast'.MatchSopt(s', a')
+      member __.MatchLopt(l', a') = ast'.MatchLopt(l', a')
+      member __.MatchArg(a') = ast'.MatchArg(a')
+      member __.TryFill(a') = ast'.TryFill(a')
     end
+    override __.ToString() = sprintf "Sqb (%A)" ast'
   end
 
 type Req(ast':IAst) =
@@ -163,83 +177,8 @@ type Seq(asts':GList<IAst>) =
         Seq.forall (fun (ast':IAst) -> ast'.TryFill(args')) asts'
     end
     override __.ToString() = sprintf "Seq %A" (Seq.toList asts')
+    member __.CleanEps() =
+      asts'.RemoveAll(fun ast' -> ast'.Tag = Tag.Eps) |> ignore;
+      if asts'.Count = 0
+      then asts'.Add(Eps())
   end
-
-(*
-[<NoComparison>]
-type Ast =
-  | Eps
-  | Ano of Options
-  | Sop of Options
-  | Sqb of Ast * bool ref  // bool holds if the list has been matched
-  | Req of Ast
-  | Arg of string ref
-  | Cmd of string
-  | Ell of Ast * bool ref
-  | Kln of Ast
-  | Xor of Ast * Ast
-  | Xoq of Ast GList
-  | Seq of Ast GList
-  with
-    static member MatchSopt(s':char, ast':Ast) = match ast' with
-    | Ano(ano)      -> ano.Find(s')
-    | Sop(sop)      -> sop.FindAndRemove(s')
-    | Sqb(ast, ism) -> (match Ast.MatchSopt(s', ast) with
-                        | null -> null
-                        | opt  -> ism := true;
-                                  opt)
-    | Req(ast)      -> Ast.MatchSopt(s', ast)
-    | Xor(lft, rgt) -> (match Ast.MatchSopt(s', lft),
-                              Ast.MatchSopt(s', rgt) with
-                        | null, null -> null
-                        | optl, null -> optl
-                        | null, optr -> optr
-                        | optl, optr -> optl) // Maybe check if optl <> optr
-    | Seq(seq)      -> let mutable ret = null in
-                       let mutable i = 0 in
-                       while i < seq.Count do
-                         match Ast.MatchSopt(s', seq.[i]) with
-                         | null -> i <- i + 1;
-                         | opt  -> ret <- opt;
-                                   i <- seq.Count
-                       done;
-                       ret
-    | _             -> null
-    static member MatchLopt(l':string, ast':Ast) = match ast' with
-    | Ano(ano) -> ano.Find(l')
-    | _        -> null
-    static member MatchArg = function
-    | Sqb(ast, ism) -> (match Ast.MatchArg(ast) with
-                        | null -> null
-                        | opt  -> ism := true;
-                                  opt)
-    | Arg(arg)      -> let ret = !arg in
-                       arg := null;
-                       ret
-    | Seq(seq)      -> let mutable ret = null in
-                       let mutable i = 0 in
-                       while i < seq.Count do
-                         match Ast.MatchArg(seq.[i]) with
-                         | null -> i <- i + 1;
-                         | arg  -> ret <- arg;
-                                   i <- seq.Count
-                       done;
-                       ret
-    | _             -> null
-    static member Success = function
-    | Eps
-    | Ano(_)        -> true
-    | Req(ast)      -> Ast.Success ast
-    | Arg(arg)      -> !arg = null
-    | Sop(sop)      -> sop.Count = 0
-    | Xor(lft, rgt) -> let l = Ast.Success lft in
-                       let r = Ast.Success rgt in
-                       l <> r
-    | Seq(seq)      -> seq.Count = 0 || Seq.forall (Ast.Success) seq
-    | Sqb(ast, ism) -> (match ast with
-                        | Seq(_) -> true
-                        | _      -> Ast.Success ast || not !ism) // A←B
-    | _             -> false
-    member xx.IsSopCase = match xx with Sop(_) -> true | _ -> false
-  end
-*)

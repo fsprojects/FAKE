@@ -184,7 +184,7 @@ options:
 """,
   "-armyourass" ->= [("-a", Flag(true));("-r", Flag(true));("-m", Argument("yourass"))]
 )
-
+(*
 Assert.Seq("Short option pack in square brackets", """
 usage: prog [-armmsg]
 
@@ -312,7 +312,6 @@ usage: prog [<kind> | <name> <type>]""",
   ""         ->= []
 )
 
-(*
 let doc = Docopt("""usage: prog (<kind> --all | <name>)
 
 options:

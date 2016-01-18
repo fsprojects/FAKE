@@ -37,7 +37,7 @@ module _Private =
     let raiseAmbiguousArg s' = raiseInternal (ambiguousArg s')
 
     let mutable opts = null
-    let mutable last:IAst = null
+    let mutable last:IAst = Eps() |> toIAst
     let updatelastAst ast' = last <- ast'; ast'
     let isLetterOrDigit c' = isLetter(c') || isDigit(c')
     let opp = OperatorPrecedenceParser<_, unit, unit>()
@@ -68,7 +68,11 @@ module _Private =
                               then i <- sops'.Length);
                              sops.Add(opt)
                  done;
-                 Sop(sops) |> toIAst
+                 if last.Tag <> Tag.Sop
+                 then Sop(sops) |> toIAst
+                 else let lastSop = last :?> Sop in
+                      lastSop.AddRange(sops);
+                      Eps() |> toIAst
                in skipChar '-'
                   >>. many1SatisfyL ( isLetterOrDigit ) "Short option(s)"
                   |>> filterSops
@@ -98,7 +102,12 @@ module _Private =
 //               in PostfixOperator("...", spaces, 20, false,
 //                                  makeEll >> updatelastAst)
     let _ = opp.TermParser <- sepEndBy1 term spaces1
-                              |>> (GList<IAst> >> Seq >> toIAst)
+                              |>> function
+                                  | []    -> Eps |> toIAst |> updatelastAst
+                                  | [ast] -> ast
+                                  | list  -> let seq = Seq(GList<IAst>(list)) in
+                                             seq.CleanEps();
+                                             seq |> toIAst |> updatelastAst
     let _ = opp.AddOperator(pxor)
 //    let _ = opp.AddOperator(pell)
     let pusageLine = spaces >>. opp.ExpressionParser
@@ -135,10 +144,11 @@ type UsageParser(u':string, opts':Options) =
       with :? IndexOutOfRangeException -> raiseInternal exn'
 
     let matchSopt (names':string) getArg' =
-      for ast in asts do
-        if not (ast.MatchSopt(names', getArg'))
-        then raiseUnexpectedShort '?'
-      done
+      let folder acc' (ast':IAst) =
+        ast'.MatchSopt(names', getArg') || acc'
+      in if Array.fold folder false asts
+      then ()
+      else raiseUnexpectedShort '?'
 
     let matchLopt (name':string) getArg' =
       let folder acc' (ast':IAst) =
