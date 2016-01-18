@@ -458,7 +458,7 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
                 reraise()
 
 /// Run the given buildscript with fsi.exe and allows for extra arguments to the script. Returns output.
-let executeBuildScriptWithArgsAndReturnMessages script (scriptArgs: string[]) useCache cleanCache =
+let executeBuildScriptWithArgsAndFsiArgsAndReturnMessages script (scriptArgs: string[]) (fsiArgs:string[]) useCache cleanCache =
     let messages = ref []
     let appendMessage isError msg =
         traceUnknown msg // Some test code expects that the executed script writes to stdout
@@ -467,9 +467,13 @@ let executeBuildScriptWithArgsAndReturnMessages script (scriptArgs: string[]) us
                       Timestamp = DateTimeOffset.UtcNow } :: !messages
     let result =
         runFAKEScriptWithFsiArgsAndRedirectMessages
-            true (FsiArgs([], script, scriptArgs |> List.ofArray)) []
+            true (FsiArgs(fsiArgs |> List.ofArray, script, scriptArgs |> List.ofArray)) []
             (appendMessage true) (appendMessage false) useCache cleanCache
     (result, !messages)
+
+/// Run the given buildscript with fsi.exe and allows for extra arguments to the script. Returns output.
+let executeBuildScriptWithArgsAndReturnMessages script (scriptArgs: string[]) useCache cleanCache =
+    executeBuildScriptWithArgsAndFsiArgsAndReturnMessages script scriptArgs [||] useCache cleanCache
 
 /// Run the given buildscript with fsi.exe at the given working directory.  Provides full access to Fsi options and args.
 let runBuildScriptWithFsiArgsAt printDetails (FsiArgs(fsiOptions, script, scriptArgs)) env useCache cleanCache =

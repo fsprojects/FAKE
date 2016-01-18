@@ -10,8 +10,8 @@ namespace Test.FAKECore
 {
     public class when_running_script
     {
-
-        static string RunExplicit(string scriptFilePath, string arguments, bool useCache)
+        static string[] EmptyArgs = new string[0];
+        static string RunExplicit(string scriptFilePath, string[] scriptArguments, string[] fsiArguments, bool useCache)
         {
             var stdOut = Console.Out;
 
@@ -23,7 +23,8 @@ namespace Test.FAKECore
             try
             {
                 
-                result = FSIHelper.executeBuildScriptWithArgsAndReturnMessages(scriptFilePath, new string[] { }, useCache, false);
+                result = FSIHelper.executeBuildScriptWithArgsAndFsiArgsAndReturnMessages(
+                    scriptFilePath, scriptArguments, fsiArguments, useCache, false);
             }
             finally
             {
@@ -48,14 +49,19 @@ namespace Test.FAKECore
                 .Replace("\n", "").Replace("\r", "");
         }
 
-        static string Run(string script, string arguments, bool useCache)
+        static string RunExplicit(string scriptFilePath, string[] scriptArguments, bool useCache)
+        {
+            return RunExplicit(scriptFilePath, scriptArguments, EmptyArgs, useCache);
+        }
+
+        static string Run(string script, string[] scriptArguments, bool useCache)
         {
             var scriptFilePath = Path.GetTempFileName() + ".fsx";
             string result;
             try
             {
                 File.WriteAllText(scriptFilePath, script);
-                result = RunExplicit(scriptFilePath, arguments, useCache);
+                result = RunExplicit(scriptFilePath, scriptArguments, useCache);
             }
             finally
             {
@@ -72,10 +78,75 @@ namespace Test.FAKECore
             return new FSIHelper.Script(contents, path.Replace("\\", "/"), null, null);
         }
 
+        It should_be_able_to_use_system_xml =
+            () =>
+            {
+                var scriptFilePath = Path.GetTempFileName() + ".fsx";
+                var scriptFileName = Path.GetFileName(scriptFilePath);
+                try
+                {
+                    File.WriteAllText(scriptFilePath, "open System.Xml");
+                    RunExplicit(scriptFilePath, EmptyArgs, false)
+                        .ShouldEqual("");
+                }
+                finally
+                {
+                    if (File.Exists(scriptFilePath))
+                        File.Delete(scriptFilePath);
+                }
+            };
+
+        It should_be_able_to_use_system_web =
+            () =>
+            {
+                var scriptFilePath = Path.GetTempFileName() + ".fsx";
+                var scriptFileName = Path.GetFileName(scriptFilePath);
+                try
+                {
+                    File.WriteAllText(scriptFilePath, "open System.Web");
+                    RunExplicit(scriptFilePath, EmptyArgs, false)
+                        .ShouldEqual("");
+                }
+                finally
+                {
+                    if (File.Exists(scriptFilePath))
+                        File.Delete(scriptFilePath);
+                }
+            };
+
+        /// <summary>
+        /// See https://github.com/fsharp/FAKE/pull/1080
+        /// </summary>
+        It should_work_with_debug_flag =
+            () =>
+            {
+                var scriptFilePath = Path.GetTempFileName() + ".fsx";
+                var scriptFileName = Path.GetFileName(scriptFilePath);
+                try
+                {
+                    File.WriteAllText(scriptFilePath, "printfn \"test\"");
+                    RunExplicit(
+                        scriptFilePath,
+                        EmptyArgs,
+                        new[] {
+                            "--debug+",
+                            "--optimize-",
+                            "--platform", "AnyCpu",
+                            "--configuration", "Release",
+                            "--csversion", "2007" },
+                        false)
+                        .ShouldEqual("test");
+                }
+                finally
+                {
+                    if (File.Exists(scriptFilePath))
+                        File.Delete(scriptFilePath);
+                }
+            };
+
         It should_use_then_invalidate_cache =
             () =>
             {
-                var arguments = "";
                 var scriptFilePath = Path.GetTempFileName() + ".fsx";
                 var scriptFileName = Path.GetFileName(scriptFilePath);
                 try
@@ -88,17 +159,17 @@ namespace Test.FAKECore
 
                     File.Exists(cacheFilePath).ShouldEqual(false);
 
-                    RunExplicit(scriptFilePath, arguments, false)
+                    RunExplicit(scriptFilePath, EmptyArgs, false)
                        .ShouldEqual("foobar");
 
                     File.Exists(cacheFilePath).ShouldEqual(false);
 
-                    RunExplicit(scriptFilePath, arguments, true)
+                    RunExplicit(scriptFilePath, EmptyArgs, true)
                         .ShouldStartWith("Cache doesn't exist");
 
                     File.Exists(cacheFilePath).ShouldEqual(true);
 
-                    RunExplicit(scriptFilePath, arguments, true)
+                    RunExplicit(scriptFilePath, EmptyArgs, true)
                         .ShouldEqual(
                             ("Using cache" + nl + "foobar")
                             .Replace("\n", "").Replace("\r", ""));
@@ -106,7 +177,7 @@ namespace Test.FAKECore
                     File.WriteAllText(scriptFilePath, "printf \"foobarbaz\"");
 
                     var changedScriptHash = FSIHelper.getScriptHash(new FSIHelper.Script[] { script(scriptFilePath, "printf \"foobarbaz\"") }, new List<string>());
-                    RunExplicit(scriptFilePath, arguments, true)
+                    RunExplicit(scriptFilePath, EmptyArgs, true)
                         .ShouldStartWith("Cache is invalid, recompiling");
 
                     File.Exists("./.fake/" + scriptFileName + "_" + changedScriptHash + ".dll").ShouldEqual(true);
@@ -132,7 +203,7 @@ namespace Test.FAKECore
                     File.WriteAllText(mainPath, mainScript.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\r", nl));
                     File.WriteAllText(loadedPath, loadedScript.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\r", nl));
 
-                    RunExplicit(mainPath, "", false)
+                    RunExplicit(mainPath, EmptyArgs, false)
                         .ShouldEqual("loaded;main");
                 }
                 finally
