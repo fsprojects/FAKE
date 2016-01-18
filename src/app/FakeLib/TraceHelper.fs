@@ -32,9 +32,6 @@ let logVerbosefn fmt =
 /// Writes a trace to the command line (in green)
 let trace message = postMessage (TraceMessage(message, true))
 
-/// Writes a trace to the command line (in the current console color)
-let traceUnknown message = postMessage (UnknownMessage(message, false))
-
 /// Writes a message to the command line (in green)
 let tracefn fmt = Printf.ksprintf trace fmt
 

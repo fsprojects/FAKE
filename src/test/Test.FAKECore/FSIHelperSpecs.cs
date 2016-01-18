@@ -11,6 +11,30 @@ namespace Test.FAKECore
 {
     public class when_running_script
     {
+        class MyTracer : Fake.TraceListener.ITraceListener
+        {
+            StringBuilder builder;
+            public MyTracer(StringBuilder builder)
+            {
+                this.builder = builder;
+            }
+
+            public void Write(TraceListener.TraceData value)
+            {
+                if (value.Message != null)
+                {
+                    builder.Append(value.Message.Value);
+                }
+
+                if (value.NewLine != null)
+                {
+                    builder.AppendLine();
+                }
+            }
+
+            public override string ToString() { return builder.ToString(); }
+        }
+
         static string[] EmptyArgs = new string[0];
 
         static Messages IgnoreDateTimeOffset(Messages msgs)
@@ -102,9 +126,7 @@ namespace Test.FAKECore
 
                     // with cache
                     var res2 = RunExplicit(scriptFilePath, EmptyArgs, EmptyArgs, true);
-                    res2.Item2.ShouldEqual(
-                            ("Using cache" + nl + "")
-                            .Replace("\n", "").Replace("\r", ""));
+                    res2.Item2.ShouldStartWith("Using cache");
 
                     Microsoft.FSharp.Core.Operators.op_Equality(IgnoreDateTimeOffset(res1.Item1), IgnoreDateTimeOffset(res2.Item1))
                         .ShouldBeTrue();
@@ -113,6 +135,36 @@ namespace Test.FAKECore
                 {
                     if (File.Exists(scriptFilePath))
                         File.Delete(scriptFilePath);
+                }
+            };
+
+        It tracing_functions_should_work =
+            () =>
+            {
+                var scriptFilePath = Path.GetTempFileName() + ".fsx";
+                var scriptFileName = Path.GetFileName(scriptFilePath);
+                var t = new MyTracer(new StringBuilder());
+                TraceListener.listeners.Add(t);
+                try
+                {
+                    var fakeLib = typeof(Fake.TraceListener).Assembly.Location;
+                    File.WriteAllText(scriptFilePath, @"
+#r """ + fakeLib.Replace(@"\", @"\\") + @"""
+open Fake
+traceFAKE ""TEST_FAKE_OUTPUT""");
+                    RunExplicit(scriptFilePath, EmptyArgs, false)
+                        .ShouldEqual("");
+                    var result = t.ToString();
+                    var idx = result.IndexOf("TEST_FAKE_OUTPUT");
+                    idx.ShouldBeGreaterThan(-1);
+                    // We should not have it twice
+                    result.Substring(idx + "TEST_FAKE_OUTPUT".Length).ShouldNotContain("TEST_FAKE_OUTPUT");
+                }
+                finally
+                {
+                    if (File.Exists(scriptFilePath))
+                        File.Delete(scriptFilePath);
+                    TraceListener.listeners.Remove(t);
                 }
             };
 
@@ -208,9 +260,7 @@ namespace Test.FAKECore
                     File.Exists(cacheFilePath).ShouldEqual(true);
 
                     var res1 = RunExplicit(scriptFilePath, EmptyArgs, EmptyArgs, true);
-                    res1.Item2.ShouldEqual(
-                            ("Using cache" + nl + "")
-                            .Replace("\n", "").Replace("\r", ""));
+                    res1.Item2.ShouldStartWith("Using cache");
                     res1.Item1.Head.Message.ShouldEqual("foobar");
 
                     File.WriteAllText(scriptFilePath, "printf \"foobarbaz\"");
@@ -250,9 +300,9 @@ namespace Test.FAKECore
                     File.WriteAllText(loadedPath, loadedScript.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\r", nl));
 
                     var res = RunExplicit(mainPath, EmptyArgs, EmptyArgs, false);
-                    res.Item2.ShouldEqual(""); // output is redirected
+                    res.Item2.ShouldEqual("loaded;main");
                     res.Item1.Head.Message.ShouldEqual("loaded;");
-                    res.Item1.Tail.Head.Message.ShouldEqual("main"); // list is never reverted
+                    res.Item1.Tail.Head.Message.ShouldEqual("main");
                 }
                 finally
                 {
