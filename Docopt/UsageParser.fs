@@ -37,10 +37,14 @@ module _Private =
     let raiseAmbiguousArg s' = raiseInternal (ambiguousArg s')
 
     let mutable opts = null
-    let mutable last:IAst = Eps() |> toIAst
-    let updatelastAst ast' = last <- ast'; ast'
+    let updateUserState (map':'a -> IAst -> IAst) : 'a -> Parser<IAst, IAst> =
+      fun arg' ->
+        fun stream' ->
+          let res = map' arg' stream'.UserState in
+          stream'.UserState <- res;
+          Reply(res)
     let isLetterOrDigit c' = isLetter(c') || isDigit(c')
-    let opp = OperatorPrecedenceParser<_, unit, unit>()
+    let opp = OperatorPrecedenceParser<IAst, _, IAst>()
     let pupperArg =
       let start c' = isUpper c' || isDigit c' in
       let cont c' = start c' || c' = '-' in
@@ -53,12 +57,13 @@ module _Private =
       .>> skipChar '>'
       |>> (fun name' -> String.Concat("<", name', ">"))
     let parg = pupperArg <|> plowerArg
-               |>> fun arg' -> if last.Tag = Tag.Sop
-                               then Eps() |> toIAst
-                               else Arg(arg') |> toIAst
+               >>= updateUserState (fun arg' last' ->
+                                      if last' <> null && last'.Tag = Tag.Sop
+                                      then Eps() |> toIAst
+                                      else Arg(arg') |> toIAst)
     let pano = skipString "[options]"
-               |>> fun () -> Ano(opts) |> toIAst
-    let psop = let filterSops (sops':string) =
+               >>= updateUserState (fun _ _ -> Ano(opts) |> toIAst)
+    let psop = let filterSops (sops':string) (last':IAst) =
                  let sops = Options() in
                  let mutable i = -1 in
                  while (i <- i + 1; i < sops'.Length) do
@@ -68,31 +73,29 @@ module _Private =
                               then i <- sops'.Length);
                              sops.Add(opt)
                  done;
-                 if last.Tag <> Tag.Sop
+                 if last' = null || last'.Tag <> Tag.Sop
                  then Sop(sops) |> toIAst
-                 else let lastSop = last :?> Sop in
-                      lastSop.AddRange(sops);
-                      Eps() |> toIAst
+                 else ((last' :?> Sop).AddRange(sops);
+                       Eps() |> toIAst)
                in skipChar '-'
                   >>. many1SatisfyL ( isLetterOrDigit ) "Short option(s)"
-                  |>> filterSops
+                  >>= updateUserState filterSops
     let psqb = between (skipChar '[' >>. spaces) (skipChar ']')
                        opp.ExpressionParser
-               |>> (Sqb >> toIAst)
+               >>= updateUserState (fun ast' _ -> Sqb(ast') |> toIAst)
     let preq = between (skipChar '(' >>. spaces) (skipChar ')')
                        opp.ExpressionParser
-               |>> (Req >> toIAst)
+               >>= updateUserState (fun ast' _ -> Req(ast') |> toIAst)
     let pcmd = many1Satisfy (fun c' -> isLetter(c') || isDigit(c') || c' = '-')
-               >>% (Eps() |> toIAst) //|>> (Cmd >> toIAst)
+               >>= updateUserState (fun _ _ -> Eps() |> toIAst) //|>> (Cmd >> toIAst)
     let term = choice [|pano;
                         psop;
                         psqb;
                         preq;
                         parg;
                         pcmd|]
-               |>> updatelastAst
     let pxor = InfixOperator("|", spaces, 10, Associativity.Left,
-                             fun x' y' -> updatelastAst (Xor(x', y') |> toIAst))
+                             fun x' y' -> Xor(x', y') |> toIAst) // répare-moi :'(
 //    let pell = let makeEll (ast':IAst) =
 //                 match ast'.Tag with
 //                 | Tag.Seq -> let cell = seq.[seq.Count - 1] in
@@ -101,13 +104,13 @@ module _Private =
 //                 | _       -> Eps() //Ell(ast')
 //               in PostfixOperator("...", spaces, 20, false,
 //                                  makeEll >> updatelastAst)
-    let _ = opp.TermParser <- sepEndBy1 term spaces1
-                              |>> function
-                                  | []    -> Eps |> toIAst |> updatelastAst
-                                  | [ast] -> ast
-                                  | list  -> let seq = Seq(GList<IAst>(list)) in
-                                             seq.CleanEps();
-                                             seq |> toIAst |> updatelastAst
+    let _ = opp.TermParser <-
+      sepEndBy1 term spaces1
+      >>= updateUserState (fun ast' _ ->
+                             match ast' |> List.filter (fun ast' -> ast'.Tag <> Tag.Eps) with
+                             | []    -> Eps() |> toIAst
+                             | [ast] -> ast
+                             | list  -> Seq(GList<IAst>(list)) |> toIAst)
     let _ = opp.AddOperator(pxor)
 //    let _ = opp.AddOperator(pell)
     let pusageLine = spaces >>. opp.ExpressionParser
@@ -125,8 +128,8 @@ type UsageParser(u':string, opts':Options) =
         let line = line.TrimStart() in
         let index = line.IndexOfAny([|' ';'\t'|]) in
         return if index = -1 then Eps() |> toIAst
-               else match run (spaces >>. opp.ExpressionParser)
-                              (line.Substring(index)) with
+               else let line = line.Substring(index) in
+                    match runParserOnString pusageLine null "" line with
                     | Success(ast, _, _) -> ast
                     | Failure(err, _, _) -> raise (UsageException(err))
       }

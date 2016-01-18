@@ -44,7 +44,7 @@ type Sop(o':Options) =
     let matched = GList<Option * string option>(o'.Count)
     interface IAst with
       member __.Tag = Tag.Sop
-      member __.MatchSopt(s', getArg') = 
+      member __.MatchSopt(s', getArg') =
         let mutable ret = true in
         let mutable i = 0 in
         while i < s'.Length do
@@ -54,9 +54,9 @@ type Sop(o':Options) =
                      matched.Add(opt, if opt.HasArgument && i = s'.Length - 1
                                       then Some(getArg' opt.ArgName)
                                       elif opt.HasArgument
-                                      then (let j = i + 1 in
+                                      then (let arg = s'.Substring(i + 1) in
                                             i <- s'.Length;
-                                            Some(s'.Substring(j)))
+                                            Some(arg))
                                       else None));
           i <- i + 1
         done;
@@ -135,11 +135,12 @@ type Req(ast':IAst) =
   class
     interface IAst with
       member __.Tag = Tag.Req
-      member __.MatchSopt(_, _) = false
-      member __.MatchLopt(_, _) = false
-      member __.MatchArg(_) = false
-      member __.TryFill(_) = false
+      member __.MatchSopt(s', a') = ast'.MatchSopt(s', a')
+      member __.MatchLopt(l', a') = ast'.MatchLopt(l', a')
+      member __.MatchArg(a') = ast'.MatchArg(a')
+      member __.TryFill(a') = ast'.TryFill(a')
     end
+    override __.ToString() = sprintf "Req (%A)" ast'
   end
 
 type Arg(name':string) =
@@ -177,8 +178,4 @@ type Seq(asts':GList<IAst>) =
         Seq.forall (fun (ast':IAst) -> ast'.TryFill(args')) asts'
     end
     override __.ToString() = sprintf "Seq %A" (Seq.toList asts')
-    member __.CleanEps() =
-      asts'.RemoveAll(fun ast' -> ast'.Tag = Tag.Eps) |> ignore;
-      if asts'.Count = 0
-      then asts'.Add(Eps())
   end

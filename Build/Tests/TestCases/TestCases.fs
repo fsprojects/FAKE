@@ -184,7 +184,7 @@ options:
 """,
   "-armyourass" ->= [("-a", Flag(true));("-r", Flag(true));("-m", Argument("yourass"))]
 )
-(*
+
 Assert.Seq("Short option pack in square brackets", """
 usage: prog [-armmsg]
 
@@ -210,7 +210,7 @@ options:
   ""      ->! typeof<ArgvException>
 )
 
-Assert.Seq("Multiple usage patterns", """
+Assert.Seq("Required short options in brackets", """
 usage: prog (-a -b)
 
 options: -a
@@ -222,7 +222,7 @@ options: -a
   "-a"    ->! typeof<ArgvException>,
   ""      ->! typeof<ArgvException>
 )
-
+(*
 Assert.Seq("Two options, one is optional","""
 usage: prog [-a] -b
 
