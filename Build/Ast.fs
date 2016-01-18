@@ -121,12 +121,16 @@ type Ano(o':Options) =
 
 type Sqb(ast':IAst) =
   class
+    let mutable matched = false
+    let hasMatched = function
+    | true -> matched <- true; true
+    | _    -> false
     interface IAst with
       member __.Tag = Tag.Sqb
-      member __.MatchSopt(s', a') = ast'.MatchSopt(s', a')
-      member __.MatchLopt(l', a') = ast'.MatchLopt(l', a')
-      member __.MatchArg(a') = ast'.MatchArg(a')
-      member __.TryFill(a') = ast'.TryFill(a')
+      member __.MatchSopt(s', a') = ast'.MatchSopt(s', a') |> hasMatched
+      member __.MatchLopt(l', a') = ast'.MatchLopt(l', a') |> hasMatched
+      member __.MatchArg(a') = ast'.MatchArg(a') |> hasMatched
+      member __.TryFill(a') = ast'.TryFill(a') || not matched // A←B
     end
     override __.ToString() = sprintf "Sqb (%A)" ast'
   end

@@ -222,7 +222,7 @@ options: -a
   "-a"    ->! typeof<ArgvException>,
   ""      ->! typeof<ArgvException>
 )
-(*
+
 Assert.Seq("Two options, one is optional","""
 usage: prog [-a] -b
 
@@ -250,7 +250,7 @@ options: -a
   "-b"    ->! typeof<ArgvException>,
   ""      ->= [("-a", Flag(false));("-b", Flag(false))]
 )
-
+(*
 Assert.Seq("Exclusive or", """
 usage: prog (-a|-b)
 
