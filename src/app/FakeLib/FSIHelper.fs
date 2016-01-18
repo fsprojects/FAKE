@@ -303,7 +303,7 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
         |> FsiOptions.ofArgs
 
     let handleException (ex : Exception) =
-        onErrMsg (ex.ToString())
+        traceError (ex.ToString())
 
     let scriptPath =
         if Path.IsPathRooted scriptPath then
@@ -362,7 +362,7 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
         finally
             try
                 traceFAKE "%s" (File.ReadAllText cacheInfo.AssemblyWarningsPath)
-            with e -> traceError (e.ToString())
+            with e -> handleException e
     else
         let cacheDir = DirectoryInfo(Path.Combine(".",".fake"))
         if useCache then
