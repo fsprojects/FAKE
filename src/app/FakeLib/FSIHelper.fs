@@ -318,7 +318,7 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
 
     let wishName = "FAKE_CACHE_" + Path.GetFileNameWithoutExtension cacheInfo.ScriptFileName + "_" + cacheInfo.ScriptHash
     use out = ScriptHost.CreateForwardWriter onOutMsg
-    use err = ScriptHost.CreateForwardWriter(onErrMsg, removeNewLines = true)
+    use err = ScriptHost.CreateForwardWriter onErrMsg
     if useCache && cacheInfo.IsValid then
         
         if printDetails then trace "Using cache"
@@ -475,10 +475,15 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
                 handleException ex
                 reraise()
 
+let internal onMessage isError =
+    let printer = if isError && TraceListener.importantMessagesToStdErr then eprintf else printf
+    printer "%s"
+
 /// Run the given buildscript with fsi.exe and allows for extra arguments to the script. Returns output.
 let executeBuildScriptWithArgsAndFsiArgsAndReturnMessages script (scriptArgs: string[]) (fsiArgs:string[]) useCache cleanCache =
     let messages = ref []
     let appendMessage isError msg =
+        onMessage isError msg // For the tests to be more realistic
         messages := { IsError = isError
                       Message = msg
                       Timestamp = DateTimeOffset.UtcNow } :: !messages
@@ -496,7 +501,7 @@ let executeBuildScriptWithArgsAndReturnMessages script (scriptArgs: string[]) us
 let runBuildScriptWithFsiArgsAt printDetails (FsiArgs(fsiOptions, script, scriptArgs)) env useCache cleanCache =
     runFAKEScriptWithFsiArgsAndRedirectMessages
         printDetails (FsiArgs(fsiOptions, script, scriptArgs)) env
-        traceError traceUnknown
+        (onMessage true) (onMessage false)
         useCache
         cleanCache
 
