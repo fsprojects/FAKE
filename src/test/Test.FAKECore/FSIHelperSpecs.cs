@@ -144,21 +144,37 @@ namespace Test.FAKECore
                 var scriptFilePath = Path.GetTempFileName() + ".fsx";
                 var scriptFileName = Path.GetFileName(scriptFilePath);
                 var t = new MyTracer(new StringBuilder());
-                TraceListener.listeners.Add(t);
                 try
                 {
-                    var fakeLib = typeof(Fake.TraceListener).Assembly.Location;
-                    File.WriteAllText(scriptFilePath, @"
+                    var fakeLib = typeof(TraceListener).Assembly.Location;
+                    TraceListener.listeners.Add(t);
+                    {
+                        File.WriteAllText(scriptFilePath, @"
 #r """ + fakeLib.Replace(@"\", @"\\") + @"""
 open Fake
 traceFAKE ""TEST_FAKE_OUTPUT""");
-                    RunExplicit(scriptFilePath, EmptyArgs, false)
-                        .ShouldEqual("");
-                    var result = t.ToString();
-                    var idx = result.IndexOf("TEST_FAKE_OUTPUT");
-                    idx.ShouldBeGreaterThan(-1);
-                    // We should not have it twice
-                    result.Substring(idx + "TEST_FAKE_OUTPUT".Length).ShouldNotContain("TEST_FAKE_OUTPUT");
+                        RunExplicit(scriptFilePath, EmptyArgs, false);
+                        var result = t.ToString();
+                        var idx = result.IndexOf("TEST_FAKE_OUTPUT");
+                        idx.ShouldBeGreaterThan(-1);
+                        // We should not have it twice
+                        result.Substring(idx + "TEST_FAKE_OUTPUT".Length).ShouldNotContain("TEST_FAKE_OUTPUT");
+                    }
+                    TraceListener.listeners.Remove(t);
+                    t = new MyTracer(new StringBuilder());
+                    TraceListener.listeners.Add(t);
+                    {
+                        File.WriteAllText(scriptFilePath, @"
+#r """ + fakeLib.Replace(@"\", @"\\") + @"""
+open Fake
+trace ""TEST_FAKE_OUTPUT""");
+                        RunExplicit(scriptFilePath, EmptyArgs, false);
+                        var result = t.ToString();
+                        var idx = result.IndexOf("TEST_FAKE_OUTPUT");
+                        idx.ShouldBeGreaterThan(-1);
+                        // We should not have it twice
+                        result.Substring(idx + "TEST_FAKE_OUTPUT".Length).ShouldNotContain("TEST_FAKE_OUTPUT");
+                    }
                 }
                 finally
                 {
