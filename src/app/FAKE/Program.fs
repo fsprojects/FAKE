@@ -126,6 +126,12 @@ try
 
         //None of the new style args parsed, so revert to the old skool.
         | Choice2Of2(ex) ->
+
+            // #1082 print a warning as we've been invoked with invalid OR old-style args.
+            traceImportant "Error parsing command line arguments.  You have a mistake in your args, or are using the pre-2.1.8 argument style:"
+            exceptionAndInnersToString ex |> traceImportant
+            trace "Attempting to run with pre-version 2.18 argument style, for backwards compat."
+
             if (cmdArgs.Length = 2 && paramIsHelp cmdArgs.[1]) || (cmdArgs.Length = 1 && List.length buildScripts = 0) then printUsage () else
             match Boot.ParseCommandLine(cmdArgs) with
             | None ->
