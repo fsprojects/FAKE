@@ -29,6 +29,7 @@ type Dictionary(options':Options) =
          | short, long         -> dict.[String([|'-';short|])] <- result;
                                   dict.[String.Concat("--", long)] <- result
        done
+    member private __.Dict = dict
     member __.AsList() = [for kv in dict do yield (kv.Key, !kv.Value) done]
     member __.Item with get key' = !dict.[key']
                     and set key' value' = dict.[key'] := value'
@@ -63,6 +64,11 @@ type Dictionary(options':Options) =
       if not (dict.ContainsKey(a'))
       then dict.Add(a', ref (Argument(val')))
       else xx.UnsafeAdd(a', val')
+    member xx.AddRange(other':Dictionary) =
+      for kv in other'.Dict do
+        (xx.Dict :> IDictionary<_, _>).Add(kv)
+      done
+    member __.Clear() = dict.Clear()
     member inline private xx.SFDisplay = xx.AsList()
   end
 ;;

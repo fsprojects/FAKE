@@ -11,12 +11,13 @@ type Tag =
   | Eps = 0b00000000
   | Ano = 0b00000001
   | Sop = 0b00000010
-  | Sqb = 0b00000011
-  | Req = 0b00000100
-  | Arg = 0b00000101
-  | Xor = 0b00000110
-  | Seq = 0b00000111
-  | Cmd = 0b00001000
+  | Lop = 0b00000011
+  | Sqb = 0b00000100
+  | Req = 0b00000101
+  | Arg = 0b00000110
+  | Xor = 0b00000111
+  | Seq = 0b00001000
+  | Cmd = 0b00001001
 
 [<AllowNullLiteral>]
 type IAst =
@@ -76,6 +77,30 @@ type Sop(o':Options) =
     end
     override __.ToString() = sprintf "Sop %A" (Seq.toList o')
     member __.AddRange(range':#IEnumerable<Option>) = o'.AddRange(range')
+  end
+
+type Lop(o':Option) =
+  class
+    let mutable matched = false
+    let mutable arg = None
+    interface IAst with
+      member __.Tag = Tag.Lop
+      member __.MatchSopt(_, _) = false
+      member __.MatchLopt(l', getArg') =
+        if matched
+        then false
+        elif l' = o'.Long
+        then (if o'.HasArgument
+              then arg <- Some(getArg' o'.ArgName);
+              matched <- true; true)
+        else false
+      member __.MatchArg(_) = false
+      member __.TryFill(args') =
+        if matched
+        then (args'.AddLong(o', ?arg'=arg); true)
+        else false
+    end
+    override __.ToString() = sprintf "Lop %A" o'
   end
 
 type Ano(o':Options) =
@@ -184,7 +209,17 @@ type Xor(l':IAst, r':IAst) =
         | true, false  -> rOk <- false; true
         | false, true  -> lOk <- false; true
         | false, false -> false
-      member __.MatchLopt(_, _) = false
+      member __.MatchLopt(lopt', getArg') =
+        let getArg = let s = ref String.Empty in
+                     let arg = lazy getArg' !s in
+                     fun s' -> s := s'; arg.Value in
+        let lmatch = lOk && l'.MatchLopt(lopt', getArg) in
+        let rmatch = rOk && r'.MatchLopt(lopt', getArg) in
+        match lmatch, rmatch with
+        | true, true   -> true
+        | true, false  -> rOk <- false; true
+        | false, true  -> lOk <- false; true
+        | false, false -> false
       member __.MatchArg(a') =
         let lmatch = lOk && l'.MatchArg(a') in
         let rmatch = rOk && r'.MatchArg(a') in
@@ -195,10 +230,15 @@ type Xor(l':IAst, r':IAst) =
         | false, false -> false
       member __.TryFill(a') =
         match lOk, rOk with
-        | true , true  -> false
-        | true , false -> l'.TryFill(a')
+        | true, false  -> l'.TryFill(a')
         | false, true  -> r'.TryFill(a')
         | false, false -> false
+        | true, true   -> let tempDict = Arguments.Dictionary(Options()) in
+                          if l'.TryFill(tempDict)
+                          then (a'.AddRange(tempDict); true)
+                          elif (tempDict.Clear(); r'.TryFill(tempDict))
+                          then (a'.AddRange(tempDict); true)
+                          else false
     end
     override __.ToString() = sprintf "Xor (%A | %A)" l' r'
   end

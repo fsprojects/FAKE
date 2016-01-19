@@ -312,23 +312,19 @@ usage: prog [<kind> | <name> <type>]""",
   ""         ->= []
 )
 
-(*
-let doc = Docopt("""usage: prog (<kind> --all | <name>)
+Assert.Seq("Mixed xor, arguments and options", """
+usage: prog (<kind> --all | <name>)
 
 options:
  --all
 
-""")
-$ prog 10 --all
-{"<kind>": "10", "--all": true, "<name>": null}
+""",
+  "10 --all" ->= [("--all", Flag(true));("<kind>", Argument("10"))],
+  "10"       ->= [("--all", Flag(false));("<name>", Argument("10"))],
+  ""         ->! typeof<ArgvException>
+)
 
-$ prog 10
-{"<kind>": null, "--all": false, "<name>": "10"}
-
-$ prog
-"user-error"
-
-
+(*
 let doc = Docopt("""usage: prog [<name> <name>]""")
 $ prog 10 20
 {"<name>": ["10", "20"]}

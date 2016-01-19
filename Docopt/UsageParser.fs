@@ -58,7 +58,9 @@ module _Private =
       |>> (fun name' -> String.Concat("<", name', ">"))
     let parg = pupperArg <|> plowerArg
                >>= updateUserState (fun arg' last' ->
-                                      if last' <> null && last'.Tag = Tag.Sop
+                                      if last' <> null
+                                         && (last'.Tag = Tag.Sop
+                                             || last'.Tag = Tag.Lop)
                                       then Eps() |> toIAst
                                       else Arg(arg') |> toIAst)
     let pano = skipString "[options]"
@@ -80,6 +82,14 @@ module _Private =
                in skipChar '-'
                   >>. many1SatisfyL ( isLetterOrDigit ) "Short option(s)"
                   >>= updateUserState filterSops
+    let plop = let filterLopt (lopt':string) _ =
+                     match opts.Find(lopt') with
+                     | null -> raiseUnexpectedLong lopt'
+                     | lopt -> Lop(lopt)
+               in skipString "--"
+                  >>. manySatisfy (fun c' -> Char.IsLetterOrDigit(c')
+                                             || c' = '-')
+                  >>= updateUserState filterLopt
     let psqb = between (skipChar '[' >>. spaces) (skipChar ']')
                        opp.ExpressionParser
                >>= updateUserState (fun ast' _ -> Sqb(ast'))
@@ -89,6 +99,7 @@ module _Private =
     let pcmd = many1Satisfy (fun c' -> isLetter(c') || isDigit(c') || c' = '-')
                >>= updateUserState (fun cmd' _ -> Cmd(cmd'))
     let term = choice [|pano;
+                        plop;
                         psop;
                         psqb;
                         preq;
