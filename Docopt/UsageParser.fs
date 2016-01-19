@@ -37,10 +37,10 @@ module _Private =
     let raiseAmbiguousArg s' = raiseInternal (ambiguousArg s')
 
     let mutable opts = null
-    let updateUserState (map':'a -> IAst -> IAst) : 'a -> Parser<IAst, IAst> =
+    let updateUserState (map':'a -> IAst -> #IAst) : 'a -> Parser<IAst, IAst> =
       fun arg' ->
         fun stream' ->
-          let res = map' arg' stream'.UserState in
+          let res = map' arg' stream'.UserState |> toIAst in
           stream'.UserState <- res;
           Reply(res)
     let isLetterOrDigit c' = isLetter(c') || isDigit(c')
@@ -62,7 +62,7 @@ module _Private =
                                       then Eps() |> toIAst
                                       else Arg(arg') |> toIAst)
     let pano = skipString "[options]"
-               >>= updateUserState (fun _ _ -> Ano(opts) |> toIAst)
+               >>= updateUserState (fun _ _ -> Ano(opts))
     let psop = let filterSops (sops':string) (last':IAst) =
                  let sops = Options() in
                  let mutable i = -1 in
@@ -82,20 +82,23 @@ module _Private =
                   >>= updateUserState filterSops
     let psqb = between (skipChar '[' >>. spaces) (skipChar ']')
                        opp.ExpressionParser
-               >>= updateUserState (fun ast' _ -> Sqb(ast') |> toIAst)
+               >>= updateUserState (fun ast' _ -> Sqb(ast'))
     let preq = between (skipChar '(' >>. spaces) (skipChar ')')
                        opp.ExpressionParser
-               >>= updateUserState (fun ast' _ -> Req(ast') |> toIAst)
+               >>= updateUserState (fun ast' _ -> Req(ast'))
     let pcmd = many1Satisfy (fun c' -> isLetter(c') || isDigit(c') || c' = '-')
-               >>= updateUserState (fun _ _ -> Eps() |> toIAst) //|>> (Cmd >> toIAst)
+               >>= updateUserState (fun cmd' _ -> Cmd(cmd'))
     let term = choice [|pano;
                         psop;
                         psqb;
                         preq;
                         parg;
                         pcmd|]
-    let pxor = InfixOperator("|", spaces, 10, Associativity.Left,
-                             fun x' y' -> Xor(x', y') |> toIAst) // répare-moi :'(
+    let pxor = let afterStringParser =
+                 spaces
+                 .>>  updateUserState (fun _ _ -> Xor(Eps(), Eps())) ()
+               in InfixOperator("|", afterStringParser, 10, Associativity.Left,
+                                fun x' y' -> Xor(x', y') |> toIAst)
 //    let pell = let makeEll (ast':IAst) =
 //                 match ast'.Tag with
 //                 | Tag.Seq -> let cell = seq.[seq.Count - 1] in

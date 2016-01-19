@@ -250,7 +250,7 @@ options: -a
   "-b"    ->! typeof<ArgvException>,
   ""      ->= [("-a", Flag(false));("-b", Flag(false))]
 )
-(*
+
 Assert.Seq("Exclusive or", """
 usage: prog (-a|-b)
 
@@ -276,7 +276,7 @@ options: -a
   "-a"    ->= [("-a", Flag(true));("-b", Flag(false))],
   "-b"    ->= [("-a", Flag(false));("-b", Flag(true))]
 )
-
+(*
 Assert.Seq("Argument", """
 usage: prog <arg>""",
   "10"    ->= [("<arg>", Argument("10"))],

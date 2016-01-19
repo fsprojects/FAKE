@@ -16,6 +16,7 @@ type Tag =
   | Arg = 0b00000101
   | Xor = 0b00000110
   | Seq = 0b00000111
+  | Cmd = 0b00001000
 
 [<AllowNullLiteral>]
 type IAst =
@@ -160,13 +161,31 @@ type Arg(name':string) =
 
 type Xor(l':IAst, r':IAst) =
   class
+    let mutable lOk = true
+    let mutable rOk = true
     interface IAst with
       member __.Tag = Tag.Xor
-      member __.MatchSopt(_, _) = false
+      member __.MatchSopt(sopt', getArg') =
+        let getArg = let s = ref String.Empty in     // In case getArg' is
+                     let arg = lazy getArg' !s in    // called by l' and r',
+                     fun s' -> s := s'; arg.Value in // make it a lazy value
+        let lmatch = lOk && l'.MatchSopt(sopt', getArg) in
+        let rmatch = rOk && r'.MatchSopt(sopt', getArg) in
+        match lmatch, rmatch with
+        | true, true   -> true
+        | true, false  -> rOk <- false; true
+        | false, true  -> lOk <- false; true
+        | false, false -> false
       member __.MatchLopt(_, _) = false
       member __.MatchArg(_) = false
-      member __.TryFill(_) = false
+      member __.TryFill(a') =
+        match lOk, rOk with
+        | true , true  -> false
+        | true , false -> l'.TryFill(a')
+        | false, true  -> r'.TryFill(a')
+        | false, false -> false
     end
+    override __.ToString() = sprintf "Xor (%A | %A)" l' r'
   end
 
 type Seq(asts':GList<IAst>) =
@@ -182,4 +201,15 @@ type Seq(asts':GList<IAst>) =
         Seq.forall (fun (ast':IAst) -> ast'.TryFill(args')) asts'
     end
     override __.ToString() = sprintf "Seq %A" (Seq.toList asts')
+  end
+
+type Cmd(cmd':string) =
+  class
+    interface IAst with
+      member __.Tag = Tag.Cmd
+      member __.MatchSopt(_, _) = false
+      member __.MatchLopt(_, _) = false
+      member __.MatchArg(_) = false
+      member __.TryFill(_) = false
+    end
   end
