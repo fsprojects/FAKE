@@ -168,6 +168,7 @@
     <Compile Include="SquirrelHelper.fs" />
     <Compile Include="XCopyHelper.fs" />
     <Compile Include="DynamicsCRMHelper.fs" />
+    <Compile Include="Appcast.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
