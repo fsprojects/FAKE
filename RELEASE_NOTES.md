@@ -1,3 +1,6 @@
+#### 4.15.1 - 19.01.2016
+* Reverting #1083
+
 #### 4.15.0 - 19.01.2016
 * Add support for appcast generation - https://github.com/fsharp/FAKE/pull/1057
 * Function to remove Compile elems missing files - https://github.com/fsharp/FAKE/pull/1078
