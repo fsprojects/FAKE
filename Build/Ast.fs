@@ -130,7 +130,7 @@ type Sqb(ast':IAst) =
       member __.Tag = Tag.Sqb
       member __.MatchSopt(s', a') = ast'.MatchSopt(s', a') |> hasMatched
       member __.MatchLopt(l', a') = ast'.MatchLopt(l', a') |> hasMatched
-      member __.MatchArg(a') = ast'.MatchArg(a') |> hasMatched
+      member __.MatchArg(a') = ast'.MatchArg(a')
       member __.TryFill(a') = ast'.TryFill(a') || not matched // A←B
     end
     override __.ToString() = sprintf "Sqb (%A)" ast'
@@ -150,13 +150,21 @@ type Req(ast':IAst) =
 
 type Arg(name':string) =
   class
+    let mutable value = null
     interface IAst with
       member __.Tag = Tag.Arg
       member __.MatchSopt(_, _) = false
       member __.MatchLopt(_, _) = false
-      member __.MatchArg(_) = false
-      member __.TryFill(_) = false
+      member __.MatchArg(value') =
+        if value = null
+        then (value <- value'; true)
+        else false
+      member __.TryFill(args') =
+        if value = null
+        then false
+        else (args'.AddArg(name', value); true)
     end
+    override __.ToString() = "Arg " + name'
   end
 
 type Xor(l':IAst, r':IAst) =
@@ -177,7 +185,14 @@ type Xor(l':IAst, r':IAst) =
         | false, true  -> lOk <- false; true
         | false, false -> false
       member __.MatchLopt(_, _) = false
-      member __.MatchArg(_) = false
+      member __.MatchArg(a') =
+        let lmatch = lOk && l'.MatchArg(a') in
+        let rmatch = rOk && r'.MatchArg(a') in
+        match lmatch, rmatch with
+        | true, true   -> true
+        | true, false  -> rOk <- false; true
+        | false, true  -> lOk <- false; true
+        | false, false -> false
       member __.TryFill(a') =
         match lOk, rOk with
         | true , true  -> false
@@ -196,7 +211,8 @@ type Seq(asts':GList<IAst>) =
         Seq.exists (fun (ast':IAst) -> ast'.MatchSopt(s', a')) asts'
       member __.MatchLopt(l', a') =
         Seq.exists (fun (ast':IAst) -> ast'.MatchLopt(l', a')) asts'
-      member __.MatchArg(_) = false
+      member __.MatchArg(a') =
+        Seq.exists (fun (ast':IAst) -> ast'.MatchArg(a')) asts'
       member __.TryFill(args') =
         Seq.forall (fun (ast':IAst) -> ast'.TryFill(args')) asts'
     end
