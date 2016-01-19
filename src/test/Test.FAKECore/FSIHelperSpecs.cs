@@ -5,60 +5,25 @@ using System.Text;
 using System.IO;
 using Fake;
 using Machine.Specifications;
-using Messages = Microsoft.FSharp.Collections.FSharpList<Fake.ProcessHelper.ConsoleMessage>;
 
 namespace Test.FAKECore
 {
     public class when_running_script
     {
-        class MyTracer : Fake.TraceListener.ITraceListener
-        {
-            StringBuilder builder;
-            public MyTracer(StringBuilder builder)
-            {
-                this.builder = builder;
-            }
 
-            public void Write(TraceListener.TraceData value)
-            {
-                if (value.Message != null)
-                {
-                    builder.Append(value.Message.Value);
-                }
-
-                if (value.NewLine != null)
-                {
-                    builder.AppendLine();
-                }
-            }
-
-            public override string ToString() { return builder.ToString(); }
-        }
-
-        static string[] EmptyArgs = new string[0];
-
-        static Messages IgnoreDateTimeOffset(Messages msgs)
-        {
-            // We don't care about the datetimeoffset.
-            var mapFunc = FSharpFuncUtil.ToFSharpFunc<Fake.ProcessHelper.ConsoleMessage, Fake.ProcessHelper.ConsoleMessage>(cm =>
-                new ProcessHelper.ConsoleMessage(cm.IsError, cm.Message, new DateTimeOffset()));
-            return Microsoft.FSharp.Collections.ListModule.Map(mapFunc, msgs);
-        }
-
-        static Tuple<Messages, string> RunExplicit(string scriptFilePath, string[] scriptArguments, string[] fsiArguments, bool useCache)
+        static string RunExplicit(string scriptFilePath, string arguments, bool useCache)
         {
             var stdOut = Console.Out;
 
             var sbOut = new System.Text.StringBuilder();
             var outStream = new StringWriter(sbOut);
             Console.SetOut(outStream);
-            Tuple<bool, Messages> result;
-
+            Tuple<bool, Microsoft.FSharp.Collections.FSharpList<ProcessHelper.ConsoleMessage>> result;
+            
             try
             {
-
-                result = FSIHelper.executeBuildScriptWithArgsAndFsiArgsAndReturnMessages(
-                    scriptFilePath, scriptArguments, fsiArguments, useCache, false);
+                
+                result = FSIHelper.executeBuildScriptWithArgsAndReturnMessages(scriptFilePath, new string[] { }, useCache, false);
             }
             finally
             {
@@ -76,26 +41,21 @@ namespace Test.FAKECore
             {
                 Console.WriteLine(x.Message);
             }
-
-            return Tuple.Create(result.Item2,
+            var messages = result.Item2.Where(x => !x.IsError).Select(x => x.Message);
+            return 
                 sbOut.ToString()
                 .Replace("Running Buildscript: " + scriptFilePath, "")
-                .Replace("\n", "").Replace("\r", ""));
+                .Replace("\n", "").Replace("\r", "");
         }
 
-        static string RunExplicit(string scriptFilePath, string[] scriptArguments, bool useCache)
-        {
-            return RunExplicit(scriptFilePath, scriptArguments, EmptyArgs, useCache).Item2;
-        }
-
-        static string Run(string script, string[] scriptArguments, bool useCache)
+        static string Run(string script, string arguments, bool useCache)
         {
             var scriptFilePath = Path.GetTempFileName() + ".fsx";
             string result;
             try
             {
                 File.WriteAllText(scriptFilePath, script);
-                result = RunExplicit(scriptFilePath, scriptArguments, useCache);
+                result = RunExplicit(scriptFilePath, arguments, useCache);
             }
             finally
             {
@@ -112,147 +72,10 @@ namespace Test.FAKECore
             return new FSIHelper.Script(contents, path.Replace("\\", "/"), null, null);
         }
 
-        It caching_and_non_caching_version_should_handle_stderr_and_stdout_equally =
-            () =>
-            {
-                var scriptFilePath = Path.GetTempFileName() + ".fsx";
-                var scriptFileName = Path.GetFileName(scriptFilePath);
-                try
-                {
-                    File.WriteAllText(scriptFilePath, "printf \"stdout\"; eprintf \"stderr\"");
-                    // without cache
-                    var res1 = RunExplicit(scriptFilePath, EmptyArgs, EmptyArgs, true);
-                    res1.Item2.ShouldStartWith("Cache doesn't exist");
-
-                    // with cache
-                    var res2 = RunExplicit(scriptFilePath, EmptyArgs, EmptyArgs, true);
-                    res2.Item2.ShouldStartWith("Using cache");
-
-                    Microsoft.FSharp.Core.Operators.op_Equality(IgnoreDateTimeOffset(res1.Item1), IgnoreDateTimeOffset(res2.Item1))
-                        .ShouldBeTrue();
-                }
-                finally
-                {
-                    if (File.Exists(scriptFilePath))
-                        File.Delete(scriptFilePath);
-                }
-            };
-
-        It tracing_functions_should_work =
-            () =>
-            {
-                var scriptFilePath = Path.GetTempFileName() + ".fsx";
-                var scriptFileName = Path.GetFileName(scriptFilePath);
-                var t = new MyTracer(new StringBuilder());
-                try
-                {
-                    var fakeLib = typeof(TraceListener).Assembly.Location;
-                    TraceListener.listeners.Add(t);
-                    {
-                        File.WriteAllText(scriptFilePath, @"
-#r """ + fakeLib.Replace(@"\", @"\\") + @"""
-open Fake
-traceFAKE ""TEST_FAKE_OUTPUT""");
-                        RunExplicit(scriptFilePath, EmptyArgs, false);
-                        var result = t.ToString();
-                        var idx = result.IndexOf("TEST_FAKE_OUTPUT");
-                        idx.ShouldBeGreaterThan(-1);
-                        // We should not have it twice
-                        result.Substring(idx + "TEST_FAKE_OUTPUT".Length).ShouldNotContain("TEST_FAKE_OUTPUT");
-                    }
-                    TraceListener.listeners.Remove(t);
-                    t = new MyTracer(new StringBuilder());
-                    TraceListener.listeners.Add(t);
-                    {
-                        File.WriteAllText(scriptFilePath, @"
-#r """ + fakeLib.Replace(@"\", @"\\") + @"""
-open Fake
-trace ""TEST_FAKE_OUTPUT""");
-                        RunExplicit(scriptFilePath, EmptyArgs, false);
-                        var result = t.ToString();
-                        var idx = result.IndexOf("TEST_FAKE_OUTPUT");
-                        idx.ShouldBeGreaterThan(-1);
-                        // We should not have it twice
-                        result.Substring(idx + "TEST_FAKE_OUTPUT".Length).ShouldNotContain("TEST_FAKE_OUTPUT");
-                    }
-                }
-                finally
-                {
-                    if (File.Exists(scriptFilePath))
-                        File.Delete(scriptFilePath);
-                    TraceListener.listeners.Remove(t);
-                }
-            };
-
-        It should_be_able_to_use_system_xml =
-            () =>
-            {
-                var scriptFilePath = Path.GetTempFileName() + ".fsx";
-                var scriptFileName = Path.GetFileName(scriptFilePath);
-                try
-                {
-                    File.WriteAllText(scriptFilePath, "open System.Xml");
-                    RunExplicit(scriptFilePath, EmptyArgs, false)
-                        .ShouldEqual("");
-                }
-                finally
-                {
-                    if (File.Exists(scriptFilePath))
-                        File.Delete(scriptFilePath);
-                }
-            };
-
-        It should_be_able_to_use_system_web =
-            () =>
-            {
-                var scriptFilePath = Path.GetTempFileName() + ".fsx";
-                var scriptFileName = Path.GetFileName(scriptFilePath);
-                try
-                {
-                    File.WriteAllText(scriptFilePath, "open System.Web");
-                    RunExplicit(scriptFilePath, EmptyArgs, false)
-                        .ShouldEqual("");
-                }
-                finally
-                {
-                    if (File.Exists(scriptFilePath))
-                        File.Delete(scriptFilePath);
-                }
-            };
-
-        /// <summary>
-        /// See https://github.com/fsharp/FAKE/pull/1080
-        /// </summary>
-        It should_work_with_debug_flag =
-            () =>
-            {
-                var scriptFilePath = Path.GetTempFileName() + ".fsx";
-                var scriptFileName = Path.GetFileName(scriptFilePath);
-                try
-                {
-                    File.WriteAllText(scriptFilePath, "printfn \"test\"");
-                    RunExplicit(
-                        scriptFilePath,
-                        EmptyArgs,
-                        new[] {
-                            "--debug+",
-                            "--optimize-",
-                            "--platform", "AnyCpu",
-                            "--configuration", "Release",
-                            "--csversion", "2007" },
-                        false)
-                        .Item1.Head.Message.ShouldEqual("test");
-                }
-                finally
-                {
-                    if (File.Exists(scriptFilePath))
-                        File.Delete(scriptFilePath);
-                }
-            };
-
         It should_use_then_invalidate_cache =
             () =>
             {
+                var arguments = "";
                 var scriptFilePath = Path.GetTempFileName() + ".fsx";
                 var scriptFileName = Path.GetFileName(scriptFilePath);
                 try
@@ -265,32 +88,26 @@ trace ""TEST_FAKE_OUTPUT""");
 
                     File.Exists(cacheFilePath).ShouldEqual(false);
 
-                    RunExplicit(scriptFilePath, EmptyArgs, EmptyArgs, false)
-                       .Item1.Head.Message.ShouldEqual("foobar");
+                    RunExplicit(scriptFilePath, arguments, false)
+                       .ShouldEqual("foobar");
 
                     File.Exists(cacheFilePath).ShouldEqual(false);
 
-                    RunExplicit(scriptFilePath, EmptyArgs, true)
+                    RunExplicit(scriptFilePath, arguments, true)
                         .ShouldStartWith("Cache doesn't exist");
 
                     File.Exists(cacheFilePath).ShouldEqual(true);
 
-                    var res1 = RunExplicit(scriptFilePath, EmptyArgs, EmptyArgs, true);
-                    res1.Item2.ShouldStartWith("Using cache");
-                    res1.Item1.Head.Message.ShouldEqual("foobar");
+                    RunExplicit(scriptFilePath, arguments, true)
+                        .ShouldEqual(
+                            ("Using cache" + nl + "foobar")
+                            .Replace("\n", "").Replace("\r", ""));
 
                     File.WriteAllText(scriptFilePath, "printf \"foobarbaz\"");
 
                     var changedScriptHash = FSIHelper.getScriptHash(new FSIHelper.Script[] { script(scriptFilePath, "printf \"foobarbaz\"") }, new List<string>());
-                    var res2 = RunExplicit(scriptFilePath, EmptyArgs, EmptyArgs, true);
-                    res2.Item2.ShouldStartWith("Cache is invalid, recompiling");
-                    res2.Item1.Head.Message.ShouldEqual("foobarbaz");
-
-                    // This last test is not strictly needed, but it is a good test to check if we can execute
-                    // multiple caching tests in the same session (see comment in FSIHelper.fs where we use Mono.Cecil to rename the assembly)
-                    var res3 = RunExplicit(scriptFilePath, EmptyArgs, EmptyArgs, true);
-                    res3.Item2.ShouldStartWith("Using cache");
-                    res3.Item1.Head.Message.ShouldEqual("foobarbaz");
+                    RunExplicit(scriptFilePath, arguments, true)
+                        .ShouldStartWith("Cache is invalid, recompiling");
 
                     File.Exists("./.fake/" + scriptFileName + "_" + changedScriptHash + ".dll").ShouldEqual(true);
                 }
@@ -315,10 +132,8 @@ trace ""TEST_FAKE_OUTPUT""");
                     File.WriteAllText(mainPath, mainScript.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\r", nl));
                     File.WriteAllText(loadedPath, loadedScript.Replace("\r\n", "\n").Replace("\r", "\n").Replace("\r", nl));
 
-                    var res = RunExplicit(mainPath, EmptyArgs, EmptyArgs, false);
-                    res.Item2.ShouldEqual("loaded;main");
-                    res.Item1.Head.Message.ShouldEqual("loaded;");
-                    res.Item1.Tail.Head.Message.ShouldEqual("main");
+                    RunExplicit(mainPath, "", false)
+                        .ShouldEqual("loaded;main");
                 }
                 finally
                 {
