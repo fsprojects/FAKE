@@ -860,10 +860,11 @@ type internal FsiOptions =
       yield! getFsiBoolArg "--checked" x.Checked
       yield! maybeArgMap x.Codepage (fun i -> sprintf "--codepage:%d" i)
       yield! getFsiBoolArg "--crossoptimize" x.CrossOptimize
+      // ! -g[+|-|:full|:pdbonly] is not working, see https://github.com/Microsoft/visualfsharp/issues/311
       yield! maybeArgMap x.Debug (function
-        | Full -> "-g+"
-        | PdbOnly -> "-g:pdbonly"
-        | NoDebug -> "-g-")
+        | Full -> "--debug:full"
+        | PdbOnly -> "--debug:pdbonly"
+        | NoDebug -> "--debug-")
       yield! x.Defines
              |> Seq.map (sprintf "--define:%s")
       yield! getSimpleBoolArg "--exec" x.Exec
@@ -1213,37 +1214,46 @@ type internal ScriptHost private() =
   /// Creates a forwarder Textwriter, which forwards all output to the given function.
   /// Set revertRedirect only to "false" if you know that f doesn't print anything to the stdout.
   /// When revertRedirect is true we capture the Console.Out property and set it before calling f.
-  /// RemoveNewLines
+  /// removeNewLines handles the newline characters properly and calls f for every new line instead of every call to
+  /// to the underlaying writers.
+  /// The difference is that with removeNewLines you should use printfn and get lines without newline characters.
+  /// On the other hand without removeNewLines you are called on every TextWriter.Write call,
+  /// so you might be called multiple times for a single lines or a single time for multiple lines.
   static member CreateForwardWriter (f, ?revertRedirect, ?removeNewLines) =
+    let revertRedirect = defaultArg revertRedirect true
+    let removeNewLines = defaultArg removeNewLines false
     let captureOut = System.Console.Out
     let captureErr = System.Console.Error
     let bufferF =
       let builder = new System.Text.StringBuilder()
+      let properEndLine = ref false
       let clearBuilder () =
         let current = builder.ToString()
         builder.Clear() |> ignore
         let reader = new StringReader(current)
         let mutable line = ""
-        while line <> null do
+        while isNull line |> not do
           line <- reader.ReadLine()
-          if line <> null then
+          if isNull line |> not then
             if reader.Peek() = -1 && not (current.EndsWith "\n") then
+              properEndLine := false
               builder.Append line |> ignore
             else
+              properEndLine := true
               f line
       (fun (data:string) ->
-        if data = null then
+        if isNull data then
           // finished.
           let last = builder.ToString()
-          if not (System.String.IsNullOrEmpty last) then
+          if !properEndLine || not (System.String.IsNullOrEmpty last) then
             f last
         else
         builder.Append data |> ignore
         clearBuilder())
-    let withBuffer = if defaultArg removeNewLines false then bufferF else (fun s -> if s <> null then f s)
+    let withBuffer = if removeNewLines then bufferF else (fun s -> if isNull s |> not then f s)
     let myF data = Helper.consoleCapture captureOut captureErr (fun () -> withBuffer data)
     Helper.ForwardTextWriter.Create
-      (if defaultArg revertRedirect true then myF else withBuffer)
+      (if revertRedirect then myF else withBuffer)
   /// Create a new IFsiSession by specifying all fsi arguments manually.
   static member Create
    ( opts : FsiOptions, ?fsiObj : obj, ?reportGlobal,
