@@ -320,7 +320,6 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
     use out = ScriptHost.CreateForwardWriter onOutMsg
     use err = ScriptHost.CreateForwardWriter onErrMsg
     if useCache && cacheInfo.IsValid then
-        
         if printDetails then trace "Using cache"
         let noExtension = Path.GetFileNameWithoutExtension(cacheInfo.ScriptFileName)
 
@@ -444,7 +443,7 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
                     with exn ->
                         // If cecil fails we might want to trigger a warning, but you know what?
                         // we can continue using the FSI-ASSEMBLY.dll
-                        traceFAKE "%O" exn
+                        traceFAKE "Warning (please open an issue on FAKE and /cc @matthid): %O" exn
                         File.Move(name + ".dll", cacheInfo.AssemblyPath)
 
                     for name in [ name; wishName ] do
@@ -481,8 +480,11 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
                         cacheConfig.Save(cacheInfo.CacheConfigPath)
                         if printDetails then trace (System.Environment.NewLine + "Saved cache")
             with ex ->
-                handleException ex
-                reraise()
+                // Caching errors are not critical, and we shouldn't throw in a finally clause.
+                traceFAKE "CACHING ERROR (please open a issue on FAKE and /cc @matthid): %O" ex
+                if File.Exists cacheInfo.AssemblyWarningsPath then
+                    // Invalidates the cache
+                    try File.Delete cacheInfo.AssemblyWarningsPath with _ -> ()
 
 let internal onMessage isError =
     let printer = if isError && TraceListener.importantMessagesToStdErr then eprintf else printf
