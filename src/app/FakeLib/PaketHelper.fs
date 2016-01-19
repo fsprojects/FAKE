@@ -167,10 +167,11 @@ let GetDependenciesForReferencesFile (referencesFile:string) =
         find <| FileInfo(referencesFile).Directory.FullName
 
     let lines = File.ReadAllLines(lockFile)
+                |> Array.map (fun s -> s.Trim())
 
     let getVersion package =
-        let line = lines |> Array.find (fun l -> l.StartsWith("    " + package))
-        let start = line.Replace("    " + package + " (","")
+        let line = lines |> Array.find (fun l -> l.StartsWith(package, StringComparison.InvariantCultureIgnoreCase))
+        let start = line.Replace(package + " (","")
         start.Substring(0,start.IndexOf(")"))
 
     nugetLines
