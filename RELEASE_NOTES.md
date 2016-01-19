@@ -1,3 +1,13 @@
+#### 4.14.0 - 12.01.2016
+* NugGet automatic version increment - https://github.com/fsharp/FAKE/pull/1063
+* Added support for the Paket pack parameter buildPlatform - https://github.com/fsharp/FAKE/pull/1066
+* Added possibility to bulk update assembly infos with file includes - https://github.com/fsharp/FAKE/pull/1067
+
+#### 4.13.0 - 11.01.2016
+* NUnit 3 support - https://github.com/fsharp/FAKE/pull/1064
+* Automatic discovery of octo.exe - https://github.com/fsharp/FAKE/pull/1065
+* Prefer git from cmd path to get ssh key - https://github.com/fsharp/FAKE/pull/1062
+
 #### 4.12.0 - 28.12.2015
 * Change SignToolHelper syntax to reflect common call syntax - https://github.com/fsharp/FAKE/pull/1051
 * New Open/Close block helpers for TeamCity - https://github.com/fsharp/FAKE/pull/1049

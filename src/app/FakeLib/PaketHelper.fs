@@ -6,7 +6,7 @@ open System.IO
 open System.Xml.Linq
 
 /// Paket pack parameter type
-type PaketPackParams = 
+type PaketPackParams =
     { ToolPath : string
       TimeOut : TimeSpan
       Version : string
@@ -14,13 +14,14 @@ type PaketPackParams =
       LockDependencies : bool
       ReleaseNotes : string
       BuildConfig : string
+      BuildPlatform : string
       TemplateFile : string
       ExcludedTemplates : string list
       WorkingDir : string
       OutputPath : string }
 
-/// Paket pack default parameters  
-let PaketPackDefaults() : PaketPackParams = 
+/// Paket pack default parameters
+let PaketPackDefaults() : PaketPackParams =
     { ToolPath = (findToolFolderInSubPath "paket.exe" (currentDirectory @@ ".paket")) @@ "paket.exe"
       TimeOut = TimeSpan.FromMinutes 5.
       Version = null
@@ -28,13 +29,14 @@ let PaketPackDefaults() : PaketPackParams =
       LockDependencies = false
       ReleaseNotes = null
       BuildConfig = null
+      BuildPlatform = null
       TemplateFile = null
       ExcludedTemplates = []
       WorkingDir = "."
       OutputPath = "./temp" }
 
 /// Paket push parameter type
-type PaketPushParams = 
+type PaketPushParams =
     { ToolPath : string
       TimeOut : TimeSpan
       PublishUrl : string
@@ -44,7 +46,7 @@ type PaketPushParams =
       ApiKey : string }
 
 /// Paket push default parameters
-let PaketPushDefaults() : PaketPushParams = 
+let PaketPushDefaults() : PaketPushParams =
     { ToolPath = (findToolFolderInSubPath "paket.exe" (currentDirectory @@ ".paket")) @@ "paket.exe"
       TimeOut = System.TimeSpan.MaxValue
       PublishUrl = null
@@ -55,43 +57,44 @@ let PaketPushDefaults() : PaketPushParams =
 
 /// Creates a new NuGet package by using Paket pack on all paket.template files in the working directory.
 /// ## Parameters
-/// 
+///
 ///  - `setParams` - Function used to manipulate the default parameters.
 let Pack setParams =
     let parameters : PaketPackParams = PaketPackDefaults() |> setParams
     traceStartTask "PaketPack" parameters.WorkingDir
 
-    let xmlEncode (notEncodedText : string) = 
+    let xmlEncode (notEncodedText : string) =
         if String.IsNullOrWhiteSpace notEncodedText then ""
         else XText(notEncodedText).ToString().Replace("ß", "&szlig;")
 
     let version = if String.IsNullOrWhiteSpace parameters.Version then "" else " version " + toParam parameters.Version
     let releaseNotes = if String.IsNullOrWhiteSpace parameters.ReleaseNotes then "" else " releaseNotes " + toParam (xmlEncode parameters.ReleaseNotes)
     let buildConfig = if String.IsNullOrWhiteSpace parameters.BuildConfig then "" else " buildconfig " + toParam parameters.BuildConfig
+    let buildPlatform = if String.IsNullOrWhiteSpace parameters.BuildPlatform then "" else " buildplatform " + toParam parameters.BuildPlatform
     let templateFile = if String.IsNullOrWhiteSpace parameters.TemplateFile then "" else " templatefile " + toParam parameters.TemplateFile
     let lockDependencies = if parameters.LockDependencies then " lock-dependencies" else ""
     let excludedTemplates = parameters.ExcludedTemplates |> Seq.map (fun t -> " exclude " + t) |> String.concat " "
     let specificVersions = parameters.SpecificVersions |> Seq.map (fun (id,v) -> sprintf " specific-version %s %s" id v) |> String.concat " "
 
-    let packResult = 
-        let cmdArgs = sprintf "%s%s%s%s%s%s%s" version specificVersions releaseNotes buildConfig templateFile lockDependencies excludedTemplates
-        ExecProcess 
-            (fun info -> 
+    let packResult =
+        let cmdArgs = sprintf "%s%s%s%s%s%s%s%s" version specificVersions releaseNotes buildConfig buildPlatform templateFile lockDependencies excludedTemplates
+        ExecProcess
+            (fun info ->
                 info.FileName <- parameters.ToolPath
                 info.WorkingDirectory <- parameters.WorkingDir
                 info.Arguments <- sprintf "pack output \"%s\" %s" parameters.OutputPath cmdArgs) parameters.TimeOut
-    
+
     if packResult <> 0 then failwithf "Error during packing %s." parameters.WorkingDir
     traceEndTask "PaketPack" parameters.WorkingDir
 
 /// Pushes all NuGet packages in the working dir to the server by using Paket push.
 /// ## Parameters
-/// 
+///
 ///  - `setParams` - Function used to manipulate the default parameters.
-let Push setParams = 
+let Push setParams =
     let parameters : PaketPushParams = PaketPushDefaults() |> setParams
 
-    let packages = !! (parameters.WorkingDir @@ "/**/*.nupkg") |> Seq.toList    
+    let packages = !! (parameters.WorkingDir @@ "/**/*.nupkg") |> Seq.toList
     let url = if String.IsNullOrWhiteSpace parameters.PublishUrl then "" else " url " + toParam parameters.PublishUrl
     let endpoint = if String.IsNullOrWhiteSpace parameters.EndPoint then "" else " endpoint " + toParam parameters.EndPoint
     let key = if String.IsNullOrWhiteSpace parameters.ApiKey then "" else " apikey " + toParam parameters.ApiKey
@@ -110,14 +113,14 @@ let Push setParams =
                     | true -> ()
                 ]
             loop xs
-    
+
         for chunk in split parameters.DegreeOfParallelism packages do
-            let tasks = 
+            let tasks =
                 chunk
                 |> Seq.toArray
                 |> Array.map (fun package -> async {
-                        let pushResult = 
-                            ExecProcess (fun info -> 
+                        let pushResult =
+                            ExecProcess (fun info ->
                                 info.FileName <- parameters.ToolPath
                                 info.Arguments <- sprintf "push %s%s%s file %s" url endpoint key (toParam package)) parameters.TimeOut
                         if pushResult <> 0 then failwithf "Error during pushing %s." package })
@@ -128,12 +131,12 @@ let Push setParams =
 
     else
         for package in packages do
-            let pushResult = 
-                ExecProcess (fun info -> 
+            let pushResult =
+                ExecProcess (fun info ->
                     info.FileName <- parameters.ToolPath
                     info.WorkingDirectory <- parameters.WorkingDir
                     info.Arguments <- sprintf "push %s%s%s file %s" url endpoint key (toParam package)) parameters.TimeOut
-            if pushResult <> 0 then failwithf "Error during pushing %s." package 
+            if pushResult <> 0 then failwithf "Error during pushing %s." package
 
     traceEndTask "PaketPush" (separated ", " packages)
 
@@ -142,13 +145,13 @@ let GetDependenciesForReferencesFile (referencesFile:string) =
     let isSingleFile (line: string) = line.StartsWith "File:"
     let isGroupLine (line: string) = line.StartsWith "group "
     let notEmpty (line: string) = not <| String.IsNullOrWhiteSpace line
-    let parsePackageName (line: string) = 
-        let parts = line.Split(' ')            
+    let parsePackageName (line: string) =
+        let parts = line.Split(' ')
         parts.[0]
 
     let nugetLines =
         File.ReadAllLines(referencesFile)
-        |> Array.filter notEmpty 
+        |> Array.filter notEmpty
         |> Array.map (fun s -> s.Trim())
         |> Array.filter (isSingleFile >> not)
         |> Array.filter (isGroupLine >> not)

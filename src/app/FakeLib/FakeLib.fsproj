@@ -68,6 +68,7 @@
     <Compile Include="UnitTest\NUnit\Common.fs" />
     <Compile Include="UnitTest\NUnit\Sequential.fs" />
     <Compile Include="UnitTest\NUnit\Parallel.fs" />
+    <Compile Include="UnitTest\NUnit\NUnit3.fs" />
     <Compile Include="UnitTest\XUnit\XUnit.fs" />
     <Compile Include="UnitTest\XUnit\XUnitHelper.fs" />
     <Compile Include="UnitTest\XUnit\XUnit2.fs" />
@@ -139,6 +140,7 @@
     <Compile Include="NuGet\NugetHelper.fs" />
     <Compile Include="NuGet\Update.fs" />
     <Compile Include="NuGet\Install.fs" />
+    <Compile Include="NuGet\NugetVersion.fs" />
     <Compile Include="TestFlightHelper.fs" />
     <Compile Include="DotCover.fs" />
     <Compile Include="PaketHelper.fs" />

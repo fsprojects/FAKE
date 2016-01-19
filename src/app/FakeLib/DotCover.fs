@@ -6,6 +6,7 @@ open System
 open System.IO
 open System.Text
 open Fake.Testing.XUnit2
+open Fake.Testing.NUnit3
 open Fake.MSTest
 
 type DotCoverReportType = 
@@ -189,6 +190,36 @@ let DotCoverNUnit (setDotCoverParams: DotCoverParams -> DotCoverParams) (setNUni
     DotCover (fun p ->
                   {p with
                      TargetExecutable = parameters.ToolPath @@ parameters.ToolName
+                     TargetArguments = args
+                  } |> setDotCoverParams)
+
+    traceEndTask "DotCoverNUnit" details
+
+/// Runs the dotCover "cover" command against the NUnit test runner.
+/// ## Parameters
+///
+///  - `setDotCoverParams` - Function used to overwrite the dotCover report default parameters.
+///  - `setNUnitParams` - Function used to overwrite the NUnit default parameters.
+///
+/// ## Sample
+///
+///     !! (buildDir @@ buildMode @@ "/*.Unit.Tests.dll") 
+///         |> DotCoverNUnit 
+///             (fun dotCoverOptions -> { dotCoverOptions with 
+///                     Output = artifactsDir @@ "NUnitDotCoverSnapshot.dcvr" }) 
+///             (fun nUnitOptions -> { nUnitOptions with
+///                     DisableShadowCopy = true })
+let DotCoverNUnit3 (setDotCoverParams: DotCoverParams -> DotCoverParams) (setNUnitParams: NUnit3Params -> NUnit3Params) (assemblies: string seq) =
+    let assemblies = assemblies |> Seq.toArray
+    let details =  assemblies |> separated ", "
+    traceStartTask "DotCoverNUnit" details
+
+    let parameters = NUnit3Defaults |> setNUnitParams
+    let args = buildNUnit3Args parameters assemblies
+    
+    DotCover (fun p ->
+                  {p with
+                     TargetExecutable = parameters.ToolPath
                      TargetArguments = args
                   } |> setDotCoverParams)
 
