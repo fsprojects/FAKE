@@ -155,8 +155,10 @@ type Sqb(ast':IAst) =
       member __.Tag = Tag.Sqb
       member __.MatchSopt(s', a') = ast'.MatchSopt(s', a') |> hasMatched
       member __.MatchLopt(l', a') = ast'.MatchLopt(l', a') |> hasMatched
-      member __.MatchArg(a') = ast'.MatchArg(a')
-      member __.TryFill(a') = ast'.TryFill(a') || not matched // A←B
+      member __.MatchArg(a') = ast'.MatchArg(a') |> hasMatched
+      member __.TryFill(a') = if ast'.Tag <> Tag.Seq
+                              then ast'.TryFill(a') || not matched // A←B
+                              else (ast'.TryFill(a') |> ignore; true)
     end
     override __.ToString() = sprintf "Sqb (%A)" ast'
   end

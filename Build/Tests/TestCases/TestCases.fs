@@ -324,29 +324,20 @@ options:
   ""         ->! typeof<ArgvException>
 )
 
+Assert.Seq("Stacked argument", """
+usage: prog [<name> <name>]""",
+  "10 20" ->= [("<name>", Arguments(["20";"10"]))],
+  "10"    ->= [("<name>", Argument("10"))],
+  ""      ->= []
+)
+
+Assert.Seq("Same, but both arguments must be present", """
+usage: prog [(<name> <name>)]""",
+  "10 20" ->= [("<name>", Arguments(["20";"10"]))],
+  "10"    ->! typeof<ArgvException>,
+  ""      ->= []
+)
 (*
-let doc = Docopt("""usage: prog [<name> <name>]""")
-$ prog 10 20
-{"<name>": ["10", "20"]}
-
-$ prog 10
-{"<name>": ["10"]}
-
-$ prog
-{"<name>": []}
-
-
-let doc = Docopt("""usage: prog [(<name> <name>)]""")
-$ prog 10 20
-{"<name>": ["10", "20"]}
-
-$ prog 10
-"user-error"
-
-$ prog
-{"<name>": []}
-
-
 let doc = Docopt("""usage: prog NAME...""")
 $ prog 10 20
 {"NAME": ["10", "20"]}
