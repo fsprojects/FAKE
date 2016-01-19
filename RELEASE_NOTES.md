@@ -1,26 +1,12 @@
-#### 4.14.9 - 18.01.2016
+#### 4.15.0 - 19.01.2016
+* Add support for appcast generation - https://github.com/fsharp/FAKE/pull/1057
 * Function to remove Compile elems missing files - https://github.com/fsharp/FAKE/pull/1078
-
-#### 4.14.8 - 18.01.2016
-* BUGFIX: Revert https://github.com/fsharp/FAKE/pull/1080
-
-#### 4.14.7 - 17.01.2016
-* BUGFIX: Fix failure when space in temp path - https://github.com/fsharp/FAKE/pull/1076
-
-#### 4.14.6 - 16.01.2016
-* BUGFIX: Fix app.config files
-
-#### 4.14.5 - 13.01.2016
-* BUGFIX: Cache invalidate on changing fsiOptions - https://github.com/fsprojects/ProjectScaffold/issues/231
-
-#### 4.14.4 - 13.01.2016
 * AssemblyInfoFile: added functions to read and update attributes -https://github.com/fsharp/FAKE/pull/1073
-
-#### 4.14.2 - 13.01.2016
 * Added support for packing symbols via PaketHelper - https://github.com/fsharp/FAKE/pull/1071
-
-#### 4.14.1 - 13.01.2016
 * Tell the clr to use the cached assemblies even when it tries to reload them with a different context - https://github.com/fsharp/FAKE/pull/1056
+* BUGFIX: Fix failure when space in temp path - https://github.com/fsharp/FAKE/pull/1076
+* BUGFIX: Fix app.config files
+* BUGFIX: Cache invalidate on changing fsiOptions - https://github.com/fsprojects/ProjectScaffold/issues/231
 
 #### 4.14.0 - 12.01.2016
 * NuGet automatic version increment - https://github.com/fsharp/FAKE/pull/1063
