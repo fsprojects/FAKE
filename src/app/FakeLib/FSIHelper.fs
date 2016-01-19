@@ -343,7 +343,6 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
         try
             Yaaf.FSharp.Scripting.Helper.consoleCapture out err (fun () ->
                 let ass = Reflection.Assembly.LoadFrom(cacheInfo.AssemblyPath)
-                assert (ass.GetName().Name = wishName)
                 match ass.GetTypes()
                       |> Seq.filter (fun t -> parseName t.FullName |> Option.isSome)
                       |> Seq.tryHead with
@@ -429,17 +428,27 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
 
                     File.WriteAllText(cacheInfo.AssemblyWarningsPath, fsiErrorOutput.ToString())
 
-                    // Now we change the AssemblyName of the written Assembly via Mono.Cecil.
-                    // Strictly speaking this is not needed, however this helps with executing
-                    // the test suite, as the runtime will only load a single
-                    // FSI-ASSEMBLY with version 0.0.0.0 by using LoadFrom...
-                    let asem = Mono.Cecil.AssemblyDefinition.ReadAssembly(name + ".dll")
-                    asem.Name <- new Mono.Cecil.AssemblyNameDefinition(wishName, new Version(0,0,1))
-                    asem.Write(wishName + ".dll")
-                    File.Move(wishName + ".dll", cacheInfo.AssemblyPath)
-                    File.Delete(name + ".dll")
+                    try
+                        // Now we change the AssemblyName of the written Assembly via Mono.Cecil.
+                        // Strictly speaking this is not needed, however this helps with executing
+                        // the test suite, as the runtime will only load a single
+                        // FSI-ASSEMBLY with version 0.0.0.0 by using LoadFrom...
+                        let reader = new Mono.Cecil.DefaultAssemblyResolver() // see https://github.com/fsharp/FAKE/issues/1084
+                        reader.AddSearchDirectory (Path.GetDirectoryName TraceHelper.fakePath)
+                        reader.AddSearchDirectory (Path.GetDirectoryName typeof<string option>.Assembly.Location)
+                        let readerParams = new Mono.Cecil.ReaderParameters(AssemblyResolver = reader)
+                        let asem = Mono.Cecil.AssemblyDefinition.ReadAssembly(name + ".dll", readerParams)
+                        asem.Name <- new Mono.Cecil.AssemblyNameDefinition(wishName, new Version(0,0,1))
+                        asem.Write(wishName + ".dll")
+                        File.Move(wishName + ".dll", cacheInfo.AssemblyPath)
+                    with exn ->
+                        // If cecil fails we might want to trigger a warning, but you know what?
+                        // we can continue using the FSI-ASSEMBLY.dll
+                        traceFAKE "%O" exn
+                        File.Move(name + ".dll", cacheInfo.AssemblyPath)
+
                     for name in [ name; wishName ] do
-                        for ext in [ ".pdb"; ".dll.mdb" ] do
+                        for ext in [ ".dll"; ".pdb"; ".dll.mdb" ] do
                             if File.Exists(name + ext) then
                                 File.Delete(name + ext)
 
