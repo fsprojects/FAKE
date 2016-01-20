@@ -133,8 +133,9 @@ namespace Test.FAKECore
                     File.Exists(cacheFilePath).ShouldEqual(true);
                     File.WriteAllBytes(cacheFilePath, new byte[] { 8 });
 
-                    RunExplicit(scriptFilePath, EmptyArgs, true)
-                        .ShouldStartWith("Using cacheCache is invalid, recompiling");
+                    var result = RunExplicit(scriptFilePath, EmptyArgs, true);
+                    result.ShouldContain("Using cache");
+                    result.ShouldContain("Cache is invalid, recompiling");
                 }
                 finally
                 {

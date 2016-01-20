@@ -485,16 +485,16 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
     use out = ScriptHost.CreateForwardWriter onOutMsg
     use err = ScriptHost.CreateForwardWriter onErrMsg
     if useCache && cacheInfo.IsValid then
-//        try
+        try
             runScriptCached printDetails cacheInfo out err
-//        with ex ->
-//            traceFAKE """CACHING WARNING
-//this might happen after Updates...
-//please open a issue on FAKE and /cc @matthid ONLY IF this happens reproducibly)
-//
-//Error: %O""" ex
-//            // Invalidates the cache
-//            runScriptUncached (useCache, scriptPath, fsiOptions) printDetails cacheInfo out err
+        with ex ->
+            traceFAKE """CACHING WARNING
+this might happen after Updates...
+please open a issue on FAKE and /cc @matthid ONLY IF this happens reproducibly)
+
+Error: %O""" ex
+            // Invalidates the cache
+            runScriptUncached (useCache, scriptPath, fsiOptions) printDetails cacheInfo out err
     else
         runScriptUncached (useCache, scriptPath, fsiOptions) printDetails cacheInfo out err
 
