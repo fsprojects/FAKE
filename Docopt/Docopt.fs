@@ -13,7 +13,7 @@ module internal DocHelper =
     let uRegex = Regex(@"(?<=(?:\n|^)\s*usage:).*?(?=\n\s*\n|$)",
                        RegexOptions.IgnoreCase ||| RegexOptions.Singleline)
 
-    let oRegex = Regex(@"(?<=(?:\n|^)\s*options:).*?(?=\n\s*\n|$|(?:\n|^)\s*options:)",
+    let oRegex = Regex(@"(?<=(?:\n|^)\s*options:).*?(?=\n\s*\n|$|\n\s*o)",
                        RegexOptions.IgnoreCase ||| RegexOptions.Singleline)
 
     let cut doc' =
