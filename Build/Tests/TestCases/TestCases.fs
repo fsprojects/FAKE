@@ -422,12 +422,12 @@ Options:
     "ship", Flag(true);
   ]
 )
+
 (*
-let doc = Docopt("""usage: prog --hello""")
-$ prog --hello
-{"--hello": true}
-
-
+Assert.Seq("", """
+usage: prog --hello""",
+  "--hello" ->= [("--hello", Flag(true))]
+)
 let doc = Docopt("""usage: prog [--hello=<world>]""")
 $ prog
 {"--hello": null}

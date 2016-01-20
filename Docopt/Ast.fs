@@ -249,7 +249,6 @@ type Xor(l':IAst, r':IAst) =
         | false, true  -> r'.TryFill(a')
         | false, false -> false
         | true, true   -> let tempDict = Arguments.Dictionary(Options()) in
-                          tempDict.AddRange(a');
                           if l'.TryFill(tempDict)
                           then (a'.AddRange(tempDict); true)
                           elif (tempDict.Clear(); r'.TryFill(tempDict))
