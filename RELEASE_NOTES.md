@@ -1,3 +1,6 @@
+#### 4.15.2 - 19.01.2016
+* Hockey app UploadTimeout - https://github.com/fsharp/FAKE/pull/1087
+
 #### 4.15.1 - 19.01.2016
 * Reverting #1083
 
