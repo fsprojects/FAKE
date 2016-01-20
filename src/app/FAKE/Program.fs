@@ -12,10 +12,6 @@ let printUsage () =
     printfn " FAKE usage"
     printfn "-------------------"
     Cli.printUsage ()
-    printfn "--------------------"
-    printfn " Classic FAKE usage"
-    printfn "--------------------"
-    CommandlineParams.printAllParams()
 
 let printEnvironment cmdArgs args =
     printVersion()
