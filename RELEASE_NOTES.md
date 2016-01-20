@@ -1,4 +1,4 @@
-#### 4.16.0-alpha001 - 20.01.2016
+#### 4.16.0 - 20.01.2016
 * General FAKE improvements - https://github.com/fsharp/FAKE/pull/1088
 * Hockey app UploadTimeout - https://github.com/fsharp/FAKE/pull/1087
 
