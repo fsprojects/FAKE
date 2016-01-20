@@ -82,6 +82,7 @@ type Sop(o':Options) =
     end
     override __.ToString() = sprintf "Sop %A" (Seq.toList o')
     member __.AddRange(range':#IEnumerable<Option>) = o'.AddRange(range')
+    member __.Option = o'.[o'.Count - 1]
   end
 
 type Lop(o':Option) =
@@ -107,6 +108,7 @@ type Lop(o':Option) =
       member __.DeepCopy() = Lop(o') :> IAst
     end
     override __.ToString() = sprintf "Lop %A" o'
+    member __.Option = o'
   end
 
 type Ano(o':Options) =

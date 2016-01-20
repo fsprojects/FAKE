@@ -365,22 +365,18 @@ usage: prog [NAME [NAME ...]]""",
   "10"    ->= [("NAME", Argument("10"))],
   ""      ->= []
 )
-(*
-let doc = Docopt("""usage: prog (NAME | --foo NAME)
+
+Assert.Seq("Argument mismatch with option", """
+usage: prog (NAME | --foo NAME)
 
 options: --foo
 
-""")
-$ prog 10
-{"NAME": "10", "--foo": false}
-
-$ prog --foo 10
-{"NAME": "10", "--foo": true}
-
-$ prog --foo=10
-"user-error"
-
-
+""",
+  "10"       ->= [("NAME", Argument("10"));("--foo", Flag(false))],
+  "--foo 10" ->= [("NAME", Argument("10"));("--foo", Flag(true))],
+  "--foo=10" ->! typeof<ArgvException>
+)
+(*
 let doc = Docopt("""usage: prog (NAME | --foo) [--bar | NAME]
 
 options: --foo

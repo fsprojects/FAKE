@@ -56,13 +56,16 @@ module _Private =
       >>. many1SatisfyL (( <> ) '>') "any character except '>'"
       .>> skipChar '>'
       |>> (fun name' -> String.Concat("<", name', ">"))
-    let parg = pupperArg <|> plowerArg
-               >>= updateUserState (fun arg' last' ->
-                                      if last' <> null
-                                         && (last'.Tag = Tag.Sop
-                                             || last'.Tag = Tag.Lop)
-                                      then Eps.Instance
-                                      else Arg(arg') |> toIAst)
+    let parg =
+      let filterArg arg' (last':IAst) =
+        if last' = null
+        then Arg(arg') |> toIAst
+        elif (last'.Tag = Tag.Sop && (last' :?> Sop).Option.HasArgument)
+             || (last'.Tag = Tag.Lop && (last' :?> Lop).Option.HasArgument)
+        then Eps.Instance
+        else Arg(arg') |> toIAst
+      in pupperArg <|> plowerArg
+         >>= updateUserState filterArg
     let pano = skipString "[options]"
                >>= updateUserState (fun _ _ -> Ano(opts))
     let psop = let filterSops (sops':string) (last':IAst) =
