@@ -167,13 +167,13 @@ let GetDependenciesForReferencesFile (referencesFile:string) =
                 if fi.Exists then fi.FullName else find fi.Directory.Parent.FullName
             find <| FileInfo(referencesFile).Directory.FullName
         
-        let breakInParts (line : string) = Regex.Match(line,"^[ ]{4}([^ ].+) \((.+)\)")
+        let breakInParts (line : string) = match Regex.Match(line,"^[ ]{4}([^ ].+) \((.+)\)") with
+                                           | m when m.Success && m.Groups.Count = 3 -> Some (m.Groups.[1].Value, m.Groups.[2].Value)
+                                           | _ -> None
 
         getPaketLockFile
         >> File.ReadAllLines
-        >> Array.map breakInParts
-        >> Array.filter (fun x -> x.Success && x.Groups.Count = 3)
-        >> Array.map (fun x -> x.Groups.[1].Value, x.Groups.[2].Value)
+        >> Array.choose breakInParts
 
     let refLines = getReferenceFilePackages referencesFile
 
