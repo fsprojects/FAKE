@@ -18,6 +18,7 @@ type Tag =
   | Xor = 0b00000111
   | Seq = 0b00001000
   | Cmd = 0b00001001
+  | Ell = 0b00001010
 
 [<AllowNullLiteral>]
 type IAst =
@@ -27,16 +28,19 @@ type IAst =
     abstract MatchLopt : lopt:string * getArg:(string -> string) -> bool
     abstract MatchArg : arg:string -> bool
     abstract TryFill : args:Arguments.Dictionary -> bool
+    abstract DeepCopy : unit -> IAst
   end
 
-type Eps() =
+type Eps private () =
   class
+    static member Instance = Eps() :> IAst
     interface IAst with
       member __.Tag = Tag.Eps
       member __.MatchSopt(_, _) = false
       member __.MatchLopt(_, _) = false
       member __.MatchArg(_) = false
       member __.TryFill(_) = true
+      member __.DeepCopy() = Eps.Instance
     end
     override __.ToString() = "Eps"
   end
@@ -74,6 +78,7 @@ type Sop(o':Options) =
           done;
           true
         with :? KeyNotFoundException -> false
+      member __.DeepCopy() = Sop(o'.Copy()) :> IAst
     end
     override __.ToString() = sprintf "Sop %A" (Seq.toList o')
     member __.AddRange(range':#IEnumerable<Option>) = o'.AddRange(range')
@@ -99,6 +104,7 @@ type Lop(o':Option) =
         if matched
         then (args'.AddLong(o', ?arg'=arg); true)
         else false
+      member __.DeepCopy() = Lop(o') :> IAst
     end
     override __.ToString() = sprintf "Lop %A" o'
   end
@@ -141,6 +147,7 @@ type Ano(o':Options) =
           done;
           true
         with :? KeyNotFoundException -> false
+      member __.DeepCopy() = Ano(o') :> IAst
     end
     override __.ToString() = "Ano"
   end
@@ -159,6 +166,7 @@ type Sqb(ast':IAst) =
       member __.TryFill(a') = if ast'.Tag <> Tag.Seq
                               then ast'.TryFill(a') || not matched // A←B
                               else (ast'.TryFill(a') |> ignore; true)
+      member __.DeepCopy() = Sqb(ast'.DeepCopy()) :> IAst
     end
     override __.ToString() = sprintf "Sqb (%A)" ast'
   end
@@ -171,6 +179,7 @@ type Req(ast':IAst) =
       member __.MatchLopt(l', a') = ast'.MatchLopt(l', a')
       member __.MatchArg(a') = ast'.MatchArg(a')
       member __.TryFill(a') = ast'.TryFill(a')
+      member __.DeepCopy() = Req(ast'.DeepCopy()) :> IAst
     end
     override __.ToString() = sprintf "Req (%A)" ast'
   end
@@ -190,6 +199,7 @@ type Arg(name':string) =
         if value = null
         then false
         else (args'.AddArg(name', value); true)
+      member __.DeepCopy() = Arg(name') :> IAst
     end
     override __.ToString() = "Arg " + name'
   end
@@ -198,6 +208,7 @@ type Xor(l':IAst, r':IAst) =
   class
     let mutable lOk = true
     let mutable rOk = true
+    new() = Xor(Eps.Instance, Eps.Instance)
     interface IAst with
       member __.Tag = Tag.Xor
       member __.MatchSopt(sopt', getArg') =
@@ -241,6 +252,7 @@ type Xor(l':IAst, r':IAst) =
                           elif (tempDict.Clear(); r'.TryFill(tempDict))
                           then (a'.AddRange(tempDict); true)
                           else false
+      member __.DeepCopy() = Xor(l'.DeepCopy(), r'.DeepCopy()) :> IAst
     end
     override __.ToString() = sprintf "Xor (%A | %A)" l' r'
   end
@@ -257,8 +269,12 @@ type Seq(asts':GList<IAst>) =
         Seq.exists (fun (ast':IAst) -> ast'.MatchArg(a')) asts'
       member __.TryFill(args') =
         Seq.forall (fun (ast':IAst) -> ast'.TryFill(args')) asts'
+      member __.DeepCopy() =
+        let astsCopy = seq {for ast in asts' -> ast.DeepCopy()} in
+        Seq(GList<IAst>(astsCopy)) :> IAst
     end
     override __.ToString() = sprintf "Seq %A" (Seq.toList asts')
+    member __.Asts = asts'
   end
 
 type Cmd(cmd':string) =
@@ -269,5 +285,35 @@ type Cmd(cmd':string) =
       member __.MatchLopt(_, _) = false
       member __.MatchArg(_) = false
       member __.TryFill(_) = false
+      member __.DeepCopy() = Cmd(cmd') :> IAst
     end
+  end
+
+type Ell(ast':IAst) =
+  class
+    let mutable hasMatched = false
+    let mutable currentAst = ast'.DeepCopy()
+    let matched = GList<IAst>()
+    interface IAst with
+      member __.Tag = Tag.Ell
+      member __.MatchSopt(s', a') = false
+      member __.MatchLopt(s', a') = false
+      member xx.MatchArg(a') =
+        match currentAst.MatchArg(a') with
+        | true -> hasMatched <- true; true
+        | _    -> match hasMatched with
+                  | false -> false
+                  | _     -> matched.Add(currentAst);
+                             currentAst <- ast'.DeepCopy();
+                             hasMatched <- false;
+                             (xx :> IAst).MatchArg(a')
+      member __.TryFill(args') =
+        if hasMatched
+        then matched.Add(currentAst);
+        match matched.Count with
+        | 0 -> ast'.Tag = Tag.Sqb
+        | _ -> matched |> Seq.forall (fun ast' -> ast'.TryFill(args'))
+      member __.DeepCopy() = Ell(ast') :> IAst // No need to copy ast'
+    end
+    override __.ToString() = sprintf "Ell (%A)" ast'
   end

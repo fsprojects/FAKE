@@ -46,5 +46,7 @@ type Options() =
       match base.FindLast(fun o' -> o'.Long = l') with
       | null -> base.FindLast(fun o' -> o'.Long.StartsWith(l'))
       | opt  -> opt
+    member xx.Copy() = List<Option>(xx :> IEnumerable<Option>)
+                       :?> Options
   end
 ;;

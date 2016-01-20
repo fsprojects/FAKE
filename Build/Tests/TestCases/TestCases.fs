@@ -337,51 +337,35 @@ usage: prog [(<name> <name>)]""",
   "10"    ->! typeof<ArgvException>,
   ""      ->= []
 )
+
+Assert.Seq("Ellipsis (one or more (also, ALL-CAPS argument name))", """
+usage: prog NAME...""",
+  "10 20" ->= [("NAME", Arguments(["20";"10"]))],
+  "10"    ->= [("NAME", Argument("10"))],
+  ""      ->! typeof<ArgvException>
+)
+
+Assert.Seq("Optional in ellipsis", """
+usage: prog [NAME]...""",
+  "10 20" ->= [("NAME", Arguments(["20";"10"]))],
+  "10"    ->= [("NAME", Argument("10"))],
+  ""      ->= []
+)
+
+Assert.Seq("Ellipsis in optional", """
+usage: prog [NAME...]""",
+  "10 20" ->= [("NAME", Arguments(["20";"10"]))],
+  "10"    ->= [("NAME", Argument("10"))],
+  ""      ->= []
+)
+
+Assert.Seq("", """
+usage: prog [NAME [NAME ...]]""",
+  "10 20" ->= [("NAME", Arguments(["20";"10"]))],
+  "10"    ->= [("NAME", Argument("10"))],
+  ""      ->= []
+)
 (*
-let doc = Docopt("""usage: prog NAME...""")
-$ prog 10 20
-{"NAME": ["10", "20"]}
-
-$ prog 10
-{"NAME": ["10"]}
-
-$ prog
-"user-error"
-
-
-let doc = Docopt("""usage: prog [NAME]...""")
-$ prog 10 20
-{"NAME": ["10", "20"]}
-
-$ prog 10
-{"NAME": ["10"]}
-
-$ prog
-{"NAME": []}
-
-
-let doc = Docopt("""usage: prog [NAME...]""")
-$ prog 10 20
-{"NAME": ["10", "20"]}
-
-$ prog 10
-{"NAME": ["10"]}
-
-$ prog
-{"NAME": []}
-
-
-let doc = Docopt("""usage: prog [NAME [NAME ...]]""")
-$ prog 10 20
-{"NAME": ["10", "20"]}
-
-$ prog 10
-{"NAME": ["10"]}
-
-$ prog
-{"NAME": []}
-
-
 let doc = Docopt("""usage: prog (NAME | --foo NAME)
 
 options: --foo

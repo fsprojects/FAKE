@@ -61,7 +61,7 @@ module _Private =
                                       if last' <> null
                                          && (last'.Tag = Tag.Sop
                                              || last'.Tag = Tag.Lop)
-                                      then Eps() |> toIAst
+                                      then Eps.Instance
                                       else Arg(arg') |> toIAst)
     let pano = skipString "[options]"
                >>= updateUserState (fun _ _ -> Ano(opts))
@@ -78,7 +78,7 @@ module _Private =
                  if last' = null || last'.Tag <> Tag.Sop
                  then Sop(sops) |> toIAst
                  else ((last' :?> Sop).AddRange(sops);
-                       Eps() |> toIAst)
+                       Eps.Instance)
                in skipChar '-'
                   >>. many1SatisfyL ( isLetterOrDigit ) "Short option(s)"
                   >>= updateUserState filterSops
@@ -107,26 +107,28 @@ module _Private =
                         pcmd|]
     let pxor = let afterStringParser =
                  spaces
-                 .>>  updateUserState (fun _ _ -> Xor(Eps(), Eps())) ()
+                 .>> updateUserState (fun _ _ -> Xor()) ()
                in InfixOperator("|", afterStringParser, 10, Associativity.Left,
                                 fun x' y' -> Xor(x', y') |> toIAst)
-//    let pell = let makeEll (ast':IAst) =
-//                 match ast'.Tag with
-//                 | Tag.Seq -> let cell = seq.[seq.Count - 1] in
-//                              seq.[seq.Count - 1] <- Ell(cell, ref false);
-//                              ast
-//                 | _       -> Eps() //Ell(ast')
-//               in PostfixOperator("...", spaces, 20, false,
-//                                  makeEll >> updatelastAst)
+    let pell = let afterStringParser =
+                 spaces .>> updateUserState (fun _ _ -> Ell(Eps.Instance)) ()
+               in let makeEll (ast':IAst) =
+                 match ast'.Tag with
+                 | Tag.Seq -> let seq = (ast' :?> Seq).Asts in
+                              let cell = seq.[seq.Count - 1] in
+                              seq.[seq.Count - 1] <- Ell(cell);
+                              ast'
+                 | _       -> Ell(ast') |> toIAst
+               in PostfixOperator("...", afterStringParser, 20, false, makeEll)
     let _ = opp.TermParser <-
       sepEndBy1 term spaces1
       >>= updateUserState (fun ast' _ ->
                              match ast' |> List.filter (fun ast' -> ast'.Tag <> Tag.Eps) with
-                             | []    -> Eps() |> toIAst
+                             | []    -> Eps.Instance
                              | [ast] -> ast
                              | list  -> Seq(GList<IAst>(list)) |> toIAst)
     let _ = opp.AddOperator(pxor)
-//    let _ = opp.AddOperator(pell)
+    let _ = opp.AddOperator(pell)
     let pusageLine = spaces >>. opp.ExpressionParser
   end
 ;;
@@ -137,11 +139,11 @@ type UsageParser(u':string, opts':Options) =
   class
     do opts <- opts'
     let parseAsync = function
-    | ""   -> async { return Eps() |> toIAst }
+    | ""   -> async { return Eps.Instance }
     | line -> async {
         let line = line.TrimStart() in
         let index = line.IndexOfAny([|' ';'\t'|]) in
-        return if index = -1 then Eps() |> toIAst
+        return if index = -1 then Eps.Instance
                else let line = line.Substring(index) in
                     match runParserOnString pusageLine null "" line with
                     | Success(ast, _, _) -> ast
