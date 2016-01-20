@@ -1,8 +1,6 @@
-#### 4.15.2 - 19.01.2016
+#### 4.16.0-alpha001 - 20.01.2016
+* General FAKE improvements - https://github.com/fsharp/FAKE/pull/1088
 * Hockey app UploadTimeout - https://github.com/fsharp/FAKE/pull/1087
-
-#### 4.15.1 - 19.01.2016
-* Reverting #1083
 
 #### 4.15.0 - 19.01.2016
 * Add support for appcast generation - https://github.com/fsharp/FAKE/pull/1057
