@@ -85,14 +85,14 @@ module _Private =
                in skipChar '-'
                   >>. many1SatisfyL ( isLetterOrDigit ) "Short option(s)"
                   >>= updateUserState filterSops
-    let plop = let filterLopt (lopt':string) _ =
-                     match opts.Find(lopt') with
-                     | null -> raiseUnexpectedLong lopt'
-                     | lopt -> Lop(lopt)
-               in skipString "--"
-                  >>. manySatisfy (fun c' -> Char.IsLetterOrDigit(c')
-                                             || c' = '-')
-                  >>= updateUserState filterLopt
+    let plop =
+      let filterLopt (lopt':string) _ =
+        match opts.Find(lopt') with
+        | null -> raiseUnexpectedLong lopt'
+        | lopt -> Lop(lopt)
+      in skipString "--"
+         >>. manySatisfy (fun c' -> Char.IsLetterOrDigit(c') || c' = '-')
+         >>= updateUserState filterLopt
     let psqb = between (skipChar '[' >>. spaces) (skipChar ']')
                        opp.ExpressionParser
                >>= updateUserState (fun ast' _ -> Sqb(ast'))

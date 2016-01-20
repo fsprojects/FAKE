@@ -376,23 +376,19 @@ options: --foo
   "--foo 10" ->= [("NAME", Argument("10"));("--foo", Flag(true))],
   "--foo=10" ->! typeof<ArgvException>
 )
-(*
-let doc = Docopt("""usage: prog (NAME | --foo) [--bar | NAME]
+
+Assert.Seq("Multiple “options:” statements", """
+usage: prog (NAME | --foo) [--bar | NAME]
 
 options: --foo
 options: --bar
 
-""")
-$ prog 10
-{"NAME": ["10"], "--foo": false, "--bar": false}
-
-$ prog 10 20
-{"NAME": ["10", "20"], "--foo": false, "--bar": false}
-
-$ prog --foo --bar
-{"NAME": [], "--foo": true, "--bar": true}
-
-
+""",
+  "10"          ->= [("--foo", Flag(false));("--bar", Flag(false));("NAME", Argument("10"))],
+  "10 20"       ->= [("--foo", Flag(false));("--bar", Flag(false));("NAME", Arguments(["20";"10"]))],
+  "--foo --bar" ->= [("--foo", Flag(true));("--bar", Flag(true))]
+)
+(*
 let doc = Docopt("""Naval Fate.
 
 Usage:

@@ -13,13 +13,13 @@ module internal DocHelper =
     let uRegex = Regex(@"(?<=(?:\n|^)\s*usage:).*?(?=\n\s*\n|$)",
                        RegexOptions.IgnoreCase ||| RegexOptions.Singleline)
 
-    let oRegex = Regex(@"(?<=(?:\n|^)\s*options:).*?(?=\n\s*\n|$)",
+    let oRegex = Regex(@"(?<=(?:\n|^)\s*options:).*?(?=\n\s*\n|$|(?:\n|^)\s*options:)",
                        RegexOptions.IgnoreCase ||| RegexOptions.Singleline)
 
     let cut doc' =
       let uStr = uRegex.Match(doc') in
-      let oStr = oRegex.Match(doc', uStr.Index + uStr.Length) in
-      (uStr.Value, oStr.Value)
+      let oStr = oRegex.Matches(doc', uStr.Index + uStr.Length) in
+      uStr.Value, String.Join("\n", seq {for m in oStr -> m.Value})
   end
 ;;
 
