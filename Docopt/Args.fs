@@ -64,6 +64,10 @@ type Dictionary(options':Options) =
       if not (dict.ContainsKey(a'))
       then dict.Add(a', ref (Argument(val')))
       else xx.UnsafeAdd(a', val')
+    member xx.AddCmd(cmd':string) =
+      if not (dict.ContainsKey(cmd'))
+      then dict.Add(cmd', ref (Flag(true)))
+      else xx.UnsafeAdd(cmd')
     member xx.AddRange(other':Dictionary) =
       for kv in other'.Dict do
         (xx.Dict :> IDictionary<_, _>).Add(kv)

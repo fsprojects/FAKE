@@ -26,8 +26,8 @@ type Assert =
               reraise ()
 let ( ->= ) (argv':string) val' (doc':Docopt) =
   let argv = argv'.Split([|' '|], StringSplitOptions.RemoveEmptyEntries)
-  let args = doc'.Parse(argv)
-  let res = (List.sort (args.AsList())) = List.sort val'
+  let args = doc'.Parse(argv).AsList()
+  let res = List.sort args = List.sort val'
   if not res then printfn "Got args = %A" args
   (sprintf "%A ->= %A" argv' val'), res
 let ( ->! ) (argv':string) val' (doc':Docopt) =
@@ -388,8 +388,9 @@ options: --bar
   "10 20"       ->= [("--foo", Flag(false));("--bar", Flag(false));("NAME", Arguments(["20";"10"]))],
   "--foo --bar" ->= [("--foo", Flag(true));("--bar", Flag(true))]
 )
-(*
-let doc = Docopt("""Naval Fate.
+
+Assert.Seq("Big Bertha: command, multiple usage and --long=arg", """
+Naval Fate.
 
 Usage:
   prog ship new <name>...
@@ -406,25 +407,22 @@ Options:
   --moored      Mored (anchored) mine.
   --drifting    Drifting mine.
 
-""")
-$ prog ship Guardian move 150 300 --speed=20
-{"--drifting": false,
- "--help": false,
- "--moored": false,
- "--speed": "20",
- "--version": false,
- "<name>": ["Guardian"],
- "<x>": "150",
- "<y>": "300",
- "mine": false,
- "move": true,
- "new": false,
- "remove": false,
- "set": false,
- "ship": true,
- "shoot": false}
-
-
+""",
+  "ship Guardian move 150 300 --speed=20" ->= [
+    "--drifting", Flag(false);
+    "-h", Flag(false);
+    "--help", Flag(false);
+    "--moored", Flag(false);
+    "--speed", Argument("20");
+    "--version", Flag(false);
+    "<name>", Argument("Guardian");
+    "<x>", Argument("150");
+    "<y>", Argument("300");
+    "move", Flag(true);
+    "ship", Flag(true);
+  ]
+)
+(*
 let doc = Docopt("""usage: prog --hello""")
 $ prog --hello
 {"--hello": true}

@@ -92,6 +92,7 @@ module _Private =
         | lopt -> Lop(lopt)
       in skipString "--"
          >>. manySatisfy (fun c' -> Char.IsLetterOrDigit(c') || c' = '-')
+         .>> optional (skipChar '=' >>. parg)
          >>= updateUserState filterLopt
     let psqb = between (skipChar '[' >>. spaces) (skipChar ']')
                        opp.ExpressionParser
@@ -168,22 +169,30 @@ type UsageParser(u':string, opts':Options) =
     let matchSopt (names':string) getArg' =
       let folder acc' (ast':IAst) =
         ast'.MatchSopt(names', getArg') || acc'
-      in if Array.fold folder false asts
-      then ()
-      else raiseUnexpectedShort '?'
+      in if not (Array.fold folder false asts)
+      then raiseUnexpectedShort '?'
 
     let matchLopt (name':string) getArg' =
       let folder acc' (ast':IAst) =
         ast'.MatchLopt(name', getArg') || acc'
-      in if Array.fold folder false asts
-      then ()
-      else raiseUnexpectedLong name'
+      in if not (Array.fold folder false asts)
+      then raiseUnexpectedLong name'
 
-    let matchArg (str:string) =
-      for ast in asts do
-        if not (ast.MatchArg(str))
-        then raiseUnexpectedArg str
-      done
+    let matchArg (str':string) =
+      let folder acc' (ast':IAst) =
+        ast'.MatchArg(str') || acc'
+      in if not (Array.fold folder false asts)
+      then raiseUnexpectedArg str'
+
+    let tryFill (args':Arguments.Dictionary) =
+      let predicate (ast':IAst) =
+        let args = Arguments.Dictionary(opts') in
+        match ast'.TryFill(args) with
+        | false -> false
+        | _     -> args'.Clear();
+                   args'.AddRange(args);
+                   true
+      in Array.exists predicate asts
 
     member __.Parse(argv':string array, args':Arguments.Dictionary) =
       i <- -1;
@@ -215,7 +224,7 @@ type UsageParser(u':string, opts':Options) =
       with InternalException(errlist) ->
         if errlist <> null
         then raiseArgvException errlist
-        elif Array.exists (fun (ast':IAst) -> ast'.TryFill(args')) asts
+        elif tryFill args'
         then args'
         else raise (ArgvException("Usage:" + u'))
     member __.Asts = asts

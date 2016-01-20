@@ -95,7 +95,7 @@ type Lop(o':Option) =
       member __.MatchLopt(l', getArg') =
         if matched
         then false
-        elif l' = o'.Long
+        elif l' = o'.Long || o'.Long.StartsWith(l')
         then (if o'.HasArgument
               then arg <- Some(getArg' o'.ArgName);
               matched <- true; true)
@@ -249,6 +249,7 @@ type Xor(l':IAst, r':IAst) =
         | false, true  -> r'.TryFill(a')
         | false, false -> false
         | true, true   -> let tempDict = Arguments.Dictionary(Options()) in
+                          tempDict.AddRange(a');
                           if l'.TryFill(tempDict)
                           then (a'.AddRange(tempDict); true)
                           elif (tempDict.Clear(); r'.TryFill(tempDict))
@@ -281,14 +282,22 @@ type Seq(asts':GList<IAst>) =
 
 type Cmd(cmd':string) =
   class
+    let mutable matched = false
     interface IAst with
       member __.Tag = Tag.Cmd
       member __.MatchSopt(_, _) = false
       member __.MatchLopt(_, _) = false
-      member __.MatchArg(_) = false
-      member __.TryFill(_) = false
+      member __.MatchArg(a') =
+        match not matched && a' = cmd' with
+        | true -> matched <- true; true
+        | _    -> false
+      member __.TryFill(args') =
+        match matched with
+        | true -> args'.AddCmd(cmd'); true
+        | _    -> false
       member __.DeepCopy() = Cmd(cmd') :> IAst
     end
+    override __.ToString() = "Cmd " + cmd'
   end
 
 type Ell(ast':IAst) =
