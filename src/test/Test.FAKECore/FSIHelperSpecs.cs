@@ -58,7 +58,7 @@ namespace Test.FAKECore
             {
 
                 result = FSIHelper.executeBuildScriptWithArgsAndFsiArgsAndReturnMessages(
-                    scriptFilePath, scriptArguments, fsiArguments, useCache, false);
+                    scriptFilePath, scriptArguments, fsiArguments, useCache);
             }
             finally
             {
