@@ -7,72 +7,74 @@ open System.Collections.Generic
 
 type Result =
   | None
-  | Flag of bool
+  | Flag
   | Flags of int
   | Command of bool
-  | Default of string
   | Argument of string
   | Arguments of string list
 
 [<StructuredFormatDisplay("Docopt.Arguments.Dictionary {SFDisplay}")>]
 [<AllowNullLiteral>]
-type Dictionary(options':Options) =
+type Dictionary() =
   class
-    let dict = Dictionary<string, Result ref>()
-    do for o in options' do
-         let result = ref (if o.HasDefault
-                           then Default(o.Default)
-                           else Flag(false)) in
-         match o.Short, o.Long with
-         | short, null         -> dict.[String([|'-';short|])] <- result
-         | Char.MaxValue, long -> dict.[String.Concat("--", long)] <- result
-         | short, long         -> dict.[String([|'-';short|])] <- result;
-                                  dict.[String.Concat("--", long)] <- result
-       done
-    member private __.Dict = dict
-    member __.AsList() = [for kv in dict do yield (kv.Key, !kv.Value) done]
-    member __.Item with get key' = !dict.[key']
-                    and set key' value' = dict.[key'] := value'
-    member xx.UnsafeAdd(key':string, ?arg':string) =
+    let dict = Dictionary<string, Result>() :> IDictionary<_, _>
+    interface IDictionary<string, Result> with
+      member __.Add(k', v') = dict.Add(k', v')
+      member __.Add(kv') = dict.Add(kv')
+      member __.Clear() = dict.Clear()
+      member __.Contains(kv') = dict.Contains(kv')
+      member __.ContainsKey(k') = dict.ContainsKey(k')
+      member __.CopyTo(array', arrayIndex') = dict.CopyTo(array', arrayIndex')
+      member __.Count = dict.Count
+      member __.GetEnumerator() = dict.GetEnumerator() :> Collections.IEnumerator
+      member __.GetEnumerator() = dict.GetEnumerator()
+      member __.IsReadOnly = dict.IsReadOnly
+      member __.Keys = dict.Keys
+      member __.Remove(kv':KeyValuePair<_, _>) = dict.Remove(kv')
+      member __.Remove(k':string) = dict.Remove(k')
+      member __.TryGetValue(k', v') = dict.TryGetValue(k', &v')
+      member __.Values = dict.Values
+      member __.Item with get key' =
+                       let mutable value = Unchecked.defaultof<Result> in
+                       if dict.TryGetValue(key', &value)
+                       then value
+                       else None
+                      and set key' value' =
+                       dict.Add(key', value')
+    end
+    member __.AsList() = [for kv in dict -> kv.Key, kv.Value]
+    member xx.Clear = (xx :> IDictionary<_, _>).Clear
+    member xx.AddString(key':string, ?arg':string) =
       let newval =
+        let currentVal = (xx :> IDictionary<_, _>).[key'] in
         if arg'.IsNone
-        then match xx.[key'] with
-             | None
-             | Flag(false) -> Flag(true)
-             | Flag(_)     -> Flags(2)
+        then match currentVal with
+             | None        -> Flag
+             | Flag        -> Flags(2)
              | Flags(n)    -> Flags(n + 1)
              | value       -> value
-        else match xx.[key'] with
+        else match currentVal with
              | None
-             | Flag(_)
-             | Flags(_)
-             | Default(_)      -> Argument(arg'.Value)
+             | Flag
+             | Flags(_)        -> Argument(arg'.Value)
              | Argument(arg)   -> Arguments([arg'.Value;arg])
              | Arguments(args) -> Arguments(arg'.Value::args)
              | value           -> value in
-      xx.[key'] <- newval
-    member xx.AddShort(o':Option, ?arg':string) =
-      xx.UnsafeAdd(String([|'-';o'.Short|]), ?arg'=arg')
-    member xx.AddLong(o':Option, ?arg':string) =
-      xx.UnsafeAdd(String.Concat("--", o'.Long), ?arg'=arg')
+      (xx :> IDictionary<_, _>).[key'] <- newval
     member xx.AddOpt(o':Option, ?arg':string) =
       if o'.IsShort
-      then xx.AddShort(o', ?arg'=arg')
-      elif o'.IsLong
-      then xx.AddLong(o', ?arg'=arg')
+      then xx.AddString(String([|'-';o'.Short|]), ?arg'=arg');
+      if o'.IsLong
+      then xx.AddString(String.Concat("--", o'.Long), ?arg'=arg')
     member xx.AddArg(a':string, val':string) =
-      if not (dict.ContainsKey(a'))
-      then dict.Add(a', ref (Argument(val')))
-      else xx.UnsafeAdd(a', val')
+      xx.AddString(a', val')
     member xx.AddCmd(cmd':string) =
-      if not (dict.ContainsKey(cmd'))
-      then dict.Add(cmd', ref (Flag(true)))
-      else xx.UnsafeAdd(cmd')
-    member xx.AddRange(other':Dictionary) =
-      for kv in other'.Dict do
-        (xx.Dict :> IDictionary<_, _>).Add(kv)
+      xx.AddString(cmd')
+    member __.AddRange(range':#IEnumerable<KeyValuePair<string, Result>>) =
+      let idict = dict :> IDictionary<_, _> in
+      for kv in range' do
+        idict.Add(kv)
       done
-    member __.Clear() = dict.Clear()
-    member inline private xx.SFDisplay = xx.AsList()
+    member private xx.SFDisplay = xx.AsList()
   end
 ;;

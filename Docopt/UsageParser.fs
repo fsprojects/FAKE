@@ -186,7 +186,7 @@ type UsageParser(u':string, opts':Options) =
 
     let tryFill (args':Arguments.Dictionary) =
       let predicate (ast':IAst) =
-        let args = Arguments.Dictionary(opts') in
+        let args = Arguments.Dictionary() in
         match ast'.TryFill(args) with
         | false -> false
         | _     -> args'.Clear();

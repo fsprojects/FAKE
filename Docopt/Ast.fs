@@ -74,7 +74,7 @@ type Sop(o':Options) =
         then false
         else try
           for sopt, arg in matched do
-            args'.AddShort(sopt, ?arg'=arg)
+            args'.AddOpt(sopt, ?arg'=arg)
           done;
           true
         with :? KeyNotFoundException -> false
@@ -103,7 +103,7 @@ type Lop(o':Option) =
       member __.MatchArg(_) = false
       member __.TryFill(args') =
         if matched
-        then (args'.AddLong(o', ?arg'=arg); true)
+        then (args'.AddOpt(o', ?arg'=arg); true)
         else false
       member __.DeepCopy() = Lop(o') :> IAst
     end
@@ -248,7 +248,7 @@ type Xor(l':IAst, r':IAst) =
         | true, false  -> l'.TryFill(a')
         | false, true  -> r'.TryFill(a')
         | false, false -> false
-        | true, true   -> let tempDict = Arguments.Dictionary(Options()) in
+        | true, true   -> let tempDict = Arguments.Dictionary() in
                           if l'.TryFill(tempDict)
                           then (a'.AddRange(tempDict); true)
                           elif (tempDict.Clear(); r'.TryFill(tempDict))

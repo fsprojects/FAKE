@@ -15,7 +15,6 @@ type Assert =
       printf "%s\n{" test'
       Console.WriteLine(usage')
       printfn "  Asts: %A" doc.UsageParser.Asts
-      printfn "  Dict: %A\n" doc.DefaultDictionary
       Array.iter (fun assertion' -> let doc = Docopt(usage')
                                     count <- count + 1
                                     let msg, res = assertion' doc
@@ -54,8 +53,8 @@ Usage: prog [options]
 Options: -a  All.
 
 """,
-  ""   ->= [("-a", Flag(false))],
-  "-a" ->= [("-a", Flag(true))],
+  ""   ->= [],
+  "-a" ->= [("-a", Flag)],
   "-x" ->! typeof<ArgvException>
 )
 
@@ -65,8 +64,8 @@ Usage: prog [options]
 Options: --all  All.
 
 """,
-  ""      ->= [("--all", Flag(false))],
-  "--all" ->= [("--all", Flag(true))],
+  ""      ->= [],
+  "--all" ->= [("--all", Flag)],
   "--xxx" ->! typeof<ArgvException>
 )
 
@@ -76,9 +75,9 @@ Usage: prog [options]
 Options: -v, --verbose  Verbose.
 
 """,
-  "--verbose" ->= [("-v", Flag(true));("--verbose", Flag(true))],
-  "--ver"     ->= [("-v", Flag(true));("--verbose", Flag(true))],
-  "-v"        ->= [("-v", Flag(true));("--verbose", Flag(true))]
+  "--verbose" ->= [("-v", Flag);("--verbose", Flag)],
+  "--ver"     ->= [("-v", Flag);("--verbose", Flag)],
+  "-v"        ->= [("-v", Flag);("--verbose", Flag)]
 )
 
 Assert.Seq("Short option with argument", """
@@ -131,7 +130,7 @@ Options:
  -p PATH  Path to files [default: ./]
 
 """,
-  ""       ->= [("-p", Default("./"))],
+  ""       ->= [("-p", Argument("./"))],
   "-phome" ->= [("-p", Argument("home"))]
 )
 
@@ -142,7 +141,7 @@ OpTiOnS: --path=<files>  Path to files
                 [dEfAuLt: /root]
 
 """,
-  ""            ->= [("--path", Default("/root"))],
+  ""            ->= [("--path", Argument("/root"))],
   "--path=home" ->= [("--path", Argument("home"))]
 )
 
@@ -155,9 +154,9 @@ options:
     -m <msg>  Message
 
 """,
-  "-a -r -m Hello" ->= [("-a", Flag(true));("-r", Flag(true));("-m", Argument("Hello"))],
-  "-armyourass"    ->= [("-a", Flag(true));("-r", Flag(true));("-m", Argument("yourass"))],
-  "-a -r"          ->= [("-a", Flag(true));("-r", Flag(true));("-m", Flag(false))]
+  "-a -r -m Hello" ->= [("-a", Flag);("-r", Flag);("-m", Argument("Hello"))],
+  "-armyourass"    ->= [("-a", Flag);("-r", Flag);("-m", Argument("yourass"))],
+  "-a -r"          ->= [("-a", Flag);("-r", Flag)]
 )
 
 Assert.Seq("Truncated long option disambiguation", """
@@ -167,10 +166,10 @@ Options: --version
          --verbose
 
 """,
-  "--version" ->= [("--version", Flag(true));("--verbose", Flag(false))],
-  "--verbose" ->= [("--version", Flag(false));("--verbose", Flag(true))],
+  "--version" ->= [("--version", Flag)],
+  "--verbose" ->= [("--verbose", Flag)],
   "--ver"     ->! typeof<ArgvException>,
-  "--verb"    ->= [("--version", Flag(false));("--verbose", Flag(true))]
+  "--verb"    ->= [("--verbose", Flag)]
 )
 
 Assert.Seq("Short options in square brackets", """
@@ -182,7 +181,7 @@ options:
  -m <msg>  Message
 
 """,
-  "-armyourass" ->= [("-a", Flag(true));("-r", Flag(true));("-m", Argument("yourass"))]
+  "-armyourass" ->= [("-a", Flag);("-r", Flag);("-m", Argument("yourass"))]
 )
 
 Assert.Seq("Short option pack in square brackets", """
@@ -193,7 +192,7 @@ options: -a        Add
          -m <msg>  Message
 
 """,
-  "-a -r -m Hello" ->= [("-a", Flag(true));("-r", Flag(true));("-m", Argument("Hello"))]
+  "-a -r -m Hello" ->= [("-a", Flag);("-r", Flag);("-m", Argument("Hello"))]
 )
 
 Assert.Seq("Required short options", """
@@ -204,8 +203,8 @@ options:
  -b
 
 """,
-  "-a -b" ->= [("-a", Flag(true));("-b", Flag(true))],
-  "-b -a" ->= [("-a", Flag(true));("-b", Flag(true))],
+  "-a -b" ->= [("-a", Flag);("-b", Flag)],
+  "-b -a" ->= [("-a", Flag);("-b", Flag)],
   "-a"    ->! typeof<ArgvException>,
   ""      ->! typeof<ArgvException>
 )
@@ -217,8 +216,8 @@ options: -a
          -b
 
 """,
-  "-a -b" ->= [("-a", Flag(true));("-b", Flag(true))],
-  "-b -a" ->= [("-a", Flag(true));("-b", Flag(true))],
+  "-a -b" ->= [("-a", Flag);("-b", Flag)],
+  "-b -a" ->= [("-a", Flag);("-b", Flag)],
   "-a"    ->! typeof<ArgvException>,
   ""      ->! typeof<ArgvException>
 )
@@ -230,10 +229,10 @@ options: -a
  -b
 
 """,
-  "-a -b" ->= [("-a", Flag(true));("-b", Flag(true))],
-  "-b -a" ->= [("-a", Flag(true));("-b", Flag(true))],
+  "-a -b" ->= [("-a", Flag);("-b", Flag)],
+  "-b -a" ->= [("-a", Flag);("-b", Flag)],
   "-a"    ->! typeof<ArgvException>,
-  "-b"    ->= [("-a", Flag(false));("-b", Flag(true))],
+  "-b"    ->= [("-b", Flag)],
   ""      ->! typeof<ArgvException>
 )
 
@@ -244,11 +243,11 @@ options: -a
          -b
 
 """,
-  "-a -b" ->= [("-a", Flag(true));("-b", Flag(true))],
-  "-b -a" ->= [("-a", Flag(true));("-b", Flag(true))],
+  "-a -b" ->= [("-a", Flag);("-b", Flag)],
+  "-b -a" ->= [("-a", Flag);("-b", Flag)],
   "-a"    ->! typeof<ArgvException>,
   "-b"    ->! typeof<ArgvException>,
-  ""      ->= [("-a", Flag(false));("-b", Flag(false))]
+  ""      ->= []
 )
 
 Assert.Seq("Exclusive or", """
@@ -260,8 +259,8 @@ options: -a
 """,
   "-a -b" ->! typeof<ArgvException>,
   ""      ->! typeof<ArgvException>,
-  "-a"    ->= [("-a", Flag(true));("-b", Flag(false))],
-  "-b"    ->= [("-a", Flag(false));("-b", Flag(true))]
+  "-a"    ->= [("-a", Flag)],
+  "-b"    ->= [("-b", Flag)]
 )
 
 Assert.Seq("Optional exclusive or", """
@@ -272,9 +271,9 @@ options: -a
 
 """,
   "-a -b" ->! typeof<ArgvException>,
-  ""      ->= [("-a", Flag(false));("-b", Flag(false))],
-  "-a"    ->= [("-a", Flag(true));("-b", Flag(false))],
-  "-b"    ->= [("-a", Flag(false));("-b", Flag(true))]
+  ""      ->= [],
+  "-a"    ->= [("-a", Flag)],
+  "-b"    ->= [("-b", Flag)]
 )
 
 Assert.Seq("Argument", """
@@ -319,8 +318,8 @@ options:
  --all
 
 """,
-  "10 --all" ->= [("--all", Flag(true));("<kind>", Argument("10"))],
-  "10"       ->= [("--all", Flag(false));("<name>", Argument("10"))],
+  "10 --all" ->= [("--all", Flag);("<kind>", Argument("10"))],
+  "10"       ->= [("<name>", Argument("10"))],
   ""         ->! typeof<ArgvException>
 )
 
@@ -372,8 +371,8 @@ usage: prog (NAME | --foo NAME)
 options: --foo
 
 """,
-  "10"       ->= [("NAME", Argument("10"));("--foo", Flag(false))],
-  "--foo 10" ->= [("NAME", Argument("10"));("--foo", Flag(true))],
+  "10"       ->= [("NAME", Argument("10"))],
+  "--foo 10" ->= [("NAME", Argument("10"));("--foo", Flag)],
   "--foo=10" ->! typeof<ArgvException>
 )
 
@@ -384,9 +383,9 @@ options: --foo
 options: --bar
 
 """,
-  "10"          ->= [("--foo", Flag(false));("--bar", Flag(false));("NAME", Argument("10"))],
-  "10 20"       ->= [("--foo", Flag(false));("--bar", Flag(false));("NAME", Arguments(["20";"10"]))],
-  "--foo --bar" ->= [("--foo", Flag(true));("--bar", Flag(true))]
+  "10"          ->= [("NAME", Argument("10"))],
+  "10 20"       ->= [("NAME", Arguments(["20";"10"]))],
+  "--foo --bar" ->= [("--foo", Flag);("--bar", Flag)]
 )
 
 Assert.Seq("Big Bertha: command, multiple usage and --long=arg", """
@@ -409,24 +408,19 @@ Options:
 
 """,
   "ship Guardian move 150 300 --speed=20" ->= [
-    "--drifting", Flag(false);
-    "-h", Flag(false);
-    "--help", Flag(false);
-    "--moored", Flag(false);
     "--speed", Argument("20");
-    "--version", Flag(false);
     "<name>", Argument("Guardian");
     "<x>", Argument("150");
     "<y>", Argument("300");
-    "move", Flag(true);
-    "ship", Flag(true);
+    "move", Flag;
+    "ship", Flag;
   ]
 )
 
 (*
 Assert.Seq("", """
 usage: prog --hello""",
-  "--hello" ->= [("--hello", Flag(true))]
+  "--hello" ->= [("--hello", Flag)]
 )
 let doc = Docopt("""usage: prog [--hello=<world>]""")
 $ prog

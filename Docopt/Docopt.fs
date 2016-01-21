@@ -36,13 +36,11 @@ type Docopt(doc', ?argv':string array, ?help':HelpCallback, ?version':obj,
     let (uStr, oStr) = DocHelper.cut doc'
     let options = OptionsParser(soptChars).Parse(oStr)
     let pusage = UsageParser(uStr, options)
-    let defaultDict = Arguments.Dictionary(options)
     member __.Parse(?argv':string array, ?args':Arguments.Dictionary) =
-      let args = defaultArg args' defaultDict in
+      let args = defaultArg args' (Arguments.Dictionary()) in
       let argv = defaultArg argv' argv in
       pusage.Parse(argv, args)
     member __.Usage = uStr
     member __.UsageParser = pusage
-    member __.DefaultDictionary = defaultDict
   end
 ;;

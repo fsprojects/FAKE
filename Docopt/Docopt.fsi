@@ -26,6 +26,5 @@ type Docopt =
     member Usage : string
 
     member UsageParser : UsageParser
-    member DefaultDictionary : Arguments.Dictionary
   end
 ;;
