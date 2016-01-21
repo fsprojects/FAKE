@@ -9,7 +9,8 @@ open System.IO
 
 /// Returns the commit message file.
 let getCommitMessageFileInfo repositoryDir = 
-    (findGitDir repositoryDir).FullName + "\\COMMITMESSAGE"
+    //(findGitDir repositoryDir).FullName + "\\COMMITMESSAGE"
+    (findGitDir repositoryDir).FullName + "\\COMMIT_EDITMSG"
       |> fileInfo
 
 /// Gets the commit message
