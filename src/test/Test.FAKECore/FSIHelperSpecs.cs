@@ -58,7 +58,7 @@ namespace Test.FAKECore
             {
 
                 result = FSIHelper.executeBuildScriptWithArgsAndFsiArgsAndReturnMessages(
-                    scriptFilePath, scriptArguments, fsiArguments, useCache, false);
+                    scriptFilePath, scriptArguments, fsiArguments, useCache);
             }
             finally
             {
@@ -111,6 +111,38 @@ namespace Test.FAKECore
         {
             return new FSIHelper.Script(contents, path.Replace("\\", "/"), null, null);
         }
+
+        It fallback_to_compiling_when_cache_is_broken =
+            () =>
+            {
+                var scriptFilePath = Path.GetTempFileName() + ".fsx";
+                var scriptFileName = Path.GetFileName(scriptFilePath);
+                try
+                {
+                    File.WriteAllText(scriptFilePath, "printf \"foobar\"");
+                    var scriptHash =
+                            FSIHelper.getScriptHash(new FSIHelper.Script[] { script(scriptFilePath, "printf \"foobar\"") }, new List<string>());
+
+                    var cacheFilePath = Path.Combine(".", ".fake", scriptFileName + "_" + scriptHash + ".dll");
+
+                    File.Exists(cacheFilePath).ShouldEqual(false);
+
+                    RunExplicit(scriptFilePath, EmptyArgs, true)
+                        .ShouldStartWith("Cache doesn't exist");
+
+                    File.Exists(cacheFilePath).ShouldEqual(true);
+                    File.WriteAllBytes(cacheFilePath, new byte[] { 8 });
+
+                    var result = RunExplicit(scriptFilePath, EmptyArgs, true);
+                    result.ShouldContain("Using cache");
+                    result.ShouldContain("Cache is invalid, recompiling");
+                }
+                finally
+                {
+                    if (File.Exists(scriptFilePath))
+                        File.Delete(scriptFilePath);
+                }
+            };
 
         It caching_and_non_caching_version_should_handle_stderr_and_stdout_equally =
             () =>
