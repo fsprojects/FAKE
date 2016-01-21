@@ -52,12 +52,14 @@ Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; docsDir; apidocsDir; nuge
 open Fake.AssemblyInfoFile
 
 Target "RenameFSharpCompilerService" (fun _ ->
-    let reader = new Mono.Cecil.DefaultAssemblyResolver()
     for framework in ["net40"; "net45"] do
       let dir = __SOURCE_DIRECTORY__ </> "packages/FSharp.Compiler.Service/lib" </> framework
       let targetFile = dir </> "FAKE.FSharp.Compiler.Service.dll"
       DeleteFile targetFile 
+
+      let reader = new Mono.Cecil.DefaultAssemblyResolver()
       reader.AddSearchDirectory(dir)
+      reader.AddSearchDirectory(__SOURCE_DIRECTORY__ </> "packages/FSharp.Core/lib/net40")
       let readerParams = new Mono.Cecil.ReaderParameters(AssemblyResolver = reader)
       let asem = Mono.Cecil.AssemblyDefinition.ReadAssembly(dir </> "FSharp.Compiler.Service.dll", readerParams)
       asem.Name <- new Mono.Cecil.AssemblyNameDefinition("FAKE.FSharp.Compiler.Service", new System.Version(1,0,0,0))
