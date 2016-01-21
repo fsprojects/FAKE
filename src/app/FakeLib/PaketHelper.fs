@@ -4,6 +4,7 @@ module Fake.Paket
 open System
 open System.IO
 open System.Xml.Linq
+open System.Text.RegularExpressions
 
 /// Paket pack parameter type
 type PaketPackParams =
@@ -145,33 +146,36 @@ let Push setParams =
 
 /// Returns the dependencies from specified paket.references file
 let GetDependenciesForReferencesFile (referencesFile:string) =
-    let isSingleFile (line: string) = line.StartsWith "File:"
-    let isGroupLine (line: string) = line.StartsWith "group "
-    let notEmpty (line: string) = not <| String.IsNullOrWhiteSpace line
-    let parsePackageName (line: string) =
-        let parts = line.Split(' ')
-        parts.[0]
+    let getReferenceFilePackages =
+        let isSingleFile (line: string) = line.StartsWith "File:"
+        let isGroupLine (line: string) = line.StartsWith "group "
+        let notEmpty (line: string) = not <| String.IsNullOrWhiteSpace line
+        let parsePackageName (line: string) =
+            let parts = line.Split(' ')
+            parts.[0]
+        File.ReadAllLines
+        >> Array.filter notEmpty
+        >> Array.map (fun s -> s.Trim())
+        >> Array.filter (isSingleFile >> not)
+        >> Array.filter (isGroupLine >> not)
+        >> Array.map parsePackageName
 
-    let nugetLines =
-        File.ReadAllLines(referencesFile)
-        |> Array.filter notEmpty
-        |> Array.map (fun s -> s.Trim())
-        |> Array.filter (isSingleFile >> not)
-        |> Array.filter (isGroupLine >> not)
-        |> Array.map parsePackageName
+    let getLockFilePackages =
+        let getPaketLockFile referencesFile =
+            let rec find dir =
+                let fi = FileInfo(dir </> "paket.lock")
+                if fi.Exists then fi.FullName else find fi.Directory.Parent.FullName
+            find <| FileInfo(referencesFile).Directory.FullName
+        
+        let breakInParts (line : string) = match Regex.Match(line,"^[ ]{4}([^ ].+) \((.+)\)") with
+                                           | m when m.Success && m.Groups.Count = 3 -> Some (m.Groups.[1].Value, m.Groups.[2].Value)
+                                           | _ -> None
 
-    let lockFile =
-        let rec find dir =
-            let fi = FileInfo(dir </> "paket.lock")
-            if fi.Exists then fi.FullName else find fi.Directory.Parent.FullName
-        find <| FileInfo(referencesFile).Directory.FullName
+        getPaketLockFile
+        >> File.ReadAllLines
+        >> Array.choose breakInParts
 
-    let lines = File.ReadAllLines(lockFile)
+    let refLines = getReferenceFilePackages referencesFile
 
-    let getVersion package =
-        let line = lines |> Array.find (fun l -> l.StartsWith("    " + package))
-        let start = line.Replace("    " + package + " (","")
-        start.Substring(0,start.IndexOf(")"))
-
-    nugetLines
-    |> Array.map (fun p -> p,getVersion p)
+    getLockFilePackages referencesFile
+    |> Array.filter (fun (n, _) -> refLines |> Array.exists (fun pn -> pn.Equals(n, StringComparison.InvariantCultureIgnoreCase)))
