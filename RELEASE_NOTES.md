@@ -1,4 +1,5 @@
-#### 4.16.1 - 21.01.2016
+#### 4.17.0-alpha001 - 21.01.2016
+* Fallback to recompile when caching of build script fails  - https://github.com/fsharp/FAKE/pull/1093
 * COSMETICS: Don't show the obsolete usage - https://github.com/fsharp/FAKE/pull/1094
 * BUGFIX: Fixed case sensitivity on package name when search references in Paket.lock - https://github.com/fsharp/FAKE/pull/1089
  
