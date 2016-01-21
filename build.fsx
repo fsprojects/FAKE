@@ -1,6 +1,6 @@
 #I @"packages/build/FAKE/tools/"
 #r @"FakeLib.dll"
-#r @"packages\Mono.Cecil\lib\net45\Mono.Cecil.dll"
+#r @"packages/Mono.Cecil/lib/net45/Mono.Cecil.dll"
 #load "packages/build/SourceLink.Fake/tools/SourceLink.fsx"
 
 open Fake
