@@ -416,7 +416,7 @@ let attachServiceControlToComponents (components : WiXComponent seq) fileFilter 
                             comp)
 
 /// Use this to attach service installs to your components.
-let attachServiceInstallsToComponents (components : WiXComponent seq) fileFilter serviceInstalls = 
+let attachServiceInstallToComponents (components : WiXComponent seq) fileFilter serviceInstalls = 
     components 
         |> Seq.map(fun comp -> 
                         if fileFilter comp then
