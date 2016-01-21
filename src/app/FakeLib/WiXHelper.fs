@@ -122,6 +122,173 @@ let generateServiceControl (setParams : WiXServiceControl -> WiXServiceControl) 
         failwith "No parameter passed for service control Id!"
     parameters
 
+/// Determines what action should be taken on an error.
+type ErrorControl = 
+    /// Logs the error and continues with the startup operation.
+    | Ignore
+    /// Logs the error, displays a message box and continues the startup operation.
+    | Normal
+    /// Logs the error if it is possible and the system is restarted with the last configuration known to be good. If the last-known-good configuration is being started, the startup operation fails.
+    | Critical
+    override w.ToString() = 
+        match w with
+        | Ignore -> "ignore"
+        | Normal -> "normal"
+        | Critical -> "critical"
+
+/// Determines when the service should be started. The Windows Installer does not support boot or system. 
+type ServiceInstallStart = 
+    /// The service will start during startup of the system.
+    | Auto
+    /// The service will start when the service control manager calls the StartService function.
+    | Demand
+    /// The service can no longer be started.
+    | Disabled
+    /// The service is a device driver that will be started by the operating system boot loader. This value is not currently supported by the Windows Installer.
+    | Boot
+    /// The service is a device driver that will be started by the IoInitSystem function. This value is not currently supported by the Windows Installer.
+    | System
+    override w.ToString() = 
+        match w with
+        | Auto -> "auto"
+        | Demand -> "demand"
+        | Disabled -> "disabled"
+        | Boot -> "boot"
+        | System -> "system"
+
+/// Determines the type of the service. The Windows Installer does not currently support kernelDriver or systemDriver.
+type ServiceInstallType = 
+    /// A Win32 service that runs its own process.
+    | OwnProcess
+    /// A Win32 service that shares a process.
+    | ShareProcess
+    /// A kernel driver service. This value is not currently supported by the Windows Installer.
+    | KernelDriver
+    /// A file system driver service. This value is not currently supported by the Windows Installer.
+    | SystemDriver
+    override w.ToString() = 
+        match w with
+        | OwnProcess -> "ownProcess"
+        | ShareProcess -> "shareProcess"
+        | KernelDriver -> "kernelDriver"
+        | SystemDriver -> "systemDriver"
+
+/// Service or group of services that must start before the parent service.
+type WiXServiceDependency = 
+    {
+        /// [Required] The value of this attribute should be one of the following:
+        /// 1. The name (not the display name) of a previously installed service.
+        /// 2. The name of a service group (in which case the Group attribute must be set to 'yes').
+        Id : string
+        /// Set to 'yes' to indicate that the value in the Id attribute is the name of a group of services.	
+        Group : YesOrNo option
+    }
+    member w.createAttributeList () =
+        seq {           
+            yield ("Id", w.Id)           
+            if w.Group.IsSome then yield ("Group", w.Group.Value.ToString())                         
+        }
+    override w.ToString() =
+        sprintf "<ServiceDependency%s />"
+            (Seq.fold(fun acc (key, value) -> acc + sprintf " %s=\"%s\"" key value) "" (w.createAttributeList())) 
+
+let WiXServiceDependencyDefaults =
+    {       
+        Id = ""
+        Group = None
+    }
+
+/// Use this for generating service dependencies
+let generateServiceDependency (setParams : WiXServiceDependency -> WiXServiceDependency) =
+    let parameters = WiXServiceDependencyDefaults |> setParams
+    if String.IsNullOrWhiteSpace parameters.Id then 
+        failwith "No parameter passed for service dependency id!"
+    parameters
+
+/// Adds services for parent Component. Use the ServiceControl element to remove services.
+type WiXServiceInstall =
+    {
+        /// Fully qualified names must be used even for local accounts, e.g.: ".\LOCAL_ACCOUNT". Valid only when ServiceType is ownProcess.
+        Account : string
+        /// Contains any command line arguments or properties required to run the service.
+        Arguments : string
+        /// Sets the description of the service.      
+        Description : string
+        /// This column is the localizable string that user interface programs use to identify the service.
+        DisplayName: string
+        /// Determines whether the existing service description will be ignored. If 'yes', the service description will be null, even if the Description attribute is set.
+        EraseDescription : YesOrNo option
+        /// [Required] Determines what action should be taken on an error. (Default: Normal)
+        ErrorControl: ErrorControl
+        /// Unique identifier for this service configuration. This value will default to the Name attribute if not specified.
+        Id : string
+        /// Whether or not the service interacts with the desktop.
+        Interactive : YesOrNo option
+        /// The load ordering group that this service should be a part of.
+        LoadOrderGroup : string
+        /// [Required] This column is the string that gives the service name to install.
+        Name: string
+        /// The password for the account. Valid only when the account has a password.	
+        Password: string
+        /// [Required] Determines when the service should be started. The Windows Installer does not support boot or system. (Default: Demand)
+        Start : ServiceInstallStart        
+        /// [Required] The Windows Installer does not currently support kernelDriver or systemDriver. (Default: OwnProcess)
+        Type: ServiceInstallType        
+        /// The overall install should fail if this service fails to install. (Default: Yes)
+        Vital : YesOrNo
+        /// Services or groups of services that must start before the parent service.
+        ServiceDependencies : WiXServiceDependency seq
+
+    }
+    member w.createAttributeList () =
+        seq {
+            if not (String.IsNullOrWhiteSpace w.Account) then yield ("Account", w.Account)
+            if not (String.IsNullOrWhiteSpace w.Arguments) then yield ("Arguments", w.Arguments)
+            if not (String.IsNullOrWhiteSpace w.Description) then yield ("Description", w.Description)
+            if not (String.IsNullOrWhiteSpace w.DisplayName) then yield ("DisplayName", w.DisplayName)
+            if w.EraseDescription.IsSome then yield ("EraseDescription", w.EraseDescription.Value.ToString())
+            yield ("ErrorControl", w.ErrorControl.ToString())            
+            if not (String.IsNullOrWhiteSpace w.Id) then yield ("Id", w.Id)
+            if w.Interactive.IsSome then yield ("Interactive", w.Interactive.Value.ToString())
+            if not (String.IsNullOrWhiteSpace w.LoadOrderGroup) then yield ("LoadOrderGroup", w.LoadOrderGroup)
+            yield ("Name", w.Name)
+            if not (String.IsNullOrWhiteSpace w.Password) then yield ("Password", w.Password)
+            yield ("Start", w.Start.ToString())
+            yield ("Type", w.Type.ToString())
+            yield ("Vital", w.Vital.ToString())
+        }
+    override w.ToString() = 
+        sprintf "<ServiceInstall%s>%s</ServiceInstall>" 
+            (Seq.fold(fun acc (key, value) -> acc + sprintf " %s=\"%s\"" key value) "" (w.createAttributeList())) 
+            (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.ServiceDependencies)
+
+/// Defaults for service install element
+let WiXServiceInstallDefaults =
+    {       
+        Account = ""        
+        Arguments = ""        
+        Description = ""        
+        DisplayName = ""        
+        EraseDescription = None        
+        ErrorControl = Normal        
+        Id = ""        
+        Interactive = None        
+        LoadOrderGroup = ""        
+        Name = ""
+        Password = ""        
+        Start = Demand        
+        Type = OwnProcess        
+        Vital = Yes        
+        ServiceDependencies = []
+    }
+
+/// Use this for generating service installs
+let generateServiceInstall (setParams : WiXServiceInstall -> WiXServiceInstall) =
+    let parameters = WiXServiceInstallDefaults |> setParams
+    if String.IsNullOrWhiteSpace parameters.Name then 
+        failwith "No parameter passed for service name!"
+    parameters
+
 /// Reference to a component for including it in a feature
 type WiXComponentRef =
     {
@@ -149,10 +316,14 @@ type WiXComponent =
         Guid : string
         Files : WiXFile seq
         ServiceControls : WiXServiceControl seq
+        ServiceInstalls : WiXServiceInstall seq
     }
     member w.ToComponentRef() = generateComponentRef (fun f -> { f with Id = w.Id })
-    override w.ToString() = sprintf "<Component Id=\"%s\" Guid=\"%s\">%s%s</Component>" 
-                                w.Id w.Guid (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.Files) (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.ServiceControls)
+    override w.ToString() = sprintf "<Component Id=\"%s\" Guid=\"%s\">%s%s%s</Component>" 
+                                w.Id w.Guid 
+                                (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.Files) 
+                                (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.ServiceControls)
+                                (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.ServiceInstalls)
 
 /// Defaults for component
 let WiXComponentDefaults =
@@ -161,6 +332,7 @@ let WiXComponentDefaults =
         Guid = "*"
         Files = []
         ServiceControls = []
+        ServiceInstalls = []
     }
 
 /// Use this for generating single components
@@ -218,6 +390,7 @@ let bulkComponentCreation fileFilter directoryInfo =
                             Guid = "*"
                             Files = [file]
                             ServiceControls = []
+                            ServiceInstalls = []
                         })
 
 /// Creates WiX component with directories and files from the given DirectoryInfo
@@ -238,9 +411,19 @@ let attachServiceControlToComponents (components : WiXComponent seq) fileFilter 
     components 
         |> Seq.map(fun comp -> 
                         if fileFilter comp then
-                            { Id = comp.Id; Guid = comp.Guid; Files = comp.Files; ServiceControls = Seq.append comp.ServiceControls serviceControls }
+                            { Id = comp.Id; Guid = comp.Guid; Files = comp.Files; ServiceControls = Seq.append comp.ServiceControls serviceControls; ServiceInstalls = comp.ServiceInstalls }
                         else
                             comp)
+
+/// Use this to attach service installs to your components.
+let attachServiceInstallToComponents (components : WiXComponent seq) fileFilter serviceInstalls = 
+    components 
+        |> Seq.map(fun comp -> 
+                        if fileFilter comp then
+                            { Id = comp.Id; Guid = comp.Guid; Files = comp.Files; ServiceControls = comp.ServiceControls; ServiceInstalls = Seq.append comp.ServiceInstalls serviceInstalls}
+                        else
+                            comp)
+
                             
 /// Creates recursive WiX directory and file tags from the given DirectoryInfo
 /// The function will create one component for each file [best practice](https://support.microsoft.com/de-de/kb/290997/en-us)
