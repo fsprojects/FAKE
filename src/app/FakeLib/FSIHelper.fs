@@ -280,17 +280,15 @@ let private getCacheInfoFromScript printDetails fsiOptions scriptPath =
       CacheConfig = cacheConfig
       IsValid = cacheValid }
 
-/// Run a script from the cache
-let private runScriptCached printDetails cacheInfo out err =
-    if printDetails then trace "Using cache"
-    let noExtension = Path.GetFileNameWithoutExtension(cacheInfo.ScriptFileName)
-
+/// because it is used by test code
+let nameParser scriptFileName =
+    let noExtension = Path.GetFileNameWithoutExtension(scriptFileName)
     let startString = "<StartupCode$FSI_"
     let endString =
       sprintf "_%s%s$%s"
         (noExtension.Substring(0, 1).ToUpper())
         (noExtension.Substring(1))
-        (Path.GetExtension(cacheInfo.ScriptFileName).Substring(1))
+        (Path.GetExtension(scriptFileName).Substring(1))
     let fullName i = sprintf "%s%s>.$FSI_%s%s" startString i i endString
     let exampleName = fullName "0001"
     let parseName (n:string) =
@@ -301,24 +299,29 @@ let private runScriptCached printDetails cacheInfo out err =
             assert (fullName num = n)
             Some (num)
         else None
+    exampleName, fullName, parseName
+
+/// Run a script from the cache
+let private runScriptCached printDetails cacheInfo out err =
+    if printDetails then trace "Using cache"
+    let exampleName, fullName, parseName = nameParser cacheInfo.ScriptFileName
     try
         Yaaf.FSharp.Scripting.Helper.consoleCapture out err (fun () ->
             let ass = Reflection.Assembly.LoadFrom(cacheInfo.AssemblyPath)
             match ass.GetTypes()
                   |> Seq.filter (fun t -> parseName t.FullName |> Option.isSome)
+                  |> Seq.map (fun t -> t.GetMethod("main@", BindingFlags.InvokeMethod ||| BindingFlags.Public ||| BindingFlags.Static))
+                  |> Seq.filter (isNull >> not)
                   |> Seq.tryHead with
-            | Some mainModule ->
-              try mainModule.InvokeMember(
-                      "main@",
-                      BindingFlags.InvokeMethod ||| BindingFlags.Public ||| BindingFlags.Static,
-                      null, null, [||])
+            | Some mainMethod ->
+              try mainMethod.Invoke(null, [||])
                   |> ignore
                   true
               with
               | ex ->
                   traceError (ex.ToString())
                   false
-            | None -> failwithf "We could not find a type similar to '%s' in the cached assembly!" exampleName)
+            | None -> failwithf "We could not find a type similar to '%s' containing a 'main@' method in the cached assembly (%s)!" exampleName cacheInfo.AssemblyPath)
     finally
         try
             traceFAKE "%s" (File.ReadAllText cacheInfo.AssemblyWarningsPath)
