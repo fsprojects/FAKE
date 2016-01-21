@@ -47,6 +47,17 @@ namespace Test.FAKECore
 
         static Tuple<Messages, string> RunExplicit(string scriptFilePath, string[] scriptArguments, string[] fsiArguments, bool useCache)
         {
+            var result = RunExplicitWithResult(scriptFilePath, scriptArguments, fsiArguments, useCache);
+            if (!result.Item1)
+            {
+                var errors = result.Item2.Select(x => x.Message);
+                throw new Exception("Executing script failed. Output: \n" + String.Join("\n", errors));
+            }
+            return Tuple.Create(result.Item2, result.Item3);
+        }
+
+        static Tuple<bool, Messages, string> RunExplicitWithResult(string scriptFilePath, string[] scriptArguments, string[] fsiArguments, bool useCache)
+        {
             var stdOut = Console.Out;
 
             var sbOut = new System.Text.StringBuilder();
@@ -67,17 +78,12 @@ namespace Test.FAKECore
             }
 
 
-            if (!result.Item1)
-            {
-                var errors = result.Item2.Where(x => x.IsError).Select(x => x.Message);
-                throw new Exception("Executing script failed. Errors: \n" + String.Join("\n", errors));
-            }
             foreach (var x in result.Item2)
             {
                 Console.WriteLine(x.Message);
             }
 
-            return Tuple.Create(result.Item2,
+            return Tuple.Create(result.Item1, result.Item2,
                 sbOut.ToString()
                 .Replace("Running Buildscript: " + scriptFilePath, "")
                 .Replace("\n", "").Replace("\r", ""));
@@ -111,6 +117,41 @@ namespace Test.FAKECore
         {
             return new FSIHelper.Script(contents, path.Replace("\\", "/"), null, null);
         }
+
+        It fallback_should_not_trigger_on_build_errors =
+            () =>
+            {
+                var scriptFilePath = Path.GetTempFileName() + ".fsx";
+                var scriptFileName = Path.GetFileName(scriptFilePath);
+                try
+                {
+                    var scriptText = @"failwith ""some exn""";
+                    File.WriteAllText(scriptFilePath, scriptText);
+                    var scriptHash =
+                            FSIHelper.getScriptHash(new FSIHelper.Script[] { script(scriptFilePath, scriptText) }, new List<string>());
+
+                    var cacheFilePath = Path.Combine(".", ".fake", scriptFileName + "_" + scriptHash + ".dll");
+
+                    File.Exists(cacheFilePath).ShouldEqual(false);
+
+                    var res1 = RunExplicitWithResult(scriptFilePath, EmptyArgs, EmptyArgs, true);
+                    res1.Item1.ShouldBeFalse();
+                    res1.Item3.ShouldStartWith("Cache doesn't exist");
+
+                    File.Exists(cacheFilePath).ShouldEqual(true);
+
+                    var res2 = RunExplicitWithResult(scriptFilePath, EmptyArgs, EmptyArgs, true);
+                    res2.Item1.ShouldBeFalse();
+                    res2.Item3.ShouldContain("Using cache");
+                    res2.Item3.ShouldNotContain("Cache is invalid, recompiling");
+                    res2.Item3.ShouldNotContain("Cache doesn't exist");
+                }
+                finally
+                {
+                    if (File.Exists(scriptFilePath))
+                        File.Delete(scriptFilePath);
+                }
+            };
 
         It fallback_to_compiling_when_cache_is_broken =
             () =>
