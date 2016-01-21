@@ -1,3 +1,7 @@
+#### 4.16.1 - 21.01.2016
+* COSMETICS: Don't show the obsolete usage - https://github.com/fsharp/FAKE/pull/1094
+* BUGFIX: Fixed case sensitivity on package name when search references in Paket.lock - https://github.com/fsharp/FAKE/pull/1089
+ 
 #### 4.16.0 - 20.01.2016
 * General FAKE improvements - https://github.com/fsharp/FAKE/pull/1088
 * Hockey app UploadTimeout - https://github.com/fsharp/FAKE/pull/1087
