@@ -360,6 +360,7 @@ do ()
                 try
                 {
                     var fakeLib = typeof(TraceListener).Assembly.Location;
+
                     TraceListener.listeners.Add(t);
                     {
                         File.WriteAllText(scriptFilePath, @"
@@ -506,6 +507,39 @@ trace ""TEST_FAKE_OUTPUT""");
                     res3.Item1.Head.Message.ShouldEqual("foobarbaz");
 
                     File.Exists("./.fake/" + scriptFileName + "_" + changedScriptHash + ".dll").ShouldEqual(true);
+                }
+                finally
+                {
+                    if (File.Exists(scriptFilePath))
+                        File.Delete(scriptFilePath);
+                }
+            };
+
+        It should_save_assemblies =
+            () =>
+            {
+                var scriptFilePath = Path.GetTempFileName() + ".fsx";
+                var scriptFileName = Path.GetFileName(scriptFilePath);
+                try
+                {
+                    var mainScript = "printf \"main\"";
+                    File.WriteAllText(scriptFilePath, mainScript);
+                    var scriptHash =
+                            FSIHelper.getScriptHash(new FSIHelper.Script[] { script(scriptFilePath, mainScript) }, new List<string>());
+
+                    var cacheFilePath = Path.Combine(".", ".fake", scriptFileName + "_" + scriptHash + ".dll");
+                    var cacheXmlFilePath = Path.Combine(".", ".fake", scriptFileName + "_" + scriptHash + "_config.xml");
+
+                    var res = RunExplicit(scriptFilePath, EmptyArgs, EmptyArgs, true);
+                    var cache = FSIHelper.Cache.read(cacheXmlFilePath);
+                    var loaded = System.AppDomain.CurrentDomain.GetAssemblies().ToLookup(a => a.FullName);
+                    foreach (var ass in cache.Assemblies)
+                    {
+                        loaded.Contains(ass.FullName).ShouldBeTrue();
+                    }
+
+                    // FakeLib, TestAssembly, FSharp.Core, FSharp.Compiler.Service, mscorlib, Cecil,...
+                    cache.Assemblies.Count().ShouldBeGreaterThan(5);
                 }
                 finally
                 {
