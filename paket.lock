@@ -2,7 +2,7 @@ CONTENT: NONE
 NUGET
   remote: http://www.nuget.org/api/v2
   specs:
-    Argu (2.0)
+    Argu (2.1)
     AspNetMvc (4.0.20710)
       Microsoft.AspNet.Mvc (>= 4.0.20710.0 < 4.1)
     bootstrap (3.3.6)
@@ -90,7 +90,7 @@ CONTENT: NONE
 NUGET
   remote: http://www.nuget.org/api/v2
   specs:
-    FAKE (4.17.0-alpha002)
+    FAKE (4.17.0-alpha003)
     FSharp.Compiler.Service (1.4.2.3)
     FSharp.Formatting (2.13.4)
       FSharp.Compiler.Service (>= 1.4.2 < 1.5.0)
