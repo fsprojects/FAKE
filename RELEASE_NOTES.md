@@ -1,10 +1,11 @@
-#### 4.17.0-alpha004 - 22.01.2016
+#### 4.17.0-alpha005 - 22.01.2016
 * Renamed internal FSharp.Compiler.Service to avoid clashes - https://github.com/fsharp/FAKE/pull/1097
 * WiX service install - https://github.com/fsharp/FAKE/pull/1099
-* Fallback to recompile when caching of build script fails - https://github.com/fsharp/FAKE/pull/1093
-* Commit message will be retrieved for older and newer git versions - https://github.com/fsharp/FAKE/pull/1098
-* COSMETICS: Don't show the obsolete usage - https://github.com/fsharp/FAKE/pull/1094
+* Passing timeout value also to solution exchanger in DynamicsCRMHelper - https://github.com/fsharp/FAKE/pull/1102
+* BUGFIX: Fallback to recompile when caching of build script fails - https://github.com/fsharp/FAKE/pull/1093
+* BUGFIX: Commit message will be retrieved for older and newer git versions - https://github.com/fsharp/FAKE/pull/1098
 * BUGFIX: Fixed case sensitivity on package name when search references in Paket.lock - https://github.com/fsharp/FAKE/pull/1089
+* COSMETICS: Don't show the obsolete usage - https://github.com/fsharp/FAKE/pull/1094
  
 #### 4.16.0 - 20.01.2016
 * General FAKE improvements - https://github.com/fsharp/FAKE/pull/1088
