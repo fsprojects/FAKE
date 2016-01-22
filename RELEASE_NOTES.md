@@ -1,4 +1,4 @@
-#### 4.17.0-alpha005 - 22.01.2016
+#### 4.17.0-alpha006 - 22.01.2016
 * Renamed internal FSharp.Compiler.Service to avoid clashes - https://github.com/fsharp/FAKE/pull/1097
 * WiX service install - https://github.com/fsharp/FAKE/pull/1099
 * Passing timeout value also to solution exchanger in DynamicsCRMHelper - https://github.com/fsharp/FAKE/pull/1102
