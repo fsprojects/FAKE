@@ -1,7 +1,7 @@
 content: none
 source http://nuget.org/api/v2
 
-nuget FSharp.Core
+nuget FSharp.Core redirects:force
 nuget Knockout
 nuget RavenDB.Server
 nuget serilog.sinks.nlog
@@ -31,7 +31,7 @@ nuget Machine.Specifications.Runner.Console
 nuget Nancy.Testing
 nuget xunit.extensions ~> 1.9
 nuget xunit.runners ~> 1.9
-nuget Newtonsoft.Json
+nuget Newtonsoft.Json redirects:force
 nuget Microsoft.AspNet.Razor 2.0.30506
 nuget Microsoft.AspNet.WebPages 2.0.30506
 nuget FluentMigrator.Runner

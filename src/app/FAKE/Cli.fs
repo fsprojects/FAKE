@@ -3,7 +3,7 @@
 module Cli
 
 open System
-open Nessos.Argu
+open Argu
 
 type FakeArg = 
     | [<AltCommandLine("-ev")>] EnvVar of string * string

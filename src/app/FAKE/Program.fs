@@ -1,7 +1,7 @@
 open System
 open Fake
 open System.IO
-open Nessos.Argu
+open Argu
 
 let printVersion() =
     traceFAKE "FakePath: %s" fakePath
