@@ -16,7 +16,7 @@ NUGET
     FsCheck.Xunit (2.0.7)
       FsCheck (>= 2.0.7)
       xunit (>= 1.9.2)
-    FSharp.Compiler.Service (1.4.2.3)
+    FSharp.Compiler.Service (2.0.0.2)
     FSharp.Core (4.0.0.1)
     HashLib (2.0.1)
     jQuery (2.1.4)
@@ -88,16 +88,16 @@ GITHUB
 GROUP Build
 CONTENT: NONE
 NUGET
-  remote: http://nuget.org/api/v2
+  remote: http://www.nuget.org/api/v2
   specs:
-    FAKE (4.11.0)
-    FSharp.Compiler.Service (1.4.0.6)
-    FSharp.Formatting (2.12.0)
-      FSharp.Compiler.Service (1.4.0.6)
-      FSharpVSPowerTools.Core (2.1.0)
-    FSharp.Formatting.CommandTool (2.12.0)
-    FSharpVSPowerTools.Core (2.1.0)
-      FSharp.Compiler.Service (>= 1.4.0.6)
-    ILRepack (2.0.9)
+    FAKE (4.17.0-alpha002)
+    FSharp.Compiler.Service (1.4.2.3)
+    FSharp.Formatting (2.13.4)
+      FSharp.Compiler.Service (>= 1.4.2 < 1.5.0)
+      FSharpVSPowerTools.Core (>= 2.2.0 < 2.3.0)
+    FSharp.Formatting.CommandTool (2.13.4)
+    FSharpVSPowerTools.Core (2.2.0)
+      FSharp.Compiler.Service (>= 1.4.2.0)
+    ILRepack (2.0.10)
     NuGet.CommandLine (3.3.0)
     SourceLink.Fake (1.1.0)

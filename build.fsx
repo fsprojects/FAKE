@@ -1,5 +1,6 @@
 #I @"packages/build/FAKE/tools/"
 #r @"FakeLib.dll"
+#r @"packages/Mono.Cecil/lib/net45/Mono.Cecil.dll"
 #load "packages/build/SourceLink.Fake/tools/SourceLink.fsx"
 
 open Fake
@@ -49,6 +50,21 @@ let additionalFiles = [
 Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDir; reportDir])
 
 open Fake.AssemblyInfoFile
+
+Target "RenameFSharpCompilerService" (fun _ ->
+    for framework in ["net40"; "net45"] do
+      let dir = __SOURCE_DIRECTORY__ </> "packages/FSharp.Compiler.Service/lib" </> framework
+      let targetFile = dir </> "FAKE.FSharp.Compiler.Service.dll"
+      DeleteFile targetFile 
+
+      let reader = new Mono.Cecil.DefaultAssemblyResolver()
+      reader.AddSearchDirectory(dir)
+      reader.AddSearchDirectory(__SOURCE_DIRECTORY__ </> "packages/FSharp.Core/lib/net40")
+      let readerParams = new Mono.Cecil.ReaderParameters(AssemblyResolver = reader)
+      let asem = Mono.Cecil.AssemblyDefinition.ReadAssembly(dir </> "FSharp.Compiler.Service.dll", readerParams)
+      asem.Name <- new Mono.Cecil.AssemblyNameDefinition("FAKE.FSharp.Compiler.Service", new System.Version(1,0,0,0))
+      asem.Write(dir </> "FAKE.FSharp.Compiler.Service.dll")
+)
 
 Target "SetAssemblyInfo" (fun _ ->
     let common = [
@@ -341,6 +357,7 @@ Target "Default" DoNothing
 
 // Dependencies
 "Clean"
+    ==> "RenameFSharpCompilerService"
     ==> "SetAssemblyInfo"
     ==> "BuildSolution"
     //==> "ILRepack"
