@@ -59,7 +59,7 @@ let DynamicsCrmHelperDefaults =
         Url = ""
         User = ""
         Password = ""
-        TimeOut = TimeSpan.FromMinutes 1.0
+        TimeOut = TimeSpan.FromMinutes 10.0
         ToolDirectory = currentDirectory @@ "tools" @@ "Dynamics.CRM.SolutionExchanger"
         WorkingDirectory = ""
         FileName = ""
@@ -108,7 +108,7 @@ let PublishAll (setParams : DynamicsCrmHelperParams -> DynamicsCrmHelperParams) 
     traceStartTask "Publish All" ""
     let parameters = setParams DynamicsCrmHelperDefaults
     let tool = parameters.ToolDirectory @@ "Dynamics.CRM.SolutionExchanger.exe"
-    let args = sprintf "Publish /url:%s /user:%s /password:%s" parameters.Url parameters.User parameters.Password
+    let args = sprintf "Publish /url:%s /user:%s /password:%s /timeout:%i" parameters.Url parameters.User parameters.Password (int parameters.TimeOut.TotalMinutes)
     if 0 <> ExecProcess (fun pInfo -> 
                 pInfo.FileName <- tool
                 pInfo.WorkingDirectory <- parameters.WorkingDirectory
@@ -152,9 +152,9 @@ let ExportSolution (setParams : DynamicsCrmHelperParams -> DynamicsCrmHelperPara
     let parameters = setParams DynamicsCrmHelperDefaults
     traceStartTask "Exporting Solution" (parameters.Solution + ": " + if parameters.Managed then "Managed" else "Unmanaged")
     let tool = parameters.ToolDirectory @@ "Dynamics.CRM.SolutionExchanger.exe"
-    let args = sprintf "Export /url:%s /user:%s /password:%s /solution:%s /managed:%s /workingdir:%s /filename:%s /allSolutions:%s /allOrganizations:%s" 
+    let args = sprintf "Export /url:%s /user:%s /password:%s /solution:%s /managed:%s /workingdir:%s /filename:%s /allSolutions:%s /allOrganizations:%s /timeout:%i" 
                     parameters.Url parameters.User parameters.Password parameters.Solution (parameters.Managed.ToString()) 
-                    parameters.WorkingDirectory parameters.FileName (parameters.AllSolutions.ToString()) (parameters.AllOrganizations.ToString())
+                    parameters.WorkingDirectory parameters.FileName (parameters.AllSolutions.ToString()) (parameters.AllOrganizations.ToString()) (int parameters.TimeOut.TotalMinutes)
     if 0 <> ExecProcess (fun pInfo -> 
                 pInfo.FileName <- tool
                 pInfo.WorkingDirectory <- parameters.WorkingDirectory
@@ -170,8 +170,8 @@ let ImportSolution (setParams : DynamicsCrmHelperParams -> DynamicsCrmHelperPara
     let parameters = setParams DynamicsCrmHelperDefaults
     traceStartTask "Importing Solution" parameters.FileName
     let tool = parameters.ToolDirectory @@ "Dynamics.CRM.SolutionExchanger.exe"
-    let args = sprintf "Import /url:%s /user:%s /password:%s /filename:%s" 
-                    parameters.Url parameters.User parameters.Password parameters.FileName
+    let args = sprintf "Import /url:%s /user:%s /password:%s /filename:%s /timeout:%i" 
+                    parameters.Url parameters.User parameters.Password parameters.FileName (int parameters.TimeOut.TotalMinutes)
     if 0 <> ExecProcess (fun pInfo -> 
                 pInfo.FileName <- tool
                 pInfo.WorkingDirectory <- parameters.WorkingDirectory
