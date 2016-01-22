@@ -59,10 +59,12 @@ namespace Test.FAKECore
         static Tuple<bool, Messages, string> RunExplicitWithResult(string scriptFilePath, string[] scriptArguments, string[] fsiArguments, bool useCache)
         {
             var stdOut = Console.Out;
+            var stdErr = Console.Error;
 
             var sbOut = new System.Text.StringBuilder();
             var outStream = new StringWriter(sbOut);
             Console.SetOut(outStream);
+            Console.SetError(outStream);
             Tuple<bool, Messages> result;
 
             try
@@ -74,6 +76,7 @@ namespace Test.FAKECore
             finally
             {
                 Console.SetOut(stdOut); // Now all output start going back to console window
+                Console.SetError(stdErr);
                 Console.Write(sbOut.ToString());
             }
 
@@ -117,6 +120,143 @@ namespace Test.FAKECore
         {
             return new FSIHelper.Script(contents, path.Replace("\\", "/"), null, null);
         }
+
+        It fallback_should_not_trigger_when_attribute_constructor_throws =
+            () =>
+            {
+                var scriptFilePath = Path.GetTempFileName() + ".fsx";
+                var scriptFileName = Path.GetFileName(scriptFilePath);
+                try
+                {
+                    var scriptText = @"
+open System
+type MyAttr() =
+  inherit Attribute()
+  do failwith ""test""
+
+[<MyAttr()>]
+type Test () =
+  do ignore ()
+[<assembly: MyAttr()>]
+do ()
+";
+                    File.WriteAllText(scriptFilePath, scriptText);
+                    var scriptHash =
+                            FSIHelper.getScriptHash(new FSIHelper.Script[] { script(scriptFilePath, scriptText) }, new List<string>());
+
+                    var cacheFilePath = Path.Combine(".", ".fake", scriptFileName + "_" + scriptHash + ".dll");
+
+                    File.Exists(cacheFilePath).ShouldEqual(false);
+
+                    var res1 = RunExplicitWithResult(scriptFilePath, EmptyArgs, EmptyArgs, true);
+                    res1.Item3.ShouldStartWith("Cache doesn't exist");
+
+                    File.Exists(cacheFilePath).ShouldEqual(true);
+
+                    var res2 = RunExplicitWithResult(scriptFilePath, EmptyArgs, EmptyArgs, true);
+                    res2.Item3.ShouldContain("Using cache");
+                    res2.Item3.ShouldNotContain("Cache is invalid, recompiling");
+                }
+                finally
+                {
+                    if (File.Exists(scriptFilePath))
+                        File.Delete(scriptFilePath);
+                }
+            };
+
+        It fallback_should_trigger_when_type_not_exists =
+            () =>
+            {
+                var scriptFilePath = Path.GetTempFileName() + ".fsx";
+                var scriptFileName = Path.GetFileName(scriptFilePath);
+                try
+                {
+                    File.WriteAllText(scriptFilePath, "printf \"foobar\"");
+                    var scriptHash =
+                            FSIHelper.getScriptHash(new FSIHelper.Script[] { script(scriptFilePath, "printf \"foobar\"") }, new List<string>());
+
+                    var cacheFilePath = Path.Combine(".", ".fake", scriptFileName + "_" + scriptHash + ".dll");
+
+                    File.Exists(cacheFilePath).ShouldEqual(false);
+
+                    RunExplicit(scriptFilePath, EmptyArgs, true)
+                        .ShouldStartWith("Cache doesn't exist");
+
+                    File.Exists(cacheFilePath).ShouldEqual(true);
+                    // Remove the type from the assembly as we are using it :)
+                    var res = FSIHelper.nameParser(scriptFileName);
+                    var reader = new Mono.Cecil.DefaultAssemblyResolver();
+                    reader.AddSearchDirectory(Path.GetDirectoryName(TraceHelper.fakePath));
+                    reader.AddSearchDirectory(Path.GetDirectoryName(typeof(Microsoft.FSharp.Core.FSharpOption<string>).Assembly.Location));
+                    var readerParams = new Mono.Cecil.ReaderParameters() { AssemblyResolver = reader };
+                    var asem = Mono.Cecil.AssemblyDefinition.ReadAssembly(cacheFilePath, readerParams);
+                    var i = 0;
+                    foreach (var type in asem.Modules.SelectMany(mod => mod.Types).Where(t =>
+                        // parseName t.FullName |> Option.isSome
+                        Microsoft.FSharp.Core.OptionModule.IsSome(res.Item3.Invoke(t.FullName))))
+                    {
+                        // Seems like deleting is not so simple, because others might reference the type
+                        // therefore we just rename the type -> our algorithm can no longer find it.
+                        type.Name = "YOU_CANNOT_FIND_ME_" + i++;
+                    }
+
+                    asem.Write(cacheFilePath);
+
+                    var result = RunExplicit(scriptFilePath, EmptyArgs, true);
+                    result.ShouldContain("Using cache");
+                    result.ShouldContain("Cache is invalid, recompiling");
+                }
+                finally
+                {
+                    if (File.Exists(scriptFilePath))
+                        File.Delete(scriptFilePath);
+                }
+            };
+
+        It fallback_should_trigger_when_method_not_exists =
+            () =>
+            {
+                var scriptFilePath = Path.GetTempFileName() + ".fsx";
+                var scriptFileName = Path.GetFileName(scriptFilePath);
+                try
+                {
+                    File.WriteAllText(scriptFilePath, "printf \"foobar\"");
+                    var scriptHash =
+                            FSIHelper.getScriptHash(new FSIHelper.Script[] { script(scriptFilePath, "printf \"foobar\"") }, new List<string>());
+
+                    var cacheFilePath = Path.Combine(".", ".fake", scriptFileName + "_" + scriptHash + ".dll");
+
+                    File.Exists(cacheFilePath).ShouldEqual(false);
+
+                    RunExplicit(scriptFilePath, EmptyArgs, true)
+                        .ShouldStartWith("Cache doesn't exist");
+
+                    File.Exists(cacheFilePath).ShouldEqual(true);
+                    // Remove the main method from the assembly as we are using it :)
+                    var reader = new Mono.Cecil.DefaultAssemblyResolver();
+                    reader.AddSearchDirectory(Path.GetDirectoryName(TraceHelper.fakePath));
+                    reader.AddSearchDirectory(Path.GetDirectoryName(typeof(Microsoft.FSharp.Core.FSharpOption<string>).Assembly.Location));
+                    var readerParams = new Mono.Cecil.ReaderParameters() { AssemblyResolver = reader };
+                    var asem = Mono.Cecil.AssemblyDefinition.ReadAssembly(cacheFilePath, readerParams);
+                    foreach (var type in asem.Modules.SelectMany(mod => mod.Types).Where(t => t.HasMethods))
+                    {
+                        foreach (var method in type.Methods.Where(method => method.Name == "main@").ToList())
+                        {
+                            type.Methods.Remove(method);
+                        }
+                    }
+                    asem.Write(cacheFilePath);
+
+                    var result = RunExplicit(scriptFilePath, EmptyArgs, true);
+                    result.ShouldContain("Using cache");
+                    result.ShouldContain("Cache is invalid, recompiling");
+                }
+                finally
+                {
+                    if (File.Exists(scriptFilePath))
+                        File.Delete(scriptFilePath);
+                }
+            };
 
         It fallback_should_not_trigger_on_build_errors =
             () =>
