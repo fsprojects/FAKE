@@ -9,8 +9,10 @@ open System.IO
 
 /// Returns the commit message file.
 let getCommitMessageFileInfo repositoryDir =
-    let oldgitFileInfo = (findGitDir repositoryDir).FullName + "\\COMMITMESSAGE" |> fileInfo
-    if oldgitFileInfo.Exists then oldgitFileInfo else (findGitDir repositoryDir).FullName + "\\COMMIT_EDITMSG" |> fileInfo
+    let gitDir = findGitDir repositoryDir
+    let oldgitFileInfo = gitDir.FullName </> "COMMITMESSAGE" |> fileInfo
+    if oldgitFileInfo.Exists then oldgitFileInfo
+    else gitDir.FullName </> "COMMIT_EDITMSG" |> fileInfo
 
 /// Gets the commit message
 let getCommitMessage repositoryDir = 
