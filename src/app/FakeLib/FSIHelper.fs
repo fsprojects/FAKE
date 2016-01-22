@@ -77,7 +77,7 @@ let getScriptHash pathsAndContents fsiOptions =
     let hasher = HashLib.HashFactory.Checksum.CreateCRC32a()
     hasher.ComputeString(fullContents + paths + fsiOptions).ToString()
 
-module private Cache =
+module internal Cache =
     let xname name = XName.Get(name)
     let create (loadedAssemblies : Reflection.Assembly seq) =
         let xelement name = XElement(xname name)
@@ -226,11 +226,12 @@ let private getCacheInfoFromScript printDetails fsiOptions scriptPath =
     let cacheConfigPath = hashPath + "_config.xml"
     let cacheConfig = lazy Cache.read cacheConfigPath
     let cacheValid =
-        let cacheFilesExist = 
+        let cacheFilesExistAndAreValid =
             File.Exists(assemblyPath) &&
             File.Exists(cacheConfigPath) &&
-            File.Exists(assemblyWarningsPath)
-        if cacheFilesExist then
+            File.Exists(assemblyWarningsPath) &&
+            cacheConfig.Value.Assemblies |> Seq.length > 0
+        if cacheFilesExistAndAreValid then
             let loadedAssemblies =
                 cacheConfig.Value.Assemblies
                 |> Seq.choose (fun assemInfo ->
@@ -376,7 +377,7 @@ let private handleCaching printDetails (session:IFsiSession) fsiErrorOutput (cac
             |> Seq.filter(fun assem -> assem.IsDynamic)
             |> Seq.map(fun assem -> assem.GetName().Name)
             |> Seq.filter(fun assem -> assem <> "FSI-ASSEMBLY")
-            |> Seq.filter(fun assem -> assem.StartsWith "FAKE_CACHE_")
+            |> Seq.filter(fun assem -> not <| assem.StartsWith "FAKE_CACHE_")
             // General Reflection.Emit helper (most likely harmless to ignore)
             |> Seq.filter(fun assem -> assem <> "Anonymously Hosted DynamicMethods Assembly")
             // RazorEngine generated
@@ -392,7 +393,7 @@ let private handleCaching printDetails (session:IFsiSession) fsiErrorOutput (cac
             let assemblies =
                 System.AppDomain.CurrentDomain.GetAssemblies()
                 |> Seq.filter(fun assem -> not assem.IsDynamic)
-                |> Seq.filter(fun assem -> assem.GetName().Name.StartsWith "FAKE_CACHE_")
+                |> Seq.filter(fun assem -> not <| assem.GetName().Name.StartsWith "FAKE_CACHE_")
                 // They are not dynamic, but can't be re-used either.
                 |> Seq.filter(fun assem -> not <| assem.GetName().Name.StartsWith("CompiledRazorTemplates.Dynamic.RazorEngine_"))
 
