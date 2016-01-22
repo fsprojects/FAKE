@@ -1,4 +1,4 @@
-#### 4.17.0-alpha003 - 22.01.2016
+#### 4.17.0-alpha004 - 22.01.2016
 * Renamed internal FSharp.Compiler.Service to avoid clashes - https://github.com/fsharp/FAKE/pull/1097
 * WiX service install - https://github.com/fsharp/FAKE/pull/1099
 * Fallback to recompile when caching of build script fails - https://github.com/fsharp/FAKE/pull/1093
