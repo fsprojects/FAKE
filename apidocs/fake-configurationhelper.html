@@ -40,7 +40,6 @@
 <div class="xmldoc">
 <p>Contains functions which allow to read and write config files.</p>
 
-
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -67,23 +66,18 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Applies a Xsl Stylesheet to a config file and writes it back.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>xsl</code> - The Xsl stylesheet to apply.</li>
 <li><code>fileName</code> - The file name of the config file.</li>
 </ul>
-
 <h2>Sample</h2>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">applyXslOnConfig</span> (<span class="i">navServicePath</span> <span class="o">@@</span> <span class="i">DEV</span><span class="o">.</span><span class="i">xsl</span>) (<span class="i">navServicePath</span> <span class="o">@@</span> <span class="s">&quot;CustomSettings.config&quot;</span>)
 </code></pre></td>
 </tr>
 </table>
-
 
 
         </td>
@@ -104,13 +98,10 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Reads a config file into an XmlDocument.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>fileName</code> - The file name of the config file.</li>
 </ul>
-
 
 
         </td>
@@ -131,24 +122,19 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Reads a config file from the given file name, replaces the Application Setting (as opposed to AppSetting) value and writes it back.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>settingName</code> - The ApplicationSetting name for which the value should be replaced.</li>
 <li><code>value</code> - The new ApplicationSetting value.</li>
 <li><code>fileName</code> - The file name of the config file.</li>
 </ul>
-
 <h2>Sample</h2>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">updateApplicationSetting</span> <span class="s">&quot;DatabaseName&quot;</span> <span class="i">targetDatabase</span> (<span class="i">navServicePath</span> <span class="o">@@</span> <span class="s">&quot;CustomSettings.config&quot;</span>)
 </code></pre></td>
 </tr>
 </table>
-
 
 
         </td>
@@ -169,24 +155,19 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Reads a config file from the given file name, replaces the app setting value and writes it back.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>key</code> - The AppSettings attribute key name for which the value should be replaced.</li>
 <li><code>value</code> - The new AppSettings attribute value.</li>
 <li><code>fileName</code> - The file name of the config file.</li>
 </ul>
-
 <h2>Sample</h2>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">updateAppSetting</span> <span class="s">&quot;DatabaseName&quot;</span> <span class="i">targetDatabase</span> (<span class="i">navServicePath</span> <span class="o">@@</span> <span class="s">&quot;CustomSettings.config&quot;</span>)
 </code></pre></td>
 </tr>
 </table>
-
 
 
         </td>
@@ -207,16 +188,13 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Reads a config file from the given file name, replaces an attribute using the given xPath and writes it back.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>xpath</code> - An XPath term which can be used to replace the attribute.</li>
 <li><code>attribute</code> - The attribute name for which the value should be replaced.</li>
 <li><code>value</code> - The new attribute value.</li>
 <li><code>config</code> - The XElement representing the config.</li>
 </ul>
-
 
 
         </td>
@@ -237,16 +215,13 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Reads a config file from the given file name, replaces an attribute using the given xPath and writes it back.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>fileName</code> - The file name of the config file.</li>
 <li><code>xpath</code> - An XPath term which can be used to replace the attribute.</li>
 <li><code>attribute</code> - The attribute name for which the value should be replaced.</li>
 <li><code>value</code> - The new attribute value.</li>
 </ul>
-
 
 
         </td>
@@ -267,15 +242,12 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Reads a config file from the given file name, replaces the connection string value and writes it back.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>connectionStringKey</code> - The connection string key name for which the value should be replaced.</li>
 <li><code>value</code> - The new connection string value.</li>
 <li><code>fileName</code> - The file name of the config file.</li>
 </ul>
-
 
 
         </td>
@@ -296,14 +268,11 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Writes an XmlDocument to a config file.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>fileName</code> - The file name of the config file.</li>
 <li><code>config</code> - The XmlDocument representing the config.</li>
 </ul>
-
 
 
         </td>

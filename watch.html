@@ -38,14 +38,10 @@
       <div class="row">
         <div class="span9" id="main">
           <h1>Watching for file changes with "FAKE - F# Make"</h1>
-
 <p>FAKE makes it easy to setup monitoring for filesystem changes. Using the standard glob patterns you can
 watch for changes, and automatically run a function or another target.</p>
-
 <h2>Using WatchChanges</h2>
-
 <p>Add a new target named "Watch" to your build:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -78,12 +74,9 @@ watch for changes, and automatically run a function or another target.</p>
 </code></pre></td>
 </tr>
 </table>
-
 <p>Now run build.fsx and make some changes to the docs directory. They should be printed out to the console as they happen,
 and the GenerateDocs target should be rerun.</p>
-
 <p>If you need to watch only a subset of the files, say you want to rerun tests as soon as the compiled DLLs change:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -116,24 +109,17 @@ and the GenerateDocs target should be rerun.</p>
 </code></pre></td>
 </tr>
 </table>
-
 <h2>Running on Linux or Mac OSX</h2>
-
 <p><code>WatchChanges</code> requires additional care when running on Linux or Mac OSX. The following sections describe potential issues you may encounter.</p>
-
 <h3>Maximum Number of Files to Watch Exception</h3>
-
 <p>When running on Linux or Mac OSX, you should add the following export to your <code>.bashrc</code> or <code>.bash_profile</code>:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">export</span> <span class="i">MONO_MANAGED_WATCHER</span><span class="o">=</span><span class="k">false</span>
 </code></pre></td>
 </tr>
 </table>
-
 <p>If you don't add this, you may see the following exception when attempting to run the <code>WatchChanges</code> task:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -152,11 +138,8 @@ and the GenerateDocs target should be rerun.</p>
 </code></pre></td>
 </tr>
 </table>
-
 <h3>Watching Changes from Windows over Parallels</h3>
-
 <p>The Windows file watcher does not appear to be able to correctly identify changes that occur within a folder shared by Parallels between Mac OSX and Windows. If you want to run <code>WatchChanges</code>, you will need to run your FAKE script from Mac OSX.</p>
-
 <p>At this time, only Parallels is known to have this problem, but you should assume that any other virtualization solutions will have the same problem. If you confirm a similar problem with other Linux distros or VM platforms, please update this document accordingly.</p>
 
           <div class="tip" id="fs1">namespace System</div>

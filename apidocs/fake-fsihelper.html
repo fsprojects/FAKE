@@ -40,7 +40,6 @@
 <div class="xmldoc">
 <p>Contains helper functions which allow to interact with the F# Interactive.</p>
 
-
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -103,12 +102,11 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FSIHelper.fs#L506-506" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FSIHelper.fs#L509-509" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Run the given buildscript with fsi.exe and allows for extra arguments to the script. Returns output.</p>
-
 
 
         </td>
@@ -124,12 +122,11 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FSIHelper.fs#L520-520" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FSIHelper.fs#L523-523" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Run the given buildscript with fsi.exe and allows for extra arguments to the script. Returns output.</p>
-
 
 
         </td>
@@ -152,7 +149,6 @@
           <p>Run the given buildscript with fsi.exe</p>
 
 
-
         </td>
       </tr>
       <tr>
@@ -171,7 +167,6 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Run the given build script with fsi.exe and allows for extra arguments to FSI.</p>
-
 
 
         </td>
@@ -194,7 +189,6 @@
           <p>Run the given build script with fsi.exe and allows for extra arguments to the script. Returns output.</p>
 
 
-
         </td>
       </tr>
       <tr>
@@ -215,7 +209,6 @@
           <p>The path to the F# Interactive tool.</p>
 
 
-
         </td>
       </tr>
       <tr>
@@ -234,7 +227,6 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Creates a ProcessStartInfo which is configured to the F# Interactive.</p>
-
 
 
         </td>
@@ -369,9 +361,29 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '280', 280)" onmouseover="showTip(event, '280', 280)">
-            rAssemblyRegex 
+            nameParser scriptFileName
           </code>
           <div class="tip" id="280">
+            <strong>Signature:</strong> scriptFileName:string -&gt; string * (string -&gt; string) * (string -&gt; string option)<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FSIHelper.fs#L284-284" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>because it is used by test code</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '281', 281)" onmouseover="showTip(event, '281', 281)">
+            rAssemblyRegex 
+          </code>
+          <div class="tip" id="281">
             <strong>Signature:</strong> Regex<br />
                       </div>
         </td>
@@ -386,41 +398,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '281', 281)" onmouseover="showTip(event, '281', 281)">
-            runBuildScript (...)
-          </code>
-          <div class="tip" id="281">
-            <strong>Signature:</strong> printDetails:bool -&gt; script:string -&gt; extraFsiArgs:string list -&gt; env:seq&lt;string * string&gt; -&gt; useCache:bool -&gt; bool<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FSIHelper.fs#L535-535" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Run the given buildscript with fsi.exe</p>
-
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
           <code onmouseout="hideTip(event, '282', 282)" onmouseover="showTip(event, '282', 282)">
-            runBuildScriptAt (...)
+            runBuildScript (...)
           </code>
           <div class="tip" id="282">
             <strong>Signature:</strong> printDetails:bool -&gt; script:string -&gt; extraFsiArgs:string list -&gt; env:seq&lt;string * string&gt; -&gt; useCache:bool -&gt; bool<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FSIHelper.fs#L531-531" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FSIHelper.fs#L538-538" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Run the given buildscript with fsi.exe at the given working directory.</p>
-
+          <p>Run the given buildscript with fsi.exe</p>
 
 
         </td>
@@ -429,19 +419,18 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '283', 283)" onmouseover="showTip(event, '283', 283)">
-            runBuildScriptWithFsiArgsAt (...)
+            runBuildScriptAt (...)
           </code>
           <div class="tip" id="283">
-            <strong>Signature:</strong> printDetails:bool -&gt; FsiArgs -&gt; env:seq&lt;string * string&gt; -&gt; useCache:bool -&gt; bool<br />
+            <strong>Signature:</strong> printDetails:bool -&gt; script:string -&gt; extraFsiArgs:string list -&gt; env:seq&lt;string * string&gt; -&gt; useCache:bool -&gt; bool<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FSIHelper.fs#L524-524" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FSIHelper.fs#L534-534" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Run the given buildscript with fsi.exe at the given working directory.  Provides full access to Fsi options and args.</p>
-
+          <p>Run the given buildscript with fsi.exe at the given working directory.</p>
 
 
         </td>
@@ -450,9 +439,29 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '284', 284)" onmouseover="showTip(event, '284', 284)">
-            searchPathRegex 
+            runBuildScriptWithFsiArgsAt (...)
           </code>
           <div class="tip" id="284">
+            <strong>Signature:</strong> printDetails:bool -&gt; FsiArgs -&gt; env:seq&lt;string * string&gt; -&gt; useCache:bool -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FSIHelper.fs#L527-527" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Run the given buildscript with fsi.exe at the given working directory.  Provides full access to Fsi options and args.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '285', 285)" onmouseover="showTip(event, '285', 285)">
+            searchPathRegex 
+          </code>
+          <div class="tip" id="285">
             <strong>Signature:</strong> Regex<br />
                       </div>
         </td>

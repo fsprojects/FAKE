@@ -40,7 +40,6 @@
 <div class="xmldoc">
 <p>Contains tasks which allow to control NT services.</p>
 
-
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -54,10 +53,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '569', 569)" onmouseover="showTip(event, '569', 569)">
+          <code onmouseout="hideTip(event, '570', 570)" onmouseover="showTip(event, '570', 570)">
             checkRemoteServiceExists host name
           </code>
-          <div class="tip" id="569">
+          <div class="tip" id="570">
             <strong>Signature:</strong> host:string -&gt; name:string -&gt; bool<br />
                       </div>
         </td>
@@ -67,14 +66,11 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Returns whether a remote service with the given name exists.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>host</code> - The hostname of the remote machine.</li>
 <li><code>name</code> - The name of the service in question.</li>
 </ul>
-
 
 
         </td>
@@ -82,10 +78,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '570', 570)" onmouseover="showTip(event, '570', 570)">
+          <code onmouseout="hideTip(event, '571', 571)" onmouseover="showTip(event, '571', 571)">
             checkServiceExists name
           </code>
-          <div class="tip" id="570">
+          <div class="tip" id="571">
             <strong>Signature:</strong> name:string -&gt; bool<br />
                       </div>
         </td>
@@ -95,13 +91,10 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Returns whether a local service with the given name exists.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>name</code> - The name of the service in question.</li>
 </ul>
-
 
 
         </td>
@@ -109,10 +102,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '571', 571)" onmouseover="showTip(event, '571', 571)">
+          <code onmouseout="hideTip(event, '572', 572)" onmouseover="showTip(event, '572', 572)">
             ensureRemoteServiceHasStarted (...)
           </code>
-          <div class="tip" id="571">
+          <div class="tip" id="572">
             <strong>Signature:</strong> host:string -&gt; name:string -&gt; timeout:TimeSpan -&gt; unit<br />
                       </div>
         </td>
@@ -122,9 +115,7 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Waits until the remote service with the given name has been started or fails after given timeout</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>host</code> - The hostname of the remote machine.</li>
 <li><code>name</code> - The name of the service in question.</li>
@@ -132,16 +123,15 @@
 </ul>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '572', 572)" onmouseover="showTip(event, '572', 572)">
+          <code onmouseout="hideTip(event, '573', 573)" onmouseover="showTip(event, '573', 573)">
             ensureRemoteServiceHasStopped (...)
           </code>
-          <div class="tip" id="572">
+          <div class="tip" id="573">
             <strong>Signature:</strong> host:string -&gt; name:string -&gt; timeout:TimeSpan -&gt; unit<br />
                       </div>
         </td>
@@ -151,9 +141,7 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Waits until the remote service with the given name has been stopped or fails after given timeout</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>host</code> - The hostname of the remote machine.</li>
 <li><code>name</code> - The name of the service in question.</li>
@@ -161,16 +149,15 @@
 </ul>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '573', 573)" onmouseover="showTip(event, '573', 573)">
+          <code onmouseout="hideTip(event, '574', 574)" onmouseover="showTip(event, '574', 574)">
             ensureServiceHasStarted name timeout
           </code>
-          <div class="tip" id="573">
+          <div class="tip" id="574">
             <strong>Signature:</strong> name:string -&gt; timeout:TimeSpan -&gt; unit<br />
                       </div>
         </td>
@@ -180,14 +167,11 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Waits until the local service with the given name has been started or fails after given timeout</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>name</code> - The name of the service in question.</li>
 <li><code>timeout</code> - The timespan to time out after.</li>
 </ul>
-
 
 
         </td>
@@ -195,10 +179,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '574', 574)" onmouseover="showTip(event, '574', 574)">
+          <code onmouseout="hideTip(event, '575', 575)" onmouseover="showTip(event, '575', 575)">
             ensureServiceHasStopped name timeout
           </code>
-          <div class="tip" id="574">
+          <div class="tip" id="575">
             <strong>Signature:</strong> name:string -&gt; timeout:TimeSpan -&gt; unit<br />
                       </div>
         </td>
@@ -208,14 +192,11 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Waits until the local service with the given name has been stopped or fails after given timeout</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>name</code> - The name of the service in question.</li>
 <li><code>timeout</code> - The timespan to time out after.</li>
 </ul>
-
 
 
         </td>
@@ -223,10 +204,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '575', 575)" onmouseover="showTip(event, '575', 575)">
+          <code onmouseout="hideTip(event, '576', 576)" onmouseover="showTip(event, '576', 576)">
             getRemoteService host name
           </code>
-          <div class="tip" id="575">
+          <div class="tip" id="576">
             <strong>Signature:</strong> host:string -&gt; name:string -&gt; ServiceController option<br />
                       </div>
         </td>
@@ -236,14 +217,11 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Returns the first remote service with given name or None.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>host</code> - The hostname of the remote machine.</li>
 <li><code>name</code> - The name of the service in question.</li>
 </ul>
-
 
 
         </td>
@@ -251,10 +229,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '576', 576)" onmouseover="showTip(event, '576', 576)">
+          <code onmouseout="hideTip(event, '577', 577)" onmouseover="showTip(event, '577', 577)">
             getRemoteServices host name
           </code>
-          <div class="tip" id="576">
+          <div class="tip" id="577">
             <strong>Signature:</strong> host:string -&gt; name:string -&gt; seq&lt;ServiceController&gt;<br />
                       </div>
         </td>
@@ -264,14 +242,11 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Returns sequence of remote services with given name.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>host</code> - The hostname of the remote machine.</li>
 <li><code>name</code> - The name of the services in question.</li>
 </ul>
-
 
 
         </td>
@@ -279,10 +254,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '577', 577)" onmouseover="showTip(event, '577', 577)">
+          <code onmouseout="hideTip(event, '578', 578)" onmouseover="showTip(event, '578', 578)">
             getRemoteServiceStatus host name
           </code>
-          <div class="tip" id="577">
+          <div class="tip" id="578">
             <strong>Signature:</strong> host:string -&gt; name:string -&gt; ServiceControllerStatus<br />
                       </div>
         </td>
@@ -292,14 +267,11 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Returns status of the remote service with given name or fails when service is not found.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>host</code> - The hostname of the remote machine.</li>
 <li><code>name</code> - The name of the service in question.</li>
 </ul>
-
 
 
         </td>
@@ -307,10 +279,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '578', 578)" onmouseover="showTip(event, '578', 578)">
+          <code onmouseout="hideTip(event, '579', 579)" onmouseover="showTip(event, '579', 579)">
             getService name
           </code>
-          <div class="tip" id="578">
+          <div class="tip" id="579">
             <strong>Signature:</strong> name:string -&gt; ServiceController option<br />
                       </div>
         </td>
@@ -320,13 +292,10 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Returns the first local service with given name or None.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>name</code> - The name of the service in question.</li>
 </ul>
-
 
 
         </td>
@@ -334,10 +303,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '579', 579)" onmouseover="showTip(event, '579', 579)">
+          <code onmouseout="hideTip(event, '580', 580)" onmouseover="showTip(event, '580', 580)">
             getServices name
           </code>
-          <div class="tip" id="579">
+          <div class="tip" id="580">
             <strong>Signature:</strong> name:string -&gt; seq&lt;ServiceController&gt;<br />
                       </div>
         </td>
@@ -347,13 +316,10 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Returns sequence of local services with given name.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>name</code> - The name of the services in question.</li>
 </ul>
-
 
 
         </td>
@@ -361,10 +327,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '580', 580)" onmouseover="showTip(event, '580', 580)">
+          <code onmouseout="hideTip(event, '581', 581)" onmouseover="showTip(event, '581', 581)">
             getServiceStatus name
           </code>
-          <div class="tip" id="580">
+          <div class="tip" id="581">
             <strong>Signature:</strong> name:string -&gt; ServiceControllerStatus<br />
                       </div>
         </td>
@@ -374,13 +340,10 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Returns status of the local service with given name or fails when service is not found.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>name</code> - The name of the service in question.</li>
 </ul>
-
 
 
         </td>
@@ -388,10 +351,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '581', 581)" onmouseover="showTip(event, '581', 581)">
+          <code onmouseout="hideTip(event, '582', 582)" onmouseover="showTip(event, '582', 582)">
             isService name service
           </code>
-          <div class="tip" id="581">
+          <div class="tip" id="582">
             <strong>Signature:</strong> name:string -&gt; service:ServiceController -&gt; bool<br />
                       </div>
         </td>
@@ -401,14 +364,11 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Returns whether the given service has the given name as display or service name.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>name</code> - The name to check for.</li>
 <li><code>service</code> - The service in question.</li>
 </ul>
-
 
 
         </td>
@@ -416,10 +376,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '582', 582)" onmouseover="showTip(event, '582', 582)">
+          <code onmouseout="hideTip(event, '583', 583)" onmouseover="showTip(event, '583', 583)">
             startRemoteService host name
           </code>
-          <div class="tip" id="582">
+          <div class="tip" id="583">
             <strong>Signature:</strong> host:string -&gt; name:string -&gt; unit<br />
                       </div>
         </td>
@@ -429,14 +389,11 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Starts all remote services with given name.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>host</code> - The hostname of the remote machine.</li>
 <li><code>name</code> - The name of the services in question.</li>
 </ul>
-
 
 
         </td>
@@ -444,10 +401,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '583', 583)" onmouseover="showTip(event, '583', 583)">
+          <code onmouseout="hideTip(event, '584', 584)" onmouseover="showTip(event, '584', 584)">
             startService name
           </code>
-          <div class="tip" id="583">
+          <div class="tip" id="584">
             <strong>Signature:</strong> name:string -&gt; unit<br />
                       </div>
         </td>
@@ -457,13 +414,10 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Starts all local services with given name.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>name</code> - The name of the services in question.</li>
 </ul>
-
 
 
         </td>
@@ -471,10 +425,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '584', 584)" onmouseover="showTip(event, '584', 584)">
+          <code onmouseout="hideTip(event, '585', 585)" onmouseover="showTip(event, '585', 585)">
             stopRemoteService host name
           </code>
-          <div class="tip" id="584">
+          <div class="tip" id="585">
             <strong>Signature:</strong> host:string -&gt; name:string -&gt; unit<br />
                       </div>
         </td>
@@ -484,14 +438,11 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Stops all services with given name.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>host</code> - The hostname of the remote machine.</li>
 <li><code>name</code> - The name of the services in question.</li>
 </ul>
-
 
 
         </td>
@@ -499,10 +450,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '585', 585)" onmouseover="showTip(event, '585', 585)">
+          <code onmouseout="hideTip(event, '586', 586)" onmouseover="showTip(event, '586', 586)">
             stopService name
           </code>
-          <div class="tip" id="585">
+          <div class="tip" id="586">
             <strong>Signature:</strong> name:string -&gt; unit<br />
                       </div>
         </td>
@@ -512,13 +463,10 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Stops all local services with given name.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>name</code> - The name of the services in question.</li>
 </ul>
-
 
 
         </td>

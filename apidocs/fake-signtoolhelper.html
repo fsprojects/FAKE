@@ -40,13 +40,11 @@
 <div class="xmldoc">
 <p>Contains a task to sign assemblies using the <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/aa387764(v=vs.85).aspx">SignTool</a>.</p>
 
-
         <h2>Certificates</h2>
 <p>The SignTool needs a certificate to sign assemblies. It is not a good idea to include a certficate in your
 source control system, but the sign step should be usable on developer machines. Because of this, you can
 specify a dev certificate that can safely included in your source control system. Whenever the real certificate
 can not be found, the dev certificate will be used.</p>
-
 
 </div>
 
@@ -64,7 +62,6 @@ can not be found, the dev certificate will be used.</p>
           </td>
           <td class="xmldoc"><p>Represents a certificate file and an optional password</p>
 
-
 </td>
         </tr>
         <tr>
@@ -72,7 +69,6 @@ can not be found, the dev certificate will be used.</p>
             <a href="fake-signtoolhelper-signparams.html">SignParams</a>
           </td>
           <td class="xmldoc"><p>Parameters used for signing.</p>
-
 
 </td>
         </tr>
@@ -90,10 +86,10 @@ can not be found, the dev certificate will be used.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '586', 586)" onmouseover="showTip(event, '586', 586)">
+          <code onmouseout="hideTip(event, '587', 587)" onmouseover="showTip(event, '587', 587)">
             Sign toolsPath parameters filesToSign
           </code>
-          <div class="tip" id="586">
+          <div class="tip" id="587">
             <strong>Signature:</strong> toolsPath:string -&gt; parameters:SignParams -&gt; filesToSign:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -106,16 +102,15 @@ can not be found, the dev certificate will be used.</p>
 This will be looked up using the toolsPath parameter.</p>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '587', 587)" onmouseover="showTip(event, '587', 587)">
+          <code onmouseout="hideTip(event, '588', 588)" onmouseover="showTip(event, '588', 588)">
             SignTool (...)
           </code>
-          <div class="tip" id="587">
+          <div class="tip" id="588">
             <strong>Signature:</strong> toolsPath:string -&gt; certFile:string -&gt; passFile:string option -&gt; filesToSign:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -124,10 +119,9 @@ This will be looked up using the toolsPath parameter.</p>
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Signs all files in filesToSign with the certification file certFile, 
-protected with the password in the file passFile. 
+          <p>Signs all files in filesToSign with the certification file certFile,
+protected with the password in the file passFile.
 The signtool will be search in the toolPath.</p>
-
 
 
         </td>

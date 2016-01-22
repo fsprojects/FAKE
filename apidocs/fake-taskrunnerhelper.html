@@ -40,7 +40,6 @@
 <div class="xmldoc">
 <p>Contains a helper which can be used to implement timeouts and retries.</p>
 
-
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -54,10 +53,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '695', 695)" onmouseover="showTip(event, '695', 695)">
+          <code onmouseout="hideTip(event, '696', 696)" onmouseover="showTip(event, '696', 696)">
             runWithRetries f retries
           </code>
-          <div class="tip" id="695">
+          <div class="tip" id="696">
             <strong>Signature:</strong> f:(unit -&gt; &#39;?8623) -&gt; retries:int -&gt; &#39;?8623<br />
                           <strong>Type parameters:</strong> '?8623          </div>
         </td>
@@ -67,14 +66,11 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Retries the given function until a retry limit is reached or the function succeeds without exception.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>f</code> - This function will be started.</li>
 <li><code>retries</code> - A retry limit.</li>
 </ul>
-
 
 
         </td>
@@ -82,10 +78,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '696', 696)" onmouseover="showTip(event, '696', 696)">
+          <code onmouseout="hideTip(event, '697', 697)" onmouseover="showTip(event, '697', 697)">
             waitFor f timeout testMS timeoutF
           </code>
-          <div class="tip" id="696">
+          <div class="tip" id="697">
             <strong>Signature:</strong> f:(unit -&gt; bool) -&gt; timeout:TimeSpan -&gt; testMS:int -&gt; timeoutF:(unit -&gt; unit) -&gt; TimeSpan<br />
                       </div>
         </td>
@@ -95,16 +91,13 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Waits until the given function returns true or the timeout is reached.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>f</code> - This function will be started.</li>
 <li><code>timeout</code> - A System.TimeSpan representing the timeout.</li>
 <li><code>testMS</code> - An interval at which FAKE checks if the function has succeeded.</li>
 <li><code>timeoutF</code> - This function will be run if the timeout has been reached.</li>
 </ul>
-
 
 
         </td>

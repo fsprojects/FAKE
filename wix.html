@@ -38,12 +38,9 @@
       <div class="row">
         <div class="span9" id="main">
           <h1>Create WiX Setup</h1>
-
 <p>If you often ship software to customers, it might be comfortable for you to install it using setups rather than manually deploying.
 FAKE provides you with support for creating MSI setups using the WiX Toolset (<a href="http://wixtoolset.org/).">http://wixtoolset.org/).</a></p>
-
 <h2>Minimal working example</h2>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -121,10 +118,10 @@ FAKE provides you with support for creating MSI setups using the WiX Toolset (<a
             <span class="k">true</span> 
         <span class="k">else</span> 
             <span class="k">false</span>
-
+        
     <span class="c">// Collect Files which should be shipped. Pass directory with your deployment output for deployDir</span>
     <span class="k">let</span> <span class="i">components</span> <span class="o">=</span> <span class="i">bulkComponentCreation</span> <span class="i">fileFilter</span> (<span class="i">DirectoryInfo</span> <span class="i">deployDir</span>)
-
+             
     <span class="c">// Collect component references for usage in features</span>
     <span class="k">let</span> <span class="i">componentRefs</span> <span class="o">=</span> <span class="i">components</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">map</span>(<span class="k">fun</span> <span class="i">comp</span> <span class="k">-&gt;</span> <span class="i">comp</span><span class="o">.</span><span class="i">ToComponentRef</span>())
 
@@ -176,7 +173,7 @@ FAKE provides you with support for creating MSI setups using the WiX Toolset (<a
                                 <span class="i">BuildNumber</span> <span class="o">=</span> <span class="s">&quot;Build number&quot;</span>
                                 <span class="i">Features</span> <span class="o">=</span> [<span class="i">completeFeature</span>]
                             })
-
+        
 
     <span class="c">// run the WiX tools</span>
     <span class="i">WiX</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> {<span class="i">p</span> <span class="k">with</span> <span class="i">ToolDirectory</span> <span class="o">=</span> <span class="i">WiXPath</span>}) 
@@ -186,18 +183,14 @@ FAKE provides you with support for creating MSI setups using the WiX Toolset (<a
 </code></pre></td>
 </tr>
 </table>
-
 <h2>Further possibilities</h2>
-
 <p>Besides just plainly shipping those files as setup you can also use the custom action and custom action execution elements to execute various commands before or after certain events during the installation.
 This gives you the possibility to for example install, uninstall, start or stop certain services when you need to.
 If your software is for example running as a service at your customer's side, you would need to manually stop and start the services on upgrades.
 WiX knows the "ServiceControl" element for starting, stopping and removing services. You attach it to components.
 If a component's files change and it has a Service Control element, the service that is referred to will be started, stopped or uninstalled, just as you defined it.
 You can use the attachServiceToControlComponents function for attaching service controls to components. You would only have to slightly change the above example:</p>
-
 <h3>Example</h3>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>

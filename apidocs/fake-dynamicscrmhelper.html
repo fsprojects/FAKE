@@ -40,7 +40,6 @@
 <div class="xmldoc">
 <p>Contains various functions for interacting with Dynamics CRM. So far there is support for exporting and importing solutions, zipping and unzipping using the Solution Packager, as well as publishing customizations.</p>
 
-
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -57,7 +56,6 @@
           </td>
           <td class="xmldoc"><p>Parameters for executing Dynamics CRM Helper functions</p>
 
-
 </td>
         </tr>
         <tr>
@@ -65,7 +63,6 @@
             <a href="fake-dynamicscrmhelper-packagetype.html">PackageType</a>
           </td>
           <td class="xmldoc"><p>Specify Package Type for usage with Solution Packager</p>
-
 
 </td>
         </tr>
@@ -75,7 +72,6 @@
           </td>
           <td class="xmldoc"><p>Specify which action Solution Packager should be invoked with</p>
 
-
 </td>
         </tr>
         <tr>
@@ -83,7 +79,6 @@
             <a href="fake-dynamicscrmhelper-solutionpackagerparams.html">SolutionPackagerParams</a>
           </td>
           <td class="xmldoc"><p>Parameters for invoking Solution Packager</p>
-
 
 </td>
         </tr>
@@ -117,7 +112,6 @@
 You can obtain the solution exchanger as NuGet Package "Dynamics.CRM.SolutionExchanger"</p>
 
 
-
         </td>
       </tr>
       <tr>
@@ -136,11 +130,10 @@ You can obtain the solution exchanger as NuGet Package "Dynamics.CRM.SolutionExc
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Exports solution from Dynamics CRM and save it to file</p>
-
 <h2>Parameters</h2>
-
 <ul>
-<li><p><code>setParams</code> - Parameters for invoking solution exchanger</p>
+<li>
+<p><code>setParams</code> - Parameters for invoking solution exchanger</p>
 <h2>Sample</h2>
 <p>// This Target will get all solutions of all organizations that the executing user has access to, export them as unmanaged and extract them using Solution Packager.
 // Extracted solutions are stored in a folder named according to the name of the organization they were exported from.
@@ -192,9 +185,9 @@ CreateDir solutions</p>
 </code></pre></td>
 </tr>
 </table>
-<p>)</p></li>
+<p>)</p>
+</li>
 </ul>
-
 <div class="tip" id="fs1">module Seq<br /><br />from Microsoft.FSharp.Collections</div>
 <div class="tip" id="fs2">val iter : action:(&#39;T -&gt; unit) -&gt; source:seq&lt;&#39;T&gt; -&gt; unit<br /><br />Full name: Microsoft.FSharp.Collections.Seq.iter</div>
 <div class="tip" id="fs3">val solution : obj</div>
@@ -219,13 +212,10 @@ CreateDir solutions</p>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Imports zipped solution file to Dynamics CRM</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>setParams</code> - Parameters for invoking solution exchanger</li>
 </ul>
-
 
 
         </td>
@@ -246,13 +236,10 @@ CreateDir solutions</p>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Publishes all solution component changes.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>setParams</code> - Parameters for invoking solution exchanger</li>
 </ul>
-
 
 
         </td>
@@ -273,13 +260,10 @@ CreateDir solutions</p>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Runs the solution packager tool on the given file for extracting the zip file or packing the extracted XML representation of a solution to a zip file again</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>setParams</code> - Parameters for invoking solution packager</li>
 </ul>
-
 
 
         </td>
@@ -300,7 +284,6 @@ CreateDir solutions</p>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Default values for invoking Solution Packager</p>
-
 
 
         </td>

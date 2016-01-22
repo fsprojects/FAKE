@@ -41,7 +41,6 @@
 <p>Contains functions which allow basic operations on git repositories.
 All operations assume that the CommandHelper can find git.exe.</p>
 
-
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -55,10 +54,10 @@ All operations assume that the CommandHelper can find git.exe.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1008', 1008)" onmouseover="showTip(event, '1008', 1008)">
+          <code onmouseout="hideTip(event, '1009', 1009)" onmouseover="showTip(event, '1009', 1009)">
             clone workingDir repoUrl toPath
           </code>
-          <div class="tip" id="1008">
+          <div class="tip" id="1009">
             <strong>Signature:</strong> workingDir:string -&gt; repoUrl:string -&gt; toPath:string -&gt; unit<br />
                       </div>
         </td>
@@ -68,9 +67,7 @@ All operations assume that the CommandHelper can find git.exe.</p>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Clones a git repository.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>workingDir</code> - The working directory.</li>
 <li><code>repoUrl</code> - The URL to the origin.</li>
@@ -78,16 +75,15 @@ All operations assume that the CommandHelper can find git.exe.</p>
 </ul>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1009', 1009)" onmouseover="showTip(event, '1009', 1009)">
+          <code onmouseout="hideTip(event, '1010', 1010)" onmouseover="showTip(event, '1010', 1010)">
             cloneSingleBranch (...)
           </code>
-          <div class="tip" id="1009">
+          <div class="tip" id="1010">
             <strong>Signature:</strong> workingDir:string -&gt; repoUrl:string -&gt; branchName:string -&gt; toPath:string -&gt; unit<br />
                       </div>
         </td>
@@ -97,9 +93,7 @@ All operations assume that the CommandHelper can find git.exe.</p>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Clones a single branch of a git repository.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>workingDir</code> - The working directory.</li>
 <li><code>repoUrl</code> - The URL to the origin.</li>
@@ -108,16 +102,15 @@ All operations assume that the CommandHelper can find git.exe.</p>
 </ul>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1010', 1010)" onmouseover="showTip(event, '1010', 1010)">
+          <code onmouseout="hideTip(event, '1011', 1011)" onmouseover="showTip(event, '1011', 1011)">
             fullclean repositoryDir
           </code>
-          <div class="tip" id="1010">
+          <div class="tip" id="1011">
             <strong>Signature:</strong> repositoryDir:string -&gt; unit<br />
                       </div>
         </td>
@@ -127,13 +120,10 @@ All operations assume that the CommandHelper can find git.exe.</p>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Cleans a directory by removing all files and sub-directories.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>repositoryDir</code> - The path of the directory to clean.</li>
 </ul>
-
 
 
         </td>
@@ -141,10 +131,10 @@ All operations assume that the CommandHelper can find git.exe.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1011', 1011)" onmouseover="showTip(event, '1011', 1011)">
+          <code onmouseout="hideTip(event, '1012', 1012)" onmouseover="showTip(event, '1012', 1012)">
             init repositoryDir bare shared
           </code>
-          <div class="tip" id="1011">
+          <div class="tip" id="1012">
             <strong>Signature:</strong> repositoryDir:string -&gt; bare:bool -&gt; shared:bool -&gt; unit<br />
                       </div>
         </td>
@@ -154,15 +144,12 @@ All operations assume that the CommandHelper can find git.exe.</p>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Inits a git repository.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>repositoryDir</code> - The path of the target directory.</li>
 <li><code>bare</code> - If the new directory is a bare directory.</li>
 <li><code>shared</code> - Specifies that the git repository is to be shared amongst several users. This allows users belonging to the same group to push into that repository.</li>
 </ul>
-
 
 
         </td>

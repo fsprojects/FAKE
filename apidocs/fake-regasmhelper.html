@@ -40,7 +40,6 @@
 <div class="xmldoc">
 <p>Contains a task which can be used to run regasm .NET assembly</p>
 
-
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -56,7 +55,6 @@
             <a href="fake-regasmhelper-regasmparams.html">RegAsmParams</a>
           </td>
           <td class="xmldoc"><p>RegAsm parameter type</p>
-
 
 </td>
         </tr>
@@ -74,10 +72,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '531', 531)" onmouseover="showTip(event, '531', 531)">
+          <code onmouseout="hideTip(event, '532', 532)" onmouseover="showTip(event, '532', 532)">
             RegAsm setParams lib
           </code>
-          <div class="tip" id="531">
+          <div class="tip" id="532">
             <strong>Signature:</strong> setParams:(RegAsmParams -&gt; RegAsmParams) -&gt; lib:string -&gt; unit<br />
                       </div>
         </td>
@@ -87,14 +85,11 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Runs regasm on the given lib</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>setParams</code> - Function used to manipulate the default RegAsm parameters.</li>
 <li><code>lib</code> - The assembly file name.</li>
 </ul>
-
 
 
         </td>
@@ -102,10 +97,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '532', 532)" onmouseover="showTip(event, '532', 532)">
+          <code onmouseout="hideTip(event, '533', 533)" onmouseover="showTip(event, '533', 533)">
             RegAsmDefaults 
           </code>
-          <div class="tip" id="532">
+          <div class="tip" id="533">
             <strong>Signature:</strong> RegAsmParams<br />
                       </div>
         </td>
@@ -117,16 +112,15 @@
           <p>RegAsm default params</p>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '533', 533)" onmouseover="showTip(event, '533', 533)">
+          <code onmouseout="hideTip(event, '534', 534)" onmouseover="showTip(event, '534', 534)">
             regAsmToolPath 
           </code>
-          <div class="tip" id="533">
+          <div class="tip" id="534">
             <strong>Signature:</strong> string<br />
                       </div>
         </td>
@@ -138,16 +132,15 @@
           <p>Path to newest <code>regasm.exe</code></p>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '534', 534)" onmouseover="showTip(event, '534', 534)">
+          <code onmouseout="hideTip(event, '535', 535)" onmouseover="showTip(event, '535', 535)">
             RegisterAssembliesWithCodebase (...)
           </code>
-          <div class="tip" id="534">
+          <div class="tip" id="535">
             <strong>Signature:</strong> workingDir:string -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -157,10 +150,8 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Executes <code>RegAsm.exe</code> with the <code>/codebase</code> <code>/tlb</code> option</p>
-
-<p>Used to temporarily register any .net dependencies before running 
+<p>Used to temporarily register any .net dependencies before running
 a VB6 build</p>
-
 
 
         </td>
@@ -168,10 +159,10 @@ a VB6 build</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '535', 535)" onmouseover="showTip(event, '535', 535)">
+          <code onmouseout="hideTip(event, '536', 536)" onmouseover="showTip(event, '536', 536)">
             UnregisterAssemblies (...)
           </code>
-          <div class="tip" id="535">
+          <div class="tip" id="536">
             <strong>Signature:</strong> workingDir:string -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -181,10 +172,8 @@ a VB6 build</p>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Executes <code>Regasm.exe</code> with the <code>/codebase /tlb /unregister</code> options</p>
-
 <p>Used to unregegister any temporarily registerd .net dependencies
 <em>after</em> running a VB6 build</p>
-
 
 
         </td>

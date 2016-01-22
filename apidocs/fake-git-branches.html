@@ -40,7 +40,6 @@
 <div class="xmldoc">
 <p>Contains helper functions which allow to deal with git branches.</p>
 
-
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -54,10 +53,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '944', 944)" onmouseover="showTip(event, '944', 944)">
+          <code onmouseout="hideTip(event, '945', 945)" onmouseover="showTip(event, '945', 945)">
             checkout repositoryDir create branch
           </code>
-          <div class="tip" id="944">
+          <div class="tip" id="945">
             <strong>Signature:</strong> repositoryDir:string -&gt; create:bool -&gt; branch:string -&gt; unit<br />
                       </div>
         </td>
@@ -67,9 +66,7 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Performs a checkout of the given branch to the working copy.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
 <li><code>create</code> - Set this to true if the branch is new.</li>
@@ -77,16 +74,15 @@
 </ul>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '945', 945)" onmouseover="showTip(event, '945', 945)">
+          <code onmouseout="hideTip(event, '946', 946)" onmouseover="showTip(event, '946', 946)">
             checkoutBranch repositoryDir branch
           </code>
-          <div class="tip" id="945">
+          <div class="tip" id="946">
             <strong>Signature:</strong> repositoryDir:string -&gt; branch:string -&gt; unit<br />
                       </div>
         </td>
@@ -96,14 +92,11 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Performs a checkout of the given branch to the working copy.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
 <li><code>branch</code> - The branch for the checkout.</li>
 </ul>
-
 
 
         </td>
@@ -111,10 +104,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '946', 946)" onmouseover="showTip(event, '946', 946)">
+          <code onmouseout="hideTip(event, '947', 947)" onmouseover="showTip(event, '947', 947)">
             checkoutNewBranch (...)
           </code>
-          <div class="tip" id="946">
+          <div class="tip" id="947">
             <strong>Signature:</strong> repositoryDir:string -&gt; baseBranch:string -&gt; branch:string -&gt; unit<br />
                       </div>
         </td>
@@ -124,9 +117,7 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Creates a new branch based on the given baseBranch and checks it out to the working copy.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
 <li><code>baseBranch</code> - The base branch.</li>
@@ -134,16 +125,15 @@
 </ul>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '947', 947)" onmouseover="showTip(event, '947', 947)">
+          <code onmouseout="hideTip(event, '948', 948)" onmouseover="showTip(event, '948', 948)">
             checkoutTracked (...)
           </code>
-          <div class="tip" id="947">
+          <div class="tip" id="948">
             <strong>Signature:</strong> repositoryDir:string -&gt; trackBranch:string -&gt; branch:string -&gt; unit<br />
                       </div>
         </td>
@@ -153,9 +143,7 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Performs a checkout of the given branch with an additional tracking branch.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
 <li><code>trackBranch</code> - The tracking branch.</li>
@@ -163,16 +151,15 @@
 </ul>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '948', 948)" onmouseover="showTip(event, '948', 948)">
+          <code onmouseout="hideTip(event, '949', 949)" onmouseover="showTip(event, '949', 949)">
             createBranch (...)
           </code>
-          <div class="tip" id="948">
+          <div class="tip" id="949">
             <strong>Signature:</strong> repositoryDir:string -&gt; newBranchName:string -&gt; commit:string -&gt; unit<br />
                       </div>
         </td>
@@ -182,9 +169,7 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Creates a new branch from the given commit.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
 <li><code>newBranchName</code> - The new branch.</li>
@@ -192,16 +177,15 @@
 </ul>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '949', 949)" onmouseover="showTip(event, '949', 949)">
+          <code onmouseout="hideTip(event, '950', 950)" onmouseover="showTip(event, '950', 950)">
             deleteBranch repositoryDir force branch
           </code>
-          <div class="tip" id="949">
+          <div class="tip" id="950">
             <strong>Signature:</strong> repositoryDir:string -&gt; force:bool -&gt; branch:string -&gt; unit<br />
                       </div>
         </td>
@@ -211,9 +195,7 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Deletes the given branch.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
 <li><code>force</code> - Determines if git should be run with the <em>force</em> flag.</li>
@@ -221,16 +203,15 @@
 </ul>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '950', 950)" onmouseover="showTip(event, '950', 950)">
+          <code onmouseout="hideTip(event, '951', 951)" onmouseover="showTip(event, '951', 951)">
             deleteTag repositoryDir tag
           </code>
-          <div class="tip" id="950">
+          <div class="tip" id="951">
             <strong>Signature:</strong> repositoryDir:string -&gt; tag:string -&gt; unit<br />
                       </div>
         </td>
@@ -240,14 +221,11 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Deletes the given tag.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
 <li><code>tag</code> - The tag which should be deleted.</li>
 </ul>
-
 
 
         </td>
@@ -255,10 +233,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '951', 951)" onmouseover="showTip(event, '951', 951)">
+          <code onmouseout="hideTip(event, '952', 952)" onmouseover="showTip(event, '952', 952)">
             findMergeBase (...)
           </code>
-          <div class="tip" id="951">
+          <div class="tip" id="952">
             <strong>Signature:</strong> repositoryDir:string -&gt; commit1:string -&gt; commit2:string -&gt; string<br />
                       </div>
         </td>
@@ -268,9 +246,7 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Returns the SHA1 of the merge base of the two given commits from the given repository.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
 <li><code>commit1</code> - The first commit for which git should find the merge base.</li>
@@ -278,16 +254,15 @@
 </ul>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '952', 952)" onmouseover="showTip(event, '952', 952)">
+          <code onmouseout="hideTip(event, '953', 953)" onmouseover="showTip(event, '953', 953)">
             getAllBranches repositoryDir
           </code>
-          <div class="tip" id="952">
+          <div class="tip" id="953">
             <strong>Signature:</strong> repositoryDir:string -&gt; string list<br />
                       </div>
         </td>
@@ -299,16 +274,15 @@
           <p>Gets all local and remote branches from the given repository.</p>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '953', 953)" onmouseover="showTip(event, '953', 953)">
+          <code onmouseout="hideTip(event, '954', 954)" onmouseover="showTip(event, '954', 954)">
             getLocalBranches repositoryDir
           </code>
-          <div class="tip" id="953">
+          <div class="tip" id="954">
             <strong>Signature:</strong> repositoryDir:string -&gt; string list<br />
                       </div>
         </td>
@@ -320,16 +294,15 @@
           <p>Gets all local branches from the given repository.</p>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '954', 954)" onmouseover="showTip(event, '954', 954)">
+          <code onmouseout="hideTip(event, '955', 955)" onmouseover="showTip(event, '955', 955)">
             getRemoteBranches repositoryDir
           </code>
-          <div class="tip" id="954">
+          <div class="tip" id="955">
             <strong>Signature:</strong> repositoryDir:string -&gt; string list<br />
                       </div>
         </td>
@@ -341,16 +314,15 @@
           <p>Gets all remote branches from the given repository.</p>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '955', 955)" onmouseover="showTip(event, '955', 955)">
+          <code onmouseout="hideTip(event, '956', 956)" onmouseover="showTip(event, '956', 956)">
             getSHA1 repositoryDir commit
           </code>
-          <div class="tip" id="955">
+          <div class="tip" id="956">
             <strong>Signature:</strong> repositoryDir:string -&gt; commit:string -&gt; string<br />
                       </div>
         </td>
@@ -360,14 +332,11 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Returns the SHA1 of the given commit from the given repository.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
 <li><code>commit</code> - The commit for which git should return the SHA1 - can be HEAD, HEAD~1, ... , a branch name or a prefix of a SHA1.</li>
 </ul>
-
 
 
         </td>
@@ -375,10 +344,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '956', 956)" onmouseover="showTip(event, '956', 956)">
+          <code onmouseout="hideTip(event, '957', 957)" onmouseover="showTip(event, '957', 957)">
             pull repositoryDir remote branch
           </code>
-          <div class="tip" id="956">
+          <div class="tip" id="957">
             <strong>Signature:</strong> repositoryDir:string -&gt; remote:string -&gt; branch:string -&gt; unit<br />
                       </div>
         </td>
@@ -388,9 +357,7 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Pulls a given branch from the given remote.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
 <li><code>remote</code> - The name of the remote.</li>
@@ -398,16 +365,15 @@
 </ul>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '957', 957)" onmouseover="showTip(event, '957', 957)">
+          <code onmouseout="hideTip(event, '958', 958)" onmouseover="showTip(event, '958', 958)">
             push repositoryDir
           </code>
-          <div class="tip" id="957">
+          <div class="tip" id="958">
             <strong>Signature:</strong> repositoryDir:string -&gt; unit<br />
                       </div>
         </td>
@@ -417,13 +383,10 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Pushes all branches to the default remote.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
 </ul>
-
 
 
         </td>
@@ -431,10 +394,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '958', 958)" onmouseover="showTip(event, '958', 958)">
+          <code onmouseout="hideTip(event, '959', 959)" onmouseover="showTip(event, '959', 959)">
             pushBranch repositoryDir remote branch
           </code>
-          <div class="tip" id="958">
+          <div class="tip" id="959">
             <strong>Signature:</strong> repositoryDir:string -&gt; remote:string -&gt; branch:string -&gt; unit<br />
                       </div>
         </td>
@@ -444,9 +407,7 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Pushes the given branch to the given remote.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
 <li><code>remote</code> - The remote.</li>
@@ -454,16 +415,15 @@
 </ul>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '959', 959)" onmouseover="showTip(event, '959', 959)">
+          <code onmouseout="hideTip(event, '960', 960)" onmouseover="showTip(event, '960', 960)">
             pushTag repositoryDir remote tag
           </code>
-          <div class="tip" id="959">
+          <div class="tip" id="960">
             <strong>Signature:</strong> repositoryDir:string -&gt; remote:string -&gt; tag:string -&gt; unit<br />
                       </div>
         </td>
@@ -473,9 +433,7 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Pushes the given tag to the given remote.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
 <li><code>remote</code> - The remote.</li>
@@ -483,16 +441,15 @@
 </ul>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '960', 960)" onmouseover="showTip(event, '960', 960)">
+          <code onmouseout="hideTip(event, '961', 961)" onmouseover="showTip(event, '961', 961)">
             revisionsBetween (...)
           </code>
-          <div class="tip" id="960">
+          <div class="tip" id="961">
             <strong>Signature:</strong> repositoryDir:string -&gt; commit1:string -&gt; commit2:string -&gt; int<br />
                       </div>
         </td>
@@ -502,9 +459,7 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Returns the number of revisions between the two given commits.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
 <li><code>commit1</code> - The first commit for which git should find the merge base.</li>
@@ -512,16 +467,15 @@
 </ul>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '961', 961)" onmouseover="showTip(event, '961', 961)">
+          <code onmouseout="hideTip(event, '962', 962)" onmouseover="showTip(event, '962', 962)">
             tag repositoryDir tag
           </code>
-          <div class="tip" id="961">
+          <div class="tip" id="962">
             <strong>Signature:</strong> repositoryDir:string -&gt; tag:string -&gt; unit<br />
                       </div>
         </td>
@@ -531,14 +485,11 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Tags the current branch.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>repositoryDir</code> - The git repository.</li>
 <li><code>tag</code> - The new tag.</li>
 </ul>
-
 
 
         </td>

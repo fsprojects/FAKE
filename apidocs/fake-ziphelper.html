@@ -40,7 +40,6 @@
 <div class="xmldoc">
 <p>This module contains helper function to create and extract zip archives.</p>
 
-
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -54,10 +53,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '916', 916)" onmouseover="showTip(event, '916', 916)">
+          <code onmouseout="hideTip(event, '917', 917)" onmouseover="showTip(event, '917', 917)">
             CreateZip (...)
           </code>
-          <div class="tip" id="916">
+          <div class="tip" id="917">
             <strong>Signature:</strong> workingDir:string -&gt; fileName:string -&gt; comment:string -&gt; level:int -&gt; flatten:bool -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -67,9 +66,7 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Creates a zip file with the given files</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>workingDir</code> - The relative dir of the zip files. Use this parameter to influence directory structure within zip file.</li>
 <li><code>fileName</code> - The fileName of the resulting zip file.</li>
@@ -80,16 +77,15 @@
 </ul>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '917', 917)" onmouseover="showTip(event, '917', 917)">
+          <code onmouseout="hideTip(event, '918', 918)" onmouseover="showTip(event, '918', 918)">
             CreateZipOfIncludes (...)
           </code>
-          <div class="tip" id="917">
+          <div class="tip" id="918">
             <strong>Signature:</strong> fileName:string -&gt; comment:string -&gt; level:int -&gt; files:seq&lt;string * FileIncludes&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -99,9 +95,7 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Creates a zip file with the given files.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>fileName</code> - The file name of the resulting zip file.</li>
 <li><code>comment</code> - A comment for the resulting zip file.</li>
@@ -110,16 +104,15 @@
 </ul>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '918', 918)" onmouseover="showTip(event, '918', 918)">
+          <code onmouseout="hideTip(event, '919', 919)" onmouseover="showTip(event, '919', 919)">
             DefaultZipLevel 
           </code>
-          <div class="tip" id="918">
+          <div class="tip" id="919">
             <strong>Signature:</strong> int<br />
                       </div>
         </td>
@@ -131,16 +124,15 @@
           <p>The default zip level</p>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '919', 919)" onmouseover="showTip(event, '919', 919)">
+          <code onmouseout="hideTip(event, '920', 920)" onmouseover="showTip(event, '920', 920)">
             Unzip target fileName
           </code>
-          <div class="tip" id="919">
+          <div class="tip" id="920">
             <strong>Signature:</strong> target:string -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
@@ -150,14 +142,11 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Unzips a file with the given file name.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>target</code> - The target directory.</li>
 <li><code>fileName</code> - The file name of the zip file.</li>
 </ul>
-
 
 
         </td>
@@ -165,10 +154,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '920', 920)" onmouseover="showTip(event, '920', 920)">
+          <code onmouseout="hideTip(event, '921', 921)" onmouseover="showTip(event, '921', 921)">
             UnzipFirstMatchingFileInMemory (...)
           </code>
-          <div class="tip" id="920">
+          <div class="tip" id="921">
             <strong>Signature:</strong> predicate:(ZipEntry -&gt; bool) -&gt; zipFileName:string -&gt; string<br />
                       </div>
         </td>
@@ -178,14 +167,11 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Unzips a single file from the archive with the given file name.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>predicate</code> - The predictae for the searched file in the archive.</li>
 <li><code>zipFileName</code> - The file name of the zip file.</li>
 </ul>
-
 
 
         </td>
@@ -193,10 +179,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '921', 921)" onmouseover="showTip(event, '921', 921)">
+          <code onmouseout="hideTip(event, '922', 922)" onmouseover="showTip(event, '922', 922)">
             UnzipSingleFileInMemory (...)
           </code>
-          <div class="tip" id="921">
+          <div class="tip" id="922">
             <strong>Signature:</strong> fileToUnzip:string -&gt; zipFileName:string -&gt; string<br />
                       </div>
         </td>
@@ -206,14 +192,11 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Unzips a single file from the archive with the given file name.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>fileToUnzip</code> - The file inside the archive.</li>
 <li><code>zipFileName</code> - The file name of the zip file.</li>
 </ul>
-
 
 
         </td>
@@ -221,10 +204,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '922', 922)" onmouseover="showTip(event, '922', 922)">
+          <code onmouseout="hideTip(event, '923', 923)" onmouseover="showTip(event, '923', 923)">
             Zip workingDir fileName files
           </code>
-          <div class="tip" id="922">
+          <div class="tip" id="923">
             <strong>Signature:</strong> workingDir:string -&gt; fileName:string -&gt; files:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -234,9 +217,7 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Creates a zip file with the given files.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>workingDir</code> - The relative dir of the zip files. Use this parameter to influence directory structure within zip file.</li>
 <li><code>fileName</code> - The file name of the resulting zip file.</li>
@@ -244,16 +225,15 @@
 </ul>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '923', 923)" onmouseover="showTip(event, '923', 923)">
+          <code onmouseout="hideTip(event, '924', 924)" onmouseover="showTip(event, '924', 924)">
             ZipFile fileName targetFileName
           </code>
-          <div class="tip" id="923">
+          <div class="tip" id="924">
             <strong>Signature:</strong> fileName:string -&gt; targetFileName:string -&gt; unit<br />
                       </div>
         </td>
@@ -263,14 +243,11 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Creates a zip file with the given file.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>fileName</code> - The file name of the resulting zip file.</li>
 <li><code>targetFileName</code> - The file to zip.</li>
 </ul>
-
 
 
         </td>
@@ -278,10 +255,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '924', 924)" onmouseover="showTip(event, '924', 924)">
+          <code onmouseout="hideTip(event, '925', 925)" onmouseover="showTip(event, '925', 925)">
             ZipOfIncludes fileName files
           </code>
-          <div class="tip" id="924">
+          <div class="tip" id="925">
             <strong>Signature:</strong> fileName:string -&gt; files:seq&lt;string * FileIncludes&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -291,23 +268,17 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Creates a zip file with the given files.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>fileName</code> - The file name of the resulting zip file.</li>
 <li><code>files</code> - A sequence of target folders and files to include relative to their base directory.</li>
 </ul>
-
 <h2>Sample</h2>
-
 <p>The following sample creates a zip file containing the files from the two target folders and FileIncludes.</p>
-
 <ul>
 <li>The files from the first FileInclude will be placed in the root of the zip file.</li>
 <li>The files from the second FileInclude will be placed under the directory <code>app_data\jobs\continuous\MyWebJob</code> in the zip file.</li>
 </ul>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -338,7 +309,6 @@
 </code></pre></td>
 </tr>
 </table>
-
 <div class="tip" id="fs1">val sprintf : format:Printf.StringFormat&lt;&#39;T&gt; -&gt; &#39;T<br /><br />Full name: Microsoft.FSharp.Core.ExtraTopLevelOperators.sprintf</div>
 
 

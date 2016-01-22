@@ -38,15 +38,10 @@
       <div class="row">
         <div class="span9" id="main">
           <h1>Adding FxCop to a FAKE build script</h1>
-
 <p>This article is an extension to the <a href="gettingstarted.html">getting started guide</a>. You will improve the same Calculator sample with a task for <a href="http://msdn2.microsoft.com/en-us/library/bb429476.aspx">FxCop</a>.</p>
-
 <p>If you need more details please see the <a href="apidocs/fake-fxcophelper.html">API docs for the FxCop</a> task.</p>
-
 <h2>Setting up FxCop</h2>
-
 <p>Open <em>build.fsx</em> from your Calculator sample folder and add a new target <em>FxCop</em> to the targets section:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -71,9 +66,7 @@
 </code></pre></td>
 </tr>
 </table>
-
 <p>In the dependencies section modify the build order to:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -92,15 +85,10 @@
 </code></pre></td>
 </tr>
 </table>
-
 <p>That's it. If you run your build script you will get new <em>.xml file in the </em>./test* folder:</p>
-
 <p><img src="pics/fxcop/report.png" alt="alt text" title="Code analysis report" /></p>
-
 <h2>Letting the build fail</h2>
-
 <p>If you want to let the build fail in the case that FxCop reports any errors or warnings you can use the <em>FailOnError</em> parameter:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -127,11 +115,8 @@
 </code></pre></td>
 </tr>
 </table>
-
 <p><img src="pics/fxcop/report.png" alt="alt text" title="Fail on FxCop error" /></p>
-
 <p>If you activate this option FxCop errors will cause your build to fail. Possible values are:</p>
-
 <ul>
 <li>FxCopErrorLevel.Warning</li>
 <li>FxCopErrorLevel.CriticalWarning</li>
@@ -140,7 +125,6 @@
 <li>FxCopErrorLevel.ToolError</li>
 <li>FxCopErrorLevel.DontFailBuild</li>
 </ul>
-
 <p>The values are cummulative. If you choose <em>FxCopErrorLevel.CriticalWarning</em> the build will fail for critical warnings, errors, critical errors and FxCop tool errors but not for simple warnings. The default is <em>FxCopErrorLevel.DontFailBuild</em>.</p>
 
                     

@@ -40,7 +40,6 @@
 <div class="xmldoc">
 <p>Conatins a task which allows to perform file copies using <a href="http://en.wikipedia.org/wiki/Secure_copy">SCP</a>, which is based on the Secure Shell (SSH) protocol.</p>
 
-
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -56,7 +55,6 @@
             <a href="fake-scphelper-scpparams.html">SCPParams</a>
           </td>
           <td class="xmldoc"><p>The SCP parameter type.</p>
-
 
 </td>
         </tr>
@@ -74,10 +72,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '565', 565)" onmouseover="showTip(event, '565', 565)">
+          <code onmouseout="hideTip(event, '566', 566)" onmouseover="showTip(event, '566', 566)">
             SCP setParams source target
           </code>
-          <div class="tip" id="565">
+          <div class="tip" id="566">
             <strong>Signature:</strong> setParams:(SCPParams -&gt; SCPParams) -&gt; source:string -&gt; target:string -&gt; unit<br />
                       </div>
         </td>
@@ -87,17 +85,13 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Performs a SCP copy from the given source directory to the target path.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>setParams</code> - Function used to manipulate the default SCPParams value.</li>
 <li><code>source</code> - The source path. Can be something like user@host:directory/SourceFile or a local path.</li>
 <li><code>target</code> - The target path. Can be something like user@host:directory/TargetFile or a local path.</li>
 </ul>
-
 <h2>Sample</h2>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">SCP</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> { <span class="i">p</span> <span class="k">with</span> <span class="i">ToolPath</span> <span class="o">=</span> <span class="s">&quot;tools/scp.exe&quot;</span> }) <span class="i">source</span> <span class="i">target</span>
@@ -106,16 +100,15 @@
 </table>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '566', 566)" onmouseover="showTip(event, '566', 566)">
+          <code onmouseout="hideTip(event, '567', 567)" onmouseover="showTip(event, '567', 567)">
             SCPDefaults 
           </code>
-          <div class="tip" id="566">
+          <div class="tip" id="567">
             <strong>Signature:</strong> SCPParams<br />
                       </div>
         </td>
@@ -125,7 +118,6 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>The SCP default parameters</p>
-
 
 
         </td>

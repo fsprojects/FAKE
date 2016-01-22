@@ -38,12 +38,9 @@
       <div class="row">
         <div class="span9" id="main">
           <h1>Compiling TypeScript applications</h1>
-
-<p>FAKE can be used to build a variety of different application types. 
+<p>FAKE can be used to build a variety of different application types.
 In this tutorial we are looking at the TypeScript support.</p>
-
 <p>Consider a greetings.ts file:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -61,7 +58,7 @@ In this tutorial we are looking at the TypeScript support.</p>
     firstname: <span class="k">string</span>;
     lastname: <span class="k">string</span>;
 }
-
+ 
 <span class="k">function</span> greeter(person : Person) {
     <span class="k">return</span> <span class="s">"Hello, "</span> <span class="o">+</span> person.firstname <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> person.lastname;
 }
@@ -70,9 +67,7 @@ In this tutorial we are looking at the TypeScript support.</p>
 
 document.body.innerHTML <span class="o">=</span> greeter(user);
 </code></pre></td></tr></table>
-
 <p>Now create a build.fsx and run it via FAKE.exe:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -96,16 +91,14 @@ document.body.innerHTML <span class="o">=</span> greeter(user);
 
 <span class="i">Target</span> <span class="s">&quot;CompileTypeScript&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
     <span class="o">!!</span> <span class="s">&quot;**/*.ts&quot;</span>
-      <span class="o">|&gt;</span> <span class="i">TypeScriptCompiler</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> { <span class="i">p</span> <span class="k">with</span> <span class="i">OutputPath</span> <span class="o">=</span> <span class="s">&quot;./out&quot;</span> }) 
+	  <span class="o">|&gt;</span> <span class="i">TypeScriptCompiler</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> { <span class="i">p</span> <span class="k">with</span> <span class="i">OutputPath</span> <span class="o">=</span> <span class="s">&quot;./out&quot;</span> }) 
 )
 
 <span class="i">RunTargetOrDefault</span> <span class="s">&quot;CompileTypeScript&quot;</span>
 </code></pre></td>
 </tr>
 </table>
-
 <p>This small script will run all *.ts files through the TypeScript compiler and put them into the ./out/ folder. In this case we will find a greetings.js:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -115,14 +108,13 @@ document.body.innerHTML <span class="o">=</span> greeter(user);
 <span class="l">7: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="javascript"><span class="k">function</span> greeter(person) {
-    <span class="k">return</span> <span class="s">"Hello, "</span> <span class="o">+</span> person.firstname <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> person.lastname;
+  <span class="k">return</span> <span class="s">"Hello, "</span> <span class="o">+</span> person.firstname <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> person.lastname;
 }
 
 <span class="k">var</span> user <span class="o">=</span> { firstname: <span class="s">"Jane"</span>, lastname: <span class="s">"User"</span> };
 
 document.body.innerHTML <span class="o">=</span> greeter(user);
 </code></pre></td></tr></table>
-
 <p>If you need more details please see the <a href="apidocs/fake-typescript.html">API docs for the TypeScript</a> task.</p>
 
           <div class="tip" id="fs1">namespace System</div>

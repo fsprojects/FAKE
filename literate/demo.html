@@ -38,29 +38,22 @@
       <div class="row">
         <div class="span9" id="main">
           <h1>Literate sample</h1>
-
 <p>This file demonstrates how to write literate F# script
 files (<code>*.fsx</code>) that can be transformed into nice HTML
 using the <code>literate.fsx</code> script from the <a href="http://tpetricek.github.com/FSharp.Formatting">F# Formatting
 package</a>.</p>
-
 <p>As you can see, a comment starting with double asterisk
-is treated as part of the document and is transformed 
+is treated as part of the document and is transformed
 using Markdown, which means that you can use:</p>
-
 <ul>
 <li>Unordered or ordered lists</li>
 <li>Text formatting including <strong>bold</strong> and <em>emphasis</em></li>
 </ul>
-
 <p>And numerous other <a href="http://daringfireball.net/projects/markdown">Markdown</a> features.</p>
-
 <h2>Writing F# code</h2>
-
 <p>Code that is not inside comment will be formatted as
-a sample snippet (which also means that you can 
+a sample snippet (which also means that you can
 run it in Visual Studio or MonoDevelop).</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -77,34 +70,26 @@ run it in Visual Studio or MonoDevelop).</p>
 </code></pre></td>
 </tr>
 </table>
-
 <h2>Hiding code</h2>
-
-<p>If you want to include some code in the source code, 
-but omit it from the output, you can use the <code>hide</code> 
+<p>If you want to include some code in the source code,
+but omit it from the output, you can use the <code>hide</code>
 command.</p>
-
 <p>The value will be deffined in the F# code and so you
 can use it from other (visible) code and get correct
 tool tips:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 10)" onmouseover="showTip(event, 'fs5', 10)" class="i">answer</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs4', 11)" onmouseover="showTip(event, 'fs4', 11)" class="i">hidden</span>
 </code></pre></td>
 </tr>
 </table>
-
 <h2>Moving code around</h2>
-
 <p>Sometimes, it is useful to first explain some code that
-has to be located at the end of the snippet (perhaps 
+has to be located at the end of the snippet (perhaps
 because it uses some definitions discussed in the middle).
 This can be done using <code>include</code> and <code>define</code> commands.</p>
-
 <p>The following snippet gets correct tool tips, even though
 it uses <code>laterFunction</code>:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -115,9 +100,7 @@ it uses <code>laterFunction</code>:</p>
 </code></pre></td>
 </tr>
 </table>
-
 <p>Then we can explain how <code>laterFunction</code> is defined:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 </pre></td>
@@ -126,17 +109,13 @@ it uses <code>laterFunction</code>:</p>
 </code></pre></td>
 </tr>
 </table>
-
-<p>This example covers pretty much all features that are 
-currently implemented in <code>literate.fsx</code>, but feel free 
-to <a href="https://github.com/tpetricek/FSharp.Formatting">fork the project on GitHub</a> and add more 
+<p>This example covers pretty much all features that are
+currently implemented in <code>literate.fsx</code>, but feel free
+to <a href="https://github.com/tpetricek/FSharp.Formatting">fork the project on GitHub</a> and add more
 features or report bugs!</p>
-
 <h2>Other features</h2>
-
 <p>The tool-tips also work for double-backtick identifiers.
 This might be useful to generate nice documents from tests:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 </pre></td>
@@ -145,7 +124,6 @@ This might be useful to generate nice documents from tests:</p>
 </code></pre></td>
 </tr>
 </table>
-
 <p>Others examples follow here.</p>
 
           <div class="tip" id="fs1">val factorial : x:int -&gt; int<br /><br />Full name: Demo.factorial<br /><em><br /><br />&#160;The Hello World of functional languages!</em></div>

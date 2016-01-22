@@ -41,7 +41,6 @@
 <p>Contains tasks which allow to restore NuGet packages from a NuGet package feed like <a href="http://www.nuget.org">nuget.org</a>.
 There is also a tutorial about <a href="../nuget.html">nuget package restore</a> available.</p>
 
-
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -58,7 +57,6 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
           </td>
           <td class="xmldoc"><p>RestorePackages parameter path</p>
 
-
 </td>
         </tr>
         <tr>
@@ -66,7 +64,6 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
             <a href="fake-restorepackagehelper-restoresinglepackageparams.html">RestoreSinglePackageParams</a>
           </td>
           <td class="xmldoc"><p>RestorePackages parameter path for single packages</p>
-
 
 </td>
         </tr>
@@ -84,10 +81,10 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '554', 554)" onmouseover="showTip(event, '554', 554)">
+          <code onmouseout="hideTip(event, '555', 555)" onmouseover="showTip(event, '555', 555)">
             findNuget defaultPath
           </code>
-          <div class="tip" id="554">
+          <div class="tip" id="555">
             <strong>Signature:</strong> defaultPath:string -&gt; string<br />
                       </div>
         </td>
@@ -99,16 +96,15 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
           <p>Looks for NuGet.exe in [1] the specified defaultPath, [2] a list of standard tool folders, [3] any subfolder in the current directory, [4] the PATH - returns the first path where NuGet.exe was found.</p>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '555', 555)" onmouseover="showTip(event, '555', 555)">
+          <code onmouseout="hideTip(event, '556', 556)" onmouseover="showTip(event, '556', 556)">
             RestoreMSSolutionPackages (...)
           </code>
-          <div class="tip" id="555">
+          <div class="tip" id="556">
             <strong>Signature:</strong> setParams:(RestorePackageParams -&gt; RestorePackageParams) -&gt; solutionFile:string -&gt; unit<br />
                       </div>
         </td>
@@ -118,16 +114,12 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Restores the packages in the given solution file file from NuGet.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>setParams</code> - Function used to manipulate the default NuGet parameters.</li>
 <li><code>solutionFile</code> - The microsoft sln file name.</li>
 </ul>
-
 <h2>Sample</h2>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -150,16 +142,15 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
 </table>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '556', 556)" onmouseover="showTip(event, '556', 556)">
+          <code onmouseout="hideTip(event, '557', 557)" onmouseover="showTip(event, '557', 557)">
             RestorePackage setParams packageFile
           </code>
-          <div class="tip" id="556">
+          <div class="tip" id="557">
             <strong>Signature:</strong> setParams:(RestorePackageParams -&gt; RestorePackageParams) -&gt; packageFile:string -&gt; unit<br />
                       </div>
         </td>
@@ -169,16 +160,12 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Restores the packages in the given packages.config file from NuGet.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>setParams</code> - Function used to manipulate the default NuGet parameters.</li>
 <li><code>packageFile</code> - The packages.config file name.</li>
 </ul>
-
 <h2>Sample</h2>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -201,16 +188,15 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
 </table>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '557', 557)" onmouseover="showTip(event, '557', 557)">
+          <code onmouseout="hideTip(event, '558', 558)" onmouseover="showTip(event, '558', 558)">
             RestorePackageDefaults 
           </code>
-          <div class="tip" id="557">
+          <div class="tip" id="558">
             <strong>Signature:</strong> RestorePackageParams<br />
                       </div>
         </td>
@@ -222,16 +208,15 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
           <p>RestorePackage defaults parameters</p>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '558', 558)" onmouseover="showTip(event, '558', 558)">
+          <code onmouseout="hideTip(event, '559', 559)" onmouseover="showTip(event, '559', 559)">
             RestorePackageId setParams packageId
           </code>
-          <div class="tip" id="558">
+          <div class="tip" id="559">
             <strong>Signature:</strong> setParams:(RestoreSinglePackageParams -&gt; RestoreSinglePackageParams) -&gt; packageId:string -&gt; unit<br />
                       </div>
         </td>
@@ -243,16 +228,15 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
           <p>Restores the given package from NuGet</p>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '559', 559)" onmouseover="showTip(event, '559', 559)">
+          <code onmouseout="hideTip(event, '560', 560)" onmouseover="showTip(event, '560', 560)">
             RestorePackages ()
           </code>
-          <div class="tip" id="559">
+          <div class="tip" id="560">
             <strong>Signature:</strong> unit -&gt; unit<br />
                       </div>
         </td>
@@ -264,16 +248,15 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
           <p>Restores all packages from NuGet to the default directories by scanning for packages.config files in any subdirectory.</p>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '560', 560)" onmouseover="showTip(event, '560', 560)">
+          <code onmouseout="hideTip(event, '561', 561)" onmouseover="showTip(event, '561', 561)">
             RestoreSinglePackageDefaults 
           </code>
-          <div class="tip" id="560">
+          <div class="tip" id="561">
             <strong>Signature:</strong> RestoreSinglePackageParams<br />
                       </div>
         </td>
@@ -283,7 +266,6 @@ There is also a tutorial about <a href="../nuget.html">nuget package restore</a>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>RestoreSinglePackageParams defaults parameters</p>
-
 
 
         </td>

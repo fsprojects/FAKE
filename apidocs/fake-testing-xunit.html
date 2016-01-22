@@ -40,7 +40,6 @@
 <div class="xmldoc">
 <p>Contains tasks to run <a href="https://github.com/xunit/xunit">xUnit</a> v1 unit tests.</p>
 
-
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -56,7 +55,6 @@
             <a href="fake-testing-xunit-xunitparams.html">XUnitParams</a>
           </td>
           <td class="xmldoc"><p>The xUnit parameter type.</p>
-
 
 </td>
         </tr>
@@ -74,10 +72,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1054', 1054)" onmouseover="showTip(event, '1054', 1054)">
+          <code onmouseout="hideTip(event, '1055', 1055)" onmouseover="showTip(event, '1055', 1055)">
             xUnit setParams assemblies
           </code>
-          <div class="tip" id="1054">
+          <div class="tip" id="1055">
             <strong>Signature:</strong> setParams:(XUnitParams -&gt; XUnitParams) -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -88,26 +86,19 @@
             </a>
           <p>Runs xUnit unit tests in the given assemblies via the given xUnit runner.
 Will fail if the runner terminates with non-zero exit code for any of the assemblies.</p>
-
 <p>The xUnit runner terminates with a non-zero exit code if any of the tests
 in the given assembly fail.</p>
-
 <p>This task runs xUnit once per assembly specified, prepending the assembly file name to
 the output report filenames to ensure that there is a unique report file for each
 assembly tested.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>setParams</code> - Function used to manipulate the default XUnitParams value.</li>
 <li><code>assemblies</code> - Sequence of one or more assemblies containing xUnit unit tests.</li>
 </ul>
-
 <h2>Sample usage</h2>
-
 <p>The sample below will generate HTML reports in <code>testDir</code> with names following the
 pattern <code>xUnit.Test.Example.dll.html</code>.</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -122,16 +113,15 @@ pattern <code>xUnit.Test.Example.dll.html</code>.</p>
 </table>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1055', 1055)" onmouseover="showTip(event, '1055', 1055)">
+          <code onmouseout="hideTip(event, '1056', 1056)" onmouseover="showTip(event, '1056', 1056)">
             XUnitDefaults 
           </code>
-          <div class="tip" id="1055">
+          <div class="tip" id="1056">
             <strong>Signature:</strong> XUnitParams<br />
                       </div>
         </td>
@@ -141,9 +131,7 @@ pattern <code>xUnit.Test.Example.dll.html</code>.</p>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>The xUnit default parameters.</p>
-
 <h2>Defaults</h2>
-
 <ul>
 <li><code>HtmlOutputPath</code> - <code>None</code></li>
 <li><code>XmlOutputPath</code> - <code>None</code></li>
@@ -160,16 +148,15 @@ pattern <code>xUnit.Test.Example.dll.html</code>.</p>
 </ul>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1056', 1056)" onmouseover="showTip(event, '1056', 1056)">
+          <code onmouseout="hideTip(event, '1057', 1057)" onmouseover="showTip(event, '1057', 1057)">
             xUnitSingle setParams assembly
           </code>
-          <div class="tip" id="1056">
+          <div class="tip" id="1057">
             <strong>Signature:</strong> setParams:(XUnitParams -&gt; XUnitParams) -&gt; assembly:string -&gt; unit<br />
                       </div>
         </td>
@@ -180,19 +167,14 @@ pattern <code>xUnit.Test.Example.dll.html</code>.</p>
             </a>
           <p>Runs xUnit unit tests in the given assemblies via the given xUnit runner.
 Will fail if the runner terminates with non-zero exit code for any of the assemblies.</p>
-
 <p>The xUnit runner terminates with a non-zero exit code if any of the tests
 in the given assembly fail.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>setParams</code> - Function used to manipulate the default <code>XUnitParams</code> value.</li>
 <li><code>assemblies</code> - Sequence of one or more assemblies containing xUnit unit tests.</li>
 </ul>
-
 <h2>Sample usage</h2>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -203,7 +185,6 @@ in the given assembly fail.</p>
 </code></pre></td>
 </tr>
 </table>
-
 
 
         </td>

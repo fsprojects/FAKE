@@ -40,7 +40,6 @@
 <div class="xmldoc">
 <p>Operations and tasks for working with zip archives.</p>
 
-
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -56,7 +55,6 @@
             <a href="fake-archivehelper-zip-zipcompressionparams.html">ZipCompressionParams</a>
           </td>
           <td class="xmldoc"><p>The zip archive compression parameters.</p>
-
 
 </td>
         </tr>
@@ -89,7 +87,6 @@
           <p>Adds a file, specified by an <a href="fake-archivehelper-archivefilespec.html" title="ArchiveFileSpec"><code>ArchiveFileSpec</code></a>, to a <code>ZipOutputStream</code>.</p>
 
 
-
         </td>
       </tr>
       <tr>
@@ -110,7 +107,6 @@
           <p>Constructs a function that will create a zip archive from a set of files.</p>
 
 
-
         </td>
       </tr>
       <tr>
@@ -129,9 +125,7 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Creates a zip archive with the given files.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>setParams</code> - A function which modifies the default compression parameters.</li>
 <li><code>flatten</code> - If set to true then all subfolders are merged into the root folder of the archive.</li>
@@ -139,7 +133,6 @@
 <li><code>archiveFile</code> - The output archive file. If existing, will be overwritten.</li>
 <li><code>files</code> - A sequence of files to compress.</li>
 </ul>
-
 
 
         </td>
@@ -160,16 +153,13 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Creates a zip archive containing all the files in a directory.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>setParams</code> - A function which modifies the default compression parameters.</li>
 <li><code>flatten</code> - If set to true then all subfolders are merged into the root folder of the archive.</li>
 <li><code>baseDir</code> - The base directory to be compressed. This directory will be the root of the resulting archive.</li>
 <li><code>archiveFile</code> - The output archive file. If existing, will be overwritten.</li>
 </ul>
-
 
 
         </td>
@@ -190,14 +180,11 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Creates a zip archive containing all the files in a directory.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>baseDir</code> - The base directory to be compressed. This directory will be the root of the resulting archive.</li>
 <li><code>archiveFile</code> - The output archive file. If existing, will be overwritten.</li>
 </ul>
-
 
 
         </td>
@@ -218,15 +205,12 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Creates a zip archive with the given archive file specifications.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>setParams</code> - A function which modifies the default compression parameters.</li>
 <li><code>archiveFile</code> - The output archive file. If existing, will be overwritten.</li>
 <li><code>fileSpecs</code> - A sequence of archive file specifications.</li>
 </ul>
-
 
 
         </td>
@@ -249,7 +233,6 @@
           <p>Wraps an output stream with a zip compressor.</p>
 
 
-
         </td>
       </tr>
       <tr>
@@ -268,15 +251,12 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Creates a zip archive with the given files with default parameters.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>baseDir</code> - The relative directory of the files to be compressed. Use this parameter to influence directory structure within the archive.</li>
 <li><code>archiveFile</code> - The output archive file. If existing, will be overwritten.</li>
 <li><code>files</code> - A sequence of files to compress.</li>
 </ul>
-
 
 
         </td>
@@ -297,14 +277,11 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Creates a <code>ZipOutputStream</code> wrapping a file using the given parameters.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>zipParams</code> - The zip compression parameters.</li>
 <li><code>file</code> - The <code>FileInfo</code> describing the location to which the archive should be written. Will be overwritten if it exists.</li>
 </ul>
-
 
 
         </td>
@@ -325,14 +302,11 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Extracts a zip archive to a given directory.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>extractDir</code> - The directory into which the archived files will be extracted.</li>
 <li><code>archiveFile</code> - The archive to be extracted.</li>
 </ul>
-
 
 
         </td>
@@ -355,7 +329,6 @@
           <p>Wraps an input stream with a zip decompressor.</p>
 
 
-
         </td>
       </tr>
       <tr>
@@ -374,14 +347,11 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>The default zip archive compression parameters</p>
-
 <h2>Defaults</h2>
-
 <ul>
 <li><code>Level</code> - <code>CompressionLevel.Default</code></li>
 <li><code>Comment</code> - <code>None</code></li>
 </ul>
-
 
 
         </td>

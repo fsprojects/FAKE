@@ -40,7 +40,6 @@
 <div class="xmldoc">
 <p>Contains a task which can be used to run <a href="http://www.jetbrains.com/dotcover/">DotCover</a> on .NET assemblies.</p>
 
-
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -62,7 +61,6 @@
             <a href="fake-dotcover-dotcoverparams.html">DotCoverParams</a>
           </td>
           <td class="xmldoc"><p>The dotCover parameter type for running coverage</p>
-
 
 </td>
         </tr>
@@ -150,8 +148,8 @@
             buildParamsAndExecute (...)
           </code>
           <div class="tip" id="148">
-            <strong>Signature:</strong> parameters:&#39;?10897 -&gt; buildArguments:(&#39;?10897 -&gt; string) -&gt; toolPath:string -&gt; workingDir:string -&gt; failBuild:bool -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?10897          </div>
+            <strong>Signature:</strong> parameters:&#39;?10898 -&gt; buildArguments:(&#39;?10898 -&gt; string) -&gt; toolPath:string -&gt; workingDir:string -&gt; failBuild:bool -&gt; unit<br />
+                          <strong>Type parameters:</strong> '?10898          </div>
         </td>
         <td class="xmldoc">
             <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotCover.fs#L111-111" class="github-link">
@@ -177,13 +175,10 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Runs the dotCover "cover" command, using a target executable (such as NUnit or MSpec) and generates a snapshot file.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>setParams</code> - Function used to overwrite the dotCover default parameters.</li>
 </ul>
-
 
 
         </td>
@@ -206,7 +201,6 @@
           <p>The dotCover default parameters</p>
 
 
-
         </td>
       </tr>
       <tr>
@@ -226,15 +220,11 @@
             </a>
           <p>Runs the dotCover "merge" command. This combines dotCover snaphots into a single
 snapshot, enabling you to merge test coverage from multiple test running frameworks</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>setParams</code> - Function used to overwrite the dotCover merge default parameters.</li>
 </ul>
-
 <h2>Sample</h2>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -247,7 +237,6 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
 </code></pre></td>
 </tr>
 </table>
-
 
 
         </td>
@@ -286,16 +275,12 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Runs the dotCover "cover" command against the MSpec test runner.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>setDotCoverParams</code> - Function used to overwrite the dotCover report default parameters.</li>
 <li><code>setMSpecParams</code> - Function used to overwrite the MSpec default parameters.</li>
 </ul>
-
 <h2>Sample</h2>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -312,7 +297,6 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
 </code></pre></td>
 </tr>
 </table>
-
 
 
         </td>
@@ -333,16 +317,12 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Runs the dotCover "cover" command against the MSTest test runner.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>setDotCoverParams</code> - Function used to overwrite the dotCover report default parameters.</li>
 <li><code>setMSTestParams</code> - Function used to overwrite the MSTest default parameters.</li>
 </ul>
-
 <h2>Sample</h2>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -355,7 +335,6 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
 </code></pre></td>
 </tr>
 </table>
-
 
 
         </td>
@@ -376,16 +355,12 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Runs the dotCover "cover" command against the NUnit test runner.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>setDotCoverParams</code> - Function used to overwrite the dotCover report default parameters.</li>
 <li><code>setNUnitParams</code> - Function used to overwrite the NUnit default parameters.</li>
 </ul>
-
 <h2>Sample</h2>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -402,7 +377,6 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
 </code></pre></td>
 </tr>
 </table>
-
 
 
         </td>
@@ -423,16 +397,12 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Runs the dotCover "cover" command against the NUnit test runner.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>setDotCoverParams</code> - Function used to overwrite the dotCover report default parameters.</li>
 <li><code>setNUnitParams</code> - Function used to overwrite the NUnit default parameters.</li>
 </ul>
-
 <h2>Sample</h2>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -449,7 +419,6 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
 </code></pre></td>
 </tr>
 </table>
-
 
 
         </td>
@@ -470,15 +439,11 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Runs the dotCover "report" command. This generates a report from a dotCover snapshot</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>setParams</code> - Function used to overwrite the dotCover report default parameters.</li>
 </ul>
-
 <h2>Sample</h2>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -491,7 +456,6 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
 </code></pre></td>
 </tr>
 </table>
-
 
 
         </td>
@@ -530,16 +494,12 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Runs the dotCover "cover" command against the XUnit2 test runner.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>setDotCoverParams</code> - Function used to overwrite the dotCover report default parameters.</li>
 <li><code>setXUnit2Params</code> - Function used to overwrite the XUnit2 default parameters.</li>
 </ul>
-
 <h2>Sample</h2>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -552,7 +512,6 @@ snapshot, enabling you to merge test coverage from multiple test running framewo
 </code></pre></td>
 </tr>
 </table>
-
 
 
         </td>

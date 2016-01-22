@@ -38,13 +38,9 @@
       <div class="row">
         <div class="span9" id="main">
           <h1>Packaging and Deploying Azure WebJobs</h1>
-
 <p>FAKE can be used to zip the output directory of a project and push it to Azure via the <a href="https://github.com/projectkudu/kudu/wiki/REST-API#zip">zip controller</a>.</p>
-
 <p>You'll need to know the ftp details of the website to publish the web jobs to. Also the web jobs need to already exist on the azure dashboard.</p>
-
 <p>In your <code>build.fsx</code> add the following:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -113,9 +109,7 @@
 </code></pre></td>
 </tr>
 </table>
-
 <p>In the dependencies section add the targets to the build order after the build action:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -134,11 +128,8 @@
 </code></pre></td>
 </tr>
 </table>
-
 <p>The will create a zip file in the <code>bin</code> folder in the root which contains the contents of the <code>bin/release</code> folder of each web job to deploy and push it to azure.</p>
-
 <h2>Caveats</h2>
-
 <p>The zip controller will not remove files.</p>
 
           <div class="tip" id="fs1">val private jobTypePath : webJobType:&#39;a -&gt; &#39;b<br /><br />Full name: azurewebjobs.jobTypePath</div>

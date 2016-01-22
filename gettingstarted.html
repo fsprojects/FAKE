@@ -38,9 +38,7 @@
       <div class="row">
         <div class="span9" id="main">
           <h1>Getting started with FAKE - F# Make</h1>
-
 <p>In this tutorial you will learn how to set up a complete build infrastructure with "FAKE - F# Make". This includes:</p>
-
 <ul>
 <li>how to install the latest FAKE version</li>
 <li>how to automatically compile your C# or F# projects</li>
@@ -48,41 +46,39 @@
 <li>how to automatically run NUnit tests on your projects</li>
 <li>how to zip the output to a deployment folder</li>
 </ul>
-
 <h2>Install the F# compiler</h2>
-
 <p>"FAKE - F# Make" is completely written in F# and all build scripts will also be written in F#, but this doesn't imply that you have to learn programming in F#. In fact the "FAKE - F# Make" syntax is hopefully very easy to learn.</p>
-
 <h2>Download Calculator Sample</h2>
-
 <p>Now download the latest <a href="http://fsharp.github.io/FAKE/FAKE-Calculator.zip">FAKE-Calculator.zip</a> from the <a href="https://github.com/fsharp/FAKE">FAKE project site</a>. This sample includes 3 tiny projects and has basically the following structure:</p>
-
 <ul>
-<li>src/app
+<li>
+src/app
 <ul>
 <li>Calculator (command line)</li>
 <li>CalculatorLib (class library)</li>
-</ul></li>
-<li>src/test
+</ul>
+</li>
+<li>
+src/test
 <ul>
 <li>Test.CalculatorLib</li>
-</ul></li>
-<li>tools
+</ul>
+</li>
+<li>
+tools
 <ul>
 <li>NUnit</li>
 <li>FxCop</li>
-</ul></li>
+</ul>
+</li>
 <li>build.bat</li>
 <li>build.fsx</li>
 <li>completeBuild.bat</li>
 <li>completeBuild.fsx</li>
 <li>Calculator.sln</li>
 </ul>
-
 <h2>Getting "FAKE - F# Make" started</h2>
-
 <p>In the root of the project you will find a build.bat file:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -95,27 +91,19 @@ cls
 "packages\FAKE\tools\Fake.exe" build.fsx
 pause
 </code></pre></td></tr></table>
-
 <p>If you run this batch file from the command line then the latest FAKE version will be <a href="http://nuget.org/packages/FAKE/">downloaded via nuget</a> and your first FAKE script (build.fsx) will be executed. If everything works fine you will get the following output:</p>
-
 <p><img src="pics/gettingstarted/afterdownload.png" alt="alt text" title="Run the batch file" /></p>
-
 <h3>Paket Setup</h3>
-
 <p>Alternatively you can configure <a href="http://fsprojects.github.io/Paket">Paket</a> to install and manage FAKE as a dependency. You will have to <a href="http://fsprojects.github.io/Paket/installation.html">setup Paket</a> following the instructions specified in its documentation. In this example, the <a href="http://fsprojects.github.io/Paket/installation.html#Installation-per-repository">installation per repository</a> will be used.</p>
-
 <ul>
 <li>Create a <code>.paket</code> folder in the root of the <code>FAKE-Calculator</code> solution.</li>
 <li>Download the latest <a href="https://github.com/fsprojects/Paket/releases/latest">paket.bootstrapper.exe</a> into that folder.</li>
 <li>Run <code>$ .paket/paket.bootstrapper.exe</code> This will download the latest <code>paket.exe</code>.</li>
 <li>Commit <code>.paket/paket.bootstrapper.exe</code> into your repo and add <code>.paket/paket.exe</code> to your <code>.gitignore</code> file.</li>
 </ul>
-
 <h3>Specifying dependencies</h3>
-
 <p>Create a <a href="http://fsprojects.github.io/Paket/dependencies-file.html"><code>paket.dependencies</code> file</a> in your project's root and specify FAKE as a dependency in it.
 The file might look like this:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -126,18 +114,14 @@ The file might look like this:</p>
 </code></pre></td>
 </tr>
 </table>
-
 <p>You can now run Paket from the command line:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="o">$</span> <span class="o">.</span><span class="i">paket</span><span class="o">/</span><span class="i">paket</span><span class="o">.</span><span class="i">exe</span> <span class="i">install</span>
 </code></pre></td>
 </tr>
 </table>
-
 <p>This will create the <a href="http://fsprojects.github.io/Paket/lock-file.html"><code>paket.lock</code> file</a> in your project's root. The file might look like this:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -150,9 +134,7 @@ The file might look like this:</p>
 </code></pre></td>
 </tr>
 </table>
-
 <p>You will have to replace the <code>build.bat</code> file contents with the following:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -183,17 +165,12 @@ if errorlevel 1 (
 
 packages\FAKE\tools\FAKE.exe build.fsx %*
 </code></pre></td></tr></table>
-
 <p>If you run this batch file from the command line, Paket will be bootstrapped and the paket dependencies will be restored before running the build script.
 In this case, then the latest FAKE version will be <a href="http://nuget.org/packages/FAKE/">downloaded via nuget</a>.
 If everything works fine you will get the following output:</p>
-
 <p><img src="pics/gettingstarted/afterdownloadpaket.png" alt="alt text" title="Run the batch file" /></p>
-
 <h3>The build script</h3>
-
 <p>Now open the <em>build.fsx</em> in Visual Studio or any text editor. It should look like this:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -212,7 +189,7 @@ If everything works fine you will get the following output:</p>
 
 <span class="c">// Default target</span>
 <span class="i">Target</span> <span class="s">&quot;Default&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="i">trace</span> <span class="s">&quot;Hello World from FAKE&quot;</span>
+	<span class="i">trace</span> <span class="s">&quot;Hello World from FAKE&quot;</span>
 )
 
 <span class="c">// start build</span>
@@ -220,17 +197,11 @@ If everything works fine you will get the following output:</p>
 </code></pre></td>
 </tr>
 </table>
-
 <p>As you can see the code is really simple. The first line includes the FAKE library and is vital for all FAKE build scripts.</p>
-
 <p>After this header the <em>Default</em> target is defined. A target definition contains two important parts. The first is the name of the target (here "Default") and the second is an action (here a simple trace of "Hello world").</p>
-
 <p>The last line runs the "Default" target - which means it executes the defined action of the target.</p>
-
 <h2>Cleaning the last build output</h2>
-
 <p>A typical first step in most build scenarios is to clean the output of the last build. We can achieve this by modifying the <em>build.fsx</em> to the following:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -263,11 +234,11 @@ If everything works fine you will get the following output:</p>
 
 <span class="c">// Targets</span>
 <span class="i">Target</span> <span class="s">&quot;Clean&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="i">CleanDir</span> <span class="i">buildDir</span>
+	<span class="i">CleanDir</span> <span class="i">buildDir</span>
 )
 
 <span class="i">Target</span> <span class="s">&quot;Default&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="i">trace</span> <span class="s">&quot;Hello World from FAKE&quot;</span>
+	<span class="i">trace</span> <span class="s">&quot;Hello World from FAKE&quot;</span>
 )
 
 <span class="c">// Dependencies</span>
@@ -279,19 +250,12 @@ If everything works fine you will get the following output:</p>
 </code></pre></td>
 </tr>
 </table>
-
 <p>We introduced some new concepts in this snippet. At first we defined a global property called "buildDir" with the relative path of a temporary build folder.</p>
-
 <p>In the <em>Clean</em> target we use the CleanDir task to clean up this build directory. This simply deletes all files in the folder or creates the directory if necessary.</p>
-
 <p>In the dependencies section we say that the <em>Default</em> target has a dependency on the <em>Clean</em> target. In other words <em>Clean</em> is a prerequisite of <em>Default</em> and will be run before the execution of <em>Default</em>:</p>
-
 <p><img src="pics/gettingstarted/afterclean.png" alt="alt text" title="We introduced a Clean target" /></p>
-
 <h2>Compiling the application</h2>
-
 <p>In the next step we want to compile our C# libraries, which means we want to compile all csproj-files under <em>/src/app</em> with MSBuild:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -331,17 +295,17 @@ If everything works fine you will get the following output:</p>
 
 <span class="c">// Targets</span>
 <span class="i">Target</span> <span class="s">&quot;Clean&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="i">CleanDir</span> <span class="i">buildDir</span>
+	<span class="i">CleanDir</span> <span class="i">buildDir</span>
 )
 
 <span class="i">Target</span> <span class="s">&quot;BuildApp&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="o">!!</span> <span class="s">&quot;src/app/**/*.csproj&quot;</span>
-      <span class="o">|&gt;</span> <span class="i">MSBuildRelease</span> <span class="i">buildDir</span> <span class="s">&quot;Build&quot;</span>
-      <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
+	<span class="o">!!</span> <span class="s">&quot;src/app/**/*.csproj&quot;</span>
+	  <span class="o">|&gt;</span> <span class="i">MSBuildRelease</span> <span class="i">buildDir</span> <span class="s">&quot;Build&quot;</span>
+	  <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
 )
 
 <span class="i">Target</span> <span class="s">&quot;Default&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="i">trace</span> <span class="s">&quot;Hello World from FAKE&quot;</span>
+	<span class="i">trace</span> <span class="s">&quot;Hello World from FAKE&quot;</span>
 )
 
 <span class="c">// Dependencies</span>
@@ -354,21 +318,13 @@ If everything works fine you will get the following output:</p>
 </code></pre></td>
 </tr>
 </table>
-
 <p>We defined a new build target named "BuildApp" which compiles all csproj-files with the MSBuild task and the build output will be copied to buildDir.</p>
-
 <p>In order to find the right project files FAKE scans the folder <em>src/app/</em> and all subfolders with the given pattern. Therefore a similar FileSet definition like in NAnt or MSBuild (see <a href="https://github.com/fsharp/FAKE">project page</a> for details) is used.</p>
-
 <p>In addition the target dependencies are extended again. Now <em>Default</em> is dependent on <em>BuildApp</em> and <em>BuildApp</em> needs <em>Clean</em> as a prerequisite.</p>
-
 <p>This means the execution order is: Clean ==&gt; BuildApp ==&gt; Default.</p>
-
 <p><img src="pics/gettingstarted/aftercompile.png" alt="alt text" title="We introduced a Build target" /></p>
-
 <h2>Compiling test projects</h2>
-
 <p>Now our main application will be built automatically and it's time to build the test project. We use the same concepts as before:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -417,23 +373,23 @@ If everything works fine you will get the following output:</p>
 
 <span class="c">// Targets</span>
 <span class="i">Target</span> <span class="s">&quot;Clean&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="i">CleanDirs</span> [<span class="i">buildDir</span>; <span class="i">testDir</span>]
+	<span class="i">CleanDirs</span> [<span class="i">buildDir</span>; <span class="i">testDir</span>]
 )
 
 <span class="i">Target</span> <span class="s">&quot;BuildApp&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
    <span class="o">!!</span> <span class="s">&quot;src/app/**/*.csproj&quot;</span>
-     <span class="o">|&gt;</span> <span class="i">MSBuildRelease</span> <span class="i">buildDir</span> <span class="s">&quot;Build&quot;</span>
-     <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
+	 <span class="o">|&gt;</span> <span class="i">MSBuildRelease</span> <span class="i">buildDir</span> <span class="s">&quot;Build&quot;</span>
+	 <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
 )
 
 <span class="i">Target</span> <span class="s">&quot;BuildTest&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="o">!!</span> <span class="s">&quot;src/test/**/*.csproj&quot;</span>
-      <span class="o">|&gt;</span> <span class="i">MSBuildDebug</span> <span class="i">testDir</span> <span class="s">&quot;Build&quot;</span>
-      <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;TestBuild-Output: &quot;</span>
+	<span class="o">!!</span> <span class="s">&quot;src/test/**/*.csproj&quot;</span>
+	  <span class="o">|&gt;</span> <span class="i">MSBuildDebug</span> <span class="i">testDir</span> <span class="s">&quot;Build&quot;</span>
+	  <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;TestBuild-Output: &quot;</span>
 )
 
 <span class="i">Target</span> <span class="s">&quot;Default&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="i">trace</span> <span class="s">&quot;Hello World from FAKE&quot;</span>
+	<span class="i">trace</span> <span class="s">&quot;Hello World from FAKE&quot;</span>
 )
 
 <span class="c">// Dependencies</span>
@@ -447,15 +403,10 @@ If everything works fine you will get the following output:</p>
 </code></pre></td>
 </tr>
 </table>
-
 <p>This time we defined a new target "BuildTest" which compiles all C# projects below <em>src/test/</em> in Debug mode and we put the target into our build order.</p>
-
 <p>If we run build.bat again we get an error like this:</p>
-
 <p><img src="pics/gettingstarted/compileerror.png" alt="alt text" title="Compile error" /></p>
-
 <p>The problem is that we didn't download the NUnit package from nuget. So let's fix this in the build script:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -472,13 +423,9 @@ If everything works fine you will get the following output:</p>
 </code></pre></td>
 </tr>
 </table>
-
 <p>With this simple command FAKE will use nuget.exe to install all the package dependencies.</p>
-
 <h2>Running the tests with NUnit</h2>
-
 <p>Now all our projects will be compiled and we can use FAKE's NUnit task in order to let NUnit test our assembly:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -540,31 +487,31 @@ If everything works fine you will get the following output:</p>
 
 <span class="c">// Targets</span>
 <span class="i">Target</span> <span class="s">&quot;Clean&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="i">CleanDirs</span> [<span class="i">buildDir</span>; <span class="i">testDir</span>]
+	<span class="i">CleanDirs</span> [<span class="i">buildDir</span>; <span class="i">testDir</span>]
 )
 
 <span class="i">Target</span> <span class="s">&quot;BuildApp&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
    <span class="o">!!</span> <span class="s">&quot;src/app/**/*.csproj&quot;</span>
-     <span class="o">|&gt;</span> <span class="i">MSBuildRelease</span> <span class="i">buildDir</span> <span class="s">&quot;Build&quot;</span>
-     <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
+	 <span class="o">|&gt;</span> <span class="i">MSBuildRelease</span> <span class="i">buildDir</span> <span class="s">&quot;Build&quot;</span>
+	 <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
 )
 
 <span class="i">Target</span> <span class="s">&quot;BuildTest&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="o">!!</span> <span class="s">&quot;src/test/**/*.csproj&quot;</span>
-      <span class="o">|&gt;</span> <span class="i">MSBuildDebug</span> <span class="i">testDir</span> <span class="s">&quot;Build&quot;</span>
-      <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;TestBuild-Output: &quot;</span>
+	<span class="o">!!</span> <span class="s">&quot;src/test/**/*.csproj&quot;</span>
+	  <span class="o">|&gt;</span> <span class="i">MSBuildDebug</span> <span class="i">testDir</span> <span class="s">&quot;Build&quot;</span>
+	  <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;TestBuild-Output: &quot;</span>
 )
 
 <span class="i">Target</span> <span class="s">&quot;Test&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="o">!!</span> (<span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;/NUnit.Test.*.dll&quot;</span>)
-      <span class="o">|&gt;</span> <span class="i">NUnit</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
-          {<span class="i">p</span> <span class="k">with</span>
-             <span class="i">DisableShadowCopy</span> <span class="o">=</span> <span class="k">true</span>;
-             <span class="i">OutputFile</span> <span class="o">=</span> <span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;TestResults.xml&quot;</span> })
+	<span class="o">!!</span> (<span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;/NUnit.Test.*.dll&quot;</span>)
+	  <span class="o">|&gt;</span> <span class="i">NUnit</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
+		  {<span class="i">p</span> <span class="k">with</span>
+			 <span class="i">DisableShadowCopy</span> <span class="o">=</span> <span class="k">true</span>;
+			 <span class="i">OutputFile</span> <span class="o">=</span> <span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;TestResults.xml&quot;</span> })
 )
 
 <span class="i">Target</span> <span class="s">&quot;Default&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="i">trace</span> <span class="s">&quot;Hello World from FAKE&quot;</span>
+	<span class="i">trace</span> <span class="s">&quot;Hello World from FAKE&quot;</span>
 )
 
 <span class="c">// Dependencies</span>
@@ -579,15 +526,10 @@ If everything works fine you will get the following output:</p>
 </code></pre></td>
 </tr>
 </table>
-
 <p>Our new <em>Test</em> target scans the test directory for test assemblies and runs them with the NUnit runner. FAKE automatically tries to locate the runner in one of your subfolders. See the <a href="apidocs/fake-nunitsequential.html">NUnit task documentation</a> if you need to specify the tool path explicitly.</p>
-
 <p>The mysterious part <strong>(fun p -&gt; ...)</strong> simply overrides the default parameters of the NUnit task and allows to specify concrete parameters.</p>
-
 <p><img src="pics/gettingstarted/alltestsgreen.png" alt="alt text" title="All tests green" /></p>
-
 <p>Alternatively you could also run the tests in parallel using the <a href="apidocs/fake-nunitparallel.html">NUnitParallel</a> task:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -597,20 +539,17 @@ If everything works fine you will get the following output:</p>
 <span class="l">7: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;Test&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="o">!!</span> (<span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;/NUnit.Test.*.dll&quot;</span>)
-      <span class="o">|&gt;</span> <span class="i">NUnitParallel</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
-          {<span class="i">p</span> <span class="k">with</span>
-             <span class="i">DisableShadowCopy</span> <span class="o">=</span> <span class="k">true</span>;
-             <span class="i">OutputFile</span> <span class="o">=</span> <span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;TestResults.xml&quot;</span> })
+	<span class="o">!!</span> (<span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;/NUnit.Test.*.dll&quot;</span>)
+	  <span class="o">|&gt;</span> <span class="i">NUnitParallel</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
+		  {<span class="i">p</span> <span class="k">with</span>
+			 <span class="i">DisableShadowCopy</span> <span class="o">=</span> <span class="k">true</span>;
+			 <span class="i">OutputFile</span> <span class="o">=</span> <span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;TestResults.xml&quot;</span> })
 )
 </code></pre></td>
 </tr>
 </table>
-
 <h2>Deploying a zip file</h2>
-
 <p>Now we want to deploy a *.zip file containing our application:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -687,37 +626,37 @@ If everything works fine you will get the following output:</p>
 
 <span class="c">// Targets</span>
 <span class="i">Target</span> <span class="s">&quot;Clean&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="i">CleanDirs</span> [<span class="i">buildDir</span>; <span class="i">testDir</span>; <span class="i">deployDir</span>]
+	<span class="i">CleanDirs</span> [<span class="i">buildDir</span>; <span class="i">testDir</span>; <span class="i">deployDir</span>]
 )
 
 <span class="i">Target</span> <span class="s">&quot;BuildApp&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
    <span class="o">!!</span> <span class="s">&quot;src/app/**/*.csproj&quot;</span>
-     <span class="o">|&gt;</span> <span class="i">MSBuildRelease</span> <span class="i">buildDir</span> <span class="s">&quot;Build&quot;</span>
-     <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
+	 <span class="o">|&gt;</span> <span class="i">MSBuildRelease</span> <span class="i">buildDir</span> <span class="s">&quot;Build&quot;</span>
+	 <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;AppBuild-Output: &quot;</span>
 )
 
 <span class="i">Target</span> <span class="s">&quot;BuildTest&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="o">!!</span> <span class="s">&quot;src/test/**/*.csproj&quot;</span>
-      <span class="o">|&gt;</span> <span class="i">MSBuildDebug</span> <span class="i">testDir</span> <span class="s">&quot;Build&quot;</span>
-      <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;TestBuild-Output: &quot;</span>
+	<span class="o">!!</span> <span class="s">&quot;src/test/**/*.csproj&quot;</span>
+	  <span class="o">|&gt;</span> <span class="i">MSBuildDebug</span> <span class="i">testDir</span> <span class="s">&quot;Build&quot;</span>
+	  <span class="o">|&gt;</span> <span class="i">Log</span> <span class="s">&quot;TestBuild-Output: &quot;</span>
 )
 
 <span class="i">Target</span> <span class="s">&quot;Test&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="o">!!</span> (<span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;/NUnit.Test.*.dll&quot;</span>)
-      <span class="o">|&gt;</span> <span class="i">NUnit</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
-          {<span class="i">p</span> <span class="k">with</span>
-             <span class="i">DisableShadowCopy</span> <span class="o">=</span> <span class="k">true</span>;
-             <span class="i">OutputFile</span> <span class="o">=</span> <span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;TestResults.xml&quot;</span> })
+	<span class="o">!!</span> (<span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;/NUnit.Test.*.dll&quot;</span>)
+	  <span class="o">|&gt;</span> <span class="i">NUnit</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
+		  {<span class="i">p</span> <span class="k">with</span>
+			 <span class="i">DisableShadowCopy</span> <span class="o">=</span> <span class="k">true</span>;
+			 <span class="i">OutputFile</span> <span class="o">=</span> <span class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;TestResults.xml&quot;</span> })
 )
 
 <span class="i">Target</span> <span class="s">&quot;Zip&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="o">!!</span> (<span class="i">buildDir</span> <span class="o">+</span> <span class="s">&quot;/**/*.*&quot;</span>)
-        <span class="o">--</span> <span class="s">&quot;*.zip&quot;</span>
-        <span class="o">|&gt;</span> <span class="i">Zip</span> <span class="i">buildDir</span> (<span class="i">deployDir</span> <span class="o">+</span> <span class="s">&quot;Calculator.&quot;</span> <span class="o">+</span> <span class="i">version</span> <span class="o">+</span> <span class="s">&quot;.zip&quot;</span>)
+	<span class="o">!!</span> (<span class="i">buildDir</span> <span class="o">+</span> <span class="s">&quot;/**/*.*&quot;</span>)
+		<span class="o">--</span> <span class="s">&quot;*.zip&quot;</span>
+		<span class="o">|&gt;</span> <span class="i">Zip</span> <span class="i">buildDir</span> (<span class="i">deployDir</span> <span class="o">+</span> <span class="s">&quot;Calculator.&quot;</span> <span class="o">+</span> <span class="i">version</span> <span class="o">+</span> <span class="s">&quot;.zip&quot;</span>)
 )
 
 <span class="i">Target</span> <span class="s">&quot;Default&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="i">trace</span> <span class="s">&quot;Hello World from FAKE&quot;</span>
+	<span class="i">trace</span> <span class="s">&quot;Hello World from FAKE&quot;</span>
 )
 
 <span class="c">// Dependencies</span>
@@ -733,11 +672,8 @@ If everything works fine you will get the following output:</p>
 </code></pre></td>
 </tr>
 </table>
-
 <p>The new <em>Deploy</em> target scans the build directory for all files. The result will be zipped to <em>/deploy/Calculator.zip</em> via the Zip task.</p>
-
 <h2>What's next?</h2>
-
 <p>If you want you could now <a href="fxcop.html">add a FxCop target</a> to your build in order to check specific naming rules or framework guidelines.</p>
 
                     

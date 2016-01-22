@@ -41,7 +41,6 @@
 <p>Contains helper functions and task which allow to inspect, create and publish <a href="https://www.nuget.org/">NuGet</a> packages.
 There is also a tutorial about <a href="../create-nuget-package.html">nuget package creating</a> available.</p>
 
-
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -58,7 +57,6 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
           </td>
           <td class="xmldoc"><p>Nuget parameter type</p>
 
-
 </td>
         </tr>
         <tr>
@@ -66,7 +64,6 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
             <a href="fake-nugethelper-nuspecpackage.html">NuSpecPackage</a>
           </td>
           <td class="xmldoc"><p>NuSpec metadata type</p>
-
 
 </td>
         </tr>
@@ -120,10 +117,10 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '465', 465)" onmouseover="showTip(event, '465', 465)">
+          <code onmouseout="hideTip(event, '466', 466)" onmouseover="showTip(event, '466', 466)">
             feedUrl 
           </code>
-          <div class="tip" id="465">
+          <div class="tip" id="466">
             <strong>Signature:</strong> string<br />
                       </div>
         </td>
@@ -135,16 +132,15 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
           <p>Default NuGet feed</p>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '466', 466)" onmouseover="showTip(event, '466', 466)">
+          <code onmouseout="hideTip(event, '467', 467)" onmouseover="showTip(event, '467', 467)">
             getDependencies packagesFile
           </code>
-          <div class="tip" id="466">
+          <div class="tip" id="467">
             <strong>Signature:</strong> packagesFile:string -&gt; (string * string) list<br />
                       </div>
         </td>
@@ -156,16 +152,15 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
           <p>Returns the dependencies from specified packages.config file</p>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '467', 467)" onmouseover="showTip(event, '467', 467)">
+          <code onmouseout="hideTip(event, '468', 468)" onmouseover="showTip(event, '468', 468)">
             GetMetaDataFromPackageFile (...)
           </code>
-          <div class="tip" id="467">
+          <div class="tip" id="468">
             <strong>Signature:</strong> packageFileName:string -&gt; NuSpecPackage<br />
                       </div>
         </td>
@@ -175,13 +170,10 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Returns the NuGet meta data from the given package file name.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>packageFileName</code> - The .nuspec package file name.</li>
 </ul>
-
 
 
         </td>
@@ -189,10 +181,10 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '468', 468)" onmouseover="showTip(event, '468', 468)">
+          <code onmouseout="hideTip(event, '469', 469)" onmouseover="showTip(event, '469', 469)">
             getNuspecProperties nuspec
           </code>
-          <div class="tip" id="468">
+          <div class="tip" id="469">
             <strong>Signature:</strong> nuspec:string -&gt; NuSpecPackage<br />
                       </div>
         </td>
@@ -202,13 +194,10 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Parses nuspec metadata from a nuspec file.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>nuspec</code> - The .nuspec file content.</li>
 </ul>
-
 
 
         </td>
@@ -216,10 +205,10 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '469', 469)" onmouseover="showTip(event, '469', 469)">
+          <code onmouseout="hideTip(event, '470', 470)" onmouseover="showTip(event, '470', 470)">
             GetPackageVersion deploymentsDir package
           </code>
-          <div class="tip" id="469">
+          <div class="tip" id="470">
             <strong>Signature:</strong> deploymentsDir:string -&gt; package:string -&gt; string<br />
                       </div>
         </td>
@@ -231,16 +220,15 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
           <p>Gets the version no. for a given package in the deployments folder</p>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '470', 470)" onmouseover="showTip(event, '470', 470)">
+          <code onmouseout="hideTip(event, '471', 471)" onmouseover="showTip(event, '471', 471)">
             NuGet setParams nuspecOrProjectFile
           </code>
-          <div class="tip" id="470">
+          <div class="tip" id="471">
             <strong>Signature:</strong> setParams:(NuGetParams -&gt; NuGetParams) -&gt; nuspecOrProjectFile:string -&gt; unit<br />
                       </div>
         </td>
@@ -250,14 +238,11 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Creates a new NuGet package.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>setParams</code> - Function used to manipulate the default NuGet parameters.</li>
 <li><code>nuspecFile</code> - The .nuspec file name.</li>
 </ul>
-
 
 
         </td>
@@ -265,10 +250,10 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '471', 471)" onmouseover="showTip(event, '471', 471)">
+          <code onmouseout="hideTip(event, '472', 472)" onmouseover="showTip(event, '472', 472)">
             NuGetDefaults ()
           </code>
-          <div class="tip" id="471">
+          <div class="tip" id="472">
             <strong>Signature:</strong> unit -&gt; NuGetParams<br />
                       </div>
         </td>
@@ -280,16 +265,15 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
           <p>NuGet default parameters</p>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '472', 472)" onmouseover="showTip(event, '472', 472)">
+          <code onmouseout="hideTip(event, '473', 473)" onmouseover="showTip(event, '473', 473)">
             NuGetPack setParams nuspecOrProjectFile
           </code>
-          <div class="tip" id="472">
+          <div class="tip" id="473">
             <strong>Signature:</strong> setParams:(NuGetParams -&gt; NuGetParams) -&gt; nuspecOrProjectFile:string -&gt; unit<br />
                       </div>
         </td>
@@ -299,14 +283,11 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Creates a new NuGet package based on the given .nuspec file.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>setParams</code> - Function used to manipulate the default NuGet parameters.</li>
 <li><code>nuspecOrProjectFile</code> - The .nuspec or project file name.</li>
 </ul>
-
 
 
         </td>
@@ -314,10 +295,10 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '473', 473)" onmouseover="showTip(event, '473', 473)">
+          <code onmouseout="hideTip(event, '474', 474)" onmouseover="showTip(event, '474', 474)">
             NuGetPackDirectly (...)
           </code>
-          <div class="tip" id="473">
+          <div class="tip" id="474">
             <strong>Signature:</strong> setParams:(NuGetParams -&gt; NuGetParams) -&gt; nuspecOrProjectFile:string -&gt; unit<br />
                       </div>
         </td>
@@ -327,14 +308,11 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Creates a new NuGet package based on the given .nuspec file.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>setParams</code> - Function used to manipulate the default NuGet parameters.</li>
 <li><code>nuspecOrProjectFile</code> - The .nuspec or project file name.</li>
 </ul>
-
 
 
         </td>
@@ -342,10 +320,10 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '474', 474)" onmouseover="showTip(event, '474', 474)">
+          <code onmouseout="hideTip(event, '475', 475)" onmouseover="showTip(event, '475', 475)">
             NuGetPublish setParams
           </code>
-          <div class="tip" id="474">
+          <div class="tip" id="475">
             <strong>Signature:</strong> setParams:(NuGetParams -&gt; NuGetParams) -&gt; unit<br />
                       </div>
         </td>
@@ -355,13 +333,10 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Publishes a NuGet package to the nuget server.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>setParams</code> - Function used to manipulate the default NuGet parameters.</li>
 </ul>
-
 
 
         </td>
@@ -369,10 +344,10 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '475', 475)" onmouseover="showTip(event, '475', 475)">
+          <code onmouseout="hideTip(event, '476', 476)" onmouseover="showTip(event, '476', 476)">
             RequireExactly version
           </code>
-          <div class="tip" id="475">
+          <div class="tip" id="476">
             <strong>Signature:</strong> version:string -&gt; string<br />
                       </div>
         </td>
@@ -382,7 +357,6 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Creates a string which tells NuGet that you require exactly this package version.</p>
-
 
 
         </td>

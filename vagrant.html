@@ -38,51 +38,36 @@
       <div class="row">
         <div class="span9" id="main">
           <h1>How to use Vagrant and quickly setup a reproducible development environment for FAKE</h1>
-
 <p>Since <a href="https://github.com/fsharp/FAKE/pull/711">#711</a>, it is possible to deploy an fresh Ubuntu
 Linux virtual machine with one simple command thanks to <a href="https://www.vagrantup.com/">Vagrant</a>. Here
 is how to proceed...</p>
-
 <h1>Install the system-wide prerequisites</h1>
-
 <h2>VirtualBox and its Extension Pack</h2>
-
 <blockquote>
-  <p>VirtualBox is a powerful x86 and AMD64/Intel64 virtualization product for enterprise as well as
+<p>VirtualBox is a powerful x86 and AMD64/Intel64 virtualization product for enterprise as well as
 home use. Not only is VirtualBox an extremely feature rich, high performance product for
 enterprise customers, it is also the only professional solution that is freely available as Open
 Source Software under the terms of the GNU General Public License (GPL) version 2.</p>
 </blockquote>
-
 <p>You can install VirtualBox and the VirtualBox Extension Pack from <a href="https://www.virtualbox.org/wiki/Downloads">www.virtualbox.org/wiki/Downloads</a>
 or with your package manager.</p>
-
 <h2>Vagrant</h2>
-
 <blockquote>
-  <p>Vagrant is a tool for building complete development environments. With an easy-to-use workflow
+<p>Vagrant is a tool for building complete development environments. With an easy-to-use workflow
 and focus on automation, Vagrant lowers development environment setup time, increases
 development/production parity, and makes the "works on my machine" excuse a relic of the past.</p>
 </blockquote>
-
 <p>You can install Vagrant from <a href="https://www.vagrantup.com/downloads.html">www.vagrantup.com/downloads.html</a>
 or with your package manager.</p>
-
 <h1>Start a new VM</h1>
-
 <p>Simply <code>cd</code> to the root directory of the FAKE source code and run <code>vagrant up</code>.</p>
-
 <p>The VM will be automatically downloaded, imported into VirtualBox, configured and started. The FAKE
 source directory is automatically shared with the VM under the <code>/vagrant</code> directory.</p>
-
 <p>Run <code>vagrant ssh</code> to directly connect via SSH to the VM and start working.</p>
-
 <p>Alternately, you can directly execute any command with <code>vagrant ssh -c "&lt;command&gt;"</code>.
 As example, you can directly invoke the <code>build.sh</code> script with the
 <code>vagrant ssh -c "cd /vagrant &amp;&amp; bash ./build.sh"</code> command.</p>
-
 <p>Once you have finished, you can either:</p>
-
 <ul>
 <li>Run <code>vagrant suspend</code> to pause the VM.</li>
 <li>Run <code>vagrant halt</code> to shutdown the VM.</li>
@@ -90,11 +75,8 @@ As example, you can directly invoke the <code>build.sh</code> script with the
 <li>Run <code>vagrant box remove ubuntu/trusty64</code> to remove the base box from your computer.</li>
 <li>Re-run <code>vagrant up</code> to reload the VM.</li>
 </ul>
-
 <p>The full command line documentation is available at <a href="https://docs.vagrantup.com/">docs.vagrantup.com</a>.</p>
-
 <h1>Further information</h1>
-
 <ul>
 <li><a href="https://docs.vagrantup.com/v2/">Vagrant Documentation</a></li>
 <li><a href="https://github.com/mitchellh/vagrant">Vagrant on GitHub</a></li>

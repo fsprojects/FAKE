@@ -41,7 +41,6 @@
 <p>Module that enables creating and embedding Side-by-Side interop
 manifests for registration free deployment of Com-.net interop projects</p>
 
-
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -58,7 +57,6 @@ manifests for registration free deployment of Com-.net interop projects</p>
           </td>
           <td class="xmldoc"><p>Represents an executable to create an <em>application manifest</em> for</p>
 
-
 </td>
         </tr>
         <tr>
@@ -66,7 +64,6 @@ manifests for registration free deployment of Com-.net interop projects</p>
             <a href="fake-sxshelper-interopassemblydata.html">InteropAssemblyData</a>
           </td>
           <td class="xmldoc"><p>Represents a <code>.NET</code> assembly that may be used in COM interop projects</p>
-
 
 </td>
         </tr>
@@ -84,10 +81,10 @@ manifests for registration free deployment of Com-.net interop projects</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '663', 663)" onmouseover="showTip(event, '663', 663)">
+          <code onmouseout="hideTip(event, '664', 664)" onmouseover="showTip(event, '664', 664)">
             AddEmbeddedApplicationManifest (...)
           </code>
-          <div class="tip" id="663">
+          <div class="tip" id="664">
             <strong>Signature:</strong> workingDir:string -&gt; applications:seq&lt;InteropApplicationData&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -97,14 +94,11 @@ manifests for registration free deployment of Com-.net interop projects</p>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Creates and adds <em>application interop side-by-side manifests</em> to provided executables</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>workingdir</code> - somewhere to put any temporary files</li>
 <li><code>applications</code> - Metadata about executables to create manifests for.</li>
 </ul>
-
 
 
         </td>
@@ -112,10 +106,10 @@ manifests for registration free deployment of Com-.net interop projects</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '664', 664)" onmouseover="showTip(event, '664', 664)">
+          <code onmouseout="hideTip(event, '665', 665)" onmouseover="showTip(event, '665', 665)">
             AddEmbeddedAssemblyManifest (...)
           </code>
-          <div class="tip" id="664">
+          <div class="tip" id="665">
             <strong>Signature:</strong> workingDir:string -&gt; assemblies:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -125,23 +119,18 @@ manifests for registration free deployment of Com-.net interop projects</p>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Created and embeds assembly Side-by-side interop manifests for provided assemblies</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>workingDir</code> - somewhere to put any temp files created</li>
 <li><code>assemblies</code> - .net assemblies to create manifests for</li>
 </ul>
-
 <h2>Process</h2>
-
 <p>This function will use <code>mt.exe</code> (ref: <a href="https://msdn.microsoft.com/en-us/library/aa375649(v=vs.85).aspx)
 to">https://msdn.microsoft.com/en-us/library/aa375649(v=vs.85).aspx)
-to</a> create a manifest for each assembly. This created manifest is unfortunately <em>not</em> a valid 
+to</a> create a manifest for each assembly. This created manifest is unfortunately <em>not</em> a valid
 interop Side-by-Side manifest, but it has the important <code>clrClass</code> elements, + <code>version</code> and <code>name</code>info that would be the most
 difficult to create through other means.
 The important info is then put into a valid base manifest and embedded into the assembly as a resource.</p>
-
 
 
         </td>
@@ -149,10 +138,10 @@ The important info is then put into a valid base manifest and embedded into the 
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '665', 665)" onmouseover="showTip(event, '665', 665)">
+          <code onmouseout="hideTip(event, '666', 666)" onmouseover="showTip(event, '666', 666)">
             GetInteropAssemblyData (...)
           </code>
-          <div class="tip" id="665">
+          <div class="tip" id="666">
             <strong>Signature:</strong> workingDir:string -&gt; assemblies:seq&lt;string&gt; -&gt; InteropAssemblyData list<br />
                       </div>
         </td>
@@ -161,32 +150,25 @@ The important info is then put into a valid base manifest and embedded into the 
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Gets <code>name</code>, <code>path',</code>version<code>and interop</code>Guid` for those of the provided assemblies that have 
+          <p>Gets <code>name</code>, <code>path',</code>version<code>and interop</code>Guid` for those of the provided assemblies that have
 all of the required information.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>workingDir</code> - Somewhere to put temporary files</li>
 <li><code>assemblies</code> - assemblies to get data from</li>
 </ul>
-
 <h2>Purpose</h2>
-
 <p>In order to create <em>application</em> interop side-by-side manifests we need to know some metadata
 about the assemblies that may be referenced from COM executables.
 For the manifest we need the <em>assembly version</em> and <em> assembly name</em>. And in addition to that
 the interop <em>guid</em> is collected so we can determine if the assembly is referenced by <em>vb6 projects</em></p>
-
 <h2>Process</h2>
-
 <p>This function is a <em>hack</em>. To avoid using reflection and loading all potential assemblies into the
 appdomain (with all the possible problems that may cause). I wanted to get this metadata by other means.
 I ended up using the windows sdk dissasembler <code>ildasm.exe</code> (ref: <a href="https://msdn.microsoft.com/en-us/library/f7dy01k1(v=vs.110).aspx)
 to">https://msdn.microsoft.com/en-us/library/f7dy01k1(v=vs.110).aspx)
 to</a> create the smallest dissasembly I could (Really only need the manifest part), and the parse the IL file to get the metadata
 (If anyone knows a cleaner / better way, pls improve on the code)</p>
-
 
 
         </td>

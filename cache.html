@@ -38,7 +38,6 @@
       <div class="row">
         <div class="span9" id="main">
           <h1>Caching of build scripts</h1>
-
 <p>Starting with version <code>4.0.0</code> of FAKE, the first time a script is run the
 compiled assembly that is generated is saved into the hidden <code>.fake</code> directory. This
 allows FAKE to start in milliseconds instead of seconds. Your script files are
@@ -50,7 +49,6 @@ compiled assembly to disk, you can call FAKE with the <code>--nocache</code> arg
 which stops FAKE from dumping the compiled assembly to disk. Do note that the
 assembly is still being compiled by FSI, all you are disabling is the saving
 to disk.</p>
-
 <p>You should add the <code>.fake</code> folder to your <code>.gitignore</code> file.</p>
 
                     

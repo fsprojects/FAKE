@@ -40,7 +40,6 @@
 <div class="xmldoc">
 <p>Contains code to configure FAKE for Appcast handling</p>
 
-
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -57,7 +56,6 @@
           </td>
           <td class="xmldoc"><p>Configuration data for the appcast</p>
 
-
 </td>
         </tr>
         <tr>
@@ -66,7 +64,6 @@
           </td>
           <td class="xmldoc"><p>Download details for the appcast</p>
 
-
 </td>
         </tr>
         <tr>
@@ -74,7 +71,6 @@
             <a href="fake-appcast-mimetype.html">MimeType</a>
           </td>
           <td class="xmldoc"><p>Mime type of the download file</p>
-
 
 </td>
         </tr>
@@ -105,12 +101,11 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>writes an appcast to a file</p>
-
 <h2>Parameters</h2>
-
 <ul>
-<li><code>path</code> - The file where the appcast should be written</li>
-<li><p><code>cast</code> - The appcast to write</p>
+<li><p><code>path</code> - The file where the appcast should be written</p></li>
+<li>
+<p><code>cast</code> - The appcast to write</p>
 <h2>Sample</h2>
 <p>// This target creates the app cast for our app. I contains two version 1.X and 2.X while 2.X requires at least OS X 10.10 Yosemite.
 Target "CreateAppcast" (fun _ -&gt;
@@ -120,39 +115,39 @@ let</a> fileLength file =
 let info = new System.IO.FileInfo(file)
 info.Length</p>
 <p>let latestSize = fileLength "build/download-2.0.1.zip"
-  let legacySize = fileLength "build/download-1.1.4.zip"</p>
-<p>{ 
-      title = "My Awesome App"
-      description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus."
-      language = "en"
-      items = [
-                  {
-                      title = "Hawk Nickel Greyhound"
-                      pubdate = System.DateTime.Now
-                      url = new System.Uri(server + "download-2.0.1.zip")
-                      version = "2014" // This our internal build number
-                      shortVersion = Some("2.0.1") //This is what we show to the user
-                      mimetype = OctetStream
-                      minimumSystemVersion = Some("10.10")
-                      length = latestSize
-                      dsaSignature = None
-                  };
-                  {
-                      title = "Sparrow Platinum Beagle"
-                      pubdate = System.DateTime.Now
-                      url = new System.Uri(server + "download-1.1.4.zip")
-                      version = "1142" // This our internal build number
-                      shortVersion = Some("1.1.4") //This is what we show to the user
-                      mimetype = OctetStream
-                      length = legacySize
-                      minimumSystemVersion = None
-                      dsaSignature = None
-                  }
-      ]
-  } |&gt; writeAppcast "build/updates.xml"
-)</p></li>
+let legacySize = fileLength "build/download-1.1.4.zip"</p>
+<p>{
+title = "My Awesome App"
+description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus."
+language = "en"
+items = [
+{
+title = "Hawk Nickel Greyhound"
+pubdate = System.DateTime.Now
+url = new System.Uri(server + "download-2.0.1.zip")
+version = "2014" // This our internal build number
+shortVersion = Some("2.0.1") //This is what we show to the user
+mimetype = OctetStream
+minimumSystemVersion = Some("10.10")
+length = latestSize
+dsaSignature = None
+};
+{
+title = "Sparrow Platinum Beagle"
+pubdate = System.DateTime.Now
+url = new System.Uri(server + "download-1.1.4.zip")
+version = "1142" // This our internal build number
+shortVersion = Some("1.1.4") //This is what we show to the user
+mimetype = OctetStream
+length = legacySize
+minimumSystemVersion = None
+dsaSignature = None
+}
+]
+} |&gt; writeAppcast "build/updates.xml"
+)</p>
+</li>
 </ul>
-
 
 
         </td>

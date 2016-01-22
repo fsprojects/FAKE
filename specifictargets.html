@@ -38,22 +38,15 @@
       <div class="row">
         <div class="span9" id="main">
           <h1>Running targets in "FAKE - F# Make"</h1>
-
 <h2>Listing targets</h2>
-
 <p>Before running any specific target it is useful to know all the targets that are available in a build script.
 FAKE can list all the avaiable targets including the dependencies by running the following command:</p>
-
 <ul>
 <li>Fake.exe <em>YourBuildScript</em> -lt</li>
 </ul>
-
 <p>The option <em>-lt</em> stands for "list targets". It is an abbreviation of the option <em>--listTargets</em>.</p>
-
 <h2>Running specific targets</h2>
-
 <p>FAKE has a special param "target" which can be used to run specific targets in a build. We assume the following build script:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -87,15 +80,15 @@ FAKE can list all the avaiable targets including the dependencies by running the
 
 <span class="c">// *** Define Targets ***</span>
 <span class="i">Target</span> <span class="s">&quot;Clean&quot;</span> (<span class="k">fun</span> () <span class="k">-&gt;</span> 
-    <span class="i">trace</span> <span class="s">&quot; --- Cleaning stuff --- &quot;</span>
+	<span class="i">trace</span> <span class="s">&quot; --- Cleaning stuff --- &quot;</span>
 )
 
 <span class="i">Target</span> <span class="s">&quot;Build&quot;</span> (<span class="k">fun</span> () <span class="k">-&gt;</span> 
-    <span class="i">trace</span> <span class="s">&quot; --- Building the app --- &quot;</span>
+	<span class="i">trace</span> <span class="s">&quot; --- Building the app --- &quot;</span>
 )
 
 <span class="i">Target</span> <span class="s">&quot;Deploy&quot;</span> (<span class="k">fun</span> () <span class="k">-&gt;</span> 
-    <span class="i">trace</span> <span class="s">&quot; --- Deploying app --- &quot;</span>
+	<span class="i">trace</span> <span class="s">&quot; --- Deploying app --- &quot;</span>
 )
 
 <span class="c">// *** Define Dependencies ***</span>
@@ -108,9 +101,7 @@ FAKE can list all the avaiable targets including the dependencies by running the
 </code></pre></td>
 </tr>
 </table>
-
 <p>Now we have the following options:</p>
-
 <ul>
 <li>Fake.exe "target=Build" --&gt; starts the <em>Build</em> target and runs the dependency <em>Clean</em></li>
 <li>Fake.exe Build --&gt; starts the <em>Build</em> target and runs the dependency <em>Clean</em></li>
@@ -118,12 +109,9 @@ FAKE can list all the avaiable targets including the dependencies by running the
 <li>Fake.exe Build -st --&gt; starts only the <em>Build</em> target and runs no dependencies</li>
 <li>Fake.exe --&gt; starts the Deploy target (and runs the dependencies <em>Clean</em> and <em>Build</em>)</li>
 </ul>
-
 <h2>Final targets</h2>
-
-<p>Final targets can be used for TearDown functionality. 
+<p>Final targets can be used for TearDown functionality.
 These targets will be executed even if the build fails but have to be activated via ActivateFinalTarget().</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -132,7 +120,7 @@ These targets will be executed even if the build fails but have to be activated 
 <span class="l">6: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">FinalTarget</span> <span class="s">&quot;CloseSomePrograms&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="c">// close stuff and release resources</span>
+	<span class="c">// close stuff and release resources</span>
 )
 
 <span class="c">// Activate FinalTarget somewhere during build</span>
@@ -140,12 +128,9 @@ These targets will be executed even if the build fails but have to be activated 
 </code></pre></td>
 </tr>
 </table>
-
 <h2>Build failure targets</h2>
-
 <p>Build failure targets can be used to execute tasks after a build failure.
 These targets will be executed only after a build failure but have to be activated via ActivateBuildFailureTarget().</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -154,7 +139,7 @@ These targets will be executed only after a build failure but have to be activat
 <span class="l">6: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">BuildFailureTarget</span> <span class="s">&quot;ReportErrorViaMail&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="c">// send mail about the failure</span>
+	<span class="c">// send mail about the failure</span>
 )
 
 <span class="c">// Activate BuildFailureTarget somewhere during build</span>

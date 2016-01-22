@@ -40,7 +40,6 @@
 <div class="xmldoc">
 <p>Contains types and utility functions related to creating <a href="https://github.com/Squirrel/Squirrel.Windows">Squirrel</a> installer.</p>
 
-
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -57,9 +56,7 @@
           </td>
           <td class="xmldoc"><p>The <a href="https://github.com/Squirrel/Squirrel.Windows">Squirrel</a> Console Parameters type.
 FAKE will use <a href="fake-squirrel.html">SquirrelDefaults</a> for values not provided.</p>
-
 <p>For reference, see: <a href="https://github.com/Squirrel/Squirrel.Windows/blob/master/docs/advanced-releasify.md">Squirrel Command Line Options</a></p>
-
 
 </td>
         </tr>
@@ -77,10 +74,10 @@ FAKE will use <a href="fake-squirrel.html">SquirrelDefaults</a> for values not p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '591', 591)" onmouseover="showTip(event, '591', 591)">
+          <code onmouseout="hideTip(event, '592', 592)" onmouseover="showTip(event, '592', 592)">
             SquirrelDefaults 
           </code>
-          <div class="tip" id="591">
+          <div class="tip" id="592">
             <strong>Signature:</strong> SquirrelParams<br />
                       </div>
         </td>
@@ -90,9 +87,7 @@ FAKE will use <a href="fake-squirrel.html">SquirrelDefaults</a> for values not p
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>The Squirrel default parameters.</p>
-
 <h2>Defaults</h2>
-
 <ul>
 <li><code>ReleaseDir</code> - <code>""</code></li>
 <li><code>WorkingDir</code> - <code>None</code></li>
@@ -108,16 +103,15 @@ FAKE will use <a href="fake-squirrel.html">SquirrelDefaults</a> for values not p
 </ul>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '592', 592)" onmouseover="showTip(event, '592', 592)">
+          <code onmouseout="hideTip(event, '593', 593)" onmouseover="showTip(event, '593', 593)">
             SquirrelPack setParams nugetPackage
           </code>
-          <div class="tip" id="592">
+          <div class="tip" id="593">
             <strong>Signature:</strong> setParams:(SquirrelParams -&gt; SquirrelParams) -&gt; nugetPackage:string -&gt; unit<br />
                       </div>
         </td>
@@ -128,16 +122,12 @@ FAKE will use <a href="fake-squirrel.html">SquirrelDefaults</a> for values not p
             </a>
           <p>Creates a Squirrel installer for given NuGet package
 Will fail if Squirrel terminates with non-zero exit code.</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>setParams</code> - Function used to manipulate the default <a href="fake-squirrel-squirrelparams.html" title="SquirrelParams"><code>SquirrelParams</code></a> value.</li>
 <li><code>nugetPackage</code> - The package to create an installer for</li>
 </ul>
-
 <h2>Sample usage</h2>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -148,7 +138,6 @@ Will fail if Squirrel terminates with non-zero exit code.</p>
 </code></pre></td>
 </tr>
 </table>
-
 <div class="tip" id="fs1">union case Option.Some: Value: &#39;T -&gt; Option&lt;&#39;T&gt;</div>
 
 

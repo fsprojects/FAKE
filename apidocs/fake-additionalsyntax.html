@@ -40,7 +40,6 @@
 <div class="xmldoc">
 <p>Provides functions and operators to deal with FAKE targets and target dependencies.</p>
 
-
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -58,8 +57,8 @@
             ( ? ) f s
           </code>
           <div class="tip" id="1">
-            <strong>Signature:</strong> f:(&#39;?11793 -&gt; &#39;?11794) -&gt; s:&#39;?11793 -&gt; &#39;?11794<br />
-                          <strong>Type parameters:</strong> '?11793, '?11794          </div>
+            <strong>Signature:</strong> f:(&#39;?11794 -&gt; &#39;?11795) -&gt; s:&#39;?11794 -&gt; &#39;?11795<br />
+                          <strong>Type parameters:</strong> '?11794, '?11795          </div>
         </td>
         <td class="xmldoc">
             <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AdditionalSyntax.fs#L8-8" class="github-link">
@@ -67,7 +66,6 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Allows to use Tokens instead of strings</p>
-
 
 
         </td>
@@ -79,8 +77,8 @@
             ( ?&lt;- ) f str action
           </code>
           <div class="tip" id="2">
-            <strong>Signature:</strong> f:(&#39;?11796 -&gt; &#39;?11797 -&gt; &#39;?11798) -&gt; str:&#39;?11796 -&gt; action:&#39;?11797 -&gt; &#39;?11798<br />
-                          <strong>Type parameters:</strong> '?11796, '?11797, '?11798          </div>
+            <strong>Signature:</strong> f:(&#39;?11797 -&gt; &#39;?11798 -&gt; &#39;?11799) -&gt; str:&#39;?11797 -&gt; action:&#39;?11798 -&gt; &#39;?11799<br />
+                          <strong>Type parameters:</strong> '?11797, '?11798, '?11799          </div>
         </td>
         <td class="xmldoc">
             <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AdditionalSyntax.fs#L11-11" class="github-link">
@@ -88,7 +86,6 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Allows to use Tokens instead of strings for TargetNames</p>
-
 
 
         </td>
@@ -111,7 +108,6 @@
           <p>Defines a soft dependency. x must run before y, if it is present, but y does not require x to be run.</p>
 
 
-
         </td>
       </tr>
       <tr>
@@ -130,7 +126,6 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Defines a soft dependency. x must run before y, if it is present, but y does not require x to be run.</p>
-
 
 
         </td>
@@ -153,7 +148,6 @@
           <p>Defines that x and y are not dependent on each other but y is dependent on all dependencies of x.</p>
 
 
-
         </td>
       </tr>
       <tr>
@@ -172,7 +166,6 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Defines a conditional dependency - y is dependent on x if the condition is true</p>
-
 
 
         </td>
@@ -195,7 +188,6 @@
           <p>Defines a dependency - y is dependent on x</p>
 
 
-
         </td>
       </tr>
       <tr>
@@ -214,7 +206,6 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Specifies that two targets have the same dependencies</p>
-
 
 
         </td>
@@ -237,7 +228,6 @@
           <p>Specifies that two targets have the same dependencies</p>
 
 
-
         </td>
       </tr>
       <tr>
@@ -247,8 +237,8 @@
             And x y
           </code>
           <div class="tip" id="10">
-            <strong>Signature:</strong> x:&#39;?11803 -&gt; y:&#39;?11803 list -&gt; &#39;?11803 list<br />
-                          <strong>Type parameters:</strong> '?11803          </div>
+            <strong>Signature:</strong> x:&#39;?11804 -&gt; y:&#39;?11804 list -&gt; &#39;?11804 list<br />
+                          <strong>Type parameters:</strong> '?11804          </div>
         </td>
         <td class="xmldoc">
             <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AdditionalSyntax.fs#L20-20" class="github-link">
@@ -256,7 +246,6 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Appends the dependency to the list of dependencies</p>
-
 
 
         </td>
@@ -268,8 +257,8 @@
             Dependency x
           </code>
           <div class="tip" id="11">
-            <strong>Signature:</strong> x:&#39;?11801 -&gt; &#39;?11801 list<br />
-                          <strong>Type parameters:</strong> '?11801          </div>
+            <strong>Signature:</strong> x:&#39;?11802 -&gt; &#39;?11802 list<br />
+                          <strong>Type parameters:</strong> '?11802          </div>
         </td>
         <td class="xmldoc">
             <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AdditionalSyntax.fs#L17-17" class="github-link">
@@ -277,7 +266,6 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Converts a dependency into a list</p>
-
 
 
         </td>
@@ -300,7 +288,6 @@
           <p>Allows to use For? syntax for Dependencies</p>
 
 
-
         </td>
       </tr>
       <tr>
@@ -319,7 +306,6 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Runs a Target and its dependencies</p>
-
 
 
         </td>
@@ -342,7 +328,6 @@
           <p>Runs the target given by the build script parameter or the given default target</p>
 
 
-
         </td>
       </tr>
       <tr>
@@ -361,7 +346,6 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Runs the target given by the target parameter</p>
-
 
 
         </td>
@@ -384,7 +368,6 @@
           <p>Runs the target given by the target parameter or the given default target</p>
 
 
-
         </td>
       </tr>
       <tr>
@@ -405,7 +388,6 @@
           <p>Runs the target given by the target parameter or lists the available targets</p>
 
 
-
         </td>
       </tr>
       <tr>
@@ -424,7 +406,6 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Specifies that two targets are on the same level of execution</p>
-
 
 
         </td>

@@ -38,16 +38,11 @@
       <div class="row">
         <div class="span9" id="main">
           <h1>Running canopy tests with FAKE</h1>
-
-<p>FAKE can be used to run a variety of different testing frameworks. 
+<p>FAKE can be used to run a variety of different testing frameworks.
 In this tutorial we are looking at <a href="http://lefthandedgoat.github.io/canopy/">Canopy</a> support.</p>
-
 <p><img src="pics/canopy/logo.jpg" alt="alt text" title="Running canopy tests from FAKE" /></p>
-
 <h2>Setup your canopy project</h2>
-
 <p>Consider a simple canopy program.fs file:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -100,22 +95,16 @@ In this tutorial we are looking at <a href="http://lefthandedgoat.github.io/cano
 </code></pre></td>
 </tr>
 </table>
-
 <p>Although <a href="http://docs.seleniumhq.org/">Selenium</a> (which is the framework behind canopy) supports all browsers you might want to run your tests with the headless browser PhantomJS. To grab the latest version just install the NuGet package:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">install</span><span class="o">-</span><span class="i">package</span> <span class="i">PhantomJS</span>
 </code></pre></td>
 </tr>
 </table>
-
 <p>Normally canopy loads PhantomJS.exe from C:\ but in our case we want to use the installed one so we have to override the path in our test script and set the current path as location of PhantomJS.exe.</p>
-
 <h2>Run canopy tests in FAKE</h2>
-
 <p>The target in FAKE basically hosts the website in IIS Express and starts the canopy tests. IISExpress requires a configuration template ("iisexpress-template.config") which can be copied from %ProgramFiles%\IIS Express\AppServer\applicationhost.config.</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -135,8 +124,8 @@ In this tutorial we are looking at <a href="http://lefthandedgoat.github.io/cano
 <span class="l">17: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;CanopyTests&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="k">let</span> <span class="i">hostName</span> <span class="o">=</span> <span class="s">&quot;localhost&quot;</span>
-    <span class="k">let</span> <span class="i">port</span> <span class="o">=</span> <span class="n">81</span>
+	<span class="k">let</span> <span class="i">hostName</span> <span class="o">=</span> <span class="s">&quot;localhost&quot;</span>
+	<span class="k">let</span> <span class="i">port</span> <span class="o">=</span> <span class="n">81</span>
 
     <span class="k">let</span> <span class="i">config</span> <span class="o">=</span> <span class="i">createConfigFile</span>(<span class="i">project</span>, <span class="n">1</span>, <span class="s">&quot;iisexpress-template.config&quot;</span>, <span class="i">websiteDir</span> <span class="o">+</span> <span class="s">&quot;/&quot;</span> <span class="o">+</span> <span class="i">project</span>, <span class="i">hostName</span>, <span class="i">port</span>)
     <span class="k">let</span> <span class="i">webSiteProcess</span> <span class="o">=</span> <span class="i">HostWebsite</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">id</span> <span class="i">config</span> <span class="n">1</span>
@@ -148,13 +137,12 @@ In this tutorial we are looking at <a href="http://lefthandedgoat.github.io/cano
         ) (<span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="i">System</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs3', 4)" onmouseover="showTip(event, 'fs3', 4)" class="i">TimeSpan</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs4', 5)" onmouseover="showTip(event, 'fs4', 5)" class="i">FromMinutes</span> <span class="n">5.</span>)
 
     <span class="i">ProcessHelper</span><span class="o">.</span><span class="i">killProcessById</span> <span class="i">webSiteProcess</span><span class="o">.</span><span class="i">Id</span>
-
+ 
     <span class="k">if</span> <span class="i">result</span> <span class="o">&lt;&gt;</span> <span class="n">0</span> <span class="k">then</span> <span onmouseout="hideTip(event, 'fs5', 6)" onmouseover="showTip(event, 'fs5', 6)" class="i">failwith</span> <span class="s">&quot;Failed result from canopy tests&quot;</span>
 )
 </code></pre></td>
 </tr>
 </table>
-
 <p>Please note that HostWebsite starts the IISExpress process asynchronous and does NOT wait until the IISExpress successfully started. <a href="https://github.com/fsharp/FAKE/issues/403">Issue #403</a></p>
 
           <div class="tip" id="fs1">namespace System</div>

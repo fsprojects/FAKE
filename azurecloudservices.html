@@ -38,35 +38,32 @@
       <div class="row">
         <div class="span9" id="main">
           <h1>Packaging Azure Cloud Services</h1>
-
 <p>FAKE can be used to create a Azure Cloud Service package (.cspkg) for use with e.g. Worker Roles.</p>
-
 <p>Currently it does not support publishing, and has several restrictions: -</p>
-
 <ol>
 <li>The service definition file must be called ServiceDefinition.csdef.</li>
 <li>It only works for single-role workers.</li>
 <li>It does not perform a build of the worker role project - this should be done beforehand.</li>
 <li>Always packages from the Release outputs.</li>
 </ol>
-
 <p>Assume a solution with the following structure: -</p>
-
 <ul>
-<li>MyCloudService.ccproj
+<li>
+MyCloudService.ccproj
 <ul>
 <li>Contains a single role, "MyRole".</li>
 <li>Contains a <code>ServiceDefinition.cscfg</code> file.</li>
-</ul></li>
-<li>MyWorkerRole.fsproj
+</ul>
+</li>
+<li>
+MyWorkerRole.fsproj
 <ul>
 <li>Referenced by MyCloudService as a Role.</li>
 <li>Contains a typical <code>RoleEntryPoint</code> class.</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <p>You can package this cloud service thus: -</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -83,13 +80,10 @@
 </code></pre></td>
 </tr>
 </table>
-
 <p>This will build <code>MyCloudService.cspkg</code> in the current directory (override using <code>OutputPath</code>).</p>
-
 <p>When packaging occurs, the task will scan the local machine for installed Azure SDK versions; if none is specified,
 it will pick the highest version installed. You can override this with the SdkVersion property e.g. <code>Some 2.4</code>.
 You can plug this into a regular FAKE pipeline as follows: -</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>

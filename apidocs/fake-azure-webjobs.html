@@ -40,7 +40,6 @@
 <div class="xmldoc">
 <p>Contains tasks to package and deploy <a href="http://azure.microsoft.com/en-gb/documentation/articles/web-sites-create-web-jobs/">Azure Web Jobs</a> via the <a href="https://github.com/projectkudu/kudu">Kudu</a> Zip controller</p>
 
-
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -63,7 +62,6 @@
           </td>
           <td class="xmldoc"><p>WebJob type</p>
 
-
 </td>
         </tr>
         <tr>
@@ -72,7 +70,6 @@
           </td>
           <td class="xmldoc"><p>The running modes of webjobs</p>
 
-
 </td>
         </tr>
         <tr>
@@ -80,7 +77,6 @@
             <a href="fake-azure-webjobs-website.html">WebSite</a>
           </td>
           <td class="xmldoc"><p>The website that webjobs are deployed to</p>
-
 
 </td>
         </tr>
@@ -98,10 +94,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '938', 938)" onmouseover="showTip(event, '938', 938)">
+          <code onmouseout="hideTip(event, '939', 939)" onmouseover="showTip(event, '939', 939)">
             DeployWebJobs webSites
           </code>
-          <div class="tip" id="938">
+          <div class="tip" id="939">
             <strong>Signature:</strong> webSites:WebSite list -&gt; unit<br />
                       </div>
         </td>
@@ -111,13 +107,10 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>This task to can be used deploy a prebuilt webjob zip to a website</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>webSites</code> - The websites and webjobs to deploy.</li>
 </ul>
-
 
 
         </td>
@@ -125,10 +118,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '939', 939)" onmouseover="showTip(event, '939', 939)">
+          <code onmouseout="hideTip(event, '940', 940)" onmouseover="showTip(event, '940', 940)">
             PackageWebJobs webSites
           </code>
-          <div class="tip" id="939">
+          <div class="tip" id="940">
             <strong>Signature:</strong> webSites:WebSite list -&gt; unit<br />
                       </div>
         </td>
@@ -139,13 +132,10 @@
             </a>
           <p>This task to can be used create a zip for each webjob to deploy to a website
 The output structure is: <code>outputpath/{websitename}/webjobs/{continuous/triggered}/{webjobname}.zip</code></p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>webSites</code> - The websites and webjobs to build zips from.</li>
 </ul>
-
 
 
         </td>

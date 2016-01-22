@@ -43,7 +43,6 @@ Also includes a do-it-all function that will embed interop
 side-by-side manifest to executables from Vb6 using
 functions from the Side-by-side helper module</p>
 
-
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -60,7 +59,6 @@ functions from the Side-by-side helper module</p>
           </td>
           <td class="xmldoc"><p>Parameters for running a VB6 build</p>
 
-
 </td>
         </tr>
         <tr>
@@ -69,7 +67,6 @@ functions from the Side-by-side helper module</p>
           </td>
           <td class="xmldoc"><p>Represents a VB6 project</p>
 
-
 </td>
         </tr>
         <tr>
@@ -77,7 +74,6 @@ functions from the Side-by-side helper module</p>
             <a href="fake-vb6helper-vb6reference.html">Vb6Reference</a>
           </td>
           <td class="xmldoc"><p>Represents a VB6 Reference</p>
-
 
 </td>
         </tr>
@@ -88,7 +84,6 @@ functions from the Side-by-side helper module</p>
           <td class="xmldoc"><p>Represents the version of a VB6 reference
 References from VB6 projects only care about Major.Minor versions</p>
 
-
 </td>
         </tr>
         <tr>
@@ -97,7 +92,6 @@ References from VB6 projects only care about Major.Minor versions</p>
           </td>
           <td class="xmldoc"><p>Represents the version of a VB6 project
 <code>ToString ()</code> will return a Maj.Min.Rev.Patch version string</p>
-
 
 </td>
         </tr>
@@ -115,10 +109,10 @@ References from VB6 projects only care about Major.Minor versions</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '801', 801)" onmouseover="showTip(event, '801', 801)">
+          <code onmouseout="hideTip(event, '802', 802)" onmouseover="showTip(event, '802', 802)">
             BuildAndEmbedInteropManifests (...)
           </code>
-          <div class="tip" id="801">
+          <div class="tip" id="802">
             <strong>Signature:</strong> getConfig:(Vb6BuildParams -&gt; Vb6BuildParams) -&gt; vb6Projects:seq&lt;string&gt; -&gt; possibleAssemblies:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -128,19 +122,14 @@ References from VB6 projects only care about Major.Minor versions</p>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>All-In-one build and manifest function for VB6 <strong>applications</strong> referencing .net <strong>libraries</strong></p>
-
 <h2>Paramteters</h2>
-
 <ul>
 <li><code>getConfig</code>- function to alter default VB6 build parameters</li>
 <li><code>vb6Projects</code> - Paths to all <code>.vbp</code> files to build</li>
 <li><code>possibleAssemblies</code> - Paths to assemblies that may be referenced by the VB6 projects</li>
 </ul>
-
 <h2>Process</h2>
-
 <p>This function will:</p>
-
 <ol>
 <li>Determine which of the <code>possibleAssemnblies</code> are referenced by any of the provided <code>.vbp</code> files</li>
 <li>Temporarily register any referenced assemblies using <code>RegAsm /codebase /tlb</code></li>
@@ -151,16 +140,15 @@ References from VB6 projects only care about Major.Minor versions</p>
 </ol>
 
 
-
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '802', 802)" onmouseover="showTip(event, '802', 802)">
+          <code onmouseout="hideTip(event, '803', 803)" onmouseover="showTip(event, '803', 803)">
             GetVb6ApplicationProjDetails projects
           </code>
-          <div class="tip" id="802">
+          <div class="tip" id="803">
             <strong>Signature:</strong> projects:seq&lt;string&gt; -&gt; seq&lt;Vb6Project&gt;<br />
                       </div>
         </td>
@@ -170,19 +158,14 @@ References from VB6 projects only care about Major.Minor versions</p>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Returns application details for provided <code>.vbp</code> files.</p>
-
 <h2>Information returned</h2>
-
 <ul>
 <li>Name of created binary file</li>
 <li>Version as saved in <code>.vbp</code>file</li>
 <li>GUIDs of all referenced libraries and components</li>
 </ul>
-
 <h2>Usage</h2>
-
 <p>This is used for creating Side-By-Side interop manifests.</p>
-
 
 
         </td>
@@ -190,10 +173,10 @@ References from VB6 projects only care about Major.Minor versions</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '803', 803)" onmouseover="showTip(event, '803', 803)">
+          <code onmouseout="hideTip(event, '804', 804)" onmouseover="showTip(event, '804', 804)">
             RegisterDependenciesForDevelopment (...)
           </code>
-          <div class="tip" id="803">
+          <div class="tip" id="804">
             <strong>Signature:</strong> getConfig:(Vb6BuildParams -&gt; Vb6BuildParams) -&gt; vb6Projects:seq&lt;string&gt; -&gt; possibleAssemblies:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -205,45 +188,12 @@ References from VB6 projects only care about Major.Minor versions</p>
           <p>Determines which of the provided assemblies are referenced by the
 provided VB6 projects, and registers them so the VB6 ide can
 find them.</p>
-
 <h2>Paramteters</h2>
-
 <ul>
 <li><code>getConfig</code>- function to alter default VB6 build parameters</li>
 <li><code>vb6Projects</code> - Paths to all <code>.vbp</code> files to build</li>
 <li><code>possibleAssemblies</code> - Paths to assemblies that may be referenced by the VB6 projects</li>
 </ul>
-
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '804', 804)" onmouseover="showTip(event, '804', 804)">
-            UnRegisterDependenciesForDevelopment (...)
-          </code>
-          <div class="tip" id="804">
-            <strong>Signature:</strong> getConfig:(Vb6BuildParams -&gt; Vb6BuildParams) -&gt; vb6Projects:seq&lt;string&gt; -&gt; possibleAssemblies:seq&lt;string&gt; -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Vb6helper.fs#L299-299" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Determins which of the provided assemblies are referenced by the 
-provided VB6 projects, and <strong>un-registers</strong> them</p>
-
-<h2>Paramteters</h2>
-
-<ul>
-<li><code>getConfig</code>- function to alter default VB6 build parameters</li>
-<li><code>vb6Projects</code> - Paths to all <code>.vbp</code> files to build</li>
-<li><code>possibleAssemblies</code> - Paths to assemblies that may be referenced by the VB6 projects</li>
-</ul>
-
 
 
         </td>
@@ -252,9 +202,36 @@ provided VB6 projects, and <strong>un-registers</strong> them</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '805', 805)" onmouseover="showTip(event, '805', 805)">
-            UpdateDependencyVersions (...)
+            UnRegisterDependenciesForDevelopment (...)
           </code>
           <div class="tip" id="805">
+            <strong>Signature:</strong> getConfig:(Vb6BuildParams -&gt; Vb6BuildParams) -&gt; vb6Projects:seq&lt;string&gt; -&gt; possibleAssemblies:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Vb6helper.fs#L299-299" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Determins which of the provided assemblies are referenced by the
+provided VB6 projects, and <strong>un-registers</strong> them</p>
+<h2>Paramteters</h2>
+<ul>
+<li><code>getConfig</code>- function to alter default VB6 build parameters</li>
+<li><code>vb6Projects</code> - Paths to all <code>.vbp</code> files to build</li>
+<li><code>possibleAssemblies</code> - Paths to assemblies that may be referenced by the VB6 projects</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '806', 806)" onmouseover="showTip(event, '806', 806)">
+            UpdateDependencyVersions (...)
+          </code>
+          <div class="tip" id="806">
             <strong>Signature:</strong> getConfig:(Vb6BuildParams -&gt; Vb6BuildParams) -&gt; vb6Projects:seq&lt;string&gt; -&gt; possibleAssemblies:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -264,26 +241,20 @@ provided VB6 projects, and <strong>un-registers</strong> them</p>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Fixes dependency versions in VB6 project files</p>
-
 <h2>Paramteters</h2>
-
 <ul>
 <li><code>getConfig</code>- function to alter default VB6 build parameters</li>
 <li><code>vb6Projects</code> - Paths to all <code>.vbp</code> to update references in</li>
 <li><code>possibleAssemblies</code> - Paths to assemblies that may be referenced by the VB6 projects</li>
 </ul>
-
 <p>Running this task will:</p>
-
 <ol>
 <li>In all VB6 projects provided: Get all references that intersects with the provided assemblies arg</li>
 <li>Check if there is a version difference</li>
 <li>Update the VB6 project file to reflect the actual version used.</li>
 </ol>
-
 <p>Note: Vb6 Reference versions are <strong>hex numbers</strong> not decimals like .net verions. This task handles
-      this difference automatically.</p>
-
+this difference automatically.</p>
 
 
         </td>
@@ -291,10 +262,10 @@ provided VB6 projects, and <strong>un-registers</strong> them</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '806', 806)" onmouseover="showTip(event, '806', 806)">
+          <code onmouseout="hideTip(event, '807', 807)" onmouseover="showTip(event, '807', 807)">
             Vb6Make getConfig vb6Projects
           </code>
-          <div class="tip" id="806">
+          <div class="tip" id="807">
             <strong>Signature:</strong> getConfig:(Vb6BuildParams -&gt; Vb6BuildParams) -&gt; vb6Projects:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -304,16 +275,12 @@ provided VB6 projects, and <strong>un-registers</strong> them</p>
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Executes a VB6 command line make on all provided VB6 projects</p>
-
 <p>Builds will be executed in paralell</p>
-
 <h2>Parameters</h2>
-
 <ul>
 <li><code>getConfig</code> - function to modify the build params record from default values</li>
 <li><code>vb6Projects</code>- <code>Seq</code> of paths to <code>.vbp</code> files to build</li>
 </ul>
-
 
 
         </td>

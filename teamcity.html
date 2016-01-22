@@ -38,52 +38,30 @@
       <div class="row">
         <div class="span9" id="main">
           <h1>Integrating a FAKE build script into TeamCity</h1>
-
 <p>Easy <a href="http://www.jetbrains.com/teamcity/">TeamCity</a> integration was one of the major goals for the FAKE build system.</p>
-
 <p>In this article you will learn how to set up a FAKE build script in TeamCity. We will use the CalculatorSample which you can build from the <a href="gettingstarted.html">getting started guide</a>.</p>
-
 <h2>Installing TeamCity</h2>
-
 <p>You can download the free professional edition of TeamCity from <a href="http://www.jetbrains.com/teamcity/"><a href="http://www.jetbrains.com/teamcity/">http://www.jetbrains.com/teamcity/</a></a>. After the installation process you should be ready to configure your first build.</p>
-
 <h2>Creating a FAKE project on TeamCity</h2>
-
 <p>Now create a new project and add a build configuration:</p>
-
 <p><img src="pics/teamcity/createproject.png" alt="alt text" title="Creating a FAKE project on TeamCity" /></p>
-
 <p>You also need to set the artifacts paths:</p>
-
 <p><img src="pics/teamcity/generalsettings.png" alt="alt text" title="Set the settings" /></p>
-
 <h2>Attach a VCS root</h2>
-
 <p>The next step is to attach a VCS root. For this sample we will use the official FAKE repository at <a href="https://github.com/forki/FAKE/"><a href="https://github.com/forki/FAKE/">https://github.com/forki/FAKE/</a></a>.</p>
-
 <p><img src="pics/teamcity/vcsroot.png" alt="alt text" title="Set up the VCS root" />
 <img src="pics/teamcity/auth.png" alt="alt text" title="Set up the VCS root authentication" />
 <img src="pics/teamcity/checkoutrules.png" alt="alt text" title="Set up the VCS root checkout rules" /></p>
-
 <h2>Creating the build step</h2>
-
 <p>Now is the time to create two build steps. The first one downloads FAKE via Nuget and the second one runs the build script:</p>
-
 <p><img src="pics/teamcity/buildstep1.png" alt="alt text" title="Download FAKE" />
 <img src="pics/teamcity/buildstep2.png" alt="alt text" title="Run FAKE script" /></p>
-
 <p>If you want you could also add a build trigger to your build script:</p>
-
 <p><img src="pics/teamcity/trigger.png" alt="alt text" title="Set up the build trigger" /></p>
-
 <h2>Running the build</h2>
-
 <p>Now if everything is configured correctly, you can run your build and the output should look like:</p>
-
 <p><img src="pics/teamcity/output.png" alt="alt text" title="Build output" /></p>
-
 <p>You can also inspect the NUnit results:</p>
-
 <p><img src="pics/teamcity/nunit.png" alt="alt text" title="NUnit results" /></p>
 
                     

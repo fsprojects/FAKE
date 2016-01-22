@@ -38,38 +38,27 @@
       <div class="row">
         <div class="span9" id="main">
           <h1>Using FAKE's parallel option</h1>
-
 <p>Since multithreading is beneficial (especially for large projects) FAKE allows to specify the
 number of threads used for traversing the dependency tree.
 This option of course only affects independent targets whereas dependent targets will
 still be exectued in order.</p>
-
 <h2>Setting the number of threads</h2>
-
 <p>The number of threads used can be set using the environment variable <code>parallel-jobs</code>.
-This can be achieved in various ways where the easiest one is to use FAKE's built-in support for 
+This can be achieved in various ways where the easiest one is to use FAKE's built-in support for
 setting environment variables:</p>
-
 <p><code>FAKE.exe *YourBuildScript* "parallel-jobs=8"</code></p>
-
 <p>Note that the dependency tree will be traversed as usual whenever setting <code>parallel-jobs</code> to a value <code>&lt;= 1</code> or omiting it entirely.</p>
-
 <h2>Issues</h2>
-
 <ul>
 <li>Running targets in parallel is of course only possible when the target-functions themselves are thread-safe.</li>
 <li>Parallel execution may also cause races on stdout and build-logs may therefore be quite obfuscated.</li>
 <li>Error detection may suffer since it's not possible to determine a first error when targets are running in parallel</li>
 </ul>
-
 <p>Due to these limitations it is recommended to use the standard sequential build whenever checking for errors (CI, etc.)
 However when a fast build is desired (and the project is e.g. known to build successfully) the parallel option might be helpful</p>
-
 <h2>Example</h2>
-
 <p>When using this parallel option, Fake resolves the build dependency hierearchies from the described paths and builds independend paths as parallel if you have multiple CPUs available.
 For example this dependency tree:</p>
-
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -106,11 +95,8 @@ For example this dependency tree:</p>
 </code></pre></td>
 </tr>
 </table>
-
 <p>...would be treated as follows:</p>
-
 <p><img src="pics/parallel/ParallelExample.png" alt="" /></p>
-
 <p>This is in addition to that that MsBuild may use multiple threads when building one solution having multiple independent project-files.</p>
 
                     
