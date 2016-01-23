@@ -1,4 +1,4 @@
-#### 4.17.0-alpha007 - 23.01.2016
+#### 4.17.0 - 23.01.2016
 * Renamed internal FSharp.Compiler.Service to avoid clashes - https://github.com/fsharp/FAKE/pull/1097
 * Added support for "paket restore" - https://github.com/fsharp/FAKE/pull/1108
 * WiX service install - https://github.com/fsharp/FAKE/pull/1099
