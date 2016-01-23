@@ -58,6 +58,25 @@ let PaketPushDefaults() : PaketPushParams =
       DegreeOfParallelism = 8
       ApiKey = null }
 
+/// Paket restore packages type
+type PaketRestoreParams =
+    { ToolPath : string
+      TimeOut : TimeSpan
+      WorkingDir : string
+      ForceDownloadOfPackages : bool
+      OnlyReferencedFiles: bool
+      Group: string
+      ReferenceFiles: string list }
+
+let PaketRestoreDefaults() : PaketRestoreParams = 
+    { ToolPath = (findToolFolderInSubPath "paket.exe" (currentDirectory @@ ".paket")) @@ "paket.exe"
+      TimeOut = System.TimeSpan.MaxValue
+      WorkingDir = "."
+      ForceDownloadOfPackages = false
+      OnlyReferencedFiles = false
+      ReferenceFiles = []
+      Group = "" }
+
 /// Creates a new NuGet package by using Paket pack on all paket.template files in the working directory.
 /// ## Parameters
 ///
@@ -179,3 +198,28 @@ let GetDependenciesForReferencesFile (referencesFile:string) =
 
     getLockFilePackages referencesFile
     |> Array.filter (fun (n, _) -> refLines |> Array.exists (fun pn -> pn.Equals(n, StringComparison.InvariantCultureIgnoreCase)))
+
+/// Restores all packages referenced in either a paket.dependencies or a paket.references file using Paket
+/// ## Parameters
+///
+///  - `setParams` - Function used to manipulate the default parameters.
+let Restore setParams = 
+    let parameters : PaketRestoreParams = PaketRestoreDefaults() |> setParams
+    let forceRestore = if parameters.ForceDownloadOfPackages then " --force " else ""
+    let onlyReferenced = if parameters.OnlyReferencedFiles then " --only-referenced " else ""
+    let groupArg = if parameters.Group <> "" then (sprintf " group %s " parameters.Group) else ""
+    let referencedFiles = 
+        if parameters.ReferenceFiles |> List.isEmpty |> not
+        then (sprintf " --references-files %s " (System.String.Join(" ", parameters.ReferenceFiles)))
+        else ""
+    
+    traceStartTask "PaketRestore" parameters.WorkingDir 
+
+    let restoreResult = 
+        ExecProcess (fun info ->
+            info.FileName <- parameters.ToolPath
+            info.WorkingDirectory <- parameters.WorkingDir
+            info.Arguments <- sprintf "restore %s%s%s%s" forceRestore onlyReferenced groupArg referencedFiles) parameters.TimeOut
+
+    if restoreResult <> 0 then failwithf "Error during restore %s." parameters.WorkingDir
+    traceEndTask "PaketRestore" parameters.WorkingDir
