@@ -66,6 +66,14 @@
 
 </td>
         </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-paket-paketrestoreparams.html">PaketRestoreParams</a>
+          </td>
+          <td class="xmldoc"><p>Paket restore packages type</p>
+
+</td>
+        </tr>
     </tbody>
   </table>
 
@@ -88,7 +96,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/PaketHelper.fs#L148-148" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/PaketHelper.fs#L167-167" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -108,7 +116,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/PaketHelper.fs#L65-65" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/PaketHelper.fs#L84-84" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -165,18 +173,60 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '495', 495)" onmouseover="showTip(event, '495', 495)">
-            Push setParams
+            PaketRestoreDefaults ()
           </code>
           <div class="tip" id="495">
+            <strong>Signature:</strong> unit -&gt; PaketRestoreParams<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/PaketHelper.fs#L71-71" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '496', 496)" onmouseover="showTip(event, '496', 496)">
+            Push setParams
+          </code>
+          <div class="tip" id="496">
             <strong>Signature:</strong> setParams:(PaketPushParams -&gt; PaketPushParams) -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/PaketHelper.fs#L98-98" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/PaketHelper.fs#L117-117" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Pushes all NuGet packages in the working dir to the server by using Paket push.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setParams</code> - Function used to manipulate the default parameters.</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '497', 497)" onmouseover="showTip(event, '497', 497)">
+            Restore setParams
+          </code>
+          <div class="tip" id="497">
+            <strong>Signature:</strong> setParams:(PaketRestoreParams -&gt; PaketRestoreParams) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/PaketHelper.fs#L206-206" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Restores all packages referenced in either a paket.dependencies or a paket.references file using Paket</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to manipulate the default parameters.</li>
