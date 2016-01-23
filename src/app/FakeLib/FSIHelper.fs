@@ -199,7 +199,7 @@ let executeFSIWithScriptArgsAndReturnMessages script (scriptArgs: string[]) =
 open Microsoft.FSharp.Compiler.Interactive.Shell
 open System.Reflection
 
-let hashRegex = Text.RegularExpressions.Regex("(?<script>.+)_(?<hash>[a-zA-Z0-9]+\.dll$)", System.Text.RegularExpressions.RegexOptions.Compiled)
+let hashRegex = Text.RegularExpressions.Regex("(?<script>.+)_(?<hash>[a-zA-Z0-9]+)(\.dll|_config\.xml|_warnings\.txt)$", System.Text.RegularExpressions.RegexOptions.Compiled)
 
 type private CacheInfo =
   {
@@ -424,13 +424,23 @@ let private runScriptUncached (useCache, scriptPath, fsiOptions) printDetails ca
                 |> Seq.filter(fun file ->
                     let oldScriptName, _ = getScriptAndHash(file.Name)
                     oldScriptName = cacheInfo.ScriptFileName)
+                |> Seq.toList
 
-            if (oldFiles |> Seq.length) > 0 then
+            if not <| List.isEmpty oldFiles then
                 if printDetails then trace "Cache is invalid, recompiling"
-                for file in oldFiles do
-                    try file.Delete()
+                oldFiles
+                |> List.map (fun file ->
+                    try file.Delete(); true
                     // File might be locked (for example when executing the test suite!)
-                    with :? UnauthorizedAccessException -> traceFAKE "Unable to access %s" file.FullName
+                    with :? UnauthorizedAccessException ->
+                        traceFAKE "Unable to access %s" file.FullName
+                        false)
+                |> List.exists id |> not
+                // we could not delete a single file -> cache was not invalidated
+                |> function
+                    | true ->
+                        traceError (sprintf "Unable to invalidate cache for '%s', please delete the .fake folder!" cacheInfo.ScriptFileName)
+                    | _ -> ()
             else
                 if printDetails then trace "Cache doesn't exist"
         else
