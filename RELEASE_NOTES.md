@@ -1,5 +1,6 @@
-#### 4.17.0-alpha006 - 22.01.2016
+#### 4.17.0-alpha007 - 23.01.2016
 * Renamed internal FSharp.Compiler.Service to avoid clashes - https://github.com/fsharp/FAKE/pull/1097
+* Added support for "paket restore" - https://github.com/fsharp/FAKE/pull/1108
 * WiX service install - https://github.com/fsharp/FAKE/pull/1099
 * Passing timeout value also to solution exchanger in DynamicsCRMHelper - https://github.com/fsharp/FAKE/pull/1102
 * BUGFIX: Fallback to recompile when caching of build script fails - https://github.com/fsharp/FAKE/pull/1093
