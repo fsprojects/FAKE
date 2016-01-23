@@ -250,8 +250,7 @@ type Xor(l':IAst, r':IAst) =
         | false, false -> false
         | true, true   -> let tempDict = Arguments.Dictionary() in
                           if l'.TryFill(tempDict)
-                          then (a'.AddRange(tempDict); true)
-                          elif (tempDict.Clear(); r'.TryFill(tempDict))
+                             || (tempDict.Clear(); r'.TryFill(tempDict))
                           then (a'.AddRange(tempDict); true)
                           else false
       member __.DeepCopy() = Xor(l'.DeepCopy(), r'.DeepCopy()) :> IAst

@@ -11,9 +11,9 @@ exception private InternalException of ErrorMessageList
 exception UsageException of string
 exception ArgvException of string
 
-module _Private =
+module private Helpers =
   begin
-    let inline toIAst obj' = (# "" obj' : IAst #) // maybe #IAst instead of IAst
+    let toIAst obj' = (# "" obj' : IAst #) // maybe #IAst instead of IAst
     let raiseArgvException errlist' =
       let pos = Position(null, 0L, 0L, 0L) in
       let perror = ParserError(pos, null, errlist') in
@@ -35,8 +35,12 @@ module _Private =
     let raiseExpectedArg a' = raiseInternal (expectedArg a')
     let raiseUnexpectedArg a' = raiseInternal (unexpectedArg a')
     let raiseAmbiguousArg s' = raiseInternal (ambiguousArg s')
+  end
 
-    let mutable opts = null
+open Helpers
+
+type UsageParser(u':string, opts':Options) =
+  class
     let updateUserState (map':'a -> IAst -> #IAst) : 'a -> Parser<IAst, IAst> =
       fun arg' ->
         fun stream' ->
@@ -67,12 +71,12 @@ module _Private =
       in pupperArg <|> plowerArg
          >>= updateUserState filterArg
     let pano = skipString "[options]"
-               >>= updateUserState (fun _ _ -> Ano(opts))
+               >>= updateUserState (fun _ _ -> Ano(opts'))
     let psop = let filterSops (sops':string) (last':IAst) =
                  let sops = Options() in
                  let mutable i = -1 in
                  while (i <- i + 1; i < sops'.Length) do
-                   match opts.Find(sops'.[i]) with
+                   match opts'.Find(sops'.[i]) with
                    | null -> raiseUnexpectedShort sops'.[i]
                    | opt  -> (if opt.HasArgument && i + 1 < sops'.Length
                               then i <- sops'.Length);
@@ -87,7 +91,7 @@ module _Private =
                   >>= updateUserState filterSops
     let plop =
       let filterLopt (lopt':string) _ =
-        match opts.Find(lopt') with
+        match opts'.Find(lopt') with
         | null -> raiseUnexpectedLong lopt'
         | lopt -> Lop(lopt)
       in skipString "--"
@@ -134,14 +138,7 @@ module _Private =
     let _ = opp.AddOperator(pxor)
     let _ = opp.AddOperator(pell)
     let pusageLine = spaces >>. opp.ExpressionParser
-  end
-;;
 
-open _Private
-
-type UsageParser(u':string, opts':Options) =
-  class
-    do opts <- opts'
     let parseAsync = function
     | ""   -> async { return Eps.Instance }
     | line -> async {
@@ -225,7 +222,7 @@ type UsageParser(u':string, opts':Options) =
         if errlist <> null
         then raiseArgvException errlist
         elif tryFill args'
-        then args'
+        then (args'.RegisterDefaults(opts'); args')
         else raise (ArgvException("Usage:" + u'))
     member __.Asts = asts
   end

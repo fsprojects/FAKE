@@ -6,15 +6,19 @@ open System.Collections.Generic
 [<AllowNullLiteral>]
 type Option(short':char, long':string, argName':string, default':string) =
   class
-    member val Short = short'
-    member val Long = long'
-    member val ArgName = argName'
-    member val Default = default' with get, set
     new() = Option(Char.MaxValue, null, null, null)
     static member op_Equality(lhs':Option, rhs':Option) =
       lhs'.Short = rhs'.Short
       && lhs'.Long = rhs'.Long
     static member Empty = Option()
+    member val Short = short'
+    member val Long = long'
+    member val ArgName = argName'
+    member val Default = default' with get, set
+    member val FullShort = if short' = Char.MaxValue
+                           then "" else String([|'-';short'|])
+    member val FullLong = if long' = null
+                          then "" else String.Concat("--", long')
     member xx.IsEmpty = xx = Option.Empty
     member xx.HasArgument = xx.ArgName <> null
     member xx.HasDefault = xx.Default <> null

@@ -40,13 +40,18 @@ type Dictionary() =
                        then value
                        else None
                       and set key' value' =
-                       dict.Add(key', value')
+                       if dict.ContainsKey(key')
+                       then dict.[key'] <- value'
+                       else dict.Add(key', value')
     end
     member __.AsList() = [for kv in dict -> kv.Key, kv.Value]
+    member xx.Item
+      with get key' = (xx :> IDictionary<_, _>).Item key'
+       and set key' val' = (xx :> IDictionary<_, _>).Item key' <- val'
     member xx.Clear = (xx :> IDictionary<_, _>).Clear
     member xx.AddString(key':string, ?arg':string) =
       let newval =
-        let currentVal = (xx :> IDictionary<_, _>).[key'] in
+        let currentVal = xx.[key'] in
         if arg'.IsNone
         then match currentVal with
              | None        -> Flag
@@ -60,20 +65,35 @@ type Dictionary() =
              | Argument(arg)   -> Arguments([arg'.Value;arg])
              | Arguments(args) -> Arguments(arg'.Value::args)
              | value           -> value in
-      (xx :> IDictionary<_, _>).[key'] <- newval
+      xx.[key'] <- newval
     member xx.AddOpt(o':Option, ?arg':string) =
       if o'.IsShort
-      then xx.AddString(String([|'-';o'.Short|]), ?arg'=arg');
+      then xx.AddString(o'.FullShort, ?arg'=arg');
       if o'.IsLong
-      then xx.AddString(String.Concat("--", o'.Long), ?arg'=arg')
+      then xx.AddString(o'.FullLong, ?arg'=arg')
     member xx.AddArg(a':string, val':string) =
       xx.AddString(a', val')
     member xx.AddCmd(cmd':string) =
       xx.AddString(cmd')
-    member __.AddRange(range':#IEnumerable<KeyValuePair<string, Result>>) =
-      let idict = dict :> IDictionary<_, _> in
+    member xx.AddRange(range':#IEnumerable<KeyValuePair<string, Result>>) =
       for kv in range' do
-        idict.Add(kv)
+        (xx :> IDictionary<_, _>).Add(kv)
+      done
+    member internal xx.RegisterDefaults(opts':Options) =
+      let canRegister (opt':Option) =
+        if opt'.IsShort
+        then match xx.[opt'.FullShort] with None -> true | _ -> false
+        elif opt'.IsLong
+        then match xx.[opt'.FullLong] with None -> true | _ -> false
+        else false
+      in for opt in opts' do
+        if opt.HasDefault && canRegister opt
+        then match opt.IsShort, opt.IsLong with
+             | false, false -> ()
+             | true, false  -> xx.[opt.FullShort] <- Argument(opt.Default)
+             | false, true  -> xx.[opt.FullLong] <- Argument(opt.Default)
+             | true, true   -> xx.[opt.FullShort] <- Argument(opt.Default);
+                               xx.[opt.FullLong] <- Argument(opt.Default)
       done
     member private xx.SFDisplay = xx.AsList()
   end
