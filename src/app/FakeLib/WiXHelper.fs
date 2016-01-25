@@ -309,8 +309,11 @@ let generateComponentRef (setParams : WiXComponentRef -> WiXComponentRef) =
         failwith "No parameter passed for component ref Id!"
     parameters
 
+type WiXDirectoryComponent = 
+    | C of WiXComponent
+    | D of WiXDir      
 /// Component which wraps files into logical components and which allows to 
-type WiXComponent = 
+and WiXComponent = 
     {
         Id : string
         Guid : string
@@ -324,6 +327,22 @@ type WiXComponent =
                                 (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.Files) 
                                 (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.ServiceControls)
                                 (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.ServiceInstalls)
+and WiXDir = 
+    {
+        Id : string
+        Name : string
+        Files : WiXFile seq
+        Components : WiXDirectoryComponent seq
+    }
+    override d.ToString() = sprintf "<Direcotry Id=\"%s\" Name=\"%s\>%s%s</Directory>"
+                                d.Id 
+                                d.Name 
+                                (Seq.fold(fun acc elem -> acc + elem.ToString()) "" d.Files) 
+                                (Seq.fold(fun acc elem -> (                                                            
+                                                            acc + match elem with
+                                                                    | C c -> c.ToString()
+                                                                    | D d -> d.ToString()
+                                                           )) "" d.Components)
 
 /// Defaults for component
 let WiXComponentDefaults =
@@ -343,15 +362,7 @@ let generateComponent (setParams : WiXComponent -> WiXComponent) =
     parameters
 
 /// WiX Directories define a logical directory which can include components and files
-type WiXDir = 
-    {
-        Id : string
-        Name : string
-        Files : WiXFile seq
-        Components : WiXComponent seq
-    }
-    override d.ToString() = sprintf "<Direcotry Id=\"%s\" Name=\"%s\>%s%s</Directory>"
-                                d.Id d.Name (Seq.fold(fun acc elem -> acc + elem.ToString()) "" d.Files) (Seq.fold(fun acc elem -> acc + elem.ToString()) "" d.Components)
+
 
 /// Defaults for directories
 let WiXDirDefaults = 
@@ -385,7 +396,7 @@ let bulkComponentCreation fileFilter directoryInfo =
                             Source = file.FullName
                         })
         |> Seq.map(fun file->
-                        {
+                        C{
                             Id = "c" + file.Id.Substring(1)
                             Guid = "*"
                             Files = [file]
@@ -405,25 +416,32 @@ let bulkComponentCreationAsSubDir fileFilter (directoryInfo : DirectoryInfo) =
         Files = []
         Components = bulkComponentCreation fileFilter directoryInfo
     }  
-                      
-/// Use this to attach service controls to your components.
-let attachServiceControlToComponents (components : WiXComponent seq) fileFilter serviceControls = 
-    components 
-        |> Seq.map(fun comp -> 
-                        if fileFilter comp then
-                            { Id = comp.Id; Guid = comp.Guid; Files = comp.Files; ServiceControls = Seq.append comp.ServiceControls serviceControls; ServiceInstalls = comp.ServiceInstalls }
+                 
+///// Use this to attach service controls to your components.   
+let rec attachServiceControlToComponent (comp : WiXDirectoryComponent) fileFilter serviceControls = 
+    match comp with
+    | C c -> C (if fileFilter c then                        
+                        { Id = c.Id; Guid = c.Guid; Files = c.Files; ServiceControls = Seq.append c.ServiceControls serviceControls; ServiceInstalls = c.ServiceInstalls }
                         else
-                            comp)
-
-/// Use this to attach service installs to your components.
-let attachServiceInstallToComponents (components : WiXComponent seq) fileFilter serviceInstalls = 
+                            c
+                        )                                          
+    | D d -> D({Id = d.Id; Name = d.Name; Files = d.Files; Components = (attachServiceControlToComponents d.Components fileFilter serviceControls)})
+and attachServiceControlToComponents (components : WiXDirectoryComponent seq) fileFilter serviceControls = 
     components 
-        |> Seq.map(fun comp -> 
-                        if fileFilter comp then
-                            { Id = comp.Id; Guid = comp.Guid; Files = comp.Files; ServiceControls = comp.ServiceControls; ServiceInstalls = Seq.append comp.ServiceInstalls serviceInstalls}
+    |> Seq.map(fun c -> attachServiceControlToComponent c fileFilter serviceControls)
+            
+/// Use this to attach service installs to your components.          
+let rec attachServiceInstallToComponent (comp : WiXDirectoryComponent) fileFilter serviceInstalls = 
+    match comp with
+    | C c -> C (if fileFilter c then                        
+                        { Id = c.Id; Guid = c.Guid; Files = c.Files; ServiceControls = c.ServiceControls; ServiceInstalls = Seq.append c.ServiceInstalls serviceInstalls }
                         else
-                            comp)
-
+                            c
+                        )                                          
+    | D d -> D({Id = d.Id; Name = d.Name; Files = d.Files; Components = (attachServiceInstallToComponents d.Components fileFilter serviceInstalls)})
+and attachServiceInstallToComponents (components : WiXDirectoryComponent seq) fileFilter serviceInstalls = 
+    components 
+    |> Seq.map(fun c -> attachServiceInstallToComponent c fileFilter serviceInstalls)
                             
 /// Creates recursive WiX directory and file tags from the given DirectoryInfo
 /// The function will create one component for each file [best practice](https://support.microsoft.com/de-de/kb/290997/en-us)
