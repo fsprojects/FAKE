@@ -423,7 +423,27 @@ let getDirectoryId (directoryName : string) =
 
 ///create a directory component hierarchy from a root folder
 let rec bulkComponentTreeCreation fileFilter directoryInfo =
-    bulkComponentTreeSubCreation fileFilter directoryInfo ""    
+    let directories = directoryInfo
+                      |> subDirectories
+                      |> Seq.map (fun d -> bulkComponentTreeSubCreation fileFilter d directoryInfo.Name)
+    let components = directoryInfo
+                        |> filesInDir
+                        |> Seq.filter fileFilter
+                        |> Seq.map (fun file -> 
+                                        { 
+                                            Id = "f" + (file.Name).GetHashCode().ToString().Replace("-", "")
+                                            Name = file.Name
+                                            Source = file.FullName
+                                        })
+                        |> Seq.map(fun file->
+                                        C{
+                                            Id = "c" + file.Id.Substring(1)
+                                            Guid = "*"
+                                            Files = [file]
+                                            ServiceControls = []
+                                            ServiceInstalls = []
+                                        })
+    Seq.append directories components  
 and private bulkComponentTreeSubCreation fileFilter directoryInfo directoryId =    
     let directories = directoryInfo
                       |> subDirectories
