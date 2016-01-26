@@ -96,13 +96,23 @@ type WiXServiceControl =
         Id : string
         Name: string
         Remove : InstallUninstall
-        Start : InstallUninstall
+        Start : InstallUninstall option
         Stop : InstallUninstall
         Wait : YesOrNo
     }
+    member w.createAttributeList () =
+        seq 
+            {
+                yield ("Id", w.Id)
+                yield ("Name", w.Name)
+                yield ("Remove", w.Remove.ToString())
+                if w.Start.IsSome then yield ("Start", w.Start.Value.ToString())
+                yield ("Stop", w.Stop.ToString())
+                yield ("Wait", w.Wait.ToString())
+            }
     override w.ToString() = 
-        sprintf "<ServiceControl Id=\"%s\" Name=\"%s\" Remove=\"%s\" Start=\"%s\" Stop=\"%s\" Wait=\"%s\" />" 
-            w.Id w.Name (w.Remove.ToString()) (w.Start.ToString()) (w.Stop.ToString()) (w.Wait.ToString())
+        sprintf "<ServiceControl%s/>" 
+            (Seq.fold(fun acc (key, value) -> acc + sprintf " %s=\"%s\"" key value) "" (w.createAttributeList()))             
 
 /// Defaults for service control element
 let WiXServiceControlDefaults =
@@ -110,7 +120,7 @@ let WiXServiceControlDefaults =
         Id = "ServiceControl"
         Name = "Service"
         Remove = Both
-        Start = Both
+        Start = Some(Both)
         Stop = Both
         Wait = Yes
     }
@@ -309,13 +319,14 @@ let generateComponentRef (setParams : WiXComponentRef -> WiXComponentRef) =
         failwith "No parameter passed for component ref Id!"
     Some(parameters)
 
+
 type WiXDirectoryComponent = 
     | C of WiXComponent
     | D of WiXDir      
     member w.ToComponentRef() = 
         match w with
         | C c -> c.ToComponentRef()
-        | D d -> None
+        | D d -> None  
     override w.ToString() =
           match w with
             | C c -> c.ToString()
@@ -342,7 +353,7 @@ and WiXDir =
         Files : WiXFile seq
         Components : WiXDirectoryComponent seq
     }
-    override d.ToString() = sprintf "<Direcotry Id=\"%s\" Name=\"%s\>%s%s</Directory>"
+    override d.ToString() = sprintf "<Directory Id=\"%s\" Name=\"%s\">%s%s</Directory>"
                                 d.Id 
                                 d.Name 
                                 (Seq.fold(fun acc elem -> acc + elem.ToString()) "" d.Files) 
@@ -351,6 +362,24 @@ and WiXDir =
                                                                     | C c -> c.ToString()
                                                                     | D d -> d.ToString()
                                                            )) "" d.Components)
+
+///get component refs from a directory component hierarchy
+let rec getComponentRefs (elements : WiXDirectoryComponent seq) = 
+    let refs = elements
+                |> Seq.choose (fun e -> 
+                                match e with
+                                | D d -> Some (d)
+                                | _ -> None)
+                |> Seq.map (fun d -> getComponentRefs d.Components)
+                |> Seq.concat
+    let cRefs = elements
+                |> Seq.choose (fun e -> 
+                                match e with
+                                | C c -> Some c
+                                | _ -> None)
+                |> Seq.map (fun c -> c.ToComponentRef())
+    Seq.append refs cRefs
+    
 
 /// Defaults for component
 let WiXComponentDefaults =
@@ -387,6 +416,42 @@ let generateDirectory (setParams : WiXDir -> WiXDir) =
     if parameters.Id = "" then 
         failwith "No parameter passed for directory Id!"
     parameters
+
+let getDirectoryId (directoryName : string) =        
+    "d" + directoryName.GetHashCode().ToString().Replace("-", "")
+    
+
+///create a directory component hierarchy from a root folder
+let rec bulkComponentTreeCreation fileFilter directoryInfo =
+    bulkComponentTreeSubCreation fileFilter directoryInfo ""    
+and private bulkComponentTreeSubCreation fileFilter directoryInfo directoryId =    
+    let directories = directoryInfo
+                      |> subDirectories
+                      |> Seq.map (fun d -> bulkComponentTreeSubCreation fileFilter d (directoryId + directoryInfo.Name))       
+    let components = directoryInfo
+                        |> filesInDir
+                        |> Seq.filter fileFilter
+                        |> Seq.map (fun file -> 
+                                        { 
+                                            Id = "f" + (directoryId + directoryInfo.Name + file.Name).GetHashCode().ToString().Replace("-", "")
+                                            Name = file.Name
+                                            Source = file.FullName
+                                        })
+                        |> Seq.map(fun file->
+                                        C{
+                                            Id = "c" + file.Id.Substring(1)
+                                            Guid = "*"
+                                            Files = [file]
+                                            ServiceControls = []
+                                            ServiceInstalls = []
+                                        })    
+    let currentDirectory = D{
+        Id = getDirectoryId (directoryInfo.Name + directoryId)
+        Name = directoryInfo.Name
+        Files = []
+        Components = Seq.append directories components
+    }    
+    currentDirectory
 
 /// Creates WiX component with directories and files from the given DirectoryInfo
 /// The function will create one component for each file [best practice](https://support.microsoft.com/de-de/kb/290997/en-us)
