@@ -307,11 +307,19 @@ let generateComponentRef (setParams : WiXComponentRef -> WiXComponentRef) =
     let parameters = WiXComponentRefDefaults |> setParams
     if parameters.Id = "" then 
         failwith "No parameter passed for component ref Id!"
-    parameters
+    Some(parameters)
 
 type WiXDirectoryComponent = 
     | C of WiXComponent
     | D of WiXDir      
+    member w.ToComponentRef() = 
+        match w with
+        | C c -> c.ToComponentRef()
+        | D d -> None
+    override w.ToString() =
+          match w with
+            | C c -> c.ToString()
+            | D d -> d.ToString()
 /// Component which wraps files into logical components and which allows to 
 and WiXComponent = 
     {
@@ -636,15 +644,15 @@ type Feature =
         NestedFeatures : Feature seq
 
         /// Components included in this feature
-        Components : WiXComponentRef seq
+        Components : WiXComponentRef option seq
     }
     override f.ToString() =
         let (|Empty|NotEmpty|) seq = if Seq.isEmpty seq then Empty else NotEmpty seq
 
         let rec ConcatAll feature (node : string) = 
             match feature.NestedFeatures with
-            | Empty ->  "<Feature Id=\"" + feature.Id + "\" Title=\"" + feature.Title + "\" Level=\"" + feature.Level.ToString() + "\" Description=\"" + feature.Description + "\" Display=\"" + feature.Display.ToString() + "\" ConfigurableDirectory=\"INSTALLDIR\">" + Seq.fold(fun acc elem -> acc + elem.ToString()) "" feature.Components + "</Feature>"
-            | NotEmpty list -> "<Feature Id=\"" + feature.Id + "\" Title=\"" + feature.Title + "\" Level=\"" + feature.Level.ToString() + "\" Description=\"" + feature.Description + "\" Display=\"" + feature.Display.ToString() + "\" ConfigurableDirectory=\"INSTALLDIR\">" + Seq.fold(fun acc elem -> acc + ConcatAll elem "") "" list + Seq.fold(fun acc elem -> acc + elem.ToString()) "" feature.Components  + "</Feature>"
+            | Empty ->  "<Feature Id=\"" + feature.Id + "\" Title=\"" + feature.Title + "\" Level=\"" + feature.Level.ToString() + "\" Description=\"" + feature.Description + "\" Display=\"" + feature.Display.ToString() + "\" ConfigurableDirectory=\"INSTALLDIR\">" + (feature.Components |> Seq.choose id |> Seq.fold(fun acc elem -> acc + elem.ToString()) "") + "</Feature>"
+            | NotEmpty list -> "<Feature Id=\"" + feature.Id + "\" Title=\"" + feature.Title + "\" Level=\"" + feature.Level.ToString() + "\" Description=\"" + feature.Description + "\" Display=\"" + feature.Display.ToString() + "\" ConfigurableDirectory=\"INSTALLDIR\">" + Seq.fold(fun acc elem -> acc + ConcatAll elem "") "" list + (feature.Components |> Seq.choose id |> Seq.fold(fun acc elem -> acc + elem.ToString()) "") + "</Feature>"
         ConcatAll f ""
 
 /// Default values for creating WiX Feature
@@ -1044,7 +1052,7 @@ type Script =
         Directories : WiXDir seq
 
         /// Nest Components in here
-        Components : WiXComponent seq
+        Components : WiXDirectoryComponent seq
 
         /// Build Number of product
         BuildNumber : string
