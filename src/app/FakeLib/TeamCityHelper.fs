@@ -79,6 +79,35 @@ let sendTeamCityDotNetDupFinderImport path = sendToTeamCity "##teamcity[importDa
 /// Sends an dotcover, partcover, ncover or ncover3 results filename to TeamCity    
 let sendTeamCityDotNetCoverageImport path = sendToTeamCity "##teamcity[importData type='dotNetCoverage' path='%s']" path
 
+/// Sends the full path to the dotCover home folder to override the bundled dotCover to TeamCity
+let sendTeamCityDotCoverHome = sendToTeamCity "##teamcity[dotNetCoverage dotcover_home='%s']"
+    
+/// Sends the full path to NCover installation folder to TeamCity
+let sendTeamCityNCover3Home = sendToTeamCity "##teamcity[dotNetCoverage ncover3_home='%s']"
+
+/// Sends arguments for the NCover report generator to TeamCity
+let sendTeamCityNCover3ReporterArgs = sendToTeamCity "##teamcity[dotNetCoverage ncover3_reporter_args='%s']"
+    
+/// Sends the path to NCoverExplorer to TeamCity
+let sendTeamCityNCoverExplorerTool = sendToTeamCity "##teamcity[dotNetCoverage ncover_explorer_tool='%s']"
+    
+/// Sends additional arguments for NCover 1.x to TeamCity
+let sendTeamCityNCoverExplorerToolArgs = sendToTeamCity "##teamcity[dotNetCoverage ncover_explorer_tool_args='%s']"
+    
+/// Sends the value for NCover /report: argument to TeamCity
+let sendTeamCityNCoverReportType : int -> unit = string >> sendToTeamCity "##teamcity[dotNetCoverage ncover_explorer_report_type='%s']"
+    
+/// Sends the value for NCover  /sort: argument to TeamCity
+let sendTeamCityNCoverReportOrder : int -> unit = string >> sendToTeamCity "##teamcity[dotNetCoverage ncover_explorer_report_order='%s']"
+    
+/// Send the PartCover xslt transformation rules (Input xlst and output files) to TeamCity
+let sendTeamCityPartCoverReportXslts : seq<string * string> -> unit =
+    Seq.map (fun (xslt, output) -> sprintf "%s=>%s" xslt output)
+    >> Seq.map EncapsulateSpecialChars
+    >> String.concat "|n"
+    >> sprintf "##teamcity[dotNetCoverage partcover_report_xslts='%s']"
+    >> sendStrToTeamCity      
+
 /// Starts the test case.
 let StartTestCase testCaseName = 
     sendToTeamCity "##teamcity[testStarted name='%s' captureStandardOutput='true']" testCaseName
