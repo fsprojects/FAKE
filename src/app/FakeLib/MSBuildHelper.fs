@@ -6,6 +6,7 @@ open System
 open System.IO
 open System.Configuration
 open System.Xml.Linq
+open BuildServerHelper
 
 /// A type to represent MSBuild project files.
 type MSBuildProject = XDocument
@@ -148,7 +149,7 @@ let mutable MSBuildDefaults =
       Properties = []
       MaxCpuCount = Some None
       NoLogo = false
-      NodeReuse = true
+      NodeReuse = not (buildServer = TeamCity)
       ToolsVersion = None
       Verbosity = None
       NoConsoleLogger = false
