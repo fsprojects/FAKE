@@ -196,7 +196,7 @@ type WiXServiceDependency =
     member w.createAttributeList () =
         seq {           
             yield ("Id", w.Id)           
-            if w.Group.IsSome then yield ("Group", w.Group.Value.ToString())                         
+            if w.Group.IsSome then yield ("Group", w.Group.Value.ToString())
         }
     override w.ToString() =
         sprintf "<ServiceDependency%s />"
@@ -1150,6 +1150,9 @@ type Script =
 
         /// You can nest InstallExecuteSequence actions in here
         ActionSequences : WiXCustomActionExecution seq
+
+        /// You can add custom replacements for the wix xml here.
+        CustomReplacements: (string * string) seq
     }
 
 /// Default values for WiX Script properties
@@ -1173,6 +1176,7 @@ let ScriptDefaults =
         Features = []
         CustomActions = []
         ActionSequences = []
+        CustomReplacements = []
     }
 
 /// Generates WiX Template with specified file name (you can prepend location too)
@@ -1287,7 +1291,7 @@ let FillInWixScript wiXPath (setParams : WiXScript -> WiXScript) =
         "@Product.Features@", parameters.Features
         "@Product.CustomActions@", parameters.CustomActions
         "@Product.ActionSequences@", parameters.ActionSequences
-        "@Build.number@", parameters.BuildNumber]
+        "@Build.number@", parameters.BuildNumber]    
     processTemplates replacements wixScript
     
 /// Takes path where script files reside and sets all parameters as defined
@@ -1335,6 +1339,8 @@ let FillInWiXTemplate wiXPath setParams =
         "@Product.CustomActions@", Seq.fold(fun acc elem -> acc + elem.ToString()) "" parameters.CustomActions
         "@Product.ActionSequences@", Seq.fold(fun acc elem -> acc + elem.ToString()) "" parameters.ActionSequences
         "@Build.number@", parameters.BuildNumber]
+    let customReplacements = parameters.CustomReplacements |> Seq.map (fun (key, value) -> ((sprintf "@Custom.%s@" key), value)) |> List.ofSeq
+    let replacements = replacements @ customReplacements
     processTemplates replacements wixScript
 
 /// Generates a feature based on the given parameters, use toString on it when embedding it
