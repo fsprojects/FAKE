@@ -1,11 +1,15 @@
 [<AutoOpen>]
 /// Contains tasks to create msi installers using the [WiX toolset](http://wixtoolset.org/)
+
 module Fake.WiXHelper
 
 open System
 open System.IO
 open System.Collections.Generic
 open System.Text.RegularExpressions;
+open System.Security.Cryptography
+open System.Text
+
 
 let mutable internal fileCount = 0
 let mutable internal dirs = Dictionary()
@@ -417,56 +421,61 @@ let generateDirectory (setParams : WiXDir -> WiXDir) =
         failwith "No parameter passed for directory Id!"
     parameters
 
-let getDirectoryId (directoryName : string) =        
-    "d" + directoryName.GetHashCode().ToString().Replace("-", "")
-    
+/// Calculates the SHA1 for a given string.
+let private calcSHA1 (text:string) =
+    Fake.EnvironmentHelper.encoding.GetBytes text
+      |> (new SHA1CryptoServiceProvider()).ComputeHash
+      |> Array.fold (fun acc e -> 
+           let t = System.Convert.ToString(e, 16)
+           if t.Length = 1 then acc + "0" + t else acc + t) 
+           ""
+let private getDirectoryId (directoryName : string) =        
+    "d" + calcSHA1 directoryName
 
-///create a directory component hierarchy from a root folder
-let rec bulkComponentTreeCreation fileFilter directoryInfo =
+let private getFileId (fileName : string) =
+    "f" + calcSHA1 fileName
+
+let private createComponents fileFilter directoryInfo directoryName =
+    directoryInfo
+        |> filesInDir
+        |> Seq.filter fileFilter
+        |> Seq.map (fun file -> 
+                        { 
+                            Id = getFileId (directoryName + directoryInfo.Name + file.Name)
+                            Name = file.Name
+                            Source = file.FullName
+                        })
+        |> Seq.map(fun file->
+                        C{
+                            Id = "c" + file.Id.Substring(1)
+                            Guid = "*"
+                            Files = [file]
+                            ServiceControls = []
+                            ServiceInstalls = []
+                        })
+
+/// Creates a WiX directory and component hierarchy from the given DirectoryInfo
+/// The function will create one component for each file [best practice](https://support.microsoft.com/de-de/kb/290997/en-us)
+/// and set the GUID to "*", which will make WiX produce consistent Component Guids if the Component's target path doesn't change.
+/// This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
+/// You can use the getComponentRefs function for getting all created component refs and adding them to features.
+/// You can use attachServiceControlToComponents or attachServiceInstallToComponents to attach ServiceControl or ServiceInstall to the directory component hierarchy
+let rec bulkComponentTreeCreation fileFilter directoryFilter directoryInfo =
+    let directoryName = ""
     let directories = directoryInfo
                       |> subDirectories
-                      |> Seq.map (fun d -> bulkComponentTreeSubCreation fileFilter d directoryInfo.Name)
-    let components = directoryInfo
-                        |> filesInDir
-                        |> Seq.filter fileFilter
-                        |> Seq.map (fun file -> 
-                                        { 
-                                            Id = "f" + (file.Name).GetHashCode().ToString().Replace("-", "")
-                                            Name = file.Name
-                                            Source = file.FullName
-                                        })
-                        |> Seq.map(fun file->
-                                        C{
-                                            Id = "c" + file.Id.Substring(1)
-                                            Guid = "*"
-                                            Files = [file]
-                                            ServiceControls = []
-                                            ServiceInstalls = []
-                                        })
+                      |> Seq.filter directoryFilter
+                      |> Seq.map (fun d -> bulkComponentTreeSubCreation fileFilter directoryFilter d directoryInfo.Name)
+    let components = createComponents fileFilter directoryInfo directoryName
     Seq.append directories components  
-and private bulkComponentTreeSubCreation fileFilter directoryInfo directoryId =    
+and private bulkComponentTreeSubCreation fileFilter directoryFilter directoryInfo directoryName =    
     let directories = directoryInfo
                       |> subDirectories
-                      |> Seq.map (fun d -> bulkComponentTreeSubCreation fileFilter d (directoryId + directoryInfo.Name))       
-    let components = directoryInfo
-                        |> filesInDir
-                        |> Seq.filter fileFilter
-                        |> Seq.map (fun file -> 
-                                        { 
-                                            Id = "f" + (directoryId + directoryInfo.Name + file.Name).GetHashCode().ToString().Replace("-", "")
-                                            Name = file.Name
-                                            Source = file.FullName
-                                        })
-                        |> Seq.map(fun file->
-                                        C{
-                                            Id = "c" + file.Id.Substring(1)
-                                            Guid = "*"
-                                            Files = [file]
-                                            ServiceControls = []
-                                            ServiceInstalls = []
-                                        })    
+                      |> Seq.filter directoryFilter
+                      |> Seq.map (fun d -> bulkComponentTreeSubCreation fileFilter directoryFilter d (directoryName + directoryInfo.Name))       
+    let components = createComponents fileFilter directoryInfo directoryName
     let currentDirectory = D{
-        Id = getDirectoryId (directoryInfo.Name + directoryId)
+        Id = getDirectoryId (directoryInfo.Name + directoryName)
         Name = directoryInfo.Name
         Files = []
         Components = Seq.append directories components
