@@ -457,89 +457,65 @@ Usage: prog -v ...""",
   "-vv"     ->= [("-v", Flags(2))],
   "-vvvvvv" ->= [("-v", Flags(6))]
 )
-(*
-let doc = Docopt("""Usage: prog [-v | -vv | -vvv]
 
-This one is probably most readable user-friednly variant.
+Assert.Seq("Many flags xor'd", """
+Usage: prog [-v | -vv | -vvv]
 
-""")
-$ prog
-{"-v": 0}
+This one is probably most readable user-friendly variant.
 
-$ prog -v
-{"-v": 1}
+""",
+  ""      ->= [],
+  "-v"    ->= [("-v", Flag)],
+  "-vv"   ->= [("-v", Flags(2))],
+  "-vvvv" ->! typeof<ArgvException>
+)
 
-$ prog -vv
-{"-v": 2}
+Assert.Seq("Counting long options", """
+usage: prog [--ver --ver]""",
+  "--ver --ver" ->= [("--ver", Flags(2))]
+)
 
-$ prog -vvvv
-"user-error"
+Assert.Seq("1 command", """
+usage: prog [go]""",
+  "go" ->= [("go", Flag)]
+)
 
+Assert.Seq("2 commands", """
+usage: prog [go go]""",
+  ""         ->= [],
+  "go"       ->= [("go", Flag)],
+  "go go"    ->= [("go", Flags(2))],
+  "go go go" ->! typeof<ArgvException>
+)
 
-let doc = Docopt("""usage: prog [--ver --ver]""")
-$ prog --ver --ver
-{"--ver": 2}
+Assert.Seq("Many commands", """
+usage: prog go...""",
+  "go go go go go" ->= [("go", Flags(5))]
+)
 
-
-//
-// Counting commands
-//
-
-let doc = Docopt("""usage: prog [go]""")
-$ prog go
-{"go": true}
-
-
-let doc = Docopt("""usage: prog [go go]""")
-$ prog
-{"go": 0}
-
-$ prog go
-{"go": 1}
-
-$ prog go go
-{"go": 2}
-
-$ prog go go go
-"user-error"
-
-let doc = Docopt("""usage: prog go...""")
-$ prog go go go go go
-{"go": 5}
-
-//
-// [options] does not include options from usage-pattern
-//
-let doc = Docopt("""usage: prog [options] [-a]
+Assert.Seq("[options] does not include options from usage-pattern", """
+usage: prog [options] [-a]
 
 options: -a
          -b
-""")
-$ prog -a
-{"-a": true, "-b": false}
+""",
+  "-a"  ->= [("-a", Flag)],
+  "-aa" ->! typeof<ArgvException>
+)
 
-$ prog -aa
-"user-error"
-
-//
-// Test [options] shourtcut
-//
-
-let doc = Docopt("""Usage: prog [options] A
+Assert.Seq("[options] shortcut", """
+Usage: prog [options] A
 Options:
     -q  Be quiet
     -v  Be verbose.
 
-""")
-$ prog arg
-{"A": "arg", "-v": false, "-q": false}
+""",
+  "arg" ->= [("A", Argument("arg"))],
+  "-v arg" ->= [("A", Argument("arg"));("-v", Flag)],
+  "-q arg" ->= [("A", Argument("arg"));("-q", Flag)]
+)
 
-$ prog -v arg
-{"A": "arg", "-v": true, "-q": false}
-
-$ prog -q arg
-{"A": "arg", "-v": false, "-q": true}
-
+(*
 //
 // Test single dash
 //

@@ -115,7 +115,7 @@ type Ano(o':Options) =
       member __.MatchSopt(s', getArg') =
         let rec loop i = function
         | s when String.IsNullOrEmpty(s) || i >= s.Length -> s
-        | s -> match o'.Find(s.[i]) with
+        | s -> match o'.FindAndRemove(s.[i]) with
                | null -> loop 0 null
                | opt  -> match opt.HasArgument, i = s.Length - 1 with
                          | true, true -> matched.Add(opt, Some(getArg' opt.ArgName));

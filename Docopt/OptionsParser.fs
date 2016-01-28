@@ -120,7 +120,7 @@ type OptionsParser(soptChars':string) =
                              RegexOptions.RightToLeft
                              ||| RegexOptions.IgnoreCase)
 
-    member __.Parse(optionString':string) =
+    member __.Parse(optionStrings':string array) =
       let parseAsync line' = async {
           let dflt = defaultRegex.Match(line') in
           return
@@ -138,7 +138,7 @@ type OptionsParser(soptChars':string) =
       | Val(str) -> let lastOptCopy = !lastOpt in
                     if not lastOptCopy.IsEmpty
                     then lastOptCopy.Default <- str
-      in optionString'.Split([|'\n';'\r'|], StringSplitOptions.RemoveEmptyEntries)
+      in optionStrings'
       |> Seq.map parseAsync
       |> Async.Parallel
       |> Async.RunSynchronously
