@@ -57,7 +57,6 @@ Options: -a  All.
   "-a" ->= [("-a", Flag)],
   "-x" ->! typeof<ArgvException>
 )
-
 Assert.Seq("Basic long option", """
 Usage: prog [options]
 
@@ -417,73 +416,48 @@ Options:
   ]
 )
 
-(*
-Assert.Seq("", """
+Assert.Seq("No `options:` part", """
 usage: prog --hello""",
   "--hello" ->= [("--hello", Flag)]
 )
-let doc = Docopt("""usage: prog [--hello=<world>]""")
-$ prog
-{"--hello": null}
 
-$ prog --hello wrld
-{"--hello": "wrld"}
+Assert.Seq("No `options:` part", """
+usage: prog [--hello=<world>]""",
+  ""             ->= [],
+  "--hello wrld" ->= [("--hello", Argument("wrld"))]
+)
 
+Assert.Seq("No `options:` part", """
+usage: prog [-o]""",
+  "" ->= [],
+  "-o" ->= [("-o", Flag)]
+)
 
-let doc = Docopt("""usage: prog [-o]""")
-$ prog
-{"-o": false}
+Assert.Seq("No `options:` part", """
+usage: prog [-opr]""",
+  "-op" ->= [("-o", Flag);("-p", Flag)]
+)
 
-$ prog -o
-{"-o": true}
+Assert.Seq("1 flag", """
+Usage: prog -v""",
+  "-v" ->= [("-v", Flag)]
+)
 
+Assert.Seq("2 flags", """
+Usage: prog [-v -v]""",
+  ""    ->= [],
+  "-v"  ->= [("-v", Flag)],
+  "-vv" ->= [("-v", Flags(2))]
+)
 
-let doc = Docopt("""usage: prog [-opr]""")
-$ prog -op
-{"-o": true, "-p": true, "-r": false}
-
-
-let doc = Docopt("""usage: prog --aabb | --aa""")
-$ prog --aa
-{"--aabb": false, "--aa": true}
-
-$ prog --a
-"user-error"  # not a unique prefix
-
-//
-// Counting number of flags
-//
-
-let doc = Docopt("""Usage: prog -v""")
-$ prog -v
-{"-v": true}
-
-
-let doc = Docopt("""Usage: prog [-v -v]""")
-$ prog
-{"-v": 0}
-
-$ prog -v
-{"-v": 1}
-
-$ prog -vv
-{"-v": 2}
-
-
-let doc = Docopt("""Usage: prog -v ...""")
-$ prog
-"user-error"
-
-$ prog -v
-{"-v": 1}
-
-$ prog -vv
-{"-v": 2}
-
-$ prog -vvvvvv
-{"-v": 6}
-
-
+Assert.Seq("Many flags", """
+Usage: prog -v ...""",
+  ""        ->! typeof<ArgvException>,
+  "-v"      ->= [("-v", Flag)],
+  "-vv"     ->= [("-v", Flags(2))],
+  "-vvvvvv" ->= [("-v", Flags(6))]
+)
+(*
 let doc = Docopt("""Usage: prog [-v | -vv | -vvv]
 
 This one is probably most readable user-friednly variant.

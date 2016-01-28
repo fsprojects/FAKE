@@ -24,7 +24,7 @@ type Tag =
 type IAst =
   interface
     abstract Tag : Tag
-    abstract MatchSopt : sopt:string * getArg:(string -> string) -> bool
+    abstract MatchSopt : sopt:string * getArg:(string -> string) -> string
     abstract MatchLopt : lopt:string * getArg:(string -> string) -> bool
     abstract MatchArg : arg:string -> bool
     abstract TryFill : args:Arguments.Dictionary -> bool
@@ -36,7 +36,7 @@ type Eps private () =
     static member Instance = Eps() :> IAst
     interface IAst with
       member __.Tag = Tag.Eps
-      member __.MatchSopt(_, _) = false
+      member __.MatchSopt(_, _) = null
       member __.MatchLopt(_, _) = false
       member __.MatchArg(_) = false
       member __.TryFill(_) = true
@@ -48,35 +48,31 @@ type Eps private () =
 type Sop(o':Options) =
   class
     let matched = GList<Option * string option>(o'.Count)
+    static member Success = ( = ) ""
     interface IAst with
       member __.Tag = Tag.Sop
       member __.MatchSopt(s', getArg') =
-        let mutable ret = true in
-        let mutable i = 0 in
-        while i < s'.Length do
-          (match o'.FindAndRemove(s'.[i]) with
-           | null -> ret <- false
-           | opt  -> ret <- true;
-                     matched.Add(opt, if opt.HasArgument && i = s'.Length - 1
-                                      then Some(getArg' opt.ArgName)
-                                      elif opt.HasArgument
-                                      then (let arg = s'.Substring(i + 1) in
-                                            i <- s'.Length;
-                                            Some(arg))
-                                      else None));
-          i <- i + 1
-        done;
-        ret
+        let rec loop i = function
+        | s when String.IsNullOrEmpty(s) || i >= s.Length -> s
+        | s -> match o'.FindAndRemove(s.[i]) with
+               | null -> loop (i + 1) s
+               | opt  -> match opt.HasArgument, i = s.Length - 1 with
+                         | true, true -> matched.Add(opt, Some(getArg' opt.ArgName));
+                                         loop i (s.Remove(i, 1))
+                         | true, _    -> let arg = s.Substring(i + 1) in
+                                         matched.Add(opt, Some(arg));
+                                         loop Int32.MaxValue (s.Substring(0, i))
+                         | _          -> matched.Add(opt, None);
+                                         loop i (s.Remove(i, 1))
+        in loop 0 s'
       member __.MatchLopt(_, _) = false
       member __.MatchArg(_) = false
       member __.TryFill(args') =
-        if o'.Count <> 0
-        then false
-        else try
+        try
           for sopt, arg in matched do
             args'.AddOpt(sopt, ?arg'=arg)
           done;
-          true
+          o'.Count = 0
         with :? KeyNotFoundException -> false
       member __.DeepCopy() = Sop(o'.Copy()) :> IAst
     end
@@ -91,7 +87,7 @@ type Lop(o':Option) =
     let mutable arg = None
     interface IAst with
       member __.Tag = Tag.Lop
-      member __.MatchSopt(_, _) = false
+      member __.MatchSopt(_, _) = null
       member __.MatchLopt(l', getArg') =
         if matched
         then false
@@ -117,21 +113,19 @@ type Ano(o':Options) =
     interface IAst with
       member __.Tag = Tag.Ano
       member __.MatchSopt(s', getArg') =
-        let mutable ret = true in
-        let mutable i = 0 in
-        while i < s'.Length do
-          (match o'.Find(s'.[i]) with
-           | null -> ret <- false; i <- s'.Length
-           | opt  -> matched.Add(opt, if opt.HasArgument && i = s'.Length - 1
-                                      then Some(getArg' opt.ArgName)
-                                      elif opt.HasArgument
-                                      then (let j = i + 1 in
-                                            i <- s'.Length;
-                                            Some(s'.Substring(j)))
-                                      else None));
-          i <- i + 1
-        done;
-        ret
+        let rec loop i = function
+        | s when String.IsNullOrEmpty(s) || i >= s.Length -> s
+        | s -> match o'.Find(s.[i]) with
+               | null -> loop 0 null
+               | opt  -> match opt.HasArgument, i = s.Length - 1 with
+                         | true, true -> matched.Add(opt, Some(getArg' opt.ArgName));
+                                         loop i (s.Remove(i, 1))
+                         | true, _    -> let arg = s.Substring(i + 1) in
+                                         matched.Add(opt, Some(arg));
+                                         loop Int32.MaxValue (s.Substring(0, i))
+                         | _          -> matched.Add(opt, None);
+                                         loop i (s.Remove(i, 1))
+        in loop 0 s'
       member __.MatchLopt(l', getArg') =
         match o'.Find(l') with
         | null -> false
@@ -162,12 +156,15 @@ type Sqb(ast':IAst) =
     | _    -> false
     interface IAst with
       member __.Tag = Tag.Sqb
-      member __.MatchSopt(s', a') = ast'.MatchSopt(s', a') |> hasMatched
+      member __.MatchSopt(s', a') =
+        let res = ast'.MatchSopt(s', a') in
+        res <> s' |> hasMatched |> ignore;
+        res
       member __.MatchLopt(l', a') = ast'.MatchLopt(l', a') |> hasMatched
       member __.MatchArg(a') = ast'.MatchArg(a') |> hasMatched
-      member __.TryFill(a') = if ast'.Tag <> Tag.Seq
-                              then ast'.TryFill(a') || not matched // A←B
-                              else (ast'.TryFill(a') |> ignore; true)
+      member __.TryFill(a') = if ast'.Tag = Tag.Seq || ast'.Tag = Tag.Sop
+                              then (ast'.TryFill(a') |> ignore; true)
+                              else ast'.TryFill(a') || not matched // A←B
       member __.DeepCopy() = Sqb(ast'.DeepCopy()) :> IAst
     end
     override __.ToString() = sprintf "Sqb (%A)" ast'
@@ -191,7 +188,7 @@ type Arg(name':string) =
     let mutable value = null
     interface IAst with
       member __.Tag = Tag.Arg
-      member __.MatchSopt(_, _) = false
+      member __.MatchSopt(_, _) = null
       member __.MatchLopt(_, _) = false
       member __.MatchArg(value') =
         if value = null
@@ -217,13 +214,15 @@ type Xor(l':IAst, r':IAst) =
         let getArg = let s = ref String.Empty in     // In case getArg' is
                      let arg = lazy getArg' !s in    // called by l' and r',
                      fun s' -> s := s'; arg.Value in // make it a lazy value
-        let lmatch = lOk && l'.MatchSopt(sopt', getArg) in
-        let rmatch = rOk && r'.MatchSopt(sopt', getArg) in
+        let lres = lazy l'.MatchSopt(sopt', getArg) in
+        let rres = lazy r'.MatchSopt(sopt', getArg) in
+        let lmatch = lOk && (lres.Value |> Sop.Success) in
+        let rmatch = rOk && (rres.Value |> Sop.Success) in
         match lmatch, rmatch with
-        | true, true   -> true
-        | true, false  -> rOk <- false; true
-        | false, true  -> lOk <- false; true
-        | false, false -> false
+        | true, true   -> lres.Value
+        | true, false  -> rOk <- false; lres.Value
+        | false, true  -> lOk <- false; rres.Value
+        | false, false -> null
       member __.MatchLopt(lopt', getArg') =
         let getArg = let s = ref String.Empty in
                      let arg = lazy getArg' !s in
@@ -263,7 +262,7 @@ type Seq(asts':GList<IAst>) =
     interface IAst with
       member __.Tag = Tag.Seq
       member __.MatchSopt(s', a') =
-        Seq.exists (fun (ast':IAst) -> ast'.MatchSopt(s', a')) asts'
+        Seq.fold (fun ret' (ast':IAst) -> ast'.MatchSopt(ret', a')) s' asts'
       member __.MatchLopt(l', a') =
         Seq.exists (fun (ast':IAst) -> ast'.MatchLopt(l', a')) asts'
       member __.MatchArg(a') =
@@ -283,7 +282,7 @@ type Cmd(cmd':string) =
     let mutable matched = false
     interface IAst with
       member __.Tag = Tag.Cmd
-      member __.MatchSopt(_, _) = false
+      member __.MatchSopt(_, _) = null
       member __.MatchLopt(_, _) = false
       member __.MatchArg(a') =
         match not matched && a' = cmd' with
@@ -305,8 +304,28 @@ type Ell(ast':IAst) =
     let matched = GList<IAst>()
     interface IAst with
       member __.Tag = Tag.Ell
-      member __.MatchSopt(s', a') = false
-      member __.MatchLopt(s', a') = false
+      member xx.MatchSopt(s', a') =
+        let res = currentAst.MatchSopt(s', a') in
+        match res <> s' with
+        | true -> hasMatched <- true;
+                  if String.IsNullOrEmpty(res)
+                  then res
+                  else (xx :> IAst).MatchSopt(res, a')
+        | _    -> match hasMatched with
+                  | false -> res
+                  | _     -> matched.Add(currentAst);
+                             currentAst <- ast'.DeepCopy();
+                             hasMatched <- false;
+                             (xx :> IAst).MatchSopt(res, a')
+      member xx.MatchLopt(l', a') =
+        match currentAst.MatchLopt(l', a') with
+        | true -> hasMatched <- true; true
+        | _    -> match hasMatched with
+                  | false -> false
+                  | _     -> matched.Add(currentAst);
+                             currentAst <- ast'.DeepCopy();
+                             hasMatched <- false;
+                             (xx :> IAst).MatchLopt(l', a')
       member xx.MatchArg(a') =
         match currentAst.MatchArg(a') with
         | true -> hasMatched <- true; true

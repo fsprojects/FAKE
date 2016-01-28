@@ -13,7 +13,6 @@ exception ArgvException of string
 
 module private Helpers =
   begin
-    let toIAst obj' = (# "" obj' : IAst #) // maybe #IAst instead of IAst
     let raiseArgvException errlist' =
       let pos = Position(null, 0L, 0L, 0L) in
       let perror = ParserError(pos, null, errlist') in
@@ -27,20 +26,17 @@ module private Helpers =
                       >> expected
     let unexpectedArg = ( + ) "argument "
                         >> unexpected
-    let ambiguousArg = ( + ) "ambiguous long option --"
-                       >> unexpected
     let raiseInternal exn' = raise (InternalException exn')
     let raiseUnexpectedShort s' = raiseInternal (unexpectedShort s')
     let raiseUnexpectedLong l' = raiseInternal (unexpectedLong l')
-    let raiseExpectedArg a' = raiseInternal (expectedArg a')
     let raiseUnexpectedArg a' = raiseInternal (unexpectedArg a')
-    let raiseAmbiguousArg s' = raiseInternal (ambiguousArg s')
   end
 
 open Helpers
 
 type UsageParser(u':string, opts':Options) =
   class
+    let toIAst obj' = (# "" obj' : IAst #) // maybe #IAst instead of IAst
     let updateUserState (map':'a -> IAst -> #IAst) : 'a -> Parser<IAst, IAst> =
       fun arg' ->
         fun stream' ->
@@ -77,7 +73,7 @@ type UsageParser(u':string, opts':Options) =
                  let mutable i = -1 in
                  while (i <- i + 1; i < sops'.Length) do
                    match opts'.Find(sops'.[i]) with
-                   | null -> raiseUnexpectedShort sops'.[i]
+                   | null -> sops.Add(Option(short'=sops'.[i]))
                    | opt  -> (if opt.HasArgument && i + 1 < sops'.Length
                               then i <- sops'.Length);
                              sops.Add(opt)
@@ -90,13 +86,13 @@ type UsageParser(u':string, opts':Options) =
                   >>. many1SatisfyL ( isLetterOrDigit ) "Short option(s)"
                   >>= updateUserState filterSops
     let plop =
-      let filterLopt (lopt':string) _ =
+      let filterLopt (lopt':string, arg':string Option) _ =
         match opts'.Find(lopt') with
-        | null -> raiseUnexpectedLong lopt'
+        | null -> Lop(Option(long'=lopt', ?argName'=arg'))
         | lopt -> Lop(lopt)
       in skipString "--"
          >>. manySatisfy (fun c' -> Char.IsLetterOrDigit(c') || c' = '-')
-         .>> optional (skipChar '=' >>. parg)
+        .>>. opt (skipChar '=' >>. (plowerArg <|> pupperArg))
          >>= updateUserState filterLopt
     let psqb = between (skipChar '[' >>. spaces) (skipChar ']')
                        opp.ExpressionParser
@@ -164,10 +160,12 @@ type UsageParser(u':string, opts':Options) =
       with :? IndexOutOfRangeException -> raiseInternal exn'
 
     let matchSopt (names':string) getArg' =
+      let mutable res = Unchecked.defaultof<string> in
       let folder acc' (ast':IAst) =
-        ast'.MatchSopt(names', getArg') || acc'
+        res <- ast'.MatchSopt(names', getArg');
+        Sop.Success res || acc'
       in if not (Array.fold folder false asts)
-      then raiseUnexpectedShort '?'
+      then raiseUnexpectedShort (if res = null then names' else res).[0]
 
     let matchLopt (name':string) getArg' =
       let folder acc' (ast':IAst) =
@@ -186,8 +184,7 @@ type UsageParser(u':string, opts':Options) =
         let args = Arguments.Dictionary() in
         match ast'.TryFill(args) with
         | false -> false
-        | _     -> args'.Clear();
-                   args'.AddRange(args);
+        | _     -> args'.AddRange(args);
                    true
       in Array.exists predicate asts
 

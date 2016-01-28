@@ -4,9 +4,12 @@ open System
 open System.Collections.Generic
 
 [<AllowNullLiteral>]
-type Option(short':char, long':string, argName':string, default':string) =
+type Option(?short':char, ?long':string, ?argName':string, ?default':string) =
   class
-    new() = Option(Char.MaxValue, null, null, null)
+    let short' = defaultArg short' Char.MaxValue
+    let long' = defaultArg long' null
+    let argName' = defaultArg argName' null
+    let default' = defaultArg default' null
     static member op_Equality(lhs':Option, rhs':Option) =
       lhs'.Short = rhs'.Short
       && lhs'.Long = rhs'.Long
@@ -50,7 +53,9 @@ type Options() =
       match base.FindLast(fun o' -> o'.Long = l') with
       | null -> base.FindLast(fun o' -> o'.Long.StartsWith(l'))
       | opt  -> opt
-    member xx.Copy() = List<Option>(xx :> IEnumerable<Option>)
-                       :?> Options
+    member xx.Copy() =
+      let newOptions = Options() in
+      newOptions.AddRange(xx :> IEnumerable<Option>);
+      newOptions
   end
 ;;
