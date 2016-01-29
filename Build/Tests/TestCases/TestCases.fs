@@ -636,27 +636,26 @@ $ prog --long one
 
 $ prog --long one --long two
 {"--long": ["one", "two"]}
+*)
 
-//
-// Test multiple elements repeated at once
-//
+Assert.Seq("multiple elements repeated at once", """
+usage: prog (go <direction> --speed=<km/h>)...""",
+  "go left --speed=5  go right --speed=9" ->= [
+    "go", Flags(2);
+    "<direction>", Arguments(["right";"left"]);
+    "--speed", Arguments(["9";"5"])
+  ]
+)
 
-let doc = Docopt("""usage: prog (go <direction> --speed=<km/h>)...""")
-$ prog  go left --speed=5  go right --speed=9
-{"go": 2, "<direction>": ["left", "right"], "--speed": ["5", "9"]}
-
-//
-// Required options should work with option shortcut
-//
-
-let doc = Docopt("""usage: prog [options] -a
+Assert.Seq("Required options should work with option shortcut", """
+usage: prog [options] -a
 
 options: -a
 
-""")
-$ prog -a
-{"-a": true}
-
+""",
+  "-a" ->= [("-a", Flag)]
+)
+(*
 //
 // If option could be repeated its defaults should be split into a list
 //

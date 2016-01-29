@@ -36,6 +36,7 @@ open Helpers
 
 type UsageParser(usageStrings':string array, opts':Options) =
   class
+    let mutable isAno = false
     let toIAst obj' = (# "" obj' : IAst #) // maybe #IAst instead of IAst
     let updateUserState (map':'a -> IAst -> #IAst) : 'a -> Parser<IAst, IAst> =
       fun arg' ->
@@ -67,7 +68,7 @@ type UsageParser(usageStrings':string array, opts':Options) =
       in pupperArg <|> plowerArg
          >>= updateUserState filterArg
     let pano = skipString "[options]"
-               >>= updateUserState (fun _ _ -> Ano(opts'))
+               >>= updateUserState (fun _ _ -> isAno <- true; Ano(opts'))
     let psdh = skipString "[-]"
                >>= updateUserState (fun _ _ -> Sdh.Instance)
     let psop = let filterSops (sops':string) (last':IAst) =
@@ -78,9 +79,11 @@ type UsageParser(usageStrings':string array, opts':Options) =
                    | null -> sops.Add(Option(short'=sops'.[i]))
                    | opt  -> (if opt.HasArgument && i + 1 < sops'.Length
                               then i <- sops'.Length);
-                             sops.Add(opt)
+                             if not isAno then sops.Add(opt)
                  done;
-                 if last' = null || last'.Tag <> Tag.Sop
+                 if sops.Count = 0
+                 then Eps.Instance
+                 elif last' = null || last'.Tag <> Tag.Sop
                  then Sop(sops) |> toIAst
                  else ((last' :?> Sop).AddRange(sops);
                        Eps.Instance)
@@ -90,8 +93,8 @@ type UsageParser(usageStrings':string array, opts':Options) =
     let plop =
       let filterLopt (lopt':string, arg':string Option) _ =
         match opts'.Find(lopt') with
-        | null -> Lop(Option(long'=lopt', ?argName'=arg'))
-        | lopt -> Lop(lopt)
+        | null -> Lop(Option(long'=lopt', ?argName'=arg')) |> toIAst
+        | lopt -> if isAno then Eps.Instance else Lop(lopt) |> toIAst
       in skipString "--"
          >>. manySatisfy (fun c' -> Char.IsLetterOrDigit(c') || c' = '-')
         .>>. opt (skipChar '=' >>. (plowerArg <|> pupperArg))
