@@ -36,7 +36,7 @@ type Eps private () =
     static member Instance = Eps() :> IAst
     interface IAst with
       member __.Tag = Tag.Eps
-      member __.MatchSopt(_, _) = null
+      member __.MatchSopt(s', _) = s'
       member __.MatchLopt(_, _) = false
       member __.MatchArg(_) = false
       member __.TryFill(_) = true
@@ -87,7 +87,7 @@ type Lop(o':Option) =
     let mutable arg = None
     interface IAst with
       member __.Tag = Tag.Lop
-      member __.MatchSopt(_, _) = null
+      member __.MatchSopt(s', _) = s'
       member __.MatchLopt(l', getArg') =
         if matched
         then false
@@ -188,7 +188,7 @@ type Arg(name':string) =
     let mutable value = null
     interface IAst with
       member __.Tag = Tag.Arg
-      member __.MatchSopt(_, _) = null
+      member __.MatchSopt(s', _) = s'
       member __.MatchLopt(_, _) = false
       member __.MatchArg(value') =
         if value = null
@@ -261,8 +261,9 @@ type Seq(asts':GList<IAst>) =
   class
     interface IAst with
       member __.Tag = Tag.Seq
-      member __.MatchSopt(s', a') =
-        Seq.fold (fun ret' (ast':IAst) -> ast'.MatchSopt(ret', a')) s' asts'
+      member __.MatchSopt(shorts', a') =
+        asts'
+        |> Seq.fold (fun shorts' ast' -> ast'.MatchSopt(shorts', a')) shorts'
       member __.MatchLopt(l', a') =
         Seq.exists (fun (ast':IAst) -> ast'.MatchLopt(l', a')) asts'
       member __.MatchArg(a') =
@@ -282,7 +283,7 @@ type Cmd(cmd':string) =
     let mutable matched = false
     interface IAst with
       member __.Tag = Tag.Cmd
-      member __.MatchSopt(_, _) = null
+      member __.MatchSopt(s', _) = s'
       member __.MatchLopt(_, _) = false
       member __.MatchArg(a') =
         match not matched && a' = cmd' with

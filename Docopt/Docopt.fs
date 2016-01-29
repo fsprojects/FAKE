@@ -35,9 +35,10 @@ module internal DocHelper =
       in doc'.Split([|"\r\n";"\n";"\r"|], StringSplitOptions.None)
       |> Array.fold folder ([], [], Last.Nothing)
       |> fun (ustr', ostrs', _) ->
+           let ustrsArray = List.toArray ustr' in
            let ostrsArray = List.toArray ostrs' in
            Array.Reverse(ostrsArray);
-           (String.Join("\n", ustr'), ostrsArray)
+           (ustrsArray, ostrsArray)
   end
 ;;
 
@@ -51,14 +52,14 @@ type Docopt(doc', ?argv':string array, ?help':HelpCallback, ?version':obj,
     let help = defaultArg help' (fun () -> doc')
     let version = defaultArg version' noVersionObject
     let soptChars = defaultArg soptChars' "?"
-    let (uStr, oStrs) = DocHelper.cut doc'
+    let (uStrs, oStrs) = DocHelper.cut doc'
     let options = OptionsParser(soptChars).Parse(oStrs)
-    let pusage = UsageParser(uStr, options)
+    let pusage = UsageParser(uStrs, options)
     member __.Parse(?argv':string array, ?args':Arguments.Dictionary) =
       let args = defaultArg args' (Arguments.Dictionary()) in
       let argv = defaultArg argv' argv in
       pusage.Parse(argv, args)
-    member __.Usage = uStr
+    member __.Usage = String.Join("\n", uStrs)
     member __.UsageParser = pusage
   end
 ;;

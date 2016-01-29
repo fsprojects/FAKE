@@ -34,7 +34,7 @@ module private Helpers =
 
 open Helpers
 
-type UsageParser(u':string, opts':Options) =
+type UsageParser(usageStrings':string array, opts':Options) =
   class
     let toIAst obj' = (# "" obj' : IAst #) // maybe #IAst instead of IAst
     let updateUserState (map':'a -> IAst -> #IAst) : 'a -> Parser<IAst, IAst> =
@@ -147,7 +147,7 @@ type UsageParser(u':string, opts':Options) =
                     | Failure(err, _, _) -> raise (UsageException(err))
       }
     let asts =
-      u'.Split([|'\n';'\r'|], StringSplitOptions.RemoveEmptyEntries)
+      usageStrings'
       |> Array.map parseAsync
       |> Async.Parallel
       |> Async.RunSynchronously
@@ -220,6 +220,6 @@ type UsageParser(u':string, opts':Options) =
         then raiseArgvException errlist
         elif tryFill args'
         then (args'.RegisterDefaults(opts'); args')
-        else raise (ArgvException("Usage:" + u'))
+        else raise (ArgvException("Usage:" + String.Join("\n", usageStrings')))
     member __.Asts = asts
   end
