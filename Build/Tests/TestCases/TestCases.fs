@@ -655,6 +655,7 @@ options: -a
 """,
   "-a" ->= [("-a", Flag)]
 )
+
 (*
 //
 // If option could be repeated its defaults should be split into a list
@@ -681,52 +682,42 @@ $ prog -o this
 
 $ prog
 {"-o": ["x", "y"]}
+*)
 
-//
-// Test stacked option's argument
-//
-
-let doc = Docopt("""usage: prog -pPATH
+Assert.Seq("Test stacked option's argument", """
+usage: prog -pPATH
 
 options: -p PATH
 
-""")
-$ prog -pHOME
-{"-p": "HOME"}
+""",
+  "-pHOME" ->= [("-p", Argument("HOME"))]
+)
 
-//
-// Issue 56: Repeated mutually exclusive args give nested lists sometimes
-//
+Assert.Seq("Issue 56: Repeated mutually exclusive args give nested lists sometimes", """
+Usage: foo (--xx=<x>|--yy=<y>)...""",
+  "--xx=1 --yy=2" ->= [("--xx", Argument("1"));("--yy", Argument("2"))]
+)
 
-let doc = Docopt("""Usage: foo (--xx=x|--yy=y)...""")
-$ prog --xx=1 --yy=2
-{"--xx": ["1"], "--yy": ["2"]}
+Assert.Seq("POSIXly correct indentation", """
+usage: prog [<input file>]""",
+  "f.txt" ->= [("<input file>", Argument("f.txt"))]
+)
 
-//
-// POSIXly correct tokenization
-//
+Assert.Seq("POSIXly correct indentation", """
+usage: prog [--input=<file name>]...""",
+  "--input a.txt --input=b.txt" ->= [("--input", Arguments(["b.txt";"a.txt"]))]
+)
 
-let doc = Docopt("""usage: prog [<input file>]""")
-$ prog f.txt
-{"<input file>": "f.txt"}
-
-let doc = Docopt("""usage: prog [--input=<file name>]...""")
-$ prog --input a.txt --input=b.txt
-{"--input": ["a.txt", "b.txt"]}
-
-//
-// Issue 85: `[options]` shourtcut with multiple subcommands
-//
-
-let doc = Docopt("""usage: prog good [options]
+Assert.Seq("Issue 85: `[options]` shortcut with multiple subcommands", """
+usage: prog good [options]
            prog fail [options]
 
 options: --loglevel=N
 
-""")
-$ prog fail --loglevel 5
-{"--loglevel": "5", "fail": true, "good": false}
-
+""",
+  "fail --loglevel 5" ->= [("--loglevel", Argument("5"));("fail", Flag)]
+)
+(*
 //
 // Usage-section syntax
 //

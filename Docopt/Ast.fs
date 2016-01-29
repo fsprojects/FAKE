@@ -212,11 +212,8 @@ type Xor(l':IAst, r':IAst) =
     interface IAst with
       member __.Tag = Tag.Xor
       member __.MatchSopt(sopt', getArg') =
-        let getArg = let s = ref String.Empty in     // In case getArg' is
-                     let arg = lazy getArg' !s in    // called by l' and r',
-                     fun s' -> s := s'; arg.Value in // make it a lazy value
-        let lres = lazy l'.MatchSopt(sopt', getArg) in
-        let rres = lazy r'.MatchSopt(sopt', getArg) in
+        let lres = lazy l'.MatchSopt(sopt', getArg') in
+        let rres = lazy r'.MatchSopt(sopt', getArg') in
         let lmatch = lOk && (lres.Value |> Sop.Success) in
         let rmatch = rOk && (rres.Value |> Sop.Success) in
         match lmatch, rmatch with

@@ -203,8 +203,11 @@ type UsageParser(usageStrings':string array, opts':Options) =
         then if arg'.Length > 2 && arg'.[1] = '-'
              then match arg'.IndexOf('=') with
                   | -1 -> let name = arg'.Substring(2) in
-                          let getArg = getNext << expectedArg in
-                          Lopt(name, getArg)
+                          let getArg =
+                            let s = ref String.Empty in
+                            let arg = lazy getNext (expectedArg !s) in
+                            fun s' -> s := s'; arg.Value
+                          in Lopt(name, getArg)
                   | eq -> let name = arg'.Substring(2, eq - 3) in
                           let arg = arg'.Substring(eq + 1) in
                           let getArg _ = arg in
