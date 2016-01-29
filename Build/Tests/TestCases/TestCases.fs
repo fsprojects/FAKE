@@ -722,12 +722,12 @@ options: --loglevel=N
  * Usage-section syntax
  *)
 
-Assert.Seq("", """
+Assert.Seq("Basic usage", """
 usage:prog --foo""",
   "--foo" ->= [("--foo", Flag)]
 )
 
-Assert.Seq("", """
+Assert.Seq("Words before `usage:`", """
 PROGRAM USAGE: prog --foo""",
   "--foo" ->= [("--foo", Flag)]
 )
@@ -757,11 +757,11 @@ NOT PART OF SECTION""",
 )
 
 (*
-//
-// Options-section syntax
-//
+ * Options-section syntax
+ *)
 
-let doc = Docopt("""Usage: prog [options]
+Assert.Seq("Options-section syntax", """
+Usage: prog [options]
 
 global options: --foo
 local options: --baz
@@ -771,11 +771,9 @@ other options:
  --spam
 -not-an-option-
 
-""")
-$ prog --baz --egg
-{"--foo": false, "--baz": true, "--bar": false, "--egg": true, "--spam": false}
-
-*)
+""",
+  "--baz --egg" ->= [("--baz", Flag);("--egg", Flag)]
+)
 
 stopwatch.Stop()
 printfn "\n>>> %i Docopt calls in %A\nless than %fms per call" count stopwatch.Elapsed (float stopwatch.ElapsedMilliseconds / float count)
