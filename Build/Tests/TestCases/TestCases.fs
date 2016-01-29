@@ -520,6 +520,7 @@ usage: prog [-]""",
   "-" ->= [("-",  Flag)],
   ""  ->= []
 )
+
 (*
 //
 // If argument is repeated, its value should always be a list
@@ -545,88 +546,84 @@ options:
 """)
 $ prog -a
 {"-m": null, "-a": true}
+*)
 
-//
-// Test options without description
-//
+Assert.Seq("Options without description", """
+usage: prog --hello""",
+  "--hello" ->= [("--hello", Flag)]
+)
 
-let doc = Docopt("""usage: prog --hello""")
-$ prog --hello
-{"--hello": true}
+Assert.Seq("Options without description", """
+usage: prog [--hello=<world>]""",
+  ""             ->= [],
+  "--hello wrld" ->= [("--hello", Argument("wrld"))]
+)
 
-let doc = Docopt("""usage: prog [--hello=<world>]""")
-$ prog
-{"--hello": null}
+Assert.Seq("Options without description", """
+usage: prog [-o]""",
+  ""   ->= [],
+  "-o" ->= [("-o", Flag)]
+)
 
-$ prog --hello wrld
-{"--hello": "wrld"}
+Assert.Seq("Options without description", """
+usage: prog [-opr]""",
+  "-op" ->= [("-o", Flag);("-p", Flag)]
+)
 
-let doc = Docopt("""usage: prog [-o]""")
-$ prog
-{"-o": false}
+Assert.Seq("Options without description", """
+usage: git [-v | --verbose]""",
+  "-v" ->= [("-v", Flag)]
+)
 
-$ prog -o
-{"-o": true}
+Assert.Seq("Options without description", """
+usage: git remote [-v | --verbose]""",
+  "remote -v" ->= [("remote", Flag);("-v", Flag)]
+)
 
-let doc = Docopt("""usage: prog [-opr]""")
-$ prog -op
-{"-o": true, "-p": true, "-r": false}
+Assert.Seq("Empty usage pattern", """
+usage: prog""",
+  "" ->= []
+)
 
-let doc = Docopt("""usage: git [-v | --verbose]""")
-$ prog -v
-{"-v": true, "--verbose": false}
+Assert.Seq("Empty pattern then two arguments", """
+usage: prog
+       prog <a> <b>
+""",
+  "1 2" ->= [("<a>", Argument("1"));("<b>", Argument("2"))],
+  ""    ->= []
+)
 
-let doc = Docopt("""usage: git remote [-v | --verbose]""")
-$ prog remote -v
-{"remote": true, "-v": true, "--verbose": false}
+Assert.Seq("Two arguments then empty pattern", """
+usage: prog <a> <b>
+       prog
+""",
+  "" ->= []
+)
 
-//
-// Test empty usage pattern
-//
 
-let doc = Docopt("""usage: prog""")
-$ prog
-{}
+Assert.Seq("Option's argument should not capture default value from usage pattern", """
+usage: prog [--file=<f>]""",
+  "" ->= []
+)
 
-let doc = Docopt("""usage: prog
-           prog <a> <b>
-""")
-$ prog 1 2
-{"<a>": "1", "<b>": "2"}
-
-$ prog
-{"<a>": null, "<b>": null}
-
-let doc = Docopt("""usage: prog <a> <b>
-           prog
-""")
-$ prog
-{"<a>": null, "<b>": null}
-
-//
-// Option's argument should not capture default value from usage pattern
-//
-
-let doc = Docopt("""usage: prog [--file=<f>]""")
-$ prog
-{"--file": null}
-
-let doc = Docopt("""usage: prog [--file=<f>]
+Assert.Seq("Option's argument should not capture default value from usage pattern", """
+usage: prog [--file=<f>]
 
 options: --file <a>
 
-""")
-$ prog
-{"--file": null}
+""",
+  "" ->= []
+)
 
-let doc = Docopt("""Usage: prog [-a <host:port>]
+Assert.Seq("Option's argument should not capture default value from usage pattern", """
+Usage: prog [-a <host:port>]
 
 Options: -a, --address <host:port>  TCP address [default: localhost:6283].
 
-""")
-$ prog
-{"--address": "localhost:6283"}
-
+""",
+  "" ->= [("-a", Argument("localhost:6283"));("--address", Argument("localhost:6283"))]
+)
+(*
 //
 // If option with argument could be repeated,
 // its arguments should be accumulated into a list

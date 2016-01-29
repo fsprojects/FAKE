@@ -116,7 +116,7 @@ type OptionsParser(soptChars':string) =
              else null),
             reply.Error)
 
-    let defaultRegex = Regex(@"(?<=\[default:\s).*(?=]\s*$)",
+    let defaultRegex = Regex(@"(?<=\[default:\s).*(?=])",
                              RegexOptions.RightToLeft
                              ||| RegexOptions.IgnoreCase)
 
