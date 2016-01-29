@@ -119,6 +119,7 @@
     <Compile Include="MessageFiles\MessageFileSpecs.cs" />
     <Compile Include="ConfigFiles\ConfigSpecs.cs" />
     <Compile Include="AssemblyInfoSpecs.cs" />
+    <Compile Include="WiXHelperSpec.cs" />
     <Compile Include="XdtSpecs.cs" />
     <Compile Include="CscSpecs.cs" />
     <Compile Include="XmlSpecs.cs" />
