@@ -515,19 +515,12 @@ Options:
   "-q arg" ->= [("A", Argument("arg"));("-q", Flag)]
 )
 
+Assert.Seq("Single dash", """
+usage: prog [-]""",
+  "-" ->= [("-",  Flag)],
+  ""  ->= []
+)
 (*
-//
-// Test single dash
-//
-
-let doc = Docopt("""usage: prog [-]""")
-
-$ prog -
-{"-": true}
-
-$ prog
-{"-": false}
-
 //
 // If argument is repeated, its value should always be a list
 //

@@ -68,6 +68,8 @@ type UsageParser(usageStrings':string array, opts':Options) =
          >>= updateUserState filterArg
     let pano = skipString "[options]"
                >>= updateUserState (fun _ _ -> Ano(opts'))
+    let psdh = skipString "[-]"
+               >>= updateUserState (fun _ _ -> Sdh.Instance)
     let psop = let filterSops (sops':string) (last':IAst) =
                  let sops = Options() in
                  let mutable i = -1 in
@@ -103,6 +105,7 @@ type UsageParser(usageStrings':string array, opts':Options) =
     let pcmd = many1Satisfy (fun c' -> isLetter(c') || isDigit(c') || c' = '-')
                >>= updateUserState (fun cmd' _ -> Cmd(cmd'))
     let term = choice [|pano;
+                        psdh;
                         plop;
                         psop;
                         psqb;

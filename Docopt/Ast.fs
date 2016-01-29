@@ -19,6 +19,7 @@ type Tag =
   | Seq = 0b00001000
   | Cmd = 0b00001001
   | Ell = 0b00001010
+  | Sdh = 0b00001011
 
 [<AllowNullLiteral>]
 type IAst =
@@ -345,4 +346,27 @@ type Ell(ast':IAst) =
       member __.DeepCopy() = Ell(ast') :> IAst // No need to copy ast'
     end
     override __.ToString() = sprintf "Ell (%A)" ast'
+  end
+
+type Sdh private () =
+  class
+    let mutable matched = false
+    static member Instance = Sdh() :> IAst
+    interface IAst with
+      member __.Tag = Tag.Sdh
+      member __.MatchSopt(s', _) = s'
+      member __.MatchLopt(_, _) = false
+      member __.MatchArg(a') =
+        match a' with
+        | "-" -> matched <- true; true
+        | _   -> false
+      member __.TryFill(args') =
+        match matched with
+        | false -> true
+        | true  -> args'.AddString("-");
+                   matched <- false;
+                   true
+      member __.DeepCopy() = Sdh.Instance
+    end
+    override __.ToString() = "Sdh"
   end
