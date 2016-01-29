@@ -14,21 +14,28 @@ module internal DocHelper =
       | Options = 1
       | Nothing = 2
 
-    let (|Usage|Options|Nothing|Newline|) (line':string) =
-      if line'.StartsWith("usage:", StringComparison.OrdinalIgnoreCase)
-      then Usage(line'.Substring(6))
-      elif line'.StartsWith("options:", StringComparison.OrdinalIgnoreCase)
-      then Options(line'.Substring(8))
-      elif String.IsNullOrEmpty(line')
+    [<Literal>]
+    let OrdinalIgnoreCase = StringComparison.OrdinalIgnoreCase
+
+    let (|Usage|Options|Other|Newline|) (line':string) =
+      if String.IsNullOrEmpty(line')
       then Newline
-      else Nothing(line')
+      elif line'.[0] = ' ' || line'.[0] = '\t'
+      then Other(line')
+      else let idx = line'.IndexOf("usage:", OrdinalIgnoreCase) in
+           if idx <> -1
+           then Usage(line'.Substring(idx + 6))
+           else let idx = line'.IndexOf("options:", OrdinalIgnoreCase) in
+                if idx <> -1
+                then Options(line'.Substring(idx + 8))
+                else Other(line')
 
     let cut (doc':string) =
       let folder (usages', options', last') = function
       | Usage(ustr)   -> (ustr::usages', options', Last.Usage)
       | Options(ostr) -> (usages', ostr::options', Last.Options)
       | Newline       -> (usages', options', Last.Nothing)
-      | Nothing(line) -> match last' with
+      | Other(line)   -> match last' with
                          | Last.Usage   -> (line::usages', options', Last.Usage)
                          | Last.Options -> (usages', line::options', Last.Options)
                          | _            -> (usages', options', Last.Nothing)

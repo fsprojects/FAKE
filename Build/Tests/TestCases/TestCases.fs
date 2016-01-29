@@ -717,40 +717,46 @@ options: --loglevel=N
 """,
   "fail --loglevel 5" ->= [("--loglevel", Argument("5"));("fail", Flag)]
 )
+
 (*
-//
-// Usage-section syntax
-//
+ * Usage-section syntax
+ *)
 
-let doc = Docopt("""usage:prog --foo""")
-$ prog --foo
-{"--foo": true}
+Assert.Seq("", """
+usage:prog --foo""",
+  "--foo" ->= [("--foo", Flag)]
+)
 
-let doc = Docopt("""PROGRAM USAGE: prog --foo""")
-$ prog --foo
-{"--foo": true}
+Assert.Seq("", """
+PROGRAM USAGE: prog --foo""",
+  "--foo" ->= [("--foo", Flag)]
+)
 
-let doc = Docopt("""Usage: prog --foo
+Assert.Seq("", """
+Usage: prog --foo
            prog --bar
-NOT PART OF SECTION""")
-$ prog --foo
-{"--foo": true, "--bar": false}
+NOT PART OF SECTION""",
+  "--foo" ->= [("--foo", Flag)]
+)
 
-let doc = Docopt("""Usage:
+Assert.Seq("", """
+Usage:
  prog --foo
  prog --bar
 
-NOT PART OF SECTION""")
-$ prog --foo
-{"--foo": true, "--bar": false}
+NOT PART OF SECTION""",
+  "--foo" ->= [("--foo", Flag)]
+)
 
-let doc = Docopt("""Usage:
+Assert.Seq("", """
+Usage:
  prog --foo
  prog --bar
-NOT PART OF SECTION""")
-$ prog --foo
-{"--foo": true, "--bar": false}
+NOT PART OF SECTION""",
+  "--foo" ->= [("--foo", Flag)]
+)
 
+(*
 //
 // Options-section syntax
 //
