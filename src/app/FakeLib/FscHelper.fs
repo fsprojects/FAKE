@@ -204,15 +204,25 @@ type FscParam =
     | QuotationsDebug of on:bool
 
     override self.ToString () =
+        // commandline formatting helper functions 
+        /// format a standalone compiler arg: "--%s"
         let arg s = sprintf "--%s" s
+        /// format a compiler arg with a parameter: "--%s:%s"
         let argp s p = sprintf "--%s:%s" s p            
+        /// format a short form compiler arg with a parameter: "-%s:%s"
         let sargp s p = sprintf "-%s:%s" s p  // for short forms          
+        /// helper function to convert a bool to a "+" or "-"
         let inline chk b = if b then "+" else "-"
+        /// format a compiler arg that ends with "+" or "-": "--%s%s"
         let togl s b = sprintf "--%s%s" s (chk b)
-        let stogl s b = sprintf "-%s%s" s (chk b) // for short forms          
+        /// format a short form compiler arg that ends with "+" or "-": "-%s%s"
+        let stogl s b = sprintf "-%s%s" s (chk b) // for short forms       
+        /// format a list of compiler args with string parameters "--%s:\"%s\""   
         let argls s (ls:string list) = sprintf "--%s:\"%s\"" s (String.concat ";" ls)
+        /// format a complier arg that ends with "+" or "-" with string parameters  "--%s%s:\"%s\""
         let inline toglls s b (ls:'a list) = 
             sprintf "--%s%s:\"%s\"" s  (chk b) (String.concat ";" (List.map string ls))
+        /// format a list of short form complier args using the same symbol 
         let sargmap sym ls = ls |> List.map (sargp sym) |> String.concat ";" 
 
         match self with
@@ -276,17 +286,6 @@ type FscParam =
             References []
             Debug false        
         ]
-
-
-
-    /// The default parameters to the compiler service.
-//    static member Default = 
-//        { Output = ""
-//          FscTarget = Exe
-//          Platform = AnyCpu
-//          References = []
-//          Debug = false
-//          OtherParams = [] }
 
 /// Compiles the given source file with the given options. If no options
 /// given (i.e. the second argument is an empty list), by default tries
