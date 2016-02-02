@@ -16,7 +16,7 @@ Usually your FAKE setup will look as follows:
     open Fake.FluentMigratorHelper
 
     // Assemblies with migrations
-    let assemblies = ["Migrations.dll"]
+    let assemblies = "Migrations.dll"
     
     // Using SQL Server 2014 LocalDB
     let connection = 
@@ -27,11 +27,11 @@ Usually your FAKE setup will look as follows:
     // Specify additional options or just use the defaults
     let options = {DefaultMigrationOptions with Profile="Staging"; Tags = ["US"; "Canada"]}
 
-    Target "Build" (fun _ 
+    Target "Build" (fun _ ->
         // Build your Migrations.dll assembly using MSBuild or whatever
     )
 
-    Target "MigrateDatabase" (fun _ 
+    Target "MigrateDatabase" (fun _ ->
         MigrateToLatest connection [assembly] options
     )
 
