@@ -1,6 +1,6 @@
 Docopt.fs is a F\# port of [docopt]
 ===================================
-`let ``Docopt.fs`` = docopt |> ``F#`` in`
+```let ``Docopt.fs`` = docopt |> ``F#`` in```
 ***
 
 Isn't it awesome how [CommandLineParser] and [PowerArgs] generate help
