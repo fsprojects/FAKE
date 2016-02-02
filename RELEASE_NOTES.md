@@ -1,5 +1,6 @@
 #### 4.19.0 - 02.02.2016
 * New FSC task- https://github.com/fsharp/FAKE/pull/1122
+* Disable warning from #1082 for now because it created lots of confusion 
 
 #### 4.18.0 - 02.02.2016
 * New helpers which allow to send .NET coverage settings to TeamCity - https://github.com/fsharp/FAKE/pull/1117
