@@ -53,6 +53,29 @@ There is also a tutorial about the <a href="../fsc.html">F# compiler tasks</a> a
     <tbody>
         <tr>
           <td class="type-name">
+            <a href="fake-fschelper-access.html">Access</a>
+          </td>
+          <td class="xmldoc"><p>Used to set the Accessiblity of an embeded or linked resource</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-fschelper-debugtype.html">DebugType</a>
+          </td>
+          <td class="xmldoc"><p>Specify debugging type: full, pdbonly.
+('full' is the default and enables attaching a debugger to a running program).</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-fschelper-fscparam.html">FscParam</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
             <a href="fake-fschelper-fscparams.html">FscParams</a>
           </td>
           <td class="xmldoc"><p>'fsc.exe' command line parameters</p>
@@ -75,6 +98,50 @@ There is also a tutorial about the <a href="../fsc.html">F# compiler tasks</a> a
 
 </td>
         </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-fschelper-optimization.html">Optimization</a>
+          </td>
+          <td class="xmldoc"><p>Optimization options that can be disabled or enabled selectively by listing them
+with the optimize compiler flag</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-fschelper-platformtype.html">PlatformType</a>
+          </td>
+          <td class="xmldoc"><p>Limit which platforms the compiled code can run on:
+x86, Itanium, x64, anycpu32bitpreferred, or anycpu.
+The default is anycpu.</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-fschelper-profile.html">Profile</a>
+          </td>
+          <td class="xmldoc"><p>Specify target framework profile of this assembly.
+Valid values are mscorlib or netcore. Default - mscorlib</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-fschelper-resourceinfo.html">ResourceInfo</a>
+          </td>
+          <td class="xmldoc"><p>Specified path of a managed resource with an optional name alias and accessiblity flag
+resinfo format is <file>[,<stringname>[,public|private]]
+e.g. <code>resource.dat,rezName,public</code></p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-fschelper-targettype.html">TargetType</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
     </tbody>
   </table>
 
@@ -90,14 +157,126 @@ There is also a tutorial about the <a href="../fsc.html">F# compiler tasks</a> a
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '387', 387)" onmouseover="showTip(event, '387', 387)">
-            fsc setParams inputFiles
+            compile fscParams inputFiles
           </code>
           <div class="tip" id="387">
+            <strong>Signature:</strong> fscParams:FscParam list -&gt; inputFiles:string list -&gt; int<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FscHelper.fs#L495-495" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Compiles the given F# source files with the specified parameters.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setParams</code> - Function used to overwrite the default Fsc parameters.</li>
+<li><code>inputFiles</code> - The F# input files.</li>
+</ul>
+<h2>Returns</h2>
+<p>The exit status code of the compile process.</p>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">[<span class="s">&quot;file1.fs&quot;</span>; <span class="s">&quot;file2.fs&quot;</span>]
+<span class="o">|&gt;</span> <span class="i">compile</span> [<span class="i">Out</span> <span class="s">&quot;&quot;</span> 
+            <span class="i">Target</span> <span class="i">Exe</span>
+            <span class="i">Platform</span> <span class="i">AnyCpu</span>
+            <span class="i">References</span> []
+            <span class="i">Debug</span> <span class="k">false</span> 
+        ]
+</code></pre></td>
+</tr>
+</table>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '388', 388)" onmouseover="showTip(event, '388', 388)">
+            Compile fscParams inputFiles
+          </code>
+          <div class="tip" id="388">
+            <strong>Signature:</strong> fscParams:FscParam list -&gt; inputFiles:string list -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FscHelper.fs#L520-520" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Compiles one or more F# source files with the specified parameters.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setParams</code> - Function used to overwrite the default Fsc parameters.</li>
+<li><code>inputFiles</code> - The F# input files.</li>
+</ul>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">[<span class="s">&quot;file1.fs&quot;</span>; <span class="s">&quot;file2.fs&quot;</span>]
+<span class="o">|&gt;</span> <span class="i">Compile</span> [<span class="i">Out</span> <span class="s">&quot;&quot;</span> 
+            <span class="i">Target</span> <span class="i">Exe</span>
+            <span class="i">Platform</span> <span class="i">AnyCpu</span>
+            <span class="i">References</span> []
+            <span class="i">Debug</span> <span class="k">false</span> 
+        ]
+</code></pre></td>
+</tr>
+</table>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '389', 389)" onmouseover="showTip(event, '389', 389)">
+            compileFiles srcFiles opts
+          </code>
+          <div class="tip" id="389">
+            <strong>Signature:</strong> srcFiles:string list -&gt; opts:string list -&gt; int<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FscHelper.fs#L448-448" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Compiles the given source file with the given options. If no options
+given (i.e. the second argument is an empty list), by default tries
+to behave the same way as would the command-line 'fsc.exe' tool.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '390', 390)" onmouseover="showTip(event, '390', 390)">
+            fsc setParams inputFiles
+          </code>
+          <div class="tip" id="390">
             <strong>Signature:</strong> setParams:(FscParams -&gt; FscParams) -&gt; inputFiles:string list -&gt; int<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FscHelper.fs#L94-94" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FscHelper.fs#L104-104" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -131,15 +310,15 @@ There is also a tutorial about the <a href="../fsc.html">F# compiler tasks</a> a
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '388', 388)" onmouseover="showTip(event, '388', 388)">
+          <code onmouseout="hideTip(event, '391', 391)" onmouseover="showTip(event, '391', 391)">
             Fsc setParams inputFiles
           </code>
-          <div class="tip" id="388">
+          <div class="tip" id="391">
             <strong>Signature:</strong> setParams:(FscParams -&gt; FscParams) -&gt; inputFiles:string list -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FscHelper.fs#L144-144" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FscHelper.fs#L155-155" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -171,15 +350,15 @@ There is also a tutorial about the <a href="../fsc.html">F# compiler tasks</a> a
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '389', 389)" onmouseover="showTip(event, '389', 389)">
+          <code onmouseout="hideTip(event, '392', 392)" onmouseover="showTip(event, '392', 392)">
             fscList srcFiles opts
           </code>
-          <div class="tip" id="389">
+          <div class="tip" id="392">
             <strong>Signature:</strong> srcFiles:string list -&gt; opts:string list -&gt; int<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FscHelper.fs#L49-49" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FscHelper.fs#L58-58" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -188,6 +367,24 @@ given (i.e. the second argument is an empty list), by default tries
 to behave the same way as would the command-line 'fsc.exe' tool.</p>
 
 
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '393', 393)" onmouseover="showTip(event, '393', 393)">
+            resourceStr (arg1, arg2, arg3)
+          </code>
+          <div class="tip" id="393">
+            <strong>Signature:</strong> (string * string option * Access option) -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/FscHelper.fs#L232-232" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
         </td>
       </tr>
     </tbody>
