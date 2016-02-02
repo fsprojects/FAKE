@@ -1,3 +1,6 @@
+#### 4.19.0 - 02.02.2016
+* New FSC task- https://github.com/fsharp/FAKE/pull/1122
+
 #### 4.18.0 - 02.02.2016
 * New helpers which allow to send .NET coverage settings to TeamCity - https://github.com/fsharp/FAKE/pull/1117
 * Disabled NodeReuse on TeamCity, it can lead to consecutive builds failing - https://github.com/fsharp/FAKE/pull/1110
