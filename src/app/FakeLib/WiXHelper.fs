@@ -350,7 +350,7 @@ type WiXDir =
         Files : WiXFile seq
         Components : WiXComponent seq
     }
-    override d.ToString() = sprintf "<Direcotry Id=\"%s\" Name=\"%s\>%s%s</Directory>"
+    override d.ToString() = sprintf "<Directory Id=\"%s\" Name=\"%s\">%s%s</Directory>"
                                 d.Id d.Name (Seq.fold(fun acc elem -> acc + elem.ToString()) "" d.Files) (Seq.fold(fun acc elem -> acc + elem.ToString()) "" d.Components)
 
 /// Defaults for directories
