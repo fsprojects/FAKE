@@ -16,7 +16,7 @@ Usually your FAKE setup will look as follows:
     open Fake.FluentMigratorHelper
 
     // Assemblies with migrations
-    let assemblies = "Migrations.dll"
+    let assembly = "Migrations.dll"
     
     // Using SQL Server 2014 LocalDB
     let connection = 
