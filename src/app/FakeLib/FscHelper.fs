@@ -486,12 +486,12 @@ let compileFiles (srcFiles : string list) (opts : string list) : int =
 /// ## Sample
 ///
 ///     ["file1.fs"; "file2.fs"]
-///     |> fsc [Out "" 
-///             Target Exe
-///             Platform AnyCpu
-///             References []
-///             Debug false 
-///        ]
+///     |> compile [Out "" 
+///                 Target Exe
+///                 Platform AnyCpu
+///                 References []
+///                 Debug false 
+///             ]
 let compile (fscParams : FscParam list) (inputFiles : string list) : int = 
     let inputFiles = inputFiles |> Seq.toList
     let taskDesc = inputFiles |> separated ", "
@@ -511,12 +511,12 @@ let compile (fscParams : FscParam list) (inputFiles : string list) : int =
 /// ## Sample
 ///
 ///     ["file1.fs"; "file2.fs"]
-///     |> Fsc [Out "" 
-///             Target Exe
-///             Platform AnyCpu
-///             References []
-///             Debug false 
-///        ]
+///     |> Compile [Out "" 
+///                 Target Exe
+///                 Platform AnyCpu
+///                 References []
+///                 Debug false 
+///             ]
 let Compile (fscParams : FscParam list) (inputFiles : string list) : unit = 
     let res = compile fscParams inputFiles
     if res <> 0 then raise <| BuildException("Fsc: compile failed with exit code", [ string res ])
