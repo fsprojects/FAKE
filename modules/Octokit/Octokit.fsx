@@ -1,5 +1,6 @@
 #I __SOURCE_DIRECTORY__
 #I @"../../../../../packages/Octokit/lib/net45"
+#I @"../../packages/Octokit/lib/net45"
 #I @"../../../../../../packages/build/Octokit/lib/net45"
 #r "System.Net.Http"
 #r "Octokit.dll"
@@ -98,7 +99,7 @@ let private makeRelease draft owner project version prerelease (notes:seq<string
         data.Body <- String.Join(Environment.NewLine, notes)
         data.Draft <- draft
         data.Prerelease <- prerelease
-        let! draft = Async.AwaitTask <| client'.Release.Create(owner, project, data)
+        let! draft = Async.AwaitTask <| client'.Repository.Release.Create(owner, project, data)
         let draftWord = if data.Draft then " draft" else ""
         printfn "Created%s release id %d" draftWord draft.Id
         return {
@@ -116,7 +117,7 @@ let uploadFile fileName (draft : Async<Draft>) =
         let fi = FileInfo(fileName)
         let archiveContents = File.OpenRead(fi.FullName)
         let assetUpload = new ReleaseAssetUpload(fi.Name,"application/octet-stream",archiveContents,Nullable<TimeSpan>())
-        let! asset = Async.AwaitTask <| draft'.Client.Release.UploadAsset(draft'.DraftRelease, assetUpload)
+        let! asset = Async.AwaitTask <| draft'.Client.Repository.Release.UploadAsset(draft'.DraftRelease, assetUpload)
         printfn "Uploaded %s" asset.Name
         return draft'
     }
@@ -132,6 +133,6 @@ let releaseDraft (draft : Async<Draft>) =
     retryWithArg 5 draft <| fun draft' -> async {
         let update = draft'.DraftRelease.ToUpdate()
         update.Draft <- Nullable<bool>(false)
-        let! released = Async.AwaitTask <| draft'.Client.Release.Edit(draft'.Owner, draft'.Project, draft'.DraftRelease.Id, update)
+        let! released = Async.AwaitTask <| draft'.Client.Repository.Release.Edit(draft'.Owner, draft'.Project, draft'.DraftRelease.Id, update)
         printfn "Released %d on github" released.Id
     }

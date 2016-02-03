@@ -37,6 +37,7 @@ nuget Microsoft.AspNet.WebPages 2.0.30506
 nuget FluentMigrator.Runner
 nuget HashLib
 nuget FSharp.Compiler.Service
+nuget Octokit
 
 github matthid/Yaaf.FSharp.Scripting src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs
 
