@@ -1,6 +1,13 @@
-#### 4.17.1 - 26.01.2016
+#### 4.19.0 - 02.02.2016
+* New FSC task- https://github.com/fsharp/FAKE/pull/1122
+* Disable warning from #1082 for now because it created lots of confusion 
+
+#### 4.18.0 - 02.02.2016
+* New helpers which allow to send .NET coverage settings to TeamCity - https://github.com/fsharp/FAKE/pull/1117
 * Disabled NodeReuse on TeamCity, it can lead to consecutive builds failing - https://github.com/fsharp/FAKE/pull/1110
 * Added IncludeReferencedProjects property to the Packet.Pack params - https://github.com/fsharp/FAKE/pull/1112
+* BUGFIX: Ensure that traceEndTask is called in DotCover - https://github.com/fsharp/FAKE/pull/1118
+* BUGFIX: WiXHelper: fixed typos in WiXDir.ToString - https://github.com/fsharp/FAKE/pull/1120
 
 #### 4.17.0 - 23.01.2016
 * Renamed internal FSharp.Compiler.Service to avoid clashes - https://github.com/fsharp/FAKE/pull/1097

@@ -358,6 +358,7 @@ and WiXComponent =
                                 (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.Files) 
                                 (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.ServiceControls)
                                 (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.ServiceInstalls)
+/// WiX Directories define a logical directory which can include components and files
 and WiXDir = 
     {
         Id : string
@@ -410,7 +411,7 @@ let generateComponent (setParams : WiXComponent -> WiXComponent) =
         failwith "No parameter passed for component Id!"
     parameters
 
-/// WiX Directories define a logical directory which can include components and files
+
 
 
 /// Defaults for directories
