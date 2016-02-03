@@ -79,11 +79,13 @@ type InstallUninstall =
     | Install
     | Uninstall
     | Both
+    | Never
     override w.ToString() = 
         match w with
         | Install -> "install"
         | Uninstall -> "uninstall"
         | Both -> "both"
+        | Never -> null
 
 /// These are used in many methods for generating WiX nodes, regard them as booleans
 type YesOrNo = 
@@ -100,7 +102,7 @@ type WiXServiceControl =
         Id : string
         Name: string
         Remove : InstallUninstall
-        Start : InstallUninstall option
+        Start : InstallUninstall
         Stop : InstallUninstall
         Wait : YesOrNo
     }
@@ -109,9 +111,15 @@ type WiXServiceControl =
             {
                 yield ("Id", w.Id)
                 yield ("Name", w.Name)
-                yield ("Remove", w.Remove.ToString())
-                if w.Start.IsSome then yield ("Start", w.Start.Value.ToString())
-                yield ("Stop", w.Stop.ToString())
+                match w.Remove with
+                | Never -> ()
+                | _ -> yield ("Remove", w.Remove.ToString())
+                match w.Start with
+                | Never -> ()
+                | _ -> yield ("Start", w.Start.ToString())
+                match w.Stop with
+                | Never -> ()
+                | _ -> yield ("Stop", w.Stop.ToString())
                 yield ("Wait", w.Wait.ToString())
             }
     override w.ToString() = 
@@ -124,7 +132,7 @@ let WiXServiceControlDefaults =
         Id = "ServiceControl"
         Name = "Service"
         Remove = Both
-        Start = Some(Both)
+        Start = Install
         Stop = Both
         Wait = Yes
     }
