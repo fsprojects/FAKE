@@ -16,7 +16,7 @@ NUGET
     FsCheck.Xunit (2.0.7)
       FsCheck (>= 2.0.7)
       xunit (>= 1.9.2)
-    FSharp.Compiler.Service (2.0.0.2)
+    FSharp.Compiler.Service (2.0.0.3)
     FSharp.Core (4.0.0.1) - redirects: force
     HashLib (2.0.1)
     jQuery (2.2.0)
@@ -66,7 +66,7 @@ NUGET
     NLog (4.2.3)
     NuGet.Core (2.10.1)
       Microsoft.Web.Xdt (>= 2.1.0)
-    RavenDB.Client (2.5.2996)
+    RavenDB.Client (2.5.25001)
       Microsoft.CompilerServices.AsyncTargetingPack
     RavenDB.Server (3.0.30037)
     Serilog (1.5.14)
@@ -90,12 +90,12 @@ CONTENT: NONE
 NUGET
   remote: http://www.nuget.org/api/v2
   specs:
-    FAKE (4.17.0-alpha007)
+    FAKE (4.19.0)
     FSharp.Compiler.Service (1.4.2.3)
-    FSharp.Formatting (2.13.4)
+    FSharp.Formatting (2.13.5)
       FSharp.Compiler.Service (>= 1.4.2 < 1.5.0)
       FSharpVSPowerTools.Core (>= 2.2.0 < 2.3.0)
-    FSharp.Formatting.CommandTool (2.13.4)
+    FSharp.Formatting.CommandTool (2.13.5)
     FSharpVSPowerTools.Core (2.2.0)
       FSharp.Compiler.Service (>= 1.4.2.0)
     ILRepack (2.0.10)
