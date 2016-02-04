@@ -173,6 +173,7 @@
     <Compile Include="XCopyHelper.fs" />
     <Compile Include="DynamicsCRMHelper.fs" />
     <Compile Include="Appcast.fs" />
+    <Compile Include="PicklesHelper.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
