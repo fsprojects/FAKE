@@ -481,6 +481,10 @@ let private runScriptUncached (useCache, scriptPath, fsiOptions) printDetails ca
 let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(fsiOptions, scriptPath, scriptArgs)) env onErrMsg onOutMsg useCache =
     if printDetails then traceFAKE "Running Buildscript: %s" scriptPath
 
+    if printDetails then
+      System.AppDomain.CurrentDomain.add_AssemblyResolve(
+        new System.ResolveEventHandler(fun _ e -> trace <| sprintf "FAKE: Trying to resolve %s" e.Name; null))
+
     // Add arguments to the Environment
     for (k,v) in env do
       Environment.SetEnvironmentVariable(k, v, EnvironmentVariableTarget.Process)
