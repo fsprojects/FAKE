@@ -46,10 +46,10 @@ try
 
         let args = Cli.parsePositionalArgs cmdArgs
 
-        match Cli.parsedArgsOrEx args.Rest with
+        match Cli.tryParseArguArgs args.Rest with
 
         //We have new style help args!
-        | Choice1Of2(fakeArgs) ->
+        | Cli.ArguParseResult.OK(fakeArgs) ->
 
             //Break to allow a debugger to be attached here
             if fakeArgs.Contains <@ Cli.Break @> then
@@ -121,13 +121,13 @@ try
 
                 ()
 
-        //None of the new style args parsed, so revert to the old skool.
-        | Choice2Of2(ex) ->
+        // Failed to parse args AND Argu switches detected, so error.
+        | Cli.ArguParseResult.FailWithArguSwitches(ex) ->
+            traceError "Failed to parse command line args.  IMPORTANT:  FAKE supports an 'old' and 'new' CLI.  A new style switch has been detected in your arguments, but the new style parse is failing.  Please see the error and usage help below. "
+            traceException ex
 
-            // #1082 print a warning as we've been invoked with invalid OR old-style args.
-            // traceImportant "Error parsing command line arguments.  You have a mistake in your args, or are using the pre-2.1.8 argument style:"
-            // exceptionAndInnersToString ex |> traceImportant
-            // trace "Attempting to run with pre-version 2.18 argument style, for backwards compat."
+        // Failed to parse args but NO Argu switches detected, so try old format.
+        | Cli.ArguParseResult.FailWithoutArguSwitches(ex) ->
 
             if (cmdArgs.Length = 2 && paramIsHelp cmdArgs.[1]) || (cmdArgs.Length = 1 && List.length buildScripts = 0) then printUsage () else
             match Boot.ParseCommandLine(cmdArgs) with

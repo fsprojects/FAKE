@@ -30,13 +30,39 @@ type FakeArg =
             | Single_Target -> "Runs only the specified target and not the dependencies."
             | NoCache -> "Disables caching of compiled script"
 
-/// Return the parsed FAKE args or the parse exception.
-let parsedArgsOrEx args =
-    try
-        let args = args |> Seq.skip 1 |> Array.ofSeq
-        let parser = ArgumentParser.Create<FakeArg>()
-        Choice1Of2(parser.Parse(args))
-    with | ex -> Choice2Of2(ex)
+open Microsoft.FSharp.Reflection
+
+/// List of all the argu switches and alt switches.
+let arguSwitches = 
+    lazy(let switchUnionCases = FSharpType.GetUnionCases(typeof<FakeArg>)
+         let arguSwitchesFromUnionCase (unionCase : UnionCaseInfo) =
+            [ yield "--" + unionCase.Name.Replace("_", "-")
+              yield! unionCase.GetCustomAttributes(typeof<AltCommandLineAttribute>)
+                    |> Seq.cast<AltCommandLineAttribute>
+                    |> Seq.map (fun altAttr -> altAttr.Names)
+                    |> Seq.concat
+            ]
+         switchUnionCases |> Seq.map arguSwitchesFromUnionCase |> Seq.concat)
+
+/// Checks to see if arg starts with any of the argu or alt argu switches.
+let isArguSwitch (arg : string) = 
+    arguSwitches.Value |> Seq.exists (fun arguSwitch -> arg.StartsWith(arguSwitch, StringComparison.InvariantCultureIgnoreCase))
+
+/// Represents a parse result, with fallback context.
+type ArguParseResult =
+    | OK of ParseResults<FakeArg>
+    | FailWithArguSwitches of Exception
+    | FailWithoutArguSwitches of Exception
+
+/// Return the parsed Argu FAKE args or the parse exception with context.
+let tryParseArguArgs args = 
+    let args = args |> Seq.skip 1 |> Array.ofSeq
+    let parser = ArgumentParser.Create<FakeArg>()
+    try OK(parser.Parse(args))
+    with
+    | ex ->
+        if args |> Seq.map isArguSwitch |> Seq.exists id then FailWithArguSwitches ex
+        else FailWithoutArguSwitches ex
 
 /// Prints the FAKE argument usage.
 let printUsage () =
