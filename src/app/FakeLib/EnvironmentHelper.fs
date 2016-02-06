@@ -34,6 +34,12 @@ let environVars target =
 /// Sets the environment variable with the given name
 let setEnvironVar name value = Environment.SetEnvironmentVariable(name, value)
 
+/// Sets the environment variable with the given name for the current user.
+let setUserEnvironVar name value = Environment.SetEnvironmentVariable(name, value, EnvironmentVariableTarget.User)
+
+/// Sets the environment variable with the given name for the current machine.
+let setMachineEnvironVar name value = Environment.SetEnvironmentVariable(name, value, EnvironmentVariableTarget.Machine)
+
 /// Sets the environment variable with the given name for the current process.
 let setProcessEnvironVar name value = Environment.SetEnvironmentVariable(name, value, EnvironmentVariableTarget.Process)
 
