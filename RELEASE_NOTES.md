@@ -1,5 +1,8 @@
+#### 4.20.0 - 06.02.2016
+* Allows to create full Wix directory hierarchy - https://github.com/fsharp/FAKE/pull/1116
+
 #### 4.19.0 - 02.02.2016
-* New FSC task- https://github.com/fsharp/FAKE/pull/1122
+* New FSC task - https://github.com/fsharp/FAKE/pull/1122
 * Disable warning from #1082 for now because it created lots of confusion 
 
 #### 4.18.0 - 02.02.2016
