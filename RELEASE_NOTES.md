@@ -1,5 +1,6 @@
 #### 4.20.0 - 06.02.2016
 * Allows to create full Wix directory hierarchy - https://github.com/fsharp/FAKE/pull/1116
+* New PicklesHelper for generating living documentation with Pickles - https://github.com/fsharp/FAKE/pull/1126
 
 #### 4.19.0 - 02.02.2016
 * New FSC task - https://github.com/fsharp/FAKE/pull/1122

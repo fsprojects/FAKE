@@ -1,4 +1,3 @@
-[<AutoOpen>]
 /// Contains tasks to run the [Pickles](http://http://www.picklesdoc.com/) living documentation generator
 module Fake.PicklesHelper
 
