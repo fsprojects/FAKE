@@ -66,7 +66,8 @@ let archiveFileSpec (file : FileInfo) =
 let archiveFileSpecWithBaseDir (baseDir : DirectoryInfo) (file : FileInfo) =
     if not baseDir.Exists then failwithf "Directory not found: %s" baseDir.FullName
     if not <| isInFolder baseDir file then failwithf "File not in base directory: (BaseDir: %s, File: %s)" baseDir.FullName file.FullName
-    { InputFile = file; ArchiveEntryPath = replace (baseDir.FullName + directorySeparator) "" file.FullName }
+    let entryPath = replace (baseDir.FullName + directorySeparator) "" file.FullName
+    { InputFile = file; ArchiveEntryPath = replace directorySeparator "/" entryPath }
 
 let private doCompression compressor archivePath fileSpecGenerator =
     Seq.map fileSpecGenerator
