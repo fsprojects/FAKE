@@ -65,24 +65,10 @@ In this tutorial we will look at these compile tasks.</p>
 <span class="l">19: </span>
 <span class="l">20: </span>
 <span class="l">21: </span>
-<span class="l">22: </span>
-<span class="l">23: </span>
-<span class="l">24: </span>
-<span class="l">25: </span>
-<span class="l">26: </span>
-<span class="l">27: </span>
-<span class="l">28: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="prep">#r</span> <span class="s">&quot;/path/to/FakeLib.dll&quot;</span>
 <span class="k">open</span> <span class="i">Fake</span>
 <span class="k">open</span> <span class="i">Fake</span><span class="o">.</span><span class="i">FscHelper</span>
-
-<span class="i">Target</span> <span class="s">&quot;Something.dll&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-  <span class="o">!!</span> <span class="s">&quot;src/**/*.fs&quot;</span>
-  <span class="o">|&gt;</span> <span class="i">Fsc</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
-           { <span class="i">p</span> <span class="k">with</span> <span class="i">Output</span> <span class="o">=</span> <span class="s">&quot;Something.dll&quot;</span>
-                    <span class="i">FscTarget</span> <span class="o">=</span> <span class="i">Library</span> })
-)
 
 <span class="i">Target</span> <span class="s">&quot;Otherthing.dll&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
   [<span class="s">&quot;Otherthing.fs&quot;</span>; <span class="s">&quot;Otherthing2.fs&quot;</span>]
