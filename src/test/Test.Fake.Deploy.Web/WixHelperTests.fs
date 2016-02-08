@@ -3,6 +3,7 @@
 open System
 open Fake
 open Xunit
+open System.Text.RegularExpressions
 
 [<Fact>]
 let ``should find correct file id`` () =
@@ -124,3 +125,46 @@ let ``should create valid major upgrade node`` () =
                                                         })
     let expectedMajorUpgrade = "<MajorUpgrade Schedule=\"afterInstallInitialize\" AllowDowngrades=\"no\" DowngradeErrorMessage=\"A later version is already installed, exiting.\" />"
     Assert.Equal<string>(expectedMajorUpgrade, actualMajorUpgrade.ToString())
+
+
+[<Fact>]
+let ``should create nested features`` () =
+    let nestedDir = generateComponentRef(fun f -> { f with Id="Nested"})
+    let rootDir = generateComponentRef(fun f -> { f with Id="Root"})
+
+    let innerFeature = generateFeatureElement(fun f -> { f with
+                                                            Id = "Inner"
+                                                            Components = [nestedDir]
+                                                       })
+
+    let nestedFeature = generateFeatureElement(fun f -> { f with
+                                                            Id = "Fst"
+                                                            NestedFeatures = [innerFeature]
+                                                         })
+
+    let sndFeature = generateFeatureElement(fun f -> { f with
+                                                            Id = "Snd"
+                                                     })
+
+    let feature = generateFeatureElement(fun f -> { f with
+                                                        Id = "Complete"
+                                                        Components = [rootDir]
+                                                        NestedFeatures = [nestedFeature; sndFeature]
+                                                  })
+
+    let featureString = feature.ToString()
+    let expectedFeatureString = 
+        "<Feature Id=\"Complete\" Title=\"Default Feature\" Level=\"1\" Description=\"Default Feature\" Display=\"expand\" ConfigurableDirectory=\"INSTALLDIR\">
+            <Feature Id=\"Fst\" Title=\"Default Feature\" Level=\"1\" Description=\"Default Feature\" Display=\"expand\" ConfigurableDirectory=\"INSTALLDIR\">
+                <Feature Id=\"Inner\" Title=\"Default Feature\" Level=\"1\" Description=\"Default Feature\" Display=\"expand\" ConfigurableDirectory=\"INSTALLDIR\">
+                    <ComponentRef Id=\"Nested\" />
+                </Feature>
+            </Feature>
+            <Feature Id=\"Snd\" Title=\"Default Feature\" Level=\"1\" Description=\"Default Feature\" Display=\"expand\" ConfigurableDirectory=\"INSTALLDIR\"></Feature>
+            <ComponentRef Id=\"Root\" />
+        </Feature>".Replace("\n", "").Replace("\r", "")
+
+    let cleanResult = Regex.Replace(featureString, @"\s+", "")
+    let cleanExpected = Regex.Replace(expectedFeatureString, @"\s+", "")
+
+    Assert.Equal<string>(cleanExpected, cleanResult)

@@ -16,7 +16,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET40</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>3</WarningLevel>
     <DocumentationFile>
@@ -30,12 +30,16 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\..\..\build\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;NET40</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>3</WarningLevel>
     <DocumentationFile>..\..\..\build\FakeLib.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\..\..\paket-files\matthid\Yaaf.FSharp.Scripting\src\source\Yaaf.FSharp.Scripting\YaafFSharpScripting.fs">
+      <Paket>True</Paket>
+      <Link>paket-files/YaafFSharpScripting.fs</Link>
+    </Compile>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="UserInputHelper.fs" />
     <Compile Include="CSharpHelper.fs" />
@@ -55,6 +59,7 @@
     <Compile Include="ServiceControllerHelper.fs" />
     <Compile Include="GuardedAwaitObservable.fs" />
     <Compile Include="ProcessHelper.fs" />
+    <Compile Include="NpmHelper.fs" />
     <Compile Include="AppVeyor.fs" />
     <Compile Include="TaskRunnerHelper.fs" />
     <Compile Include="Globbing\Globbing.fs" />
@@ -67,6 +72,7 @@
     <Compile Include="UnitTest\NUnit\Common.fs" />
     <Compile Include="UnitTest\NUnit\Sequential.fs" />
     <Compile Include="UnitTest\NUnit\Parallel.fs" />
+    <Compile Include="UnitTest\NUnit\NUnit3.fs" />
     <Compile Include="UnitTest\XUnit\XUnit.fs" />
     <Compile Include="UnitTest\XUnit\XUnitHelper.fs" />
     <Compile Include="UnitTest\XUnit\XUnit2.fs" />
@@ -98,7 +104,7 @@
     <Compile Include="DynamicsNavHelper.fs" />
     <Compile Include="DynamicsNavFile.fs" />
     <Compile Include="SCPHelper.fs" />
-    <Compile Include="XCopyHelper.fs" />
+    <Compile Include="RoboCopyHelper.fs" />
     <Compile Include="XpkgHelper.fs" />
     <Compile Include="VersionHelper.fs" />
     <Compile Include="MSBuild\ProjectSystem.fs" />
@@ -129,7 +135,7 @@
     <Compile Include="SpecFlowHelper.fs" />
     <Compile Include="OctoTools.fs" />
     <None Include="paket.references" />
-    <Compile Include="SignHelper.fs" />
+    <Compile Include="SignToolHelper.fs" />
     <Compile Include="MageHelper.fs" />
     <Compile Include="SemVerHelper.fs" />
     <Compile Include="ReleaseNotesHelper.fs" />
@@ -138,6 +144,7 @@
     <Compile Include="NuGet\NugetHelper.fs" />
     <Compile Include="NuGet\Update.fs" />
     <Compile Include="NuGet\Install.fs" />
+    <Compile Include="NuGet\NugetVersion.fs" />
     <Compile Include="TestFlightHelper.fs" />
     <Compile Include="DotCover.fs" />
     <Compile Include="PaketHelper.fs" />
@@ -163,6 +170,10 @@
     <None Include="app.config" />
     <Compile Include="RaygunHelper.fs" />
     <Compile Include="SquirrelHelper.fs" />
+    <Compile Include="XCopyHelper.fs" />
+    <Compile Include="DynamicsCRMHelper.fs" />
+    <Compile Include="Appcast.fs" />
+    <Compile Include="PicklesHelper.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
@@ -188,26 +199,28 @@
     <FSharpTargetsPath>$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\$(FSharpSdkVer)\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
   </PropertyGroup>
   <Import Project="$(FSharpTargetsPath)" />
+  <!-- Hand-crafted reference to the renamed version of FCS. You must run build.cmd/build.sh first! -->
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0')">
       <ItemGroup>
-        <Reference Include="FSharp.Compiler.Service">
-          <HintPath>..\..\..\packages\FSharp.Compiler.Service\lib\net40\FSharp.Compiler.Service.dll</HintPath>
+        <Reference Include="FAKE.FSharp.Compiler.Service">
+          <HintPath>..\..\..\packages\FSharp.Compiler.Service\lib\net40\FAKE.FSharp.Compiler.Service.dll</HintPath>
           <Private>True</Private>
-          <Paket>True</Paket>
+          <Paket>False</Paket>
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1')">
       <ItemGroup>
-        <Reference Include="FSharp.Compiler.Service">
-          <HintPath>..\..\..\packages\FSharp.Compiler.Service\lib\net45\FSharp.Compiler.Service.dll</HintPath>
+        <Reference Include="FAKE.FSharp.Compiler.Service">
+          <HintPath>..\..\..\packages\FSharp.Compiler.Service\lib\net45\FAKE.FSharp.Compiler.Service.dll</HintPath>
           <Private>True</Private>
-          <Paket>True</Paket>
+          <Paket>False</Paket>
         </Reference>
       </ItemGroup>
     </When>
   </Choose>
+  <!-- Ordinary dependencies managed by Paket as usual -->
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v2.0' Or $(TargetFrameworkVersion) == 'v3.0' Or $(TargetFrameworkVersion) == 'v3.5')">
       <ItemGroup>
@@ -218,7 +231,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1')">
       <ItemGroup>
         <Reference Include="FSharp.Core">
           <HintPath>..\..\..\packages\FSharp.Core\lib\net40\FSharp.Core.dll</HintPath>
@@ -274,7 +287,7 @@
     </When>
   </Choose>
   <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1')">
       <ItemGroup>
         <Reference Include="HashLib">
           <HintPath>..\..\..\packages\HashLib\lib\net40\HashLib.dll</HintPath>
@@ -285,7 +298,7 @@
     </When>
   </Choose>
   <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1')">
       <ItemGroup>
         <Reference Include="Microsoft.Web.XmlTransform">
           <HintPath>..\..\..\packages\Microsoft.Web.Xdt\lib\net40\Microsoft.Web.XmlTransform.dll</HintPath>
@@ -363,7 +376,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1')">
       <ItemGroup>
         <Reference Include="Mono.Cecil.Mdb">
           <HintPath>..\..\..\packages\Mono.Cecil\lib\net45\Mono.Cecil.Mdb.dll</HintPath>
@@ -403,7 +416,7 @@
     </When>
   </Choose>
   <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1')">
       <ItemGroup>
         <Reference Include="Microsoft.Web.XmlTransform">
           <HintPath>..\..\..\packages\Mono.Web.Xdt\lib\Net40\Microsoft.Web.XmlTransform.dll</HintPath>
@@ -441,7 +454,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1')">
       <ItemGroup>
         <Reference Include="Newtonsoft.Json">
           <HintPath>..\..\..\packages\Newtonsoft.Json\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -470,7 +483,7 @@
     </When>
   </Choose>
   <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1')">
       <ItemGroup>
         <Reference Include="NuGet.Core">
           <HintPath>..\..\..\packages\NuGet.Core\lib\net40-Client\NuGet.Core.dll</HintPath>

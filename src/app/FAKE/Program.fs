@@ -1,7 +1,7 @@
 open System
 open Fake
 open System.IO
-open Nessos.Argu
+open Argu
 
 let printVersion() =
     traceFAKE "FakePath: %s" fakePath
@@ -12,10 +12,6 @@ let printUsage () =
     printfn " FAKE usage"
     printfn "-------------------"
     Cli.printUsage ()
-    printfn "--------------------"
-    printfn " Classic FAKE usage"
-    printfn "--------------------"
-    CommandlineParams.printAllParams()
 
 let printEnvironment cmdArgs args =
     printVersion()
@@ -55,7 +51,9 @@ try
         | Choice1Of2(fakeArgs) ->
             
             //Break to allow a debugger to be attached here
-            if fakeArgs.Contains <@ Cli.Break @> then Diagnostics.Debugger.Break()
+            if fakeArgs.Contains <@ Cli.Break @> then
+                Diagnostics.Debugger.Launch() |> ignore
+                Diagnostics.Debugger.Break() |> ignore
 
             //Boot and version force us to ignore other args, so check for them and handle.
             let isBoot, bootArgs = fakeArgs.Contains <@ Cli.Boot @>, fakeArgs.GetResults <@ Cli.Boot @>
@@ -117,13 +115,19 @@ try
                 //TODO if printDetails then printEnvironment cmdArgs args
 
                 let useCache = not (fakeArgs.Contains <@ Cli.NoCache @>)
-                if not (runBuildScriptWithFsiArgsAt printDetails fsiArgs envVars useCache true) then Environment.ExitCode <- 1
+                if not (runBuildScriptWithFsiArgsAt printDetails fsiArgs envVars useCache) then Environment.ExitCode <- 1
                 else if printDetails then log "Ready."
 
                 ()
 
         //None of the new style args parsed, so revert to the old skool.
         | Choice2Of2(ex) ->
+
+            // #1082 print a warning as we've been invoked with invalid OR old-style args.
+            // traceImportant "Error parsing command line arguments.  You have a mistake in your args, or are using the pre-2.1.8 argument style:"
+            // exceptionAndInnersToString ex |> traceImportant
+            // trace "Attempting to run with pre-version 2.18 argument style, for backwards compat."
+
             if (cmdArgs.Length = 2 && paramIsHelp cmdArgs.[1]) || (cmdArgs.Length = 1 && List.length buildScripts = 0) then printUsage () else
             match Boot.ParseCommandLine(cmdArgs) with
             | None ->
@@ -136,7 +140,7 @@ try
                 let printDetails = containsParam "details" cmdArgs
                 if printDetails then
                     printEnvironment cmdArgs args
-                if not (runBuildScript printDetails buildScriptArg fsiArgs args true true) then Environment.ExitCode <- 1
+                if not (runBuildScript printDetails buildScriptArg fsiArgs args true) then Environment.ExitCode <- 1
                 else if printDetails then log "Ready."
             | Some handler ->
                 handler.Interact()
@@ -162,3 +166,5 @@ try
 
 finally
     traceEndBuild()
+    if !TargetHelper.ExitCode.exitCode <> 0 then exit !TargetHelper.ExitCode.exitCode
+    if Environment.ExitCode <> 0 then exit Environment.ExitCode

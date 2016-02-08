@@ -1,10 +1,16 @@
 #I __SOURCE_DIRECTORY__
 #I @"../../../../../packages/Octokit/lib/net45"
+#I @"../../packages/Octokit/lib/net45"
 #I @"../../../../../../packages/build/Octokit/lib/net45"
+#r "System.Net.Http"
 #r "Octokit.dll"
 
 open Octokit
+open Octokit.Internal
 open System
+open System.Threading
+open System.Net.Http
+open System.Reflection
 open System.IO
 
 type Draft =
@@ -12,6 +18,25 @@ type Draft =
       Owner : string
       Project : string
       DraftRelease : Release }
+
+// wrapper re-implementation of HttpClientAdapter which works around
+// known Octokit bug in which user-supplied timeouts are not passed to HttpClient object
+// https://github.com/octokit/octokit.net/issues/963
+type private HttpClientWithTimeout(timeout : TimeSpan) as this =
+    inherit HttpClientAdapter(fun () -> HttpMessageHandlerFactory.CreateDefault())
+    let setter = lazy(
+        match typeof<HttpClientAdapter>.GetField("_http", BindingFlags.NonPublic ||| BindingFlags.Instance) with
+        | null -> ()
+        | f -> 
+            match f.GetValue(this) with
+            | :? HttpClient as http -> http.Timeout <- timeout
+            | _ -> ())
+
+    interface IHttpClient with
+        member __.Send(request : IRequest, ct : CancellationToken) =
+            setter.Force()
+            match request with :? Request as r -> r.Timeout <- timeout | _ -> ()
+            base.Send(request, ct)
 
 let private isRunningOnMono = System.Type.GetType ("Mono.Runtime") <> null
 
@@ -51,14 +76,18 @@ let private retryWithArg count input asycnF =
 
 let createClient user password =
     async {
-        let github = new GitHubClient(new ProductHeaderValue("FAKE"))
+        let httpClient = new HttpClientWithTimeout(TimeSpan.FromMinutes 20.)
+        let connection = new Connection(new ProductHeaderValue("FAKE"), httpClient)
+        let github = new GitHubClient(connection)
         github.Credentials <- Credentials(user, password)
         return github
     }
 
 let createClientWithToken token =
     async {
-        let github = new GitHubClient(new ProductHeaderValue("FAKE"))
+        let httpClient = new HttpClientWithTimeout(TimeSpan.FromMinutes 20.)
+        let connection = new Connection(new ProductHeaderValue("FAKE"), httpClient)
+        let github = new GitHubClient(connection)
         github.Credentials <- Credentials(token)
         return github
     }
@@ -70,7 +99,7 @@ let private makeRelease draft owner project version prerelease (notes:seq<string
         data.Body <- String.Join(Environment.NewLine, notes)
         data.Draft <- draft
         data.Prerelease <- prerelease
-        let! draft = Async.AwaitTask <| client'.Release.Create(owner, project, data)
+        let! draft = Async.AwaitTask <| client'.Repository.Release.Create(owner, project, data)
         let draftWord = if data.Draft then " draft" else ""
         printfn "Created%s release id %d" draftWord draft.Id
         return {
@@ -88,15 +117,22 @@ let uploadFile fileName (draft : Async<Draft>) =
         let fi = FileInfo(fileName)
         let archiveContents = File.OpenRead(fi.FullName)
         let assetUpload = new ReleaseAssetUpload(fi.Name,"application/octet-stream",archiveContents,Nullable<TimeSpan>())
-        let! asset = Async.AwaitTask <| draft'.Client.Release.UploadAsset(draft'.DraftRelease, assetUpload)
+        let! asset = Async.AwaitTask <| draft'.Client.Repository.Release.UploadAsset(draft'.DraftRelease, assetUpload)
         printfn "Uploaded %s" asset.Name
         return draft'
     }
+
+let uploadFiles fileNames (draft : Async<Draft>) = async {
+    let! draft' = draft
+    let draftW = async { return draft' }
+    let! _ = Async.Parallel [for f in fileNames -> uploadFile f draftW ]
+    return draft'
+}
 
 let releaseDraft (draft : Async<Draft>) =
     retryWithArg 5 draft <| fun draft' -> async {
         let update = draft'.DraftRelease.ToUpdate()
         update.Draft <- Nullable<bool>(false)
-        let! released = Async.AwaitTask <| draft'.Client.Release.Edit(draft'.Owner, draft'.Project, draft'.DraftRelease.Id, update)
+        let! released = Async.AwaitTask <| draft'.Client.Repository.Release.Edit(draft'.Owner, draft'.Project, draft'.DraftRelease.Id, update)
         printfn "Released %d on github" released.Id
     }

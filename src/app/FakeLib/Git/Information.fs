@@ -4,8 +4,11 @@ module Fake.Git.Information
 
 open Fake
 open System
+open System.Text.RegularExpressions
 open System.IO
    
+let versionRegex = Regex("^git version ([\d.]*).*$", RegexOptions.Compiled)
+
 /// Gets the git version
 let getVersion repositoryDir = 
     let ok,msg,errors = runGitCommand repositoryDir "--version"
@@ -14,11 +17,18 @@ let getVersion repositoryDir =
 let isVersionHigherOrEqual currentVersion referenceVersion = 
   
     parseVersion currentVersion >= parseVersion referenceVersion
-                
+
+/// [omit]       
+let extractGitVersion version =
+    let regexRes = versionRegex.Match version 
+    if regexRes.Success then
+        regexRes.Groups.[1].Value
+    else
+        failwith "unable to find git version"
+         
 let isGitVersionHigherOrEqual referenceVersion = 
 
-    let currentVersion = getVersion "."
-    let versionParts = currentVersion.Replace("git version ","") 
+    let versionParts = getVersion "." |> extractGitVersion
 
     isVersionHigherOrEqual versionParts referenceVersion
 

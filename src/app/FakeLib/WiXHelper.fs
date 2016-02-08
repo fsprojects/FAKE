@@ -1,11 +1,15 @@
 [<AutoOpen>]
 /// Contains tasks to create msi installers using the [WiX toolset](http://wixtoolset.org/)
+
 module Fake.WiXHelper
 
 open System
 open System.IO
 open System.Collections.Generic
 open System.Text.RegularExpressions;
+open System.Security.Cryptography
+open System.Text
+
 
 let mutable internal fileCount = 0
 let mutable internal dirs = Dictionary()
@@ -52,6 +56,504 @@ let getFilesAsWiXString files =
     |> Seq.map (fileInfo >> wixFile)
     |> toLines
 
+/// WiX File Element
+type WiXFile =
+    {
+        Id : string
+        Name : string
+        Source : string
+    }
+    override w.ToString() = sprintf "<File Id=\"%s\" Name=\"%s\" Source=\"%s\" />"
+                                w.Id w.Name w.Source
+
+/// Defaults for WiX file
+let WiXFileDefaults = 
+    {
+        Id = "fi"
+        Name = ""
+        Source = ""
+    }
+
+/// Specifies whether an action occur on install, uninstall or both.
+type InstallUninstall = 
+    | Install
+    | Uninstall
+    | Both
+    | Never
+    override w.ToString() = 
+        match w with
+        | Install -> "install"
+        | Uninstall -> "uninstall"
+        | Both -> "both"
+        | Never -> null
+
+/// These are used in many methods for generating WiX nodes, regard them as booleans
+type YesOrNo = 
+    | Yes
+    | No
+    override y.ToString() =
+        match y with
+        | Yes -> "yes"
+        | No -> "no"
+
+/// Service Control Element. Can Start, Stop and Remove services
+type WiXServiceControl =
+    {
+        Id : string
+        Name: string
+        Remove : InstallUninstall
+        Start : InstallUninstall
+        Stop : InstallUninstall
+        Wait : YesOrNo
+    }
+    member w.createAttributeList () =
+        seq 
+            {
+                yield ("Id", w.Id)
+                yield ("Name", w.Name)
+                match w.Remove with
+                | Never -> ()
+                | _ -> yield ("Remove", w.Remove.ToString())
+                match w.Start with
+                | Never -> ()
+                | _ -> yield ("Start", w.Start.ToString())
+                match w.Stop with
+                | Never -> ()
+                | _ -> yield ("Stop", w.Stop.ToString())
+                yield ("Wait", w.Wait.ToString())
+            }
+    override w.ToString() = 
+        sprintf "<ServiceControl%s/>" 
+            (Seq.fold(fun acc (key, value) -> acc + sprintf " %s=\"%s\"" key value) "" (w.createAttributeList()))             
+
+/// Defaults for service control element
+let WiXServiceControlDefaults =
+    {
+        Id = "ServiceControl"
+        Name = "Service"
+        Remove = Both
+        Start = Install
+        Stop = Both
+        Wait = Yes
+    }
+
+/// Use this for generating service controls
+let generateServiceControl (setParams : WiXServiceControl -> WiXServiceControl) =
+    let parameters = WiXServiceControlDefaults |> setParams
+    if parameters.Id = "" then 
+        failwith "No parameter passed for service control Id!"
+    parameters
+
+/// Determines what action should be taken on an error.
+type ErrorControl = 
+    /// Logs the error and continues with the startup operation.
+    | Ignore
+    /// Logs the error, displays a message box and continues the startup operation.
+    | Normal
+    /// Logs the error if it is possible and the system is restarted with the last configuration known to be good. If the last-known-good configuration is being started, the startup operation fails.
+    | Critical
+    override w.ToString() = 
+        match w with
+        | Ignore -> "ignore"
+        | Normal -> "normal"
+        | Critical -> "critical"
+
+/// Determines when the service should be started. The Windows Installer does not support boot or system. 
+type ServiceInstallStart = 
+    /// The service will start during startup of the system.
+    | Auto
+    /// The service will start when the service control manager calls the StartService function.
+    | Demand
+    /// The service can no longer be started.
+    | Disabled
+    /// The service is a device driver that will be started by the operating system boot loader. This value is not currently supported by the Windows Installer.
+    | Boot
+    /// The service is a device driver that will be started by the IoInitSystem function. This value is not currently supported by the Windows Installer.
+    | System
+    override w.ToString() = 
+        match w with
+        | Auto -> "auto"
+        | Demand -> "demand"
+        | Disabled -> "disabled"
+        | Boot -> "boot"
+        | System -> "system"
+
+/// Determines the type of the service. The Windows Installer does not currently support kernelDriver or systemDriver.
+type ServiceInstallType = 
+    /// A Win32 service that runs its own process.
+    | OwnProcess
+    /// A Win32 service that shares a process.
+    | ShareProcess
+    /// A kernel driver service. This value is not currently supported by the Windows Installer.
+    | KernelDriver
+    /// A file system driver service. This value is not currently supported by the Windows Installer.
+    | SystemDriver
+    override w.ToString() = 
+        match w with
+        | OwnProcess -> "ownProcess"
+        | ShareProcess -> "shareProcess"
+        | KernelDriver -> "kernelDriver"
+        | SystemDriver -> "systemDriver"
+
+/// Service or group of services that must start before the parent service.
+type WiXServiceDependency = 
+    {
+        /// [Required] The value of this attribute should be one of the following:
+        /// 1. The name (not the display name) of a previously installed service.
+        /// 2. The name of a service group (in which case the Group attribute must be set to 'yes').
+        Id : string
+        /// Set to 'yes' to indicate that the value in the Id attribute is the name of a group of services.	
+        Group : YesOrNo option
+    }
+    member w.createAttributeList () =
+        seq {           
+            yield ("Id", w.Id)           
+            if w.Group.IsSome then yield ("Group", w.Group.Value.ToString())
+        }
+    override w.ToString() =
+        sprintf "<ServiceDependency%s />"
+            (Seq.fold(fun acc (key, value) -> acc + sprintf " %s=\"%s\"" key value) "" (w.createAttributeList())) 
+
+let WiXServiceDependencyDefaults =
+    {       
+        Id = ""
+        Group = None
+    }
+
+/// Use this for generating service dependencies
+let generateServiceDependency (setParams : WiXServiceDependency -> WiXServiceDependency) =
+    let parameters = WiXServiceDependencyDefaults |> setParams
+    if String.IsNullOrWhiteSpace parameters.Id then 
+        failwith "No parameter passed for service dependency id!"
+    parameters
+
+/// Adds services for parent Component. Use the ServiceControl element to remove services.
+type WiXServiceInstall =
+    {
+        /// Fully qualified names must be used even for local accounts, e.g.: ".\LOCAL_ACCOUNT". Valid only when ServiceType is ownProcess.
+        Account : string
+        /// Contains any command line arguments or properties required to run the service.
+        Arguments : string
+        /// Sets the description of the service.      
+        Description : string
+        /// This column is the localizable string that user interface programs use to identify the service.
+        DisplayName: string
+        /// Determines whether the existing service description will be ignored. If 'yes', the service description will be null, even if the Description attribute is set.
+        EraseDescription : YesOrNo option
+        /// [Required] Determines what action should be taken on an error. (Default: Normal)
+        ErrorControl: ErrorControl
+        /// Unique identifier for this service configuration. This value will default to the Name attribute if not specified.
+        Id : string
+        /// Whether or not the service interacts with the desktop.
+        Interactive : YesOrNo option
+        /// The load ordering group that this service should be a part of.
+        LoadOrderGroup : string
+        /// [Required] This column is the string that gives the service name to install.
+        Name: string
+        /// The password for the account. Valid only when the account has a password.	
+        Password: string
+        /// [Required] Determines when the service should be started. The Windows Installer does not support boot or system. (Default: Demand)
+        Start : ServiceInstallStart        
+        /// [Required] The Windows Installer does not currently support kernelDriver or systemDriver. (Default: OwnProcess)
+        Type: ServiceInstallType        
+        /// The overall install should fail if this service fails to install. (Default: Yes)
+        Vital : YesOrNo
+        /// Services or groups of services that must start before the parent service.
+        ServiceDependencies : WiXServiceDependency seq
+
+    }
+    member w.createAttributeList () =
+        seq {
+            if not (String.IsNullOrWhiteSpace w.Account) then yield ("Account", w.Account)
+            if not (String.IsNullOrWhiteSpace w.Arguments) then yield ("Arguments", w.Arguments)
+            if not (String.IsNullOrWhiteSpace w.Description) then yield ("Description", w.Description)
+            if not (String.IsNullOrWhiteSpace w.DisplayName) then yield ("DisplayName", w.DisplayName)
+            if w.EraseDescription.IsSome then yield ("EraseDescription", w.EraseDescription.Value.ToString())
+            yield ("ErrorControl", w.ErrorControl.ToString())            
+            if not (String.IsNullOrWhiteSpace w.Id) then yield ("Id", w.Id)
+            if w.Interactive.IsSome then yield ("Interactive", w.Interactive.Value.ToString())
+            if not (String.IsNullOrWhiteSpace w.LoadOrderGroup) then yield ("LoadOrderGroup", w.LoadOrderGroup)
+            yield ("Name", w.Name)
+            if not (String.IsNullOrWhiteSpace w.Password) then yield ("Password", w.Password)
+            yield ("Start", w.Start.ToString())
+            yield ("Type", w.Type.ToString())
+            yield ("Vital", w.Vital.ToString())
+        }
+    override w.ToString() = 
+        sprintf "<ServiceInstall%s>%s</ServiceInstall>" 
+            (Seq.fold(fun acc (key, value) -> acc + sprintf " %s=\"%s\"" key value) "" (w.createAttributeList())) 
+            (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.ServiceDependencies)
+
+/// Defaults for service install element
+let WiXServiceInstallDefaults =
+    {       
+        Account = ""        
+        Arguments = ""        
+        Description = ""        
+        DisplayName = ""        
+        EraseDescription = None        
+        ErrorControl = Normal        
+        Id = ""        
+        Interactive = None        
+        LoadOrderGroup = ""        
+        Name = ""
+        Password = ""        
+        Start = Demand        
+        Type = OwnProcess        
+        Vital = Yes        
+        ServiceDependencies = []
+    }
+
+/// Use this for generating service installs
+let generateServiceInstall (setParams : WiXServiceInstall -> WiXServiceInstall) =
+    let parameters = WiXServiceInstallDefaults |> setParams
+    if String.IsNullOrWhiteSpace parameters.Name then 
+        failwith "No parameter passed for service name!"
+    parameters
+
+/// Reference to a component for including it in a feature
+type WiXComponentRef =
+    {
+        Id : string
+    }
+    override w.ToString() = sprintf "<ComponentRef Id=\"%s\" />" w.Id
+
+/// Defaults for component ref
+let WiXComponentRefDefaults =
+    {
+        Id = ""
+    }
+
+/// Use this for generating component refs
+let generateComponentRef (setParams : WiXComponentRef -> WiXComponentRef) =
+    let parameters = WiXComponentRefDefaults |> setParams
+    if parameters.Id = "" then 
+        failwith "No parameter passed for component ref Id!"
+    Some(parameters)
+
+
+type WiXDirectoryComponent = 
+    | C of WiXComponent
+    | D of WiXDir      
+    member w.ToComponentRef() = 
+        match w with
+        | C c -> c.ToComponentRef()
+        | D d -> None  
+    override w.ToString() =
+          match w with
+            | C c -> c.ToString()
+            | D d -> d.ToString()
+/// Component which wraps files into logical components and which allows to 
+and WiXComponent = 
+    {
+        Id : string
+        Guid : string
+        Files : WiXFile seq
+        ServiceControls : WiXServiceControl seq
+        ServiceInstalls : WiXServiceInstall seq
+    }
+    member w.ToComponentRef() = generateComponentRef (fun f -> { f with Id = w.Id })
+    override w.ToString() = sprintf "<Component Id=\"%s\" Guid=\"%s\">%s%s%s</Component>" 
+                                w.Id w.Guid 
+                                (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.Files) 
+                                (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.ServiceControls)
+                                (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.ServiceInstalls)
+/// WiX Directories define a logical directory which can include components and files
+and WiXDir = 
+    {
+        Id : string
+        Name : string
+        Files : WiXFile seq
+        Components : WiXDirectoryComponent seq
+    }
+    override d.ToString() = sprintf "<Directory Id=\"%s\" Name=\"%s\">%s%s</Directory>"
+                                d.Id 
+                                d.Name 
+                                (Seq.fold(fun acc elem -> acc + elem.ToString()) "" d.Files) 
+                                (Seq.fold(fun acc elem -> (                                                            
+                                                            acc + match elem with
+                                                                    | C c -> c.ToString()
+                                                                    | D d -> d.ToString()
+                                                           )) "" d.Components)
+
+///get component refs from a directory component hierarchy
+let rec getComponentRefs (elements : WiXDirectoryComponent seq) = 
+    let refs = elements
+                |> Seq.choose (fun e -> 
+                                match e with
+                                | D d -> Some (d)
+                                | _ -> None)
+                |> Seq.map (fun d -> getComponentRefs d.Components)
+                |> Seq.concat
+    let cRefs = elements
+                |> Seq.choose (fun e -> 
+                                match e with
+                                | C c -> Some c
+                                | _ -> None)
+                |> Seq.map (fun c -> c.ToComponentRef())
+    Seq.append refs cRefs
+    
+
+/// Defaults for component
+let WiXComponentDefaults =
+    {
+        Id = ""
+        Guid = "*"
+        Files = []
+        ServiceControls = []
+        ServiceInstalls = []
+    }
+
+/// Use this for generating single components
+let generateComponent (setParams : WiXComponent -> WiXComponent) =
+    let parameters = WiXComponentDefaults |> setParams
+    if parameters.Id = "" then 
+        failwith "No parameter passed for component Id!"
+    parameters
+
+
+
+
+/// Defaults for directories
+let WiXDirDefaults = 
+    {
+        Id = ""
+        Name = ""
+        Files = []
+        Components = []
+    }
+
+/// Use this for generating directories
+let generateDirectory (setParams : WiXDir -> WiXDir) =
+    let parameters = WiXDirDefaults |> setParams
+    if parameters.Id = "" then 
+        failwith "No parameter passed for directory Id!"
+    parameters
+
+/// Calculates the SHA1 for a given string.
+let private calcSHA1 (text:string) =
+    Fake.EnvironmentHelper.encoding.GetBytes text
+      |> (new SHA1CryptoServiceProvider()).ComputeHash
+      |> Array.fold (fun acc e -> 
+           let t = System.Convert.ToString(e, 16)
+           if t.Length = 1 then acc + "0" + t else acc + t) 
+           ""
+let private getDirectoryId (directoryName : string) =        
+    "d" + calcSHA1 directoryName
+
+let private getFileId (fileName : string) =
+    "f" + calcSHA1 fileName
+
+let private createComponents fileFilter directoryInfo directoryName =
+    directoryInfo
+        |> filesInDir
+        |> Seq.filter fileFilter
+        |> Seq.map (fun file -> 
+                        { 
+                            Id = getFileId (directoryName + directoryInfo.Name + file.Name)
+                            Name = file.Name
+                            Source = file.FullName
+                        })
+        |> Seq.map(fun file->
+                        C{
+                            Id = "c" + file.Id.Substring(1)
+                            Guid = "*"
+                            Files = [file]
+                            ServiceControls = []
+                            ServiceInstalls = []
+                        })
+
+/// Creates a WiX directory and component hierarchy from the given DirectoryInfo
+/// The function will create one component for each file [best practice](https://support.microsoft.com/de-de/kb/290997/en-us)
+/// and set the GUID to "*", which will make WiX produce consistent Component Guids if the Component's target path doesn't change.
+/// This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
+/// You can use the getComponentRefs function for getting all created component refs and adding them to features.
+/// You can use attachServiceControlToComponents or attachServiceInstallToComponents to attach ServiceControl or ServiceInstall to the directory component hierarchy
+let rec bulkComponentTreeCreation fileFilter directoryFilter directoryInfo =
+    let directoryName = ""
+    let directories = directoryInfo
+                      |> subDirectories
+                      |> Seq.filter directoryFilter
+                      |> Seq.map (fun d -> bulkComponentTreeSubCreation fileFilter directoryFilter d directoryInfo.Name)
+    let components = createComponents fileFilter directoryInfo directoryName
+    Seq.append directories components  
+and private bulkComponentTreeSubCreation fileFilter directoryFilter directoryInfo directoryName =    
+    let directories = directoryInfo
+                      |> subDirectories
+                      |> Seq.filter directoryFilter
+                      |> Seq.map (fun d -> bulkComponentTreeSubCreation fileFilter directoryFilter d (directoryName + directoryInfo.Name))       
+    let components = createComponents fileFilter directoryInfo directoryName
+    let currentDirectory = D{
+        Id = getDirectoryId (directoryInfo.Name + directoryName)
+        Name = directoryInfo.Name
+        Files = []
+        Components = Seq.append directories components
+    }    
+    currentDirectory
+
+/// Creates WiX component with directories and files from the given DirectoryInfo
+/// The function will create one component for each file [best practice](https://support.microsoft.com/de-de/kb/290997/en-us)
+/// and set the GUID to "*", which will make WiX produce consistent Component Guids if the Component's target path doesn't change.
+/// This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
+/// You can use the getComponentIdsFromWiXString function for getting all created component refs and adding them to features.
+let bulkComponentCreation fileFilter directoryInfo = 
+    directoryInfo
+        |> filesInDir
+        |> Seq.filter fileFilter
+        |> Seq.map (fun file -> 
+                        { 
+                            Id = "f" + file.Name.GetHashCode().ToString().Replace("-", "")
+                            Name = file.Name
+                            Source = file.FullName
+                        })
+        |> Seq.map(fun file->
+                        C{
+                            Id = "c" + file.Id.Substring(1)
+                            Guid = "*"
+                            Files = [file]
+                            ServiceControls = []
+                            ServiceInstalls = []
+                        })
+
+/// Creates WiX component with directories and files from the given DirectoryInfo
+/// The function will create one component for each file [best practice](https://support.microsoft.com/de-de/kb/290997/en-us)
+/// and set the GUID to "*", which will make WiX produce consistent Component Guids if the Component's target path doesn't change.
+/// This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
+/// The components are embedded into the passed in root directory.
+let bulkComponentCreationAsSubDir fileFilter (directoryInfo : DirectoryInfo) = 
+    {
+        Id = (directoryInfo.FullName.GetHashCode().ToString())
+        Name = directoryInfo.Name 
+        Files = []
+        Components = bulkComponentCreation fileFilter directoryInfo
+    }  
+                 
+///// Use this to attach service controls to your components.   
+let rec attachServiceControlToComponent (comp : WiXDirectoryComponent) fileFilter serviceControls = 
+    match comp with
+    | C c -> C (if fileFilter c then                        
+                        { Id = c.Id; Guid = c.Guid; Files = c.Files; ServiceControls = Seq.append c.ServiceControls serviceControls; ServiceInstalls = c.ServiceInstalls }
+                        else
+                            c
+                        )                                          
+    | D d -> D({Id = d.Id; Name = d.Name; Files = d.Files; Components = (attachServiceControlToComponents d.Components fileFilter serviceControls)})
+and attachServiceControlToComponents (components : WiXDirectoryComponent seq) fileFilter serviceControls = 
+    components 
+    |> Seq.map(fun c -> attachServiceControlToComponent c fileFilter serviceControls)
+            
+/// Use this to attach service installs to your components.          
+let rec attachServiceInstallToComponent (comp : WiXDirectoryComponent) fileFilter serviceInstalls = 
+    match comp with
+    | C c -> C (if fileFilter c then                        
+                        { Id = c.Id; Guid = c.Guid; Files = c.Files; ServiceControls = c.ServiceControls; ServiceInstalls = Seq.append c.ServiceInstalls serviceInstalls }
+                        else
+                            c
+                        )                                          
+    | D d -> D({Id = d.Id; Name = d.Name; Files = d.Files; Components = (attachServiceInstallToComponents d.Components fileFilter serviceInstalls)})
+and attachServiceInstallToComponents (components : WiXDirectoryComponent seq) fileFilter serviceInstalls = 
+    components 
+    |> Seq.map(fun c -> attachServiceInstallToComponent c fileFilter serviceInstalls)
+                            
 /// Creates recursive WiX directory and file tags from the given DirectoryInfo
 /// The function will create one component for each file [best practice](https://support.microsoft.com/de-de/kb/290997/en-us)
 /// and set the GUID to "*", which will make WiX produce consistent Component Guids if the Component's target path doesn't change.
@@ -150,15 +652,6 @@ let WiXDefaults : WiXParams =
       AdditionalCandleArgs = [ "-ext WiXNetFxExtension" ]
       AdditionalLightArgs = [ "-ext WiXNetFxExtension"; "-ext WixUIExtension.dll"; "-ext WixUtilExtension.dll" ] }
 
-/// These are used in many methods for generating WiX nodes, regard them as booleans
-type YesOrNo = 
-    | Yes
-    | No
-    override y.ToString() =
-        match y with
-        | Yes -> "yes"
-        | No -> "no"
-
 /// Used for determing whether the feature should be visible in the select features installer pane or not
 type FeatureDisplay = 
     /// Initially shows the feature collapsed. This is the default value.
@@ -174,6 +667,7 @@ type FeatureDisplay =
         | Hidden -> "hidden"
 
 /// Parameters for creating WiX Feature, use ToString for creating the string xml nodes
+[<Obsolete("Please use the new Feature type which features automatic string concatenation of inner features")>]
 type WiXFeature = 
     {
         /// Unique identifier of the feature.
@@ -209,6 +703,7 @@ type WiXFeature =
                             + f.Display.ToString() + "\" ConfigurableDirectory=\"INSTALLDIR\">" + f.InnerContent + "</Feature>"
 
 /// Default values for creating WiX Feature
+[<Obsolete("Please use the new Feature type which features automatic string concatenation of inner features")>]
 let WiXFeatureDefaults =
     {   
         Id = ""
@@ -219,7 +714,73 @@ let WiXFeatureDefaults =
         InnerContent = ""
     }
 
+/// Parameters for creating WiX Feature, use ToString for creating the string xml nodes
+type Feature =
+    {
+         /// Unique identifier of the feature.
+        Id : string
+
+        /// Short string of text identifying the feature. 
+        /// This string is listed as an item by the SelectionTree control of the Selection Dialog. 
+        Title : string
+
+        /// Sets the install level of this feature. A value of 0 will disable the feature. 
+        /// Processing the Condition Table can modify the level value (this is set via the Condition child element).
+        /// The default value is "1". 
+        Level : int
+
+        /// Longer string of text describing the feature. This localizable string is displayed by the Text Control of the Selection Dialog. 
+        Description : string
+
+        ///Determines the initial display of this feature in the feature tree. This attribute's value should be one of the following:
+        ///collapse
+        ///    Initially shows the feature collapsed. This is the default value.
+        ///expand
+        ///    Initially shows the feature expanded.
+        ///hidden
+        ///    Prevents the feature from displaying in the user interface.
+        ///<an explicit integer value>
+        ///    For advanced users only, it is possible to directly set the integer value of the display value that will appear in the Feature row. 
+        Display : FeatureDisplay
+
+        /// Nest sub features
+        NestedFeatures : Feature seq
+
+        /// Components included in this feature
+        Components : WiXComponentRef option seq
+    }
+    override f.ToString() =
+        let (|Empty|NotEmpty|) seq = if Seq.isEmpty seq then Empty else NotEmpty seq
+
+        let rec ConcatAll feature (node : string) = 
+            match feature.NestedFeatures with
+            | Empty ->  "<Feature Id=\"" + feature.Id + "\" Title=\"" + feature.Title + "\" Level=\"" + feature.Level.ToString() + "\" Description=\"" + feature.Description + "\" Display=\"" + feature.Display.ToString() + "\" ConfigurableDirectory=\"INSTALLDIR\">" + (feature.Components |> Seq.choose id |> Seq.fold(fun acc elem -> acc + elem.ToString()) "") + "</Feature>"
+            | NotEmpty list -> "<Feature Id=\"" + feature.Id + "\" Title=\"" + feature.Title + "\" Level=\"" + feature.Level.ToString() + "\" Description=\"" + feature.Description + "\" Display=\"" + feature.Display.ToString() + "\" ConfigurableDirectory=\"INSTALLDIR\">" + Seq.fold(fun acc elem -> acc + ConcatAll elem "") "" list + (feature.Components |> Seq.choose id |> Seq.fold(fun acc elem -> acc + elem.ToString()) "") + "</Feature>"
+        ConcatAll f ""
+
+/// Default values for creating WiX Feature
+let FeatureDefaults =
+    {   
+        Id = ""
+        Title = "Default Feature"
+        Level = 1
+        Description = "Default Feature"
+        Display = FeatureDisplay.Expand
+        NestedFeatures = Seq.empty<Feature>
+        Components = []
+    }
+
+/// Type for defining, which program directory should be used for installation. ProgramFiles32 refers to 'Program Files (x86)', ProgramFiles64 refers to 'Program Files'
+type ProgramFilesFolder = 
+    | ProgramFiles32
+    | ProgramFiles64
+    override p.ToString() = 
+        match p with 
+        | ProgramFiles32 -> "ProgramFilesFolder"
+        | ProgramFiles64 -> "ProgramFiles64Folder"
+
 /// Parameters for WiX Script properties, use ToString for creating the string xml nodes
+[<Obsolete("Please use new 'Script' type")>]
 type WiXScript =
     {
         /// The product code GUID for the product.
@@ -227,6 +788,9 @@ type WiXScript =
 
         /// The descriptive name of the product.
         ProductName : string
+
+        /// The program files folder
+        ProgramFilesFolder : ProgramFilesFolder
 
         /// Product description
         Description : string
@@ -272,10 +836,12 @@ type WiXScript =
     }
 
 /// Default values for WiX Script properties
+[<Obsolete("Please use new 'Script' type")>]
 let WiXScriptDefaults = 
     {
         ProductCode = Guid.Empty
         ProductName = ""
+        ProgramFilesFolder = ProgramFilesFolder.ProgramFiles32
         Description = ""
         ProductLanguage = ""
         ProductVersion = ""
@@ -423,27 +989,6 @@ let WiXUIRefDefaults =
         Id = "WixUI_Minimal"
     }
 
-/// Parameters for WiX Variable, use ToString for creating the string xml nodes
-type WiXVariable = 
-    {
-        /// The name of the variable.
-        Id : string
-        /// Set this value to 'yes' in order to make the variable's value overridable either by another WixVariable entry or via the command-line option -d<name>=<value> for light.exe.
-        /// If the same variable is declared overridable in multiple places it will cause an error (since WiX won't know which value is correct). The default value is 'no'. 
-        Overridable : YesOrNo
-        /// The value of the variable. The value cannot be an empty string because that would make it possible to accidentally set a column to null. 
-        Value : string
-    }
-    override w.ToString() = "<WixVariable Id=\"" + w.Id + "\" Value=\"" + w.Value + "\" Overridable=\"" + w.Overridable.ToString() + "\"/>"
-
-/// Default value for WiX Variable
-let WiXVariableDefaults = 
-    {
-        Id = ""
-        Overridable = YesOrNo.No
-        Value = ""
-    }
-
 /// Parameters for WiX Upgrade
 type WiXUpgrade =
     {
@@ -546,6 +1091,112 @@ let WiXMajorUpgradeDefaults =
         DowngradeErrorMessage = "You can't downgrade this product!"
     }
 
+    /// Parameters for WiX Variable, use ToString for creating the string xml nodes
+type WiXVariable = 
+    {
+        /// The name of the variable.
+        Id : string
+        /// Set this value to 'yes' in order to make the variable's value overridable either by another WixVariable entry or via the command-line option -d<name>=<value> for light.exe.
+        /// If the same variable is declared overridable in multiple places it will cause an error (since WiX won't know which value is correct). The default value is 'no'. 
+        Overridable : YesOrNo
+        /// The value of the variable. The value cannot be an empty string because that would make it possible to accidentally set a column to null. 
+        Value : string
+    }
+    override w.ToString() = "<WixVariable Id=\"" + w.Id + "\" Value=\"" + w.Value + "\" Overridable=\"" + w.Overridable.ToString() + "\"/>"
+
+/// Default value for WiX Variable
+let WiXVariableDefaults = 
+    {
+        Id = ""
+        Overridable = YesOrNo.No
+        Value = ""
+    }
+
+/// Parameters for WiX Script properties, use ToString for creating the string xml nodes
+type Script =
+    {
+        /// The product code GUID for the product.
+        ProductCode : Guid
+
+        /// The descriptive name of the product.
+        ProductName : string
+
+        /// The program files folder
+        ProgramFilesFolder : ProgramFilesFolder
+
+        /// Product description
+        Description : string
+
+        /// The decimal language ID (LCID) for the product.
+        ProductLanguage : int
+
+        /// The product's version string.
+        ProductVersion : string
+
+        /// The manufacturer of the product.
+        ProductPublisher : string
+
+        /// The upgrade code GUID for the product.
+        UpgradeGuid : Guid
+
+        /// You can nest upgrade elements in here
+        Upgrade : WiXUpgrade seq
+
+        /// Nest major upgrade elements in here
+        MajorUpgrade : WiXMajorUpgrade seq
+
+        /// Nest UIRefs in here
+        UIRefs : WiXUIRef seq
+
+        /// Nest WiXVariables in here
+        WiXVariables : WiXVariable seq
+
+        /// Nest directories in here
+        Directories : WiXDir seq
+
+        /// Nest Components in here
+        Components : WiXDirectoryComponent seq
+
+        /// Build Number of product
+        BuildNumber : string
+
+        /// You can nest feature elements in here
+        Features : Feature seq
+
+        /// You can nest custom actions in here
+        CustomActions : WiXCustomAction seq
+
+        /// You can nest InstallExecuteSequence actions in here
+        ActionSequences : WiXCustomActionExecution seq
+
+        /// You can add custom replacements for the wix xml here.
+        CustomReplacements: (string * string) seq
+    }
+
+/// Default values for WiX Script properties
+let ScriptDefaults = 
+    {
+        ProductCode = Guid.Empty
+        ProductName = ""
+        ProgramFilesFolder = ProgramFilesFolder.ProgramFiles64
+        Description = ""
+        ProductLanguage = 1033
+        ProductVersion = ""
+        ProductPublisher = ""
+        UpgradeGuid = Guid.Empty
+        Upgrade = []
+        MajorUpgrade = []
+        UIRefs = []
+        WiXVariables = []
+        Directories = []
+        Components = []
+        BuildNumber = "1.0.0"
+        Features = []
+        CustomActions = []
+        ActionSequences = []
+        CustomReplacements = []
+    }
+
 /// Generates WiX Template with specified file name (you can prepend location too)
 /// You need to run this once every build an then use FillInWiXScript to replace placeholders
 /// ## Parameters
@@ -588,10 +1239,11 @@ let generateWiXScript fileName =
             <Media Id=\"1\" Cabinet=\"media1.cab\" EmbedCab=\"yes\" />
 
             <Directory Id=\"TARGETDIR\" Name=\"SourceDir\">
-              <Directory Id=\"ProgramFilesFolder\" Name=\"ProgramFiles\">
+              <Directory Id=\"@Product.ProgramFilesFolder@\" Name=\"ProgramFiles\">
                 <Directory Id=\"PUBLISHERDIR\" Name=\"@Product.Publisher@\">
                   <Directory Id=\"INSTALLDIR\" Name=\"@Product.ProductName@\">
                     @Product.Directories@
+                    @Product.Components@
                   </Directory>
                 </Directory>
               </Directory>
@@ -635,12 +1287,14 @@ let generateWiXScript fileName =
 ///                                CustomActions = action1.ToString() + action2.ToString()
 ///                                ActionSequences = actionExecution1.ToString() + actionExecution2.ToString()
 ///                            })
-let FillInWixScript wiXPath setParams =
+[<Obsolete("Please use new FillInWiXTemplate function")>]
+let FillInWixScript wiXPath (setParams : WiXScript -> WiXScript) =
     let parameters = WiXScriptDefaults |> setParams
     let wixScript = !!("*.wxs" @@ wiXPath)
     let replacements = [
         "@Product.ProductCode@", parameters.ProductCode.ToString("D")
         "@Product.ProductName@", parameters.ProductName
+        "@Product.ProgramFilesFolder@", parameters.ProgramFilesFolder.ToString()
         "@Product.Description@", parameters.Description
         "@Product.UIRefs@", parameters.UIRefs
         "@Product.Language@", parameters.ProductLanguage
@@ -651,12 +1305,62 @@ let FillInWixScript wiXPath setParams =
         "@Product.Upgrade@", parameters.Upgrade
         "@Product.MajorUpgrade@", parameters.MajorUpgrade
         "@Product.Directories@", parameters.Directories
+        "@Product.Components@", ""
         "@Product.Features@", parameters.Features
         "@Product.CustomActions@", parameters.CustomActions
         "@Product.ActionSequences@", parameters.ActionSequences
-        "@Build.number@", parameters.BuildNumber]
+        "@Build.number@", parameters.BuildNumber]    
     processTemplates replacements wixScript
     
+/// Takes path where script files reside and sets all parameters as defined
+/// ## Parameters
+///  - `wiXPath` - Pass path where your script is located at. Function will search for all Scripts in that location and fill in parameters
+///  - `setParams` - Function used to manipulate the WiX default parameters.
+///
+/// ## Sample
+///     FillInWixScript "" (fun f ->
+///                            {f with
+///                                ProductCode = WiXProductCode
+///                                ProductName = WiXProductName
+///                                Description = projectDescription
+///                                ProductLanguage = WiXProductLanguage
+///                                ProductVersion = WiXProductVersion
+///                                ProductPublisher = WixProductPublisher
+///                                UpgradeGuid = WixProductUpgradeGuid
+///                                UIRefs = uiRef1.ToString() + uiRef2.ToString()
+///                                WiXVariables = wiXLicense.ToString()
+///                                Directories = directories
+///                                BuildNumber = "1.0.0"
+///                                Features = rootFeature.ToString()
+///                                CustomActions = action1.ToString() + action2.ToString()
+///                                ActionSequences = actionExecution1.ToString() + actionExecution2.ToString()
+///                            })
+let FillInWiXTemplate wiXPath setParams =
+    let parameters = ScriptDefaults |> setParams
+    let wixScript = !!("*.wxs" @@ wiXPath)
+    let replacements = [
+        "@Product.ProductCode@", parameters.ProductCode.ToString("D")
+        "@Product.ProductName@", parameters.ProductName
+        "@Product.ProgramFilesFolder@", parameters.ProgramFilesFolder.ToString()
+        "@Product.Description@", parameters.Description
+        "@Product.UIRefs@", Seq.fold(fun acc elem -> acc + elem.ToString()) "" parameters.UIRefs
+        "@Product.Language@", parameters.ProductLanguage.ToString()
+        "@Product.Version@", parameters.ProductVersion
+        "@Product.Variables@", Seq.fold(fun acc elem -> acc + elem.ToString()) "" parameters.WiXVariables
+        "@Product.Publisher@", parameters.ProductPublisher
+        "@Product.UpgradeGuid@", parameters.UpgradeGuid.ToString("D")
+        "@Product.Upgrade@", Seq.fold(fun acc elem -> acc + elem.ToString()) "" parameters.Upgrade
+        "@Product.MajorUpgrade@", Seq.fold(fun acc elem -> acc + elem.ToString()) "" parameters.MajorUpgrade
+        "@Product.Directories@", Seq.fold(fun acc elem -> acc + elem.ToString()) "" parameters.Directories
+        "@Product.Components@", Seq.fold(fun acc elem -> acc + elem.ToString()) "" parameters.Components
+        "@Product.Features@", Seq.fold(fun acc elem -> acc + elem.ToString()) "" parameters.Features
+        "@Product.CustomActions@", Seq.fold(fun acc elem -> acc + elem.ToString()) "" parameters.CustomActions
+        "@Product.ActionSequences@", Seq.fold(fun acc elem -> acc + elem.ToString()) "" parameters.ActionSequences
+        "@Build.number@", parameters.BuildNumber]
+    let customReplacements = parameters.CustomReplacements |> Seq.map (fun (key, value) -> ((sprintf "@Custom.%s@" key), value)) |> List.ofSeq
+    let replacements = replacements @ customReplacements
+    processTemplates replacements wixScript
+
 /// Generates a feature based on the given parameters, use toString on it when embedding it
 /// You can pass other features into InnerContent for making a hierarchy
 /// ## Parameters
@@ -672,8 +1376,30 @@ let FillInWixScript wiXPath setParams =
 ///                                            Display = "expand" 
 ///                                            InnerContent = otherFeature.ToString()
 ///                                        })
-let generateFeature setParams =
-    let parameters : WiXFeature = WiXFeatureDefaults |> setParams
+[<Obsolete("Please use the new ")>]
+let generateFeature (setParams : WiXFeature -> WiXFeature) =
+    let parameters = WiXFeatureDefaults |> setParams
+    if parameters.Id = "" then 
+        failwith "No parameter passed for feature Id!"
+    parameters
+
+/// Generates a feature based on the given parameters, use toString on it when embedding it
+/// You can pass other features into InnerContent for making a hierarchy
+/// ## Parameters
+///  - `setParams` - Function used to manipulate the WiX default parameters.
+///
+/// ## Sample
+///     let feature = generateFeature (fun f -> 
+///                                        {f with  
+///                                            Id = "UniqueName"
+///                                            Title = "Title which is shown"
+///                                            Level = 1 
+///                                            Description = "Somewhat longer description" 
+///                                            Display = "expand" 
+///                                            InnerContent = [otherFeature1; otherFeature2]
+///                                        })
+let generateFeatureElement setParams =
+    let parameters : Feature = FeatureDefaults |> setParams
     if parameters.Id = "" then 
         failwith "No parameter passed for feature Id!"
     parameters

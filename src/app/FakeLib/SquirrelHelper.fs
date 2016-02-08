@@ -26,6 +26,9 @@ type SquirrelParams =
         /// The full path to an optional icon, which will be used for the generated installer.
         SetupIcon : string option
 
+        /// Do not create an MSI file
+        NoMsi : bool
+
         /// The path to Squirrel: `squirrel.exe`
         ToolPath : string
 
@@ -50,6 +53,7 @@ type SquirrelParams =
 /// - `BootstrapperExe` - `None`
 /// - `LoadingGif` - `None`
 /// - `SetupIcon` - `None`
+/// - `NoMsi` - `false`
 /// - `ToolPath` - The `squirrel.exe` path if it exists in a subdirectory of the current directory.
 /// - `TimeOut` - 10 minutes
 /// - `SignExecutable` - `None`
@@ -63,6 +67,7 @@ let SquirrelDefaults =
         BootstrapperExe = None
         LoadingGif = None
         SetupIcon = None
+        NoMsi = false
         ToolPath = findToolInSubPath toolname (currentDirectory @@ "tools" @@ "Squirrel")
         TimeOut = TimeSpan.FromMinutes 10.
         SignExecutable = None
@@ -84,6 +89,7 @@ let internal buildSquirrelArgs parameters nugetPackage =
     |> appendIfNotNullOrEmpty parameters.ReleaseDir "--releaseDir="
     |> appendIfSome parameters.LoadingGif (sprintf "\"--loadingGif=%s\"")
     |> appendIfSome parameters.SetupIcon (sprintf "\"--setupIcon=%s\"")
+    |> appendIfTrue parameters.NoMsi "--no-msi"
     |> appendIfSome parameters.BootstrapperExe (sprintf "\"--bootstrapperExe=%s\"")
     |> appendIfSome parameters.SignExecutable (fun s -> createSigningArgs parameters)
     |> toText
@@ -113,7 +119,7 @@ module internal ResultHandling =
 /// ## Sample usage
 ///
 ///     Target "CreatePackage" (fun _ ->
-///         SquirrelPack (fun p -> {p with WorkingDir = "./tmp"}) "./my.nuget"
+///         SquirrelPack (fun p -> { p with WorkingDir = Some "./tmp" }) "./my.nuget"
 ///     )
 let SquirrelPack setParams nugetPackage =
     traceStartTask "Squirrel" ""

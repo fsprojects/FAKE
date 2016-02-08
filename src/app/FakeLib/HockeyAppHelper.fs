@@ -116,6 +116,9 @@ type HockeyAppUploadParams = {
 
     /// Restrict download to specific teams
     Teams: string[]
+
+    /// Set maximum upload delay
+    UploadTimeout: TimeSpan
 }
 
 /// The default HockeyApp parameters
@@ -135,6 +138,7 @@ let HockeyAppUploadDefaults = {
     RepositoryUrl = String.Empty
     DownloadStatus = DownloadStatusOption.NotDownloadable
     Teams = Array.empty
+    UploadTimeout = TimeSpan.FromMinutes 2.
 }
 
 /// [omit]
@@ -187,15 +191,17 @@ let private toCurlArgs param = seq {
 /// ## Parameters
 ///  - `setParams` - Function used to override the default parameters
 let HockeyApp (setParams: HockeyAppUploadParams -> HockeyAppUploadParams) =
-    HockeyAppUploadDefaults
-    |> setParams
-    |> validateParams
+    let p = HockeyAppUploadDefaults
+            |> setParams
+            |> validateParams
+
+    p
     |> toCurlArgs
     |> fun args ->
         ExecProcessAndReturnMessages (fun p ->
             p.FileName <- "curl"
             p.Arguments <- (String.concat " " args)
-        ) (TimeSpan.FromMinutes 2.)
+        ) p.UploadTimeout
     |> fun response ->
         let error = sprintf "Error while posting to HockeyApp.%sMessages: %s%sErrors: %s%s" nl (String.concat "; " response.Messages) nl (String.concat "; " response.Errors) nl
         match response.ExitCode with
