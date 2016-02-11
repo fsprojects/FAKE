@@ -6,7 +6,7 @@ With FAKE we can use [NuGet](http://nuget.codeplex.com/) to download all depende
 ## Setting the stage for NuGet
 
 In order to download the packages during the build we need to add NuGet.exe to our repository. 
-You can download the "NuGet.exe Command Line Tool" from the [release page](http://nuget.codeplex.com/releases).
+You can download the "NuGet.exe Command Line Tool" from the [release page](https://github.com/NuGet/Home/releases).
 
 ## Restore packages from the build script
 

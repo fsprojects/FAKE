@@ -10,6 +10,34 @@ open System
 /// The default zip level
 let DefaultZipLevel = 7
 
+let private addZipEntry (stream : ZipOutputStream) (buffer : byte[]) (item : string) (itemSpec : string) =
+    let info = fileInfo item
+    let itemSpec = ZipEntry.CleanName itemSpec
+    logfn "Adding File %s" itemSpec
+    let entry = new ZipEntry(itemSpec)
+    entry.DateTime <- info.LastWriteTime
+    entry.Size <- info.Length
+    use stream2 = info.OpenRead()
+    stream.PutNextEntry(entry)
+    let length = ref stream2.Length
+    stream2.Seek(0L, SeekOrigin.Begin) |> ignore
+    while !length > 0L do
+        let count = stream2.Read(buffer, 0, buffer.Length)
+        stream.Write(buffer, 0, count)
+        length := !length - (int64 count)
+
+let private createZip fileName comment level (items : (string * string) seq) =
+    use stream = new ZipOutputStream(File.Create(fileName))
+    let zipLevel = min (max 0 level) 9
+    tracefn "Creating Zipfile: %s (Level: %d)" fileName zipLevel
+    stream.SetLevel zipLevel
+    if not (String.IsNullOrEmpty comment) then stream.SetComment comment
+    let buffer = Array.create 32768 0uy
+    for item, itemSpec in items do
+        addZipEntry stream buffer item itemSpec
+    stream.Finish()
+    tracefn "Zip successfully created %s" fileName
+
 /// Creates a zip file with the given files
 /// ## Parameters
 ///  - `workingDir` - The relative dir of the zip files. Use this parameter to influence directory structure within zip file.
@@ -18,45 +46,25 @@ let DefaultZipLevel = 7
 ///  - `level` - The compression level.
 ///  - `flatten` - If set to true then all subfolders are merged into the root folder.
 ///  - `files` - A sequence with files to zip.
-let CreateZip workingDir fileName comment level flatten files = 
-    let files = files |> Seq.toList
-    
+let CreateZip workingDir fileName comment level flatten files =
     let workingDir = 
         let dir = directoryInfo workingDir
         if not dir.Exists then failwithf "Directory not found: %s" dir.FullName
         dir.FullName
-    
-    use stream = new ZipOutputStream(File.Create(fileName))
-    let zipLevel = min (max 0 level) 9
-    tracefn "Creating Zipfile: %s (Level: %d)" fileName zipLevel
-    stream.SetLevel zipLevel
-    if not (String.IsNullOrEmpty comment) then stream.SetComment comment
-    let buffer = Array.create 32768 0uy
-    for item in files do
-        let info = fileInfo item
-        if info.Exists then 
-            let itemSpec = 
-                if flatten then info.Name
-                else if not (String.IsNullOrEmpty(workingDir)) 
-                        && info.FullName.StartsWith(workingDir, true, Globalization.CultureInfo.InvariantCulture) then 
-                    info.FullName.Remove(0, workingDir.Length)
-                else info.FullName
-            
-            let itemSpec = ZipEntry.CleanName itemSpec
-            logfn "Adding File %s" itemSpec
-            let entry = new ZipEntry(itemSpec)
-            entry.DateTime <- info.LastWriteTime
-            entry.Size <- info.Length
-            use stream2 = info.OpenRead()
-            stream.PutNextEntry(entry)
-            let length = ref stream2.Length
-            stream2.Seek(0L, SeekOrigin.Begin) |> ignore
-            while !length > 0L do
-                let count = stream2.Read(buffer, 0, buffer.Length)
-                stream.Write(buffer, 0, count)
-                length := !length - (int64 count)
-    stream.Finish()
-    tracefn "Zip successfully created %s" fileName
+
+    let items = seq {
+        for item in files do
+            let info = fileInfo item
+            if info.Exists then 
+                let itemSpec = 
+                    if flatten then info.Name
+                    else if not (String.IsNullOrEmpty(workingDir)) 
+                            && info.FullName.StartsWith(workingDir, true, Globalization.CultureInfo.InvariantCulture) then 
+                        info.FullName.Remove(0, workingDir.Length)
+                    else info.FullName
+                yield item, itemSpec }
+
+    createZip fileName comment level items
 
 /// Creates a zip file with the given files.
 /// ## Parameters
@@ -123,3 +131,53 @@ let UnzipFirstMatchingFileInMemory predicate (zipFileName : string) =
     use stream = zf.GetInputStream(ze)
     use reader = new StreamReader(stream)
     reader.ReadToEnd()
+
+/// Creates a zip file with the given files.
+/// ## Parameters
+///  - `fileName` - The file name of the resulting zip file.
+///  - `comment` - A comment for the resulting zip file.
+///  - `level` - The compression level.
+///  - `files` - A sequence of target folders and files to include relative to their base directory.
+let CreateZipOfIncludes fileName comment level (files : (string * FileIncludes) seq) =
+    let items = seq {
+        for path, incl in files do
+            for file in incl do
+                let info = fileInfo file
+                if info.Exists then
+                    let baseFull = (Path.GetFullPath incl.BaseDirectory).TrimEnd [|'/';'\\'|]
+                    let path =
+                        if String.IsNullOrEmpty path then ""
+                        else sprintf "%s%c" (path.TrimEnd [|'/';'\\'|]) Path.DirectorySeparatorChar
+                    let spec = sprintf "%s%s" path (info.FullName.Substring (baseFull.Length+1))
+                    yield file, spec }
+
+    createZip fileName comment level items
+
+/// Creates a zip file with the given files.
+/// ## Parameters
+///  - `fileName` - The file name of the resulting zip file.
+///  - `files` - A sequence of target folders and files to include relative to their base directory.
+///
+/// ## Sample
+///
+/// The following sample creates a zip file containing the files from the two target folders and FileIncludes.
+///
+/// - The files from the first FileInclude will be placed in the root of the zip file.
+/// - The files from the second FileInclude will be placed under the directory `app_data\jobs\continuous\MyWebJob` in the zip file.
+///
+///
+///     Target "Zip" (fun _ ->
+///         [   "", !! "MyWebApp/*.html"
+///                 ++ "MyWebApp/bin/**/*.dll"
+///                 ++ "MyWebApp/bin/**/*.pdb"
+///                 ++ "MyWebApp/fonts/**"
+///                 ++ "MyWebApp/img/**"
+///                 ++ "MyWebApp/js/**"
+///                 -- "MyWebApp/js/_references.js"
+///                 ++ "MyWebApp/web.config"
+///             @"app_data\jobs\continuous\MyWebJob", !! "MyWebJob/bin/Release/*.*"
+///         ]
+///         |> ZipOfIncludes (sprintf @"bin\MyWebApp.%s.zip" buildVersion)
+///     )
+///
+let ZipOfIncludes fileName files = CreateZipOfIncludes fileName "" DefaultZipLevel files

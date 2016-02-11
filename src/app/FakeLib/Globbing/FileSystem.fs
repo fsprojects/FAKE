@@ -5,77 +5,7 @@ module Fake.FileSystem
 open System
 open System.Collections.Generic
 open System.IO
-open Fake
 open System.Text.RegularExpressions
-
-type private SearchOption = 
-    | Directory of string
-    | Drive of string
-    | Recursive
-    | FilePattern of string
-
-let private checkSubDirs absolute (dir : string) root = 
-    if dir.Contains "*" then Directory.EnumerateDirectories(root, dir, SearchOption.TopDirectoryOnly) |> Seq.toList
-    else 
-        let path = Path.Combine(root, dir)
-        
-        let di = 
-            if absolute then new DirectoryInfo(dir)
-            else new DirectoryInfo(path)
-        if di.Exists then [ di.FullName ]
-        else []
-
-let rec private buildPaths acc (input : SearchOption list) = 
-    match input with
-    | [] -> acc
-    | Directory(name) :: t -> 
-        let subDirs = 
-            acc
-            |> List.map (checkSubDirs false name)
-            |> List.concat
-        buildPaths subDirs t
-    | Drive(name) :: t -> 
-        let subDirs = 
-            acc
-            |> List.map (checkSubDirs true name)
-            |> List.concat
-        buildPaths subDirs t
-    | Recursive :: [] -> 
-        let dirs = 
-            Seq.collect (fun dir -> Directory.EnumerateFileSystemEntries(dir, "*", SearchOption.AllDirectories)) acc 
-            |> Seq.toList
-        buildPaths (acc @ dirs) []
-    | Recursive :: t -> 
-        let dirs = 
-            Seq.collect (fun dir -> Directory.EnumerateDirectories(dir, "*", SearchOption.AllDirectories)) acc 
-            |> Seq.toList
-        buildPaths (acc @ dirs) t
-    | FilePattern(pattern) :: t -> Seq.collect (fun dir -> Directory.EnumerateFiles(dir, pattern)) acc |> Seq.toList
-
-let private isDrive = 
-    let regex = Regex(@"^[A-Za-z]:$", RegexOptions.Compiled)
-    fun dir -> regex.IsMatch dir
-
-let inline private normalizePath (p : string) = 
-    p.Replace('\\', Path.DirectorySeparatorChar).Replace('/', Path.DirectorySeparatorChar)
-let inline private normalizeOutputPath (p : string) = 
-    p.Replace('\\', Path.DirectorySeparatorChar).Replace('/', Path.DirectorySeparatorChar)
-     .TrimEnd(Path.DirectorySeparatorChar)
-
-let private search (baseDir : string) (input : string) = 
-    let baseDir = normalizePath baseDir
-    let input = normalizePath input
-    let input = input.Replace(baseDir, "")
-    let filePattern = Path.GetFileName(input)
-    input.Split([| '/'; '\\' |], StringSplitOptions.RemoveEmptyEntries)
-    |> Seq.map (function 
-           | "**" -> Recursive
-           | a when a = filePattern -> FilePattern(a)
-           | a when isDrive a -> Directory(a + "\\")
-           | a -> Directory(a))
-    |> Seq.toList
-    |> buildPaths [ baseDir ]
-    |> List.map normalizeOutputPath
 
 /// Internal representation of a file set.
 type FileIncludes = 
@@ -90,8 +20,29 @@ type FileIncludes =
     member this.ButNot pattern = { this with Excludes = pattern :: this.Excludes }
     
     /// Sets a directory as BaseDirectory.
-    member this.SetBaseDirectory(dir : string) = { this with BaseDirectory = dir.TrimEnd(directorySeparator.[0]) }
+    member this.SetBaseDirectory(dir : string) = { this with BaseDirectory = dir.TrimEnd(Path.DirectorySeparatorChar) }
     
+    /// Checks if a particular file is matched
+    member this.IsMatch (path : string) =
+        let fullDir pattern = 
+            if Path.IsPathRooted(pattern) then
+                pattern
+            else
+                System.IO.Path.Combine(this.BaseDirectory, pattern)
+
+        let included = 
+            this.Includes
+            |> Seq.exists(fun fileInclude ->
+                Globbing.isMatch (fullDir fileInclude) path
+            )
+        let excluded = 
+            this.Excludes
+            |> Seq.exists(fun fileExclude ->
+                Globbing.isMatch (fullDir fileExclude) path
+            )
+
+        included && not excluded
+
     interface IEnumerable<string> with
         
         member this.GetEnumerator() = 
@@ -100,14 +51,14 @@ type FileIncludes =
             let excludes = 
                 seq { 
                     for pattern in this.Excludes do
-                        yield! search this.BaseDirectory pattern
+                        yield! Globbing.search this.BaseDirectory pattern
                 }
                 |> Set.ofSeq
             
             let files = 
                 seq { 
                     for pattern in this.Includes do
-                        yield! search this.BaseDirectory pattern
+                        yield! Globbing.search this.BaseDirectory pattern
                 }
                 |> Seq.filter (fun x -> not (Set.contains x excludes))
                 |> Seq.filter (fun x -> hashSet.Add x)
@@ -117,9 +68,6 @@ type FileIncludes =
         member this.GetEnumerator() = (this :> IEnumerable<string>).GetEnumerator() :> System.Collections.IEnumerator
 
 let private defaultBaseDir = Path.GetFullPath "."
-
-/// Logs the given files with the message.
-let Log message files = files |> Seq.iter (log << sprintf "%s%s" message)
 
 /// Include files
 let Include x = 
@@ -139,10 +87,6 @@ let inline (--) (x : FileIncludes) pattern = x.ButNot pattern
 /// Includes a single pattern and scans the files - !! x = AllFilesMatching x
 let inline (!!) x = Include x
 
-/// Include prefix operator
-[<Obsolete("!+ is obsolete - use !! instead")>]
-let inline (!+) x = Include x
-
 /// Looks for a tool first in its default path, if not found in all subfolders of the root folder - returns the tool file name.
 let findToolInSubPath toolname defaultPath =
     try
@@ -161,20 +105,7 @@ let findToolFolderInSubPath toolname defaultPath =
         let tools = !! ("./**/" @@ toolname)
         if Seq.isEmpty tools then defaultPath
         else 
-            let fi = fileInfo (Seq.head tools)
+            let fi = FileInfo (Seq.head tools)
             fi.Directory.FullName
     with
     | _ -> defaultPath
-
-/// Includes a single pattern and scans the files - !! x = AllFilesMatching x
-[<Obsolete>]
-let AllFilesMatching x = Include x
-
-/// Lazy scan for include files.
-/// Will be processed at the time when needed.
-[<Obsolete("FileIncludes implement IEnumerable<string> so explicit scanning is not needed")>]
-let Scan files = files
-
-/// Scans immediately for include files - all matching files will be memoized.
-[<Obsolete("FileIncludes implement IEnumerable<string> so explicit scanning is not needed. Just use Seq.toList")>]
-let ScanImmediately includes = includes |> Seq.toList

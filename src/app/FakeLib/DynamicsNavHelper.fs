@@ -8,6 +8,51 @@ open System.Threading
 open System.Xml
 open Fake.UnitTestHelper
 
+module Replacements =
+    let isWin8 = 
+        Environment.OSVersion.Platform = PlatformID.Win32NT &&
+          Environment.OSVersion.Version >= new Version(6, 2, 9200, 0)
+
+    let win8Replacements =
+        ["4.0:{F6D90F11-9C73-11D3-B32E-00C04F990BB4}:'Microsoft XML, v4.0'.DOMDocument","6.0:{88D96A05-F192-11D4-A65F-0040963251E5}:'Microsoft XML, v6.0'.DOMDocument60"
+         "4.0:{2933BF80-7B36-11D2-B20E-00C04F983E60}:'Microsoft XML, v4.0'","6.0:{2933BF80-7B36-11D2-B20E-00C04F983E60}:'Microsoft XML, v6.0'"
+         "{F6D90F11-9C73-11D3-B32E-00C04F990BB4}:'Microsoft XML, v6.0'.DOMDocument","{88D96A05-F192-11D4-A65F-0040963251E5}:'Microsoft XML, v6.0'.DOMDocument60"]
+
+    let Win8ToWin7 (s:string) =
+        if isWin8 then
+            win8Replacements
+            |> Seq.fold (fun (s:string) (r,p) -> s.Replace(p,r)) s
+        else
+            s
+
+    let Win7ToWin8 (s:string) =
+        if isWin8 then
+            win8Replacements
+            |> Seq.fold (fun (s:string) (p,r) -> s.Replace(p,r)) s
+        else
+            s
+
+    let ConvertFileFromWin7ToWin8 fileName =
+        if isWin8 then
+            traceVerbose "Converting from Win7 format to Win8"
+            Fake.StringHelper.ReadFileAsString fileName
+            |> Win7ToWin8
+            |> Fake.StringHelper.WriteStringToFile false fileName
+
+    let shortcutReplacements =
+        ["ShortCutKey=Strg","ShortCutKey=Ctrl"
+         "ShortCutKey=Umschalt+Strg","ShortCutKey=Shift+Ctrl"
+         "ShortCutKey=Umschalt","ShortCutKey=Shift"]
+
+    let replaceShortcuts (s:string) =
+        shortcutReplacements
+        |> Seq.fold (fun (s:string) (r,p) -> s.Replace(p,r)) s
+
+    let NormalizeShortcuts fileName =
+        Fake.StringHelper.ReadFileAsString fileName
+        |> replaceShortcuts
+        |> Fake.StringHelper.WriteStringToFile false fileName
+
 [<RequireQualifiedAccess>]
 /// A Dynamics NAV server type
 type NavisionServerType = 
@@ -37,6 +82,7 @@ let getNAVClassicPath navClientVersion =
         | "700" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\70\RoleTailored Client"
         | "701" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\71\RoleTailored Client"
         | "800" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\80\RoleTailored Client"
+        | "900" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\90\RoleTailored Client"
         | "501" -> @"software\microsoft\Dynamics Nav\Cside Client\W1 5.0 SP1"
         | "403" -> @"SOFTWARE\Navision\Microsoft Business Solutions-Navision\W1 4.00"
         | _     -> failwithf "Unknown NAV-Version (Client) %s" navClientVersion
@@ -54,10 +100,11 @@ let getNAVServicePath navClientVersion =
             | "700" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\70\Service"
             | "701" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\71\Service"
             | "800" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\80\Service"
+            | "900" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\90\Service"
             | _     -> failwithf "Unknown NAV-Version (Service) %s" navClientVersion
         match navClientVersion with
             | "601" | "602" -> getRegistryValue HKEYLocalMachine subKey "Path"
-            | "700"| "701"| "800" ->  getRegistryValue64 HKEYLocalMachine subKey "Path"
+            | "700"| "701"| "800" | "900" ->  getRegistryValue64 HKEYLocalMachine subKey "Path"
             | _     -> failwithf "Unknown NAV-Version (Service) %s" navClientVersion
     (directoryInfo navServiceRootPath).Parent.FullName @@ "Service"
 
@@ -96,23 +143,30 @@ let private reportError text logFile =
                       else sprintf " with %d errors." errors))
 
 let private import connectionInfo fileName =
-    let fi = fileInfo fileName
+    let originalFile = fileInfo fileName
     
-    let deleteFile, fi = 
-        if fi.Extension = ".nav" then true, fi.CopyTo(Path.Combine(fi.Directory.FullName, fi.Name + ".txt"))
-        else false, fi
-    
-    let args = 
-        sprintf "command=importobjects, file=\"%s\", logfile=\"%s\", servername=\"%s\", database=\"%s\"" fi.FullName 
+    let importFile = 
+        let importFileName = 
+            let tempFI = fileInfo(Path.GetTempFileName())
+            tempFI.FullName.Replace(tempFI.Extension,"") + ".txt"
+        let fi = originalFile.CopyTo(importFileName)
+        Replacements.ConvertFileFromWin7ToWin8 importFileName
+        fi
+
+
+    let args =
+        sprintf "command=importobjects, file=\"%s\", logfile=\"%s\", servername=\"%s\", database=\"%s\"" importFile.FullName 
             (FullName connectionInfo.TempLogFile) connectionInfo.ServerName connectionInfo.Database
+
     if 0 <> ExecProcess (fun info -> 
                 info.FileName <- connectionInfo.ToolPath
                 info.WorkingDirectory <- connectionInfo.WorkingDir
                 info.Arguments <- args) connectionInfo.TimeOut
     then 
-        if deleteFile then fi.Delete()
+        importFile.Delete()
         reportError "ImportFile failed" connectionInfo.TempLogFile
-    if deleteFile then fi.Delete()
+
+    importFile.Delete()
 
 let private export connectionInfo filter fileName = 
     let fi = fileInfo fileName
@@ -374,3 +428,30 @@ let analyzeXmlTestResults (fileName : string) (testSuite : string) =
         |> List.ofSeq
     Some { SuiteName = testSuite
            Tests = tests }
+
+let StartNavServiceTier serverMode navClientVersion =
+    traceStartTask "StartNavServiceTier" ""
+    match serverMode with
+    | NavisionServerType.NativeServer -> ()
+    | NavisionServerType.SqlServer ->
+        match navClientVersion with
+        | "700" ->
+            StartService "MicrosoftDynamicsNavServer$DynamicsNAV70"
+        | "701" ->
+            StartService "MicrosoftDynamicsNavServer$DynamicsNAV71"
+        | "800" ->
+            StartService "MicrosoftDynamicsNavServer$DynamicsNAV80"
+        | _ -> failwithf "NavServiceTier of version %s unknown." navClientVersion
+    | _ -> failwithf "ServerMode %A unknown." serverMode
+    traceEndTask "StartNavServiceTier" ""
+
+let StopNavServiceTier serverMode navClientVersion =
+    traceStartTask "StopNavServiceTier" ""
+    match serverMode with
+    | NavisionServerType.NativeServer -> ()
+    | NavisionServerType.SqlServer -> 
+        StopService "MicrosoftDynamicsNavServer$DynamicsNAV71"
+        StopService "MicrosoftDynamicsNavServer$DynamicsNAV70"
+        StopService "MicrosoftDynamicsNavServer$DynamicsNAV80"
+    | _ -> failwithf "ServerMode %A unknown." serverMode
+    traceEndTask "StopNavServiceTier" ""

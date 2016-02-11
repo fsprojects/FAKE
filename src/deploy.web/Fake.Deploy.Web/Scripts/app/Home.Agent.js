@@ -21,6 +21,18 @@ function AgentViewModel() {
 
     self.recentMessages = ko.observableArray();
 
+	self.updateMessagesFrom = function(data) {
+         self.recentMessages([]);
+         if (data != null) {
+	        var response = data.xhr().response;
+	        var messages = [];
+	        if (response) messages = $.parseJSON(response);
+            $.each(messages, function (i, msg) {
+                self.recentMessages.push(msg);
+            });
+         }
+	};
+
     self.getAgentDetails = function () {
         $.ajax({
             type: 'GET',
@@ -46,7 +58,8 @@ function AgentViewModel() {
                 contentType: 'application/json'
             }).done(function (data) {
                 self.deployments([]);
-                $.each(data.values, function (i, d) {
+                  
+                $.each(data.fields || [], function (i, d) {
                     $.each(d, function (i2, dep) {
                         var deployment = ko.mapping.fromJS(dep);
                         self.deployments.push(deployment);
@@ -97,13 +110,7 @@ function AgentViewModel() {
                 $('#filePlaceHolder').modal('hide');
                 $('#selectPackageBtn').removeClass('hide');
                 toastr.info('Package deployed');
-                self.recentMessages([]);
-                if (data != null && data.result !== undefined) {
-                    $.each(data.result, function (i, msg) {
-                        self.recentMessages.push(msg);
-                    });
-                }
-
+	            self.updateMessagesFrom(data);
                 self.refreshDeploymentsForAgent();
             },
             fail: function (e, data) {
@@ -111,12 +118,7 @@ function AgentViewModel() {
                 $('#selectPackageBtn').removeClass('hide');
                 $('#filePlaceHolder').modal('hide');
                 toastr.error('Package deployment failed');
-                self.recentMessages([]);
-                if (data != null && data.result !== undefined) {
-                    $.each(data.result, function (i, msg) {
-                        self.recentMessages.push(msg);
-                    });
-                }
+	            self.updateMessagesFrom(data);
             }
         });
         

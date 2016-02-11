@@ -1,5 +1,6 @@
 #ignore thumbnails created by windows
 Thumbs.db
+.DS_Store
 #Ignore files build by Visual Studio
 docs/
 docsBuild/
@@ -58,3 +59,12 @@ release.cmd
 Samples/typescript/out/
 help/RELEASE_NOTES.md
 paket.exe
+paket-files/
+
+# Ignore the Vagrant local directories
+.vagrant/*
+*/.vagrant/*
+# Ignore VS2015 folder
+.vs/
+
+.fake

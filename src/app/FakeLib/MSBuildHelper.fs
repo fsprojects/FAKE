@@ -6,8 +6,9 @@ open System
 open System.IO
 open System.Configuration
 open System.Xml.Linq
+open BuildServerHelper
 
-/// An type to represent MSBuild project files.
+/// A type to represent MSBuild project files.
 type MSBuildProject = XDocument
 
 /// An exception type to signal build errors.
@@ -30,7 +31,8 @@ let msBuildExe =
             @"c:\Windows\Microsoft.NET\Framework\v3.5\"
 
         let ev = environVar "MSBuild"
-        if not (isNullOrEmpty ev) then ev
+        if not (isNullOrEmpty ev) then
+            if isDirectory ev && Directory.Exists ev then ev @@ "MSBuild.exe" else ev
         else if "true".Equals(ConfigurationManager.AppSettings.["IgnoreMSBuild"], StringComparison.OrdinalIgnoreCase) then 
                 String.Empty 
         else findPath "MSBuildPath" MSBuildPath "MSBuild.exe"
@@ -82,7 +84,7 @@ let rec getProjectReferences (projectFileName : string) =
     else // exclude .sln-files since the are not XML
          
     let doc = loadProject projectFileName
-    let references = getReferenceElements "ProjectReference" projectFileName doc |> Seq.map snd
+    let references = getReferenceElements "ProjectReference" projectFileName doc |> Seq.map snd |> Seq.filter File.Exists
     references
       |> Seq.map getProjectReferences
       |> Seq.concat
@@ -132,7 +134,9 @@ type MSBuildParams =
     { Targets : string list
       Properties : (string * string) list
       MaxCpuCount : int option option
+      NoLogo : bool
       NodeReuse : bool
+      RestorePackagesFlag : bool
       ToolsVersion : string option
       Verbosity : MSBuildVerbosity option
       NoConsoleLogger : bool
@@ -144,17 +148,19 @@ let mutable MSBuildDefaults =
     { Targets = []
       Properties = []
       MaxCpuCount = Some None
-      NodeReuse = true
+      NoLogo = false
+      NodeReuse = not (buildServer = TeamCity)
       ToolsVersion = None
       Verbosity = None
       NoConsoleLogger = false
+      RestorePackagesFlag = false
       FileLoggers = None 
       DistributedLoggers = None }
 
 /// [omit]
-let getAllParameters targets maxcpu nodeReuse tools verbosity noconsolelogger fileLoggers distributedFileLoggers properties =
+let getAllParameters targets maxcpu noLogo nodeReuse tools verbosity noconsolelogger fileLoggers distributedFileLoggers properties =
     if isUnix then [ targets; tools; verbosity; noconsolelogger ] @ fileLoggers @ distributedFileLoggers @ properties
-    else [ targets; maxcpu; nodeReuse; tools; verbosity; noconsolelogger ] @ fileLoggers @ distributedFileLoggers @ properties
+    else [ targets; maxcpu; noLogo; nodeReuse; tools; verbosity; noconsolelogger ] @ fileLoggers @ distributedFileLoggers @ properties
 
 let private serializeArgs args =
     args
@@ -182,7 +188,7 @@ let serializeMSBuildParams (p : MSBuildParams) =
         | [] -> None
         | t -> Some("t", t |> Seq.map (replace "." "_") |> separated ";")
     
-    let properties = p.Properties |> List.map (fun (k, v) -> Some("p", sprintf "%s=\"%s\"" k v))
+    let properties = ("RestorePackages",p.RestorePackagesFlag.ToString()) :: p.Properties |> List.map (fun (k, v) -> Some("p", sprintf "%s=\"%s\"" k v))
     
     let maxcpu = 
         match p.MaxCpuCount with
@@ -192,6 +198,10 @@ let serializeMSBuildParams (p : MSBuildParams) =
                  match x with
                  | Some v -> v.ToString()
                  | _ -> "")
+   
+    let noLogo = 
+        if p.NoLogo then Some("nologo", "")
+        else None
     
     let nodeReuse = 
         if p.NodeReuse then None
@@ -233,7 +243,7 @@ let serializeMSBuildParams (p : MSBuildParams) =
             sprintf "%s%s%s" 
                 (match fl.Filename with
                 | None -> ""
-                | Some f -> sprintf "logfile=%s;" f)
+                | Some f -> sprintf "LogFile=%s;" f)
                 (match fl.Verbosity with
                 | None -> ""
                 | Some v -> sprintf "Verbosity=%s;" (verbosityName v)) 
@@ -273,7 +283,7 @@ let serializeMSBuildParams (p : MSBuildParams) =
             dfls
             |> List.map(fun (cl, fl) -> Some("dl", createLoggerString cl fl))
 
-    getAllParameters targets maxcpu nodeReuse tools verbosity noconsolelogger fileLoggers distributedFileLoggers properties
+    getAllParameters targets maxcpu noLogo nodeReuse tools verbosity noconsolelogger fileLoggers distributedFileLoggers properties
     |> serializeArgs
 
 /// [omit]
@@ -434,9 +444,11 @@ let BuildWebsite outputPath projectFile =
     
     let currentDir = (directoryInfo ".").FullName
     let projectDir = (fileInfo projectFile).Directory.FullName
-    let mutable prefix = ""
+    
     let diff = slashes projectDir - slashes currentDir
-    prefix <- prefix + (String.replicate diff "../")
+    let prefix = if Path.IsPathRooted outputPath
+                 then ""
+                 else (String.replicate diff "../")
 
     MSBuildDebug "" "Rebuild" [ projectFile ] |> ignore
     MSBuild "" "_CopyWebApplication;_BuiltWebOutputGroupOutput" 

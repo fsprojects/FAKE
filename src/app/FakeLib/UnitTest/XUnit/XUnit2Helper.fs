@@ -1,9 +1,14 @@
-﻿/// Contains tasks to run [xUnit](http://xunit.codeplex.com/) unit tests.
+[<System.Obsolete("Open Fake.Testing to use the latest xUnit2 task.")>]
+/// DEPRECATED. See [`Fake.Testing.XUnit2`](fake-testing-xunit2.html).
+///
+/// Contains tasks to run [xUnit](https://github.com/xunit/xunit) unit tests.
 module Fake.XUnit2Helper
 
 open System
 open System.IO
 open System.Text
+
+#nowarn "44"
 
 (*
 xUnit.net console test runner (64-bit .NET 4.0.30319.34209)
@@ -34,17 +39,23 @@ Valid options:
   -html <filename>       : output results to HTML file
 *)
 
-type ParallelOption = 
+/// DEPRECATED.
+[<Obsolete("This type will be removed in a future version.")>]
+type ParallelOption =
     | None = 0
     | Collections = 1
     | Assemblies = 2
     | All = 3
 
+/// DEPRECATED.
 /// Option which allows to specify if an xUnit error should break the build.
+[<Obsolete("This type alias will be removed in a future version.")>]
 type XUnit2ErrorLevel = TestRunnerErrorLevel // a type alias to keep backwards compatibility
 
+/// DEPRECATED.
 /// The xUnit parameter type
-type XUnit2Params = 
+[<Obsolete("This type will be removed in a future version. See Fake.Testing.XUnit2.XUnit2Params")>]
+type XUnit2Params =
     { /// The path to the xunit.console.exe - FAKE will scan all subfolders to find it automatically.
       ToolPath : string
       /// The file name of the config file (optional).
@@ -54,7 +65,7 @@ type XUnit2Params =
       ///   collections - only parallelize collections
       ///   assemblies - only parallelize assemblies
       ///   all - parallelize assemblies & collections
-      Parallel : ParallelOption 
+      Parallel : ParallelOption
       /// maximum thread count for collection parallelization
       /// 0 - run with unbounded thread count
       /// >0 - limit task thread pool size to 'count'
@@ -88,10 +99,14 @@ type XUnit2Params =
       /// output directory
       OutputDir : string }
 
+/// DEPRECATED.
 /// The xUnit default parameters
+[<Obsolete("This value will be removed in a future version.")>]
 let empty2Trait : (string * string) option = None
 
-let XUnit2Defaults = 
+/// DEPRECATED.
+[<Obsolete("This value will be removed in a future version. See Fake.Testing.XUnit2.XUnit2Defaults")>]
+let XUnit2Defaults =
     { ToolPath = findToolInSubPath "xunit.console.exe" (currentDirectory @@ "tools" @@ "xUnit")
       ConfigFile = null
       Parallel = ParallelOption.None
@@ -111,35 +126,37 @@ let XUnit2Defaults =
       HtmlOutput = false
       OutputDir = null }
 
+/// DEPRECATED.
 /// Builds the command line arguments from the given parameter record and the given assemblies.
 /// [omit]
-let buildXUnit2Args parameters assembly = 
+[<Obsolete("This function will be removed in a future version.")>]
+let buildXUnit2Args parameters assembly =
     let fi = fileInfo assembly
     let name = fi.Name
-    
-    let dir = 
+
+    let dir =
         if isNullOrEmpty parameters.OutputDir then String.Empty
         else Path.GetFullPath parameters.OutputDir
-    
-    let traits includeExclude (name, values : string) = 
+
+    let traits includeExclude (name, values : string) =
         values.Split([| ',' |], System.StringSplitOptions.RemoveEmptyEntries)
-        |> Seq.collect (fun value -> 
+        |> Seq.collect (fun value ->
                [| includeExclude
                   sprintf "\"%s=%s\"" name value |])
         |> String.concat " "
 
     let parallelOptionsText =
         parameters.Parallel.ToString().ToLower()
-    
+
     new StringBuilder()
     |> appendFileNamesIfNotNull [ assembly ]
-    |> append "-parallel" 
+    |> append "-parallel"
     |> append (sprintf "%s" parallelOptionsText)
     |> append "-maxthreads"
     |> append (sprintf "%i" parameters.MaxThreads)
     |> appendIfFalse parameters.ShadowCopy "-noshadow"
-    |> appendIfTrue (buildServer = TeamCity) "-teamcity"
-    |> appendIfTrue (buildServer = AppVeyor) "-appveyor"
+    |> appendIfTrue (buildServer = TeamCity || parameters.Teamcity) "-teamcity"
+    |> appendIfTrue (buildServer = AppVeyor || parameters.Appveyor) "-appveyor"
     |> appendIfTrue parameters.Wait "-wait"
     |> appendIfTrue parameters.Silent "-silent"
     |> appendIfTrue parameters.XmlOutput (sprintf "-xml\" \"%s" (dir @@ (name + ".xml")))
@@ -150,6 +167,8 @@ let buildXUnit2Args parameters assembly =
     |> toText
 
 
+/// DEPRECATED. See [`Fake.Testing.XUnit2.xUnit2`](fake-testing-xunit2.html).
+///
 /// Runs xUnit unit tests in the given assemblies via the given xUnit runner.
 /// Will fail if the runner terminates with non-zero exit code for any of the assemblies.
 /// Offending assemblies will be listed in the error message.
@@ -157,33 +176,34 @@ let buildXUnit2Args parameters assembly =
 /// The xUnit runner terminates with a non-zero exit code if any of the tests
 /// in the given assembly fail.
 /// ## Parameters
-/// 
+///
 ///  - `setParams` - Function used to manipulate the default XUnitParams value.
 ///  - `assemblies` - Sequence of one or more assemblies containing xUnit unit tests.
-/// 
+///
 /// ## Sample usage
 ///
 ///     Target "Test" (fun _ ->
-///         !! (testDir + @"\xUnit.Test.*.dll") 
-///           |> xUnit (fun p -> {p with OutputDir = testDir })
+///         !! (testDir + @"\xUnit.Test.*.dll")
+///           |> xUnit2 (fun p -> {p with OutputDir = testDir })
 ///     )
-let xUnit2 setParams assemblies = 
+[<Obsolete("Deprecated. This task will be removed in a future version. Open Fake.Testing to use the latest xUnit2 task.")>]
+let xUnit2 setParams assemblies =
     let details = separated ", " assemblies
     traceStartTask "xUnit2" details
     let parameters = setParams XUnit2Defaults
-    
-    let runTests assembly = 
+
+    let runTests assembly =
         let args = buildXUnit2Args parameters assembly
-        0 = ExecProcess (fun info -> 
+        0 = ExecProcess (fun info ->
                 info.FileName <- parameters.ToolPath
                 info.WorkingDirectory <- parameters.WorkingDir
                 info.Arguments <- args) parameters.TimeOut
-    
-    let failedTests = 
+
+    let failedTests =
         [ for asm in List.ofSeq assemblies do
               if runTests asm |> not then yield asm ]
-    
-    if not (List.isEmpty failedTests) then 
+
+    if not (List.isEmpty failedTests) then
         sprintf "xUnit2 failed for the following assemblies: %s" (separated ", " failedTests)
         |> match parameters.ErrorLevel with
            | Error | FailOnFirstError -> failwith

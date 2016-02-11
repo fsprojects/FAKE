@@ -45,6 +45,61 @@ If you run this batch file from the command line then the latest FAKE version wi
 
 ![alt text](pics/gettingstarted/afterdownload.png "Run the batch file")
 
+### Paket Setup
+
+Alternatively you can configure [Paket](http://fsprojects.github.io/Paket) to install and manage FAKE as a dependency. You will have to [setup Paket](http://fsprojects.github.io/Paket/installation.html) following the instructions specified in its documentation. In this example, the [installation per repository](http://fsprojects.github.io/Paket/installation.html#Installation-per-repository) will be used.
+
+  * Create a `.paket` folder in the root of the `FAKE-Calculator` solution.
+  * Download the latest [paket.bootstrapper.exe](https://github.com/fsprojects/Paket/releases/latest) into that folder.
+  * Run `$ .paket/paket.bootstrapper.exe` This will download the latest `paket.exe`.
+  * Commit `.paket/paket.bootstrapper.exe` into your repo and add `.paket/paket.exe` to your `.gitignore` file.
+
+### Specifying dependencies
+
+Create a [`paket.dependencies` file](http://fsprojects.github.io/Paket/dependencies-file.html) in your project's root and specify FAKE as a dependency in it.
+The file might look like this:
+
+    source https://nuget.org/api/v2
+
+    nuget FAKE
+
+You can now run Paket from the command line:
+
+    $ .paket/paket.exe install
+
+This will create the [`paket.lock` file](http://fsprojects.github.io/Paket/lock-file.html) in your project's root. The file might look like this:
+
+    NUGET
+        remote: https://nuget.org/api/v2
+        specs:
+            FAKE (4.7.2)
+
+You will have to replace the `build.bat` file contents with the following:
+
+    [lang=batchfile]
+    @echo off
+    cls
+    
+    .paket\paket.bootstrapper.exe
+    if errorlevel 1 (
+        exit /b %errorlevel%
+    )
+    
+    .paket\paket.exe restore
+    if errorlevel 1 (
+        exit /b %errorlevel%
+    )
+    
+    packages\FAKE\tools\FAKE.exe build.fsx %*
+    
+If you run this batch file from the command line, Paket will be bootstrapped and the paket dependencies will be restored before running the build script.
+In this case, then the latest FAKE version will be [downloaded via nuget](http://nuget.org/packages/FAKE/).
+If everything works fine you will get the following output:
+
+![alt text](pics/gettingstarted/afterdownloadpaket.png "Run the batch file")
+
+### The build script
+
 Now open the *build.fsx* in Visual Studio or any text editor. It should look like this:
 
 	// include Fake lib
@@ -137,7 +192,7 @@ In the next step we want to compile our C# libraries, which means we want to com
 
 We defined a new build target named "BuildApp" which compiles all csproj-files with the MSBuild task and the build output will be copied to buildDir.
 
-In order to find the right project files FAKEscans the folder *src/app/* and all subfolders with the given pattern. Therefore a similar FileSet definition like in NAnt or MSBuild (see [project page](https://github.com/fsharp/FAKE) for details) is used.
+In order to find the right project files FAKE scans the folder *src/app/* and all subfolders with the given pattern. Therefore a similar FileSet definition like in NAnt or MSBuild (see [project page](https://github.com/fsharp/FAKE) for details) is used.
 
 In addition the target dependencies are extended again. Now *Default* is dependent on *BuildApp* and *BuildApp* needs *Clean* as a prerequisite.
 
@@ -257,7 +312,7 @@ Now all our projects will be compiled and we can use FAKE's NUnit task in order 
 	// start build
 	RunTargetOrDefault "Default"
 
-Our new *Test* target scans the test directory for test assemblies and runs them with the NUnit runner. FAKE automatically tries to locate the runner in one of your subfolders. See the [NUnit task documentation](apidocs/fake-nunitparallel.html) if you need to specify the tool path explicitly.
+Our new *Test* target scans the test directory for test assemblies and runs them with the NUnit runner. FAKE automatically tries to locate the runner in one of your subfolders. See the [NUnit task documentation](apidocs/fake-nunitsequential.html) if you need to specify the tool path explicitly.
 
 The mysterious part **(fun p -> ...)** simply overrides the default parameters of the NUnit task and allows to specify concrete parameters.
 

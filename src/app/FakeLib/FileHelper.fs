@@ -343,6 +343,14 @@ let TestDir path =
     else 
         logfn "%s not found" di.FullName
         false
+        
+/// Checks if the file exists
+let TestFile path = 
+    let fi = fileInfo path
+    if fi.Exists then true
+    else 
+        logfn "%s not found" fi.FullName
+        false
 
 /// Checks the srcFiles for changes to the last release.
 /// ## Parameters
@@ -352,12 +360,16 @@ let TestDir path =
 ///  - `srcFiles` - The source files
 ///  - `findOldFileF` - A function which finds the old file
 let GeneratePatchWithFindOldFileFunction lastReleaseDir patchDir srcFiles findOldFileF = 
+    let i = ref 0
     for file in srcFiles do
         let newFile = toRelativePath file
         let oldFile = findOldFileF newFile (lastReleaseDir + newFile.TrimStart('.'))
         let fi = fileInfo oldFile
         if not fi.Exists then logVerbosefn "LastRelease has no file like %s" fi.FullName
-        if CompareFiles false oldFile newFile |> not then CopyFileIntoSubFolder patchDir newFile
+        if CompareFiles false oldFile newFile |> not then 
+            i := !i + 1
+            CopyFileIntoSubFolder patchDir newFile
+    tracefn "Patch contains %d files." !i
 
 /// Checks the srcFiles for changes to the last release.
 /// ## Parameters
@@ -421,6 +433,28 @@ let WriteConfigFile configFileName parameters =
 ///  - `replacements` - A sequence of tuples with the patterns and the replacements.
 ///  - `files` - The files to process.
 let ReplaceInFiles replacements files = processTemplates replacements files
+
+/// Replace all occurences of the regex pattern with the given replacement in the specified file
+/// ## Parameters
+///
+/// - `pattern` - The string to search for a match
+/// - `replacement` - The replacement string
+/// - `encoding` - The encoding to use when reading and writing the file
+/// - `file` - The path of the file to process
+let RegexReplaceInFileWithEncoding pattern (replacement:string) encoding file =
+    let oldContent = File.ReadAllText(file, encoding)
+    let newContent = System.Text.RegularExpressions.Regex.Replace(oldContent, pattern, replacement)
+    File.WriteAllText(file, newContent, encoding)
+
+/// Replace all occurences of the regex pattern with the given replacement in the specified files
+/// ## Parameters
+///
+/// - `pattern` - The string to search for a match
+/// - `replacement` - The replacement string
+/// - `encoding` - The encoding to use when reading and writing the files
+/// - `files` - The paths of the files to process
+let RegexReplaceInFilesWithEncoding pattern (replacement:string) encoding files =
+    files |> Seq.iter (RegexReplaceInFileWithEncoding pattern replacement encoding)
 
 /// Get the version a file.
 /// ## Parameters

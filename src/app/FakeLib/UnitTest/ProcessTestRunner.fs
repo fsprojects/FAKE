@@ -14,7 +14,7 @@ type ProcessTestRunnerParams =
       /// Option which allows to specify if a test runner error should break the build.
       ErrorLevel : TestRunnerErrorLevel }
 
-/// The ProcessTestRunner defeaults.
+/// The ProcessTestRunner defaults.
 let ProcessTestRunnerDefaults = 
     { WorkingDir = null
       TimeOut = TimeSpan.FromMinutes 5.

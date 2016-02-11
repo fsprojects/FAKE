@@ -1,4 +1,4 @@
-﻿[<AutoOpen>]
+[<AutoOpen>]
 /// This module contains functions which allow to read and write environment variables and build parameters
 module Fake.EnvironmentHelper
 
@@ -19,9 +19,15 @@ let environVar name = Environment.GetEnvironmentVariable name
 
 /// Combines two path strings using Path.Combine
 let inline combinePaths path1 (path2 : string) = Path.Combine(path1, path2.TrimStart [| '\\'; '/' |])
+let inline combinePathsNoTrim path1 path2 = Path.Combine(path1, path2)
 
 /// Combines two path strings using Path.Combine
 let inline (@@) path1 path2 = combinePaths path1 path2
+let inline (</>) path1 path2 = combinePathsNoTrim path1 path2
+
+// Normalizes path for different OS
+let inline normalizePath (path : string) = 
+    path.Replace('\\', Path.DirectorySeparatorChar).Replace('/', Path.DirectorySeparatorChar)
 
 /// Retrieves all environment variables from the given target
 let environVars target = 
@@ -38,11 +44,30 @@ let setProcessEnvironVar name value = Environment.SetEnvironmentVariable(name, v
 /// Clears the environment variable with the given name for the current process.
 let clearProcessEnvironVar name = Environment.SetEnvironmentVariable(name, null, EnvironmentVariableTarget.Process)
 
+/// Sets the build parameter with the given name for the current process.
+let setBuildParam name value = setProcessEnvironVar name value
+
 /// Retrieves the environment variable with the given name or returns the default if no value was set
 let environVarOrDefault name defaultValue = 
     let var = environVar name
     if String.IsNullOrEmpty var then defaultValue
     else var
+
+/// Retrieves the environment variable with the given name or fails if not found
+let environVarOrFail name = 
+    let var = environVar name
+    if String.IsNullOrEmpty var then failwith <| sprintf "Environment variable '%s' not found" name
+    else var
+
+/// Retrieves the environment variable with the given name or returns the default bool if no value was set
+let getEnvironmentVarAsBoolOrDefault varName defaultValue=
+    try  
+        (environVar varName).ToUpper() = "TRUE" 
+    with
+    | _ ->  defaultValue
+
+/// Retrieves the environment variable with the given name or returns the false if no value was set
+let getEnvironmentVarAsBool varName = getEnvironmentVarAsBoolOrDefault varName false
 
 /// Retrieves the environment variable or None
 let environVarOrNone name = 
@@ -50,13 +75,19 @@ let environVarOrNone name =
     if String.IsNullOrEmpty var then None
     else Some var
 
+/// Splits the entries of an environment variable and removes the empty ones.
+let splitEnvironVar name =
+    let var = environVarOrNone name
+    if var = None then [ ]
+    else var.Value.Split([| Path.PathSeparator |]) |> Array.toList
+
 /// Retrieves the application settings variable with the given name
 let appSetting (name : string) = ConfigurationManager.AppSettings.[name]
 
 /// Returns if the build parameter with the given name was set
 let inline hasBuildParam name = environVar name <> null
 
-/// Returns the value of the build parameter with the given name was set if it was set and otherwise the given default value
+/// Returns the value of the build parameter with the given name if it was set and otherwise the given default value
 let inline getBuildParamOrDefault name defaultParam = 
     if hasBuildParam name then environVar name
     else defaultParam
@@ -87,7 +118,10 @@ let SystemRoot = environVar "SystemRoot"
 let isUnix = Environment.OSVersion.Platform = PlatformID.Unix
 
 /// Determines if the current system is a MacOs system
-let isMacOS = Environment.OSVersion.Platform = PlatformID.MacOSX
+let isMacOS =
+    (Environment.OSVersion.Platform = PlatformID.MacOSX) ||
+      // osascript is the AppleScript interpreter on OS X
+      File.Exists "/usr/bin/osascript"
 
 /// Determines if the current system is a Linux system
 let isLinux = int System.Environment.OSVersion.Platform |> fun p -> (p = 4) || (p = 6) || (p = 128)
@@ -96,6 +130,12 @@ let isLinux = int System.Environment.OSVersion.Platform |> fun p -> (p = 4) || (
 /// Todo: Detect mono on windows
 let isMono = isLinux || isUnix || isMacOS
 
+let monoPath =
+    if isMacOS && File.Exists "/Library/Frameworks/Mono.framework/Commands/mono" then
+        "/Library/Frameworks/Mono.framework/Commands/mono"
+    else
+        "mono"
+
 /// Arguments on the Mono executable
 let mutable monoArguments = ""
 
@@ -103,7 +143,7 @@ let mutable monoArguments = ""
 let platformInfoAction (psi : ProcessStartInfo) = 
     if isMono && psi.FileName.EndsWith ".exe" then 
         psi.Arguments <- monoArguments + " " + psi.FileName + " " + psi.Arguments
-        psi.FileName <- "mono"
+        psi.FileName <- monoPath
 
 /// The path of the current target platform
 let mutable TargetPlatformPrefix = 
@@ -116,6 +156,19 @@ let mutable TargetPlatformPrefix =
     <|> if (isUnix) then Some "/usr/lib/mono"
         else Some @"C:\Windows\Microsoft.NET\Framework"
     |> Option.get
+
+/// Base path for getting tools from windows SDKs
+let sdkBasePath = ProgramFilesX86 @@ "Microsoft SDKs\Windows"
+
+/// Helper function to help find framework or sdk tools from the 
+/// newest toolkit available
+let getNewestTool possibleToolPaths = 
+       possibleToolPaths 
+       |> Seq.sortBy (fun p -> p) 
+       |> Array.ofSeq 
+       |> Array.rev 
+       |> Seq.ofArray 
+       |> Seq.head
 
 /// Gets the local directory for the given target platform
 let getTargetPlatformDir platformVersion = 

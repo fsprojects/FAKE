@@ -14,6 +14,26 @@ type TraceData =
     | FinishedMessage
     | OpenTag of string * string
     | CloseTag of string
+    member x.NewLine =
+        match x with
+        | ImportantMessage _
+        | ErrorMessage _ -> Some true
+        | LogMessage (_, newLine)
+        | TraceMessage (_, newLine) -> Some newLine
+        | StartMessage
+        | FinishedMessage
+        | OpenTag _
+        | CloseTag _ -> None
+    member x.Message =
+        match x with
+        | ImportantMessage text
+        | ErrorMessage text
+        | LogMessage (text, _)
+        | TraceMessage (text, _) -> Some text
+        | StartMessage
+        | FinishedMessage
+        | OpenTag _
+        | CloseTag _ -> None
 
 /// Defines a TraceListener interface
 type ITraceListener = 
@@ -37,13 +57,17 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap) =
     
     let writeText toStdErr color newLine text = 
         let curColor = Console.ForegroundColor
-        if curColor <> color then Console.ForegroundColor <- color
-        if toStdErr then 
-            if newLine then eprintfn "%s" text
-            else eprintf "%s" text
-        else if newLine then printfn "%s" text
-        else printf "%s" text
-        if curColor <> color then Console.ForegroundColor <- curColor
+        try
+          if curColor <> color then Console.ForegroundColor <- color
+          let printer =
+            match toStdErr, newLine with
+            | true, true -> eprintfn
+            | true, false -> eprintf
+            | false, true -> printfn
+            | false, false -> printf
+          printer "%s" text
+        finally
+          if curColor <> color then Console.ForegroundColor <- curColor
     
     interface ITraceListener with
         /// Writes the given message to the Console.
@@ -53,12 +77,18 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap) =
             | StartMessage -> ()
             | OpenTag _ -> ()
             | CloseTag _ -> ()
-            | ImportantMessage text | ErrorMessage text -> writeText importantMessagesToStdErr color true text
-            | LogMessage(text, newLine) | TraceMessage(text, newLine) -> writeText false color newLine text
+            | ImportantMessage text | ErrorMessage text ->
+                writeText importantMessagesToStdErr color true text
+            | LogMessage(text, newLine) | TraceMessage(text, newLine) ->
+                writeText false color newLine text
             | FinishedMessage -> ()
 
+// If we write the stderr on those build servers the build will fail.
+let importantMessagesToStdErr = buildServer <> CCNet && buildServer <> AppVeyor
+
 /// The default TraceListener for Console.
-let defaultConsoleTraceListener = ConsoleTraceListener(buildServer <> CCNet, colorMap)
+let defaultConsoleTraceListener =
+  ConsoleTraceListener(importantMessagesToStdErr, colorMap)
 
 /// Specifies if the XmlWriter should close tags automatically
 let mutable AutoCloseXmlWriter = false

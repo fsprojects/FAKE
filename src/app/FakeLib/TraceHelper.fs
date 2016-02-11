@@ -5,6 +5,7 @@ module Fake.TraceHelper
 open System
 open System.IO
 open System.Reflection
+open System.Threading
 
 /// Gets the path of the current FAKE instance
 let fakePath = productName.GetType().Assembly.Location
@@ -12,7 +13,7 @@ let fakePath = productName.GetType().Assembly.Location
 /// Gets the FAKE version no.
 let fakeVersion = AssemblyVersionInformation.Version
 
-let mutable private openTags = []
+let private openTags = new ThreadLocal<list<string>>(fun _ -> [])
 
 /// Logs the specified string        
 let log message = LogMessage(message, true) |> postMessage
@@ -51,8 +52,9 @@ let traceFAKE fmt = Printf.ksprintf (fun text -> postMessage (ImportantMessage t
 let traceError error = postMessage (ErrorMessage error)
 
 open Microsoft.FSharp.Core.Printf
-/// Traces an exception details (in red)
-let traceException (ex:Exception) =
+
+/// Converts an exception and its inner exceptions to a nice string.
+let exceptionAndInnersToString (ex:Exception) =
     let sb = Text.StringBuilder()
     let delimeter = String.replicate 50 "*"
     let nl = Environment.NewLine
@@ -84,7 +86,10 @@ let traceException (ex:Exception) =
             if (e.InnerException <> null)
             then printException e.InnerException (count+1)
     printException ex 1
-    sb.ToString() |> traceError
+    sb.ToString()
+
+/// Traces an exception details (in red)
+let traceException (ex:Exception) = exceptionAndInnersToString ex |> traceError
 
 /// Traces the EnvironmentVariables
 let TraceEnvironmentVariables() = 
@@ -113,16 +118,16 @@ let traceStartBuild() = postMessage StartMessage
 let traceEndBuild() = postMessage FinishedMessage
 
 /// Puts an opening tag on the internal tag stack
-let openTag tag = openTags <- tag :: openTags
+let openTag tag = openTags.Value <- tag :: openTags.Value
 
 /// Removes an opening tag from the internal tag stack
 let closeTag tag = 
-    match openTags with
-    | x :: rest when x = tag -> openTags <- rest
+    match openTags.Value with
+    | x :: rest when x = tag -> openTags.Value <- rest
     | _ -> failwithf "Invalid tag structure. Trying to close %s tag but stack is %A" tag openTags
     CloseTag tag |> postMessage
 
-let closeAllOpenTags() = Seq.iter closeTag openTags
+let closeAllOpenTags() = Seq.iter closeTag openTags.Value
 
 /// Traces the begin of a target
 let traceStartTarget name description dependencyString = 
@@ -161,3 +166,6 @@ let logToConsole (msg, eventLogEntry : EventLogEntryType) =
     | EventLogEntryType.Warning -> ImportantMessage msg
     | _ -> LogMessage(msg, true)
     |> console.Write
+
+/// Logs the given files with the message.
+let Log message files = files |> Seq.iter (log << sprintf "%s%s" message)

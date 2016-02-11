@@ -189,3 +189,33 @@ let splitNavisionFiles fileNames destDir =
             use outputFile = new StreamWriter(Path.Combine(destDir, targetFile), false)
             outputFile.Write(x.Source)
             outputFile.Close()
+
+/// Gets the version number for the specified version tag in a Dynamics NAV version tag list
+let getTagVersionInVersionTagList (versionTag : string) (tagList : string) =
+    let versionTag = versionTag.ToUpper()
+    if tagList.ToUpper().Contains versionTag then
+        let tag = splitVersionTags tagList
+                  |> Seq.find (fun x -> x.StartsWith versionTag)
+        tag.Replace(versionTag, "")
+    else
+        ""
+
+/// Gets the version number for the specified version tag in a Dynamics NAV object
+let getTagVersionInObject (versionTag : string) sourceCode =
+    let tagList = getVersionTagList sourceCode
+    getTagVersionInVersionTagList versionTag tagList
+
+/// Gets the highest version number for a specified version tag in a number of Dynamics NAV objects
+let getHighestTagVersionInObjects (versionTag : string) sourceCode =
+    objectsInObjectString sourceCode
+    |> Seq.map (fun objectSourcecode -> getTagVersionInObject versionTag objectSourcecode.Source)
+    |> Seq.filter (fun version -> not (String.IsNullOrWhiteSpace(version)))
+    |> Seq.max
+
+/// Gets the highest version number for a specified version tag in a number of Dynamics NAV objects in a set of object files
+let getHighestTagVersionInFiles (versionTag : string) fileNames =
+    fileNames
+    |> Seq.map (fun fileName -> File.ReadAllText(fileName))
+    |> Seq.map (fun sourceCode -> getTagVersionInObject versionTag sourceCode)
+    |> Seq.filter (fun version -> not (String.IsNullOrWhiteSpace(version)))
+    |> Seq.max

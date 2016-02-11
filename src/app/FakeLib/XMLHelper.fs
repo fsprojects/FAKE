@@ -118,6 +118,14 @@ let XPathReplace xpath value (doc : XmlDocument) =
         node.Value <- value
         doc
 
+/// Replaces the inner text of an xml node in the XML document specified by a XPath expression.
+let XPathReplaceInnerText xpath innerTextValue (doc : XmlDocument) = 
+    let node = doc.SelectSingleNode xpath
+    if node = null then failwithf "XML node '%s' not found" xpath
+    else 
+        node.InnerText <- innerTextValue
+        doc
+
 /// Selects a xml node value via XPath from the given document
 let XPathValue xpath (namespaces : #seq<string * string>) (doc : XmlDocument) = 
     let nsmgr = XmlNamespaceManager(doc.NameTable)
@@ -132,6 +140,12 @@ let XmlPoke (fileName : string) xpath value =
     doc.Load fileName
     XPathReplace xpath value doc |> fun x -> x.Save fileName
 
+/// Replaces the inner text of an xml node in a XML file at the location specified by a XPath expression.
+let XmlPokeInnerText (fileName : string) xpath innerTextValue = 
+    let doc = new XmlDocument()
+    doc.Load fileName
+    XPathReplaceInnerText xpath innerTextValue doc |> fun x -> x.Save fileName
+
 /// Replaces text in a XML document specified by a XPath expression, with support for namespaces.
 let XPathReplaceNS xpath value (namespaces : #seq<string * string>) (doc : XmlDocument) = 
     let nsmgr = XmlNamespaceManager(doc.NameTable)
@@ -142,11 +156,27 @@ let XPathReplaceNS xpath value (namespaces : #seq<string * string>) (doc : XmlDo
         node.Value <- value
         doc
 
+/// Replaces inner text in a XML document specified by a XPath expression, with support for namespaces.
+let XPathReplaceInnerTextNS xpath innerTextValue (namespaces : #seq<string * string>) (doc : XmlDocument) = 
+    let nsmgr = XmlNamespaceManager(doc.NameTable)
+    namespaces |> Seq.iter nsmgr.AddNamespace
+    let node = doc.SelectSingleNode(xpath, nsmgr)
+    if node = null then failwithf "XML node '%s' not found" xpath
+    else 
+        node.InnerText <- innerTextValue
+        doc
+
 /// Replaces text in a XML file at the location specified by a XPath expression, with support for namespaces.
 let XmlPokeNS (fileName : string) namespaces xpath value = 
     let doc = new XmlDocument()
     doc.Load fileName
     XPathReplaceNS xpath value namespaces doc |> fun x -> x.Save fileName
+
+/// Replaces inner text of an xml node in a XML file at the location specified by a XPath expression, with support for namespaces.
+let XmlPokeInnerTextNS (fileName : string) namespaces xpath innerTextValue = 
+    let doc = new XmlDocument()
+    doc.Load fileName
+    XPathReplaceInnerTextNS xpath innerTextValue namespaces doc |> fun x -> x.Save fileName
 
 /// Loads the given text into a XslCompiledTransform.
 let XslTransformer text = 

@@ -3,7 +3,9 @@
 module Fake.FileSystemHelper
 
 open System
+open System.Text
 open System.IO
+open System.Runtime.InteropServices
 
 /// Creates a DirectoryInfo for the given path.
 let inline directoryInfo path = new DirectoryInfo(path)
@@ -95,3 +97,9 @@ let isDirectory path =
 
 /// Detects whether the given path is a file.
 let isFile path = isDirectory path |> not
+
+/// Detects whether the given path does not contains invalid characters.
+let isValidPath (path:string) =
+    Path.GetInvalidPathChars()
+    |> Array.filter (fun char -> path.Contains(char.ToString()))
+    |> Array.isEmpty

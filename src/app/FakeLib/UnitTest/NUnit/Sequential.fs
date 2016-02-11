@@ -5,7 +5,7 @@ module Fake.NUnitSequential
 /// Runs NUnit on a group of assemblies.
 /// ## Parameters
 /// 
-///  - `setParams` - Function used to manipulate the default NUnitParams value.
+///  - `setParams` - Function used to manipulate the default [NUnitParams](fake-nunitcommon-nunitparams.html) value.
 ///  - `assemblies` - Sequence of one or more assemblies containing NUnit unit tests.
 /// 
 /// ## Sample usage
@@ -14,7 +14,7 @@ module Fake.NUnitSequential
 ///         !! (testDir + @"\Test.*.dll") 
 ///           |> NUnit (fun p -> { p with ErrorLevel = DontFailBuild })
 ///     )
-let NUnit (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) = 
+let NUnit (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) =
     let details = assemblies |> separated ", "
     traceStartTask "NUnit" details
     let parameters = NUnitDefaults |> setParams
@@ -28,7 +28,7 @@ let NUnit (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) =
             info.FileName <- tool
             info.WorkingDirectory <- getWorkingDir parameters
             info.Arguments <- args) parameters.TimeOut
-    sendTeamCityNUnitImport (getWorkingDir parameters @@ parameters.OutputFile)
+    sendTeamCityNUnitImport parameters.OutputFile
     let errorDescription error = 
         match error with
         | OK -> "OK"
@@ -38,8 +38,8 @@ let NUnit (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) =
     | DontFailBuild -> 
         match result with
         | OK | TestsFailed -> traceEndTask "NUnit" details
-        | _ -> failwith (errorDescription result)
+        | _ -> raise (FailedTestsException(errorDescription result))
     | Error | FailOnFirstError -> 
         match result with
         | OK -> traceEndTask "NUnit" details
-        | _ -> failwith (errorDescription result)
+        | _ -> raise (FailedTestsException(errorDescription result))

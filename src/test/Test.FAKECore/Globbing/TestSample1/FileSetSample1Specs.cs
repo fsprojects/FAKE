@@ -147,4 +147,24 @@ namespace Test.FAKECore.Globbing.TestSample1
         It should_find_sample_app = () => Files.First().ShouldEndWith("SampleApp.dll");
         It should_match_1_file = () => Files.Length.ShouldEqual(1);
     }
+
+    public class when_scanning_folder_with_trialing_slash : when_extracting_zip
+    {
+        Because of = () => Files =
+            FileSystem
+                .Include("temptest/SampleApp/obj/")
+                .ToArray();
+
+        It should_match_1_file = () => Files.Length.ShouldEqual(1);
+    }
+
+    public class when_scanning_folder_without_trialing_slash : when_extracting_zip
+    {
+        Because of = () => Files =
+            FileSystem
+                .Include("temptest/SampleApp/obj")
+                .ToArray();
+
+        It should_match_1_file = () => Files.Length.ShouldEqual(1);
+    }
 }

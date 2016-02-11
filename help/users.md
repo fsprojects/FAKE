@@ -3,6 +3,7 @@
 Some of our users are:
 
 * [msu solutions GmbH](http://www.msu-solutions.de/)
+* [SEEK](http://www.seek.com.au)
 * [E.On Global Commodities UK](http://www.eon.com/en/about-us/structure/company-finder/e-dot-on-global-commodities.html)
 * [Octokit.NET](https://github.com/octokit/octokit.net/) by GitHub
 * [Akka.net](https://github.com/akkadotnet/akka.net)
@@ -29,3 +30,7 @@ Some of our users are:
 * [Olo](http://www.olo.com)
 * [Papers](http://www.papersapp.com)
 * [Centigrade GmbH](http://www.centigrade.de)
+* [NEST & Elasticsearch.NET](http://github.com/elasticsearch/elasticsearch-net) by Elasticsearch
+* [Elastacloud](http://elastacloud.com/)
+* [Digital Furnace Games](http://digitalfurnacegames.com/)
+* [Recognos Romania](http://www.recognos.ro/en)

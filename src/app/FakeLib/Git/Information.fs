@@ -4,8 +4,11 @@ module Fake.Git.Information
 
 open Fake
 open System
+open System.Text.RegularExpressions
 open System.IO
    
+let versionRegex = Regex("^git version ([\d.]*).*$", RegexOptions.Compiled)
+
 /// Gets the git version
 let getVersion repositoryDir = 
     let ok,msg,errors = runGitCommand repositoryDir "--version"
@@ -14,30 +17,48 @@ let getVersion repositoryDir =
 let isVersionHigherOrEqual currentVersion referenceVersion = 
   
     parseVersion currentVersion >= parseVersion referenceVersion
-                
+
+/// [omit]       
+let extractGitVersion version =
+    let regexRes = versionRegex.Match version 
+    if regexRes.Success then
+        regexRes.Groups.[1].Value
+    else
+        failwith "unable to find git version"
+         
 let isGitVersionHigherOrEqual referenceVersion = 
 
-    let currentVersion = getVersion "."
-    let versionParts = currentVersion.Replace("git version ","") 
+    let versionParts = getVersion "." |> extractGitVersion
 
     isVersionHigherOrEqual versionParts referenceVersion
 
 /// Gets the git branch name
-let getBranchName repositoryDir = 
-    let ok,msg,errors = runGitCommand repositoryDir "status"
-    let s = msg |> Seq.head 
+let getBranchName repositoryDir =
+    try
+        let ok,msg,errors = runGitCommand repositoryDir "status"
+        let s = msg |> Seq.head
 
-    let mutable replaceBranchString = "On branch "
-    let mutable replaceNoBranchString = "Not currently on any branch."
-    let noBranch = "NoBranch"
+        let mutable replaceBranchString = "On branch "
+        let mutable replaceNoBranchString = "Not currently on any branch."
+        let noBranch = "NoBranch"
 
-    if isGitVersionHigherOrEqual "1.9" then replaceNoBranchString <- "HEAD detached"
-    if not <| isGitVersionHigherOrEqual "1.9" then replaceBranchString <- "# " + replaceBranchString
+        if isGitVersionHigherOrEqual "1.9" then replaceNoBranchString <- "HEAD detached"
+        if not <| isGitVersionHigherOrEqual "1.9" then replaceBranchString <- "# " + replaceBranchString
 
-    if startsWith replaceNoBranchString s then noBranch else s.Replace(replaceBranchString,"")
+        if startsWith replaceNoBranchString s then noBranch else s.Replace(replaceBranchString,"")
+    with _ when (repositoryDir = "" || repositoryDir = ".") && buildServer = TeamFoundation ->
+        match environVarOrNone "BUILD_SOURCEBRANCHNAME" with
+        | None -> reraise()
+        | Some s -> s
 
 /// Returns the SHA1 of the current HEAD
-let getCurrentSHA1 repositoryDir = getSHA1 repositoryDir "HEAD"
+let getCurrentSHA1 repositoryDir =
+    try
+        getSHA1 repositoryDir "HEAD"
+    with _ when (repositoryDir = "" || repositoryDir = ".") && buildServer = TeamFoundation ->
+        match environVarOrNone "BUILD_SOURCEVERSION" with
+        | None -> reraise()
+        | Some s -> s
 
 /// Shows the git status
 let showStatus repositoryDir = showGitCommand repositoryDir "status"
@@ -74,8 +95,13 @@ let getLastTag() = (describe "").Split('-') |> Seq.head
 
 /// Gets the current hash of the current repository
 let getCurrentHash() =
-    let tmp =
-        (shortlog "").Split(' ') 
-          |> Seq.head
-          |> fun s -> s.Split('m')
-    if tmp |> Array.length > 2 then tmp.[1].Substring(0,6) else tmp.[0].Substring(0,6)
+    try
+        let tmp =
+            (shortlog "").Split(' ')
+            |> Seq.head
+            |> fun s -> s.Split('m')
+        if tmp |> Array.length > 2 then tmp.[1].Substring(0,6) else tmp.[0].Substring(0,6)
+    with _ when buildServer = TeamFoundation ->
+        match environVarOrNone "BUILD_SOURCEVERSION" with
+        | None -> reraise()
+        | Some s -> s

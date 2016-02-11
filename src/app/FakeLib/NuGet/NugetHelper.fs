@@ -19,6 +19,10 @@ type NugetFrameworkReferences =
     { FrameworkVersion : string
       References : NugetReferences }
 
+type NugetFrameworkAssemblyReferences =
+    { FrameworkVersions : string list
+      AssemblyName : string }
+
 type NugetSymbolPackage =
     /// Do not build symbol packages
     | None = 0
@@ -44,12 +48,14 @@ type NuGetParams =
       OutputPath : string
       PublishUrl : string
       AccessKey : string
+      NoDefaultExcludes : bool
       NoPackageAnalysis : bool
       ProjectFile : string
       Dependencies : NugetDependencies
       DependenciesByFramework : NugetFrameworkDependencies list
       References : NugetReferences
       ReferencesByFramework : NugetFrameworkReferences list
+      FrameworkAssemblies : NugetFrameworkAssemblyReferences list
       IncludeReferencedProjects : bool
       PublishTrials : int
       Publish : bool
@@ -77,11 +83,13 @@ let NuGetDefaults() =
       DependenciesByFramework = []
       References = []
       ReferencesByFramework = []
+      FrameworkAssemblies = []
       IncludeReferencedProjects = false
       OutputPath = "./NuGet"
       WorkingDir = "./NuGet"
       PublishUrl = null
       AccessKey = null
+      NoDefaultExcludes = false
       NoPackageAnalysis = false
       PublishTrials = 5
       Publish = false
@@ -108,10 +116,10 @@ let GetPackageVersion deploymentsDir package =
             if index < folder.Length then
                 folder.Substring index
             else
-                let files = Directory.GetFiles(folder, sprintf "%s.*.nupkg" package)
-                let file = (Seq.head files).Replace(".nupkg","")
-                let index = file.LastIndexOf package + package.Length + 1
-                file.Substring index
+                let nuspec = Directory.GetFiles(folder, sprintf "%s.nuspec" package) |> Seq.head
+                let doc = System.Xml.Linq.XDocument.Load(nuspec)
+                let vers = doc.Descendants(XName.Get("version", doc.Root.Name.NamespaceName))
+                (Seq.head vers).Value
                
         logfn "Version %s found for package %s" version package
         version
@@ -122,12 +130,12 @@ let private replaceAccessKey key (text : string) =
     if isNullOrEmpty key then text
     else text.Replace(key, "PRIVATEKEY")
 
-let private createNuspecFile parameters nuSpec = 
-    let fi = fileInfo nuSpec
-    let specFile = parameters.WorkingDir @@ (fi.Name.Replace("nuspec", "") + parameters.Version + ".nuspec")
-                   |> FullName
+let private createNuSpecFromTemplate parameters (templateNuSpec:FileInfo) =
+    let specFile = parameters.WorkingDir @@ (templateNuSpec.Name.Replace("nuspec", "") + parameters.Version + ".nuspec")
+                    |> FullName
     tracefn "Creating .nuspec file at %s" specFile
-    fi.CopyTo(specFile, true) |> ignore
+
+    templateNuSpec.CopyTo(specFile, true) |> ignore
 
     let getFrameworkGroup (frameworkTags : (string * string) seq) =
         frameworkTags
@@ -151,9 +159,20 @@ let private createNuspecFile parameters nuSpec =
         parameters.ReferencesByFramework
         |> Seq.map (fun x -> (x.FrameworkVersion, getReferencesTags x.References))
         |> getFrameworkGroup
-    
+
     let referencesXml = sprintf "<references>%s</references>" (references + referencesByFramework)
     
+    let getFrameworkAssemblyTags references =
+        references
+        |> Seq.map (fun x ->
+                    if x.FrameworkVersions = [] then sprintf "<frameworkAssembly assemblyName=\"%s\" />" x.AssemblyName
+                    else sprintf "<frameworkAssembly assemblyName=\"%s\" targetFramework=\"%s\" />" x.AssemblyName (x.FrameworkVersions |> separated ", "))
+        |> toLines
+
+    let frameworkAssembliesXml =
+        if parameters.FrameworkAssemblies = [] then ""
+        else sprintf "<frameworkAssemblies>%s</frameworkAssemblies>" (parameters.FrameworkAssemblies |> getFrameworkAssemblyTags)
+
     let getDependenciesTags dependencies = 
         dependencies
         |> Seq.map (fun (package, version) -> sprintf "<dependency id=\"%s\" version=\"%s\" />" package version)
@@ -205,11 +224,19 @@ let private createNuspecFile parameters nuSpec =
         |> List.map (fun (placeholder, replacement) -> placeholder, xmlEncode replacement)
         |> List.append [ "@dependencies@", dependenciesXml
                          "@references@", referencesXml
+                         "@frameworkAssemblies@", frameworkAssembliesXml
                          "@files@", filesXml ]
     
     processTemplates replacements [ specFile ]
     tracefn "Created nuspec file %s" specFile
     specFile
+
+let private createNuSpecFromTemplateIfNotProjFile parameters nuSpecOrProjFile = 
+    let nuSpecOrProjFileInfo = fileInfo nuSpecOrProjFile
+    match nuSpecOrProjFileInfo.Extension.ToLower().EndsWith("proj") with
+    | true -> None
+    | false -> Some (createNuSpecFromTemplate parameters nuSpecOrProjFileInfo)
+    
 
 let private propertiesParam = function 
     | [] -> ""
@@ -218,11 +245,13 @@ let private propertiesParam = function
                           |> List.map (fun p -> (fst p) + "=\"" + (snd p) + "\"")
                           |> String.concat ";")
 
-/// create package (including symbols package if enabled)
+/// Creates a NuGet package without templating (including symbols package if enabled)
 let private pack parameters nuspecFile =
+    let nuspecFile = FullName nuspecFile
     let properties = propertiesParam parameters.Properties
     let outputPath = (FullName(parameters.OutputPath.TrimEnd('\\').TrimEnd('/')))
     let packageAnalysis = if parameters.NoPackageAnalysis then "-NoPackageAnalysis" else ""
+    let defaultExcludes = if parameters.NoDefaultExcludes then "-NoDefaultExcludes" else ""
     let includeReferencedProjects = if parameters.IncludeReferencedProjects then "-IncludeReferencedProjects" else ""
     
     if Directory.Exists parameters.OutputPath |> not then 
@@ -230,35 +259,28 @@ let private pack parameters nuspecFile =
 
     let execute args =
         let result =
-            ExecProcess (fun info ->
+            ExecProcessAndReturnMessages (fun info ->
                 info.FileName <- parameters.ToolPath
                 info.WorkingDirectory <- FullName parameters.WorkingDir
                 info.Arguments <- args) parameters.TimeOut
-        if result <> 0 then failwithf "Error during NuGet package creation. %s %s" parameters.ToolPath args
-
-    let nuspecFile = 
-        let fi = fileInfo nuspecFile
-        if fi.Directory.FullName = FullName parameters.WorkingDir then
-            fi.Name
-        else
-            FullName nuspecFile
+        if result.ExitCode <> 0 || result.Errors.Count > 0 then failwithf "Error during NuGet package creation. %s %s\r\n%s" parameters.ToolPath args (toLines result.Errors)
 
     match parameters.SymbolPackage with
     | NugetSymbolPackage.ProjectFile ->
         if not (isNullOrEmpty parameters.ProjectFile) then
-            sprintf "pack -Symbols -Version %s -OutputDirectory \"%s\" \"%s\" %s %s %s"
-                parameters.Version outputPath (FullName parameters.ProjectFile) packageAnalysis includeReferencedProjects properties
+            sprintf "pack -Symbols -Version %s -OutputDirectory \"%s\" \"%s\" %s %s %s %s"
+                parameters.Version outputPath (FullName parameters.ProjectFile) packageAnalysis defaultExcludes includeReferencedProjects properties
             |> execute
-        sprintf "pack -Version %s -OutputDirectory \"%s\" \"%s\" %s %s %s"
-            parameters.Version outputPath nuspecFile packageAnalysis includeReferencedProjects properties
+        sprintf "pack -Version %s -OutputDirectory \"%s\" \"%s\" %s %s %s %s"
+            parameters.Version outputPath nuspecFile packageAnalysis defaultExcludes includeReferencedProjects properties
         |> execute
     | NugetSymbolPackage.Nuspec ->
-        sprintf "pack -Symbols -Version %s -OutputDirectory \"%s\" \"%s\" %s %s %s"
-            parameters.Version outputPath nuspecFile packageAnalysis includeReferencedProjects properties
+        sprintf "pack -Symbols -Version %s -OutputDirectory \"%s\" \"%s\" %s %s %s %s"
+            parameters.Version outputPath nuspecFile packageAnalysis defaultExcludes includeReferencedProjects properties
         |> execute
     | _ ->
-        sprintf "pack -Version %s -OutputDirectory \"%s\" \"%s\" %s %s %s"
-            parameters.Version outputPath nuspecFile packageAnalysis includeReferencedProjects properties
+        sprintf "pack -Version %s -OutputDirectory \"%s\" \"%s\" %s %s %s %s"
+            parameters.Version outputPath nuspecFile packageAnalysis defaultExcludes includeReferencedProjects properties
         |> execute
     
 
@@ -311,20 +333,39 @@ let rec private publishSymbols parameters =
 /// ## Parameters
 /// 
 ///  - `setParams` - Function used to manipulate the default NuGet parameters.
-///  - `nuspecFile` - The .nuspec file name.
-let NuGetPack setParams nuspecFile =
-    traceStartTask "NuGetPack" nuspecFile
+///  - `nuspecOrProjectFile` - The .nuspec or project file name.
+let NuGetPackDirectly setParams nuspecOrProjectFile =
+    traceStartTask "NuGetPackDirectly" nuspecOrProjectFile
     let parameters = NuGetDefaults() |> setParams
     try
-        let nuspecFile = createNuspecFile parameters nuspecFile
-        pack parameters nuspecFile
-        DeleteFile nuspecFile
+         pack parameters nuspecOrProjectFile
     with exn ->
         (if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message
          else exn.Message)
         |> replaceAccessKey parameters.AccessKey
         |> failwith
-    traceEndTask "NuGetPack" nuspecFile
+    traceEndTask "NuGetPackDirectly" nuspecOrProjectFile
+
+/// Creates a new NuGet package based on the given .nuspec file.
+/// ## Parameters
+/// 
+///  - `setParams` - Function used to manipulate the default NuGet parameters.
+///  - `nuspecOrProjectFile` - The .nuspec or project file name.
+let NuGetPack setParams nuspecOrProjectFile =
+    traceStartTask "NuGetPack" nuspecOrProjectFile
+    let parameters = NuGetDefaults() |> setParams
+    try
+        match (createNuSpecFromTemplateIfNotProjFile parameters nuspecOrProjectFile) with
+        | Some nuspecTemplateFile -> 
+            pack parameters nuspecTemplateFile
+            DeleteFile nuspecTemplateFile
+        | None -> pack parameters nuspecOrProjectFile
+    with exn ->
+        (if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message
+         else exn.Message)
+        |> replaceAccessKey parameters.AccessKey
+        |> failwith
+    traceEndTask "NuGetPack" nuspecOrProjectFile
 
 /// Publishes a NuGet package to the nuget server.
 /// ## Parameters
@@ -341,22 +382,25 @@ let NuGetPublish setParams =
 /// 
 ///  - `setParams` - Function used to manipulate the default NuGet parameters.
 ///  - `nuspecFile` - The .nuspec file name.
-let NuGet setParams nuspecFile = 
-    traceStartTask "NuGet" nuspecFile
+let NuGet setParams nuspecOrProjectFile = 
+    traceStartTask "NuGet" nuspecOrProjectFile
     let parameters = NuGetDefaults() |> setParams
     try 
-        let nuspecFile = createNuspecFile parameters nuspecFile
-        pack parameters nuspecFile
+        match (createNuSpecFromTemplateIfNotProjFile parameters nuspecOrProjectFile) with
+        | Some nuspecTemplateFile -> 
+            pack parameters nuspecTemplateFile
+            DeleteFile nuspecTemplateFile
+        | None -> pack parameters nuspecOrProjectFile
+
         if parameters.Publish then 
             publish parameters
             if parameters.ProjectFile <> null then publishSymbols parameters
-        DeleteFile nuspecFile
     with exn -> 
         (if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message
          else exn.Message)
         |> replaceAccessKey parameters.AccessKey
         |> failwith
-    traceEndTask "NuGet" nuspecFile
+    traceEndTask "NuGet" nuspecOrProjectFile
 
 /// NuSpec metadata type
 type NuSpecPackage = 
@@ -375,6 +419,7 @@ type NuSpecPackage =
       RequireLicenseAcceptance : bool
       Description : string
       Language : string
+      ReleaseNotes : string
       Tags : string }
     member x.Name = sprintf "%s %s" x.Id x.Version
     override x.ToString() = x.Name
@@ -392,6 +437,7 @@ let getNuspecProperties (nuspec : string) =
         [ "x", "http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd"
           "y", "http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd" 
           "default", ""
+          "inDoc", doc.DocumentElement.NamespaceURI
           ]
     
     let getValue name = 
@@ -418,6 +464,7 @@ let getNuspecProperties (nuspec : string) =
       Description = getValue "description"
       Language = getValue "language"
       Tags = getValue "tags"
+      ReleaseNotes = getValue "releaseNotes"
       Url = String.Empty
       IsLatestVersion = false
       Created = DateTime.MinValue
@@ -452,17 +499,21 @@ let getRepoUrl() = discoverRepoUrl.Force()
 /// [omit]
 let extractFeedPackageFromXml (entry : Xml.XmlNode) = 
     let properties = entry.["m:properties"]
-    let property name = properties.["d:" + name].InnerText
+    let property name = 
+        let p = properties.["d:" + name]
+        if p = null || p.IsEmpty then "" else p.InnerText
     let boolProperty name = (property name).ToLower() = "true"
+    let author = entry.["author"].InnerText
     let dateTimeProperty name = DateTime.Parse(property name)
-    { Id = property "Id"
+    { Id = entry.["title"].InnerText
       Version = property "Version"
       Description = property "Description"
       IsLatestVersion = boolProperty "IsLatestVersion"
-      Authors = property "Authors"
-      Owners = property "Authors"
+      Authors = author
+      Owners = author
       Language = property "Language"
       Tags = property "Tags"
+      ReleaseNotes = property "ReleaseNotes"
       ProjectUrl = property "ProjectUrl"
       LicenseUrl = property "LicenseUrl"
       RequireLicenseAcceptance = boolProperty "RequireLicenseAcceptance"
@@ -507,7 +558,7 @@ let argList name values =
     |> String.concat " "
 
 
-/// loads the dependences from specified packages.config file
+/// Returns the dependencies from specified packages.config file
 let getDependencies (packagesFile:string) =
     let xname = XName.op_Implicit
     let attribute name (e:XElement) =

@@ -5,29 +5,39 @@ module Fake.RestorePackageHelper
 
 open System
 
-/// Looks for a tool in all subfolders - returns the tool file name.
+/// Looks for NuGet.exe in [1] the specified defaultPath, [2] a list of standard tool folders, [3] any subfolder in the current directory, [4] the PATH - returns the first path where NuGet.exe was found.
 let findNuget defaultPath = 
     try
         let priorityList = 
-            [currentDirectory @@ "tools" @@ "NuGet"
+            [defaultPath
+             currentDirectory @@ "tools" @@ "NuGet"
              currentDirectory @@ ".nuget"             
              currentDirectory @@ "packages" @@ "NuGet.Commandline" @@ "tools"
              currentDirectory @@ "packages" @@ "Nuget.Commandline" @@ "tools"]
-
+            
         let exeNames = ["nuget.exe"; "NuGet.exe"; "Nuget.exe"]
 
-        let priorityPaths =
-            seq { for path in priorityList do
+        let findInFolders folders =
+            seq { for path in folders do
                     for name in exeNames do
                       let fi = fileInfo(path @@ name)
                       if fi.Exists then yield fi.FullName }
+
+        // Find in defaultPath or priorityFolders
+        let priorityPaths = findInFolders priorityList
         if not <| Seq.isEmpty priorityPaths then Seq.head priorityPaths else
 
+        // Find in ANY subfolder
         let tools = !! ("./**/" @@ "nuget.exe")
-        if Seq.isEmpty tools then 
-            let tools = !! ("./**/" @@ "NuGet.exe")
-            if Seq.isEmpty tools then defaultPath @@ "NuGet.exe" else Seq.head tools
-        else Seq.head tools
+                    ++ ("./**/" @@ "NuGet.exe")
+                    ++ ("./**/" @@ "Nuget.exe")
+        if not <| Seq.isEmpty tools then Seq.head tools else
+
+        // Find in PATH
+        let nugetInPATH = findInFolders pathDirectories
+        if not <| Seq.isEmpty nugetInPATH then Seq.head nugetInPATH else
+
+        defaultPath @@ "NuGet.exe"
     with
     | _ -> defaultPath @@ "NuGet.exe"
 
@@ -83,15 +93,18 @@ let runNuGet toolPath timeOut args failWith =
 let rec runNuGetTrial retries toolPath timeOut args failWith =
     let f() = runNuGet toolPath timeOut args failWith
     TaskRunnerHelper.runWithRetries f retries
+
+/// [omit]
+let buildSources sources = 
+    sources
+    |> List.map (fun source -> " \"-Source\" \"" + source + "\"")
+    |> separated ""
         
 /// [omit]
 let buildNuGetArgs setParams packageId = 
     let parameters = RestoreSinglePackageDefaults |> setParams
-    let sources =
-        parameters.Sources
-        |> List.map (fun source -> " \"-Source\" \"" + source + "\"")
-        |> separated ""
-
+    let sources = parameters.Sources |> buildSources
+        
     let args = " \"install\" \"" + packageId + "\" \"-OutputDirectory\" \"" + (parameters.OutputPath |> FullName) + "\"" + sources
 
     match parameters.ExcludeVersion, parameters.IncludePreRelease, parameters.Version with
@@ -132,10 +145,7 @@ let RestorePackage setParams packageFile =
     traceStartTask "RestorePackage" packageFile
     let (parameters:RestorePackageParams) = RestorePackageDefaults |> setParams
 
-    let sources =
-        parameters.Sources
-        |> List.map (fun source -> " \"-Source\" \"" + source + "\"")
-        |> separated ""
+    let sources = parameters.Sources |> buildSources
 
     let args =
         " \"install\" \"" + (packageFile |> FullName) + "\"" +
@@ -149,3 +159,33 @@ let RestorePackage setParams packageFile =
 let RestorePackages() = 
     !! "./**/packages.config"
     |> Seq.iter (RestorePackage id)
+
+/// Restores the packages in the given solution file file from NuGet.
+/// ## Parameters
+/// 
+///  - `setParams` - Function used to manipulate the default NuGet parameters.
+///  - `solutionFile` - The microsoft sln file name.
+///
+/// ## Sample
+///
+///     Target "RestorePackages" (fun _ -> 
+///          "./scr/Everything.sln"
+///          |> RestoreMSSolutionPackages (fun p ->
+///              { p with
+///                  Sources = "http:://myNugetSources.com" :: p.Sources
+///                  OutputPath = outputDir
+///                  Retries = 4 })
+///      )
+let RestoreMSSolutionPackages setParams solutionFile =
+    traceStartTask "RestoreSolutionPackages" solutionFile
+    let (parameters:RestorePackageParams) = RestorePackageDefaults |> setParams
+
+    let sources = parameters.Sources |> buildSources
+
+    let args = 
+        "\"restore\" \"" + (solutionFile |> FullName) + "\"" +
+        " \"-OutputDirectory\" \"" + (parameters.OutputPath |> FullName) + "\"" + sources
+
+    runNuGetTrial parameters.Retries parameters.ToolPath parameters.TimeOut args (fun () -> failwithf "Package restore of %s failed" solutionFile)
+
+    traceEndTask "RestoreSolutionPackages" solutionFile

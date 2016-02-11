@@ -12,3 +12,6 @@ type TestRunnerErrorLevel =
     | FailOnFirstError
     /// With this option set, no exception is thrown if a test is broken.
     | DontFailBuild
+
+type FailedTestsException(msg) =
+    inherit System.Exception(msg)

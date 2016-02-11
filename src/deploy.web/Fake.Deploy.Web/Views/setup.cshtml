@@ -149,7 +149,8 @@
         </div>
     </div>
 
-    <div class="control-group">
+    @*hidden, until nuget feed integration is ready*@
+    <div class="control-group hidden">
         <div class="controls">
             <label>
                 <input type="checkbox" data-bind="checked: useNuGetFeedUpload"/> Use NuGet feed package upload integration
@@ -157,14 +158,14 @@
         </div>
     </div>
     
-    <div class="control-group" data-bind="foreach: nugetFeeds">
+    <div class="control-group hidden" data-bind="foreach: nugetFeeds">
         <label class="control-label" data-bind ="text: $index() + 1 + '. ', id: 'nugetFeed_' + $index()"></label>
         <div class="controls">
             <input type="text" data-bind="value: $parent.nugetFeeds()[$index()]"/>
             <a href="#" class="badge badge-important" data-bind="click: $parent.removeNugetFeed" alt="remove" title="remove">X</a>
         </div>        
     </div>
-    <div class="control-group" data-bind="if: useNuGetFeedUpload">
+    <div class="control-group hidden" data-bind="if: useNuGetFeedUpload">
         <label class="control-label" for="agentName">Uri:</label>
             <div class="controls">
                 <label>

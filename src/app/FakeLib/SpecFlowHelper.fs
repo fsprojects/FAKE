@@ -51,13 +51,16 @@ let SpecFlow setParams =
 
     let tool = parameters.ToolPath @@ parameters.ToolName
 
+    let isMsTest = toLower >> ((=) "mstestexecutionreport")
+
     let commandLineBuilder = 
         new StringBuilder()
         |> append           parameters.SubCommand
         |> append           parameters.ProjectFile
         |> appendIfNotNull  parameters.BinFolder "/binFolder:"
         |> appendIfNotNull  parameters.OutputFile "/out:"
-        |> appendIfNotNull  parameters.XmlTestResultFile "/xmlTestResult:"
+        |> appendIfNotNull  parameters.XmlTestResultFile 
+                                (if isMsTest parameters.SubCommand then "/testResult:" else "/xmlTestResult:")
         |> appendIfNotNull  parameters.TestOutputFile "/testOutput:"
         |> appendIfTrue     parameters.Verbose "/verbose"
         |> appendIfTrue     parameters.ForceRegeneration "/force"

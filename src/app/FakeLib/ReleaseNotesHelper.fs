@@ -49,15 +49,20 @@ type ReleaseNotes =
       NugetVersion: string
       /// Semantic version
       SemVer: SemVerHelper.SemVerInfo
+      /// Release date
+      Date : DateTime option
       // The parsed release notes.
       Notes: string list }
     override x.ToString() = sprintf "%A" x
 
-    static member New(assemblyVersion,nugetVersion,notes) = { 
+    static member New(assemblyVersion,nugetVersion,date,notes) = { 
         AssemblyVersion = assemblyVersion
         NugetVersion = nugetVersion
         SemVer = SemVerHelper.parse nugetVersion
+        Date = date
         Notes = notes }
+
+    static member New(assemblyVersion,nugetVersion,notes) = ReleaseNotes.New(assemblyVersion,nugetVersion,None,notes)
 
 let parseVersions =
     let nugetRegex = getRegEx @"([0-9]+.)+[0-9]+(-[a-zA-Z]+\d*)?(.[0-9]+)?"
@@ -71,6 +76,17 @@ let parseVersions =
         then failwithf "Unable to parse valid NuGet version from release notes (%s)." line
         assemblyVersion, nugetVersion
 
+let parseDate =
+    let dateRegex = getRegEx @"(19|20)\d\d([- /.])(0[1-9]|1[012]|[1-9])\2(0[1-9]|[12][0-9]|3[01]|[1-9])"
+    fun line ->
+        let possibleDate = dateRegex.Match line
+        match possibleDate.Success with
+        | false -> None
+        | true ->
+            match DateTime.TryParse possibleDate.Value with
+            | false, _ -> None
+            | true, x -> Some(x)
+
 /// Parse simple release notes sequence
 let private parseSimpleReleaseNotes line =
     let assemblyVersion, nugetVersion = parseVersions line
@@ -83,7 +99,7 @@ let private parseSimpleReleaseNotes line =
         |> List.map (trimDot >> trim)
         |> List.filter isNotNullOrEmpty
         |> List.map (fun x -> x + ".")
-    ReleaseNotes.New(assemblyVersion.Value, nugetVersion.Value, notes)
+    ReleaseNotes.New(assemblyVersion.Value, nugetVersion.Value, None, notes)
 
 /// Parse "complex" release notes text sequence
 let private parseAllComplexReleaseNotes (text: seq<string>) =
@@ -102,7 +118,8 @@ let private parseAllComplexReleaseNotes (text: seq<string>) =
         match findNextNotesBlock text with
         | Some(header,(notes, rest)) ->
             let assemblyVer, nugetVer = parseVersions header
-            let newReleaseNotes = ReleaseNotes.New(assemblyVer.Value,nugetVer.Value,notes |> List.filter isNotNullOrEmpty |> List.rev)
+            let date = parseDate header
+            let newReleaseNotes = ReleaseNotes.New(assemblyVer.Value,nugetVer.Value,date,notes |> List.filter isNotNullOrEmpty |> List.rev)
             loop (newReleaseNotes::releaseNotes) rest
         | None -> releaseNotes
 

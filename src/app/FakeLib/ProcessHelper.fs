@@ -16,8 +16,8 @@ let startedProcesses = HashSet()
 /// [omit]
 let start (proc : Process) = 
     if isMono && proc.StartInfo.FileName.ToLowerInvariant().EndsWith(".exe") then
-        proc.StartInfo.Arguments <- "\"" + proc.StartInfo.FileName + "\" " + proc.StartInfo.Arguments
-        proc.StartInfo.FileName <- "mono"
+        proc.StartInfo.Arguments <- "--debug \"" + proc.StartInfo.FileName + "\" " + proc.StartInfo.Arguments
+        proc.StartInfo.FileName <- monoPath
 
     proc.Start() |> ignore
     startedProcesses.Add(proc.Id, proc.StartTime) |> ignore
@@ -180,6 +180,13 @@ let ExecProcessElevated cmd args timeOut =
         si.FileName <- cmd
         si.UseShellExecute <- true) timeOut
 
+/// Gets the list of valid directories included in the PATH environment variable.
+let pathDirectories =
+    splitEnvironVar "PATH"
+    |> Seq.map (fun value -> value.Trim())
+    |> Seq.filter (fun value -> not <| isNullOrEmpty value)
+    |> Seq.filter isValidPath
+
 /// Sets the environment Settings for the given startInfo.
 /// Existing values will be overriden.
 /// [omit]
@@ -258,7 +265,7 @@ let StartRemoteService host serviceName =
 
 /// Adds quotes around the string
 /// [omit]
-let quote str = "\"" + str + "\""
+let quote (str:string) = "\"" + str.Replace("\"","\\\"") + "\""
 
 /// Adds quotes around the string if needed
 /// [omit]
@@ -337,10 +344,10 @@ let findFile dirs file =
 /// environment variable for the given file. If successful returns the full
 /// path to the file.
 /// ## Parameters
-///  - `exe` - The executable file to locate
+///  - `file` - The file to locate
 let tryFindFileOnPath (file : string) : string option =
-    Environment.GetEnvironmentVariable("PATH").Split([| Path.PathSeparator |])
-    |> Seq.append ["."]
+    pathDirectories
+    |> Seq.append [ "." ]
     |> fun path -> tryFindFile path file
 
 /// Returns the AppSettings for the key - Splitted on ;
@@ -359,7 +366,9 @@ let appSettings (key : string) (fallbackValue : string) =
 /// [omit]
 let tryFindPath settingsName fallbackValue tool = 
     let paths = appSettings settingsName fallbackValue
-    tryFindFile paths tool
+    match tryFindFile paths tool with
+    | Some path -> Some path
+    | None -> tryFindFileOnPath tool
 
 /// Tries to find the tool via AppSettings. If no path has the right tool we are trying the PATH system variable.
 /// [omit]
@@ -407,17 +416,19 @@ let asyncShellExec (args : ExecParams) =
         let commandLine = args.CommandLine + " " + formatArgs args.Args
         let info = 
             ProcessStartInfo
-                (args.Program, UseShellExecute = false, RedirectStandardError = true, RedirectStandardOutput = true, 
+                (args.Program, UseShellExecute = false, 
+                 RedirectStandardError = true, RedirectStandardOutput = true, RedirectStandardInput = true,
                  WindowStyle = ProcessWindowStyle.Hidden, WorkingDirectory = args.WorkingDirectory, 
                  Arguments = commandLine)
         use proc = new Process(StartInfo = info)
         proc.ErrorDataReceived.Add(fun e -> 
             if e.Data <> null then traceError e.Data)
         proc.OutputDataReceived.Add(fun e -> 
-            if e.Data <> null then trace e.Data)
+            if e.Data <> null then log e.Data)
         start proc
         proc.BeginOutputReadLine()
         proc.BeginErrorReadLine()
+        proc.StandardInput.Close()
         // attaches handler to Exited event, enables raising events, then awaits event
         // the event gets triggered even if process has already finished
         let! _ = Async.GuardedAwaitObservable proc.Exited (fun _ -> proc.EnableRaisingEvents <- true)
