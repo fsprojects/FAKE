@@ -93,6 +93,19 @@ module Choco =
         ToolPath = null
         AdditionalArgs = null
     }
+    
+    let private getPaths =
+        let programDataPath = environVar "ProgramData"
+        if programDataPath |> isNotNullOrEmpty
+        then 
+            [
+                Seq.singleton (programDataPath @@ "chocolatey" @@ "bin")
+                pathDirectories
+            ]
+        else
+            [
+                pathDirectories
+            ]
 
     /// [omit]
     /// Tries to find the specified choco executable:
@@ -100,13 +113,9 @@ module Choco =
     /// 1. In the `<ProgramData>\chocolatey\bin` directory
     /// 2. In the `PATH` environment variable.
     let FindExe =
-        [
-            Seq.singleton (environVar "ProgramData" @@ "chocolatey" @@ "bin")
-            pathDirectories
-        ]
-        |> Seq.concat
-        |> Seq.map (fun directory -> directory @@ "choco.exe")
-        |> Seq.tryFind fileExists
+        getPaths |> Seq.concat
+            |> Seq.map (fun directory -> directory @@ "choco.exe")
+            |> Seq.tryFind fileExists
 
     /// [omit]
     /// Invokes chocolatey withe the specified arguments
@@ -144,7 +153,6 @@ module Choco =
     ///         "pretzel" |> Choco.Install (fun p -> { p with Version = "0.4.0" })
     ///     )
     let Install (setParams: (ChocoInstallParams -> ChocoInstallParams)) (packages: string) =
-
         if packages |> isNullOrEmpty then failwith "'packages' must not be empty."
 
         let parameters = setParams ChocoInstallDefaults
