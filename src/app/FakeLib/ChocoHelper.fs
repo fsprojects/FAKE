@@ -75,23 +75,23 @@ module Choco =
         ForceX86 = false
         OverrideArgs = false
         SkipPowershell = false
-        Version = ""
-        PackageParameters = ""
-        Source = ""
-        InstallArgs = ""
-        User = ""
-        Password = ""
-        ToolPath = ""
-        AdditionalArgs = ""
+        Version = null
+        PackageParameters = null
+        Source = null
+        InstallArgs = null
+        User = null
+        Password = null
+        ToolPath = null
+        AdditionalArgs = null
     }
 
     /// The default option set given to choco pack.
     let ChocoPackDefaults = {
         Timeout = TimeSpan.FromMinutes 5.
         NonInteractive = true
-        Version = ""
-        ToolPath = ""
-        AdditionalArgs = ""
+        Version = null
+        ToolPath = null
+        AdditionalArgs = null
     }
 
     /// [omit]
@@ -114,7 +114,7 @@ module Choco =
     ///  - `exePath` - The location of choco executable. Automatically found if null or empty.
     ///  - `args` - The arguments given to the executable.
     ///  - `timeout` - The choco execution timeout
-    let private CallChoco exePath args timeout =
+    let private callChoco exePath args timeout =
         // Try to find the choco executable if not specified by the user.
         let chocoExe =
             if not <| isNullOrEmpty exePath then exePath else
@@ -149,23 +149,24 @@ module Choco =
 
         let parameters = setParams ChocoInstallDefaults
 
-        let args = new StringBuilder("install ")
+        let args = new StringBuilder()
+                |> appendWithoutQuotes "install"
                 |> append packages
-                |> appendIfNotNullOrEmpty parameters.Version "--version "
+                |> appendWithoutQuotesIfNotNull parameters.Version "--version "
                 |> appendIfTrueWithoutQuotes parameters.Prerelease "--pre"
-                |> appendIfNotNullOrEmpty parameters.PackageParameters "--params "
-                |> appendIfNotNullOrEmpty parameters.Source "--source "
+                |> appendWithoutQuotesIfNotNull parameters.PackageParameters "--params "
+                |> appendWithoutQuotesIfNotNull parameters.Source "--source "
                 |> appendIfTrueWithoutQuotes parameters.ForceX86 "--forcex86"
-                |> appendIfNotNullOrEmpty parameters.InstallArgs "--installargs "
+                |> appendWithoutQuotesIfNotNull parameters.InstallArgs "--installargs "
                 |> appendIfTrueWithoutQuotes parameters.OverrideArgs "--overrideargs"
                 |> appendIfTrueWithoutQuotes parameters.SkipPowershell "--skippowershell"
-                |> appendIfNotNullOrEmpty parameters.User "--user "
-                |> appendIfNotNullOrEmpty parameters.Password "--password "
+                |> appendWithoutQuotesIfNotNull parameters.User "--user "
+                |> appendWithoutQuotesIfNotNull parameters.Password "--password "
                 |> appendIfTrueWithoutQuotes parameters.NonInteractive "-y"
                 |> appendIfNotNullOrEmpty parameters.AdditionalArgs ""
                 |> toText
 
-        CallChoco parameters.ToolPath args parameters.Timeout
+        callChoco parameters.ToolPath args parameters.Timeout
 
     /// Call choco to pack a package
     /// ## Parameters
@@ -181,11 +182,12 @@ module Choco =
 
         let parameters = setParams ChocoPackDefaults
 
-        let args = new StringBuilder("pack ")
+        let args = new StringBuilder()
+                |> appendWithoutQuotes "pack"
                 |> append nuspecPath
-                |> appendIfNotNullOrEmpty parameters.Version "--version "
+                |> appendWithoutQuotesIfNotNull parameters.Version "--version "
                 |> appendIfTrueWithoutQuotes parameters.NonInteractive "-y"
-                |> appendIfNotNullOrEmpty parameters.AdditionalArgs parameters.AdditionalArgs
+                |> appendWithoutQuotesIfNotNull parameters.AdditionalArgs parameters.AdditionalArgs
                 |> toText
 
-        CallChoco parameters.ToolPath args parameters.Timeout
+        callChoco parameters.ToolPath args parameters.Timeout
