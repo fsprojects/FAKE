@@ -152,8 +152,10 @@ let FinishTestCase testSuiteName testCaseName (duration : System.TimeSpan) =
 /// Union type representing the available test result formats accepted by AppVeyor.
 type TestResultsType =
     | MsTest
-    | NUnit
     | Xunit
+    | NUnit
+    | NUnit3
+    | JUnit
 
 /// Uploads all the test results ".xml" files in a directory to make them visible in Test tab of the build console.
 let UploadTestResultsXml (testResultsType : TestResultsType) outputDir =
