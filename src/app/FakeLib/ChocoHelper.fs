@@ -67,6 +67,26 @@ module Choco =
         NonInteractive: bool
     }
 
+    /// The choco push parameter type.
+    type ChocoPushParams = {
+        /// The source we are pushing the package to. Default: "https://chocolatey.org/"
+        /// Equivalent to the `--source <source>` option.
+        Source: string
+        /// The api key for the source. If not specified (and not local file source), does a lookup. 
+        /// If not specified and one is not found for an https source, push will fail.
+        /// Equivalent to the `--apikey <apikey>` option.
+        ApiKey: string
+        /// The choco execution timeout.
+        Timeout:TimeSpan
+        /// The location of the choco executable. Automatically found if null or empty.
+        ToolPath: string
+        /// A character string containing additional arguments to give to choco.
+        AdditionalArgs: string
+        /// Do not prompt for user input or confirmations. Default `true`.
+        /// Equivalent to the `-y` option.
+        NonInteractive: bool
+    }
+
     /// The default option set given to choco install.
     let ChocoInstallDefaults = {
         Timeout = TimeSpan.FromMinutes 5.
@@ -86,10 +106,20 @@ module Choco =
     }
 
     /// The default option set given to choco pack.
-    let ChocoPackDefaults = {
+    let ChocoPackDefaults: ChocoPackParams = {
         Timeout = TimeSpan.FromMinutes 5.
         NonInteractive = true
         Version = null
+        ToolPath = null
+        AdditionalArgs = null
+    }
+    
+    /// The default option set given to choco pack.
+    let ChocoPushDefaults = {
+        Timeout = TimeSpan.FromMinutes 5.
+        NonInteractive = true
+        Source = "https://chocolatey.org/"
+        ApiKey = null
         ToolPath = null
         AdditionalArgs = null
     }
@@ -118,7 +148,7 @@ module Choco =
             |> Seq.tryFind fileExists
 
     /// [omit]
-    /// Invokes chocolatey withe the specified arguments
+    /// Invokes chocolatey with the specified arguments
     /// ## Parameters
     ///  - `exePath` - The location of choco executable. Automatically found if null or empty.
     ///  - `args` - The arguments given to the executable.
@@ -143,7 +173,7 @@ module Choco =
     ///     "Build" =?> ("ChocoInstall", Choco.IsAvailable)
     let IsAvailable = not isUnix && FindExe <> None
 
-    /// Call choco to install a package
+    /// Call choco to [install](https://github.com/chocolatey/choco/wiki/CommandsInstall) a package
     /// ## Parameters
     ///  - `setParams` - Function used to manipulate the default choco parameters. See `ChocoInstallParams`
     ///  - `packages` - Names of packages, path to packages.config, .nuspec or .nupkg to install
@@ -176,7 +206,7 @@ module Choco =
 
         callChoco parameters.ToolPath args parameters.Timeout
 
-    /// Call choco to pack a package
+    /// Call choco to [pack](https://github.com/chocolatey/choco/wiki/CommandsPack) a package
     /// ## Parameters
     ///  - `setParams` - Function used to manipulate the default choco parameters. See `ChocoPackParams`
     ///  - `nuspecPath` - path to the .nuspec to pack
@@ -194,6 +224,31 @@ module Choco =
                 |> appendWithoutQuotes "pack"
                 |> append nuspecPath
                 |> appendWithoutQuotesIfNotNull parameters.Version "--version "
+                |> appendIfTrueWithoutQuotes parameters.NonInteractive "-y"
+                |> appendWithoutQuotesIfNotNull parameters.AdditionalArgs parameters.AdditionalArgs
+                |> toText
+
+        callChoco parameters.ToolPath args parameters.Timeout
+        
+    /// Call choco to [push](https://github.com/chocolatey/choco/wiki/CommandsPush) a package
+    /// ## Parameters
+    ///  - `setParams` - Function used to manipulate the default choco parameters. See `ChocoPushParams`
+    ///  - `nupkgPath` - path to the .nupkg to push
+    /// ## Sample usage
+    ///
+    ///     Target "ChocoPush" (fun _ ->
+    ///         "pretzel.0.5.0.nupkg" |> Choco.Push (fun p -> { p with ApiKey = "123-123123-123" })
+    ///     )
+    let Push setParams nupkgPath =
+        if nupkgPath |> isNullOrEmpty then failwith "'nupkgPath' must not be empty."
+
+        let parameters = setParams ChocoPushDefaults
+
+        let args = new StringBuilder()
+                |> appendWithoutQuotes "push"
+                |> append nupkgPath
+                |> appendWithoutQuotesIfNotNull parameters.Source "--source "
+                |> appendWithoutQuotesIfNotNull parameters.ApiKey "--apikey "
                 |> appendIfTrueWithoutQuotes parameters.NonInteractive "-y"
                 |> appendWithoutQuotesIfNotNull parameters.AdditionalArgs parameters.AdditionalArgs
                 |> toText
