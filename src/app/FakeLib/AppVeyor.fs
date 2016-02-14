@@ -157,18 +157,23 @@ type TestResultsType =
     | NUnit3
     | JUnit
 
-/// Uploads all the test results ".xml" files in a directory to make them visible in Test tab of the build console.
-let UploadTestResultsXml (testResultsType : TestResultsType) outputDir =
+/// Uploads a test result file to make them visible in Test tab of the build console.
+let UploadTestResultsFile (testResultsType : TestResultsType) file =
     if buildServer = BuildServer.AppVeyor then
         let resultsType = (sprintf "%A" testResultsType).ToLower()
         let url = sprintf "https://ci.appveyor.com/api/testresults/%s/%s" resultsType AppVeyorEnvironment.JobId
-        let files = System.IO.Directory.GetFiles(path = outputDir, searchPattern = "*.xml")
         use wc = new System.Net.WebClient()
-        files
-        |> Seq.iter (fun file ->
-            try
-                wc.UploadFile(url, file) |> ignore
-                printfn "Successfully uploaded test results %s" file
-            with
-            | ex -> printfn "An error occurred while uploading %s:\r\n%O" file ex
-        )
+        try
+            wc.UploadFile(url, file) |> ignore
+            printfn "Successfully uploaded test results %s" file
+        with
+        | ex -> printfn "An error occurred while uploading %s:\r\n%O" file ex
+
+/// Uploads all the test results ".xml" files in a directory to make them visible in Test tab of the build console.
+let UploadTestResultsXml (testResultsType : TestResultsType) outputDir =
+    if buildServer = BuildServer.AppVeyor then
+        System.IO.Directory.EnumerateFiles(path = outputDir, searchPattern = "*.xml")
+        |> Seq.map(fun file -> async { UploadTestResultsFile testResultsType file })
+        |> Async.Parallel
+        |> Async.RunSynchronously
+        |> ignore
