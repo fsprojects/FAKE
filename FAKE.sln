@@ -50,6 +50,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "help", "help", "{564BD198-0
 		help\index.md = help\index.md
 		help\nuget.md = help\nuget.md
 		help\octopusdeploy.md = help\octopusdeploy.md
+		help\slacknotification.md = help\slacknotification.md
 		help\specifictargets.md = help\specifictargets.md
 		help\teamcity.md = help\teamcity.md
 		help\templates\template-project.html = help\templates\template-project.html
@@ -124,6 +125,11 @@ EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsCheck.Fake", "src\test\FsCheck.Fake\FsCheck.Fake.fsproj", "{791651E4-4422-4A31-8DDE-6B1AD79B377A}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.FluentMigrator", "src\app\Fake.FluentMigrator\Fake.FluentMigrator.fsproj", "{0110E42E-E3AA-4A01-A6D4-DA26FD89ED4A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "slacknotification", "slacknotification", "{F131A0F4-D7BC-4717-812A-CE937DB64BE9}"
+	ProjectSection(SolutionItems) = preProject
+		help\pics\slacknotification\slacknotification.png = help\pics\slacknotification\slacknotification.png
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -291,5 +297,6 @@ Global
 		{64547E3E-F74E-48C2-8091-795A6C04B99C} = {75162148-B884-4575-8E14-5320DD137760}
 		{791651E4-4422-4A31-8DDE-6B1AD79B377A} = {B774DC6A-F933-4EC3-A61F-E07344EF8ED2}
 		{0110E42E-E3AA-4A01-A6D4-DA26FD89ED4A} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
+		{F131A0F4-D7BC-4717-812A-CE937DB64BE9} = {75162148-B884-4575-8E14-5320DD137760}
 	EndGlobalSection
 EndGlobal
