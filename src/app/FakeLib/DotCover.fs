@@ -184,16 +184,17 @@ let DotCoverNUnit (setDotCoverParams: DotCoverParams -> DotCoverParams) (setNUni
     let details =  assemblies |> separated ", "
     traceStartTask "DotCoverNUnit" details
 
-    let parameters = NUnitDefaults |> setNUnitParams
-    let args = buildNUnitdArgs parameters assemblies
+    try
+        let parameters = NUnitDefaults |> setNUnitParams
+        let args = buildNUnitdArgs parameters assemblies
     
-    DotCover (fun p ->
-                  {p with
-                     TargetExecutable = parameters.ToolPath @@ parameters.ToolName
-                     TargetArguments = args
-                  } |> setDotCoverParams)
-
-    traceEndTask "DotCoverNUnit" details
+        DotCover (fun p ->
+                      {p with
+                         TargetExecutable = parameters.ToolPath @@ parameters.ToolName
+                         TargetArguments = args
+                      } |> setDotCoverParams)
+    finally
+        traceEndTask "DotCoverNUnit" details
 
 /// Runs the dotCover "cover" command against the NUnit test runner.
 /// ## Parameters
@@ -212,18 +213,19 @@ let DotCoverNUnit (setDotCoverParams: DotCoverParams -> DotCoverParams) (setNUni
 let DotCoverNUnit3 (setDotCoverParams: DotCoverParams -> DotCoverParams) (setNUnitParams: NUnit3Params -> NUnit3Params) (assemblies: string seq) =
     let assemblies = assemblies |> Seq.toArray
     let details =  assemblies |> separated ", "
-    traceStartTask "DotCoverNUnit" details
+    traceStartTask "DotCoverNUnit3" details
 
-    let parameters = NUnit3Defaults |> setNUnitParams
-    let args = buildNUnit3Args parameters assemblies
+    try
+        let parameters = NUnit3Defaults |> setNUnitParams
+        let args = buildNUnit3Args parameters assemblies
     
-    DotCover (fun p ->
-                  {p with
-                     TargetExecutable = parameters.ToolPath
-                     TargetArguments = args
-                  } |> setDotCoverParams)
-
-    traceEndTask "DotCoverNUnit" details
+        DotCover (fun p ->
+                      {p with
+                         TargetExecutable = parameters.ToolPath
+                         TargetArguments = args
+                      } |> setDotCoverParams)
+    finally
+        traceEndTask "DotCoverNUnit3" details
 
 /// Runs the dotCover "cover" command against the XUnit2 test runner.
 /// ## Parameters
@@ -242,16 +244,17 @@ let DotCoverXUnit2 (setDotCoverParams: DotCoverParams -> DotCoverParams) (setXUn
     let details =  assemblies |> separated ", "
     traceStartTask "DotCoverXUnit2" details
 
-    let parameters = XUnit2Defaults |> setXUnit2Params
-    let args = buildXUnit2Args assemblies parameters 
+    try
+        let parameters = XUnit2Defaults |> setXUnit2Params
+        let args = buildXUnit2Args assemblies parameters 
     
-    DotCover (fun p ->
-                  {p with
-                     TargetExecutable = parameters.ToolPath 
-                     TargetArguments = args
-                  } |> setDotCoverParams)
-
-    traceEndTask "DotCoverXUnit2" details
+        DotCover (fun p ->
+                      {p with
+                         TargetExecutable = parameters.ToolPath 
+                         TargetArguments = args
+                      } |> setDotCoverParams)
+    finally
+        traceEndTask "DotCoverXUnit2" details
 
 /// Builds the command line arguments from the given parameter record and the given assemblies.
 /// Runs all test assemblies in the same run for easier coverage management. 
@@ -289,16 +292,17 @@ let DotCoverMSTest (setDotCoverParams: DotCoverParams -> DotCoverParams) (setMST
     let details =  assemblies |> separated ", "
     traceStartTask "DotCoverMSTest " details
 
-    let parameters = MSTestDefaults |> setMSTestParams
-    let args = buildMSTestArgsForDotCover parameters assemblies
+    try
+        let parameters = MSTestDefaults |> setMSTestParams
+        let args = buildMSTestArgsForDotCover parameters assemblies
     
-    DotCover (fun p ->
-                  {p with
-                     TargetExecutable = parameters.ToolPath 
-                     TargetArguments = args
-                  } |> setDotCoverParams)
-
-    traceEndTask "DotCoverMSTest" details
+        DotCover (fun p ->
+                      {p with
+                         TargetExecutable = parameters.ToolPath 
+                         TargetArguments = args
+                      } |> setDotCoverParams)
+    finally
+        traceEndTask "DotCoverMSTest" details
 
 /// Runs the dotCover "cover" command against the MSpec test runner.
 /// ## Parameters
@@ -319,14 +323,15 @@ let DotCoverMSpec (setDotCoverParams: DotCoverParams -> DotCoverParams) (setMSpe
     let details =  assemblies |> separated ", "
     traceStartTask "DotCoverMSpec" details
 
-    let parameters = MSpecDefaults |> setMSpecParams            
+    try
+        let parameters = MSpecDefaults |> setMSpecParams            
    
-    let args = buildMSpecArgs parameters assemblies
+        let args = buildMSpecArgs parameters assemblies
     
-    DotCover (fun p ->
-                  {p with
-                     TargetExecutable = parameters.ToolPath
-                     TargetArguments = args
-                  } |> setDotCoverParams)
-
-    traceEndTask "DotCoverMSpec" details
+        DotCover (fun p ->
+                      {p with
+                         TargetExecutable = parameters.ToolPath
+                         TargetArguments = args
+                      } |> setDotCoverParams)
+    finally
+        traceEndTask "DotCoverMSpec" details

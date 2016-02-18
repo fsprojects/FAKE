@@ -1,5 +1,45 @@
+#### 4.20.0 - 06.02.2016
+* Allows to create full Wix directory hierarchy - https://github.com/fsharp/FAKE/pull/1116
+* New PicklesHelper for generating living documentation with Pickles - https://github.com/fsharp/FAKE/pull/1126
+* BUGFIX: Replaced system directory separator with "/" in ArchiveHelper - https://github.com/fsharp/FAKE/pull/1127
+
+#### 4.19.0 - 02.02.2016
+* New FSC task - https://github.com/fsharp/FAKE/pull/1122
+* Disable warning from #1082 for now because it created lots of confusion 
+
+#### 4.18.0 - 02.02.2016
+* New helpers which allow to send .NET coverage settings to TeamCity - https://github.com/fsharp/FAKE/pull/1117
+* Disabled NodeReuse on TeamCity, it can lead to consecutive builds failing - https://github.com/fsharp/FAKE/pull/1110
+* Added IncludeReferencedProjects property to the Packet.Pack params - https://github.com/fsharp/FAKE/pull/1112
+* BUGFIX: Ensure that traceEndTask is called in DotCover - https://github.com/fsharp/FAKE/pull/1118
+* BUGFIX: WiXHelper: fixed typos in WiXDir.ToString - https://github.com/fsharp/FAKE/pull/1120
+
+#### 4.17.0 - 23.01.2016
+* Renamed internal FSharp.Compiler.Service to avoid clashes - https://github.com/fsharp/FAKE/pull/1097
+* Added support for "paket restore" - https://github.com/fsharp/FAKE/pull/1108
+* WiX service install - https://github.com/fsharp/FAKE/pull/1099
+* Passing timeout value also to solution exchanger in DynamicsCRMHelper - https://github.com/fsharp/FAKE/pull/1102
+* BUGFIX: Fallback to recompile when caching of build script fails - https://github.com/fsharp/FAKE/pull/1093
+* BUGFIX: Commit message will be retrieved for older and newer git versions - https://github.com/fsharp/FAKE/pull/1098
+* BUGFIX: Fixed case sensitivity on package name when search references in Paket.lock - https://github.com/fsharp/FAKE/pull/1089
+* COSMETICS: Don't show the obsolete usage - https://github.com/fsharp/FAKE/pull/1094
+ 
+#### 4.16.0 - 20.01.2016
+* General FAKE improvements - https://github.com/fsharp/FAKE/pull/1088
+* Hockey app UploadTimeout - https://github.com/fsharp/FAKE/pull/1087
+
+#### 4.15.0 - 19.01.2016
+* Add support for appcast generation - https://github.com/fsharp/FAKE/pull/1057
+* Function to remove Compile elems missing files - https://github.com/fsharp/FAKE/pull/1078
+* AssemblyInfoFile: added functions to read and update attributes -https://github.com/fsharp/FAKE/pull/1073
+* Added support for packing symbols via PaketHelper - https://github.com/fsharp/FAKE/pull/1071
+* Tell the clr to use the cached assemblies even when it tries to reload them with a different context - https://github.com/fsharp/FAKE/pull/1056
+* BUGFIX: Fix failure when space in temp path - https://github.com/fsharp/FAKE/pull/1076
+* BUGFIX: Fix app.config files
+* BUGFIX: Cache invalidate on changing fsiOptions - https://github.com/fsprojects/ProjectScaffold/issues/231
+
 #### 4.14.0 - 12.01.2016
-* NugGet automatic version increment - https://github.com/fsharp/FAKE/pull/1063
+* NuGet automatic version increment - https://github.com/fsharp/FAKE/pull/1063
 * Added support for the Paket pack parameter buildPlatform - https://github.com/fsharp/FAKE/pull/1066
 * Added possibility to bulk update assembly infos with file includes - https://github.com/fsharp/FAKE/pull/1067
 

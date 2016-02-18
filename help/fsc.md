@@ -13,13 +13,6 @@ The `Fsc` task can be used in standard FAKE targets:
     open Fake
     open Fake.FscHelper
 
-    Target "Something.dll" (fun _ ->
-      !! "src/**/*.fs"
-      |> Fsc (fun p ->
-               { p with Output = "Something.dll"
-                        FscTarget = Library })
-    )
-
     Target "Otherthing.dll" (fun _ ->
       ["Otherthing.fs"; "Otherthing2.fs"]
       |> Fsc (fun p -> { p with FscTarget = Library })
