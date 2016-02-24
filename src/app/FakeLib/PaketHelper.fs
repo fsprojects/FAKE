@@ -21,7 +21,8 @@ type PaketPackParams =
       WorkingDir : string
       OutputPath : string 
       Symbols : bool
-      IncludeReferencedProjects : bool }
+      IncludeReferencedProjects : bool
+      MinimumFromLockFile : bool }
 
 /// Paket pack default parameters
 let PaketPackDefaults() : PaketPackParams =
@@ -38,7 +39,8 @@ let PaketPackDefaults() : PaketPackParams =
       WorkingDir = "."
       OutputPath = "./temp" 
       Symbols = false
-      IncludeReferencedProjects = false }
+      IncludeReferencedProjects = false
+      MinimumFromLockFile = false }
 
 /// Paket push parameter type
 type PaketPushParams =
@@ -101,9 +103,10 @@ let Pack setParams =
     let specificVersions = parameters.SpecificVersions |> Seq.map (fun (id,v) -> sprintf " specific-version %s %s" id v) |> String.concat " "
     let symbols = if parameters.Symbols then " symbols" else ""
     let includeReferencedProjects = if parameters.IncludeReferencedProjects then " include-referenced-projects" else ""
+    let minimumFromLockFile = if parameters.MinimumFromLockFile then " minimum-from-lock-file" else ""
 
     let packResult =
-        let cmdArgs = sprintf "%s%s%s%s%s%s%s%s%s%s" version specificVersions releaseNotes buildConfig buildPlatform templateFile lockDependencies excludedTemplates symbols includeReferencedProjects
+        let cmdArgs = sprintf "%s%s%s%s%s%s%s%s%s%s%s" version specificVersions releaseNotes buildConfig buildPlatform templateFile lockDependencies excludedTemplates symbols includeReferencedProjects minimumFromLockFile
         ExecProcess
             (fun info ->
                 info.FileName <- parameters.ToolPath
