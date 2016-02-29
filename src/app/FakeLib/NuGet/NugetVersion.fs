@@ -4,6 +4,8 @@ open System
 open System.Net
 open Newtonsoft.Json
 open Fake.SemVerHelper
+open System.Xml
+open System.Xml.Linq
 
 type NuGetSearchItemResult =
     { Version:string
@@ -46,23 +48,51 @@ type NuGetVersionArg =
 let getLastNuGetVersion server (packageName:string) = 
     let escape = Uri.EscapeDataString
     let url = 
-        sprintf "%s/Packages()?$filter=%s%s%s&$orderby=%s"
-            server
-            (escape "Id eq '")
-            packageName
-            (escape "'")
-            (escape "IsLatestVersion desc")
+      sprintf "%s/Search()?$filter=IsLatestVersion&searchTerm='%s'&includePrerelease=false"
+        server packageName
     let client = new WebClient()
     client.Headers.Add("Accept", "application/json")
     let text = client.DownloadString url
-    let json = JsonConvert.DeserializeObject<NuGetSearchResponse>(text)
-    json.d.results
-    |> Seq.sortByDescending (fun i -> i.Published)
-    |> Seq.tryHead
-    |> fun i -> 
-        match i with 
-        | Some v -> Some (SemVerHelper.parse v.Version)
-        | None -> None
+    let hasContentType = client.ResponseHeaders.AllKeys |> Seq.contains "Content-Type"
+    let version =
+      if hasContentType && client.ResponseHeaders.Item("Content-Type").Contains "application/json"
+      then
+        let json = JsonConvert.DeserializeObject<NuGetSearchResponse>(text)
+        json.d.results
+        |> Seq.sortByDescending (fun i -> i.Published)
+        |> Seq.tryHead
+        |> fun i -> 
+            match i with 
+            | Some v -> Some (SemVerHelper.parse v.Version)
+            | None -> None
+      else
+        let xml = XDocument.Parse text
+        let xmlns = "http://www.w3.org/2005/Atom"
+        let xmlnsd="http://schemas.microsoft.com/ado/2007/08/dataservices" 
+        let xmlnsm="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
+        xml.Descendants(XName.Get("entry", xmlns))
+          |> Seq.filter (
+              fun entry ->
+                entry.Elements(XName.Get("title", xmlns))
+                  |> Seq.exists (
+                      fun t -> 
+                        t.Attribute(XName.Get "type").Value = "text"
+                        && t.Value = packageName
+                     )
+             )
+          |> Seq.tryHead
+          |> function
+              | Some e ->
+                  e.Descendants(XName.Get ("properties", xmlnsm))
+                  |> fun props -> 
+                      props.Elements(XName.Get ("Version", xmlnsd))
+                      |> Seq.tryHead
+                      |> function 
+                          | Some n -> Some (SemVerHelper.parse n.Value)
+                          | None -> None
+              | None -> None
+    version
+    
 
 /// Compute next NuGet version number
 let nextVersion (f : NuGetVersionArg -> NuGetVersionArg) =
