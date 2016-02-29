@@ -148,6 +148,7 @@
     <Compile Include="TestFlightHelper.fs" />
     <Compile Include="DotCover.fs" />
     <Compile Include="PaketHelper.fs" />
+    <Compile Include="PaketTemplateHelper.fs" />
     <Compile Include="AzureHelper.fs" />
     <Compile Include="FtpHelper.fs" />
     <Compile Include="TypeScript.fs" />
