@@ -175,6 +175,7 @@
     <Compile Include="Appcast.fs" />
     <Compile Include="PicklesHelper.fs" />
     <Compile Include="ChocoHelper.fs" />
+    <Compile Include="SlackNotificationHelper.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
