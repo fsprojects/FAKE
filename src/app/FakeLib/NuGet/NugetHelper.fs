@@ -524,8 +524,8 @@ let extractFeedPackageFromXml (entry : Xml.XmlNode) =
       Url = entry.["content"].GetAttribute("src") }
 
 /// [omit]
-let getPackage repoUrl packageName version = 
-    let url : string = repoUrl + "Packages(Id='" + packageName + "',Version='" + version + "')"
+let getPackage (repoUrl:string) packageName version = 
+    let url : string = repoUrl.TrimEnd('/') + "/Packages(Id='" + packageName + "',Version='" + version + "')"
     let resp = webClient.DownloadString(url)
     let doc = XMLDoc resp
     extractFeedPackageFromXml doc.["entry"]
@@ -537,8 +537,8 @@ let getFeedPackagesFromUrl (url : string) =
     [ for entry in doc.["feed"].GetElementsByTagName("entry") -> extractFeedPackageFromXml entry ]
 
 /// [omit]
-let getLatestPackage repoUrl packageName = 
-    repoUrl + "Packages()?$filter=(Id%20eq%20'" + packageName + "')%20and%20IsLatestVersion"
+let getLatestPackage (repoUrl:string) packageName = 
+    repoUrl.TrimEnd('/') + "/Packages()?$filter=(Id%20eq%20'" + packageName + "')%20and%20IsLatestVersion"
     |> getFeedPackagesFromUrl
     |> Seq.head
 
