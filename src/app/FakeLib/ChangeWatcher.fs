@@ -4,27 +4,30 @@ module Fake.ChangeWatcher
 
 open System.IO
 
-type FileStatus = 
+type FileStatus =
     | Deleted
     | Created
     | Changed
 
-type FileChange = 
+type FileChange =
     { FullPath : string
       Name : string
       Status : FileStatus }
 
-let private handleWatcherEvents (status : FileStatus) (onChange : FileChange -> unit) (e : FileSystemEventArgs) = 
+type WatchChangesOption =
+    { IncludeSubdirectories: bool }
+
+let private handleWatcherEvents (status : FileStatus) (onChange : FileChange -> unit) (e : FileSystemEventArgs) =
     onChange ({ FullPath = e.FullPath
                 Name = e.Name
                 Status = status })
 
 let private calcDirsToWatch fileIncludes =
     let dirsToWatch = fileIncludes.Includes |> Seq.map (fun file -> Globbing.getRoot fileIncludes.BaseDirectory file)
-    
+
     // remove subdirectories from watch list so that we don't get duplicate file watchers running
-    dirsToWatch 
-    |> Seq.filter (fun d -> 
+    dirsToWatch
+    |> Seq.filter (fun d ->
                     dirsToWatch
                     |> Seq.exists (fun p -> d.StartsWith p && p <> d)
                     |> not)
@@ -40,21 +43,21 @@ let private calcDirsToWatch fileIncludes =
 /// ## Sample
 ///
 ///     Target "Watch" (fun _ ->
-///         use watcher = !! "c:/projects/watchDir/*.txt" |> WatchChanges (fun changes -> 
+///         use watcher = !! "c:/projects/watchDir/*.txt" |> WatchChanges (fun changes ->
 ///             // do something
 ///         )
-///     
+///
 ///         System.Console.ReadLine() |> ignore
-///     
+///
 ///         watcher.Dispose() // if you need to cleanup the watches.
 ///     )
 ///
-let WatchChanges (onChange : FileChange seq -> unit) (fileIncludes : FileIncludes) = 
+let WatchChangesWithOptions options (onChange : FileChange seq -> unit) (fileIncludes : FileIncludes) =
     let dirsToWatch = fileIncludes |> calcDirsToWatch
 
     tracefn "dirs to watch: %A" dirsToWatch
- 
-    // we collect changes in a mutable ref cell and wait for a few milliseconds to 
+
+    // we collect changes in a mutable ref cell and wait for a few milliseconds to
     // receive all notifications when the system sends them repetedly or sends multiple
     // updates related to the same file; then we call 'onChange' with all cahnges
     let unNotifiedChanges = ref List.empty<FileChange>
@@ -63,42 +66,42 @@ let WatchChanges (onChange : FileChange seq -> unit) (fileIncludes : FileInclude
 
     let timer = new System.Timers.Timer(50.0)
     timer.AutoReset <- false
-    timer.Elapsed.Add(fun _ -> 
-        lock unNotifiedChanges (fun () -> 
+    timer.Elapsed.Add(fun _ ->
+        lock unNotifiedChanges (fun () ->
             if not (Seq.isEmpty !unNotifiedChanges) then
-                let changes = 
+                let changes =
                     !unNotifiedChanges
                     |> Seq.groupBy (fun c -> c.FullPath)
-                    |> Seq.map (fun (name, changes) -> 
+                    |> Seq.map (fun (name, changes) ->
                            changes
                            |> Seq.sortBy (fun c -> c.Status)
                            |> Seq.head)
                 unNotifiedChanges := []
-                try 
+                try
                     runningHandlers := true
                     onChange changes
                 finally
                     runningHandlers := false ))
 
-    let acumChanges (fileChange : FileChange) = 
+    let acumChanges (fileChange : FileChange) =
         // only record the changes if we are not currently running 'onChange' handler
-        if not !runningHandlers && fileIncludes.IsMatch fileChange.FullPath then 
-            lock unNotifiedChanges (fun () -> 
+        if not !runningHandlers && fileIncludes.IsMatch fileChange.FullPath then
+            lock unNotifiedChanges (fun () ->
               unNotifiedChanges := fileChange :: !unNotifiedChanges
               // start the timer (ignores repeated calls) to trigger events in 50ms
               (timer:System.Timers.Timer).Start() )
-    
-    let watchers = 
-        dirsToWatch |> List.map (fun dir -> 
+
+    let watchers =
+        dirsToWatch |> List.map (fun dir ->
                            tracefn "watching dir: %s" dir
 
                            let watcher = new FileSystemWatcher(FullName dir, "*.*")
                            watcher.EnableRaisingEvents <- true
-                           watcher.IncludeSubdirectories <- true
+                           watcher.IncludeSubdirectories <- options.IncludeSubdirectories
                            watcher.Changed.Add(handleWatcherEvents Changed acumChanges)
                            watcher.Created.Add(handleWatcherEvents Created acumChanges)
                            watcher.Deleted.Add(handleWatcherEvents Deleted acumChanges)
-                           watcher.Renamed.Add(fun (e : RenamedEventArgs) -> 
+                           watcher.Renamed.Add(fun (e : RenamedEventArgs) ->
                                acumChanges { FullPath = e.OldFullPath
                                              Name = e.OldName
                                              Status = Deleted }
@@ -108,8 +111,11 @@ let WatchChanges (onChange : FileChange seq -> unit) (fileIncludes : FileInclude
                            watcher)
 
     { new System.IDisposable with
-          member this.Dispose() = 
+          member this.Dispose() =
               for watcher in watchers do
                   watcher.EnableRaisingEvents <- false
                   watcher.Dispose()
               timer.Dispose() }
+
+
+let WatchChanges = WatchChangesWithOptions { IncludeSubdirectories = true }
