@@ -1,9 +1,10 @@
 #### 4.21.0 - 29.02.2016
-* New helper for chocolatey - http://fsharp.github.io/FAKE/using-chocolatey.html
+* New helper for chocolatey - http://fsharp.github.io/FAKE/chocolatey.html
 * New helper for Slack - http://fsharp.github.io/FAKE/slacknotification.html
 * New helper for SonarQube - http://fsharp.github.io/FAKE/sonarcube.html
 * New version of WatchChanges that support options - https://github.com/fsharp/FAKE/pull/1144 
 * Improved AppVeyor test results upload - https://github.com/fsharp/FAKE/pull/1138
+* BUGFIX: Fixed Issue #1142: Arguments of CombinePaths are switched in WixHelper - https://github.com/fsharp/FAKE/pull/1145 
 * WORKAROUND: nuget.org changed base url
 
 #### 4.20.0 - 06.02.2016
