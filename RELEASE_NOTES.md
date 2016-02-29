@@ -1,3 +1,7 @@
+#### 4.21.0 - 29.02.2016
+* New helper for chocolatey - http://fsharp.github.io/FAKE/using-chocolatey.html
+* Improved AppVeyor test results upload - https://github.com/fsharp/FAKE/pull/1138
+
 #### 4.20.0 - 06.02.2016
 * Allows to create full Wix directory hierarchy - https://github.com/fsharp/FAKE/pull/1116
 * New PicklesHelper for generating living documentation with Pickles - https://github.com/fsharp/FAKE/pull/1126
