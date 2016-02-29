@@ -5,6 +5,7 @@
 * New version of WatchChanges that support options - https://github.com/fsharp/FAKE/pull/1144 
 * Improved AppVeyor test results upload - https://github.com/fsharp/FAKE/pull/1138
 * BUGFIX: Fixed Issue #1142: Arguments of CombinePaths are switched in WixHelper - https://github.com/fsharp/FAKE/pull/1145 
+* BUGFIX: NuGet auto version bug fix - https://github.com/fsharp/FAKE/pull/1146
 * WORKAROUND: nuget.org changed base url
 
 #### 4.20.0 - 06.02.2016
