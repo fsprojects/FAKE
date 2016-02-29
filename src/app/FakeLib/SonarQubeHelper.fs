@@ -1,4 +1,3 @@
-﻿[<AutoOpen>]
 /// Contains a task to run the msbuild runner of [Sonar Qube analyzer](http://sonarqube.org).
 module Fake.SonarQubeHelper
 

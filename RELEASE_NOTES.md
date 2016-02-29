@@ -1,6 +1,7 @@
 #### 4.21.0 - 29.02.2016
 * New helper for chocolatey - http://fsharp.github.io/FAKE/using-chocolatey.html
 * New helper for Slack - http://fsharp.github.io/FAKE/slacknotification.html
+* New helper for SonarQube - http://fsharp.github.io/FAKE/sonarcube.html
 * Improved AppVeyor test results upload - https://github.com/fsharp/FAKE/pull/1138
 * WORKAROUND: nuget.org changed base url
 
