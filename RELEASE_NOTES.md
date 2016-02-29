@@ -1,7 +1,8 @@
 #### 4.21.0 - 29.02.2016
 * New helper for chocolatey - http://fsharp.github.io/FAKE/using-chocolatey.html
+* New helper for Slack - http://fsharp.github.io/FAKE/slacknotification.html
 * Improved AppVeyor test results upload - https://github.com/fsharp/FAKE/pull/1138
-* WORKAROUND: Nuget.org changed base url
+* WORKAROUND: nuget.org changed base url
 
 #### 4.20.0 - 06.02.2016
 * Allows to create full Wix directory hierarchy - https://github.com/fsharp/FAKE/pull/1116
