@@ -104,8 +104,8 @@
             FinishTestSuite testSuiteName
           </code>
           <div class="tip" id="29">
-            <strong>Signature:</strong> testSuiteName:&#39;?11797 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?11797          </div>
+            <strong>Signature:</strong> testSuiteName:&#39;a -&gt; unit<br />
+                          <strong>Type parameters:</strong> 'a          </div>
         </td>
         <td class="xmldoc">
             <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L123-123" class="github-link">
@@ -124,8 +124,8 @@
             IgnoreTestCase (...)
           </code>
           <div class="tip" id="30">
-            <strong>Signature:</strong> testSuiteName:string -&gt; testCaseName:string -&gt; message:&#39;?11803 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?11803          </div>
+            <strong>Signature:</strong> testSuiteName:string -&gt; testCaseName:string -&gt; message:&#39;a -&gt; unit<br />
+                          <strong>Type parameters:</strong> 'a          </div>
         </td>
         <td class="xmldoc">
             <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L138-138" class="github-link">
@@ -164,8 +164,8 @@
             StartTestSuite testSuiteName
           </code>
           <div class="tip" id="32">
-            <strong>Signature:</strong> testSuiteName:&#39;?11799 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?11799          </div>
+            <strong>Signature:</strong> testSuiteName:&#39;a -&gt; unit<br />
+                          <strong>Type parameters:</strong> 'a          </div>
         </td>
         <td class="xmldoc">
             <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L126-126" class="github-link">
@@ -221,14 +221,34 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '35', 35)" onmouseover="showTip(event, '35', 35)">
-            UploadTestResultsXml (...)
+            UploadTestResultsFile (...)
           </code>
           <div class="tip" id="35">
+            <strong>Signature:</strong> testResultsType:TestResultsType -&gt; file:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L161-161" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Uploads a test result file to make them visible in Test tab of the build console.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '36', 36)" onmouseover="showTip(event, '36', 36)">
+            UploadTestResultsXml (...)
+          </code>
+          <div class="tip" id="36">
             <strong>Signature:</strong> testResultsType:TestResultsType -&gt; outputDir:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L159-159" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L173-173" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -285,6 +305,9 @@
             <li><a href="http://fsharp.github.io/FAKE/androidpublisher.html">Android publisher</a></li>
             <li><a href="http://fsharp.github.io/FAKE/watch.html">File Watcher</a></li>
             <li><a href="http://fsharp.github.io/FAKE/wix.html">WiX Setup Generation</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/chocolatey.html">Using Chocolatey</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/slacknotification.html">Using Slack</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/sonarcube.html">Using SonarQube</a></li>
             <li class="divider"></li>
             <li><a href="http://fsharp.github.io/FAKE/deploy.html">Fake.Deploy</a></li>
             <li><a href="http://fsharp.github.io/FAKE/iis.html">Fake.IIS</a></li>

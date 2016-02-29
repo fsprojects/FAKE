@@ -62,6 +62,12 @@
           </td>
           <td class="xmldoc"></td>
         </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-changewatcher-watchchangesoption.html">WatchChangesOption</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
     </tbody>
   </table>
 
@@ -76,15 +82,33 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '131', 131)" onmouseover="showTip(event, '131', 131)">
-            WatchChanges onChange fileIncludes
+          <code onmouseout="hideTip(event, '132', 132)" onmouseover="showTip(event, '132', 132)">
+            WatchChanges 
           </code>
-          <div class="tip" id="131">
-            <strong>Signature:</strong> onChange:(seq&lt;FileChange&gt; -&gt; unit) -&gt; fileIncludes:FileIncludes -&gt; IDisposable<br />
+          <div class="tip" id="132">
+            <strong>Signature:</strong> (seq&lt;FileChange&gt; -&gt; unit) -&gt; FileIncludes -&gt; IDisposable<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/ChangeWatcher.fs#L52-52" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/ChangeWatcher.fs#L121-121" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '133', 133)" onmouseover="showTip(event, '133', 133)">
+            WatchChangesWithOptions (...)
+          </code>
+          <div class="tip" id="133">
+            <strong>Signature:</strong> options:WatchChangesOption -&gt; onChange:(seq&lt;FileChange&gt; -&gt; unit) -&gt; fileIncludes:FileIncludes -&gt; IDisposable<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/ChangeWatcher.fs#L55-55" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -107,7 +131,7 @@ Returns an IDisposable which allows to dispose all FileSystemWatchers.</p>
 <span class="l">9: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;Watch&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-    <span class="k">use</span> <span class="i">watcher</span> <span class="o">=</span> <span class="o">!!</span> <span class="s">&quot;c:/projects/watchDir/*.txt&quot;</span> <span class="o">|&gt;</span> <span class="i">WatchChanges</span> (<span class="k">fun</span> <span class="i">changes</span> <span class="k">-&gt;</span> 
+    <span class="k">use</span> <span class="i">watcher</span> <span class="o">=</span> <span class="o">!!</span> <span class="s">&quot;c:/projects/watchDir/*.txt&quot;</span> <span class="o">|&gt;</span> <span class="i">WatchChanges</span> (<span class="k">fun</span> <span class="i">changes</span> <span class="k">-&gt;</span>
         <span class="c">// do something</span>
     )
 
@@ -174,6 +198,9 @@ Returns an IDisposable which allows to dispose all FileSystemWatchers.</p>
             <li><a href="http://fsharp.github.io/FAKE/androidpublisher.html">Android publisher</a></li>
             <li><a href="http://fsharp.github.io/FAKE/watch.html">File Watcher</a></li>
             <li><a href="http://fsharp.github.io/FAKE/wix.html">WiX Setup Generation</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/chocolatey.html">Using Chocolatey</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/slacknotification.html">Using Slack</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/sonarcube.html">Using SonarQube</a></li>
             <li class="divider"></li>
             <li><a href="http://fsharp.github.io/FAKE/deploy.html">Fake.Deploy</a></li>
             <li><a href="http://fsharp.github.io/FAKE/iis.html">Fake.IIS</a></li>
