@@ -80,9 +80,22 @@ type NUnit3Runtime =
         | Mono35 -> "mono-3.5"
         | Mono40 -> "mono-4.0"
         | Other(name) -> name
-        
+
 /// Option which allows to specify if a NUnit error should break the build.
 type NUnit3ErrorLevel = TestRunnerErrorLevel
+
+/// The --labels option in NUnit3 console runner. Specify whether to write test case names to the output.
+type LabelsLevel =
+    | Default
+    | Off
+    | On
+    | All
+    member x.ParamString =
+        match x with
+        | Default -> ""
+        | Off -> "Off"
+        | On -> "On"
+        | All -> "All"
 
 /// The NUnit 3 Console Parameters type. FAKE will use [NUnit3Defaults](fake-testing-nunit3.html) for values not provided.
 ///
@@ -157,6 +170,9 @@ type NUnit3Params =
       /// Turns on use of TeamCity service messages.
       TeamCity : bool
 
+      /// Specify whether to write test case names to the output.
+      Labels: LabelsLevel
+
       /// Default: [TestRunnerErrorLevel](fake-unittestcommon-testrunnererrorlevel.html).Error
       ErrorLevel : NUnit3ErrorLevel
     }
@@ -194,7 +210,7 @@ let NUnit3Defaults =
       ProcessModel = DefaultProcessModel
       Agents = None
       Domain = DefaultDomainModel
-      Framework = Default
+      Framework = NUnit3Runtime.Default
       Force32bit = false
       DisposeRunners = false
       TimeOut = TimeSpan.FromMilliseconds((float)Int32.MaxValue)
@@ -207,12 +223,13 @@ let NUnit3Defaults =
       ResultSpecs = [currentDirectory @@ "TestResult.xml"]
       ShadowCopy = false
       TeamCity = false
+      Labels = LabelsLevel.Default
       ErrorLevel = Error
     }
 
 /// Tries to detect the working directory as specified in the parameters or via TeamCity settings
 /// [omit]
-let getWorkingDir parameters = 
+let getWorkingDir parameters =
     Seq.find isNotNullOrEmpty [ parameters.WorkingDir
                                 environVar ("teamcity.build.workingDir")
                                 "." ]
@@ -234,6 +251,7 @@ let buildNUnit3Args parameters assemblies =
     |> appendIfSome parameters.Agents (sprintf "--agents=%i")
     |> appendIfNotNullOrEmpty parameters.Domain.ParamString "--domain="
     |> appendIfNotNullOrEmpty parameters.Framework.ParamString "--framework="
+    |> appendIfNotNullOrEmpty parameters.Labels.ParamString "--labels="
     |> appendIfTrue parameters.Force32bit "--x86"
     |> appendIfTrue parameters.DisposeRunners "--dispose-runners"
     |> appendIfTrue (parameters.TimeOut <> NUnit3Defaults.TimeOut) (sprintf "--timeout=%i" (int parameters.TimeOut.TotalMilliseconds))
