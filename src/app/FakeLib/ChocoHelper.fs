@@ -331,6 +331,19 @@ module Choco =
         if result <> 0 then failwithf "choco failed with exit code %i." result
         traceEndTask "choco" args
         
+    let private getTempFolder =
+        let tempFolder = directoryInfo (Path.GetTempPath() @@ "FakeChocolateyPack")
+        
+        if tempFolder.Exists
+        then tempFolder.Delete(true)
+
+        tempFolder.Create()
+        
+        CreateDir (tempFolder.FullName @@ "tools")
+            
+        tempFolder.FullName
+            
+
     let private appendLine line builder =
         Printf.bprintf builder "%s%s" line Environment.NewLine
         builder
@@ -444,8 +457,8 @@ module Choco =
 
     /// [omit]
     /// Create nuspec from template
-    let private createNuSpecFromTemplate parameters (templateNuSpec:FileInfo) =
-        let specFile = parameters.OutputDir @@ (templateNuSpec.Name.Replace("nuspec", "") + parameters.Version + ".nuspec")
+    let private createNuSpecFromTemplate (parameters:ChocoPackParams) (templateNuSpec:FileInfo) outputDir =
+        let specFile = outputDir @@ (templateNuSpec.Name.Replace("nuspec", "") + parameters.Version + ".nuspec")
                         |> FullName
         tracefn "Creating .nuspec file at %s" specFile
 
@@ -485,8 +498,8 @@ module Choco =
         
     /// [omit]
     /// Create nuspec from data
-    let private createNuSpec parameters =
-        let specFile = parameters.OutputDir @@ parameters.PackageId + "." + parameters.Version + ".nuspec"
+    let private createNuSpec (parameters:ChocoPackParams) outputDir =
+        let specFile = outputDir @@ parameters.PackageId + "." + parameters.Version + ".nuspec"
                         |> FullName
         tracefn "Creating .nuspec file at %s" specFile
 
@@ -532,8 +545,8 @@ module Choco =
         match Microsoft.FSharp.Reflection.FSharpValue.GetUnionFields(x, typeof<ChocolateyInstallerType>) with
         | case, _ -> case.Name.ToLower()
 
-    let private createChocolateyInstallPs1 parameters =
-        let outputPath = parameters.OutputDir @@ "tools" @@ "chocolateyInstall.ps1" |> FullName
+    let private createChocolateyInstallPs1 (parameters:ChocoPackParams) outputDir =
+        let outputPath = outputDir @@ "tools" @@ "chocolateyInstall.ps1" |> FullName
         tracefn "Create chocolateyInstall.ps1 at %s" outputPath
 
         if isNullOrWhiteSpace parameters.Title || isNullOrWhiteSpace parameters.PackageDownloadUrl
@@ -558,8 +571,8 @@ module Choco =
         tracefn "Created chocolateyInstall.ps1 at %s" outputPath
 
         
-    let private createChocolateyInstallPs1FromTemplate parameters templatePath =
-        let outputPath = parameters.OutputDir @@ "tools" @@ "chocolateyInstall.ps1" |> FullName
+    let private createChocolateyInstallPs1FromTemplate (parameters:ChocoPackParams) templatePath outputDir =
+        let outputPath = outputDir @@ "tools" @@ "chocolateyInstall.ps1" |> FullName
         tracefn "Create chocolateyInstall.ps1 at %s from template %s" outputPath templatePath
 
         templatePath |> CopyFile outputPath
@@ -577,11 +590,11 @@ module Choco =
     
         tracefn "Created chocolateyInstall.ps1 at %sfrom template %s" outputPath templatePath
         
-    let private createChocolateyUninstallPs1 (parameters: ChocoPackParams) =
+    let private createChocolateyUninstallPs1 (parameters: ChocoPackParams) outputDir =
         
         if not (isNullOrWhiteSpace parameters.Title) && not (isNullOrWhiteSpace parameters.UninstallPath)
         then 
-            let outputPath = parameters.OutputDir @@ "tools" @@ "chocolateyUninstall.ps1" |> FullName
+            let outputPath = outputDir @@ "tools" @@ "chocolateyUninstall.ps1" |> FullName
             tracefn "Create chocolateyUninstall.ps1 at %s" outputPath
 
             let uninstallContent = new StringBuilder()
@@ -599,8 +612,8 @@ module Choco =
     
             tracefn "Created chocolateyUninstall.ps1 at %s" outputPath
 
-    let private createChocolateyUninstallPs1FromTemplate parameters templatePath =
-        let outputPath = parameters.OutputDir @@ "tools" @@ "chocolateyUninstall.ps1" |> FullName
+    let private createChocolateyUninstallPs1FromTemplate (parameters:ChocoPackParams) templatePath outputDir =
+        let outputPath = outputDir @@ "tools" @@ "chocolateyUninstall.ps1" |> FullName
         tracefn "Create chocolateyUninstall.ps1 at %s from template %s" outputPath templatePath
 
         templatePath |> CopyFile outputPath
@@ -680,17 +693,17 @@ module Choco =
         if Directory.Exists parameters.OutputDir |> not then 
             failwithf "OutputDir %s does not exist." parameters.OutputDir
 
-        let toolsDir = directoryInfo (parameters.OutputDir @@ "tools")
-        if not toolsDir.Exists then
-            toolsDir.Create()
+        let tempFolder =  getTempFolder
 
-        let nuspecFile = createNuSpec parameters
+        let nuspecFile = createNuSpec parameters tempFolder
 
-        createChocolateyInstallPs1 parameters
+        createChocolateyInstallPs1 parameters tempFolder
         
-        createChocolateyUninstallPs1 parameters
+        createChocolateyUninstallPs1 parameters tempFolder
 
         callChocoPack nuspecFile parameters
+
+        parameters.PackageId + "." + parameters.Version + ".nupkg" |> FileHelper.MoveFile parameters.OutputDir
         
     /// Call choco to [pack](https://github.com/chocolatey/choco/wiki/CommandsPack) a package
     /// ## Parameters
@@ -710,25 +723,25 @@ module Choco =
         if Directory.Exists parameters.OutputDir |> not then 
             failwithf "OutputDir %s does not exist." parameters.OutputDir
 
-        let toolsDir = directoryInfo (parameters.OutputDir @@ "tools")
-        if not toolsDir.Exists then
-            toolsDir.Create()
+        let tempFolder =  getTempFolder
 
-        let nuspecFile = createNuSpecFromTemplate parameters (fileInfo nuspecPath)
+        let nuspecFile = createNuSpecFromTemplate parameters (fileInfo nuspecPath) tempFolder
 
         let rootFolder = (Directory.GetParent nuspecPath).FullName
         
         let chocoInstallPath = rootFolder @@ "tools" @@ "chocolateyInstall.ps1"
         if fileExists chocoInstallPath
-        then createChocolateyInstallPs1FromTemplate parameters chocoInstallPath
-        else createChocolateyInstallPs1 parameters
+        then createChocolateyInstallPs1FromTemplate parameters chocoInstallPath tempFolder
+        else createChocolateyInstallPs1 parameters tempFolder
         
         let chocoUninstallPath = rootFolder @@ "tools" @@ "chocolateyUninstall.ps1"
         if fileExists chocoUninstallPath
-        then createChocolateyUninstallPs1FromTemplate parameters chocoUninstallPath
-        else createChocolateyUninstallPs1 parameters
+        then createChocolateyUninstallPs1FromTemplate parameters chocoUninstallPath tempFolder
+        else createChocolateyUninstallPs1 parameters tempFolder
 
         callChocoPack nuspecFile parameters
+        
+        parameters.PackageId + "." + parameters.Version + ".nupkg" |> FileHelper.MoveFile parameters.OutputDir
         
     /// Call choco to [push](https://github.com/chocolatey/choco/wiki/CommandsPush) a package
     /// ## Parameters
