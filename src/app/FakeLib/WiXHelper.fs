@@ -1290,7 +1290,7 @@ let generateWiXScript fileName =
 [<Obsolete("Please use new FillInWiXTemplate function")>]
 let FillInWixScript wiXPath (setParams : WiXScript -> WiXScript) =
     let parameters = WiXScriptDefaults |> setParams
-    let wixScript = !!("*.wxs" @@ wiXPath)
+    let wixScript = !!( wiXPath @@ "*.wxs" )
     let replacements = [
         "@Product.ProductCode@", parameters.ProductCode.ToString("D")
         "@Product.ProductName@", parameters.ProductName
@@ -1337,7 +1337,7 @@ let FillInWixScript wiXPath (setParams : WiXScript -> WiXScript) =
 ///                            })
 let FillInWiXTemplate wiXPath setParams =
     let parameters = ScriptDefaults |> setParams
-    let wixScript = !!("*.wxs" @@ wiXPath)
+    let wixScript = !!( wiXPath @@ "*.wxs" )
     let replacements = [
         "@Product.ProductCode@", parameters.ProductCode.ToString("D")
         "@Product.ProductName@", parameters.ProductName
