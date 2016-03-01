@@ -1,3 +1,4 @@
+#nowarn "211"
 #I __SOURCE_DIRECTORY__
 #I @"../../../../../packages/Octokit/lib/net45"
 #I @"../../packages/Octokit/lib/net45"
