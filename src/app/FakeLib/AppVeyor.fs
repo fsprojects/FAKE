@@ -135,7 +135,7 @@ let TestFailed testSuiteName testCaseName message details =
         (EncapsulateSpecialChars message) (EncapsulateSpecialChars details)
 
 /// Ignores the test case.      
-let IgnoreTestCase testSuiteName testCaseName message = sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Outcome Passed" (testSuiteName + " - " + testCaseName)
+let IgnoreTestCase testSuiteName testCaseName = sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Outcome Ignored" (testSuiteName + " - " + testCaseName)
 
 /// Reports a succeeded test.
 let TestSucceeded testSuiteName testCaseName = sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Outcome Passed" (testSuiteName + " - " + testCaseName)
