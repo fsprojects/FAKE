@@ -1,3 +1,6 @@
+#### 4.21.1 - 01.03.2016
+* BUGFIX: Fixed bug that prevented using directory names with spaces in WiX - https://github.com/fsharp/FAKE/pull/1160
+
 #### 4.21.0 - 29.02.2016
 * New helper for chocolatey - http://fsharp.github.io/FAKE/chocolatey.html
 * New helper for Slack - http://fsharp.github.io/FAKE/slacknotification.html
