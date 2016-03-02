@@ -601,7 +601,7 @@ let getFileIdFromWiXString wiXString fileRegex =
         |> Seq.filter(fun line -> Regex.IsMatch(line, "Name=\"" + fileRegex + "\""))
         |> Seq.head
         // Substring starts immediately after "Id=" tag and is as long as the given file id
-        |> fun f -> f.Substring(f.IndexOf("Id=") + 4, Regex.Match(f, "Id=\"\S*\"").Length - 5)
+        |> fun f -> f.Substring(f.IndexOf("Id=") + 4, Regex.Match(f, "Id=\"[^\"]*\"").Length - 5)
 
 
 /// Retrieves all component ids from given WiX directory string
@@ -617,7 +617,7 @@ let getComponentIdsFromWiXString wiXString =
     // Filter for lines which have a name tag matching the given regex, pick the first and return its ID
     lines
         |> Seq.filter(fun line -> Regex.IsMatch(line, "<Component"))
-        |> Seq.map(fun f -> sprintf "<ComponentRef Id=\"%s\" />" (f.Substring(f.IndexOf("Id=") + 4, Regex.Match(f, "Id=\"\S*\"").Length - 5)))
+        |> Seq.map(fun f -> sprintf "<ComponentRef Id=\"%s\" />" (f.Substring(f.IndexOf("Id=") + 4, Regex.Match(f, "Id=\"[^\"]*\"").Length - 5)))
         |> System.String.Concat
 
 /// Creates WiX ComponentRef tags from the given DirectoryInfo
