@@ -1,3 +1,7 @@
+#### 4.21.3 - 03.03.2016
+* BUGFIX: Fixed IgnoreTestCase helper - https://github.com/fsharp/FAKE/pull/1159
+* BUGFIX: use compileFiles in compile - https://github.com/fsharp/FAKE/pull/1165
+
 #### 4.21.2 - 03.03.2016
 * BUGFIX: Fixed bug in WiXDir function, that would set plain directory name as id - https://github.com/fsharp/FAKE/pull/1164
 
