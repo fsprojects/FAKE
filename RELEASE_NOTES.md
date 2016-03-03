@@ -1,3 +1,6 @@
+#### 4.21.2 - 03.03.2016
+* BUGFIX: Fixed bug in WiXDir function, that would set plain directory name as id - https://github.com/fsharp/FAKE/pull/1164
+
 #### 4.21.1 - 01.03.2016
 * BUGFIX: Fixed bug that prevented using directory names with spaces in WiX - https://github.com/fsharp/FAKE/pull/1160
 
