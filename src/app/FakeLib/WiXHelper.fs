@@ -577,11 +577,11 @@ let rec wixDir fileFilter asSubDir (directoryInfo : DirectoryInfo) =
         if files = "" then ""
         else 
             split '\n' files
-            |> Seq.map(fun f -> sprintf "<Component Id=\"%s\" Guid=\"%s\">\r\n%s\r\n</Component>\r\n" (compName directoryInfo.Name) "*" f)
+            |> Seq.map(fun f -> sprintf "<Component Id=\"%s\" Guid=\"%s\">\r\n%s\r\n</Component>\r\n" (compName (directoryInfo.Name.GetHashCode().ToString("x8"))) "*" f)
             |> toLines
-    
+
     if asSubDir then 
-        sprintf "<Directory Id=\"%s\" Name=\"%s\">\r\n%s%s\r\n</Directory>\r\n" (dirName directoryInfo.Name) 
+        sprintf "<Directory Id=\"%s\" Name=\"%s\">\r\n%s%s\r\n</Directory>\r\n" (dirName (directoryInfo.Name.GetHashCode().ToString("x8"))) 
             directoryInfo.Name dirs compo
     else sprintf "%s%s" dirs compo
 
