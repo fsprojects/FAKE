@@ -321,7 +321,7 @@ type FscParam =
     ///  Display the commandline flags and their usage
     | Help
     ///  Compile using fsx.exe
-    | UseFsxExe
+    | useFscExe
 
 (* - ADVANCED - *)
     /// Specify the codepage used to read source files
@@ -420,7 +420,7 @@ type FscParam =
         | MLCompatibility -> arg "mlcompatibility"
         | NoLogo -> arg "nologo"
         | Help -> arg "help"
-        | UseFsxExe -> arg "useFsxExe"
+        | useFscExe -> arg "useFscExe"
         | Codepage n -> argp "codepage" <| string n
         | Utf8Output -> arg "utf8output"
         | FullPaths -> arg "fullpaths"
@@ -451,7 +451,7 @@ type FscParam =
 let compileFiles (srcFiles : string list) (opts : string list) : int = 
     let scs = SimpleSourceCodeServices()
     
-    let useFsxExe = opts |> Seq.exists (fun e -> e = "--useFsxExe" )
+    let useFscExe = opts |> Seq.exists (fun e -> e = "--useFscExe" )
     let optsArr = 
         // If output file name is specified, pass it on to fsc.
         if Seq.exists (fun e -> e = "-o" || e.StartsWith("--out:")) opts then opts @ srcFiles
@@ -465,7 +465,7 @@ let compileFiles (srcFiles : string list) (opts : string list) : int =
 
     trace <| sprintf "FSC with args:%A" optsArr
 
-    if not(useFsxExe) then
+    if not(useFscExe) then
       // Always prepend "fsc.exe" since fsc compiler skips the first argument
       let optsArr = Array.append [|"fsc.exe"|] optsArr
       let errors, exitCode = scs.Compile optsArr
@@ -480,7 +480,7 @@ let compileFiles (srcFiles : string list) (opts : string list) : int =
     else
         ExecProcess (fun info ->
             info.FileName <- (@"fsc.exe")
-            info.Arguments <- String.Concat( optsArr |> Array.filter(fun f -> f <> "--useFsxExe" ) |> Array.map( fun f -> f + " " ) )
+            info.Arguments <- String.Concat( optsArr |> Array.filter(fun f -> f <> "--useFscExe" ) |> Array.map( fun f -> f + " " ) )
         ) (System.TimeSpan.FromMinutes 5.)
 
 /// Compiles the given F# source files with the specified parameters.
