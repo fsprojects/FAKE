@@ -498,7 +498,7 @@ let compile (fscParams : FscParam list) (inputFiles : string list) : int =
     let fscParams = if fscParams = [] then FscParam.Defaults else fscParams
     let argList = fscParams |> List.map string
     traceStartTask "Fsc " taskDesc
-    let res = fscList inputFiles argList
+    let res = compileFiles inputFiles argList
     traceEndTask "Fsc " taskDesc
     res
 
