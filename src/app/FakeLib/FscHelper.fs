@@ -320,6 +320,8 @@ type FscParam =
     | NoLogo
     ///  Display the commandline flags and their usage
     | Help
+    ///  Compile using fsx.exe
+    | UseFsxExe
 
 (* - ADVANCED - *)
     /// Specify the codepage used to read source files
@@ -418,6 +420,7 @@ type FscParam =
         | MLCompatibility -> arg "mlcompatibility"
         | NoLogo -> arg "nologo"
         | Help -> arg "help"
+        | UseFsxExe -> arg "useFsxExe"
         | Codepage n -> argp "codepage" <| string n
         | Utf8Output -> arg "utf8output"
         | FullPaths -> arg "fullpaths"
@@ -448,6 +451,7 @@ type FscParam =
 let compileFiles (srcFiles : string list) (opts : string list) : int = 
     let scs = SimpleSourceCodeServices()
     
+    let useFsxExe = opts |> Seq.exists (fun e -> e = "--useFsxExe" )
     let optsArr = 
         // If output file name is specified, pass it on to fsc.
         if Seq.exists (fun e -> e = "-o" || e.StartsWith("--out:")) opts then opts @ srcFiles
@@ -460,17 +464,24 @@ let compileFiles (srcFiles : string list) (opts : string list) : int =
         |> Array.ofList
 
     trace <| sprintf "FSC with args:%A" optsArr
-    // Always prepend "fsc.exe" since fsc compiler skips the first argument
-    let optsArr = Array.append [|"fsc.exe"|] optsArr
-    let errors, exitCode = scs.Compile optsArr
-    // Better compile reporting thanks to:
-    // https://github.com/jbtule/ComposableExtensions/blob/5b961b30668bb7f4d17238770869b5a884bc591f/tools/CompilerHelper.fsx#L233
-    for e in errors do
-        let errMsg = e.ToString()
-        match e.Severity with
-        | FSharpErrorSeverity.Warning -> traceImportant errMsg
-        | FSharpErrorSeverity.Error -> traceError errMsg
-    exitCode
+
+    if not(useFsxExe) then
+      // Always prepend "fsc.exe" since fsc compiler skips the first argument
+      let optsArr = Array.append [|"fsc.exe"|] optsArr
+      let errors, exitCode = scs.Compile optsArr
+      // Better compile reporting thanks to:
+      // https://github.com/jbtule/ComposableExtensions/blob/5b961b30668bb7f4d17238770869b5a884bc591f/tools/CompilerHelper.fsx#L233
+      for e in errors do
+          let errMsg = e.ToString()
+          match e.Severity with
+          | FSharpErrorSeverity.Warning -> traceImportant errMsg
+          | FSharpErrorSeverity.Error -> traceError errMsg
+      exitCode
+    else
+        ExecProcess (fun info ->
+            info.FileName <- (@"fsc.exe")
+            info.Arguments <- String.Concat( optsArr |> Array.filter(fun f -> f <> "--useFsxExe" ) |> Array.map( fun f -> f + " " ) )
+        ) (System.TimeSpan.FromMinutes 5.)
 
 /// Compiles the given F# source files with the specified parameters.
 ///
