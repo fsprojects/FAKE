@@ -1,3 +1,6 @@
+#### 4.21.4 - 04.03.2016
+* BUGFIX: Fixed issue with IDs that did not start with a letter - https://github.com/fsharp/FAKE/pull/1167
+
 #### 4.21.3 - 03.03.2016
 * BUGFIX: Fixed IgnoreTestCase helper - https://github.com/fsharp/FAKE/pull/1159
 * BUGFIX: use compileFiles in compile - https://github.com/fsharp/FAKE/pull/1165
