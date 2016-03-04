@@ -16,10 +16,10 @@ NUGET
     FsCheck.Xunit (2.0.7)
       FsCheck (>= 2.0.7)
       xunit (>= 1.9.2)
-    FSharp.Compiler.Service (2.0.0.4)
+    FSharp.Compiler.Service (2.0.0.6)
     FSharp.Core (4.0.0.1) - redirects: force
     HashLib (2.0.1)
-    jQuery (2.2.0)
+    jQuery (2.2.1)
     Knockout (0.0.1)
       AspNetMvc (>= 4.0.0.0)
     Knockout.Mapping (2.4.0)
@@ -98,8 +98,8 @@ CONTENT: NONE
 NUGET
   remote: http://www.nuget.org/api/v2
   specs:
-    FAKE (4.19.0)
-    FSharp.Compiler.Service (2.0.0.4)
+    FAKE (4.21.3)
+    FSharp.Compiler.Service (2.0.0.6)
     FSharp.Formatting (2.14.0)
       FSharp.Compiler.Service (>= 2.0.0.3 < 2.1.0)
       FSharpVSPowerTools.Core (>= 2.3.0 < 2.4.0)
