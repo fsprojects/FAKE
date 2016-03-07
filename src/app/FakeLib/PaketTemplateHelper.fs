@@ -254,21 +254,23 @@ module internal Rendering =
 ///
 /// ## Sample usage
 ///
-///     Target "Create Paket Template" (fun _ ->
-///        "./temp/paket.template"
-///        |> PaketTemplate (fun p -> { p with
-///                                     TemplateFilePath = Some "./deploytemp/paket.template"
-///                                     Id = Some "My.New.Package"
-///                                     Version = Some "0.0.1-alpha"
-///                                     Authors = ["Me"; "You"; "Someone Other"] })
-///                                     Files = [ Include ("./**/*.dll", "/lib/dlls")
-///                                               Exclude "./Foo/bar.dll"
-///                                               Include ("./*.jpg", "/images") ]
-///                                     Dependencies = [ "Paket1.FOO", AnyVersion
-///                                                      "Paket2.BAR", GreaterOrEqual CURRENTVERSION
-///                                                      "Paket3.BAZ", GreaterOrEqualSafe LOCKEDVERSION
-///                                                      "Paket4.BOO", GreaterOrEqual (Version "1.2.3") ]
-///     )
+///Target "Create Paket Template" (fun _ ->
+///   PaketTemplate (fun p ->
+///        { p with
+///            TemplateFilePath = Some "./deploytemp/paket.template"
+///            Id = Some "My.New.Package"
+///            Version = Some "0.0.1-alpha"
+///            Authors = ["Me"; "You"; "Someone Other"]
+///            Files = [ Include ("./**/*.dll", "/lib/dlls")
+///                      Exclude "./Foo/bar.dll"
+///                      Include ("./*.jpg", "/images") ]
+///            Dependencies = [ "Paket1.FOO", AnyVersion
+///                             "Paket2.BAR", GreaterOrEqual CURRENTVERSION
+///                             "Paket3.BAZ", GreaterOrEqualSafe LOCKEDVERSION
+///                             "Paket4.BOO", GreaterOrEqual (Version "1.2.3") ]
+///        }
+///    )
+///)
 let PaketTemplate setParams =
     traceStartTask "PaketTemplate" ""
     let parameters = setParams DefaultPaketTemplateParams
