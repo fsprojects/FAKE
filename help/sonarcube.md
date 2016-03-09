@@ -20,7 +20,7 @@ compilation has finished. Then the result is collected and send to the SonarQube
         {p with
          Key = "MyProject"
          Name = "Main solution"
-         Version = "1.0.0" })
+         Version = "1.0.0" }
         )
 
     Target "EndSonarQube" (fun _ ->
@@ -28,7 +28,7 @@ compilation has finished. Then the result is collected and send to the SonarQube
         {p with
          Key = "MyProject"
          Name = "Main solution"
-         Version = "1.0.0" })
+         Version = "1.0.0" }
         )
 
     Target "Default" DoNothing
@@ -45,3 +45,28 @@ compilation has finished. Then the result is collected and send to the SonarQube
     RunTargetOrDefault "Default"
 
 The MSBuild runner is searched in 'tools/SonarQube'. This can be overwritten with the ToolsPath property of the parameters.
+
+## Additional options for SonarQube
+
+* You can send additional global settings  to the server with the '/d:' parameter.
+In the SonarQubeParams, this is the new field Settings:
+
+      SonarQube Begin (fun p ->
+        {p with
+         Key = "MyProject"
+         Name = "Main solution"
+         Version = "1.0.0" 
+         Settings = ["sonar.debug"; "sonar.newversion"] }
+        )
+
+* Configuration can also be read from a configuration file. This is the '/s:' parameter.
+This can be done with the new field Config:
+
+      SonarQube Begin (fun p ->
+        {p with
+         Key = "MyProject"
+         Name = "Main solution"
+         Version = "1.0.0" 
+         Config = Some("myconfig.cfg") }
+        )
+

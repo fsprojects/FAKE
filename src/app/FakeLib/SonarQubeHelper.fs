@@ -18,7 +18,7 @@ type SonarQubeParams =
       /// Individual global settings for SonarQube
       Settings : List<string>
       /// Read settings from configuration file
-      Config : List<string>
+      Config : string option
     }
 
 /// SonarQube default parameters - tries to locate MSBuild.SonarQube.exe in any subfolder.
@@ -28,7 +28,7 @@ let SonarQubeDefaults =
       Name = null
       Version = "1.0"
       Settings = []
-      Config = [] }
+      Config = None }
 
 /// Execute the external msbuild runner of Sonar Qube. Parameters are fiven to the command line tool as required.
 let SonarQubeCall (call: SonarQubeCall) (parameters : SonarQubeParams) =
@@ -37,10 +37,10 @@ let SonarQubeCall (call: SonarQubeCall) (parameters : SonarQubeParams) =
     //match parameters.Settings with
     //| Some(x) -> (" /d:"+x)
     //| None -> ""
-  let cfgArgs = parameters.Config |> List.fold (fun acc x -> acc + "/s:"+x+" ") ""
-    //match parameters.Config with
-    //| Some(x) -> (" /s:"+x) 
-    //| None -> ""
+  let cfgArgs = 
+    match parameters.Config with
+    | Some(x) -> (" /s:"+x) 
+    | None -> ""
   let args = 
     match call with
     | Begin -> "begin /k:\"" + parameters.Key + "\" /n:\"" + parameters.Name + "\" /v:\"" + parameters.Version + "\" " + setArgs + cfgArgs
