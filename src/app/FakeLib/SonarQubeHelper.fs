@@ -1,5 +1,6 @@
 /// Contains a task to run the msbuild runner of [Sonar Qube analyzer](http://sonarqube.org).
 module Fake.SonarQubeHelper
+open TraceHelper
 
 /// The supported commands of Sonar Qube. It is called with Begin before compilation, and End after compilation.
 type SonarQubeCall = Begin | End
@@ -14,6 +15,10 @@ type SonarQubeParams =
       Name : string
       /// Version number of the project
       Version : string
+      /// Individual global settings for SonarQube
+      Settings : List<string>
+      /// Read settings from configuration file
+      Config : List<string>
     }
 
 /// SonarQube default parameters - tries to locate MSBuild.SonarQube.exe in any subfolder.
@@ -21,14 +26,26 @@ let SonarQubeDefaults =
     { ToolsPath = findToolInSubPath "MSBuild.SonarQube.Runner.exe" (currentDirectory @@ "tools" @@ "SonarQube")
       Key = null
       Name = null
-      Version = "1.0" }
+      Version = "1.0"
+      Settings = []
+      Config = [] }
 
 /// Execute the external msbuild runner of Sonar Qube. Parameters are fiven to the command line tool as required.
 let SonarQubeCall (call: SonarQubeCall) (parameters : SonarQubeParams) =
   let sonarPath = parameters.ToolsPath 
-  let args = match call with
-    | Begin -> "begin /k:\"" + parameters.Key + "\" /n:\"" + parameters.Name + "\" /v:\"" + parameters.Version + "\""
+  let setArgs = parameters.Settings |> List.fold (fun acc x -> acc + "/d:"+x+" ") ""
+    //match parameters.Settings with
+    //| Some(x) -> (" /d:"+x)
+    //| None -> ""
+  let cfgArgs = parameters.Config |> List.fold (fun acc x -> acc + "/s:"+x+" ") ""
+    //match parameters.Config with
+    //| Some(x) -> (" /s:"+x) 
+    //| None -> ""
+  let args = 
+    match call with
+    | Begin -> "begin /k:\"" + parameters.Key + "\" /n:\"" + parameters.Name + "\" /v:\"" + parameters.Version + "\" " + setArgs + cfgArgs
     | End -> "end"
+
   let result =
     ExecProcess (fun info ->
       info.FileName <- sonarPath
