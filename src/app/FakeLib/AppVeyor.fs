@@ -1,6 +1,8 @@
 ﻿/// Contains code to configure FAKE for AppVeyor integration
 module Fake.AppVeyor
 
+open System.IO
+
 /// AppVeyor environment variables as [described](http://www.appveyor.com/docs/environment-variables)
 type AppVeyorEnvironment = 
     
@@ -177,3 +179,57 @@ let UploadTestResultsXml (testResultsType : TestResultsType) outputDir =
         |> Async.Parallel
         |> Async.RunSynchronously
         |> ignore
+
+/// Set environment variable
+let SetVariable name value =
+    sendToAppVeyor <| sprintf "SetVariable -Name \"%s\" -Value \"%s\"" name value
+
+/// Type of artifact that is pushed
+type ArtifactType = Auto | WebDeployPackage
+
+/// AppVeyor parameters for artifact push
+type PushArtifactParams =
+    {
+        /// The full local path to the artifact
+        Path: string
+        /// File name to display in the artifact tab
+        FileName: string
+        /// Deployment name
+        DeploymentName: string
+        /// Type of the artifact
+        Type: ArtifactType
+    }
+
+/// AppVeyor artifact push default parameters
+let defaultPushArtifactParams =
+    {
+        Path = ""
+        FileName = ""
+        DeploymentName = ""
+        Type = Auto
+    }
+
+let private appendArgIfNotNullOrEmpty value name builder =
+    if (isNotNullOrEmpty value) then
+        appendWithoutQuotes (sprintf "-%s \"%s\"" name value) builder
+    else
+        builder
+
+/// Push an artifact
+let PushArtifact (setParams : PushArtifactParams -> PushArtifactParams) =
+    if buildServer = BuildServer.AppVeyor then
+        let parameters = setParams defaultPushArtifactParams
+        new System.Text.StringBuilder()
+        |> append "PushArtifact"
+        |> append parameters.Path
+        |> appendArgIfNotNullOrEmpty parameters.FileName "FileName"
+        |> appendArgIfNotNullOrEmpty parameters.DeploymentName "DeploymentName"
+        |> appendArgIfNotNullOrEmpty (sprintf "%A" parameters.Type) "Type"
+        |> toText
+        |> sendToAppVeyor
+
+/// Push multiple artifacts
+let PushArtifacts paths =
+    if buildServer = BuildServer.AppVeyor then
+        for path in paths do
+            PushArtifact (fun p -> { p with Path = path; FileName = Path.GetFileName(path) })
