@@ -2,7 +2,7 @@
 
 FAKE can be used to zip the output directory of a project and push it to Azure via the [zip controller](https://github.com/projectkudu/kudu/wiki/REST-API#zip).
 
-You'll need to know the ftp details of the website to publish the web jobs to. Also the web jobs need to already exist on the azure dashboard.
+You'll need to know the http authentication details of the website to publish the web jobs to. If the web job does not already exist, it will be created as part of the deploy.
 
 In your `build.fsx` add the following:
 
