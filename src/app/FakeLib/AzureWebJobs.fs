@@ -6,12 +6,22 @@ open System.IO
 open System
 open System.Net
 open System.Collections.Generic
+open System.Text
 
 /// The running modes of webjobs
 [<RequireQualifiedAccess>]
 type WebJobType = 
     | Continuous
     | Triggered
+
+type WebClientWithTimeout() =
+    inherit WebClient()
+    member val Timeout = 600000 with get, set
+
+    override x.GetWebRequest uri =
+        let r = base.GetWebRequest(uri)
+        r.Timeout <- x.Timeout
+        r
 
 /// WebJob type
 type WebJob = 
@@ -61,13 +71,16 @@ let PackageWebJobs webSites =
     webSites |> List.iter (fun webSite -> webSite.WebJobs |> List.iter (zipWebJob webSite))
 
 let private deployWebJobToWebSite webSite webJob =
-    let uploadApi = Uri(webSite.Url, sprintf"api/zip/site/wwwroot/App_Data/jobs/%s/%s" (jobTypePath webJob.JobType) webJob.Name)
+    let uploadUri = Uri(webSite.Url, sprintf "api/%swebjobs/%s" (jobTypePath webJob.JobType) webJob.Name)
     let filePath = webJob.PackageLocation
-    tracefn "Deploying %s webjob to %O" filePath uploadApi
-    use client = new WebClient()
-
-    client.Credentials <-NetworkCredential(webSite.UserName, webSite.Password)
-    client.UploadData(uploadApi,"PUT",File.ReadAllBytes(filePath)) |> ignore
+    tracefn "Deploying %s webjob to %O" filePath uploadUri
+    use client = new WebClientWithTimeout(Credentials = NetworkCredential(webSite.UserName, webSite.Password))
+    
+    client.Headers.Add(HttpRequestHeader.ContentType, "application/zip")
+    client.Headers.Add("Content-Disposition", sprintf "attachment; filename=%s" (Path.GetFileName webJob.PackageLocation))
+    
+    let response = client.UploadFile("https://tcappdev.scm.azurewebsites.net/api/continuouswebjobs/samplewebjob", "PUT", @"C:\Users\Isaac\Source\Repos\tag-functional\bin\webjobs\tcappdev.zip")
+    tracefn "Response from webjob upload: %s" (Encoding.ASCII.GetString response)
 
 let private deployWebJobsToWebSite webSite = 
     webSite.WebJobs |> List.iter (deployWebJobToWebSite webSite)

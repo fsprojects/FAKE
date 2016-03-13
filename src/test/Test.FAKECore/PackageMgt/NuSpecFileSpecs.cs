@@ -30,6 +30,8 @@ namespace Test.FAKECore.PackageMgt
         It should_contain_the_version_placeholder =
             () => Package.Version.ShouldEqual("@build.number@");
         
+        It should_contain_the_releasenotes_placeholder =
+            () => Package.ReleaseNotes.ShouldEqual("@releaseNotes@");
     }
 
     public class when_parsing_the_fake_nuspec_file

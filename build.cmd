@@ -1,4 +1,5 @@
 @echo off
+SETLOCAL
 
 cls
 
@@ -12,8 +13,10 @@ if errorlevel 1 (
   exit /b %errorlevel%
 )
 
-SET TARGET="Default"
+SET FAKE_PATH=packages\build\FAKE\tools\Fake.exe
 
-IF NOT [%1]==[] (set TARGET="%1")
-
-"packages\FAKE\tools\Fake.exe" "build.fsx" "target=%TARGET%"
+IF [%1]==[] (
+    "%FAKE_PATH%" "build.fsx" "Default" 
+) ELSE (
+    "%FAKE_PATH%" "build.fsx" %* 
+) 

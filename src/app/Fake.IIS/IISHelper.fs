@@ -40,37 +40,70 @@ let  AddBindingToSite (bindingInformation : string) (bindingProtocol : string) (
         | true -> ()
     ) manager
 
-let Site (name : string) protocol binding (physicalPath : string) appPool (mgr : ServerManager) =
-    let mutable site = mgr.Sites.[name] 
-    match (site) with
-    | null -> site <- mgr.Sites.Add(name, protocol, binding, physicalPath)
-    | _ -> 
-        SetPhysicalPath "/" physicalPath name (Some mgr)
-        AddBindingToSite binding protocol name (Some mgr)
+let commit (mgr : ServerManager) = mgr.CommitChanges()
 
-    site.ApplicationDefaults.ApplicationPoolName <- appPool
+type ISiteConfig = interface
+    abstract name : string
+    abstract binding : string
+    abstract physicalPath : string
+    abstract appPool : string
+    abstract id : int64 option
+    abstract protocol : string
+end
+
+type SiteConfig(name : string, binding:string, physicalPath:string, appPool:string, ?id: int64, ?protocol:string) = class
+    interface ISiteConfig with 
+        member this.name = name
+        member this.binding = binding
+        member this.physicalPath = physicalPath
+        member this.appPool = appPool
+        member this.id = id
+        member this.protocol = defaultArg protocol "http"
+end
+
+type ApplicationPoolConfig(name : string, ?runtime:string, ?allow32on64:bool, ?identity : ProcessModelIdentityType) = class
+    member this.name = name
+    member this.runtime = defaultArg runtime "v4.0"
+    member this.allow32on64 = defaultArg allow32on64 false
+    member this.identity = defaultArg identity ProcessModelIdentityType.ApplicationPoolIdentity        
+end
+
+let private MergeAppPoolProperties (appPool:ApplicationPool)(config:ApplicationPoolConfig) = 
+    appPool.Enable32BitAppOnWin64 <- config.allow32on64
+    appPool.ManagedRuntimeVersion <- config.runtime
+    appPool.ProcessModel.IdentityType <- config.identity
+    appPool
+
+let private MergeSiteProperties(site:Site)(config:ISiteConfig) = 
+    site.ApplicationDefaults.ApplicationPoolName <- config.appPool
+    match (config.id) with
+    | Some id -> site.Id <- id
+    | None -> ()
     site
 
-let ApplicationPool (name : string) (allow32on64:bool) (runtime:string) (mgr : ServerManager) = 
-    let appPool = mgr.ApplicationPools.[name]
+let Site (config:ISiteConfig) (mgr : ServerManager) =
+    let mutable site = mgr.Sites.[config.name]
+    match (site) with
+    | null -> site <- mgr.Sites.Add(config.name, config.protocol, config.binding, config.physicalPath)
+    | _ -> 
+        SetPhysicalPath "/" config.physicalPath config.name (Some mgr)
+        AddBindingToSite config.binding config.protocol config.name (Some mgr)
+    MergeSiteProperties site config
+
+let ApplicationPool (config: ApplicationPoolConfig) (mgr : ServerManager) = 
+    let appPool = mgr.ApplicationPools.[config.name]
     match (appPool) with
     | null -> 
-        let pool = mgr.ApplicationPools.Add(name)
-        pool.Enable32BitAppOnWin64 <- allow32on64
-        pool.ManagedRuntimeVersion <- runtime
-        pool
+        let pool = mgr.ApplicationPools.Add(config.name)
+        MergeAppPoolProperties pool config
     | _ ->
-        appPool.Enable32BitAppOnWin64 <- allow32on64
-        appPool.ManagedRuntimeVersion <- runtime
-        appPool
+        MergeAppPoolProperties appPool config
 
 let Application (virtualPath : string) (physicalPath : string) (site : Site) (mgr : ServerManager) =
     let app = site.Applications.[virtualPath]
     match (app) with
     | null -> site.Applications.Add(virtualPath, physicalPath)
     | _ -> app.VirtualDirectories.[0].PhysicalPath <- physicalPath; app
-
-let commit (mgr : ServerManager) = mgr.CommitChanges()
 
 let IIS (site : ServerManager -> Site) 
         (appPool : ServerManager -> ApplicationPool) 
@@ -114,4 +147,3 @@ let deleteApplicationPool (name : string) =
     if appPool <> null then
         appPool.Delete()
         commit mgr
-

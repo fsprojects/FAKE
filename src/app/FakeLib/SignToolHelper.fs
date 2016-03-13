@@ -21,8 +21,6 @@ type SignCert = {
 
 /// Parameters used for signing.
 type SignParams = {
-    /// The assemblies to sign
-    FilesToSign : seq<string>
     /// The dev certificate that will be used when the real certificate can not be found
     DevCertificate : SignCert
     /// The optional real certificate that will be used when it is found
@@ -33,7 +31,7 @@ type SignParams = {
 
 /// Signs assemblies according to the settings specified in the parameters using signtool.exe.
 /// This will be looked up using the toolsPath parameter.
-let Sign (toolsPath : string) (parameters : SignParams) = 
+let Sign (toolsPath : string) (parameters : SignParams) (filesToSign : seq<string>) = 
     traceStartTask "SignTool" "Trying to sign the specified assemblies"
   
     let signPath = toolsPath @@ "signtool.exe"
@@ -52,7 +50,7 @@ let Sign (toolsPath : string) (parameters : SignParams) =
                                            | Some pass -> sprintf " /p \"%s\"" (ReadLine pass)
                                            | None -> ""
 
-    parameters.FilesToSign
+    filesToSign
     |> Seq.iter (fun fileToSign ->  
         let withFileToSign = withPassword + sprintf " \"%s\"" fileToSign
 
@@ -75,10 +73,9 @@ let SignTool toolsPath certFile passFile filesToSign =
     }
 
     let signParams = {
-        FilesToSign = filesToSign
         Certificate = Some certToUse
         DevCertificate = certToUse
         TimeStampUrl = None
     }
 
-    Sign toolsPath signParams
+    Sign toolsPath signParams filesToSign

@@ -22,3 +22,30 @@ Note that the dependency tree will be traversed as usual whenever setting ``para
 
 Due to these limitations it is recommended to use the standard sequential build whenever checking for errors (CI, etc.)
 However when a fast build is desired (and the project is e.g. known to build successfully) the parallel option might be helpful
+
+## Example
+
+When using this parallel option, Fake resolves the build dependency hierearchies from the described paths and builds independend paths as parallel if you have multiple CPUs available.
+For example this dependency tree:
+	
+	"Task 1"
+	 ==> "Task A2"
+	 ==> "Task 3"
+
+	"Task 1"
+	 ==> "Task B2"
+	 ==> "Task 3"
+
+	"Task C2"
+	 ==> "Task 3"
+
+	"Task 3"
+	 ==> "Task A4"
+
+	"Task 3"
+	 ==> "Task B4"
+...would be treated as follows:
+
+![](pics/parallel/ParallelExample.png)
+
+This is in addition to that that MsBuild may use multiple threads when building one solution having multiple independent project-files.

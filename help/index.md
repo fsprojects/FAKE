@@ -40,7 +40,7 @@ Some of our users are:
 * [FSharp.Data](https://github.com/fsharp/FSharp.Data)
 * [CHECK24 Vergleichsportal GmbH](http://www.check24.de)
 
-You can find more user [here](users.html).
+You can find more users [here](users.html).
 
 ## How to get FAKE
 
@@ -85,7 +85,7 @@ If one target should only be run on a specific condition you can use the =?> ope
 	
 	"Clean" 
 	  ==> "BuildApp"
-	  =?> ("Test",hasBuildParam "test")  // only if FAKE was called with parameter xUnitTest
+	  =?> ("Test",hasBuildParam "xUnitTest")  // only if FAKE was called with parameter xUnitTest
 	  ==> "Default"
 
 ### Running targets

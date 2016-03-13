@@ -28,6 +28,11 @@ let RunParameterTargetOrDefault parameterName defaultTarget = getBuildParamOrDef
 /// Runs the target given by the target parameter or the given default target
 let RunTargetOrDefault defaultTarget = getBuildParamOrDefault "target" defaultTarget |> Run
 
+/// Runs the target given by the target parameter or lists the available targets
+let RunTargetOrListTargets() =
+    if hasBuildParam "target" then getBuildParam "target" |> Run
+    else listTargets()
+
 /// Runs the target given by the target parameter
 let RunTarget() = getBuildParam "target" |> Run
 
@@ -48,12 +53,31 @@ let rec addDependenciesOnSameLevel target dependency =
         Dependencies target [x]
     | _  -> ()
 
+/// Specifies that two targets have the same dependencies
+let rec addSoftDependenciesOnSameLevel target dependency =
+    match sameLevels.TryGetValue dependency with
+    | true, x -> 
+        addSoftDependenciesOnSameLevel target x
+        SoftDependencies target [x]
+    | _  -> ()
+
+
 /// Defines a dependency - y is dependent on x
 let inline (==>) x y =
     addDependenciesOnSameLevel y x 
     Dependencies y [x]
-
     y
+
+
+/// Defines a soft dependency. x must run before y, if it is present, but y does not require x to be run.
+let inline (?=>) x y = 
+   addSoftDependenciesOnSameLevel y x 
+   SoftDependencies y [x]
+   y
+
+/// Defines a soft dependency. x must run before y, if it is present, but y does not require x to be run.
+let inline (<=?) y x = x ?=> y
+
 
 /// Defines that x and y are not dependent on each other but y is dependent on all dependencies of x.
 let inline (<=>) x y =   

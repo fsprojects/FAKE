@@ -77,7 +77,7 @@ let buildArgs (param: NugetInstallParams) =
 /// ## Parameters
 ///
 ///  - `setParams` - Function used to manipulate the default parameters.
-///  - `packagesFile` - Path to the `*.sln`, `*.*proj` or `packages.config` file.
+///  - `packagesFile` - Path to the `*.sln`, `*.*proj` or `packages.config` file, or simply a NuGet package name
 let NugetInstall setParams packageName =
     traceStartTask "NugetInstall" packageName
     let param = NugetInstallDefaults |> setParams

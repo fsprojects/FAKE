@@ -1,6 +1,8 @@
 ﻿/// Contains code to configure FAKE for AppVeyor integration
 module Fake.AppVeyor
 
+open System.IO
+
 /// AppVeyor environment variables as [described](http://www.appveyor.com/docs/environment-variables)
 type AppVeyorEnvironment = 
     
@@ -92,6 +94,9 @@ type AppVeyorEnvironment =
 
     /// Configuration name set on Build tab of project settings (or through configuration parameter in appveyor.yml).  
     static member Configuration  = environVar "CONFIGURATION"
+
+    /// The job name
+    static member JobName = environVar "APPVEYOR_JOB_NAME"
     
 let private sendToAppVeyor args = 
     ExecProcess (fun info -> 
@@ -132,7 +137,7 @@ let TestFailed testSuiteName testCaseName message details =
         (EncapsulateSpecialChars message) (EncapsulateSpecialChars details)
 
 /// Ignores the test case.      
-let IgnoreTestCase testSuiteName testCaseName message = sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Outcome Passed" (testSuiteName + " - " + testCaseName)
+let IgnoreTestCase testSuiteName testCaseName message = sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Outcome Ignored" (testSuiteName + " - " + testCaseName)
 
 /// Reports a succeeded test.
 let TestSucceeded testSuiteName testCaseName = sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Outcome Passed" (testSuiteName + " - " + testCaseName)
@@ -149,21 +154,82 @@ let FinishTestCase testSuiteName testCaseName (duration : System.TimeSpan) =
 /// Union type representing the available test result formats accepted by AppVeyor.
 type TestResultsType =
     | MsTest
-    | NUnit
     | Xunit
+    | NUnit
+    | NUnit3
+    | JUnit
 
-/// Uploads the test results .xml file to the Test tab of the build console.
-let UploadTestResultsXml testResultsType outputDir =
+/// Uploads a test result file to make them visible in Test tab of the build console.
+let UploadTestResultsFile (testResultsType : TestResultsType) file =
     if buildServer = BuildServer.AppVeyor then
         let resultsType = (sprintf "%A" testResultsType).ToLower()
         let url = sprintf "https://ci.appveyor.com/api/testresults/%s/%s" resultsType AppVeyorEnvironment.JobId
-        let files = System.IO.Directory.GetFiles(path = outputDir, searchPattern = "*.xml")
         use wc = new System.Net.WebClient()
-        files
-        |> Seq.iter (fun file ->
-            try
-                wc.UploadFile(url, file) |> ignore
-                printfn "Successfully uploaded test results %s" file
-            with
-            | ex -> printfn "An error occurred while uploading %s:\r\n%O" file ex
-        )
+        try
+            wc.UploadFile(url, file) |> ignore
+            printfn "Successfully uploaded test results %s" file
+        with
+        | ex -> printfn "An error occurred while uploading %s:\r\n%O" file ex
+
+/// Uploads all the test results ".xml" files in a directory to make them visible in Test tab of the build console.
+let UploadTestResultsXml (testResultsType : TestResultsType) outputDir =
+    if buildServer = BuildServer.AppVeyor then
+        System.IO.Directory.EnumerateFiles(path = outputDir, searchPattern = "*.xml")
+        |> Seq.map(fun file -> async { UploadTestResultsFile testResultsType file })
+        |> Async.Parallel
+        |> Async.RunSynchronously
+        |> ignore
+
+/// Set environment variable
+let SetVariable name value =
+    sendToAppVeyor <| sprintf "SetVariable -Name \"%s\" -Value \"%s\"" name value
+
+/// Type of artifact that is pushed
+type ArtifactType = Auto | WebDeployPackage
+
+/// AppVeyor parameters for artifact push
+type PushArtifactParams =
+    {
+        /// The full local path to the artifact
+        Path: string
+        /// File name to display in the artifact tab
+        FileName: string
+        /// Deployment name
+        DeploymentName: string
+        /// Type of the artifact
+        Type: ArtifactType
+    }
+
+/// AppVeyor artifact push default parameters
+let defaultPushArtifactParams =
+    {
+        Path = ""
+        FileName = ""
+        DeploymentName = ""
+        Type = Auto
+    }
+
+let private appendArgIfNotNullOrEmpty value name builder =
+    if (isNotNullOrEmpty value) then
+        appendWithoutQuotes (sprintf "-%s \"%s\"" name value) builder
+    else
+        builder
+
+/// Push an artifact
+let PushArtifact (setParams : PushArtifactParams -> PushArtifactParams) =
+    if buildServer = BuildServer.AppVeyor then
+        let parameters = setParams defaultPushArtifactParams
+        new System.Text.StringBuilder()
+        |> append "PushArtifact"
+        |> append parameters.Path
+        |> appendArgIfNotNullOrEmpty parameters.FileName "FileName"
+        |> appendArgIfNotNullOrEmpty parameters.DeploymentName "DeploymentName"
+        |> appendArgIfNotNullOrEmpty (sprintf "%A" parameters.Type) "Type"
+        |> toText
+        |> sendToAppVeyor
+
+/// Push multiple artifacts
+let PushArtifacts paths =
+    if buildServer = BuildServer.AppVeyor then
+        for path in paths do
+            PushArtifact (fun p -> { p with Path = path; FileName = Path.GetFileName(path) })

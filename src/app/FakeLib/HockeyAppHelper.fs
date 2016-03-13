@@ -113,6 +113,12 @@ type HockeyAppUploadParams = {
 
     /// Release download status (can only be set with full-access tokens)
     DownloadStatus: DownloadStatusOption
+
+    /// Restrict download to specific teams
+    Teams: string[]
+
+    /// Set maximum upload delay
+    UploadTimeout: TimeSpan
 }
 
 /// The default HockeyApp parameters
@@ -131,6 +137,8 @@ let HockeyAppUploadDefaults = {
     BuildServerUrl = String.Empty
     RepositoryUrl = String.Empty
     DownloadStatus = DownloadStatusOption.NotDownloadable
+    Teams = Array.empty
+    UploadTimeout = TimeSpan.FromMinutes 2.
 }
 
 /// [omit]
@@ -171,6 +179,7 @@ let private toCurlArgs param = seq {
     yield sprintf "-F \"mandatory=%i\"" (int param.Mandatory)
     yield sprintf "-F \"status=%i\"" (int param.DownloadStatus)
     yield sprintf "-F \"private=%b\"" param.Private
+    yield sprintf "-F \"teams=%s\"" (param.Teams |> String.concat ",")
     if not (String.IsNullOrEmpty param.OwnerId) then yield sprintf "-F \"owner_id=%s\"" param.OwnerId
     if not (String.IsNullOrEmpty param.CommitSHA) then yield sprintf "-F \"commit_sha=%s\"" param.CommitSHA
     if not (String.IsNullOrEmpty param.BuildServerUrl) then yield sprintf "-F \"build_server_url=%s\"" param.BuildServerUrl
@@ -182,15 +191,17 @@ let private toCurlArgs param = seq {
 /// ## Parameters
 ///  - `setParams` - Function used to override the default parameters
 let HockeyApp (setParams: HockeyAppUploadParams -> HockeyAppUploadParams) =
-    HockeyAppUploadDefaults
-    |> setParams
-    |> validateParams
+    let p = HockeyAppUploadDefaults
+            |> setParams
+            |> validateParams
+
+    p
     |> toCurlArgs
     |> fun args ->
         ExecProcessAndReturnMessages (fun p ->
             p.FileName <- "curl"
             p.Arguments <- (String.concat " " args)
-        ) (TimeSpan.FromMinutes 2.)
+        ) p.UploadTimeout
     |> fun response ->
         let error = sprintf "Error while posting to HockeyApp.%sMessages: %s%sErrors: %s%s" nl (String.concat "; " response.Messages) nl (String.concat "; " response.Errors) nl
         match response.ExitCode with

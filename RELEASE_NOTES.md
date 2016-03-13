@@ -1,5 +1,188 @@
-#### 4.0.0-alpha002 - 14.07.2015
+#### 4.22.0 - 13.03.2016
+* Added artifact publishing to AppVeyor - https://github.com/fsharp/FAKE/pull/1173 
+* Azure Web Jobs now get created during deploy if they do not already exist - https://github.com/fsharp/FAKE/pull/1174
+* BUGFIX: New Sonar options - https://github.com/fsharp/FAKE/pull/1172
+* BUGFIX: Fixed issue with IDs that did not start with a letter - https://github.com/fsharp/FAKE/pull/1167
+* BUGFIX: Fixed IgnoreTestCase helper - https://github.com/fsharp/FAKE/pull/1159
+* BUGFIX: use compileFiles in compile - https://github.com/fsharp/FAKE/pull/1165
+* BUGFIX: Fixed bug in WiXDir function, that would set plain directory name as id - https://github.com/fsharp/FAKE/pull/1164
+* BUGFIX: Fixed bug that prevented using directory names with spaces in WiX - https://github.com/fsharp/FAKE/pull/1160
+
+#### 4.21.0 - 29.02.2016
+* New helper for chocolatey - http://fsharp.github.io/FAKE/chocolatey.html
+* New helper for Slack - http://fsharp.github.io/FAKE/slacknotification.html
+* New helper for SonarQube - http://fsharp.github.io/FAKE/sonarcube.html
+* New helper for creating paket.template files for Paket - https://github.com/fsharp/FAKE/pull/1148
+* New version of WatchChanges that support options - https://github.com/fsharp/FAKE/pull/1144
+* Improved AppVeyor test results upload - https://github.com/fsharp/FAKE/pull/1138
+* Added support for Paket's minimum-from-lock-file in pack command - https://github.com/fsharp/FAKE/pull/1149
+* Added support for NUnit3 --labels parameter - https://github.com/fsharp/FAKE/pull/1153
+* BUGFIX: Fixed Issue #1142: Arguments of CombinePaths are switched in WixHelper - https://github.com/fsharp/FAKE/pull/1145 
+* BUGFIX: NuGet auto version bug fix - https://github.com/fsharp/FAKE/pull/1146
+* WORKAROUND: nuget.org changed base url
+
+#### 4.20.0 - 06.02.2016
+* Allows to create full Wix directory hierarchy - https://github.com/fsharp/FAKE/pull/1116
+* New PicklesHelper for generating living documentation with Pickles - https://github.com/fsharp/FAKE/pull/1126
+* BUGFIX: Replaced system directory separator with "/" in ArchiveHelper - https://github.com/fsharp/FAKE/pull/1127
+
+#### 4.19.0 - 02.02.2016
+* New FSC task - https://github.com/fsharp/FAKE/pull/1122
+* Disable warning from #1082 for now because it created lots of confusion 
+
+#### 4.18.0 - 02.02.2016
+* New helpers which allow to send .NET coverage settings to TeamCity - https://github.com/fsharp/FAKE/pull/1117
+* Disabled NodeReuse on TeamCity, it can lead to consecutive builds failing - https://github.com/fsharp/FAKE/pull/1110
+* Added IncludeReferencedProjects property to the Packet.Pack params - https://github.com/fsharp/FAKE/pull/1112
+* BUGFIX: Ensure that traceEndTask is called in DotCover - https://github.com/fsharp/FAKE/pull/1118
+* BUGFIX: WiXHelper: fixed typos in WiXDir.ToString - https://github.com/fsharp/FAKE/pull/1120
+
+#### 4.17.0 - 23.01.2016
+* Renamed internal FSharp.Compiler.Service to avoid clashes - https://github.com/fsharp/FAKE/pull/1097
+* Added support for "paket restore" - https://github.com/fsharp/FAKE/pull/1108
+* WiX service install - https://github.com/fsharp/FAKE/pull/1099
+* Passing timeout value also to solution exchanger in DynamicsCRMHelper - https://github.com/fsharp/FAKE/pull/1102
+* BUGFIX: Fallback to recompile when caching of build script fails - https://github.com/fsharp/FAKE/pull/1093
+* BUGFIX: Commit message will be retrieved for older and newer git versions - https://github.com/fsharp/FAKE/pull/1098
+* BUGFIX: Fixed case sensitivity on package name when search references in Paket.lock - https://github.com/fsharp/FAKE/pull/1089
+* COSMETICS: Don't show the obsolete usage - https://github.com/fsharp/FAKE/pull/1094
+ 
+#### 4.16.0 - 20.01.2016
+* General FAKE improvements - https://github.com/fsharp/FAKE/pull/1088
+* Hockey app UploadTimeout - https://github.com/fsharp/FAKE/pull/1087
+
+#### 4.15.0 - 19.01.2016
+* Add support for appcast generation - https://github.com/fsharp/FAKE/pull/1057
+* Function to remove Compile elems missing files - https://github.com/fsharp/FAKE/pull/1078
+* AssemblyInfoFile: added functions to read and update attributes -https://github.com/fsharp/FAKE/pull/1073
+* Added support for packing symbols via PaketHelper - https://github.com/fsharp/FAKE/pull/1071
+* Tell the clr to use the cached assemblies even when it tries to reload them with a different context - https://github.com/fsharp/FAKE/pull/1056
+* BUGFIX: Fix failure when space in temp path - https://github.com/fsharp/FAKE/pull/1076
+* BUGFIX: Fix app.config files
+* BUGFIX: Cache invalidate on changing fsiOptions - https://github.com/fsprojects/ProjectScaffold/issues/231
+
+#### 4.14.0 - 12.01.2016
+* NuGet automatic version increment - https://github.com/fsharp/FAKE/pull/1063
+* Added support for the Paket pack parameter buildPlatform - https://github.com/fsharp/FAKE/pull/1066
+* Added possibility to bulk update assembly infos with file includes - https://github.com/fsharp/FAKE/pull/1067
+
+#### 4.13.0 - 11.01.2016
+* NUnit 3 support - https://github.com/fsharp/FAKE/pull/1064
+* Automatic discovery of octo.exe - https://github.com/fsharp/FAKE/pull/1065
+* Prefer git from cmd path to get ssh key - https://github.com/fsharp/FAKE/pull/1062
+
+#### 4.12.0 - 28.12.2015
+* Change SignToolHelper syntax to reflect common call syntax - https://github.com/fsharp/FAKE/pull/1051
+* New Open/Close block helpers for TeamCity - https://github.com/fsharp/FAKE/pull/1049
+* BUGFIX: Use UTF-8 encoding of AssemblyInfo as written by ReplaceAssemblyInfoVersions - https://github.com/fsharp/FAKE/pull/1055
+
+#### 4.11.0 - 19.12.2015
+* Add specific version parameter in PaketPackParams - https://github.com/fsharp/FAKE/pull/1046
+* Fixed isMacOS function - https://github.com/fsharp/FAKE/pull/1044
+* Added more comfortable types to WiXHelper, flagged old ones obsolete - https://github.com/fsharp/FAKE/pull/1036
+* Use FSharp.Compiler.Service 1.4.2.3
+* Only add relative path prefix if not rooted path in MSBuildHelper - https://github.com/fsharp/FAKE/pull/1033
+* Replaced hard reference on gacutil path with automatic search  - https://github.com/fsharp/FAKE/pull/1040
+* Wrap OutputPath in quotes in paket helper - https://github.com/fsharp/FAKE/pull/1027
+* Allow override of the signature algorithm and message digest algorithm in Xamarin helper - https://github.com/fsharp/FAKE/pull/1025
+* Expose excluded templates in Pack helper - https://github.com/fsharp/FAKE/pull/1026
+* Added initial implementation of DynamicsCRMHelper - https://github.com/fsharp/FAKE/pull/1009
+
+#### 4.10.0 - 30.11.2015
+* Added support for Squirrel's --no-msi option - https://github.com/fsharp/FAKE/pull/1013
+* Upload has longer timeout - https://github.com/fsharp/FAKE/pull/1004
+* Added the History Directory argument of ReportGenerator - https://github.com/fsharp/FAKE/pull/1003
+* Support for Bamboo build server - https://github.com/fsharp/FAKE/pull/1015
+* Added APPVEYOR_JOB_NAME appveyor environment variable - https://github.com/fsharp/FAKE/pull/1022
+* Updated octopus sample to reflect 3.3.0 package - https://github.com/fsharp/FAKE/pull/1021
+* Added functionality for deleting files and folders in FTP Helper - https://github.com/fsharp/FAKE/pull/1018
+* BASH completion for FAKE targets - https://github.com/fsharp/FAKE/pull/1020
+* BUGFIX: Fix case on MsBuild LogFile option - https://github.com/fsharp/FAKE/pull/1008
+* BUGFIX: Fix git version on Mac - https://github.com/fsharp/FAKE/pull/1006
+
+#### 4.9.1 - 11.11.2015
+* Added support for channels to OctoTools - https://github.com/fsharp/FAKE/pull/1001
+* BUGFIX: Create AssemblyInfo directory only where required - https://github.com/fsharp/FAKE/pull/997
+* COSMETICS: Renamed confusing parameter in FSI helper - https://github.com/fsharp/FAKE/pull/1000
+
+#### 4.8.0 - 04.11.2015
+* Basic npm support - https://github.com/fsharp/FAKE/pull/993
+* New RoboCopy helper - https://github.com/fsharp/FAKE/pull/988
+* Option ignore failing tests DotCover https://github.com/fsharp/FAKE/pull/990
+* Add code to replace new assemblyinfo attributes - https://github.com/fsharp/FAKE/pull/991
+* Cleanup Registry helpers - https://github.com/fsharp/FAKE/pull/980
+* FAKE.Deploy scans for default scripts - https://github.com/fsharp/FAKE/pull/981
+* BUGFIX: Use WorkingDir in Paket helpers
+* BUGFIX: support caching even when running RazorEngine as part of the build script - https://github.com/fsharp/FAKE/pull/979
+
+#### 4.6.0 - 14.10.2015
+* New Registry functions - https://github.com/fsharp/FAKE/pull/976
+* Add attribute filters to DotCover - https://github.com/fsharp/FAKE/pull/974
+* Always use FullName of nuspec for NuGet pack
+* DotCover support for MSTest - https://github.com/fsharp/FAKE/pull/972
+* Added new functions: replace and poke for inner xml - https://github.com/fsharp/FAKE/pull/970
+* Adding TestFile helper - https://github.com/fsharp/FAKE/pull/962
+
+#### 4.5.0 - 07.10.2015
+* Ensure FSI-ASSEMBLY.dll path exists - https://github.com/fsharp/FAKE/pull/969
+* New dotCover runner for Xunit2 - https://github.com/fsharp/FAKE/pull/965
+* Make FAKE compatible with Microsoft Dynamics 2016
+* Don't assume that mono is on the path for El Capitan - https://github.com/fsharp/FAKE/pull/963/files
+* Better target handling - https://github.com/fsharp/FAKE/pull/954
+* Ignore group lines in paket.references parser
+* Revert breaking change in FCS
+* Support for Android-MultiPackages - https://github.com/fsharp/FAKE/pull/964
+* BUGFIX: Exclude long directories from globbing - https://github.com/fsharp/FAKE/pull/955
+* BUGFIX: Encode script path in cache - https://github.com/fsharp/FAKE/pull/956
+
+#### 4.4.0 - 11.09.2015
+* iOSBuild relies on xbuild instead of mdtool - https://github.com/fsharp/FAKE/pull/945
+* New method to return whether or not a value exists for a registry key - https://github.com/fsharp/FAKE/pull/944
+* Extended ReportGeneratorHelper to add Badges report type - https://github.com/fsharp/FAKE/pull/943
+* HockeyAppHelper download team restriction - https://github.com/fsharp/FAKE/pull/939
+* Use TFS variables as fallback, fixes #933 - https://github.com/fsharp/FAKE/pull/937
+* Deployment configurable timeouts in FAKE.Deploy - https://github.com/fsharp/FAKE/pull/927
+* Fixed bug where only first 1024 bytes were uploaded using FTP - https://github.com/fsharp/FAKE/pull/932
+* FAKE 4.2 or newer started with wrong Target - https://github.com/fsharp/FAKE/pull/931
+* Better user input helper - https://github.com/fsharp/FAKE/pull/930
+* Add support for new Xunit2 runner -noappdomain flag - https://github.com/fsharp/FAKE/pull/928
+
+#### 4.3.0 - 26.08.2015
+* FluentMigrator helper library - http://fsharp.github.io/FAKE/fluentmigrator.html
+
+#### 4.2.0 - 24.08.2015
+* Support for soft dependencies for targets - http://fsharp.github.io/FAKE/soft-dependencies.html
+* Added support for builds within Team Foundation Server (and VSO) - https://github.com/fsharp/FAKE/pull/915
+* New options in the SquirrelHelper - https://github.com/fsharp/FAKE/pull/910
+* Logging improvement in Fake.Deploy - https://github.com/fsharp/FAKE/pull/914
+* New RunTargetOrListTargets function - https://github.com/fsharp/FAKE/pull/921
+* Added date to ReleaseNotes type definition - https://github.com/fsharp/FAKE/pull/917
+* Added `createClientWithToken` & `createRelease` to Octokit.fsx - https://github.com/fsharp/FAKE/pull/913
+* Fixed WatchChanges not properly removing subdirectories from watch list - https://github.com/fsharp/FAKE/pull/908
+* Added ability to optionally pass in SiteId to configure IIS Site - https://github.com/fsharp/FAKE/pull/905
+* Pass OutputDataReceived to logfn instead of trace in shellExec - https://github.com/fsharp/FAKE/pull/906 
+* Add GetDependenciesForReferencesFile
+
+#### 4.1.0 - 10.08.2015
+* Using FSharp.Compiler.Server for F# 4.0
+* Added Squirrel helpers to generate Squirrel installers - https://github.com/fsharp/FAKE/pull/899
+* Added Ability to specify Identity for AppPool - https://github.com/fsharp/FAKE/pull/902
+* Dynamics NAV: version helpers - https://github.com/fsharp/FAKE/pull/900
+* Added ReleaseNotes to NugetHelper - https://github.com/fsharp/FAKE/pull/893
+* BUGFIX: running from a network drive - https://github.com/fsharp/FAKE/pull/892
+* BUGFIX: Align NUnitDomainModel with NUnit documentation - https://github.com/fsharp/FAKE/pull/897
+* BUGFIX: Skip Octokit retry logic on Mono where it causes a crash - https://github.com/fsharp/FAKE/pull/895
+* BUGFIX: FAKE removes mono debug file after cache is saved - https://github.com/fsharp/FAKE/pull/891
+* BUGFIX: Nunit Domain Fix - https://github.com/fsharp/FAKE/pull/883
+* BUGGFIX: Dynamic assembly handling for caching - https://github.com/fsharp/FAKE/pull/884
+* BUGFIX: Loaded dlls versions are used to invalidate FAKE's cache - https://github.com/fsharp/FAKE/pull/882
+
+#### 4.0.0 - 23.07.2015
 * Automatic caching of FAKE build scripts - https://github.com/fsharp/FAKE/pull/859
+* Added MSBuild properties to AndroidPackageParams - https://github.com/fsharp/FAKE/pull/863
+* Add support for outputting NUnit style test result XML to Fake.Testing.XUnit2  - https://github.com/fsharp/FAKE/pull/870
+* Add support for VS2015 VSTest executable - https://github.com/fsharp/FAKE/pull/877
+* Add lock-dependencies parameter to Paket.Pack - https://github.com/fsharp/FAKE/pull/876
 
 #### 3.36.0 - 13.07.2015
 * NoLogo parameter for MSBuildHelper - https://github.com/fsharp/FAKE/pull/850

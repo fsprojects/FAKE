@@ -39,16 +39,17 @@ let validateBuildOrder (order : list<Target[]>) (rootTarget : string) =
                 failwithf "target %A was not assigned a level but occurs in the dependency tree" target.Name
     
     // recursively validate the target levels
-    let rec validate (t : Target) (maxLevel : int) =
+    let rec validate fDeps (t : Target) (maxLevel : int) =
         checkLevel t maxLevel
         let realLevel = Map.find t.Name targetLevelMap
 
-        let deps = t.Dependencies |> List.map getTarget
+        let deps = fDeps t|> List.map getTarget
         for d in deps do
-            validate d (realLevel - 1)
+            validate fDeps d (realLevel - 1)
 
     // initially the max-level is unbounded
-    validate rootTarget Int32.MaxValue
+    validate (fun t -> t.Dependencies) rootTarget Int32.MaxValue
+    validate (fun t -> t.SoftDependencies) rootTarget Int32.MaxValue
 
 [<Fact>]
 let ``Independent targets are parallel``() =
@@ -136,3 +137,70 @@ let ``Diamonds are resolved correctly``() =
 
         | _ ->
             failwithf "unexpected order: %A" order
+
+
+[<Fact>]
+let ``Soft dependencies are respected when dependees are present``() = 
+    TargetDict.Clear()
+    Target "a" DoNothing
+    Target "b" DoNothing
+    Target "c" DoNothing
+    Target "d" DoNothing
+    Target "e" DoNothing
+    Target "f" DoNothing
+    
+   
+    "a" ==> "b" ==> "c" |> ignore
+    // d does not depend on c, but if something else forces c to run, then d must come after c.
+    "d" <=? "c" |> ignore
+
+    // Running f will run  c, d, and f.  The soft dependency of d on c means that c must run first.
+    "d" ==> "f" |> ignore
+    "e" ==> "f" |> ignore
+    "c" ==> "f" |> ignore
+
+    let order = determineBuildOrder "f"
+
+    validateBuildOrder order "f"
+
+    match order with
+        | [[|Target "a"|];TargetSet ["b";];[|Target "c"|];TargetSet ["d";"e"];[|Target "f"|]] ->
+            // as expected
+            ()
+
+        | _ ->
+            failwithf "unexpected order: %A" order
+    ()
+
+
+
+[<Fact>]
+let ``Soft dependencies are ignored when dependees are not present``() = 
+    TargetDict.Clear()
+    Target "a" DoNothing
+    Target "b" DoNothing
+    Target "c" DoNothing
+    Target "d" DoNothing
+    Target "e" DoNothing
+    
+   
+    "a" ==> "b" ==> "c" |> ignore
+    // d does not depend on c, but if something else forces c to run, then d must come after c.
+    "c" ?=> "d" |> ignore
+    
+    // Running e will not run c, due to soft dependency
+    "d" ==> "e" |> ignore
+    "b" ==> "e" |> ignore
+
+    let order = determineBuildOrder "e"
+
+    validateBuildOrder order "e"
+
+    match order with
+        | [[|Target "a"|];TargetSet ["b";"d"];[|Target "e"|]] ->
+            // as expected
+            ()
+
+        | _ ->
+            failwithf "unexpected order: %A" order
+    ()

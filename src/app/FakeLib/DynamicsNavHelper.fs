@@ -37,10 +37,10 @@ module Replacements =
             traceVerbose "Converting from Win7 format to Win8"
             Fake.StringHelper.ReadFileAsString fileName
             |> Win7ToWin8
-            |> Fake.StringHelper.WriteStringToFile false fileName    
+            |> Fake.StringHelper.WriteStringToFile false fileName
 
     let shortcutReplacements =
-        ["ShortCutKey=Strg","ShortCutKey=Ctrl"     
+        ["ShortCutKey=Strg","ShortCutKey=Ctrl"
          "ShortCutKey=Umschalt+Strg","ShortCutKey=Shift+Ctrl"
          "ShortCutKey=Umschalt","ShortCutKey=Shift"]
 
@@ -50,7 +50,7 @@ module Replacements =
 
     let NormalizeShortcuts fileName =
         Fake.StringHelper.ReadFileAsString fileName
-        |> replaceShortcuts        
+        |> replaceShortcuts
         |> Fake.StringHelper.WriteStringToFile false fileName
 
 [<RequireQualifiedAccess>]
@@ -82,6 +82,7 @@ let getNAVClassicPath navClientVersion =
         | "700" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\70\RoleTailored Client"
         | "701" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\71\RoleTailored Client"
         | "800" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\80\RoleTailored Client"
+        | "900" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\90\RoleTailored Client"
         | "501" -> @"software\microsoft\Dynamics Nav\Cside Client\W1 5.0 SP1"
         | "403" -> @"SOFTWARE\Navision\Microsoft Business Solutions-Navision\W1 4.00"
         | _     -> failwithf "Unknown NAV-Version (Client) %s" navClientVersion
@@ -99,10 +100,11 @@ let getNAVServicePath navClientVersion =
             | "700" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\70\Service"
             | "701" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\71\Service"
             | "800" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\80\Service"
+            | "900" -> @"SOFTWARE\Microsoft\Microsoft Dynamics NAV\90\Service"
             | _     -> failwithf "Unknown NAV-Version (Service) %s" navClientVersion
         match navClientVersion with
             | "601" | "602" -> getRegistryValue HKEYLocalMachine subKey "Path"
-            | "700"| "701"| "800" ->  getRegistryValue64 HKEYLocalMachine subKey "Path"
+            | "700"| "701"| "800" | "900" ->  getRegistryValue64 HKEYLocalMachine subKey "Path"
             | _     -> failwithf "Unknown NAV-Version (Service) %s" navClientVersion
     (directoryInfo navServiceRootPath).Parent.FullName @@ "Service"
 

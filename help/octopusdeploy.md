@@ -28,7 +28,7 @@ It is a good idea to create an account in Octopus Deploy for your Continuous Int
 
 Octopus Deploy relies on the concept of a **release**, which should be an immutable *NuGet Package* which has been built, tested, [packaged and published](apidocs/fake-nugethelper.html) from your Continuous Integration systems - which you can of course completely manage with your FAKE script.
 
-So once you have created a project you are able to create a push a release into Octopus Deploy. This can be done through the Octopus UI, command line tool, or in our case - from a FAKE script.
+So once you have created a project you are able to create and push a release into Octopus Deploy. This can be done through the Octopus UI, command line tool, or in our case - from a FAKE script.
 
     open Fake.OctoTools
 
@@ -38,7 +38,7 @@ So once you have created a project you are able to create a push a release into 
 
 		Octo (fun octoParams ->
 			{ octoParams with
-				ToolPath = "./packages/octopustools"
+				ToolPath = "./packages/octopustools/tools"
 				Server   = server
 				Command  = CreateRelease (release, None) }
 		)
@@ -61,7 +61,7 @@ This is often a good idea when you want your FAKE build script to continue on to
 
 		Octo (fun octoParams ->
 			{ octoParams with
-				ToolPath = "./packages/octopustools"
+				ToolPath = "./packages/octopustools/tools"
 				Server   = server
 				Command  = CreateRelease (release, Some deploy) }
 		)
@@ -83,7 +83,7 @@ Finally when you are absolutely happy that your release is good to go the next s
 
 		Octo (fun octoParams ->
 			{ octoParams with
-				ToolPath = "./packages/octopustools"
+				ToolPath = "./packages/octopustools/tools"
 				Server   = server
 				Command  = DeployRelease (promote) }
 		)

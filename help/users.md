@@ -33,3 +33,4 @@ Some of our users are:
 * [Elastacloud](http://elastacloud.com/)
 * [Digital Furnace Games](http://digitalfurnacegames.com/)
 * [Recognos Romania](http://www.recognos.ro/en)
+* [Centigrade GmbH](http://www.centigrade.de)

@@ -4,12 +4,14 @@ module Fake.BuildServerHelper
 
 /// The server type option.
 type BuildServer = 
+    | TeamFoundation
     | TeamCity
     | CCNet
     | Jenkins
     | Travis
     | AppVeyor
     | GitLabCI
+    | Bamboo
     | LocalBuild
 
 /// The trace mode option.
@@ -28,6 +30,25 @@ let localBuildLabel = "LocalBuild"
 /// Defines the XML output file - used for build servers like CruiseControl.NET.
 /// This output file can be specified by using the *logfile* build parameter.
 let mutable xmlOutputFile = getBuildParamOrDefault "logfile" "./output/Results.xml"
+
+/// Build number retrieved from Bamboo
+/// [omit]
+let bambooBuildNumber = environVar "BAMBOO_BUILDNUMBER"
+
+/// Checks if we are on Bamboo
+/// [omit]
+let isBambooBuild =
+    isNotNullOrEmpty bambooBuildNumber
+
+/// Checks if we are on Team Foundation
+/// [omit]
+let isTFBuild =
+    let tfbuild = environVar "TF_BUILD"
+    tfbuild <> null && tfbuild.ToLowerInvariant() = "true"
+
+/// Build number retrieved from Team Foundation
+/// [omit]
+let tfBuildNumber = environVar "BUILD_BUILDNUMBER"
 
 /// Build number retrieved from TeamCity
 /// [omit]
@@ -65,6 +86,8 @@ let buildServer =
     elif not (isNullOrEmpty travisBuildNumber) then Travis
     elif not (isNullOrEmpty appVeyorBuildVersion) then AppVeyor
     elif isGitlabCI then GitLabCI
+    elif isTFBuild then TeamFoundation
+    elif isBambooBuild then Bamboo
     else LocalBuild
 
 /// The current build version as detected from the current build server.
@@ -77,6 +100,8 @@ let buildVersion =
     | Travis -> getVersion travisBuildNumber
     | AppVeyor -> getVersion appVeyorBuildVersion
     | GitLabCI -> getVersion gitlabCIBuildNumber
+    | TeamFoundation -> getVersion tfBuildNumber
+    | Bamboo -> getVersion bambooBuildNumber
     | LocalBuild -> getVersion localBuildLabel
 
 /// Is true when the current build is a local build.

@@ -247,6 +247,7 @@ let private propertiesParam = function
 
 /// Creates a NuGet package without templating (including symbols package if enabled)
 let private pack parameters nuspecFile =
+    let nuspecFile = FullName nuspecFile
     let properties = propertiesParam parameters.Properties
     let outputPath = (FullName(parameters.OutputPath.TrimEnd('\\').TrimEnd('/')))
     let packageAnalysis = if parameters.NoPackageAnalysis then "-NoPackageAnalysis" else ""
@@ -263,13 +264,6 @@ let private pack parameters nuspecFile =
                 info.WorkingDirectory <- FullName parameters.WorkingDir
                 info.Arguments <- args) parameters.TimeOut
         if result.ExitCode <> 0 || result.Errors.Count > 0 then failwithf "Error during NuGet package creation. %s %s\r\n%s" parameters.ToolPath args (toLines result.Errors)
-
-    let nuspecFile = 
-        let fi = fileInfo nuspecFile
-        if fi.Directory.FullName = FullName parameters.WorkingDir then
-            fi.Name
-        else
-            FullName nuspecFile
 
     match parameters.SymbolPackage with
     | NugetSymbolPackage.ProjectFile ->
@@ -425,6 +419,7 @@ type NuSpecPackage =
       RequireLicenseAcceptance : bool
       Description : string
       Language : string
+      ReleaseNotes : string
       Tags : string }
     member x.Name = sprintf "%s %s" x.Id x.Version
     override x.ToString() = x.Name
@@ -469,6 +464,7 @@ let getNuspecProperties (nuspec : string) =
       Description = getValue "description"
       Language = getValue "language"
       Tags = getValue "tags"
+      ReleaseNotes = getValue "releaseNotes"
       Url = String.Empty
       IsLatestVersion = false
       Created = DateTime.MinValue
@@ -517,6 +513,7 @@ let extractFeedPackageFromXml (entry : Xml.XmlNode) =
       Owners = author
       Language = property "Language"
       Tags = property "Tags"
+      ReleaseNotes = property "ReleaseNotes"
       ProjectUrl = property "ProjectUrl"
       LicenseUrl = property "LicenseUrl"
       RequireLicenseAcceptance = boolProperty "RequireLicenseAcceptance"
@@ -527,8 +524,8 @@ let extractFeedPackageFromXml (entry : Xml.XmlNode) =
       Url = entry.["content"].GetAttribute("src") }
 
 /// [omit]
-let getPackage repoUrl packageName version = 
-    let url : string = repoUrl + "Packages(Id='" + packageName + "',Version='" + version + "')"
+let getPackage (repoUrl:string) packageName version = 
+    let url : string = repoUrl.TrimEnd('/') + "/Packages(Id='" + packageName + "',Version='" + version + "')"
     let resp = webClient.DownloadString(url)
     let doc = XMLDoc resp
     extractFeedPackageFromXml doc.["entry"]
@@ -540,8 +537,8 @@ let getFeedPackagesFromUrl (url : string) =
     [ for entry in doc.["feed"].GetElementsByTagName("entry") -> extractFeedPackageFromXml entry ]
 
 /// [omit]
-let getLatestPackage repoUrl packageName = 
-    repoUrl + "Packages()?$filter=(Id%20eq%20'" + packageName + "')%20and%20IsLatestVersion"
+let getLatestPackage (repoUrl:string) packageName = 
+    repoUrl.TrimEnd('/') + "/Packages()?$filter=(Id%20eq%20'" + packageName + "')%20and%20IsLatestVersion"
     |> getFeedPackagesFromUrl
     |> Seq.head
 
@@ -561,7 +558,7 @@ let argList name values =
     |> String.concat " "
 
 
-/// loads the dependences from specified packages.config file
+/// Returns the dependencies from specified packages.config file
 let getDependencies (packagesFile:string) =
     let xname = XName.op_Implicit
     let attribute name (e:XElement) =

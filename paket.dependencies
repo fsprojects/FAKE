@@ -1,16 +1,14 @@
 content: none
 source http://nuget.org/api/v2
 
-nuget FSharp.Core
-nuget FAKE
+nuget FSharp.Core redirects:force
 nuget Knockout
-nuget Nuget.CommandLine
-nuget FSharp.Formatting
-nuget FSharp.Formatting.CommandTool
-nuget SourceLink.Fake
 nuget RavenDB.Server
+nuget serilog.sinks.nlog
 nuget xunit.runners
-nuget UnionArgParser
+nuget Argu
+nuget FsCheck < 2.1
+nuget FsCheck.Xunit < 2.1
 nuget Nancy.Authentication.Stateless
 nuget Nancy.Hosting.Self
 nuget Nancy.Serialization.JsonNet
@@ -28,12 +26,28 @@ nuget log4net
 nuget System.Web.Razor.Unofficial
 nuget toastr
 nuget RavenDB.Client < 3
-nuget FsCheck.Xunit
 nuget Machine.Specifications.Should
 nuget Machine.Specifications.Runner.Console
 nuget Nancy.Testing
-nuget xunit.extensions
-nuget Newtonsoft.Json
+nuget xunit.extensions ~> 1.9
+nuget xunit.runners ~> 1.9
+nuget Newtonsoft.Json redirects:force
 nuget Microsoft.AspNet.Razor 2.0.30506
 nuget Microsoft.AspNet.WebPages 2.0.30506
+nuget FluentMigrator.Runner
 nuget HashLib
+nuget FSharp.Compiler.Service
+nuget Octokit
+
+github matthid/Yaaf.FSharp.Scripting src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs
+
+group Build
+content: none
+source http://nuget.org/api/v2
+
+nuget Nuget.CommandLine
+nuget FAKE prerelease
+nuget FSharp.Formatting
+nuget FSharp.Formatting.CommandTool
+nuget SourceLink.Fake
+nuget ILRepack

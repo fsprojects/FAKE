@@ -23,8 +23,10 @@ type NUnitProcessModel =
         | MultipleProcessModel -> "Multiple"
 /// The /domain option controls of the creation of AppDomains for running tests. See [NUnit-Console Command Line Options](http://www.nunit.org/index.php?p=consoleCommandLine&r=2.6.4)
 type NUnitDomainModel = 
-    /// No domain is created - the tests are run in the primary domain. This normally requires copying the NUnit assemblies into the same directory as your tests.
+    /// The default is to use multiple domains if multiple assemblies are listed on the command line. Otherwise a single domain is used.
     | DefaultDomainModel
+    /// No domain is created - the tests are run in the primary domain. This normally requires copying the NUnit assemblies into the same directory as your tests.
+    | NoDomainModel
     /// A test domain is created - this is how NUnit worked prior to version 2.4
     | SingleDomainModel
     /// A separate test domain is created for each assembly
@@ -32,6 +34,7 @@ type NUnitDomainModel =
     member x.ParamString =
         match x with
         | DefaultDomainModel -> ""
+        | NoDomainModel -> "None"
         | SingleDomainModel -> "Single"
         | MultipleDomainModel -> "Multiple"
 
@@ -101,11 +104,11 @@ type NUnitParams =
 /// ## Defaults
 /// - `IncludeCategory` - `""`
 /// - `ExcludeCategory` - `""`
-/// - `ToolPath` - `""`
+/// - `ToolPath` - The `nunit-console.exe` path if it exists in a subdirectory of the current directory.
 /// - `ToolName` - `"nunit-console.exe"`
 /// - `DontTestInNewThread`- `false`
 /// - `StopOnError` - `false`
-/// - `OutputFile` - The `nunit-console.exe` path if it exists in a subdirectory of the current directory.
+/// - `OutputFile` - `"TestResult.xml"`
 /// - `Out` - `""`
 /// - `ErrorOutputFile` - `""`
 /// - `WorkingDir` - `""`

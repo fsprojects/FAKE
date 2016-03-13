@@ -46,6 +46,7 @@ namespace Test.FAKECore.XUnit2Specs
         {
             Arguments.ShouldNotContain(" -xml");
             Arguments.ShouldNotContain(" -xmlv1");
+            Arguments.ShouldNotContain(" -nunit");
             Arguments.ShouldNotContain(" -html");
         };
 
@@ -69,6 +70,9 @@ namespace Test.FAKECore.XUnit2Specs
 
         It should_not_force_AppVeyor_output = () =>
             Arguments.ShouldNotContain(" -appveyor");
+
+        It should_not_force_NoAppDomain = () =>
+            Arguments.ShouldNotContain(" -noappdomain");
     }
 
     internal class When_using_parameters_which_include_traits
@@ -78,11 +82,13 @@ namespace Test.FAKECore.XUnit2Specs
         {
             Parameters = new XUnit2.XUnit2Params(
                 XUnit2.XUnit2Defaults.ToolPath,
+                XUnit2.XUnit2Defaults.NoAppDomain,
                 XUnit2.XUnit2Defaults.Parallel,
                 XUnit2.XUnit2Defaults.MaxThreads,
                 XUnit2.XUnit2Defaults.HtmlOutputPath,
                 XUnit2.XUnit2Defaults.XmlOutputPath,
                 XUnit2.XUnit2Defaults.XmlV1OutputPath,
+                XUnit2.XUnit2Defaults.NUnitXmlOutputPath,
                 XUnit2.XUnit2Defaults.WorkingDir,
                 XUnit2.XUnit2Defaults.ShadowCopy,
                 XUnit2.XUnit2Defaults.Silent,
@@ -112,11 +118,13 @@ namespace Test.FAKECore.XUnit2Specs
         {
             Parameters = new XUnit2.XUnit2Params(
                 XUnit2.XUnit2Defaults.ToolPath,
+                XUnit2.XUnit2Defaults.NoAppDomain,
                 XUnit2.XUnit2Defaults.Parallel,
                 XUnit2.XUnit2Defaults.MaxThreads,
                 FSharpOption<string>.Some("html.html"),
                 FSharpOption<string>.Some("xml.xml"),
                 FSharpOption<string>.Some("xmlv1.xml"),
+                FSharpOption<string>.Some("nunit.xml"),
                 XUnit2.XUnit2Defaults.WorkingDir,
                 XUnit2.XUnit2Defaults.ShadowCopy,
                 XUnit2.XUnit2Defaults.Silent,
@@ -137,6 +145,9 @@ namespace Test.FAKECore.XUnit2Specs
 
         It should_include_the_expected_XML_v1_reporting_argument = () =>
             Arguments.ShouldContain(@" -xmlv1 ""xmlv1.xml""");
+
+        It should_include_the_expected_NUnit_XML_reporting_argument = () =>
+            Arguments.ShouldContain(@" -nunit ""nunit.xml""");
     }
 
     internal class When_using_parameters_which_request_total_parallel_execution
@@ -146,11 +157,13 @@ namespace Test.FAKECore.XUnit2Specs
         {
             Parameters = new XUnit2.XUnit2Params(
                 XUnit2.XUnit2Defaults.ToolPath,
+                XUnit2.XUnit2Defaults.NoAppDomain,
                 XUnit2.ParallelMode.All,
                 XUnit2.CollectionConcurrencyMode.Unlimited,
                 XUnit2.XUnit2Defaults.HtmlOutputPath,
                 XUnit2.XUnit2Defaults.XmlOutputPath,
                 XUnit2.XUnit2Defaults.XmlV1OutputPath,
+                XUnit2.XUnit2Defaults.NUnitXmlOutputPath,
                 XUnit2.XUnit2Defaults.WorkingDir,
                 XUnit2.XUnit2Defaults.ShadowCopy,
                 XUnit2.XUnit2Defaults.Silent,
@@ -177,11 +190,13 @@ namespace Test.FAKECore.XUnit2Specs
         {
             Parameters = new XUnit2.XUnit2Params(
                 XUnit2.XUnit2Defaults.ToolPath,
+                XUnit2.XUnit2Defaults.NoAppDomain,
                 XUnit2.ParallelMode.Assemblies,
                 XUnit2.CollectionConcurrencyMode.Default,
                 XUnit2.XUnit2Defaults.HtmlOutputPath,
                 XUnit2.XUnit2Defaults.XmlOutputPath,
                 XUnit2.XUnit2Defaults.XmlV1OutputPath,
+                XUnit2.XUnit2Defaults.NUnitXmlOutputPath,
                 XUnit2.XUnit2Defaults.WorkingDir,
                 XUnit2.XUnit2Defaults.ShadowCopy,
                 XUnit2.XUnit2Defaults.Silent,
@@ -208,11 +223,13 @@ namespace Test.FAKECore.XUnit2Specs
         {
             Parameters = new XUnit2.XUnit2Params(
                 XUnit2.XUnit2Defaults.ToolPath,
+                XUnit2.XUnit2Defaults.NoAppDomain,
                 XUnit2.ParallelMode.Collections,
                 XUnit2.CollectionConcurrencyMode.NewMaxThreads(42),
                 XUnit2.XUnit2Defaults.HtmlOutputPath,
                 XUnit2.XUnit2Defaults.XmlOutputPath,
                 XUnit2.XUnit2Defaults.XmlV1OutputPath,
+                XUnit2.XUnit2Defaults.NUnitXmlOutputPath,
                 XUnit2.XUnit2Defaults.WorkingDir,
                 XUnit2.XUnit2Defaults.ShadowCopy,
                 XUnit2.XUnit2Defaults.Silent,
@@ -240,11 +257,13 @@ namespace Test.FAKECore.XUnit2Specs
         {
             Parameters = new XUnit2.XUnit2Params(
                 XUnit2.XUnit2Defaults.ToolPath,
+                !XUnit2.XUnit2Defaults.NoAppDomain,
                 XUnit2.XUnit2Defaults.Parallel,
                 XUnit2.XUnit2Defaults.MaxThreads,
                 XUnit2.XUnit2Defaults.HtmlOutputPath,
                 XUnit2.XUnit2Defaults.XmlOutputPath,
                 XUnit2.XUnit2Defaults.XmlV1OutputPath,
+                XUnit2.XUnit2Defaults.NUnitXmlOutputPath,
                 XUnit2.XUnit2Defaults.WorkingDir,
                 !XUnit2.XUnit2Defaults.ShadowCopy,
                 !XUnit2.XUnit2Defaults.Silent,
@@ -271,6 +290,9 @@ namespace Test.FAKECore.XUnit2Specs
 
         It should_force_AppVeyor_output = () =>
             Arguments.ShouldContain(" -appveyor");
+
+        It should_force_NoAppDomain = () =>
+            Arguments.ShouldContain(" -noappdomain");
     }
 
     [Subject(typeof(XUnit2), "result handling")]

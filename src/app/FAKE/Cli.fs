@@ -1,9 +1,9 @@
-﻿/// New Command line interface for FAKE that utilises UnionArgParser.
+/// New Command line interface for FAKE that utilises Argu.
 [<RequireQualifiedAccessAttribute>]
 module Cli
 
 open System
-open Nessos.UnionArgParser
+open Argu
 
 type FakeArg = 
     | [<AltCommandLine("-ev")>] EnvVar of string * string
@@ -34,7 +34,7 @@ type FakeArg =
 let parsedArgsOrEx args = 
     try
         let args = args |> Seq.skip 1 |> Array.ofSeq
-        let parser = UnionArgParser.Create<FakeArg>()
+        let parser = ArgumentParser.Create<FakeArg>()
         Choice1Of2(parser.Parse(args))
     with | ex -> Choice2Of2(ex)
 
@@ -49,7 +49,7 @@ let printUsage () =
                            When targetName is equal --listTargets or -lt FAKE will list the targets with their dependencies.
 
     Options:
-    %s" (UnionArgParser.Create<FakeArg>().Usage())
+    %s" (ArgumentParser.Create<FakeArg>().Usage())
     
 type Args = { Script: string option; Target: string option; Rest: string [] }
 

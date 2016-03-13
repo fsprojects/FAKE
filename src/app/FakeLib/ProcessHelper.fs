@@ -17,7 +17,7 @@ let startedProcesses = HashSet()
 let start (proc : Process) = 
     if isMono && proc.StartInfo.FileName.ToLowerInvariant().EndsWith(".exe") then
         proc.StartInfo.Arguments <- "--debug \"" + proc.StartInfo.FileName + "\" " + proc.StartInfo.Arguments
-        proc.StartInfo.FileName <- "mono"
+        proc.StartInfo.FileName <- monoPath
 
     proc.Start() |> ignore
     startedProcesses.Add(proc.Id, proc.StartTime) |> ignore
@@ -424,7 +424,7 @@ let asyncShellExec (args : ExecParams) =
         proc.ErrorDataReceived.Add(fun e -> 
             if e.Data <> null then traceError e.Data)
         proc.OutputDataReceived.Add(fun e -> 
-            if e.Data <> null then trace e.Data)
+            if e.Data <> null then log e.Data)
         start proc
         proc.BeginOutputReadLine()
         proc.BeginErrorReadLine()

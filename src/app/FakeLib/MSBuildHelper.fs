@@ -6,8 +6,9 @@ open System
 open System.IO
 open System.Configuration
 open System.Xml.Linq
+open BuildServerHelper
 
-/// An type to represent MSBuild project files.
+/// A type to represent MSBuild project files.
 type MSBuildProject = XDocument
 
 /// An exception type to signal build errors.
@@ -148,7 +149,7 @@ let mutable MSBuildDefaults =
       Properties = []
       MaxCpuCount = Some None
       NoLogo = false
-      NodeReuse = true
+      NodeReuse = not (buildServer = TeamCity)
       ToolsVersion = None
       Verbosity = None
       NoConsoleLogger = false
@@ -242,7 +243,7 @@ let serializeMSBuildParams (p : MSBuildParams) =
             sprintf "%s%s%s" 
                 (match fl.Filename with
                 | None -> ""
-                | Some f -> sprintf "logfile=%s;" f)
+                | Some f -> sprintf "LogFile=%s;" f)
                 (match fl.Verbosity with
                 | None -> ""
                 | Some v -> sprintf "Verbosity=%s;" (verbosityName v)) 
@@ -443,9 +444,11 @@ let BuildWebsite outputPath projectFile =
     
     let currentDir = (directoryInfo ".").FullName
     let projectDir = (fileInfo projectFile).Directory.FullName
-    let mutable prefix = ""
+    
     let diff = slashes projectDir - slashes currentDir
-    prefix <- prefix + (String.replicate diff "../")
+    let prefix = if Path.IsPathRooted outputPath
+                 then ""
+                 else (String.replicate diff "../")
 
     MSBuildDebug "" "Rebuild" [ projectFile ] |> ignore
     MSBuild "" "_CopyWebApplication;_BuiltWebOutputGroupOutput" 

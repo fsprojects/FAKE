@@ -2,6 +2,7 @@
 module Fake.MSBuild.ProjectSystem
 
 open Fake
+open System
 open System.Collections.Generic
 open System.Xml
 open System.Xml.Linq
@@ -160,3 +161,23 @@ let CompareProjectsTo templateProject projects =
 
     if isNotNullOrEmpty errors then
         failwith errors
+        
+let removeCompileNodesWithMissingFiles includeExistsF (project:ProjectFile) =
+    let projectDir = IO.Path.GetDirectoryName(project.ProjectFileName)
+    let missingFiles =
+        seq { for filePath in project.Files do
+                // We have to normalize the path, because csproj can have win style directory separator char on Mono too
+                // Xbuild handles them, so we do too http://www.mono-project.com/archived/porting_msbuild_projects_to_xbuild/#paths 
+                let includePath = Globbing.normalizePath (IO.Path.Combine([|projectDir; filePath|]))
+                if not (includeExistsF(includePath)) then yield filePath }
+    missingFiles
+    |> Seq.fold (fun (project:ProjectFile) file -> project.RemoveFile(file)) project
+
+/// Removes projects Compile nodes that have Include attributes pointing to files missing from the file system.  Saves updated projects.
+let RemoveCompileNodesWithMissingFiles project =
+    let newProject = removeCompileNodesWithMissingFiles System.IO.File.Exists (ProjectFile.FromFile project)
+    newProject.Save()
+
+
+
+         

@@ -52,8 +52,9 @@ let traceFAKE fmt = Printf.ksprintf (fun text -> postMessage (ImportantMessage t
 let traceError error = postMessage (ErrorMessage error)
 
 open Microsoft.FSharp.Core.Printf
-/// Traces an exception details (in red)
-let traceException (ex:Exception) =
+
+/// Converts an exception and its inner exceptions to a nice string.
+let exceptionAndInnersToString (ex:Exception) =
     let sb = Text.StringBuilder()
     let delimeter = String.replicate 50 "*"
     let nl = Environment.NewLine
@@ -85,7 +86,10 @@ let traceException (ex:Exception) =
             if (e.InnerException <> null)
             then printException e.InnerException (count+1)
     printException ex 1
-    sb.ToString() |> traceError
+    sb.ToString()
+
+/// Traces an exception details (in red)
+let traceException (ex:Exception) = exceptionAndInnersToString ex |> traceError
 
 /// Traces the EnvironmentVariables
 let TraceEnvironmentVariables() = 

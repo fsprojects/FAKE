@@ -58,6 +58,42 @@ namespace Test.FAKECore.XMLHandling
                       .ShouldEqual(TargetText.Replace("\r", "").Replace("\n", ""));
     }
 
+    public class when_poking_xml_innertext
+    {
+        const string OriginalText =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+            "<painting>" +
+            "  <img src=\"madonna.jpg\" alt=\"Foligno Madonna, by Raphael\" />" +
+            "  <caption>This is Raphael's \"Foligno\" Madonna, painted in <date year=\"1511\" /> - <date year=\"1512\" />.</caption>" +
+            "  <note name=\"Type\">Oil on wood, transferred to canvas</note>" +
+            "  <note name=\"Dimensions\">320 cm * 194 cm (130 in * 76 in)</note>" +
+            "  <note name=\"Location\">Pinacoteca Vaticana, Vatican City</note>" +
+            "</painting>";
+
+        const string XPath = "painting/note[@name='Location']";
+
+        static readonly string FileName = Path.Combine(TestData.TestDir, "test.xml");
+
+        static XmlDocument _doc;
+        static readonly string TargetText = OriginalText.Replace("Pinacoteca Vaticana, Vatican City", "Vatican City");
+
+
+        Cleanup after = () => FileHelper.DeleteFile(FileName);
+
+        Establish context = () =>
+            {
+                StringHelper.WriteStringToFile(false, FileName, OriginalText);
+                _doc = new XmlDocument();
+                _doc.LoadXml(OriginalText);
+            };
+
+        Because of = () => XMLHelper.XmlPokeInnerText(FileName, XPath, "Vatican City");
+
+        It should_equal_the_target_text =
+            () => StringHelper.ReadFileAsString(FileName).Replace("\r", "").Replace("\n", "")
+                .ShouldEqual(TargetText.Replace("\r", "").Replace("\n", ""));
+    }
+
     public class when_modifying_xml_with_xpath
     {
         const string OriginalText =
@@ -84,8 +120,6 @@ namespace Test.FAKECore.XMLHandling
         It should_equal_the_target_text =
             () => _resultDoc.OuterXml.ShouldEqual(_targetText);
     }
-
-
 
     public class when_poking_xml_and_ns
     {
@@ -126,7 +160,47 @@ namespace Test.FAKECore.XMLHandling
             () => StringHelper.ReadFileAsString(FileName).Replace("\r", "").Replace("\n", "").Replace("'", "\"")
                       .ShouldEqual(TargetText.Replace("\r", "").Replace("\n", "").Replace("'", "\""));
     }
-    
+
+    public class when_poking_xml_innertext_and_ns
+    {
+        const string OriginalText =
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+            "<asmv1:assembly manifestVersion='1.0' xmlns='urn:schemas-microsoft-com:asm.v1' xmlns:asmv1='urn:schemas-microsoft-com:asm.v1' xmlns:asmv2='urn:schemas-microsoft-com:asm.v2' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>" +
+            "  <assemblyIdentity version='0.1.0.0' name='MyApplication' />" +
+            "  <assemblyDescription></assemblyDescription>" + 
+            "</asmv1:assembly>";
+
+        const string XPath = "//asmv1:assembly/asmv1:assemblyDescription";
+
+        static readonly string FileName = Path.Combine(TestData.TestDir, "test.xml");
+
+        static XmlDocument _doc;
+        static readonly string TargetText = OriginalText.Replace("<assemblyDescription></assemblyDescription>", "<assemblyDescription>A really great assembly. Really.</assemblyDescription>");
+        static List<Tuple<string, string>> _nsdecl;
+
+
+        Cleanup after = () => FileHelper.DeleteFile(FileName);
+
+        Establish context = () =>
+            {
+                StringHelper.WriteStringToFile(false, FileName, OriginalText);
+                _doc = new XmlDocument();
+                _doc.LoadXml(OriginalText);
+                _nsdecl = new List<Tuple<string, string>>
+                {
+                    new Tuple<string, string>("", "urn:schemas-microsoft-com:asm.v1"), 
+                    new Tuple<string, string>("asmv1", "urn:schemas-microsoft-com:asm.v1"), 
+                    new Tuple<string, string>("asmv2", "urn:schemas-microsoft-com:asm.v2"), 
+                    new Tuple<string, string>("xsi", "http://www.w3.org/2001/XMLSchema-instance")
+                };
+            };
+
+        Because of = () => XMLHelper.XmlPokeInnerTextNS(FileName, _nsdecl, XPath, "A really great assembly. Really.");
+
+        It should_equal_the_target_text =
+            () => StringHelper.ReadFileAsString(FileName).Replace("\r", "").Replace("\n", "").Replace("'", "\"")
+                .ShouldEqual(TargetText.Replace("\r", "").Replace("\n", "").Replace("'", "\""));
+    }
 
     public class when_modifying_xml_with_xpath_and_ns
     {
