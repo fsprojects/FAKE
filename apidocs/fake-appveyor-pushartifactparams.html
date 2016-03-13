@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>SquirrelParams - FAKE - F# Make</title>
+    <title>PushArtifactParams - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,11 +36,9 @@
 
 
 
-<h1>SquirrelParams</h1>
+<h1>PushArtifactParams</h1>
 <div class="xmldoc">
-<p>The <a href="https://github.com/Squirrel/Squirrel.Windows">Squirrel</a> Console Parameters type.
-FAKE will use <a href="fake-squirrel.html">SquirrelDefaults</a> for values not provided.</p>
-<p>For reference, see: <a href="https://github.com/Squirrel/Squirrel.Windows/blob/master/docs/advanced-releasify.md">Squirrel Command Line Options</a></p>
+<p>AppVeyor parameters for artifact push</p>
 
 </div>
   <h3>Record Fields</h3>
@@ -52,79 +50,19 @@ FAKE will use <a href="fake-squirrel.html">SquirrelDefaults</a> for values not p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2204', 2204)" onmouseover="showTip(event, '2204', 2204)">
-            BootstrapperExe
+          <code onmouseout="hideTip(event, '1159', 1159)" onmouseover="showTip(event, '1159', 1159)">
+            DeploymentName
           </code>
-          <div class="tip" id="2204">
-            <strong>Signature:</strong> string option<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SquirrelHelper.fs#L21-21" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>The full path to an optional setup.exe template</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '2205', 2205)" onmouseover="showTip(event, '2205', 2205)">
-            LoadingGif
-          </code>
-          <div class="tip" id="2205">
-            <strong>Signature:</strong> string option<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SquirrelHelper.fs#L24-24" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>The full path to an optional animated gif to be displayed during installation</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '2206', 2206)" onmouseover="showTip(event, '2206', 2206)">
-            NoMsi
-          </code>
-          <div class="tip" id="2206">
-            <strong>Signature:</strong> bool<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SquirrelHelper.fs#L30-30" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Do not create an MSI file</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '2207', 2207)" onmouseover="showTip(event, '2207', 2207)">
-            ReleaseDir
-          </code>
-          <div class="tip" id="2207">
+          <div class="tip" id="1159">
             <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SquirrelHelper.fs#L15-15" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L198-198" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>The output directory for the generated installer</p>
+          <p>Deployment name</p>
 
 
         </td>
@@ -132,119 +70,19 @@ FAKE will use <a href="fake-squirrel.html">SquirrelDefaults</a> for values not p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2208', 2208)" onmouseover="showTip(event, '2208', 2208)">
-            SetupIcon
+          <code onmouseout="hideTip(event, '1160', 1160)" onmouseover="showTip(event, '1160', 1160)">
+            FileName
           </code>
-          <div class="tip" id="2208">
-            <strong>Signature:</strong> string option<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SquirrelHelper.fs#L27-27" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>The full path to an optional icon, which will be used for the generated installer.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '2209', 2209)" onmouseover="showTip(event, '2209', 2209)">
-            SignExecutable
-          </code>
-          <div class="tip" id="2209">
-            <strong>Signature:</strong> bool option<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SquirrelHelper.fs#L39-39" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Sign the installer with signtool.exe</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '2210', 2210)" onmouseover="showTip(event, '2210', 2210)">
-            SigningKeyFile
-          </code>
-          <div class="tip" id="2210">
-            <strong>Signature:</strong> string option<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SquirrelHelper.fs#L42-42" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>The code signing certificate to be used for signing</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '2211', 2211)" onmouseover="showTip(event, '2211', 2211)">
-            SigningSecret
-          </code>
-          <div class="tip" id="2211">
-            <strong>Signature:</strong> string option<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SquirrelHelper.fs#L45-45" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>The secret key for the code signing certificate</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '2212', 2212)" onmouseover="showTip(event, '2212', 2212)">
-            TimeOut
-          </code>
-          <div class="tip" id="2212">
-            <strong>Signature:</strong> TimeSpan<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SquirrelHelper.fs#L36-36" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Maximum time to allow Squirrel to run before being killed.</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '2213', 2213)" onmouseover="showTip(event, '2213', 2213)">
-            ToolPath
-          </code>
-          <div class="tip" id="2213">
+          <div class="tip" id="1160">
             <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SquirrelHelper.fs#L33-33" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L196-196" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>The path to Squirrel: <code>squirrel.exe</code></p>
+          <p>File name to display in the artifact tab</p>
 
 
         </td>
@@ -252,19 +90,39 @@ FAKE will use <a href="fake-squirrel.html">SquirrelDefaults</a> for values not p
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2214', 2214)" onmouseover="showTip(event, '2214', 2214)">
-            WorkingDir
+          <code onmouseout="hideTip(event, '1161', 1161)" onmouseover="showTip(event, '1161', 1161)">
+            Path
           </code>
-          <div class="tip" id="2214">
-            <strong>Signature:</strong> string option<br />
+          <div class="tip" id="1161">
+            <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SquirrelHelper.fs#L18-18" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L194-194" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>The working directory.</p>
+          <p>The full local path to the artifact</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1162', 1162)" onmouseover="showTip(event, '1162', 1162)">
+            Type
+          </code>
+          <div class="tip" id="1162">
+            <strong>Signature:</strong> ArtifactType<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L200-200" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Type of the artifact</p>
 
 
         </td>

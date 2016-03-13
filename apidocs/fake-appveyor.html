@@ -60,6 +60,22 @@
         </tr>
         <tr>
           <td class="type-name">
+            <a href="fake-appveyor-artifacttype.html">ArtifactType</a>
+          </td>
+          <td class="xmldoc"><p>Type of artifact that is pushed</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-appveyor-pushartifactparams.html">PushArtifactParams</a>
+          </td>
+          <td class="xmldoc"><p>AppVeyor parameters for artifact push</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
             <a href="fake-appveyor-testresultstype.html">TestResultsType</a>
           </td>
           <td class="xmldoc"><p>Union type representing the available test result formats accepted by AppVeyor.</p>
@@ -81,14 +97,34 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '28', 28)" onmouseover="showTip(event, '28', 28)">
-            FinishTestCase (...)
+            defaultPushArtifactParams 
           </code>
           <div class="tip" id="28">
+            <strong>Signature:</strong> PushArtifactParams<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L204-204" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>AppVeyor artifact push default parameters</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '29', 29)" onmouseover="showTip(event, '29', 29)">
+            FinishTestCase (...)
+          </code>
+          <div class="tip" id="29">
             <strong>Signature:</strong> testSuiteName:string -&gt; testCaseName:string -&gt; duration:TimeSpan -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L144-144" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L146-146" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -100,15 +136,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '29', 29)" onmouseover="showTip(event, '29', 29)">
+          <code onmouseout="hideTip(event, '30', 30)" onmouseover="showTip(event, '30', 30)">
             FinishTestSuite testSuiteName
           </code>
-          <div class="tip" id="29">
+          <div class="tip" id="30">
             <strong>Signature:</strong> testSuiteName:&#39;?12045 -&gt; unit<br />
                           <strong>Type parameters:</strong> '?12045          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L123-123" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L125-125" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -120,15 +156,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '30', 30)" onmouseover="showTip(event, '30', 30)">
+          <code onmouseout="hideTip(event, '31', 31)" onmouseover="showTip(event, '31', 31)">
             IgnoreTestCase (...)
           </code>
-          <div class="tip" id="30">
+          <div class="tip" id="31">
             <strong>Signature:</strong> testSuiteName:string -&gt; testCaseName:string -&gt; message:&#39;?12051 -&gt; unit<br />
                           <strong>Type parameters:</strong> '?12051          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L138-138" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L140-140" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -140,15 +176,75 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '31', 31)" onmouseover="showTip(event, '31', 31)">
+          <code onmouseout="hideTip(event, '32', 32)" onmouseover="showTip(event, '32', 32)">
+            PushArtifact setParams
+          </code>
+          <div class="tip" id="32">
+            <strong>Signature:</strong> setParams:(PushArtifactParams -&gt; PushArtifactParams) -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L219-219" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Push an artifact</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '33', 33)" onmouseover="showTip(event, '33', 33)">
+            PushArtifacts paths
+          </code>
+          <div class="tip" id="33">
+            <strong>Signature:</strong> paths:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L232-232" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Push multiple artifacts</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '34', 34)" onmouseover="showTip(event, '34', 34)">
+            SetVariable name value
+          </code>
+          <div class="tip" id="34">
+            <strong>Signature:</strong> name:string -&gt; value:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L184-184" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Set environment variable</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '35', 35)" onmouseover="showTip(event, '35', 35)">
             StartTestCase testSuiteName testCaseName
           </code>
-          <div class="tip" id="31">
+          <div class="tip" id="35">
             <strong>Signature:</strong> testSuiteName:string -&gt; testCaseName:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L129-129" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L131-131" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -160,15 +256,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '32', 32)" onmouseover="showTip(event, '32', 32)">
+          <code onmouseout="hideTip(event, '36', 36)" onmouseover="showTip(event, '36', 36)">
             StartTestSuite testSuiteName
           </code>
-          <div class="tip" id="32">
+          <div class="tip" id="36">
             <strong>Signature:</strong> testSuiteName:&#39;?12047 -&gt; unit<br />
                           <strong>Type parameters:</strong> '?12047          </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L126-126" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L128-128" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -180,15 +276,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '33', 33)" onmouseover="showTip(event, '33', 33)">
+          <code onmouseout="hideTip(event, '37', 37)" onmouseover="showTip(event, '37', 37)">
             TestFailed (...)
           </code>
-          <div class="tip" id="33">
+          <div class="tip" id="37">
             <strong>Signature:</strong> testSuiteName:string -&gt; testCaseName:string -&gt; message:string -&gt; details:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L133-133" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L135-135" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -200,15 +296,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '34', 34)" onmouseover="showTip(event, '34', 34)">
+          <code onmouseout="hideTip(event, '38', 38)" onmouseover="showTip(event, '38', 38)">
             TestSucceeded testSuiteName testCaseName
           </code>
-          <div class="tip" id="34">
+          <div class="tip" id="38">
             <strong>Signature:</strong> testSuiteName:string -&gt; testCaseName:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L141-141" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L143-143" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -220,15 +316,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '35', 35)" onmouseover="showTip(event, '35', 35)">
+          <code onmouseout="hideTip(event, '39', 39)" onmouseover="showTip(event, '39', 39)">
             UploadTestResultsFile (...)
           </code>
-          <div class="tip" id="35">
+          <div class="tip" id="39">
             <strong>Signature:</strong> testResultsType:TestResultsType -&gt; file:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L161-161" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L163-163" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -240,15 +336,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '36', 36)" onmouseover="showTip(event, '36', 36)">
+          <code onmouseout="hideTip(event, '40', 40)" onmouseover="showTip(event, '40', 40)">
             UploadTestResultsXml (...)
           </code>
-          <div class="tip" id="36">
+          <div class="tip" id="40">
             <strong>Signature:</strong> testResultsType:TestResultsType -&gt; outputDir:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L173-173" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AppVeyor.fs#L175-175" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>

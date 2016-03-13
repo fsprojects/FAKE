@@ -39,7 +39,7 @@
         <div class="span9" id="main">
           <h1>Packaging and Deploying Azure WebJobs</h1>
 <p>FAKE can be used to zip the output directory of a project and push it to Azure via the <a href="https://github.com/projectkudu/kudu/wiki/REST-API#zip">zip controller</a>.</p>
-<p>You'll need to know the ftp details of the website to publish the web jobs to. Also the web jobs need to already exist on the azure dashboard.</p>
+<p>You'll need to know the http authentication details of the website to publish the web jobs to. If the web job does not already exist, it will be created as part of the deploy.</p>
 <p>In your <code>build.fsx</code> add the following:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
