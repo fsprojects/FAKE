@@ -1,14 +1,11 @@
-#### 4.21.4 - 04.03.2016
+#### 4.22.0 - 13.03.2016
+* Added artifact publishing to AppVeyor - https://github.com/fsharp/FAKE/pull/1173 
+* Azure Web Jobs now get created during deploy if they do not already exist - https://github.com/fsharp/FAKE/pull/1174
+* BUGFIX: New Sonar options - https://github.com/fsharp/FAKE/pull/1172
 * BUGFIX: Fixed issue with IDs that did not start with a letter - https://github.com/fsharp/FAKE/pull/1167
-
-#### 4.21.3 - 03.03.2016
 * BUGFIX: Fixed IgnoreTestCase helper - https://github.com/fsharp/FAKE/pull/1159
 * BUGFIX: use compileFiles in compile - https://github.com/fsharp/FAKE/pull/1165
-
-#### 4.21.2 - 03.03.2016
 * BUGFIX: Fixed bug in WiXDir function, that would set plain directory name as id - https://github.com/fsharp/FAKE/pull/1164
-
-#### 4.21.1 - 01.03.2016
 * BUGFIX: Fixed bug that prevented using directory names with spaces in WiX - https://github.com/fsharp/FAKE/pull/1160
 
 #### 4.21.0 - 29.02.2016
