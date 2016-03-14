@@ -1,3 +1,6 @@
+#### 4.22.1 - 14.03.2016
+* BUGFIX: Fixed hard coded path in artifact publishing to AppVeyor - https://github.com/fsharp/FAKE/pull/1176
+
 #### 4.22.0 - 13.03.2016
 * Added artifact publishing to AppVeyor - https://github.com/fsharp/FAKE/pull/1173 
 * Azure Web Jobs now get created during deploy if they do not already exist - https://github.com/fsharp/FAKE/pull/1174
