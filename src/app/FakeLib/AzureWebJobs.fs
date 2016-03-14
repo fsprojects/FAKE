@@ -79,7 +79,7 @@ let private deployWebJobToWebSite webSite webJob =
     client.Headers.Add(HttpRequestHeader.ContentType, "application/zip")
     client.Headers.Add("Content-Disposition", sprintf "attachment; filename=%s" (Path.GetFileName webJob.PackageLocation))
     
-    let response = client.UploadFile("https://tcappdev.scm.azurewebsites.net/api/continuouswebjobs/samplewebjob", "PUT", @"C:\Users\Isaac\Source\Repos\tag-functional\bin\webjobs\tcappdev.zip")
+    let response = client.UploadFile(uploadUri, "PUT", filePath)
     tracefn "Response from webjob upload: %s" (Encoding.ASCII.GetString response)
 
 let private deployWebJobsToWebSite webSite = 
