@@ -1,3 +1,6 @@
+#### 4.22.2 - 15.03.2016
+* If build failed then kill all created processes at end of build
+
 #### 4.22.1 - 14.03.2016
 * BUGFIX: Fixed hard coded path in artifact publishing to AppVeyor - https://github.com/fsharp/FAKE/pull/1176
 

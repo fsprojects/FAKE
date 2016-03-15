@@ -161,8 +161,7 @@ try
 
         Environment.ExitCode <- 1
 
-    if buildServer = BuildServer.TeamCity then
-        killAllCreatedProcesses()
+    killAllCreatedProcesses()
 
 finally
     traceEndBuild()
