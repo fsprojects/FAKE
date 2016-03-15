@@ -7,6 +7,9 @@ open System.IO
 open System.Reflection
 open System.Threading
 
+type FAKEException(msg) =
+    inherit System.Exception(msg)
+
 /// Gets the path of the current FAKE instance
 let fakePath = productName.GetType().Assembly.Location
 

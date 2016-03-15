@@ -139,8 +139,8 @@ let private reportError text logFile =
 
     File.Delete logFile
 
-    failwith (text + (if errors = 1 then " with 1 error."
-                      else sprintf " with %d errors." errors))
+    FAKEException (text + (if errors = 1 then " with 1 error." else sprintf " with %d errors." errors))
+    |> raise
 
 let private import connectionInfo fileName =
     let originalFile = fileInfo fileName

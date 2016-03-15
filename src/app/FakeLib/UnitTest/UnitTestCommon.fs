@@ -14,4 +14,4 @@ type TestRunnerErrorLevel =
     | DontFailBuild
 
 type FailedTestsException(msg) =
-    inherit System.Exception(msg)
+    inherit FAKEException(msg)
