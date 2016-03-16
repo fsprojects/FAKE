@@ -1,3 +1,6 @@
+#### 4.22.4 - 16.03.2016
+* Added namespace/class/method args for xunit2 - https://github.com/fsharp/FAKE/pull/1180 
+
 #### 4.22.3 - 16.03.2016
 * If build failed then kill all created processes at end of build
 * Make DynamicsNAV errors a known FAKE exception
