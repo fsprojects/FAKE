@@ -275,7 +275,12 @@ let targetError targetName (exn:System.Exception) =
     let error e =
         match e with
         | BuildException(msg, errs) -> msg + (if PrintStackTraceOnError then Environment.NewLine + e.StackTrace.ToString() else "")
-        | _ -> exn.ToString()
+        | _ -> 
+            if exn :? FAKEException then
+                exn.Message
+            else
+                exn.ToString()
+
 
     let msg = sprintf "%s%s" (error exn) (if exn.InnerException <> null then "\n" + (exn.InnerException |> error) else "")
     traceError <| sprintf "Running build failed.\nError:\n%s" msg

@@ -155,8 +155,8 @@ try
             |> traceError
             printUsage()
 
-        let isFailedTestsException = exn :? FAKEException
-        if not isFailedTestsException then
+        let isKnownException = exn :? FAKEException
+        if not isKnownException then
             sendTeamCityError exn.Message
 
         Environment.ExitCode <- 1
