@@ -9,30 +9,53 @@ open System.Text
 open Fake
 
 (*
-xUnit.net console test runner (64-bit .NET 4.0.30319.34209)
-Copyright (C) 2014 Outercurve Foundation.
+xUnit.net Console Runner (64-bit .NET 4.0.30319.17020)
+Copyright (C) 2015 Outercurve Foundation.
 
-usage: xunit.console <assemblyFile> [configFile] [options]
+usage: xunit.console <assemblyFile> [configFile] [assemblyFile [configFile]...] [options] [reporter] [resultFormat filename [...]]
+
+Note: Configuration files must end in .json (for JSON) or .config (for XML)
 
 Valid options:
+  -nologo                : do not show the copyright message
+  -nocolor               : do not output results with colors
   -noappdomain           : do not use app domains to run test code
+  -failskips             : convert skipped tests into failures
   -parallel option       : set parallelization based on option
-                         :   none - turn off all parallelization
+                         :   none        - turn off all parallelization
                          :   collections - only parallelize collections
-                         :   assemblies - only parallelize assemblies
-                         :   all - parallelize assemblies & collections
+                         :   assemblies  - only parallelize assemblies
+                         :   all         - parallelize assemblies & collections
   -maxthreads count      : maximum thread count for collection parallelization
-                         :   0 - run with unbounded thread count
-                         :   >0 - limit task thread pool size to 'count'
-  -silent                : do not output running test count
+                         :   default   - run with default (1 thread per CPU thread)
+                         :   unlimited - run with unbounded thread count
+                         :   (number)  - limit task thread pool size to 'count'
   -noshadow              : do not shadow copy assemblies
-  -teamcity              : forces TeamCity mode (normally auto-detected)
-  -appveyor              : forces AppVeyor CI mode (normally auto-detected)
   -wait                  : wait for input after completion
+  -diagnostics           : enable diagnostics messages for all test assemblies
+  -debug                 : launch the debugger to debug the tests
+  -serialize             : serialize all test cases (for diagnostic purposes only)
   -trait "name=value"    : only run tests with matching name/value traits
                          : if specified more than once, acts as an OR operation
   -notrait "name=value"  : do not run tests with matching name/value traits
                          : if specified more than once, acts as an AND operation
+  -method "name"         : run a given test method (should be fully specified;
+                         : i.e., 'MyNamespace.MyClass.MyTestMethod')
+                         : if specified more than once, acts as an OR operation
+  -class "name"          : run all methods in a given test class (should be fully
+                         : specified; i.e., 'MyNamespace.MyClass')
+                         : if specified more than once, acts as an OR operation
+  -namespace "name"      : run all methods in a given namespace (i.e.,
+                         : 'MyNamespace.MySubNamespace')
+                         : if specified more than once, acts as an OR operation
+
+Reporters: (optional, choose only one)
+  -appveyor              : forces AppVeyor CI mode (normally auto-detected)
+  -quiet                 : do not show progress messages
+  -teamcity              : forces TeamCity mode (normally auto-detected)
+  -verbose               : show verbose progress messages
+
+Result formats: (optional, choose one or more)
   -xml <filename>        : output results to xUnit.net v2 style XML file
   -xmlv1 <filename>      : output results to xUnit.net v1 style XML file
   -nunit <filename>      : output results to NUnit-style XML file
@@ -105,7 +128,14 @@ type XUnit2Params =
       /// Forces AppVeyor CI mode (normally auto-detected).
       ForceAppVeyor : bool
       /// Waits for input after completion.
-      Wait : bool }
+      Wait : bool
+      /// Run xUnit against a specific namespace
+      Namespace : string option
+      /// Run xUnit against a specific class
+      Class : string option
+      /// Run xUnit against a specific method
+      Method : string option
+  }
 
 /// The xUnit2 default parameters.
 ///
@@ -128,6 +158,9 @@ type XUnit2Params =
 /// - `ForceAppVeyor` - `false`
 /// - `Silent` - `false`
 /// - `Wait` - `false`
+/// - `Namespace` - `None`
+/// - `Class` - `None`
+/// - `Method` - `None`
 let XUnit2Defaults =
     { NoAppDomain = false
       Parallel = NoParallelization
@@ -146,7 +179,10 @@ let XUnit2Defaults =
       ForceTeamCity = false
       ForceAppVeyor = false
       Silent = false
-      Wait = false }
+      Wait = false
+      Namespace = None
+      Class = None
+      Method = None }
 
 let buildXUnit2Args assemblies parameters =
     let formatTrait traitFlag (name, value) =
@@ -172,6 +208,9 @@ let buildXUnit2Args assemblies parameters =
     |> appendIfSome parameters.HtmlOutputPath (sprintf @"-html ""%s""")
     |> appendTraits parameters.IncludeTraits "-trait"
     |> appendTraits parameters.ExcludeTraits "-notrait"
+    |> appendIfSome parameters.Namespace (sprintf @"-namespace ""%s""")
+    |> appendIfSome parameters.Class (sprintf @"-class ""%s""")
+    |> appendIfSome parameters.Method (sprintf @"-method ""%s""")
     |> toText
 
 /// Helper method to detect if the xunit console runner supports the -noappdomain flag.

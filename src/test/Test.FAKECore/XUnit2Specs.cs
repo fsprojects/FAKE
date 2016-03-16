@@ -98,7 +98,10 @@ namespace Test.FAKECore.XUnit2Specs
                 Util.Traits(Util.Trait("name", "value3")),
                 XUnit2.XUnit2Defaults.ForceTeamCity,
                 XUnit2.XUnit2Defaults.ForceAppVeyor,
-                XUnit2.XUnit2Defaults.Wait);
+                XUnit2.XUnit2Defaults.Wait,
+                XUnit2.XUnit2Defaults.Namespace,
+                XUnit2.XUnit2Defaults.Class,
+                XUnit2.XUnit2Defaults.Method);
         };
 
         It should_include_the_expected_include_trait_arguments = () =>
@@ -134,7 +137,10 @@ namespace Test.FAKECore.XUnit2Specs
                 XUnit2.XUnit2Defaults.ExcludeTraits,
                 XUnit2.XUnit2Defaults.ForceTeamCity,
                 XUnit2.XUnit2Defaults.ForceAppVeyor,
-                XUnit2.XUnit2Defaults.Wait);
+                XUnit2.XUnit2Defaults.Wait,
+                XUnit2.XUnit2Defaults.Namespace,
+                XUnit2.XUnit2Defaults.Class,
+                XUnit2.XUnit2Defaults.Method);
         };
 
         It should_include_the_expected_HTML_reporting_argument = () =>
@@ -173,7 +179,10 @@ namespace Test.FAKECore.XUnit2Specs
                 XUnit2.XUnit2Defaults.ExcludeTraits,
                 XUnit2.XUnit2Defaults.ForceTeamCity,
                 XUnit2.XUnit2Defaults.ForceAppVeyor,
-                XUnit2.XUnit2Defaults.Wait);
+                XUnit2.XUnit2Defaults.Wait,
+                XUnit2.XUnit2Defaults.Namespace,
+                XUnit2.XUnit2Defaults.Class,
+                XUnit2.XUnit2Defaults.Method);
         };
 
         It should_include_the_expected_parallel_argument = () =>
@@ -206,7 +215,10 @@ namespace Test.FAKECore.XUnit2Specs
                 XUnit2.XUnit2Defaults.ExcludeTraits,
                 XUnit2.XUnit2Defaults.ForceTeamCity,
                 XUnit2.XUnit2Defaults.ForceAppVeyor,
-                XUnit2.XUnit2Defaults.Wait);
+                XUnit2.XUnit2Defaults.Wait,
+                XUnit2.XUnit2Defaults.Namespace,
+                XUnit2.XUnit2Defaults.Class,
+                XUnit2.XUnit2Defaults.Method);
         };
 
         It should_include_the_expected_parallel_argument = () =>
@@ -239,7 +251,10 @@ namespace Test.FAKECore.XUnit2Specs
                 XUnit2.XUnit2Defaults.ExcludeTraits,
                 XUnit2.XUnit2Defaults.ForceTeamCity,
                 XUnit2.XUnit2Defaults.ForceAppVeyor,
-                XUnit2.XUnit2Defaults.Wait);
+                XUnit2.XUnit2Defaults.Wait,
+                XUnit2.XUnit2Defaults.Namespace,
+                XUnit2.XUnit2Defaults.Class,
+                XUnit2.XUnit2Defaults.Method);
             Assemblies = new[] { "test.dll", "other.dll" };
         };
 
@@ -273,7 +288,10 @@ namespace Test.FAKECore.XUnit2Specs
                 XUnit2.XUnit2Defaults.ExcludeTraits,
                 !XUnit2.XUnit2Defaults.ForceTeamCity,
                 !XUnit2.XUnit2Defaults.ForceAppVeyor,
-                !XUnit2.XUnit2Defaults.Wait);
+                !XUnit2.XUnit2Defaults.Wait,
+                XUnit2.XUnit2Defaults.Namespace,
+                XUnit2.XUnit2Defaults.Class,
+                XUnit2.XUnit2Defaults.Method);
         };
 
         It should_request_no_shadow_copy = () =>
