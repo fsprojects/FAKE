@@ -500,7 +500,7 @@ let runTargetsParallel (count : int) (targets : Target[]) =
         .ToArray()
     |> ignore
 
-let CurrentTargetOrder = ref []
+let mutable CurrentTargetOrder = []
 
 /// Runs a target and its dependencies.
 let run targetName =            
@@ -530,7 +530,7 @@ let run targetName =
             // determine a parallel build order
             let order = determineBuildOrder targetName
 
-            CurrentTargetOrder :=
+            CurrentTargetOrder <-
                 order 
                 |> List.map (fun targets -> targets |> Array.map (fun t -> t.Name) |> Array.toList)
             
@@ -546,7 +546,7 @@ let run targetName =
             // for a single threaded build (thereby centralizing the algorithm for build order), but that
             // ordering is inconsistent with earlier versions of FAKE (and PrintDependencyGraph).
             let _, ordered = visitDependencies ignore targetName
-            CurrentTargetOrder := ordered |> Seq.map (fun t -> [t]) |> Seq.toList
+            CurrentTargetOrder <- ordered |> Seq.map (fun t -> [t]) |> Seq.toList
 
             runTargets (ordered |> Seq.map getTarget |> Seq.toArray)
 

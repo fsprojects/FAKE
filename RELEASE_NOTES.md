@@ -1,4 +1,4 @@
-#### 4.22.5 - 17.03.2016
+#### 4.22.6 - 17.03.2016
 * Provide CurrentTargetOrder for build scripts
 
 #### 4.22.4 - 16.03.2016
