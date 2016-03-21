@@ -150,6 +150,11 @@ let private getAssemblyVersionInfo attributes =
     | Some attr -> attr.Value
     | None _ -> "\"" + buildVersion + "\""
 
+let private getAssemblyInformationalVersion attributes =
+    match attributes |> Seq.tryFind (fun (attr : Attribute) -> attr.Name = "AssemblyInformationalVersion") with
+    | Some attr -> attr.Value
+    | None _ -> getAssemblyVersionInfo attributes
+
 /// Creates a C# AssemblyInfo file with the given attributes and configuration.
 /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
 let CreateCSharpAssemblyInfoWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
