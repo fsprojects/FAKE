@@ -169,6 +169,7 @@
     <Compile Include="ChangeWatcher.fs" />
     <Compile Include="CMake.fs" />
     <None Include="app.config" />
+    <Compile Include="Sql.DacPac.fs" />
     <Compile Include="RaygunHelper.fs" />
     <Compile Include="SquirrelHelper.fs" />
     <Compile Include="XCopyHelper.fs" />
