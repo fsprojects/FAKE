@@ -1,3 +1,6 @@
+#### 4.22.7 - 24.03.2016
+* Added support for SQL DacPac - https://github.com/fsharp/FAKE/pull/1185
+
 #### 4.22.6 - 17.03.2016
 * Provide CurrentTargetOrder for build scripts
 
