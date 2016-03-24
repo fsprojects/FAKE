@@ -2,6 +2,20 @@
 
 FAKE.IIS provides extensions around the Microsoft.Web.Administration library to provide clean interfaces to easily configure IIS Sites and Application Pools.
 
+## Installing
+
+FAKE.IIS is a separate package that can be installed from NuGet.
+
+<div class="row">
+  <div class="span1"></div>
+  <div class="span6">
+      <pre>PM> Install-Package FAKE</pre>
+    </div>
+  </div>
+  <div class="span1"></div>
+</div>
+
+
 ## Creating a ApplicationPool and Site
     #r "Fake.IIS.dll"
     #load "IISHelper.fs"

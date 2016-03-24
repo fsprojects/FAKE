@@ -43,6 +43,8 @@ Normally canopy loads PhantomJS.exe from C:\ but in our case we want to use the 
 ## Run canopy tests in FAKE
 The target in FAKE basically hosts the website in IIS Express and starts the canopy tests. IISExpress requires a configuration template ("iisexpress-template.config") which can be copied from %ProgramFiles%\IIS Express\AppServer\applicationhost.config. 
 
+This sample target will require the [`FAKE.IIS package`](http://fsharp.github.io/FAKE/iis.html) to be installed and referenced in your script, though the package isn't required to run Canopy tests.
+
 	Target "CanopyTests" (fun _ ->
 		let hostName = "localhost"
 		let port = 81
