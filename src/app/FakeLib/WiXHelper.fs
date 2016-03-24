@@ -1573,3 +1573,91 @@ let WiX setParams outputFile wixScript =
     wixScript
     |> Candle parameters
     |> Light parameters outputFile
+
+type HeatParams = 
+    { 
+      /// Directory that contains the Heat tool
+      ToolDirectory : string
+      /// Timeout for the call to Heat
+      TimeOut : TimeSpan       
+      /// Auto generate component guids at compile time, e.g. set Guid="*". (Parameter: -ag)
+      AutoGenerateGuid : bool
+      /// Generate guids now. All components are given a guid when heat is run. (Parameter: -gg)
+      GenerateGuidNow : bool
+      /// Suppress COM elements. (Parameter: -scom)
+      SupressComElements : bool
+      /// Suppress generation of fragments for directories and components. (Parameter: -sfrag)
+      SupressDirectoryFragments : bool
+      /// Suppress harvesting the root directory as an element. (Parameter: -srd)
+      SupressRootDirectory : bool
+      /// Suppress registry harvesting. (Parameter: -sreg)
+      SupressRegistry : bool
+      /// Suppress unique identifiers for files, components, & directories.(Parameter: -suid)
+      SupressUniqueIds : bool
+      /// Directory reference to root directories, cannot contains spaces. (Parameter: -dr)
+      DirectoryReference : string
+      /// Component group name, cannot contain spaces. (Parameter: -cg)
+      ComponentGroupName: string
+      /// Substitute File/@Source="SourceDir" with a preprocessor or a wix variable  (Parameter: -var)
+      VariableName : string
+      AdditionalHeatArgs : string list
+    }
+
+/// Default values for the Heat harvesting
+let HeatDefaulParams = 
+    {
+      ToolDirectory = currentDirectory @@ "tools" @@ "Wix"
+      TimeOut =  TimeSpan.FromMinutes 5.0
+      AutoGenerateGuid = true
+      GenerateGuidNow = false
+      SupressComElements = true
+      SupressDirectoryFragments = true
+      SupressRootDirectory = true
+      SupressRegistry = true
+      SupressUniqueIds = true
+      DirectoryReference = "INSTALLDIR"
+      ComponentGroupName = "binaries"
+      VariableName = "var.SourceDir"
+      AdditionalHeatArgs = []
+    }
+
+/// Harvests the contents of a Directory for use with Wix using the [Heat](http://wixtoolset.org/documentation/manual/v3/overview/heat.html) tool.
+/// ## Parameters
+///  - `setParams` - Function used to manipulate the Heat default parameters.
+///  - `directory` - The path to the directory that will be harvested by Heat.
+///  - `outputFile` - The output file path given to Heat.
+///
+let HarvestDirectory (setParams : HeatParams -> HeatParams) directory outputFile = 
+    traceStartTask "Heat" directory
+    let conditionalArgument condition arg args =
+        match condition with
+            | true ->  arg :: args
+            | false -> args
+    let parameters = setParams HeatDefaulParams
+    let tool = parameters.ToolDirectory @@ "heat.exe"
+    let arglist = 
+        parameters.AdditionalHeatArgs
+        |> conditionalArgument parameters.AutoGenerateGuid "-ag" 
+        |> conditionalArgument parameters.GenerateGuidNow "-gg" 
+        |> conditionalArgument parameters.SupressComElements "-scom" 
+        |> conditionalArgument parameters.SupressDirectoryFragments "-sfrag" 
+        |> conditionalArgument parameters.SupressRootDirectory "-srd" 
+        |> conditionalArgument parameters.SupressRegistry "-sreg" 
+        |> conditionalArgument parameters.SupressUniqueIds "-suid" 
+    let args = 
+        sprintf "dir \"%s\" -o \"%s\" -dr %s -cg %s -var %s %s" 
+            (directory |> FullName)
+            (outputFile |> FullName) 
+            parameters.DirectoryReference 
+            parameters.ComponentGroupName 
+            parameters.VariableName 
+            (separated " " arglist)    
+    tracefn "%s %s" parameters.ToolDirectory args
+    if 0 <> ExecProcess (fun info -> 
+                info.FileName <- tool
+                info.WorkingDirectory <- null
+                info.Arguments <- args) parameters.TimeOut
+    then failwithf "Heat %s failed." args
+    traceEndTask "Heat" directory
+
+
