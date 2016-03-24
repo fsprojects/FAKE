@@ -1,3 +1,6 @@
+#### 4.22.8 - 24.03.2016
+* Added HarvestDirectory helper to the WixHelper Library - https://github.com/fsharp/FAKE/pull/1179
+
 #### 4.22.7 - 24.03.2016
 * Added support for SQL DacPac - https://github.com/fsharp/FAKE/pull/1185
 
