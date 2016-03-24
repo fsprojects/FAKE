@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>SlackNotificationAttachmentParams - FAKE - F# Make</title>
+    <title>HeatParams - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,10 +36,8 @@
 
 
 
-<h1>SlackNotificationAttachmentParams</h1>
+<h1>HeatParams</h1>
 <div class="xmldoc">
-<p>The Slack notification attachment parameter type</p>
-
 </div>
   <h3>Record Fields</h3>
   <table class="table table-bordered member-list">
@@ -50,19 +48,37 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2175', 2175)" onmouseover="showTip(event, '2175', 2175)">
-            Color
+          <code onmouseout="hideTip(event, '2368', 2368)" onmouseover="showTip(event, '2368', 2368)">
+            AdditionalHeatArgs
           </code>
-          <div class="tip" id="2175">
-            <strong>Signature:</strong> string<br />
+          <div class="tip" id="2368">
+            <strong>Signature:</strong> string list<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SlackNotificationHelper.fs#L30-30" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/WiXHelper.fs#L1603-1603" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Color of the attachment text. Can be hex-value(e.g. "#AABBCC") or one of "'good', 'warning', 'danger'.</p>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2369', 2369)" onmouseover="showTip(event, '2369', 2369)">
+            AutoGenerateGuid
+          </code>
+          <div class="tip" id="2369">
+            <strong>Signature:</strong> bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/WiXHelper.fs#L1584-1584" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Auto generate component guids at compile time, e.g. set Guid="*". (Parameter: -ag)</p>
 
 
         </td>
@@ -70,19 +86,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2176', 2176)" onmouseover="showTip(event, '2176', 2176)">
-            Fallback
+          <code onmouseout="hideTip(event, '2370', 2370)" onmouseover="showTip(event, '2370', 2370)">
+            ComponentGroupName
           </code>
-          <div class="tip" id="2176">
+          <div class="tip" id="2370">
             <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SlackNotificationHelper.fs#L20-20" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/WiXHelper.fs#L1600-1600" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>(Required) Text summary of the attachment that is shown by clients that understand attachments but choose not to show them</p>
+          <p>Component group name, cannot contain spaces. (Parameter: -cg)</p>
 
 
         </td>
@@ -90,19 +106,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2177', 2177)" onmouseover="showTip(event, '2177', 2177)">
-            Fields
+          <code onmouseout="hideTip(event, '2371', 2371)" onmouseover="showTip(event, '2371', 2371)">
+            DirectoryReference
           </code>
-          <div class="tip" id="2177">
-            <strong>Signature:</strong> SlackNotificationAttachmentFieldParams []<br />
+          <div class="tip" id="2371">
+            <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SlackNotificationHelper.fs#L32-32" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/WiXHelper.fs#L1598-1598" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Text to be displayed as a table below the message</p>
+          <p>Directory reference to root directories, cannot contains spaces. (Parameter: -dr)</p>
 
 
         </td>
@@ -110,19 +126,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2178', 2178)" onmouseover="showTip(event, '2178', 2178)">
-            Pretext
+          <code onmouseout="hideTip(event, '2372', 2372)" onmouseover="showTip(event, '2372', 2372)">
+            GenerateGuidNow
           </code>
-          <div class="tip" id="2178">
-            <strong>Signature:</strong> string<br />
+          <div class="tip" id="2372">
+            <strong>Signature:</strong> bool<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SlackNotificationHelper.fs#L28-28" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/WiXHelper.fs#L1586-1586" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Text that should appear above the formatted data</p>
+          <p>Generate guids now. All components are given a guid when heat is run. (Parameter: -gg)</p>
 
 
         </td>
@@ -130,19 +146,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2179', 2179)" onmouseover="showTip(event, '2179', 2179)">
-            Text
+          <code onmouseout="hideTip(event, '2373', 2373)" onmouseover="showTip(event, '2373', 2373)">
+            SupressComElements
           </code>
-          <div class="tip" id="2179">
-            <strong>Signature:</strong> string<br />
+          <div class="tip" id="2373">
+            <strong>Signature:</strong> bool<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SlackNotificationHelper.fs#L26-26" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/WiXHelper.fs#L1588-1588" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Text that should appear within the attachment</p>
+          <p>Suppress COM elements. (Parameter: -scom)</p>
 
 
         </td>
@@ -150,19 +166,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2180', 2180)" onmouseover="showTip(event, '2180', 2180)">
-            Title
+          <code onmouseout="hideTip(event, '2374', 2374)" onmouseover="showTip(event, '2374', 2374)">
+            SupressDirectoryFragments
           </code>
-          <div class="tip" id="2180">
-            <strong>Signature:</strong> string<br />
+          <div class="tip" id="2374">
+            <strong>Signature:</strong> bool<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SlackNotificationHelper.fs#L22-22" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/WiXHelper.fs#L1590-1590" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>The title of the attachment</p>
+          <p>Suppress generation of fragments for directories and components. (Parameter: -sfrag)</p>
 
 
         </td>
@@ -170,19 +186,119 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2181', 2181)" onmouseover="showTip(event, '2181', 2181)">
-            Title_Link
+          <code onmouseout="hideTip(event, '2375', 2375)" onmouseover="showTip(event, '2375', 2375)">
+            SupressRegistry
           </code>
-          <div class="tip" id="2181">
+          <div class="tip" id="2375">
+            <strong>Signature:</strong> bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/WiXHelper.fs#L1594-1594" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Suppress registry harvesting. (Parameter: -sreg)</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2376', 2376)" onmouseover="showTip(event, '2376', 2376)">
+            SupressRootDirectory
+          </code>
+          <div class="tip" id="2376">
+            <strong>Signature:</strong> bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/WiXHelper.fs#L1592-1592" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Suppress harvesting the root directory as an element. (Parameter: -srd)</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2377', 2377)" onmouseover="showTip(event, '2377', 2377)">
+            SupressUniqueIds
+          </code>
+          <div class="tip" id="2377">
+            <strong>Signature:</strong> bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/WiXHelper.fs#L1596-1596" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Suppress unique identifiers for files, components, &amp; directories.(Parameter: -suid)</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2378', 2378)" onmouseover="showTip(event, '2378', 2378)">
+            TimeOut
+          </code>
+          <div class="tip" id="2378">
+            <strong>Signature:</strong> TimeSpan<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/WiXHelper.fs#L1582-1582" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Timeout for the call to Heat</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2379', 2379)" onmouseover="showTip(event, '2379', 2379)">
+            ToolDirectory
+          </code>
+          <div class="tip" id="2379">
             <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SlackNotificationHelper.fs#L24-24" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/WiXHelper.fs#L1580-1580" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Content to which the title should link</p>
+          <p>Directory that contains the Heat tool</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2380', 2380)" onmouseover="showTip(event, '2380', 2380)">
+            VariableName
+          </code>
+          <div class="tip" id="2380">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/WiXHelper.fs#L1602-1602" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Substitute File/@Source="SourceDir" with a preprocessor or a wix variable  (Parameter: -var)</p>
 
 
         </td>

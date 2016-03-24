@@ -105,6 +105,7 @@ In this tutorial we are looking at <a href="http://lefthandedgoat.github.io/cano
 <p>Normally canopy loads PhantomJS.exe from C:\ but in our case we want to use the installed one so we have to override the path in our test script and set the current path as location of PhantomJS.exe.</p>
 <h2>Run canopy tests in FAKE</h2>
 <p>The target in FAKE basically hosts the website in IIS Express and starts the canopy tests. IISExpress requires a configuration template ("iisexpress-template.config") which can be copied from %ProgramFiles%\IIS Express\AppServer\applicationhost.config.</p>
+<p>This sample target will require the <a href="http://fsharp.github.io/FAKE/iis.html"><code>FAKE.IIS package</code></a> to be installed and referenced in your script, though the package isn't required to run Canopy tests.</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
