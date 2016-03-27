@@ -69,6 +69,11 @@ type FileIncludes =
 
 let private defaultBaseDir = Path.GetFullPath "."
 
+let private emptyFileInclude = 
+    { BaseDirectory = defaultBaseDir
+      Includes = []
+      Excludes = [] }
+
 /// Include files
 let Include x = 
     { BaseDirectory = defaultBaseDir
@@ -86,6 +91,14 @@ let inline (--) (x : FileIncludes) pattern = x.ButNot pattern
 
 /// Includes a single pattern and scans the files - !! x = AllFilesMatching x
 let inline (!!) x = Include x
+
+//  Creates a FileInclude from a sequence of file path patterns
+let includesOfSeq inc exc =
+  Seq.append
+    (inc |> Seq.map (fun t -> ((++),t)))
+    (exc |> Seq.map (fun t -> ((--),t)))
+  |> 
+  Seq.fold (fun s (f,p) -> f s p) emptyFileInclude
 
 /// Looks for a tool first in its default path, if not found in all subfolders of the root folder - returns the tool file name.
 let findToolInSubPath toolname defaultPath =
