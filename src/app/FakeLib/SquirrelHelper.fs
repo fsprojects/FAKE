@@ -57,7 +57,7 @@ type SquirrelParams =
 /// - `ToolPath` - The `squirrel.exe` path if it exists in a subdirectory of the current directory.
 /// - `TimeOut` - 10 minutes
 /// - `SignExecutable` - `None`
-/// - `SigningSecret` - `None`
+/// - `SigningKeyFile` - `None`
 /// - `SigningSecret` - `None`
 let SquirrelDefaults =
     let toolname = "Squirrel.exe"
