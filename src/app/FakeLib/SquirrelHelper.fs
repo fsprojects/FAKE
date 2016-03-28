@@ -119,7 +119,7 @@ module internal ResultHandling =
 /// ## Sample usage
 ///
 ///     Target "CreatePackage" (fun _ ->
-///         SquirrelPack (fun p -> { p with WorkingDir = Some "./tmp" }) "./my.nuget"
+///         SquirrelPack (fun p -> { p with WorkingDir = Some "./tmp" }) "./my.nupkg"
 ///     )
 let SquirrelPack setParams nugetPackage =
     traceStartTask "Squirrel" ""
