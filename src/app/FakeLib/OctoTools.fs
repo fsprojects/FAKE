@@ -64,6 +64,13 @@ type DeployReleaseOptions = {
     /// Whether to wait synchronously for deployment to finish
     WaitForDeployment           : bool
 
+    /// Don't print the raw log of failed tasks
+    NoRawLog                    : bool
+
+    /// Show progress of the deployment.
+    /// (Sets --waitfordeployment and --norawlog to true.)
+    Progress                    : bool
+
     /// Specifies maximum time that deployment can take
     /// (default: 10 minutes)
     DeploymentTimeout           : TimeSpan option
@@ -117,7 +124,8 @@ let releaseOptions = {
 /// Default options for 'DeployRelease'
 let deployOptions = {
     Project = ""; DeployTo = ""; Version = ""; Force = false; WaitForDeployment = false; 
-    DeploymentTimeout = None; DeploymentCheckSleepCycle = None; SpecificMachines = None }
+    DeploymentTimeout = None; DeploymentCheckSleepCycle = None; SpecificMachines = None;
+    NoRawLog = false; Progress = false }
 
 /// Default options for 'DeleteReleases'
 let deleteOptions = { 
@@ -176,6 +184,8 @@ let deployCommandLine (opts:DeployReleaseOptions) =
       (optionalStringParam "version" (liftString opts.Version))
       (flag "force" opts.Force)
       (flag "waitfordeployment" opts.WaitForDeployment)
+      (flag "norawlog" opts.NoRawLog)
+      (flag "progress" opts.Progress)
       (optionalObjParam "deploymenttimeout" opts.DeploymentTimeout)
       (optionalObjParam "deploymentchecksleepcycle" opts.DeploymentCheckSleepCycle)
       (optionalStringParam "specificmachines" opts.SpecificMachines) ] 
