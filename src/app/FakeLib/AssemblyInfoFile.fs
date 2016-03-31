@@ -150,6 +150,11 @@ let private getAssemblyVersionInfo attributes =
     | Some attr -> attr.Value
     | None _ -> "\"" + buildVersion + "\""
 
+let private getAssemblyInformationalVersion attributes =
+    match attributes |> Seq.tryFind (fun (attr : Attribute) -> attr.Name = "AssemblyInformationalVersion") with
+    | Some attr -> attr.Value
+    | None _ -> getAssemblyVersionInfo attributes
+
 /// Creates a C# AssemblyInfo file with the given attributes and configuration.
 /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
 let CreateCSharpAssemblyInfoWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
@@ -168,6 +173,7 @@ let CreateCSharpAssemblyInfoWithConfig outputFileName attributes (config : Assem
             [ sprintf "namespace %s {" useNamespace
               "    internal static class AssemblyVersionInformation {"
               sprintf "        internal const string Version = %s;" (getAssemblyVersionInfo attributes)
+              sprintf "        internal const string InformationalVersion = %s;" (getAssemblyInformationalVersion attributes)
               "    }"
               "}" ]
         else []
@@ -194,7 +200,9 @@ let CreateFSharpAssemblyInfoWithConfig outputFileName attributes (config : Assem
         
         let optional = 
             [ "module internal AssemblyVersionInformation ="
-              sprintf "    let [<Literal>] Version = %s" (getAssemblyVersionInfo attributes) ]
+              sprintf "    let [<Literal>] Version = %s" (getAssemblyVersionInfo attributes)
+              sprintf "    let [<Literal>] InformationalVersion = %s" (getAssemblyInformationalVersion attributes)
+            ]
         
         if generateClass then required @ optional
         else required
@@ -218,6 +226,7 @@ let CreateVisualBasicAssemblyInfoWithConfig outputFileName attributes (config : 
         if generateClass then
             [ "Friend NotInheritable Class AssemblyVersionInformation"
               sprintf "    Friend Const Version As String = %s" (getAssemblyVersionInfo attributes)
+              sprintf "    Friend Const InformationalVersion As String = %s" (getAssemblyInformationalVersion attributes)
               "End Class" ]
         else []
 
