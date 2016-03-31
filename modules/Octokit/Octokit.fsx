@@ -93,6 +93,26 @@ let createClientWithToken token =
         return github
     }
 
+let createGHEClient url user password =
+    async {
+        let credentials = Credentials(user, password)
+        let httpClient = new HttpClientWithTimeout(TimeSpan.FromMinutes 20.)
+        let connection = new Connection(new ProductHeaderValue("FAKE"), new Uri(url), new InMemoryCredentialStore(credentials), httpClient, new SimpleJsonSerializer())
+        let github = new GitHubClient(connection)
+        github.Credentials <- credentials
+        return github
+    }
+
+let createGHEClientWithToken url token =
+    async {
+        let credentials = Credentials(token)
+        let httpClient = new HttpClientWithTimeout(TimeSpan.FromMinutes 20.)
+        let connection = new Connection(new ProductHeaderValue("FAKE"), new Uri(url), new InMemoryCredentialStore(credentials), httpClient, new SimpleJsonSerializer())
+        let github = new GitHubClient(connection)
+        github.Credentials <- credentials
+        return github
+    }
+
 let private makeRelease draft owner project version prerelease (notes:seq<string>) (client : Async<GitHubClient>) =
     retryWithArg 5 client <| fun client' -> async {
         let data = new NewRelease(version)
