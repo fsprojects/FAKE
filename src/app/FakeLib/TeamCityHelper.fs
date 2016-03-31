@@ -12,12 +12,13 @@ let inline EncapsulateSpecialChars text =
     |> replace "[" "|["
     |> replace "]" "|]"
 
+let scrub = RemoveLineBreaks >> EncapsulateSpecialChars
+
 /// Send message to TeamCity
 let sendToTeamCity format message = 
     if buildServer = TeamCity then 
         message
-        |> RemoveLineBreaks
-        |> EncapsulateSpecialChars
+        |> scrub
         |> sprintf format
         |> fun m -> postMessage (LogMessage(m, true))
 
@@ -77,7 +78,15 @@ let sendTeamCityPmdCpdImport path = sendToTeamCity "##teamcity[importData type='
 let sendTeamCityDotNetDupFinderImport path = sendToTeamCity "##teamcity[importData type='DotNetDupFinder' path='%s']" path
 
 /// Sends an dotcover, partcover, ncover or ncover3 results filename to TeamCity    
+[<System.Obsolete("This function does not specify the type of coverage tool used to generate the report.  Use 'sendTeamCityDotNetCoverageImportForTool' instead")>]
 let sendTeamCityDotNetCoverageImport path = sendToTeamCity "##teamcity[importData type='dotNetCoverage' path='%s']" path
+
+type TeamCityDotNetCoverageTool = | DotCover | PartCover | NCover | NCover3 with override x.ToString() = match x with | DotCover -> "dotcover" | PartCover -> "partcover" | NCover -> "ncover" | NCover3 -> "ncover3"
+/// Sends an dotcover, partcover, ncover or ncover3 results filename to TeamCity    
+let sendTeamCityDotNetCoverageImportForTool path (tool : TeamCityDotNetCoverageTool) = 
+    if buildServer = TeamCity then
+        sprintf "##teamcity[importData type='dotNetCoverage' tool='%s' path='%s']" (string tool |> scrub) (path |> scrub)
+        |> fun f -> postMessage (LogMessage(f, true))
 
 /// Sends the full path to the dotCover home folder to override the bundled dotCover to TeamCity
 let sendTeamCityDotCoverHome = sendToTeamCity "##teamcity[dotNetCoverage dotcover_home='%s']"
