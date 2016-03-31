@@ -84,9 +84,8 @@ let sendTeamCityDotNetCoverageImport path = sendToTeamCity "##teamcity[importDat
 type TeamCityDotNetCoverageTool = | DotCover | PartCover | NCover | NCover3 with override x.ToString() = match x with | DotCover -> "dotcover" | PartCover -> "partcover" | NCover -> "ncover" | NCover3 -> "ncover3"
 /// Sends an dotcover, partcover, ncover or ncover3 results filename to TeamCity    
 let sendTeamCityDotNetCoverageImportForTool path (tool : TeamCityDotNetCoverageTool) = 
-    if buildServer = TeamCity then
-        sprintf "##teamcity[importData type='dotNetCoverage' tool='%s' path='%s']" (string tool |> scrub) (path |> scrub)
-        |> fun f -> postMessage (LogMessage(f, true))
+    sprintf "##teamcity[importData type='dotNetCoverage' tool='%s' path='%s']" (string tool |> scrub) (path |> scrub)
+    |> sendStrToTeamCity
 
 /// Sends the full path to the dotCover home folder to override the bundled dotCover to TeamCity
 let sendTeamCityDotCoverHome = sendToTeamCity "##teamcity[dotNetCoverage dotcover_home='%s']"
