@@ -168,7 +168,7 @@ let DropAndCreateDatabase connectionString =
 /// <param name="connectionString">Used to open the connection to the database.</param>
 /// <param name="scripts">The scripts which will be run.</param>
 let RunScripts connectionString scripts = 
-    let serverInfo = getServerInfo connectionString 
+    let serverInfo = getServerInfo connectionString
     scripts |> Seq.iter (runScript serverInfo)
     Disconnect serverInfo
 

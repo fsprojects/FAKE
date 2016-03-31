@@ -1,3 +1,6 @@
+#### 4.22.9 - 31.03.2016
+* Added contents of `AssemblyInformationalVersionAttribute` to the `AssemblyVersionInformation` class - https://github.com/fsharp/FAKE/pull/1183
+
 #### 4.22.8 - 24.03.2016
 * Added HarvestDirectory helper to the WixHelper Library - https://github.com/fsharp/FAKE/pull/1179
 
