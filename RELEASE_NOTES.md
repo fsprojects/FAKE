@@ -1,24 +1,13 @@
-#### 4.22.9 - 31.03.2016
+#### 4.23.0 - 01.04.2016
+* Make a new method for sending a coverage file to TeamCity - https://github.com/fsharp/FAKE/pull/1195
 * Added more deployment options for OctoTools - https://github.com/fsharp/FAKE/pull/1192
 * Added contents of `AssemblyInformationalVersionAttribute` to the `AssemblyVersionInformation` class - https://github.com/fsharp/FAKE/pull/1183
-
-#### 4.22.8 - 24.03.2016
 * Added HarvestDirectory helper to the WixHelper Library - https://github.com/fsharp/FAKE/pull/1179
-
-#### 4.22.7 - 24.03.2016
 * Added support for SQL DacPac - https://github.com/fsharp/FAKE/pull/1185
-
-#### 4.22.6 - 17.03.2016
 * Provide CurrentTargetOrder for build scripts
-
-#### 4.22.4 - 16.03.2016
 * Added namespace/class/method args for xunit2 - https://github.com/fsharp/FAKE/pull/1180 
-
-#### 4.22.3 - 16.03.2016
 * If build failed then kill all created processes at end of build
 * Make DynamicsNAV errors a known FAKE exception
-
-#### 4.22.1 - 14.03.2016
 * BUGFIX: Fixed hard coded path in artifact publishing to AppVeyor - https://github.com/fsharp/FAKE/pull/1176
 
 #### 4.22.0 - 13.03.2016
