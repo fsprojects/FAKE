@@ -18,8 +18,7 @@ See the [project home page](http://fsharp.github.com/FAKE/) for tutorials and [A
 
 [![Issue Stats](http://www.issuestats.com/github/fsharp/FAKE/badge/pr)](http://www.issuestats.com/github/fsharp/FAKE) [![Issue Stats](http://www.issuestats.com/github/fsharp/FAKE/badge/issue)](http://www.issuestats.com/github/fsharp/FAKE)
 
-[![NuGet Status](http://img.shields.io/nuget/v/FAKE.svg?style=flat)](https://www.nuget.org/packages/FAKE/)
-[![Nuget](https://img.shields.io/nuget/dt/FAKE.svg)](http://nuget.org/packages/FAKE)
+[![NuGet Badge](https://buildstats.info/nuget/FAKE)](https://www.nuget.org/packages/FAKE)
 
 ## How to contribute code
 
