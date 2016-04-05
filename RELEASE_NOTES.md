@@ -1,3 +1,6 @@
+#### 4.23.1 - 05.04.2016
+* Support for source code deployments on Azure websites through KuduSync - https://github.com/fsharp/FAKE/pull/1200
+
 #### 4.23.0 - 01.04.2016
 * Make a new method for sending a coverage file to TeamCity - https://github.com/fsharp/FAKE/pull/1195
 * Added more deployment options for OctoTools - https://github.com/fsharp/FAKE/pull/1192
