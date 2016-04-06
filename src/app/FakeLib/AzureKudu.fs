@@ -25,15 +25,26 @@ do
     CreateDir deploymentTarget
     CleanDir deploymentTemp
 
-/// Stages a set of files into the temp deployment area, ready from deployment into the website.
-let stageWebsite files = files |> FileHelper.CopyFiles deploymentTemp
+/// <summary>
+/// Stages a folder and all subdirectories into the temp deployment area, ready for deployment into the website.
+/// </summary>
+/// <param name="source">The source folder to copy.</param>
+/// <param name="shouldInclude">A predicate which includes files from the folder. If the entire directory should be copied, this predicate should always return true.</param>
+let stageFolder source shouldInclude =
+    FileHelper.CopyRecursive source deploymentTemp true
+    |> Seq.filter (not << shouldInclude)
+    |> Seq.iter File.Delete
 
-/// Stages a webjob into the temp deployment area, ready for deployment into the website as a webjob.
-let stageWebJob webJobType webjobName files =
+/// Gets the path for deploying a web job to.
+let getWebJobPath webJobType webJobName =
     let webJobType = match webJobType with Scheduled -> "scheduled" | Continuous -> "continous"
-    let webjobPath = sprintf @"%s\app_data\jobs\%s\%s\" deploymentTemp webJobType webjobName
-    CreateDir webjobPath
-    files |> FileHelper.CopyFiles webjobPath
+    sprintf @"%s\app_data\jobs\%s\%s\" deploymentTemp webJobType webJobName
+
+/// Stages a set of files into a WebJob folder in the temp deployment area, ready for deployment into the website as a webjob.
+let stageWebJob webJobType webJobName files =
+    let webJobPath = getWebJobPath webJobType webJobName
+    CreateDir webJobPath
+    files |> FileHelper.CopyFiles webJobPath
 
 /// Synchronises all stages files from the temporary deployment to the actual deployment, removing
 /// any obsolete files, updating changed files and adding new files.
