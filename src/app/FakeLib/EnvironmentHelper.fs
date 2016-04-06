@@ -120,8 +120,13 @@ let isUnix = Environment.OSVersion.Platform = PlatformID.Unix
 /// Determines if the current system is a MacOs system
 let isMacOS =
     (Environment.OSVersion.Platform = PlatformID.MacOSX) ||
-      // osascript is the AppleScript interpreter on OS X
-      File.Exists "/usr/bin/osascript"
+      // Running on OSX with mono, Environment.OSVersion.Platform returns Unix
+      // rather than MacOSX, so check for osascript (the AppleScript
+      // interpreter). Checking for osascript for other platforms can cause a
+      // problem on Windows if the current-directory is on a mapped-drive
+      // pointed to a Mac's root partition; e.g., Parallels does this to give
+      // Windows virtual machines access to files on the host.
+      (Environment.OSVersion.Platform = PlatformID.Unix && (File.Exists "/usr/bin/osascript"))
 
 /// Determines if the current system is a Linux system
 let isLinux = int System.Environment.OSVersion.Platform |> fun p -> (p = 4) || (p = 6) || (p = 128)
