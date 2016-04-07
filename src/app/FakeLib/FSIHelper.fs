@@ -259,16 +259,19 @@ let private getCacheInfoFromScript printDetails fsiOptions scriptPath =
                     if printDetails then tracefn "Redirect assembly load to known assembly: %s" ev.Name
                     a
                 | _ ->
+                    let token = name.GetPublicKeyToken()
                     match loadedAssemblies
                           |> Seq.map snd
                           |> Seq.tryFind (fun asem ->
                               let n = asem.GetName()
                               n.Name = name.Name &&
-                              n.GetPublicKeyToken() = name.GetPublicKeyToken()) with
+                              (isNull token || // When null accept what we have.
+                                n.GetPublicKeyToken() = token)) with
                     | Some (asem) ->
                         traceFAKE "Redirect assembly from '%s' to '%s'" ev.Name asem.FullName
                         asem
                     | _ ->
+                        if printDetails then traceFAKE "Could not resolve '%s'" ev.Name
                         null))
             assemVersionValidCount = Seq.length cacheConfig.Value.Assemblies
         else
