@@ -1,3 +1,6 @@
+#### 4.23.2 - 07.04.2016
+* BUGFIX: Accept the cached assembly when the public token of the given assembly is null - https://github.com/fsharp/FAKE/pull/1205
+
 #### 4.23.1 - 05.04.2016
 * Support for source code deployments on Azure websites through KuduSync - https://github.com/fsharp/FAKE/pull/1200
 
