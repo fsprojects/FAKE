@@ -1,3 +1,6 @@
+#### 4.23.3 - 07.04.2016
+* New Kudu feature to copy recursively - https://github.com/fsharp/FAKE/pull/1203
+
 #### 4.23.2 - 07.04.2016
 * BUGFIX: Accept the cached assembly when the public token of the given assembly is null - https://github.com/fsharp/FAKE/pull/1205
 
