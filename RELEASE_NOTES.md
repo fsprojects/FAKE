@@ -1,3 +1,6 @@
+#### 4.23.4 - 07.04.2016
+* BUGFIX: Prevent false-positive in EnvironmentHelper.isMacOS on Windows - https://github.com/fsharp/FAKE/pull/1204
+            
 #### 4.23.3 - 07.04.2016
 * New Kudu feature to copy recursively - https://github.com/fsharp/FAKE/pull/1203
 
