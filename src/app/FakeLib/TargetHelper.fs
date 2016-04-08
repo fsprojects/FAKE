@@ -1,7 +1,7 @@
 ﻿[<AutoOpen>]
 /// Contains infrastructure code and helper functions for FAKE's target feature.
 module Fake.TargetHelper
-    
+
 open System
 open System.Collections.Generic
 open System.Linq
@@ -16,11 +16,11 @@ type 'a TargetTemplate =
       SoftDependencies: string list;
       Description: TargetDescription;
       Function : 'a -> unit}
-  
+
 /// A Target can be run during the build
 type Target = unit TargetTemplate
 
-type private DependencyType = 
+type private DependencyType =
     | Hard = 1
     | Soft = 2
 
@@ -29,11 +29,11 @@ let mutable PrintStackTraceOnError = false
 
 /// [omit]
 let mutable LastDescription = null
-   
+
 /// Sets the Description for the next target.
 /// [omit]
-let Description text = 
-    if LastDescription <> null then 
+let Description text =
+    if LastDescription <> null then
         failwithf "You can't set the description for a target twice. There is already a description: %A" LastDescription
     LastDescription <- text
 
@@ -56,7 +56,7 @@ let ExecutedTargetTimes = new List<_>()
 
 /// Resets the state so that a deployment can be invoked multiple times
 /// [omit]
-let reset() = 
+let reset() =
     TargetDict.Clear()
     ExecutedTargets.Clear()
     BuildFailureTargets.Clear()
@@ -67,10 +67,10 @@ let reset() =
 let getAllTargetsNames() = TargetDict |> Seq.map (fun t -> t.Key) |> Seq.toList
 
 /// Gets a target with the given name from the target dictionary.
-let getTarget name = 
+let getTarget name =
     match TargetDict.TryGetValue (toLower name) with
     | true, target -> target
-    | _  -> 
+    | _  ->
         traceError <| sprintf "Target \"%s\" is not defined. Existing targets:" name
         for target in TargetDict do
             traceError  <| sprintf "  - %s" target.Value.Name
@@ -79,7 +79,7 @@ let getTarget name =
 /// Returns the DependencyString for the given target.
 let dependencyString target =
     if target.Dependencies.IsEmpty then String.Empty else
-    target.Dependencies 
+    target.Dependencies
       |> Seq.map (fun d -> (getTarget d).Name)
       |> separated ", "
       |> sprintf "(==> %s)"
@@ -91,7 +91,7 @@ let softDependencyString target =
       |> Seq.map (fun d -> (getTarget d).Name)
       |> separated ", "
       |> sprintf "(?=> %s)"
-    
+
 /// Do nothing - fun () -> () - Can be used to define empty targets.
 let DoNothing = (fun () -> ())
 
@@ -104,10 +104,10 @@ let checkIfDependencyCanBeAddedCore fGetDependencies targetName dependentTargetN
     let rec checkDependencies dependentTarget =
           fGetDependencies dependentTarget
           |> List.iter (fun dep ->
-               if toLower dep = toLower targetName then 
+               if toLower dep = toLower targetName then
                   failwithf "Cyclic dependency between %s and %s" targetName dependentTarget.Name
                checkDependencies (getTarget dep))
-      
+
     checkDependencies dependentTarget
     target,dependentTarget
 
@@ -125,14 +125,14 @@ let checkIfSoftDependencyCanBeAdded targetName dependentTargetName =
 /// [omit]
 let dependencyAtFront targetName dependentTargetName =
     let target,dependentTarget = checkIfDependencyCanBeAdded targetName dependentTargetName
-    
+
     TargetDict.[toLower targetName] <- { target with Dependencies = dependentTargetName :: target.Dependencies }
-  
+
 /// Appends the dependency to the list of dependencies.
 /// [omit]
 let dependencyAtEnd targetName dependentTargetName =
     let target,dependentTarget = checkIfDependencyCanBeAdded targetName dependentTargetName
-    
+
     TargetDict.[toLower targetName] <- { target with Dependencies = target.Dependencies @ [dependentTargetName] }
 
 
@@ -140,7 +140,7 @@ let dependencyAtEnd targetName dependentTargetName =
 /// [omit]
 let softDependencyAtEnd targetName dependentTargetName =
     let target,dependentTarget = checkIfDependencyCanBeAdded targetName dependentTargetName
-    
+
     TargetDict.[toLower targetName] <- { target with SoftDependencies = target.SoftDependencies @ [dependentTargetName] }
 
 /// Adds the dependency to the list of dependencies.
@@ -150,7 +150,7 @@ let dependency targetName dependentTargetName = dependencyAtEnd targetName depen
 /// Adds the dependency to the list of soft dependencies.
 /// [omit]
 let softDependency targetName dependentTargetName = softDependencyAtEnd targetName dependentTargetName
-  
+
 /// Adds the dependencies to the list of dependencies.
 /// [omit]
 let Dependencies targetName dependentTargetNames = dependentTargetNames |> List.iter (dependency targetName)
@@ -175,27 +175,27 @@ let TargetsDependOn target targets =
 /// Set a dependency for all registered targets.
 /// [omit]
 [<Obsolete("Please use the ==> operator")>]
-let AllTargetsDependOn target = 
-    let targets = getAllTargetsNames() 
+let AllTargetsDependOn target =
+    let targets = getAllTargetsNames()
 
     targets
     |> Seq.toList  // work on copy since the dict will be changed
     |> List.filter ((<>) target)
     |> List.filter (fun t -> Seq.exists ((=) t) targets)
     |> List.iter (fun t -> dependencyAtFront t target)
-  
+
 /// Creates a target from template.
 /// [omit]
-let targetFromTemplate template name parameters =    
+let targetFromTemplate template name parameters =
     TargetDict.Add(toLower name,
-      { Name = name; 
+      { Name = name;
         Dependencies = [];
         SoftDependencies = [];
         Description = template.Description;
         Function = fun () ->
           // Don't run function now
           template.Function parameters })
-    
+
     name <== template.Dependencies
     LastDescription <- null
 
@@ -206,40 +206,40 @@ let targetFromTemplate template name parameters =
 /// The following sample creates 4 targets using TargetTemplateWithDependencies and hooks them into the build pipeline.
 ///
 ///     // Create target creation functions
-///     let createCompileTarget name strategy = 
-///     TargetTemplateWithDependencies 
-///         ["Clean"; "ResolveDependencies"] // dependencies to other targets 
-///         (fun targetParameter -> 
-///           tracefn "--- start compile product..."  
+///     let createCompileTarget name strategy =
+///     TargetTemplateWithDependencies
+///         ["Clean"; "ResolveDependencies"] // dependencies to other targets
+///         (fun targetParameter ->
+///           tracefn "--- start compile product..."
 ///           if targetParameter = "a" then
 ///             tracefn "    ---- Strategy A"
 ///           else
 ///             tracefn "    ---- Strategy B"
-///           tracefn "--- finish compile product ..."    
+///           tracefn "--- finish compile product ..."
 ///         ) name strategy
-///     
-///     let createTestTarget name dependencies filePattern = 
-///       TargetTemplateWithDependencies 
-///         dependencies 
-///         (fun filePattern ->   
+///
+///     let createTestTarget name dependencies filePattern =
+///       TargetTemplateWithDependencies
+///         dependencies
+///         (fun filePattern ->
 ///           tracefn "--- start compile tests ..."
 ///           !! filePattern
 ///           |> RunTests
 ///           tracefn "--- finish compile tests ...")
 ///         name filePattern
-///     
+///
 ///     // create some targets
 ///     createCompileTarget "C1" "a"
 ///     createCompileTarget "C2" "b"
-///     
+///
 ///     createTestTarget "T1" ["C1"] "**/C1/*.*"
 ///     createTestTarget "T2" ["C1"; "C2"] "**/C?/*.*"
-///     
+///
 ///     // hook targets to normal build pipeline
 ///     "T1" ==> "T2" ==> "Test"
 ///
-let TargetTemplateWithDependencies dependencies body name parameters = 
-    let template = 
+let TargetTemplateWithDependencies dependencies body name parameters =
+    let template =
         { Name = String.Empty
           Dependencies = dependencies
           SoftDependencies = []
@@ -251,31 +251,34 @@ let TargetTemplateWithDependencies dependencies body name parameters =
 let TargetTemplateWithDependecies dependencies = TargetTemplateWithDependencies dependencies
 
 /// Creates a TargetTemplate.
-let TargetTemplate body = TargetTemplateWithDependencies [] body 
-  
+let TargetTemplate body = TargetTemplateWithDependencies [] body
+
 /// Creates a Target.
 let Target name body = TargetTemplate body name ()
 
 /// Represents build errors
-type BuildError = { 
+type BuildError = {
     Target : string
     Message : string }
 
-let mutable private errors = []   
- 
+let mutable private errors = []
+
+/// Get Errors - Returns the errors that occured during execution
+let GetErrors() = errors
+
 /// [omit]
 let targetError targetName (exn:System.Exception) =
     closeAllOpenTags()
-    errors <- 
+    errors <-
         match exn with
-            | BuildException(msg, errs) -> 
-                let errMsgs = errs |> List.map(fun e -> { Target = targetName; Message = e }) 
+            | BuildException(msg, errs) ->
+                let errMsgs = errs |> List.map(fun e -> { Target = targetName; Message = e })
                 { Target = targetName; Message = msg } :: (errMsgs @ errors)
             | _ -> { Target = targetName; Message = exn.ToString() } :: errors
     let error e =
         match e with
         | BuildException(msg, errs) -> msg + (if PrintStackTraceOnError then Environment.NewLine + e.StackTrace.ToString() else "")
-        | _ -> 
+        | _ ->
             if exn :? FAKEException then
                 exn.Message
             else
@@ -302,7 +305,7 @@ let runFinalTargets() =
       |> Seq.filter (fun kv -> kv.Value)     // only if activated
       |> Seq.map (fun kv -> kv.Key)
       |> Seq.iter (fun name ->
-           try             
+           try
                let watch = new System.Diagnostics.Stopwatch()
                watch.Start()
                tracefn "Starting FinalTarget: %s" name
@@ -318,7 +321,7 @@ let runBuildFailureTargets() =
       |> Seq.filter (fun kv -> kv.Value)     // only if activated
       |> Seq.map (fun kv -> kv.Key)
       |> Seq.iter (fun name ->
-           try             
+           try
                let watch = new System.Diagnostics.Stopwatch()
                watch.Start()
                tracefn "Starting BuildFailureTarget: %s" name
@@ -333,47 +336,47 @@ let PrintTargets() =
     log "The following targets are available:"
     for t in TargetDict.Values do
         logfn "   %s%s" t.Name (if isNullOrEmpty t.Description then "" else sprintf " - %s" t.Description)
- 
+
 
 // Maps the specified dependency type into the list of targets
 let private withDependencyType (depType:DependencyType) targets =
     targets |> List.map (fun t -> depType, t)
 
-// Helper function for visiting targets in a dependency tree. Returns a set containing the names of the all the 
+// Helper function for visiting targets in a dependency tree. Returns a set containing the names of the all the
 // visited targets, and a list containing the targets visited ordered such that dependencies of a target appear earlier
 // in the list than the target.
-let private visitDependencies fVisit targetName = 
-    let visit fGetDependencies fVisit targetName = 
+let private visitDependencies fVisit targetName =
+    let visit fGetDependencies fVisit targetName =
         let visited = new HashSet<_>()
         let ordered = new List<_>()
-        let rec visitDependenciesAux level (depType,targetName) = 
+        let rec visitDependenciesAux level (depType,targetName) =
             let target = getTarget targetName
             let isVisited = visited.Contains targetName
             visited.Add targetName |> ignore
             fVisit (target, depType, level, isVisited)
             (fGetDependencies target) |> Seq.iter (visitDependenciesAux (level + 1))
-            if not isVisited then ordered.Add targetName 
+            if not isVisited then ordered.Add targetName
         visitDependenciesAux 0 (DependencyType.Hard, targetName)
-        visited, ordered 
-    
-    // First pass is to accumulate targets in (hard) dependency graph 
+        visited, ordered
+
+    // First pass is to accumulate targets in (hard) dependency graph
     let visited, _ = visit (fun t -> t.Dependencies |> withDependencyType DependencyType.Hard) (fun _ -> ()) targetName
- 
-    let getAllDependencies (t: TargetTemplate<unit>) = 
-         (t.Dependencies |> withDependencyType DependencyType.Hard) @ 
+
+    let getAllDependencies (t: TargetTemplate<unit>) =
+         (t.Dependencies |> withDependencyType DependencyType.Hard) @
          // Note that we only include the soft dependency if it is present in the set of targets that were
          // visited.
          (t.SoftDependencies |> List.filter visited.Contains |> withDependencyType DependencyType.Soft)
 
     // Now make second pass, adding in soft depencencies if appropriate
     visit getAllDependencies fVisit targetName
-    
-              
+
+
 
 /// <summary>Writes a dependency graph.</summary>
 /// <param name="verbose">Whether to print verbose output or not.</param>
 /// <param name="target">The target for which the dependencies should be printed.</param>
-let PrintDependencyGraph verbose target = 
+let PrintDependencyGraph verbose target =
     match TargetDict.TryGetValue (toLower target) with
     | false,_ -> PrintTargets()
     | true,target ->
@@ -388,7 +391,7 @@ let PrintDependencyGraph verbose target =
                     log <| sprintf "%s<== %s" indent t.Name
 
         let _, ordered = visitDependencies logDependency target.Name
-        
+
         log ""
         log "The resulting target order is:"
         Seq.iter (logfn " - %s") ordered
@@ -402,12 +405,12 @@ let WriteErrors () =
 
 /// <summary>Writes a build time report.</summary>
 /// <param name="total">The total runtime.</param>
-let WriteTaskTimeSummary total =    
+let WriteTaskTimeSummary total =
     traceHeader "Build Time Report"
     if ExecutedTargets.Count > 0 then
-        let width = 
-            ExecutedTargetTimes 
-              |> Seq.map (fun (a,b) -> a.Length) 
+        let width =
+            ExecutedTargetTimes
+              |> Seq.map (fun (a,b) -> a.Length)
               |> Seq.max
               |> max 8
 
@@ -417,16 +420,16 @@ let WriteTaskTimeSummary total =
         aligned "Target" "Duration"
         aligned "------" "--------"
         ExecutedTargetTimes
-          |> Seq.iter (fun (name,time) -> 
+          |> Seq.iter (fun (name,time) ->
                 let t = getTarget name
                 aligned t.Name time)
 
         aligned "Total:" total
-        if errors = [] then aligned "Status:" "Ok" 
-        else 
+        if errors = [] then aligned "Status:" "Ok"
+        else
             alignedError "Status:" "Failure"
             WriteErrors()
-    else 
+    else
         traceError "No target was successfully completed"
 
     traceLine()
@@ -434,7 +437,7 @@ let WriteTaskTimeSummary total =
 module ExitCode =
     let exitCode = ref 0
 let private changeExitCodeIfErrorOccured() = if errors <> [] then Environment.ExitCode <- 42; ExitCode.exitCode := 42
-   
+
 /// [omit]
 let isListMode = hasBuildParam "list"
 
@@ -442,7 +445,7 @@ let isListMode = hasBuildParam "list"
 let listTargets() =
     tracefn "Available targets:"
     TargetDict.Values
-      |> Seq.iter (fun target -> 
+      |> Seq.iter (fun target ->
             tracefn "  - %s %s" target.Name (if target.Description <> null then " - " + target.Description else "")
             tracefn "     Depends on: %A" target.Dependencies)
 
@@ -452,7 +455,7 @@ let doesTargetMeanListTargets target = target = "--listTargets"  || target = "-l
 
 /// Determines a parallel build order for the given set of targets
 let determineBuildOrder (target : string) =
-    
+
     let t = getTarget target
 
     let targetLevels = new Dictionary<_,_>()
@@ -463,10 +466,10 @@ let determineBuildOrder (target : string) =
 
     let visited, ordered = visitDependencies addTargetLevel target
 
-    // the results are grouped by their level, sorted descending (by level) and 
+    // the results are grouped by their level, sorted descending (by level) and
     // finally grouped together in a list<TargetTemplate<unit>[]>
-    let result = 
-        targetLevels 
+    let result =
+        targetLevels
         |> Seq.map (fun pair -> pair.Key, pair.Value)
         |> Seq.groupBy snd
         |> Seq.sortBy (fun (l,_) -> -l)
@@ -474,7 +477,7 @@ let determineBuildOrder (target : string) =
         |> Seq.map (fun v -> v |> Seq.map fst |> Seq.distinct |> Seq.map getTarget |> Seq.toArray)
         |> Seq.toList
 
-    // Note that this build order cannot be considered "optimal" 
+    // Note that this build order cannot be considered "optimal"
     // since it may introduce order where actually no dependencies
     // exist. However it yields a "good" execution order in practice.
     result
@@ -488,7 +491,7 @@ let runSingleTarget (target : TargetTemplate<unit>) =
             watch.Start()
             target.Function()
             addExecutedTarget target.Name watch.Elapsed
-            traceEndTarget target.Name     
+            traceEndTarget target.Name
     with exn ->
         targetError target.Name exn
 
@@ -503,7 +506,7 @@ let runTargetsParallel (count : int) (targets : Target[]) =
 let mutable CurrentTargetOrder = []
 
 /// Runs a target and its dependencies.
-let run targetName =            
+let run targetName =
     if doesTargetMeanListTargets targetName then listTargets() else
     if LastDescription <> null then failwithf "You set a task description (%A) but didn't specify a task." LastDescription
 
@@ -513,12 +516,12 @@ let run targetName =
            let firstTarget = targets |> Array.head
            if hasBuildParam "single-target" then
                traceImportant "Single target mode ==> Skipping dependencies."
-               runSingleTarget lastTarget 
+               runSingleTarget lastTarget
            else
                targets |> Array.iter runSingleTarget
-    
+
     let watch = new System.Diagnostics.Stopwatch()
-    watch.Start()        
+    watch.Start()
     try
         tracefn "Building project with version: %s" buildVersion
         let parallelJobs = environVarOrDefault "parallel-jobs" "1" |> int
@@ -531,9 +534,9 @@ let run targetName =
             let order = determineBuildOrder targetName
 
             CurrentTargetOrder <-
-                order 
+                order
                 |> List.map (fun targets -> targets |> Array.map (fun t -> t.Name) |> Array.toList)
-            
+
             // run every level in parallel
             for par in order do
                 runTargetsParallel parallelJobs par
@@ -552,28 +555,28 @@ let run targetName =
 
     finally
         if errors <> [] then
-            runBuildFailureTargets()    
+            runBuildFailureTargets()
         runFinalTargets()
         killAllCreatedProcesses()
         WriteTaskTimeSummary watch.Elapsed
         changeExitCodeIfErrorOccured()
 
 /// Registers a BuildFailureTarget (not activated).
-let BuildFailureTarget name body = 
+let BuildFailureTarget name body =
     Target name body
     BuildFailureTargets.Add(toLower name,false)
 
 /// Activates the BuildFailureTarget.
-let ActivateBuildFailureTarget name = 
+let ActivateBuildFailureTarget name =
     let t = getTarget name // test if target is defined
     BuildFailureTargets.[toLower name] <- true
- 
+
 /// Registers a final target (not activated).
-let FinalTarget name body = 
+let FinalTarget name body =
     Target name body
     FinalTargets.Add(toLower name,false)
 
 /// Activates the FinalTarget.
-let ActivateFinalTarget name = 
+let ActivateFinalTarget name =
     let t = getTarget name // test if target is defined
     FinalTargets.[toLower name] <- true
