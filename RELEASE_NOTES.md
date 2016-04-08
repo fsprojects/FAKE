@@ -1,3 +1,6 @@
+#### 4.23.5 - 08.04.2016
+* Expose 'GetErrors' on TargetHelper - https://github.com/fsharp/FAKE/pull/1209
+
 #### 4.23.4 - 07.04.2016
 * BUGFIX: Prevent false-positive in EnvironmentHelper.isMacOS on Windows - https://github.com/fsharp/FAKE/pull/1204
             
