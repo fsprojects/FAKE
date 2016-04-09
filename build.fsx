@@ -176,6 +176,9 @@ Target "RunTestScripts" (fun _ ->
     !! ("src/test/testscripts/*.*")
     |> CopyFiles testScriptDir
     
+    let absFakeExe = "build/FAKE.exe" |> Path.absolute
+    let absBuildDir = "build" |> Path.absolute
+
     !! (testScriptDir @@ "run-*.bat")
     |> Seq.iter (fun ts ->
         let currentDir = System.Environment.CurrentDirectory
@@ -185,8 +188,8 @@ Target "RunTestScripts" (fun _ ->
                 ExecProcess (fun info ->
                     info.FileName <- ts
                     info.WorkingDirectory <- "."
-                    info.EnvironmentVariables.["FAKE"] <- "build/FAKE.exe" |> Path.absolute
-                    info.EnvironmentVariables.["FAKE_DIR"] <- "build" |> Path.absolute
+                    info.EnvironmentVariables.["FAKE"] <- absFakeExe
+                    info.EnvironmentVariables.["FAKE_DIR"] <- absBuildDir
                 ) (System.TimeSpan.FromMinutes 3.0)
                 
             if result <> 0 then
