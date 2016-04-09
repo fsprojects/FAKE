@@ -1,3 +1,6 @@
+#### 4.23.6 - 09.04.2016
+* BUGFIX: Only write to STDERR if an error happened - https://github.com/fsharp/FAKE/pull/1210
+
 #### 4.23.5 - 08.04.2016
 * Expose 'GetErrors' on TargetHelper - https://github.com/fsharp/FAKE/pull/1209
 
