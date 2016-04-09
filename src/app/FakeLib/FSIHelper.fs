@@ -472,7 +472,9 @@ let private runScriptUncached (useCache, scriptPath, fsiOptions) printDetails ca
             false
     finally
         // Write Script Warnings & Errors at the end
-        traceFAKE "%O" fsiErrorOutput
+        let strFsiErrorOutput = fsiErrorOutput.ToString()
+        if strFsiErrorOutput <> "" then
+            traceFAKE "%O" strFsiErrorOutput
         // Cache in the error case as well.
         if useCache && not cacheInfo.IsValid then
             handleCaching printDetails session fsiErrorOutput cacheDir cacheInfo
