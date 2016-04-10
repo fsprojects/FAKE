@@ -1,20 +1,11 @@
-#### 4.23.6 - 09.04.2016
-* BUGFIX: Only write to STDERR if an error happened - https://github.com/fsharp/FAKE/pull/1210
-
-#### 4.23.5 - 08.04.2016
-* Expose 'GetErrors' on TargetHelper - https://github.com/fsharp/FAKE/pull/1209
-
-#### 4.23.4 - 07.04.2016
-* BUGFIX: Prevent false-positive in EnvironmentHelper.isMacOS on Windows - https://github.com/fsharp/FAKE/pull/1204
-            
-#### 4.23.3 - 07.04.2016
+#### 4.24.0 - 10.04.2016
 * New Kudu feature to copy recursively - https://github.com/fsharp/FAKE/pull/1203
-
-#### 4.23.2 - 07.04.2016
-* BUGFIX: Accept the cached assembly when the public token of the given assembly is null - https://github.com/fsharp/FAKE/pull/1205
-
-#### 4.23.1 - 05.04.2016
 * Support for source code deployments on Azure websites through KuduSync - https://github.com/fsharp/FAKE/pull/1200
+* Expose 'GetErrors' on TargetHelper - https://github.com/fsharp/FAKE/pull/1209
+* BUGFIX: Call WaitForExit twice to catch all output - https://github.com/fsharp/FAKE/pull/1211
+* BUGFIX: Only write to STDERR if an error happened - https://github.com/fsharp/FAKE/pull/1210
+* BUGFIX: Prevent false-positive in EnvironmentHelper.isMacOS on Windows - https://github.com/fsharp/FAKE/pull/1204
+* BUGFIX: Accept the cached assembly when the public token of the given assembly is null - https://github.com/fsharp/FAKE/pull/1205
 
 #### 4.23.0 - 01.04.2016
 * Make a new method for sending a coverage file to TeamCity - https://github.com/fsharp/FAKE/pull/1195
