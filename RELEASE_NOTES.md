@@ -1,3 +1,6 @@
+#### 4.24.1 - 10.04.2016
+* BUGFIX: Use UTF-8 encoding for process output on Mono - https://github.com/fsharp/FAKE/pull/1212
+
 #### 4.24.0 - 10.04.2016
 * New Kudu feature to copy recursively - https://github.com/fsharp/FAKE/pull/1203
 * Support for source code deployments on Azure websites through KuduSync - https://github.com/fsharp/FAKE/pull/1200
