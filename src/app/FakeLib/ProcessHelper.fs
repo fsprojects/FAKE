@@ -7,6 +7,7 @@ open System.ComponentModel
 open System.Diagnostics
 open System.IO
 open System.Threading
+open System.Text
 open System.Collections.Generic
 open System.ServiceProcess
 
@@ -15,9 +16,12 @@ let startedProcesses = HashSet()
 
 /// [omit]
 let start (proc : Process) = 
-    if isMono && proc.StartInfo.FileName.ToLowerInvariant().EndsWith(".exe") then
-        proc.StartInfo.Arguments <- "--debug \"" + proc.StartInfo.FileName + "\" " + proc.StartInfo.Arguments
-        proc.StartInfo.FileName <- monoPath
+    if isMono then
+        proc.StartInfo.StandardOutputEncoding <- Encoding.UTF8
+        proc.StartInfo.StandardErrorEncoding  <- Encoding.UTF8
+        if proc.StartInfo.FileName.ToLowerInvariant().EndsWith(".exe") then
+            proc.StartInfo.Arguments <- "--debug \"" + proc.StartInfo.FileName + "\" " + proc.StartInfo.Arguments
+            proc.StartInfo.FileName <- monoPath
 
     proc.Start() |> ignore
     startedProcesses.Add(proc.Id, proc.StartTime) |> ignore
