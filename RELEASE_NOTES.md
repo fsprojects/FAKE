@@ -1,8 +1,5 @@
-#### 4.24.2 - 11.04.2016
-* REVERT: Use UTF-8 encoding for process output on Mono - https://github.com/fsharp/FAKE/pull/1212
-
-#### 4.24.1 - 10.04.2016
-* BUGFIX: Use UTF-8 encoding for process output on Mono - https://github.com/fsharp/FAKE/pull/1212
+#### 4.24.3 - 11.04.2016
+* BUGFIX: Use UTF-8 encoding for process output on Mono - https://github.com/fsharp/FAKE/pull/1215
 
 #### 4.24.0 - 10.04.2016
 * New Kudu feature to copy recursively - https://github.com/fsharp/FAKE/pull/1203
