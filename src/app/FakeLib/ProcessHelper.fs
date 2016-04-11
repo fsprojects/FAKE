@@ -7,6 +7,7 @@ open System.ComponentModel
 open System.Diagnostics
 open System.IO
 open System.Threading
+open System.Text
 open System.Collections.Generic
 open System.ServiceProcess
 
@@ -65,6 +66,9 @@ let ExecProcessWithLambdas configProcessStartInfoF (timeOut : TimeSpan) silent e
     if silent then 
         proc.StartInfo.RedirectStandardOutput <- true
         proc.StartInfo.RedirectStandardError <- true
+        if isMono then
+            proc.StartInfo.StandardOutputEncoding <- Encoding.UTF8
+            proc.StartInfo.StandardErrorEncoding  <- Encoding.UTF8
         proc.ErrorDataReceived.Add(fun d -> 
             if d.Data <> null then errorF d.Data)
         proc.OutputDataReceived.Add(fun d -> 
