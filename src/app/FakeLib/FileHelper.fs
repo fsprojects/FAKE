@@ -200,11 +200,11 @@ let CopyCached target cacheDir files =
            target @@ fi.Name)
     |> Seq.toList
 
-/// Renames the file to the target file name.
+/// Renames the file or directory to the target name.
 /// ## Parameters
 /// 
-///  - `target` - The target file name.
-///  - `file` - The orginal file name.
+///  - `target` - The target file or directory name.
+///  - `fileName` - The orginal file or directory name.
 let Rename target fileName = (fileInfo fileName).MoveTo target
 
 /// Copies a list of files to the specified directory without any output.
