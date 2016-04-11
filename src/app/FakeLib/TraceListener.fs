@@ -84,7 +84,7 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap) =
             | FinishedMessage -> ()
 
 // If we write the stderr on those build servers the build will fail.
-let importantMessagesToStdErr = buildServer <> CCNet && buildServer <> AppVeyor
+let importantMessagesToStdErr = buildServer <> CCNet && buildServer <> AppVeyor && buildServer <> TeamCity
 
 /// The default TraceListener for Console.
 let defaultConsoleTraceListener =
