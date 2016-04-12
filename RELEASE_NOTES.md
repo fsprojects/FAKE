@@ -1,3 +1,6 @@
+#### 4.25.1 - 12.04.2016
+* COSMETICS: Added open/close block to teamcity target tracing - https://github.com/fsharp/FAKE/pull/1219 
+
 #### 4.25.0 - 12.04.2016
 * Use FSharp.Compiler.Service 3.0
 * BUGFIX: Added TeamCity to the list of build servers that fails on error stream output - https://github.com/fsharp/FAKE/pull/1216
