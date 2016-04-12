@@ -1,3 +1,6 @@
+#### 4.25.2 - 12.04.2016
+* USABILITY: Look into packages folder for findToolPath 
+
 #### 4.25.1 - 12.04.2016
 * COSMETICS: Added open/close block to teamcity target tracing - https://github.com/fsharp/FAKE/pull/1219 
 
