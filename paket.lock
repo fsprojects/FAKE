@@ -16,10 +16,10 @@ NUGET
     FsCheck.Xunit (2.0.7)
       FsCheck (>= 2.0.7)
       xunit (>= 1.9.2)
-    FSharp.Compiler.Service (2.0.0.6)
+    FSharp.Compiler.Service (3.0.0)
     FSharp.Core (4.0.0.1) - redirects: force
     HashLib (2.0.1)
-    jQuery (2.2.1)
+    jQuery (2.2.2)
     Knockout (0.0.1)
       AspNetMvc (>= 4.0.0.0)
     Knockout.Mapping (2.4.0)
@@ -37,11 +37,11 @@ NUGET
     Microsoft.AspNet.WebPages (2.0.30506)
       Microsoft.AspNet.Razor (>= 2.0.20710.0)
       Microsoft.Web.Infrastructure (>= 1.0.0.0)
-    Microsoft.Bcl (1.1.10)
+    Microsoft.Bcl (1.1.10) - framework: net10, net11, net20, net30, net35, net40, net40
       Microsoft.Bcl.Build (>= 1.0.14)
-    Microsoft.Bcl.Build (1.0.21) - import_targets: false
+    Microsoft.Bcl.Build (1.0.21) - import_targets: false, framework: net10, net11, net20, net30, net35, net40, net40
     Microsoft.CompilerServices.AsyncTargetingPack (1.0.1)
-    Microsoft.Net.Http (2.2.29)
+    Microsoft.Net.Http (2.2.29) - framework: net10, net11, net20, net30, net35, net40, net40
       Microsoft.Bcl (>= 1.1.10)
       Microsoft.Bcl.Build (>= 1.0.14)
     Microsoft.Web.Administration (7.0.0)
@@ -68,15 +68,15 @@ NUGET
       Microsoft.AspNet.Razor
       Microsoft.AspNet.Razor (>= 2.0.30506) - framework: >= net40
       Nancy (>= 1.4.3)
-    Newtonsoft.Json (8.0.2) - redirects: force
+    Newtonsoft.Json (8.0.3) - redirects: force
     NLog (4.2.3)
     NuGet.Core (2.10.1)
       Microsoft.Web.Xdt (>= 2.1.0)
-    Octokit (0.18.0)
-      Microsoft.Net.Http
+    Octokit (0.19.0)
+      Microsoft.Net.Http  - framework: net10, net11, net20, net30, net35, net40, net40
     RavenDB.Client (2.5.25001)
       Microsoft.CompilerServices.AsyncTargetingPack
-    RavenDB.Server (3.0.30037)
+    RavenDB.Server (3.0.30115)
     Serilog (1.5.14)
     Serilog.Sinks.NLog (1.5.4)
       NLog (>= 3.0.0.0)
@@ -98,12 +98,12 @@ CONTENT: NONE
 NUGET
   remote: http://www.nuget.org/api/v2
   specs:
-    FAKE (4.21.3)
+    FAKE (4.24.3)
     FSharp.Compiler.Service (2.0.0.6)
-    FSharp.Formatting (2.14.0)
-      FSharp.Compiler.Service (>= 2.0.0.3 < 2.1.0)
+    FSharp.Formatting (2.14.2)
+      FSharp.Compiler.Service (2.0.0.6)
       FSharpVSPowerTools.Core (>= 2.3.0 < 2.4.0)
-    FSharp.Formatting.CommandTool (2.14.0)
+    FSharp.Formatting.CommandTool (2.14.2)
     FSharpVSPowerTools.Core (2.3.0)
       FSharp.Compiler.Service (>= 2.0.0.3)
     ILRepack (2.0.10)

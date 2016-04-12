@@ -1,8 +1,7 @@
-#### 4.24.4 - 11.04.2016
+#### 4.25.0 - 12.04.2016
+* Use FSharp.Compiler.Service 3.0
 * BUGFIX: Added TeamCity to the list of build servers that fails on error stream output - https://github.com/fsharp/FAKE/pull/1216
 * BUGFIX: Fixed failure to handle spaces or other special characters when running mono exes - https://github.com/fsharp/FAKE/pull/1214
-
-#### 4.24.3 - 11.04.2016
 * BUGFIX: Use UTF-8 encoding for process output on Mono - https://github.com/fsharp/FAKE/pull/1215
 
 #### 4.24.0 - 10.04.2016
