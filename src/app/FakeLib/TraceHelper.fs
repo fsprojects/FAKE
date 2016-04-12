@@ -139,12 +139,14 @@ let traceStartTarget name description dependencyString =
     tracefn "Starting Target: %s %s" name dependencyString
     if description <> null then tracefn "  %s" description
     ReportProgressStart <| sprintf "Target: %s" name
+    sendOpenBlock name
 
 /// Traces the end of a target   
 let traceEndTarget name = 
     tracefn "Finished Target: %s" name
     closeTag "target"
     ReportProgressFinish <| sprintf "Target: %s" name
+    sendCloseBlock name
 
 /// Traces the begin of a task
 let traceStartTask task description = 
