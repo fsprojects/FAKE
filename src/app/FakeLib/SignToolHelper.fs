@@ -62,10 +62,9 @@ let Sign (toolsPath : string) (parameters : SignParams) (filesToSign : seq<strin
 
     traceEndTask "SignTool" "Successfully signed the specified assemblies"
 
-/// Signs all files in filesToSign with the certification file certFile, 
-/// protected with the password in the file passFile. 
-/// The signtool will be search in the toolPath.
 
+/// Appends a SHA 256 signature to assemblies according to the settings specified in the parameters using signtool.exe.
+/// This will be looked up using the toolsPath parameter.
 let AppendSignature (toolsPath : string) (parameters : SignParams) (filesToSign : seq<string>) = 
     traceStartTask "SignTool" "Trying to dual sign the specified assemblies"
       
@@ -100,6 +99,10 @@ let AppendSignature (toolsPath : string) (parameters : SignParams) (filesToSign 
     traceEndTask "SignTool" "Successfully dual signed the specified assemblies"
 
 [<Obsolete>]
+/// Signs all files in filesToSign with the certification file certFile, 
+/// protected with the password in the file passFile. 
+/// The signtool will be search in the toolPath.
+
 let SignTool toolsPath certFile passFile filesToSign =
     let certToUse = {
         CertFile = certFile
