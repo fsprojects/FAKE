@@ -62,10 +62,47 @@ let Sign (toolsPath : string) (parameters : SignParams) (filesToSign : seq<strin
 
     traceEndTask "SignTool" "Successfully signed the specified assemblies"
 
+
+/// Appends a SHA 256 signature to assemblies according to the settings specified in the parameters using signtool.exe.
+/// This will be looked up using the toolsPath parameter.
+let AppendSignature (toolsPath : string) (parameters : SignParams) (filesToSign : seq<string>) = 
+    traceStartTask "SignTool" "Trying to dual sign the specified assemblies"
+      
+    let signPath = toolsPath @@ "signtool.exe"
+
+    let certToUse = match parameters.Certificate with
+                        | Some cert -> if File.Exists cert.CertFile then cert else parameters.DevCertificate
+                        | None -> parameters.DevCertificate
+
+    let baseCall = sprintf "sign /f \"%s\" /as /fd sha256 " certToUse.CertFile
+
+    
+    let withTimeStamp = baseCall + match parameters.TimeStampUrl with
+                                        | Some url -> sprintf " /tr \"%s\" /td sha256" url.AbsoluteUri
+                                        | None -> ""
+    
+    let withPassword = withTimeStamp + match certToUse.PasswordFile with
+                                           | Some pass -> sprintf " /p \"%s\"" (ReadLine pass)
+                                           | None -> ""
+    
+                            
+    filesToSign
+    |> Seq.iter (fun fileToSign ->  
+        let withFileToSign = withPassword + sprintf " \"%s\"" fileToSign
+
+        let result =
+            ExecProcess (fun info ->
+                info.FileName <- signPath
+                info.Arguments <- withFileToSign) System.TimeSpan.MaxValue
+        if result <> 0 then failwithf "Error during sign call ")
+
+    traceEndTask "SignTool" "Successfully dual signed the specified assemblies"
+
+[<Obsolete>]
 /// Signs all files in filesToSign with the certification file certFile, 
 /// protected with the password in the file passFile. 
 /// The signtool will be search in the toolPath.
-[<Obsolete>]
+
 let SignTool toolsPath certFile passFile filesToSign =
     let certToUse = {
         CertFile = certFile
