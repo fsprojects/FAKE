@@ -87,9 +87,30 @@ can not be found, the dev certificate will be used.</p>
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '614', 614)" onmouseover="showTip(event, '614', 614)">
-            Sign toolsPath parameters filesToSign
+            AppendSignature (...)
           </code>
           <div class="tip" id="614">
+            <strong>Signature:</strong> toolsPath:string -&gt; parameters:SignParams -&gt; filesToSign:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SignToolHelper.fs#L68-68" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Appends a SHA 256 signature to assemblies according to the settings specified in the parameters using signtool.exe.
+This will be looked up using the toolsPath parameter.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '615', 615)" onmouseover="showTip(event, '615', 615)">
+            Sign toolsPath parameters filesToSign
+          </code>
+          <div class="tip" id="615">
             <strong>Signature:</strong> toolsPath:string -&gt; parameters:SignParams -&gt; filesToSign:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
@@ -107,15 +128,15 @@ This will be looked up using the toolsPath parameter.</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '615', 615)" onmouseover="showTip(event, '615', 615)">
+          <code onmouseout="hideTip(event, '616', 616)" onmouseover="showTip(event, '616', 616)">
             SignTool (...)
           </code>
-          <div class="tip" id="615">
+          <div class="tip" id="616">
             <strong>Signature:</strong> toolsPath:string -&gt; certFile:string -&gt; passFile:string option -&gt; filesToSign:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SignToolHelper.fs#L69-69" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SignToolHelper.fs#L106-106" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
