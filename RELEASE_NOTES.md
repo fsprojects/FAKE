@@ -1,3 +1,7 @@
+#### 4.25.3 - 13.04.2016
+* New separate environ variable helpers - https://github.com/fsharp/FAKE/pull/1133
+* Reversed the order of actions in traceStartTarget - https://github.com/fsharp/FAKE/pull/1222
+
 #### 4.25.2 - 12.04.2016
 * USABILITY: Look into packages folder for findToolPath 
 
