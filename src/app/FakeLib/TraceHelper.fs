@@ -135,7 +135,7 @@ let closeAllOpenTags() = Seq.iter closeTag openTags.Value
 /// Traces the begin of a target
 let traceStartTarget name description dependencyString = 
     sendOpenBlock name
-    ReportProgressStart <| sprintf "Target: %s" name`
+    ReportProgressStart <| sprintf "Target: %s" name
     openTag "target"
     OpenTag("target", name) |> postMessage
     tracefn "Starting Target: %s %s" name dependencyString
