@@ -7,14 +7,17 @@ watch for changes, and automatically run a function or another target.
 
 Add a new target named "Watch" to your build:
 
-    Target "GenerateDocs" (fun _ ->
+    let generateDocs() = 
         tracefn "Generating docs."
+        
+    Target "GenerateDocs" (fun _ ->
+        generateDocs()
     )
 
     Target "Watch" (fun _ ->
         use watcher = !! "docs/**/*.*" |> WatchChanges (fun changes -> 
             tracefn "%A" changes
-            Run "GenerateDocs"
+            generateDocs()
         )
     
         System.Console.ReadLine() |> ignore //Needed to keep FAKE from exiting
@@ -27,14 +30,17 @@ and the GenerateDocs target should be rerun.
 
 If you need to watch only a subset of the files, say you want to rerun tests as soon as the compiled DLLs change:
 
+    let runTests() =
+        tracefn "Running tests." 
+        
     Target "RunTests" (fun _ ->
-        tracefn "Running tests."
+        runTests()
     )
     
     Target "Watch" (fun _ ->
         use watcher = !! "tests/**/bin/debug/*.dll" |> WatchChanges (fun changes -> 
             tracefn "%A" changes
-            Run "RunTests"
+            runTests()
         )
     
         System.Console.ReadLine() |> ignore //Needed to keep FAKE from exiting
@@ -42,6 +48,9 @@ If you need to watch only a subset of the files, say you want to rerun tests as 
         watcher.Dispose() // Use to stop the watch from elsewhere, ie another task.
     )
 
+Do note that FAKE will only ever run a target once within a session, so `Run "RunTests"` inside of `WatchChanges`
+would only run the `RunTests` target once.
+ 
 ## Running on Linux or Mac OSX
 
 `WatchChanges` requires additional care when running on Linux or Mac OSX. The following sections describe potential issues you may encounter.
