@@ -173,6 +173,27 @@ let getLastRelease owner project (client : Async<GitHubClient>) =
             DraftRelease = draft }
     }
 
+let getReleaseByTag owner project tag (client : Async<GitHubClient>) =
+    retryWithArg 5 client <| fun client' -> async {
+        let! drafts = Async.AwaitTask <| client'.Repository.Release.GetAll(owner, project)
+        let matches = drafts |> Seq.filter (fun (r: Release) -> r.TagName = tag)
+
+        if Seq.isEmpty matches then
+            failwithf "Unable to locate tag %s" tag
+
+        let draft = matches |> Seq.head
+
+        printfn "Release id: %d" draft.Id
+        printfn "Release tag: %s" draft.TagName
+        printfn "Release assets: %d" (Seq.length draft.Assets)
+
+        return {
+            Client = client'
+            Owner = owner
+            Project = project
+            DraftRelease = draft }
+    }
+
 let downloadAsset id destination (draft : Async<Draft>) =
     retryWithArg 5 draft <| fun draft' -> async {
         let! asset = Async.AwaitTask <| draft'.Client.Repository.Release.GetAsset(draft'.Owner,draft'.Project,id)
