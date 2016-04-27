@@ -157,3 +157,61 @@ let releaseDraft (draft : Async<Draft>) =
         let! released = Async.AwaitTask <| draft'.Client.Repository.Release.Edit(draft'.Owner, draft'.Project, draft'.DraftRelease.Id, update)
         printfn "Released %d on github" released.Id
     }
+
+let getLastRelease owner project (client : Async<GitHubClient>) =
+    retryWithArg 5 client <| fun client' -> async {
+        let! draft = Async.AwaitTask <| client'.Repository.Release.GetLatest(owner, project)
+
+        printfn "Latest release id: %d" draft.Id
+        printfn "Latest release tag: %s" draft.TagName
+        printfn "Latest release assets: %d" (Seq.length draft.Assets)
+
+        return {
+            Client = client'
+            Owner = owner
+            Project = project
+            DraftRelease = draft }
+    }
+
+let getReleaseByTag owner project tag (client : Async<GitHubClient>) =
+    retryWithArg 5 client <| fun client' -> async {
+        let! drafts = Async.AwaitTask <| client'.Repository.Release.GetAll(owner, project)
+        let matches = drafts |> Seq.filter (fun (r: Release) -> r.TagName = tag)
+
+        if Seq.isEmpty matches then
+            failwithf "Unable to locate tag %s" tag
+
+        let draft = matches |> Seq.head
+
+        printfn "Release id: %d" draft.Id
+        printfn "Release tag: %s" draft.TagName
+        printfn "Release assets: %d" (Seq.length draft.Assets)
+
+        return {
+            Client = client'
+            Owner = owner
+            Project = project
+            DraftRelease = draft }
+    }
+
+let downloadAsset id destination (draft : Async<Draft>) =
+    retryWithArg 5 draft <| fun draft' -> async {
+        let! asset = Async.AwaitTask <| draft'.Client.Repository.Release.GetAsset(draft'.Owner,draft'.Project,id)
+        let! resp = Async.AwaitTask <| draft'.Client.Connection.Get(new Uri(asset.Url), new System.Collections.Generic.Dictionary<string,string>(),"application/octet-stream")
+
+        let bytes = resp.HttpResponse.Body :?> byte[]
+        let filename = Path.Combine(destination, asset.Name)
+
+        File.WriteAllBytes(filename, bytes)
+
+        printfn "Downloaded %s" filename
+    }
+
+let downloadAssets destination (draft : Async<Draft>) = async {
+    let! draft' = draft
+    let draftW = async { return draft' }
+
+    let! _ = Async.Parallel [for f in draft'.DraftRelease.Assets -> downloadAsset f.Id destination draftW ]
+
+    ()
+}
