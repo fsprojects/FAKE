@@ -1,4 +1,4 @@
-#### 4.25.4 - 27.04.2016
+#### 4.25.5 - 27.04.2016
 * BUGFIX: Fixed FAKE parameter split - https://github.com/fsharp/FAKE/pull/1228 
 
 #### 4.25.4 - 13.04.2016
