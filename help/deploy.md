@@ -28,7 +28,7 @@ To run an agent in a console, simply run:
 
 To install a windows service on that agent:
 
-   * Open a command prompt with Administrator Priviledges
+   * Open a command prompt with Administrator Privilege
    * Run Fake.Deploy /install
 
 By default the service starts a listener on port 8080. This can however be configured by editing the Fake.Deploy.exe.config file
@@ -46,7 +46,7 @@ status if the service
 
 To uninstall an agent
 
-   * Open a command prompt with Administrator Priviledges
+   * Open a command prompt with Administrator Privilege
    * Run Fake.Deploy /uninstall
 
 ## Running a FAKE Deployment Package
