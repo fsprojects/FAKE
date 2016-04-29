@@ -17,6 +17,7 @@ FAKE.IIS is a separate package that can be installed from NuGet.
 
 
 ## Creating a ApplicationPool and Site
+
     #r "Fake.IIS.dll"
     #r "Microsoft.Web.Administration.dll"
 
@@ -36,6 +37,7 @@ FAKE.IIS is a separate package that can be installed from NuGet.
       (None))
 
 ## Deleting an Application Pool and Site
+
     #r "Fake.IIS.dll"
 
     open Fake.IISHelper
