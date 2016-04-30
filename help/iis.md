@@ -9,7 +9,7 @@ FAKE.IIS is a separate package that can be installed from NuGet.
 <div class="row">
   <div class="span1"></div>
   <div class="span6">
-      <pre>PM> Install-Package FAKE</pre>
+      <pre>PM> Install-Package FAKE.IIS</pre>
     </div>
   </div>
   <div class="span1"></div>
@@ -17,8 +17,9 @@ FAKE.IIS is a separate package that can be installed from NuGet.
 
 
 ## Creating a ApplicationPool and Site
+
     #r "Fake.IIS.dll"
-    #load "IISHelper.fs"
+    #r "Microsoft.Web.Administration.dll"
 
     open Fake.IISHelper
 
@@ -36,9 +37,8 @@ FAKE.IIS is a separate package that can be installed from NuGet.
       (None))
 
 ## Deleting an Application Pool and Site
-    #r "Fake.IIS.dll"
 
-    #load "IISHelper.fs"
+    #r "Fake.IIS.dll"
 
     open Fake.IISHelper
 
@@ -46,4 +46,4 @@ FAKE.IIS is a separate package that can be installed from NuGet.
     let appPoolName = "fake.appPool"
 
     deleteSite siteName
-    deleteApplicationPool appPool
+    deleteApplicationPool appPoolName
