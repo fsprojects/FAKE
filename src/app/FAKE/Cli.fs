@@ -25,7 +25,7 @@ type FakeArg =
             | PrintDetails _ -> "Print details of FAKE's activity."
             | FsiArgs _ -> "Pass args after this switch to FSI when running the build script."
             | Version _ -> "Print FAKE version information."
-            | Boot _ -> "Boostrapp your FAKE script."
+            | Boot _ -> "Bootstrap your FAKE script."
             | Break -> "Pauses FAKE with a Debugger.Break() near the start"
             | Single_Target -> "Runs only the specified target and not the dependencies."
             | NoCache -> "Disables caching of compiled script"
