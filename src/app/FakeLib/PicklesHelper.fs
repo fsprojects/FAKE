@@ -8,27 +8,29 @@ open Fake
 
 (*
 .\packages\Pickles.CommandLine\tools\pickles.exe  --help                                                 
-Pickles version 2.3.0.0                                                                                  
-  -f, --feature-directory=VALUE                                                                          
-                             directory to start scanning recursively for                                 
-                               features                                                                  
-  -o, --output-directory=VALUE                                                                           
-                             directory where output files will be placed                                 
-      --trfmt, --test-results-format=VALUE                                                               
-                             the format of the linked test results                                       
-                               (nunit|xunit)                                                             
-      --lr, --link-results-file=VALUE                                                                    
-                             the path to the linked test results file (can be                            
-                               a semicolon-separated list of files)                                      
-      --sn, --system-under-test-name=VALUE                                                               
-                             the name of the system under test                                           
-      --sv, --system-under-test-version=VALUE                                                            
-                             the version of the system under test                                        
-  -l, --language=VALUE       the language of the feature files                                           
-      --df, --documentation-format=VALUE                                                                 
-                             the format of the output documentation                                      
-  -v, --version                                                                                          
-  -h, -?, --help                                                                                                                                                                                                  
+Pickles version 2.6.1.0
+  -f, --feature-directory=VALUE
+                             directory to start scanning recursively for
+                               features
+  -o, --output-directory=VALUE
+                             directory where output files will be placed
+      --trfmt, --test-results-format=VALUE
+                             the format of the linked test results
+                               (nunit|xunit)
+      --lr, --link-results-file=VALUE
+                             the path to the linked test results file (can be
+                               a semicolon-separated list of files)
+      --sn, --system-under-test-name=VALUE
+                             the name of the system under test
+      --sv, --system-under-test-version=VALUE
+                             the version of the system under test
+  -l, --language=VALUE       the language of the feature files
+      --df, --documentation-format=VALUE
+                             the format of the output documentation
+  -v, --version
+  -h, -?, --help
+      --exp, --include-experimental-features
+                             whether to include experimental features
 *)
 
 /// Option which allows to specify if failure of pickles should break the build.
