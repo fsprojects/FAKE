@@ -147,7 +147,7 @@ let buildPicklesArgs parameters =
                                    |> String.concat ";"
                                    |> Some
     let experimentalFeatures = match parameters.IncludeExperimentalFeatures with
-                               | Some true -> Some "-exp"
+                               | Some true -> Some "--exp"
                                | _ -> None
                                    
     new StringBuilder()
