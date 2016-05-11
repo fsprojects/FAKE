@@ -35,8 +35,8 @@ type OpenCoverParams =
 
 /// OpenCover default parameters
 let OpenCoverDefaults = 
-    { ExePath = environVar "LOCALAPPDATA" @@ "Apps" @@ "OpenCover" @@ "OpenCover.Console.exe"
-      TestRunnerExePath = ProgramFiles @@ "NUnit" @@ "bin" @@ "nunit-console.exe"
+    { ExePath = if isMono then String.Empty else environVar "LOCALAPPDATA" @@ "Apps" @@ "OpenCover" @@ "OpenCover.Console.exe"
+      TestRunnerExePath = if isMono then String.Empty else ProgramFiles @@ "NUnit" @@ "bin" @@ "nunit-console.exe"
       Output = String.Empty
       Register = Manual
       Filter = String.Empty
