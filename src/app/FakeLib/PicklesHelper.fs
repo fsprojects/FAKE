@@ -8,27 +8,29 @@ open Fake
 
 (*
 .\packages\Pickles.CommandLine\tools\pickles.exe  --help                                                 
-Pickles version 2.3.0.0                                                                                  
-  -f, --feature-directory=VALUE                                                                          
-                             directory to start scanning recursively for                                 
-                               features                                                                  
-  -o, --output-directory=VALUE                                                                           
-                             directory where output files will be placed                                 
-      --trfmt, --test-results-format=VALUE                                                               
-                             the format of the linked test results                                       
-                               (nunit|xunit)                                                             
-      --lr, --link-results-file=VALUE                                                                    
-                             the path to the linked test results file (can be                            
-                               a semicolon-separated list of files)                                      
-      --sn, --system-under-test-name=VALUE                                                               
-                             the name of the system under test                                           
-      --sv, --system-under-test-version=VALUE                                                            
-                             the version of the system under test                                        
-  -l, --language=VALUE       the language of the feature files                                           
-      --df, --documentation-format=VALUE                                                                 
-                             the format of the output documentation                                      
-  -v, --version                                                                                          
-  -h, -?, --help                                                                                                                                                                                                  
+Pickles version 2.6.1.0
+  -f, --feature-directory=VALUE
+                             directory to start scanning recursively for
+                               features
+  -o, --output-directory=VALUE
+                             directory where output files will be placed
+      --trfmt, --test-results-format=VALUE
+                             the format of the linked test results
+                               (nunit|xunit)
+      --lr, --link-results-file=VALUE
+                             the path to the linked test results file (can be
+                               a semicolon-separated list of files)
+      --sn, --system-under-test-name=VALUE
+                             the name of the system under test
+      --sv, --system-under-test-version=VALUE
+                             the version of the system under test
+  -l, --language=VALUE       the language of the feature files
+      --df, --documentation-format=VALUE
+                             the format of the output documentation
+  -v, --version
+  -h, -?, --help
+      --exp, --include-experimental-features
+                             whether to include experimental features
 *)
 
 /// Option which allows to specify if failure of pickles should break the build.
@@ -41,7 +43,14 @@ type PicklesErrorLevel =
 /// The format of the test results
 type TestResultsFormat =
     | Nunit
+    | NUnit
+    | NUnit3
     | XUnit
+    | XUnit2
+    | MSTest
+    | CucumberJSON
+    | SpecRun
+    | VSTest
     
  type DocumentationFormat =
     | DHTML
@@ -74,6 +83,8 @@ type PicklesParams =
       TimeOut : TimeSpan
       /// Option which allows to specify if failure of pickles should break the build.
       ErrorLevel : PicklesErrorLevel
+      /// Option which allows to enable some experimental features
+      IncludeExperimentalFeatures : bool option
     }
 
 /// The Pickles default parameters
@@ -91,6 +102,7 @@ type PicklesParams =
 /// - `SystemUnderTestVersion` - `None`
 /// - `TimeOut` - 5 minutes
 /// - `ErrorLevel` - `Error`
+/// - `IncludeExperimentalFeatures` - `None` 
 let PicklesDefaults =
     {
       ToolPath = findToolInSubPath "pickles.exe" currentDirectory
@@ -98,12 +110,13 @@ let PicklesDefaults =
       FeatureFileLanguage = None
       OutputDirectory = currentDirectory @@ "Documentation"
       OutputFileFormat = DHTML
-      TestResultsFormat = Nunit
+      TestResultsFormat = NUnit
       LinkedTestResultFiles = []
       SystemUnderTestName = None
       SystemUnderTestVersion = None
       TimeOut = TimeSpan.FromMinutes 5.
       ErrorLevel = Error
+      IncludeExperimentalFeatures = None
     }
     
 let buildPicklesArgs parameters =
@@ -118,7 +131,14 @@ let buildPicklesArgs parameters =
                            | [] -> None
                            | _  -> match parameters.TestResultsFormat with
                                    | Nunit -> Some "nunit"
+                                   | NUnit -> Some "nunit"
+                                   | NUnit3 -> Some "nunit3"
                                    | XUnit -> Some "xunit"
+                                   | XUnit2 -> Some "xunit2"
+                                   | MSTest -> Some "mstest"
+                                   | CucumberJSON -> Some "cucumberjson"
+                                   | SpecRun -> Some "specrun"
+                                   | VSTest -> Some "vstest"
     
     let linkedResultFiles = match parameters.LinkedTestResultFiles with
                             | [] -> None
@@ -126,7 +146,10 @@ let buildPicklesArgs parameters =
                                    |> Seq.map (fun f -> sprintf "\"%s\"" f) 
                                    |> String.concat ";"
                                    |> Some
-                           
+    let experimentalFeatures = match parameters.IncludeExperimentalFeatures with
+                               | Some true -> Some "--exp"
+                               | _ -> None
+                                   
     new StringBuilder()
     |> appendWithoutQuotes (sprintf " -f \"%s\"" parameters.FeatureDirectory)
     |> appendWithoutQuotes (sprintf " -o \"%s\"" parameters.OutputDirectory)
@@ -136,6 +159,7 @@ let buildPicklesArgs parameters =
     |> appendWithoutQuotes (sprintf " --df %s" outputFormat)
     |> appendIfSome testResultFormat (sprintf " --trfmt %s")
     |> appendIfSome linkedResultFiles (sprintf " --lr %s")
+    |> appendIfSome experimentalFeatures (sprintf "%s")
     |> toText
     
 module internal ResultHandling = 
