@@ -119,6 +119,9 @@ type HockeyAppUploadParams = {
 
     /// Set maximum upload delay
     UploadTimeout: TimeSpan
+
+    /// Set to your App Id (required for UWP apps targeting windows phone)
+    AppId: string
 }
 
 /// The default HockeyApp parameters
@@ -139,6 +142,7 @@ let HockeyAppUploadDefaults = {
     DownloadStatus = DownloadStatusOption.NotDownloadable
     Teams = Array.empty
     UploadTimeout = TimeSpan.FromMinutes 2.
+    AppId = String.Empty
 }
 
 /// [omit]
@@ -184,7 +188,11 @@ let private toCurlArgs param = seq {
     if not (String.IsNullOrEmpty param.CommitSHA) then yield sprintf "-F \"commit_sha=%s\"" param.CommitSHA
     if not (String.IsNullOrEmpty param.BuildServerUrl) then yield sprintf "-F \"build_server_url=%s\"" param.BuildServerUrl
     if not (String.IsNullOrEmpty param.RepositoryUrl) then yield sprintf "-F \"repository_url=%s\"" param.RepositoryUrl
-    yield "https://rink.hockeyapp.net/api/2/apps/upload"
+    if not (String.IsNullOrEmpty param.AppId) 
+    then 
+        yield sprintf "https://rink.hockeyapp.net/api/2/apps/%s/app_versions/upload" param.AppId
+    else
+        yield "https://rink.hockeyapp.net/api/2/apps/upload"
 }
 
 /// Uploads an app to HockeyApp
