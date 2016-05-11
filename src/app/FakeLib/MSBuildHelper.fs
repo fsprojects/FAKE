@@ -429,37 +429,52 @@ let MSBuildReleaseExt outputPath properties targets projects =
     let properties = ("Configuration", "Release") :: properties
     MSBuild outputPath targets properties projects
 
-/// Builds the given web project file in debug mode and copies it to the given websiteDir.
+/// Builds the given web project file in the specified configuration and copies it to the given outputPath.
 /// ## Parameters
 ///  - `outputPath` - The output path.
+///  - `configuration` - MSBuild configuration.
 ///  - `projectFile` - The project file path.
-let BuildWebsite outputPath projectFile =
+let BuildWebsiteConfig outputPath configuration projectFile  =
     traceStartTask "BuildWebsite" projectFile
     let projectName = (fileInfo projectFile).Name.Replace(".csproj", "").Replace(".fsproj", "").Replace(".vbproj", "")
-    
-    let slashes (dir : string) = 
+
+    let slashes (dir : string) =
         dir.Replace("\\", "/").TrimEnd('/')
         |> Seq.filter ((=) '/')
         |> Seq.length
-    
+
     let currentDir = (directoryInfo ".").FullName
     let projectDir = (fileInfo projectFile).Directory.FullName
-    
+
     let diff = slashes projectDir - slashes currentDir
     let prefix = if Path.IsPathRooted outputPath
                  then ""
                  else (String.replicate diff "../")
 
-    MSBuildDebug "" "Rebuild" [ projectFile ] |> ignore
-    MSBuild "" "_CopyWebApplication;_BuiltWebOutputGroupOutput" 
-        [ "OutDir", prefix + outputPath
+    MSBuild null "Build" [ "Configuration", configuration ] [ projectFile ] |> ignore
+    MSBuild null "_CopyWebApplication;_BuiltWebOutputGroupOutput"
+        [ "Configuration", configuration
+          "OutDir", prefix + outputPath
           "WebProjectOutputDir", prefix + outputPath + "/" + projectName ] [ projectFile ]
         |> ignore
     !!(projectDir + "/bin/*.*") |> Copy(outputPath + "/" + projectName + "/bin/")
     traceEndTask "BuildWebsite" projectFile
 
-/// Builds the given web project files in debug mode and copies them to the given websiteDir.
+/// Builds the given web project file with debug configuration and copies it to the given outputPath.
+/// ## Parameters
+///  - `outputPath` - The output path.
+///  - `projectFile` - The project file path.
+let BuildWebsite outputPath projectFile = BuildWebsiteConfig outputPath "Debug" projectFile
+
+/// Builds the given web project files in specified configuration and copies them to the given outputPath.
+/// ## Parameters
+///  - `outputPath` - The output path.
+///  - `configuration` - MSBuild configuration.
+///  - `projectFiles` - The project file paths.
+let BuildWebsitesConfig outputPath configuration projectFiles = Seq.iter (BuildWebsiteConfig outputPath configuration) projectFiles
+
+/// Builds the given web project files with debug configuration and copies them to the given websiteDir.
 /// ## Parameters
 ///  - `outputPath` - The output path.
 ///  - `projectFiles` - The project file paths.
-let BuildWebsites websiteDir projectFiles = Seq.iter (BuildWebsite websiteDir) projectFiles
+let BuildWebsites outputPath projectFiles = BuildWebsitesConfig outputPath "Debug" projectFiles
