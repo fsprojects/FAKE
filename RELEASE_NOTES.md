@@ -1,17 +1,14 @@
-#### 4.25.5 - 27.04.2016
-* BUGFIX: Fixed FAKE parameter split - https://github.com/fsharp/FAKE/pull/1228 
-
-#### 4.25.4 - 13.04.2016
+#### 4.26.0 - 11.05.2016
 * Added new function for appending signatures - https://github.com/fsharp/FAKE/pull/1223
-
-#### 4.25.3 - 13.04.2016
 * New separate environ variable helpers - https://github.com/fsharp/FAKE/pull/1133
 * Reversed the order of actions in traceStartTarget - https://github.com/fsharp/FAKE/pull/1222
-
-#### 4.25.2 - 12.04.2016
+* Update Pickles helper to reflect the latest changes to pickles - https://github.com/fsharp/FAKE/pull/1236
+* New parameter 'AppId' in HockeyAppHelper - https://github.com/fsharp/FAKE/pull/1234
+* MSBuildHelper: Add BuildWebsite(s)Config - https://github.com/fsharp/FAKE/pull/1230
+* BUGFIX: OpenCoverHelper does not assume AppData and ProgramFiles exists by default - https://github.com/fsharp/FAKE/pull/1229
+* BUGFIX: Disable node reuse on Team foundation builds - https://github.com/fsharp/FAKE/pull/1237
+* BUGFIX: Fixed FAKE parameter split - https://github.com/fsharp/FAKE/pull/1228 
 * USABILITY: Look into packages folder for findToolPath 
-
-#### 4.25.1 - 12.04.2016
 * COSMETICS: Added open/close block to teamcity target tracing - https://github.com/fsharp/FAKE/pull/1219 
 
 #### 4.25.0 - 12.04.2016
