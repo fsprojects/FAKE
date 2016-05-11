@@ -44,7 +44,7 @@
 <div class="row">
   <div class="span1"></div>
   <div class="span6">
-      <pre>PM> Install-Package FAKE</pre>
+      <pre>PM> Install-Package FAKE.IIS</pre>
     </div>
   </div>
   <div class="span1"></div>
@@ -69,7 +69,7 @@
 <span class="l">17: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="prep">#r</span> <span class="s">&quot;Fake.IIS.dll&quot;</span>
-<span class="prep">#load</span> <span class="s">&quot;IISHelper.fs&quot;</span>
+<span class="prep">#r</span> <span class="s">&quot;Microsoft.Web.Administration.dll&quot;</span>
 
 <span class="k">open</span> <span class="i">Fake</span><span class="o">.</span><span class="i">IISHelper</span>
 
@@ -89,21 +89,17 @@
 </tr>
 </table>
 <h2>Deleting an Application Pool and Site</h2>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
-<span class="l"> 2: </span>
-<span class="l"> 3: </span>
-<span class="l"> 4: </span>
-<span class="l"> 5: </span>
-<span class="l"> 6: </span>
-<span class="l"> 7: </span>
-<span class="l"> 8: </span>
-<span class="l"> 9: </span>
-<span class="l">10: </span>
-<span class="l">11: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+<span class="l">8: </span>
+<span class="l">9: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="prep">#r</span> <span class="s">&quot;Fake.IIS.dll&quot;</span>
-
-<span class="prep">#load</span> <span class="s">&quot;IISHelper.fs&quot;</span>
 
 <span class="k">open</span> <span class="i">Fake</span><span class="o">.</span><span class="i">IISHelper</span>
 
@@ -111,7 +107,7 @@
 <span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 16)" onmouseover="showTip(event, 'fs2', 16)" class="i">appPoolName</span> <span class="o">=</span> <span class="s">&quot;fake.appPool&quot;</span>
 
 <span class="i">deleteSite</span> <span onmouseout="hideTip(event, 'fs1', 17)" onmouseover="showTip(event, 'fs1', 17)" class="i">siteName</span>
-<span class="i">deleteApplicationPool</span> <span class="i">appPool</span>
+<span class="i">deleteApplicationPool</span> <span onmouseout="hideTip(event, 'fs2', 18)" onmouseover="showTip(event, 'fs2', 18)" class="i">appPoolName</span>
 </code></pre></td>
 </tr>
 </table>

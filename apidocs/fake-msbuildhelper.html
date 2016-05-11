@@ -188,11 +188,11 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L436-436" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L467-467" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Builds the given web project file in debug mode and copies it to the given websiteDir.</p>
+          <p>Builds the given web project file with debug configuration and copies it to the given outputPath.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>outputPath</code> - The output path.</li>
@@ -206,18 +206,44 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '437', 437)" onmouseover="showTip(event, '437', 437)">
-            BuildWebsites websiteDir projectFiles
+            BuildWebsiteConfig (...)
           </code>
           <div class="tip" id="437">
-            <strong>Signature:</strong> websiteDir:string -&gt; projectFiles:seq&lt;string&gt; -&gt; unit<br />
+            <strong>Signature:</strong> outputPath:string -&gt; configuration:string -&gt; projectFile:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L465-465" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L437-437" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Builds the given web project files in debug mode and copies them to the given websiteDir.</p>
+          <p>Builds the given web project file in the specified configuration and copies it to the given outputPath.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>outputPath</code> - The output path.</li>
+<li><code>configuration</code> - MSBuild configuration.</li>
+<li><code>projectFile</code> - The project file path.</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '438', 438)" onmouseover="showTip(event, '438', 438)">
+            BuildWebsites outputPath projectFiles
+          </code>
+          <div class="tip" id="438">
+            <strong>Signature:</strong> outputPath:string -&gt; projectFiles:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L480-480" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Builds the given web project files with debug configuration and copies them to the given websiteDir.</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>outputPath</code> - The output path.</li>
@@ -230,10 +256,36 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '438', 438)" onmouseover="showTip(event, '438', 438)">
+          <code onmouseout="hideTip(event, '439', 439)" onmouseover="showTip(event, '439', 439)">
+            BuildWebsitesConfig (...)
+          </code>
+          <div class="tip" id="439">
+            <strong>Signature:</strong> outputPath:string -&gt; configuration:string -&gt; projectFiles:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L474-474" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Builds the given web project files in specified configuration and copies them to the given outputPath.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>outputPath</code> - The output path.</li>
+<li><code>configuration</code> - MSBuild configuration.</li>
+<li><code>projectFiles</code> - The project file paths.</li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '440', 440)" onmouseover="showTip(event, '440', 440)">
             MSBuild (...)
           </code>
-          <div class="tip" id="438">
+          <div class="tip" id="440">
             <strong>Signature:</strong> outputPath:string -&gt; targets:string -&gt; properties:(string * string) list -&gt; projects:seq&lt;string&gt; -&gt; string list<br />
                       </div>
         </td>
@@ -257,10 +309,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '439', 439)" onmouseover="showTip(event, '439', 439)">
+          <code onmouseout="hideTip(event, '441', 441)" onmouseover="showTip(event, '441', 441)">
             MSBuildDebug outputPath targets projects
           </code>
-          <div class="tip" id="439">
+          <div class="tip" id="441">
             <strong>Signature:</strong> outputPath:string -&gt; targets:string -&gt; projects:seq&lt;string&gt; -&gt; string list<br />
                       </div>
         </td>
@@ -283,10 +335,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '440', 440)" onmouseover="showTip(event, '440', 440)">
+          <code onmouseout="hideTip(event, '442', 442)" onmouseover="showTip(event, '442', 442)">
             MSBuildDefaults 
           </code>
-          <div class="tip" id="440">
+          <div class="tip" id="442">
             <strong>Signature:</strong> MSBuildParams<br />
                       </div>
         </td>
@@ -303,10 +355,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '441', 441)" onmouseover="showTip(event, '441', 441)">
+          <code onmouseout="hideTip(event, '443', 443)" onmouseover="showTip(event, '443', 443)">
             msBuildExe 
           </code>
-          <div class="tip" id="441">
+          <div class="tip" id="443">
             <strong>Signature:</strong> string<br />
                       </div>
         </td>
@@ -325,10 +377,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '442', 442)" onmouseover="showTip(event, '442', 442)">
+          <code onmouseout="hideTip(event, '444', 444)" onmouseover="showTip(event, '444', 444)">
             MSBuildLoggers 
           </code>
-          <div class="tip" id="442">
+          <div class="tip" id="444">
             <strong>Signature:</strong> string list<br />
                       </div>
         </td>
@@ -345,10 +397,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '443', 443)" onmouseover="showTip(event, '443', 443)">
+          <code onmouseout="hideTip(event, '445', 445)" onmouseover="showTip(event, '445', 445)">
             MSBuildRelease (...)
           </code>
-          <div class="tip" id="443">
+          <div class="tip" id="445">
             <strong>Signature:</strong> outputPath:string -&gt; targets:string -&gt; projects:seq&lt;string&gt; -&gt; string list<br />
                       </div>
         </td>
@@ -371,10 +423,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '444', 444)" onmouseover="showTip(event, '444', 444)">
+          <code onmouseout="hideTip(event, '446', 446)" onmouseover="showTip(event, '446', 446)">
             MSBuildReleaseExt (...)
           </code>
-          <div class="tip" id="444">
+          <div class="tip" id="446">
             <strong>Signature:</strong> outputPath:string -&gt; properties:(string * string) list -&gt; targets:string -&gt; projects:seq&lt;string&gt; -&gt; string list<br />
                       </div>
         </td>
@@ -398,10 +450,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '445', 445)" onmouseover="showTip(event, '445', 445)">
+          <code onmouseout="hideTip(event, '447', 447)" onmouseover="showTip(event, '447', 447)">
             MSBuildWithDefaults targets projects
           </code>
-          <div class="tip" id="445">
+          <div class="tip" id="447">
             <strong>Signature:</strong> targets:string -&gt; projects:seq&lt;string&gt; -&gt; string list<br />
                       </div>
         </td>
@@ -423,10 +475,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '446', 446)" onmouseover="showTip(event, '446', 446)">
+          <code onmouseout="hideTip(event, '448', 448)" onmouseover="showTip(event, '448', 448)">
             MSBuildWithProjectProperties (...)
           </code>
-          <div class="tip" id="446">
+          <div class="tip" id="448">
             <strong>Signature:</strong> outputPath:string -&gt; targets:string -&gt; properties:(string -&gt; (string * string) list) -&gt; projects:seq&lt;string&gt; -&gt; string list<br />
                       </div>
         </td>
