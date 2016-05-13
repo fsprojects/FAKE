@@ -64,7 +64,7 @@ let buildArgs (param: NugetInstallParams) =
     [   param.Sources |> argList "source"
         (if param.Version <> "" then sprintf "-version \"%s\""  param.Version else "")
         (if param.OutputDirectory <> "" then sprintf "-outputdirectory \"%s\"" param.OutputDirectory else "")
-        (match param.Verbosity with | Quiet -> "quiet" | Detailed -> "detailed" | Normal -> "")
+        (match param.Verbosity with | Quiet -> "quiet" | Detailed -> "detailed" | Normal -> "normal") |> sprintf "-verbosity %s"
         (if param.ExcludeVersion then "-excludeversion" else "")
         (if param.Prerelease then "-prerelease" else "")
         (if param.NoCache then "-nocache" else "")
