@@ -48,6 +48,8 @@ type SlackNotificationParams = {
     Unfurl_Links: bool
     // Richly formatted message attachments for the notification
     Attachments: SlackNotificationAttachmentParams[]
+    // Whether or not to link names of users or channels (beginning with @ or #), Default value : false
+    Link_Names: bool
 }
 
 /// The default Slack notification parameters
@@ -59,6 +61,7 @@ let SlackNotificationDefaults = {
     Icon_Emoji = null
     Unfurl_Links = false
     Attachments = Array.empty
+    Link_Names = false
 }
 
 /// The default parameters for Slack notification attachments
