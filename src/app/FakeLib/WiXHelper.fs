@@ -56,15 +56,28 @@ let getFilesAsWiXString files =
     |> Seq.map (fileInfo >> wixFile)
     |> toLines
 
+type Architecture = 
+    | X64
+    | X86
+    override a.ToString() =
+        match a with 
+        | X64 -> "x64"
+        | X86 -> "x86"
+
 /// WiX File Element
 type WiXFile =
     {
+        /// File Id in WiX definition
         Id : string
+        /// File Name in WiX definition
         Name : string
+        /// File Path in WiX definition
         Source : string
+        /// File Architecture, either X64 or X86, defaults to X64
+        ProcessorArchitecture : Architecture
     }
-    override w.ToString() = sprintf "<File Id=\"%s\" Name=\"%s\" Source=\"%s\" />"
-                                w.Id w.Name w.Source
+    override w.ToString() = sprintf "<File Id=\"%s\" Name=\"%s\" Source=\"%s\" ProcessorArchitecture=\"%s\" />"
+                                w.Id w.Name w.Source (w.ProcessorArchitecture.ToString())
 
 /// Defaults for WiX file
 let WiXFileDefaults = 
@@ -72,6 +85,7 @@ let WiXFileDefaults =
         Id = "fi"
         Name = ""
         Source = ""
+        ProcessorArchitecture = X64
     }
 
 /// Specifies whether an action occur on install, uninstall or both.
@@ -349,12 +363,13 @@ and WiXComponent =
         Id : string
         Guid : string
         Files : WiXFile seq
+        Win64 : YesOrNo
         ServiceControls : WiXServiceControl seq
         ServiceInstalls : WiXServiceInstall seq
     }
     member w.ToComponentRef() = generateComponentRef (fun f -> { f with Id = w.Id })
-    override w.ToString() = sprintf "<Component Id=\"%s\" Guid=\"%s\">%s%s%s</Component>" 
-                                w.Id w.Guid 
+    override w.ToString() = sprintf "<Component Id=\"%s\" Guid=\"%s\" Win64=\"%s\">%s%s%s</Component>" 
+                                w.Id w.Guid (w.Win64.ToString())
                                 (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.Files) 
                                 (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.ServiceControls)
                                 (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.ServiceInstalls)
@@ -399,6 +414,7 @@ let WiXComponentDefaults =
     {
         Id = ""
         Guid = "*"
+        Win64 = Yes
         Files = []
         ServiceControls = []
         ServiceInstalls = []
@@ -410,9 +426,6 @@ let generateComponent (setParams : WiXComponent -> WiXComponent) =
     if parameters.Id = "" then 
         failwith "No parameter passed for component Id!"
     parameters
-
-
-
 
 /// Defaults for directories
 let WiXDirDefaults = 
@@ -443,8 +456,13 @@ let private getDirectoryId (directoryName : string) =
 
 let private getFileId (fileName : string) =
     "f" + calcSHA1 fileName
+    
+let private IsWin64 architecture =
+    match architecture with
+    | X64 -> Yes
+    | X86 -> No
 
-let private createComponents fileFilter directoryInfo directoryName =
+let private createComponents fileFilter directoryInfo directoryName architecture =
     directoryInfo
         |> filesInDir
         |> Seq.filter fileFilter
@@ -453,11 +471,13 @@ let private createComponents fileFilter directoryInfo directoryName =
                             Id = getFileId (directoryName + directoryInfo.Name + file.Name)
                             Name = file.Name
                             Source = file.FullName
+                            ProcessorArchitecture = architecture
                         })
         |> Seq.map(fun file->
                         C{
                             Id = "c" + file.Id.Substring(1)
                             Guid = "*"
+                            Win64 = IsWin64 architecture
                             Files = [file]
                             ServiceControls = []
                             ServiceInstalls = []
@@ -469,20 +489,20 @@ let private createComponents fileFilter directoryInfo directoryName =
 /// This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
 /// You can use the getComponentRefs function for getting all created component refs and adding them to features.
 /// You can use attachServiceControlToComponents or attachServiceInstallToComponents to attach ServiceControl or ServiceInstall to the directory component hierarchy
-let rec bulkComponentTreeCreation fileFilter directoryFilter directoryInfo =
+let rec bulkComponentTreeCreation fileFilter directoryFilter directoryInfo architecture =
     let directoryName = ""
     let directories = directoryInfo
                       |> subDirectories
                       |> Seq.filter directoryFilter
-                      |> Seq.map (fun d -> bulkComponentTreeSubCreation fileFilter directoryFilter d directoryInfo.Name)
-    let components = createComponents fileFilter directoryInfo directoryName
+                      |> Seq.map (fun d -> bulkComponentTreeSubCreation fileFilter directoryFilter d directoryInfo.Name architecture)
+    let components = createComponents fileFilter directoryInfo directoryName architecture
     Seq.append directories components  
-and private bulkComponentTreeSubCreation fileFilter directoryFilter directoryInfo directoryName =    
+and private bulkComponentTreeSubCreation fileFilter directoryFilter directoryInfo directoryName architecture =    
     let directories = directoryInfo
                       |> subDirectories
                       |> Seq.filter directoryFilter
-                      |> Seq.map (fun d -> bulkComponentTreeSubCreation fileFilter directoryFilter d (directoryName + directoryInfo.Name))       
-    let components = createComponents fileFilter directoryInfo directoryName
+                      |> Seq.map (fun d -> bulkComponentTreeSubCreation fileFilter directoryFilter d (directoryName + directoryInfo.Name) architecture)       
+    let components = createComponents fileFilter directoryInfo directoryName architecture
     let currentDirectory = D{
         Id = getDirectoryId (directoryInfo.Name + directoryName)
         Name = directoryInfo.Name
@@ -496,7 +516,7 @@ and private bulkComponentTreeSubCreation fileFilter directoryFilter directoryInf
 /// and set the GUID to "*", which will make WiX produce consistent Component Guids if the Component's target path doesn't change.
 /// This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
 /// You can use the getComponentIdsFromWiXString function for getting all created component refs and adding them to features.
-let bulkComponentCreation fileFilter directoryInfo = 
+let bulkComponentCreation fileFilter directoryInfo architecture = 
     directoryInfo
         |> filesInDir
         |> Seq.filter fileFilter
@@ -505,11 +525,13 @@ let bulkComponentCreation fileFilter directoryInfo =
                             Id = "f" + file.Name.GetHashCode().ToString().Replace("-", "")
                             Name = file.Name
                             Source = file.FullName
+                            ProcessorArchitecture = architecture
                         })
         |> Seq.map(fun file->
                         C{
                             Id = "c" + file.Id.Substring(1)
                             Guid = "*"
+                            Win64 = IsWin64 architecture
                             Files = [file]
                             ServiceControls = []
                             ServiceInstalls = []
@@ -520,19 +542,19 @@ let bulkComponentCreation fileFilter directoryInfo =
 /// and set the GUID to "*", which will make WiX produce consistent Component Guids if the Component's target path doesn't change.
 /// This is vital for major upgrades, since windows installer needs a consistent component guid for tracking each of them.
 /// The components are embedded into the passed in root directory.
-let bulkComponentCreationAsSubDir fileFilter (directoryInfo : DirectoryInfo) = 
+let bulkComponentCreationAsSubDir fileFilter (directoryInfo : DirectoryInfo) architecture = 
     {
         Id = (directoryInfo.FullName.GetHashCode().ToString())
         Name = directoryInfo.Name 
         Files = []
-        Components = bulkComponentCreation fileFilter directoryInfo
+        Components = bulkComponentCreation fileFilter directoryInfo architecture
     }  
                  
 ///// Use this to attach service controls to your components.   
 let rec attachServiceControlToComponent (comp : WiXDirectoryComponent) fileFilter serviceControls = 
     match comp with
     | C c -> C (if fileFilter c then                        
-                        { Id = c.Id; Guid = c.Guid; Files = c.Files; ServiceControls = Seq.append c.ServiceControls serviceControls; ServiceInstalls = c.ServiceInstalls }
+                        { Id = c.Id; Guid = c.Guid; Files = c.Files; ServiceControls = Seq.append c.ServiceControls serviceControls; ServiceInstalls = c.ServiceInstalls; Win64 = c.Win64 }
                         else
                             c
                         )                                          
@@ -545,7 +567,7 @@ and attachServiceControlToComponents (components : WiXDirectoryComponent seq) fi
 let rec attachServiceInstallToComponent (comp : WiXDirectoryComponent) fileFilter serviceInstalls = 
     match comp with
     | C c -> C (if fileFilter c then                        
-                        { Id = c.Id; Guid = c.Guid; Files = c.Files; ServiceControls = c.ServiceControls; ServiceInstalls = Seq.append c.ServiceInstalls serviceInstalls }
+                        { Id = c.Id; Guid = c.Guid; Files = c.Files; ServiceControls = c.ServiceControls; ServiceInstalls = Seq.append c.ServiceInstalls serviceInstalls; Win64 = c.Win64 }
                         else
                             c
                         )                                          
@@ -833,6 +855,9 @@ type WiXScript =
 
         /// You can nest InstallExecuteSequence actions in here
         ActionSequences : string
+
+        /// Specify architecture of package. For 64Bit Setups set ProgramFilesFolder to ProgramFiles64, package platform to X64, all components to Win64 = yes and all files' processorArchitecture to X64.
+        Platform : Architecture
     }
 
 /// Default values for WiX Script properties
@@ -856,6 +881,7 @@ let WiXScriptDefaults =
         Features = ""
         CustomActions = ""
         ActionSequences = ""
+        Platform = X86
     }
 
 /// Used in WiXCustomAction for determing when to run the custom action
@@ -1171,6 +1197,9 @@ type Script =
 
         /// You can add custom replacements for the wix xml here.
         CustomReplacements: (string * string) seq
+
+        /// Specify architecture of package. For 64Bit Setups set ProgramFilesFolder to ProgramFiles64, package platform to X64, all components to Win64 = yes and all files' processorArchitecture to X64.
+        Platform : Architecture
     }
 
 /// Default values for WiX Script properties
@@ -1195,6 +1224,7 @@ let ScriptDefaults =
         CustomActions = []
         ActionSequences = []
         CustomReplacements = []
+        Platform = Architecture.X64
     }
 
 /// Generates WiX Template with specified file name (you can prepend location too)
@@ -1225,6 +1255,7 @@ let generateWiXScript fileName =
               Id=\"*\"
               InstallerVersion=\"200\"
               Compressed=\"yes\"
+              Platform=\"@Product.Platform@\"
               Description=\"@Product.Description@\"
               Manufacturer=\"@Product.Publisher@\"
             />
@@ -1306,6 +1337,7 @@ let FillInWixScript wiXPath (setParams : WiXScript -> WiXScript) =
         "@Product.MajorUpgrade@", parameters.MajorUpgrade
         "@Product.Directories@", parameters.Directories
         "@Product.Components@", ""
+        "@Product.Platform@", parameters.Platform.ToString()
         "@Product.Features@", parameters.Features
         "@Product.CustomActions@", parameters.CustomActions
         "@Product.ActionSequences@", parameters.ActionSequences
@@ -1356,6 +1388,7 @@ let FillInWiXTemplate wiXPath setParams =
         "@Product.Features@", Seq.fold(fun acc elem -> acc + elem.ToString()) "" parameters.Features
         "@Product.CustomActions@", Seq.fold(fun acc elem -> acc + elem.ToString()) "" parameters.CustomActions
         "@Product.ActionSequences@", Seq.fold(fun acc elem -> acc + elem.ToString()) "" parameters.ActionSequences
+        "@Product.Platform@", parameters.Platform.ToString()
         "@Build.number@", parameters.BuildNumber]
     let customReplacements = parameters.CustomReplacements |> Seq.map (fun (key, value) -> ((sprintf "@Custom.%s@" key), value)) |> List.ofSeq
     let replacements = replacements @ customReplacements
