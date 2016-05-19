@@ -1,3 +1,8 @@
+#### 4.27.0 - 19.05.2016
+* New Slack argument for Link_Names - https://github.com/fsharp/FAKE/pull/1245
+* Extended WiXHelper types for supporting creation of 64bit setups - https://github.com/fsharp/FAKE/pull/1244            
+* BUGFIX: Corrected NuGet install verbosity parameter - https://github.com/fsharp/FAKE/pull/1239
+
 #### 4.26.0 - 11.05.2016
 * Added new function for appending signatures - https://github.com/fsharp/FAKE/pull/1223
 * New separate environ variable helpers - https://github.com/fsharp/FAKE/pull/1133
