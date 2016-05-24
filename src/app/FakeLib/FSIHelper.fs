@@ -220,7 +220,7 @@ let private getCacheInfoFromScript printDetails fsiOptions scriptPath =
     //TODO this is only calculating the hash for the input file, not anything #load-ed
     
     let scriptFileName = Path.GetFileName(scriptPath)
-    let hashPath = "./.fake/" + scriptFileName + "_" + scriptHash
+    let hashPath = (Path.GetDirectoryName scriptPath) + "/.fake/" + scriptFileName + "_" + scriptHash
     let assemblyPath = hashPath + ".dll"
     let assemblyWarningsPath = hashPath + "_warnings.txt"
     let cacheConfigPath = hashPath + "_config.xml"
