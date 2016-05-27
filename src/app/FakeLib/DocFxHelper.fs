@@ -14,6 +14,8 @@ type DocFxParams =
       WorkingDirectory  : string
       /// Allows to specify a timeout for DocFx. Default: 5 min
       Timeout : TimeSpan
+      /// Serves the generated documentation on localhost. Default: false
+      Serve : bool
     }
 
 /// The default parameters
@@ -24,6 +26,7 @@ let DocFxDefaults =
       DocFxJson = docsPath @@ "docfx.json"
       WorkingDirectory = docsPath
       Timeout = TimeSpan.FromMinutes 5.
+      Serve = false
     }
 
 /// Generates a DocFx documentation.
@@ -31,17 +34,20 @@ let DocFxDefaults =
 ///  - `setParams` - Function used to manipulate the default DocFx parameters. See `DocFxDefaults`
 /// ## Sample
 ///
-///      DocFx (fun p -> 
-///       { p with 
-///           DocFxJson = "foo" @@ "bar" @@ "docfx.json"
-///           Timeout = TimeSpan.FromMinutes 10.
-///       })
+///     DocFx (fun p -> 
+///      { p with 
+///          DocFxJson = "foo" @@ "bar" @@ "docfx.json"
+///          Timeout = TimeSpan.FromMinutes 10.
+///      })
 let DocFx setParams = 
     let parameters = DocFxDefaults |> setParams
     
     traceStartTask "DocFx" parameters.DocFxJson
     
-    let args = parameters.DocFxJson |> FullName
+    let serveArg = if parameters.Serve then "--serve" else ""
+    let configArg = parameters.DocFxJson |> FullName
+
+    let args = sprintf "%s %s" configArg serveArg
 
     if 0 <> ExecProcess (fun info -> 
           info.FileName <- parameters.ToolPath |> FullName
