@@ -180,6 +180,7 @@
     <Compile Include="SlackNotificationHelper.fs" />
     <Compile Include="SonarQubeHelper.fs" />
     <Compile Include="AzureKudu.fs" />
+    <Compile Include="DocFxHelper.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
