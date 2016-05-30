@@ -1,4 +1,3 @@
-﻿[<AutoOpen>]
 /// Contains helper functions to run the documentation tool "docfx".
 module Fake.DocFxHelper
 

@@ -1,3 +1,10 @@
+#### 4.28.0 - 30.05.2016
+* New DocFx helper - https://github.com/fsharp/FAKE/pull/1251
+* Added basic support for bitbuckets piplines CI - https://github.com/fsharp/FAKE/pull/1248
+* BUGFIX: XamarinHelper: surround jarsigner input file path with quotes - https://github.com/fsharp/FAKE/pull/1249
+* BUGFIX: NUnit3: don't set a timeout on the nunit3-console process - https://github.com/fsharp/FAKE/pull/1247
+* BUGFIX: Changed the cache path to be relative to script location - https://github.com/fsharp/FAKE/pull/1250
+
 #### 4.27.0 - 19.05.2016
 * New Slack argument for Link_Names - https://github.com/fsharp/FAKE/pull/1245
 * Extended WiXHelper types for supporting creation of 64bit setups - https://github.com/fsharp/FAKE/pull/1244            
