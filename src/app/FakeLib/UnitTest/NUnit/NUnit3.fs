@@ -276,11 +276,12 @@ let NUnit3 (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) 
     let tool = parameters.ToolPath
     let args = buildNUnit3Args parameters assemblies
     trace (tool + " " + args)
+    let processTimeout = TimeSpan.MaxValue // Don't set a process timeout.  The timeout is per test.
     let result = 
         ExecProcess (fun info -> 
             info.FileName <- tool
             info.WorkingDirectory <- getWorkingDir parameters
-            info.Arguments <- args) parameters.TimeOut
+            info.Arguments <- args) processTimeout
     let errorDescription error = 
         match error with
         | OK -> "OK"
