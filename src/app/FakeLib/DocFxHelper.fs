@@ -57,3 +57,4 @@ let DocFx setParams =
       then failwith "DocFx generation failed."
 
     traceEndTask "DocFx" parameters.DocFxJson
+    
