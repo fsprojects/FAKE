@@ -299,7 +299,7 @@ let AndroidSignAndAlign setParams apkFile =
     let signAndAlign (file:FileInfo) (param:AndroidSignAndAlignParams) =
         let fullSignedFilePath = Regex.Replace(file.FullName, ".apk$", "-Signed.apk")
         let jarsignerArgs = String.Format("-sigalg {0} -digestalg {1} -keystore {2} -storepass {3} -signedjar {4} {5} {6}", 
-                                param.SignatureAlgorithm, param.MessageDigestAlgorithm, quotesSurround(param.KeystorePath), param.KeystorePassword, quotesSurround(fullSignedFilePath), file.FullName, param.KeystoreAlias)
+                                param.SignatureAlgorithm, param.MessageDigestAlgorithm, quotesSurround(param.KeystorePath), param.KeystorePassword, quotesSurround(fullSignedFilePath), quotesSurround(file.FullName), param.KeystoreAlias)
         
         executeCommand param.JarsignerPath jarsignerArgs
 
