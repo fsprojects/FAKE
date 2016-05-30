@@ -12,6 +12,7 @@ type BuildServer =
     | AppVeyor
     | GitLabCI
     | Bamboo
+    | BitbucketPipelines
     | LocalBuild
 
 /// The trace mode option.
@@ -88,6 +89,7 @@ let buildServer =
     elif isGitlabCI then GitLabCI
     elif isTFBuild then TeamFoundation
     elif isBambooBuild then Bamboo
+    elif hasBuildParam "BITBUCKET_COMMIT" then BitbucketPipelines
     else LocalBuild
 
 /// The current build version as detected from the current build server.
@@ -103,6 +105,7 @@ let buildVersion =
     | TeamFoundation -> getVersion tfBuildNumber
     | Bamboo -> getVersion bambooBuildNumber
     | LocalBuild -> getVersion localBuildLabel
+    | BitbucketPipelines -> getVersion ""
 
 /// Is true when the current build is a local build.
 let isLocalBuild = LocalBuild = buildServer
