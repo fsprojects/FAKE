@@ -34,7 +34,7 @@ let mutable xmlOutputFile = getBuildParamOrDefault "logfile" "./output/Results.x
 
 /// Build number retrieved from Bamboo
 /// [omit]
-let bambooBuildNumber = environVar "BAMBOO_BUILDNUMBER"
+let bambooBuildNumber = environVar "bamboo_buildNumber"
 
 /// Checks if we are on Bamboo
 /// [omit]
