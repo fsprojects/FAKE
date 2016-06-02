@@ -284,15 +284,18 @@ let private removeAtEnd (textToRemove:string) (text:string) =
 let GetAttributes assemblyInfoFile =
     let text = File.ReadAllText assemblyInfoFile
 
-    let regex = 
-        if assemblyInfoFile.ToLower().EndsWith(".cs") then regexAttrNameValueCs
-        elif assemblyInfoFile.ToLower().EndsWith(".fs") then regexAttrNameValueFs
-        elif assemblyInfoFile.ToLower().EndsWith(".vb") then regexAttrNameValueVb
-        elif assemblyInfoFile.ToLower().EndsWith(".cpp") then regexAttrNameValueCpp
+    // VB.NET is case-insensitive. Handle assembly attributes accordingly
+    let (regex, additionalRegexOptions) =
+        if assemblyInfoFile.ToLower().EndsWith(".cs") then (regexAttrNameValueCs, RegexOptions.None)
+        elif assemblyInfoFile.ToLower().EndsWith(".fs") then (regexAttrNameValueFs, RegexOptions.None)
+        elif assemblyInfoFile.ToLower().EndsWith(".vb") then (regexAttrNameValueVb, RegexOptions.IgnoreCase)
+        elif assemblyInfoFile.ToLower().EndsWith(".cpp") then (regexAttrNameValueCpp, RegexOptions.None)
         else
             failwithf "Assembly info file type not supported: %s" assemblyInfoFile
 
-    Regex.Matches(text, regex, RegexOptions.Multiline)
+    let combinedRegexOptions = RegexOptions.Multiline ||| additionalRegexOptions
+
+    Regex.Matches(text, regex, combinedRegexOptions)
         |> Seq.cast<Match> 
         |> Seq.map (fun m -> Attribute(m.Groups.["name"].Value |> removeAtEnd "Attribute",
                                        m.Groups.["value"].Value,
@@ -314,15 +317,15 @@ let GetAttributeValue attrName assemblyInfoFile =
     | Some attr -> Some attr.Value
     | None -> None
     
-let private updateAttr regexFactory text (attribute:Attribute) =
+let private updateAttr regexFactory additionalRegexOptions text (attribute:Attribute) =
     let regex = regexFactory attribute.Name
 
-    let m = Regex.Match(text, regex, RegexOptions.Multiline)
+    let m = Regex.Match(text, regex, RegexOptions.Multiline ||| additionalRegexOptions)
 
     // Replace if found with different value
     if m.Success && m.Value <> attribute.Value then
         tracefn "Attribute '%s' updated: %s" attribute.Name attribute.Value
-        Regex.Replace(text, regex, attribute.Value, RegexOptions.Multiline)
+        Regex.Replace(text, regex, attribute.Value, RegexOptions.Multiline ||| additionalRegexOptions)
 
     // Do nothing if found with the same value
     elif m.Success then
@@ -340,15 +343,16 @@ let private updateAttr regexFactory text (attribute:Attribute) =
 let UpdateAttributes assemblyInfoFile (attributes: seq<Attribute>) =
     tracefn "Updating attributes in: %s" assemblyInfoFile
 
-    let regexFactory = 
-        if assemblyInfoFile.ToLower().EndsWith(".cs") then regexAttrValueCs
-        elif assemblyInfoFile.ToLower().EndsWith(".fs") then regexAttrValueFs
-        elif assemblyInfoFile.ToLower().EndsWith(".vb") then regexAttrValueVb
-        elif assemblyInfoFile.ToLower().EndsWith(".cpp") then regexAttrValueCpp
+    // VB.NET is case-insensitive. Handle assembly attributes accordingly
+    let (regexFactory, additionalRegexOptions) = 
+        if assemblyInfoFile.ToLower().EndsWith(".cs") then (regexAttrValueCs, RegexOptions.None)
+        elif assemblyInfoFile.ToLower().EndsWith(".fs") then (regexAttrValueFs, RegexOptions.None)
+        elif assemblyInfoFile.ToLower().EndsWith(".vb") then (regexAttrValueVb, RegexOptions.IgnoreCase)
+        elif assemblyInfoFile.ToLower().EndsWith(".cpp") then (regexAttrValueCpp, RegexOptions.None)
         else
             failwithf "Assembly info file type not supported: %s" assemblyInfoFile
 
     let text = File.ReadAllText assemblyInfoFile
-    let newText = attributes |> Seq.fold (updateAttr regexFactory) text
+    let newText = attributes |> Seq.fold (updateAttr regexFactory additionalRegexOptions) text
 
     File.WriteAllText(assemblyInfoFile, newText)
