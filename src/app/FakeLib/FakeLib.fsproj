@@ -59,6 +59,7 @@
     <Compile Include="ServiceControllerHelper.fs" />
     <Compile Include="GuardedAwaitObservable.fs" />
     <Compile Include="ProcessHelper.fs" />
+    <Compile Include="PsExecHelper.fs" />
     <Compile Include="NpmHelper.fs" />
     <Compile Include="AppVeyor.fs" />
     <Compile Include="BitbucketPipelines.fs" />
