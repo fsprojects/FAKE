@@ -78,8 +78,8 @@ let fscList (srcFiles : string list) (opts : string list) : int =
     for e in errors do
         let errMsg = e.ToString()
         match e.Severity with
-        | Microsoft.FSharp.Compiler.Warning -> traceImportant errMsg
-        | Microsoft.FSharp.Compiler.Error -> traceError errMsg
+        | FSharpErrorSeverity.Warning -> traceImportant errMsg
+        | FSharpErrorSeverity.Error -> traceError errMsg
     exitCode
 
 /// Compiles the given F# source files with the specified parameters.
