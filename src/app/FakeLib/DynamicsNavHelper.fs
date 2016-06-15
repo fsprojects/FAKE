@@ -442,7 +442,6 @@ let StartNavServiceTier serverMode navClientVersion =
         | "800" ->
             StartService "MicrosoftDynamicsNavServer$DynamicsNAV80"
         | _ -> failwithf "NavServiceTier of version %s unknown." navClientVersion
-    | _ -> failwithf "ServerMode %A unknown." serverMode
     traceEndTask "StartNavServiceTier" ""
 
 let StopNavServiceTier serverMode navClientVersion =
@@ -453,5 +452,4 @@ let StopNavServiceTier serverMode navClientVersion =
         StopService "MicrosoftDynamicsNavServer$DynamicsNAV71"
         StopService "MicrosoftDynamicsNavServer$DynamicsNAV70"
         StopService "MicrosoftDynamicsNavServer$DynamicsNAV80"
-    | _ -> failwithf "ServerMode %A unknown." serverMode
     traceEndTask "StopNavServiceTier" ""
