@@ -61,6 +61,7 @@
     <Compile Include="ProcessHelper.fs" />
     <Compile Include="PsExecHelper.fs" />
     <Compile Include="NpmHelper.fs" />
+    <Compile Include="BowerHelper.fs" />
     <Compile Include="AppVeyor.fs" />
     <Compile Include="BitbucketPipelines.fs" />
     <Compile Include="TaskRunnerHelper.fs" />
