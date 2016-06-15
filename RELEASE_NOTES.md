@@ -4,6 +4,7 @@
 * New Bower helper - https://github.com/fsharp/FAKE/pull/1258
 * BUGFIX: Fixed issue in bulk component creation functions where IDs where invalid - https://github.com/fsharp/FAKE/pull/1264
 * BUGFIX: Support VB.NET's case-insensitive assembly attributes - https://github.com/fsharp/FAKE/pull/1255
+* BUGFIX: Bamboo buildNumber environment variable in case sensitive behavior - https://github.com/fsharp/FAKE/pull/1252
 
 #### 4.28.0 - 30.05.2016
 * New DocFx helper - https://github.com/fsharp/FAKE/pull/1251
