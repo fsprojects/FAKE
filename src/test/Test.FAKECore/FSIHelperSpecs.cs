@@ -144,7 +144,7 @@ do ()
                     var scriptHash =
                             FSIHelper.getScriptHash(new FSIHelper.Script[] { script(scriptFilePath, scriptText) }, new List<string>());
 
-                    var cacheFilePath = Path.Combine(".", ".fake", scriptFileName + "_" + scriptHash + ".dll");
+                    var cacheFilePath = Path.Combine(Path.GetDirectoryName(scriptFilePath), ".fake", scriptFileName + "_" + scriptHash + ".dll");
 
                     File.Exists(cacheFilePath).ShouldEqual(false);
 
@@ -175,7 +175,7 @@ do ()
                     var scriptHash =
                             FSIHelper.getScriptHash(new FSIHelper.Script[] { script(scriptFilePath, "printf \"foobar\"") }, new List<string>());
 
-                    var cacheFilePath = Path.Combine(".", ".fake", scriptFileName + "_" + scriptHash + ".dll");
+                    var cacheFilePath = Path.Combine(Path.GetDirectoryName(scriptFilePath), ".fake", scriptFileName + "_" + scriptHash + ".dll");
 
                     File.Exists(cacheFilePath).ShouldEqual(false);
 
@@ -224,7 +224,7 @@ do ()
                     var scriptHash =
                             FSIHelper.getScriptHash(new FSIHelper.Script[] { script(scriptFilePath, "printf \"foobar\"") }, new List<string>());
 
-                    var cacheFilePath = Path.Combine(".", ".fake", scriptFileName + "_" + scriptHash + ".dll");
+                    var cacheFilePath = Path.Combine(Path.GetDirectoryName(scriptFilePath), ".fake", scriptFileName + "_" + scriptHash + ".dll");
 
                     File.Exists(cacheFilePath).ShouldEqual(false);
 
@@ -270,7 +270,7 @@ do ()
                     var scriptHash =
                             FSIHelper.getScriptHash(new FSIHelper.Script[] { script(scriptFilePath, scriptText) }, new List<string>());
 
-                    var cacheFilePath = Path.Combine(".", ".fake", scriptFileName + "_" + scriptHash + ".dll");
+                    var cacheFilePath = Path.Combine(Path.GetDirectoryName(scriptFilePath), ".fake", scriptFileName + "_" + scriptHash + ".dll");
 
                     File.Exists(cacheFilePath).ShouldEqual(false);
 
@@ -304,7 +304,7 @@ do ()
                     var scriptHash =
                             FSIHelper.getScriptHash(new FSIHelper.Script[] { script(scriptFilePath, "printf \"foobar\"") }, new List<string>());
 
-                    var cacheFilePath = Path.Combine(".", ".fake", scriptFileName + "_" + scriptHash + ".dll");
+                    var cacheFilePath = Path.Combine(Path.GetDirectoryName(scriptFilePath), ".fake", scriptFileName + "_" + scriptHash + ".dll");
 
                     File.Exists(cacheFilePath).ShouldEqual(false);
 
@@ -475,7 +475,7 @@ trace ""TEST_FAKE_OUTPUT""");
                     var scriptHash =
                             FSIHelper.getScriptHash(new FSIHelper.Script[] { script(scriptFilePath, "printf \"foobar\"") }, new List<string>());
 
-                    var cacheFilePath = Path.Combine(".", ".fake", scriptFileName + "_" + scriptHash + ".dll");
+                    var cacheFilePath = Path.Combine(Path.GetDirectoryName(scriptFilePath), ".fake", scriptFileName + "_" + scriptHash + ".dll");
 
                     File.Exists(cacheFilePath).ShouldEqual(false);
 
@@ -527,8 +527,8 @@ trace ""TEST_FAKE_OUTPUT""");
                     var scriptHash =
                             FSIHelper.getScriptHash(new FSIHelper.Script[] { script(scriptFilePath, mainScript) }, new List<string>());
 
-                    var cacheFilePath = Path.Combine(".", ".fake", scriptFileName + "_" + scriptHash + ".dll");
-                    var cacheXmlFilePath = Path.Combine(".", ".fake", scriptFileName + "_" + scriptHash + "_config.xml");
+                    var cacheFilePath = Path.Combine(Path.GetDirectoryName(scriptFilePath), ".fake", scriptFileName + "_" + scriptHash + ".dll");
+                    var cacheXmlFilePath = Path.Combine(Path.GetDirectoryName(scriptFilePath), ".fake", scriptFileName + "_" + scriptHash + "_config.xml");
 
                     var res = RunExplicit(scriptFilePath, EmptyArgs, EmptyArgs, true);
                     var cache = FSIHelper.Cache.read(cacheXmlFilePath);
