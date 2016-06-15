@@ -39,16 +39,16 @@ let Description text =
 
 /// TargetDictionary
 /// [omit]
-let TargetDict = new Dictionary<_,_>()
+let TargetDict = new Dictionary<_,_>(StringComparer.OrdinalIgnoreCase)
 
 /// Final Targets - stores final targets and if they are activated.
-let FinalTargets = new Dictionary<_,_>()
+let FinalTargets = new Dictionary<_,_>(StringComparer.OrdinalIgnoreCase)
 
 /// BuildFailureTargets - stores build failure targets and if they are activated.
-let BuildFailureTargets = new Dictionary<_,_>()
+let BuildFailureTargets = new Dictionary<_,_>(StringComparer.OrdinalIgnoreCase)
 
 /// The executed targets.
-let ExecutedTargets = new HashSet<_>()
+let ExecutedTargets = new HashSet<_>(StringComparer.OrdinalIgnoreCase)
 
 /// The executed target time.
 /// [omit]
@@ -68,7 +68,7 @@ let getAllTargetsNames() = TargetDict |> Seq.map (fun t -> t.Key) |> Seq.toList
 
 /// Gets a target with the given name from the target dictionary.
 let getTarget name =
-    match TargetDict.TryGetValue (toLower name) with
+    match TargetDict.TryGetValue (name) with
     | true, target -> target
     | _  ->
         traceError <| sprintf "Target \"%s\" is not defined. Existing targets:" name
@@ -126,14 +126,14 @@ let checkIfSoftDependencyCanBeAdded targetName dependentTargetName =
 let dependencyAtFront targetName dependentTargetName =
     let target,dependentTarget = checkIfDependencyCanBeAdded targetName dependentTargetName
 
-    TargetDict.[toLower targetName] <- { target with Dependencies = dependentTargetName :: target.Dependencies }
+    TargetDict.[targetName] <- { target with Dependencies = dependentTargetName :: target.Dependencies }
 
 /// Appends the dependency to the list of dependencies.
 /// [omit]
 let dependencyAtEnd targetName dependentTargetName =
     let target,dependentTarget = checkIfDependencyCanBeAdded targetName dependentTargetName
 
-    TargetDict.[toLower targetName] <- { target with Dependencies = target.Dependencies @ [dependentTargetName] }
+    TargetDict.[targetName] <- { target with Dependencies = target.Dependencies @ [dependentTargetName] }
 
 
 /// Appends the dependency to the list of soft dependencies.
@@ -141,7 +141,7 @@ let dependencyAtEnd targetName dependentTargetName =
 let softDependencyAtEnd targetName dependentTargetName =
     let target,dependentTarget = checkIfDependencyCanBeAdded targetName dependentTargetName
 
-    TargetDict.[toLower targetName] <- { target with SoftDependencies = target.SoftDependencies @ [dependentTargetName] }
+    TargetDict.[targetName] <- { target with SoftDependencies = target.SoftDependencies @ [dependentTargetName] }
 
 /// Adds the dependency to the list of dependencies.
 /// [omit]
@@ -187,7 +187,7 @@ let AllTargetsDependOn target =
 /// Creates a target from template.
 /// [omit]
 let targetFromTemplate template name parameters =
-    TargetDict.Add(toLower name,
+    TargetDict.Add(name,
       { Name = name;
         Dependencies = [];
         SoftDependencies = [];
@@ -294,8 +294,8 @@ let targetError targetName (exn:System.Exception) =
 
 let addExecutedTarget target time =
     lock ExecutedTargets (fun () ->
-        ExecutedTargets.Add (toLower target) |> ignore
-        ExecutedTargetTimes.Add(toLower target,time) |> ignore
+        ExecutedTargets.Add (target) |> ignore
+        ExecutedTargetTimes.Add(target,time) |> ignore
     )
 
 /// Runs all activated final targets (in alphabetically order).
@@ -377,7 +377,7 @@ let private visitDependencies fVisit targetName =
 /// <param name="verbose">Whether to print verbose output or not.</param>
 /// <param name="target">The target for which the dependencies should be printed.</param>
 let PrintDependencyGraph verbose target =
-    match TargetDict.TryGetValue (toLower target) with
+    match TargetDict.TryGetValue (target) with
     | false,_ -> PrintTargets()
     | true,target ->
         logfn "%sDependencyGraph for Target %s:" (if verbose then String.Empty else "Shortened ") target.Name
@@ -564,19 +564,19 @@ let run targetName =
 /// Registers a BuildFailureTarget (not activated).
 let BuildFailureTarget name body =
     Target name body
-    BuildFailureTargets.Add(toLower name,false)
+    BuildFailureTargets.Add(name,false)
 
 /// Activates the BuildFailureTarget.
 let ActivateBuildFailureTarget name =
     let t = getTarget name // test if target is defined
-    BuildFailureTargets.[toLower name] <- true
+    BuildFailureTargets.[name] <- true
 
 /// Registers a final target (not activated).
 let FinalTarget name body =
     Target name body
-    FinalTargets.Add(toLower name,false)
+    FinalTargets.Add(name,false)
 
 /// Activates the FinalTarget.
 let ActivateFinalTarget name =
     let t = getTarget name // test if target is defined
-    FinalTargets.[toLower name] <- true
+    FinalTargets.[name] <- true
