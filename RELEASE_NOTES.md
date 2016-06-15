@@ -2,6 +2,8 @@
 * New helper to execute Sysinternals PsExec - https://github.com/fsharp/FAKE/pull/1266
 * New GitVersion.exe helper - https://github.com/fsharp/FAKE/pull/1265
 * New Bower helper - https://github.com/fsharp/FAKE/pull/1258
+* BUGFIX: Fixed issue in bulk component creation functions where IDs where invalid - https://github.com/fsharp/FAKE/pull/1264
+* BUGFIX: Support VB.NET's case-insensitive assembly attributes - https://github.com/fsharp/FAKE/pull/1255
 
 #### 4.28.0 - 30.05.2016
 * New DocFx helper - https://github.com/fsharp/FAKE/pull/1251
