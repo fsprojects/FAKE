@@ -122,10 +122,10 @@ type private Result<'t> = {
     Error: string option;
 }
 
-type private HttpClient() as x =
+type private HttpClient() =
     inherit WebClient()
 
-    override x.GetWebRequest (address:Uri) =
+    override __.GetWebRequest (address:Uri) =
         let rq = base.GetWebRequest address
         rq.Timeout <- int32 <| TimeSpan.FromHours(1.).TotalMilliseconds
         rq

@@ -190,7 +190,7 @@ let public Vb6Make (getConfig: Vb6BuildParams->Vb6BuildParams) (vb6Projects: str
      let failedJobs = completedWork |> List.filter (fun j -> not j.IsSuccessful)
      match failedJobs with
      | [] -> traceEndTask "Vb6Make" (sprintf "Building %i projects" (vb6Projects |> Seq.length))
-     | _  -> failwith "Vb6 build failed after %A" (System.DateTime.Now - startTime)
+     | _  -> failwithf "Vb6 build failed after %A" (System.DateTime.Now - startTime)
 
 /// Returns application details for provided `.vbp` files.
 /// 

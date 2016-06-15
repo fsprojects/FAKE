@@ -126,28 +126,30 @@ let writeAppcast (path : string) (cast : Appcast) =
             XElement "item" [
                 XElement "title" e.title
                 XElement "pubDate" (e.pubdate.ToString("r"))
-                XElement "enclosure" ([
-                    XAttribute "url" e.url
-                    XAttributeXName (sparkle + "version") e.version
-                    XAttribute "type" (mtToString e.mimetype)
-                    XAttribute "length" e.length
-                    XAttributeXName (sparkle + "shortVersionString") (choose e.shortVersion e.version)
-                ] 
+                XElement "enclosure" (
+                    [
+                        XAttribute "url" e.url
+                        XAttributeXName (sparkle + "version") e.version
+                        XAttribute "type" (mtToString e.mimetype)
+                        XAttribute "length" e.length
+                        XAttributeXName (sparkle + "shortVersionString") (choose e.shortVersion e.version)
+                    ] 
                 |> appendMinimumVersion
                 |> appendSig)
             ]
 
         let doc = XDocument (XDeclaration "1.0" "UTF-8" "no") [
-                    XElement "rss" [
-                        XAttribute "version" "2.0"
-                        XAttributeXName (XNamespace.Xmlns + "sparkle") "http://www.andymatuschak.org/xml-namespaces/sparkle"
-                        XAttributeXName (XNamespace.Xmlns + "dc") "http://purl.org/dc/elements/1.1/"
-                        XElement "channel" ([
-                                                XElement "title" cast.title
-                                                XElement "description" cast.description
-                                                XElement "language" cast.language] 
-                        @ List.map item cast.items)
-                    ]
+                    XElement "rss" 
+                        [
+                            XAttribute "version" "2.0"
+                            XAttributeXName (XNamespace.Xmlns + "sparkle") "http://www.andymatuschak.org/xml-namespaces/sparkle"
+                            XAttributeXName (XNamespace.Xmlns + "dc") "http://purl.org/dc/elements/1.1/"
+                            XElement "channel" ([
+                                                    XElement "title" cast.title
+                                                    XElement "description" cast.description
+                                                    XElement "language" cast.language] 
+                            @ List.map item cast.items)
+                        ]
         ]
         doc
     let xml = toXml cast

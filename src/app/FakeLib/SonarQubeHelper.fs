@@ -50,7 +50,7 @@ let SonarQubeCall (call: SonarQubeCall) (parameters : SonarQubeParams) =
     ExecProcess (fun info ->
       info.FileName <- sonarPath
       info.Arguments <- args) System.TimeSpan.MaxValue
-  if result <> 0 then failwithf "Error during sonar qube call " (call.ToString())
+  if result <> 0 then failwithf "Error during sonar qube call %s" (call.ToString())
 
 /// This task to can be used to run [Sonar Qube](http://conarqube.org/) on a project.
 /// ## Parameters
