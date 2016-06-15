@@ -522,7 +522,7 @@ let bulkComponentCreation fileFilter directoryInfo architecture =
         |> Seq.filter fileFilter
         |> Seq.map (fun file -> 
                         { 
-                            Id = "f" + file.Name.GetHashCode().ToString().Replace("-", "")
+                            Id = getFileId(file.FullName)
                             Name = file.Name
                             Source = file.FullName
                             ProcessorArchitecture = architecture
@@ -544,7 +544,7 @@ let bulkComponentCreation fileFilter directoryInfo architecture =
 /// The components are embedded into the passed in root directory.
 let bulkComponentCreationAsSubDir fileFilter (directoryInfo : DirectoryInfo) architecture = 
     {
-        Id = (directoryInfo.FullName.GetHashCode().ToString())
+        Id = getDirectoryId(directoryInfo.FullName)
         Name = directoryInfo.Name 
         Files = []
         Components = bulkComponentCreation fileFilter directoryInfo architecture
