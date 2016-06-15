@@ -2,6 +2,7 @@ content: none
 source http://nuget.org/api/v2
 
 nuget FSharp.Core redirects:force
+nuget FSharp.Data
 nuget Knockout
 nuget RavenDB.Server
 nuget serilog.sinks.nlog
