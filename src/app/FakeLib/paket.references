@@ -1,6 +1,5 @@
 File: YaafFSharpScripting.fs
 FSharp.Core
-FSharp.Data
 Mono.Web.Xdt
 Mono.Cecil
 Nuget.Core
