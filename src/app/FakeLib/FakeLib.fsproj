@@ -184,7 +184,6 @@
     <Compile Include="SonarQubeHelper.fs" />
     <Compile Include="AzureKudu.fs" />
     <Compile Include="DocFxHelper.fs" />
-    <Compile Include="GitVersionHelper.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
@@ -515,5 +514,4 @@
       </ItemGroup>
     </When>
   </Choose>
-</Project>
 </Project>
