@@ -355,6 +355,7 @@ do ()
             () =>
             {
                 var scriptFilePath = Path.GetTempFileName() + ".fsx";
+                var cacheDir = Path.Combine(Path.GetDirectoryName(scriptFilePath), ".fake");
                 var scriptFileName = Path.GetFileName(scriptFilePath);
                 var t = new MyTracer(new StringBuilder());
                 try
@@ -468,6 +469,7 @@ trace ""TEST_FAKE_OUTPUT""");
             () =>
             {
                 var scriptFilePath = Path.GetTempFileName() + ".fsx";
+                var cacheDir = Path.Combine(Path.GetDirectoryName(scriptFilePath), ".fake");
                 var scriptFileName = Path.GetFileName(scriptFilePath);
                 try
                 {
@@ -475,12 +477,12 @@ trace ""TEST_FAKE_OUTPUT""");
                     var scriptHash =
                             FSIHelper.getScriptHash(new FSIHelper.Script[] { script(scriptFilePath, "printf \"foobar\"") }, new List<string>());
 
-                    var cacheFilePath = Path.Combine(Path.GetDirectoryName(scriptFilePath), ".fake", scriptFileName + "_" + scriptHash + ".dll");
+                    var cacheFilePath = Path.Combine(cacheDir, scriptFileName + "_" + scriptHash + ".dll");
 
                     File.Exists(cacheFilePath).ShouldEqual(false);
 
                     RunExplicit(scriptFilePath, EmptyArgs, EmptyArgs, false)
-                       .Item1.Head.Message.ShouldEqual("foobar");
+                       .Item1.Any(m => m.Message == "foobar").ShouldEqual(true);
 
                     File.Exists(cacheFilePath).ShouldEqual(false);
 
@@ -506,7 +508,7 @@ trace ""TEST_FAKE_OUTPUT""");
                     res3.Item2.ShouldStartWith("Using cache");
                     res3.Item1.Head.Message.ShouldEqual("foobarbaz");
 
-                    File.Exists("./.fake/" + scriptFileName + "_" + changedScriptHash + ".dll").ShouldEqual(true);
+                    File.Exists(Path.Combine(cacheDir, scriptFileName + "_" + changedScriptHash + ".dll")).ShouldEqual(true);
                 }
                 finally
                 {
