@@ -5,12 +5,29 @@ namespace Test.FAKECore
 {
     public static class TestData
     {
-        public static readonly string SideBySideFolder =
-            new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, "SideBySideSpecification")).FullName;
+        public static string SideBySideFolder;
 
         static TestData()
         {
-            BaseDir = Directory.GetCurrentDirectory();
+            try
+            {
+                BaseDir = Directory.GetCurrentDirectory();
+                InitializeFromBase();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                // Take temp (for example when running in VS)
+                BaseDir = Path.GetTempFileName();
+                File.Delete(BaseDir);
+                CreateDir(BaseDir);
+                InitializeFromBase();
+            }
+        }
+
+        private static void InitializeFromBase()
+        {
+            SideBySideFolder =
+               new DirectoryInfo(Path.Combine(BaseDir, "SideBySideSpecification")).FullName;
             TestDir = Path.Combine(BaseDir, "Test");
             CreateDir(TestDir);
 
