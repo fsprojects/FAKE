@@ -55,12 +55,13 @@ namespace Test.FAKECore
 
     internal class when_appending_arguments : BuildReportArgumentsSpecs
     {
-        It should_surround_reports_with_quotes = () => ArgumentsWithQuotes.ShouldContain("-reports:");
-        It should_surround_target_directory_with_quotes = () => ArgumentsWithQuotes.ShouldContain("-targetdir:");
-        It should_not_surround_report_types_with_quotes = () => ArgumentsWithQuotes.ShouldNotContain("-reporttypes:");
-        It should_not_surround_verbosity_with_quotes = () => ArgumentsWithQuotes.ShouldNotContain("-verbosity:");
+        It should_surround_reports_with_quotes = () => ArgumentsWithQuotes.Value.ShouldContain("-reports:");
+        It should_surround_target_directory_with_quotes = () => ArgumentsWithQuotes.Value.ShouldContain("-targetdir:");
+        It should_not_surround_report_types_with_quotes = () => ArgumentsWithQuotes.Value.ShouldNotContain("-reporttypes:");
+        It should_not_surround_verbosity_with_quotes = () => ArgumentsWithQuotes.Value.ShouldNotContain("-verbosity:");
 
-        private static string ArgumentsWithQuotes = GetArgumentsWithQuotes();
+        // Note: Needs to be lazy because the static variable 'Arguments' might not be initialized otherwise
+        private static Lazy<string> ArgumentsWithQuotes = new Lazy<string>(() => GetArgumentsWithQuotes());
 
         private static string GetArgumentsWithQuotes()
         {
