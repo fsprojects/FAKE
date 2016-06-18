@@ -417,7 +417,7 @@ let private runScriptUncached (useCache, scriptPath, fsiOptions) printDetails ca
     let getScriptAndHash fileName =
         let matched = hashRegex.Match(fileName)
         matched.Groups.Item("script").Value, matched.Groups.Item("hash").Value
-    let cacheDir = DirectoryInfo(Path.Combine(".",".fake"))
+    let cacheDir = DirectoryInfo(Path.Combine(Path.GetDirectoryName(scriptPath),".fake"))
     if useCache then
         // If we are here that proably means that
         // when trying to load the cached version something went wrong...
