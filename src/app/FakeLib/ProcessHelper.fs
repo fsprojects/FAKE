@@ -19,6 +19,9 @@ let start (proc : Process) =
     if isMono && proc.StartInfo.FileName.ToLowerInvariant().EndsWith(".exe") then
         proc.StartInfo.Arguments <- "--debug \"" + proc.StartInfo.FileName + "\" " + proc.StartInfo.Arguments
         proc.StartInfo.FileName <- monoPath
+        if isMono then
+            proc.StartInfo.StandardOutputEncoding <- Encoding.UTF8
+            proc.StartInfo.StandardErrorEncoding  <- Encoding.UTF8
 
     proc.Start() |> ignore
     startedProcesses.Add(proc.Id, proc.StartTime) |> ignore
@@ -66,9 +69,6 @@ let ExecProcessWithLambdas configProcessStartInfoF (timeOut : TimeSpan) silent e
     if silent then 
         proc.StartInfo.RedirectStandardOutput <- true
         proc.StartInfo.RedirectStandardError <- true
-        if isMono then
-            proc.StartInfo.StandardOutputEncoding <- Encoding.UTF8
-            proc.StartInfo.StandardErrorEncoding  <- Encoding.UTF8
         proc.ErrorDataReceived.Add(fun d -> 
             if d.Data <> null then errorF d.Data)
         proc.OutputDataReceived.Add(fun d -> 
