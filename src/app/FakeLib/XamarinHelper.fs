@@ -9,8 +9,14 @@ open System.Xml
 open System.Text
 
 let private executeCommand command args =
-    Shell.Exec(command, args)
-    |> fun result -> if result <> 0 then failwithf "%s exited with error %d" command result
+    ExecProcessAndReturnMessages (fun p ->
+        p.FileName <- command
+        p.Arguments <- args
+    ) TimeSpan.MaxValue
+    |>  fun result ->
+             let output = String.Join (Environment.NewLine, result.Messages)
+             tracefn "Process output: \r\n%A" output
+             if result.ExitCode <> 0 then failwithf "%s exited with error %d" command result.ExitCode
 
 /// The package restore paramater type
 type XamarinComponentRestoreParams = {
