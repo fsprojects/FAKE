@@ -1,8 +1,9 @@
 #### 4.29.0 - 15.06.2016
 * New helper to execute Sysinternals PsExec - https://github.com/fsharp/FAKE/pull/1266
-* New GitVersion.exe helper - https://github.com/fsharp/FAKE/pull/1265
+* Add initial support for Fuchu tests - https://github.com/fsharp/FAKE/pull/1268
 * New Bower helper - https://github.com/fsharp/FAKE/pull/1258
 * FAKE cache is now local to the build script - https://github.com/fsharp/FAKE/pull/1250
+* BUGFIX: Correct waiting for android packaging and fix for mono processes encoding - https://github.com/fsharp/FAKE/pull/1275
 * BUGFIX: Fixed issue in bulk component creation functions where IDs where invalid - https://github.com/fsharp/FAKE/pull/1264
 * BUGFIX: Support VB.NET's case-insensitive assembly attributes - https://github.com/fsharp/FAKE/pull/1255
 * BUGFIX: Bamboo buildNumber environment variable in case sensitive behavior - https://github.com/fsharp/FAKE/pull/1252
