@@ -1,4 +1,7 @@
-#### 4.29.0 - 15.06.2016
+#### 4.29.1 - 20.06.2016
+* BUGFIX: update fix for mono encoding in ProcessHelper.fs - https://github.com/fsharp/FAKE/pull/1276
+
+#### 4.29.0 - 19.06.2016
 * New helper to execute Sysinternals PsExec - https://github.com/fsharp/FAKE/pull/1266
 * Add initial support for Fuchu tests - https://github.com/fsharp/FAKE/pull/1268
 * New Bower helper - https://github.com/fsharp/FAKE/pull/1258
