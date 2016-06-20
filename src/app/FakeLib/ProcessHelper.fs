@@ -19,10 +19,9 @@ let start (proc : Process) =
     if isMono && proc.StartInfo.FileName.ToLowerInvariant().EndsWith(".exe") then
         proc.StartInfo.Arguments <- "--debug \"" + proc.StartInfo.FileName + "\" " + proc.StartInfo.Arguments
         proc.StartInfo.FileName <- monoPath
-        if isMono then
-            proc.StartInfo.StandardOutputEncoding <- Encoding.UTF8
-            proc.StartInfo.StandardErrorEncoding  <- Encoding.UTF8
-
+    if isMono then
+        proc.StartInfo.StandardOutputEncoding <- Encoding.UTF8
+        proc.StartInfo.StandardErrorEncoding  <- Encoding.UTF8
     proc.Start() |> ignore
     startedProcesses.Add(proc.Id, proc.StartTime) |> ignore
 
