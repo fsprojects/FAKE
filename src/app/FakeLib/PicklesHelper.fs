@@ -1,4 +1,4 @@
-/// Contains tasks to run the [Pickles](http://http://www.picklesdoc.com/) living documentation generator
+/// Contains tasks to run the [Pickles](http://www.picklesdoc.com/) living documentation generator
 module Fake.PicklesHelper
 
 open System
