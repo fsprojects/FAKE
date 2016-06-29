@@ -5,7 +5,7 @@ open Fake
 open System
 open System.IO
 
-/// Location where staged outputs should go before before synced up to the site.
+/// Location where staged outputs should go before synced up to the site.
 let deploymentTemp = getBuildParamOrDefault "DEPLOYMENT_TEMP" (Path.GetTempPath() + "kudutemp")
 /// Location where synced outputs should be deployed to.
 let deploymentTarget = getBuildParamOrDefault "DEPLOYMENT_TARGET" (Path.GetTempPath() + "kudutarget")
@@ -46,7 +46,7 @@ let stageWebJob webJobType webJobName files =
     CreateDir webJobPath
     files |> FileHelper.CopyFiles webJobPath
 
-/// Synchronises all stages files from the temporary deployment to the actual deployment, removing
+/// Synchronises all staged files from the temporary deployment to the actual deployment, removing
 /// any obsolete files, updating changed files and adding new files.
 let kuduSync() =
     let succeeded, output =
