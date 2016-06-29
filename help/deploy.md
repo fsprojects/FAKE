@@ -69,11 +69,11 @@ Fake deployment packages can be run manually on the current machine or they can 
 
 To run a package on the local machine located at C:\Appdev\MyDeployment.nupkg you would run the following command:
 
-    Fake.Deploy /deploy C:\Appdev\MyDeployment.nupkg
+    Fake.Deploy /deploy C:/Appdev/MyDeployment.nupkg
 
 To run the same package on a remote computer (e.g. integration-1) you can run:
 
-    Fake.Deploy /deployRemote http://integration-1:8080 C:\Appdev\MyDeployment.nupkg
+    Fake.Deploy /deployRemote http://integration-1:8080/fake C:/Appdev/MyDeployment.nupkg
 
 It's also possible to just make a HTTP-POST with the package to http://integration-1:8080/fake
 

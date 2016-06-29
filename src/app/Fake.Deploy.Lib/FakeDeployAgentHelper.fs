@@ -76,7 +76,7 @@ let private webRequest (url : Url) (action : Action) (timeout : TimeSpan) =
     req
 
 let private downloadString (request : HttpWebRequest) = 
-    use responseStream = request.GetRequestStream()
+    use responseStream = request.GetResponse().GetResponseStream()
     use ms = new MemoryStream()
     responseStream.CopyTo ms
     Encoding.UTF8.GetString(ms.ToArray())
