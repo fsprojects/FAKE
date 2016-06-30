@@ -69,9 +69,9 @@
     <Compile Include="Globbing\FileSystem.fs" />
     <Compile Include="FileHelper.fs" />
     <Compile Include="FileUtils.fs" />
+    <Compile Include="FuchuHelper.fs" />
     <Compile Include="UnitTest\UnitTestCommon.fs" />
     <Compile Include="UnitTest\UnitTestHelper.fs" />
-    <Compile Include="FuchuHelper.fs" />
     <Compile Include="UnitTest\NUnit\Xml.fs" />
     <Compile Include="UnitTest\NUnit\Common.fs" />
     <Compile Include="UnitTest\NUnit\Sequential.fs" />
