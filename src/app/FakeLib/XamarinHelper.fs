@@ -310,7 +310,7 @@ let AndroidSignAndAlign setParams apkFile =
         executeCommand param.JarsignerPath jarsignerArgs
 
         let fullAlignedFilePath = Regex.Replace(fullSignedFilePath, "-Signed.apk$", "-SignedAndAligned.apk")
-        let zipalignArgs = String.Format("-f -v 4 {0} {1}", fullSignedFilePath, fullAlignedFilePath)
+        let zipalignArgs = String.Format("-f -v 4 {0} {1}", quotesSurround(fullSignedFilePath), quotesSurround(fullAlignedFilePath))
         executeCommand param.ZipalignPath zipalignArgs
 
         fileInfo fullAlignedFilePath
