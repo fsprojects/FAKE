@@ -1,5 +1,6 @@
 #### 4.30.0 - 12.07.2016
 * Improved default npm path handling - https://github.com/fsharp/FAKE/pull/1278
+* BUGFIX: Fixed Fake.Deploy downloadString - https://github.com/fsharp/FAKE/pull/1288
 * BUGFIX: update fix for mono encoding in ProcessHelper.fs - https://github.com/fsharp/FAKE/pull/1276
 
 #### 4.29.0 - 19.06.2016
