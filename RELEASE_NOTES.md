@@ -2,6 +2,7 @@
 * Improved default npm path handling - https://github.com/fsharp/FAKE/pull/1278
 * BUGFIX: Fixed Fake.Deploy downloadString - https://github.com/fsharp/FAKE/pull/1288
 * BUGFIX: update fix for mono encoding in ProcessHelper.fs - https://github.com/fsharp/FAKE/pull/1276
+* BUGFIX: XamarinHelper - file name was not quoted by calling zipalign - https://github.com/fsharp/FAKE/pull/1294
 
 #### 4.29.0 - 19.06.2016
 * New helper to execute Sysinternals PsExec - https://github.com/fsharp/FAKE/pull/1266
