@@ -102,14 +102,14 @@ status if the service</p>
 <p>To run a package on the local machine located at C:\Appdev\MyDeployment.nupkg you would run the following command:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Fake</span><span class="o">.</span><span class="i">Deploy</span> <span class="o">/</span><span class="i">deploy</span> <span class="i">C</span><span class="o">:</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Fake</span><span class="o">.</span><span class="i">Deploy</span> <span class="o">/</span><span class="i">deploy</span> <span class="i">C</span><span class="o">:</span><span class="o">/</span><span class="i">Appdev</span><span class="o">/</span><span class="i">MyDeployment</span><span class="o">.</span><span class="i">nupkg</span>
 </code></pre></td>
 </tr>
 </table>
 <p>To run the same package on a remote computer (e.g. integration-1) you can run:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Fake</span><span class="o">.</span><span class="i">Deploy</span> <span class="o">/</span><span class="i">deployRemote</span> <span class="i">http</span><span class="o">:</span><span class="c">//integration-1:8080 C:\Appdev\MyDeployment.nupkg</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Fake</span><span class="o">.</span><span class="i">Deploy</span> <span class="o">/</span><span class="i">deployRemote</span> <span class="i">http</span><span class="o">:</span><span class="c">//integration-1:8080/fake C:/Appdev/MyDeployment.nupkg</span>
 </code></pre></td>
 </tr>
 </table>
