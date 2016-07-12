@@ -3,11 +3,23 @@ module Fake.NpmHelper
 open Fake
 open System
 open System.IO
+open System.Diagnostics
 
 /// Default paths to Npm
 let private npmFileName =
     match isUnix with
-    | true -> "/usr/local/bin/npm"
+    | true -> 
+        let info = new ProcessStartInfo("which","npm")
+        info.StandardOutputEncoding <- System.Text.Encoding.UTF8
+        info.RedirectStandardOutput <- true
+        info.UseShellExecute        <- false
+        info.CreateNoWindow         <- true
+        use proc = Process.Start info
+        proc.WaitForExit()
+        match proc.ExitCode with
+            | 0 when not proc.StandardOutput.EndOfStream ->
+              proc.StandardOutput.ReadLine()
+            | _ -> "/usr/bin/npm"
     | _ -> "./packages/Npm.js/tools/npm.cmd"
 
 /// Arguments for the Npm install command
