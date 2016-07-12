@@ -37,7 +37,7 @@ let stageFolder source shouldInclude =
 
 /// Gets the path for deploying a web job to.
 let getWebJobPath webJobType webJobName =
-    let webJobType = match webJobType with Scheduled -> "scheduled" | Continuous -> "continous"
+    let webJobType = match webJobType with Scheduled -> "scheduled" | Continuous -> "continuous" 
     sprintf @"%s\app_data\jobs\%s\%s\" deploymentTemp webJobType webJobName
 
 /// Stages a set of files into a WebJob folder in the temp deployment area, ready for deployment into the website as a webjob.
