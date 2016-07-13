@@ -235,7 +235,7 @@ module internal ResultHandling =
 
     let failBuildWithMessage = function
         | DontFailBuild -> traceImportant
-        | _ -> failwith
+        | _ -> (fun m -> raise(FailedTestsException m))
 
     let failBuildIfXUnitReportedError errorLevel =
         buildErrorMessage
