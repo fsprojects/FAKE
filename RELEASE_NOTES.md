@@ -1,5 +1,7 @@
-#### 4.30.2 - 13.07.2016
+#### 4.31.0 - 14.07.2016
+* BUGFIX: Better Old-Style Arg parsing - https://github.com/fsharp/FAKE/pull/1301
 * BUGFIX: Fixed typo in continuous web job path - https://github.com/fsharp/FAKE/pull/1297 https://github.com/fsharp/FAKE/pull/1300
+* COSMETICS: Update XUnit2 module to fail gracefully - https://github.com/fsharp/FAKE/pull/1302
 
 #### 4.30.0 - 12.07.2016
 * Improved default npm path handling - https://github.com/fsharp/FAKE/pull/1278
