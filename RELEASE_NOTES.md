@@ -1,3 +1,6 @@
+#### 4.31.1 - 14.07.2016
+* REVERT: Better Old-Style Arg parsing - https://github.com/fsharp/FAKE/pull/1301
+
 #### 4.31.0 - 14.07.2016
 * BUGFIX: Better Old-Style Arg parsing - https://github.com/fsharp/FAKE/pull/1301
 * BUGFIX: Fixed typo in continuous web job path - https://github.com/fsharp/FAKE/pull/1297 https://github.com/fsharp/FAKE/pull/1300
