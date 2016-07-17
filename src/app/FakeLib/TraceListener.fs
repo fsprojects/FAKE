@@ -97,11 +97,12 @@ let mutable AutoCloseXmlWriter = false
 /// ## Parameters
 ///  - `xmlOutputFile` - Defines the xml output file.
 type NAntXmlTraceListener(xmlOutputFile) = 
-    let getXmlWriter() = new IO.StreamWriter(xmlOutputFile, true, encoding)
+    let xmlOutputPath = FullName xmlOutputFile
+    let getXmlWriter() = new IO.StreamWriter(xmlOutputPath, true, encoding)
     let mutable xmlWriter : IO.StreamWriter = null
     
     let deleteOldFile() = 
-        let fi = fileInfo xmlOutputFile
+        let fi = fileInfo xmlOutputPath
         if fi.Exists then 
             fi.IsReadOnly <- false
             fi.Delete()
