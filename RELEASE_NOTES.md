@@ -1,4 +1,5 @@
-#### 4.31.1 - 14.07.2016
+#### 4.32.0 - 14.07.2016
+* BUGFIX: Fixed FscParam.References issue - https://github.com/fsharp/FAKE/pull/1304
 * REVERT: Better Old-Style Arg parsing - https://github.com/fsharp/FAKE/pull/1301
 
 #### 4.31.0 - 14.07.2016
