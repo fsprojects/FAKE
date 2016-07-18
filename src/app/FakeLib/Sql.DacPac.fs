@@ -6,12 +6,12 @@ open Fake.ProcessHelper
 
 /// The type of action to execute.
 type DeployAction =
-    /// Generate and apply a synchronisation between two databases.
+    /// Generate and apply a synchronisation script between two databases.
     | Deploy
     /// Generate a SQL script to sync two databases.
-    | Script
+    | Script of OutputPath:string
     /// Generate an XML report for the differences between two databases.
-    | Report
+    | Report of OutputPath:string
 
 /// Configuration arguments for DacPac deploy
 type DeployDbArgs = {
@@ -31,12 +31,25 @@ type DeployDbArgs = {
 /// The default DacPac deployment arguments.
 let defaultDeploymentArgs = { Action = Deploy; Source = ""; Destination = ""; Timeout = 120; BlockOnPossibleDataLoss = true; DropObjectsNotInSource = false }
 
+let private generateCommandLine args =
+    let action, outputPath =
+        match args with
+        | Deploy -> "Publish", None
+        | Script outputPath -> "Script", Some outputPath
+        | Report outputPath -> "DeployReport", Some outputPath
+    let outputPath = defaultArg(outputPath |> Option.map(sprintf """/OutputPath:"%s" """)) ""
+    action, outputPath
+
 /// Deploys a SQL DacPac or database to another database or DacPac.
 let deployDb modifier =
     let args = modifier defaultDeploymentArgs
+    let action, outputPath = generateCommandLine args.Action
     shellExec {        
-        Program = sprintf @"%s\IIS\Microsoft Web Deploy V3\MSDeploy.exe" ProgramFiles
-        CommandLine = sprintf """-verb:sync -source:dbDacFx="%s" -dest:dbDacFx="%s",DacPacAction=%A,BlockOnPossibleDataLoss=%b,DropObjectsNotInSource=%b,CommandTimeout=%d""" args.Source args.Destination args.Action args.BlockOnPossibleDataLoss args.DropObjectsNotInSource args.Timeout
+        Program = sprintf @"%s\Microsoft SQL Server\130\DAC\bin\SqlPackage.exe" ProgramFilesX86
+        CommandLine = sprintf """/Action:%s /SourceFile:"%s" /TargetConnectionString:"%s" %s /p:BlockOnPossibleDataLoss=%b /p:DropObjectsNotInSource=%b /p:CommandTimeout=%d""" action args.Source args.Destination outputPath args.BlockOnPossibleDataLoss args.DropObjectsNotInSource args.Timeout
         WorkingDirectory = ""
         Args = [] }
+    |> function
+    | 0 -> ()
+    | _ -> failwith "Error executing DACPAC deployment. Please see output for error details."
 
