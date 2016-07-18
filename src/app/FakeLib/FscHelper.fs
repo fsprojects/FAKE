@@ -392,7 +392,7 @@ type FscParam =
         | NoInterfacedata -> arg "nointerfacedata"
         | Sig file -> argp "sig" file
         | Reference dllPath -> sargp "r" dllPath
-        | References dllPaths -> sargmap "r" dllPaths 
+        | References dllPaths -> dllPaths |> List.map (sargp "r") |> String.concat " "
         | Win32res file -> argp "win32res" file
         | Win32Manifest file -> argp "win32manifest" file
         | NoWin32Manifest -> arg "nowin32manifest"
