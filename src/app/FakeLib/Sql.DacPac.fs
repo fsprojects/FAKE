@@ -45,7 +45,7 @@ let deployDb modifier =
     let args = modifier defaultDeploymentArgs
     let action, outputPath = generateCommandLine args.Action
     shellExec {        
-        Program = sprintf @"%s\Microsoft SQL Server\130\DAC\bin\SqlPackage.exe" ProgramFilesX86
+        Program = sprintf @"%s\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\130\SqlPackage.exe" ProgramFilesX86
         CommandLine = sprintf """/Action:%s /SourceFile:"%s" /TargetConnectionString:"%s" %s /p:BlockOnPossibleDataLoss=%b /p:DropObjectsNotInSource=%b /p:CommandTimeout=%d""" action args.Source args.Destination outputPath args.BlockOnPossibleDataLoss args.DropObjectsNotInSource args.Timeout
         WorkingDirectory = ""
         Args = [] }
