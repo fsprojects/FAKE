@@ -1,4 +1,7 @@
-#### 4.31.1 - 14.07.2016
+#### 4.32.0 - 18.07.2016
+* BUGFIX: Convert relative path to absolute path when creating NAntXmlTraceListen - https://github.com/fsharp/FAKE/pull/1305
+* BUGFIX: Update DACPAC module - https://github.com/fsharp/FAKE/pull/1306
+* BUGFIX: Fixed FscParam.References issue - https://github.com/fsharp/FAKE/pull/1304
 * REVERT: Better Old-Style Arg parsing - https://github.com/fsharp/FAKE/pull/1301
 
 #### 4.31.0 - 14.07.2016
