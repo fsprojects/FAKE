@@ -43,21 +43,22 @@ let private generateCommandLine args =
     let outputPath = defaultArg(outputPath |> Option.map(sprintf """/OutputPath:"%s" """)) ""
     action, outputPath
 
-let private sqlPackagePaths =
-    [ ProgramFilesX86 </> @"Microsoft SQL Server\130\DAC\bin\SqlPackage.exe"
-      ProgramFilesX86 </> @"Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\130\SqlPackage.exe" ]
-
 /// Deploys a SQL DacPac or database to another database or DacPac.
 let deployDb modifier =
     let args = modifier defaultDeploymentArgs
     let action, outputPath = generateCommandLine args.Action
 
+    let pathsToCheck =
+        (args.SqlPackagePath |> Option.toList) @
+        [ ProgramFilesX86 </> @"Microsoft SQL Server\130\DAC\bin\SqlPackage.exe"
+          ProgramFilesX86 </> @"Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\130\SqlPackage.exe" ]
+
     let sqlPackagePath =
-        (args.SqlPackagePath |> Option.toList) @ sqlPackagePaths
+        pathsToCheck
         |> List.tryFind File.Exists
         |> function
         | Some path -> path
-        | None -> failwith (sprintf "Unable to find a valid instance of SqlPackage.exe. Valid paths are: %A." sqlPackagePaths)
+        | None -> failwith (sprintf "Unable to find a valid instance of SqlPackage.exe. Paths checked were: %A." pathsToCheck)
           
     shellExec {
         Program = sqlPackagePath
