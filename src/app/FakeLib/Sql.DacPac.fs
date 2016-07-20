@@ -16,6 +16,8 @@ type DeployAction =
 
 /// Configuration arguments for DacPac deploy
 type DeployDbArgs = {
+    /// The path to SqlPackage.exe. If none is supplied, a set of default locations will be probed.
+    SqlPackagePath : string option
     /// Type of action to execute. Defaults to Deploy.
     Action : DeployAction
     /// Path to source (path to DACPAC or Connection String).
@@ -30,7 +32,7 @@ type DeployDbArgs = {
     DropObjectsNotInSource : bool }
 
 /// The default DacPac deployment arguments.
-let defaultDeploymentArgs = { Action = Deploy; Source = ""; Destination = ""; Timeout = 120; BlockOnPossibleDataLoss = true; DropObjectsNotInSource = false }
+let defaultDeploymentArgs = { SqlPackagePath = None; Action = Deploy; Source = ""; Destination = ""; Timeout = 120; BlockOnPossibleDataLoss = true; DropObjectsNotInSource = false }
 
 let private generateCommandLine args =
     let action, outputPath =
@@ -51,7 +53,7 @@ let deployDb modifier =
     let action, outputPath = generateCommandLine args.Action
 
     let sqlPackagePath =
-        sqlPackagePaths
+        (args.SqlPackagePath |> Option.toList) @ sqlPackagePaths
         |> List.tryFind File.Exists
         |> function
         | Some path -> path
