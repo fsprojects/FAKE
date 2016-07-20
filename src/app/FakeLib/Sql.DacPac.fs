@@ -71,7 +71,7 @@ let deployDb setParams =
         failwithf "Unable to find a valid instance of SqlPackage.exe. Paths checked were: %A." pathsToCheck
           
     shellExec {
-        Program = args.SqlPackagePath
+        Program = args.SqlPackageToolPath
         CommandLine = sprintf """/Action:%s /SourceFile:"%s" /TargetConnectionString:"%s" %s /p:BlockOnPossibleDataLoss=%b /p:DropObjectsNotInSource=%b /p:CommandTimeout=%d""" action args.Source args.Destination outputPath args.BlockOnPossibleDataLoss args.DropObjectsNotInSource args.Timeout
         WorkingDirectory = ""
         Args = [] }
