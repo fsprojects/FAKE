@@ -32,7 +32,14 @@ type DeployDbArgs = {
     DropObjectsNotInSource : bool }
 
 /// The default DacPac deployment arguments.
-let defaultDeploymentArgs = { SqlPackagePath = None; Action = Deploy; Source = ""; Destination = ""; Timeout = 120; BlockOnPossibleDataLoss = true; DropObjectsNotInSource = false }
+let defaultDeploymentArgs = 
+    { SqlPackagePath = None
+      Action = Deploy
+      Source = ""
+      Destination = ""
+      Timeout = 120
+      BlockOnPossibleDataLoss = true
+      DropObjectsNotInSource = false }
 
 let private generateCommandLine args =
     let action, outputPath =
@@ -44,8 +51,8 @@ let private generateCommandLine args =
     action, outputPath
 
 /// Deploys a SQL DacPac or database to another database or DacPac.
-let deployDb modifier =
-    let args = modifier defaultDeploymentArgs
+let deployDb setParams =
+    let args = setParams defaultDeploymentArgs
     let action, outputPath = generateCommandLine args.Action
 
     let pathsToCheck =
