@@ -3,7 +3,9 @@ module Fake.DotNet
 
 open Fake
 open System
+open System.IO
 open System.Text
+open Newtonsoft.Json.Linq
 
 /// The dotnet command name
 let commandName = "dotnet"
@@ -295,4 +297,17 @@ let Pack (setPackParams: PackParams -> PackParams) projects =
             then
                 failwithf "Pack failed on %s" args
     finally
-        traceEndTask "DotNet.pack" ""
+        traceEndTask "DotNet.Pack" ""
+
+/// Sets version in project.json
+let SetVersionInProjectJson version fileName = 
+    traceStartTask "DotNet.SetVersion" fileName
+    try
+        let original = File.ReadAllText fileName
+        let p = JObject.Parse(original)
+        p.["version"] <- version
+        let newText = p.ToString()
+        if newText <> original then
+            File.WriteAllText(fileName,newText)
+    finally
+        traceEndTask "DotNet.SetVersion" fileName
