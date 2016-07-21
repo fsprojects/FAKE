@@ -300,12 +300,12 @@ let Pack (setPackParams: PackParams -> PackParams) projects =
         traceEndTask "DotNet.Pack" ""
 
 /// Sets version in project.json
-let SetVersionInProjectJson version fileName = 
+let SetVersionInProjectJson (version:string) fileName = 
     traceStartTask "DotNet.SetVersion" fileName
     try
         let original = File.ReadAllText fileName
         let p = JObject.Parse(original)
-        p.["version"] <- version
+        p.["version"] <- JValue version
         let newText = p.ToString()
         if newText <> original then
             File.WriteAllText(fileName,newText)
