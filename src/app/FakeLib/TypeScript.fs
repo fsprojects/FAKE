@@ -34,6 +34,7 @@ type TypeScriptParams =
       /// Specifies if the TypeScript compiler should remove comments. Default is false.
       RemoveComments : bool
       /// Specifies the TypeScript compiler path.
+      /// If unspecified, will use the latest version found in [Program Files/x86]\Microsoft SDKs\TypeScript
       ToolPath : string
       /// Specifies the TypeScript compiler output path.
       OutputPath : string
