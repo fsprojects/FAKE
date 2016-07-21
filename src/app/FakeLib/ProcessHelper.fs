@@ -8,6 +8,7 @@ open System.Diagnostics
 open System.IO
 open System.Threading
 open System.Text
+open System.Text.RegularExpressions
 open System.Collections.Generic
 open System.ServiceProcess
 
@@ -316,27 +317,54 @@ let parametersToString flagPrefix delimiter parameters =
     |> separated " "
 
 /// Searches the given directories for all occurrences of the given file name
+/// Permits [ProgramFiles], [ProgramFilesX86], [SystemRoot] as placeholders.
+/// Also allows [v] to represent a version number, where it will search the latest version first
 /// [omit]
-let tryFindFile dirs file = 
-    let files = 
-        dirs
-        |> Seq.map (fun (path : string) -> 
-               let dir = 
-                   path
-                   |> replace "[ProgramFiles]" ProgramFiles
-                   |> replace "[ProgramFilesX86]" ProgramFilesX86
-                   |> replace "[SystemRoot]" SystemRoot
-                   |> directoryInfo
-               if not dir.Exists then ""
-               else 
-                   let fi = dir.FullName @@ file
-                            |> fileInfo
-                   if fi.Exists then fi.FullName
-                   else "")
-        |> Seq.filter ((<>) "")
-        |> Seq.cache
-    if not (Seq.isEmpty files) then Some(Seq.head files)
-    else None
+let tryFindFile dirs file =
+    let someIf p x = if p x then Some x else None
+    let (|Substituted|) = function
+    | "[ProgramFiles]"       -> ProgramFiles
+    | "[ProgramFilesX86]"    -> ProgramFilesX86
+    | "[SystemRoot]"         -> SystemRoot
+    | x when x.EndsWith(":") -> x + @"\"
+    | x                      -> x
+
+    let expand (path: string) =
+        let rec expand' root subDirs =
+            let extractVersion s =
+                Regex.Match(s, "((?<v>[0-9]+)\.)*(?<v>[0-9]+)").Groups.["v"].Captures
+                |> Seq.cast<Capture>
+                |> Seq.map (fun x -> Int32.Parse(x.Value))
+                |> List.ofSeq
+                
+            let (|Versions|_|) (s: string) =
+                match s with
+                | x when x.Contains("[v]") -> root
+                                              |> Directory.GetDirectories
+                                              |> Seq.map (Path.GetFileName >> extractVersion)
+                                              |> Seq.sortDescending
+                                              |> Seq.map (fun vs -> s.Replace("[v]", String.Join(".", vs)))
+                                              |> Seq.cache
+                                              |> someIf (Seq.isEmpty >> not)
+                | _     -> None
+
+            let rootCombine xs x =
+                let combined = root @@ x
+                if Directory.Exists combined then expand' combined xs else Seq.empty
+
+            match subDirs with
+            | (Versions vs)::xs   -> vs |> Seq.collect (rootCombine xs)
+            | (Substituted x)::xs -> rootCombine xs x
+            | []                  -> Seq.singleton root
+        
+        expand' "" (path.Split(Path.DirectorySeparatorChar) |> List.ofArray)
+
+    dirs
+    |> Seq.collect expand
+    |> Seq.choose (fun dir -> dir @@ file |> someIf File.Exists)
+    |> Seq.cache
+    |> someIf (Seq.isEmpty >> not)
+    |> Option.map Seq.head
 
 /// Searches the given directories for the given file, failing if not found.
 /// [omit]

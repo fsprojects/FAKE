@@ -34,6 +34,7 @@ type TypeScriptParams =
       /// Specifies if the TypeScript compiler should remove comments. Default is false.
       RemoveComments : bool
       /// Specifies the TypeScript compiler path.
+      /// If unspecified, will use the latest version found in [Program Files/x86]\Microsoft SDKs\TypeScript
       ToolPath : string
       /// Specifies the TypeScript compiler output path.
       OutputPath : string
@@ -41,7 +42,7 @@ type TypeScriptParams =
       TimeOut : TimeSpan }
 
 let private TypeScriptCompilerPath = 
-    @"[ProgramFilesX86]\Microsoft SDKs\TypeScript\1.0\;[ProgramFiles]\Microsoft SDKs\TypeScript\1.0\;[ProgramFilesX86]\Microsoft SDKs\TypeScript\0.9\;[ProgramFiles]\Microsoft SDKs\TypeScript\0.9\"
+    @"[ProgramFilesX86]\Microsoft SDKs\TypeScript\[v]\;[ProgramFiles]\Microsoft SDKs\TypeScript\[v]\"
 
 /// Default parameters for the TypeScript task
 let TypeScriptDefaultParams = 
