@@ -77,11 +77,11 @@ let private DefaultCommandParams : CommandParams = {
 ///
 /// ## Sample
 ///
-///     !! "src/test/project.json"
-///     |> DotNet.Pack
+///     DotNet.RunCommand
 ///         (fun p -> 
 ///              { p with 
-///                   Configuration = "Release" })
+///                   TimeOut = TimeSpan.FromMinutes 10. })
+///         "restore"
 let RunCommand (setCommandParams: CommandParams -> CommandParams) args =
     traceStartTask "DotNet" ""
 
