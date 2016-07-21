@@ -38,7 +38,7 @@
 
 <h1>DotNet</h1>
 <div class="xmldoc">
-<p>Contains a task which can be used to run <a href="http://www.jetbrains.com/dotcover/">DotCover</a> on .NET assemblies.</p>
+<p>Contains a task which can be used to run dotnet CLI commands.</p>
 
 </div>
 
@@ -54,7 +54,15 @@
           <td class="type-name">
             <a href="fake-dotnet-restoreparams.html">RestoreParams</a>
           </td>
-          <td class="xmldoc"><p>DotNet Restore parameters</p>
+          <td class="xmldoc"><p>DotNet restore parameters</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-testparams.html">TestParams</a>
+          </td>
+          <td class="xmldoc"><p>DotNet test parameters</p>
 
 </td>
         </tr>
@@ -73,14 +81,72 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '180', 180)" onmouseover="showTip(event, '180', 180)">
-            Restore setRestoreParams
+            commandName 
           </code>
           <div class="tip" id="180">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotNetCLIHelper.fs#L8-8" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '181', 181)" onmouseover="showTip(event, '181', 181)">
+            getVersion ()
+          </code>
+          <div class="tip" id="181">
+            <strong>Signature:</strong> unit -&gt; string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotNetCLIHelper.fs#L11-11" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Gets the installed dotnet version</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '182', 182)" onmouseover="showTip(event, '182', 182)">
+            isInstalled ()
+          </code>
+          <div class="tip" id="182">
+            <strong>Signature:</strong> unit -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotNetCLIHelper.fs#L21-21" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Checks wether the dotnet CLI is installed</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '183', 183)" onmouseover="showTip(event, '183', 183)">
+            Restore setRestoreParams
+          </code>
+          <div class="tip" id="183">
             <strong>Signature:</strong> setRestoreParams:(RestoreParams -&gt; RestoreParams) -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotNetCLIHelper.fs#L41-41" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotNetCLIHelper.fs#L63-63" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -102,6 +168,46 @@
 </code></pre></td>
 </tr>
 </table>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '184', 184)" onmouseover="showTip(event, '184', 184)">
+            Test setTestParams projects
+          </code>
+          <div class="tip" id="184">
+            <strong>Signature:</strong> setTestParams:(TestParams -&gt; TestParams) -&gt; projects:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotNetCLIHelper.fs#L117-117" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Runs the dotnet "test" command.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setTestParams</code> - Function used to overwrite the test default parameters.</li>
+</ul>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="o">!!</span> <span class="s">&quot;src/test/project.json&quot;</span>
+<span class="o">|&gt;</span> <span class="i">DotNet</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">Test</span>
+    (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> 
+         { <span class="i">p</span> <span class="k">with</span> 
+              <span class="i">Configuration</span> <span class="o">=</span> <span class="s">&quot;Release&quot;</span> })
+</code></pre></td>
+</tr>
+</table>
+<div class="tip" id="fs1">namespace Test</div>
 
 
         </td>
