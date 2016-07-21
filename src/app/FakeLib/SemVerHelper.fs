@@ -38,7 +38,7 @@ type PreRelease =
       Parts : PrereleaseIdent list }
     static member TryParse str = 
         // this matches any number of alpha-numeric literals separated by '.'
-        let prereleaseSpecRE = Regex("^(?<front>([0-9A-Za-z]+\.)*)(?<back>[0-9A-Za-z]+)$", RegexOptions.Compiled)
+        let prereleaseSpecRE = Regex("^(?<front>([0-9A-Za-z-]+\.)*)(?<back>[0-9A-Za-z-]+)$", RegexOptions.Compiled)
         let namedPrereleaseRE = Regex("^(?<name>[a-zA-Z]+)(?<number>\d*)$", RegexOptions.Compiled)
         let m = prereleaseSpecRE.Match(str)
         match m.Success, m.Groups.["front"].Value, m.Groups.["back"].Value with
