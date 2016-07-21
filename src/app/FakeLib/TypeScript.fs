@@ -41,7 +41,7 @@ type TypeScriptParams =
       TimeOut : TimeSpan }
 
 let private TypeScriptCompilerPath = 
-    @"[ProgramFilesX86]\Microsoft SDKs\TypeScript\1.0\;[ProgramFiles]\Microsoft SDKs\TypeScript\1.0\;[ProgramFilesX86]\Microsoft SDKs\TypeScript\0.9\;[ProgramFiles]\Microsoft SDKs\TypeScript\0.9\"
+    @"[ProgramFilesX86]\Microsoft SDKs\TypeScript\[v]\;[ProgramFiles]\Microsoft SDKs\TypeScript\[v]\"
 
 /// Default parameters for the TypeScript task
 let TypeScriptDefaultParams = 
