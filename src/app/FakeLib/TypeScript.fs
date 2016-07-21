@@ -3,6 +3,7 @@ module Fake.TypeScript
 
 open System
 open System.Text
+open System.IO
 
 /// Generated ECMAScript version
 type ECMAScript =
@@ -42,6 +43,11 @@ type TypeScriptParams =
 
 let private TypeScriptCompilerPrefix = "Microsoft SDKs" </> "TypeScript"
 
+let extractVersionNumber (di : DirectoryInfo) = 
+    match Double.TryParse di.Name with
+    | true, d -> d
+    | false, _ -> 0.0
+
 /// Default parameters for the TypeScript task
 let TypeScriptDefaultParams = 
     { ECMAScript = ES3
@@ -60,8 +66,8 @@ let TypeScriptDefaultParams =
                     [ System.Environment.GetFolderPath System.Environment.SpecialFolder.ProgramFiles; System.Environment.GetFolderPath System.Environment.SpecialFolder.ProgramFilesX86]
                     |> List.map (fun p -> p </> TypeScriptCompilerPrefix)
                     |> List.collect (fun p -> try System.IO.DirectoryInfo(p).GetDirectories() |> List.ofArray with | _ -> [])
+                    |> List.sortByDescending extractVersionNumber
                     |> List.map (fun di -> di.FullName)
-                    |> List.sortDescending
                 findPath "TypeScriptPath" (String.Join(";", paths)) "tsc.exe"
       TimeOut = TimeSpan.FromMinutes 5. }
 
