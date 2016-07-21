@@ -40,8 +40,7 @@ type TypeScriptParams =
       /// Specifies the timeout for the TypeScript compiler.
       TimeOut : TimeSpan }
 
-let private TypeScriptCompilerPath = 
-    @"[ProgramFilesX86]\Microsoft SDKs\TypeScript\1.0\;[ProgramFiles]\Microsoft SDKs\TypeScript\1.0\;[ProgramFilesX86]\Microsoft SDKs\TypeScript\0.9\;[ProgramFiles]\Microsoft SDKs\TypeScript\0.9\"
+let private TypeScriptCompilerPrefix = "Microsoft SDKs" </> "TypeScript"
 
 /// Default parameters for the TypeScript task
 let TypeScriptDefaultParams = 
@@ -56,7 +55,14 @@ let TypeScriptDefaultParams =
       OutputPath = null
       ToolPath = 
             if isUnix then "tsc"
-            else findPath "TypeScriptPath" TypeScriptCompilerPath "tsc.exe"
+            else 
+                let paths = 
+                    [ System.Environment.GetFolderPath System.Environment.SpecialFolder.ProgramFiles; System.Environment.GetFolderPath System.Environment.SpecialFolder.ProgramFilesX86]
+                    |> List.map (fun p -> p </> TypeScriptCompilerPrefix)
+                    |> List.collect (fun p -> try System.IO.DirectoryInfo(p).GetDirectories() |> List.ofArray with | _ -> [])
+                    |> List.map (fun di -> di.FullName)
+                    |> List.sortDescending
+                findPath "TypeScriptPath" (String.Join(";", paths)) "tsc.exe"
       TimeOut = TimeSpan.FromMinutes 5. }
 
 let private buildArguments parameters file = 
