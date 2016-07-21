@@ -113,6 +113,9 @@ type RestoreParams = {
 
     /// Log Verbosity.
     Verbosity : Verbosity
+
+    /// Additional Args
+    AdditionalArgs : string list
 }
 
 let private DefaultRestoreParams : RestoreParams = {
@@ -121,6 +124,7 @@ let private DefaultRestoreParams : RestoreParams = {
     NoCache = false
     TimeOut = TimeSpan.FromMinutes 30.
     Verbosity = DefaultVerbosity
+    AdditionalArgs = []
 }
 
 /// Runs the dotnet "restore" command.
@@ -144,6 +148,9 @@ let Restore (setRestoreParams: RestoreParams -> RestoreParams) =
             |> append "restore"
             |> appendIfTrue parameters.NoCache "--no-cache"
             |> appendWithoutQuotes (sprintf "--verbosity %s" (verbosityString parameters.Verbosity))
+            |> fun sb ->
+                parameters.AdditionalArgs
+                |> List.fold (fun sb arg -> appendWithoutQuotes arg sb) sb
             |> toText
 
         if 0 <> ExecProcess (fun info ->  
@@ -174,6 +181,9 @@ type BuildParams = {
 
     /// Allows to build for a specific runtime
     Runtime : string
+
+    /// Additional Args
+    AdditionalArgs : string list
 }
 
 let private DefaultBuildParams : BuildParams = {
@@ -183,6 +193,7 @@ let private DefaultBuildParams : BuildParams = {
     TimeOut = TimeSpan.FromMinutes 30.
     Framework = ""
     Runtime = ""
+    AdditionalArgs = []
 }
 
 /// Runs the dotnet "build" command.
@@ -210,6 +221,9 @@ let Build (setBuildParams: BuildParams -> BuildParams) projects =
                 |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Configuration) (sprintf "--configuration %s"  parameters.Configuration)
                 |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Framework) (sprintf "--framework %s"  parameters.Framework)
                 |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Runtime) (sprintf "--runtime %s"  parameters.Runtime)
+                |> fun sb ->
+                    parameters.AdditionalArgs
+                    |> List.fold (fun sb arg -> appendWithoutQuotes arg sb) sb
                 |> toText
 
             if 0 <> ExecProcess (fun info ->  
@@ -241,6 +255,9 @@ type TestParams = {
 
     /// Allows to test a specific runtime
     Runtime : string
+
+    /// Additional Args
+    AdditionalArgs : string list
 }
 
 let private DefaultTestParams : TestParams = {
@@ -250,6 +267,7 @@ let private DefaultTestParams : TestParams = {
     TimeOut = TimeSpan.FromMinutes 30.
     Framework = ""
     Runtime = ""
+    AdditionalArgs = []
 }
 
 /// Runs the dotnet "test" command.
@@ -277,6 +295,9 @@ let Test (setTestParams: TestParams -> TestParams) projects =
                 |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Configuration) (sprintf "--configuration %s"  parameters.Configuration)
                 |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Framework) (sprintf "--framework %s"  parameters.Framework)
                 |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Runtime) (sprintf "--runtime %s"  parameters.Runtime)
+                |> fun sb ->
+                    parameters.AdditionalArgs
+                    |> List.fold (fun sb arg -> appendWithoutQuotes arg sb) sb
                 |> toText
 
             if 0 <> ExecProcess (fun info ->  
@@ -308,6 +329,9 @@ type PackParams = {
     
     /// The build configuration.
     Configuration : string
+
+    /// Additional Args
+    AdditionalArgs : string list
 }
 
 let private DefaultPackParams : PackParams = {
@@ -317,6 +341,7 @@ let private DefaultPackParams : PackParams = {
     OutputPath = ""
     VersionSuffix = ""
     TimeOut = TimeSpan.FromMinutes 30.
+    AdditionalArgs = []
 }
 
 /// Runs the dotnet "pack" command.
@@ -344,6 +369,9 @@ let Pack (setPackParams: PackParams -> PackParams) projects =
                 |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Configuration) (sprintf "--configuration %s"  parameters.Configuration)
                 |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.OutputPath) (sprintf "--output %s"  parameters.OutputPath)
                 |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.VersionSuffix) (sprintf "--version-suffix %s"  parameters.VersionSuffix)
+                |> fun sb ->
+                    parameters.AdditionalArgs
+                    |> List.fold (fun sb arg -> appendWithoutQuotes arg sb) sb
                 |> toText
 
             if 0 <> ExecProcess (fun info ->  
