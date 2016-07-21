@@ -124,7 +124,7 @@ let Test (setTestParams: TestParams -> TestParams) projects =
                 new StringBuilder()
                 |> append "test"
                 |> append project
-                |> appendIfNotNullOrEmpty parameters.Configuration "--configuration"
+                |> appendIfNotNullOrEmpty parameters.Configuration "--configuration "
                 |> toText
 
             if 0 <> ExecProcess (fun info ->  
@@ -135,3 +135,60 @@ let Test (setTestParams: TestParams -> TestParams) projects =
                 failwithf "Test failed on %s" args
     finally
         traceEndTask "DotNet.Test" ""
+
+
+/// DotNet pack parameters
+type PackParams = {
+    /// ToolPath - usually just "dotnet"
+    ToolPath: string
+
+    /// Working directory (optional).
+    WorkingDir: string
+
+    /// A timeout for the command.
+    TimeOut: TimeSpan
+    
+    /// The build configuration.
+    Configuration : string
+}
+
+let private DefaultPackParams : PackParams = {
+    ToolPath = commandName
+    WorkingDir = Environment.CurrentDirectory
+    Configuration = "Release"
+    TimeOut = TimeSpan.FromMinutes 30.
+}
+
+/// Runs the dotnet "pack" command.
+/// ## Parameters
+///
+///  - `setPackParams` - Function used to overwrite the pack default parameters.
+///
+/// ## Sample
+///
+///     !! "src/test/project.json"
+///     |> DotNet.Pack
+///         (fun p -> 
+///              { p with 
+///                   Configuration = "Release" })
+let Pack (setPackParams: PackParams -> PackParams) projects =
+    traceStartTask "DotNet.Pack" ""
+
+    try
+        for project in projects do
+            let parameters = setPackParams DefaultPackParams
+            let args =
+                new StringBuilder()
+                |> append "pack"
+                |> append project
+                |> appendIfNotNullOrEmpty parameters.Configuration "--configuration "
+                |> toText
+
+            if 0 <> ExecProcess (fun info ->  
+                info.FileName <- parameters.ToolPath
+                info.WorkingDirectory <- parameters.WorkingDir
+                info.Arguments <- args) parameters.TimeOut
+            then
+                failwithf "Pack failed on %s" args
+    finally
+        traceEndTask "DotNet.pack" ""
