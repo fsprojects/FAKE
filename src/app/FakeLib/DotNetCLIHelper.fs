@@ -5,6 +5,7 @@ open Fake
 open System
 open System.Text
 
+/// The dotnet command name
 let commandName = "dotnet"
 
 /// Gets the installed dotnet version
