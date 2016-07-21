@@ -107,6 +107,73 @@ let Restore (setRestoreParams: RestoreParams -> RestoreParams) =
     finally
         traceEndTask "DotNet.Restore" ""
 
+/// DotNet build parameters
+type BuildParams = {
+    /// ToolPath - usually just "dotnet"
+    ToolPath: string
+
+    /// Working directory (optional).
+    WorkingDir: string
+
+    /// A timeout for the command.
+    TimeOut: TimeSpan
+    
+    /// The build configuration.
+    Configuration : string
+
+    /// Allows to build for a specific framework
+    Framework : string
+
+    /// Allows to build for a specific runtime
+    Runtime : string
+}
+
+let private DefaultBuildParams : BuildParams = {
+    ToolPath = commandName
+    WorkingDir = Environment.CurrentDirectory
+    Configuration = "Release"
+    TimeOut = TimeSpan.FromMinutes 30.
+    Framework = ""
+    Runtime = ""
+}
+
+/// Runs the dotnet "build" command.
+/// ## Parameters
+///
+///  - `setBuildParams` - Function used to overwrite the build default parameters.
+///
+/// ## Sample
+///
+///     !! "src/test/project.json"
+///     |> DotNet.Build
+///         (fun p -> 
+///              { p with 
+///                   Configuration = "Release" })
+let Build (setBuildParams: BuildParams -> BuildParams) projects =
+    traceStartTask "DotNet.Build" ""
+
+    try
+        for project in projects do
+            let parameters = setBuildParams DefaultBuildParams
+            let args =
+                new StringBuilder()
+                |> append "build"
+                |> append project                
+                |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Configuration) (sprintf "--configuration %s"  parameters.Configuration)
+                |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Framework) (sprintf "--framework %s"  parameters.Framework)
+                |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Runtime) (sprintf "--runtime %s"  parameters.Runtime)
+                |> toText
+
+            if 0 <> ExecProcess (fun info ->  
+                info.FileName <- parameters.ToolPath
+                info.WorkingDirectory <- parameters.WorkingDir
+                info.Arguments <- args) parameters.TimeOut
+            then
+                failwithf "Build failed on %s" args
+    finally
+        traceEndTask "DotNet.Build" ""
+
+
 /// DotNet test parameters
 type TestParams = {
     /// ToolPath - usually just "dotnet"
