@@ -1,3 +1,7 @@
+#### 4.33.0 - 21.07.2016
+* DotNet restore support - https://github.com/fsharp/FAKE/pull/1309
+* BUGFIX: Update DACPAC module - https://github.com/fsharp/FAKE/pull/1307
+
 #### 4.32.0 - 18.07.2016
 * BUGFIX: Convert relative path to absolute path when creating NAntXmlTraceListen - https://github.com/fsharp/FAKE/pull/1305
 * BUGFIX: Update DACPAC module - https://github.com/fsharp/FAKE/pull/1306
