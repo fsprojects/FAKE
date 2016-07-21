@@ -1,10 +1,11 @@
-#### 4.34.4 - 21.07.2016
+#### 4.34.5 - 21.07.2016
 * DotNet version support - https://github.com/fsharp/FAKE/pull/1310
 * DotNet test support - https://github.com/fsharp/FAKE/pull/1311
 * DotNet build support - https://github.com/fsharp/FAKE/pull/1318
 * DotNet pack support - https://github.com/fsharp/FAKE/pull/1313
 * Allows to set version in project.json
 * Allow to run arbitrary dotnet CLI commands
+* Allow to add arbitrary args to all dotnet CLI commands
 * DotNet restore support - https://github.com/fsharp/FAKE/pull/1309
 * BUGFIX: Update DACPAC module - https://github.com/fsharp/FAKE/pull/1307
 
