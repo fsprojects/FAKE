@@ -147,10 +147,10 @@ let parse version =
     let prereleasePartStart = startPos '-' version
     let main, pre, build = 
         match prereleasePartStart, buildPartStart with
-        | None, None -> version, "", ""
-        | Some n, None -> version.[0..n-1], version.[n+1..], ""
-        | None, Some n -> version.[0..n-1], "", version.[n+1..]
-        | Some n, Some m -> version.[0..n-1], version.[n+1..m-1], version.[m+1..]
+        | None, None -> version, None, None
+        | Some n, None -> version.[0..n-1], Some version.[n+1..], None
+        | None, Some n -> version.[0..n-1], None, Some version.[n+1..]
+        | Some n, Some m -> version.[0..n-1], Some version.[n+1..m-1], Some version.[m+1..]
     
     let maj, minor, patch = 
         match split '.' main with
@@ -162,15 +162,15 @@ let parse version =
         | _ -> failwith "unknown semver format"
     
     
-    let buildParts = splitRemove '.' build
-    if buildParts |> List.exists (not << identRE.IsMatch) then failwith "unknown semver build format"
+    let buildParts = Option.map (fun b -> splitRemove '.' b) build
+    if buildParts.IsSome && buildParts.Value |> List.exists (not << identRE.IsMatch) then failwith "unknown semver build format"
 
     { Major = maj
       Minor = minor
       Patch = patch
-      PreRelease = PreRelease.TryParse pre
-      Build = build
-      BuildIdentifiers = buildParts |> List.map parseIdent
+      PreRelease = Option.bind PreRelease.TryParse pre
+      Build = defaultArg build "" 
+      BuildIdentifiers = defaultArg (buildParts |> Option.map (List.map parseIdent)) List.empty
     }
 
 
