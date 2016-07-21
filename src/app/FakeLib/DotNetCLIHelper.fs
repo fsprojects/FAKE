@@ -125,7 +125,7 @@ let Test (setTestParams: TestParams -> TestParams) projects =
                 new StringBuilder()
                 |> append "test"
                 |> append project
-                |> appendIfNotNullOrEmpty parameters.Configuration "--configuration "
+                |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Configuration) (sprintf "--configuration %s"  parameters.Configuration)
                 |> toText
 
             if 0 <> ExecProcess (fun info ->  
@@ -182,7 +182,7 @@ let Pack (setPackParams: PackParams -> PackParams) projects =
                 new StringBuilder()
                 |> append "pack"
                 |> append project
-                |> appendIfNotNullOrEmpty parameters.Configuration "--configuration "
+                |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Configuration) (sprintf "--configuration %s"  parameters.Configuration)
                 |> toText
 
             if 0 <> ExecProcess (fun info ->  
