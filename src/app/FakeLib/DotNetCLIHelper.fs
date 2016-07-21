@@ -27,7 +27,7 @@ let isInstalled() =
 
     processResult.OK
 
-/// DotNet Restore parameters
+/// DotNet restore parameters
 type RestoreParams = {
     /// ToolPath - usually just "dotnet"
     ToolPath: string
@@ -61,7 +61,7 @@ let private DefaultRestoreParams : RestoreParams = {
 ///              { p with 
 ///                   NoCache = true })
 let Restore (setRestoreParams: RestoreParams -> RestoreParams) =
-    traceStartTask "DotNetRestore" ""
+    traceStartTask "DotNet.Restore" ""
 
     try
         let parameters = setRestoreParams DefaultRestoreParams
@@ -78,4 +78,60 @@ let Restore (setRestoreParams: RestoreParams -> RestoreParams) =
         then
             failwithf "Restore failed on %s" args
     finally
-        traceEndTask "DotNetRestore" ""
+        traceEndTask "DotNet.Restore" ""
+
+/// DotNet test parameters
+type TestParams = {
+    /// ToolPath - usually just "dotnet"
+    ToolPath: string
+
+    /// Working directory (optional).
+    WorkingDir: string
+
+    /// A timeout for the command.
+    TimeOut: TimeSpan
+    
+    /// The build configuration.
+    Configuration : string
+}
+
+let private DefaultTestParams : TestParams = {
+    ToolPath = commandName
+    WorkingDir = Environment.CurrentDirectory
+    Configuration = "Release"
+    TimeOut = TimeSpan.FromMinutes 30.
+}
+
+/// Runs the dotnet "test" command.
+/// ## Parameters
+///
+///  - `setTestParams` - Function used to overwrite the test default parameters.
+///
+/// ## Sample
+///
+///     !! "src/test/project.json"
+///     |> DotNet.Test
+///         (fun p -> 
+///              { p with 
+///                   Configuration = "Release" })
+let Test (setTestParams: TestParams -> TestParams) projects =
+    traceStartTask "DotNet.Test" ""
+
+    try
+        for project in projects do
+            let parameters = setTestParams DefaultTestParams
+            let args =
+                new StringBuilder()
+                |> append "test"
+                |> append project
+                |> appendIfNotNullOrEmpty parameters.Configuration "--configuration"
+                |> toText
+
+            if 0 <> ExecProcess (fun info ->  
+                info.FileName <- parameters.ToolPath
+                info.WorkingDirectory <- parameters.WorkingDir
+                info.Arguments <- args) parameters.TimeOut
+            then
+                failwithf "Test failed on %s" args
+    finally
+        traceEndTask "DotNet.Test" ""
