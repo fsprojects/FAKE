@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>iOSArchiveParams - FAKE - F# Make</title>
+    <title>PackParams - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,9 +36,9 @@
 
 
 
-<h1>iOSArchiveParams</h1>
+<h1>PackParams</h1>
 <div class="xmldoc">
-<p>The iOS archive paramater type</p>
+<p>DotNet pack parameters</p>
 
 </div>
   <h3>Record Fields</h3>
@@ -50,19 +50,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2662', 2662)" onmouseover="showTip(event, '2662', 2662)">
+          <code onmouseout="hideTip(event, '1463', 1463)" onmouseover="showTip(event, '1463', 1463)">
             Configuration
           </code>
-          <div class="tip" id="2662">
+          <div class="tip" id="1463">
             <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/XamarinHelper.fs#L338-338" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotNetCLIHelper.fs#L152-152" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Build configuration, defaults to 'Debug|iPhoneSimulator'</p>
+          <p>The build configuration.</p>
 
 
         </td>
@@ -70,19 +70,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2663', 2663)" onmouseover="showTip(event, '2663', 2663)">
-            MDToolPath
+          <code onmouseout="hideTip(event, '1464', 1464)" onmouseover="showTip(event, '1464', 1464)">
+            TimeOut
           </code>
-          <div class="tip" id="2663">
-            <strong>Signature:</strong> string<br />
+          <div class="tip" id="1464">
+            <strong>Signature:</strong> TimeSpan<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/XamarinHelper.fs#L340-340" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotNetCLIHelper.fs#L149-149" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Path to mdtool, defaults to Xamarin Studio's usual path</p>
+          <p>A timeout for the command.</p>
 
 
         </td>
@@ -90,19 +90,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2664', 2664)" onmouseover="showTip(event, '2664', 2664)">
-            ProjectName
+          <code onmouseout="hideTip(event, '1465', 1465)" onmouseover="showTip(event, '1465', 1465)">
+            ToolPath
           </code>
-          <div class="tip" id="2664">
+          <div class="tip" id="1465">
             <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/XamarinHelper.fs#L336-336" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotNetCLIHelper.fs#L143-143" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Project name within a solution file</p>
+          <p>ToolPath - usually just "dotnet"</p>
 
 
         </td>
@@ -110,20 +110,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2665', 2665)" onmouseover="showTip(event, '2665', 2665)">
-            SolutionPath
+          <code onmouseout="hideTip(event, '1466', 1466)" onmouseover="showTip(event, '1466', 1466)">
+            WorkingDir
           </code>
-          <div class="tip" id="2665">
+          <div class="tip" id="1466">
             <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/XamarinHelper.fs#L334-334" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotNetCLIHelper.fs#L146-146" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Path to desired solution file. If not provided, mdtool finds the first solution in the current directory.
-Although mdtool can take a project file, the archiving seems to fail to work without a solution.</p>
+          <p>Working directory (optional).</p>
 
 
         </td>
