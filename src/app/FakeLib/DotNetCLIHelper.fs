@@ -8,6 +8,27 @@ open System.Text
 /// The dotnet command name
 let commandName = "dotnet"
 
+/// DotNet logger verbosity
+type Verbosity =
+| Debug
+| Verbose
+| Information
+| Minimal
+| Warning
+| Error
+
+/// The default log verbosity
+let DefaultVerbosity = Minimal
+
+let private verbosityString v =
+    match v with
+    | Debug -> "Debug"
+    | Verbose -> "Verbose"
+    | Information -> "Information"
+    | Minimal -> "Minimal"
+    | Warning -> "Warning"
+    | Error -> "Error"
+
 /// Gets the installed dotnet version
 let getVersion() = 
     let processResult = 
@@ -41,6 +62,9 @@ type RestoreParams = {
     
     /// Whether to use the NuGet cache.
     NoCache : bool
+
+    /// Log Verbosity.
+    Verbosity : Verbosity
 }
 
 let private DefaultRestoreParams : RestoreParams = {
@@ -48,6 +72,7 @@ let private DefaultRestoreParams : RestoreParams = {
     WorkingDir = Environment.CurrentDirectory
     NoCache = false
     TimeOut = TimeSpan.FromMinutes 30.
+    Verbosity = DefaultVerbosity
 }
 
 /// Runs the dotnet "restore" command.
@@ -70,6 +95,7 @@ let Restore (setRestoreParams: RestoreParams -> RestoreParams) =
             new StringBuilder()
             |> append "restore"
             |> appendIfTrue parameters.NoCache "--no-cache"
+            |> appendWithoutQuotes (sprintf "--verbosity %s" (verbosityString parameters.Verbosity))
             |> toText
 
         if 0 <> ExecProcess (fun info ->  
@@ -124,7 +150,7 @@ let Test (setTestParams: TestParams -> TestParams) projects =
             let args =
                 new StringBuilder()
                 |> append "test"
-                |> append project
+                |> append project                
                 |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Configuration) (sprintf "--configuration %s"  parameters.Configuration)
                 |> toText
 
