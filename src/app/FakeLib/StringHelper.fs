@@ -31,6 +31,8 @@ let inline trimSlash (s : string) = s.TrimEnd('\\')
 /// Splits the given string at the given char delimiter
 let inline split (delimiter : char) (text : string) = text.Split [| delimiter |] |> Array.toList
 
+let inline splitRemove (delimiter : char) (text : string) = text.Split ([|delimiter|], StringSplitOptions.RemoveEmptyEntries) |> Array.toList
+
 /// Splits the given string at the given string delimiter
 let inline splitStr (delimiterStr : string) (text : string) = 
     text.Split([| delimiterStr |], StringSplitOptions.None) |> Array.toList

@@ -66,7 +66,7 @@ namespace Test.FAKECore
         It should_parse_minor = () => semVer.Minor.ShouldEqual(2);
         It should_parse_patch = () => semVer.Patch.ShouldEqual(3);
         It should_parse_prerelease = () => semVer.PreRelease.ShouldEqual(
-            FSharpOption<SemVerHelper.PreRelease>.Some(new SemVerHelper.PreRelease("alpha", "alpha", FSharpOption<int>.None, new[] { SemVerHelper.PrereleaseIdent.NewAlphaNumeric("alpha") }.ToFSharpList())));
+            FSharpOption<SemVerHelper.PreRelease>.Some(new SemVerHelper.PreRelease("alpha", "alpha", FSharpOption<int>.None, new[] { SemVerHelper.Ident.NewAlphaNumeric("alpha") }.ToFSharpList())));
         It should_parse_build = () => semVer.Build.ShouldEqual("beta");
     }
 

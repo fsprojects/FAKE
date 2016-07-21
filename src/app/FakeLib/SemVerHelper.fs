@@ -4,12 +4,13 @@ module Fake.SemVerHelper
 open System
 open System.Text.RegularExpressions
 
+let identRE = Regex("[0-9A-Za-z-]+", RegexOptions.Compiled)
 [<CustomEquality;CustomComparison>]
-type PrereleaseIdent = 
+type Ident = 
     | AlphaNumeric of string | Numeric of int64
     override x.Equals(yobj) = 
         match yobj with
-        | :? PrereleaseIdent as y -> 
+        | :? Ident as y -> 
             match x,y with
             | AlphaNumeric a, AlphaNumeric b -> a = b
             | AlphaNumeric _, Numeric _ -> false
@@ -22,7 +23,7 @@ type PrereleaseIdent =
         member x.CompareTo yobj =
             match yobj with
             // spec says that alpha is always greater than numeric, alpha segments are compared lexicographically
-            | :? PrereleaseIdent as y ->
+            | :? Ident as y ->
                 match x,y with
                 | AlphaNumeric a, AlphaNumeric b -> compare a b
                 | AlphaNumeric _, Numeric _ -> 1
@@ -30,29 +31,32 @@ type PrereleaseIdent =
                 | Numeric a, Numeric b -> compare a b
             | _ -> invalidArg "yobj" "cannot compare values of different types"
 
+let parseIdent s = 
+    match Int64.TryParse s with 
+    | true, i -> Numeric i
+    | false, _ -> AlphaNumeric s
+
 [<CustomEquality; CustomComparison>]
 type PreRelease = 
     { Origin: string
       Name: string
       Number: int option
-      Parts : PrereleaseIdent list }
+      Parts : Ident list }
     static member TryParse str = 
-        // this matches any number of alpha-numeric literals separated by '.'
-        let prereleaseSpecRE = Regex("^(?<front>([0-9A-Za-z-]+\.)*)(?<back>[0-9A-Za-z-]+)$", RegexOptions.Compiled)
-        let namedPrereleaseRE = Regex("^(?<name>[a-zA-Z]+)(?<number>\d*)$", RegexOptions.Compiled)
-        let m = prereleaseSpecRE.Match(str)
-        match m.Success, m.Groups.["front"].Value, m.Groups.["back"].Value with
-        | false, _ , _  -> None
-        | true, front, back -> 
-            let m' = namedPrereleaseRE.Match(str)
-            let parts = split '.' (front + back) |> List.map (fun part -> match Int64.TryParse part with | true, i -> Numeric i | false, _ -> AlphaNumeric part)
+        let idents = splitRemove '.' str
+        match idents |> List.forall (identRE.IsMatch) with
+        | false -> None
+        | true -> 
+            let namedPrereleaseRE = Regex("^(?<name>[a-zA-Z]+)(?<number>\d*)$", RegexOptions.Compiled)        
+            let m = namedPrereleaseRE.Match(str)
+            let parts = idents |> List.map parseIdent
             match m.Success, m.Groups.["name"].Value, m.Groups.["number"].Value with
             | true, name, "" -> Some { Origin = str; Name = name; Number = None; Parts = parts }
             | true, name, number -> Some { Origin = str; Name = name; Number = Some (int number); Parts = parts }
-            | false, _, _ when front = "" -> 
-                Some { Origin = back; Name = ""; Parts = parts; Number = match Int32.TryParse back with | true, n -> Some n | false, _ -> None; }
+            | false, _, _ when idents.Length = 1 -> 
+                Some { Origin = idents.[0]; Name = ""; Parts = parts; Number = match Int32.TryParse idents.[0] with | true, n -> Some n | false, _ -> None; }
             | false, _, _ -> 
-                Some { Origin = front + back; Name = ""; Number = None; Parts = parts}
+                Some { Origin = str; Name = ""; Number = None; Parts = parts}
     override x.ToString() = String.Join(".", x.Parts |> List.map string)
     override x.Equals(yobj) =
         match yobj with
@@ -83,7 +87,8 @@ type SemVerInfo =
       /// The optional PreRelease version
       PreRelease : PreRelease option
       /// The optional build no.
-      Build: string }
+      Build: string 
+      BuildIdentifiers : Ident list}
     override x.ToString() =
         sprintf "%d.%d.%d%s%s" x.Major x.Minor x.Patch 
          (match x.PreRelease with
@@ -149,17 +154,23 @@ let parse version =
     
     let maj, minor, patch = 
         match split '.' main with
-        | maj::min::pat::[] -> Int32.Parse maj, Int32.Parse min, Int32.Parse pat
+        // odd case for sillies that use non-standard semver? that's why xs instead of []
+        | maj::min::pat::xs -> Int32.Parse maj, Int32.Parse min, Int32.Parse pat
         | maj::min::[] -> Int32.Parse maj, Int32.Parse min, 0
         | maj::[] -> Int32.Parse maj, 0, 0
         | [] -> 0,0,0
         | _ -> failwith "unknown semver format"
+    
+    
+    let buildParts = splitRemove '.' build
+    if buildParts |> List.exists (not << identRE.IsMatch) then failwith "unknown semver build format"
 
     { Major = maj
       Minor = minor
       Patch = patch
       PreRelease = PreRelease.TryParse pre
       Build = build
+      BuildIdentifiers = buildParts |> List.map parseIdent
     }
 
 
