@@ -248,6 +248,12 @@ type PackParams = {
     /// ToolPath - usually just "dotnet"
     ToolPath: string
 
+    /// Optional output path.
+    OutputPath: string
+
+    /// Optional version suffix.
+    VersionSuffix: string
+
     /// Working directory (optional).
     WorkingDir: string
 
@@ -262,6 +268,8 @@ let private DefaultPackParams : PackParams = {
     ToolPath = commandName
     WorkingDir = Environment.CurrentDirectory
     Configuration = "Release"
+    OutputPath = ""
+    VersionSuffix = ""
     TimeOut = TimeSpan.FromMinutes 30.
 }
 
@@ -288,6 +296,8 @@ let Pack (setPackParams: PackParams -> PackParams) projects =
                 |> append "pack"
                 |> append project
                 |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Configuration) (sprintf "--configuration %s"  parameters.Configuration)
+                |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.OutputPath) (sprintf "--output %s"  parameters.OutputPath)
+                |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.VersionSuffix) (sprintf "--version-suffix %s"  parameters.VersionSuffix)
                 |> toText
 
             if 0 <> ExecProcess (fun info ->  
