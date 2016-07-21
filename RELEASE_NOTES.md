@@ -4,8 +4,6 @@
 * DotNet build support - https://github.com/fsharp/FAKE/pull/1318
 * DotNet pack support - https://github.com/fsharp/FAKE/pull/1313
 * Allows to set version in project.json
-
-#### 4.33.0 - 21.07.2016
 * DotNet restore support - https://github.com/fsharp/FAKE/pull/1309
 * BUGFIX: Update DACPAC module - https://github.com/fsharp/FAKE/pull/1307
 

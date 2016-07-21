@@ -13,8 +13,8 @@ FAKE provides you with support for creating MSI setups using the WiX Toolset (ht
             else 
                 false
             
-        // Collect Files which should be shipped. Pass directory with your deployment output for deployDir
-        let components = bulkComponentCreation fileFilter (DirectoryInfo deployDir)
+        // Collect Files which should be shipped. Pass directory with your deployment output for deployDir, along with the targeted architecture.
+        let components = bulkComponentCreation fileFilter (DirectoryInfo deployDir) Architecture.X86
                  
         // Collect component references for usage in features
         let componentRefs = components |> Seq.map(fun comp -> comp.ToComponentRef())
