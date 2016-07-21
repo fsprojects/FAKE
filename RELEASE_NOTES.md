@@ -1,6 +1,7 @@
-#### 4.33.3 - 21.07.2016
+#### 4.33.4 - 21.07.2016
 * DotNet version support - https://github.com/fsharp/FAKE/pull/1310
 * DotNet test support - https://github.com/fsharp/FAKE/pull/1311
+* DotNet build support - https://github.com/fsharp/FAKE/pull/1318
 * DotNet pack support - https://github.com/fsharp/FAKE/pull/1313
 
 #### 4.33.0 - 21.07.2016
