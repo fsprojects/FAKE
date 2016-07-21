@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>ProjectFile - FAKE - F# Make</title>
+    <title>CommandParams - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,59 +36,33 @@
 
 
 
-<h1>ProjectFile</h1>
+<h1>CommandParams</h1>
 <div class="xmldoc">
-<p>A small abstraction over MSBuild project files.</p>
+<p>DotNet parameters</p>
 
 </div>
-  <h3>Constructors</h3>
+  <h3>Record Fields</h3>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Constructor</td><td>Description</td></tr>
+      <tr><td>Record Field</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2782', 2782)" onmouseover="showTip(event, '2782', 2782)">
-            new(projectFileName, documentContent)
+          <code onmouseout="hideTip(event, '1473', 1473)" onmouseover="showTip(event, '1473', 1473)">
+            TimeOut
           </code>
-          <div class="tip" id="2782">
-            <strong>Signature:</strong> (projectFileName:string * documentContent:string) -&gt; ProjectFile<br />
+          <div class="tip" id="1473">
+            <strong>Signature:</strong> TimeSpan<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuild/ProjectSystem.fs#L12-12" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotNetCLIHelper.fs#L63-63" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <h3>Instance members</h3>
-  <table class="table table-bordered member-list">
-    <thead>
-      <tr><td>Instance member</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '2783', 2783)" onmouseover="showTip(event, '2783', 2783)">
-            AddFile(fileName)
-          </code>
-          <div class="tip" id="2783">
-            <strong>Signature:</strong> fileName:string -&gt; ProjectFile<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuild/ProjectSystem.fs#L33-33" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Add a file to the Compile nodes</p>
+          <p>A timeout for the command.</p>
 
 
         </td>
@@ -96,59 +70,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2784', 2784)" onmouseover="showTip(event, '2784', 2784)">
-            Files
+          <code onmouseout="hideTip(event, '1474', 1474)" onmouseover="showTip(event, '1474', 1474)">
+            ToolPath
           </code>
-          <div class="tip" id="2784">
-            <strong>Signature:</strong> string list<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuild/ProjectSystem.fs#L55-55" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>All files which are in "Compile" sections</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '2785', 2785)" onmouseover="showTip(event, '2785', 2785)">
-            FindDuplicateFiles()
-          </code>
-          <div class="tip" id="2785">
-            <strong>Signature:</strong> unit -&gt; string list<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuild/ProjectSystem.fs#L58-58" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Finds duplicate files which are in "Compile" sections</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '2786', 2786)" onmouseover="showTip(event, '2786', 2786)">
-            ProjectFileName
-          </code>
-          <div class="tip" id="2786">
+          <div class="tip" id="1474">
             <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuild/ProjectSystem.fs#L72-72" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotNetCLIHelper.fs#L57-57" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>The project file name</p>
+          <p>ToolPath - usually just "dotnet"</p>
 
 
         </td>
@@ -156,85 +90,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2787', 2787)" onmouseover="showTip(event, '2787', 2787)">
-            RemoveDuplicates()
+          <code onmouseout="hideTip(event, '1475', 1475)" onmouseover="showTip(event, '1475', 1475)">
+            WorkingDir
           </code>
-          <div class="tip" id="2787">
-            <strong>Signature:</strong> unit -&gt; ProjectFile<br />
+          <div class="tip" id="1475">
+            <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuild/ProjectSystem.fs#L67-67" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotNetCLIHelper.fs#L60-60" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '2788', 2788)" onmouseover="showTip(event, '2788', 2788)">
-            RemoveFile(fileName)
-          </code>
-          <div class="tip" id="2788">
-            <strong>Signature:</strong> fileName:string -&gt; ProjectFile<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuild/ProjectSystem.fs#L43-43" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Removes a file from the Compile nodes</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '2789', 2789)" onmouseover="showTip(event, '2789', 2789)">
-            Save(fileName)
-          </code>
-          <div class="tip" id="2789">
-            <strong>Signature:</strong> (fileName:string option) -&gt; unit<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuild/ProjectSystem.fs#L30-30" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Saves the project file</p>
-
-
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <h3>Static members</h3>
-  <table class="table table-bordered member-list">
-    <thead>
-      <tr><td>Static member</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '2790', 2790)" onmouseover="showTip(event, '2790', 2790)">
-            FromFile(projectFileName)
-          </code>
-          <div class="tip" id="2790">
-            <strong>Signature:</strong> projectFileName:string -&gt; ProjectFile<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuild/ProjectSystem.fs#L27-27" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Read a Project from a FileName</p>
+          <p>Working directory (optional).</p>
 
 
         </td>
