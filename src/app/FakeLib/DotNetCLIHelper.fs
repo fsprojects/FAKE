@@ -51,6 +51,52 @@ let isInstalled() =
 
     processResult.OK
 
+/// DotNet parameters
+type CommandParams = {
+    /// ToolPath - usually just "dotnet"
+    ToolPath: string
+
+    /// Working directory (optional).
+    WorkingDir: string
+
+    /// A timeout for the command.
+    TimeOut: TimeSpan
+}
+
+let private DefaultCommandParams : CommandParams = {
+    ToolPath = commandName
+    WorkingDir = Environment.CurrentDirectory
+    TimeOut = TimeSpan.FromMinutes 30.
+}
+
+/// Runs a dotnet command.
+/// ## Parameters
+///
+///  - `setCommandParams` - Function used to overwrite the default parameters.
+///  - `args` - command and additional arguments.
+///
+/// ## Sample
+///
+///     DotNet.RunCommand
+///         (fun p -> 
+///              { p with 
+///                   TimeOut = TimeSpan.FromMinutes 10. })
+///         "restore"
+let RunCommand (setCommandParams: CommandParams -> CommandParams) args =
+    traceStartTask "DotNet" ""
+
+    try
+        let parameters = setCommandParams DefaultCommandParams
+
+        if 0 <> ExecProcess (fun info ->  
+            info.FileName <- parameters.ToolPath
+            info.WorkingDirectory <- parameters.WorkingDir
+            info.Arguments <- args) parameters.TimeOut
+        then
+            failwithf "Pack failed on %s" args
+    finally
+        traceEndTask "DotNet" ""
+
 /// DotNet restore parameters
 type RestoreParams = {
     /// ToolPath - usually just "dotnet"
