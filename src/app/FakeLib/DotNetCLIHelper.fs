@@ -120,6 +120,12 @@ type TestParams = {
     
     /// The build configuration.
     Configuration : string
+
+    /// Allows to test a specific framework
+    Framework : string
+
+    /// Allows to test a specific runtime
+    Runtime : string
 }
 
 let private DefaultTestParams : TestParams = {
@@ -127,6 +133,8 @@ let private DefaultTestParams : TestParams = {
     WorkingDir = Environment.CurrentDirectory
     Configuration = "Release"
     TimeOut = TimeSpan.FromMinutes 30.
+    Framework = ""
+    Runtime = ""
 }
 
 /// Runs the dotnet "test" command.
@@ -152,6 +160,8 @@ let Test (setTestParams: TestParams -> TestParams) projects =
                 |> append "test"
                 |> append project                
                 |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Configuration) (sprintf "--configuration %s"  parameters.Configuration)
+                |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Framework) (sprintf "--framework %s"  parameters.Framework)
+                |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Runtime) (sprintf "--runtime %s"  parameters.Runtime)
                 |> toText
 
             if 0 <> ExecProcess (fun info ->  
