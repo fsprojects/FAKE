@@ -52,6 +52,14 @@
     <tbody>
         <tr>
           <td class="type-name">
+            <a href="fake-dotnet-buildparams.html">BuildParams</a>
+          </td>
+          <td class="xmldoc"><p>DotNet build parameters</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
             <a href="fake-dotnet-packparams.html">PackParams</a>
           </td>
           <td class="xmldoc"><p>DotNet pack parameters</p>
@@ -74,6 +82,14 @@
 
 </td>
         </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-dotnet-verbosity.html">Verbosity</a>
+          </td>
+          <td class="xmldoc"><p>DotNet logger verbosity</p>
+
+</td>
+        </tr>
     </tbody>
   </table>
 
@@ -89,9 +105,48 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '180', 180)" onmouseover="showTip(event, '180', 180)">
-            commandName 
+            Build setBuildParams projects
           </code>
           <div class="tip" id="180">
+            <strong>Signature:</strong> setBuildParams:(BuildParams -&gt; BuildParams) -&gt; projects:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotNetCLIHelper.fs#L152-152" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Runs the dotnet "build" command.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setBuildParams</code> - Function used to overwrite the build default parameters.</li>
+</ul>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="o">!!</span> <span class="s">&quot;src/test/project.json&quot;</span>
+<span class="o">|&gt;</span> <span class="i">DotNet</span><span class="o">.</span><span class="i">Build</span>
+    (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> 
+         { <span class="i">p</span> <span class="k">with</span> 
+              <span class="i">Configuration</span> <span class="o">=</span> <span class="s">&quot;Release&quot;</span> })
+</code></pre></td>
+</tr>
+</table>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '181', 181)" onmouseover="showTip(event, '181', 181)">
+            commandName 
+          </code>
+          <div class="tip" id="181">
             <strong>Signature:</strong> string<br />
                       </div>
         </td>
@@ -108,15 +163,35 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '181', 181)" onmouseover="showTip(event, '181', 181)">
+          <code onmouseout="hideTip(event, '182', 182)" onmouseover="showTip(event, '182', 182)">
+            DefaultVerbosity 
+          </code>
+          <div class="tip" id="182">
+            <strong>Signature:</strong> Verbosity<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotNetCLIHelper.fs#L21-21" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>The default log verbosity</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '183', 183)" onmouseover="showTip(event, '183', 183)">
             getVersion ()
           </code>
-          <div class="tip" id="181">
+          <div class="tip" id="183">
             <strong>Signature:</strong> unit -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotNetCLIHelper.fs#L12-12" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotNetCLIHelper.fs#L33-33" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -128,15 +203,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '182', 182)" onmouseover="showTip(event, '182', 182)">
+          <code onmouseout="hideTip(event, '184', 184)" onmouseover="showTip(event, '184', 184)">
             isInstalled ()
           </code>
-          <div class="tip" id="182">
+          <div class="tip" id="184">
             <strong>Signature:</strong> unit -&gt; bool<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotNetCLIHelper.fs#L22-22" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotNetCLIHelper.fs#L43-43" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -148,15 +223,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '183', 183)" onmouseover="showTip(event, '183', 183)">
+          <code onmouseout="hideTip(event, '185', 185)" onmouseover="showTip(event, '185', 185)">
             Pack setPackParams projects
           </code>
-          <div class="tip" id="183">
+          <div class="tip" id="185">
             <strong>Signature:</strong> setPackParams:(PackParams -&gt; PackParams) -&gt; projects:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotNetCLIHelper.fs#L175-175" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotNetCLIHelper.fs#L278-278" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -187,15 +262,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '184', 184)" onmouseover="showTip(event, '184', 184)">
+          <code onmouseout="hideTip(event, '186', 186)" onmouseover="showTip(event, '186', 186)">
             Restore setRestoreParams
           </code>
-          <div class="tip" id="184">
+          <div class="tip" id="186">
             <strong>Signature:</strong> setRestoreParams:(RestoreParams -&gt; RestoreParams) -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotNetCLIHelper.fs#L64-64" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotNetCLIHelper.fs#L89-89" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -224,15 +299,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '185', 185)" onmouseover="showTip(event, '185', 185)">
+          <code onmouseout="hideTip(event, '187', 187)" onmouseover="showTip(event, '187', 187)">
             Test setTestParams projects
           </code>
-          <div class="tip" id="185">
+          <div class="tip" id="187">
             <strong>Signature:</strong> setTestParams:(TestParams -&gt; TestParams) -&gt; projects:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotNetCLIHelper.fs#L118-118" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotNetCLIHelper.fs#L219-219" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
