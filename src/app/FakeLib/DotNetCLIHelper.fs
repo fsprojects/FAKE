@@ -1,5 +1,5 @@
 ﻿/// Contains a task which can be used to run dotnet CLI commands.
-module Fake.DotNet
+module Fake.DotNetCli
 
 open Fake
 open System
@@ -43,13 +43,15 @@ let getVersion() =
 
 /// Checks wether the dotnet CLI is installed
 let isInstalled() =
-    let processResult = 
-        ExecProcessAndReturnMessages (fun info ->  
-          info.FileName <- commandName
-          info.WorkingDirectory <- Environment.CurrentDirectory
-          info.Arguments <- "--version") (TimeSpan.FromMinutes 30.)
+    try
+        let processResult =
+            ExecProcessAndReturnMessages (fun info ->  
+              info.FileName <- commandName
+              info.WorkingDirectory <- Environment.CurrentDirectory
+              info.Arguments <- "--version") (TimeSpan.FromMinutes 30.)
 
-    processResult.OK
+        processResult.OK
+    with _ -> false
 
 /// DotNet parameters
 type CommandParams = {
