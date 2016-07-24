@@ -325,6 +325,195 @@ let generateServiceInstall (setParams : WiXServiceInstall -> WiXServiceInstall) 
         failwith "No parameter passed for service name!"
     parameters
 
+/// Represents the registry root under which this key should be written
+type WiXRegistryRootType =
+    /// Writes this registry key inside either HKEY_LOCAL_MACHINE or HKEY_CURRENT_USER. Wix decides at install time based on wether or not this is an "all users" install
+    | HKMU
+    /// Writes this registry key inside either the HKEY_CLASSES_ROOT registry root
+    | HKCR
+    /// Writes this registry key inside either the HKEY_CURRENT_USER registry root
+    | HKCU
+    /// Writes this registry key inside either the HKEY_LOCAL_MACHINE registry root
+    | HKLM
+    /// Writes this registry key inside either the HKEY_USers registry root
+    | HKU
+    override w.ToString() =
+        match w with
+        | HKMU -> "HKMU"
+        | HKCR -> "HKCR"
+        | HKCU -> "HKCU"
+        | HKLM -> "HKLM"
+        | HKU -> "HKU"
+
+/// The action that will be taken for a registry value
+type WiXRegistryValueAction = 
+    /// Appends the specified value(s) to a multiString registry value
+    | Append
+    /// Prepends the specified value(s) to a multiString registry value
+    | Prepend
+    /// Writes a registry value
+    | Write
+    override a.ToString() =
+        match a with
+        | Append -> "append"
+        | Prepend -> "prepend"
+        | Write -> "write"
+
+/// The desired type of a registry key.
+type WiXRegistryValueType =
+    /// The value is interpreted and stored as a string (REG_SZ)
+    | String
+    /// The value is interpreted and stored as an integer (REG_DWORD)
+    | Integer
+    /// The value is interpreted and stored as a hexadecimal value (REG_BINARY)
+    | Binary
+    /// The value is interpreted and stored as an expandable string (REG_EXPAND_SZ)
+    | Expandable
+    /// The value is interpreted and stored as a multiple strings (REG_MULTI_SZ)
+    | MultiString
+    override t.ToString() =
+        match t with
+        | String -> "string"
+        | Integer -> "integer"
+        | Binary -> "binary"
+        | Expandable -> "expandable"
+        | MultiString -> "multistring"
+
+/// Parameters for WiX RegistryValue
+type WiXRegistryValue =
+    {
+        /// The Id of this value
+        Id : string
+        /// The localizable registry value name. If this attribute is not provided the default value for the registry key will be set instead
+        Name : string 
+        /// The localizable registry value. 
+        Value : string
+        /// The action that will be taken for this registry value
+        Action : WiXRegistryValueAction
+        /// The type of the desired registry key
+        Type : WiXRegistryValueType
+        /// The localizable key for the registry value
+        /// If the parent element is a RegistryKey, this value may be omitted to use the path of the parent, or if its specified it will be appended to the path of the parent
+        Key : string
+        /// Set this attribute to 'yes' to make this registry key the KeyPath of the parent component
+        KeyPath : YesOrNo
+        /// The predefined root key for the registry value.
+        Root : WiXRegistryRootType Option
+    }
+    member v.createAttributeList () =
+        seq {
+            if not (String.IsNullOrWhiteSpace v.Id) then yield ("Id", v.Id)
+            if not (String.IsNullOrWhiteSpace v.Name) then yield ("Name", v.Name)
+            if not (String.IsNullOrWhiteSpace v.Key) then yield ("Key", v.Key)
+            if not (Option.isNone v.Root) then yield ("Root", v.Root.Value.ToString())
+            yield ("Type", v.Type.ToString())
+            yield ("Value", v.Value)
+            yield ("KeyPath", v.KeyPath.ToString())
+        }
+    override v.ToString() = 
+        sprintf "<RegistryValue%s />" 
+            (Seq.fold(fun acc (key, value) -> acc + sprintf " %s=\"%s\"" key value) "" (v.createAttributeList())) 
+    
+let wixRegistryValueDefaults =
+    {
+        Id = ""
+        Name = ""
+        Value = ""
+        Type = WiXRegistryValueType.String
+        Action = WiXRegistryValueAction.Write
+        Key = ""
+        KeyPath = YesOrNo.No
+        Root = None
+    }
+
+/// Generates a registry value based on the given parameters, use toString on it when embedding it
+/// ## Parameters
+///  - `setParams` - Function used to manipulate the WiX default parameters.
+///
+/// ## Sample
+/// let registryValue = generateRegistryValue(fun v -> 
+///                                               {v with
+///                                                   Id = "asdasd"
+///                                                   Name = "Something"
+///                                                   Key = "Somewhere"
+///                                                   Root = Some WiXRegistryRootType.HKU
+///                                                   Type = WiXRegistryValueType.Integer
+///                                                   KeyPath = YesOrNo.No
+///                                                   Value = "2"
+///                                               })
+
+let generateRegistryValue (setParams : WiXRegistryValue -> WiXRegistryValue) =
+    let parameters = wixRegistryValueDefaults |> setParams
+    parameters
+
+/// Parameters for WiX RegistryKey
+type WiXRegistryKey =
+    {
+        /// Primary key used to identify this particular entry
+        Id : string
+        /// The predefined root key for the registry value
+        Root : WiXRegistryRootType Option
+        /// The localizable key for the registry value
+        /// If the parent element is a RegistryKey, this value may be omitted to use the path of the parent, or if its specified it will be appended to the path of the parent
+        Key : string
+        /// Set this attribute to 'yes' to create an empty key, if absent, when the parent component is installed
+        /// This value is needed only to create an empty key with no subkeys or values.
+        /// Windows Installer creates keys as needed to store subkeys and values. The default is "no"
+        ForceCreateOnInstall : YesOrNo
+        /// Set this attribute to 'yes' to remove the key with all its values and subkeys when the parent component is uninstalled
+        /// Note that this value is useful only if your program creates additional values or subkeys under this key and you want an uninstall to remove them
+        /// MSI already removes all values and subkeys that it creates, so this option just adds additional overhead to uninstall. The default is "no"
+        ForceDeleteOnUninstall : YesOrNo
+        /// You can nest child registry keys here
+        Keys : WiXRegistryKey seq
+        /// You can nest child registry values here
+        Values : WiXRegistryValue seq
+    }
+    member k.createAttributeList () = 
+        seq {
+            if not (String.IsNullOrWhiteSpace k.Id) then yield ("Id", k.Id)
+            if not (String.IsNullOrWhiteSpace k.Key) then yield ("Key", k.Key)
+            if not (Option.isNone k.Root) then yield ("Root", k.Root.Value.ToString())
+            yield ("ForceCreateOnInstall", k.ForceCreateOnInstall.ToString())
+            yield ("ForceDeleteOnUninstall", k.ForceDeleteOnUninstall.ToString())
+        }
+    override k.ToString() = 
+          sprintf "<RegistryKey%s>%s%s</RegistryKey>" 
+              (Seq.fold(fun acc (key, value) -> acc + sprintf " %s=\"%s\"" key value) "" (k.createAttributeList())) 
+              (Seq.fold(fun acc elem -> acc + elem.ToString()) "" k.Keys) 
+              (Seq.fold(fun acc elem -> acc + elem.ToString()) "" k.Values)
+    
+let wixRegistryKeyDefaults =
+    {
+        Id = ""
+        Root = None
+        Key = ""
+        ForceCreateOnInstall = YesOrNo.No
+        ForceDeleteOnUninstall = YesOrNo.No
+        Keys = Seq.empty
+        Values = Seq.empty
+    }
+
+/// Generates a registry key based on the given parameters, use toString on it when embedding it
+/// You can pass other registry keys and values into RegistryKeys or RegistryValues for making a hierarchy
+/// ## Parameters
+///  - `setParams` - Function used to manipulate the WiX default parameters.
+///
+/// ## Sample
+/// let key = generateRegistryKey(fun k ->
+///                                 {k with
+///                                   Id = "KeyId"
+///                                   Key = "SomeKey"
+///                                   Root = Some WiXRegistryRootType.HKCR
+///                                   ForceCreateOnInstall = YesOrNo.Yes
+///                                   ForceDeleteOnUninstall = YesOrNo.No
+///                                   Keys = someChildKeys
+///                                   Values = someChildValues
+///                                 })
+let generateRegistryKey (setParams : WiXRegistryKey -> WiXRegistryKey) =
+    let parameters = wixRegistryKeyDefaults |> setParams
+    parameters
+
 /// Reference to a component for including it in a feature
 type WiXComponentRef =
     {
@@ -366,13 +555,18 @@ and WiXComponent =
         Win64 : YesOrNo
         ServiceControls : WiXServiceControl seq
         ServiceInstalls : WiXServiceInstall seq
+        RegistryKeys : WiXRegistryKey seq
+        RegistryValues : WiXRegistryValue seq
     }
     member w.ToComponentRef() = generateComponentRef (fun f -> { f with Id = w.Id })
-    override w.ToString() = sprintf "<Component Id=\"%s\" Guid=\"%s\" Win64=\"%s\">%s%s%s</Component>" 
+    override w.ToString() = sprintf "<Component Id=\"%s\" Guid=\"%s\" Win64=\"%s\">%s%s%s%s%s</Component>" 
                                 w.Id w.Guid (w.Win64.ToString())
                                 (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.Files) 
                                 (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.ServiceControls)
                                 (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.ServiceInstalls)
+                                (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.RegistryKeys)
+                                (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.RegistryValues)
+                                
 /// WiX Directories define a logical directory which can include components and files
 and WiXDir = 
     {
@@ -390,6 +584,30 @@ and WiXDir =
                                                                     | C c -> c.ToString()
                                                                     | D d -> d.ToString()
                                                            )) "" d.Components)
+
+/// Reference to a component for including it in a feature
+type WiXDirectoryRef =
+   {
+       Id : string
+       Components : WiXDirectoryComponent seq
+   }
+   override r.ToString() = sprintf "<DirectoryRef Id=\"%s\">%s</DirectoryRef>" 
+                              r.Id
+                              (Seq.fold(fun acc elem -> acc + elem.ToString()) "" r.Components)
+
+/// Defaults for component ref
+let WiXDirectoryRefDefaults =
+   {
+       Id = ""
+       Components = []
+   }
+
+/// Use this for generating component refs
+let generateDirectoryRef (setParams : WiXDirectoryRef -> WiXDirectoryRef) =
+   let parameters = WiXDirectoryRefDefaults |> setParams
+   if parameters.Id = "" then 
+       failwith "No parameter passed for component ref Id!"
+   parameters
 
 ///get component refs from a directory component hierarchy
 let rec getComponentRefs (elements : WiXDirectoryComponent seq) = 
@@ -418,6 +636,8 @@ let WiXComponentDefaults =
         Files = []
         ServiceControls = []
         ServiceInstalls = []
+        RegistryKeys = []
+        RegistryValues = []
     }
 
 /// Use this for generating single components
@@ -481,6 +701,8 @@ let private createComponents fileFilter directoryInfo directoryName architecture
                             Files = [file]
                             ServiceControls = []
                             ServiceInstalls = []
+                            RegistryKeys = []
+                            RegistryValues = []
                         })
 
 /// Creates a WiX directory and component hierarchy from the given DirectoryInfo
@@ -535,6 +757,8 @@ let bulkComponentCreation fileFilter directoryInfo architecture =
                             Files = [file]
                             ServiceControls = []
                             ServiceInstalls = []
+                            RegistryKeys = []
+                            RegistryValues = []
                         })
 
 /// Creates WiX component with directories and files from the given DirectoryInfo
@@ -554,7 +778,7 @@ let bulkComponentCreationAsSubDir fileFilter (directoryInfo : DirectoryInfo) arc
 let rec attachServiceControlToComponent (comp : WiXDirectoryComponent) fileFilter serviceControls = 
     match comp with
     | C c -> C (if fileFilter c then                        
-                        { Id = c.Id; Guid = c.Guid; Files = c.Files; ServiceControls = Seq.append c.ServiceControls serviceControls; ServiceInstalls = c.ServiceInstalls; Win64 = c.Win64 }
+                        { Id = c.Id; Guid = c.Guid; Files = c.Files; ServiceControls = Seq.append c.ServiceControls serviceControls; ServiceInstalls = c.ServiceInstalls; RegistryKeys = c.RegistryKeys; RegistryValues = c.RegistryValues; Win64 = c.Win64 }
                         else
                             c
                         )                                          
@@ -567,7 +791,7 @@ and attachServiceControlToComponents (components : WiXDirectoryComponent seq) fi
 let rec attachServiceInstallToComponent (comp : WiXDirectoryComponent) fileFilter serviceInstalls = 
     match comp with
     | C c -> C (if fileFilter c then                        
-                        { Id = c.Id; Guid = c.Guid; Files = c.Files; ServiceControls = c.ServiceControls; ServiceInstalls = Seq.append c.ServiceInstalls serviceInstalls; Win64 = c.Win64 }
+                        { Id = c.Id; Guid = c.Guid; Files = c.Files; ServiceControls = c.ServiceControls; ServiceInstalls = Seq.append c.ServiceInstalls serviceInstalls; RegistryKeys = c.RegistryKeys; RegistryValues = c.RegistryValues; Win64 = c.Win64 }
                         else
                             c
                         )                                          
@@ -1179,6 +1403,9 @@ type Script =
 
         /// Nest directories in here
         Directories : WiXDir seq
+        
+        /// You can nest DirectoryRefs in here
+        DirectoryRefs : WiXDirectoryRef seq
 
         /// Nest Components in here
         Components : WiXDirectoryComponent seq
@@ -1218,6 +1445,7 @@ let ScriptDefaults =
         UIRefs = []
         WiXVariables = []
         Directories = []
+        DirectoryRefs = []
         Components = []
         BuildNumber = "1.0.0"
         Features = []
@@ -1279,6 +1507,8 @@ let generateWiXScript fileName =
                 </Directory>
               </Directory>
             </Directory>
+            
+            @Product.DirectoryRefs@
 
             @Product.Features@
         
@@ -1362,6 +1592,7 @@ let FillInWixScript wiXPath (setParams : WiXScript -> WiXScript) =
 ///                                UIRefs = uiRef1.ToString() + uiRef2.ToString()
 ///                                WiXVariables = wiXLicense.ToString()
 ///                                Directories = directories
+///                                DirectoryRefs = directoryrefs
 ///                                BuildNumber = "1.0.0"
 ///                                Features = rootFeature.ToString()
 ///                                CustomActions = action1.ToString() + action2.ToString()
@@ -1384,6 +1615,7 @@ let FillInWiXTemplate wiXPath setParams =
         "@Product.Upgrade@", Seq.fold(fun acc elem -> acc + elem.ToString()) "" parameters.Upgrade
         "@Product.MajorUpgrade@", Seq.fold(fun acc elem -> acc + elem.ToString()) "" parameters.MajorUpgrade
         "@Product.Directories@", Seq.fold(fun acc elem -> acc + elem.ToString()) "" parameters.Directories
+        "@Product.DirectoryRefs@", Seq.fold(fun acc elem -> acc + elem.ToString()) "" parameters.DirectoryRefs
         "@Product.Components@", Seq.fold(fun acc elem -> acc + elem.ToString()) "" parameters.Components
         "@Product.Features@", Seq.fold(fun acc elem -> acc + elem.ToString()) "" parameters.Features
         "@Product.CustomActions@", Seq.fold(fun acc elem -> acc + elem.ToString()) "" parameters.CustomActions

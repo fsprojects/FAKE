@@ -126,6 +126,71 @@ let ``should create valid major upgrade node`` () =
     let expectedMajorUpgrade = "<MajorUpgrade Schedule=\"afterInstallInitialize\" AllowDowngrades=\"no\" DowngradeErrorMessage=\"A later version is already installed, exiting.\" />"
     Assert.Equal<string>(expectedMajorUpgrade, actualMajorUpgrade.ToString())
 
+[<Fact>]
+let ``should create valid registry value`` () =
+    let actualRegistryValue = generateRegistryValue(fun v -> 
+                                                     {v with
+                                                        Id = "asdasd"
+                                                        Name = "Something"
+                                                        Key = "Somewhere"
+                                                        Root = Some WiXRegistryRootType.HKU
+                                                        Type = WiXRegistryValueType.Integer
+                                                        KeyPath = YesOrNo.No
+                                                        Value = "2"
+                                                     })
+    let expectedRegistryValue = "<RegistryValue Id=\"asdasd\" Name=\"Something\" Key=\"Somewhere\" Root=\"HKU\" Type=\"integer\" Value=\"2\" KeyPath=\"no\" />"
+    Assert.Equal<string>(expectedRegistryValue, actualRegistryValue.ToString())
+
+[<Fact>]
+let ``should create valid registry key`` () =
+    let actualRegistryKey = generateRegistryKey(fun k ->
+                                                  {k with
+                                                    Id = "asdqwe"
+                                                    Key = "SomeKey"
+                                                    Root = Some WiXRegistryRootType.HKCR
+                                                    ForceCreateOnInstall = YesOrNo.Yes
+                                                    ForceDeleteOnUninstall = YesOrNo.No
+                                                  })
+    let expectedRegistryKey = "<RegistryKey Id=\"asdqwe\" Key=\"SomeKey\" Root=\"HKCR\" ForceCreateOnInstall=\"yes\" ForceDeleteOnUninstall=\"no\"></RegistryKey>"
+    Assert.Equal<string>(expectedRegistryKey, actualRegistryKey.ToString())
+
+[<Fact>]
+let ``can nest registry keys and values`` () =
+    let actualRegistryKey = generateRegistryKey(fun k ->
+                                                  {k with
+                                                    Id = "RootKeyId"
+                                                    Key = "RootKey"
+                                                    Root = Some WiXRegistryRootType.HKU
+                                                    Keys = [
+                                                      generateRegistryKey(fun k' ->
+                                                                            {k' with
+                                                                              Id = "NestedKeyId"
+                                                                              Key = "NestedKey"
+                                                                            })
+                                                    ]
+                                                    Values = [
+                                                      generateRegistryValue(fun v ->
+                                                                              {v with
+                                                                                Id = "NestedValue"
+                                                                                Value = "SomeValue"
+                                                                              })
+                                                    ]
+                                                    })
+    let expectedRegistryKey = "<RegistryKey Id=\"RootKeyId\" Key=\"RootKey\" Root=\"HKU\" ForceCreateOnInstall=\"no\" ForceDeleteOnUninstall=\"no\">" 
+                                + "<RegistryKey Id=\"NestedKeyId\" Key=\"NestedKey\" ForceCreateOnInstall=\"no\" ForceDeleteOnUninstall=\"no\"></RegistryKey>" 
+                                + "<RegistryValue Id=\"NestedValue\" Type=\"string\" Value=\"SomeValue\" KeyPath=\"no\" />"
+                            + "</RegistryKey>"
+    Assert.Equal<string>(expectedRegistryKey, actualRegistryKey.ToString())
+
+[<Fact>]
+let ``should create valid directory refs`` () =
+    let component = generateComponent(fun f -> { f with Id="Nested" })
+    let actualRef = generateDirectoryRef(fun f -> { f with 
+                                                        Id = "TARGETDIR"
+                                                        Components = [C component]
+                                                  })
+    let expectedRef = sprintf "<DirectoryRef Id=\"TARGETDIR\">%s</DirectoryRef>" (component.ToString())
+    Assert.Equal<string>(expectedRef, actualRef.ToString())                                          
 
 [<Fact>]
 let ``should create nested features`` () =
