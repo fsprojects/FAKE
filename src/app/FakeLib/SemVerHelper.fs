@@ -22,10 +22,10 @@ type Ident =
     interface IComparable with
         member x.CompareTo yobj =
             match yobj with
-            // spec says that alpha is always greater than numeric, alpha segments are compared lexicographically
+            // spec says that alpha is always greater than numeric, alpha segments are compared lexicographically, which in .Net is the ordinal comparer
             | :? Ident as y ->
                 match x,y with
-                | AlphaNumeric a, AlphaNumeric b -> compare a b
+                | AlphaNumeric a, AlphaNumeric b -> StringComparer.Ordinal.Compare(a, b)
                 | AlphaNumeric _, Numeric _ -> 1
                 | Numeric _, AlphaNumeric _ -> -1
                 | Numeric a, Numeric b -> compare a b
