@@ -2,7 +2,6 @@
 /// There is also a tutorial about the [Octopus deployment helper](../octopusdeploy.html) available.
 module Fake.OctoTools
 
-open Fake
 open System
 
 /// Octo.exe server options
@@ -218,6 +217,7 @@ let commandLine command =
     | ListEnvironments -> 
         " list-environments"
 
+let serverCommandLineForTracing (opts: OctoServerOptions) = serverCommandLine { opts with ApiKey = "(Removed for security purposes)" }
 
 /// This task calls the Octo.exe CLI.
 /// See [Octopus-Tools](https://github.com/OctopusDeploy/Octopus-Tools) for more details.
@@ -229,9 +229,10 @@ let Octo setParams =
     let command = (octoParams.Command.ToString())
     let tool = octoParams.ToolPath @@ octoParams.ToolName
     let args = commandLine octoParams.Command |>(+)<| serverCommandLine octoParams.Server
-
+    let traceArgs = commandLine octoParams.Command |>(+)<| serverCommandLineForTracing octoParams.Server
+    
     traceStartTask "Octo " command
-    trace (tool + args)
+    trace (tool + traceArgs)
         
     let result = 
         ExecProcess (fun info ->
