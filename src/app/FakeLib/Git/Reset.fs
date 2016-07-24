@@ -3,12 +3,19 @@
 module Fake.Git.Reset
 
 open System
-open Fake
+open Fake.Git.CommandHelper
 
 let internal addArgs commit file =
     sprintf "%s%s"
       (if String.IsNullOrEmpty commit then "" else " \"" + commit + "\"")
       (if String.IsNullOrEmpty file then "" else " -- \"" + file + "\"")
+
+/// the intent of the 'reset' helper is to either set a repo to a certain point, or set a file to a certain point.  Git reset doesn't take file paths in the hard/mixed/soft modes, and so you have to use checkout instead for that.
+/// This function encapsulates caring about that so you don't have to.      
+let internal resetOrCheckout file mode = 
+    match file |> String.IsNullOrEmpty with 
+    | true -> sprintf "reset --%s" mode 
+    | false -> "checkout"
 
 /// Performs a git reset "soft".
 /// Does not touch the index file nor the working tree at all.
@@ -17,7 +24,7 @@ let internal addArgs commit file =
 ///  - `repositoryDir` - The git repository.
 ///  - `commit` - The commit to which git should perform the reset.
 ///  - `file` - The file to reset - null means all files.
-let soft repositoryDir commit file = "reset --soft" + addArgs commit file |> gitCommand repositoryDir
+let soft repositoryDir commit file = resetOrCheckout file "soft" + addArgs commit file |> gitCommand repositoryDir
 
 /// Performs a git reset "mixed".
 /// Resets the index but not the working tree and reports what has not been updated. 
@@ -26,7 +33,7 @@ let soft repositoryDir commit file = "reset --soft" + addArgs commit file |> git
 ///  - `repositoryDir` - The git repository.
 ///  - `commit` - The commit to which git should perform the reset.
 ///  - `file` - The file to reset - null means all files.
-let mixed repositoryDir commit file = "reset --mixed" + addArgs commit file |> gitCommand repositoryDir
+let mixed repositoryDir commit file = resetOrCheckout file "mixed" + addArgs commit file |> gitCommand repositoryDir
 
 /// Performs a git reset "hard".
 /// Resets the index and working tree. Any changes to tracked files in the working tree since <commit> are discarded.
@@ -35,7 +42,7 @@ let mixed repositoryDir commit file = "reset --mixed" + addArgs commit file |> g
 ///  - `repositoryDir` - The git repository.
 ///  - `commit` - The commit to which git should perform the reset.
 ///  - `file` - The file to reset - null means all files.
-let hard repositoryDir commit file = "reset --hard" + addArgs commit file |> gitCommand repositoryDir
+let hard repositoryDir commit file = resetOrCheckout file "hard" + addArgs commit file |> gitCommand repositoryDir
 
 /// Performs a git reset "soft" to the current HEAD.
 /// Does not touch the index file nor the working tree at all.
