@@ -1,3 +1,10 @@
+#### 4.35.0 - 24.07.2016
+* New registry support in WiXHelper - https://github.com/fsharp/FAKE/pull/1331
+* BREAKING CHANGE: Changed DotNet helper to DotNetCLI - https://github.com/fsharp/FAKE/pull/1332
+* BUGFIX: Fixed exception when dotnet cli is not installed - https://github.com/fsharp/FAKE/pull/1332
+* BUGFIX: Fixed git reset helper to use checkout when file resets are requested - https://github.com/fsharp/FAKE/pull/1326
+* BUGFIX: Masked octo api key when tracing - https://github.com/fsharp/FAKE/pull/1327 
+
 #### 4.34.5 - 21.07.2016
 * DotNet version support - https://github.com/fsharp/FAKE/pull/1310
 * DotNet test support - https://github.com/fsharp/FAKE/pull/1311
