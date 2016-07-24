@@ -79,7 +79,7 @@ let private DefaultCommandParams : CommandParams = {
 ///
 /// ## Sample
 ///
-///     DotNet.RunCommand
+///     DotNetCli.RunCommand
 ///         (fun p -> 
 ///              { p with 
 ///                   TimeOut = TimeSpan.FromMinutes 10. })
@@ -136,7 +136,7 @@ let private DefaultRestoreParams : RestoreParams = {
 ///
 /// ## Sample
 ///
-///     DotNet.Restore 
+///     DotNetCli.Restore 
 ///         (fun p -> 
 ///              { p with 
 ///                   NoCache = true })
@@ -206,7 +206,7 @@ let private DefaultBuildParams : BuildParams = {
 /// ## Sample
 ///
 ///     !! "src/test/project.json"
-///     |> DotNet.Build
+///     |> DotNetCli.Build
 ///         (fun p -> 
 ///              { p with 
 ///                   Configuration = "Release" })
@@ -280,7 +280,7 @@ let private DefaultTestParams : TestParams = {
 /// ## Sample
 ///
 ///     !! "src/test/project.json"
-///     |> DotNet.Test
+///     |> DotNetCli.Test
 ///         (fun p -> 
 ///              { p with 
 ///                   Configuration = "Release" })
@@ -354,7 +354,7 @@ let private DefaultPackParams : PackParams = {
 /// ## Sample
 ///
 ///     !! "src/test/project.json"
-///     |> DotNet.Pack
+///     |> DotNetCli.Pack
 ///         (fun p -> 
 ///              { p with 
 ///                   Configuration = "Release" })

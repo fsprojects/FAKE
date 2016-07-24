@@ -5,7 +5,7 @@ module Fake.DotNet
 open Fake
 open System
 open System.IO
-open System.TextFake.DotNet
+open System.Text
 open Newtonsoft.Json.Linq
 
 /// The dotnet command name
