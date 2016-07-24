@@ -110,6 +110,8 @@ FAKE provides you with support for creating MSI setups using the WiX Toolset (<a
 <span class="l">67: </span>
 <span class="l">68: </span>
 <span class="l">69: </span>
+<span class="l">70: </span>
+<span class="l">71: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;BuildWiXSetup&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
     <span class="c">// This defines, which files should be collected when running bulkComponentCreation</span>
@@ -119,7 +121,9 @@ FAKE provides you with support for creating MSI setups using the WiX Toolset (<a
         <span class="k">else</span> 
             <span class="k">false</span>
         
-    <span class="c">// Collect Files which should be shipped. Pass directory with your deployment output for deployDir, along with the targeted architecture.</span>
+    <span class="c">// Collect Files which should be shipped. Pass directory with your deployment output for deployDir</span>
+    <span class="c">// along with the targeted architecture.</span>
+    
     <span class="k">let</span> <span class="i">components</span> <span class="o">=</span> <span class="i">bulkComponentCreation</span> <span class="i">fileFilter</span> (<span class="i">DirectoryInfo</span> <span class="i">deployDir</span>) <span class="i">Architecture</span><span class="o">.</span><span class="i">X86</span>
              
     <span class="c">// Collect component references for usage in features</span>
@@ -231,6 +235,134 @@ You can use the attachServiceToControlComponents function for attaching service 
 </code></pre></td>
 </tr>
 </table>
+<h2>Registry</h2>
+<p>If you need your installer to modify the registry, you can achieve this by creating a component containing <code>RegistryKey</code> and <code>RegistryValue</code> elements. A <code>RegistryKey</code> can have further keys and values nested as children.</p>
+<h3>Example</h3>
+<p>First, define the desired registry layout and add it to a new component:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs9', 14)" onmouseover="showTip(event, 'fs9', 14)" class="i">registryDefinition</span> <span class="o">=</span> <span class="i">generateRegistryKey</span> (<span class="k">fun</span> <span class="i">f</span> <span class="k">-&gt;</span> {<span class="i">f</span> <span class="k">with</span>
+                                                          <span class="i">Root</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs10', 15)" onmouseover="showTip(event, 'fs10', 15)" class="i">Some</span> <span class="i">WiXRegistryRootType</span><span class="o">.</span><span class="i">HKCU</span>
+                                                          <span class="i">Key</span> <span class="o">=</span> <span class="s">&quot;Some key name&quot;</span>
+                                                          <span class="i">Values</span> <span class="o">=</span> [
+                                                            <span class="i">generateRegistryValue</span>(<span class="k">fun</span> <span class="i">v</span> <span class="k">-&gt;</span> 
+                                                                                    {<span class="i">v</span> <span class="k">with</span>
+                                                                                       <span class="i">Name</span> <span class="o">=</span> <span class="s">&quot;Something&quot;</span>
+                                                                                       <span class="i">Type</span> <span class="o">=</span> <span class="i">WiXRegistryValueType</span><span class="o">.</span><span class="i">Integer</span>
+                                                                                       <span class="i">Value</span> <span class="o">=</span> <span class="s">&quot;1&quot;</span>
+                                                                                    })
+                                                          ]
+                                                          <span class="i">Keys</span> <span class="o">=</span> [
+                                                            <span class="c">//Could nest more keys here</span>
+                                                          ]
+                                                       })
+                                                      
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs11', 16)" onmouseover="showTip(event, 'fs11', 16)" class="i">regComponent</span> <span class="o">=</span> <span class="i">C</span> (<span class="i">generateComponent</span> (<span class="k">fun</span> <span class="i">c</span> <span class="k">-&gt;</span> {<span class="i">c</span> <span class="k">with</span>
+                                                     <span class="i">Id</span> <span class="o">=</span> <span class="s">&quot;RegistryEntries&quot;</span>
+                                                     <span class="i">RegistryKeys</span> <span class="o">=</span> [<span onmouseout="hideTip(event, 'fs9', 17)" onmouseover="showTip(event, 'fs9', 17)" class="i">registryDefinition</span>]
+                                                  }))
+</code></pre></td>
+</tr>
+</table>
+<p>This component needs to be attached to the <code>TARGETDIR</code> directory. This effectively means the registry entries should be installed to the target user's machine. For this we will use a <code>DirectoryRef</code> pointing to <code>TARGETDIR</code>.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs12', 18)" onmouseover="showTip(event, 'fs12', 18)" class="i">targetDirRef</span> <span class="o">=</span> <span class="i">generateDirectoryRef</span> (<span class="k">fun</span> <span class="i">r</span> <span class="k">-&gt;</span> {<span class="i">r</span> <span class="k">with</span>
+                                                     <span class="i">Id</span> <span class="o">=</span> <span class="s">&quot;TARGETDIR&quot;</span>
+                                                     <span class="i">Components</span> <span class="o">=</span> [<span onmouseout="hideTip(event, 'fs11', 19)" onmouseover="showTip(event, 'fs11', 19)" class="i">regComponent</span>]
+                                                  })
+</code></pre></td>
+</tr>
+</table>
+<p>The directory reference should be included in the <code>DirectoryRefs</code> sequence when calling <code>FillInWixTemplate</code>, and a reference to <code>regComponent</code> should be added to the relevant feature.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+<span class="l">21: </span>
+<span class="l">22: </span>
+<span class="l">23: </span>
+<span class="l">24: </span>
+<span class="l">25: </span>
+<span class="l">26: </span>
+<span class="l">27: </span>
+<span class="l">28: </span>
+<span class="l">29: </span>
+<span class="l">30: </span>
+<span class="l">31: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs13', 20)" onmouseover="showTip(event, 'fs13', 20)" class="i">componentRefs</span> <span class="o">=</span> (<span onmouseout="hideTip(event, 'fs1', 21)" onmouseover="showTip(event, 'fs1', 21)" class="t">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs14', 22)" onmouseover="showTip(event, 'fs14', 22)" class="f">append</span> <span onmouseout="hideTip(event, 'fs8', 23)" onmouseover="showTip(event, 'fs8', 23)" class="i">components</span> [<span onmouseout="hideTip(event, 'fs11', 24)" onmouseover="showTip(event, 'fs11', 24)" class="i">regComponent</span>]) <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs1', 25)" onmouseover="showTip(event, 'fs1', 25)" class="t">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs2', 26)" onmouseover="showTip(event, 'fs2', 26)" class="f">map</span>(<span class="k">fun</span> <span onmouseout="hideTip(event, 'fs15', 27)" onmouseover="showTip(event, 'fs15', 27)" class="i">comp</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs15', 28)" onmouseover="showTip(event, 'fs15', 28)" class="i">comp</span><span class="o">.</span><span class="i">ToComponentRef</span>())
+
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs16', 29)" onmouseover="showTip(event, 'fs16', 29)" class="i">completeFeature</span> <span class="o">=</span> <span class="i">generateFeatureElement</span> (<span class="k">fun</span> <span class="i">f</span> <span class="k">-&gt;</span> 
+                                                {<span class="i">f</span> <span class="k">with</span>  
+                                                    <span class="i">Id</span> <span class="o">=</span> <span class="s">&quot;Complete&quot;</span>
+                                                    <span class="i">Title</span> <span class="o">=</span> <span class="s">&quot;Complete Feature&quot;</span>
+                                                    <span class="i">Level</span> <span class="o">=</span> <span class="n">1</span> 
+                                                    <span class="i">Description</span> <span class="o">=</span> <span class="s">&quot;Installs all features&quot;</span>
+                                                    <span class="i">Components</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs13', 30)" onmouseover="showTip(event, 'fs13', 30)" class="i">componentRefs</span>
+                                                    <span class="i">Display</span> <span class="o">=</span> <span class="i">Expand</span> 
+                                                })
+
+<span class="i">FillInWiXTemplate</span> <span class="s">&quot;&quot;</span> (<span class="k">fun</span> <span class="i">f</span> <span class="k">-&gt;</span>
+                        {<span class="i">f</span> <span class="k">with</span>
+                            <span class="c">// Guid which should be generated on every build</span>
+                            <span class="i">ProductCode</span> <span class="o">=</span> <span class="i">Guid</span><span class="o">.</span><span class="i">NewGuid</span>()
+                            <span class="i">ProductName</span> <span class="o">=</span> <span class="s">&quot;Test Setup&quot;</span>
+                            <span class="i">Description</span> <span class="o">=</span> <span class="s">&quot;Description of Test Setup&quot;</span>
+                            <span class="i">ProductLanguage</span> <span class="o">=</span> <span class="n">1033</span>
+                            <span class="i">ProductVersion</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span>
+                            <span class="i">ProductPublisher</span> <span class="o">=</span> <span class="s">&quot;YouOrYourCompany&quot;</span>
+                            <span class="c">// Set fixed upgrade guid, this should never change for this project!</span>
+                            <span class="i">UpgradeGuid</span> <span class="o">=</span> <span class="i">WixProductUpgradeGuid</span>
+                            <span class="i">MajorUpgrade</span> <span class="o">=</span> [<span class="i">MajorUpgrade</span>]
+                            <span class="i">UIRefs</span> <span class="o">=</span> [<span class="i">WiXUIMondo</span>; <span class="i">WiXUIError</span>]
+                            <span class="i">ProgramFilesFolder</span> <span class="o">=</span> <span class="i">ProgramFiles32</span>
+                            <span class="i">Components</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs8', 31)" onmouseover="showTip(event, 'fs8', 31)" class="i">components</span>
+                            <span class="i">BuildNumber</span> <span class="o">=</span> <span class="s">&quot;Build number&quot;</span>
+                            <span class="i">Features</span> <span class="o">=</span> [<span onmouseout="hideTip(event, 'fs16', 32)" onmouseover="showTip(event, 'fs16', 32)" class="i">completeFeature</span>]
+                            <span class="i">DirectoryRefs</span> <span class="o">=</span> [<span onmouseout="hideTip(event, 'fs12', 33)" onmouseover="showTip(event, 'fs12', 33)" class="i">targetDirRef</span>]
+                        })
+</code></pre></td>
+</tr>
+</table>
 
           <div class="tip" id="fs1">module Seq<br /><br />from Microsoft.FSharp.Collections</div>
 <div class="tip" id="fs2">val map : mapping:(&#39;T -&gt; &#39;U) -&gt; source:seq&lt;&#39;T&gt; -&gt; seq&lt;&#39;U&gt;<br /><br />Full name: Microsoft.FSharp.Collections.Seq.map</div>
@@ -239,7 +371,15 @@ You can use the attachServiceToControlComponents function for attaching service 
 <div class="tip" id="fs5">val comp : &#39;a</div>
 <div class="tip" id="fs6">val exists : predicate:(&#39;T -&gt; bool) -&gt; source:seq&lt;&#39;T&gt; -&gt; bool<br /><br />Full name: Microsoft.FSharp.Collections.Seq.exists</div>
 <div class="tip" id="fs7">val file : obj</div>
-<div class="tip" id="fs8">val components : obj<br /><br />Full name: wix.components</div>
+<div class="tip" id="fs8">val components : seq&lt;obj&gt;<br /><br />Full name: wix.components</div>
+<div class="tip" id="fs9">val registryDefinition : obj<br /><br />Full name: wix.registryDefinition</div>
+<div class="tip" id="fs10">union case Option.Some: Value: &#39;T -&gt; Option&lt;&#39;T&gt;</div>
+<div class="tip" id="fs11">val regComponent : obj<br /><br />Full name: wix.regComponent</div>
+<div class="tip" id="fs12">val targetDirRef : obj<br /><br />Full name: wix.targetDirRef</div>
+<div class="tip" id="fs13">val componentRefs : seq&lt;obj&gt;<br /><br />Full name: wix.componentRefs</div>
+<div class="tip" id="fs14">val append : source1:seq&lt;&#39;T&gt; -&gt; source2:seq&lt;&#39;T&gt; -&gt; seq&lt;&#39;T&gt;<br /><br />Full name: Microsoft.FSharp.Collections.Seq.append</div>
+<div class="tip" id="fs15">val comp : obj</div>
+<div class="tip" id="fs16">val completeFeature : obj<br /><br />Full name: wix.completeFeature</div>
           
         </div>
         <div class="span3">
