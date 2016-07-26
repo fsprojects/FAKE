@@ -3,6 +3,7 @@ module Fake.TypeScript
 
 open System
 open System.Text
+open System.IO
 
 /// Generated ECMAScript version
 type ECMAScript =
@@ -40,8 +41,12 @@ type TypeScriptParams =
       /// Specifies the timeout for the TypeScript compiler.
       TimeOut : TimeSpan }
 
-let private TypeScriptCompilerPath = 
-    @"[ProgramFilesX86]\Microsoft SDKs\TypeScript\1.0\;[ProgramFiles]\Microsoft SDKs\TypeScript\1.0\;[ProgramFilesX86]\Microsoft SDKs\TypeScript\0.9\;[ProgramFiles]\Microsoft SDKs\TypeScript\0.9\"
+let private TypeScriptCompilerPrefix = "Microsoft SDKs" </> "TypeScript"
+
+let extractVersionNumber (di : DirectoryInfo) = 
+    match Double.TryParse di.Name with
+    | true, d -> d
+    | false, _ -> 0.0
 
 /// Default parameters for the TypeScript task
 let TypeScriptDefaultParams = 
@@ -56,7 +61,14 @@ let TypeScriptDefaultParams =
       OutputPath = null
       ToolPath = 
             if isUnix then "tsc"
-            else findPath "TypeScriptPath" TypeScriptCompilerPath "tsc.exe"
+            else 
+                let paths = 
+                    [ System.Environment.GetFolderPath System.Environment.SpecialFolder.ProgramFiles; System.Environment.GetFolderPath System.Environment.SpecialFolder.ProgramFilesX86]
+                    |> List.map (fun p -> p </> TypeScriptCompilerPrefix)
+                    |> List.collect (fun p -> try System.IO.DirectoryInfo(p).GetDirectories() |> List.ofArray with | _ -> [])
+                    |> List.sortByDescending extractVersionNumber
+                    |> List.map (fun di -> di.FullName)
+                findPath "TypeScriptPath" (String.Join(";", paths)) "tsc.exe"
       TimeOut = TimeSpan.FromMinutes 5. }
 
 let private buildArguments parameters file = 
