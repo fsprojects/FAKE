@@ -1,4 +1,7 @@
 #### 4.35.0 - 24.07.2016
+* BUGFIX: NUpdate search pattern in NuGet helper - https://github.com/fsharp/FAKE/pull/1334
+
+#### 4.35.0 - 24.07.2016
 * New registry support in WiXHelper - https://github.com/fsharp/FAKE/pull/1331
 * BREAKING CHANGE: Changed DotNet helper to DotNetCLI - https://github.com/fsharp/FAKE/pull/1332
 * BUGFIX: Fixed exception when dotnet cli is not installed - https://github.com/fsharp/FAKE/pull/1332
