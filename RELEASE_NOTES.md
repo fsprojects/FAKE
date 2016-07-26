@@ -1,5 +1,6 @@
 #### 4.35.0 - 24.07.2016
-* BUGFIX: NUpdate search pattern in NuGet helper - https://github.com/fsharp/FAKE/pull/1334
+* BUGFIX: Update search pattern in NuGet helper - https://github.com/fsharp/FAKE/pull/1334
+* BUGFIX: Expanded typescript search paths on windows to cover all new typescript compilers - https://github.com/fsharp/FAKE/pull/1308
 
 #### 4.35.0 - 24.07.2016
 * New registry support in WiXHelper - https://github.com/fsharp/FAKE/pull/1331
