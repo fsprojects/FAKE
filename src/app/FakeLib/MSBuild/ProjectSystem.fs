@@ -21,6 +21,10 @@ type ProjectFile(projectFileName:string,documentContent : string) =
     let getCompileNodes (document:XmlDocument) =         
         [for node in document.SelectNodes(compileNodesXPath,nsmgr) -> node]
 
+    let contentNodesXPath = "/default:Project/default:ItemGroup/default:Content"
+    let getContentNodes (document:XmlDocument) =         
+        [for node in document.SelectNodes(contentNodesXPath,nsmgr) -> node]
+
     let getFileAttribute (node:XmlNode) = node.Attributes.["Include"].InnerText
 
     /// Read a Project from a FileName
@@ -33,6 +37,16 @@ type ProjectFile(projectFileName:string,documentContent : string) =
     member x.AddFile fileName =        
         let document = XMLDoc documentContent // we create a copy and work immutable
         let node = getCompileNodes document |> Seq.last
+        let newNode = node.CloneNode(false) :?> XmlElement
+        newNode.SetAttribute("Include",fileName)
+        
+        node.ParentNode.AppendChild(newNode) |> ignore
+        new ProjectFile(projectFileName,document.OuterXml)
+        
+    /// Add a file to the Content nodes
+    member x.AddContentFile fileName =        
+        let document = XMLDoc documentContent // we create a copy and work immutable
+        let node = getContentNodes document |> Seq.last
         let newNode = node.CloneNode(false) :?> XmlElement
         newNode.SetAttribute("Include",fileName)
         
@@ -51,8 +65,23 @@ type ProjectFile(projectFileName:string,documentContent : string) =
 
         new ProjectFile(projectFileName,document.OuterXml)
 
+    /// Removes a file from the Content nodes
+    member x.RemoveContentFile fileName =        
+        let document = XMLDoc documentContent // we create a copy and work immutable
+        let node = 
+            getContentNodes document 
+            |> List.filter (fun node -> getFileAttribute node = fileName) 
+            |> Seq.last  // we remove the last one to make easier to remove duplicates
+
+        node.ParentNode.RemoveChild node |> ignore
+
+        new ProjectFile(projectFileName,document.OuterXml)
+
     /// All files which are in "Compile" sections
     member x.Files = getCompileNodes document |> List.map getFileAttribute
+    
+        /// All files which are in "Content" sections
+    member x.ContentFiles = getContentNodes document |> List.map getFileAttribute
 
     /// Finds duplicate files which are in "Compile" sections
     member this.FindDuplicateFiles() = 
@@ -172,12 +201,26 @@ let removeCompileNodesWithMissingFiles includeExistsF (project:ProjectFile) =
                 if not (includeExistsF(includePath)) then yield filePath }
     missingFiles
     |> Seq.fold (fun (project:ProjectFile) file -> project.RemoveFile(file)) project
+    
+    let removeContentNodesWithMissingFiles includeExistsF (project:ProjectFile) =
+    let projectDir = IO.Path.GetDirectoryName(project.ProjectFileName)
+    let missingFiles =
+        seq { for filePath in project.ContentFiles do
+                // We have to normalize the path, because csproj can have win style directory separator char on Mono too
+                // Xbuild handles them, so we do too http://www.mono-project.com/archived/porting_msbuild_projects_to_xbuild/#paths 
+                let includePath = Globbing.normalizePath (IO.Path.Combine([|projectDir; filePath|]))
+                if not (includeExistsF(includePath)) then yield filePath }
+    missingFiles
+    |> Seq.fold (fun (project:ProjectFile) file -> project.RemoveContentFile(file)) project
 
 /// Removes projects Compile nodes that have Include attributes pointing to files missing from the file system.  Saves updated projects.
 let RemoveCompileNodesWithMissingFiles project =
     let newProject = removeCompileNodesWithMissingFiles System.IO.File.Exists (ProjectFile.FromFile project)
     newProject.Save()
 
-
+/// Removes projects Content nodes that have Include attributes pointing to files missing from the file system.  Saves updated projects.
+let RemoveContentNodesWithMissingFiles project =
+    let newProject = removeContentNodesWithMissingFiles System.IO.File.Exists (ProjectFile.FromFile project)
+    newProject.Save()
 
          
