@@ -202,7 +202,7 @@ let removeCompileNodesWithMissingFiles includeExistsF (project:ProjectFile) =
     missingFiles
     |> Seq.fold (fun (project:ProjectFile) file -> project.RemoveFile(file)) project
     
-    let removeContentNodesWithMissingFiles includeExistsF (project:ProjectFile) =
+let removeContentNodesWithMissingFiles includeExistsF (project:ProjectFile) =
     let projectDir = IO.Path.GetDirectoryName(project.ProjectFileName)
     let missingFiles =
         seq { for filePath in project.ContentFiles do
