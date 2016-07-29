@@ -93,9 +93,24 @@ type ProjectFile(projectFileName:string,documentContent : string) =
             | true,true  -> ()                              // already seen at least twice
         ]
 
-    member x.RemoveDuplicates() =
-        x.FindDuplicateFiles()
-        |> List.fold (fun (project:ProjectFile) duplicate -> project.RemoveFile duplicate) x
+     member x.RemoveDuplicates() =
+            x.FindDuplicateFiles()
+            |> List.fold (fun (project:ProjectFile) duplicate -> project.RemoveFile duplicate) x
+
+
+    /// Finds duplicate files which are in "Content" sections
+    member this.FindDuplicateContentFiles() = 
+        [let dict = Dictionary()
+         for file in this.ContentFiles do
+            match dict.TryGetValue file with
+            | false,_    -> dict.[file] <- false            // first observance
+            | true,false -> dict.[file] <- true; yield file // second observance
+            | true,true  -> ()                              // already seen at least twice
+        ]
+
+    member x.RemoveDuplicatesContent() =
+        x.FindDuplicateContentFiles()
+        |> List.fold (fun (project:ProjectFile) duplicate -> project.RemoveContentFile duplicate) x
 
     /// The project file name
     member x.ProjectFileName = projectFileName
@@ -144,6 +159,37 @@ let findMissingFiles templateProject projects =
               UnorderedFiles = unorderedFiles })
     |> Seq.filter (fun pc -> pc.HasErrors)
 
+/// Compares the given project files againts the template project and returns which files are missing.
+/// For F# projects it is also reporting unordered files.
+let findMissingContentFiles templateProject projects =
+    let isFSharpProject file = file |> endsWith ".fsproj"
+
+    let templateFiles = (ProjectFile.FromFile templateProject).ContentFiles
+    let templateFilesSet = Set.ofSeq templateFiles
+    
+    projects
+    |> Seq.map (fun fileName -> ProjectFile.FromFile fileName)
+    |> Seq.map (fun ps ->             
+            let missingFiles = Set.difference templateFilesSet (Set.ofSeq ps.ContentFiles)
+                
+            let unorderedFiles =
+                if not <| isFSharpProject templateProject then [] else
+                if not <| Seq.isEmpty missingFiles then [] else
+                let remainingFiles = ps.Files |> List.filter (fun file -> Set.contains file templateFilesSet)
+                if remainingFiles.Length <> templateFiles.Length then [] else
+
+                templateFiles 
+                |> List.zip remainingFiles
+                |> List.filter (fun (a,b) -> a <> b) 
+                |> List.map fst
+
+            { TemplateProjectFileName = templateProject
+              ProjectFileName = ps.ProjectFileName
+              MissingFiles = missingFiles
+              DuplicateFiles = ps.FindDuplicateContentFiles()
+              UnorderedFiles = unorderedFiles })
+    |> Seq.filter (fun pc -> pc.HasErrors)
+
 /// Compares the given projects to the template project and adds all missing files to the projects if needed.
 let FixMissingFiles templateProject projects =
     let addMissing (project:ProjectFile) missingFile = 
@@ -151,6 +197,19 @@ let FixMissingFiles templateProject projects =
         project.AddFile missingFile
 
     findMissingFiles templateProject projects
+    |> Seq.iter (fun pc -> 
+            let project = ProjectFile.FromFile pc.ProjectFileName
+            if not (Seq.isEmpty pc.MissingFiles) then
+                let newProject = Seq.fold addMissing project pc.MissingFiles
+                newProject.Save())
+
+/// Compares the given projects to the template project and adds all missing files to the projects if needed.
+let FixMissingContentFiles templateProject projects =
+    let addMissing (project:ProjectFile) missingFile = 
+        tracefn "Adding %s to %s" missingFile project.ProjectFileName
+        project.AddContentFile missingFile
+
+    findMissingContentFiles templateProject projects
     |> Seq.iter (fun pc -> 
             let project = ProjectFile.FromFile pc.ProjectFileName
             if not (Seq.isEmpty pc.MissingFiles) then
@@ -166,11 +225,27 @@ let RemoveDuplicateFiles projects =
                 let newProject = project.RemoveDuplicates()
                 newProject.Save())
 
+/// It removes duplicate content files from the project files.
+let RemoveDuplicateContentFiles projects =    
+    projects
+    |> Seq.iter (fun fileName ->
+            let project = ProjectFile.FromFile fileName
+            if not (project.FindDuplicateContentFiles().IsEmpty) then
+                let newProject = project.RemoveDuplicatesContent()
+                newProject.Save())
+
 /// Compares the given projects to the template project and adds all missing files to the projects if needed.
 /// It also removes duplicate files from the project files.
 let FixProjectFiles templateProject projects =
     FixMissingFiles templateProject projects
     RemoveDuplicateFiles projects
+
+
+/// Compares the given projects to the template project and adds all missing content files to the projects if needed.
+/// It also removes duplicate files from the project files.
+let FixProjectContentFiles templateProject projects =
+    FixMissingContentFiles templateProject projects
+    RemoveDuplicateContentFiles projects
 
 /// Compares the given project files againts the template project and fails if any files are missing.
 /// For F# projects it is also reporting unordered files.
