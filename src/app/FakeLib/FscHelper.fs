@@ -374,7 +374,7 @@ type FscParam =
         let stogl s b = sprintf "-%s%s" s (chk b) // for short forms       
         /// format a list of compiler args with string parameters "--%s:\"%s\""   
         let argls s (ls:string list) = sprintf "--%s:\"%s\"" s (String.concat ";" ls)
-        /// format a complier arg that ends with "+" or "-" with string parameters  "--%s%s:\"%s\""
+        /// format a compiler arg that ends with "+" or "-" with string parameters  "--%s%s:\"%s\""
         let inline toglls s b (ls:'a list) = 
             sprintf "--%s%s:\"%s\"" s  (chk b) (String.concat ";" (List.map string ls))
         /// format a list of short form complier args using the same symbol 
