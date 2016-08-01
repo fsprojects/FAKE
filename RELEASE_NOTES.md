@@ -1,3 +1,6 @@
+#### 4.35.2 - 01.08.2016
+* BUGFIX: Fix Fsc short toggle argument format - https://github.com/fsharp/FAKE/pull/1339
+
 #### 4.35.1 - 24.07.2016
 * BUGFIX: Update search pattern in NuGet helper - https://github.com/fsharp/FAKE/pull/1334
 * BUGFIX: Expanded typescript search paths on windows to cover all new typescript compilers - https://github.com/fsharp/FAKE/pull/1308
