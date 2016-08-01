@@ -74,7 +74,7 @@ let AllSpecFiles elementName (s:string) = s.EndsWith "Specs.cs" || s.EndsWith "S
 let AllSpecAndTestDataFiles elementName (s:string) =
     AllSpecFiles elementName s || ((elementName = "Content" || elementName = "None") && s.Contains("TestData"))
 
-/// A Convetion which matches nothing
+/// A Convention which matches nothing
 let Nothing _ _ = false
 
 /// Removes all NUnit references from a project.
