@@ -1,8 +1,21 @@
+/// Containts helper function for GitVersion - a tool to help you achieve Semantic Versioning on your project.
+///
+/// To install GitVersion.exe on Windows, start PowerShell as Administrator and run choco install gitversion.portable -s https://chocolatey.org/api/v2"
+/// For Mac and Unix, install the NuGet version.
+
 module Fake.GitVersionHelper
 
 open FSharp.Data
 open Newtonsoft.Json
 open System
+
+type GitversionParams = {
+    ToolPath : string
+}
+
+let GitversionDefaults = {
+    ToolPath = findToolInSubPath "GitVersion.exe" (environVarOrDefault "ChocolateyInstall" currentDirectory)
+}
 
 type GitVersionProperties = {
                                 Major : int;
@@ -31,20 +44,20 @@ type GitVersionProperties = {
                                 CommitDate : string;
                             }
 
-
-let GitVersion () =
-    let dirs = [ (environVar "ProgramData")  @@ "chocolatey" @@ "bin" ]
-    let file = "GitVersion.exe"
+/// Runs [GitVersion](https://gitversion.readthedocs.io/en/latest/) on a .NET project file.
+/// ## Parameters
+///
+///  - `setParams` - Function used to manipulate the GitversionDefaults value.
+///
+/// ## Sample
+///
+///      GitVersion id // Use Defaults
+///      GitVersion (fun p -> { p with ToolPath = currentDirectory @@ "tools" }
+let GitVersion (setParams : GitversionParams -> GitversionParams) =
+    let parameters = GitversionDefaults |> setParams
     let timespan =  TimeSpan.FromMinutes 1.
-    let usage = "To install GitVersion.exe, start PowerShell as Administrator and run choco install gitversion.portable -s https://chocolatey.org/api/v2"
 
-    let run executable =
-        let result = ExecProcessAndReturnMessages (fun info ->
-            info.FileName <- executable ) timespan
-        if result.ExitCode <> 0 then failwithf "%s failed with exit code %i" executable result.ExitCode
-        result.Messages |> String.concat ""
-
-
-    match tryFindFile dirs file with
-        | Some executable -> run executable  |> fun j -> JsonConvert.DeserializeObject<GitVersionProperties>(j)
-        | None -> failwithf  "%s is not installed. %s" file usage
+    let result = ExecProcessAndReturnMessages (fun info ->
+        info.FileName <- parameters.ToolPath) timespan
+    if result.ExitCode <> 0 then failwithf "GitVersion.exe failed with exit code %i" result.ExitCode
+    result.Messages |> String.concat "" |> fun j -> JsonConvert.DeserializeObject<GitVersionProperties>(j)
