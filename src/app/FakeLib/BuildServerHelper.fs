@@ -61,7 +61,7 @@ let travisBuildNumber = environVar "TRAVIS_BUILD_NUMBER"
 
 /// Checks if we are on GitLab CI
 /// [omit]
-let isGitlabCI = environVar "CI_SERVER_NAME" = "GitLab CI"
+let isGitlabCI = getEnvironmentVarAsBool "GITLAB_CI"
 
 /// Build number retrieved from GitLab CI
 /// [omit]
