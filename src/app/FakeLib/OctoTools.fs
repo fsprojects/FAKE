@@ -94,12 +94,20 @@ type DeleteReleaseOptions = {
     /// Maximum (inclusive) version number for the range of versions to delete
     MaxVersion  : string }
 
+type PushOptions = {
+    // paths to one or more packages to push to the server
+    Packages : string list 
+    /// if the package already exists, should this package overwrite it?
+    ReplaceExisting : bool 
+}
+
 /// Option type for selecting one command
 type OctoCommand = 
 | CreateRelease of CreateReleaseOptions * DeployReleaseOptions option
 | DeployRelease of DeployReleaseOptions
 | DeleteRelease of DeleteReleaseOptions
 | ListEnvironments
+| Push of PushOptions
 
 /// Complete Octo.exe CLI params
 type OctoParams = {
@@ -203,6 +211,12 @@ let serverCommandLine (opts:OctoServerOptions) =
       (optionalStringParam "apikey" (liftString opts.ApiKey)) ] 
     |> List.fold (+) ""
 
+/// [omit]
+let pushCommandLine (opts : PushOptions) =
+    [ stringListParam "package" opts.Packages
+      flag "replace-existing" opts.ReplaceExisting ]
+    |> List.fold (+) ""     
+
 /// Maps a command to string input for the octopus tools cli.
 let commandLine command =
     match command with
@@ -216,6 +230,8 @@ let commandLine command =
         sprintf " delete-releases%s" (deleteCommandLine opts)
     | ListEnvironments -> 
         " list-environments"
+    | Push opts -> 
+        sprintf " push%s" (pushCommandLine opts)
 
 let serverCommandLineForTracing (opts: OctoServerOptions) = serverCommandLine { opts with ApiKey = "(Removed for security purposes)" }
 
