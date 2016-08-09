@@ -1,4 +1,4 @@
-﻿[<AutoOpen>]
+[<AutoOpen>]
 /// Contains functions which allow build scripts to interact with a build server.
 module Fake.BuildServerHelper
 
@@ -61,7 +61,7 @@ let travisBuildNumber = environVar "TRAVIS_BUILD_NUMBER"
 
 /// Checks if we are on GitLab CI
 /// [omit]
-let isGitlabCI = getEnvironmentVarAsBool "GITLAB_CI"
+let isGitlabCI = getEnvironmentVarAsBool "GITLAB_CI" || environVar "CI_SERVER_NAME" = "GitLab CI"
 
 /// Build number retrieved from GitLab CI
 /// [omit]
