@@ -396,7 +396,7 @@ type FscParam =
             dllPaths 
             |> List.map (sargp "r") 
             |> List.map (fun x -> sprintf "\"%s\"" x)
-            |> String.concat " "
+            |> String.concat "; "
             |> (fun x -> x.Substring(1, x.Length - 2))
         | Win32res file -> argp "win32res" file
         | Win32Manifest file -> argp "win32manifest" file
