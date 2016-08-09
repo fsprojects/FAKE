@@ -1,3 +1,8 @@
+#### 4.37.0 - 09.08.2016
+* New Octopus command for push - https://github.com/fsharp/FAKE/pull/1349
+* BUGFIX: Fixed multiple references for DLL in Fsc helper - https://github.com/fsharp/FAKE/pull/1350
+* BUGFIX: Fixed detection of GitLab CI with current multi-runner - https://github.com/fsharp/FAKE/pull/1345
+
 #### 4.36.0 - 01.08.2016
 * Added methods to cover manipulation of Content Nodes in project files - https://github.com/fsharp/FAKE/pull/1335
 * BUGFIX: Fix Fsc short toggle argument format - https://github.com/fsharp/FAKE/pull/1339
