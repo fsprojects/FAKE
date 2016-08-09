@@ -392,7 +392,12 @@ type FscParam =
         | NoInterfacedata -> arg "nointerfacedata"
         | Sig file -> argp "sig" file
         | Reference dllPath -> sargp "r" dllPath
-        | References dllPaths -> dllPaths |> List.map (sargp "r") |> String.concat " "
+        | References dllPaths -> 
+            dllPaths 
+            |> List.map (sargp "r") 
+            |> List.map (fun x -> sprintf "\"%s\"" x)
+            |> String.concat " "
+            |> (fun x -> x.Substring(1, x.Length - 2))
         | Win32res file -> argp "win32res" file
         | Win32Manifest file -> argp "win32manifest" file
         | NoWin32Manifest -> arg "nowin32manifest"
