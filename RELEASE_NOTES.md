@@ -1,3 +1,6 @@
+#### 4.37.1 - 09.08.2016
+* BUGFIX: Fixed FSCHelper -https://github.com/fsharp/FAKE/pull/1351
+
 #### 4.37.0 - 09.08.2016
 * New Octopus command for push - https://github.com/fsharp/FAKE/pull/1349
 * New GitVersionHelper - https://github.com/fsharp/FAKE/pull/1319
