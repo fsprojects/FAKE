@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Paket.Core.netcore</id>
+    <version>3.10.0-alpha001</version>
+    <authors>Paket.Core.netcore</authors>
+    <owners>Paket.Core.netcore</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Paket.Core.netcore</description>
+    <tags></tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.6">
+        <dependency id="Mono.Cecil" version="[0.9.6.1, )" />
+        <dependency id="Newtonsoft.Json" version="[9.0.1, )" />
+        <dependency id="FSharp.Core" version="[4.0.1.7-alpha, )" />
+        <dependency id="Chessie" version="[0.6.0, )" />
+      </group>
+      <group targetFramework=".NETStandard1.6">
+        <dependency id="System.Xml.XmlDocument" version="[4.0.1, )" />
+        <dependency id="System.Net.Requests" version="[4.0.11, )" />
+        <dependency id="System.Diagnostics.TraceSource" version="[4.0.0, )" />
+        <dependency id="System.Xml.XPath.XmlDocument" version="[4.0.1, )" />
+        <dependency id="System.Diagnostics.Process" version="[4.1.0, )" />
+        <dependency id="System.Xml.XDocument" version="[4.0.11, )" />
+        <dependency id="System.Xml.XPath.XDocument" version="[4.0.1, )" />
+        <dependency id="System.Security.Cryptography.ProtectedData" version="[4.0.0, )" />
+        <dependency id="System.Security.Cryptography.Algorithms" version="[4.2.0, )" />
+        <dependency id="System.Diagnostics.FileVersionInfo" version="[4.0.0, )" />
+        <dependency id="Mono.Cecil" version="[0.9.6, )" />
+        <dependency id="NETStandard.Library" version="[1.6.0, )" />
+        <dependency id="Newtonsoft.Json" version="[9.0.1, )" />
+        <dependency id="FSharp.Core" version="[4.0.1.7-alpha, )" />
+        <dependency id="Chessie" version="[0.6.0, )" />
+      </group>
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="mscorlib" targetFramework=".NETFramework4.6" />
+      <frameworkAssembly assemblyName="System" targetFramework=".NETFramework4.6" />
+      <frameworkAssembly assemblyName="System.Configuration" targetFramework=".NETFramework4.6" />
+      <frameworkAssembly assemblyName="System.Core" targetFramework=".NETFramework4.6" />
+      <frameworkAssembly assemblyName="System.Data" targetFramework=".NETFramework4.6" />
+      <frameworkAssembly assemblyName="System.Data.Linq" targetFramework=".NETFramework4.6" />
+      <frameworkAssembly assemblyName="System.IO.Compression" targetFramework=".NETFramework4.6" />
+      <frameworkAssembly assemblyName="System.IO.Compression.FileSystem" targetFramework=".NETFramework4.6" />
+      <frameworkAssembly assemblyName="System.Numerics" targetFramework=".NETFramework4.6" />
+      <frameworkAssembly assemblyName="System.Security" targetFramework=".NETFramework4.6" />
+      <frameworkAssembly assemblyName="System.Xml" targetFramework=".NETFramework4.6" />
+      <frameworkAssembly assemblyName="System.Xml.Linq" targetFramework=".NETFramework4.6" />
+    </frameworkAssemblies>
+  </metadata>
+</package>

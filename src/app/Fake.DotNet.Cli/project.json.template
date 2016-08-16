@@ -1,0 +1,65 @@
+{
+  "version": "__FAKE_DOTNET_CLI_VERSION__",
+  "buildOptions": {
+    "debugType": "portable",
+    "compilerName": "fsc",
+    "define": [
+      "DOTNETCORE"
+    ],
+    "emitEntryPoint": false,
+    "xmlDoc": true,
+    "compile": {
+      "includeFiles": [
+        "AssemblyInfo.fs",
+        "Dotnet.fs"
+      ]
+    }
+  },
+  "tools": {
+    "dotnet-compile-fsc": {
+      "version": "1.0.0-preview2-*",
+      "imports": "dnxcore50"
+    }
+  },
+  "dependencies": {
+    "Fake.Core.Environment": "__FAKE_CORE_ENVIRONMENT_VERSION__",
+    "Fake.Core.Tracing": "__FAKE_CORE_TRACING_VERSION__",
+    "Fake.Core.Process": "__FAKE_CORE_PROCESS_VERSION__",
+    "Fake.Core.String": "__FAKE_CORE_STRING_VERSION__",
+    "Fake.IO.FileSystem": "__FAKE_IO_FILESYSTEM_VERSION__",
+    "FSharp.Core": "__FSHARP_CORE_VERSION__"
+  },
+  "frameworks": {
+    "net46": {
+      "dependencies": {
+      },
+      "frameworkAssemblies": {
+        "Microsoft.Build.Framework": "",
+        "mscorlib": "",
+        "System": "",
+        "System.Configuration": "",
+        "System.Runtime.Caching": "",
+        "System.ServiceProcess": "",
+        "System.Xml": "",
+        "System.Xml.Linq": "",
+        "System.Core": ""
+      }
+    },
+    "netstandard1.6": {
+      "buildOptions": {
+        "define": [
+          "NETSTANDARD",
+          "USE_HTTPCLIENT"
+        ]
+      },
+      "imports": [
+        "portable-net45+win8",
+        "dnxcore50"
+      ],
+      "dependencies": {
+        "System.Net.Http": "4.1.0",
+        "NETStandard.Library": "1.6.0"
+      }
+    }
+  }
+}
