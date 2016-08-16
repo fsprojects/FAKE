@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0F0488CC-2580-4C07-9E16-3997480F0221}"
 	ProjectSection(SolutionItems) = preProject
@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		build.cmd = build.cmd
 		build.fsx = build.fsx
 		fake.nuspec = fake.nuspec
+		paket.dependencies = paket.dependencies
 		README.markdown = README.markdown
 		RELEASE_NOTES.md = RELEASE_NOTES.md
 	EndProjectSection
@@ -44,6 +45,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "help", "help", "{564BD198-0
 		help\create-nuget-package.md = help\create-nuget-package.md
 		help\customtasks.md = help\customtasks.md
 		help\deploy.md = help\deploy.md
+		help\fake-dotnetcore.md = help\fake-dotnetcore.md
 		help\fluentmigrator.md = help\fluentmigrator.md
 		help\fsc.md = help\fsc.md
 		help\fxcop.md = help\fxcop.md
@@ -131,6 +133,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "slacknotification", "slackn
 	ProjectSection(SolutionItems) = preProject
 		help\pics\slacknotification\slacknotification.png = help\pics\slacknotification\slacknotification.png
 	EndProjectSection
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Core.IntegrationTests", "src\test\Fake.Core.IntegrationTests\Fake.Core.IntegrationTests.fsproj", "{793ED18D-ED6B-4BD1-9617-C077C2B38589}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -272,6 +276,18 @@ Global
 		{0110E42E-E3AA-4A01-A6D4-DA26FD89ED4A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{0110E42E-E3AA-4A01-A6D4-DA26FD89ED4A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{0110E42E-E3AA-4A01-A6D4-DA26FD89ED4A}.Release|x86.ActiveCfg = Release|Any CPU
+		{793ED18D-ED6B-4BD1-9617-C077C2B38589}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{793ED18D-ED6B-4BD1-9617-C077C2B38589}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{793ED18D-ED6B-4BD1-9617-C077C2B38589}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{793ED18D-ED6B-4BD1-9617-C077C2B38589}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{793ED18D-ED6B-4BD1-9617-C077C2B38589}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{793ED18D-ED6B-4BD1-9617-C077C2B38589}.Debug|x86.Build.0 = Debug|Any CPU
+		{793ED18D-ED6B-4BD1-9617-C077C2B38589}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{793ED18D-ED6B-4BD1-9617-C077C2B38589}.Release|Any CPU.Build.0 = Release|Any CPU
+		{793ED18D-ED6B-4BD1-9617-C077C2B38589}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{793ED18D-ED6B-4BD1-9617-C077C2B38589}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{793ED18D-ED6B-4BD1-9617-C077C2B38589}.Release|x86.ActiveCfg = Release|Any CPU
+		{793ED18D-ED6B-4BD1-9617-C077C2B38589}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -299,5 +315,6 @@ Global
 		{791651E4-4422-4A31-8DDE-6B1AD79B377A} = {B774DC6A-F933-4EC3-A61F-E07344EF8ED2}
 		{0110E42E-E3AA-4A01-A6D4-DA26FD89ED4A} = {4198A143-EFB9-4E72-A3BD-F2848B78CC21}
 		{F131A0F4-D7BC-4717-812A-CE937DB64BE9} = {75162148-B884-4575-8E14-5320DD137760}
+		{793ED18D-ED6B-4BD1-9617-C077C2B38589} = {B774DC6A-F933-4EC3-A61F-E07344EF8ED2}
 	EndGlobalSection
 EndGlobal
