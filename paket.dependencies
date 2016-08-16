@@ -8,6 +8,9 @@ nuget serilog.sinks.nlog
 nuget Argu
 nuget FsCheck < 2.1
 nuget FsCheck.Xunit < 2.1
+nuget Unquote
+nuget NUnit
+nuget NUnit.Console
 nuget Nancy.Authentication.Stateless
 nuget Nancy.Hosting.Self
 nuget Nancy.Serialization.JsonNet
