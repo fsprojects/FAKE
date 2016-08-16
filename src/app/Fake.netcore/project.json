@@ -1,0 +1,81 @@
+{
+  "version": "1.0.0-alpha8",
+  "copyright": "Appparently dotnet cli needs this.",
+  "buildOptions": {
+    "debugType": "portable",
+    "compilerName": "fsc",
+    "define": [
+      "CORE_CLR",
+      "DOTNETCORE"
+    ],
+    "emitEntryPoint": true,
+    "xmlDoc": true,
+    "delaySign": true,
+    "additionalArguments": [
+      "--warn:3",
+      "--fullpaths",
+      "--flaterrors",
+      "--warnon:1182"
+    ],
+    "compile": {
+      "includeFiles": [
+        "Cli.fs",
+        "Program.fs"
+      ]
+    }
+  },
+  "tools": {
+    "dotnet-compile-fsc": {
+      "version": "1.0.0-preview2-*",
+      "imports": "dnxcore50"
+    }
+  },
+  "runtimes": {
+     "win7-x86": { },
+     "win7-x64": { },
+     "osx.10.11-x64": { },
+     "ubuntu.14.04-x64": { },
+     "ubuntu.16.04-x64": { }
+  },
+  "dependencies": {
+    "FSharp.Core": "4.0.1.7-alpha",
+    "Argu": "3.0.0-beta02",
+    "Fake.Runtime": "1.0.0-alpha8",
+    "FSharp.Compiler.Service": "6.0.3-alpha1",
+    "Mono.Cecil": "0.9.6.0"
+  },
+  "frameworks": {
+    "netcoreapp1.0": {
+      "buildOptions": {
+        "define": [
+          "NETSTANDARD1_5",
+          "NETSTANDARD1_6"
+        ]
+      },
+      "imports": [
+        "portable-net45+win8",
+        "dnxcore50"
+      ],
+      "dependencies": {
+        "System.Console": "4.0.0",
+        "System.IO.FileSystem": "4.0.1",
+        "System.Diagnostics.Tracing": "4.1.0",
+        "System.Net.NameResolution": "4.0.0",
+        "System.Net.Primitives": "4.0.11",
+        "System.Threading.ThreadPool": "4.0.10",
+        "System.Diagnostics.TraceSource": "4.0.0",
+        "System.Reflection": "4.1.0",
+        "System.Reflection.Metadata": "1.4.1-beta-24227-04",
+        "System.Reflection.TypeExtensions": "4.1.0",
+        "System.Reflection.Primitives": "4.0.1",
+        "System.Runtime": "4.1.0",
+        "System.Runtime.Loader": "4.0.0",
+        "System.Runtime.Extensions": "4.1.0",
+        "System.Security.Cryptography.Algorithms": "4.2.0",
+        "Microsoft.NETCore.App": {
+            "version": "1.0.0"
+        }
+      }
+    }
+  }
+}

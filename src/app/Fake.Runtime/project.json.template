@@ -1,0 +1,74 @@
+{
+  "version": "__FAKE_RUNTIME_VERSION__",
+  "buildOptions": {
+    "debugType": "portable",
+    "compilerName": "fsc",
+    "define": [
+      "CORE_CLR",
+      "DOTNETCORE",
+      "EXPLICIT_DEPENDENCIES"
+    ],
+    "emitEntryPoint": false,
+    "xmlDoc": true,
+    "delaySign": true,
+    "additionalArguments": [
+      "--warn:3",
+      "--fullpaths",
+      "--flaterrors",
+      "--warnon:1182"
+    ],
+    "compile": {
+      "includeFiles": [
+        "../../../paket-files/matthid/Yaaf.FSharp.Scripting/src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs",
+        "AssemblyInfo.fs",
+        "LegacyApiHelper.fs",
+        "Environment.fs",
+        "Path.fs",
+        "String.fs",
+        "Trace.fs",
+        "ScriptRunner.fs",
+        "HashGeneration.fs",
+        "CoreCache.fs",
+        "FakeRuntime.fs"
+      ]
+    }
+  },
+  "tools": {
+    "dotnet-compile-fsc": {
+      "version": "1.0.0-preview2-*",
+      "imports": "dnxcore50"
+    }
+  },
+  "dependencies": {
+    "Fake.Core.Context": "__FAKE_CORE_CONTEXT_VERSION__",
+    "__PAKET_CORE_PACKAGE__": "__PAKET_CORE_VERSION__",
+    "FSharp.Core": "__FSHARP_CORE_VERSION__",
+    "__FSHARP_COMPILER_SERVICE_PACKAGE__": "__FSHARP_COMPILER_SERVICE_VERSION__",
+    "Mono.Cecil": "__MONO_CECIL_VERSION__"
+  },
+  "frameworks": {
+    "netstandard1.6": {
+      "buildOptions": {
+        "define": [
+          "NETSTANDARD1_5"
+        ]
+      },
+      "imports": [
+        "portable-net45+win8",
+        "dnxcore50"
+      ],
+      "dependencies": {
+        "System.Diagnostics.TraceSource": "4.0.0",
+        "System.Reflection": "4.1.0",
+        "System.Reflection.TypeExtensions": "4.1.0",
+        "System.Reflection.Primitives": "4.0.1",
+        "System.Runtime": "4.1.0",
+        "System.Runtime.Loader": "4.0.0",
+        "System.Runtime.Extensions": "4.1.0",
+        "System.Security.Cryptography.Primitives": "4.0.0",
+        "System.Security.Cryptography.Algorithms": "4.2.0",
+        "NETStandard.Library": "1.6.0"
+      }
+    }
+  }
+}

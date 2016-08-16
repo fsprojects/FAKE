@@ -1,0 +1,53 @@
+{
+  "version": "1.0.0-alpha8",
+  "buildOptions": {
+    "debugType": "portable",
+    "compilerName": "fsc",
+    "define": [
+      "DOTNETCORE"
+    ],
+    "emitEntryPoint": false,
+    "xmlDoc": true,
+    "compile": {
+      "includeFiles": [
+        "AssemblyInfo.fs",
+        "Environment.fs"
+      ]
+    }
+  },
+  "tools": {
+    "dotnet-compile-fsc": {
+      "version": "1.0.0-preview2-*",
+      "imports": "dnxcore50"
+    }
+  },
+  "dependencies": {
+    "FSharp.Core": "4.0.1.7-alpha"
+  },
+  "frameworks": {
+    "net46": {
+      "dependencies": {
+      },
+      "frameworkAssemblies": {
+        "Microsoft.Build.Framework": "",
+        "mscorlib": "",
+        "System": "",
+        "System.Configuration": "",
+        "System.Runtime.Caching": "",
+        "System.ServiceProcess": "",
+        "System.Xml": "",
+        "System.Xml.Linq": "",
+        "System.Core": ""
+      }
+    },
+    "netstandard1.6": {
+      "imports": [
+        "portable-net45+win8",
+        "dnxcore50"
+      ],
+      "dependencies": {
+        "NETStandard.Library": "1.6.0"
+      }
+    }
+  }
+}

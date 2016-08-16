@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Mono.Cecil</id>
+    <version>0.9.6.0</version>
+    <authors>Mono.Cecil</authors>
+    <owners>Mono.Cecil</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Cecil is a library to generate and inspect programs and libraries in the ECMA CIL form</description>
+    <tags></tags>
+    <dependencies>
+      <group targetFramework=".NETStandard1.3">
+        <dependency id="Microsoft.NETCore.Portable.Compatibility" version="[1.0.1, )" />
+        <dependency id="NETStandard.Library" version="[1.6.0, )" />
+        <dependency id="System.Security.Cryptography.Algorithms" version="[4.2.0, )" />
+        <dependency id="System.Security.Cryptography.Csp" version="[4.0.0, )" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>
