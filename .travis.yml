@@ -20,7 +20,7 @@ before install:
 
 
 script: 
-  - ./build.sh BootstrapAndBuildDnc -st
+  - ./build.sh 
 
 branches:
   except:
