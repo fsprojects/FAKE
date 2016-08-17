@@ -394,8 +394,7 @@ type FscParam =
         | Reference dllPath -> sargp "r" dllPath
         | References dllPaths -> 
             dllPaths 
-            |> List.map (sargp "r") 
-            |> List.map (fun x -> sprintf "\"%s\"" x)
+            |> List.map (sargp "r" >> sprintf "\"%s\"") 
             |> String.concat (sprintf "; %s" Environment.NewLine)
             |> (fun x -> x.Substring(1, x.Length - 2))
         | Win32res file -> argp "win32res" file
