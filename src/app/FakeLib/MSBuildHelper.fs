@@ -341,10 +341,13 @@ let build setParams project =
     
     let args = toParam project + " " + args + " " + errorLoggerParam
     tracefn "Building project: %s\n  %s %s" project msBuildExe args
+    let enableProcessTracingPreviousValue = enableProcessTracing
+    enableProcessTracing <- false
     let exitCode =
         ExecProcess (fun info ->  
             info.FileName <- msBuildExe
             info.Arguments <- args) TimeSpan.MaxValue
+    enableProcessTracing <- enableProcessTracingPreviousValue
     if exitCode <> 0 then
         let errors =
             System.Threading.Thread.Sleep(200) // wait for the file to write
