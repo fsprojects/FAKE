@@ -1,4 +1,8 @@
-#### 4.37.2 - 09.08.2016
+#### 4.38.0 - 22.08.2016
+* BUGFIX: System.ArgumentNullException thrown for colored output on mono - https://github.com/fsharp/FAKE/pull/1362
+* BUGFIX: Trim assembly info attribute value - https://github.com/fsharp/FAKE/pull/1361
+* BUGFIX: Not printing MSBUILD command line twice - https://github.com/fsharp/FAKE/pull/1359
+* BUGFIX: Semver parse fix to handle prereleases and build parts - https://github.com/fsharp/FAKE/pull/1325
 * BUGFIX: Fixed FSCHelper -https://github.com/fsharp/FAKE/pull/1351, https://github.com/fsharp/FAKE/pull/1352
 
 #### 4.37.0 - 09.08.2016
