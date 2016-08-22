@@ -1,3 +1,6 @@
+#### 4.38.1 - 22.08.2016
+* BUGFIX: TERM environment property should be upper case - https://github.com/fsharp/FAKE/pull/1363
+
 #### 4.38.0 - 22.08.2016
 * BUGFIX: System.ArgumentNullException thrown for colored output on mono - https://github.com/fsharp/FAKE/pull/1362
 * BUGFIX: Trim assembly info attribute value - https://github.com/fsharp/FAKE/pull/1361
