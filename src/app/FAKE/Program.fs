@@ -31,7 +31,7 @@ let printEnvironment cmdArgs args =
     traceFAKE "FSI-Path: %s" fsiPath
     traceFAKE "MSBuild-Path: %s" msBuildExe
 
-let hostBasedEnvArgs = seq { if isMono then yield "term", "xterm-256color" } // avoid problem with unsupported colored terminal output
+let hostBasedEnvArgs = seq { if isMono then yield "TERM", "xterm-256color" } // avoid problem with unsupported colored terminal output
 
 let containsParam param = Seq.map toLower >> Seq.exists ((=) (toLower param))
 
