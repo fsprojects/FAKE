@@ -70,8 +70,8 @@ namespace Test.FAKECore
             var versionAttr = AssemblyInfoFile.GetAttribute("AssemblyVersion", infoFile).Value;
 
             // Assert
-            productAttr.Value.ShouldEqual("\"TestLib\"");
-            versionAttr.Value.ShouldEqual("\"1.0.0.0\"");
+            productAttr.Value.ShouldEqual("TestLib");
+            versionAttr.Value.ShouldEqual("1.0.0.0");
         };
     }
 
@@ -150,8 +150,8 @@ namespace Test.FAKECore
             var versionAttr = AssemblyInfoFile.GetAttribute("AssemblyVersion", infoFile).Value;
 
             // Assert
-            productAttr.Value.ShouldEqual("\"TestLib\"");
-            versionAttr.Value.ShouldEqual("\"1.0.0.0\"");
+            productAttr.Value.ShouldEqual("TestLib");
+            versionAttr.Value.ShouldEqual("1.0.0.0");
         };
     }
 
@@ -213,8 +213,8 @@ namespace Test.FAKECore
             var versionAttr = AssemblyInfoFile.GetAttribute("AssemblyVersion", infoFile).Value;
 
             // Assert
-            productAttr.Value.ShouldEqual("\"TestLib\"");
-            versionAttr.Value.ShouldEqual("\"1.0.0.0\"");
+            productAttr.Value.ShouldEqual("TestLib");
+            versionAttr.Value.ShouldEqual("1.0.0.0");
         };
     }
 
@@ -286,9 +286,9 @@ namespace Test.FAKECore
             var comVisibleAttr = AssemblyInfoFile.GetAttribute("ComVisible", infoFile).Value;
 
             // Assert
-            productAttr.Value.ShouldEqual("\"TestLib\"");
-            companyAttr.Value.ShouldEqual("\"TestCompany\"");
-            versionAttr.Value.ShouldEqual("\"1.0.0.0\"");
+            productAttr.Value.ShouldEqual("TestLib");
+            companyAttr.Value.ShouldEqual("TestCompany");
+            versionAttr.Value.ShouldEqual("1.0.0.0");
             comVisibleAttr.Value.ShouldEqual("false");
         };
     }
