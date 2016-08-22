@@ -52,6 +52,12 @@
     <tbody>
         <tr>
           <td class="type-name">
+            <a href="fake-semverhelper-ident.html">Ident</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
             <a href="fake-semverhelper-prerelease.html">PreRelease</a>
           </td>
           <td class="xmldoc"></td>
@@ -79,14 +85,32 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '627', 627)" onmouseover="showTip(event, '627', 627)">
-            isValidSemVer input
+            identRE 
           </code>
           <div class="tip" id="627">
+            <strong>Signature:</strong> Regex<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SemVerHelper.fs#L7-7" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '628', 628)" onmouseover="showTip(event, '628', 628)">
+            isValidSemVer input
+          </code>
+          <div class="tip" id="628">
             <strong>Signature:</strong> input:string -&gt; bool<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SemVerHelper.fs#L83-83" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SemVerHelper.fs#L127-127" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -98,15 +122,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '628', 628)" onmouseover="showTip(event, '628', 628)">
+          <code onmouseout="hideTip(event, '629', 629)" onmouseover="showTip(event, '629', 629)">
             parse version
           </code>
-          <div class="tip" id="628">
+          <div class="tip" id="629">
             <strong>Signature:</strong> version:string -&gt; SemVerInfo<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SemVerHelper.fs#L97-97" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SemVerHelper.fs#L144-144" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -118,17 +142,41 @@ according to the rules described in the <a href="http://semver.org/">SemVer docs
 <span class="l">3: </span>
 <span class="l">4: </span>
 <span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+<span class="l">8: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">parse</span> <span class="s">&quot;1.0.0-rc.1&quot;</span>     <span class="o">&lt;</span> <span class="i">parse</span> <span class="s">&quot;1.0.0&quot;</span>          <span class="c">// true</span>
 <span class="i">parse</span> <span class="s">&quot;1.2.3-alpha&quot;</span>    <span class="o">&gt;</span> <span class="i">parse</span> <span class="s">&quot;1.2.2&quot;</span>          <span class="c">// true</span>
-<span class="i">parse</span> <span class="s">&quot;1.2.3-alpha2&quot;</span>   <span class="o">&gt;</span> <span class="i">parse</span> <span class="s">&quot;1.2.3-alpha&quot;</span>    <span class="c">// true</span>
-<span class="i">parse</span> <span class="s">&quot;1.2.3-alpha002&quot;</span> <span class="o">&gt;</span> <span class="i">parse</span> <span class="s">&quot;1.2.3-alpha1&quot;</span>   <span class="c">// true</span>
-<span class="i">parse</span> <span class="s">&quot;1.5.0-beta.2&quot;</span>   <span class="o">&gt;</span> <span class="i">parse</span> <span class="s">&quot;1.5.0-rc.1&quot;</span>     <span class="c">// false</span>
+<span class="i">parse</span> <span class="s">&quot;1.2.3-alpha2&quot;</span>   <span class="o">&gt;</span> <span class="i">parse</span> <span class="s">&quot;1.2.3-alpha&quot;</span>    <span class="c">// true, but only because of lexical compare</span>
+<span class="i">parse</span> <span class="s">&quot;1.2.3-alpha002&quot;</span> <span class="o">&gt;</span> <span class="i">parse</span> <span class="s">&quot;1.2.3-alpha1&quot;</span>   <span class="c">// false, due to lexical compare</span>
+<span class="i">parse</span> <span class="s">&quot;1.5.0-beta.2&quot;</span>   <span class="o">&gt;</span> <span class="i">parse</span> <span class="s">&quot;1.5.0-rc.1&quot;</span>     <span class="c">// false, due to lexical compare of first prerelease identitifer</span>
+<span class="i">parse</span> <span class="s">&quot;1.5.0-beta.2&quot;</span>   <span class="o">&gt;</span> <span class="i">parse</span> <span class="s">&quot;1.5.0-beta.3&quot;</span>   <span class="c">// true, due to numeric compare of second prerelease identitifer</span>
+<span class="i">parse</span> <span class="s">&quot;1.5.0-0123.001&quot;</span> <span class="o">&lt;</span> <span class="i">parse</span> <span class="s">&quot;1.5.0-0123.002&quot;</span> <span class="c">// true, due to numeric compare of second prerelease identifier</span>
+<span class="i">parse</span> <span class="s">&quot;1.0.0+lol&quot;</span>      <span class="o">=</span> <span class="i">parse</span> <span class="s">&quot;1.0.0&quot;</span>          <span class="c">// true, because build identifiers do not influence comparison</span>
 </code></pre></td>
 </tr>
 </table>
 
 
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '630', 630)" onmouseover="showTip(event, '630', 630)">
+            parseIdent s
+          </code>
+          <div class="tip" id="630">
+            <strong>Signature:</strong> s:string -&gt; Ident<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/SemVerHelper.fs#L34-34" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
         </td>
       </tr>
     </tbody>
