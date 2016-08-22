@@ -60,13 +60,13 @@ namespace Test.FAKECore
     public class when_parsing_semver_strings
     {
         static SemVerHelper.SemVerInfo semVer;
-        Because of = () => semVer = SemVerHelper.parse("1.2.3-alpha.beta");
+        Because of = () => semVer = SemVerHelper.parse("1.2.3-alpha+beta");
 
         It should_parse_major = () => semVer.Major.ShouldEqual(1);
         It should_parse_minor = () => semVer.Minor.ShouldEqual(2);
         It should_parse_patch = () => semVer.Patch.ShouldEqual(3);
         It should_parse_prerelease = () => semVer.PreRelease.ShouldEqual(
-            FSharpOption<SemVerHelper.PreRelease>.Some(new SemVerHelper.PreRelease("alpha", "alpha", FSharpOption<int>.None)));
+            FSharpOption<SemVerHelper.PreRelease>.Some(new SemVerHelper.PreRelease("alpha", "alpha", FSharpOption<int>.None, new[] { SemVerHelper.Ident.NewAlphaNumeric("alpha") }.ToFSharpList())));
         It should_parse_build = () => semVer.Build.ShouldEqual("beta");
     }
 
@@ -96,9 +96,9 @@ namespace Test.FAKECore
             () => SemVerHelper.parse("1.0.0-alpha.1")
                 .ShouldBeLessThan(SemVerHelper.parse("1.0.0-alpha.beta"));
 
-        It should_assume_alpha_is_smaller_tha_beta =
+        It should_assume_that_longer_prereleases_are_greater =
             () => SemVerHelper.parse("1.0.0-alpha.beta")
-                .ShouldBeLessThan(SemVerHelper.parse("1.0.0-beta"));
+                .ShouldBeGreaterThan(SemVerHelper.parse("1.0.0-beta"));
 
         It should_assume_empty_build_no_in_beta_build_is_smaller_than_text_in_build =
             () => SemVerHelper.parse("1.0.0-beta")
@@ -128,9 +128,9 @@ namespace Test.FAKECore
             () => SemVerHelper.parse("2.3.4-alpha2")
                 .ShouldBeGreaterThan(SemVerHelper.parse("2.3.4-alpha"));
 
-        It should_assume_alpha003_is_greater_than_alpha2 =
+        It should_assume_alpha003_is_less_than_alpha2_because_lexicalsort =
             () => SemVerHelper.parse("2.3.4-alpha003")
-                .ShouldBeGreaterThan(SemVerHelper.parse("2.3.4-alpha2"));
+                .ShouldBeLessThan(SemVerHelper.parse("2.3.4-alpha2"));
 
         It should_assume_rc_is_greater_than_beta2 =
             () => SemVerHelper.parse("2.3.4-rc")
