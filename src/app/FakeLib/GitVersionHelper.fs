@@ -24,7 +24,7 @@ type GitVersionProperties = {
                                 PreReleaseTag : string;
                                 PreReleaseTagWithDash : string;
                                 PreReleaseLabel : string;
-                                PreReleaseNumber : int;
+                                PreReleaseNumber : Nullable<int>;
                                 BuildMetaData : string;
                                 BuildMetaDataPadded : string;
                                 FullBuildMetaData : string;
