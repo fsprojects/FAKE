@@ -1,3 +1,6 @@
+#### 4.38.2 - 23.08.2016
+* BUGFIX: Made GitVersionHelper PreReleaseNumber Nullable  - https://github.com/fsharp/FAKE/pull/1365
+
 #### 4.38.1 - 22.08.2016
 * BUGFIX: TERM environment property should be upper case - https://github.com/fsharp/FAKE/pull/1363
 
