@@ -1,4 +1,5 @@
 #### 4.38.2 - 23.08.2016
+* Added isWindows helper -  https://github.com/fsharp/FAKE/pull/1356
 * BUGFIX: Made GitVersionHelper PreReleaseNumber Nullable  - https://github.com/fsharp/FAKE/pull/1365
 
 #### 4.38.1 - 22.08.2016
