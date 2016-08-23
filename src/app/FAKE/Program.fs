@@ -31,8 +31,6 @@ let printEnvironment cmdArgs args =
     traceFAKE "FSI-Path: %s" fsiPath
     traceFAKE "MSBuild-Path: %s" msBuildExe
 
-let hostBasedEnvArgs = seq { if isMono then yield "TERM", "xterm-256color" } // avoid problem with unsupported colored terminal output
-
 let containsParam param = Seq.map toLower >> Seq.exists ((=) (toLower param))
 
 let paramIsHelp param = containsParam param ["help"; "?"; "/?"; "-h"; "--help"; "/h"; "/help"]
@@ -89,7 +87,6 @@ try
                           yield! fakeArgs.GetResults <@ Cli.EnvVar @>
                           if fakeArgs.Contains <@ Cli.Single_Target @> then yield "single-target", "true"
                           if args.Target.IsSome then yield "target", args.Target.Value }
-                    |> Seq.append hostBasedEnvArgs
 
                 //Get our fsiargs from somewhere!
                 let fsiArgs = 
@@ -137,7 +134,7 @@ try
                 let buildScriptArg = if cmdArgs.Length > 1 && cmdArgs.[1].EndsWith ".fsx" then cmdArgs.[1] else Seq.head buildScripts
                 let fakeArgs = cmdArgs |> Array.filter (fun x -> x.StartsWith "-d:" = false)
                 let fsiArgs = cmdArgs |> Array.filter (fun x -> x.StartsWith "-d:") |> Array.toList
-                let args = Seq.toList hostBasedEnvArgs @ CommandlineParams.parseArgs (fakeArgs |> Seq.filter ((<>) buildScriptArg) |> Seq.filter ((<>) "details"))
+                let args = CommandlineParams.parseArgs (fakeArgs |> Seq.filter ((<>) buildScriptArg) |> Seq.filter ((<>) "details"))
 
                 traceStartBuild()
                 let printDetails = containsParam "details" cmdArgs

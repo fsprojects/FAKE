@@ -58,14 +58,20 @@ type ConsoleTraceListener(importantMessagesToStdErr, colorMap) =
     let writeText toStdErr color newLine text = 
         let curColor = Console.ForegroundColor
         try
-          if curColor <> color then Console.ForegroundColor <- color
-          let printer =
-            match toStdErr, newLine with
-            | true, true -> eprintfn
-            | true, false -> eprintf
-            | false, true -> printfn
-            | false, false -> printf
-          printer "%s" text
+          try
+            if curColor <> color then Console.ForegroundColor <- color
+            let printer =
+              match toStdErr, newLine with
+              | true, true -> eprintfn
+              | true, false -> eprintf
+              | false, true -> printfn
+              | false, false -> printf
+            printer "%s" text
+          with
+            | :? ArgumentException when EnvironmentHelper.isMono -> 
+              printfn "* Color output has been disabled because of a bug in GNOME Terminal."
+              printfn "* Hint: To workaround this bug, please set environment property TERM=xterm-256color"
+              reraise()
         finally
           if curColor <> color then Console.ForegroundColor <- curColor
     
