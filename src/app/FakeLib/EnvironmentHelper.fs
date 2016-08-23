@@ -122,6 +122,9 @@ let ProgramFilesX86 =
 /// The system root environment variable. Typically "C:\Windows"
 let SystemRoot = environVar "SystemRoot"
 
+/// Determines if the current system is a Windows system
+let isWindows = Environment.OSVersion.Platform = PlatformID.Win32NT
+
 /// Determines if the current system is an Unix system
 let isUnix = Environment.OSVersion.Platform = PlatformID.Unix
 
