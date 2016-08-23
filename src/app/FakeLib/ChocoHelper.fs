@@ -14,6 +14,12 @@ module Choco =
     | Exe
     | Msi
 
+    type ChocolateyChecksumType =
+    | Md5
+    | Sha1
+    | Sha256
+    | Sha512
+
     /// The choco install parameter type.
     type ChocoInstallParams = {
         /// Version of the package
@@ -169,6 +175,22 @@ module Choco =
         /// - For zip: the zip filename originally installed
         /// - For exe or msi: the full path to the native uninstaller to run
         UninstallPath: string
+        /// The checksum hash value of the PackageDownloadUrl resource
+        /// This allows a checksum to be validated for files that are not local. The checksum type is covered by ChecksumType.
+        /// Equivalent to the `--checksum <string>` option of Install-Chocolatey[Zip]Package functions.
+        /// Used to create chocolateyInstall.ps1 if it doesn't exists.
+        Checksum: string
+        /// The checksum hash value of the PackageDownload64Url resource
+        /// This allows a checksum to be validated for files that are not local. The checksum type is covered by ChecksumType64.
+        /// Equivalent to the `--checksum <string>` option of Install-Chocolatey[Zip]Package functions.
+        /// Used to create chocolateyInstall.ps1 if it doesn't exists.
+        Checksum64: string
+        /// The type of checksum that the file is validated with. Default: Sha256
+        /// Used to create chocolateyInstall.ps1 if it doesn't exists.
+        ChecksumType : ChocolateyChecksumType
+        /// The type of checksum that the file is validated with. Default: Sha256
+        /// Used to create chocolateyInstall.ps1 if it doesn't exists.
+        Checksum64Type : ChocolateyChecksumType
     }
 
     /// The choco push parameter type.
@@ -275,9 +297,13 @@ module Choco =
         InstallerType = ChocolateyInstallerType.Zip
         UninstallPath = null
         DevelopmentDependency = false
+        Checksum = null
+        Checksum64 = null
+        ChecksumType = ChocolateyChecksumType.Sha256
+        Checksum64Type = ChocolateyChecksumType.Sha256
     }
     
-    /// The default option set given to choco pack.
+    /// The default option set given to choco push.
     let ChocoPushDefaults = {
         Timeout = TimeSpan.FromMinutes 5.
         NonInteractive = true
@@ -545,6 +571,10 @@ module Choco =
         match Microsoft.FSharp.Reflection.FSharpValue.GetUnionFields(x, typeof<ChocolateyInstallerType>) with
         | case, _ -> case.Name.ToLower()
 
+    let private checksumTypeToString x =
+        match Microsoft.FSharp.Reflection.FSharpValue.GetUnionFields(x, typeof<ChocolateyChecksumType>) with
+        | case, _ -> case.Name.ToLower()
+
     let private createChocolateyInstallPs1 (parameters:ChocoPackParams) outputDir =
         let outputPath = outputDir @@ "tools" @@ "chocolateyInstall.ps1" |> FullName
         tracefn "Create chocolateyInstall.ps1 at %s" outputPath
@@ -564,6 +594,10 @@ module Choco =
                                 | ChocolateyInstallerType.Zip -> appendWithoutQuotes "Install-ChocolateyZipPackage $packageName $url $unzipLocation"
                                 | _ -> appendWithoutQuotes "Install-ChocolateyPackage $packageName $installerType $silentArgs $url"
                             |> appendIfTrue (isNotNullOrEmpty parameters.PackageDownload64Url) " $url64"
+                            |> appendIfTrueWithoutQuotes (isNotNullOrEmpty  parameters.Checksum) ("-Checksum " + parameters.Checksum)
+                            |> appendIfTrueWithoutQuotes (isNotNullOrEmpty  parameters.Checksum) ("-ChecksumType " + checksumTypeToString parameters.ChecksumType)
+                            |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Checksum64) ("-Checksum64 " + parameters.Checksum64)
+                            |> appendIfTrueWithoutQuotes (isNotNullOrEmpty  parameters.Checksum64) ("-Checksum64Type " + checksumTypeToString parameters.Checksum64Type)
                             |> toText
 
         WriteStringToFile false outputPath installContent 

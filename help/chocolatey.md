@@ -36,6 +36,8 @@ It is also possible to only defines the fields in ChocoPackParams and the corres
                 Tags = ["report"; "parsing"; "build"; "server"; "inspectcode"]
                 ReleaseNotes = "https://github.com/laedit/vika/releases"
                 PackageDownloadUrl = "https://github.com/laedit/vika/releases/download/" + tag + "/NVika." + version + ".zip"
+                Checksum = Checksum.CalculateFileHash ("NVika." + version + ".zip")
+                ChecksumType = Choco.ChocolateyChecksumType.Sha256
             })
     )
 
