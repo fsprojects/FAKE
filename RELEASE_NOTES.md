@@ -1,5 +1,8 @@
+#### 4.38.3 - 23.08.2016
+* Hint shown in for ArgumentException #1355 instead of trying to set it directly - https://github.com/fsharp/FAKE/pull/1366
+
 #### 4.38.2 - 23.08.2016
-* Added isWindows helper -  https://github.com/fsharp/FAKE/pull/1356
+* Added isWindows helper - https://github.com/fsharp/FAKE/pull/1356
 * BUGFIX: Made GitVersionHelper PreReleaseNumber Nullable  - https://github.com/fsharp/FAKE/pull/1365
 
 #### 4.38.1 - 22.08.2016
