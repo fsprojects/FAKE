@@ -577,16 +577,31 @@ Target "BootstrapAndBuildDnc" (fun _ ->
     let buildScript = __SOURCE_FILE__
     let target = "DotnetPackage"
 
-    if isLinux then
-        ExecProcess (fun info ->
-            info.FileName <- "fake.sh"
-            info.WorkingDirectory <- "."
-            info.Arguments <- sprintf "--verbose run %s -t %s" buildScript target) (System.TimeSpan.FromMinutes 45.0)
+    let noDncBootstrap = environVar "NO_DOTNETCORE_BOOTSTRAP" = "true"
+    if noDncBootstrap then
+        // Just use "old" fake
+        if isLinux then
+            ExecProcess (fun info ->
+                info.FileName <- "build.sh"
+                info.WorkingDirectory <- "."
+                info.Arguments <- sprintf "%s" target) (System.TimeSpan.FromMinutes 45.0)
+        else
+            ExecProcess (fun info ->
+                info.FileName <- "build.cmd"
+                info.WorkingDirectory <- "."
+                info.Arguments <- sprintf "%s" target) (System.TimeSpan.FromMinutes 45.0)
     else
-        ExecProcess (fun info ->
-            info.FileName <- "fake.cmd"
-            info.WorkingDirectory <- "."
-            info.Arguments <- sprintf "run %s -t %s" buildScript target) (System.TimeSpan.FromMinutes 45.0)
+        if isLinux then
+            ExecProcess (fun info ->
+                info.FileName <- "fake.sh"
+                info.WorkingDirectory <- "."
+                info.Arguments <- sprintf "--verbose run %s -t %s" buildScript target) (System.TimeSpan.FromMinutes 45.0)
+        else
+            ExecProcess (fun info ->
+                info.FileName <- "fake.cmd"
+                info.WorkingDirectory <- "."
+                info.Arguments <- sprintf "run %s -t %s" buildScript target) (System.TimeSpan.FromMinutes 45.0)
+      
     |> fun r -> if r <> 0 then failwith "dnc build failed!"
 )
 
@@ -657,7 +672,7 @@ Target "StartDnc" DoNothing
     ==> "BuildSolution"
     ==> "BootstrapAndBuildDnc"
     ==> "DotnetCoreCreateZipPackages"
-    =?> ("TestDotnetCore", not isLinux)
+    ==> "TestDotnetCore"
     //==> "ILRepack"
     ==> "Test"
     ==> "Bootstrap"

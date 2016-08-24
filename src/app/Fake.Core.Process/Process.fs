@@ -65,30 +65,32 @@ let private startedProcessesVar = "Fake.Core.Process.startedProcesses"
 let private getStartedProcesses, _, private setStartedProcesses = 
     Fake.Core.Context.fakeVar startedProcessesVar
 let private addStartedProcess (id:int, startTime:System.DateTime) =
-    match getStartedProcesses () with
-    | Some (h:ProcessList) -> h.Add(id, startTime)
-    | None -> 
-        let h = new ProcessList()
-        setStartedProcesses (h)
-        h.Add(id, startTime)
+    if Fake.Core.Context.isFakeContext () then
+        match getStartedProcesses () with
+        | Some (h:ProcessList) -> h.Add(id, startTime)
+        | None -> 
+            let h = new ProcessList()
+            setStartedProcesses (h)
+            h.Add(id, startTime)
+        |> ignore
 
-let private monoArgumentsVar = "Fake.Core.Process.monoArguments"
-let private tryGetMonoArguments, _, public setMonoArguments = 
-    Fake.Core.Context.fakeVar monoArgumentsVar
-let getMonoArguments () =
-    match tryGetMonoArguments () with
-    | Some (args) -> args
-    | None -> ""
-
-/// Modifies the ProcessStartInfo according to the platform semantics
-let platformInfoAction (psi : ProcessStartInfo) = 
-    if Environment.isMono && psi.FileName.EndsWith ".exe" then 
-        psi.Arguments <- getMonoArguments() + " \"" + psi.FileName + "\" " + psi.Arguments
-        psi.FileName <- Environment.monoPath
+//let private monoArgumentsVar = "Fake.Core.Process.monoArguments"
+//let private tryGetMonoArguments, _, public setMonoArguments = 
+//    Fake.Core.Context.fakeVar monoArgumentsVar
+//let getMonoArguments () =
+//    match tryGetMonoArguments () with
+//    | Some (args) -> args
+//    | None -> ""
+//
+///// Modifies the ProcessStartInfo according to the platform semantics
+//let platformInfoAction (psi : ProcessStartInfo) = 
+//    if Environment.isMono && psi.FileName.EndsWith ".exe" then 
+//        psi.Arguments <- getMonoArguments() + " \"" + psi.FileName + "\" " + psi.Arguments
+//        psi.FileName <- Environment.monoPath
 
 /// [omit]
 let start (proc : Process) = 
-    platformInfoAction proc.StartInfo
+    //platformInfoAction proc.StartInfo
     proc.Start() |> ignore
     addStartedProcess(proc.Id, proc.StartTime) |> ignore
 
@@ -148,7 +150,7 @@ let ExecProcessWithLambdas configProcessStartInfoF (timeOut : TimeSpan) silent e
     use proc = new Process()
     proc.StartInfo.UseShellExecute <- false
     configProcessStartInfoF proc.StartInfo
-    platformInfoAction proc.StartInfo
+    //platformInfoAction proc.StartInfo
     if String.isNullOrEmpty proc.StartInfo.WorkingDirectory |> not then 
         if Directory.Exists proc.StartInfo.WorkingDirectory |> not then 
             failwithf "Start of process %s failed. WorkingDir %s does not exist." proc.StartInfo.FileName 

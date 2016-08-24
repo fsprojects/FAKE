@@ -5,8 +5,9 @@
 /// .NET Core + CLI tools helpers
 module Fake.DotNet.Cli
 
-// NOTE: The #if can be removed once we have a working Release
-#if DOTNETCORE
+// NOTE: The #if can be removed once we have a working release with the "new" API
+// Currently we #load this file in build.fsx
+#if NO_DOTNETCORE_BOOTSTRAP
 open Fake.Core
 open Fake.IO.FileSystem
 open Fake.IO.FileSystem.Operators
@@ -299,7 +300,7 @@ let Dotnet (options: DotnetOptions) args =
             info.WorkingDirectory <- options.WorkingDirectory
             info.Arguments <- cmdArgs
         ) timeout true errorF messageF
-#if DOTNETCORE
+#if NO_DOTNETCORE_BOOTSTRAP
     Process.ProcessResult.New result messages errors
 #else
     ProcessResult.New result messages errors
