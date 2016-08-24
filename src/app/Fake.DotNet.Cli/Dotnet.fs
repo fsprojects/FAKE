@@ -190,14 +190,7 @@ let private boolToFlag value flagParam =
     | false -> ""
 
 /// [omit]
-let private buildDotnetCliInstallArgs (param: DotNetCliInstallOptions) =
-    // Problem is that argument parsing works differently on dotnetcore than on mono...
-    // See https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.Process/src/System/Diagnostics/Process.Unix.cs#L437
-#if NO_DOTNETCORE_BOOTSTRAP
-    let quoteChar = '\'' 
-#else
-    let quoteChar = '"'
-#endif
+let private buildDotnetCliInstallArgs quoteChar (param: DotNetCliInstallOptions) =
     let versionParamValue = 
         match param.Version with
         | Latest -> "latest"
@@ -241,10 +234,21 @@ let DotnetCliInstall setParams =
     let exitCode =
         let args, fileName =
             if Environment.isUnix then
-                let args = sprintf "%s %s" installScript (buildDotnetCliInstallArgs param)
+                // Problem is that argument parsing works differently on dotnetcore than on mono...
+                // See https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.Process/src/System/Diagnostics/Process.Unix.cs#L437
+#if NO_DOTNETCORE_BOOTSTRAP
+                let quoteChar = '"' 
+#else
+                let quoteChar = '\''
+#endif
+                let args = sprintf "%s %s" installScript (buildDotnetCliInstallArgs quoteChar param)
                 args, "bash" // Otherwise we need to set the executable flag!
             else
-                let args = sprintf "-ExecutionPolicy Bypass -NoProfile -NoLogo -NonInteractive -Command \"%s %s; if (-not $?) { exit -1 };\"" installScript (buildDotnetCliInstallArgs param)
+                let args = 
+                    sprintf 
+                        "-ExecutionPolicy Bypass -NoProfile -NoLogo -NonInteractive -Command \"%s %s; if (-not $?) { exit -1 };\"" 
+                        installScript 
+                        (buildDotnetCliInstallArgs '\'' param)
                 args, "powershell"
         Process.ExecProcess (fun info ->
             info.FileName <- fileName
