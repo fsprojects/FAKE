@@ -4,6 +4,7 @@ module Fake.Sql.DacPac
 open Fake.EnvironmentHelper
 open Fake.ProcessHelper
 open System.IO
+open Fake.FileSystem
 
 /// The type of action to execute.
 type DeployAction =
@@ -29,26 +30,34 @@ type DeployDbArgs = {
     /// Block deployment if data loss can occur. Defaults to true.
     BlockOnPossibleDataLoss : bool
     /// Drops objects in the destination that do not exist in the source. Defaults to false.
-    DropObjectsNotInSource : bool }
+    DropObjectsNotInSource : bool
+    /// Recreates the database from scratch on publish (rather than an in-place update). Defaults to false.
+    RecreateDb : bool }
 
-let pathsToCheck =
-    [ ProgramFilesX86 </> @"Microsoft SQL Server\130\DAC\bin\SqlPackage.exe"
-      ProgramFilesX86 </> @"Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\130\SqlPackage.exe" ]
+let validPaths =
+    let getSqlVersion (path:string) = path.Split '\\' |> Array.item 3 |> int
+    let getVsVersion path = (Path.GetDirectoryName path |> DirectoryInfo).Name |> int
+    let sql = !!(ProgramFilesX86 </> @"Microsoft SQL Server\**\DAC\bin\SqlPackage.exe") |> Seq.map(fun path -> path, getSqlVersion path)
+    let vs = !!(ProgramFilesX86 </> @"Microsoft Visual Studio*\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\*\SqlPackage.exe") |> Seq.map(fun path -> path, getVsVersion path)
+
+    [ sql; vs ]
+    |> List.collect Seq.toList
+    |> List.sortByDescending snd
+    |> List.map fst
 
 /// The default DacPac deployment arguments.
 let defaultDeploymentArgs = 
     { SqlPackageToolPath = 
-        pathsToCheck
-        |> List.tryFind File.Exists
-        |> function
-        | Some path -> path
-        | None -> ""
+        validPaths
+        |> List.tryHead
+        |> defaultArg <| ""
       Action = Deploy
       Source = ""
       Destination = ""
       Timeout = 120
       BlockOnPossibleDataLoss = true
-      DropObjectsNotInSource = false }
+      DropObjectsNotInSource = false
+      RecreateDb = false }
 
 let private generateCommandLine args =
     let action, outputPath =
@@ -68,11 +77,11 @@ let deployDb setParams =
         failwith "No SqlPackage.exe filename was given."
 
     if not (File.Exists args.SqlPackageToolPath) then
-        failwithf "Unable to find a valid instance of SqlPackage.exe. Paths checked were: %A." pathsToCheck
+        failwithf "Unable to find a valid instance of SqlPackage.exe. Paths checked were: %A." validPaths
           
     shellExec {
         Program = args.SqlPackageToolPath
-        CommandLine = sprintf """/Action:%s /SourceFile:"%s" /TargetConnectionString:"%s" %s /p:BlockOnPossibleDataLoss=%b /p:DropObjectsNotInSource=%b /p:CommandTimeout=%d""" action args.Source args.Destination outputPath args.BlockOnPossibleDataLoss args.DropObjectsNotInSource args.Timeout
+        CommandLine = sprintf """/Action:%s /SourceFile:"%s" /TargetConnectionString:"%s" %s /p:BlockOnPossibleDataLoss=%b /p:DropObjectsNotInSource=%b /p:CommandTimeout=%d /p:CreateNewDatabase=%b""" action args.Source args.Destination outputPath args.BlockOnPossibleDataLoss args.DropObjectsNotInSource args.Timeout args.RecreateDb
         WorkingDirectory = ""
         Args = [] }
 
