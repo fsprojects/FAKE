@@ -3,7 +3,7 @@ sudo: required
 dist: trusty # Ubuntu 14.04
 
 env:
- - HOME=/home/travis APPDATA=/home/travis LocalAppData=/home/travis
+ - HOME=/home/travis APPDATA=/home/travis LocalAppData=/home/travis NO_DOTNETCORE_BOOTSTRAP=true
 
 addons:
   apt:

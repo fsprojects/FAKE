@@ -191,6 +191,13 @@ let private boolToFlag value flagParam =
 
 /// [omit]
 let private buildDotnetCliInstallArgs (param: DotNetCliInstallOptions) =
+    // Problem is that argument parsing works differently on dotnetcore than on mono...
+    // See https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.Process/src/System/Diagnostics/Process.Unix.cs#L437
+#if NO_DOTNETCORE_BOOTSTRAP
+    let quoteChar = '\'' 
+#else
+    let quoteChar = '"'
+#endif
     let versionParamValue = 
         match param.Version with
         | Latest -> "latest"
@@ -204,7 +211,7 @@ let private buildDotnetCliInstallArgs (param: DotNetCliInstallOptions) =
             | None -> 
                 let installerOptions = DotNetInstallerOptions.Default |> param.InstallerOptions
                 installerOptions.Branch |> String.replace "/" "-"
-
+    let quoteStr str = sprintf "%c%s%c" quoteChar str quoteChar
     let architectureParamValue = 
         match param.Architecture with
         | Auto -> None
@@ -212,10 +219,10 @@ let private buildDotnetCliInstallArgs (param: DotNetCliInstallOptions) =
         | X64 -> Some "x64"
     [   
         "-Verbose"
-        sprintf "-Channel '%s'" channelParamValue
-        sprintf "-Version '%s'" versionParamValue        
+        sprintf "-Channel %s" (quoteStr channelParamValue)
+        sprintf "-Version %s" (quoteStr versionParamValue)
         optionToParam architectureParamValue "-Architecture %s"
-        optionToParam param.CustomInstallDir "-InstallDir '%s'"
+        optionToParam (param.CustomInstallDir |> Option.map quoteStr) "-InstallDir %s"
         boolToFlag param.DebugSymbols "-DebugSymbols"
         boolToFlag param.DryRun "-DryRun"
         boolToFlag param.NoPath "-NoPath"
