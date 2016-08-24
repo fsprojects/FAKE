@@ -474,8 +474,8 @@ Target "CreateNuGet" (fun _ ->
 )
 
 #if !DOTNETCORE
-#load "src/app/Fake.Dotnet/Dotnet.fs"
-open Fake.Dotnet
+#load "src/app/Fake.DotNet.Cli/Dotnet.fs"
+open Fake.DotNet.Cli
 #endif
 
 Target "InstallDotnetCore" (fun _ ->
@@ -646,9 +646,9 @@ Target "StartDnc" DoNothing
 
 "StartDnc"
     ==> "ConvertProjectJsonTemplates"
-    =?> ("InstallDotnetCore", not isLinux)
-    =?> ("DotnetRestore", not isLinux)
-    =?> ("DotnetPackage", not isLinux)
+    ==> "InstallDotnetCore"
+    ==> "DotnetRestore"
+    ==> "DotnetPackage"
 
 // Dependencies
 "Clean"

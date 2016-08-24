@@ -238,7 +238,7 @@ let ExecProcess configProcessStartInfoF timeOut =
 ///  - `cmd` - The command which should be run in elavated context.
 ///  - `args` - The process arguments.
 ///  - `timeOut` - The timeout for the process.
-[<Obsolete("This is currently no possible in dotnetcore")>]
+[<Obsolete("This is currently not possible in dotnetcore")>]
 let ExecProcessElevated cmd args timeOut = 
     ExecProcess (fun si ->
 #if !NETSTANDARD

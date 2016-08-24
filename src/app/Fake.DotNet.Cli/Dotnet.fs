@@ -5,29 +5,59 @@
 /// .NET Core + CLI tools helpers
 module Fake.DotNet.Cli
 
+// NOTE: The #if can be removed once we have a working Release
+#if DOTNETCORE
 open Fake.Core
 open Fake.IO.FileSystem
 open Fake.IO.FileSystem.Operators
+#else
+open Fake
+// Workaround until we have a release with the "new" API.
+module Environment =
+    let environVar = environVar
+    let isUnix = isUnix
+module Trace =
+    let trace = trace
+    let traceError = traceError
+    let traceImportant = traceImportant
+    let traceTask s proj = 
+        { new System.IDisposable with 
+            member x.Dispose() = () }
+module String =
+    let replace = replace
+module Process =
+    let ExecProcess = ExecProcess
+    let ExecProcessWithLambdas = ExecProcessWithLambdas
+
+#endif
 open System
 open System.IO
 open System.Security.Cryptography
 open System.Text
 
 /// .NET Core SDK default install directory (set to default localappdata dotnet dir). Update this to redirect all tool commands to different location. 
-let mutable DefaultDotnetCliDir = Environment.environVar "LocalAppData" @@ "Microsoft" @@ "dotnet"
+let mutable DefaultDotnetCliDir = 
+    if Environment.isUnix
+    then Environment.environVar "HOME" @@ ".dotnet"
+    else Environment.environVar "LocalAppData" @@ "Microsoft" @@ "dotnet"
 
 /// Get dotnet cli executable path
 /// ## Parameters
 ///
 /// - 'dotnetCliDir' - dotnet cli install directory 
-let private dotnetCliPath dotnetCliDir = dotnetCliDir @@ "dotnet.exe"
+let private dotnetCliPath dotnetCliDir = dotnetCliDir @@ (if Environment.isUnix then "dotnet" else "dotnet.exe")
 
 /// Get .NET Core SDK download uri
-let private getDotnetCliInstallerUrl branch = sprintf "https://raw.githubusercontent.com/dotnet/cli/%s/scripts/obtain/dotnet-install.ps1" branch
+let private getGenericDotnetCliInstallerUrl branch installerName =
+    sprintf "https://raw.githubusercontent.com/dotnet/cli/%s/scripts/obtain/%s" branch installerName
+
+let private getPowershellDotnetCliInstallerUrl branch = getGenericDotnetCliInstallerUrl branch "dotnet-install.ps1"
+let private getBashDotnetCliInstallerUrl branch = getGenericDotnetCliInstallerUrl branch "dotnet-install.sh"
+
 
 /// Download .NET Core SDK installer
-let private downloadDotnetInstaller branch fileName =  
-    let url = getDotnetCliInstallerUrl branch
+let private downloadDotnetInstallerFromUrl (url:string) fileName =  
+    //let url = getDotnetCliInstallerUrl branch
 #if USE_HTTPCLIENT
     let h = new System.Net.Http.HttpClient();
     use f = File.Open(fileName, FileMode.Create);
@@ -70,12 +100,17 @@ type DotNetInstallerOptions =
 let DotnetDownloadInstaller setParams =
     let param = DotNetInstallerOptions.Default |> setParams
 
-    let scriptName = sprintf "dotnet_install_%s.ps1" <| md5 (Encoding.ASCII.GetBytes(param.Branch))
+    let ext = if Environment.isUnix then "sh" else "ps1"
+    let getInstallerUrl = if Environment.isUnix then getBashDotnetCliInstallerUrl else getPowershellDotnetCliInstallerUrl
+    let scriptName =
+        sprintf "dotnet_install_%s.%s" (md5 (Encoding.ASCII.GetBytes(param.Branch))) ext
     let tempInstallerScript = Path.GetTempPath() @@ scriptName
 
     // maybe download installer script
     match param.AlwaysDownload || not(File.Exists(tempInstallerScript)) with
-        | true -> downloadDotnetInstaller param.Branch tempInstallerScript 
+        | true -> 
+            let url = getInstallerUrl param.Branch
+            downloadDotnetInstallerFromUrl url tempInstallerScript 
         | _ -> ()
 
     tempInstallerScript
@@ -175,6 +210,7 @@ let private buildDotnetCliInstallArgs (param: DotNetCliInstallOptions) =
         | X86 -> Some "x86"
         | X64 -> Some "x64"
     [   
+        "-Verbose"
         sprintf "-Channel '%s'" channelParamValue
         sprintf "-Version '%s'" versionParamValue        
         optionToParam architectureParamValue "-Architecture %s"
@@ -194,10 +230,16 @@ let DotnetCliInstall setParams =
     let param = DotNetCliInstallOptions.Default |> setParams  
     let installScript = DotnetDownloadInstaller param.InstallerOptions
 
-    let args = sprintf "-ExecutionPolicy Bypass -NoProfile -NoLogo -NonInteractive -Command \"%s %s; if (-not $?) { exit -1 };\"" installScript (buildDotnetCliInstallArgs param)
-    let exitCode = 
+    let exitCode =
+        let args, fileName =
+            if Environment.isUnix then
+                let args = sprintf "%s %s" installScript (buildDotnetCliInstallArgs param)
+                args, "bash" // Otherwise we need to set the executable flag!
+            else
+                let args = sprintf "-ExecutionPolicy Bypass -NoProfile -NoLogo -NonInteractive -Command \"%s %s; if (-not $?) { exit -1 };\"" installScript (buildDotnetCliInstallArgs param)
+                args, "powershell"
         Process.ExecProcess (fun info ->
-            info.FileName <- "powershell"
+            info.FileName <- fileName
             info.WorkingDirectory <- Path.GetTempPath()
             info.Arguments <- args
         ) TimeSpan.MaxValue
@@ -257,9 +299,11 @@ let Dotnet (options: DotnetOptions) args =
             info.WorkingDirectory <- options.WorkingDirectory
             info.Arguments <- cmdArgs
         ) timeout true errorF messageF
-
+#if DOTNETCORE
     Process.ProcessResult.New result messages errors
-
+#else
+    ProcessResult.New result messages errors
+#endif
 
 /// [omit]
 let private argList2 name values =
