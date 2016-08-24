@@ -582,7 +582,10 @@ module Targets =
                 runBuildFailureTargets()
             runFinalTargets()
             WriteTaskTimeSummary watch.Elapsed
-            //changeExitCodeIfErrorOccured()
+        
+        match GetErrors() with
+        | [] -> ()
+        | errors -> failwithf "A target failed: %A" errors 
 
     /// Registers a BuildFailureTarget (not activated).
     let BuildFailureTarget name body =

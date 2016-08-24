@@ -359,22 +359,22 @@ Target "BootstrapTestDotnetCore" (fun _ ->
         let clear () =
             // Will make sure the test call actually compiles the script.
             // Note: We cannot just clean .fake here as it might be locked by the currently executing code :)
-            if Directory.Exists ".fake" then
-                Directory.EnumerateDirectories(".fake")
-                  |> Seq.filter (fun s -> (Path.GetFileName s).StartsWith script)
-                  |> Seq.iter File.Delete
+            // On dotnetcore we currently have no cache
+            ()
+            //if Directory.Exists ".fake/testbuild.fsx" then
+            //    Directory.Delete(".fake/testbuild.fsx", true)
         let executeTarget target =
             if clearCache then clear ()
             ExecProcess (fun info ->
                 info.FileName <- "nuget/dotnetcore/Fake.netcore/current/Fake.netcore" + (if isUnix then "" else ".exe")
                 info.WorkingDirectory <- "."
-                info.Arguments <- sprintf "--verbose run %s -t %s" script target) (System.TimeSpan.FromMinutes 3.0)
+                info.Arguments <- sprintf "--verbose run %s --target %s --singletarget" script target) (System.TimeSpan.FromMinutes 3.0)
 
         let result = executeTarget "PrintColors"
-        if result <> 0 then failwith "Bootstrapping failed"
+        if result <> 0 then failwithf "Bootstrapping failed (because of exitcode %d)" result
 
         let result = executeTarget "FailFast"
-        if result = 0 then failwith "Bootstrapping failed"
+        if result = 0 then failwithf "Bootstrapping failed (because of exitcode %d)" result
 
     // Replace the include line to use the newly build FakeLib, otherwise things will be weird.
     File.ReadAllText buildScript
