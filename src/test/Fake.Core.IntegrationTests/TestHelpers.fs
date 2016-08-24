@@ -1,6 +1,7 @@
 ﻿[<AutoOpen>]
 module Fake.Core.IntegrationTests.TestHelpers
 
+open Fake.Core
 open Fake.IO.FileSystem
 open Fake.IO.FileSystem.Operators
 open System
@@ -8,7 +9,10 @@ open NUnit.Framework
 open System
 open System.IO
 
-let fakeToolPath = Path.getFullName(__SOURCE_DIRECTORY__ + "../../../../nuget/dotnetcore/Fake.netcore/current/Fake.netcore.exe")
+let fakeToolPath = 
+    let rawWithoutExtension = Path.getFullName(__SOURCE_DIRECTORY__ + "../../../../nuget/dotnetcore/Fake.netcore/current/Fake.netcore")
+    if Environment.isUnix then rawWithoutExtension
+    else rawWithoutExtension + ".exe"
 let integrationTestPath = Path.getFullName(__SOURCE_DIRECTORY__ + "../../../../integrationtests")
 let scenarioTempPath scenario = integrationTestPath @@ scenario @@ "temp"
 let originalScenarioPath scenario = integrationTestPath @@ scenario @@ "before"
@@ -23,7 +27,7 @@ let prepare scenario =
 
 let directFakeInPath command scenarioPath target =
     let result =
-        Fake.ProcessHelper.ExecProcessAndReturnMessages (fun (info:System.Diagnostics.ProcessStartInfo) ->
+        Process.ExecProcessAndReturnMessages (fun (info:System.Diagnostics.ProcessStartInfo) ->
           info.EnvironmentVariables.["target"] <- target
           info.FileName <- fakeToolPath
           info.WorkingDirectory <- scenarioPath
