@@ -167,4 +167,4 @@ TBD.
 
 Currently Releases are on my branch: https://github.com/matthid/FAKE/releases/
 
-Alpha4 is the last known working version: https://github.com/matthid/FAKE/releases/tag/core-v1.0-alpha-04
+Alpha 9 is the last known working version: https://github.com/matthid/FAKE/releases/tag/core-v1.0-alpha-09
