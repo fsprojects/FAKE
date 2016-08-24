@@ -146,7 +146,8 @@ module Environment =
     /// The system root environment variable. Typically "C:\Windows"
     let SystemRoot = environVar "SystemRoot"
 
-    /// Determines if the current system is an Unix system
+    /// Determines if the current system is an Unix system.
+    /// See http://www.mono-project.com/docs/faq/technical/#how-to-detect-the-execution-platform
     let isUnix = 
     #if NETSTANDARD1_6
         System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(

@@ -4,7 +4,8 @@
     "debugType": "portable",
     "compilerName": "fsc",
     "define": [
-      "DOTNETCORE"
+      "DOTNETCORE",
+      "NO_DOTNETCORE_BOOTSTRAP"
     ],
     "emitEntryPoint": false,
     "xmlDoc": true,
