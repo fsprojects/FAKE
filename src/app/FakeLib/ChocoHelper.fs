@@ -618,6 +618,10 @@ module Choco =
               "@silentArgs@", parameters.SilentArgs
               "@unzipLocation@", parameters.UnzipLocation
               "@installerType@", (installerTypeToString parameters.InstallerType)
+              "@checksum@", parameters.Checksum
+              "@checksumType@", (checksumTypeToString parameters.ChecksumType)
+              "@checksum64@", parameters.Checksum64
+              "@checksum64Type@", (checksumTypeToString parameters.Checksum64Type)
             ]
     
         processTemplates replacements [ outputPath ]
