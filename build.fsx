@@ -186,7 +186,7 @@ Target "SetAssemblyInfo" (fun _ ->
 
 
 Target "ConvertProjectJsonTemplates" (fun _ ->
-    let commonDotNetCoreVersion = "1.0.0-alpha8"
+    let commonDotNetCoreVersion = "1.0.0-alpha9"
     // Set project.json.template -> project.json
     let mappings = [
       "__FSHARP_CORE_VERSION__", "4.0.1.7-alpha"
