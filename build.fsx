@@ -368,7 +368,7 @@ Target "BootstrapTestDotnetCore" (fun _ ->
             ExecProcess (fun info ->
                 info.FileName <- "nuget/dotnetcore/Fake.netcore/current/Fake.netcore" + (if isUnix then "" else ".exe")
                 info.WorkingDirectory <- "."
-                info.Arguments <- sprintf "--verbose run %s --target %s --singletarget" script target) (System.TimeSpan.FromMinutes 3.0)
+                info.Arguments <- sprintf "run %s --target %s" script target) (System.TimeSpan.FromMinutes 3.0)
 
         let result = executeTarget "PrintColors"
         if result <> 0 then failwithf "Bootstrapping failed (because of exitcode %d)" result
