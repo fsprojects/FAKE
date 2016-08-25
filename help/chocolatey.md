@@ -36,6 +36,8 @@ It is also possible to only defines the fields in ChocoPackParams and the corres
                 Tags = ["report"; "parsing"; "build"; "server"; "inspectcode"]
                 ReleaseNotes = "https://github.com/laedit/vika/releases"
                 PackageDownloadUrl = "https://github.com/laedit/vika/releases/download/" + tag + "/NVika." + version + ".zip"
+                Checksum = Checksum.CalculateFileHash ("NVika." + version + ".zip")
+                ChecksumType = Choco.ChocolateyChecksumType.Sha256
             })
     )
 
@@ -63,6 +65,10 @@ Placeholder | replaced by (`ChocoPackParams` record field)
 `@silentArgs@` | `SilentArgs`: Silent args for the installer.
 `@unzipLocation@` | `UnzipLocation`: Unzip location for zip package. Default: Chocolatey install folder.
 `@installerType@` | `InstallerType`: Installer type. Default: Zip.
+`@checksum@` | `Checksum`: The checksum hash value of the PackageDownloadUrl resource.
+`@checksumType@` | `ChecksumType`: The type of checksum that the file is validated with. Default: Sha256.
+`@checksum64@` | `Checksum64`: The checksum hash value of the PackageDownload64Url resource.
+`@checksum64Type@` | `Checksum64Type`: The type of checksum that the file is validated with. Default: Sha256.
 
 ### chocolateyUninstall.ps1
 To use a chocolateyUninstall.ps1 template, a file with the same name must exists in a `tool` folder alongside the .nuspec template file.  
