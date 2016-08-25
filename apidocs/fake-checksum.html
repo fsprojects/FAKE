@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Vb6BuildParams - FAKE - F# Make</title>
+    <title>Checksum - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,34 +36,33 @@
 
 
 
-<h1>Vb6BuildParams</h1>
+<h1>Checksum</h1>
 <div class="xmldoc">
-<p>Parameters for running a VB6 build</p>
+<p>Allow to calculate checksum</p>
 
 </div>
-  <h3>Record Fields</h3>
+  <h3>Static members</h3>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Record Field</td><td>Description</td></tr>
+      <tr><td>Static member</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2537', 2537)" onmouseover="showTip(event, '2537', 2537)">
-            Logdir
+          <code onmouseout="hideTip(event, '2858', 2858)" onmouseover="showTip(event, '2858', 2858)">
+            CalculateFileHash(...)
           </code>
-          <div class="tip" id="2537">
-            <strong>Signature:</strong> string<br />
+          <div class="tip" id="2858">
+            <strong>Signature:</strong> (filePath:string * hashAlgorithm:ChecksumHashAlgorithm option) -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Vb6helper.fs#L23-23" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Checksum.fs#L16-16" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Directory to put logs and other temporary files
-created during the build process</p>
+          <p>Calculate the hash of a file. Default hash algorithm used: SHA256</p>
 
 
         </td>
@@ -71,59 +70,19 @@ created during the build process</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2538', 2538)" onmouseover="showTip(event, '2538', 2538)">
-            Outdir
+          <code onmouseout="hideTip(event, '2859', 2859)" onmouseover="showTip(event, '2859', 2859)">
+            CheckFileHash(...)
           </code>
-          <div class="tip" id="2538">
-            <strong>Signature:</strong> string<br />
+          <div class="tip" id="2859">
+            <strong>Signature:</strong> (filepath:string * hash:string * hashAlgorithm:ChecksumHashAlgorithm option) -&gt; bool<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Vb6helper.fs#L19-19" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Checksum.fs#L29-29" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Directory to put generated binaries</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '2539', 2539)" onmouseover="showTip(event, '2539', 2539)">
-            Timeout
-          </code>
-          <div class="tip" id="2539">
-            <strong>Signature:</strong> TimeSpan<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Vb6helper.fs#L26-26" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Maximum amount of time the entire build is allowed to take</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '2540', 2540)" onmouseover="showTip(event, '2540', 2540)">
-            Toolpath
-          </code>
-          <div class="tip" id="2540">
-            <strong>Signature:</strong> string<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Vb6helper.fs#L16-16" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Path to the VB6 executable</p>
+          <p>Check if the hash in parameter is the valid hash of the file</p>
 
 
         </td>
