@@ -21,9 +21,14 @@ to simplify calling fake you can create two helper scripts in your repository:
 ```bash
 #!/usr/bin/env bash
 
+# With this you can lock the version, can be overwritten with the environment variable
+FAKE_VERSION=${FAKE_VERSION:-"core-v1.0-alpha-10"}
+
 p=".fake";f="$p/obtain_fake.sh";if [ ! -f "$f" ]; then mkdir -p $p; curl --fail -L -s -o $f https://raw.githubusercontent.com/matthid/FAKE/coreclr/script/obtain_fake.sh; fi; . $f
 
-install_fake_packages # remove me once out of alpha or nuget packages uploaded to nuget
+# remove me once out of alpha or nuget packages uploaded to nuget
+# For now you can use 'source .fake/bin/core-v1.0-alpha-10/packages' to reference the (currently unreleased) new packages
+install_fake_packages
 
 exec_fake $*
 ```
@@ -142,6 +147,8 @@ nuget FSharp.Formatting ~> 2.14
 #load "./.fake/build.fsx/loadDependencies.fsx"
 ```
 
+> For now you probably want to add `source .fake/bin/core-v1.0-alpha-10/packages` if you want to use the FAKE Api.
+
 ### paket.dependencies
 
 It's also possible to use an existing `paket.dependencies` file and specify the file and group to use (defaults to "paket.dependencies" and "Main"):
@@ -167,4 +174,4 @@ TBD.
 
 Currently Releases are on my branch: https://github.com/matthid/FAKE/releases/
 
-Alpha 9 is the last known working version: https://github.com/matthid/FAKE/releases/tag/core-v1.0-alpha-09
+Alpha 10 is the last known working version: https://github.com/matthid/FAKE/releases/tag/core-v1.0-alpha10
