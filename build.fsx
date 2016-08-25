@@ -190,7 +190,7 @@ Target "SetAssemblyInfo" (fun _ ->
 
 
 Target "ConvertProjectJsonTemplates" (fun _ ->
-    let commonDotNetCoreVersion = "1.0.0-alpha9"
+    let commonDotNetCoreVersion = "1.0.0-alpha10"
     // Set project.json.template -> project.json
     let mappings = [
       "__FSHARP_CORE_VERSION__", "4.0.1.7-alpha"
@@ -359,10 +359,14 @@ Target "BootstrapTestDotnetCore" (fun _ ->
         let clear () =
             // Will make sure the test call actually compiles the script.
             // Note: We cannot just clean .fake here as it might be locked by the currently executing code :)
-            // On dotnetcore we currently have no cache
-            ()
-            //if Directory.Exists ".fake/testbuild.fsx" then
-            //    Directory.Delete(".fake/testbuild.fsx", true)
+            if Directory.Exists ".fake/testbuild.fsx/packages" then
+              Directory.Delete (".fake/testbuild.fsx/packages", true)
+            if File.Exists ".fake/testbuild.fsx/paket.depedencies.sha1" then
+              File.Delete ".fake/testbuild.fsx/paket.depedencies.sha1"
+            if File.Exists ".fake/testbuild.fsx/paket.lock" then
+              File.Delete ".fake/testbuild.fsx/paket.lock"
+            // TODO: Clean a potentially cached dll as well.
+
         let executeTarget target =
             if clearCache then clear ()
             ExecProcess (fun info ->
