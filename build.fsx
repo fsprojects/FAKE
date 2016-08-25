@@ -378,7 +378,7 @@ Target "BootstrapTestDotnetCore" (fun _ ->
 
     // Replace the include line to use the newly build FakeLib, otherwise things will be weird.
     File.ReadAllText buildScript
-    //|> fun s -> s.Replace("#I @\"packages/build/FAKE/tools/\"", "#I @\"build/\"")
+    |> fun s -> s.Replace("source .fake/bin/core-v1.0-alpha-09/packages", "source nuget/dotnetcore")
     |> fun text -> File.WriteAllText(testScript, text)
 
     try
