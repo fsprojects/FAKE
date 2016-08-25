@@ -1,3 +1,6 @@
+#### 4.38.4 - 25.08.2016
+* Added Checksum[64][Type] in ChocoHelper - https://github.com/fsharp/FAKE/pull/1367
+
 #### 4.38.3 - 23.08.2016
 * Hint shown in for ArgumentException #1355 instead of trying to set it directly - https://github.com/fsharp/FAKE/pull/1366
 
