@@ -6,7 +6,7 @@ Getting started with the Fake dotnetcore version is easy.
 Just execute a single line of bash (supports git bash on windows):
 
 ```bash
-p=".fake";f="$p/obtain_fake.sh";if [ ! -f "$f" ]; then mkdir -p $p; curl --fail -L -s -o $f https://raw.githubusercontent.com/matthid/FAKE/coreclr/script/obtain_fake.sh; fi; . $f
+p=".fake";f="$p/obtain_fake.sh";if [ ! -f "$f" ];then mkdir -p $p;curl -fLso $f https://raw.githubusercontent.com/matthid/FAKE/coreclr/script/obtain_fake.sh; fi;. $f
 ```
 
 now you can use 
@@ -24,7 +24,7 @@ to simplify calling fake you can create two helper scripts in your repository:
 # With this you can lock the version, can be overwritten with the environment variable
 FAKE_VERSION=${FAKE_VERSION:-"core-v1.0-alpha-10"}
 
-p=".fake";f="$p/obtain_fake.sh";if [ ! -f "$f" ]; then mkdir -p $p; curl --fail -L -s -o $f https://raw.githubusercontent.com/matthid/FAKE/coreclr/script/obtain_fake.sh; fi; . $f
+p=".fake";f="$p/obtain_fake.sh";if [ ! -f "$f" ];then mkdir -p $p;curl -fLso $f https://raw.githubusercontent.com/matthid/FAKE/coreclr/script/obtain_fake.sh; fi;. $f
 
 # remove me once out of alpha or nuget packages uploaded to nuget
 # For now you can use 'source .fake/bin/core-v1.0-alpha-10/packages' to reference the (currently unreleased) new packages

@@ -216,6 +216,8 @@ Target "ConvertProjectJsonTemplates" (fun _ ->
       "__FAKE_TRACING_NANTXML_VERSION__", commonDotNetCoreVersion
       "__FAKE_NETCORE_EXE_VERSION__", commonDotNetCoreVersion
       "__FAKE_RUNTIME_VERSION__", commonDotNetCoreVersion
+      "__FAKE_CORE_RELEASENOTES_VERSION__", commonDotNetCoreVersion
+      "__FAKE_CORE_SEMVER_VERSION__", commonDotNetCoreVersion
       ]
       
     !! "src/app/*/project.json.template"

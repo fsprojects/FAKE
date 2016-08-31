@@ -104,6 +104,12 @@
     <Compile Include="..\Fake.DotNet.AssemblyInfoFile\AssemblyInfoFile.fs">
       <Link>Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs</Link>
     </Compile>
+    <Compile Include="..\Fake.Core.SemVer\SemVer.fs">
+      <Link>Fake.Core.SemVer/SemVer.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Core.ReleaseNotes\ReleaseNotes.fs">
+      <Link>Fake.Core.ReleaseNotes/ReleaseNotes.fs</Link>
+    </Compile>
     <Compile Include="..\Fake.Core.Globbing\Globbing.fs">
       <Link>Fake.Core.Globbing/Globbing.fs</Link>
     </Compile>
