@@ -1,0 +1,62 @@
+{
+  "version": "1.0.0-alpha10",
+  "buildOptions": {
+    "debugType": "portable",
+    "compilerName": "fsc",
+    "define": [
+      "DOTNETCORE"
+    ],
+    "emitEntryPoint": false,
+    "xmlDoc": true,
+    "compile": {
+      "includeFiles": [
+        "AssemblyInfo.fs",
+        "Zip.fs"
+      ]
+    }
+  },
+  "tools": {
+    "dotnet-compile-fsc": {
+      "version": "1.0.0-preview2-*",
+      "imports": "dnxcore50"
+    }
+  },
+  "dependencies":{
+    "Fake.IO.FileSystem": "1.0.0-alpha10",
+    "Fake.Core.Globbing": "1.0.0-alpha10",
+    "FSharp.Core": "4.0.1.7-alpha"
+  },
+  "frameworks": {
+    "net46": {
+      "frameworkAssemblies": {
+        "Microsoft.Build.Framework": "",
+        "mscorlib": "",
+        "System": "",
+        "System.Configuration": "",
+        "System.IO.Compression": "",
+        "System.IO.Compression.FileSystem": "",
+        "System.Runtime.Caching": "",
+        "System.ServiceProcess": "",
+        "System.Xml": "",
+        "System.Xml.Linq": "",
+        "System.Core": ""
+      }
+    },
+    "netstandard1.6": {
+      "buildOptions": {
+        "define": [
+          "NETSTANDARD1_5"
+        ]
+      },
+      "imports": [
+        "portable-net45+win8",
+        "dnxcore50"
+      ],
+      "dependencies": {
+        "NETStandard.Library": "1.6.0",
+        "System.IO.Compression": "4.1.0",
+        "System.IO.Compression.ZipFile": "4.0.1"
+      }
+    }
+  }
+}

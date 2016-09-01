@@ -218,6 +218,7 @@ Target "ConvertProjectJsonTemplates" (fun _ ->
       "__FAKE_RUNTIME_VERSION__", commonDotNetCoreVersion
       "__FAKE_CORE_RELEASENOTES_VERSION__", commonDotNetCoreVersion
       "__FAKE_CORE_SEMVER_VERSION__", commonDotNetCoreVersion
+      "__FAKE_IO_ZIP_VERSION__", commonDotNetCoreVersion
       ]
       
     !! "src/app/*/project.json.template"
