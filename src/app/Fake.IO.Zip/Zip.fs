@@ -38,11 +38,11 @@ let private createZipP fileName comment level (items: (string * string) seq) =
         //entry.LastWriteTime <- DateTimeOffset(info.LastWriteTime)
 
 let private createZip fileName comment level (items: (string* string) seq) =
-//#if NETSTANDARD1_6
-//    let lc = System.Runtime.Loader.AssemblyLoadContext.GetLoadContext(typeof<MyClass>.GetTypeInfo().Assembly)
-//    let n = AssemblyName "System.IO.Compression.ZipFile"
-//    lc.LoadFromAssemblyName(n) |> ignore
-//#endif
+#if NETSTANDARD1_6
+    let lc = System.Runtime.Loader.AssemblyLoadContext.GetLoadContext(typeof<MyClass>.GetTypeInfo().Assembly)
+    let n = AssemblyName "System.IO.Compression.ZipFile"
+    lc.LoadFromAssemblyName(n) |> ignore
+#endif
     createZipP fileName comment level items
 #else
 
