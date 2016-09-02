@@ -202,7 +202,8 @@ type AssemblyLoadContext () =
 #endif
 
 let loadAssembly (loadContext:AssemblyLoadContext) printDetails (assemInfo:AssemblyInfo) =
-    try let assem =
+    let realLoadAssembly (assemInfo:AssemblyInfo) =
+        let assem =
             if assemInfo.Location <> "" then
                 try
                     Some assemInfo.Location, loadContext.LoadFromAssemblyPath(assemInfo.Location)
@@ -216,8 +217,17 @@ let loadAssembly (loadContext:AssemblyLoadContext) printDetails (assemInfo:Assem
                     None, asem
             else None, loadContext.LoadFromAssemblyName(new AssemblyName(assemInfo.FullName))
         Some(assem)
+    try
+        //let location = assemInfo.Location.Replace("\\", "/")
+        //let newLocation = location.Replace("/ref/", "/lib/")
+        //try
+        realLoadAssembly assemInfo
+        //with
+        //| :? System.BadImageFormatException when location.Contains ("/ref/") && File.Exists newLocation->
+            // TODO: This is a real bad hack for now...
+            //realLoadAssembly { assemInfo with Location = newLocation }
     with ex ->
-        if printDetails then tracef "Unable to find assembly %A. (Error: %O)" assemInfo ex
+        if printDetails then tracefn "Unable to find assembly %A. (Error: %O)" assemInfo ex
         None
 
 let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyName) printDetails (runtimeDependencies:AssemblyInfo list) =
@@ -291,8 +301,6 @@ let setupAssemblyResolver (context:FakeContext) =
 #else
     let loadContext = new AssemblyLoadContext()
 #endif
-
-
 
 #if NETSTANDARD1_6
     globalLoadContext.add_Resolving(new Func<AssemblyLoadContext, AssemblyName, Assembly>(fun _ name ->

@@ -4,6 +4,9 @@ module Fake.IO.Zip
 open System.IO
 #if DOTNETCORE // Wait for SharpZipLib to become available for netcore
 open System.IO.Compression
+#if NETSTANDARD1_6
+open System.Reflection
+#endif
 #else
 // No SharpZipLib for netcore
 open ICSharpCode.SharpZipLib.Zip
@@ -19,7 +22,9 @@ let DefaultZipLevel = 7
 
 #if DOTNETCORE // Wait for SharpZipLib to become available for netcore
 
-let createZip fileName comment level (items: (string* string) seq) =
+type private MyClass () = class end
+
+let private createZipP fileName comment level (items: (string * string) seq) =
     use stream = new ZipArchive (File.Create(fileName), ZipArchiveMode.Create)
     let zipLevel = min (max 0 level) 9
     //tracefn "Creating Zipfile: %s (Level: %d)" fileName zipLevel
@@ -32,6 +37,13 @@ let createZip fileName comment level (items: (string* string) seq) =
         ()
         //entry.LastWriteTime <- DateTimeOffset(info.LastWriteTime)
 
+let private createZip fileName comment level (items: (string* string) seq) =
+//#if NETSTANDARD1_6
+//    let lc = System.Runtime.Loader.AssemblyLoadContext.GetLoadContext(typeof<MyClass>.GetTypeInfo().Assembly)
+//    let n = AssemblyName "System.IO.Compression.ZipFile"
+//    lc.LoadFromAssemblyName(n) |> ignore
+//#endif
+    createZipP fileName comment level items
 #else
 
 let private addZipEntry (stream : ZipOutputStream) (buffer : byte[]) (item : string) (itemSpec : string) =
@@ -49,6 +61,7 @@ let private addZipEntry (stream : ZipOutputStream) (buffer : byte[]) (item : str
         let count = stream2.Read(buffer, 0, buffer.Length)
         stream.Write(buffer, 0, count)
         length := !length - (int64 count)
+
 
 let private createZip fileName comment level (items : (string * string) seq) =
     use stream = new ZipOutputStream(File.Create(fileName))
