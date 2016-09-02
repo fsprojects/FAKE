@@ -218,14 +218,14 @@ let loadAssembly (loadContext:AssemblyLoadContext) printDetails (assemInfo:Assem
             else None, loadContext.LoadFromAssemblyName(new AssemblyName(assemInfo.FullName))
         Some(assem)
     try
-        //let location = assemInfo.Location.Replace("\\", "/")
-        //let newLocation = location.Replace("/ref/", "/lib/")
-        //try
-        realLoadAssembly assemInfo
-        //with
-        //| :? System.BadImageFormatException when location.Contains ("/ref/") && File.Exists newLocation->
+        let location = assemInfo.Location.Replace("\\", "/")
+        let newLocation = location.Replace("/ref/", "/lib/")
+        try
+            realLoadAssembly assemInfo
+        with
+        | :? System.BadImageFormatException when location.Contains ("/ref/") && File.Exists newLocation->
             // TODO: This is a real bad hack for now...
-            //realLoadAssembly { assemInfo with Location = newLocation }
+            realLoadAssembly { assemInfo with Location = newLocation }
     with ex ->
         if printDetails then tracefn "Unable to find assembly %A. (Error: %O)" assemInfo ex
         None
