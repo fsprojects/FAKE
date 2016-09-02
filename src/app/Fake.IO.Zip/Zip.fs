@@ -29,7 +29,8 @@ let createZip fileName comment level (items: (string* string) seq) =
     for item, itemSpec in items do
         let info = FileInfo.ofPath item
         let entry = stream.CreateEntryFromFile(item, itemSpec)
-        entry.LastWriteTime <- DateTimeOffset(info.LastWriteTime)
+        ()
+        //entry.LastWriteTime <- DateTimeOffset(info.LastWriteTime)
 
 #else
 

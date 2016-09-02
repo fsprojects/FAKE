@@ -1,11 +1,14 @@
 (* -- Fake Dependencies paket-inline
 source https://nuget.org/api/v2
-source .fake/bin/core-v1.0-alpha-10/packages
+source .fake/current-packages
 
 nuget System.AppContext prerelease
 nuget Fake.Core.Targets prerelease
 nuget Fake.Core.Globbing prerelease
+nuget Fake.Core.SemVer prerelease
 nuget Fake.IO.FileSystem prerelease
+nuget Fake.IO.Zip prerelease
+nuget Fake.Core.ReleaseNotes prerelease
 nuget Fake.DotNet.AssemblyInfoFile prerelease
 nuget Fake.DotNet.MsBuild prerelease
 nuget Fake.DotNet.Cli prerelease
@@ -30,10 +33,13 @@ open Fake.Core.Trace
 open Fake.Core.Targets
 open Fake.Core.TargetOperators
 open Fake.Core.String
+open Fake.Core.SemVer
+open Fake.Core.ReleaseNotes
 open Fake.Core.Process
 open Fake.Core.Globbing
 open Fake.Core.Globbing.Operators
 open Fake.IO.FileSystem
+open Fake.IO.Zip
 open Fake.IO.FileSystem.Directory
 open Fake.IO.FileSystem.File
 open Fake.IO.FileSystem.Operators
@@ -66,14 +72,9 @@ let projectDescription = "FAKE - F# Make - is a build automation tool for .NET. 
 let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"]
 let gitRaw = environVarOrDefault "gitRaw" "https://raw.github.com/fsharp"
 
-#if DOTNETCORE
-type ReleaseNotesWorkAround =
-    { AssemblyVersion : string; NugetVersion : string; Notes : string }
-let release =
-    { AssemblyVersion = "1.0.0"; NugetVersion = "1.0.0"; Notes = "my notes" }
-let allFiles = (fun _ -> true)
-#else
 let release = LoadReleaseNotes "RELEASE_NOTES.md"
+#if DOTNETCORE
+let allFiles = (fun _ -> true)
 #endif
 
 let packages =
@@ -584,7 +585,6 @@ Target "DotnetPackage" (fun _ ->
 )
 
 Target "DotnetCoreCreateZipPackages" (fun _ ->
-#if !DOTNETCORE
     // build zip packages
     !! "nuget/dotnetcore/*.nupkg"
     -- "nuget/dotnetcore/*.symbols.nupkg"
@@ -596,9 +596,6 @@ Target "DotnetCoreCreateZipPackages" (fun _ ->
       !! (sprintf "%s/**" runtimeDir)
       |> Zip runtimeDir (sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" runtime)
     )
-#else
-    printfn "We don't currently have Zip helper on dotnetcore."
-#endif
 )
 
 Target "DotnetCorePushNuGet" (fun _ ->
