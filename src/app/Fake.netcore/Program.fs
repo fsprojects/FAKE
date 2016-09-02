@@ -62,9 +62,9 @@ let handleCli (results:ParseResults<Cli.FakeArgs>) =
 
   let mutable didSomething = false
   let mutable exitCode = 0
-  let printDetails = results.Contains <@ Cli.FakeArgs.Verbose @>
-
-  if printDetails then
+  let verbLevel = (results.GetResults <@ Cli.FakeArgs.Verbose @>) |> List.length
+  let printDetails = verbLevel > 0
+  if verbLevel > 1 then
     Paket.Logging.verbose <- true
   Paket.Utils.autoAnswer <- Some true
   use consoleTrace = Paket.Logging.event.Publish |> Observable.subscribe Paket.Logging.traceToConsole
