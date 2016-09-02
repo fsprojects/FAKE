@@ -639,6 +639,20 @@ Target "BootstrapAndBuildDnc" (fun _ ->
                 info.WorkingDirectory <- "."
                 info.Arguments <- sprintf "%s" target) (System.TimeSpan.FromMinutes 45.0)
     else
+        // Copy packages to correct directory
+        let version =
+            let startStr= "FAKE_VERSION=${FAKE_VERSION:-\""
+            match File.ReadLines("fake.sh")
+                  |> Seq.tryFind (fun line -> line.StartsWith(startStr)) with
+            | Some line ->
+              let strtLen = startStr.Length
+              line.Substring(strtLen, line.Length - strtLen - 2)
+            | None -> failwith "Could not extract version from fake.sh."
+        tracefn "Detected version in fake.sh '%s'" version
+        CleanDir ".fake/current-packages/"
+        !! (sprintf ".fake/bin/%s/packages/*.nupkg" version)
+        |> Copy ".fake/current-packages"
+
         if isLinux then
             ExecProcess (fun info ->
                 info.FileName <- "fake.sh"
