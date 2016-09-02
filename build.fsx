@@ -624,6 +624,7 @@ Target "BootstrapAndBuildDnc" (fun _ ->
     let buildScript = __SOURCE_FILE__
     let target = "DotnetPackage"
 
+
     let noDncBootstrap = environVar "NO_DOTNETCORE_BOOTSTRAP" = "true"
     if noDncBootstrap then
         // Just use "old" fake
@@ -650,6 +651,12 @@ Target "BootstrapAndBuildDnc" (fun _ ->
                 info.Arguments <- sprintf "run %s -t %s" buildScript target) (System.TimeSpan.FromMinutes 45.0)
       
     |> fun r -> if r <> 0 then failwith "dnc build failed!"
+
+    // refresh packages
+    CleanDir ".fake/current-packages/"
+    !! "nuget/dotnetcore/*.nupkg"
+    |> Copy ".fake/current-packages"
+    //CopyDir ".fake/current-packages" "nuget/dotnetcore" (fun p -> not <| p.Contains("Fake.netcore"))
 )
 
 Target "PublishNuget" (fun _ ->
@@ -703,6 +710,15 @@ Target "PrintColors" (fun s ->
   color ConsoleColor.Magenta (fun _ -> printfn "TestMagenta")
 )
 Target "FailFast" (fun _ -> failwith "fail fast")
+Target "EnsureTestsRun" (fun _ ->
+#if !DOTNETCORE
+  if hasBuildParam "SkipIntegrationTests" || hasBuildParam "SkipTests" then 
+      let res = getUserInput "Are you really sure to continue without running tests (yes/no)?"
+      if res <> "yes" then
+          failwith "cannot continue without tests"
+#endif
+  ()
+)
 Target "Default" DoNothing
 Target "StartDnc" DoNothing
 
@@ -719,12 +735,13 @@ Target "StartDnc" DoNothing
     ==> "BuildSolution"
     ==> "BootstrapAndBuildDnc"
     ==> "DotnetCoreCreateZipPackages"
-    ==> "TestDotnetCore"
+    =?> ("TestDotnetCore", not <| hasBuildParam "SkipIntegrationTests" && not <| hasBuildParam "SkipTests")
     //==> "ILRepack"
-    ==> "Test"
-    ==> "BootstrapTest"
-    ==> "BootstrapTestDotnetCore"
+    =?> ("Test", not <| hasBuildParam "SkipTests")
+    =?> ("BootstrapTest",not <| hasBuildParam "SkipTests")
+    =?> ("BootstrapTestDotnetCore",not <| hasBuildParam "SkipTests")
     ==> "Default"
+    ==> "EnsureTestsRun"
     ==> "CopyLicense"
     =?> ("GenerateDocs", isLocalBuild && not isLinux)
     =?> ("SourceLink", isLocalBuild && not isLinux)
