@@ -562,6 +562,7 @@ Target "DotnetPackage" (fun _ ->
                 OutputPath = Some (nugetDir @@ "dotnetcore")
             }) proj
     )
+
     // dotnet publish
     runtimes
     |> List.map Some
@@ -582,6 +583,35 @@ Target "DotnetPackage" (fun _ ->
                 }) proj
         )
     )
+
+    // Publish portable as well (see https://docs.microsoft.com/en-us/dotnet/articles/core/app-types)
+    let netcoreJson = "src/app/Fake.netcore/project.json"
+    let oldContent = File.ReadAllText netcoreJson
+    let newContent =
+      oldContent.Replace(
+        "  \"runtimes\": {
+     \"win7-x86\": { },
+     \"win7-x64\": { },
+     \"osx.10.11-x64\": { },
+     \"ubuntu.14.04-x64\": { },
+     \"ubuntu.16.04-x64\": { }
+  },", "").Replace(
+        "        \"Microsoft.NETCore.App\": {
+            \"version\": \"1.0.0\"
+        }", "        \"Microsoft.NETCore.App\": {
+            \"version\": \"1.0.0\",
+            \"type\": \"platform\"
+        }")
+    try
+        File.WriteAllText(netcoreJson, newContent)
+    
+        DotnetPublish (fun c ->
+            { c with
+                Framework = Some "netcoreapp1.0"
+                OutputPath = Some (nugetDir @@ "dotnetcore" @@ "Fake.netcore" @@ "portable") 
+            }) netcoreJson
+    finally
+        File.WriteAllText(netcoreJson, oldContent)
 )
 
 Target "DotnetCoreCreateZipPackages" (fun _ ->
@@ -590,7 +620,7 @@ Target "DotnetCoreCreateZipPackages" (fun _ ->
     -- "nuget/dotnetcore/*.symbols.nupkg"
     |> Zip "nuget/dotnetcore" "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-packages.zip"
 
-    runtimes
+    ("portable" :: runtimes)
     |> Seq.iter (fun runtime ->
       let runtimeDir = sprintf "nuget/dotnetcore/Fake.netcore/%s" runtime
       !! (sprintf "%s/**" runtimeDir)
@@ -620,6 +650,7 @@ Target "DotnetCorePushNuGet" (fun _ ->
           nugetPush nugetpackage)
     )
 )
+
 Target "BootstrapAndBuildDnc" (fun _ ->
     let buildScript = __SOURCE_FILE__
     let target = "DotnetPackage"
