@@ -161,6 +161,18 @@ group Build
 #load "./.fake/build.fsx/loadDependencies.fsx"
 ```
 
+## Portable installation
+
+We distrubute a dotnetcore version of FAKE without the dotnetcore runtime.
+This version assumes an existing dotnet sdk installation while the non-portable installation doesn't.
+
+Just use the `-portable` version of the downloads, extract it and execute.
+
+```
+dotnet Fake.netcore.dll <regular-arguments>
+```
+
+The advantage of this method is that it is portable (ie. distribute the same binaries) and requires less bandwidth.
 
 ## Examples
 
