@@ -1,5 +1,6 @@
 #### 4.39.1 - 05.09.2016
 * USABILITY: Check for npm on path variable in NpmHelper on Windows - https://github.com/fsharp/FAKE/pull/1371
+* New helper: Search for files with a given pattern also in subdirectories - https://github.com/fsharp/FAKE/pull/1354
 
 #### 4.39.0 - 25.08.2016
 * Added Checksum[64][Type] in ChocoHelper - https://github.com/fsharp/FAKE/pull/1367
