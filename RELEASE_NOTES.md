@@ -1,3 +1,6 @@
+#### 4.39.1 - 05.09.2016
+* USABILITY: Check for npm on path variable in NpmHelper on Windows - https://github.com/fsharp/FAKE/pull/1371
+
 #### 4.39.0 - 25.08.2016
 * Added Checksum[64][Type] in ChocoHelper - https://github.com/fsharp/FAKE/pull/1367
 * Better support for multiple versions of SqlPackage - https://github.com/fsharp/FAKE/pull/1368
