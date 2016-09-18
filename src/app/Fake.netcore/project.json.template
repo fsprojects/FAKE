@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "FSharp.Core": "__FSHARP_CORE_VERSION__",
+    "Microsoft.FSharp.Core.netcore": "1.0.0-alpha-160629",
     "Argu": "__ARGU_VERSION__",
     "Fake.Runtime": "__FAKE_RUNTIME_VERSION__",
     "__FSHARP_COMPILER_SERVICE_PACKAGE__": "__FSHARP_COMPILER_SERVICE_VERSION__",
