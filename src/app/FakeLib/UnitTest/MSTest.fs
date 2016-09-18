@@ -87,19 +87,21 @@ let buildMSTestArgs parameters assembly =
 let MSTest (setParams : MSTestParams -> MSTestParams) (assemblies : string seq) = 
     let details = assemblies |> separated ", "
     traceStartTask "MSTest" details
-    let parameters = MSTestDefaults |> setParams
-    let assemblies = assemblies |> Seq.toArray
-    if Array.isEmpty assemblies then failwith "MSTest: cannot run tests (the assembly list is empty)."
-    let failIfError assembly exitCode = 
-        if exitCode > 0 && parameters.ErrorLevel <> ErrorLevel.DontFailBuild then 
-            let message = sprintf "%sMSTest test run failed for %s" Environment.NewLine assembly
-            traceError message
-            failwith message
-    for assembly in assemblies do
-        let args = buildMSTestArgs parameters assembly
-        ExecProcess (fun info -> 
-            info.FileName <- parameters.ToolPath
-            info.WorkingDirectory <- parameters.WorkingDir
-            info.Arguments <- args) parameters.TimeOut
-        |> failIfError assembly
-    traceEndTask "MSTest" details
+    try
+        let parameters = MSTestDefaults |> setParams
+        let assemblies = assemblies |> Seq.toArray
+        if Array.isEmpty assemblies then failwith "MSTest: cannot run tests (the assembly list is empty)."
+        let failIfError assembly exitCode = 
+            if exitCode > 0 && parameters.ErrorLevel <> ErrorLevel.DontFailBuild then 
+                let message = sprintf "%sMSTest test run failed for %s" Environment.NewLine assembly
+                traceError message
+                failwith message
+        for assembly in assemblies do
+            let args = buildMSTestArgs parameters assembly
+            ExecProcess (fun info -> 
+                info.FileName <- parameters.ToolPath
+                info.WorkingDirectory <- parameters.WorkingDir
+                info.Arguments <- args) parameters.TimeOut
+            |> failIfError assembly
+    finally
+        traceEndTask "MSTest" details
