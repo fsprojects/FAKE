@@ -416,6 +416,11 @@ type CopyRecursiveMethod =
 
 open Fake.Globbing
 /// Copies the file structure recursively.
+/// ## Parameters
+/// 
+///  - `method` - the method to decide which files get copied
+///  - `dir` - The source directory.
+///  - `outputDir` - The target directory.
 let CopyRecursive2 method dir outputDir =
     let dirInfo = directoryInfo dir
     let outputDirInfo = directoryInfo outputDir   
