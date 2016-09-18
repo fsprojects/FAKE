@@ -12,7 +12,7 @@ nuget Fake.Core.ReleaseNotes prerelease
 nuget Fake.DotNet.AssemblyInfoFile prerelease
 nuget Fake.DotNet.MsBuild prerelease
 nuget Fake.DotNet.Cli prerelease
-nuget Mono.Cecil 0.9.6
+nuget Mono.Cecil 0.10.0-beta1-v2
 -- Fake Dependencies -- *)
 
 #if DOTNETCORE

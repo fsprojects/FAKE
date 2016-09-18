@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "FSharp.Core": "4.0.1.7-alpha",
+    "Microsoft.FSharp.Core.netcore": "1.0.0-alpha-160629",
     "Argu": "3.3.0",
     "Fake.Runtime": "1.0.0-alpha10",
     "FSharp.Compiler.Service": "6.0.3-alpha1",
