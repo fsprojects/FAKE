@@ -195,13 +195,12 @@ Target "ConvertProjectJsonTemplates" (fun _ ->
     // Set project.json.template -> project.json
     let mappings = [
       "__FSHARP_CORE_VERSION__", "4.0.1.7-alpha"
-      "__ARGU_VERSION__", "3.0.0-beta02"
-      "__ARGU_VERSION__", "3.0.0-beta02"
+      "__ARGU_VERSION__", "3.3.0"
       "__FSHARP_COMPILER_SERVICE_PACKAGE__", "FSharp.Compiler.Service"
       "__FSHARP_COMPILER_SERVICE_VERSION__", "6.0.3-alpha1"
-      "__MONO_CECIL_VERSION__", "0.9.6.0"
-      "__PAKET_CORE_VERSION__", "3.10.0-alpha001"
-      "__PAKET_CORE_PACKAGE__", "Paket.Core.netcore"
+      "__MONO_CECIL_VERSION__", "0.10.0-beta1-v2"
+      "__PAKET_CORE_VERSION__", "3.19.4"
+      "__PAKET_CORE_PACKAGE__", "Paket.Core"
       "__FAKE_CORE_TRACING_VERSION__", commonDotNetCoreVersion
       "__FAKE_CORE_CONTEXT_VERSION__", commonDotNetCoreVersion
       "__FAKE_CORE_GLOBBING_VERSION__", commonDotNetCoreVersion

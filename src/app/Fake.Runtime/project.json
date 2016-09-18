@@ -41,10 +41,10 @@
   },
   "dependencies": {
     "Fake.Core.Context": "1.0.0-alpha10",
-    "Paket.Core.netcore": "3.10.0-alpha001",
+    "Paket.Core": "3.19.4",
     "FSharp.Core": "4.0.1.7-alpha",
     "FSharp.Compiler.Service": "6.0.3-alpha1",
-    "Mono.Cecil": "0.9.6.0"
+    "Mono.Cecil": "0.10.0-beta1-v2"
   },
   "frameworks": {
     "netstandard1.6": {
