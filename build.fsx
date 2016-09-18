@@ -125,7 +125,8 @@ Target "RenameFSharpCompilerService" (fun _ ->
               | Some f -> f
               | None ->
                   failwithf "Could not resolve '%s'" name
-          { new Mono.Cecil.IAssemblyResolver with 
+          { new Mono.Cecil.IAssemblyResolver with
+              member x.Dispose () = ()
               member x.Resolve (name : string) =
                   Mono.Cecil.AssemblyDefinition.ReadAssembly(
                       resolve name,
