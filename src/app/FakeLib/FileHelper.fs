@@ -413,6 +413,7 @@ type CopyRecursiveMethod =
 | Skip
 | IncludePattern of string
 | ExcludePattern of string
+| Filter of (DirectoryInfo -> DirectoryInfo -> FileInfo -> bool)
 
 open Fake.Globbing
 /// Copies the file structure recursively.
@@ -435,6 +436,7 @@ let CopyRecursive2 method dir outputDir =
     | ExcludePattern(pattern) ->
         let regex = globRegexCache.GetOrAdd(pattern, compileGlobToRegex)
         cr2 <| fun _ d f -> d.FullName @@ f.Name |> regex.IsMatch |> not
+    | Filter(f) -> cr2 f
 
 /// Moves a single file to the target and overwrites the existing file.
 /// ## Parameters
