@@ -1,7 +1,10 @@
 #### 4.40.0 - 19.09.2016
 * Allow to pass parameter to SonarQube end - https://github.com/fsharp/FAKE/pull/1381
 * New helper: Search for files with a given pattern also in subdirectories - https://github.com/fsharp/FAKE/pull/1354
+* Adds comment on top of auto-generated AssemblyInfo.fs files - https://github.com/fsharp/FAKE/pull/1373
+* Use nuget instead of referenced dlls. Fix SQL Server version issue - https://github.com/fsharp/FAKE/pull/1377
 * BUGFIX: NuGetVersion: adds application/xml to request accept header - https://github.com/fsharp/FAKE/pull/1383
+* BUGFIX: Replace process cache with safe alternative - https://github.com/fsharp/FAKE/pull/1378
 * BUGFIX: Call 'traceEndTask' in the finally block of a try-finally, so that it is always closed, even if the task throws an exception. https://github.com/fsharp/FAKE/pull/1379
 * USABILITY: Check for npm on path variable in NpmHelper on Windows - https://github.com/fsharp/FAKE/pull/1371
 
