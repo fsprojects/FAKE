@@ -83,15 +83,17 @@ let buildMSpecArgs parameters assemblies =
 let MSpec setParams assemblies = 
     let details = separated ", " assemblies
     traceStartTask "MSpec" details
-    let parameters = setParams MSpecDefaults
-    let args = buildMSpecArgs parameters assemblies
-    trace (parameters.ToolPath + " " + args)
-    if 0 <> ExecProcess (fun info -> 
-                info.FileName <- parameters.ToolPath
-                info.WorkingDirectory <- parameters.WorkingDir
-                info.Arguments <- args) parameters.TimeOut
-    then 
-        sprintf "MSpec test failed on %s." details |> match parameters.ErrorLevel with
-                                                      | Error | FailOnFirstError -> failwith
-                                                      | DontFailBuild -> traceImportant
-    traceEndTask "MSpec" details
+    try
+        let parameters = setParams MSpecDefaults
+        let args = buildMSpecArgs parameters assemblies
+        trace (parameters.ToolPath + " " + args)
+        if 0 <> ExecProcess (fun info -> 
+                    info.FileName <- parameters.ToolPath
+                    info.WorkingDirectory <- parameters.WorkingDir
+                    info.Arguments <- args) parameters.TimeOut
+        then 
+            sprintf "MSpec test failed on %s." details |> match parameters.ErrorLevel with
+                                                          | Error | FailOnFirstError -> failwith
+                                                          | DontFailBuild -> traceImportant
+    finally
+        traceEndTask "MSpec" details

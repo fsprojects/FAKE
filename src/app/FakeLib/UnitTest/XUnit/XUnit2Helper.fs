@@ -190,22 +190,24 @@ let buildXUnit2Args parameters assembly =
 let xUnit2 setParams assemblies =
     let details = separated ", " assemblies
     traceStartTask "xUnit2" details
-    let parameters = setParams XUnit2Defaults
+    try
+        let parameters = setParams XUnit2Defaults
 
-    let runTests assembly =
-        let args = buildXUnit2Args parameters assembly
-        0 = ExecProcess (fun info ->
-                info.FileName <- parameters.ToolPath
-                info.WorkingDirectory <- parameters.WorkingDir
-                info.Arguments <- args) parameters.TimeOut
+        let runTests assembly =
+            let args = buildXUnit2Args parameters assembly
+            0 = ExecProcess (fun info ->
+                    info.FileName <- parameters.ToolPath
+                    info.WorkingDirectory <- parameters.WorkingDir
+                    info.Arguments <- args) parameters.TimeOut
 
-    let failedTests =
-        [ for asm in List.ofSeq assemblies do
-              if runTests asm |> not then yield asm ]
+        let failedTests =
+            [ for asm in List.ofSeq assemblies do
+                  if runTests asm |> not then yield asm ]
 
-    if not (List.isEmpty failedTests) then
-        sprintf "xUnit2 failed for the following assemblies: %s" (separated ", " failedTests)
-        |> match parameters.ErrorLevel with
-           | Error | FailOnFirstError -> failwith
-           | DontFailBuild -> traceImportant
-    traceEndTask "xUnit2" details
+        if not (List.isEmpty failedTests) then
+            sprintf "xUnit2 failed for the following assemblies: %s" (separated ", " failedTests)
+            |> match parameters.ErrorLevel with
+               | Error | FailOnFirstError -> failwith
+               | DontFailBuild -> traceImportant
+    finally
+        traceEndTask "xUnit2" details

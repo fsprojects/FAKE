@@ -34,17 +34,16 @@ let SonarQubeDefaults =
 let SonarQubeCall (call: SonarQubeCall) (parameters : SonarQubeParams) =
   let sonarPath = parameters.ToolsPath 
   let setArgs = parameters.Settings |> List.fold (fun acc x -> acc + "/d:"+x+" ") ""
-    //match parameters.Settings with
-    //| Some(x) -> (" /d:"+x)
-    //| None -> ""
+
   let cfgArgs = 
     match parameters.Config with
     | Some(x) -> (" /s:"+x) 
     | None -> ""
+  
   let args = 
     match call with
     | Begin -> "begin /k:\"" + parameters.Key + "\" /n:\"" + parameters.Name + "\" /v:\"" + parameters.Version + "\" " + setArgs + cfgArgs
-    | End -> "end"
+    | End -> "end " + setArgs + cfgArgs
 
   let result =
     ExecProcess (fun info ->
@@ -52,7 +51,7 @@ let SonarQubeCall (call: SonarQubeCall) (parameters : SonarQubeParams) =
       info.Arguments <- args) System.TimeSpan.MaxValue
   if result <> 0 then failwithf "Error during sonar qube call %s" (call.ToString())
 
-/// This task to can be used to run [Sonar Qube](http://conarqube.org/) on a project.
+/// This task to can be used to run [Sonar Qube](http://sonarqube.org/) on a project.
 /// ## Parameters
 ///
 ///  - `call` - Begin or End, to start analysis or finish it
@@ -71,3 +70,12 @@ let SonarQube (call: SonarQubeCall) setParams =
     let parameters = setParams SonarQubeDefaults
     SonarQubeCall call parameters
     traceEndTask "SonarQube" (call.ToString())
+
+/// This task can be used to run the end command of [Sonar Qube](http://sonarqube.org/) on a project.
+///
+/// ## Sample
+
+///   SonarQubeEnd
+///
+let SonarQubeEnd() =
+    SonarQube End (fun p -> { p with Settings = [] })

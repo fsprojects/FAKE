@@ -43,13 +43,15 @@ let buildNDependArgs parameters =
 let NDepend(setParams : NDependParams -> NDependParams) = 
     let taskName = "NDepend"
     traceStartTask taskName ""
-    let parameters = (NDependDefaults |> setParams)
-    let args = buildNDependArgs parameters
-    trace (parameters.ToolPath + " " + args)
-    let result = 
-        ExecProcess (fun info -> 
-            info.FileName <- parameters.ToolPath
-            info.WorkingDirectory <- getWorkingDir parameters.WorkingDir
-            info.Arguments <- args) TimeSpan.MaxValue
-    if result <> 0 then failwithf "Error running %s" parameters.ToolPath
-    traceEndTask taskName ""
+    try
+        let parameters = (NDependDefaults |> setParams)
+        let args = buildNDependArgs parameters
+        trace (parameters.ToolPath + " " + args)
+        let result = 
+            ExecProcess (fun info -> 
+                info.FileName <- parameters.ToolPath
+                info.WorkingDirectory <- getWorkingDir parameters.WorkingDir
+                info.Arguments <- args) TimeSpan.MaxValue
+        if result <> 0 then failwithf "Error running %s" parameters.ToolPath
+    finally
+        traceEndTask taskName ""

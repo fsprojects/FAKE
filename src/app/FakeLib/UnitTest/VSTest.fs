@@ -125,21 +125,23 @@ let buildVSTestArgs (parameters : VSTestParams) assembly =
 let VSTest (setParams : VSTestParams -> VSTestParams) (assemblies : string seq) = 
     let details = assemblies |> separated ", "
     traceStartTask "VSTest" details
-    let parameters = VSTestDefaults |> setParams
-    if isNullOrEmpty parameters.ToolPath then failwith "VSTest: No tool path specified, or it could not be found automatically."
-    let assemblies = assemblies |> Seq.toArray
-    if Array.isEmpty assemblies then failwith "VSTest: cannot run tests (the assembly list is empty)."
-    let failIfError assembly exitCode = 
-        if exitCode > 0 && parameters.ErrorLevel <> ErrorLevel.DontFailBuild then 
-            let message = sprintf "%sVSTest test run failed for %s" Environment.NewLine assembly
-            traceError message
-            failwith message
-    for assembly in assemblies do
-        let args = buildVSTestArgs parameters assembly
-        ExecProcess (fun info -> 
-            info.FileName <- parameters.ToolPath
-            info.WorkingDirectory <- parameters.WorkingDir
-            info.Arguments <- args) parameters.TimeOut
-        |> failIfError assembly
-    traceEndTask "VSTest" details
+    try
+        let parameters = VSTestDefaults |> setParams
+        if isNullOrEmpty parameters.ToolPath then failwith "VSTest: No tool path specified, or it could not be found automatically."
+        let assemblies = assemblies |> Seq.toArray
+        if Array.isEmpty assemblies then failwith "VSTest: cannot run tests (the assembly list is empty)."
+        let failIfError assembly exitCode = 
+            if exitCode > 0 && parameters.ErrorLevel <> ErrorLevel.DontFailBuild then 
+                let message = sprintf "%sVSTest test run failed for %s" Environment.NewLine assembly
+                traceError message
+                failwith message
+        for assembly in assemblies do
+            let args = buildVSTestArgs parameters assembly
+            ExecProcess (fun info -> 
+                info.FileName <- parameters.ToolPath
+                info.WorkingDirectory <- parameters.WorkingDir
+                info.Arguments <- args) parameters.TimeOut
+            |> failIfError assembly
+    finally
+        traceEndTask "VSTest" details
 
