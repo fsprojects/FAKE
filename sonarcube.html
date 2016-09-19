@@ -72,27 +72,19 @@ compilation has finished. Then the result is collected and send to the SonarQube
 <span class="l">23: </span>
 <span class="l">24: </span>
 <span class="l">25: </span>
-<span class="l">26: </span>
-<span class="l">27: </span>
-<span class="l">28: </span>
-<span class="l">29: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">Target</span> <span class="s">&quot;BeginSonarQube&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-
   <span class="i">SonarQube</span> <span class="i">Begin</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
     {<span class="i">p</span> <span class="k">with</span>
      <span class="i">Key</span> <span class="o">=</span> <span class="s">&quot;MyProject&quot;</span>
      <span class="i">Name</span> <span class="o">=</span> <span class="s">&quot;Main solution&quot;</span>
      <span class="i">Version</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span> }
     )
+  )
 
 <span class="i">Target</span> <span class="s">&quot;EndSonarQube&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
-  <span class="i">SonarQube</span> <span class="i">End</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
-    {<span class="i">p</span> <span class="k">with</span>
-     <span class="i">Key</span> <span class="o">=</span> <span class="s">&quot;MyProject&quot;</span>
-     <span class="i">Name</span> <span class="o">=</span> <span class="s">&quot;Main solution&quot;</span>
-     <span class="i">Version</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span> }
-    )
+  <span class="i">SonarQubeEnd</span>()
+)
 
 <span class="i">Target</span> <span class="s">&quot;Default&quot;</span> <span class="i">DoNothing</span>
 
@@ -123,8 +115,8 @@ In the SonarQubeParams, this is the new field Settings:</p>
 <span class="l">6: </span>
 <span class="l">7: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">SonarQube</span> <span class="i">Begin</span> (<span class="k">fun</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">p</span> <span class="k">-&gt;</span>
-  {<span onmouseout="hideTip(event, 'fs1', 2)" onmouseover="showTip(event, 'fs1', 2)" class="i">p</span> <span class="k">with</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">SonarQube</span> <span class="i">Begin</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
+  {<span class="i">p</span> <span class="k">with</span>
    <span class="i">Key</span> <span class="o">=</span> <span class="s">&quot;MyProject&quot;</span>
    <span class="i">Name</span> <span class="o">=</span> <span class="s">&quot;Main solution&quot;</span>
    <span class="i">Version</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span> 
@@ -145,12 +137,12 @@ This can be done with the new field Config:</p>
 <span class="l">6: </span>
 <span class="l">7: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">SonarQube</span> <span class="i">Begin</span> (<span class="k">fun</span> <span onmouseout="hideTip(event, 'fs1', 3)" onmouseover="showTip(event, 'fs1', 3)" class="i">p</span> <span class="k">-&gt;</span>
-  {<span onmouseout="hideTip(event, 'fs1', 4)" onmouseover="showTip(event, 'fs1', 4)" class="i">p</span> <span class="k">with</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">SonarQube</span> <span class="i">Begin</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
+  {<span class="i">p</span> <span class="k">with</span>
    <span class="i">Key</span> <span class="o">=</span> <span class="s">&quot;MyProject&quot;</span>
    <span class="i">Name</span> <span class="o">=</span> <span class="s">&quot;Main solution&quot;</span>
    <span class="i">Version</span> <span class="o">=</span> <span class="s">&quot;1.0.0&quot;</span> 
-   <span class="i">Config</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs2', 5)" onmouseover="showTip(event, 'fs2', 5)" class="i">Some</span>(<span class="s">&quot;myconfig.cfg&quot;</span>) }
+   <span class="i">Config</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">Some</span>(<span class="s">&quot;myconfig.cfg&quot;</span>) }
   )
 </code></pre></td>
 </tr>
@@ -158,8 +150,7 @@ This can be done with the new field Config:</p>
 </li>
 </ul>
 
-          <div class="tip" id="fs1">val p : &#39;a</div>
-<div class="tip" id="fs2">union case Option.Some: Value: &#39;T -&gt; Option&lt;&#39;T&gt;</div>
+          <div class="tip" id="fs1">union case Option.Some: Value: &#39;T -&gt; Option&lt;&#39;T&gt;</div>
           
         </div>
         <div class="span3">
