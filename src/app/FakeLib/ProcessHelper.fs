@@ -9,10 +9,17 @@ open System.IO
 open System.Threading
 open System.Text
 open System.Collections.Generic
+open System.Collections.Concurrent
 open System.ServiceProcess
 
 /// [omit]
-let startedProcesses = HashSet()
+type internal ConcurrentBag<'T> with
+    member internal this.Clear() = 
+        while not(this.IsEmpty) do
+            this.TryTake() |> ignore
+
+/// [omit]
+let startedProcesses = ConcurrentBag()
 
 /// [omit]
 let start (proc : Process) = 
