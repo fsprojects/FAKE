@@ -1,0 +1,66 @@
+{
+  "version": "__FAKE_CORE_PROCESS_VERSION__",
+  "buildOptions": {
+    "debugType": "portable",
+    "compilerName": "fsc",
+    "define": [
+      "DOTNETCORE"
+    ],
+    "emitEntryPoint": false,
+    "xmlDoc": true,
+    "compile": {
+      "includeFiles": [
+        "AssemblyInfo.fs",
+        "GuardedAwaitObservable.fs",
+        "Process.fs"
+      ]
+    }
+  },
+  "tools": {
+    "dotnet-compile-fsc": {
+      "version": "1.0.0-preview2-*",
+      "imports": "dnxcore50"
+    }
+  },
+  "dependencies": {
+    "FSharp.Core": "__FSHARP_CORE_VERSION__",
+    "Fake.Core.Environment": "__FAKE_CORE_ENVIRONMENT_VERSION__",
+    "Fake.IO.FileSystem": "__FAKE_IO_FILESYSTEM_VERSION__",
+    "Fake.Core.String": "__FAKE_CORE_STRING_VERSION__",
+    "Fake.Core.Tracing": "__FAKE_CORE_TRACING_VERSION__",
+    "Fake.Core.Context": "__FAKE_CORE_CONTEXT_VERSION__"
+  },
+  "frameworks": {
+    "net46": {
+      "dependencies": {
+        "FSharp.Compiler.Service": "3.0.0"
+      },
+      "frameworkAssemblies": {
+        "Microsoft.Build.Framework": "",
+        "mscorlib": "",
+        "System": "",
+        "System.Configuration": "",
+        "System.Runtime.Caching": "",
+        "System.ServiceProcess": "",
+        "System.Xml": "",
+        "System.Xml.Linq": "",
+        "System.Core": ""
+      }
+    },
+    "netstandard1.6": {
+      "buildOptions": {
+        "define": [
+          "NETSTANDARD"
+        ]
+      },
+      "imports": [
+        "portable-net45+win8",
+        "dnxcore50"
+      ],
+      "dependencies": {
+        "System.Diagnostics.Process": "4.1.0",
+        "NETStandard.Library": "1.6.0"
+      }
+    }
+  }
+}

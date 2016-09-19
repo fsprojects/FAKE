@@ -16,7 +16,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NET40</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NET40;NO_DOTNETCORE_BOOTSTRAP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>3</WarningLevel>
     <DocumentationFile>
@@ -30,7 +30,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\..\..\build\</OutputPath>
-    <DefineConstants>TRACE;NET40</DefineConstants>
+    <DefineConstants>TRACE;NET40;NO_DOTNETCORE_BOOTSTRAP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>3</WarningLevel>
     <DocumentationFile>..\..\..\build\FakeLib.XML</DocumentationFile>
@@ -41,6 +41,105 @@
       <Link>paket-files/YaafFSharpScripting.fs</Link>
     </Compile>
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="..\Fake.Core.Context\Context.fs">
+      <Link>Fake.Core.Context/Context.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Runtime\LegacyApiHelper.fs">
+      <Link>Fake.Runtime/LegacyApiHelper.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Runtime\Environment.fs">
+      <Link>Fake.Runtime/Environment.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Runtime\Path.fs">
+      <Link>Fake.Runtime/Path.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Runtime\String.fs">
+      <Link>Fake.Runtime/String.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Runtime\Trace.fs">
+      <Link>Fake.Runtime/Trace.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Runtime\ScriptRunner.fs">
+      <Link>Fake.Runtime/ScriptRunner.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Runtime\HashGeneration.fs">
+      <Link>Fake.Runtime/HashGeneration.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Runtime\CoreCache.fs">
+      <Link>Fake.Runtime/CoreCache.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Runtime\FakeRuntime.fs">
+      <Link>Fake.Runtime/FakeRuntime.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Core.Environment\Environment.fs">
+      <Link>Fake.Core.Environment/Environment.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Core.String\String.fs">
+      <Link>Fake.Core.String/String.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Core.BuildServer\BuildServer.fs">
+      <Link>Fake.Core.BuildServer/BuildServer.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Core.Tracing\TraceListener.fs">
+      <Link>Fake.Core.Tracing/TraceListener.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Core.Tracing\Trace.fs">
+      <Link>Fake.Core.Tracing/Trace.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Core.Targets\Targets.fs">
+      <Link>Fake.Core.Targets/Targets.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Core.Targets\AdditionalSyntax.fs">
+      <Link>Fake.Core.Targets/AdditionalSyntax.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.IO.FileSystem\Path.fs">
+      <Link>Fake.IO.FileSystem/Path.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.IO.FileSystem\FileSystem.fs">
+      <Link>Fake.IO.FileSystem/FileSystem.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.IO.FileSystem\FileUtils.fs">
+      <Link>Fake.IO.FileSystem/FileUtils.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.DotNet.AssemblyInfoFile\AssemblyInfoFile.fs">
+      <Link>Fake.DotNet.AssemblyInfoFile/AssemblyInfoFile.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Core.SemVer\SemVer.fs">
+      <Link>Fake.Core.SemVer/SemVer.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Core.ReleaseNotes\ReleaseNotes.fs">
+      <Link>Fake.Core.ReleaseNotes/ReleaseNotes.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Core.Globbing\Globbing.fs">
+      <Link>Fake.Core.Globbing/Globbing.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Core.Globbing\GlobbingFileSystem.fs">
+      <Link>Fake.Core.Globbing/GlobbingFileSystem.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.IO.Zip\Zip.fs">
+      <Link>Fake.IO.Zip/Zip.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Core.Process\GuardedAwaitObservable.fs">
+      <Link>Fake.Core.Process/GuardedAwaitObservable.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Core.Process\Process.fs">
+      <Link>Fake.Core.Process/Process.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.DotNet.MsBuild\MsBuildLogger.fs">
+      <Link>Fake.DotNet.MsBuild/MsBuildLogger.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.DotNet.MsBuild\MsBuild.fs">
+      <Link>Fake.DotNet.MsBuild/MsBuild.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Tools.ServiceControl\ServiceControl.fs">
+      <Link>Fake.Tools.ServiceControl/ServiceControl.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Tracing.NAntXml\NAntXmlTraceListener.fs">
+      <Link>Fake.Tracing.NAntXml/NAntXmlTraceListener.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.DotNet.Cli\Dotnet.fs">
+      <Link>Fake.DotNet.Cli/Dotnet.fs</Link>
+    </Compile>
     <Compile Include="UserInputHelper.fs" />
     <Compile Include="CSharpHelper.fs" />
     <Compile Include="EnvironmentHelper.fs" />
@@ -57,7 +156,6 @@
     <Compile Include="TeamCityRESTHelper.fs" />
     <Compile Include="TraceHelper.fs" />
     <Compile Include="ServiceControllerHelper.fs" />
-    <Compile Include="GuardedAwaitObservable.fs" />
     <Compile Include="ProcessHelper.fs" />
     <Compile Include="PsExecHelper.fs" />
     <Compile Include="NpmHelper.fs" />
@@ -138,12 +236,10 @@
     <Compile Include="PermissionsHelper.fs" />
     <Compile Include="SpecFlowHelper.fs" />
     <Compile Include="OctoTools.fs" />
-    <None Include="paket.references" />
     <Compile Include="SignToolHelper.fs" />
     <Compile Include="MageHelper.fs" />
     <Compile Include="SemVerHelper.fs" />
     <Compile Include="ReleaseNotesHelper.fs" />
-    <None Include="Targets.fsx" />
     <Compile Include="FixieHelper.fs" />
     <Compile Include="NuGet\NugetHelper.fs" />
     <Compile Include="NuGet\Update.fs" />
@@ -151,7 +247,6 @@
     <Compile Include="NuGet\NugetVersion.fs" />
     <Compile Include="TestFlightHelper.fs" />
     <Compile Include="DotNetCLIHelper.fs" />
-    <Compile Include="DotNetHelper.fs" />
     <Compile Include="DotCover.fs" />
     <Compile Include="PaketHelper.fs" />
     <Compile Include="PaketTemplateHelper.fs" />
@@ -174,7 +269,6 @@
     <Compile Include="AndroidPublisher.fs" />
     <Compile Include="ChangeWatcher.fs" />
     <Compile Include="CMake.fs" />
-    <None Include="app.config" />
     <Compile Include="Sql.DacPac.fs" />
     <Compile Include="RaygunHelper.fs" />
     <Compile Include="SquirrelHelper.fs" />
@@ -189,6 +283,9 @@
     <Compile Include="DocFxHelper.fs" />
     <Compile Include="GitVersionHelper.fs" />
     <Compile Include="Checksum.fs" />
+    <None Include="Targets.fsx" />
+    <None Include="app.config" />
+    <None Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
@@ -255,7 +352,7 @@
         </Reference>
       </ItemGroup>
     </When>
-    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v1.0' Or $(TargetFrameworkVersion) == 'v1.1' Or $(TargetFrameworkVersion) == 'v1.2' Or $(TargetFrameworkVersion) == 'v1.3' Or $(TargetFrameworkVersion) == 'v1.4' Or $(TargetFrameworkVersion) == 'v1.5')) Or ($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2'))">
+    <When Condition="($(TargetFrameworkIdentifier) == '.NETStandard' And ($(TargetFrameworkVersion) == 'v1.0' Or $(TargetFrameworkVersion) == 'v1.1' Or $(TargetFrameworkVersion) == 'v1.2' Or $(TargetFrameworkVersion) == 'v1.3' Or $(TargetFrameworkVersion) == 'v1.4' Or $(TargetFrameworkVersion) == 'v1.5')) Or ($(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2'))" >
       <ItemGroup>
         <Reference Include="FSharp.Core">
           <HintPath>..\..\..\packages\FSharp.Core\lib\net40\FSharp.Core.dll</HintPath>

@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# We use this to tell FAKE to not use the current latest version to build the netcore version, 
+# but instead use the current NON dotnetcore version
+export NO_DOTNETCORE_BOOTSTRAP=true
+
 if test "$OS" = "Windows_NT"
 then
   # use .Net

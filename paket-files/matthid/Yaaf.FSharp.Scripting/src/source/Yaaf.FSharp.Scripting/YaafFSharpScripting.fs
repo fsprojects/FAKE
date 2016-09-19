@@ -6,7 +6,11 @@ module internal Env =
   let inline isNull o = obj.ReferenceEquals(null, o)
   let isMono = try System.Type.GetType("Mono.Runtime") |> isNull |> not with _ -> false
   let (++) a b = System.IO.Path.Combine(a,b)
+#if NETSTANDARD1_5
+  let (=?) s1 s2 = System.String.Equals(s1, s2, System.StringComparison.OrdinalIgnoreCase)
+#else
   let (=?) s1 s2 = System.String.Equals(s1, s2, System.StringComparison.InvariantCultureIgnoreCase)
+#endif
   let (<>?) s1 s2 = not (s1 =? s2)
 
 #if NET40
@@ -18,13 +22,15 @@ module internal Env =
 open System
 open System.Diagnostics
 module Log =
-  let source = new TraceSource("Yaaf.FSharp.Scriping")
+  let source = new TraceSource("Yaaf.FSharp.Scripting")
 
+#if !NETSTANDARD1_5
   let LogConsole levels =
     let consoleListener = new ConsoleTraceListener();
     consoleListener.TraceOutputOptions <- TraceOptions.DateTime
     consoleListener.Filter <- new EventTypeFilter(levels)
     source.Listeners.Add consoleListener |> ignore
+#endif
 
   let traceEventf t f =
     Printf.kprintf (fun s -> source.TraceEvent(t, 0, s)) f
@@ -64,6 +70,9 @@ module internal CompilerServiceExtensions =
       let defaultFrameworkVersion = "4.5"
 #endif
 
+      let getLib dir nm =
+          dir ++ nm + ".dll"
+#if !NETSTANDARD1_5
       let referenceAssemblyDirectory frameworkVersion =
         let isWindows = System.Environment.OSVersion.Platform = System.PlatformID.Win32NT
         let baseDir =
@@ -79,8 +88,6 @@ module internal CompilerServiceExtensions =
         if Directory.Exists refDir then refDir
         else System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory()
 
-      let getLib dir nm =
-          dir ++ nm + ".dll"
       let referenceAssembly frameworkVersion = getLib (referenceAssemblyDirectory frameworkVersion)
       let fsCore frameworkVersion fsharpVersion =
         let isWindows = System.Environment.OSVersion.Platform = System.PlatformID.Win32NT
@@ -100,13 +107,19 @@ module internal CompilerServiceExtensions =
         let ass = typedefof<option<_>>.Assembly
         let name = ass.GetName()
         name.Version.ToString()
-
+#endif
       let fscoreResolveDirs libDirs =
-        [ yield System.AppDomain.CurrentDomain.BaseDirectory
+        [ 
+#if !NETSTANDARD1_5
+          yield System.AppDomain.CurrentDomain.BaseDirectory
           yield referenceAssemblyDirectory defaultFrameworkVersion
           yield System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory()
+#else
+          yield System.AppContext.BaseDirectory
+#endif
           yield! libDirs
-          yield Environment.CurrentDirectory
+          yield System.IO.Directory.GetCurrentDirectory()
+#if !NETSTANDARD1_5
           // Prefer the currently loaded version
           yield fsCore "4.0" loadedFsCoreVersion
           yield fsCore4400Dir
@@ -123,6 +136,7 @@ module internal CompilerServiceExtensions =
           if isMono then
             // See https://github.com/fsharp/FSharp.Compiler.Service/issues/317
             yield referenceAssemblyDirectory "4.0"
+#endif
         ]
 
       let tryCheckFsCore fscorePath =
@@ -150,14 +164,17 @@ module internal CompilerServiceExtensions =
         [ "FSharp.Core"
           "System.EnterpriseServices.Thunk" // See #4
           "System.EnterpriseServices.Wrapper" ] // See #4
+#if !NETSTANDARD1_5
       let getDefaultSystemReferences frameworkVersion =
         Directory.EnumerateFiles(referenceAssemblyDirectory frameworkVersion)
         |> Seq.filter (fun file -> Path.GetExtension file =? ".dll")
         |> Seq.map Path.GetFileNameWithoutExtension
         |> Seq.filter (fun f ->
             sysLibBlackList |> Seq.forall (fun backListed -> f <>? backListed))
-
+#endif
       let getCheckerArguments frameworkVersion defaultReferences (fsCoreLib: _ option) dllFiles libDirs otherFlags =
+          ignore frameworkVersion
+          ignore defaultReferences
           let base1 = Path.GetTempFileName()
           let dllName = Path.ChangeExtension(base1, ".dll")
           let xmlName = Path.ChangeExtension(base1, ".xml")
@@ -171,9 +188,11 @@ module internal CompilerServiceExtensions =
                //yield "--optimize-"
                yield "--nooptimizationdata"
                yield "--noframework"
+#if !NETSTANDARD1_5
                yield sprintf "-I:%s" (referenceAssemblyDirectory frameworkVersion)
                for ref in defaultReferences do
                  yield sprintf "-r:%s" (referenceAssembly frameworkVersion ref)
+#endif
                if fsCoreLib.IsSome then
                  yield sprintf "-r:%s" fsCoreLib.Value
                yield "--out:" + dllName
@@ -193,6 +212,7 @@ module internal CompilerServiceExtensions =
           projFileName, args
 
       let findAssemblyVersion (assembly:Assembly) =
+#if !NETSTANDARD1_5
           let customAttributes = assembly.GetCustomAttributesData()
           let targetFramework =
             customAttributes
@@ -216,6 +236,10 @@ module internal CompilerServiceExtensions =
               let version = versionString.Substring ("Version=v".Length)
               Some (framework, version)
           | None -> None
+#else
+          ignore assembly
+          None
+#endif
 
       let getProjectReferences frameworkVersion otherFlags libDirs dllFiles =
           let otherFlags = defaultArg otherFlags Seq.empty
@@ -237,12 +261,16 @@ module internal CompilerServiceExtensions =
             if not hasFsCoreLib then
               Some (findFSCore dllFiles libDirs)
             else None
-
+            
+#if !NETSTANDARD1_5
           let defaultReferences =
             getDefaultSystemReferences frameworkVersion
             |> Seq.filter (not << hasAssembly)
 
           let projFileName, args = getCheckerArguments frameworkVersion defaultReferences (fsCoreLib: _ option) dllFiles libDirs otherFlags
+#else
+          let projFileName, args = getCheckerArguments frameworkVersion ignore (fsCoreLib: _ option) dllFiles libDirs otherFlags
+#endif
           Log.verbf "Checker Arguments: %O" (Log.formatArgs args)
 
           let options = checker.GetProjectOptionsFromCommandLineArgs(projFileName, args)
@@ -353,7 +381,11 @@ module internal CompilerServiceExtensions =
           t.Name
       and getFSharpTypeName (t:System.Type) =
           let optFsharpName =
+#if !NETSTANDARD1_5
               match FSharpAssembly.FromAssembly t.Assembly with
+#else
+              match FSharpAssembly.FromAssembly (t.GetTypeInfo().Assembly) with
+#endif
               | Some fsAssembly ->
                   match fsAssembly.FindType t with
                   | Some entity -> Some entity.DisplayName
@@ -370,7 +402,12 @@ module internal CompilerServiceExtensions =
       member x.FSharpFullName = x.Namespace + "." + x.FSharpName
 
   module internal TypeParamHelper =
+#if !NETSTANDARD1_5
       let rec getFSharpTypeParameterList (t:System.Type) =
+#else
+      let rec getFSharpTypeParameterList (tk:System.Type) =
+          let t = tk.GetTypeInfo()
+#endif
           let builder = new System.Text.StringBuilder()
           if t.IsGenericType then
               let args = t.GetGenericArguments()
@@ -398,9 +435,136 @@ type InteractionResult =
 type internal InteractionResult =
 #endif
   { Output : OutputData; Error : OutputData }
+  
+#if !NETSTANDARD1_5
+// Thank you for http://www.blogs.sigristsoftware.com/marcsigrist/post/F-for-C-developers-Creating-escaped-concatsplit-functions-in-F.aspx
+module internal StringHelpers =
+  [<RequireQualifiedAccess>]
+  module Assert = 
+      let notNull argName arg = if arg = null then nullArg argName
+    
+      let notNullOrEmpty argName arg = 
+          notNull argName arg
+          if Seq.isEmpty arg then invalidArg argName "Value cannot be empty."
+  
+  type private Token = 
+      | Esc of Count:int
+      | Sep
+      | Val of Content:string
+
+  [<RequireQualifiedAccess>]
+  module private Tokenizer =
+    /// Returns a function who can convert a given source string to a token stream.
+    let create esc sep = 
+      let sepName = "sep"
+      let sepLen = String.length sep
+    
+      // Validate parameters
+      Assert.notNullOrEmpty sepName sep
+      if sep.[0] = esc then invalidArg sepName "Separator cannot start with escape char."
+      if sepLen > 1 then
+          let iMax = sepLen - 1
+          for i in 0 .. iMax / 2 do
+              if sep.[0 .. i] = sep.[sepLen - i - 1 .. iMax] then
+                  invalidArg sepName "Separator cannot have same beginning and ending."
+      
+      // Return the tokenizer function
+      fun source -> 
+          match String.length source - 1 with
+          | -1 -> Val String.Empty |> Seq.singleton
+          | iMax -> 
+            let (|Esc|_|) = 
+                let rec aux acc i = 
+                    if i <= iMax && source.[i] = esc then aux (acc + 1) (i + 1) else acc
+                aux 0 >> function 0 -> None | count -> Some count
+          
+            let (|Sep|_|) i = 
+                if i <= iMax - sepLen + 1 
+                   && String.CompareOrdinal(source, i, sep, 0, sepLen) = 0 then Some()
+                else None
+          
+            let rec read valLen i = 
+              seq { let wrapVal() = 
+                        if valLen > 0 
+                        then source.Substring(i - valLen, valLen) |> Val |> Seq.singleton
+                        else Seq.empty
+                    if i <= iMax then 
+                        match i with
+                        | Esc count -> 
+                            yield! wrapVal(); yield Esc count; yield! read 0 (i + count)
+                        | Sep -> yield! wrapVal(); yield Sep; yield! read 0 (i + sepLen)
+                        | _ -> yield! read (valLen + 1) (i + 1)
+                    else yield! wrapVal() }
+            read 0 0
+  open System.Text
+  [<RequireQualifiedAccess>]
+  module String = 
+    /// Returns a new string by connecting the given strings with the given separator.
+    let concatEscape (esc:char) sep (strings:seq<_>) = 
+      Assert.notNull "strings" strings
+      let sb = StringBuilder()
+      
+      let appendTokens areLast ts = 
+          let appendEsc count = sb.Append(esc, count) |> ignore
+          let appendVal (v: string) = sb.Append v |> ignore
+          let appendSep() = appendVal sep
+          
+          let rec aux = function
+              | [] -> ()
+              | Esc count :: [] -> appendEsc <| if areLast then count else count * 2
+              | Esc count :: (Sep :: _ as ts) -> appendEsc (count * 2); aux ts 
+              | Esc count :: ts -> appendEsc count; aux ts
+              | Sep :: ts -> appendEsc 1; appendSep(); aux ts
+              | Val v :: ts -> appendVal v; aux ts
+          
+          aux ts
+          if not areLast then appendSep()
+      
+      strings
+      |> Seq.map (Tokenizer.create esc sep >> List.ofSeq)
+      |> Seq.fold (fun ts1 ts2 -> Option.iter (appendTokens false) ts1; Some ts2) None
+      |> Option.iter (appendTokens true)
+      
+      sb.ToString()
+      
+    /// Reproduces the original substrings from a string created with concatEscape.
+    let splitUnescape esc sep string = 
+        Assert.notNull "string" string
+        let emptyVal = Val String.Empty
+        let sepVal = Val sep
+        let flipAppend x1 x2 = Seq.append x2 x1
+        
+        // Produce token stream
+        string
+        |> Tokenizer.create esc sep 
+        
+        // Convert token stream to StringBuilder stream
+        |> flipAppend [emptyVal]
+        |> Seq.scan 
+          (fun (sb:StringBuilder, t1) t2 ->
+              match t1, t2 with
+              | Esc count, Sep when count % 2 = 1 -> sb.Append(esc, count / 2), sepVal
+              | Esc count, Sep -> sb.Append(esc, count / 2), Sep
+              | Esc count, _ -> sb.Append(esc, count), t2
+              | Sep, _ -> StringBuilder(), t2
+              | Val v, _ -> sb.Append v, t2)
+          (StringBuilder(), emptyVal)
+        |> Seq.map fst
+        
+        // Of each series of repeated StringBuilder references, keep only the last
+        // reference (which points to the StringBuilder's completed state). 
+        // Convert the remaining StringBuilder references to strings.
+        |> flipAppend [null]
+        |> Seq.pairwise
+        |> Seq.filter (fun (sb1, sb2) -> sb1 <> sb2)
+        |> Seq.map (fst >> sprintf "%O")
+open StringHelpers
+#endif
 
 /// This exception indicates that an exception happened while compiling or executing given F# code.
+#if !NETSTANDARD1_5
 [<System.Serializable>]
+#endif
 #if YAAF_FSHARP_SCRIPTING_PUBLIC
 type FsiEvaluationException =
 #else
@@ -409,13 +573,21 @@ type internal FsiEvaluationException =
     inherit System.Exception
     val private result : InteractionResult
     val private input : string
-    new (msg:string, input:string, result: InteractionResult, inner:System.Exception) = {
+    val private arguments : string list option
+    new (msg:string, input:string, args : string list option, result: InteractionResult, inner:System.Exception) = {
       inherit System.Exception(msg, inner)
       input = input
-      result = result }
+      result = result
+      arguments = args }
+#if !NETSTANDARD1_5
     new (info:System.Runtime.Serialization.SerializationInfo, context:System.Runtime.Serialization.StreamingContext) = {
         inherit System.Exception(info, context)
         input = info.GetString("Input")
+        // TODO: do this properly?
+        arguments =
+          match info.GetString("FSI_Arguments") with
+          | null -> None
+          | v -> v |> String.splitUnescape '\\' ";" |> Seq.toList |> Some
         result =
           { Output =
               { FsiOutput = info.GetString("Result_Output_FsiOutput")
@@ -434,16 +606,30 @@ type internal FsiEvaluationException =
       info.AddValue("Result_Error_FsiOutput", x.result.Error.FsiOutput)
       info.AddValue("Result_Error_ScriptOutput", x.result.Error.ScriptOutput)
       info.AddValue("Result_Error_Merged", x.result.Error.Merged)
+      info.AddValue("FSI_Arguments", 
+        match x.arguments with
+        | None -> null
+        | Some args -> args |> String.concatEscape '\\' ";")
+#endif
     member x.Result with get () = x.result
     member x.Input with get () = x.input
     override x.ToString () =
       let nl (s:string) = s.Replace("\n", "\n\t")
-      sprintf
-        "FsiEvaluationException:\n\nError: %s\n\nOutput: %s\n\nInput: %s\n\nException: %s"
-        (nl x.Result.Error.Merged) (nl x.Result.Output.Merged) (nl x.Input) (base.ToString())
+      match x.arguments with
+      | None ->
+        sprintf
+          "FsiEvaluationException:\n\nError: %s\n\nOutput: %s\n\nInput: %s\n\nException: %s"
+          (nl x.Result.Error.Merged) (nl x.Result.Output.Merged) (nl x.Input) (base.ToString())
+      | Some args ->
+        sprintf
+          "FsiEvaluationException:\n\nError: %s\n\nOutput: %s\n\nInput: %s\n\Arguments: %s\n\nException: %s"
+          (nl x.Result.Error.Merged) (nl x.Result.Output.Merged) (nl x.Input) (Log.formatArgs args) (base.ToString())
+        
 
 /// Exception for invalid expression types
+#if !NETSTANDARD1_5
 [<System.Serializable>]
+#endif
 #if YAAF_FSHARP_SCRIPTING_PUBLIC
 type FsiExpressionTypeException =
 #else
@@ -453,14 +639,16 @@ type internal FsiExpressionTypeException =
     val private expected : System.Type
     inherit FsiEvaluationException
     new (msg:string, input:string, result: InteractionResult, expect : System.Type, ?value : obj) = {
-      inherit FsiEvaluationException(msg, input, result, null)
+      inherit FsiEvaluationException(msg, input, None, result, null)
       expected = expect
       value = value }
+#if !NETSTANDARD1_5
     new (info:System.Runtime.Serialization.SerializationInfo, context:System.Runtime.Serialization.StreamingContext) = {
       inherit FsiEvaluationException(info, context)
       expected = null
       value = None
     }
+#endif
     member x.Value with get () = x.value
     member x.ExpectedType with get () = x.expected
 
@@ -499,6 +687,17 @@ module internal Extensions =
       member x.EvalInteraction s = x.EvalInteractionWithOutput s |> ignore
       member x.TryEvalExpression s = x.TryEvalExpressionWithOutput s |> snd
       member x.EvalScript s = x.EvalScriptWithOutput s |> ignore
+      /// See https://github.com/Microsoft/visualfsharp/issues/1392
+      member x.EvalScriptAsInteractionWithOutput s =
+          // See https://github.com/fsharp/FSharp.Compiler.Service/issues/621
+          let scriptContents = 
+            sprintf "#line 1 @\"%s\"\n" s + 
+            System.IO.File.ReadAllText s + 
+            "\n()"
+          x.EvalInteraction scriptContents
+      /// See https://github.com/Microsoft/visualfsharp/issues/1392
+      member x.EvalScriptAsInteraction s =
+          x.EvalScriptAsInteractionWithOutput s |> ignore
 
       member x.EvalExpressionWithOutput<'a> text =
         match x.TryEvalExpressionWithOutput text with
@@ -637,6 +836,7 @@ type internal DebugMode =
 #endif
   | Full
   | PdbOnly
+  | Portable
   | NoDebug
 
 #if YAAF_FSHARP_SCRIPTING_PUBLIC
@@ -714,6 +914,7 @@ type internal FsiOptions =
       WarnAsErrorList = []
       ScriptArgs  = [] }
   static member Default =
+#if !NETSTANDARD1_5
     // find a FSharp.Core.dll with optdata and sigdata
     let runtimeDir = System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory()
     let includes =
@@ -724,6 +925,9 @@ type internal FsiOptions =
         // See also https://github.com/fsharp/fsharp/pull/389, https://github.com/fsharp/fsharp/pull/388
         [ runtimeDir; System.IO.Path.Combine (monoDir, "4.0") ]
       else [ runtimeDir ]
+#else
+    let includes = []
+#endif
     let fsCore = FSharpAssemblyHelper.findFSCore [] includes
     Log.verbf "Using FSharp.Core: %s" fsCore
     { FsiOptions.Empty with
@@ -748,6 +952,9 @@ type internal FsiOptions =
       | _, StartsWith "--debug:" "pdbonly"
       | _, StartsWith "-g:" "pdbonly" ->
         { parsed with Debug = Some DebugMode.PdbOnly }, state
+      | _, StartsWith "--debug:" "portable"
+      | _, StartsWith "-g:" "portable" ->
+        { parsed with Debug = Some DebugMode.Portable }, state
       | _, StartsWith "--debug:" "full"
       | _, StartsWith "-g:" "full"
       | _, FsiBoolArg "--debug" true
@@ -864,6 +1071,7 @@ type internal FsiOptions =
       yield! maybeArgMap x.Debug (function
         | Full -> "--debug:full"
         | PdbOnly -> "--debug:pdbonly"
+        | Portable -> "--debug:portable"
         | NoDebug -> "--debug-")
       yield! x.Defines
              |> Seq.map (sprintf "--define:%s")
@@ -994,7 +1202,7 @@ module internal Helper =
     let all = [ globalFsiOut, fsiOut; globalStdOut, stdOut; globalMergedOut, mergedOut ]
     member __.FsiOutWriter = fsiOutWriter
     member __.StdOutWriter = stdOutWriter
-    member __.SaveOutput () =
+    member __.GetOutputAndResetLocal () =
       let [ fsi; std; merged ] =
         all
         |> List.map (fun (global', local) ->
@@ -1002,11 +1210,6 @@ module internal Helper =
           if saveGlobal then global'.Append(data) |> ignore
           local.Clear() |> ignore
           data)
-      { FsiOutput = fsi; ScriptOutput = std; Merged = merged}
-    member __.GetOut () =
-      let [ fsi; std; merged ] =
-        all
-        |> List.map (fun (global', local) -> if saveGlobal then global'.ToString() else local.ToString() )
       { FsiOutput = fsi; ScriptOutput = std; Merged = merged}
 
   let consoleCapture out err f =
@@ -1033,12 +1236,12 @@ module internal Helper =
            yield! options.AsArgs |]
       Log.verbf "Starting nested fsi.exe with args: %s" (Log.formatArgs args)
       let saveOutput () =
-        let out = out.SaveOutput()
-        let err = err.SaveOutput()
+        let out = out.GetOutputAndResetLocal()
+        let err = err.GetOutputAndResetLocal()
         { Output = out; Error = err }
       let getMessages () =
-        let out = out.GetOut()
-        let err = err.GetOut()
+        let out = out.GetOutputAndResetLocal()
+        let err = err.GetOutputAndResetLocal()
         let inp = sbInput.ToString()
         err, out, inp
       let redirectOut f =
@@ -1064,6 +1267,7 @@ module internal Helper =
             new FsiEvaluationException(
               "Error while creating a fsi session.",
               sprintf "Fsi Arguments: %s" (Log.formatArgs args),
+              args |> Array.toList |> Some,
               { Output = out; Error = err },
               e)
 
@@ -1078,6 +1282,7 @@ module internal Helper =
             new FsiEvaluationException(
               "Error while compiling or executing fsharp snippet.",
               (if reportGlobal then inp else text),
+              args |> Array.toList |> Some,
               { Output = out; Error = err },
               e)
 
@@ -1089,7 +1294,8 @@ module internal Helper =
       let saveScript f =
           save_ (fun path ->
               if reportGlobal then
-                sbInput.AppendLine(sprintf "#script %s" path) |> ignore
+                // That's how its implemented: https://github.com/fsharp/FSharp.Compiler.Service/blob/c1ca06144d8194000cf6b86f5f26bdc433ccaa7d/src/fsharp/fsi/fsi.fs#L2074
+                sbInput.AppendLine(sprintf "#load @\"%s\" " path) |> ignore
               f path)
 
       let evalInteraction = save fsiSession.EvalInteraction
@@ -1113,6 +1319,7 @@ module internal Helper =
       // We just compile ourself a forwarder to fix that.
       //session.Reference (typeof<Microsoft.FSharp.Compiler.Interactive.Shell.Settings.InteractiveSettings>.Assembly.Location)
       //session.Let "fsi" fsi
+#if !NETSTANDARD1_5 // Currently this is broken on netcore
       session.Let "__rawfsi" (box fsi)
       session.EvalInteraction """
 module __ReflectHelper =
@@ -1203,6 +1410,7 @@ module __ReflectHelper =
     member self.AddPrintTransformer(printer : 'T -> obj) =
       callInstanceMethod1 fsiObj [|typeof<'T>|] "AddPrintTransformer" printer
 let fsi = __ReflectHelper.ForwardingInteractiveSettings(__rawfsi)"""
+#endif
       session
 
 open System.IO
