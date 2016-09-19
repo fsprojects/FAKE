@@ -1,10 +1,9 @@
-#### 4.39.2 - 19.09.2016
-* BUGFIX: NuGetVersion: adds application/xml to request accept header - https://github.com/fsharp/FAKE/pull/1383
-* Allow to pass parameter to sonarqube end - https://github.com/fsharp/FAKE/pull/1381
-
-#### 4.39.1 - 05.09.2016
-* USABILITY: Check for npm on path variable in NpmHelper on Windows - https://github.com/fsharp/FAKE/pull/1371
+#### 4.40.0 - 19.09.2016
+* Allow to pass parameter to SonarQube end - https://github.com/fsharp/FAKE/pull/1381
 * New helper: Search for files with a given pattern also in subdirectories - https://github.com/fsharp/FAKE/pull/1354
+* BUGFIX: NuGetVersion: adds application/xml to request accept header - https://github.com/fsharp/FAKE/pull/1383
+* BUGFIX: Call 'traceEndTask' in the finally block of a try-finally, so that it is always closed, even if the task throws an exception. https://github.com/fsharp/FAKE/pull/1379
+* USABILITY: Check for npm on path variable in NpmHelper on Windows - https://github.com/fsharp/FAKE/pull/1371
 
 #### 4.39.0 - 25.08.2016
 * Added Checksum[64][Type] in ChocoHelper - https://github.com/fsharp/FAKE/pull/1367
