@@ -393,7 +393,7 @@ let rec copyRecursive2 (dir : DirectoryInfo) (outputDir : DirectoryInfo) overwri
 
     (dir
      |> filesInDir
-     |> Seq.filter (fun f -> filter dir outputDir f)
+     |> Seq.filter (fun f -> filter outputDir f)
      |> Seq.map (fun f -> 
             let newFileName = outputDir.FullName @@ f.Name
             f.CopyTo(newFileName, overwrite) |> ignore
@@ -402,7 +402,7 @@ let rec copyRecursive2 (dir : DirectoryInfo) (outputDir : DirectoryInfo) overwri
 
 /// Copies the file structure recursively.
 let rec copyRecursive (dir : DirectoryInfo) (outputDir : DirectoryInfo) overwrite = 
-    copyRecursive2 dir outputDir overwrite (fun _ _ _ -> true)
+    copyRecursive2 dir outputDir overwrite (fun _ _ -> true)
 
 /// Copies the file structure recursively.
 let CopyRecursive dir outputDir = copyRecursive (directoryInfo dir) (directoryInfo outputDir)
@@ -413,7 +413,7 @@ type CopyRecursiveMethod =
 | Skip
 | IncludePattern of string
 | ExcludePattern of string
-| Filter of (DirectoryInfo -> DirectoryInfo -> FileInfo -> bool)
+| Filter of (DirectoryInfo -> FileInfo -> bool)
 
 open Fake.Globbing
 /// Copies the file structure recursively.
@@ -429,13 +429,13 @@ let CopyRecursive2 method dir outputDir =
     match method with
     | Overwrite -> copyRecursive dirInfo outputDirInfo true
     | NoOverwrite -> copyRecursive dirInfo outputDirInfo false
-    | Skip -> cr2 <| fun _ d f -> d.FullName @@ f.Name |> File.Exists |> not
+    | Skip -> cr2 <| fun d f -> d.FullName @@ f.Name |> File.Exists |> not
     | IncludePattern(pattern) ->
         let regex = globRegexCache.GetOrAdd(pattern, compileGlobToRegex)
-        cr2 <| fun _ d f -> d.FullName @@ f.Name |> regex.IsMatch
+        cr2 <| fun d f -> d.FullName @@ f.Name |> regex.IsMatch
     | ExcludePattern(pattern) ->
         let regex = globRegexCache.GetOrAdd(pattern, compileGlobToRegex)
-        cr2 <| fun _ d f -> d.FullName @@ f.Name |> regex.IsMatch |> not
+        cr2 <| fun d f -> d.FullName @@ f.Name |> regex.IsMatch |> not
     | Filter(f) -> cr2 f
 
 /// Moves a single file to the target and overwrites the existing file.
