@@ -65,6 +65,18 @@
     <None Include="paket.references" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo">
+      <HintPath>..\..\..\lib\SQLServer\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Management.Sdk.Sfc">
+      <HintPath>..\..\..\lib\SQLServer\Microsoft.SqlServer.Management.Sdk.Sfc.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Smo">
+      <HintPath>..\..\..\lib\SQLServer\Microsoft.SqlServer.Smo.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -149,41 +161,4 @@
       </ItemGroup>
     </When>
   </Choose>
-  <ItemGroup>
-    <Reference Include="Microsoft.SqlServer.ConnectionInfo">
-      <HintPath>..\..\..\packages\Microsoft.SQLServer.SMO\lib\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
-      <Private>True</Private>
-      <Paket>True</Paket>
-    </Reference>
-    <Reference Include="Microsoft.SqlServer.ConnectionInfoExtended">
-      <HintPath>..\..\..\packages\Microsoft.SQLServer.SMO\lib\Microsoft.SqlServer.ConnectionInfoExtended.dll</HintPath>
-      <Private>True</Private>
-      <Paket>True</Paket>
-    </Reference>
-    <Reference Include="Microsoft.SqlServer.Management.Sdk.Sfc">
-      <HintPath>..\..\..\packages\Microsoft.SQLServer.SMO\lib\Microsoft.SqlServer.Management.Sdk.Sfc.dll</HintPath>
-      <Private>True</Private>
-      <Paket>True</Paket>
-    </Reference>
-    <Reference Include="Microsoft.SqlServer.Smo">
-      <HintPath>..\..\..\packages\Microsoft.SQLServer.SMO\lib\Microsoft.SqlServer.Smo.dll</HintPath>
-      <Private>True</Private>
-      <Paket>True</Paket>
-    </Reference>
-    <Reference Include="Microsoft.SqlServer.SmoExtended">
-      <HintPath>..\..\..\packages\Microsoft.SQLServer.SMO\lib\Microsoft.SqlServer.SmoExtended.dll</HintPath>
-      <Private>True</Private>
-      <Paket>True</Paket>
-    </Reference>
-    <Reference Include="Microsoft.SqlServer.SqlClrProvider">
-      <HintPath>..\..\..\packages\Microsoft.SQLServer.SMO\lib\Microsoft.SqlServer.SqlClrProvider.dll</HintPath>
-      <Private>True</Private>
-      <Paket>True</Paket>
-    </Reference>
-    <Reference Include="Microsoft.SqlServer.SqlEnum">
-      <HintPath>..\..\..\packages\Microsoft.SQLServer.SMO\lib\Microsoft.SqlServer.SqlEnum.dll</HintPath>
-      <Private>True</Private>
-      <Paket>True</Paket>
-    </Reference>
-  </ItemGroup>
 </Project>

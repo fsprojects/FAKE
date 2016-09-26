@@ -1,3 +1,6 @@
+#### 4.40.1 - 26.09.2016
+* REVERT: Use nuget instead of referenced dlls. Fix SQL Server version issue - https://github.com/fsharp/FAKE/pull/1377
+
 #### 4.40.0 - 19.09.2016
 * Allow to pass parameter to SonarQube end - https://github.com/fsharp/FAKE/pull/1381
 * New helper: Search for files with a given pattern also in subdirectories - https://github.com/fsharp/FAKE/pull/1354

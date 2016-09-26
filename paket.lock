@@ -43,7 +43,6 @@ NUGET
     Microsoft.Net.Http (2.2.29) - framework: net10, net11, net20, net30, net35, net40, net40
       Microsoft.Bcl (>= 1.1.10)
       Microsoft.Bcl.Build (>= 1.0.14)
-    Microsoft.SQLServer.SMO (12.0.2000.8)
     Microsoft.Web.Administration (7.0)
     Microsoft.Web.Infrastructure (1.0)
     Microsoft.Web.Xdt (2.1.1)

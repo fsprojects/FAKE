@@ -15,7 +15,6 @@ nuget Nancy.Authentication.Forms
 nuget Nancy.Hosting.Aspnet
 nuget Nancy.Viewengines.Razor
 nuget SSH.NET
-nuget Microsoft.SQLServer.SMO
 nuget Microsoft.Web.Administration
 nuget Mono.Web.Xdt
 nuget Mono.Cecil
