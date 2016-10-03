@@ -54,16 +54,24 @@ type AssemblyInfoFileConfig
         static member Default = AssemblyInfoFileConfig(true)
 
 /// Represents AssemblyInfo attributes
-type Attribute(name, value, inNamespace) =
+type Attribute(name, value, inNamespace, staticPropName, staticPropType, staticPropValue) =
     member this.Name = name
     member this.Value = value
     member this.Namespace = inNamespace
+    member this.StaticPropertyName = staticPropName
+    member this.StaticPropertyType = staticPropType
+    member this.StaticPropertyValue = staticPropValue
+
+    new(name, value, inNamespace, staticPropType) =
+        Attribute(name, value, inNamespace, name, staticPropType, value)
 
     /// Creates a simple attribute with string values. Used as base for other attributes
-    static member StringAttribute(name, value, inNamespace) = Attribute(name, sprintf "\"%s\"" value, inNamespace)
+    static member StringAttribute(name, value, inNamespace, ?staticName, ?staticValue) =
+        let quotedValue = sprintf "\"%s\"" value
+        Attribute(name, quotedValue, inNamespace, defaultArg staticName name, typeof<string>.FullName, defaultArg staticValue quotedValue)
 
     /// Creates a simple attribute with boolean values. Used as base for other attributes
-    static member BoolAttribute(name, value, inNamespace) = Attribute(name, sprintf "%b" value, inNamespace)
+    static member BoolAttribute(name, value, inNamespace) = Attribute(name, sprintf "%b" value, inNamespace, typeof<bool>.FullName)
 
     /// Creates an attribute which holds the company information
     static member Company(value) = Attribute.StringAttribute("AssemblyCompany", value, "System.Reflection")
