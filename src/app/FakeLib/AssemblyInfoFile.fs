@@ -178,12 +178,13 @@ let CreateCSharpAssemblyInfoWithConfig outputFileName attributes (config : Assem
 
     let sourceLines =
         if generateClass then
+            let consts =
+                attributes
+                |> Seq.map (fun x -> sprintf "        internal const %s %s = %s;" x.StaticPropertyType x.StaticPropertyName x.StaticPropertyValue)
+                |> Seq.toList
             [ sprintf "namespace %s {" useNamespace
-              "    internal static class AssemblyVersionInformation {"
-              sprintf "        internal const string Version = %s;" (getAssemblyVersionInfo attributes)
-              sprintf "        internal const string InformationalVersion = %s;" (getAssemblyInformationalVersion attributes)
-              "    }"
-              "}" ]
+              "    internal static class AssemblyVersionInformation {" ]
+            @ consts @ [ "    }"; "}" ]
         else []
 
     attributeLines @ sourceLines
@@ -210,8 +211,9 @@ let CreateFSharpAssemblyInfoWithConfig outputFileName attributes (config : Assem
 
             if generateClass then
                 yield "module internal AssemblyVersionInformation ="
-                yield sprintf "    let [<Literal>] Version = %s" (getAssemblyVersionInfo attributes)
-                yield sprintf "    let [<Literal>] InformationalVersion = %s" (getAssemblyInformationalVersion attributes)
+                yield!
+                    attributes
+                    |> Seq.map (fun x -> sprintf "    let [<Literal>] %s = %s" x.StaticPropertyName x.StaticPropertyValue)
         ]
 
     sourceLines |> writeToFile outputFileName
@@ -232,10 +234,11 @@ let CreateVisualBasicAssemblyInfoWithConfig outputFileName attributes (config : 
 
     let sourceLines =
         if generateClass then
-            [ "Friend NotInheritable Class AssemblyVersionInformation"
-              sprintf "    Friend Const Version As String = %s" (getAssemblyVersionInfo attributes)
-              sprintf "    Friend Const InformationalVersion As String = %s" (getAssemblyInformationalVersion attributes)
-              "End Class" ]
+            let consts =
+                attributes
+                |> Seq.map (fun x -> sprintf "    Friend Const %s As %s = %s" x.StaticPropertyName x.StaticPropertyType x.StaticPropertyValue)
+                |> Seq.toList
+            "Friend NotInheritable Class AssemblyVersionInformation"::consts @ [ "End Class" ]
         else []
 
     attributeLines @ sourceLines
@@ -305,9 +308,12 @@ let GetAttributes assemblyInfoFile =
 
     Regex.Matches(text, regex, combinedRegexOptions)
         |> Seq.cast<Match>
-        |> Seq.map (fun m -> Attribute(m.Groups.["name"].Value |> removeAtEnd "Attribute",
-                                       m.Groups.["value"].Value.Trim([|'"'|]),
-                                       ""))
+        |> Seq.map
+            (fun m ->
+                let v = m.Groups.["value"].Value
+                let t = if v = "true" || v = "false" then typeof<bool>.FullName else typeof<string>.FullName
+                Attribute(m.Groups.["name"].Value |> removeAtEnd "Attribute", v.Trim([|'"'|]), "", t)
+            )
 
 /// Read a single attribute from an AssemblyInfo file.
 /// ## Parameters
