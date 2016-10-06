@@ -385,6 +385,91 @@ let Pack (setPackParams: PackParams -> PackParams) projects =
     finally
         traceEndTask "DotNet.Pack" ""
 
+/// DotNet publish parameters
+type PublishParams = {
+    /// ToolPath - usually just "dotnet"
+    ToolPath: string
+
+    /// Working directory (optional).
+    WorkingDir: string
+
+    /// A timeout for the command.
+    TimeOut: TimeSpan
+    
+    /// The build configuration.
+    Configuration : string
+
+    /// Allows to publish to a specific framework
+    Framework : string
+
+    /// Allows to test a specific runtime
+    Runtime : string
+
+    /// Optional version suffix.
+    VersionSuffix: string
+
+    /// Optional outputh path
+    Output : string
+
+    /// Additional Args
+    AdditionalArgs : string list
+}
+
+let private DefaultPublishParams : PublishParams = {
+    ToolPath = commandName
+    WorkingDir = Environment.CurrentDirectory
+    Configuration = "Release"
+    TimeOut = TimeSpan.FromMinutes 30.
+    Framework = ""
+    Runtime = ""
+    VersionSuffix = ""
+    Output = ""
+    AdditionalArgs = []
+}
+
+/// Runs the dotnet "publish" command.
+/// ## Parameters
+///
+///  - `setPublishParams` - Function used to overwrite the publish default parameters.
+///
+/// ## Sample
+///
+///     !! "src/test/project.json"
+///     |> DotNetCli.Publish
+///         (fun p -> 
+///              { p with 
+///                   Configuration = "Release" })
+let Publish (setPublishParams: PublishParams -> PublishParams) projects =
+    traceStartTask "DotNet.Publish" ""
+
+    try
+        for project in projects do
+            let parameters = setPublishParams DefaultPublishParams
+            let args =
+                new StringBuilder()
+                |> append "publish"
+                |> append project                
+                |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Configuration) (sprintf "--configuration %s"  parameters.Configuration)
+                |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Framework) (sprintf "--framework %s"  parameters.Framework)
+                |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Runtime) (sprintf "--runtime %s"  parameters.Runtime)
+                |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Output) (sprintf "--output %s"  parameters.Output)     
+                |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.VersionSuffix) (sprintf "--version-suffix %s"  parameters.VersionSuffix)           
+                |> fun sb ->
+                    parameters.AdditionalArgs
+                    |> List.fold (fun sb arg -> appendWithoutQuotes arg sb) sb
+                |> toText
+
+            if 0 <> ExecProcess (fun info ->  
+                info.FileName <- parameters.ToolPath
+                info.WorkingDirectory <- parameters.WorkingDir
+                info.Arguments <- args) parameters.TimeOut
+            then
+                failwithf "Test Publish on %s" args
+    finally
+        traceEndTask "DotNet.Publish" ""
+
+
+
 /// Sets version in project.json
 let SetVersionInProjectJson (version:string) fileName = 
     traceStartTask "DotNet.SetVersion" fileName
