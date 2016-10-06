@@ -76,6 +76,14 @@
         </tr>
         <tr>
           <td class="type-name">
+            <a href="fake-dotnetcli-publishparams.html">PublishParams</a>
+          </td>
+          <td class="xmldoc"><p>DotNet publish parameters</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
             <a href="fake-dotnetcli-restoreparams.html">RestoreParams</a>
           </td>
           <td class="xmldoc"><p>DotNet restore parameters</p>
@@ -271,9 +279,48 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '196', 196)" onmouseover="showTip(event, '196', 196)">
-            Restore setRestoreParams
+            Publish setPublishParams projects
           </code>
           <div class="tip" id="196">
+            <strong>Signature:</strong> setPublishParams:(PublishParams -&gt; PublishParams) -&gt; projects:seq&lt;string&gt; -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotNetCLIHelper.fs#L442-442" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Runs the dotnet "publish" command.</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setPublishParams</code> - Function used to overwrite the publish default parameters.</li>
+</ul>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="o">!!</span> <span class="s">&quot;src/test/project.json&quot;</span>
+<span class="o">|&gt;</span> <span class="i">DotNetCli</span><span class="o">.</span><span class="i">Publish</span>
+    (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span> 
+         { <span class="i">p</span> <span class="k">with</span> 
+              <span class="i">Configuration</span> <span class="o">=</span> <span class="s">&quot;Release&quot;</span> })
+</code></pre></td>
+</tr>
+</table>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '197', 197)" onmouseover="showTip(event, '197', 197)">
+            Restore setRestoreParams
+          </code>
+          <div class="tip" id="197">
             <strong>Signature:</strong> setRestoreParams:(RestoreParams -&gt; RestoreParams) -&gt; unit<br />
                       </div>
         </td>
@@ -307,10 +354,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '197', 197)" onmouseover="showTip(event, '197', 197)">
+          <code onmouseout="hideTip(event, '198', 198)" onmouseover="showTip(event, '198', 198)">
             RunCommand setCommandParams args
           </code>
-          <div class="tip" id="197">
+          <div class="tip" id="198">
             <strong>Signature:</strong> setCommandParams:(CommandParams -&gt; CommandParams) -&gt; args:string -&gt; unit<br />
                       </div>
         </td>
@@ -347,15 +394,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '198', 198)" onmouseover="showTip(event, '198', 198)">
+          <code onmouseout="hideTip(event, '199', 199)" onmouseover="showTip(event, '199', 199)">
             SetVersionInProjectJson version fileName
           </code>
-          <div class="tip" id="198">
+          <div class="tip" id="199">
             <strong>Signature:</strong> version:string -&gt; fileName:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotNetCLIHelper.fs#L389-389" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/DotNetCLIHelper.fs#L474-474" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -367,10 +414,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '199', 199)" onmouseover="showTip(event, '199', 199)">
+          <code onmouseout="hideTip(event, '200', 200)" onmouseover="showTip(event, '200', 200)">
             Test setTestParams projects
           </code>
-          <div class="tip" id="199">
+          <div class="tip" id="200">
             <strong>Signature:</strong> setTestParams:(TestParams -&gt; TestParams) -&gt; projects:seq&lt;string&gt; -&gt; unit<br />
                       </div>
         </td>
