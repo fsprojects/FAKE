@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>AzureHelper - FAKE - F# Make</title>
+    <title>PropertyKeys - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,32 +36,11 @@
 
 
 
-<h1>AzureHelper</h1>
+<h1>PropertyKeys</h1>
 <div class="xmldoc">
-<p>Contains tasks to control the local Azure Emulator</p>
-
 </div>
 
 <!-- Render nested types and modules, if there are any -->
-  <h2>Nested types and modules</h2>
-  <div>
-      <table class="table table-bordered type-list">
-    <thead>
-      <tr><td>Type</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-        <tr>
-          <td class="type-name">
-            <a href="fake-azurehelper-azureemulatorparams.html">AzureEmulatorParams</a>
-          </td>
-          <td class="xmldoc"><p>A type for the controlling parameter</p>
-
-</td>
-        </tr>
-    </tbody>
-  </table>
-
-  </div>
 
   <h3>Functions and values</h3>
   <table class="table table-bordered member-list">
@@ -72,119 +51,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '121', 121)" onmouseover="showTip(event, '121', 121)">
-            AzureEmulatorDefaults 
+          <code onmouseout="hideTip(event, '1169', 1169)" onmouseover="showTip(event, '1169', 1169)">
+            sqlAzureDbSize 
           </code>
-          <div class="tip" id="121">
-            <strong>Signature:</strong> AzureEmulatorParams<br />
+          <div class="tip" id="1169">
+            <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AzureHelper.fs#L21-21" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Sql.DacPac.fs#L67-67" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>The default parameter of emulator</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '122', 122)" onmouseover="showTip(event, '122', 122)">
-            ResetDevStorage _arg1
-          </code>
-          <div class="tip" id="122">
-            <strong>Signature:</strong> _arg1:&#39;?12131 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?12131          </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AzureHelper.fs#L78-78" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Resets the devstore (BLOB, Queues and Tables)</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '123', 123)" onmouseover="showTip(event, '123', 123)">
-            StartComputeEmulator _arg1
-          </code>
-          <div class="tip" id="123">
-            <strong>Signature:</strong> _arg1:&#39;?12129 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?12129          </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AzureHelper.fs#L67-67" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Starts the compute emulator</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '124', 124)" onmouseover="showTip(event, '124', 124)">
-            StartStorageEmulator _arg1
-          </code>
-          <div class="tip" id="124">
-            <strong>Signature:</strong> _arg1:&#39;?12125 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?12125          </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AzureHelper.fs#L45-45" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Starts the storage emulator</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '125', 125)" onmouseover="showTip(event, '125', 125)">
-            StopComputeEmulator _arg1
-          </code>
-          <div class="tip" id="125">
-            <strong>Signature:</strong> _arg1:&#39;?12127 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?12127          </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AzureHelper.fs#L56-56" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Stops the compute emulator</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '126', 126)" onmouseover="showTip(event, '126', 126)">
-            StopStorageEmulator _arg1
-          </code>
-          <div class="tip" id="126">
-            <strong>Signature:</strong> _arg1:&#39;?12123 -&gt; unit<br />
-                          <strong>Type parameters:</strong> '?12123          </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AzureHelper.fs#L34-34" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Stops the storage emulator</p>
+          <p>When creating a new SQL Azure database, specifies the database service tier to use e.g. S2, P1</p>
 
 
         </td>
