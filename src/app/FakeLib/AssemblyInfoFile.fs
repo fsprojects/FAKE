@@ -54,16 +54,24 @@ type AssemblyInfoFileConfig
         static member Default = AssemblyInfoFileConfig(true)
 
 /// Represents AssemblyInfo attributes
-type Attribute(name, value, inNamespace) =
+type Attribute(name, value, inNamespace, staticPropName, staticPropType, staticPropValue) =
     member this.Name = name
     member this.Value = value
     member this.Namespace = inNamespace
+    member this.StaticPropertyName = staticPropName
+    member this.StaticPropertyType = staticPropType
+    member this.StaticPropertyValue = staticPropValue
+
+    new(name, value, inNamespace, staticPropType) =
+        Attribute(name, value, inNamespace, name, staticPropType, value)
 
     /// Creates a simple attribute with string values. Used as base for other attributes
-    static member StringAttribute(name, value, inNamespace) = Attribute(name, sprintf "\"%s\"" value, inNamespace)
+    static member StringAttribute(name, value, inNamespace, ?staticName, ?staticValue) =
+        let quotedValue = sprintf "\"%s\"" value
+        Attribute(name, quotedValue, inNamespace, defaultArg staticName name, typeof<string>.FullName, defaultArg staticValue quotedValue)
 
     /// Creates a simple attribute with boolean values. Used as base for other attributes
-    static member BoolAttribute(name, value, inNamespace) = Attribute(name, sprintf "%b" value, inNamespace)
+    static member BoolAttribute(name, value, inNamespace) = Attribute(name, sprintf "%b" value, inNamespace, typeof<bool>.FullName)
 
     /// Creates an attribute which holds the company information
     static member Company(value) = Attribute.StringAttribute("AssemblyCompany", value, "System.Reflection")
@@ -127,7 +135,7 @@ type Attribute(name, value, inNamespace) =
 
     /// Create an attribute which specifies metadata about the assembly
     static member Metadata(name,value) =
-        Attribute.StringAttribute("AssemblyMetadata", sprintf "%s\",\"%s" name value, "System.Reflection")
+        Attribute.StringAttribute("AssemblyMetadata", sprintf "%s\",\"%s" name value, "System.Reflection", sprintf "AssemblyMetadata_%s" (name.Replace(" ", "_")))
 
 let private writeToFile outputFileName (lines : seq<string>) =
     let fi = fileInfo outputFileName
@@ -170,12 +178,13 @@ let CreateCSharpAssemblyInfoWithConfig outputFileName attributes (config : Assem
 
     let sourceLines =
         if generateClass then
+            let consts =
+                attributes
+                |> Seq.map (fun x -> sprintf "        internal const %s %s = %s;" x.StaticPropertyType x.StaticPropertyName x.StaticPropertyValue)
+                |> Seq.toList
             [ sprintf "namespace %s {" useNamespace
-              "    internal static class AssemblyVersionInformation {"
-              sprintf "        internal const string Version = %s;" (getAssemblyVersionInfo attributes)
-              sprintf "        internal const string InformationalVersion = %s;" (getAssemblyInformationalVersion attributes)
-              "    }"
-              "}" ]
+              "    internal static class AssemblyVersionInformation {" ]
+            @ consts @ [ "    }"; "}" ]
         else []
 
     attributeLines @ sourceLines
@@ -202,8 +211,9 @@ let CreateFSharpAssemblyInfoWithConfig outputFileName attributes (config : Assem
 
             if generateClass then
                 yield "module internal AssemblyVersionInformation ="
-                yield sprintf "    let [<Literal>] Version = %s" (getAssemblyVersionInfo attributes)
-                yield sprintf "    let [<Literal>] InformationalVersion = %s" (getAssemblyInformationalVersion attributes)
+                yield!
+                    attributes
+                    |> Seq.map (fun x -> sprintf "    let [<Literal>] %s = %s" x.StaticPropertyName x.StaticPropertyValue)
         ]
 
     sourceLines |> writeToFile outputFileName
@@ -224,10 +234,11 @@ let CreateVisualBasicAssemblyInfoWithConfig outputFileName attributes (config : 
 
     let sourceLines =
         if generateClass then
-            [ "Friend NotInheritable Class AssemblyVersionInformation"
-              sprintf "    Friend Const Version As String = %s" (getAssemblyVersionInfo attributes)
-              sprintf "    Friend Const InformationalVersion As String = %s" (getAssemblyInformationalVersion attributes)
-              "End Class" ]
+            let consts =
+                attributes
+                |> Seq.map (fun x -> sprintf "    Friend Const %s As %s = %s" x.StaticPropertyName x.StaticPropertyType x.StaticPropertyValue)
+                |> Seq.toList
+            "Friend NotInheritable Class AssemblyVersionInformation"::consts @ [ "End Class" ]
         else []
 
     attributeLines @ sourceLines
@@ -297,9 +308,12 @@ let GetAttributes assemblyInfoFile =
 
     Regex.Matches(text, regex, combinedRegexOptions)
         |> Seq.cast<Match>
-        |> Seq.map (fun m -> Attribute(m.Groups.["name"].Value |> removeAtEnd "Attribute",
-                                       m.Groups.["value"].Value.Trim([|'"'|]),
-                                       ""))
+        |> Seq.map
+            (fun m ->
+                let v = m.Groups.["value"].Value
+                let t = if v = "true" || v = "false" then typeof<bool>.FullName else typeof<string>.FullName
+                Attribute(m.Groups.["name"].Value |> removeAtEnd "Attribute", v.Trim([|'"'|]), "", t)
+            )
 
 /// Read a single attribute from an AssemblyInfo file.
 /// ## Parameters
