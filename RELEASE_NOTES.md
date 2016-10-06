@@ -1,7 +1,7 @@
-#### 4.40.2 - 06.10.2016
-* REVERT: Support for dotnet publish
-
-#### 4.40.1 - 26.09.2016
+#### 4.41.0 - 06.10.2016
+* Add all assembly metadata to AssemblyVersionInformation typehttps://github.com/fsharp/FAKE/pull/1392
+* Support for dotnet publish
+* BUGFIX: wixHelper AllowDowngrades - https://github.com/fsharp/FAKE/pull/1389
 * REVERT: Use nuget instead of referenced dlls. Fix SQL Server version issue - https://github.com/fsharp/FAKE/pull/1377
 
 #### 4.40.0 - 19.09.2016
