@@ -138,6 +138,30 @@ let ``Diamonds are resolved correctly``() =
         | _ ->
             failwithf "unexpected order: %A" order
 
+[<Fact>]
+let ``Spurs run as early as possible``() =
+    TargetDict.Clear()
+    Target "a" DoNothing
+    Target "b" DoNothing
+    Target "c1" DoNothing
+    Target "c2" DoNothing
+    Target "d" DoNothing
+
+    // create a diamond graph
+    "a" ==> "b" ==> "d" |> ignore
+    "a" ==> "c1" ==> "c2" ==> "d" |> ignore
+
+    let order = determineBuildOrder "d"
+    validateBuildOrder order "d"
+
+    match order with
+        | [[|Target "a"|];TargetSet ["b"; "c1"];[|Target "c2"|];[|Target "d"|]] ->
+            // as expected
+            ()
+
+        | _ ->
+            failwithf "unexpected order: %A" order
+
 
 [<Fact>]
 let ``Soft dependencies are respected when dependees are present``() = 
