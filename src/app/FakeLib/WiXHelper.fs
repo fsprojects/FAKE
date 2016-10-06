@@ -1331,7 +1331,12 @@ type WiXMajorUpgrade =
         /// The message displayed if users try to install a product with a lower version number when a product with a higher version is installed. Used only when AllowDowngrades is no (the default). 
         DowngradeErrorMessage : string
     }
-    override w.ToString() = "<MajorUpgrade Schedule=\"" + w.Schedule.ToString() + "\" AllowDowngrades=\"" + w.AllowDowngrades.ToString() + "\" DowngradeErrorMessage=\"" + w.DowngradeErrorMessage + "\" />"
+    override w.ToString() =
+        let downgradeErrorMessage =
+            match w.AllowDowngrades with
+            | Yes -> ""
+            | No ->  " DowngradeErrorMessage=\"" + w.DowngradeErrorMessage + "\""
+        "<MajorUpgrade Schedule=\"" + w.Schedule.ToString() + "\" AllowDowngrades=\"" + w.AllowDowngrades.ToString() + "\"" + downgradeErrorMessage + " />"
 
 /// Default value for WiX Major Upgrade
 let WiXMajorUpgradeDefaults =
