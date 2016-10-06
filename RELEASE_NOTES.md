@@ -1,3 +1,6 @@
+#### 4.40.2 - 06.10.2016
+* REVERT: Support for dotnet publish
+
 #### 4.40.1 - 26.09.2016
 * REVERT: Use nuget instead of referenced dlls. Fix SQL Server version issue - https://github.com/fsharp/FAKE/pull/1377
 
