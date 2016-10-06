@@ -1,5 +1,6 @@
 #### 4.41.0 - 06.10.2016
 * Add all assembly metadata to AssemblyVersionInformation typehttps://github.com/fsharp/FAKE/pull/1392
+* Allow additional properties to be specified when running the SQL dacpac tooling - https://github.com/fsharp/FAKE/pull/1386
 * Support for dotnet publish
 * BUGFIX: wixHelper AllowDowngrades - https://github.com/fsharp/FAKE/pull/1389
 * REVERT: Use nuget instead of referenced dlls. Fix SQL Server version issue - https://github.com/fsharp/FAKE/pull/1377
