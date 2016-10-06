@@ -1,4 +1,4 @@
-#### 4.41.0 - 06.10.2016
+#### 4.41.1 - 06.10.2016
 * Add all assembly metadata to AssemblyVersionInformation typehttps://github.com/fsharp/FAKE/pull/1392
 * Allow additional properties to be specified when running the SQL dacpac tooling - https://github.com/fsharp/FAKE/pull/1386
 * Support for dotnet publish
