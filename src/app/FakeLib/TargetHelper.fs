@@ -69,6 +69,8 @@ let reset() =
     ExecutedTargetTimes.Clear()
     FinalTargets.Clear()
 
+let mutable CurrentTargetOrder = []
+
 /// Returns a list with all target names.
 let getAllTargetsNames() = TargetDict |> Seq.map (fun t -> t.Key) |> Seq.toList
 
@@ -402,7 +404,11 @@ let PrintDependencyGraph verbose target =
 
         log ""
         log "The resulting target order is:"
-        Seq.iter (logfn " - %s") ordered
+        CurrentTargetOrder
+        |> List.iteri (fun index x ->  
+                                if (environVarOrDefault "parallel-jobs" "1" |> int > 1) then                               
+                                    logfn "Group - %d" (index + 1)
+                                Seq.iter (logfn "  - %s") x)
 
 /// Writes a summary of errors reported during build.
 let WriteErrors () =
@@ -480,9 +486,7 @@ let determineBuildOrder (target : string) =
                 exDependencyLevel.dependants |> List.iter (fun x -> SetTargetLevel (newLevel - 1) x)
             if exDependencyLevel.dependants.Length > 0 then
                 targetLevels.[target] <- {level = newLevel; dependants = exDependencyLevel.dependants}
-        | _ -> ()  
-
-    
+        | _ -> ()     
 
     let addTargetLevel ((dependantTarget:option<TargetTemplate<unit>>), (target: TargetTemplate<unit>), _, level, _ ) =
         let (|LevelIncreaseWithDependantTarget|_|) = function
@@ -492,7 +496,7 @@ let determineBuildOrder (target : string) =
         let (|LevelIncreaseWithNoDependantTarget|_|) = function
         | (true, exDependencyLevel), None when exDependencyLevel.level > level -> Some (exDependencyLevel)
         | _ -> None
-
+        
         let (|LevelDecrease|_|) = function
         | (true, exDependencyLevel), _ when exDependencyLevel.level < level -> Some (exDependencyLevel)
         | _ -> None
@@ -547,8 +551,6 @@ let runTargetsParallel (count : int) (targets : Target[]) =
         .ToArray()
     |> ignore
 
-let mutable CurrentTargetOrder = []
-
 /// Runs a target and its dependencies.
 let run targetName =
     if doesTargetMeanListTargets targetName then listTargets() else
@@ -581,19 +583,22 @@ let run targetName =
                 order
                 |> List.map (fun targets -> targets |> Array.map (fun t -> t.Name) |> Array.toList)
 
+            PrintDependencyGraph false targetName
+
             // run every level in parallel
             for par in order do
                 runTargetsParallel parallelJobs par
 
         else
             // single threaded build.
-            PrintDependencyGraph false targetName
-
+            
             // Note: we could use the ordering resulting from flattening the result of determineBuildOrder
             // for a single threaded build (thereby centralizing the algorithm for build order), but that
             // ordering is inconsistent with earlier versions of FAKE (and PrintDependencyGraph).
             let _, ordered = visitDependencies ignore targetName
             CurrentTargetOrder <- ordered |> Seq.map (fun t -> [t]) |> Seq.toList
+
+            PrintDependencyGraph false targetName
 
             runTargets (ordered |> Seq.map getTarget |> Seq.toArray)
 
