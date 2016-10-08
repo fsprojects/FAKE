@@ -38,7 +38,7 @@ nuget HashLib
 nuget FSharp.Compiler.Service
 nuget Octokit
 
-github matthid/Yaaf.FSharp.Scripting src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs
+github nosami/Yaaf.FSharp.Scripting:develop src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs
 
 group Build
 content: none

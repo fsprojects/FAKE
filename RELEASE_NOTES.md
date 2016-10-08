@@ -1,3 +1,6 @@
+#### 4.41.2 - 08.10.2016
+* Fixing the famous chinese FAKE bug
+
 #### 4.41.1 - 06.10.2016
 * Add all assembly metadata to AssemblyVersionInformation typehttps://github.com/fsharp/FAKE/pull/1392
 * Allow additional properties to be specified when running the SQL dacpac tooling - https://github.com/fsharp/FAKE/pull/1386
