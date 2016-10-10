@@ -212,8 +212,16 @@ let CreateFSharpAssemblyInfoWithConfig outputFileName attributes (config : Assem
             if generateClass then
                 yield "module internal AssemblyVersionInformation ="
                 yield!
+                    // it might be that a specific assembly has multiple attributes of the same name
+                    // if more than one occurences appear, append numerical suffixes to avoid compile errors
                     attributes
-                    |> Seq.map (fun x -> sprintf "    let [<Literal>] %s = %s" x.StaticPropertyName x.StaticPropertyValue)
+                    |> Seq.mapi (fun index a -> index,a)
+                    |> Seq.groupBy (fun (_,attr) -> attr.StaticPropertyName)
+                    |> Seq.collect (fun (_,group) -> group |> Seq.mapi (fun i a -> i,a))
+                    |> Seq.sortBy (fun (_,(index,_)) -> index)
+                    |> Seq.map (fun (id,(_,attr)) ->
+                        let name = if id = 0 then attr.StaticPropertyName else sprintf "%s-%d" attr.StaticPropertyName id
+                        sprintf "    let [<Literal>] %s = %s" name attr.StaticPropertyValue)
         ]
 
     sourceLines |> writeToFile outputFileName
