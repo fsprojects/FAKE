@@ -135,7 +135,7 @@ type Attribute(name, value, inNamespace, staticPropName, staticPropType, staticP
 
     /// Create an attribute which specifies metadata about the assembly
     static member Metadata(name,value) =
-        Attribute.StringAttribute("AssemblyMetadata", sprintf "%s\",\"%s" name value, "System.Reflection", sprintf "AssemblyMetadata_%s" (name.Replace(" ", "_")))
+        Attribute.StringAttribute("AssemblyMetadata", sprintf "%s\",\"%s" name value, "System.Reflection", sprintf "AssemblyMetadata_%s" (name.Replace(" ", "_")), sprintf "\"%s\"" value)
 
 let private writeToFile outputFileName (lines : seq<string>) =
     let fi = fileInfo outputFileName
