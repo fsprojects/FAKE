@@ -1,5 +1,8 @@
+#### 4.41.5 - 10.10.2016
+* When generating AssemblyMetadata_XYZ for AssemblyInfo, pass just value - https://github.com/fsharp/FAKE/pull/1399
+
 #### 4.41.4 - 10.10.2016
-* Fixing the famous chinese FAKE bug
+* BUGFIX: Fixing the famous chinese FAKE bug
 
 #### 4.41.1 - 06.10.2016
 * Add all assembly metadata to AssemblyVersionInformation typehttps://github.com/fsharp/FAKE/pull/1392
