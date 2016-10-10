@@ -107,10 +107,10 @@
 <h2>Storing the githash in the AssemblyInfo</h2>
 <p>Storing the githash with the assembly can make it easier to identify exactly what code is running. There isn't an attribute that
 directly fits with doing this, but one way is by storing it as Metadata (warning: this attribute is only available in .NET 4.5 and above)</p>
-<p>If your solution is inside a git repository you can get the git hash like this:</p>
+<p>If your solution is inside a git repository you can get the git hash like this (remember to <code>open Fake.Git</code>):</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="i">commitHash</span> <span class="o">=</span> <span class="i">Information</span><span class="o">.</span><span class="i">getCurrentSHA1</span>()
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="i">commitHash</span> <span class="o">=</span> <span class="i">Information</span><span class="o">.</span><span class="i">getCurrentHash</span>()
 </code></pre></td>
 </tr>
 </table>
