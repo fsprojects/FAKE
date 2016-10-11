@@ -180,7 +180,13 @@ let CreateCSharpAssemblyInfoWithConfig outputFileName attributes (config : Assem
         if generateClass then
             let consts =
                 attributes
-                |> Seq.map (fun x -> sprintf "        internal const %s %s = %s;" x.StaticPropertyType x.StaticPropertyName x.StaticPropertyValue)
+                |> Seq.mapi (fun index a -> index,a)
+                |> Seq.groupBy (fun (_,attr) -> attr.StaticPropertyName)
+                |> Seq.collect (fun (_,group) -> group |> Seq.mapi (fun i a -> i,a))
+                |> Seq.sortBy (fun (_,(index,_)) -> index)
+                |> Seq.map (fun (id,(_,attr)) ->
+                    let name = if id = 0 then attr.StaticPropertyName else sprintf "%s_%d" attr.StaticPropertyName id
+                    sprintf "        internal const %s %s = %s;" attr.StaticPropertyType name attr.StaticPropertyValue)
                 |> Seq.toList
             [ sprintf "namespace %s {" useNamespace
               "    internal static class AssemblyVersionInformation {" ]
@@ -220,7 +226,7 @@ let CreateFSharpAssemblyInfoWithConfig outputFileName attributes (config : Assem
                     |> Seq.collect (fun (_,group) -> group |> Seq.mapi (fun i a -> i,a))
                     |> Seq.sortBy (fun (_,(index,_)) -> index)
                     |> Seq.map (fun (id,(_,attr)) ->
-                        let name = if id = 0 then attr.StaticPropertyName else sprintf "%s-%d" attr.StaticPropertyName id
+                        let name = if id = 0 then attr.StaticPropertyName else sprintf "%s_%d" attr.StaticPropertyName id
                         sprintf "    let [<Literal>] %s = %s" name attr.StaticPropertyValue)
         ]
 
@@ -244,7 +250,13 @@ let CreateVisualBasicAssemblyInfoWithConfig outputFileName attributes (config : 
         if generateClass then
             let consts =
                 attributes
-                |> Seq.map (fun x -> sprintf "    Friend Const %s As %s = %s" x.StaticPropertyName x.StaticPropertyType x.StaticPropertyValue)
+                |> Seq.mapi (fun index a -> index,a)
+                |> Seq.groupBy (fun (_,attr) -> attr.StaticPropertyName)
+                |> Seq.collect (fun (_,group) -> group |> Seq.mapi (fun i a -> i,a))
+                |> Seq.sortBy (fun (_,(index,_)) -> index)
+                |> Seq.map (fun (id,(_,attr)) ->
+                    let name = if id = 0 then attr.StaticPropertyName else sprintf "%s_%d" attr.StaticPropertyName id
+                    sprintf "    Friend Const %s As %s = %s" name attr.StaticPropertyType attr.StaticPropertyValue)
                 |> Seq.toList
             "Friend NotInheritable Class AssemblyVersionInformation"::consts @ [ "End Class" ]
         else []
