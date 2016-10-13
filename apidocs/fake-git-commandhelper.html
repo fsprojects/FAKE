@@ -74,14 +74,34 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '1072', 1072)" onmouseover="showTip(event, '1072', 1072)">
-            findGitDir repositoryDir
+            directRunGitCommandAndFail (...)
           </code>
           <div class="tip" id="1072">
+            <strong>Signature:</strong> repositoryDir:string -&gt; command:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Git/CommandHelper.fs#L59-59" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Runs the given git command, waits for its completion and fails when it didn't succeeded.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1073', 1073)" onmouseover="showTip(event, '1073', 1073)">
+            findGitDir repositoryDir
+          </code>
+          <div class="tip" id="1073">
             <strong>Signature:</strong> repositoryDir:string -&gt; DirectoryInfo<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Git/CommandHelper.fs#L97-97" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Git/CommandHelper.fs#L102-102" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -93,10 +113,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1073', 1073)" onmouseover="showTip(event, '1073', 1073)">
+          <code onmouseout="hideTip(event, '1074', 1074)" onmouseover="showTip(event, '1074', 1074)">
             fireAndForgetGitCommand (...)
           </code>
-          <div class="tip" id="1073">
+          <div class="tip" id="1074">
             <strong>Signature:</strong> repositoryDir:string -&gt; command:string -&gt; unit<br />
                       </div>
         </td>
@@ -113,15 +133,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1074', 1074)" onmouseover="showTip(event, '1074', 1074)">
+          <code onmouseout="hideTip(event, '1075', 1075)" onmouseover="showTip(event, '1075', 1075)">
             gitCommand repositoryDir command
           </code>
-          <div class="tip" id="1074">
+          <div class="tip" id="1075">
             <strong>Signature:</strong> repositoryDir:string -&gt; command:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Git/CommandHelper.fs#L59-59" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Git/CommandHelper.fs#L64-64" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -133,10 +153,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1075', 1075)" onmouseover="showTip(event, '1075', 1075)">
+          <code onmouseout="hideTip(event, '1076', 1076)" onmouseover="showTip(event, '1076', 1076)">
             gitPath 
           </code>
-          <div class="tip" id="1075">
+          <div class="tip" id="1076">
             <strong>Signature:</strong> string<br />
                       </div>
         </td>
@@ -153,10 +173,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1076', 1076)" onmouseover="showTip(event, '1076', 1076)">
+          <code onmouseout="hideTip(event, '1077', 1077)" onmouseover="showTip(event, '1077', 1077)">
             gitTimeOut 
           </code>
-          <div class="tip" id="1076">
+          <div class="tip" id="1077">
             <strong>Signature:</strong> TimeSpan<br />
                       </div>
         </td>
@@ -173,10 +193,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1077', 1077)" onmouseover="showTip(event, '1077', 1077)">
+          <code onmouseout="hideTip(event, '1078', 1078)" onmouseover="showTip(event, '1078', 1078)">
             runGitCommand repositoryDir command
           </code>
-          <div class="tip" id="1077">
+          <div class="tip" id="1078">
             <strong>Signature:</strong> repositoryDir:string -&gt; command:string -&gt; bool * List&lt;string&gt; * string<br />
                       </div>
         </td>
@@ -193,15 +213,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1078', 1078)" onmouseover="showTip(event, '1078', 1078)">
+          <code onmouseout="hideTip(event, '1079', 1079)" onmouseover="showTip(event, '1079', 1079)">
             runSimpleGitCommand (...)
           </code>
-          <div class="tip" id="1078">
+          <div class="tip" id="1079">
             <strong>Signature:</strong> repositoryDir:string -&gt; command:string -&gt; string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Git/CommandHelper.fs#L77-77" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Git/CommandHelper.fs#L82-82" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -213,15 +233,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1079', 1079)" onmouseover="showTip(event, '1079', 1079)">
+          <code onmouseout="hideTip(event, '1080', 1080)" onmouseover="showTip(event, '1080', 1080)">
             showGitCommand repositoryDir command
           </code>
-          <div class="tip" id="1079">
+          <div class="tip" id="1080">
             <strong>Signature:</strong> repositoryDir:string -&gt; command:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Git/CommandHelper.fs#L70-70" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Git/CommandHelper.fs#L75-75" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
