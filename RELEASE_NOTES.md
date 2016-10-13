@@ -1,3 +1,6 @@
+#### 4.41.6 - 13.10.2016
+* BUGFIX: Make FAKE fail on failing git push
+
 #### 4.41.5 - 10.10.2016
 * BUGFIX: When generating AssemblyMetadata_XYZ for AssemblyInfo, pass just value - https://github.com/fsharp/FAKE/pull/1399
 * BUGFIX: Fixed AssemblyVersion bug - https://github.com/fsharp/FAKE/pull/1397
