@@ -55,6 +55,11 @@ let directRunGitCommand repositoryDir command =
       info.WorkingDirectory <- repositoryDir
       info.Arguments <- command)
 
+/// Runs the given git command, waits for its completion and fails when it didn't succeeded.
+let directRunGitCommandAndFail repositoryDir command = 
+    directRunGitCommand repositoryDir command
+    |> fun ok -> if not ok then failwith "Command failed."
+
 /// Runs the given git command, waits for its completion.
 let gitCommand repositoryDir command =
     let ok,msg,error = runGitCommand repositoryDir command

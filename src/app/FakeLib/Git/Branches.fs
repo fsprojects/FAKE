@@ -134,7 +134,7 @@ let deleteTag repositoryDir tag =
 /// ## Parameters
 ///
 ///  - `repositoryDir` - The git repository.
-let push repositoryDir = directRunGitCommand repositoryDir "push" |> ignore
+let push repositoryDir = directRunGitCommandAndFail repositoryDir "push"
 
 /// Pushes the given tag to the given remote.
 /// ## Parameters
@@ -142,7 +142,7 @@ let push repositoryDir = directRunGitCommand repositoryDir "push" |> ignore
 ///  - `repositoryDir` - The git repository.
 ///  - `remote` - The remote.
 ///  - `tag` - The tag.
-let pushTag repositoryDir remote tag = directRunGitCommand repositoryDir (sprintf "push %s %s" remote tag) |> ignore
+let pushTag repositoryDir remote tag = directRunGitCommandAndFail repositoryDir (sprintf "push %s %s" remote tag)
 
 /// Pushes the given branch to the given remote.
 /// ## Parameters
@@ -150,7 +150,7 @@ let pushTag repositoryDir remote tag = directRunGitCommand repositoryDir (sprint
 ///  - `repositoryDir` - The git repository.
 ///  - `remote` - The remote.
 ///  - `branch` - The branch.
-let pushBranch repositoryDir remote branch = directRunGitCommand repositoryDir (sprintf "push %s %s" remote branch) |> ignore
+let pushBranch repositoryDir remote branch = directRunGitCommandAndFail repositoryDir (sprintf "push %s %s" remote branch)
 
 /// Pulls a given branch from the given remote.
 /// ## Parameters
@@ -159,4 +159,4 @@ let pushBranch repositoryDir remote branch = directRunGitCommand repositoryDir (
 ///  - `remote` - The name of the remote.
 ///  - `branch` - The name of the branch to pull.
 let pull repositoryDir remote branch = 
-    directRunGitCommand repositoryDir (sprintf "pull %s %s" remote branch) |> ignore
+    directRunGitCommandAndFail repositoryDir (sprintf "pull %s %s" remote branch)
