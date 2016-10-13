@@ -45,9 +45,9 @@ The version parameter can be declared as a property or fetched from a build serv
 Storing the githash with the assembly can make it easier to identify exactly what code is running. There isn't an attribute that
 directly fits with doing this, but one way is by storing it as Metadata (warning: this attribute is only available in .NET 4.5 and above)
 
-If your solution is inside a git repository you can get the git hash like this:
+If your solution is inside a git repository you can get the git hash like this (remember to `open Fake.Git`):
 
-	let commitHash = Information.getCurrentSHA1()
+	let commitHash = Information.getCurrentHash()
 	
 And set like this:
 
