@@ -220,7 +220,7 @@ let CreateFSharpAssemblyInfoWithConfig outputFileName attributes (config : Assem
                     |> Seq.collect (fun (_,group) -> group |> Seq.mapi (fun i a -> i,a))
                     |> Seq.sortBy (fun (_,(index,_)) -> index)
                     |> Seq.map (fun (id,(_,attr)) ->
-                        let name = if id = 0 then attr.StaticPropertyName else sprintf "%s-%d" attr.StaticPropertyName id
+                        let name = if id = 0 then attr.StaticPropertyName else sprintf "%s_%d" attr.StaticPropertyName id
                         sprintf "    let [<Literal>] %s = %s" name attr.StaticPropertyValue)
         ]
 
