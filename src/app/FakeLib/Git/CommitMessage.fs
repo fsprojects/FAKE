@@ -7,23 +7,24 @@ open System
 open System.Text
 open System.IO
 
+
 /// Returns the commit message file.
-let getCommitMessageFileInfo repositoryDir =
+let getCommitMessageFileInfos repositoryDir =
     let gitDir = findGitDir repositoryDir
-    let oldgitFileInfo = gitDir.FullName </> "COMMITMESSAGE" |> fileInfo
-    if oldgitFileInfo.Exists then oldgitFileInfo
-    else gitDir.FullName </> "COMMIT_EDITMSG" |> fileInfo
+    [gitDir.FullName </> "COMMITMESSAGE" |> fileInfo
+     gitDir.FullName </> "COMMIT_EDITMSG" |> fileInfo ]
 
 /// Gets the commit message
 let getCommitMessage repositoryDir = 
-    let fi = getCommitMessageFileInfo repositoryDir
-    if fi.Exists then ReadFileAsString fi.FullName else ""       
+    match getCommitMessageFileInfos repositoryDir |> List.filter (fun fi -> fi.Exists) with
+    | fi::_ -> ReadFileAsString fi.FullName 
+    | _ -> ""       
 
 /// Sets the commit message
 let setMessage repositoryDir text =
-    let messageFile = getCommitMessageFileInfo repositoryDir
-    if isNullOrEmpty text then
-        if messageFile.Exists then messageFile.Delete()
-    else
-        use textWriter = new StreamWriter(messageFile.FullName, false, new UTF8Encoding(true))
-        textWriter.Write text
+    for messageFile in getCommitMessageFileInfos repositoryDir do
+        if isNullOrEmpty text then
+            if messageFile.Exists then messageFile.Delete()
+        else
+            use textWriter = new StreamWriter(messageFile.FullName, false, new UTF8Encoding(true))
+            textWriter.Write text
