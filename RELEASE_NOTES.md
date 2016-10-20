@@ -1,5 +1,6 @@
 #### 4.41.7 - 20.10.2016
 * BUGFIX: FAKE should work with old and new commit messages
+* BUGFIX: Fixed bug in assembly info variable name suffixes - https://github.com/fsharp/FAKE/pull/1404
 
 #### 4.41.6 - 13.10.2016
 * BUGFIX: Make FAKE fail on failing git push
