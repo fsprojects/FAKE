@@ -48,6 +48,5 @@ let SSH setParams command =
     let result = 
         ExecProcess (fun info -> 
             info.FileName <- p.ToolPath
-            info.WorkingDirectory <- workingDir
             info.Arguments <- args) System.TimeSpan.MaxValue
     if result <> 0 then failwithf "Error during SSH. Target: %s Command: %s" target command
