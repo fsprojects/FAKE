@@ -312,7 +312,7 @@ let CloseAllNavProcesses raiseExceptionIfNotFound =
     let closedProcesses = 
         getNAVProcesses()
         |> Seq.toList
-        |> List.map (fun p -> p.Kill())
+        |> List.map (fun p -> try p.Kill() with | _ -> traceImportant <| sprintf "Could not kill all NAV process %O" p.Id)
 
     if closedProcesses = [] && raiseExceptionIfNotFound then failwith "Could not kill all NAV processes"
     traceEndTask "CloseNAV" details
