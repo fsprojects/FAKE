@@ -53,7 +53,8 @@ namespace Test.FAKECore.PackageMgt
                     tags: p.Tags,
                     timeOut: p.TimeOut,
                     title: p.Title,
-                    toolPath: p.ToolPath
+                    toolPath: p.ToolPath,
+                    language: p.Language
                 )
             );
         };
@@ -108,7 +109,8 @@ namespace Test.FAKECore.PackageMgt
                     tags: p.Tags,
                     timeOut: p.TimeOut,
                     title: p.Title,
-                    toolPath: p.ToolPath
+                    toolPath: p.ToolPath,
+                    language: p.Language
                 )
             );
         };
@@ -175,7 +177,8 @@ namespace Test.FAKECore.PackageMgt
                     tags: p.Tags,
                     timeOut: p.TimeOut,
                     title: p.Title,
-                    toolPath: p.ToolPath
+                    toolPath: p.ToolPath,
+                    language: p.Language
                 )
             );
         };
