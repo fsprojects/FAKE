@@ -1,21 +1,12 @@
-#### 4.41.9 - 25.10.2016
+#### 4.42.0 - 25.10.2016
+* Add language in NuGetParams - https://github.com/fsharp/FAKE/pull/1407
 * Change order of Dynamics NAV process killing 
-
-#### 4.41.8 - 21.10.2016
 * New SSH helper - https://github.com/fsharp/FAKE/pull/1405 
-
-#### 4.41.7 - 20.10.2016
 * BUGFIX: FAKE should work with old and new commit messages
 * BUGFIX: Fixed bug in assembly info variable name suffixes - https://github.com/fsharp/FAKE/pull/1404
-
-#### 4.41.6 - 13.10.2016
 * BUGFIX: Make FAKE fail on failing git push
-
-#### 4.41.5 - 10.10.2016
 * BUGFIX: When generating AssemblyMetadata_XYZ for AssemblyInfo, pass just value - https://github.com/fsharp/FAKE/pull/1399
 * BUGFIX: Fixed AssemblyVersion bug - https://github.com/fsharp/FAKE/pull/1397
-
-#### 4.41.4 - 10.10.2016
 * BUGFIX: Fixing the famous chinese FAKE bug
 
 #### 4.41.1 - 06.10.2016
