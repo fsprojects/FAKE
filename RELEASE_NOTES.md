@@ -1,4 +1,5 @@
 #### 4.42.0 - 25.10.2016
+* Add option to emit SuppressMessage Attributes - https://github.com/fsharp/FAKE/pull/1406
 * Add language in NuGetParams - https://github.com/fsharp/FAKE/pull/1407
 * Change order of Dynamics NAV process killing 
 * New SSH helper - https://github.com/fsharp/FAKE/pull/1405 
