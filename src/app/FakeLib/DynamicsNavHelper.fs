@@ -311,9 +311,10 @@ let CloseAllNavProcesses raiseExceptionIfNotFound =
     traceStartTask "CloseNAV" details
     let closedProcesses = 
         getNAVProcesses()
-        |> Seq.map (fun p -> p.Kill())
         |> Seq.toList
-    if closedProcesses = [] && raiseExceptionIfNotFound then failwith "Could not kill NAV processes"
+        |> List.map (fun p -> p.Kill())
+
+    if closedProcesses = [] && raiseExceptionIfNotFound then failwith "Could not kill all NAV processes"
     traceEndTask "CloseNAV" details
 
 /// Waits until all NAV processes have stopped or fails after given timeout.

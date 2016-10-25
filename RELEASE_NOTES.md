@@ -1,3 +1,6 @@
+#### 4.41.9 - 25.10.2016
+* Change order of Dynamics NAV process killing 
+
 #### 4.41.8 - 21.10.2016
 * New SSH helper - https://github.com/fsharp/FAKE/pull/1405 
 
