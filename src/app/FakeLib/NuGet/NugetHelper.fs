@@ -61,7 +61,8 @@ type NuGetParams =
       Publish : bool
       SymbolPackage : NugetSymbolPackage
       Properties : list<string * string>
-      Files : list<string*string option*string option>}
+      Files : list<string*string option*string option>
+      Language : string}
 
 /// NuGet default parameters  
 let NuGetDefaults() = 
@@ -95,7 +96,8 @@ let NuGetDefaults() =
       Publish = false
       SymbolPackage = NugetSymbolPackage.ProjectFile
       Properties = []
-      Files = [] }
+      Files = []
+      Language = null }
 
 /// Creates a string which tells NuGet that you require exactly this package version.
 let RequireExactly version = sprintf "[%s]" version
@@ -220,6 +222,7 @@ let private createNuSpecFromTemplate parameters (templateNuSpec:FileInfo) =
           "@tags@", parameters.Tags
           "@releaseNotes@", parameters.ReleaseNotes
           "@copyright@", parameters.Copyright
+          "@language@", parameters.Language
         ]
         |> List.map (fun (placeholder, replacement) -> placeholder, xmlEncode replacement)
         |> List.append [ "@dependencies@", dependenciesXml
