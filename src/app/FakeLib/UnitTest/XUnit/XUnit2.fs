@@ -261,20 +261,19 @@ module internal ResultHandling =
 let xUnit2 setParams assemblies =
     let details = separated ", " assemblies
     traceStartTask "xUnit2" details
-    try
-        let parametersFirst = setParams XUnit2Defaults
+    let parametersFirst = setParams XUnit2Defaults
 
-        let parameters =
-            if parametersFirst.NoAppDomain
-            then discoverNoAppDomainExists parametersFirst
-            else parametersFirst
+    let parameters =
+        if parametersFirst.NoAppDomain
+        then discoverNoAppDomainExists parametersFirst
+        else parametersFirst
 
-        let result =
-            ExecProcess (fun info ->
-                info.FileName <- parameters.ToolPath
-                info.WorkingDirectory <- defaultArg parameters.WorkingDir "."
-                info.Arguments <- parameters |> buildXUnit2Args assemblies) parameters.TimeOut
+    let result =
+        ExecProcess (fun info ->
+            info.FileName <- parameters.ToolPath
+            info.WorkingDirectory <- defaultArg parameters.WorkingDir "."
+            info.Arguments <- parameters |> buildXUnit2Args assemblies) parameters.TimeOut
 
-        ResultHandling.failBuildIfXUnitReportedError parameters.ErrorLevel result
-    finally
-        traceEndTask "xUnit2" details
+    ResultHandling.failBuildIfXUnitReportedError parameters.ErrorLevel result
+
+    traceEndTask "xUnit2" details

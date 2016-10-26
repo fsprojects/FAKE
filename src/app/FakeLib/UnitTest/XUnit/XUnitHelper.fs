@@ -123,24 +123,22 @@ let buildXUnitArgs parameters assembly =
 let xUnit setParams assemblies =
     let details = separated ", " assemblies
     traceStartTask "xUnit" details
-    try
-        let parameters = setParams XUnitDefaults
+    let parameters = setParams XUnitDefaults
 
-        let runTests assembly =
-            let args = buildXUnitArgs parameters assembly
-            0 = ExecProcess (fun info ->
-                    info.FileName <- parameters.ToolPath
-                    info.WorkingDirectory <- parameters.WorkingDir
-                    info.Arguments <- args) parameters.TimeOut
+    let runTests assembly =
+        let args = buildXUnitArgs parameters assembly
+        0 = ExecProcess (fun info ->
+                info.FileName <- parameters.ToolPath
+                info.WorkingDirectory <- parameters.WorkingDir
+                info.Arguments <- args) parameters.TimeOut
 
-        let failedTests =
-            [ for asm in List.ofSeq assemblies do
-                  if runTests asm |> not then yield asm ]
+    let failedTests =
+        [ for asm in List.ofSeq assemblies do
+              if runTests asm |> not then yield asm ]
 
-        if not (List.isEmpty failedTests) then
-            sprintf "xUnit failed for the following assemblies: %s" (separated ", " failedTests)
-            |> match parameters.ErrorLevel with
-               | Error | FailOnFirstError -> failwith
-               | DontFailBuild -> traceImportant
-    finally
-        traceEndTask "xUnit" details
+    if not (List.isEmpty failedTests) then
+        sprintf "xUnit failed for the following assemblies: %s" (separated ", " failedTests)
+        |> match parameters.ErrorLevel with
+           | Error | FailOnFirstError -> failwith
+           | DontFailBuild -> traceImportant
+    traceEndTask "xUnit" details

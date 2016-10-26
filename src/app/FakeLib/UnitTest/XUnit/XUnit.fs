@@ -151,10 +151,10 @@ let xUnitSingle setParams assembly =
     traceStartTask "xUnit" assembly
 
     let parameters = XUnitDefaults |> setParams
-    try
-        runXUnitForOneAssembly parameters assembly |> ignore
-    finally
-        traceEndTask "xUnit" assembly
+
+    runXUnitForOneAssembly parameters assembly |> ignore
+
+    traceEndTask "xUnit" assembly
 
 let internal overrideAssemblyReportParams assembly p =
     let prependAssemblyName path =
@@ -194,13 +194,13 @@ let internal overrideAssemblyReportParams assembly p =
 let xUnit setParams assemblies =
     let details = separated ", " assemblies
     traceStartTask "xUnit" details
-    try
-        let parameters = XUnitDefaults |> setParams
 
-        let assemblyResults =
-            assemblies
-            |> Seq.map (fun a -> a, runXUnitForOneAssembly (parameters |> overrideAssemblyReportParams a) a)
+    let parameters = XUnitDefaults |> setParams
 
-        ResultHandling.failBuildIfXUnitReportedErrors parameters.ErrorLevel assemblyResults
-    finally
-        traceEndTask "xUnit" details
+    let assemblyResults =
+        assemblies
+        |> Seq.map (fun a -> a, runXUnitForOneAssembly (parameters |> overrideAssemblyReportParams a) a)
+
+    ResultHandling.failBuildIfXUnitReportedErrors parameters.ErrorLevel assemblyResults
+
+    traceEndTask "xUnit" details

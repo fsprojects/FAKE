@@ -62,22 +62,20 @@ let runConsoleTests parameters processes =
 ///     )
 let RunConsoleTests setParams processes = 
     traceStartTask "RunConsoleTests" ""
-    try
-        let parameters = setParams ProcessTestRunnerDefaults
+    let parameters = setParams ProcessTestRunnerDefaults
     
-        let execute() = 
-            runConsoleTests parameters processes
-            |> Seq.map (fun (f, a, m) -> sprintf "Process %s %s terminated with %s" f a m)
-            |> toLines
-        match parameters.ErrorLevel with
-        | TestRunnerErrorLevel.DontFailBuild -> execute() |> trace
-        | TestRunnerErrorLevel.Error -> 
-            let msg = execute()
-            if msg <> "" then failwith msg
-        | TestRunnerErrorLevel.FailOnFirstError -> 
-            for fileName, args in processes do
-                match RunConsoleTest parameters fileName args with
-                | Some error -> failwithf "Process %s %s terminated with %s" fileName args error
-                | _ -> ()
-    finally
-        traceEndTask "RunConsoleTests" ""
+    let execute() = 
+        runConsoleTests parameters processes
+        |> Seq.map (fun (f, a, m) -> sprintf "Process %s %s terminated with %s" f a m)
+        |> toLines
+    match parameters.ErrorLevel with
+    | TestRunnerErrorLevel.DontFailBuild -> execute() |> trace
+    | TestRunnerErrorLevel.Error -> 
+        let msg = execute()
+        if msg <> "" then failwith msg
+    | TestRunnerErrorLevel.FailOnFirstError -> 
+        for fileName, args in processes do
+            match RunConsoleTest parameters fileName args with
+            | Some error -> failwithf "Process %s %s terminated with %s" fileName args error
+            | _ -> ()
+    traceEndTask "RunConsoleTests" ""

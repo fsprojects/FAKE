@@ -329,37 +329,35 @@ match buildServer with
 ///           |> DoNothing
 let build setParams project =
     traceStartTask "MSBuild" project
-    try
-        let args = 
-            MSBuildDefaults
-            |> setParams
-            |> serializeMSBuildParams
+    let args = 
+        MSBuildDefaults
+        |> setParams
+        |> serializeMSBuildParams
 
-        let errorLoggerParam = 
-            MSBuildLoggers
-            |> List.map (fun a -> Some ("logger", a))
-            |> serializeArgs
+    let errorLoggerParam = 
+        MSBuildLoggers
+        |> List.map (fun a -> Some ("logger", a))
+        |> serializeArgs
     
-        let args = toParam project + " " + args + " " + errorLoggerParam
-        tracefn "Building project: %s\n  %s %s" project msBuildExe args
-        let enableProcessTracingPreviousValue = enableProcessTracing
-        enableProcessTracing <- false
-        let exitCode =
-            ExecProcess (fun info ->  
-                info.FileName <- msBuildExe
-                info.Arguments <- args) TimeSpan.MaxValue
-        enableProcessTracing <- enableProcessTracingPreviousValue
-        if exitCode <> 0 then
-            let errors =
-                System.Threading.Thread.Sleep(200) // wait for the file to write
-                if File.Exists MsBuildLogger.ErrorLoggerFile then
-                    File.ReadAllLines(MsBuildLogger.ErrorLoggerFile) |> List.ofArray
-                else []
+    let args = toParam project + " " + args + " " + errorLoggerParam
+    tracefn "Building project: %s\n  %s %s" project msBuildExe args
+    let enableProcessTracingPreviousValue = enableProcessTracing
+    enableProcessTracing <- false
+    let exitCode =
+        ExecProcess (fun info ->  
+            info.FileName <- msBuildExe
+            info.Arguments <- args) TimeSpan.MaxValue
+    enableProcessTracing <- enableProcessTracingPreviousValue
+    if exitCode <> 0 then
+        let errors =
+            System.Threading.Thread.Sleep(200) // wait for the file to write
+            if File.Exists MsBuildLogger.ErrorLoggerFile then
+                File.ReadAllLines(MsBuildLogger.ErrorLoggerFile) |> List.ofArray
+            else []
         
-            let errorMessage = sprintf "Building %s failed with exitcode %d." project exitCode
-            raise (BuildException(errorMessage, errors))
-    finally
-        traceEndTask "MSBuild" project
+        let errorMessage = sprintf "Building %s failed with exitcode %d." project exitCode
+        raise (BuildException(errorMessage, errors))
+    traceEndTask "MSBuild" project
 
 /// Builds the given project files and collects the output files.
 /// ## Parameters
@@ -441,31 +439,29 @@ let MSBuildReleaseExt outputPath properties targets projects =
 ///  - `projectFile` - The project file path.
 let BuildWebsiteConfig outputPath configuration projectFile  =
     traceStartTask "BuildWebsite" projectFile
-    try
-        let projectName = (fileInfo projectFile).Name.Replace(".csproj", "").Replace(".fsproj", "").Replace(".vbproj", "")
+    let projectName = (fileInfo projectFile).Name.Replace(".csproj", "").Replace(".fsproj", "").Replace(".vbproj", "")
 
-        let slashes (dir : string) =
-            dir.Replace("\\", "/").TrimEnd('/')
-            |> Seq.filter ((=) '/')
-            |> Seq.length
+    let slashes (dir : string) =
+        dir.Replace("\\", "/").TrimEnd('/')
+        |> Seq.filter ((=) '/')
+        |> Seq.length
 
-        let currentDir = (directoryInfo ".").FullName
-        let projectDir = (fileInfo projectFile).Directory.FullName
+    let currentDir = (directoryInfo ".").FullName
+    let projectDir = (fileInfo projectFile).Directory.FullName
 
-        let diff = slashes projectDir - slashes currentDir
-        let prefix = if Path.IsPathRooted outputPath
-                     then ""
-                     else (String.replicate diff "../")
+    let diff = slashes projectDir - slashes currentDir
+    let prefix = if Path.IsPathRooted outputPath
+                 then ""
+                 else (String.replicate diff "../")
 
-        MSBuild null "Build" [ "Configuration", configuration ] [ projectFile ] |> ignore
-        MSBuild null "_CopyWebApplication;_BuiltWebOutputGroupOutput"
-            [ "Configuration", configuration
-              "OutDir", prefix + outputPath
-              "WebProjectOutputDir", prefix + outputPath + "/" + projectName ] [ projectFile ]
-            |> ignore
-        !!(projectDir + "/bin/*.*") |> Copy(outputPath + "/" + projectName + "/bin/")
-    finally
-        traceEndTask "BuildWebsite" projectFile
+    MSBuild null "Build" [ "Configuration", configuration ] [ projectFile ] |> ignore
+    MSBuild null "_CopyWebApplication;_BuiltWebOutputGroupOutput"
+        [ "Configuration", configuration
+          "OutDir", prefix + outputPath
+          "WebProjectOutputDir", prefix + outputPath + "/" + projectName ] [ projectFile ]
+        |> ignore
+    !!(projectDir + "/bin/*.*") |> Copy(outputPath + "/" + projectName + "/bin/")
+    traceEndTask "BuildWebsite" projectFile
 
 /// Builds the given web project file with debug configuration and copies it to the given outputPath.
 /// ## Parameters
