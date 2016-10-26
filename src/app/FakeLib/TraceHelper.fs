@@ -149,13 +149,15 @@ let traceEndTarget name =
     sendCloseBlock name
 
 /// Traces the begin of a task
-let private traceStartTask task description = 
+[<Obsolete("use 'traceStartTaskUsing' with the 'use' pattern instead of traceStartTask / traceEndTask")>]
+let traceStartTask task description = 
     openTag "task"
     OpenTag("task", task) |> postMessage
     ReportProgressStart <| sprintf "Task: %s %s" task description
 
 /// Traces the end of a task
-let private traceEndTask task description = 
+[<Obsolete("use 'traceStartTaskUsing' with the 'use' pattern instead of traceStartTask / traceEndTask")>]
+let traceEndTask task description = 
     closeTag "task"
     ReportProgressFinish <| sprintf "Task: %s %s" task description
 
