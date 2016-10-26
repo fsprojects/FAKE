@@ -159,7 +159,6 @@ let parse version =
         | maj::min::[] -> Int32.Parse maj, Int32.Parse min, 0
         | maj::[] -> Int32.Parse maj, 0, 0
         | [] -> 0,0,0
-        | _ -> failwith "unknown semver format"
     
     
     let buildParts = Option.map (fun b -> splitRemove '.' b) build
