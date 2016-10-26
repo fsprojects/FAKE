@@ -47,7 +47,7 @@ let SpecFlowDefaults = {
 let SpecFlow setParams =    
     let parameters = setParams SpecFlowDefaults
 
-    traceStartTask "SpecFlow " parameters.SubCommand
+    use __ = traceStartTaskUsing "SpecFlow " parameters.SubCommand
 
     let tool = parameters.ToolPath @@ parameters.ToolName
 
@@ -77,5 +77,5 @@ let SpecFlow setParams =
             info.Arguments <- args) System.TimeSpan.MaxValue
 
     match result with
-    | 0 -> traceEndTask "SpecFlow " parameters.SubCommand
+    | 0 -> ()
     | _ -> failwithf "SpecFlow %s failed. Process finished with exit code %i" parameters.SubCommand result

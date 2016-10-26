@@ -31,7 +31,7 @@ let DocuDefaults =
 ///  - `assemblies` - Sequence of one or more assemblies containing the XML docs.
 let Docu setParams assemblies = 
     let details = assemblies |> separated ", "
-    traceStartTask "Docu" details
+    use __ = traceStartTaskUsing "Docu" details
     let parameters = DocuDefaults |> setParams
     
     let files = 
@@ -46,4 +46,3 @@ let Docu setParams assemblies =
                 info.FileName <- parameters.ToolPath |> FullName
                 info.Arguments <- args) parameters.TimeOut
     then failwith "Documentation generation failed."
-    traceEndTask "Docu" details

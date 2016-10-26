@@ -183,7 +183,7 @@ let private getSortedAndNumberedAttributes (attrs: seq<Attribute>) =
 /// Creates a C# AssemblyInfo file with the given attributes and configuration.
 /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
 let CreateCSharpAssemblyInfoWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
-    traceStartTask "AssemblyInfo" outputFileName
+    use __ = traceStartTaskUsing "AssemblyInfo" outputFileName
     let generateClass, useNamespace, emitResharperSupressions = config.GenerateClass, config.UseNamespace, config.EmitResharperSuppressions
 
     let  dependencies =
@@ -226,12 +226,11 @@ let CreateCSharpAssemblyInfoWithConfig outputFileName attributes (config : Assem
 
     attributeLines @ sourceLines
     |> writeToFile outputFileName
-    traceEndTask "AssemblyInfo" outputFileName
 
 /// Creates a F# AssemblyInfo file with the given attributes and configuration.
 /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
 let CreateFSharpAssemblyInfoWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
-    traceStartTask "AssemblyInfo" outputFileName
+    use __ = traceStartTaskUsing "AssemblyInfo" outputFileName
     let generateClass, useNamespace = config.GenerateClass, config.UseNamespace
 
     let sourceLines =
@@ -257,12 +256,11 @@ let CreateFSharpAssemblyInfoWithConfig outputFileName attributes (config : Assem
         ]
 
     sourceLines |> writeToFile outputFileName
-    traceEndTask "AssemblyInfo" outputFileName
 
 /// Creates a VB AssemblyInfo file with the given attributes and configuration.
 /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.
 let CreateVisualBasicAssemblyInfoWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
-    traceStartTask "AssemblyInfo" outputFileName
+    use __ = traceStartTaskUsing "AssemblyInfo" outputFileName
     let generateClass, useNamespace = config.GenerateClass, config.UseNamespace
 
     let attributeLines =
@@ -284,12 +282,11 @@ let CreateVisualBasicAssemblyInfoWithConfig outputFileName attributes (config : 
 
     attributeLines @ sourceLines
     |> writeToFile outputFileName
-    traceEndTask "AssemblyInfo" outputFileName
 
 /// Creates a C++/CLI AssemblyInfo file with the given attributes and configuration.
 /// Does not generate an AssemblyVersionInformation class.
 let CreateCppCliAssemblyInfoWithConfig outputFileName attributes (config : AssemblyInfoFileConfig) =
-    traceStartTask "AssemblyInfo" outputFileName
+    use __ = traceStartTaskUsing "AssemblyInfo" outputFileName
     let generateClass, useNamespace = config.GenerateClass, config.UseNamespace
     //C++/CLI namespaces cannot be fully qualified; you must
     // namespace Namespace1 {  namespace Namespace2 { }} //etc
@@ -303,7 +300,6 @@ let CreateCppCliAssemblyInfoWithConfig outputFileName attributes (config : Assem
 
     attributeLines
     |> writeToFile outputFileName
-    traceEndTask "AssemblyInfo" outputFileName
 
 /// Creates a C# AssemblyInfo file with the given attributes.
 /// The generated AssemblyInfo file contains an AssemblyVersionInformation class which can be used to retrieve the current version no. from inside of an assembly.

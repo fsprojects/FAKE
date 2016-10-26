@@ -79,8 +79,7 @@ let buildArgs (param: NugetInstallParams) =
 ///  - `setParams` - Function used to manipulate the default parameters.
 ///  - `packagesFile` - Path to the `*.sln`, `*.*proj` or `packages.config` file, or simply a NuGet package name
 let NugetInstall setParams packageName =
-    traceStartTask "NugetInstall" packageName
+    use __ = traceStartTaskUsing "NugetInstall" packageName
     let param = NugetInstallDefaults |> setParams
     let args = sprintf "install %s %s" packageName (buildArgs param)
     runNuGetTrial param.Retries param.ToolPath param.TimeOut args (fun () -> failwithf "Package install for %s failed." packageName)
-    traceEndTask "NugetInstall" packageName

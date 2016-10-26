@@ -29,7 +29,7 @@ let RegAsmDefaults =
 ///  - `setParams` - Function used to manipulate the default RegAsm parameters.
 ///  - `lib` - The assembly file name.
 let RegAsm setParams lib = 
-    traceStartTask "RegAsm" lib
+    use __ = traceStartTaskUsing "RegAsm" lib
     let parameters = setParams RegAsmDefaults
     let args = if parameters.ExportTypeLibrary then
                     sprintf "\"%s\" /tlb:\"%s\"" lib (replace ".dll" ".tlb" lib)
@@ -40,14 +40,13 @@ let RegAsm setParams lib =
                 info.WorkingDirectory <- parameters.WorkingDir
                 info.Arguments <- args) parameters.TimeOut
     then failwithf "RegAsm %s failed." args
-    traceEndTask "RegAsm" lib
 
 /// Executes `RegAsm.exe` with the `/codebase` `/tlb` option
 ///
 /// Used to temporarily register any .net dependencies before running 
 /// a VB6 build
 let public RegisterAssembliesWithCodebase workingDir (assemblies:string seq) =
-    traceStartTask "Regasm with codebase" "Registering assemblies with codebase, expect warnings"
+    use __ = traceStartTaskUsing "Regasm with codebase" "Registering assemblies with codebase, expect warnings"
     let registerAssemblyWithCodebase assembly =
         async {
             let! regAsmResult = 
@@ -64,14 +63,13 @@ let public RegisterAssembliesWithCodebase workingDir (assemblies:string seq) =
     |> Async.Parallel
     |> Async.RunSynchronously
     |> ignore
-    traceEndTask "Regasm with codebase" "Registering assemblies with codebase, expect warnings"
 
 /// Executes `Regasm.exe` with the `/codebase /tlb /unregister` options
 ///
 /// Used to unregegister any temporarily registerd .net dependencies
 /// _after_ running a VB6 build
 let public UnregisterAssemblies workingDir (assemblies:string seq) =
-    traceStartTask "Regasm /unregister with codebase" "Registering assemblies with codebase, expect warnings"
+    use __ = traceStartTaskUsing "Regasm /unregister with codebase" "Registering assemblies with codebase, expect warnings"
     let registerAssemblyWithCodebase assembly =
         async {
             let! regAsmResult = 
@@ -88,4 +86,3 @@ let public UnregisterAssemblies workingDir (assemblies:string seq) =
     |> Async.Parallel
     |> Async.RunSynchronously
     |> ignore
-    traceEndTask "Regasm /unregister with codebase" "Registering assemblies with codebase, expect warnings"

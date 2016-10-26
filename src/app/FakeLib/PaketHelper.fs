@@ -87,7 +87,7 @@ let PaketRestoreDefaults() : PaketRestoreParams =
 ///  - `setParams` - Function used to manipulate the default parameters.
 let Pack setParams =
     let parameters : PaketPackParams = PaketPackDefaults() |> setParams
-    traceStartTask "PaketPack" parameters.WorkingDir
+    use __ = traceStartTaskUsing "PaketPack" parameters.WorkingDir
 
     let xmlEncode (notEncodedText : string) =
         if String.IsNullOrWhiteSpace notEncodedText then ""
@@ -114,7 +114,6 @@ let Pack setParams =
                 info.Arguments <- sprintf "pack output \"%s\" %s" parameters.OutputPath cmdArgs) parameters.TimeOut
 
     if packResult <> 0 then failwithf "Error during packing %s." parameters.WorkingDir
-    traceEndTask "PaketPack" parameters.WorkingDir
 
 /// Pushes all NuGet packages in the working dir to the server by using Paket push.
 /// ## Parameters
@@ -128,7 +127,7 @@ let Push setParams =
     let endpoint = if String.IsNullOrWhiteSpace parameters.EndPoint then "" else " endpoint " + toParam parameters.EndPoint
     let key = if String.IsNullOrWhiteSpace parameters.ApiKey then "" else " apikey " + toParam parameters.ApiKey
 
-    traceStartTask "PaketPush" (separated ", " packages)
+    use __ = traceStartTaskUsing "PaketPush" (separated ", " packages)
 
     if parameters.DegreeOfParallelism > 0 then
         /// Returns a sequence that yields chunks of length n.
@@ -166,8 +165,6 @@ let Push setParams =
                     info.WorkingDirectory <- parameters.WorkingDir
                     info.Arguments <- sprintf "push %s%s%s file %s" url endpoint key (toParam package)) parameters.TimeOut
             if pushResult <> 0 then failwithf "Error during pushing %s." package
-
-    traceEndTask "PaketPush" (separated ", " packages)
 
 /// Returns the dependencies from specified paket.references file
 let GetDependenciesForReferencesFile (referencesFile:string) =
@@ -219,7 +216,7 @@ let Restore setParams =
         then (sprintf " --references-files %s " (System.String.Join(" ", parameters.ReferenceFiles)))
         else ""
     
-    traceStartTask "PaketRestore" parameters.WorkingDir 
+    use __ = traceStartTaskUsing "PaketRestore" parameters.WorkingDir 
 
     let restoreResult = 
         ExecProcess (fun info ->
@@ -228,4 +225,3 @@ let Restore setParams =
             info.Arguments <- sprintf "restore %s%s%s%s" forceRestore onlyReferenced groupArg referencedFiles) parameters.TimeOut
 
     if restoreResult <> 0 then failwithf "Error during restore %s." parameters.WorkingDir
-    traceEndTask "PaketRestore" parameters.WorkingDir

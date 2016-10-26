@@ -41,7 +41,7 @@ let DocFxDefaults =
 let DocFx setParams = 
     let parameters = DocFxDefaults |> setParams
     
-    traceStartTask "DocFx" parameters.DocFxJson
+    use __ = traceStartTaskUsing "DocFx" parameters.DocFxJson
     
     let serveArg = if parameters.Serve then "--serve" else ""
     let configArg = parameters.DocFxJson |> FullName
@@ -54,6 +54,4 @@ let DocFx setParams =
           info.WorkingDirectory <- parameters.WorkingDirectory
         ) parameters.Timeout
       then failwith "DocFx generation failed."
-
-    traceEndTask "DocFx" parameters.DocFxJson
     

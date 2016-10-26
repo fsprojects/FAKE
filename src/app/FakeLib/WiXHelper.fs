@@ -1777,7 +1777,7 @@ let generateMajorUpgradeVersion setParams =
 
 /// Runs the [Candle tool](http://wixtoolset.org/documentation/manual/v3/overview/candle.html) on the given WiX script with the given parameters
 let Candle (parameters : WiXParams) wixScript = 
-    traceStartTask "Candle" wixScript
+    use __ = traceStartTaskUsing "Candle" wixScript
     let fi = fileInfo wixScript
     let wixObj = fi.Directory.FullName @@ sprintf @"%s.wixobj" fi.Name
     let tool = parameters.ToolDirectory @@ "candle.exe"
@@ -1789,12 +1789,11 @@ let Candle (parameters : WiXParams) wixScript =
                 info.WorkingDirectory <- null
                 info.Arguments <- args) parameters.TimeOut
     then failwithf "Candle %s failed." args
-    traceEndTask "Candle" wixScript
     wixObj
 
 /// Runs the [Light tool](http://wixtoolset.org/documentation/manual/v3/overview/light.html) on the given WiX script with the given parameters
 let Light (parameters : WiXParams) outputFile wixObj = 
-    traceStartTask "Light" wixObj
+    use __ = traceStartTaskUsing "Light" wixObj
     let tool = parameters.ToolDirectory @@ "light.exe"
     let args = 
         sprintf "\"%s\" -spdb -dcl:high -out \"%s\" %s" (wixObj |> FullName) (outputFile |> FullName) 
@@ -1805,7 +1804,6 @@ let Light (parameters : WiXParams) outputFile wixObj =
                 info.WorkingDirectory <- null
                 info.Arguments <- args) parameters.TimeOut
     then failwithf "Light %s failed." args
-    traceEndTask "Light" wixObj
 
 /// Uses the WiX tools [Candle](http://wixtoolset.org/documentation/manual/v3/overview/candle.html) and [Light](http://wixtoolset.org/documentation/manual/v3/overview/light.html) to create an msi.
 /// ## Parameters
@@ -1898,7 +1896,7 @@ let HeatDefaulParams =
 ///  - `outputFile` - The output file path given to Heat.
 ///
 let HarvestDirectory (setParams : HeatParams -> HeatParams) directory outputFile = 
-    traceStartTask "Heat" directory
+    use __ = traceStartTaskUsing "Heat" directory
     let conditionalArgument condition arg args =
         match condition with
             | true ->  arg :: args
@@ -1928,6 +1926,5 @@ let HarvestDirectory (setParams : HeatParams -> HeatParams) directory outputFile
                 info.WorkingDirectory <- null
                 info.Arguments <- args) parameters.TimeOut
     then failwithf "Heat %s failed." args
-    traceEndTask "Heat" directory
 
 

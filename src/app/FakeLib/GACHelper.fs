@@ -28,7 +28,7 @@ let GACDefaults =
 /// Runs gacutil with the given command.
 let GAC setParams command = 
     let taskName = "GAC"
-    traceStartTask taskName command
+    use __ = traceStartTaskUsing taskName command
     let param = setParams GACDefaults
     
     let ok = 
@@ -37,5 +37,3 @@ let GAC setParams command =
             if param.WorkingDir <> String.Empty then info.WorkingDirectory <- param.WorkingDir
             info.Arguments <- command) param.TimeOut
     if not ok then failwithf "gacutil reported errors."
-
-    traceEndTask taskName command

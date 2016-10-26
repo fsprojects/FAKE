@@ -272,11 +272,10 @@ module internal Rendering =
 ///        )
 ///    )
 let PaketTemplate setParams =
-    traceStartTask "PaketTemplate" ""
+    use __ = traceStartTaskUsing "PaketTemplate" ""
     let parameters = setParams DefaultPaketTemplateParams
     let filePath = match parameters.TemplateFilePath with
                    | Some v -> v
                    | _ -> "paket.template"
 
     WriteStringToFile false filePath (Rendering.createLines parameters)
-    traceEndTask "PaketTemplate" ""

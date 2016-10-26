@@ -77,7 +77,7 @@ let buildOpenCoverArgs param targetArgs =
 let OpenCover setParams targetArgs = 
     let taskName = "OpenCover"
     let description = "Gathering coverage statistics"
-    traceStartTask taskName description
+    use __ = traceStartTaskUsing taskName description
     let param = setParams OpenCoverDefaults
     
     let processArgs = buildOpenCoverArgs param targetArgs
@@ -88,4 +88,3 @@ let OpenCover setParams targetArgs =
             if param.WorkingDir <> String.Empty then info.WorkingDirectory <- param.WorkingDir
             info.Arguments <- processArgs) param.TimeOut
     if not ok then failwithf "OpenCover reported errors."
-    traceEndTask taskName description

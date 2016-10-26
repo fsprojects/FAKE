@@ -66,10 +66,9 @@ let SonarQubeCall (call: SonarQubeCall) (parameters : SonarQubeParams) =
 ///      Version = "1.0 })
 ///
 let SonarQube (call: SonarQubeCall) setParams = 
-    traceStartTask "SonarQube" (call.ToString())
+    use __ = traceStartTaskUsing "SonarQube" (call.ToString())
     let parameters = setParams SonarQubeDefaults
     SonarQubeCall call parameters
-    traceEndTask "SonarQube" (call.ToString())
 
 /// This task can be used to run the end command of [Sonar Qube](http://sonarqube.org/) on a project.
 ///

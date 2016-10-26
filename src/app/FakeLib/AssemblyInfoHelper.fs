@@ -130,7 +130,7 @@ let generateFile param (attributes : Dictionary<string, string>) imports (writer
 [<Obsolete("Please use the new AssemblyInfoFile tasks")>]
 let AssemblyInfo setParams = 
     let param' = setParams AssemblyInfoDefaults
-    traceStartTask "AssemblyInfo" param'.OutputFileName
+    use __ = traceStartTaskUsing "AssemblyInfo" param'.OutputFileName
     let param'' = 
         if param'.AssemblyFileVersion <> String.Empty then param'
         else { param' with AssemblyFileVersion = param'.AssemblyVersion }
@@ -199,7 +199,6 @@ let AssemblyInfo setParams =
     writer.Flush()
     writer.Close()
     tracefn "Created AssemblyInfo file \"%s\"." param.OutputFileName
-    traceEndTask "AssemblyInfo" param'.OutputFileName
 
 type AssemblyInfoReplacementParams = 
     { OutputFileName : string

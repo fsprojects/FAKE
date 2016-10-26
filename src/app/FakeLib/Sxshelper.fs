@@ -128,7 +128,7 @@ let private embedManiFestAsync workingDir (asyncData: Async<string*string>) =
 /// difficult to create through other means.
 /// The important info is then put into a valid base manifest and embedded into the assembly as a resource.
 let AddEmbeddedAssemblyManifest workingDir (assemblies: string seq) =
-     traceStartTask "AddEmbeddedAssemblyManifest" (sprintf "Adding assembly manifests to %i assemlbies" (assemblies |> Seq.length)) 
+     use __ = traceStartTaskUsing "AddEmbeddedAssemblyManifest" (sprintf "Adding assembly manifests to %i assemlbies" (assemblies |> Seq.length)) 
      let createManifestPath assembly =
             workingDir @@ ((Path.GetFileNameWithoutExtension assembly) + ".manifest")
 
@@ -169,7 +169,6 @@ let AddEmbeddedAssemblyManifest workingDir (assemblies: string seq) =
      |> Async.Parallel
      |> Async.RunSynchronously
      |> ignore
-     traceEndTask "AddEmbeddedAssemblyManifest" (sprintf "Adding assembly manifests to %i assemlbies" (assemblies |> Seq.length)) 
 
 /// Gets `name`, `path', `version` and interop `Guid` for those of the provided assemblies that have 
 /// all of the required information.
@@ -284,7 +283,7 @@ let GetInteropAssemblyData workingDir assemblies =
 ///  - `workingdir` - somewhere to put any temporary files
 ///  - `applications` - Metadata about executables to create manifests for.
 let public AddEmbeddedApplicationManifest workingDir (applications: InteropApplicationData seq) = 
-    traceStartTask "AddEmbeddedApplicationManifest" (sprintf "Adding embedded application manifest to %i applications" (applications |> Seq.length))
+    use __ = traceStartTaskUsing "AddEmbeddedApplicationManifest" (sprintf "Adding embedded application manifest to %i applications" (applications |> Seq.length))
     let applicationManifestBase = 
         """
         <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -336,4 +335,3 @@ let public AddEmbeddedApplicationManifest workingDir (applications: InteropAppli
     |> Async.Parallel
     |> Async.RunSynchronously
     |> ignore
-    traceEndTask "AddEmbeddedApplicationManifest" (sprintf "Adding embedded application manifest to %i applications" (applications |> Seq.length))

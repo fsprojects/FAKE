@@ -183,39 +183,35 @@ let private export connectionInfo filter fileName =
 
 /// Exports objects from the Dynamics NAV client based on the given filter to the given .txt or .fob file
 let ExportObjects connectionInfo filter fileName = 
-    traceStartTask "ExportObjects" fileName
+    use __ = traceStartTaskUsing "ExportObjects" fileName
     export connectionInfo filter fileName
-    traceEndTask "ExportObjects" fileName
 
 /// Exports all objects from the Dynamics NAV client to the given .txt or .fob file
 let ExportAllObjects connectionInfo fileName = 
-    traceStartTask "ExportAllObjects" fileName
+    use __ = traceStartTaskUsing "ExportAllObjects" fileName
     export connectionInfo "" fileName
-    traceEndTask "ExportAllObjects" fileName
 
 /// Imports the given .txt or .fob file into the Dynamics NAV client
 let ImportFile connectionInfo fileName = 
-    traceStartTask "ImportFile" fileName
+    use __ = traceStartTaskUsing "ImportFile" fileName
     import connectionInfo fileName
-    traceEndTask "ImportFile" fileName
 
 /// Creates an import file from the given .txt files.
 let CreateImportFile importFileName files = 
     let details = importFileName
-    traceStartTask "CreateImportFile" details
+    use __ = traceStartTaskUsing "CreateImportFile" details
     files
     |> Seq.toList
     |> List.sortBy (fun name -> 
            let firstLine = (ReadFile name |> Seq.head).Split(' ')
            firstLine.[3], firstLine.[2])
     |> AppendTextFiles importFileName
-    traceEndTask "CreateImportFile" details
 
 /// Creates an import file from the given .txt files and imports it into the Dynamics NAV client.
 /// If the import fails, then every file will be tried alone.
 let ImportFiles connectionInfo importFileName files = 
     let details = importFileName
-    traceStartTask "ImportFiles" details
+    use __ = traceStartTaskUsing "ImportFiles" details
     CreateImportFile importFileName files
     try 
         ImportFile connectionInfo importFileName
@@ -225,12 +221,11 @@ let ImportFiles connectionInfo importFileName files =
                          ImportFile connectionInfo file
                      with _ -> ())
         raise exn
-    traceEndTask "ImportFiles" details
 
 /// Compiles all uncompiled objects in the Dynamics NAV client.
 let CompileAll connectionInfo = 
     let details = ""
-    traceStartTask "CompileAll" details
+    use __ = traceStartTaskUsing "CompileAll" details
     let args = 
         sprintf "command=compileobjects, filter=\"Compiled=0\", logfile=\"%s\", servername=\"%s\", database=\"%s\"" 
             (FullName connectionInfo.TempLogFile) connectionInfo.ServerName connectionInfo.Database
@@ -239,7 +234,6 @@ let CompileAll connectionInfo =
                 info.WorkingDirectory <- connectionInfo.WorkingDir
                 info.Arguments <- args) connectionInfo.TimeOut
     then reportError "CompileAll failed" connectionInfo.TempLogFile
-    traceEndTask "CompileAll" details
 
 /// The parameter type allows to interact with Dynamics NAV RTC.
 type RTCParams = 
@@ -268,7 +262,7 @@ let createRTCConnectionInfo navClientVersion serverName serviceTierName port com
 /// Runs a codeunit with the given ID on the RTC client
 let RunCodeunit connectionInfo (codeunitID : int) = 
     let details = codeunitID.ToString()
-    traceStartTask "Running Codeunit" details
+    use __ = traceStartTaskUsing "Running Codeunit" details
     let args = 
         sprintf "-consolemode \"DynamicsNAV://%s:%d/%s/%s/runcodeunit?codeunit=%d\" -ShowNavigationPage:0" 
             connectionInfo.ServerName connectionInfo.Port connectionInfo.ServiceTierName connectionInfo.Company 
@@ -282,19 +276,17 @@ let RunCodeunit connectionInfo (codeunitID : int) =
     if exitCode <> 0 && exitCode <> 255 then 
         reportError (sprintf "Running codeunit %d failed with ExitCode %d" codeunitID exitCode) 
             connectionInfo.TempLogFile
-    traceEndTask "Running Codeunit" details
 
 /// Opens a page with the given ID on the RTC client
 let OpenPage connectionInfo pageNo = 
     let details = sprintf "%d" pageNo
-    traceStartTask "OpenPage" details
+    use __ = traceStartTaskUsing "OpenPage" details
     let protocol = 
         sprintf @"dynamicsnav://%s:%d/%s/%s/runpage?page=%d" connectionInfo.ServerName connectionInfo.Port 
             connectionInfo.ServiceTierName connectionInfo.Company pageNo
     let p = new Process()
     p.StartInfo <- new ProcessStartInfo(protocol)
     let result = p.Start()
-    traceEndTask "OpenPage" details
     result
 
 /// Returns all running NAV processes.
@@ -308,14 +300,13 @@ let getNAVProcesses() =
 /// Closes all running Dynamics NAV instances
 let CloseAllNavProcesses raiseExceptionIfNotFound = 
     let details = ""
-    traceStartTask "CloseNAV" details
+    use __ = traceStartTaskUsing "CloseNAV" details
     let closedProcesses = 
         getNAVProcesses()
         |> Seq.toList
         |> List.map (fun p -> try p.Kill() with | _ -> traceImportant <| sprintf "Could not kill all NAV process %O" p.Id)
 
     if closedProcesses = [] && raiseExceptionIfNotFound then failwith "Could not kill all NAV processes"
-    traceEndTask "CloseNAV" details
 
 /// Waits until all NAV processes have stopped or fails after given timeout.
 /// ## Parameters
@@ -431,7 +422,7 @@ let analyzeXmlTestResults (fileName : string) (testSuite : string) =
            Tests = tests }
 
 let StartNavServiceTier serverMode navClientVersion =
-    traceStartTask "StartNavServiceTier" ""
+    use __ = traceStartTaskUsing "StartNavServiceTier" ""
     match serverMode with
     | NavisionServerType.NativeServer -> ()
     | NavisionServerType.SqlServer ->
@@ -443,14 +434,12 @@ let StartNavServiceTier serverMode navClientVersion =
         | "800" ->
             StartService "MicrosoftDynamicsNavServer$DynamicsNAV80"
         | _ -> failwithf "NavServiceTier of version %s unknown." navClientVersion
-    traceEndTask "StartNavServiceTier" ""
 
 let StopNavServiceTier serverMode navClientVersion =
-    traceStartTask "StopNavServiceTier" ""
+    use __ = traceStartTaskUsing "StopNavServiceTier" ""
     match serverMode with
     | NavisionServerType.NativeServer -> ()
     | NavisionServerType.SqlServer -> 
         StopService "MicrosoftDynamicsNavServer$DynamicsNAV71"
         StopService "MicrosoftDynamicsNavServer$DynamicsNAV70"
         StopService "MicrosoftDynamicsNavServer$DynamicsNAV80"
-    traceEndTask "StopNavServiceTier" ""

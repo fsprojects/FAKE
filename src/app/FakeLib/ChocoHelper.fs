@@ -349,13 +349,12 @@ module Choco =
             let found = FindExe
             if found <> None then found.Value else failwith "Cannot find the choco executable."
 
-        traceStartTask "choco" args
+        use __ = traceStartTaskUsing "choco" args
         let setInfo (info:ProcessStartInfo) =
             info.FileName <- chocoExe
             info.Arguments <- args
         let result = ExecProcess (setInfo) timeout
         if result <> 0 then failwithf "choco failed with exit code %i." result
-        traceEndTask "choco" args
         
     let private getTempFolder =
         let tempFolder = directoryInfo (Path.GetTempPath() @@ "FakeChocolateyPack")

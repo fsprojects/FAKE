@@ -16,7 +16,7 @@ module Fake.NUnitSequential
 ///     )
 let NUnit (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) =
     let details = assemblies |> separated ", "
-    traceStartTask "NUnit" details
+    use __ = traceStartTaskUsing "NUnit" details
     let parameters = NUnitDefaults |> setParams
     let assemblies = assemblies |> Seq.toArray
     if Array.isEmpty assemblies then failwith "NUnit: cannot run tests (the assembly list is empty)."
@@ -37,9 +37,9 @@ let NUnit (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) =
     match parameters.ErrorLevel with
     | DontFailBuild -> 
         match result with
-        | OK | TestsFailed -> traceEndTask "NUnit" details
+        | OK | TestsFailed -> ()
         | _ -> raise (FailedTestsException(errorDescription result))
     | Error | FailOnFirstError -> 
         match result with
-        | OK -> traceEndTask "NUnit" details
+        | OK -> ()
         | _ -> raise (FailedTestsException(errorDescription result))

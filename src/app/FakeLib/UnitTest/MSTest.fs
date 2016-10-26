@@ -86,7 +86,7 @@ let buildMSTestArgs parameters assembly =
 ///     )
 let MSTest (setParams : MSTestParams -> MSTestParams) (assemblies : string seq) = 
     let details = assemblies |> separated ", "
-    traceStartTask "MSTest" details
+    use __ = traceStartTaskUsing "MSTest" details
     let parameters = MSTestDefaults |> setParams
     let assemblies = assemblies |> Seq.toArray
     if Array.isEmpty assemblies then failwith "MSTest: cannot run tests (the assembly list is empty)."
@@ -102,4 +102,3 @@ let MSTest (setParams : MSTestParams -> MSTestParams) (assemblies : string seq) 
             info.WorkingDirectory <- parameters.WorkingDir
             info.Arguments <- args) parameters.TimeOut
         |> failIfError assembly
-    traceEndTask "MSTest" details

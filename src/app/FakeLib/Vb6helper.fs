@@ -117,7 +117,7 @@ let private referenceLineFilter (l:string) = l.StartsWith("Reference") || l.Star
 ///  - `vb6Projects`- `Seq` of paths to `.vbp` files to build
 let public Vb6Make (getConfig: Vb6BuildParams->Vb6BuildParams) (vb6Projects: string seq) =
      let config = defaultVb6BuildParams |> getConfig
-     traceStartTask "Vb6Make" (sprintf "Building %i projects" (vb6Projects |> Seq.length))
+     use __ = traceStartTaskUsing "Vb6Make" (sprintf "Building %i projects" (vb6Projects |> Seq.length))
      let jobs = vb6Projects 
                 |> List.ofSeq 
                 |>  List.map (fun p -> 
@@ -189,7 +189,7 @@ let public Vb6Make (getConfig: Vb6BuildParams->Vb6BuildParams) (vb6Projects: str
 
      let failedJobs = completedWork |> List.filter (fun j -> not j.IsSuccessful)
      match failedJobs with
-     | [] -> traceEndTask "Vb6Make" (sprintf "Building %i projects" (vb6Projects |> Seq.length))
+     | [] -> ()
      | _  -> failwithf "Vb6 build failed after %A" (System.DateTime.Now - startTime)
 
 /// Returns application details for provided `.vbp` files.
@@ -274,7 +274,7 @@ let public GetVb6ApplicationProjDetails (projects: string seq) =
 ///  - `vb6Projects` - Paths to all `.vbp` files to build
 ///  - `possibleAssemblies` - Paths to assemblies that may be referenced by the VB6 projects
 let public RegisterDependenciesForDevelopment (getConfig: Vb6BuildParams->Vb6BuildParams) (vb6Projects: string seq) (possibleAssemblies: string seq) =
-    traceStartTask "RegisterDependenciesForDevelopment" (sprintf "Registering dependenices for %i projects" (vb6Projects |> Seq.length))
+    use __ = traceStartTaskUsing "RegisterDependenciesForDevelopment" (sprintf "Registering dependenices for %i projects" (vb6Projects |> Seq.length))
     let config = defaultVb6BuildParams |> getConfig 
     let details = vb6Projects |> GetVb6ApplicationProjDetails
     let interopReferences = possibleAssemblies |> GetInteropAssemblyData config.Logdir
@@ -287,7 +287,6 @@ let public RegisterDependenciesForDevelopment (getConfig: Vb6BuildParams->Vb6Bui
         })
     let dependenciesToRegister = applications |> Seq.collect (fun a -> a.Dependencies) |> Seq.distinct |> Seq.map (fun d -> d.Path)
     dependenciesToRegister |> RegisterAssembliesWithCodebase config.Logdir 
-    traceEndTask "RegisterDependenciesForDevelopment" (sprintf "Registering dependenices for %i projects" (vb6Projects |> Seq.length))
 
 /// Determins which of the provided assemblies are referenced by the 
 /// provided VB6 projects, and __un-registers__ them
@@ -297,7 +296,7 @@ let public RegisterDependenciesForDevelopment (getConfig: Vb6BuildParams->Vb6Bui
 ///  - `vb6Projects` - Paths to all `.vbp` files to build
 ///  - `possibleAssemblies` - Paths to assemblies that may be referenced by the VB6 projects
 let public UnRegisterDependenciesForDevelopment (getConfig: Vb6BuildParams->Vb6BuildParams) (vb6Projects: string seq) (possibleAssemblies: string seq) =
-    traceStartTask "UnRegisterDependenciesForDevelopment" (sprintf "Un-registering dependenices for %i projects" (vb6Projects |> Seq.length))
+    use __ = traceStartTaskUsing "UnRegisterDependenciesForDevelopment" (sprintf "Un-registering dependenices for %i projects" (vb6Projects |> Seq.length))
     let config = defaultVb6BuildParams |> getConfig 
     let details = vb6Projects |> GetVb6ApplicationProjDetails
     let interopReferences = possibleAssemblies |> GetInteropAssemblyData config.Logdir
@@ -310,7 +309,6 @@ let public UnRegisterDependenciesForDevelopment (getConfig: Vb6BuildParams->Vb6B
         })
     let dependenciesToRegister = applications |> Seq.collect (fun a -> a.Dependencies) |> Seq.distinct |> Seq.map (fun d -> d.Path)
     dependenciesToRegister |> UnregisterAssemblies config.Logdir
-    traceEndTask "UnRegisterDependenciesForDevelopment" (sprintf "Un-registering dependenices for %i projects" (vb6Projects |> Seq.length))
 
 
 /// All-In-one build and manifest function for VB6 __applications__ referencing .net __libraries__
@@ -331,7 +329,7 @@ let public UnRegisterDependenciesForDevelopment (getConfig: Vb6BuildParams->Vb6B
 /// 5. Generate and embed Side-By-Side interop appplication manifests in all generated VB6 executables
 /// 6. Generate and embed Side-By-Side interop assembly manifest in all referenced assemblies 
 let public BuildAndEmbedInteropManifests (getConfig: Vb6BuildParams->Vb6BuildParams) (vb6Projects: string seq) (possibleAssemblies: string seq) =
-    traceStartTask "BuildAndEmbedInteropManifests" (sprintf "Building and embedding for %i projects" (vb6Projects |> Seq.length))
+    use __ = traceStartTaskUsing "BuildAndEmbedInteropManifests" (sprintf "Building and embedding for %i projects" (vb6Projects |> Seq.length))
     let config = defaultVb6BuildParams |> getConfig 
     let details = vb6Projects |> GetVb6ApplicationProjDetails
     let interopReferences = possibleAssemblies |> GetInteropAssemblyData config.Logdir
@@ -348,7 +346,6 @@ let public BuildAndEmbedInteropManifests (getConfig: Vb6BuildParams->Vb6BuildPar
     dependenciesToRegister |> UnregisterAssemblies config.Logdir
     applications |> AddEmbeddedApplicationManifest config.Logdir
     dependenciesToRegister |> AddEmbeddedAssemblyManifest config.Logdir
-    traceEndTask "BuildAndEmbedInteropManifests" (sprintf "Building and embedding for %i projects" (vb6Projects |> Seq.length))
 
 /// Fixes dependency versions in VB6 project files 
 ///
@@ -366,7 +363,7 @@ let public BuildAndEmbedInteropManifests (getConfig: Vb6BuildParams->Vb6BuildPar
 /// Note: Vb6 Reference versions are __hex numbers__ not decimals like .net verions. This task handles
 ///       this difference automatically.
 let public UpdateDependencyVersions (getConfig: Vb6BuildParams->Vb6BuildParams) (vb6Projects: string seq) (possibleAssemblies: string seq) =
-    traceStartTask "UpdateDependencyVersion" (sprintf "Updating dependency versions for %i projects" (vb6Projects |> Seq.length))
+    use __ = traceStartTaskUsing "UpdateDependencyVersion" (sprintf "Updating dependency versions for %i projects" (vb6Projects |> Seq.length))
     let config = defaultVb6BuildParams |> getConfig 
     let details = vb6Projects |> GetVb6ApplicationProjDetails
     let interopReferences = possibleAssemblies |> GetInteropAssemblyData config.Logdir
@@ -408,4 +405,3 @@ let public UpdateDependencyVersions (getConfig: Vb6BuildParams->Vb6BuildParams) 
         |> writeProjectFileLines project.ProjectFile
 
     details |> Seq.choose projectNeedsUpdating |> Seq.iter updateProjectReferences
-    traceEndTask "UpdateDependencyVersion" (sprintf "Updating dependency versions for %i projects" (vb6Projects |> Seq.length))

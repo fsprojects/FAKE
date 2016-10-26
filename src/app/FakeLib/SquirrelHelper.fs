@@ -122,7 +122,7 @@ module internal ResultHandling =
 ///         SquirrelPack (fun p -> { p with WorkingDir = Some "./tmp" }) "./my.nupkg"
 ///     )
 let SquirrelPack setParams nugetPackage =
-    traceStartTask "Squirrel" ""
+    use __ = traceStartTaskUsing "Squirrel" ""
     let parameters = SquirrelDefaults |> setParams
     let args = buildSquirrelArgs parameters nugetPackage
     trace args
@@ -134,5 +134,3 @@ let SquirrelPack setParams nugetPackage =
             info.Arguments <- args) parameters.TimeOut
 
     ResultHandling.failBuildIfSquirrelReportedError result
-
-    traceEndTask "Squirrel" ""

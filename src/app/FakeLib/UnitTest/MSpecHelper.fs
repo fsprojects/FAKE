@@ -82,7 +82,7 @@ let buildMSpecArgs parameters assemblies =
 /// XmlOutputPath expects a full file path whereas the HtmlOutputDir expects a directory name
 let MSpec setParams assemblies = 
     let details = separated ", " assemblies
-    traceStartTask "MSpec" details
+    use __ = traceStartTaskUsing "MSpec" details
     let parameters = setParams MSpecDefaults
     let args = buildMSpecArgs parameters assemblies
     trace (parameters.ToolPath + " " + args)
@@ -92,6 +92,5 @@ let MSpec setParams assemblies =
                 info.Arguments <- args) parameters.TimeOut
     then 
         sprintf "MSpec test failed on %s." details |> match parameters.ErrorLevel with
-                                                      | Error | FailOnFirstError -> failwith
-                                                      | DontFailBuild -> traceImportant
-    traceEndTask "MSpec" details
+                                                        | Error | FailOnFirstError -> failwith
+                                                        | DontFailBuild -> traceImportant

@@ -338,7 +338,7 @@ let rec private publishSymbols parameters =
 ///  - `setParams` - Function used to manipulate the default NuGet parameters.
 ///  - `nuspecOrProjectFile` - The .nuspec or project file name.
 let NuGetPackDirectly setParams nuspecOrProjectFile =
-    traceStartTask "NuGetPackDirectly" nuspecOrProjectFile
+    use __ = traceStartTaskUsing "NuGetPackDirectly" nuspecOrProjectFile
     let parameters = NuGetDefaults() |> setParams
     try
          pack parameters nuspecOrProjectFile
@@ -347,7 +347,6 @@ let NuGetPackDirectly setParams nuspecOrProjectFile =
          else exn.Message)
         |> replaceAccessKey parameters.AccessKey
         |> failwith
-    traceEndTask "NuGetPackDirectly" nuspecOrProjectFile
 
 /// Creates a new NuGet package based on the given .nuspec file.
 /// ## Parameters
@@ -355,7 +354,7 @@ let NuGetPackDirectly setParams nuspecOrProjectFile =
 ///  - `setParams` - Function used to manipulate the default NuGet parameters.
 ///  - `nuspecOrProjectFile` - The .nuspec or project file name.
 let NuGetPack setParams nuspecOrProjectFile =
-    traceStartTask "NuGetPack" nuspecOrProjectFile
+    use __ = traceStartTaskUsing "NuGetPack" nuspecOrProjectFile
     let parameters = NuGetDefaults() |> setParams
     try
         match (createNuSpecFromTemplateIfNotProjFile parameters nuspecOrProjectFile) with
@@ -368,7 +367,6 @@ let NuGetPack setParams nuspecOrProjectFile =
          else exn.Message)
         |> replaceAccessKey parameters.AccessKey
         |> failwith
-    traceEndTask "NuGetPack" nuspecOrProjectFile
 
 /// Publishes a NuGet package to the nuget server.
 /// ## Parameters
@@ -376,9 +374,8 @@ let NuGetPack setParams nuspecOrProjectFile =
 ///  - `setParams` - Function used to manipulate the default NuGet parameters.
 let NuGetPublish setParams = 
     let parameters = NuGetDefaults() |> setParams
-    traceStartTask "NuGet-Push" (packageFileName parameters)
+    use __ = traceStartTaskUsing "NuGet-Push" (packageFileName parameters)
     publish parameters
-    traceEndTask "NuGet-Push" (packageFileName parameters)
 
 /// Creates a new NuGet package.
 /// ## Parameters
@@ -386,7 +383,7 @@ let NuGetPublish setParams =
 ///  - `setParams` - Function used to manipulate the default NuGet parameters.
 ///  - `nuspecFile` - The .nuspec file name.
 let NuGet setParams nuspecOrProjectFile = 
-    traceStartTask "NuGet" nuspecOrProjectFile
+    use __ = traceStartTaskUsing "NuGet" nuspecOrProjectFile
     let parameters = NuGetDefaults() |> setParams
     try 
         match (createNuSpecFromTemplateIfNotProjFile parameters nuspecOrProjectFile) with
@@ -403,7 +400,6 @@ let NuGet setParams nuspecOrProjectFile =
          else exn.Message)
         |> replaceAccessKey parameters.AccessKey
         |> failwith
-    traceEndTask "NuGet" nuspecOrProjectFile
 
 /// NuSpec metadata type
 type NuSpecPackage = 

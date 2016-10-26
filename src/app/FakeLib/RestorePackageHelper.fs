@@ -117,13 +117,11 @@ let buildNuGetArgs setParams packageId =
 
 /// Restores the given package from NuGet
 let RestorePackageId setParams packageId = 
-    traceStartTask "RestorePackageId" packageId
+    use __ = traceStartTaskUsing "RestorePackageId" packageId
     let parameters = RestoreSinglePackageDefaults |> setParams
 
     let args = buildNuGetArgs setParams packageId
     runNuGetTrial parameters.Retries parameters.ToolPath parameters.TimeOut args (fun () -> failwithf "Package installation of package %s failed." packageId)
-  
-    traceEndTask "RestorePackageId" packageId
 
 /// Restores the packages in the given packages.config file from NuGet.
 /// ## Parameters
@@ -142,7 +140,7 @@ let RestorePackageId setParams packageId =
 ///                  Retries = 4 })
 ///      )
 let RestorePackage setParams packageFile = 
-    traceStartTask "RestorePackage" packageFile
+    use __ = traceStartTaskUsing "RestorePackage" packageFile
     let (parameters:RestorePackageParams) = RestorePackageDefaults |> setParams
 
     let sources = parameters.Sources |> buildSources
@@ -152,8 +150,6 @@ let RestorePackage setParams packageFile =
         " \"-OutputDirectory\" \"" + (parameters.OutputPath |> FullName) + "\"" + sources
 
     runNuGetTrial parameters.Retries parameters.ToolPath parameters.TimeOut args (fun () -> failwithf "Package installation of %s generation failed." packageFile)
-                    
-    traceEndTask "RestorePackage" packageFile
 
 /// Restores all packages from NuGet to the default directories by scanning for packages.config files in any subdirectory.
 let RestorePackages() = 
@@ -177,7 +173,7 @@ let RestorePackages() =
 ///                  Retries = 4 })
 ///      )
 let RestoreMSSolutionPackages setParams solutionFile =
-    traceStartTask "RestoreSolutionPackages" solutionFile
+    use __ = traceStartTaskUsing "RestoreSolutionPackages" solutionFile
     let (parameters:RestorePackageParams) = RestorePackageDefaults |> setParams
 
     let sources = parameters.Sources |> buildSources
@@ -187,5 +183,3 @@ let RestoreMSSolutionPackages setParams solutionFile =
         " \"-OutputDirectory\" \"" + (parameters.OutputPath |> FullName) + "\"" + sources
 
     runNuGetTrial parameters.Retries parameters.ToolPath parameters.TimeOut args (fun () -> failwithf "Package restore of %s failed" solutionFile)
-
-    traceEndTask "RestoreSolutionPackages" solutionFile

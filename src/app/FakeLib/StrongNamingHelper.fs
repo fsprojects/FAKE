@@ -25,7 +25,7 @@ let StrongNameDefaults =
 /// Runs sn.exe with the given command.
 let StrongName setParams command = 
     let taskName = "StrongName"
-    traceStartTask taskName command
+    use __ = traceStartTaskUsing taskName command
     let param = setParams StrongNameDefaults
     
     let ok = 
@@ -34,8 +34,6 @@ let StrongName setParams command =
             if param.WorkingDir <> String.Empty then info.WorkingDirectory <- param.WorkingDir
             info.Arguments <- command) param.TimeOut
     if not ok then failwithf "SN.exe reported errors."
-
-    traceEndTask taskName command
 
 /// Registers the given assembly for verification skipping.
 let DisableVerification assembly key =

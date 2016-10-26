@@ -163,9 +163,8 @@ let MageSignDeploy (mp : MageParams) =
 
 /// Executes a full run of MAGE commands: first, it creates a new manifest file. Then it signs the manifest, deploys the application and finally signs the deployment.
 let MageRun (mp : MageParams) =
-  traceStartTask "Mage-Tool" mp.ApplicationFile
+  use __ = traceStartTaskUsing "Mage-Tool" mp.ApplicationFile
   MageCreateApp mp
   MageSignManifest mp
   MageDeployApp mp
   MageSignDeploy mp
-  traceEndTask "Mage-Tool" mp.ApplicationFile

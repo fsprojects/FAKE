@@ -36,7 +36,7 @@ type private AggFailedResult =
 ///     )
 let NUnitParallel (setParams : NUnitParams -> NUnitParams) (assemblies : string seq) = 
     let details = assemblies |> separated ", "
-    traceStartTask "NUnitParallel" details
+    use __ = traceStartTaskUsing "NUnitParallel" details
     let parameters = NUnitDefaults |> setParams
     let tool = parameters.ToolPath @@ parameters.ToolName
     
@@ -90,7 +90,7 @@ let NUnitParallel (setParams : NUnitParams -> NUnitParams) (assemblies : string 
               yield sprintf "NUnit test run for %s reported failed tests, check output file %s for details." 
                         r.AssemblyName parameters.OutputFile ]
     match List.filter (fun r -> r.ReturnCode <> 0) testRunResults with
-    | [] -> traceEndTask "NUnitParallel" details
+    | [] -> ()
     | failedResults -> 
         let aggResult = 
             List.fold (fun acc x -> 
@@ -105,9 +105,9 @@ let NUnitParallel (setParams : NUnitParams -> NUnitParams) (assemblies : string 
         match parameters.ErrorLevel with
         | DontFailBuild -> 
             match aggResult.WorseReturnCode with
-            | OK | TestsFailed -> traceEndTask "NUnit" details
+            | OK | TestsFailed -> ()
             | _ -> fail()
         | Error | FailOnFirstError -> 
             match aggResult.WorseReturnCode with
-            | OK -> traceEndTask "NUnit" details
+            | OK -> ()
             | _ -> fail()

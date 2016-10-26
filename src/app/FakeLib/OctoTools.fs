@@ -247,7 +247,7 @@ let Octo setParams =
     let args = commandLine octoParams.Command |>(+)<| serverCommandLine octoParams.Server
     let traceArgs = commandLine octoParams.Command |>(+)<| serverCommandLineForTracing octoParams.Server
     
-    traceStartTask "Octo " command
+    use __ = traceStartTaskUsing "Octo " command
     trace (tool + traceArgs)
         
     let result = 
@@ -258,5 +258,5 @@ let Octo setParams =
         ) octoParams.Timeout
 
     match result with
-    | 0 -> traceEndTask "Octo " command
+    | 0 -> ()
     | _ -> failwithf "Octo %s failed. Process finished with exit code %i" command result

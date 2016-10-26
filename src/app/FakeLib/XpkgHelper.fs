@@ -76,7 +76,7 @@ let private getPackageFileName parameters = sprintf "%s-%s.xam" parameters.Packa
 let xpkgPack setParams = 
     let parameters = XpkgDefaults() |> setParams
     let packageFileName = getPackageFileName parameters
-    traceStartTask "xpkgPack" packageFileName
+    use __ = traceStartTaskUsing "xpkgPack" packageFileName
     let fullPath = parameters.OutputPath @@ packageFileName
     
     let commandLineBuilder = 
@@ -106,14 +106,14 @@ let xpkgPack setParams =
             info.FileName <- parameters.ToolPath
             info.WorkingDirectory <- parameters.WorkingDir
             info.Arguments <- args) parameters.TimeOut
-    if result = 0 then traceEndTask "xpkgPack" packageFileName
+    if result = 0 then ()
     else failwithf "Create xpkg package failed. Process finished with exit code %d." result
 
 /// Validates a xpkg package based on the package file name
 let xpkgValidate setParams = 
     let parameters = XpkgDefaults() |> setParams
     let packageFileName = getPackageFileName parameters
-    traceStartTask "xpkgValidate" packageFileName
+    use __ = traceStartTaskUsing "xpkgValidate" packageFileName
     let fullPath = parameters.OutputPath @@ packageFileName
     
     let commandLineBuilder = 
@@ -128,5 +128,5 @@ let xpkgValidate setParams =
             info.FileName <- parameters.ToolPath
             info.WorkingDirectory <- parameters.WorkingDir
             info.Arguments <- args) parameters.TimeOut
-    if result = 0 then traceEndTask "xpkgValidate" packageFileName
+    if result = 0 then ()
     else failwithf "Validate xpkg package failed. Process finished with exit code %d." result

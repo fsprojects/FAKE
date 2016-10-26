@@ -84,7 +84,7 @@ let buildReportGeneratorArgs parameters (reports : string seq) =
 let ReportGenerator setParams (reports : string list) =
     let taskName = "ReportGenerator"
     let description = "Generating reports"
-    traceStartTask taskName description
+    use __ = traceStartTaskUsing taskName description
     let param = setParams ReportGeneratorDefaultParams
 
     let processArgs = buildReportGeneratorArgs param reports
@@ -95,4 +95,3 @@ let ReportGenerator setParams (reports : string list) =
             if param.WorkingDir <> String.Empty then info.WorkingDirectory <- param.WorkingDir
             info.Arguments <- processArgs) param.TimeOut
     if not ok then failwithf "ReportGenerator reported errors."
-    traceEndTask taskName description

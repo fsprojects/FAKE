@@ -61,7 +61,7 @@ let runConsoleTests parameters processes =
 ///           |> RunConsoleTests (fun p -> {p with TimeOut = TimeSpan.FromMinutes 1. })
 ///     )
 let RunConsoleTests setParams processes = 
-    traceStartTask "RunConsoleTests" ""
+    use __ = traceStartTaskUsing "RunConsoleTests" ""
     let parameters = setParams ProcessTestRunnerDefaults
     
     let execute() = 
@@ -78,4 +78,3 @@ let RunConsoleTests setParams processes =
             match RunConsoleTest parameters fileName args with
             | Some error -> failwithf "Process %s %s terminated with %s" fileName args error
             | _ -> ()
-    traceEndTask "RunConsoleTests" ""

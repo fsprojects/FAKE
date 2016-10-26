@@ -122,7 +122,7 @@ let buildXUnitArgs parameters assembly =
 [<Obsolete("Deprecated. This task will be removed in a future version. Open Fake.Testing to use the latest xUnit task.")>]
 let xUnit setParams assemblies =
     let details = separated ", " assemblies
-    traceStartTask "xUnit" details
+    use __ = traceStartTaskUsing "xUnit" details
     let parameters = setParams XUnitDefaults
 
     let runTests assembly =
@@ -134,11 +134,10 @@ let xUnit setParams assemblies =
 
     let failedTests =
         [ for asm in List.ofSeq assemblies do
-              if runTests asm |> not then yield asm ]
+                if runTests asm |> not then yield asm ]
 
     if not (List.isEmpty failedTests) then
         sprintf "xUnit failed for the following assemblies: %s" (separated ", " failedTests)
         |> match parameters.ErrorLevel with
-           | Error | FailOnFirstError -> failwith
-           | DontFailBuild -> traceImportant
-    traceEndTask "xUnit" details
+            | Error | FailOnFirstError -> failwith
+            | DontFailBuild -> traceImportant

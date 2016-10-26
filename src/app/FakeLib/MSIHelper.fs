@@ -28,7 +28,7 @@ let MSIDefaults =
 ///  - `setParams` - Function used to manipulate the default MSI parameters.
 ///  - `setup` - The setup file name.
 let Install setParams setup = 
-    traceStartTask "MSI-Install" setup
+    use __ = traceStartTaskUsing "MSI-Install" setup
     let parameters = setParams MSIDefaults
     let args = sprintf "%s /l* %s /i %s" (if parameters.Silent then "/qn" else "/qb") parameters.LogFile setup
 
@@ -38,8 +38,6 @@ let Install setParams setup =
         info.Arguments <- args) parameters.TimeOut && parameters.ThrowIfSetupFails 
     then
         failwithf "MSI-Install %s failed." args
-                  
-    traceEndTask "MSI-Install" setup
 
 /// Uninstalls a msi.
 /// ## Parameters
@@ -47,7 +45,7 @@ let Install setParams setup =
 ///  - `setParams` - Function used to manipulate the default MSI parameters.
 ///  - `setup` - The setup file name.
 let Uninstall setParams setup = 
-    traceStartTask "MSI-Uninstall" setup
+    use __ = traceStartTaskUsing "MSI-Uninstall" setup
     let parameters = setParams MSIDefaults
     let args = sprintf "%s /l* %s /x %s" (if parameters.Silent then "/qn" else "/qb") parameters.LogFile setup
     
@@ -57,5 +55,3 @@ let Uninstall setParams setup =
         info.Arguments <- args) parameters.TimeOut && parameters.ThrowIfSetupFails 
     then
         failwithf "MSI-Uninstall %s failed." args
-                  
-    traceEndTask "MSI-Uninstall" setup

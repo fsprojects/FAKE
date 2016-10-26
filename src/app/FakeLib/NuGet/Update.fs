@@ -65,8 +65,7 @@ let buildArgs (param: NugetUpdateParams) =
 ///  - `setParams` - Function used to manipulate the default parameters.
 ///  - `packagesFile` - Path to the `*.sln`, `*.*proj` or `packages.config` file.
 let NugetUpdate setParams packagesFile =
-    traceStartTask "NugetUpdate" packagesFile
+    use __ = traceStartTaskUsing "NugetUpdate" packagesFile
     let param = NugetUpdateDefaults |> setParams
     let args = sprintf "update %s %s" packagesFile (buildArgs param)
     runNuGetTrial param.Retries param.ToolPath param.TimeOut args (fun () -> failwithf "Package update for %s failed." packagesFile)
-    traceEndTask "NugetUpdate" packagesFile

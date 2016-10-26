@@ -110,7 +110,7 @@ let private buildArguments parameters file =
 ///         !! "src/**/*.ts"
 ///             |> TypeScriptCompiler (fun p -> { p with TimeOut = TimeSpan.MaxValue }) 
 let TypeScriptCompiler setParams files = 
-    traceStartTask "TypeScript" ""
+    use __ = traceStartTaskUsing "TypeScript" ""
     let parameters = setParams TypeScriptDefaultParams
     
     let callResults = 
@@ -128,4 +128,3 @@ let TypeScriptCompiler setParams files =
        |> not
     then Seq.iter traceError errors
     Seq.collect (fun x -> x.Messages) callResults |> Seq.iter trace
-    traceEndTask "TypeScript" ""

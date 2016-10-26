@@ -161,14 +161,13 @@ module CMake =
         // CMake expects the binary directory to be passed as an argument.
         let arguments = if (String.IsNullOrEmpty args) then "\"" + binaryDir + "\"" else args
         let fullCommand = cmakeExe + " " + arguments
-        traceStartTask "CMake" fullCommand
+        use __ = traceStartTaskUsing "CMake" fullCommand
         let setInfo (info:ProcessStartInfo) =
             info.FileName <- cmakeExe
             info.WorkingDirectory <- binaryDir
             info.Arguments <- arguments
         let result = ExecProcess (setInfo) timeout
         if result <> 0 then failwithf "CMake failed with exit code %i." result
-        traceEndTask "CMake" fullCommand
 
     /// Calls `cmake` to generate a project.
     /// ## Parameters
