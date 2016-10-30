@@ -1,3 +1,6 @@
+#### 4.43.0 - 30.10.2016
+* Better tracing of tasks in TeamCity - https://github.com/fsharp/FAKE/pull/1408
+
 #### 4.42.0 - 25.10.2016
 * Add option to emit SuppressMessage Attributes - https://github.com/fsharp/FAKE/pull/1406
 * Add language in NuGetParams - https://github.com/fsharp/FAKE/pull/1407
