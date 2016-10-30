@@ -1,5 +1,7 @@
 #### 4.43.0 - 30.10.2016
 * Better tracing of tasks in TeamCity - https://github.com/fsharp/FAKE/pull/1408
+* BUGFIX: getBranchName works language independent - https://github.com/fsharp/FAKE/pull/1409
+* Add support for the pin-project-references switch to PaketHelper - https://github.com/fsharp/FAKE/pull/1410
 
 #### 4.42.0 - 25.10.2016
 * Add option to emit SuppressMessage Attributes - https://github.com/fsharp/FAKE/pull/1406
