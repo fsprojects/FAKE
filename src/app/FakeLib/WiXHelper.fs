@@ -258,7 +258,7 @@ type WiXServiceConfig =
                 yield ("ThirdFailureActionType", w.ThirdFailureActionType.ToString())
             }
     override w.ToString() = 
-        sprintf "<ServiceConfig%s/>" 
+        sprintf "<ServiceConfig xmlns=\"http://schemas.microsoft.com/wix/UtilExtension\" %s/>" 
             (Seq.fold(fun acc (key, value) -> acc + sprintf " %s=\"%s\"" key value) "" (w.createAttributeList())) 
 
 let WiXServiceConfigDefaults =
