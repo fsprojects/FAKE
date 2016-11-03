@@ -1,3 +1,6 @@
+#### 4.44.2 - 03.11.2016
+*BUGFIX: Set Console.OutputEncoding <- System.Text.Encoding.UTF8 - https://github.com/fsharp/FAKE/pull/1414
+
 #### 4.44.1 - 03.11.2016
 * REVERT: Enable ServiceConfig element configuration in WixHelper - https://github.com/fsharp/FAKE/pull/1412
 

@@ -23,6 +23,7 @@ let startedProcesses = ConcurrentBag()
 
 /// [omit]
 let start (proc : Process) = 
+    System.Console.OutputEncoding <- System.Text.Encoding.UTF8
     if isMono && proc.StartInfo.FileName.ToLowerInvariant().EndsWith(".exe") then
         proc.StartInfo.Arguments <- "--debug \"" + proc.StartInfo.FileName + "\" " + proc.StartInfo.Arguments
         proc.StartInfo.FileName <- monoPath
