@@ -1,3 +1,6 @@
+#### 4.43.1 - 03.11.2016
+* BUGFIX: Moved process stdout encoding out of is silent check - https://github.com/fsharp/FAKE/pull/1414 
+
 #### 4.43.0 - 30.10.2016
 * Better tracing of tasks in TeamCity - https://github.com/fsharp/FAKE/pull/1408
 * BUGFIX: getBranchName works language independent - https://github.com/fsharp/FAKE/pull/1409
