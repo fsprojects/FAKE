@@ -1,3 +1,6 @@
+#### 4.44.1 - 03.11.2016
+* REVERT: Enable ServiceConfig element configuration in WixHelper - https://github.com/fsharp/FAKE/pull/1412
+
 #### 4.44.0 - 03.11.2016
 * Enable ServiceConfig element configuration in WixHelper - https://github.com/fsharp/FAKE/pull/1412
 * BUGFIX: Moved process stdout encoding out of is silent check - https://github.com/fsharp/FAKE/pull/1414 
