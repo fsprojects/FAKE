@@ -1,3 +1,6 @@
+#### 4.44.3 - 04.11.2016
+*BUGFIX: Added logic to allow parsing of git branch names which track - https://github.com/fsharp/FAKE/pull/1417
+
 #### 4.44.2 - 03.11.2016
 *BUGFIX: Set Console.OutputEncoding <- System.Text.Encoding.UTF8 - https://github.com/fsharp/FAKE/pull/1414
 
