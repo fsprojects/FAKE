@@ -52,6 +52,12 @@
 <p>Now download the latest <a href="http://fsharp.github.io/FAKE/FAKE-Calculator.zip">FAKE-Calculator.zip</a> from the <a href="https://github.com/fsharp/FAKE">FAKE project site</a>. This sample includes 3 tiny projects and has basically the following structure:</p>
 <ul>
 <li>
+.paket
+<ul>
+<li>paket.exe</li>
+</ul>
+</li>
+<li>
 src/app
 <ul>
 <li>Calculator (command line)</li>
@@ -79,30 +85,34 @@ tools
 </ul>
 <h2>Getting "FAKE - F# Make" started</h2>
 <p>In the root of the project you will find a build.bat file:</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-<span class="l">4: </span>
-<span class="l">5: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip"><code lang="batchfile">@echo off
 cls
-".nuget\NuGet.exe" "Install" "FAKE" "-OutputDirectory" "packages" "-ExcludeVersion"
+
+
+.paket\paket.exe restore
+if errorlevel 1 (
+  exit /b %errorlevel%
+)
+
 "packages\FAKE\tools\Fake.exe" build.fsx
 pause
 </code></pre></td></tr></table>
-<p>If you run this batch file from the command line then the latest FAKE version will be <a href="http://nuget.org/packages/FAKE/">downloaded via nuget</a> and your first FAKE script (build.fsx) will be executed. If everything works fine you will get the following output:</p>
-<p><img src="pics/gettingstarted/afterdownload.png" alt="alt text" title="Run the batch file" /></p>
-<h3>Paket Setup</h3>
-<p>Alternatively you can configure <a href="http://fsprojects.github.io/Paket">Paket</a> to install and manage FAKE as a dependency. You will have to <a href="http://fsprojects.github.io/Paket/installation.html">setup Paket</a> following the instructions specified in its documentation. In this example, the <a href="http://fsprojects.github.io/Paket/installation.html#Installation-per-repository">installation per repository</a> will be used.</p>
-<ul>
-<li>Create a <code>.paket</code> folder in the root of the <code>FAKE-Calculator</code> solution.</li>
-<li>Download the latest <a href="https://github.com/fsprojects/Paket/releases/latest">paket.bootstrapper.exe</a> into that folder.</li>
-<li>Run <code>$ .paket/paket.bootstrapper.exe</code> This will download the latest <code>paket.exe</code>.</li>
-<li>Commit <code>.paket/paket.bootstrapper.exe</code> into your repo and add <code>.paket/paket.exe</code> to your <code>.gitignore</code> file.</li>
-</ul>
+<p>If you run this batch file from the command line then the latest FAKE version will be <a href="http://nuget.org/packages/FAKE/">downloaded from nuget.org</a> and your first FAKE script (build.fsx) will be executed. If everything works fine you will get the following output:</p>
+<p><img src="pics/gettingstarted/afterdownloadpaket.png" alt="alt text" title="Run the batch file" /></p>
 <h3>Specifying dependencies</h3>
-<p>Create a <a href="http://fsprojects.github.io/Paket/dependencies-file.html"><code>paket.dependencies</code> file</a> in your project's root and specify FAKE as a dependency in it.
+<p>Open the <a href="http://fsprojects.github.io/Paket/dependencies-file.html"><code>paket.dependencies</code> file</a> in your project's root and specify a dependency in it. Currently it looks like the following:
 The file might look like this:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
@@ -134,41 +144,6 @@ The file might look like this:</p>
 </code></pre></td>
 </tr>
 </table>
-<p>You will have to replace the <code>build.bat</code> file contents with the following:</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
-<span class="l"> 2: </span>
-<span class="l"> 3: </span>
-<span class="l"> 4: </span>
-<span class="l"> 5: </span>
-<span class="l"> 6: </span>
-<span class="l"> 7: </span>
-<span class="l"> 8: </span>
-<span class="l"> 9: </span>
-<span class="l">10: </span>
-<span class="l">11: </span>
-<span class="l">12: </span>
-<span class="l">13: </span>
-<span class="l">14: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip"><code lang="batchfile">@echo off
-cls
-
-.paket\paket.bootstrapper.exe
-if errorlevel 1 (
-    exit /b %errorlevel%
-)
-
-.paket\paket.exe restore
-if errorlevel 1 (
-    exit /b %errorlevel%
-)
-
-packages\FAKE\tools\FAKE.exe build.fsx %*
-</code></pre></td></tr></table>
-<p>If you run this batch file from the command line, Paket will be bootstrapped and the paket dependencies will be restored before running the build script.
-In this case, then the latest FAKE version will be <a href="http://nuget.org/packages/FAKE/">downloaded via nuget</a>.
-If everything works fine you will get the following output:</p>
-<p><img src="pics/gettingstarted/afterdownloadpaket.png" alt="alt text" title="Run the batch file" /></p>
 <h3>The build script</h3>
 <p>Now open the <em>build.fsx</em> in Visual Studio or any text editor. It should look like this:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
