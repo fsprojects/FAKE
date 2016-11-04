@@ -16,6 +16,8 @@ In this tutorial you will learn how to set up a complete build infrastructure wi
 
 Now download the latest [FAKE-Calculator.zip](http://fsharp.github.io/FAKE/FAKE-Calculator.zip) from the [FAKE project site](https://github.com/fsharp/FAKE). This sample includes 3 tiny projects and has basically the following structure:
 
+* .paket
+	* paket.exe
 * src/app
 	* Calculator (command line)
 	* CalculatorLib (class library)
@@ -37,26 +39,23 @@ In the root of the project you will find a build.bat file:
     [lang=batchfile]
 	@echo off
 	cls
-	".nuget\NuGet.exe" "Install" "FAKE" "-OutputDirectory" "packages" "-ExcludeVersion"
+
+
+	.paket\paket.exe restore
+	if errorlevel 1 (
+	  exit /b %errorlevel%
+	)
+
 	"packages\FAKE\tools\Fake.exe" build.fsx
 	pause
 
-If you run this batch file from the command line then the latest FAKE version will be [downloaded via nuget](http://nuget.org/packages/FAKE/) and your first FAKE script (build.fsx) will be executed. If everything works fine you will get the following output:
+If you run this batch file from the command line then the latest FAKE version will be [downloaded from nuget.org](http://nuget.org/packages/FAKE/) and your first FAKE script (build.fsx) will be executed. If everything works fine you will get the following output:
 
-![alt text](pics/gettingstarted/afterdownload.png "Run the batch file")
-
-### Paket Setup
-
-Alternatively you can configure [Paket](http://fsprojects.github.io/Paket) to install and manage FAKE as a dependency. You will have to [setup Paket](http://fsprojects.github.io/Paket/installation.html) following the instructions specified in its documentation. In this example, the [installation per repository](http://fsprojects.github.io/Paket/installation.html#Installation-per-repository) will be used.
-
-  * Create a `.paket` folder in the root of the `FAKE-Calculator` solution.
-  * Download the latest [paket.bootstrapper.exe](https://github.com/fsprojects/Paket/releases/latest) into that folder.
-  * Run `$ .paket/paket.bootstrapper.exe` This will download the latest `paket.exe`.
-  * Commit `.paket/paket.bootstrapper.exe` into your repo and add `.paket/paket.exe` to your `.gitignore` file.
+![alt text](pics/gettingstarted/afterdownloadpaket.png "Run the batch file")
 
 ### Specifying dependencies
 
-Create a [`paket.dependencies` file](http://fsprojects.github.io/Paket/dependencies-file.html) in your project's root and specify FAKE as a dependency in it.
+Open the [`paket.dependencies` file](http://fsprojects.github.io/Paket/dependencies-file.html) in your project's root and specify a dependency in it. Currently it looks like the following:
 The file might look like this:
 
     source https://nuget.org/api/v2
@@ -73,30 +72,6 @@ This will create the [`paket.lock` file](http://fsprojects.github.io/Paket/lock-
         remote: https://nuget.org/api/v2
         specs:
             FAKE (4.7.2)
-
-You will have to replace the `build.bat` file contents with the following:
-
-    [lang=batchfile]
-    @echo off
-    cls
-    
-    .paket\paket.bootstrapper.exe
-    if errorlevel 1 (
-        exit /b %errorlevel%
-    )
-    
-    .paket\paket.exe restore
-    if errorlevel 1 (
-        exit /b %errorlevel%
-    )
-    
-    packages\FAKE\tools\FAKE.exe build.fsx %*
-    
-If you run this batch file from the command line, Paket will be bootstrapped and the paket dependencies will be restored before running the build script.
-In this case, then the latest FAKE version will be [downloaded via nuget](http://nuget.org/packages/FAKE/).
-If everything works fine you will get the following output:
-
-![alt text](pics/gettingstarted/afterdownloadpaket.png "Run the batch file")
 
 ### The build script
 
