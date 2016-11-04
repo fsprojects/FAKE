@@ -293,7 +293,7 @@ let rec private publish parameters =
     enableProcessTracing <- false
     let source = 
         if isNullOrEmpty parameters.PublishUrl then ""
-        else sprintf "-s %s" parameters.PublishUrl
+        else sprintf "-source %s" parameters.PublishUrl
     
     let args = sprintf "push \"%s\" %s %s" (parameters.OutputPath @@ packageFileName parameters
                                             |> FullName) parameters.AccessKey source
