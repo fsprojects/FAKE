@@ -41,7 +41,11 @@ let getBranchName repositoryDir =
         let replaceNoBranchString = "## HEAD ("
         let noBranch = "NoBranch"
 
-        if startsWith replaceNoBranchString s then noBranch else s.Substring(3)
+        if startsWith replaceNoBranchString s 
+            then noBranch
+            else match s.Contains("...") with
+                    | true  -> s.Substring(3,s.IndexOf("...")-3)
+                    | false -> s.Substring(3)
     with _ when (repositoryDir = "" || repositoryDir = ".") && buildServer = TeamFoundation ->
         match environVarOrNone "BUILD_SOURCEBRANCHNAME" with
         | None -> reraise()
