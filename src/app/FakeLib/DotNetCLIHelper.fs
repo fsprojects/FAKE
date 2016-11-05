@@ -10,27 +10,6 @@ open Newtonsoft.Json.Linq
 /// The dotnet command name
 let commandName = "dotnet"
 
-/// DotNet logger verbosity
-type Verbosity =
-| Debug
-| Verbose
-| Information
-| Minimal
-| Warning
-| Error
-
-/// The default log verbosity
-let DefaultVerbosity = Minimal
-
-let private verbosityString v =
-    match v with
-    | Debug -> "Debug"
-    | Verbose -> "Verbose"
-    | Information -> "Information"
-    | Minimal -> "Minimal"
-    | Warning -> "Warning"
-    | Error -> "Error"
-
 /// Gets the installed dotnet version
 let getVersion() = 
     let processResult = 
@@ -113,9 +92,6 @@ type RestoreParams = {
     /// Whether to use the NuGet cache.
     NoCache : bool
 
-    /// Log Verbosity.
-    Verbosity : Verbosity
-
     /// Additional Args
     AdditionalArgs : string list
 }
@@ -126,7 +102,6 @@ let private DefaultRestoreParams : RestoreParams = {
     NoCache = false
     Project = ""
     TimeOut = TimeSpan.FromMinutes 30.
-    Verbosity = DefaultVerbosity
     AdditionalArgs = []
 }
 
@@ -150,7 +125,6 @@ let Restore (setRestoreParams: RestoreParams -> RestoreParams) =
         |> append "restore"
         |> appendStringIfValueIsNotNullOrEmpty parameters.Project parameters.Project
         |> appendIfTrue parameters.NoCache "--no-cache"
-        |> appendWithoutQuotes (sprintf "--verbosity %s" (verbosityString parameters.Verbosity))
         |> fun sb ->
             parameters.AdditionalArgs
             |> List.fold (fun sb arg -> appendWithoutQuotes arg sb) sb

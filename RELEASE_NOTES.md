@@ -1,4 +1,4 @@
-#### 4.45.0 - 05.11.2016
+#### 4.45.1 - 05.11.2016
 * BREAKING CHANGE: Remove old DotNet helper and cleanup DotNetCli helper
 * BUGFIX: Worked around breaking change in NuGet 3.5 - https://github.com/fsharp/FAKE/issues/1415
 * BUGFIX: Added logic to allow parsing of git branch names which track - https://github.com/fsharp/FAKE/pull/1417
