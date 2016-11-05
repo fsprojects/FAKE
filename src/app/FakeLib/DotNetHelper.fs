@@ -138,6 +138,7 @@ let private DefaultRestoreParams : RestoreParams = {
 ///         (fun p -> 
 ///              { p with 
 ///                   NoCache = true })
+[<System.Obsolete("Please use Fake.DotNetCli instead")>]
 let Restore (setRestoreParams: RestoreParams -> RestoreParams) =
     use __ = traceStartTaskUsing "DotNet.Restore" ""
 
@@ -205,6 +206,7 @@ let private DefaultBuildParams : BuildParams = {
 ///         (fun p -> 
 ///              { p with 
 ///                   Configuration = "Release" })
+[<System.Obsolete("Please use Fake.DotNetCli instead")>]
 let Build (setBuildParams: BuildParams -> BuildParams) projects =
     use __ = traceStartTaskUsing "DotNet.Build" ""
 
@@ -276,6 +278,7 @@ let private DefaultTestParams : TestParams = {
 ///         (fun p -> 
 ///              { p with 
 ///                   Configuration = "Release" })
+[<System.Obsolete("Please use Fake.DotNetCli instead")>]
 let Test (setTestParams: TestParams -> TestParams) projects =
     use __ = traceStartTaskUsing "DotNet.Test" ""
 
@@ -347,6 +350,7 @@ let private DefaultPackParams : PackParams = {
 ///         (fun p -> 
 ///              { p with 
 ///                   Configuration = "Release" })
+[<System.Obsolete("Please use Fake.DotNetCli instead")>]
 let Pack (setPackParams: PackParams -> PackParams) projects =
     use __ = traceStartTaskUsing "DotNet.Pack" ""
 
