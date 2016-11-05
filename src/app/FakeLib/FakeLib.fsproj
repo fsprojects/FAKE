@@ -152,7 +152,6 @@
     <Compile Include="NuGet\NugetVersion.fs" />
     <Compile Include="TestFlightHelper.fs" />
     <Compile Include="DotNetCLIHelper.fs" />
-    <Compile Include="DotNetHelper.fs" />
     <Compile Include="DotCover.fs" />
     <Compile Include="PaketHelper.fs" />
     <Compile Include="PaketTemplateHelper.fs" />
