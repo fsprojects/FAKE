@@ -1,13 +1,8 @@
-#### 4.44.4 - 04.11.2016
+#### 4.45.0 - 05.11.2016
+* BREAKING CHANGE: Remove old DotNet helper and cleanup DotNetCli helper
 * BUGFIX: Worked around breaking change in NuGet 3.5 - https://github.com/fsharp/FAKE/issues/1415
-
-#### 4.44.3 - 04.11.2016
 * BUGFIX: Added logic to allow parsing of git branch names which track - https://github.com/fsharp/FAKE/pull/1417
-
-#### 4.44.2 - 03.11.2016
 * BUGFIX: Set Console.OutputEncoding <- System.Text.Encoding.UTF8 - https://github.com/fsharp/FAKE/pull/1414
-
-#### 4.44.1 - 03.11.2016
 * REVERT: Enable ServiceConfig element configuration in WixHelper - https://github.com/fsharp/FAKE/pull/1412
 
 #### 4.44.0 - 03.11.2016
