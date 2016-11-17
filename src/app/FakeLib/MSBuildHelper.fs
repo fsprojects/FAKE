@@ -149,7 +149,7 @@ let mutable MSBuildDefaults =
       Properties = []
       MaxCpuCount = Some None
       NoLogo = false
-      NodeReuse = not (buildServer = TeamCity || buildServer = TeamFoundation)
+      NodeReuse = not (buildServer = TeamCity || buildServer = TeamFoundation || buildServer = Jenkins)
       ToolsVersion = None
       Verbosity = None
       NoConsoleLogger = false
