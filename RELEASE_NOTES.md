@@ -1,3 +1,7 @@
+#### 4.45.2 - 05.11.2016
+* BUGFIX: Added try catch block to ignore error from setting console encoding - https://github.com/fsharp/FAKE/pull/1422
+* BUGFIX: Disable NodeReuse for MSBuild on Jenkins too - https://github.com/fsharp/FAKE/pull/1418
+
 #### 4.45.1 - 05.11.2016
 * BREAKING CHANGE: Remove old DotNet helper and cleanup DotNetCli helper
 * BUGFIX: Worked around breaking change in NuGet 3.5 - https://github.com/fsharp/FAKE/issues/1415
