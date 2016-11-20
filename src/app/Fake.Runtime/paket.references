@@ -3,7 +3,10 @@ FSharp.NET.Sdk
 Paket.Core
 Mono.Cecil
 FSharp.Core
-FSharp.Compiler.Service
+
 Microsoft.FSharp.Core.netcore
 System.Runtime.Loader
 NETStandard.Library
+
+group netcore
+    FSharp.Compiler.Service

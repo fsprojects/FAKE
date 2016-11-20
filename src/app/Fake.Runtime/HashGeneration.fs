@@ -13,7 +13,7 @@ module TokenizerHelper =
     type TokenizedScript =
         private { Tokens : Token list }
 
-    let getTokenized filePath defines lines = 
+    let getTokenized filePath defines lines =
         let tokenizer = FSharpSourceTokenizer(defines, filePath)
         /// Tokenize a single line of F# code
         let rec tokenizeLine (tokenizer:FSharpLineTokenizer) state =
@@ -24,7 +24,7 @@ module TokenizerHelper =
             |> Seq.takeWhile (fun (prev,cur, _) -> prev.IsSome || cur.IsSome)
             |> Seq.map (fun (_, cur, state) -> cur, state)
             |> Seq.toList
-          raw 
+          raw
           |> List.choose fst, raw |> List.tryLast |> Option.map snd
 
         lines
@@ -33,7 +33,7 @@ module TokenizerHelper =
           let tokens, newState = tokenizeLine tokenizer state
           let newState = defaultArg newState state
           tokens
-          |> List.map (fun (token) -> 
+          |> List.map (fun (token) ->
               { Representation = line.Substring(token.LeftColumn, token.RightColumn - token.LeftColumn + 1)
                 LineNumber = lineNr
                 TokenInfo = Some token })
@@ -41,7 +41,7 @@ module TokenizerHelper =
         |> Seq.collect (fst)
         |> Seq.toList
         |> fun t -> { Tokens = t }
-    
+
     let getHashableString { Tokens = tokens } =
         let mutable rawS =
           tokens
@@ -66,7 +66,7 @@ module TokenizerHelper =
     type StringLike =
         | StringItem of string
         | StringKeyword of StringKeyword
-    type PreprocessorDirective = 
+    type PreprocessorDirective =
         { Token : Token; Strings : StringLike list }
 
     let handleRawString (s:string) =
@@ -78,7 +78,7 @@ module TokenizerHelper =
 
     let private handlePreprocessorTokens (tokens:Token list) =
         let (firstTok) = tokens |> List.head
-        
+
         let strings =
           tokens
           |> Seq.skip 1
@@ -106,7 +106,7 @@ module TokenizerHelper =
             match items with
             | [s] -> s
             | [] -> failwith "unexpected empty list"
-            | _ -> items 
+            | _ -> items
                    |> List.map (function | StringItem i -> i | _ -> failwith "string cannot be combined with something else!")
                    |> List.fold (fun s item -> item + s) ""
                    |> StringItem)
@@ -135,14 +135,14 @@ type Script = {
     Location : string
 }
 
-let getAllScriptContents (pathsAndContents : seq<Script>) = 
+let getAllScriptContents (pathsAndContents : seq<Script>) =
     pathsAndContents |> Seq.map(fun s -> s.HashContent)
 
-let getAllScripts defines scriptPath : Script list = 
+let getAllScripts defines scriptPath : Script list =
     let rec getAllScriptsRec scriptPath parentIncludes : Script list =
-        let scriptContents = 
+        let scriptContents =
           File.ReadLines scriptPath
-          |> TokenizerHelper.getTokenized scriptPath defines
+          |> TokenizerHelper.getTokenized (Some scriptPath) defines
         //let searchPaths = getSearchPaths scriptContents |> Seq.toList
         let resolvePath currentIncludes currentDir relativeOrAbsolute isDir =
             let possiblePaths =
@@ -163,15 +163,15 @@ let getAllScripts defines scriptPath : Script list =
             |> List.fold (fun ((currentIncludes, currentDir, childScripts) as state) preprocessorDirective ->
                 let (|MatchFirstString|_|) (l:TokenizerHelper.StringLike list) =
                   match l with
-                  | TokenizerHelper.StringLike.StringKeyword TokenizerHelper.SourceDirectory :: _ -> 
+                  | TokenizerHelper.StringLike.StringKeyword TokenizerHelper.SourceDirectory :: _ ->
                     Some (Path.GetDirectoryName scriptPath)
-                  | TokenizerHelper.StringLike.StringKeyword TokenizerHelper.SourceFile :: _ -> 
+                  | TokenizerHelper.StringLike.StringKeyword TokenizerHelper.SourceFile :: _ ->
                     Some (Path.GetFileName scriptPath)
-                  | TokenizerHelper.StringLike.StringKeyword (TokenizerHelper.Unknown s) :: _ -> 
+                  | TokenizerHelper.StringLike.StringKeyword (TokenizerHelper.Unknown s) :: _ ->
                     printfn "FAKE-CACHING: Unknown special key '%s' in preprocessor directive: %A" s preprocessorDirective.Token
                     None
                   | TokenizerHelper.StringLike.StringItem s :: _ -> Some s
-                  | _ -> 
+                  | _ ->
                     printfn "FAKE-CACHING: Unknown preprocessor directive found, please check your script (try to start it with fsi to get a more detailed error)! Preprocessor directive was: %A" preprocessorDirective.Token
                     None
                 match preprocessorDirective with

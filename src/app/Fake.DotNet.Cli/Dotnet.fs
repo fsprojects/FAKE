@@ -185,7 +185,7 @@ let Preview4ToolingOptions options =
                 Branch = "v1.0.0-preview4"                    
             })
         Channel = Some "preview"
-        Version = Version "1.0.0-preview4-004079"
+        Version = Version "1.0.0-preview4-004107"
     }
 
 

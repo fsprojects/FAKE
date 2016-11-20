@@ -4,4 +4,5 @@ Mono.Cecil
 Nuget.Core
 Newtonsoft.Json
 HashLib
+FSharp.Compiler.Service
 File:YaafFSharpScripting.fs

@@ -60,12 +60,18 @@ nuget Microsoft.Net.Http
 github matthid/Yaaf.FSharp.Scripting src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs
 
 group Build
-content: none
-source http://nuget.org/api/v2
+    content: none
+    source http://nuget.org/api/v2
 
-nuget Nuget.CommandLine
-nuget FAKE prerelease
-nuget FSharp.Formatting
-nuget FSharp.Formatting.CommandTool
-nuget SourceLink.Fake
-nuget ILRepack
+    nuget Nuget.CommandLine
+    nuget FAKE prerelease
+    nuget FSharp.Formatting
+    nuget FSharp.Formatting.CommandTool
+    nuget SourceLink.Fake
+    nuget ILRepack
+
+group netcore
+    source lib/nupgks/FSharp.Compiler.Service/6.0.3-alpha1/
+    source http://nuget.org/api/v2
+    
+    nuget FSharp.Compiler.Service 6.0.3-alpha1

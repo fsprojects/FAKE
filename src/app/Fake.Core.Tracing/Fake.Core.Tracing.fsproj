@@ -1,7 +1,7 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" />
   <PropertyGroup>
-    <VersionPrefix>1.0.0-alpha10</VersionPrefix>
+    <VersionPrefix>1.0.0-alpha-10</VersionPrefix>
     <TargetFrameworks>net46;netstandard1.6</TargetFrameworks>
     <DebugType>pdbonly</DebugType>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

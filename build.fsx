@@ -52,7 +52,7 @@ open Fake.DotNet.Cli
 #else
 #I @"packages/build/FAKE/tools/"
 #r @"FakeLib.dll"
-#r @"packages/Mono.Cecil/lib/net45/Mono.Cecil.dll"
+#r @"packages/Mono.Cecil/lib/net40/Mono.Cecil.dll"
 #I "packages/build/SourceLink.Fake/tools/"
 #load "packages/build/SourceLink.Fake/tools/SourceLink.fsx"
 
@@ -84,7 +84,7 @@ let packages =
      "FAKE.FluentMigrator",projectDescription + " Extensions for FluentMigrator"
      "FAKE.SQL",projectDescription + " Extensions for SQL Server"
      "FAKE.Experimental",projectDescription + " Experimental Extensions"
-     "FAKE.Deploy.Lib",projectDescription + " Extensions for FAKE Deploy"     
+     "FAKE.Deploy.Lib",projectDescription + " Extensions for FAKE Deploy"
      projectName,projectDescription + " This package bundles all extensions."
      "FAKE.Lib",projectDescription + " FAKE helper functions as library"]
 
@@ -108,10 +108,11 @@ let additionalFiles = [
 Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDir; reportDir])
 
 Target "RenameFSharpCompilerService" (fun _ ->
-    for framework in ["net40"; "net45"] do
-      let dir = __SOURCE_DIRECTORY__ </> "packages/FSharp.Compiler.Service/lib" </> framework
-      let targetFile = dir </> "FAKE.FSharp.Compiler.Service.dll"
-      DeleteFile targetFile 
+    // for framework in ["net40"; "net45"] do
+    for framework in ["netstandard1.6"] do
+      let dir = __SOURCE_DIRECTORY__ </> "packages"</>"netcore"</>"FSharp.Compiler.Service"</>"lib"</>framework
+      let targetFile = dir </>"netcore"</>  "FAKE.FSharp.Compiler.Service.dll"
+      DeleteFile targetFile
 
 #if DOTNETCORE
       let reader =
@@ -143,9 +144,9 @@ Target "RenameFSharpCompilerService" (fun _ ->
       reader.AddSearchDirectory(__SOURCE_DIRECTORY__ </> "packages/FSharp.Core/lib/net40")
 #endif
       let readerParams = new Mono.Cecil.ReaderParameters(AssemblyResolver = reader)
-      let asem = Mono.Cecil.AssemblyDefinition.ReadAssembly(dir </> "FSharp.Compiler.Service.dll", readerParams)
+      let asem = Mono.Cecil.AssemblyDefinition.ReadAssembly(dir </>"FSharp.Compiler.Service.dll", readerParams)
       asem.Name <- new Mono.Cecil.AssemblyNameDefinition("FAKE.FSharp.Compiler.Service", new System.Version(1,0,0,0))
-      asem.Write(dir </> "FAKE.FSharp.Compiler.Service.dll")
+      asem.Write(dir</>"FAKE.FSharp.Compiler.Service.dll")
 )
 
 Target "SetAssemblyInfo" (fun _ ->
@@ -192,7 +193,7 @@ Target "SetAssemblyInfo" (fun _ ->
 
 
 Target "ConvertProjectJsonTemplates" (fun _ ->
-    let commonDotNetCoreVersion = "1.0.0-alpha10"
+    let commonDotNetCoreVersion = "1.0.0-alpha-10"
     // Set project.json.template -> project.json
     let mappings = [
       "__FSHARP_CORE_VERSION__", "4.0.1.7-alpha"
@@ -221,7 +222,7 @@ Target "ConvertProjectJsonTemplates" (fun _ ->
       "__FAKE_CORE_SEMVER_VERSION__", commonDotNetCoreVersion
       "__FAKE_IO_ZIP_VERSION__", commonDotNetCoreVersion
       ]
-      
+
     !! "src/app/*/project.json.template"
     |> Seq.iter(fun template ->
         let original = template.Replace("project.json.template", "project.json")
@@ -251,7 +252,7 @@ Target "GenerateDocs" (fun _ ->
 #else
     let source = "./help"
     let template = "./help/literate/templates/template-project.html"
-    let templatesDir = "./help/templates/reference/" 
+    let templatesDir = "./help/templates/reference/"
     let githubLink = "https://github.com/fsharp/FAKE"
     let projInfo =
       [ "page-description", "FAKE - F# Make"
@@ -272,8 +273,8 @@ Target "GenerateDocs" (fun _ ->
           ++ "./build/FakeLib.dll"
           -- "./build/**/Fake.Experimental.dll"
           -- "./build/**/FSharp.Compiler.Service.dll"
-          -- "./build/**/FAKE.FSharp.Compiler.Service.dll"
-          -- "./build/**/Fake.IIS.dll"                    
+          -- "./build/**/netcore/FAKE.FSharp.Compiler.Service.dll"
+          -- "./build/**/Fake.IIS.dll"
           -- "./build/**/Fake.Deploy.Lib.dll"
 
     CreateDocsForDlls apidocsDir templatesDir (projInfo @ ["--libDirs", "./build"]) (githubLink + "/blob/master") dllFiles
@@ -399,7 +400,7 @@ Target "BootstrapTestDotnetCore" (fun _ ->
 
 Target "SourceLink" (fun _ ->
 #if !DOTNETCORE
-    !! "src/app/**/*.fsproj" 
+    !! "src/app/**/*.fsproj"
     |> Seq.iter (fun f ->
         let proj = VsProj.LoadRelease f
         let url = sprintf "%s/%s/{0}/%%var2%%" gitRaw projectName
@@ -415,7 +416,7 @@ Target "SourceLink" (fun _ ->
 Target "ILRepack" (fun _ ->
     CreateDir buildMergedDir
 
-    let internalizeIn filename = 
+    let internalizeIn filename =
         let toPack =
             [filename; "FSharp.Compiler.Service.dll"]
             |> List.map (fun l -> buildDir </> l)
@@ -432,17 +433,17 @@ Target "ILRepack" (fun _ ->
         CopyFile (buildDir </> filename) targetFile
 
     internalizeIn "FAKE.exe"
-    
+
     !! (buildDir </> "FSharp.Compiler.Service.**")
     |> Seq.iter DeleteFile
-    
+
     DeleteDir buildMergedDir
 )
 
 Target "CreateNuGet" (fun _ ->
     let set64BitCorFlags files =
         files
-        |> Seq.iter (fun file -> 
+        |> Seq.iter (fun file ->
             let args =
                 { Program = "lib" @@ "corflags.exe"
                   WorkingDirectory = Path.GetDirectoryName file
@@ -451,7 +452,7 @@ Target "CreateNuGet" (fun _ ->
             printfn "%A" args
             shellExec args |> ignore)
 
-    let x64ify package = 
+    let x64ify package =
 #if !DOTNETCORE
         { package with
             Dependencies = package.Dependencies |> List.map (fun (pkg, ver) -> pkg + ".x64", ver)
@@ -477,7 +478,7 @@ Target "CreateNuGet" (fun _ ->
           //!! (dir </> "FSharp.Compiler.Service.**")
           //|> Seq.iter DeleteFile
           ()
-          
+
         match package with
         | p when p = projectName ->
             !! (buildDir @@ "**/*.*") |> Copy nugetToolsDir
@@ -487,7 +488,7 @@ Target "CreateNuGet" (fun _ ->
             !! (buildDir @@ "*.*") |> Copy nugetToolsDir
             CopyDir nugetDocsDir docsDir allFiles
             deleteFCS nugetToolsDir
-        | p when p = "FAKE.Lib" -> 
+        | p when p = "FAKE.Lib" ->
             CleanDir nugetLib451Dir
             !! (buildDir @@ "FakeLib.dll") |> Copy nugetLib451Dir
             deleteFCS nugetLib451Dir
@@ -506,7 +507,7 @@ Target "CreateNuGet" (fun _ ->
                 OutputPath = nugetDir
                 Summary = projectSummary
                 ReleaseNotes = release.Notes |> toLines
-                Dependencies =                    
+                Dependencies =
                     (if package <> "FAKE.Core" && package <> projectName && package <> "FAKE.Lib" then
                        ["FAKE.Core", RequireExactly (NormalizeVersion release.AssemblyVersion)]
                      else p.Dependencies )
@@ -549,13 +550,13 @@ Target "DotnetRestore" (fun _ ->
       )
 )
 
-let runtimes = 
+let runtimes =
   [ "win7-x86"; "win7-x64"; "osx.10.11-x64"; "ubuntu.14.04-x64"; "ubuntu.16.04-x64" ]
 
 Target "DotnetPackage" (fun _ ->
     // dotnet pack
-    !! "src/app/*/project.json"
-    -- "src/app/Fake.netcore/project.json"
+    !! "src/app/*/*.fsproj"
+    -- "src/app/Fake.netcore/Fake.netcore.fsproj"
     |> Seq.iter(fun proj ->
         DotnetPack (fun c ->
             { c with
@@ -569,7 +570,7 @@ Target "DotnetPackage" (fun _ ->
     |> List.map Some
     |> (fun rs -> None :: rs)
     |> Seq.iter (fun runtime ->
-        !! "src/app/Fake.netcore/project.json"
+        !! "src/app/Fake.netcore/Fake.netcore.fsproj"
         |> Seq.iter(fun proj ->
             let projName = Path.GetFileName(Path.GetDirectoryName proj)
             let runtimeName =
@@ -580,39 +581,40 @@ Target "DotnetPackage" (fun _ ->
                 { c with
                     Runtime = runtime
                     Framework = Some "netcoreapp1.0"
-                    OutputPath = Some (nugetDir @@ "dotnetcore" @@ projName @@ runtimeName) 
+                    OutputPath = Some (nugetDir @@ "dotnetcore" @@ projName @@ runtimeName)
                 }) proj
         )
     )
 
     // Publish portable as well (see https://docs.microsoft.com/en-us/dotnet/articles/core/app-types)
-    let netcoreJson = "src/app/Fake.netcore/project.json"
-    let oldContent = File.ReadAllText netcoreJson
-    let newContent =
-      oldContent.Replace(
-        "  \"runtimes\": {
-     \"win7-x86\": { },
-     \"win7-x64\": { },
-     \"osx.10.11-x64\": { },
-     \"ubuntu.14.04-x64\": { },
-     \"ubuntu.16.04-x64\": { }
-  },", "").Replace(
-        "        \"Microsoft.NETCore.App\": {
-            \"version\": \"1.0.0\"
-        }", "        \"Microsoft.NETCore.App\": {
-            \"version\": \"1.0.0\",
-            \"type\": \"platform\"
-        }")
+    let netcoreFsproj = "src/app/Fake.netcore/Fake.netcore.fsproj"
+    let oldContent = File.ReadAllText netcoreFsproj
+    // let newContent =
+//       oldContent.Replace(
+//         "  \"runtimes\": {
+//      \"win7-x86\": { },
+//      \"win7-x64\": { },
+//      \"osx.10.11-x64\": { },
+//      \"ubuntu.14.04-x64\": { },
+//      \"ubuntu.16.04-x64\": { }
+//   },", "").Replace(
+//         "        \"Microsoft.NETCore.App\": {
+//             \"version\": \"1.0.0\"
+//         }", "        \"Microsoft.NETCore.App\": {
+//             \"version\": \"1.0.0\",
+//             \"type\": \"platform\"
+//         }")
     try
-        File.WriteAllText(netcoreJson, newContent)
-    
+        // File.WriteAllText(netcoreJson, newContent)
+
         DotnetPublish (fun c ->
             { c with
                 Framework = Some "netcoreapp1.0"
-                OutputPath = Some (nugetDir @@ "dotnetcore" @@ "Fake.netcore" @@ "portable") 
-            }) netcoreJson
+                OutputPath = Some (nugetDir @@ "dotnetcore" @@ "Fake.netcore" @@ "portable")
+            }) netcoreFsproj
     finally
-        File.WriteAllText(netcoreJson, oldContent)
+        // File.WriteAllText(netcoreJson, oldContent)
+        ()
 )
 
 Target "DotnetCoreCreateZipPackages" (fun _ ->
@@ -695,7 +697,7 @@ Target "BootstrapAndBuildDnc" (fun _ ->
                 info.FileName <- "fake.cmd"
                 info.WorkingDirectory <- "."
                 info.Arguments <- sprintf "run %s -t %s" buildScript target) (System.TimeSpan.FromMinutes 45.0)
-      
+
     |> fun r -> if r <> 0 then failwith "dnc build failed!"
 
     // refresh packages
@@ -707,7 +709,7 @@ Target "BootstrapAndBuildDnc" (fun _ ->
 
 Target "PublishNuget" (fun _ ->
 #if !DOTNETCORE
-    Paket.Push(fun p -> 
+    Paket.Push(fun p ->
         { p with
             DegreeOfParallelism = 2
             WorkingDir = nugetDir })
@@ -758,7 +760,7 @@ Target "PrintColors" (fun s ->
 Target "FailFast" (fun _ -> failwith "fail fast")
 Target "EnsureTestsRun" (fun _ ->
 #if !DOTNETCORE
-  if hasBuildParam "SkipIntegrationTests" || hasBuildParam "SkipTests" then 
+  if hasBuildParam "SkipIntegrationTests" || hasBuildParam "SkipTests" then
       let res = getUserInput "Are you really sure to continue without running tests (yes/no)?"
       if res <> "yes" then
           failwith "cannot continue without tests"

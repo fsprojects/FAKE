@@ -1,5 +1,5 @@
-Microsoft.NET.Sdk
-FSharp.NET.Sdk
-FSharp.Core
-Microsoft.FSharp.Core.netcore
-NETStandard.Library
+Microsoft.NET.Sdk framework:net46, netcore
+FSharp.NET.Sdk framework:net46, netcore
+FSharp.Core framework: net46
+Microsoft.FSharp.Core.netcore framework: netcore
+NETStandard.Library framework: netcore
