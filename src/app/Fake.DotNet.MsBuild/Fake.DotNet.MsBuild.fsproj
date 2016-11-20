@@ -3,30 +3,31 @@
   <PropertyGroup>
     <VersionPrefix>1.0.0-alpha10</VersionPrefix>
     <TargetFrameworks>net46;netstandard1.6</TargetFrameworks>
+    <DefineConstants>$(DefineConstants);DOTNETCORE</DefineConstants>
     <DebugType>pdbonly</DebugType>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <AssemblyName>Fake.DotNet.AssemblyInfoFile</AssemblyName>
+    <AssemblyName>Fake.DotNet.MsBuild</AssemblyName>
     <OutputType>Library</OutputType>
     <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.6' ">$(PackageTargetFallback);portable-net45+win8;dnxcore50</PackageTargetFallback>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
-  </PropertyGroup>
-
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
-    <Compile Include="AssemblyInfoFile.fs" />
-  </ItemGroup>
-
+    <Compile Include="MsBuildLogger.fs" />
+    <Compile Include="MsBuild.fs" />
+  </ItemGroup
+  >
   <ItemGroup>
-    <ProjectReference Include="..\Fake.Core.Tracing\Fake.Core.Tracing.fsproj" />
+    <ProjectReference Include="..\Fake.Core.Environment\Fake.Core.Environment.fsproj" />
+    <ProjectReference Include="..\Fake.Core.Globbing\Fake.Core.Globbing.fsproj" />
     <ProjectReference Include="..\Fake.Core.String\Fake.Core.String.fsproj" />
+    <ProjectReference Include="..\Fake.Core.Tracing\Fake.Core.Tracing.fsproj" />
     <ProjectReference Include="..\Fake.IO.FileSystem\Fake.IO.FileSystem.fsproj" />
-    <ProjectReference Include="..\Fake.Core.Environment\Fake.Core.Environment.fsproj">
+    <ProjectReference Include="..\Fake.Core.Process\Fake.Core.Process.fsproj" />
+    <ProjectReference Include="..\Fake.Core.BuildServer\Fake.Core.BuildServer.fsproj">
       <FromP2P>true</FromP2P>
     </ProjectReference>
-    <ProjectReference Include="..\Fake.Core.BuildServer\Fake.Core.BuildServer.fsproj">
+    <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj">
       <FromP2P>true</FromP2P>
     </ProjectReference>
   </ItemGroup>
@@ -45,11 +46,29 @@
   <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
     <PackageReference Include="FSharp.Core">
       <Version>4.0.1.7-alpha</Version>
-    </PackageReference>    
+    </PackageReference>  
+    <Reference Include="Microsoft.Build.Framework">
+      <FromP2P>true</FromP2P>
+    </Reference>
     <Reference Include="mscorlib">
       <FromP2P>true</FromP2P>
     </Reference>
     <Reference Include="System">
+      <FromP2P>true</FromP2P>
+    </Reference>
+    <Reference Include="System.Configuration">
+      <FromP2P>true</FromP2P>
+    </Reference>
+    <Reference Include="System.Runtime.Caching">
+      <FromP2P>true</FromP2P>
+    </Reference>
+    <Reference Include="System.ServiceProcess">
+      <FromP2P>true</FromP2P>
+    </Reference>
+    <Reference Include="System.Xml">
+      <FromP2P>true</FromP2P>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
       <FromP2P>true</FromP2P>
     </Reference>
     <Reference Include="System.Core">
@@ -65,13 +84,20 @@
       <Version>1.6.0</Version>
     </PackageReference>
   </ItemGroup>
-  
 
   <ItemGroup>
     <DotNetCliToolReference Include="dotnet-compile-fsc">
       <Version>1.0.0-preview2-020000</Version>
     </DotNetCliToolReference>
   </ItemGroup>
+  
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
+    <DefineConstants>$(DefineConstants);FX_NO_SYSTEM_CONFIGURATION;NO_MSBUILD_AVAILABLE</DefineConstants>
+  </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
+  </PropertyGroup>
+  
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>
