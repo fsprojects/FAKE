@@ -94,10 +94,15 @@ let traceException (ex:Exception) = exceptionAndInnersToString ex |> traceError
 /// Traces the EnvironmentVariables
 let TraceEnvironmentVariables() = 
 #if !DOTNETCORE
-    [ EnvironTarget.Machine; EnvironTarget.Process; EnvironTarget.User ] 
-    |> Seq.iter (fun mode -> 
-           tracefn "Environment-Settings (%A):" mode
-           environVarsWithMode mode |> Seq.iter (tracefn "  %A"))
+    // [ EnvironTarget.Machine; EnvironTarget.Process; EnvironTarget.User ] 
+    // |> Seq.iter (fun mode -> 
+    //        tracefn "Environment-Settings (%A):" mode
+    //        environVars mode |> Seq.iter (tracefn "  %A"))
+    tracefn "Environment-Settings :\n" 
+    environVars () |> Seq.iter (fun (a,b) ->
+        tracefn "  %A - %A" a b 
+    )
+
 #else
     tracefn "Environment-Settings (%A):" "Process"
     environVars () |> Seq.iter (tracefn "  %A")

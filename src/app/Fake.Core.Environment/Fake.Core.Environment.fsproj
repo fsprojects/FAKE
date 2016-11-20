@@ -3,13 +3,21 @@
   <PropertyGroup>
     <VersionPrefix>1.0.0-alpha10</VersionPrefix>
     <TargetFrameworks>net46;netstandard1.6</TargetFrameworks>
-    <DefineConstants>$(DefineConstants);DOTNETCORE</DefineConstants>
     <DebugType>pdbonly</DebugType>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>Fake.Core.Environment</AssemblyName>
     <OutputType>Library</OutputType>
     <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.6' ">$(PackageTargetFallback);portable-net45+win8;dnxcore50</PackageTargetFallback>
   </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.6' ">
+    <DefineConstants>$(DefineConstants);DOTNETCORE;NETSTANDARD1_6</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Environment.fs" />
@@ -55,8 +63,6 @@
       <Version>1.0.0-preview2-020000</Version>
     </DotNetCliToolReference>
   </ItemGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
-  </PropertyGroup>
+
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>
