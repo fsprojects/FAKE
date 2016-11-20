@@ -242,10 +242,10 @@
   <Import Project="$(FSharpTargetsPath)" />
   <!-- Hand-crafted reference to the renamed version of FCS. You must run build.cmd/build.sh first! -->
   <Choose>
-    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0')">
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5')">
       <ItemGroup>
         <Reference Include="FAKE.FSharp.Compiler.Service">
-          <HintPath>..\..\..\packages\FSharp.Compiler.Service\lib\net40\FAKE.FSharp.Compiler.Service.dll</HintPath>
+          <HintPath>..\..\..\packages\FSharp.Compiler.Service\lib\net45\FAKE.FSharp.Compiler.Service.dll</HintPath>
           <Private>True</Private>
           <Paket>False</Paket>
         </Reference>

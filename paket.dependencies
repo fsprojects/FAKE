@@ -18,7 +18,8 @@ nuget Nancy.Authentication.Forms
 nuget Nancy.Hosting.Aspnet
 nuget Nancy.Viewengines.Razor
 nuget SSH.NET
-nuget Microsoft.Web.Administration
+// Because of net45 support
+nuget Microsoft.Web.Administration 7.0.0
 nuget Mono.Web.Xdt
 nuget Mono.Cecil
 nuget Nuget.Core
