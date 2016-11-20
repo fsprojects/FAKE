@@ -530,7 +530,8 @@ open Fake.DotNet.Cli
 #endif
 
 Target "InstallDotnetCore" (fun _ ->
-    DotnetCliInstall Preview2ToolingOptions
+    // DotnetCliInstall Preview2ToolingOptions
+    DotnetCliInstall Preview4ToolingOptions
 )
 
 Target "DotnetRestore" (fun _ ->

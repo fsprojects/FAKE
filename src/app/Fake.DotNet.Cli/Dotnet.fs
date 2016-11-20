@@ -177,6 +177,18 @@ let Preview2ToolingOptions options =
         Version = Version "1.0.0-preview2-003121"
     }
 
+/// .NET Core SDK install options preconfigured for preview4 tooling
+let Preview4ToolingOptions options = 
+    { options with
+        InstallerOptions = (fun io -> 
+            { io with
+                Branch = "v1.0.0-preview4"                    
+            })
+        Channel = Some "preview"
+        Version = Version "1.0.0-preview4-004079"
+    }
+
+
 /// [omit]
 let private optionToParam option paramFormat =
     match option with

@@ -1,0 +1,7 @@
+Microsoft.NET.Sdk
+FSharp.NET.Sdk
+FSharp.Compiler.Service
+FSharp.Core
+Microsoft.FSharp.Core.netcore
+System.Diagnostics.FileVersionInfo
+NETStandard.Library
