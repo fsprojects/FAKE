@@ -10,6 +10,7 @@ open Fake.FSharpFormatting
 open System.IO
 open SourceLink
 open Fake.ReleaseNotesHelper
+open Fake.Testing.XUnit2
 
 // properties
 let projectName = "FAKE"
@@ -27,7 +28,7 @@ let packages =
      "FAKE.FluentMigrator",projectDescription + " Extensions for FluentMigrator"
      "FAKE.SQL",projectDescription + " Extensions for SQL Server"
      "FAKE.Experimental",projectDescription + " Experimental Extensions"
-     "FAKE.Deploy.Lib",projectDescription + " Extensions for FAKE Deploy"     
+     "FAKE.Deploy.Lib",projectDescription + " Extensions for FAKE Deploy"
      projectName,projectDescription + " This package bundles all extensions."
      "FAKE.Lib",projectDescription + " FAKE helper functions as library"]
 
@@ -56,7 +57,7 @@ Target "RenameFSharpCompilerService" (fun _ ->
     for framework in ["net45"] do
       let dir = __SOURCE_DIRECTORY__ </> "packages/FSharp.Compiler.Service/lib" </> framework
       let targetFile = dir </> "FAKE.FSharp.Compiler.Service.dll"
-      DeleteFile targetFile 
+      DeleteFile targetFile
 
       let reader = new Mono.Cecil.DefaultAssemblyResolver()
       reader.AddSearchDirectory(dir)
@@ -116,7 +117,7 @@ Target "BuildSolution" (fun _ ->
 Target "GenerateDocs" (fun _ ->
     let source = "./help"
     let template = "./help/literate/templates/template-project.html"
-    let templatesDir = "./help/templates/reference/" 
+    let templatesDir = "./help/templates/reference/"
     let githubLink = "https://github.com/fsharp/FAKE"
     let projInfo =
       [ "page-description", "FAKE - F# Make"
@@ -138,7 +139,7 @@ Target "GenerateDocs" (fun _ ->
           -- "./build/**/Fake.Experimental.dll"
           -- "./build/**/FSharp.Compiler.Service.dll"
           -- "./build/**/FAKE.FSharp.Compiler.Service.dll"
-          -- "./build/**/Fake.IIS.dll"                    
+          -- "./build/**/Fake.IIS.dll"
           -- "./build/**/Fake.Deploy.Lib.dll"
 
     CreateDocsForDlls apidocsDir templatesDir (projInfo @ ["--libDirs", "./build"]) (githubLink + "/blob/master") dllFiles
@@ -164,7 +165,7 @@ Target "Test" (fun _ ->
 
     !! (testDir @@ "Test.*.dll")
       ++ (testDir @@ "FsCheck.Fake.dll")
-    |>  xUnit id
+    |>  xUnit2 id
 )
 
 Target "Bootstrap" (fun _ ->
@@ -206,7 +207,7 @@ Target "Bootstrap" (fun _ ->
 )
 
 Target "SourceLink" (fun _ ->
-    !! "src/app/**/*.fsproj" 
+    !! "src/app/**/*.fsproj"
     |> Seq.iter (fun f ->
         let proj = VsProj.LoadRelease f
         let url = sprintf "%s/%s/{0}/%%var2%%" gitRaw projectName
@@ -219,7 +220,7 @@ Target "SourceLink" (fun _ ->
 Target "ILRepack" (fun _ ->
     CreateDir buildMergedDir
 
-    let internalizeIn filename = 
+    let internalizeIn filename =
         let toPack =
             [filename; "FSharp.Compiler.Service.dll"]
             |> List.map (fun l -> buildDir </> l)
@@ -236,17 +237,17 @@ Target "ILRepack" (fun _ ->
         CopyFile (buildDir </> filename) targetFile
 
     internalizeIn "FAKE.exe"
-    
+
     !! (buildDir </> "FSharp.Compiler.Service.**")
     |> Seq.iter DeleteFile
-    
+
     DeleteDir buildMergedDir
 )
 
 Target "CreateNuGet" (fun _ ->
     let set64BitCorFlags files =
         files
-        |> Seq.iter (fun file -> 
+        |> Seq.iter (fun file ->
             let args =
                 { Program = "lib" @@ "corflags.exe"
                   WorkingDirectory = directory file
@@ -255,7 +256,7 @@ Target "CreateNuGet" (fun _ ->
             printfn "%A" args
             shellExec args |> ignore)
 
-    let x64ify package = 
+    let x64ify package =
         { package with
             Dependencies = package.Dependencies |> List.map (fun (pkg, ver) -> pkg + ".x64", ver)
             Project = package.Project + ".x64" }
@@ -277,7 +278,7 @@ Target "CreateNuGet" (fun _ ->
           //!! (dir </> "FSharp.Compiler.Service.**")
           //|> Seq.iter DeleteFile
           ()
-          
+
         match package with
         | p when p = projectName ->
             !! (buildDir @@ "**/*.*") |> Copy nugetToolsDir
@@ -287,7 +288,7 @@ Target "CreateNuGet" (fun _ ->
             !! (buildDir @@ "*.*") |> Copy nugetToolsDir
             CopyDir nugetDocsDir docsDir allFiles
             deleteFCS nugetToolsDir
-        | p when p = "FAKE.Lib" -> 
+        | p when p = "FAKE.Lib" ->
             CleanDir nugetLib451Dir
             !! (buildDir @@ "FakeLib.dll") |> Copy nugetLib451Dir
             deleteFCS nugetLib451Dir
@@ -305,7 +306,7 @@ Target "CreateNuGet" (fun _ ->
                 OutputPath = nugetDir
                 Summary = projectSummary
                 ReleaseNotes = release.Notes |> toLines
-                Dependencies =                    
+                Dependencies =
                     (if package <> "FAKE.Core" && package <> projectName && package <> "FAKE.Lib" then
                        ["FAKE.Core", RequireExactly (NormalizeVersion release.AssemblyVersion)]
                      else p.Dependencies )
@@ -317,7 +318,7 @@ Target "CreateNuGet" (fun _ ->
 )
 
 Target "PublishNuget" (fun _ ->
-    Paket.Push(fun p -> 
+    Paket.Push(fun p ->
         { p with
             DegreeOfParallelism = 2
             WorkingDir = nugetDir })
