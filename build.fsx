@@ -290,6 +290,8 @@ Target "CopyLicense" (fun _ ->
     CopyTo buildDir additionalFiles
 )
 
+open Fake.Testing.XUnit2
+
 Target "Test" (fun _ ->
 #if !DOTNETCORE
     !! (testDir @@ "Test.*.dll")
@@ -302,7 +304,7 @@ Target "Test" (fun _ ->
 
     !! (testDir @@ "Test.*.dll")
       ++ (testDir @@ "FsCheck.Fake.dll")
-    |>  xUnit id
+    |>  xUnit2 id
 #else
     printfn "We don't currently have MSpec and xunit on dotnetcore."
 #endif
@@ -530,24 +532,52 @@ Target "CreateNuGet" (fun _ ->
 open Fake.DotNet.Cli
 #endif
 
-Target "InstallDotnetCore" (fun _ ->
-    // DotnetCliInstall Preview2ToolingOptions
-    DotnetCliInstall Preview4ToolingOptions
-)
+// Target "InstallDotnetCore" (fun _ ->
+//     // DotnetCliInstall Preview2ToolingOptions
+//     DotnetCliInstall Preview4ToolingOptions
+// )
+
+
+let assertExitCodeZero x = 
+    if x = 0 then () else 
+    failwithf "Command failed with exit code %i" x
+
+let runCmdIn workDir exe = 
+    Printf.ksprintf (fun args -> 
+        Shell.Exec(exe, args, workDir) |> assertExitCodeZero)
+
+/// Execute a dotnet cli command
+let dotnet workDir = runCmdIn workDir "dotnet"
+
+
+let root = __SOURCE_DIRECTORY__
+let srcDir = root</>"src"
+let appDir = srcDir</>"app"
+
+
 
 Target "DotnetRestore" (fun _ ->
-      // Copy nupkgs to nuget/dotnetcore
-      !! "lib/nupgks/**/*.nupkg"
-      |> Seq.iter (fun file ->
-            let dir = nugetDir @@ "dotnetcore"
-            ensureDirectory dir
-            File.Copy(file, dir @@ Path.GetFileName file, true))
 
-      // dotnet restore
-      !! "src/app/*/project.json"
-      |> Seq.iter(fun proj ->
-          DotnetRestore id proj
-      )
+    dotnet root "--info"
+
+    // Copy nupkgs to nuget/dotnetcore
+    !! "lib/nupgks/**/*.nupkg"
+    |> Seq.iter (fun file ->
+        let dir = nugetDir @@ "dotnetcore"
+        ensureDirectory dir
+        File.Copy(file, dir @@ Path.GetFileName file, true))
+
+    // dotnet restore
+    !! "src/app/Fake.Core.*/*.fsproj"
+    ++ "src/app/Fake.DotNet.*/*.fsproj"
+    ++ "src/app/Fake.IO.*/*.fsproj"
+    ++ "src/app/Fake.netcore/*.fsproj"
+    ++ "src/app/Fake.Runtime/*.fsproj"
+    |> Seq.iter(fun proj ->
+        let dir = (FileInfo (Path.GetFullPath proj)).Directory.FullName
+        dotnet dir "restore"
+        //DotnetRestore id proj
+    )
 )
 
 let runtimes =
@@ -771,8 +801,8 @@ Target "Default" DoNothing
 Target "StartDnc" DoNothing
 
 "StartDnc"
-    ==> "ConvertProjectJsonTemplates"
-    ==> "InstallDotnetCore"
+    //==> "ConvertProjectJsonTemplates"
+    // ==> "InstallDotnetCore"
     ==> "DotnetRestore"
     ==> "DotnetPackage"
 
