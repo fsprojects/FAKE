@@ -1,0 +1,116 @@
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" />
+  <PropertyGroup>
+    <VersionPrefix>1.0.0-alpha10</VersionPrefix>
+    <!--<TargetFrameworks>net46;netcoreapp1.0</TargetFrameworks>-->
+    <TargetFramework>netcoreapp1.0</TargetFramework>
+    <DelaySign>true</DelaySign>
+    <DebugType>pdbonly</DebugType>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>Fake.netcore</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <RuntimeIdentifier>win7-x64</RuntimeIdentifier> 
+    <!--<RuntimeIdentifiers>
+          win7-x64; 
+          ubuntu.14.10-x64;
+          osx.10.10-x64; 
+    </RuntimeIdentifiers> -->
+
+    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">$(PackageTargetFallback);portable-net45+win8;dnxcore50</PackageTargetFallback>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
+  </PropertyGroup>
+
+  <!--<PropertyGroup Condition=" '$(TargetFramework)' == 'net46' "> 
+    <OutputPath>bin\$(TargetFramework)\$(Configuration)\</OutputPath>
+    <RuntimeIdentifiers>
+          win10-x64; win10-x86;
+    </RuntimeIdentifiers>
+    <RuntimeIdentifier Condition=" '$(RuntimeIdentifier)' == '' ">win10-x64</RuntimeIdentifier>        
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' "> 
+    <OutputPath>bin\$(TargetFramework)\$(Configuration)\</OutputPath>
+    <RuntimeIdentifiers>
+          win10-x64; 
+          ubuntu.16.10-x64;
+          osx.10.12-x64; 
+    </RuntimeIdentifiers>    
+  </PropertyGroup>    -->
+
+
+  <ItemGroup>
+    <Compile Include="Cli.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fake.Runtime\Fake.Runtime.fsproj" />
+    <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj">
+      <FromP2P>true</FromP2P>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Sdk">
+      <Version>1.0.0-alpha-20161104-2</Version>
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="FSharp.NET.Sdk">
+      <Version>1.0.0-alpha-000007</Version>
+      <PrivateAssets>All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.FSharp.Core.netcore">
+      <Version>1.0.0-alpha-161023</Version>
+    </PackageReference>  
+    <PackageReference Include="Microsoft.NETCore.App">
+      <Version>1.0.1</Version>
+      <Type>Platform</Type>
+    </PackageReference>       
+  </ItemGroup>  
+
+
+<!--
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' "> 
+
+    <PackageReference Include="FSharp.Core">
+      <Version>4.0.1.7-alpha</Version>
+    </PackageReference>     
+    <Reference Include="mscorlib">
+      <FromP2P>true</FromP2P>
+    </Reference>
+    <Reference Include="System">
+      <FromP2P>true</FromP2P>
+    </Reference>
+    <Reference Include="System.Xml">
+      <FromP2P>true</FromP2P>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <FromP2P>true</FromP2P>
+    </Reference>
+    <Reference Include="System.Core">
+      <FromP2P>true</FromP2P>
+    </Reference>
+  </ItemGroup>-->
+
+  <!--<ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">
+    <PackageReference Include="Microsoft.FSharp.Core.netcore">
+      <Version>1.0.0-alpha-161023</Version>
+    </PackageReference>  
+    <PackageReference Include="Microsoft.NETCore.App">
+      <Version>1.0.1</Version>
+      <Type>Platform</Type>
+    </PackageReference>
+  </ItemGroup>-->
+
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="dotnet-compile-fsc">
+      <Version>1.0.0-preview2-020000</Version>
+    </DotNetCliToolReference>
+  </ItemGroup>
+
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
+</Project>

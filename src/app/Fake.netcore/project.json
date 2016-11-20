@@ -3,7 +3,7 @@
   "copyright": "Appparently dotnet cli needs this.",
   "buildOptions": {
     "debugType": "portable",
-    "compilerName": "fsc",
+    // "compilerName": "fsc",
     "define": [
       "CORE_CLR",
       "DOTNETCORE"
