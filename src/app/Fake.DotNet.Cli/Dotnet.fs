@@ -234,48 +234,47 @@ let private buildDotnetCliInstallArgs quoteChar (param: DotNetCliInstallOptions)
     ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
 
 
+// /// Install .NET Core SDK if required
+// /// ## Parameters
+// ///
+// /// - 'setParams' - set installation options
+// let DotnetCliInstall setParams =
+//     let param = DotNetCliInstallOptions.Default |> setParams  
+//     let installScript = DotnetDownloadInstaller param.InstallerOptions
 
-/// Install .NET Core SDK if required
-/// ## Parameters
-///
-/// - 'setParams' - set installation options
-let DotnetCliInstall setParams =
-    let param = DotNetCliInstallOptions.Default |> setParams  
-    let installScript = DotnetDownloadInstaller param.InstallerOptions
+//     let exitCode =
+//         let args, fileName =
+//             if Environment.isUnix then
+//                 // Problem is that argument parsing works differently on dotnetcore than on mono...
+//                 // See https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.Process/src/System/Diagnostics/Process.Unix.cs#L437
+// #if NO_DOTNETCORE_BOOTSTRAP
+//                 let quoteChar = '"' 
+// #else
+//                 let quoteChar = '\''
+// #endif
+//                 let args = sprintf "%s %s" installScript (buildDotnetCliInstallArgs quoteChar param)
+//                 args, "bash" // Otherwise we need to set the executable flag!
+//             else
+//                 let args = 
+//                     sprintf 
+//                         "-ExecutionPolicy Bypass -NoProfile -NoLogo -NonInteractive -Command \"%s %s; if (-not $?) { exit -1 };\"" 
+//                         installScript 
+//                         (buildDotnetCliInstallArgs '\'' param)
+//                 args, "powershell"
+//         Process.ExecProcess (fun info ->
+//             info.FileName <- fileName
+//             info.WorkingDirectory <- Path.GetTempPath()
+//             info.Arguments <- args
+//         ) TimeSpan.MaxValue
 
-    let exitCode =
-        let args, fileName =
-            if Environment.isUnix then
-                // Problem is that argument parsing works differently on dotnetcore than on mono...
-                // See https://github.com/dotnet/corefx/blob/master/src/System.Diagnostics.Process/src/System/Diagnostics/Process.Unix.cs#L437
-#if NO_DOTNETCORE_BOOTSTRAP
-                let quoteChar = '"' 
-#else
-                let quoteChar = '\''
-#endif
-                let args = sprintf "%s %s" installScript (buildDotnetCliInstallArgs quoteChar param)
-                args, "bash" // Otherwise we need to set the executable flag!
-            else
-                let args = 
-                    sprintf 
-                        "-ExecutionPolicy Bypass -NoProfile -NoLogo -NonInteractive -Command \"%s %s; if (-not $?) { exit -1 };\"" 
-                        installScript 
-                        (buildDotnetCliInstallArgs '\'' param)
-                args, "powershell"
-        Process.ExecProcess (fun info ->
-            info.FileName <- fileName
-            info.WorkingDirectory <- Path.GetTempPath()
-            info.Arguments <- args
-        ) TimeSpan.MaxValue
-
-    if exitCode <> 0 then
-        // force download new installer script
-        Trace.traceError ".NET Core SDK install failed, trying to redownload installer..."
-        DotnetDownloadInstaller (param.InstallerOptions >> (fun o -> 
-            { o with 
-                AlwaysDownload = true
-            })) |> ignore
-        failwithf ".NET Core SDK install failed with code %i" exitCode
+//     if exitCode <> 0 then
+//         // force download new installer script
+//         Trace.traceError ".NET Core SDK install failed, trying to redownload installer..."
+//         DotnetDownloadInstaller (param.InstallerOptions >> (fun o -> 
+//             { o with 
+//                 AlwaysDownload = true
+//             })) |> ignore
+//         failwithf ".NET Core SDK install failed with code %i" exitCode
 
 /// dotnet cli command execution options
 type DotnetOptions =

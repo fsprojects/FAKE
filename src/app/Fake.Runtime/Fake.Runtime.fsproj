@@ -33,10 +33,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj" />
   </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
-    <!--<Reference Include="Microsoft.Build.Framework">
-      <FromP2P>true</FromP2P>
-    </Reference>-->
+  <!--<ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
     <Reference Include="mscorlib">
       <FromP2P>true</FromP2P>
     </Reference>
@@ -61,7 +58,7 @@
     <Reference Include="System.Core">
       <FromP2P>true</FromP2P>
     </Reference>
-  </ItemGroup>
+  </ItemGroup>-->
   <ItemGroup>
     <DotNetCliToolReference Include="dotnet-compile-fsc">
       <Version>1.0.0-preview2-020000</Version>

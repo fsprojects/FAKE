@@ -2,7 +2,9 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" />
   <PropertyGroup>
     <VersionPrefix>1.0.0-alpha-10</VersionPrefix>
-    <TargetFrameworks>net46;netstandard1.6</TargetFrameworks>
+    <!--<TargetFrameworks>net46;netstandard1.6</TargetFrameworks>-->
+    <TargetFramework>netstandard1.6</TargetFramework>
+    
     <DebugType>pdbonly</DebugType>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>Fake.Core.Targets</AssemblyName>
@@ -24,7 +26,7 @@
     <ProjectReference Include="..\Fake.Core.BuildServer\Fake.Core.BuildServer.fsproj" />
     <ProjectReference Include="..\Fake.Core.Tracing\Fake.Core.Tracing.fsproj" />
   </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
+  <!--<ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
     <Reference Include="mscorlib">
       <FromP2P>true</FromP2P>
     </Reference>
@@ -34,7 +36,7 @@
     <Reference Include="System.Core">
       <FromP2P>true</FromP2P>
     </Reference>
-  </ItemGroup>
+  </ItemGroup>-->
   <ItemGroup>
     <DotNetCliToolReference Include="dotnet-compile-fsc">
       <Version>1.0.0-preview2-020000</Version>
