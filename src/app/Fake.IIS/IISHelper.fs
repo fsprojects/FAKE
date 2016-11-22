@@ -61,17 +61,22 @@ type SiteConfig(name : string, binding:string, physicalPath:string, appPool:stri
         member this.protocol = defaultArg protocol "http"
 end
 
-type ApplicationPoolConfig(name : string, ?runtime:string, ?allow32on64:bool, ?identity : ProcessModelIdentityType) = class
+type ApplicationPoolConfig(name : string, ?runtime:string, ?allow32on64:bool, ?identity : ProcessModelIdentityType, ?credentials: string * string) = class
     member this.name = name
     member this.runtime = defaultArg runtime "v4.0"
     member this.allow32on64 = defaultArg allow32on64 false
-    member this.identity = defaultArg identity ProcessModelIdentityType.ApplicationPoolIdentity        
+    member this.identity = defaultArg identity ProcessModelIdentityType.ApplicationPoolIdentity
+    member this.credentials = defaultArg credentials ("","")
 end
 
 let private MergeAppPoolProperties (appPool:ApplicationPool)(config:ApplicationPoolConfig) = 
     appPool.Enable32BitAppOnWin64 <- config.allow32on64
     appPool.ManagedRuntimeVersion <- config.runtime
     appPool.ProcessModel.IdentityType <- config.identity
+
+    let (userName, password) = config.credentials
+    appPool.ProcessModel.UserName <- userName
+    appPool.ProcessModel.Password <- password
     appPool
 
 let private MergeSiteProperties(site:Site)(config:ISiteConfig) = 
