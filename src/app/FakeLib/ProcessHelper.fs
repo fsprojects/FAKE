@@ -434,22 +434,29 @@ let asyncShellExec (args : ExecParams) =
         let info = 
             ProcessStartInfo
                 (args.Program, UseShellExecute = false, 
-                 RedirectStandardError = true, RedirectStandardOutput = true, RedirectStandardInput = true,
-                 WindowStyle = ProcessWindowStyle.Hidden, WorkingDirectory = args.WorkingDirectory, 
-                 Arguments = commandLine)
-        use proc = new Process(StartInfo = info)
-        proc.ErrorDataReceived.Add(fun e -> 
-            if e.Data <> null then traceError e.Data)
-        proc.OutputDataReceived.Add(fun e -> 
-            if e.Data <> null then log e.Data)
-        start proc
-        proc.BeginOutputReadLine()
-        proc.BeginErrorReadLine()
-        proc.StandardInput.Close()
-        // attaches handler to Exited event, enables raising events, then awaits event
-        // the event gets triggered even if process has already finished
-        let! _ = Async.GuardedAwaitObservable proc.Exited (fun _ -> proc.EnableRaisingEvents <- true)
-        return proc.ExitCode
+                RedirectStandardError = true, RedirectStandardOutput = true, RedirectStandardInput = true,
+                WindowStyle = ProcessWindowStyle.Hidden, WorkingDirectory = args.WorkingDirectory, 
+                Arguments = commandLine)
+        let proc = new Process(StartInfo = info)
+
+        try
+            proc.ErrorDataReceived.Add(fun e -> 
+                if e.Data <> null then traceError e.Data)
+            proc.OutputDataReceived.Add(fun e -> 
+                if e.Data <> null then log e.Data)
+            start proc
+            proc.BeginOutputReadLine()
+            proc.BeginErrorReadLine()
+            proc.StandardInput.Close()
+            // attaches handler to Exited event, enables raising events, then awaits event
+            // the event gets triggered even if process has already finished
+            let! _ = Async.GuardedAwaitObservable proc.Exited (fun _ -> proc.EnableRaisingEvents <- true)
+            return proc.ExitCode
+        finally
+            // add a delay because we were seeing ObjectDisposedException when running shell commands on
+            // osx. Github issue #1424. 
+            Async.Sleep (10) |> Async.RunSynchronously
+            proc.Dispose()
     }
 
 /// Kills the given process
