@@ -60,6 +60,7 @@ type TestResultsFormat =
     | Excel
   
 /// The Pickles parameter type
+[<CLIMutable>]
 type PicklesParams =
     { /// The path to the Pickles console tool: 'pickles.exe'      
       ToolPath : string

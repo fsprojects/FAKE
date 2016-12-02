@@ -26,6 +26,7 @@ type TargetKind =
     | WinExe
 
 /// Parameter type for ILMerge
+[<CLIMutable>]
 type ILMergeParams = 
     { /// Path to ILMerge.exe
       ToolPath : string

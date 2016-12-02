@@ -10,6 +10,7 @@ type RegisterType =
     | RegisterUser
 
 /// OpenCover parameters, for more details see: https://github.com/OpenCover/opencover/wiki/Usage#console-application-usage.
+[<CLIMutable>]
 type OpenCoverParams = 
     { /// (Required) Path to the OpenCover console application
       ExePath : string

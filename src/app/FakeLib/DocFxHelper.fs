@@ -4,6 +4,7 @@ module Fake.DocFxHelper
 open System
 
 /// The parameter type for DocFx.
+[<CLIMutable>]
 type DocFxParams = 
     { /// The tool path - FAKE tries to find docfx.exe automatically in any sub folder.
       ToolPath : string

@@ -6,6 +6,7 @@ open System.IO
 open System.Text
 
 /// Parameter type to configure the Fixie runner
+[<CLIMutable>]
 type FixieParams = {
     /// FileName of the Fixie runner
     ToolPath: string

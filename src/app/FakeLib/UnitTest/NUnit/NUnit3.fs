@@ -100,6 +100,7 @@ type LabelsLevel =
 /// The NUnit 3 Console Parameters type. FAKE will use [NUnit3Defaults](fake-testing-nunit3.html) for values not provided.
 ///
 /// For reference, see: [NUnit3 command line options](https://github.com/nunit/nunit/wiki/Console-Command-Line)
+[<CLIMutable>]
 type NUnit3Params =
     { /// The path to the NUnit3 console runner: `nunit3-console.exe`
       ToolPath : string

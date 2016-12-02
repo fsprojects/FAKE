@@ -21,6 +21,7 @@ let mstestexe =
 type ErrorLevel = TestRunnerErrorLevel
 
 /// Parameter type to configure the MSTest.exe.
+[<CLIMutable>]
 type MSTestParams = 
     { /// Test category filter  (optional). The test category filter consists of one or more test category names separated by the logical operators '&', '|', '!', '&!'. The logical operators '&' and '|' cannot be used together to create a test category filter.
       Category : string

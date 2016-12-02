@@ -8,6 +8,7 @@ open System.Text
 open Fake
 
 /// The xUnit parameter type.
+[<CLIMutable>]
 type XUnitParams =
     { /// The path to the xUnit console runner: `xunit.console.clr4.exe`
       ToolPath : string

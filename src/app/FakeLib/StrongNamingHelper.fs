@@ -5,6 +5,7 @@ open System
 
 
 /// Strong naming parameters
+[<CLIMutable>]
 type StrongNameParams = 
     { /// (Required) Path to the sn.exe
       ToolPath : string

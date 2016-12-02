@@ -26,6 +26,7 @@ type PackageType =
         | Both -> "/p:Both"
 
 /// Parameters for executing Dynamics CRM Helper functions
+[<CLIMutable>]
 type DynamicsCrmHelperParams =
     {
         /// Url of CRM Organization / Discovery Service URL if using AllOrganizations
@@ -70,6 +71,7 @@ let DynamicsCrmHelperDefaults =
     }
 
 /// Parameters for invoking Solution Packager
+[<CLIMutable>]
 type SolutionPackagerParams =
     {
         /// Action to start, either pack or extract

@@ -16,6 +16,7 @@ type ModuleGeneration =
     | AMD
 
 /// TypeScript task parameter type
+[<CLIMutable>]
 type TypeScriptParams =
     { 
       /// Specifies which ECMAScript version the TypeScript compiler should generate. Default is ES3.

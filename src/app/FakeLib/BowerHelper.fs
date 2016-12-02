@@ -24,6 +24,7 @@ type BowerCommand =
 | Custom of string
 
 /// The Bower parameter type
+[<CLIMutable>]
 type BowerParams =
     { Src: string
       BowerFilePath: string

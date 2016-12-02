@@ -42,6 +42,7 @@ type NUnitDomainModel =
 /// FAKE will use [NUnitDefaults](fake-nunitcommon.html) for values not provided.
 ///
 /// For reference, see: [NUnit-Console Command Line Options](http://www.nunit.org/index.php?p=consoleCommandLine&r=2.6.4)
+[<CLIMutable>]
 type NUnitParams = 
     { 
       /// The [Categories](http://www.nunit.org/index.php?p=category&r=2.6.4) to be included in a test run. Multiple categories may be specified on either option, by using commas to separate them.

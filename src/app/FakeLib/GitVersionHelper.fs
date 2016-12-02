@@ -9,6 +9,7 @@ open FSharp.Data
 open Newtonsoft.Json
 open System
 
+[<CLIMutable>]
 type GitversionParams = {
     ToolPath : string
 }

@@ -19,6 +19,7 @@ type MageCall = NewApp | UpdateApp | Sign | Deploy | UpdateDeploy | SignDeploy
 type MageTrustLevels = Internet | LocalIntranet | FullTrust
 
 /// Needed information to call MAGE
+[<CLIMutable>]
 type MageParams =
   { ToolsPath : string 
     ProjectFiles : seq<string>

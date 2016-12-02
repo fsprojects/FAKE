@@ -20,6 +20,7 @@ type ReportGeneratorLogVerbosity =
     | Error = 2
 
 /// ReportGenerator parameters, for more details see: https://github.com/danielpalme/ReportGenerator.
+[<CLIMutable>]
 type ReportGeneratorParams =
     { /// (Required) Path to the ReportGenerator exe file.
       ExePath : string

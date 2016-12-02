@@ -6,6 +6,7 @@ open System
 open System.Text
 
 /// Parameter type for xpkg tasks
+[<CLIMutable>]
 type xpkgParams = 
     { ToolPath : string
       WorkingDir : string

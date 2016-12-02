@@ -20,6 +20,7 @@ type SignCert = {
 }
 
 /// Parameters used for signing.
+[<CLIMutable>]
 type SignParams = {
     /// The dev certificate that will be used when the real certificate can not be found
     DevCertificate : SignCert

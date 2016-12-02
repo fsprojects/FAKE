@@ -55,6 +55,7 @@ type XUnit2ErrorLevel = TestRunnerErrorLevel // a type alias to keep backwards c
 /// DEPRECATED.
 /// The xUnit parameter type
 [<Obsolete("This type will be removed in a future version. See Fake.Testing.XUnit2.XUnit2Params")>]
+[<CLIMutable>]
 type XUnit2Params =
     { /// The path to the xunit.console.exe - FAKE will scan all subfolders to find it automatically.
       ToolPath : string

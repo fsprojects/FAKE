@@ -15,6 +15,7 @@ type CodeLanguage =
     | FSharp
     | VisualBasic
 
+[<CLIMutable>]
 type AssemblyInfoParams = 
     { OutputFileName : string
       ComVisible : bool option

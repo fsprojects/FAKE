@@ -6,6 +6,7 @@ open TraceHelper
 type SonarQubeCall = Begin | End
 
 /// Parameter type to configure the sonar qube runner.
+[<CLIMutable>]
 type SonarQubeParams =
     { /// FileName of the sonar qube runner exe. 
       ToolsPath : string

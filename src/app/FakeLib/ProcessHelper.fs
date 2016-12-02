@@ -395,6 +395,7 @@ let findPath settingsName fallbackValue tool =
     | None -> tool
 
 /// Parameter type for process execution.
+[<CLIMutable>]
 type ExecParams = 
     { /// The path to the executable, without arguments. 
       Program : string

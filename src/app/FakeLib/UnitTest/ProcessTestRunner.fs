@@ -6,6 +6,7 @@ open System.IO
 open System.Text
 
 /// The ProcessTestRunner parameter type.
+[<CLIMutable>]
 type ProcessTestRunnerParams = 
     { /// The working directory (optional).
       WorkingDir : string

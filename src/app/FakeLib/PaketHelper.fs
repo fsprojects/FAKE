@@ -7,6 +7,7 @@ open System.Xml.Linq
 open System.Text.RegularExpressions
 
 /// Paket pack parameter type
+[<CLIMutable>]
 type PaketPackParams =
     { ToolPath : string
       TimeOut : TimeSpan
@@ -45,6 +46,7 @@ let PaketPackDefaults() : PaketPackParams =
       PinProjectReferences = false }
 
 /// Paket push parameter type
+[<CLIMutable>]
 type PaketPushParams =
     { ToolPath : string
       TimeOut : TimeSpan
@@ -65,6 +67,7 @@ let PaketPushDefaults() : PaketPushParams =
       ApiKey = null }
 
 /// Paket restore packages type
+[<CLIMutable>]
 type PaketRestoreParams =
     { ToolPath : string
       TimeOut : TimeSpan

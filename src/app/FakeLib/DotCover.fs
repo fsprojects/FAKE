@@ -16,6 +16,7 @@ type DotCoverReportType =
   | NDependXml = 3
 
 /// The dotCover parameter type for running coverage
+[<CLIMutable>]
 type DotCoverParams = 
     { ToolPath: string
       WorkingDir: string
@@ -41,6 +42,7 @@ let DotCoverDefaults =
       CustomParameters = "" 
       ErrorLevel = ErrorLevel.Error} 
 
+[<CLIMutable>]
 type DotCoverMergeParams = 
     { ToolPath: string
       WorkingDir: string
@@ -57,6 +59,7 @@ let DotCoverMergeDefaults =
        TempDir = ""
        CustomParameters = "" }
 
+[<CLIMutable>]
 type DotCoverReportParams = 
     { ToolPath: string
       WorkingDir: string

@@ -957,6 +957,7 @@ let setComponentsNeverOverwrite (components : string) =
 open System
 
 /// WiX parameter type
+[<CLIMutable>]
 type WiXParams = 
     { ToolDirectory : string
       TimeOut : TimeSpan

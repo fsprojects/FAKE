@@ -3,6 +3,7 @@
 module Fake.SCPHelper
 
 /// The SCP parameter type.
+[<CLIMutable>]
 type SCPParams = 
     { /// Path of the scp.exe 
       ToolPath : string

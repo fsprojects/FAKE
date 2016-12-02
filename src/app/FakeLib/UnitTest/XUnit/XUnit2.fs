@@ -92,6 +92,7 @@ type CollectionConcurrencyMode =
         | MaxThreads count -> Some count
 
 /// The xUnit2 parameter type.
+[<CLIMutable>]
 type XUnit2Params =
     { /// The path to the xUnit console runner: `xunit.console.exe`
       ToolPath : string

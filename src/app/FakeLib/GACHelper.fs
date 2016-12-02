@@ -8,6 +8,7 @@ let gacutilToolPath = !! (sdkBasePath + "/**/gacutil.exe")
                              |> getNewestTool
 
 /// GAC parameters
+[<CLIMutable>]
 type GACParams = 
     { /// (Required) Path to the gacutil
       ToolPath : string

@@ -42,6 +42,7 @@ let findNuget defaultPath =
     | _ -> defaultPath @@ "NuGet.exe"
 
 /// RestorePackages parameter path
+[<CLIMutable>]
 type RestorePackageParams =
     { ToolPath: string
       Sources: string list
@@ -59,6 +60,7 @@ let RestorePackageDefaults =
       OutputPath = "./packages" }
 
 /// RestorePackages parameter path for single packages
+[<CLIMutable>]
 type RestoreSinglePackageParams = 
     { ToolPath: string
       Sources: string list
