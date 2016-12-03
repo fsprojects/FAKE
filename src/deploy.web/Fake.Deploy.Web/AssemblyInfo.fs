@@ -5,11 +5,11 @@ open System.Runtime.InteropServices
 [<assembly: AssemblyTitleAttribute("FAKE - F# Make Deploy Web")>]
 [<assembly: GuidAttribute("27BA7705-3F57-47BE-B607-8A46B27AE876")>]
 [<assembly: AssemblyProductAttribute("FAKE - F# Make")>]
-[<assembly: AssemblyVersionAttribute("4.45.3")>]
-[<assembly: AssemblyInformationalVersionAttribute("4.45.3")>]
-[<assembly: AssemblyFileVersionAttribute("4.45.3")>]
+[<assembly: AssemblyVersionAttribute("4.46.0")>]
+[<assembly: AssemblyInformationalVersionAttribute("4.46.0")>]
+[<assembly: AssemblyFileVersionAttribute("4.46.0")>]
 do ()
 
 module internal AssemblyVersionInformation =
-    let [<Literal>] Version = "4.45.3"
-    let [<Literal>] InformationalVersion = "4.45.3"
+    let [<Literal>] Version = "4.46.0"
+    let [<Literal>] InformationalVersion = "4.46.0"
