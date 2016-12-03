@@ -19,6 +19,7 @@ let vsTestExe =
 type ErrorLevel = TestRunnerErrorLevel
 
 /// Parameter type to configure [VSTest.Console.exe](https://msdn.microsoft.com/en-us/library/jj155800.aspx)
+[<CLIMutable>]
 type VSTestParams = 
     { /// Path to the run settings file to run tests with additional settings such as data collectors (optional).
       SettingsPath : string

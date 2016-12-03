@@ -11,6 +11,7 @@ type NugetInstallVerbosity =
 | Detailed
 
 /// Nuget install parameters.
+[<CLIMutable>]
 type NugetInstallParams =
     {
       /// Path to the nuget.exe.

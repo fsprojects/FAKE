@@ -23,6 +23,7 @@ type CMakeVariable = {
 }
 
 /// The CMakeGenerate parameter type.
+[<CLIMutable>]
 type CMakeGenerateParams = {
     /// The location of the CMake executable. Automatically found if null or empty.
     ToolPath:string
@@ -65,6 +66,7 @@ type CMakeGenerateParams = {
 }
 
 /// The CMakeBuild parameter type.
+[<CLIMutable>]
 type CMakeBuildParams = {
     /// The location of the CMake executable. Automatically found if null or empty.
     ToolPath:string

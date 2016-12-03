@@ -27,6 +27,7 @@ type FscPlatform =
 
 /// 'fsc.exe' command line parameters
 [<Obsolete "Use FscHelper.FscParam instead">]
+[<CLIMutable>]
 type FscParams = 
     { /// Specifies the output file name and path.
       Output : string

@@ -5,6 +5,7 @@ module Fake.MSIHelper
 open System
 
 /// MSI parameter type
+[<CLIMutable>]
 type MSIParams =
     { ToolPath: string
       WorkingDir:string

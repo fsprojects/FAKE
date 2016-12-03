@@ -65,6 +65,7 @@ type NavisionServerType =
         | NavisionServerType.NativeServer -> "NAVISION"
 
 /// A parameter type to interact with Dynamics NAV
+[<CLIMutable>]
 type DynamicsNavParams = 
     { ToolPath : string
       ServerName : string

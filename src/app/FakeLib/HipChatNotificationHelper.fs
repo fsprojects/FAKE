@@ -6,6 +6,7 @@ open System.Web
 open Fake
 
 /// The HipChat notification paramater type
+[<CLIMutable>]
 type HipChatNotificationParams = {
     /// (Required) Auth token from HipChat
     AuthToken: string

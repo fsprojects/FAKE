@@ -6,6 +6,7 @@ open Fake.ProcessHelper
 open System
 
 /// Parameter type to configure the RoundhousE runner
+[<CLIMutable>]
 type RoundhouseParams = {
 
     /// The database you want to create/migrate.

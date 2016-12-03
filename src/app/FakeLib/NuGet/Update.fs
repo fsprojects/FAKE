@@ -5,6 +5,7 @@ open System
 open Fake
 
 /// Nuget update parameters.
+[<CLIMutable>]
 type NugetUpdateParams =
     {
       /// Path to the nuget.exe.

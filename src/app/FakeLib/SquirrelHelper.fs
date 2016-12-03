@@ -9,6 +9,7 @@ open System.Text
 /// FAKE will use [SquirrelDefaults](fake-squirrel.html) for values not provided.
 ///
 /// For reference, see: [Squirrel Command Line Options](https://github.com/Squirrel/Squirrel.Windows/blob/master/docs/advanced-releasify.md)
+[<CLIMutable>]
 type SquirrelParams =
     {
         /// The output directory for the generated installer

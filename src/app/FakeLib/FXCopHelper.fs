@@ -19,6 +19,7 @@ type FxCopErrorLevel =
     | DontFailBuild = 0
 
 /// Parameter type for the FxCop tool
+[<CLIMutable>]
 type FxCopParams = 
     { ApplyOutXsl : bool
       DirectOutputToConsole : bool

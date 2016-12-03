@@ -188,6 +188,7 @@ let SetVariable name value =
 type ArtifactType = Auto | WebDeployPackage
 
 /// AppVeyor parameters for artifact push
+[<CLIMutable>]
 type PushArtifactParams =
     {
         /// The full local path to the artifact

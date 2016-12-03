@@ -5,6 +5,7 @@ module Fake.DocuHelper
 open System
 
 /// The parameter type for docu.
+[<CLIMutable>]
 type DocuParams = 
     { /// The tool path - FAKE tries to find docu.exe automatically in any sub folder.
       ToolPath : string

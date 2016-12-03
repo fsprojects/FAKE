@@ -45,6 +45,7 @@ type NpmCommand =
 | Custom of string
 
 /// The Npm parameter type
+[<CLIMutable>]
 type NpmParams = 
     { Src: string
       NpmFilePath: string

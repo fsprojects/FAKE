@@ -5,6 +5,7 @@ open System
 open System.IO
 
 /// The TestFlight parameter type.
+[<CLIMutable>]
 type TestFlightParams = {
     /// (Required) API token from testflightapp.com/account/#api
     ApiToken: string

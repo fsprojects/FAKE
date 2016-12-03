@@ -3,6 +3,7 @@
 module Fake.SSHHelper
 
 /// The SSH parameter type.
+[<CLIMutable>]
 type SSHParams = 
     { /// Path of the scp.exe 
       ToolPath : string

@@ -5,6 +5,7 @@ open System.Net
 open Newtonsoft.Json
 
 /// The Slack notification attachment field parameter type
+[<CLIMutable>]
 type SlackNotificationAttachmentFieldParams = {
     /// (Required) The field title
     Title: string
@@ -15,6 +16,7 @@ type SlackNotificationAttachmentFieldParams = {
 }
 
 /// The Slack notification attachment parameter type
+[<CLIMutable>]
 type SlackNotificationAttachmentParams = {
     /// (Required) Text summary of the attachment that is shown by clients that understand attachments but choose not to show them
     Fallback: string
@@ -33,6 +35,7 @@ type SlackNotificationAttachmentParams = {
 }
 
 /// The Slack notification parameter type
+[<CLIMutable>]
 type SlackNotificationParams = {
     /// (Required) The message body
     Text: string

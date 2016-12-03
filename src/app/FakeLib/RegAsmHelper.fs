@@ -10,6 +10,7 @@ let regAsmToolPath = !! (TargetPlatformPrefix + "/**/RegAsm.exe")
                              |> getNewestTool
 
 /// RegAsm parameter type
+[<CLIMutable>]
 type RegAsmParams = 
     { ToolPath : string
       WorkingDir : string

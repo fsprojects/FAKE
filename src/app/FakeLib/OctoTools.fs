@@ -110,6 +110,7 @@ type OctoCommand =
 | Push of PushOptions
 
 /// Complete Octo.exe CLI params
+[<CLIMutable>]
 type OctoParams = {
     ToolName            : string
     ToolPath            : string

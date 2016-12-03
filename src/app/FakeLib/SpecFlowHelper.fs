@@ -7,6 +7,7 @@ open System.IO
 open System.Text
 
 /// SpecFlow execution parameter type.
+[<CLIMutable>]
 type SpecFlowParams = { 
     SubCommand:         string
     ProjectFile:        string

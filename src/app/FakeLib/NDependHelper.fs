@@ -10,6 +10,7 @@ let getWorkingDir workingDir =
     Seq.find isNotNullOrEmpty [workingDir; environVar("teamcity.build.workingDir"); "."]  // TODO: other build servers?
     |> Path.GetFullPath
     
+[<CLIMutable>]
 type NDependParams = 
     { ToolPath : string
       WorkingDir : string

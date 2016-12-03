@@ -21,6 +21,7 @@ module Choco =
     | Sha512
 
     /// The choco install parameter type.
+    [<CLIMutable>]
     type ChocoInstallParams = {
         /// Version of the package
         /// Equivalent to the `--version <version>` option.
@@ -65,6 +66,7 @@ module Choco =
     }
 
     /// The choco pack parameter type.
+    [<CLIMutable>]
     type ChocoPackParams = {
         /// The version you would like to insert into the package.
         /// Equivalent to the `--version <version>` option.
@@ -194,6 +196,7 @@ module Choco =
     }
 
     /// The choco push parameter type.
+    [<CLIMutable>]
     type ChocoPushParams = {
         /// The source we are pushing the package to. Default: "https://chocolatey.org/"
         /// Equivalent to the `--source <source>` option.

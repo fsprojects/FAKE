@@ -10,6 +10,7 @@ open System
 open System.IO
 
 /// Parameters for running a VB6 build
+[<CLIMutable>]
 type Vb6BuildParams = 
     { 
         /// Path to the VB6 executable

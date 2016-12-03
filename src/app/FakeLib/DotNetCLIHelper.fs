@@ -33,6 +33,7 @@ let isInstalled() =
     with _ -> false
 
 /// DotNet parameters
+[<CLIMutable>]
 type CommandParams = {
     /// ToolPath - usually just "dotnet"
     ToolPath: string
@@ -76,6 +77,7 @@ let RunCommand (setCommandParams: CommandParams -> CommandParams) args =
         failwithf "dotnet command failed on %s" args
 
 /// DotNet restore parameters
+[<CLIMutable>]
 type RestoreParams = {
     /// ToolPath - usually just "dotnet"
     ToolPath: string
@@ -138,6 +140,7 @@ let Restore (setRestoreParams: RestoreParams -> RestoreParams) =
         failwithf "Restore failed on %s" args
 
 /// DotNet build parameters
+[<CLIMutable>]
 type BuildParams = {
     /// ToolPath - usually just "dotnet"
     ToolPath: string
@@ -211,6 +214,7 @@ let Build (setBuildParams: BuildParams -> BuildParams) =
 
 
 /// DotNet test parameters
+[<CLIMutable>]
 type TestParams = {
     /// ToolPath - usually just "dotnet"
     ToolPath: string
@@ -284,6 +288,7 @@ let Test (setTestParams: TestParams -> TestParams) =
 
 
 /// DotNet pack parameters
+[<CLIMutable>]
 type PackParams = {
     /// ToolPath - usually just "dotnet"
     ToolPath: string
@@ -356,6 +361,7 @@ let Pack (setPackParams: PackParams -> PackParams) =
         failwithf "Pack failed on %s" args
 
 /// DotNet publish parameters
+[<CLIMutable>]
 type PublishParams = {
     /// ToolPath - usually just "dotnet"
     ToolPath: string

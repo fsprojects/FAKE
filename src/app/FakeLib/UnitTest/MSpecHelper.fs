@@ -7,6 +7,7 @@ open System.IO
 open System.Text
 
 /// Parameter type to configure the MSpec runner.
+[<CLIMutable>]
 type MSpecParams = 
     { /// FileName of the mspec runner exe. Use mspec-clr4.exe if you are on .NET 4.0 or above.
       ToolPath : string

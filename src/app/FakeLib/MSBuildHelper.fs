@@ -130,6 +130,7 @@ type MSBuildDistributedLoggerConfig =
         Parameters : (string * string) list option }
 
 /// A type for MSBuild task parameters
+[<CLIMutable>]
 type MSBuildParams = 
     { Targets : string list
       Properties : (string * string) list

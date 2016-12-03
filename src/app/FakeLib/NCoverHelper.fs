@@ -7,6 +7,7 @@ open System.IO
 open System.Text
 
 /// The NCover parameter type.
+[<CLIMutable>]
 type NCoverParams = 
     { ProjectName : string
       ToolPath : string

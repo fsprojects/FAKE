@@ -32,6 +32,7 @@ type NugetSymbolPackage =
     | Nuspec = 2
 
 /// Nuget parameter type
+[<CLIMutable>]
 type NuGetParams = 
     { ToolPath : string
       TimeOut : TimeSpan

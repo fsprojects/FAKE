@@ -5,6 +5,7 @@ open Fake.ProcessHelper
 open System
 
 /// A type for the controlling parameter
+[<CLIMutable>]
 type AzureEmulatorParams = {
     CSRunToolPath:string
     DSInitToolPath:string

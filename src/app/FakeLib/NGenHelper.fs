@@ -4,6 +4,7 @@ module Fake.NGenHelper
 open System
 
 /// NGen parameters
+[<CLIMutable>]
 type NGenParams = 
     { /// (Required) Path to the NGenutil
       ToolPath : string
