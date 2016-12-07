@@ -60,5 +60,5 @@ let GitVersion (setParams : GitversionParams -> GitversionParams) =
 
     let result = ExecProcessAndReturnMessages (fun info ->
         info.FileName <- parameters.ToolPath) timespan
-    if result.ExitCode <> 0 then failwithf "GitVersion.exe failed with exit code %i" result.ExitCode
+    if result.ExitCode <> 0 then failwithf "GitVersion.exe failed with exit code %i and message %s" result.ExitCode (String.concat "" result.Messages)
     result.Messages |> String.concat "" |> fun j -> JsonConvert.DeserializeObject<GitVersionProperties>(j)
