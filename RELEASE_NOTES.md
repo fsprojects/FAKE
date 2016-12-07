@@ -1,3 +1,6 @@
+#### 4.46.1 - 07.12.2016
+* USABILITY: Improve error logging in GitVersionHelper - https://github.com/fsharp/FAKE/pull/1429
+
 #### 4.46.0 - 03.12.2016
 * Decorated all *Params helper records with [<CLIMutable>] for C# access - https://github.com/fsharp/FAKE/pull/1428
 * Added credentials parameter to ApplicationPoolConfig in IISHelper - https://github.com/fsharp/FAKE/pull/1425
