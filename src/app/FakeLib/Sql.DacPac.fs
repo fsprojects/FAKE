@@ -34,7 +34,9 @@ type DeployDbArgs = {
     /// Recreates the database from scratch on publish (rather than an in-place update). Defaults to false.
     RecreateDb : bool
     /// Additional configuration parameters required by sqlpackage.exe
-    AdditionalSqlPackageProperties : (string * string) list }
+    AdditionalSqlPackageProperties : (string * string) list
+    /// SQLCMD variables
+    Variables : (string * string) list }
 
 let validPaths =
     let getSqlVersion (path:string) = path.Split '\\' |> Array.item 3 |> int
@@ -60,7 +62,8 @@ let defaultDeploymentArgs =
       BlockOnPossibleDataLoss = true
       DropObjectsNotInSource = false
       RecreateDb = false
-      AdditionalSqlPackageProperties = [] }
+      AdditionalSqlPackageProperties = []
+      Variables = [] }
 
 module PropertyKeys =
     /// When creating a new SQL Azure database, specifies the database service tier to use e.g. S2, P1
@@ -80,10 +83,13 @@ let deployDb setParams =
     let args = setParams defaultDeploymentArgs
     let action, outputPath = generateCommandLine args.Action
 
-    let additionalParameters =
-        args.AdditionalSqlPackageProperties
-        |> List.map (fun (key, value) -> sprintf "/p:%s=%s" key value)
-        |> String.concat " "
+    let concat parameter =
+        List.map (fun (key, value) -> sprintf "/%s:%s=%s" parameter key value)
+        >> String.concat " "
+
+    let additionalParameters = args.AdditionalSqlPackageProperties |> concat "p"
+
+    let variables = args.Variables |> concat "v"
 
     if System.String.IsNullOrWhiteSpace args.SqlPackageToolPath then
         failwith "No SqlPackage.exe filename was given."
@@ -93,7 +99,7 @@ let deployDb setParams =
           
     shellExec {
         Program = args.SqlPackageToolPath
-        CommandLine = sprintf """/Action:%s /SourceFile:"%s" /TargetConnectionString:"%s" %s /p:BlockOnPossibleDataLoss=%b /p:DropObjectsNotInSource=%b /p:CommandTimeout=%d /p:CreateNewDatabase=%b %s""" action args.Source args.Destination outputPath args.BlockOnPossibleDataLoss args.DropObjectsNotInSource args.Timeout args.RecreateDb additionalParameters
+        CommandLine = sprintf """/Action:%s /SourceFile:"%s" /TargetConnectionString:"%s" %s /p:BlockOnPossibleDataLoss=%b /p:DropObjectsNotInSource=%b /p:CommandTimeout=%d /p:CreateNewDatabase=%b %s %s""" action args.Source args.Destination outputPath args.BlockOnPossibleDataLoss args.DropObjectsNotInSource args.Timeout args.RecreateDb additionalParameters variables
         WorkingDirectory = ""
         Args = [] }
 
