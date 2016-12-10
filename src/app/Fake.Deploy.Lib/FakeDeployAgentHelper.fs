@@ -107,6 +107,7 @@ let private uploadData (action : Action) (url : Url) (body : byte []) timeout =
     respStream.CopyTo ms
     ms.ToArray()
 
+/// sends the given body using the given action (POST or PUT) to the given url
 let private uploadFile (action : Action) (url : Url) (file : FilePath) (args : string []) timeout = 
     let req = webRequest url action timeout
     req.Headers.Add(scriptArgumentsHeaderName, args |> toHeaderValue)
@@ -120,24 +121,22 @@ let private uploadFile (action : Action) (url : Url) (file : FilePath) (args : s
     respStream.CopyTo ms
     ms.ToArray()
 
-/// sends the given body using the given action (POST or PUT) to the given url
+/// parses response body
 let private processResponse (response : byte []) = 
     try 
         use ms = new MemoryStream(response)
         use sr = new StreamReader(ms, Text.Encoding.UTF8)
         let msg = sr.ReadToEnd()
-        try 
-            match msg |> Json.deserialize with
-            | Message msg -> 
-                Json.deserialize<DeploymentResponse> msg
-                |> Message
-                |> Choice1Of2
-            | Exception exn -> Exception exn |> Choice1Of2
-        with _ -> 
-            msg
-            |> Json.deserialize<DeploymentResponse>
-            |> Message
-            |> Choice1Of2
+        match msg |> Json.tryDeserialize<HttpResponseMessage<string>> with
+        | Choice1Of2 m -> match m with
+                          | Message msg -> Json.deserialize<DeploymentResponse> msg
+                                           |> Message
+                                           |> Choice1Of2
+                          | Exception exn -> Exception exn |> Choice1Of2
+        | Choice2Of2 exn -> match msg |> Json.tryDeserialize<DeploymentResponse> with
+                            | Choice1Of2 m -> m |> Message |> Choice1Of2
+                            | Choice2Of2 exn -> Choice2Of2 exn
+
     with exn -> Choice2Of2 exn
 
 /// Posts the given file to the given URL.
