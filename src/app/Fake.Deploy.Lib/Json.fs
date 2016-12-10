@@ -15,11 +15,16 @@ let deserialize<'a> text : 'a = JsonConvert.DeserializeObject<'a>(text)
 /// Deserializes a file into a object of type 'a
 let deserializeFile<'a> = ReadFileAsString >> deserialize<'a>
 
-exception ParsingException of string * exn
+type ParsingException(input : string, inner : exn) =
+    inherit Exception(sprintf "Faied to parse input: %s" input, inner)
 
 /// Tryes to deserialize a text into a object of type 'a and returns either instance of 'a or parsing error
 let tryDeserialize<'a> (s: string) : Choice<'a, exn> =
     try
         deserialize<'a> s |> Choice1Of2
-    with exn -> ParsingException(s, exn) |> Choice2Of2
+    with exn -> ParsingException(s, exn)
+                :> exn 
+                |> Choice2Of2
+
+
 

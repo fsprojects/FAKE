@@ -4,6 +4,7 @@ module Fake.FakeDeployAgentHelper
 open System
 open System.IO
 open System.Net
+open System.Net.Http
 open System.Text
 open System.Web
 open HttpListenerHelper
@@ -64,62 +65,51 @@ let private defaultDeployment =
 [<Literal>]
 let scriptArgumentsHeaderName = "X-FAKE-Script-Arguments"
 
-let private webRequest (url : Url) (action : Action) (timeout : TimeSpan) = 
-    let req = WebRequest.Create url :?> HttpWebRequest
-    req.Method <- action
-    req.Timeout <- int timeout.TotalMilliseconds
-    req.ContentType <- "application/fake"
-    req.Headers.Add("fake-deploy-use-http-response-messages", "true")
+let private httpClient (timeout : TimeSpan) = 
+    let client = new System.Net.Http.HttpClient()
+    client.Timeout <- timeout
+    client.DefaultRequestHeaders.Add("fake-deploy-use-http-response-messages", "true")
     match authToken with
     | None -> ()
-    | Some t -> req.Headers.Add("AuthToken", string t)
-    req
+    | Some t -> client.DefaultRequestHeaders.Add("AuthToken", string t)
+    client
 
-let private downloadString (request : HttpWebRequest) = 
-    use responseStream = request.GetResponse().GetResponseStream()
-    use ms = new MemoryStream()
-    responseStream.CopyTo ms
-    Encoding.UTF8.GetString(ms.ToArray())
+let parseDeploymentResponse msg = 
+    match msg |> Json.tryDeserialize<HttpResponseMessage<string>> with
+    | Choice1Of2 m -> match m with
+                        | Message msg -> Json.deserialize<DeploymentResponse> msg
+                                        |> Message
+                                        |> Choice1Of2
+                        | Exception exn -> Exception exn |> Choice1Of2
+    | Choice2Of2 exn -> match msg |> Json.tryDeserialize<DeploymentResponse> with
+                        | Choice1Of2 m -> m |> Message |> Choice1Of2
+                        | Choice2Of2 exn -> Choice2Of2 exn
 
 /// Gets the http response from the given URL and runs it with the given function.
-let private get timeout f url = 
+let private get timeout f (url: Url) = 
     try 
-        let msg = webRequest url "GET" timeout |> downloadString
-        try 
-            match msg |> Json.deserialize with
-            | Message msg -> 
-                f msg
-                |> Message
-                |> Choice1Of2
-            | Exception exn -> Exception exn |> Choice1Of2
-        with _ -> 
-            f msg
-            |> Message
-            |> Choice1Of2
+        use client = httpClient timeout
+        let msg = client.GetStringAsync(url).Result
+        f msg
     with exn -> Choice2Of2 exn
 
-let private uploadData (action : Action) (url : Url) (body : byte []) timeout = 
-    let req = webRequest url action timeout
-    use reqStream = req.GetRequestStream()
-    reqStream.Write(body, 0, body.Length)
-    use respStream = req.GetResponse().GetResponseStream()
-    let ms = new MemoryStream()
-    respStream.CopyTo ms
-    ms.ToArray()
+/// PUTS the given body to the given url
+let private uploadData (url : Url) (body : byte []) timeout = 
+    use client = httpClient timeout
+    let fileStreamContent = new ByteArrayContent(body) :> HttpContent
+    fileStreamContent.Headers.ContentType <- new Headers.MediaTypeHeaderValue("application/fake")
+    let response = client.PutAsync(url, fileStreamContent).Result
+    response.Content.ReadAsByteArrayAsync().Result
 
-/// sends the given body using the given action (POST or PUT) to the given url
-let private uploadFile (action : Action) (url : Url) (file : FilePath) (args : string []) timeout = 
-    let req = webRequest url action timeout
-    req.Headers.Add(scriptArgumentsHeaderName, args |> toHeaderValue)
-    req.AllowWriteStreamBuffering <- false
+/// POSTs the given file to the given url
+let private uploadFile (url : Url) (file : FilePath) (args : string []) timeout = 
+    use client = httpClient timeout
+    client.DefaultRequestHeaders.Add(scriptArgumentsHeaderName, args |> toHeaderValue)
     use fileStream = File.OpenRead file
-    req.ContentLength <- fileStream.Length
-    use reqStream = req.GetRequestStream()
-    fileStream.CopyTo reqStream
-    use respStream = req.GetResponse().GetResponseStream()
-    let ms = new MemoryStream()
-    respStream.CopyTo ms
-    ms.ToArray()
+    let fileStreamContent = new StreamContent(fileStream) :> HttpContent
+    fileStreamContent.Headers.ContentType <- new Headers.MediaTypeHeaderValue("application/fake")
+    let response = client.PostAsync(url, fileStreamContent).Result
+    response.Content.ReadAsByteArrayAsync().Result
 
 /// parses response body
 let private processResponse (response : byte []) = 
@@ -127,23 +117,14 @@ let private processResponse (response : byte []) =
         use ms = new MemoryStream(response)
         use sr = new StreamReader(ms, Text.Encoding.UTF8)
         let msg = sr.ReadToEnd()
-        match msg |> Json.tryDeserialize<HttpResponseMessage<string>> with
-        | Choice1Of2 m -> match m with
-                          | Message msg -> Json.deserialize<DeploymentResponse> msg
-                                           |> Message
-                                           |> Choice1Of2
-                          | Exception exn -> Exception exn |> Choice1Of2
-        | Choice2Of2 exn -> match msg |> Json.tryDeserialize<DeploymentResponse> with
-                            | Choice1Of2 m -> m |> Message |> Choice1Of2
-                            | Choice2Of2 exn -> Choice2Of2 exn
-
+        parseDeploymentResponse msg
     with exn -> Choice2Of2 exn
 
 /// Posts the given file to the given URL.
-let private post url file timeout = uploadFile "POST" url file timeout >> processResponse
+let private post url file timeout = uploadFile url file timeout >> processResponse
 
 /// Puts the given body to the given URL.
-let private put url timeout = uploadData "PUT" url timeout >> processResponse
+let private put url timeout = uploadData url timeout >> processResponse
 
 type DeployStatus = 
     | Active
@@ -183,7 +164,7 @@ let authenticate server userId serverpathToPrivateKeyFile passwordForPrivateKey 
 let getReleasesFor server appname status = 
     if String.IsNullOrEmpty(appname) then server + "/deployments?status=" + status
     else server + "/deployments/" + appname + "?status=" + status
-    |> get defaultTimeout (Json.deserialize<DeploymentResponse>)
+    |> get defaultTimeout parseDeploymentResponse
 
 /// Performs a rollback of the given app on the server.
 let rollbackTo server appname version = 
@@ -199,7 +180,7 @@ let getActiveReleasesFor server appname = getReleasesFor server appname "active"
 let getAllReleasesFor server appname = 
     if String.IsNullOrEmpty(appname) then server + "/deployments/"
     else server + "/deployments/" + appname + "/"
-    |> get defaultTimeout (Json.deserialize<DeploymentResponse>)
+    |> get defaultTimeout parseDeploymentResponse
     |> wrapFailure
 
 /// Returns all releases from the given server.
