@@ -72,6 +72,7 @@
     <Compile Include="FuchuHelper.fs" />
     <Compile Include="UnitTest\UnitTestCommon.fs" />
     <Compile Include="UnitTest\UnitTestHelper.fs" />
+    <Compile Include="UnitTest\Expecto\Expecto.fs" />
     <Compile Include="UnitTest\NUnit\Xml.fs" />
     <Compile Include="UnitTest\NUnit\Common.fs" />
     <Compile Include="UnitTest\NUnit\Sequential.fs" />
