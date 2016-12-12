@@ -79,16 +79,3 @@ let Expecto (setParams : ExpectoParams -> ExpectoParams) (assemblies : string se
         |> List.map (fun (testAssembly,exitCode) -> sprintf "Expecto test of assembly '%s' failed. Process finished with exit code %d." testAssembly exitCode)
         |> String.concat System.Environment.NewLine
         |> FailedTestsException |> raise
-
-let testExpecto =
-    !! "tests/*.Tests.exe"
-    |> Expecto (fun p ->
-        { p with
-            Debug = true
-            Parallel = true
-            Filter = "TestPrefix"
-            FilterTestCase = "TestCaseNameSubstring"
-            FilterTestList = "TestListNameSubstring"
-            Run = ["Test1"; "Test2"]
-            ListTests = true
-        })

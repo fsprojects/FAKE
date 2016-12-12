@@ -1,15 +1,15 @@
 # FAKE - F# Make - A DSL for build tasks
 
-"FAKE - F# Make" is a build automation system with capabilities which are similar to **make** and **rake**. 
+"FAKE - F# Make" is a build automation system with capabilities which are similar to **make** and **rake**.
 It is using an easy domain-specific language (DSL) so that you can start using it without learning F#.
 If you need more than the default functionality you can either write F# or simply reference .NET assemblies.
 
 ### Simple Example
 
     #r "tools/FAKE/tools/FakeLib.dll" // include Fake lib
-	open Fake 
+	open Fake
 
-	
+
 	Target "Test" (fun _ ->
 		trace "Testing stuff..."
 	)
@@ -20,7 +20,7 @@ If you need more than the default functionality you can either write F# or simpl
 
 	"Test"            // define the dependencies
 	   ==> "Deploy"
-	
+
 	Run "Deploy"
 
 This build script has two targets. The "Deploy" target has exactly one dependency, namely the "Test" target. Invoking the "Deploy" target (line 16) will cause FAKE to invoke the "Test" target as well.
@@ -68,22 +68,22 @@ If you want to learn about FAKE you should read the ["Getting started with FAKE"
 Targets are the main unit of work in a "FAKE - F# Make" script. Targets have a name and an action (given as a code block).
 
 	// The clean target cleans the build and deploy folders
-	Target "Clean" (fun _ -> 
+	Target "Clean" (fun _ ->
 		CleanDirs ["./build/"; "./deploy/"]
 	)
 
 ### Build target order
 
 You can specify the build order using the ==> operator:
-	
+
 	// "FAKE - F# Make" will run these targets in the order Clean, BuildApp, Default
-	"Clean" 
-	  ==> "BuildApp" 
+	"Clean"
+	  ==> "BuildApp"
 	  ==> "Default"
 
 If one target should only be run on a specific condition you can use the =?> operator:
-	
-	"Clean" 
+
+	"Clean"
 	  ==> "BuildApp"
 	  =?> ("Test",hasBuildParam "xUnitTest")  // only if FAKE was called with parameter xUnitTest
 	  ==> "Default"
@@ -96,7 +96,7 @@ You can execute targets with the "RunTargetOrDefault"-function (for more details
 
 ## FileSets
 
-"FAKE - F# Make" uses similar include and exclude patterns as NAnt and MSBuild. 
+"FAKE - F# Make" uses similar include and exclude patterns as NAnt and MSBuild.
 
 ### File includes
 
@@ -119,23 +119,23 @@ You can execute targets with the "RunTargetOrDefault"-function (for more details
 
 	// define test dlls
 	let testDlls = !! (testDir + "/Test.*.dll")
-	 
+
 	Target "NUnitTest" (fun _ ->
 		testDlls
-			|> NUnit (fun p -> 
+			|> NUnit (fun p ->
 				{p with
-					DisableShadowCopy = true; 
+					DisableShadowCopy = true;
 					OutputFile = testDir + "TestResults.xml"})
     )
-							 
+
 ### MSpec
 	// define test dlls
 	let testDlls = !! (testDir + "/Test.*.dll")
-	 
+
 	Target "MSpecTest" (fun _ ->
 		testDlls
-			|> MSpec (fun p -> 
-				{p with 
+			|> MSpec (fun p ->
+				{p with
 					ExcludeTags = ["LongRunning"]
 					HtmlOutputDir = testOutputDir})
     )
@@ -147,56 +147,77 @@ You can execute targets with the "RunTargetOrDefault"-function (for more details
 
 	Target "xUnitTest" (fun _ ->
         testDlls
-            |> xUnit (fun p -> 
-                {p with 
+            |> xUnit (fun p ->
+                {p with
                     ShadowCopy = false;
                     HtmlOutput = true;
                     XmlOutput = true;
                     OutputDir = testDir })
     )
 
+### Expecto
+
+    // define test executables
+	let testExecutables = !! (testDir + "/Test.*.exe")
+
+    Target "expectoTest" (fun _ ->
+        testExecutables
+        |> Expecto (fun p ->
+            { p with
+                Debug = true
+                Parallel = true
+                // use only one of the following parameters
+                Filter = "TestPrefix"
+                FilterTestCase = "TestCaseNameSubstring"
+                FilterTestList = "TestListNameSubstring"
+                Run = ["Test1"; "Test2"]
+                ListTests = false
+            })
+    )
+
+
 ## Sample script
 
 This sample script
-  
+
 * Assumes "FAKE - F# Make" is located at ./tools/FAKE
-* Assumes NUnit is located at ./tools/NUnit  
+* Assumes NUnit is located at ./tools/NUnit
 * Cleans the build and deploy paths
 * Builds all C# projects below src/app/ and puts the output to ./build
 * Builds all NUnit test projects below src/test/ and puts the output to ./build
 * Uses NUnit to test the generated Test.*.dll's
 * Zips all generated files to deploy/MyProject-0.1.zip
-  
+
 You can read the [getting started guide](gettingstarted.html) to build such a script.
 
     // include Fake libs
     #r "tools/FAKE/FakeLib.dll"
-    
+
     open Fake
-    
+
     // Directories
     let buildDir  = "./build/"
     let testDir   = "./test/"
     let deployDir = "./deploy/"
-    
+
     // tools
     let fxCopRoot = "./Tools/FxCop/FxCopCmd.exe"
-    
+
     // Filesets
-    let appReferences  = 
-        !! "src/app/**/*.csproj" 
+    let appReferences  =
+        !! "src/app/**/*.csproj"
           ++ "src/app/**/*.fsproj"
-    
+
     let testReferences = !! "src/test/**/*.csproj"
-        
+
     // version info
     let version = "0.2"  // or retrieve from CI server
-    
+
     // Targets
-    Target "Clean" (fun _ -> 
+    Target "Clean" (fun _ ->
         CleanDirs [buildDir; testDir; deployDir]
     )
-    
+
     Target "BuildApp" (fun _ ->
 		CreateCSharpAssemblyInfo "./src/app/Calculator/Properties/AssemblyInfo.cs"
 			[Attribute.Title "Calculator Command line tool"
@@ -213,50 +234,50 @@ You can read the [getting started guide](gettingstarted.html) to build such a sc
 			 Attribute.Product "Calculator"
 			 Attribute.Version version
 			 Attribute.FileVersion version]
-          
+
         // compile all projects below src/app/
         MSBuildRelease buildDir "Build" appReferences
             |> Log "AppBuild-Output: "
     )
-    
+
     Target "BuildTest" (fun _ ->
         MSBuildDebug testDir "Build" testReferences
             |> Log "TestBuild-Output: "
     )
-    
-    Target "NUnitTest" (fun _ ->  
+
+    Target "NUnitTest" (fun _ ->
         !! (testDir + "/NUnit.Test.*.dll")
-            |> NUnit (fun p -> 
+            |> NUnit (fun p ->
                 {p with
-                    DisableShadowCopy = true; 
+                    DisableShadowCopy = true;
                     OutputFile = testDir + "TestResults.xml"})
     )
-    
-    Target "xUnitTest" (fun _ ->  
+
+    Target "xUnitTest" (fun _ ->
         !! (testDir + "/xUnit.Test.*.dll")
-            |> xUnit (fun p -> 
-                {p with 
+            |> xUnit (fun p ->
+                {p with
                     ShadowCopy = false;
                     HtmlOutput = true;
                     XmlOutput = true;
                     OutputDir = testDir })
     )
-    
+
     Target "FxCop" (fun _ ->
-        !! (buildDir + "/**/*.dll") 
+        !! (buildDir + "/**/*.dll")
             ++ (buildDir + "/**/*.exe")
-            |> FxCop (fun p -> 
-                {p with                     
+            |> FxCop (fun p ->
+                {p with
                     ReportFileName = testDir + "FXCopResults.xml";
                     ToolPath = fxCopRoot})
     )
-    
+
     Target "Deploy" (fun _ ->
-        !! (buildDir + "/**/*.*") 
-            -- "*.zip" 
+        !! (buildDir + "/**/*.*")
+            -- "*.zip"
             |> Zip buildDir (deployDir + "Calculator." + version + ".zip")
     )
-    
+
     // Build order
 	"Clean"
       ==> "BuildApp"
@@ -265,6 +286,6 @@ You can read the [getting started guide](gettingstarted.html) to build such a sc
       ==> "NUnitTest"
       =?> ("xUnitTest",hasBuildParam "xUnitTest")  // only if FAKE was called with parameter xUnitTest
       ==> "Deploy"
-     
+
     // start build
     RunTargetOrDefault "Deploy"
