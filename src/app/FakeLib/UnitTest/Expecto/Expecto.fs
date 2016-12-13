@@ -1,5 +1,4 @@
-[<AutoOpen>]
-/// Contains tasks to run [xUnit](https://github.com/haf/expecto) v2 unit tests.
+/// Contains tasks to run [expecto](https://github.com/haf/expecto) v2 unit tests.
 module Fake.Testing.Expecto
 
 open System
@@ -29,17 +28,17 @@ type ExpectoParams =
     }
     override this.ToString() =
         let append (s: string) (sb: StringBuilder) = sb.Append s
-        let appendIfTrue p s sb = 
+        let appendIfTrue p s sb =
             if p then append s sb else sb
-        let appendIfNotNullOrWhiteSpace p s (sb: StringBuilder) = 
-            if String.IsNullOrWhiteSpace p |> not 
+        let appendIfNotNullOrWhiteSpace p s (sb: StringBuilder) =
+            if String.IsNullOrWhiteSpace p |> not
             then sprintf "%s%s " s p |> sb.Append
             else sb
-        let appendList list s (sb: StringBuilder) = 
+        let appendList list s (sb: StringBuilder) =
             let filtered = list |> List.filter (String.IsNullOrWhiteSpace >> not)
             if List.isEmpty filtered then sb
             else
-                filtered |> String.concat " " |> sprintf "%s%s " s |> sb.Append
+                filtered |> separated " " |> sprintf "%s%s " s |> sb.Append
         StringBuilder()
         |> appendIfTrue this.Debug "--debug "
         |> appendIfTrue this.Parallel "--parallel "
@@ -50,7 +49,7 @@ type ExpectoParams =
         |> appendList this.Run "--run "
         |> toText
 
-    static member defaultParams =
+    static member DefaultParams =
         {
             Debug = false
             Parallel = true
@@ -63,20 +62,21 @@ type ExpectoParams =
         }
 
 let Expecto (setParams : ExpectoParams -> ExpectoParams) (assemblies : string seq) =
-    let args = setParams ExpectoParams.defaultParams
+    let args = setParams ExpectoParams.DefaultParams
+    use __ = assemblies |> separated ", " |> traceStartTaskUsing "Expecto"
     let argsString = string args
     let runAssembly testAssembly =
         let processTimeout = TimeSpan.MaxValue // Don't set a process timeout.  The timeout is per test.
         let workingDir =
             if isNotNullOrEmpty args.WorkingDirectory
             then args.WorkingDirectory else DirectoryName testAssembly
-        let processResult =
+        let exitCode =
             ExecProcess(fun info ->
                 info.FileName <- testAssembly
                 info.WorkingDirectory <- workingDir
                 info.Arguments <- argsString
             ) processTimeout
-        testAssembly,processResult
+        testAssembly, exitCode
     let res =
         assemblies
         |> Seq.map runAssembly
