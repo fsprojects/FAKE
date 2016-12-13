@@ -27,17 +27,27 @@ type ExpectoParams =
       /// Working directory
       WorkingDirectory : string
     }
-    member this.ToString() =
+    override this.ToString() =
+        let append (s: string) (sb: StringBuilder) = sb.Append s
+        let appendIfTrue p s sb = 
+            if p then append s sb else sb
+        let appendIfNotNullOrWhiteSpace p s (sb: StringBuilder) = 
+            if String.IsNullOrWhiteSpace p |> not 
+            then sprintf "%s%s " s p |> sb.Append
+            else sb
+        let appendList list s (sb: StringBuilder) = 
+            let filtered = list |> List.filter (String.IsNullOrWhiteSpace >> not)
+            if List.isEmpty filtered then sb
+            else
+                filtered |> String.concat " " |> sprintf "%s%s " s |> sb.Append
         StringBuilder()
-        |> appendIfTrue this.Debug " --debug"
-        |> appendIfTrue this.Parallel " --parallel"
-        |> appendIfFalse this.Parallel " --sequential"
-        |> appendIfNotNullOrEmpty this.Filter " --filter "
-        |> appendIfNotNullOrEmpty this.FilterTestCase " --filter-test-case "
-        |> appendIfNotNullOrEmpty this.FilterTestList " --filter-test-list "
-        |> appendIfTrue
-                (this.Run |> List.exists isNotNullOrEmpty)
-                (this.Run |> List.filter isNotNullOrEmpty |> String.concat " " |> sprintf " --run %s")
+        |> appendIfTrue this.Debug "--debug "
+        |> appendIfTrue this.Parallel "--parallel "
+        |> appendIfTrue (not this.Parallel) "--sequential "
+        |> appendIfNotNullOrWhiteSpace this.Filter "--filter "
+        |> appendIfNotNullOrWhiteSpace this.FilterTestCase "--filter-test-case "
+        |> appendIfNotNullOrWhiteSpace this.FilterTestList "--filter-test-list "
+        |> appendList this.Run "--run "
         |> toText
 
     static member defaultParams =
