@@ -34,6 +34,11 @@ let inline filesInDir (dir : DirectoryInfo) = dir.GetFiles()
 let filesInDirMatching pattern (dir : DirectoryInfo) = 
     if dir.Exists then dir.GetFiles pattern
     else [||]
+    
+/// Finds all the files in the directory and in all subdirectories matching the search pattern.
+let filesInDirMatchingRecursive pattern (dir : DirectoryInfo) = 
+    if dir.Exists then dir.GetFiles(pattern, SearchOption.AllDirectories)
+    else [||]    
 
 /// Gets the first file in the directory matching the search pattern as an option value.
 let TryFindFirstMatchingFile pattern dir = 

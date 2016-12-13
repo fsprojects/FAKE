@@ -132,7 +132,7 @@ namespace Test.FAKECore
 #### 2.0.0-alpha001 - December 15 2013
 * A";
         static readonly ReleaseNotesHelper.ReleaseNotes expected =
-            ReleaseNotesHelper.ReleaseNotes.New("2.0.0", "2.0.0-rc007", null, new[] { "A" }.ToFSharpList());
+            ReleaseNotesHelper.ReleaseNotes.New("2.0.0", "2.0.0-rc2", null, new[] { "A" }.ToFSharpList());
 
         It should_parse =
            () => ReleaseNotesHelper.parseReleaseNotes(Notes.FromString(input)).ShouldEqual(expected);

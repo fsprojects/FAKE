@@ -145,12 +145,6 @@ let isMatch pattern path : bool =
     let path = normalizePath path
 
     let regex = 
-        let outRegex : ref<Regex> = ref null
-        if globRegexCache.TryGetValue(pattern, outRegex) then
-            !outRegex
-        else
-            let compiled = compileGlobToRegex pattern
-            globRegexCache.TryAdd(pattern, compiled) |> ignore
-            compiled
+        globRegexCache.GetOrAdd(pattern, compileGlobToRegex)
 
     regex.IsMatch(path)

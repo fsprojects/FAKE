@@ -6,6 +6,7 @@ open System.IO
 open System.Text
 
 /// Parameter type to configure the Fixie runner
+[<CLIMutable>]
 type FixieParams = {
     /// FileName of the Fixie runner
     ToolPath: string
@@ -35,7 +36,7 @@ let FixieDefaults = {
 ///       |> Fixie (fun p -> { p with CustomOptions = ["custom","1"; "test",2] })
 let Fixie setParams assemblies = 
     let details = separated ", " assemblies
-    traceStartTask "Fixie" details
+    use __ = traceStartTaskUsing "Fixie" details
     let parameters = setParams FixieDefaults
     
     let args =
@@ -55,5 +56,3 @@ let Fixie setParams assemblies =
         info.Arguments <- args) parameters.TimeOut
     then
         failwithf "Fixie test failed on %s." details
-                  
-    traceEndTask "Fixie" details

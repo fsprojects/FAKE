@@ -99,11 +99,10 @@ let private serialize data = JsonConvert.SerializeObject(data)
 /// * settings : Function that sets the raygun connection settings.
 /// * data : Function that sets the deployment data
 let ReportDeployment (settings:RaygunConnectionSettings->RaygunConnectionSettings) (data:RaygunDeploymentData->RaygunDeploymentData) =
-    traceStartTask "Raygun.io" "Report new deployment"
+    use __ = traceStartTaskUsing "Raygun.io" "Report new deployment"
     let settings = defaultSettings |> settings
     let data = defaultData |> data
     use client = (new WebClient())
     client.Headers.Add(HttpRequestHeader.ContentType, "application/json")
     client.QueryString <- createQueryStringCollection settings.externalToken
     client.UploadString(settings.endPoint,"POST", (serialize data)) |> ignore
-    traceEndTask "Raygun.io" "Report new deployment"

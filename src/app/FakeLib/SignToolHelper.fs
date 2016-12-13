@@ -20,6 +20,7 @@ type SignCert = {
 }
 
 /// Parameters used for signing.
+[<CLIMutable>]
 type SignParams = {
     /// The dev certificate that will be used when the real certificate can not be found
     DevCertificate : SignCert
@@ -32,7 +33,7 @@ type SignParams = {
 /// Signs assemblies according to the settings specified in the parameters using signtool.exe.
 /// This will be looked up using the toolsPath parameter.
 let Sign (toolsPath : string) (parameters : SignParams) (filesToSign : seq<string>) = 
-    traceStartTask "SignTool" "Trying to sign the specified assemblies"
+    use __ = traceStartTaskUsing "SignTool" "Trying to sign the specified assemblies"
   
     let signPath = toolsPath @@ "signtool.exe"
 
@@ -60,13 +61,11 @@ let Sign (toolsPath : string) (parameters : SignParams) (filesToSign : seq<strin
                 info.Arguments <- withFileToSign) System.TimeSpan.MaxValue
         if result <> 0 then failwithf "Error during sign call ")
 
-    traceEndTask "SignTool" "Successfully signed the specified assemblies"
-
 
 /// Appends a SHA 256 signature to assemblies according to the settings specified in the parameters using signtool.exe.
 /// This will be looked up using the toolsPath parameter.
 let AppendSignature (toolsPath : string) (parameters : SignParams) (filesToSign : seq<string>) = 
-    traceStartTask "SignTool" "Trying to dual sign the specified assemblies"
+    use __ = traceStartTaskUsing "SignTool" "Trying to dual sign the specified assemblies"
       
     let signPath = toolsPath @@ "signtool.exe"
 
@@ -95,8 +94,6 @@ let AppendSignature (toolsPath : string) (parameters : SignParams) (filesToSign 
                 info.FileName <- signPath
                 info.Arguments <- withFileToSign) System.TimeSpan.MaxValue
         if result <> 0 then failwithf "Error during sign call ")
-
-    traceEndTask "SignTool" "Successfully dual signed the specified assemblies"
 
 [<Obsolete>]
 /// Signs all files in filesToSign with the certification file certFile, 

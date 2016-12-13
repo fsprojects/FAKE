@@ -100,6 +100,7 @@ type LabelsLevel =
 /// The NUnit 3 Console Parameters type. FAKE will use [NUnit3Defaults](fake-testing-nunit3.html) for values not provided.
 ///
 /// For reference, see: [NUnit3 command line options](https://github.com/nunit/nunit/wiki/Console-Command-Line)
+[<CLIMutable>]
 type NUnit3Params =
     { /// The path to the NUnit3 console runner: `nunit3-console.exe`
       ToolPath : string
@@ -269,7 +270,7 @@ let buildNUnit3Args parameters assemblies =
 
 let NUnit3 (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) =
     let details = assemblies |> separated ", "
-    traceStartTask "NUnit" details
+    use __ = traceStartTaskUsing "NUnit" details
     let parameters = NUnit3Defaults |> setParams
     let assemblies = assemblies |> Seq.toArray
     if Array.isEmpty assemblies then failwith "NUnit: cannot run tests (the assembly list is empty)."
@@ -291,9 +292,9 @@ let NUnit3 (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) 
     match parameters.ErrorLevel with
     | DontFailBuild -> 
         match result with
-        | OK | TestsFailed -> traceEndTask "NUnit" details
+        | OK | TestsFailed -> ()
         | _ -> raise (FailedTestsException(errorDescription result))
     | Error | FailOnFirstError -> 
         match result with
-        | OK -> traceEndTask "NUnit" details
+        | OK -> ()
         | _ -> raise (FailedTestsException(errorDescription result))

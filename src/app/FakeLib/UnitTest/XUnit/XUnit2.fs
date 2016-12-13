@@ -92,6 +92,7 @@ type CollectionConcurrencyMode =
         | MaxThreads count -> Some count
 
 /// The xUnit2 parameter type.
+[<CLIMutable>]
 type XUnit2Params =
     { /// The path to the xUnit console runner: `xunit.console.exe`
       ToolPath : string
@@ -260,7 +261,7 @@ module internal ResultHandling =
 ///     )
 let xUnit2 setParams assemblies =
     let details = separated ", " assemblies
-    traceStartTask "xUnit2" details
+    use __ = traceStartTaskUsing "xUnit2" details
     let parametersFirst = setParams XUnit2Defaults
 
     let parameters =
@@ -275,5 +276,3 @@ let xUnit2 setParams assemblies =
             info.Arguments <- parameters |> buildXUnit2Args assemblies) parameters.TimeOut
 
     ResultHandling.failBuildIfXUnitReportedError parameters.ErrorLevel result
-
-    traceEndTask "xUnit2" details

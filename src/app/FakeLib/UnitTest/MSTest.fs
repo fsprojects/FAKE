@@ -21,6 +21,7 @@ let mstestexe =
 type ErrorLevel = TestRunnerErrorLevel
 
 /// Parameter type to configure the MSTest.exe.
+[<CLIMutable>]
 type MSTestParams = 
     { /// Test category filter  (optional). The test category filter consists of one or more test category names separated by the logical operators '&', '|', '!', '&!'. The logical operators '&' and '|' cannot be used together to create a test category filter.
       Category : string
@@ -86,7 +87,7 @@ let buildMSTestArgs parameters assembly =
 ///     )
 let MSTest (setParams : MSTestParams -> MSTestParams) (assemblies : string seq) = 
     let details = assemblies |> separated ", "
-    traceStartTask "MSTest" details
+    use __ = traceStartTaskUsing "MSTest" details
     let parameters = MSTestDefaults |> setParams
     let assemblies = assemblies |> Seq.toArray
     if Array.isEmpty assemblies then failwith "MSTest: cannot run tests (the assembly list is empty)."
@@ -102,4 +103,3 @@ let MSTest (setParams : MSTestParams -> MSTestParams) (assemblies : string seq) 
             info.WorkingDirectory <- parameters.WorkingDir
             info.Arguments <- args) parameters.TimeOut
         |> failIfError assembly
-    traceEndTask "MSTest" details

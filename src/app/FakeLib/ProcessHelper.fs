@@ -9,13 +9,25 @@ open System.IO
 open System.Threading
 open System.Text
 open System.Collections.Generic
+open System.Collections.Concurrent
 open System.ServiceProcess
 
 /// [omit]
-let startedProcesses = HashSet()
+type internal ConcurrentBag<'T> with
+    member internal this.Clear() = 
+        while not(this.IsEmpty) do
+            this.TryTake() |> ignore
+
+/// [omit]
+let startedProcesses = ConcurrentBag()
 
 /// [omit]
 let start (proc : Process) = 
+    try
+        System.Console.OutputEncoding <- System.Text.Encoding.UTF8
+    with exn ->
+        logfn "Failed setting UTF8 console encoding, ignoring error... %s." exn.Message
+
     if isMono && proc.StartInfo.FileName.ToLowerInvariant().EndsWith(".exe") then
         proc.StartInfo.Arguments <- "--debug \"" + proc.StartInfo.FileName + "\" " + proc.StartInfo.Arguments
         proc.StartInfo.FileName <- monoPath
@@ -383,6 +395,7 @@ let findPath settingsName fallbackValue tool =
     | None -> tool
 
 /// Parameter type for process execution.
+[<CLIMutable>]
 type ExecParams = 
     { /// The path to the executable, without arguments. 
       Program : string
@@ -422,22 +435,29 @@ let asyncShellExec (args : ExecParams) =
         let info = 
             ProcessStartInfo
                 (args.Program, UseShellExecute = false, 
-                 RedirectStandardError = true, RedirectStandardOutput = true, RedirectStandardInput = true,
-                 WindowStyle = ProcessWindowStyle.Hidden, WorkingDirectory = args.WorkingDirectory, 
-                 Arguments = commandLine)
-        use proc = new Process(StartInfo = info)
-        proc.ErrorDataReceived.Add(fun e -> 
-            if e.Data <> null then traceError e.Data)
-        proc.OutputDataReceived.Add(fun e -> 
-            if e.Data <> null then log e.Data)
-        start proc
-        proc.BeginOutputReadLine()
-        proc.BeginErrorReadLine()
-        proc.StandardInput.Close()
-        // attaches handler to Exited event, enables raising events, then awaits event
-        // the event gets triggered even if process has already finished
-        let! _ = Async.GuardedAwaitObservable proc.Exited (fun _ -> proc.EnableRaisingEvents <- true)
-        return proc.ExitCode
+                RedirectStandardError = true, RedirectStandardOutput = true, RedirectStandardInput = true,
+                WindowStyle = ProcessWindowStyle.Hidden, WorkingDirectory = args.WorkingDirectory, 
+                Arguments = commandLine)
+        let proc = new Process(StartInfo = info)
+
+        try
+            proc.ErrorDataReceived.Add(fun e -> 
+                if e.Data <> null then traceError e.Data)
+            proc.OutputDataReceived.Add(fun e -> 
+                if e.Data <> null then log e.Data)
+            start proc
+            proc.BeginOutputReadLine()
+            proc.BeginErrorReadLine()
+            proc.StandardInput.Close()
+            // attaches handler to Exited event, enables raising events, then awaits event
+            // the event gets triggered even if process has already finished
+            let! _ = Async.GuardedAwaitObservable proc.Exited (fun _ -> proc.EnableRaisingEvents <- true)
+            return proc.ExitCode
+        finally
+            // add a delay because we were seeing ObjectDisposedException when running shell commands on
+            // osx. Github issue #1424. 
+            Async.Sleep (10) |> Async.RunSynchronously
+            proc.Dispose()
     }
 
 /// Kills the given process

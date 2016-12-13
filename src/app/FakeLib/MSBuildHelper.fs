@@ -130,6 +130,7 @@ type MSBuildDistributedLoggerConfig =
         Parameters : (string * string) list option }
 
 /// A type for MSBuild task parameters
+[<CLIMutable>]
 type MSBuildParams = 
     { Targets : string list
       Properties : (string * string) list
@@ -149,7 +150,7 @@ let mutable MSBuildDefaults =
       Properties = []
       MaxCpuCount = Some None
       NoLogo = false
-      NodeReuse = not (buildServer = TeamCity || buildServer = TeamFoundation)
+      NodeReuse = not (buildServer = TeamCity || buildServer = TeamFoundation || buildServer = Jenkins)
       ToolsVersion = None
       Verbosity = None
       NoConsoleLogger = false
@@ -328,7 +329,7 @@ match buildServer with
 ///     build setParams "./MySolution.sln"
 ///           |> DoNothing
 let build setParams project =
-    traceStartTask "MSBuild" project
+    use __ = traceStartTaskUsing "MSBuild" project
     let args = 
         MSBuildDefaults
         |> setParams
@@ -357,7 +358,6 @@ let build setParams project =
         
         let errorMessage = sprintf "Building %s failed with exitcode %d." project exitCode
         raise (BuildException(errorMessage, errors))
-    traceEndTask "MSBuild" project
 
 /// Builds the given project files and collects the output files.
 /// ## Parameters
@@ -438,7 +438,7 @@ let MSBuildReleaseExt outputPath properties targets projects =
 ///  - `configuration` - MSBuild configuration.
 ///  - `projectFile` - The project file path.
 let BuildWebsiteConfig outputPath configuration projectFile  =
-    traceStartTask "BuildWebsite" projectFile
+    use __ = traceStartTaskUsing "BuildWebsite" projectFile
     let projectName = (fileInfo projectFile).Name.Replace(".csproj", "").Replace(".fsproj", "").Replace(".vbproj", "")
 
     let slashes (dir : string) =
@@ -461,7 +461,6 @@ let BuildWebsiteConfig outputPath configuration projectFile  =
           "WebProjectOutputDir", prefix + outputPath + "/" + projectName ] [ projectFile ]
         |> ignore
     !!(projectDir + "/bin/*.*") |> Copy(outputPath + "/" + projectName + "/bin/")
-    traceEndTask "BuildWebsite" projectFile
 
 /// Builds the given web project file with debug configuration and copies it to the given outputPath.
 /// ## Parameters

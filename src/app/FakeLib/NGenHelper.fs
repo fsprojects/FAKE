@@ -4,6 +4,7 @@ module Fake.NGenHelper
 open System
 
 /// NGen parameters
+[<CLIMutable>]
 type NGenParams = 
     { /// (Required) Path to the NGenutil
       ToolPath : string
@@ -34,14 +35,13 @@ let private ngen param command =
 /// Runs ngen.exe with the given command.
 let NGen setParams command = 
     let taskName = "NGen"
-    traceStartTask taskName command
+    use __ = traceStartTaskUsing taskName command
     ngen (setParams NGenDefaults) command
-    traceEndTask taskName command
 
 /// Runs ngen.exe install on given assemblies.
 let Install setParams assemblies = 
     let taskName = "NGen Install"
-    traceStartTask taskName ""
+    use __ = traceStartTaskUsing taskName ""
     let param = setParams NGenDefaults
     match assemblies |> Seq.toList with
     | [] -> ()
@@ -50,4 +50,3 @@ let Install setParams assemblies =
         for assembly in assemblies do
             ngen param (sprintf "install \"%s\" /queue:1 /nologo" assembly)
         ngen param "executeQueuedItems 1 /nologo"
-    traceEndTask taskName ""

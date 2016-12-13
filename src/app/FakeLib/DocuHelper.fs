@@ -5,6 +5,7 @@ module Fake.DocuHelper
 open System
 
 /// The parameter type for docu.
+[<CLIMutable>]
 type DocuParams = 
     { /// The tool path - FAKE tries to find docu.exe automatically in any sub folder.
       ToolPath : string
@@ -31,7 +32,7 @@ let DocuDefaults =
 ///  - `assemblies` - Sequence of one or more assemblies containing the XML docs.
 let Docu setParams assemblies = 
     let details = assemblies |> separated ", "
-    traceStartTask "Docu" details
+    use __ = traceStartTaskUsing "Docu" details
     let parameters = DocuDefaults |> setParams
     
     let files = 
@@ -46,4 +47,3 @@ let Docu setParams assemblies =
                 info.FileName <- parameters.ToolPath |> FullName
                 info.Arguments <- args) parameters.TimeOut
     then failwith "Documentation generation failed."
-    traceEndTask "Docu" details

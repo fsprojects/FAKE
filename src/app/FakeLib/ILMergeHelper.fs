@@ -26,6 +26,7 @@ type TargetKind =
     | WinExe
 
 /// Parameter type for ILMerge
+[<CLIMutable>]
 type ILMergeParams = 
     { /// Path to ILMerge.exe
       ToolPath : string
@@ -141,7 +142,7 @@ let getArguments outputFile primaryAssembly parameters =
 ///  - `outputFile` - Output file path for the merged assembly.
 ///  - `primaryAssembly` - The assembly you want ILMerge to consider as the primary.
 let ILMerge setParams outputFile primaryAssembly = 
-    traceStartTask "ILMerge" primaryAssembly
+    use __ = traceStartTaskUsing "ILMerge" primaryAssembly
     let parameters = setParams ILMergeDefaults
     let args = getArguments outputFile primaryAssembly parameters
     if 0 <> ExecProcess (fun info -> 
@@ -149,4 +150,3 @@ let ILMerge setParams outputFile primaryAssembly =
                 info.WorkingDirectory <- null
                 info.Arguments <- args) parameters.TimeOut
     then failwithf "ILMerge %s failed." args
-    traceEndTask "ILMerge" primaryAssembly

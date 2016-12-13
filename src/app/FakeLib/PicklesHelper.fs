@@ -60,6 +60,7 @@ type TestResultsFormat =
     | Excel
   
 /// The Pickles parameter type
+[<CLIMutable>]
 type PicklesParams =
     { /// The path to the Pickles console tool: 'pickles.exe'      
       ToolPath : string
@@ -198,7 +199,7 @@ module internal ResultHandling =
 ///                            OutputDirectory = currentDirectory @@ "SpecDocs" })
 ///     )
 let Pickles setParams =
-    traceStartTask "Pickles" ""
+    use __ = traceStartTaskUsing "Pickles" ""
     let parameters = setParams PicklesDefaults
     let result = 
         ExecProcess (fun info ->
@@ -207,5 +208,3 @@ let Pickles setParams =
             info.Arguments <- parameters |> buildPicklesArgs) parameters.TimeOut
     
     ResultHandling.failBuildIfPicklesReportedError parameters.ErrorLevel result
-    
-    traceEndTask "Pickles" ""

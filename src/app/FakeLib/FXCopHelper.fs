@@ -19,6 +19,7 @@ type FxCopErrorLevel =
     | DontFailBuild = 0
 
 /// Parameter type for the FxCop tool
+[<CLIMutable>]
 type FxCopParams = 
     { ApplyOutXsl : bool
       DirectOutputToConsole : bool
@@ -87,7 +88,7 @@ let FxCopDefaults =
 /// Run FxCop on a group of assemblies.
 let FxCop setParams (assemblies : string seq) = 
     let param = setParams FxCopDefaults
-    traceStartTask "FxCop" ""
+    use __ = traceStartTaskUsing "FxCop" ""
     let param = 
         if param.ApplyOutXsl && param.OutputXslFileName = String.Empty then 
             { param with OutputXslFileName = param.ToolPath @@ "Xml" @@ "FxCopReport.xsl" }
@@ -145,4 +146,3 @@ let FxCop setParams (assemblies : string seq) =
             failwithf "FxCop found %d critical warnings." criticalWarnings
         if warnings <> 0 && param.FailOnError >= FxCopErrorLevel.Warning then 
             failwithf "FxCop found %d warnings." warnings
-    traceEndTask "FxCop" ""

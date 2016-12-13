@@ -27,6 +27,7 @@ type FscPlatform =
 
 /// 'fsc.exe' command line parameters
 [<Obsolete "Use FscHelper.FscParam instead">]
+[<CLIMutable>]
 type FscParams = 
     { /// Specifies the output file name and path.
       Output : string
@@ -133,9 +134,8 @@ let fsc (setParams : FscParams -> FscParams) (inputFiles : string list) : int =
     let debug = if fscParams.Debug then [ "-g" ] else []
     let argList =
         output @ target @ platform @ references @ debug @ fscParams.OtherParams
-    traceStartTask "Fsc " taskDesc
+    use __ = traceStartTaskUsing "Fsc " taskDesc
     let res = fscList inputFiles argList
-    traceEndTask "Fsc " taskDesc
     res
 
 /// Compiles one or more F# source files with the specified parameters.
@@ -501,9 +501,8 @@ let compile (fscParams : FscParam list) (inputFiles : string list) : int =
     let taskDesc = inputFiles |> separated ", "
     let fscParams = if fscParams = [] then FscParam.Defaults else fscParams
     let argList = fscParams |> List.map string
-    traceStartTask "Fsc " taskDesc
+    use __ = traceStartTaskUsing "Fsc " taskDesc
     let res = compileFiles inputFiles argList
-    traceEndTask "Fsc " taskDesc
     res
 
 /// Compiles one or more F# source files with the specified parameters.

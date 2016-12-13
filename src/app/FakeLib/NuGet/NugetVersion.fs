@@ -51,7 +51,7 @@ let getLastNuGetVersion server (packageName:string) =
       sprintf "%s/Search()?$filter=IsLatestVersion&searchTerm='%s'&includePrerelease=false"
         server packageName
     let client = new WebClient()
-    client.Headers.Add("Accept", "application/json")
+    client.Headers.Add("Accept", "application/json, application/xml")
     let text = client.DownloadString url
     let hasContentType = client.ResponseHeaders.AllKeys |> Seq.contains "Content-Type"
     let version =

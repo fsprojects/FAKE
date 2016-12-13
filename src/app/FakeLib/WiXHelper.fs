@@ -209,6 +209,75 @@ type ServiceInstallType =
         | KernelDriver -> "kernelDriver"
         | SystemDriver -> "systemDriver"
 
+/// Determines the type of the service failure action.
+type ServiceFailureActionType =
+    | NoneAction
+    | Reboot
+    | Restart
+    | RunCommand
+    override w.ToString() =
+        match w with
+        | NoneAction -> "none"
+        | Reboot -> "reboot"
+        | Restart -> "restart"
+        | RunCommand -> "runCommand"
+
+/// Service configuration information for failure actions.
+type WiXServiceConfig =
+    {
+        /// [Required] Determines the type of the service failure action.
+        FirstFailureActionType: ServiceFailureActionType
+        /// If any of the three *ActionType attributes is "runCommand", this specifies the command to run when doing so. This value is formatted.
+        ProgramCommandLine: string
+        /// If any of the three *ActionType attributes is "reboot", this specifies the message to broadcast to server users before doing so.
+        RebootMessage: string
+        /// Number of days after which to reset the failure count to zero if there are no failures.
+        ResetPeriodInDays: int
+        /// If any of the three *ActionType attributes is "restart", this specifies the number of seconds to wait before doing so.
+        RestartServiceDelayInSeconds: int
+        /// [Required] Action to take on the second failure of the service.
+        SecondFailureActionType: ServiceFailureActionType
+        /// Required if not under a ServiceInstall element.
+        ServiceName: String
+        /// [Required] Action to take on the third failure of the service.
+        ThirdFailureActionType: ServiceFailureActionType
+    }
+    member w.createAttributeList () =
+        seq 
+            {
+                yield ("FirstFailureActionType", w.FirstFailureActionType.ToString())                
+                if not (String.IsNullOrWhiteSpace w.ProgramCommandLine) then
+                    yield ("ProgramCommandLine", w.ProgramCommandLine)
+                if not (String.IsNullOrWhiteSpace w.RebootMessage) then
+                    yield ("RebootMessage", w.RebootMessage)                               
+                yield ("ResetPeriodInDays", w.ResetPeriodInDays.ToString())                
+                yield ("RestartServiceDelayInSeconds", w.RestartServiceDelayInSeconds.ToString())                
+                yield ("SecondFailureActionType", w.SecondFailureActionType.ToString())                
+                if not (String.IsNullOrWhiteSpace w.ServiceName) then
+                    yield ("ServiceName", w.ServiceName)                
+                yield ("ThirdFailureActionType", w.ThirdFailureActionType.ToString())
+            }
+    override w.ToString() = 
+        sprintf "<ServiceConfig xmlns=\"http://schemas.microsoft.com/wix/UtilExtension\" %s/>" 
+            (Seq.fold(fun acc (key, value) -> acc + sprintf " %s=\"%s\"" key value) "" (w.createAttributeList())) 
+
+let WiXServiceConfigDefaults =
+    {       
+        FirstFailureActionType = NoneAction
+        ProgramCommandLine = ""
+        RebootMessage = ""
+        ResetPeriodInDays = 0
+        RestartServiceDelayInSeconds = 0
+        SecondFailureActionType = NoneAction
+        ServiceName = ""
+        ThirdFailureActionType = NoneAction
+    }
+
+/// Use this for generating service configs
+let generateServiceConfig (setParams : WiXServiceConfig -> WiXServiceConfig) =
+    let parameters = WiXServiceConfigDefaults |> setParams
+    parameters
+
 /// Service or group of services that must start before the parent service.
 type WiXServiceDependency = 
     {
@@ -274,7 +343,8 @@ type WiXServiceInstall =
         Vital : YesOrNo
         /// Services or groups of services that must start before the parent service.
         ServiceDependencies : WiXServiceDependency seq
-
+        /// Service configuration information for failure actions.
+        ServiceConfig: WiXServiceConfig seq
     }
     member w.createAttributeList () =
         seq {
@@ -294,9 +364,10 @@ type WiXServiceInstall =
             yield ("Vital", w.Vital.ToString())
         }
     override w.ToString() = 
-        sprintf "<ServiceInstall%s>%s</ServiceInstall>" 
+        sprintf "<ServiceInstall%s>%s%s</ServiceInstall>"
             (Seq.fold(fun acc (key, value) -> acc + sprintf " %s=\"%s\"" key value) "" (w.createAttributeList())) 
             (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.ServiceDependencies)
+            (Seq.fold(fun acc elem -> acc + elem.ToString()) "" w.ServiceConfig)
 
 /// Defaults for service install element
 let WiXServiceInstallDefaults =
@@ -316,6 +387,7 @@ let WiXServiceInstallDefaults =
         Type = OwnProcess        
         Vital = Yes        
         ServiceDependencies = []
+        ServiceConfig = []
     }
 
 /// Use this for generating service installs
@@ -885,6 +957,7 @@ let setComponentsNeverOverwrite (components : string) =
 open System
 
 /// WiX parameter type
+[<CLIMutable>]
 type WiXParams = 
     { ToolDirectory : string
       TimeOut : TimeSpan
@@ -1331,7 +1404,12 @@ type WiXMajorUpgrade =
         /// The message displayed if users try to install a product with a lower version number when a product with a higher version is installed. Used only when AllowDowngrades is no (the default). 
         DowngradeErrorMessage : string
     }
-    override w.ToString() = "<MajorUpgrade Schedule=\"" + w.Schedule.ToString() + "\" AllowDowngrades=\"" + w.AllowDowngrades.ToString() + "\" DowngradeErrorMessage=\"" + w.DowngradeErrorMessage + "\" />"
+    override w.ToString() =
+        let downgradeErrorMessage =
+            match w.AllowDowngrades with
+            | Yes -> ""
+            | No ->  " DowngradeErrorMessage=\"" + w.DowngradeErrorMessage + "\""
+        "<MajorUpgrade Schedule=\"" + w.Schedule.ToString() + "\" AllowDowngrades=\"" + w.AllowDowngrades.ToString() + "\"" + downgradeErrorMessage + " />"
 
 /// Default value for WiX Major Upgrade
 let WiXMajorUpgradeDefaults =
@@ -1772,7 +1850,7 @@ let generateMajorUpgradeVersion setParams =
 
 /// Runs the [Candle tool](http://wixtoolset.org/documentation/manual/v3/overview/candle.html) on the given WiX script with the given parameters
 let Candle (parameters : WiXParams) wixScript = 
-    traceStartTask "Candle" wixScript
+    use __ = traceStartTaskUsing "Candle" wixScript
     let fi = fileInfo wixScript
     let wixObj = fi.Directory.FullName @@ sprintf @"%s.wixobj" fi.Name
     let tool = parameters.ToolDirectory @@ "candle.exe"
@@ -1784,12 +1862,11 @@ let Candle (parameters : WiXParams) wixScript =
                 info.WorkingDirectory <- null
                 info.Arguments <- args) parameters.TimeOut
     then failwithf "Candle %s failed." args
-    traceEndTask "Candle" wixScript
     wixObj
 
 /// Runs the [Light tool](http://wixtoolset.org/documentation/manual/v3/overview/light.html) on the given WiX script with the given parameters
 let Light (parameters : WiXParams) outputFile wixObj = 
-    traceStartTask "Light" wixObj
+    use __ = traceStartTaskUsing "Light" wixObj
     let tool = parameters.ToolDirectory @@ "light.exe"
     let args = 
         sprintf "\"%s\" -spdb -dcl:high -out \"%s\" %s" (wixObj |> FullName) (outputFile |> FullName) 
@@ -1800,7 +1877,6 @@ let Light (parameters : WiXParams) outputFile wixObj =
                 info.WorkingDirectory <- null
                 info.Arguments <- args) parameters.TimeOut
     then failwithf "Light %s failed." args
-    traceEndTask "Light" wixObj
 
 /// Uses the WiX tools [Candle](http://wixtoolset.org/documentation/manual/v3/overview/candle.html) and [Light](http://wixtoolset.org/documentation/manual/v3/overview/light.html) to create an msi.
 /// ## Parameters
@@ -1893,7 +1969,7 @@ let HeatDefaulParams =
 ///  - `outputFile` - The output file path given to Heat.
 ///
 let HarvestDirectory (setParams : HeatParams -> HeatParams) directory outputFile = 
-    traceStartTask "Heat" directory
+    use __ = traceStartTaskUsing "Heat" directory
     let conditionalArgument condition arg args =
         match condition with
             | true ->  arg :: args
@@ -1923,6 +1999,5 @@ let HarvestDirectory (setParams : HeatParams -> HeatParams) directory outputFile
                 info.WorkingDirectory <- null
                 info.Arguments <- args) parameters.TimeOut
     then failwithf "Heat %s failed." args
-    traceEndTask "Heat" directory
 
 

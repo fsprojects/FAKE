@@ -10,6 +10,7 @@ let getWorkingDir workingDir =
     Seq.find isNotNullOrEmpty [workingDir; environVar("teamcity.build.workingDir"); "."]  // TODO: other build servers?
     |> Path.GetFullPath
     
+[<CLIMutable>]
 type NDependParams = 
     { ToolPath : string
       WorkingDir : string
@@ -42,7 +43,7 @@ let buildNDependArgs parameters =
 ///              })
 let NDepend(setParams : NDependParams -> NDependParams) = 
     let taskName = "NDepend"
-    traceStartTask taskName ""
+    use __ = traceStartTaskUsing taskName ""
     let parameters = (NDependDefaults |> setParams)
     let args = buildNDependArgs parameters
     trace (parameters.ToolPath + " " + args)
@@ -52,4 +53,3 @@ let NDepend(setParams : NDependParams -> NDependParams) =
             info.WorkingDirectory <- getWorkingDir parameters.WorkingDir
             info.Arguments <- args) TimeSpan.MaxValue
     if result <> 0 then failwithf "Error running %s" parameters.ToolPath
-    traceEndTask taskName ""

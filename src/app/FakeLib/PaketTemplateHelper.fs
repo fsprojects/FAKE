@@ -36,6 +36,7 @@ type PaketDependencyVersionInfo =
 type PaketDependency = string * PaketDependencyVersionInfo
 
 /// Contains the different parameters to create a paket.template file
+[<CLIMutable>]
 type PaketTemplateParams =
     { /// The file path to the `paket.template` file
       /// if omitted, a `paket.template` file will be created in the current directory
@@ -272,11 +273,10 @@ module internal Rendering =
 ///        )
 ///    )
 let PaketTemplate setParams =
-    traceStartTask "PaketTemplate" ""
+    use __ = traceStartTaskUsing "PaketTemplate" ""
     let parameters = setParams DefaultPaketTemplateParams
     let filePath = match parameters.TemplateFilePath with
                    | Some v -> v
                    | _ -> "paket.template"
 
     WriteStringToFile false filePath (Rendering.createLines parameters)
-    traceEndTask "PaketTemplate" ""

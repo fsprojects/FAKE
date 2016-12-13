@@ -113,9 +113,8 @@ let csc (setParams : CscParams -> CscParams) (inputFiles : string list) : int =
     let debug = if cscParams.Debug then [ "/debug" ] else []
     let argList =
         output @ target @ platform @ references @ debug @ cscParams.OtherParams
-    traceStartTask "Csc " taskDesc
+    use __ = traceStartTaskUsing "Csc " taskDesc
     let res = cscExe cscParams.ToolPath inputFiles argList
-    traceEndTask "Csc " taskDesc
     res
 
 /// Compiles one or more C# source files with the specified parameters.

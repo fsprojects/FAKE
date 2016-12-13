@@ -71,6 +71,7 @@ type HockeyResponse = {
 
 /// The HockeyApp parameter type
 /// Based on http://support.hockeyapp.net/kb/api/api-apps#upload-app
+[<CLIMutable>]
 type HockeyAppUploadParams = {
     /// (Required) API token
     ApiToken: string

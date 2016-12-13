@@ -9,6 +9,7 @@ open FSharp.Data
 open Newtonsoft.Json
 open System
 
+[<CLIMutable>]
 type GitversionParams = {
     ToolPath : string
 }
@@ -24,7 +25,7 @@ type GitVersionProperties = {
                                 PreReleaseTag : string;
                                 PreReleaseTagWithDash : string;
                                 PreReleaseLabel : string;
-                                PreReleaseNumber : int;
+                                PreReleaseNumber : Nullable<int>;
                                 BuildMetaData : string;
                                 BuildMetaDataPadded : string;
                                 FullBuildMetaData : string;
@@ -59,5 +60,5 @@ let GitVersion (setParams : GitversionParams -> GitversionParams) =
 
     let result = ExecProcessAndReturnMessages (fun info ->
         info.FileName <- parameters.ToolPath) timespan
-    if result.ExitCode <> 0 then failwithf "GitVersion.exe failed with exit code %i" result.ExitCode
+    if result.ExitCode <> 0 then failwithf "GitVersion.exe failed with exit code %i and message %s" result.ExitCode (String.concat "" result.Messages)
     result.Messages |> String.concat "" |> fun j -> JsonConvert.DeserializeObject<GitVersionProperties>(j)

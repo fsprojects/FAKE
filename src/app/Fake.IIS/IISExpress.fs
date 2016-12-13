@@ -65,15 +65,13 @@ let createConfigFile (name, siteId : int, templateFileName, path, hostName, port
 let HostWebsite setParams configFileName siteId = 
     let parameters = setParams IISExpressDefaults
 
-    traceStartTask "StartWebSite" configFileName
+    use __ = traceStartTaskUsing "StartWebSite" configFileName
     let args = sprintf "/config:\"%s\" /siteid:%d" configFileName siteId
     tracefn "Starting WebSite with %s %s" parameters.ToolPath args
 
     let proc = 
         ProcessStartInfo(FileName = parameters.ToolPath, Arguments = args, UseShellExecute = false) 
         |> Process.Start
-
-    traceEndTask "StartWebSite" configFileName
 
     proc
 

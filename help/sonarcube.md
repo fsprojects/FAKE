@@ -15,21 +15,17 @@ compilation has finished. Then the result is collected and send to the SonarQube
 ## Minimal working example
 
     Target "BeginSonarQube" (fun _ ->
-
       SonarQube Begin (fun p ->
         {p with
          Key = "MyProject"
          Name = "Main solution"
          Version = "1.0.0" }
         )
+      )
 
     Target "EndSonarQube" (fun _ ->
-      SonarQube End (fun p ->
-        {p with
-         Key = "MyProject"
-         Name = "Main solution"
-         Version = "1.0.0" }
-        )
+      SonarQubeEnd()
+    )
 
     Target "Default" DoNothing
 

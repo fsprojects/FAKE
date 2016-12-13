@@ -9,6 +9,7 @@ open System.Text
 /// FAKE will use [SquirrelDefaults](fake-squirrel.html) for values not provided.
 ///
 /// For reference, see: [Squirrel Command Line Options](https://github.com/Squirrel/Squirrel.Windows/blob/master/docs/advanced-releasify.md)
+[<CLIMutable>]
 type SquirrelParams =
     {
         /// The output directory for the generated installer
@@ -122,7 +123,7 @@ module internal ResultHandling =
 ///         SquirrelPack (fun p -> { p with WorkingDir = Some "./tmp" }) "./my.nupkg"
 ///     )
 let SquirrelPack setParams nugetPackage =
-    traceStartTask "Squirrel" ""
+    use __ = traceStartTaskUsing "Squirrel" ""
     let parameters = SquirrelDefaults |> setParams
     let args = buildSquirrelArgs parameters nugetPackage
     trace args
@@ -134,5 +135,3 @@ let SquirrelPack setParams nugetPackage =
             info.Arguments <- args) parameters.TimeOut
 
     ResultHandling.failBuildIfSquirrelReportedError result
-
-    traceEndTask "Squirrel" ""

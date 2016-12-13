@@ -1,4 +1,71 @@
-#### 4.37.2 - 09.08.2016
+#### 4.46.1 - 07.12.2016
+* USABILITY: Improve error logging in GitVersionHelper - https://github.com/fsharp/FAKE/pull/1429
+
+#### 4.46.0 - 03.12.2016
+* Decorated all *Params helper records with [<CLIMutable>] for C# access - https://github.com/fsharp/FAKE/pull/1428
+* Added credentials parameter to ApplicationPoolConfig in IISHelper - https://github.com/fsharp/FAKE/pull/1425
+* BUGFIX: Added a delay to prevent object disposed exceptions from process on macosx - https://github.com/fsharp/FAKE/pull/1426
+* BUGFIX: Added try catch block to ignore error from setting console encoding - https://github.com/fsharp/FAKE/pull/1422
+* BUGFIX: Disable NodeReuse for MSBuild on Jenkins too - https://github.com/fsharp/FAKE/pull/1418
+
+#### 4.45.1 - 05.11.2016
+* BREAKING CHANGE: Remove old DotNet helper and cleanup DotNetCli helper
+* BUGFIX: Worked around breaking change in NuGet 3.5 - https://github.com/fsharp/FAKE/issues/1415
+* BUGFIX: Added logic to allow parsing of git branch names which track - https://github.com/fsharp/FAKE/pull/1417
+* BUGFIX: Set Console.OutputEncoding <- System.Text.Encoding.UTF8 - https://github.com/fsharp/FAKE/pull/1414
+* REVERT: Enable ServiceConfig element configuration in WixHelper - https://github.com/fsharp/FAKE/pull/1412
+
+#### 4.44.0 - 03.11.2016
+* Enable ServiceConfig element configuration in WixHelper - https://github.com/fsharp/FAKE/pull/1412
+* BUGFIX: Moved process stdout encoding out of is silent check - https://github.com/fsharp/FAKE/pull/1414 
+
+#### 4.43.0 - 30.10.2016
+* Better tracing of tasks in TeamCity - https://github.com/fsharp/FAKE/pull/1408
+* BUGFIX: getBranchName works language independent - https://github.com/fsharp/FAKE/pull/1409
+* Add support for the pin-project-references switch to PaketHelper - https://github.com/fsharp/FAKE/pull/1410
+
+#### 4.42.0 - 25.10.2016
+* Add option to emit SuppressMessage Attributes - https://github.com/fsharp/FAKE/pull/1406
+* Add language in NuGetParams - https://github.com/fsharp/FAKE/pull/1407
+* Change order of Dynamics NAV process killing 
+* New SSH helper - https://github.com/fsharp/FAKE/pull/1405 
+* BUGFIX: FAKE should work with old and new commit messages
+* BUGFIX: Fixed bug in assembly info variable name suffixes - https://github.com/fsharp/FAKE/pull/1404
+* BUGFIX: Make FAKE fail on failing git push
+* BUGFIX: When generating AssemblyMetadata_XYZ for AssemblyInfo, pass just value - https://github.com/fsharp/FAKE/pull/1399
+* BUGFIX: Fixed AssemblyVersion bug - https://github.com/fsharp/FAKE/pull/1397
+* BUGFIX: Fixing the famous chinese FAKE bug
+
+#### 4.41.1 - 06.10.2016
+* Add all assembly metadata to AssemblyVersionInformation typehttps://github.com/fsharp/FAKE/pull/1392
+* Allow additional properties to be specified when running the SQL dacpac tooling - https://github.com/fsharp/FAKE/pull/1386
+* Support for dotnet publish
+* BUGFIX: wixHelper AllowDowngrades - https://github.com/fsharp/FAKE/pull/1389
+* REVERT: Use nuget instead of referenced dlls. Fix SQL Server version issue - https://github.com/fsharp/FAKE/pull/1377
+
+#### 4.40.0 - 19.09.2016
+* Allow to pass parameter to SonarQube end - https://github.com/fsharp/FAKE/pull/1381
+* New helper: Search for files with a given pattern also in subdirectories - https://github.com/fsharp/FAKE/pull/1354
+* Adds comment on top of auto-generated AssemblyInfo.fs files - https://github.com/fsharp/FAKE/pull/1373
+* Use nuget instead of referenced dlls. Fix SQL Server version issue - https://github.com/fsharp/FAKE/pull/1377
+* BUGFIX: NuGetVersion: adds application/xml to request accept header - https://github.com/fsharp/FAKE/pull/1383
+* BUGFIX: Replace process cache with safe alternative - https://github.com/fsharp/FAKE/pull/1378
+* BUGFIX: Call 'traceEndTask' in the finally block of a try-finally, so that it is always closed, even if the task throws an exception. https://github.com/fsharp/FAKE/pull/1379
+* USABILITY: Check for npm on path variable in NpmHelper on Windows - https://github.com/fsharp/FAKE/pull/1371
+
+#### 4.39.0 - 25.08.2016
+* Added Checksum[64][Type] in ChocoHelper - https://github.com/fsharp/FAKE/pull/1367
+* Better support for multiple versions of SqlPackage - https://github.com/fsharp/FAKE/pull/1368
+* Hint shown in for ArgumentException #1355 instead of trying to set it directly - https://github.com/fsharp/FAKE/pull/1366
+* Added isWindows helper - https://github.com/fsharp/FAKE/pull/1356
+* BUGFIX: Made GitVersionHelper PreReleaseNumber Nullable - https://github.com/fsharp/FAKE/pull/1365
+* BUGFIX: TERM environment property should be upper case - https://github.com/fsharp/FAKE/pull/1363
+
+#### 4.38.0 - 22.08.2016
+* BUGFIX: System.ArgumentNullException thrown for colored output on mono - https://github.com/fsharp/FAKE/pull/1362
+* BUGFIX: Trim assembly info attribute value - https://github.com/fsharp/FAKE/pull/1361
+* BUGFIX: Not printing MSBUILD command line twice - https://github.com/fsharp/FAKE/pull/1359
+* BUGFIX: Semver parse fix to handle prereleases and build parts - https://github.com/fsharp/FAKE/pull/1325
 * BUGFIX: Fixed FSCHelper -https://github.com/fsharp/FAKE/pull/1351, https://github.com/fsharp/FAKE/pull/1352
 
 #### 4.37.0 - 09.08.2016

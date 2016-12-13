@@ -7,8 +7,16 @@ open System.Diagnostics
 
 /// Default paths to Npm
 let private npmFileName =
-    match isUnix with
+    match isWindows with
     | true -> 
+        System.Environment.GetEnvironmentVariable("PATH")
+        |> fun path -> path.Split ';'
+        |> Seq.tryFind (fun p -> p.Contains "nodejs")
+        |> fun res ->
+            match res with
+            | Some npm when File.Exists (sprintf @"%s\npm.cmd" npm) -> (sprintf @"%s\npm.cmd" npm)
+            | _ -> "./packages/Npm.js/tools/npm.cmd"
+    | _ -> 
         let info = new ProcessStartInfo("which","npm")
         info.StandardOutputEncoding <- System.Text.Encoding.UTF8
         info.RedirectStandardOutput <- true
@@ -20,7 +28,8 @@ let private npmFileName =
             | 0 when not proc.StandardOutput.EndOfStream ->
               proc.StandardOutput.ReadLine()
             | _ -> "/usr/bin/npm"
-    | _ -> "./packages/Npm.js/tools/npm.cmd"
+        
+
 
 /// Arguments for the Npm install command
 type InstallArgs =
@@ -36,6 +45,7 @@ type NpmCommand =
 | Custom of string
 
 /// The Npm parameter type
+[<CLIMutable>]
 type NpmParams = 
     { Src: string
       NpmFilePath: string

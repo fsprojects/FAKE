@@ -10,27 +10,6 @@ open Newtonsoft.Json.Linq
 /// The dotnet command name
 let commandName = "dotnet"
 
-/// DotNet logger verbosity
-type Verbosity =
-| Debug
-| Verbose
-| Information
-| Minimal
-| Warning
-| Error
-
-/// The default log verbosity
-let DefaultVerbosity = Minimal
-
-let private verbosityString v =
-    match v with
-    | Debug -> "Debug"
-    | Verbose -> "Verbose"
-    | Information -> "Information"
-    | Minimal -> "Minimal"
-    | Warning -> "Warning"
-    | Error -> "Error"
-
 /// Gets the installed dotnet version
 let getVersion() = 
     let processResult = 
@@ -54,6 +33,7 @@ let isInstalled() =
     with _ -> false
 
 /// DotNet parameters
+[<CLIMutable>]
 type CommandParams = {
     /// ToolPath - usually just "dotnet"
     ToolPath: string
@@ -85,36 +65,34 @@ let private DefaultCommandParams : CommandParams = {
 ///                   TimeOut = TimeSpan.FromMinutes 10. })
 ///         "restore"
 let RunCommand (setCommandParams: CommandParams -> CommandParams) args =
-    traceStartTask "DotNet" ""
+    use __ = traceStartTaskUsing "DotNet" ""
 
-    try
-        let parameters = setCommandParams DefaultCommandParams
+    let parameters = setCommandParams DefaultCommandParams
 
-        if 0 <> ExecProcess (fun info ->  
-            info.FileName <- parameters.ToolPath
-            info.WorkingDirectory <- parameters.WorkingDir
-            info.Arguments <- args) parameters.TimeOut
-        then
-            failwithf "Pack failed on %s" args
-    finally
-        traceEndTask "DotNet" ""
+    if 0 <> ExecProcess (fun info ->  
+        info.FileName <- parameters.ToolPath
+        info.WorkingDirectory <- parameters.WorkingDir
+        info.Arguments <- args) parameters.TimeOut
+    then
+        failwithf "dotnet command failed on %s" args
 
 /// DotNet restore parameters
+[<CLIMutable>]
 type RestoreParams = {
     /// ToolPath - usually just "dotnet"
     ToolPath: string
 
     /// Working directory (optional).
     WorkingDir: string
+    
+    /// Project (optional).
+    Project: string
 
     /// A timeout for the command.
     TimeOut: TimeSpan
     
     /// Whether to use the NuGet cache.
     NoCache : bool
-
-    /// Log Verbosity.
-    Verbosity : Verbosity
 
     /// Additional Args
     AdditionalArgs : string list
@@ -124,8 +102,8 @@ let private DefaultRestoreParams : RestoreParams = {
     ToolPath = commandName
     WorkingDir = Environment.CurrentDirectory
     NoCache = false
+    Project = ""
     TimeOut = TimeSpan.FromMinutes 30.
-    Verbosity = DefaultVerbosity
     AdditionalArgs = []
 }
 
@@ -141,30 +119,28 @@ let private DefaultRestoreParams : RestoreParams = {
 ///              { p with 
 ///                   NoCache = true })
 let Restore (setRestoreParams: RestoreParams -> RestoreParams) =
-    traceStartTask "DotNet.Restore" ""
+    use __ = traceStartTaskUsing "DotNet.Restore" ""
 
-    try
-        let parameters = setRestoreParams DefaultRestoreParams
-        let args =
-            new StringBuilder()
-            |> append "restore"
-            |> appendIfTrue parameters.NoCache "--no-cache"
-            |> appendWithoutQuotes (sprintf "--verbosity %s" (verbosityString parameters.Verbosity))
-            |> fun sb ->
-                parameters.AdditionalArgs
-                |> List.fold (fun sb arg -> appendWithoutQuotes arg sb) sb
-            |> toText
+    let parameters = setRestoreParams DefaultRestoreParams
+    let args =
+        new StringBuilder()
+        |> append "restore"
+        |> appendStringIfValueIsNotNullOrEmpty parameters.Project parameters.Project
+        |> appendIfTrue parameters.NoCache "--no-cache"
+        |> fun sb ->
+            parameters.AdditionalArgs
+            |> List.fold (fun sb arg -> appendWithoutQuotes arg sb) sb
+        |> toText
 
-        if 0 <> ExecProcess (fun info ->  
-            info.FileName <- parameters.ToolPath
-            info.WorkingDirectory <- parameters.WorkingDir
-            info.Arguments <- args) parameters.TimeOut
-        then
-            failwithf "Restore failed on %s" args
-    finally
-        traceEndTask "DotNet.Restore" ""
+    if 0 <> ExecProcess (fun info ->  
+        info.FileName <- parameters.ToolPath
+        info.WorkingDirectory <- parameters.WorkingDir
+        info.Arguments <- args) parameters.TimeOut
+    then
+        failwithf "Restore failed on %s" args
 
 /// DotNet build parameters
+[<CLIMutable>]
 type BuildParams = {
     /// ToolPath - usually just "dotnet"
     ToolPath: string
@@ -174,6 +150,9 @@ type BuildParams = {
 
     /// A timeout for the command.
     TimeOut: TimeSpan
+
+    /// Project (optional).
+    Project: string
     
     /// The build configuration.
     Configuration : string
@@ -195,6 +174,7 @@ let private DefaultBuildParams : BuildParams = {
     TimeOut = TimeSpan.FromMinutes 30.
     Framework = ""
     Runtime = ""
+    Project = ""
     AdditionalArgs = []
 }
 
@@ -205,40 +185,36 @@ let private DefaultBuildParams : BuildParams = {
 ///
 /// ## Sample
 ///
-///     !! "src/test/project.json"
-///     |> DotNetCli.Build
-///         (fun p -> 
-///              { p with 
-///                   Configuration = "Release" })
-let Build (setBuildParams: BuildParams -> BuildParams) projects =
-    traceStartTask "DotNet.Build" ""
+///     DotNetCli.Build
+///       (fun p -> 
+///            { p with 
+///                 Configuration = "Release" })
+let Build (setBuildParams: BuildParams -> BuildParams) =
+    use __ = traceStartTaskUsing "DotNet.Build" ""
 
-    try
-        for project in projects do
-            let parameters = setBuildParams DefaultBuildParams
-            let args =
-                new StringBuilder()
-                |> append "build"
-                |> append project                
-                |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Configuration) (sprintf "--configuration %s"  parameters.Configuration)
-                |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Framework) (sprintf "--framework %s"  parameters.Framework)
-                |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Runtime) (sprintf "--runtime %s"  parameters.Runtime)
-                |> fun sb ->
-                    parameters.AdditionalArgs
-                    |> List.fold (fun sb arg -> appendWithoutQuotes arg sb) sb
-                |> toText
+    let parameters = setBuildParams DefaultBuildParams
+    let args =
+        new StringBuilder()
+        |> append "build"
+        |> appendStringIfValueIsNotNullOrEmpty parameters.Project parameters.Project
+        |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Configuration) (sprintf "--configuration %s"  parameters.Configuration)
+        |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Framework) (sprintf "--framework %s"  parameters.Framework)
+        |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Runtime) (sprintf "--runtime %s"  parameters.Runtime)
+        |> fun sb ->
+            parameters.AdditionalArgs
+            |> List.fold (fun sb arg -> appendWithoutQuotes arg sb) sb
+        |> toText
 
-            if 0 <> ExecProcess (fun info ->  
-                info.FileName <- parameters.ToolPath
-                info.WorkingDirectory <- parameters.WorkingDir
-                info.Arguments <- args) parameters.TimeOut
-            then
-                failwithf "Build failed on %s" args
-    finally
-        traceEndTask "DotNet.Build" ""
+    if 0 <> ExecProcess (fun info ->  
+        info.FileName <- parameters.ToolPath
+        info.WorkingDirectory <- parameters.WorkingDir
+        info.Arguments <- args) parameters.TimeOut
+    then
+        failwithf "Build failed on %s" args
 
 
 /// DotNet test parameters
+[<CLIMutable>]
 type TestParams = {
     /// ToolPath - usually just "dotnet"
     ToolPath: string
@@ -248,6 +224,9 @@ type TestParams = {
 
     /// A timeout for the command.
     TimeOut: TimeSpan
+
+    /// Project (optional).
+    Project: string    
     
     /// The build configuration.
     Configuration : string
@@ -268,6 +247,7 @@ let private DefaultTestParams : TestParams = {
     Configuration = "Release"
     TimeOut = TimeSpan.FromMinutes 30.
     Framework = ""
+    Project = ""
     Runtime = ""
     AdditionalArgs = []
 }
@@ -279,40 +259,36 @@ let private DefaultTestParams : TestParams = {
 ///
 /// ## Sample
 ///
-///     !! "src/test/project.json"
-///     |> DotNetCli.Test
-///         (fun p -> 
-///              { p with 
-///                   Configuration = "Release" })
-let Test (setTestParams: TestParams -> TestParams) projects =
-    traceStartTask "DotNet.Test" ""
+///     DotNetCli.Test
+///       (fun p -> 
+///            { p with 
+///                 Configuration = "Release" })
+let Test (setTestParams: TestParams -> TestParams) =
+    use __ = traceStartTaskUsing "DotNet.Test" ""
 
-    try
-        for project in projects do
-            let parameters = setTestParams DefaultTestParams
-            let args =
-                new StringBuilder()
-                |> append "test"
-                |> append project                
-                |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Configuration) (sprintf "--configuration %s"  parameters.Configuration)
-                |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Framework) (sprintf "--framework %s"  parameters.Framework)
-                |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Runtime) (sprintf "--runtime %s"  parameters.Runtime)
-                |> fun sb ->
-                    parameters.AdditionalArgs
-                    |> List.fold (fun sb arg -> appendWithoutQuotes arg sb) sb
-                |> toText
+    let parameters = setTestParams DefaultTestParams
+    let args =
+        new StringBuilder()
+        |> append "test"
+        |> appendStringIfValueIsNotNullOrEmpty parameters.Project parameters.Project
+        |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Configuration) (sprintf "--configuration %s"  parameters.Configuration)
+        |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Framework) (sprintf "--framework %s"  parameters.Framework)
+        |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Runtime) (sprintf "--runtime %s"  parameters.Runtime)
+        |> fun sb ->
+            parameters.AdditionalArgs
+            |> List.fold (fun sb arg -> appendWithoutQuotes arg sb) sb
+        |> toText
 
-            if 0 <> ExecProcess (fun info ->  
-                info.FileName <- parameters.ToolPath
-                info.WorkingDirectory <- parameters.WorkingDir
-                info.Arguments <- args) parameters.TimeOut
-            then
-                failwithf "Test failed on %s" args
-    finally
-        traceEndTask "DotNet.Test" ""
+    if 0 <> ExecProcess (fun info ->  
+        info.FileName <- parameters.ToolPath
+        info.WorkingDirectory <- parameters.WorkingDir
+        info.Arguments <- args) parameters.TimeOut
+    then
+        failwithf "Test failed on %s" args
 
 
 /// DotNet pack parameters
+[<CLIMutable>]
 type PackParams = {
     /// ToolPath - usually just "dotnet"
     ToolPath: string
@@ -322,6 +298,9 @@ type PackParams = {
 
     /// Optional version suffix.
     VersionSuffix: string
+
+    /// Project (optional).
+    Project: string    
 
     /// Working directory (optional).
     WorkingDir: string
@@ -342,6 +321,7 @@ let private DefaultPackParams : PackParams = {
     Configuration = "Release"
     OutputPath = ""
     VersionSuffix = ""
+    Project = ""
     TimeOut = TimeSpan.FromMinutes 30.
     AdditionalArgs = []
 }
@@ -353,47 +333,124 @@ let private DefaultPackParams : PackParams = {
 ///
 /// ## Sample
 ///
-///     !! "src/test/project.json"
-///     |> DotNetCli.Pack
-///         (fun p -> 
-///              { p with 
-///                   Configuration = "Release" })
-let Pack (setPackParams: PackParams -> PackParams) projects =
-    traceStartTask "DotNet.Pack" ""
+///     DotNetCli.Pack
+///       (fun p -> 
+///            { p with 
+///                 Configuration = "Release" })
+let Pack (setPackParams: PackParams -> PackParams) =
+    use __ = traceStartTaskUsing "DotNet.Pack" ""
 
-    try
-        for project in projects do
-            let parameters = setPackParams DefaultPackParams
-            let args =
-                new StringBuilder()
-                |> append "pack"
-                |> append project
-                |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Configuration) (sprintf "--configuration %s"  parameters.Configuration)
-                |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.OutputPath) (sprintf "--output %s"  parameters.OutputPath)
-                |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.VersionSuffix) (sprintf "--version-suffix %s"  parameters.VersionSuffix)
-                |> fun sb ->
-                    parameters.AdditionalArgs
-                    |> List.fold (fun sb arg -> appendWithoutQuotes arg sb) sb
-                |> toText
+    let parameters = setPackParams DefaultPackParams
+    let args =
+        new StringBuilder()
+        |> append "pack"
+        |> appendStringIfValueIsNotNullOrEmpty parameters.Project parameters.Project
+        |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Configuration) (sprintf "--configuration %s"  parameters.Configuration)
+        |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.OutputPath) (sprintf "--output %s"  parameters.OutputPath)
+        |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.VersionSuffix) (sprintf "--version-suffix %s"  parameters.VersionSuffix)
+        |> fun sb ->
+            parameters.AdditionalArgs
+            |> List.fold (fun sb arg -> appendWithoutQuotes arg sb) sb
+        |> toText
 
-            if 0 <> ExecProcess (fun info ->  
-                info.FileName <- parameters.ToolPath
-                info.WorkingDirectory <- parameters.WorkingDir
-                info.Arguments <- args) parameters.TimeOut
-            then
-                failwithf "Pack failed on %s" args
-    finally
-        traceEndTask "DotNet.Pack" ""
+    if 0 <> ExecProcess (fun info ->  
+        info.FileName <- parameters.ToolPath
+        info.WorkingDirectory <- parameters.WorkingDir
+        info.Arguments <- args) parameters.TimeOut
+    then
+        failwithf "Pack failed on %s" args
+
+/// DotNet publish parameters
+[<CLIMutable>]
+type PublishParams = {
+    /// ToolPath - usually just "dotnet"
+    ToolPath: string
+
+    /// Working directory (optional).
+    WorkingDir: string
+
+    /// A timeout for the command.
+    TimeOut: TimeSpan
+
+    /// Project (optional).
+    Project: string
+    
+    /// The build configuration.
+    Configuration : string
+
+    /// Allows to publish to a specific framework
+    Framework : string
+
+    /// Allows to test a specific runtime
+    Runtime : string
+
+    /// Optional version suffix.
+    VersionSuffix: string
+
+    /// Optional outputh path
+    Output : string
+
+    /// Additional Args
+    AdditionalArgs : string list
+}
+
+let private DefaultPublishParams : PublishParams = {
+    ToolPath = commandName
+    WorkingDir = Environment.CurrentDirectory
+    Configuration = "Release"
+    TimeOut = TimeSpan.FromMinutes 30.
+    Project = ""
+    Framework = ""
+    Runtime = ""
+    VersionSuffix = ""
+    Output = ""
+    AdditionalArgs = []
+}
+
+/// Runs the dotnet "publish" command.
+/// ## Parameters
+///
+///  - `setPublishParams` - Function used to overwrite the publish default parameters.
+///
+/// ## Sample
+///
+///     DotNetCli.Publish
+///       (fun p -> 
+///            { p with 
+///                 Configuration = "Release" })
+let Publish (setPublishParams: PublishParams -> PublishParams) =
+    use __ = traceStartTaskUsing "DotNet.Publish" ""
+
+    let parameters = setPublishParams DefaultPublishParams
+    let args =
+        new StringBuilder()
+        |> append "publish"
+        |> appendStringIfValueIsNotNullOrEmpty parameters.Project parameters.Project
+        |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Configuration) (sprintf "--configuration %s"  parameters.Configuration)
+        |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Framework) (sprintf "--framework %s"  parameters.Framework)
+        |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Runtime) (sprintf "--runtime %s"  parameters.Runtime)
+        |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Output) (sprintf "--output %s"  parameters.Output)     
+        |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.VersionSuffix) (sprintf "--version-suffix %s"  parameters.VersionSuffix)           
+        |> fun sb ->
+            parameters.AdditionalArgs
+            |> List.fold (fun sb arg -> appendWithoutQuotes arg sb) sb
+        |> toText
+
+    if 0 <> ExecProcess (fun info ->  
+        info.FileName <- parameters.ToolPath
+        info.WorkingDirectory <- parameters.WorkingDir
+        info.Arguments <- args) parameters.TimeOut
+    then
+        failwithf "Test Publish on %s" args
+
+
 
 /// Sets version in project.json
 let SetVersionInProjectJson (version:string) fileName = 
-    traceStartTask "DotNet.SetVersion" fileName
-    try
-        let original = File.ReadAllText fileName
-        let p = JObject.Parse(original)
-        p.["version"] <- JValue version
-        let newText = p.ToString()
-        if newText <> original then
-            File.WriteAllText(fileName,newText)
-    finally
-        traceEndTask "DotNet.SetVersion" fileName
+    use __ = traceStartTaskUsing "DotNet.SetVersion" fileName
+    let original = File.ReadAllText fileName
+    let p = JObject.Parse(original)
+    p.["version"] <- JValue version
+    let newText = p.ToString()
+    if newText <> original then
+        File.WriteAllText(fileName,newText)

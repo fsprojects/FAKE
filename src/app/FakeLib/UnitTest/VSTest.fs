@@ -19,6 +19,7 @@ let vsTestExe =
 type ErrorLevel = TestRunnerErrorLevel
 
 /// Parameter type to configure [VSTest.Console.exe](https://msdn.microsoft.com/en-us/library/jj155800.aspx)
+[<CLIMutable>]
 type VSTestParams = 
     { /// Path to the run settings file to run tests with additional settings such as data collectors (optional).
       SettingsPath : string
@@ -124,7 +125,7 @@ let buildVSTestArgs (parameters : VSTestParams) assembly =
 ///     )
 let VSTest (setParams : VSTestParams -> VSTestParams) (assemblies : string seq) = 
     let details = assemblies |> separated ", "
-    traceStartTask "VSTest" details
+    use __ = traceStartTaskUsing "VSTest" details
     let parameters = VSTestDefaults |> setParams
     if isNullOrEmpty parameters.ToolPath then failwith "VSTest: No tool path specified, or it could not be found automatically."
     let assemblies = assemblies |> Seq.toArray
@@ -141,5 +142,4 @@ let VSTest (setParams : VSTestParams -> VSTestParams) (assemblies : string seq) 
             info.WorkingDirectory <- parameters.WorkingDir
             info.Arguments <- args) parameters.TimeOut
         |> failIfError assembly
-    traceEndTask "VSTest" details
 

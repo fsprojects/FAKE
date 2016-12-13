@@ -149,15 +149,23 @@ let traceEndTarget name =
     sendCloseBlock name
 
 /// Traces the begin of a task
+[<Obsolete("use 'traceStartTaskUsing' with the 'use' pattern instead of traceStartTask / traceEndTask")>]
 let traceStartTask task description = 
     openTag "task"
     OpenTag("task", task) |> postMessage
     ReportProgressStart <| sprintf "Task: %s %s" task description
 
 /// Traces the end of a task
+[<Obsolete("use 'traceStartTaskUsing' with the 'use' pattern instead of traceStartTask / traceEndTask")>]
 let traceEndTask task description = 
     closeTag "task"
     ReportProgressFinish <| sprintf "Task: %s %s" task description
+
+/// Traces the begin of a task and closes it again after disposing of the return value
+/// (call it with 'use')
+let traceStartTaskUsing task description = 
+    traceStartTask task description
+    { new IDisposable with member x.Dispose() = traceEndTask task description }
 
 let console = new ConsoleTraceListener(false, colorMap) :> ITraceListener
 

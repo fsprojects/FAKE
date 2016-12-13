@@ -34,6 +34,7 @@ type AndroidPublishConfig = {
     Apk: string;
 }
 
+[<CLIMutable>]
 type AndroidPublishParams = {
     Track: string;
     Config: AndroidPublishConfig;

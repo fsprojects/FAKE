@@ -8,6 +8,7 @@ open System.Text
 open Fake
 
 /// The xUnit parameter type.
+[<CLIMutable>]
 type XUnitParams =
     { /// The path to the xUnit console runner: `xunit.console.clr4.exe`
       ToolPath : string
@@ -148,13 +149,10 @@ let internal runXUnitForOneAssembly parameters assembly =
 ///         xUnit (fun p -> {p with HtmlOutputPath = testDir @@ "xunit.html"}) "xUnit.Test.dll"
 ///     )
 let xUnitSingle setParams assembly =
-    traceStartTask "xUnit" assembly
+    use __ = traceStartTaskUsing "xUnit" assembly
 
     let parameters = XUnitDefaults |> setParams
-
     runXUnitForOneAssembly parameters assembly |> ignore
-
-    traceEndTask "xUnit" assembly
 
 let internal overrideAssemblyReportParams assembly p =
     let prependAssemblyName path =
@@ -193,8 +191,7 @@ let internal overrideAssemblyReportParams assembly p =
 ///     )
 let xUnit setParams assemblies =
     let details = separated ", " assemblies
-    traceStartTask "xUnit" details
-
+    use __ = traceStartTaskUsing "xUnit" details
     let parameters = XUnitDefaults |> setParams
 
     let assemblyResults =
@@ -202,5 +199,3 @@ let xUnit setParams assemblies =
         |> Seq.map (fun a -> a, runXUnitForOneAssembly (parameters |> overrideAssemblyReportParams a) a)
 
     ResultHandling.failBuildIfXUnitReportedErrors parameters.ErrorLevel assemblyResults
-
-    traceEndTask "xUnit" details

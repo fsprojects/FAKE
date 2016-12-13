@@ -6,6 +6,7 @@ open Fake.ProcessHelper
 open System
 
 /// Parameter type to configure the RoundhousE runner
+[<CLIMutable>]
 type RoundhouseParams = {
 
     /// The database you want to create/migrate.
@@ -240,7 +241,7 @@ let Roundhouse setParams =
 
     let args = parameters |> getParamPairs |> serializeArgs
 
-    traceStartTask "Roundhouse" args
+    use __ = traceStartTaskUsing "Roundhouse" args
 
     if 0 <> ExecProcess (fun info ->  
         info.FileName <- parameters.ToolPath
@@ -248,5 +249,3 @@ let Roundhouse setParams =
         info.Arguments <- args) parameters.TimeOut
     then
         failwithf "Roundhouse failed on %s" args
-                  
-    traceEndTask "Roundhouse" args
