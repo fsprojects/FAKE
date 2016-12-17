@@ -1,5 +1,7 @@
 #### 4.47.0 - 17.12.2016
 * New Expecto helper - https://github.com/fsharp/FAKE/pull/1435
+* Displas original server response when failing to parse JSON in Fake.Deploy - https://github.com/fsharp/FAKE/pull/1432
+* Added SQLCMD variable support - https://github.com/fsharp/FAKE/pull/1434
 * USABILITY: Improve error logging in GitVersionHelper - https://github.com/fsharp/FAKE/pull/1429
 
 #### 4.46.0 - 03.12.2016
