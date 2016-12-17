@@ -37,6 +37,7 @@ nuget FluentMigrator.Runner
 nuget HashLib
 nuget FSharp.Compiler.Service
 nuget Octokit
+nuget Microsoft.Net.Http
 
 github matthid/Yaaf.FSharp.Scripting src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs
 
