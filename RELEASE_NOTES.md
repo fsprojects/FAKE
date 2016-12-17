@@ -1,4 +1,5 @@
-#### 4.46.1 - 07.12.2016
+#### 4.47.0 - 17.12.2016
+* New Expecto helper - https://github.com/fsharp/FAKE/pull/1435
 * USABILITY: Improve error logging in GitVersionHelper - https://github.com/fsharp/FAKE/pull/1429
 
 #### 4.46.0 - 03.12.2016
