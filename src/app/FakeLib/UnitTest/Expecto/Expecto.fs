@@ -15,6 +15,8 @@ type ExpectoParams =
       Parallel : bool
       /// Filter a specific hierarchy to run
       Filter : string
+      /// Allows to print a nice summary at the end of the test suite.
+      Summary : bool
       /// Filter a specific test case to run.
       FilterTestCase : string
       /// Filter a specific test list to run.
@@ -42,6 +44,7 @@ type ExpectoParams =
         StringBuilder()
         |> appendIfTrue this.Debug "--debug "
         |> appendIfTrue this.Parallel "--parallel "
+        |> appendIfTrue this.Summary "--summary "
         |> appendIfTrue (not this.Parallel) "--sequential "
         |> appendIfNotNullOrWhiteSpace this.Filter "--filter "
         |> appendIfNotNullOrWhiteSpace this.FilterTestCase "--filter-test-case "
@@ -58,6 +61,7 @@ type ExpectoParams =
             FilterTestList = ""
             Run = []
             ListTests = false
+            Summary = true
             WorkingDirectory = ""
         }
 
