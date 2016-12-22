@@ -23,8 +23,6 @@ type ExpectoParams =
       Run : string list
       /// Doesn't run tests, print out list of tests instead.
       ListTests : bool
-      /// Prints out summary after all tests are finished
-      Summary : bool
       /// Custom cli arguments if not yet supported per se.
       CustomArgs : string list
       /// Working directory
@@ -53,7 +51,6 @@ type ExpectoParams =
         |> appendIfNotNullOrWhiteSpace this.FilterTestList "--filter-test-list "
         |> appendList this.Run "--run "
         |> appendIfTrue this.ListTests "--list-tests "
-        |> appendIfTrue this.Summary "--summary "
         |> appendList this.CustomArgs ""
         |> toText
 
@@ -66,7 +63,6 @@ type ExpectoParams =
             FilterTestList = ""
             Run = []
             ListTests = false
-            Summary = false
             CustomArgs = []
             WorkingDirectory = ""
         }
