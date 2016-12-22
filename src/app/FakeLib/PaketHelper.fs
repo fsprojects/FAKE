@@ -77,6 +77,7 @@ type PaketRestoreParams =
       Group: string
       ReferenceFiles: string list }
 
+/// Paket restore default parameters
 let PaketRestoreDefaults() : PaketRestoreParams = 
     { ToolPath = (findToolFolderInSubPath "paket.exe" (currentDirectory @@ ".paket")) @@ "paket.exe"
       TimeOut = System.TimeSpan.MaxValue
