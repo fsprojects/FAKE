@@ -40,12 +40,12 @@
           <h1>Analyze your code with SonarQube</h1>
 <p>From the <a href="http://sonarqube.org">web page</a>:
 "The SonarQube® platform is an open source quality management platform, dedicated to continuously analyzing and measuring the technical quality of source code, from project portfolio down to the method level"</p>
-<p>It can analyze a lot of different programming languages, from PHP, Erlang, Css to Cobol. C# can be installed
+<p>It can analyze a lot of different programming languages, from PHP, Erlang, CSS to Cobol. C# can be installed
 with an additional plugin. This must be done on the SonarQube server.
 To support the analysis process on a build server, an additional command line tool called "MSBuild.SonarQube.Runner.exe"
-must be used. The sonar qube module in FAKE provides a function 'SonarQube' to call this tool with the needed parameters.</p>
-<p>This function must be called twice, one time at the beginning of the compilation process and one time after
-compilation has finished. Then the result is collected and send to the SonarQube server.</p>
+must be used. The SonarQube module in FAKE provides a function 'SonarQube' to call this tool with the needed parameters.</p>
+<p>This function must be called twice, once at the beginning of the compilation process and once after
+compilation has finished. The result is then collected and sent to the SonarQube server.</p>
 <h2>Minimal working example</h2>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
@@ -101,7 +101,7 @@ compilation has finished. Then the result is collected and send to the SonarQube
 </code></pre></td>
 </tr>
 </table>
-<p>The MSBuild runner is searched in 'tools/SonarQube'. This can be overwritten with the ToolsPath property of the parameters.</p>
+<p>By default, the SonarQube module looks for the MSBuild runner in the 'tools/SonarQube' directory. This can be overwritten using the ToolsPath property of the parameters.</p>
 <h2>Additional options for SonarQube</h2>
 <ul>
 <li>
