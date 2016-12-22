@@ -1,3 +1,6 @@
+#### 4.47.1 - 2.12.2016
+* New Expecto --summary parameter
+
 #### 4.47.0 - 17.12.2016
 * New Expecto helper - https://github.com/fsharp/FAKE/pull/1435
 * Displas original server response when failing to parse JSON in Fake.Deploy - https://github.com/fsharp/FAKE/pull/1432
