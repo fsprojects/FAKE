@@ -465,7 +465,7 @@ let kill (proc : Process) =
     tracefn "Trying to kill process %s (Id = %d)" proc.ProcessName proc.Id
     try 
         proc.Kill()
-    with exn -> ()
+    with exn -> tracefn "Could not kill process %s (Id = %d).%sMessage: %s" proc.ProcessName proc.Id Environment.NewLine exn.Message
 
 /// Kills all processes with the given id
 let killProcessById id = Process.GetProcessById id |> kill
@@ -484,8 +484,13 @@ let getProcessesByName (name : string) =
 
 /// Kills all processes with the given name
 let killProcess name = 
-    tracefn "Searching for process with name = %s" name
-    getProcessesByName name |> Seq.iter kill
+    tracefn "Searching for processes with name = %s" name
+    Process.GetProcesses()
+    |> Seq.filter (fun p -> 
+           try 
+               p.ProcessName.ToLower().StartsWith(name.ToLower())
+           with exn -> false)
+    |> Seq.iter kill
 
 /// Kills the F# Interactive (FSI) process.
 let killFSI() = killProcess "fsi.exe"
