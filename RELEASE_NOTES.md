@@ -1,3 +1,6 @@
+#### 4.47.4 - 04.01.2017
+* New Expecto --fail-on-focused-tests parameter
+
 #### 4.47.2 - 29.12.2016
 * More verbose kill
 
