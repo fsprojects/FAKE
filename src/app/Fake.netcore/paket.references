@@ -1,3 +1,4 @@
+group netcore
 FSharp.Core
 Microsoft.FSharp.Core.netcore
 FSharp.NET.Sdk
@@ -6,6 +7,3 @@ Microsoft.NETCore.App
 Argu
 Paket.Core
 Mono.Cecil
-
-group netcore
-    FSharp.Compiler.Service

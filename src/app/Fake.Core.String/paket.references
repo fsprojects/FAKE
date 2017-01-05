@@ -1,3 +1,4 @@
+group netcore
 Microsoft.NET.Sdk framework:net46, netcore
 FSharp.NET.Sdk framework:net46, netcore
 FSharp.Core framework: net46

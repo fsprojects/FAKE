@@ -1,3 +1,4 @@
+group netcore
 Microsoft.NET.Sdk
 FSharp.NET.Sdk
 FSharp.Compiler.Service

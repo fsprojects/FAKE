@@ -532,34 +532,28 @@ Target "CreateNuGet" (fun _ ->
 open Fake.DotNet.Cli
 #endif
 
-// Target "InstallDotnetCore" (fun _ ->
+Target "InstallDotnetCore" (fun _ ->
 //     // DotnetCliInstall Preview2ToolingOptions
-//     DotnetCliInstall Preview4ToolingOptions
-// )
-
-
-let assertExitCodeZero x = 
-    if x = 0 then () else 
-    failwithf "Command failed with exit code %i" x
-
-let runCmdIn workDir exe = 
-    Printf.ksprintf (fun args -> 
-        Shell.Exec(exe, args, workDir) |> assertExitCodeZero)
-
-/// Execute a dotnet cli command
-let dotnet workDir = runCmdIn workDir "dotnet"
-
+     DotnetCliInstall Preview4_004233ToolingOptions
+)
 
 let root = __SOURCE_DIRECTORY__
 let srcDir = root</>"src"
 let appDir = srcDir</>"app"
 
 
+let netCoreProjs =
+    !! "src/app/Fake.Core.*/*.fsproj"
+    ++ "src/app/Fake.DotNet.*/*.fsproj"
+    ++ "src/app/Fake.IO.*/*.fsproj"
+    ++ "src/app/Fake.netcore/*.fsproj"
+    ++ "src/app/Fake.Runtime/*.fsproj"
 
 Target "DotnetRestore" (fun _ ->
 
-    dotnet root "--info"
-
+    //dotnet root "--info"
+    Dotnet { DotnetOptions.Default with WorkingDirectory = root } "--info"
+    
     // Copy nupkgs to nuget/dotnetcore
     !! "lib/nupgks/**/*.nupkg"
     |> Seq.iter (fun file ->
@@ -568,15 +562,11 @@ Target "DotnetRestore" (fun _ ->
         File.Copy(file, dir @@ Path.GetFileName file, true))
 
     // dotnet restore
-    !! "src/app/Fake.Core.*/*.fsproj"
-    ++ "src/app/Fake.DotNet.*/*.fsproj"
-    ++ "src/app/Fake.IO.*/*.fsproj"
-    ++ "src/app/Fake.netcore/*.fsproj"
-    ++ "src/app/Fake.Runtime/*.fsproj"
+    netCoreProjs
     |> Seq.iter(fun proj ->
         let dir = (FileInfo (Path.GetFullPath proj)).Directory.FullName
-        dotnet dir "restore"
-        //DotnetRestore id proj
+        //dotnet dir "restore"
+        DotnetRestore id proj
     )
 )
 
@@ -585,7 +575,7 @@ let runtimes =
 
 Target "DotnetPackage" (fun _ ->
     // dotnet pack
-    !! "src/app/*/*.fsproj"
+    netCoreProjs
     -- "src/app/Fake.netcore/Fake.netcore.fsproj"
     |> Seq.iter(fun proj ->
         DotnetPack (fun c ->
@@ -802,7 +792,7 @@ Target "StartDnc" DoNothing
 
 "StartDnc"
     //==> "ConvertProjectJsonTemplates"
-    // ==> "InstallDotnetCore"
+    ==> "InstallDotnetCore"
     ==> "DotnetRestore"
     ==> "DotnetPackage"
 
