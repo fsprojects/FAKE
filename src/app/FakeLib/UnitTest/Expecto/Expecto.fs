@@ -27,9 +27,12 @@ type ExpectoParams =
       Run : string list
       /// Doesn't run tests, print out list of tests instead.
       ListTests : bool
+      /// Custom arguments to use in the case the helper not yet supports them
+      CustomArgs: string list
       /// Working directory
       WorkingDirectory : string
     }
+
     override this.ToString() =
         let append (s: string) (sb: StringBuilder) = sb.Append s
         let appendIfTrue p s sb =
@@ -49,10 +52,12 @@ type ExpectoParams =
         |> appendIfTrue this.FailOnFocusedTests "--fail-on-focused-tests "
         |> appendIfTrue this.Summary "--summary "
         |> appendIfTrue (not this.Parallel) "--sequential "
+        |> appendIfTrue this.ListTests "--list-tests "
         |> appendIfNotNullOrWhiteSpace this.Filter "--filter "
         |> appendIfNotNullOrWhiteSpace this.FilterTestCase "--filter-test-case "
         |> appendIfNotNullOrWhiteSpace this.FilterTestList "--filter-test-list "
         |> appendList this.Run "--run "
+        |> appendList this.CustomArgs ""
         |> toText
 
     static member DefaultParams =
@@ -66,6 +71,7 @@ type ExpectoParams =
             Run = []
             ListTests = false
             Summary = true
+            CustomArgs = []
             WorkingDirectory = ""
         }
 
