@@ -1,6 +1,5 @@
 group netcore
 FSharp.Core
-Microsoft.FSharp.Core.netcore
 FSharp.NET.Sdk
 Microsoft.NET.Sdk
 Microsoft.NETCore.App

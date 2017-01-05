@@ -13,8 +13,12 @@ module TokenizerHelper =
     type TokenizedScript =
         private { Tokens : Token list }
 
-    let getTokenized filePath defines lines =
+    let getTokenized (filePath:string) defines lines =
+#if NETSTANDARD
         let tokenizer = FSharpSourceTokenizer(defines, filePath)
+#else
+        let tokenizer = FSharpSourceTokenizer(defines, Some filePath)
+#endif
         /// Tokenize a single line of F# code
         let rec tokenizeLine (tokenizer:FSharpLineTokenizer) state =
           let raw =
@@ -142,7 +146,7 @@ let getAllScripts defines scriptPath : Script list =
     let rec getAllScriptsRec scriptPath parentIncludes : Script list =
         let scriptContents =
           File.ReadLines scriptPath
-          |> TokenizerHelper.getTokenized (Some scriptPath) defines
+          |> TokenizerHelper.getTokenized scriptPath defines
         //let searchPaths = getSearchPaths scriptContents |> Seq.toList
         let resolvePath currentIncludes currentDir relativeOrAbsolute isDir =
             let possiblePaths =

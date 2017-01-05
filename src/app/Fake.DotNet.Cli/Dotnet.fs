@@ -333,12 +333,17 @@ let Dotnet (options: DotnetOptions) args =
             info.Arguments <- cmdArgs
             // Add dotnet to PATH...
 #if NO_DOTNETCORE_BOOTSTRAP
+#if NETSTANDARD
+            let envDict = info.Environment
+#else
             let envDict = info.EnvironmentVariables
+#endif
 #else
             let envDict = info.Environment
 #endif
             let dir = System.IO.Path.GetDirectoryName options.DotnetCliPath
-            let key, value = "PATH", sprintf "%s%c%s" (System.Environment.GetEnvironmentVariable "PATH") System.IO.Path.DirectorySeparatorChar dir
+            let oldPath = System.Environment.GetEnvironmentVariable "PATH"
+            let key, value = "PATH", sprintf "%s%c%s" dir System.IO.Path.PathSeparator oldPath
             if envDict.ContainsKey key then envDict.[key] <- value
             else envDict.Add(key, value)
         ) timeout true errorF messageF

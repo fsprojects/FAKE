@@ -8,7 +8,7 @@ nuget Knockout
 nuget NuGet.CommandLine
 nuget Paket.Core 3.19.4
 nuget RavenDB.Server
-nuget serilog.sinks.nlog
+nuget serilog.sinks.nlog 1.5.4
 nuget Argu 3.3.0
 nuget FsCheck < 2.1
 nuget FsCheck.Xunit < 2.1
@@ -28,15 +28,15 @@ nuget Mono.Cecil
 nuget Nuget.Core
 nuget bootstrap
 nuget Knockout.Mapping
-nuget log4net
+nuget log4net 2.0.5
 nuget System.Web.Razor.Unofficial
 nuget toastr
 nuget RavenDB.Client < 3
 nuget Machine.Specifications.Should
 nuget Machine.Specifications.Runner.Console
 nuget Nancy.Testing
-nuget xunit.extensions
-nuget xunit.runners
+nuget xunit.extensions ~> 1.9
+nuget xunit.runners ~> 1.9
 nuget Newtonsoft.Json redirects:force
 nuget Microsoft.AspNet.Razor 2.0.30506
 nuget Microsoft.AspNet.WebPages 2.0.30506

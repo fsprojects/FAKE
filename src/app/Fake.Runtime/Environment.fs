@@ -6,7 +6,7 @@ open System
 open System.IO
 
 /// Gets the FAKE version no.
-let fakeVersion = AssemblyVersionInformation.Version
+let fakeVersion = AssemblyVersionInformation.AssemblyVersion
 
 /// Gets the FAKE Version string
 let fakeVersionStr = sprintf "FAKE - F# Make %A" fakeVersion
