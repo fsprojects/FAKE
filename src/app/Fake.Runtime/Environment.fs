@@ -1,6 +1,6 @@
 /// This module contains functions which allow to read and write environment variables and build parameters
 module Fake.Runtime.Environment
-type Environment = System.Environment
+//type Environment = System.Environment
 
 open System
 open System.IO
@@ -12,18 +12,18 @@ let fakeVersion = AssemblyVersionInformation.AssemblyVersion
 let fakeVersionStr = sprintf "FAKE - F# Make %A" fakeVersion
 
 /// Retrieves the environment variable with the given name
-let environVar name = Environment.GetEnvironmentVariable name
+let environVar name = System.Environment.GetEnvironmentVariable name
 
 /// Retrieves all environment variables from the given target
 
 let environVars () = 
-    let vars = Environment.GetEnvironmentVariables ()
+    let vars = System.Environment.GetEnvironmentVariables ()
     [ for e in vars -> 
           let e1 = e :?> Collections.DictionaryEntry
           e1.Key, e1.Value ]
 
 /// Sets the environment variable with the given name
-let setEnvironVar name value = Environment.SetEnvironmentVariable(name, value)
+let setEnvironVar name value = System.Environment.SetEnvironmentVariable(name, value)
 
 /// Retrieves the environment variable with the given name or returns the default if no value was set
 let environVarOrDefault name defaultValue = 
