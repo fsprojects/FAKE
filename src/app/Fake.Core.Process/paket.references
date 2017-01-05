@@ -2,6 +2,5 @@ group netcore
 Microsoft.NET.Sdk
 FSharp.NET.Sdk
 FSharp.Core
-Microsoft.FSharp.Core.netcore
 System.Diagnostics.Process
 NETStandard.Library

@@ -6,7 +6,6 @@ Paket.Core
 Mono.Cecil
 FSharp.Core
 
-Microsoft.FSharp.Core.netcore
 System.Runtime.Loader
 NETStandard.Library
 
