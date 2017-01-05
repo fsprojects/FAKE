@@ -626,7 +626,7 @@ Target "DotnetPackage" (fun _ ->
                     }) proj
                 runtimeWorked <- true
             with e ->
-                printfn "Runtime %s failed to publish!" runtimeName
+                printfn "FIXME: Runtime %s failed to publish!" runtimeName
         )
     )
 
@@ -672,9 +672,12 @@ Target "DotnetCoreCreateZipPackages" (fun _ ->
 
     ("portable" :: runtimes)
     |> Seq.iter (fun runtime ->
-      let runtimeDir = sprintf "nuget/dotnetcore/Fake.netcore/%s" runtime
-      !! (sprintf "%s/**" runtimeDir)
-      |> Zip runtimeDir (sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" runtime)
+      try
+        let runtimeDir = sprintf "nuget/dotnetcore/Fake.netcore/%s" runtime
+        !! (sprintf "%s/**" runtimeDir)
+        |> Zip runtimeDir (sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" runtime)
+      with _ ->
+        printfn "FIXME: Runtime '%s' failed to zip!" runtime
     )
 )
 
