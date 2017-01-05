@@ -585,7 +585,7 @@ Target "DotnetPackage" (fun _ ->
                 { c with
                     Configuration = Debug;
                     OutputPath = Some (nugetDir @@ "dotnetcore")
-                }
+                }) proj
         with _ ->
             printfn "pack failed, retrying..."
             DotnetPack (fun c ->
