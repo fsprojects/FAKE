@@ -574,6 +574,8 @@ let runtimes =
   [ "win7-x86"; "win7-x64"; "osx.10.11-x64"; "ubuntu.14.04-x64"; "ubuntu.16.04-x64" ]
 
 Target "DotnetPackage" (fun _ ->
+    let nugetDir = System.IO.Path.GetFullPath nugetDir
+    
     // dotnet pack
     netCoreProjs
     -- "src/app/Fake.netcore/Fake.netcore.fsproj"
@@ -585,6 +587,7 @@ Target "DotnetPackage" (fun _ ->
             }) proj
     )
 
+    let mutable runtimeWorked = false
     // dotnet publish
     runtimes
     |> List.map Some
@@ -597,14 +600,20 @@ Target "DotnetPackage" (fun _ ->
                 match runtime with
                 | Some r -> r
                 | None -> "current"
-            DotnetPublish (fun c ->
-                { c with
-                    Runtime = runtime
-                    Framework = Some "netcoreapp1.0"
-                    OutputPath = Some (nugetDir @@ "dotnetcore" @@ projName @@ runtimeName)
-                }) proj
+            try
+                DotnetPublish (fun c ->
+                    { c with
+                        Runtime = runtime
+                        Framework = Some "netcoreapp1.0"
+                        OutputPath = Some (nugetDir @@ "dotnetcore" @@ projName @@ runtimeName)
+                    }) proj
+                runtimeWorked <- true
+            with e ->
+                printfn "Runtime %s failed to publish!" runtimeName
         )
     )
+
+    if not runtimeWorked then failwith "No runtime worked!"
 
     // Publish portable as well (see https://docs.microsoft.com/en-us/dotnet/articles/core/app-types)
     let netcoreFsproj = "src/app/Fake.netcore/Fake.netcore.fsproj"
@@ -632,7 +641,8 @@ Target "DotnetPackage" (fun _ ->
                 Framework = Some "netcoreapp1.0"
                 OutputPath = Some (nugetDir @@ "dotnetcore" @@ "Fake.netcore" @@ "portable")
             }) netcoreFsproj
-    finally
+    with e ->
+        printfn "failed to publish portable!"
         // File.WriteAllText(netcoreJson, oldContent)
         ()
 )
