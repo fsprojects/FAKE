@@ -46,14 +46,14 @@ type NUnit3Runtime =
     | V35
     | V40
     | V45
-    /// NUnit should use .NET framework but can select it's version
+    /// NUnit should use .NET framework but can select its version
     | Net
     | Net20
     | Net30
     | Net35
     | Net40
     | Net45
-    /// NUnit should use Mono framework but can select it's version
+    /// NUnit should use Mono framework but can select its version
     | Mono
     | Mono20
     | Mono30
@@ -99,7 +99,7 @@ type LabelsLevel =
 
 /// The NUnit 3 Console Parameters type. FAKE will use [NUnit3Defaults](fake-testing-nunit3.html) for values not provided.
 ///
-/// For reference, see: [NUnit3 command line options](https://github.com/nunit/nunit/wiki/Console-Command-Line)
+/// For reference, see: [NUnit3 command line options](https://github.com/nunit/docs/wiki/Console-Command-Line)
 [<CLIMutable>]
 type NUnit3Params =
     { /// The path to the NUnit3 console runner: `nunit3-console.exe`
@@ -110,7 +110,7 @@ type NUnit3Params =
 
       /// An expression indicating which tests to run. It may specify test names, classes, methods, 
       /// catgories or properties comparing them to actual values with the operators ==, !=, =~ and !~. 
-      /// See [NUnit documentation](https://github.com/nunit/nunit/wiki/Test-Selection-Language) for a full description of the syntax.
+      /// See [NUnit documentation](https://github.com/nunit/docs/wiki/Test-Selection-Language) for a full description of the syntax.
       Where : string
 
       /// Name of a project configuration to load (e.g.: Debug)
@@ -161,8 +161,8 @@ type NUnit3Params =
       ErrorDir : string
 
       /// Output specs for saving the test results. Default value is TestResult.xml
-      /// Passing empty list does not save any result (--noresult option in nunit)
-      /// For more information, see: [NUnit3 command line options](https://github.com/nunit/nunit/wiki/Console-Command-Line)
+      /// Passing empty list does not save any result (--noresult option in NUnit)
+      /// For more information, see: [NUnit3 command line options](https://github.com/nunit/docs/wiki/Console-Command-Line)
       ResultSpecs : string list
 
       /// Tells .NET to copy loaded assemblies to the shadowcopy directory.
@@ -277,7 +277,7 @@ let NUnit3 (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) 
     let tool = parameters.ToolPath
     let args = buildNUnit3Args parameters assemblies
     trace (tool + " " + args)
-    let processTimeout = TimeSpan.MaxValue // Don't set a process timeout.  The timeout is per test.
+    let processTimeout = TimeSpan.MaxValue // Don't set a process timeout. The timeout is per test.
     let result = 
         ExecProcess (fun info -> 
             info.FileName <- tool
