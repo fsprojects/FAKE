@@ -29,7 +29,7 @@ module Environment =
 namespace Fake.Core
 
 module Environment =
-    type Environment = System.Environment
+//    type Environment = System.Environment
 #if DOTNETCORE
     open Fake.SystemHelper
 #endif
@@ -48,11 +48,11 @@ module Environment =
     #endif
 
     /// Retrieves the environment variable with the given name
-    let environVar name = Environment.GetEnvironmentVariable name
+    let environVar name = System.Environment.GetEnvironmentVariable name
 
     /// Retrieves all environment variables from the given target
     let environVars () = 
-        let vars = Environment.GetEnvironmentVariables ()
+        let vars = System.Environment.GetEnvironmentVariables ()
         [ for e in vars -> 
               let e1 = e :?> Collections.DictionaryEntry
               e1.Key, e1.Value ]
@@ -60,17 +60,17 @@ module Environment =
     #if !DOTNETCORE
     [<Obsolete("Will be removed in dotnetcore. Use environVars instead.")>]
     let environVarsWithMode mode = 
-        let vars = Environment.GetEnvironmentVariables (mode)
+        let vars = System.Environment.GetEnvironmentVariables (mode)
         [ for e in vars -> 
               let e1 = e :?> Collections.DictionaryEntry
               e1.Key, e1.Value ]
     #endif
 
     /// Sets the environment variable with the given name
-    let setEnvironVar name value = Environment.SetEnvironmentVariable(name, value)
+    let setEnvironVar name value = System.Environment.SetEnvironmentVariable(name, value)
 
     /// Clears the environment variable with the given name for the current process.
-    let clearEnvironVar name = Environment.SetEnvironmentVariable(name, null)
+    let clearEnvironVar name = System.Environment.SetEnvironmentVariable(name, null)
 
     [<Obsolete("Use setEnvironVar instead")>]
     /// Sets the build parameter with the given name for the current process.
@@ -128,7 +128,7 @@ module Environment =
     let inline getBuildParam name = getBuildParamOrDefault name String.Empty
 
     /// The path of the "Program Files" folder - might be x64 on x64 machine
-    let ProgramFiles = Environment.GetFolderPath Environment.SpecialFolder.ProgramFiles
+    let ProgramFiles = System.Environment.GetFolderPath System.Environment.SpecialFolder.ProgramFiles
 
     /// The path of Program Files (x86)
     /// It seems this covers all cases where PROCESSOR\_ARCHITECTURE may misreport and the case where the other variable 
@@ -155,7 +155,7 @@ module Environment =
         System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
             System.Runtime.InteropServices.OSPlatform.OSX)
     #else
-        int Environment.OSVersion.Platform |> fun p -> (p = 4) || (p = 6) || (p = 128)
+        int System.Environment.OSVersion.Platform |> fun p -> (p = 4) || (p = 6) || (p = 128)
     #endif
 
     /// Determines if the current system is a MacOs system
@@ -164,7 +164,7 @@ module Environment =
         System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
             System.Runtime.InteropServices.OSPlatform.OSX)
     #else
-        (Environment.OSVersion.Platform = PlatformID.MacOSX) ||
+        (System.Environment.OSVersion.Platform = PlatformID.MacOSX) ||
             // osascript is the AppleScript interpreter on OS X
             File.Exists "/usr/bin/osascript"
     #endif
@@ -184,7 +184,7 @@ module Environment =
         System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(
             System.Runtime.InteropServices.OSPlatform.Windows)
     #else
-        match Environment.OSVersion.Platform with
+        match System.Environment.OSVersion.Platform with
         | PlatformID.Win32NT | PlatformID.Win32S | PlatformID.Win32Windows | PlatformID.WinCE -> true
         | _ -> false
     #endif
@@ -299,7 +299,7 @@ module Environment =
     [<Obsolete("Will no longer be available in dotnetcore, target package is currently unknown")>]
     /// Retrieves information about the hard drives
     let getDrivesInfo() = 
-        Environment.GetLogicalDrives()
+        System.Environment.GetLogicalDrives()
         |> Seq.map (fun d -> IO.DriveInfo(d))
         |> Seq.filter (fun d -> d.IsReady)
         |> Seq.map 
@@ -311,12 +311,12 @@ module Environment =
     [<Obsolete("Will no longer be available in dotnetcore, target package is currently unknown")>]
     /// Retrieves lots of machine specific information like machine name, processor count etc.
     let getMachineEnvironment() = 
-        { ProcessorCount = Environment.ProcessorCount
-          Is64bit = Environment.Is64BitOperatingSystem
-          OperatingSystem = Environment.OSVersion.ToString()
-          MachineName = Environment.MachineName
+        { ProcessorCount = System.Environment.ProcessorCount
+          Is64bit = System.Environment.Is64BitOperatingSystem
+          OperatingSystem = System.Environment.OSVersion.ToString()
+          MachineName = System.Environment.MachineName
           NETFrameworks = getInstalledDotNetFrameworks()
-          UserDomainName = Environment.UserDomainName
+          UserDomainName = System.Environment.UserDomainName
           AgentVersion = 
               sprintf "%A" ((System.Reflection.Assembly.GetAssembly(typedefof<MachineDetails>)).GetName().Version)
           DriveInfo = getDrivesInfo() }
