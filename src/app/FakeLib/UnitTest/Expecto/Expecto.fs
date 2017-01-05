@@ -29,6 +29,8 @@ type ExpectoParams =
       ListTests : bool
       /// Custom arguments to use in the case the helper not yet supports them
       CustomArgs: string list
+      /// Prints the version on startup. Default is true
+      PrintVersion : bool
       /// Working directory
       WorkingDirectory : string
     }
@@ -52,6 +54,7 @@ type ExpectoParams =
         |> appendIfTrue this.FailOnFocusedTests "--fail-on-focused-tests "
         |> appendIfTrue this.Summary "--summary "
         |> appendIfTrue (not this.Parallel) "--sequential "
+        |> appendIfTrue this.PrintVersion "--version "
         |> appendIfTrue this.ListTests "--list-tests "
         |> appendIfNotNullOrWhiteSpace this.Filter "--filter "
         |> appendIfNotNullOrWhiteSpace this.FilterTestCase "--filter-test-case "
@@ -68,6 +71,7 @@ type ExpectoParams =
             FilterTestCase = ""
             FailOnFocusedTests = true
             FilterTestList = ""
+            PrintVersion = true
             Run = []
             ListTests = false
             Summary = true
