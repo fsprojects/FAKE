@@ -1,11 +1,9 @@
-#### 4.47.4 - 04.01.2017
+#### 4.48.0 - 05.01.2017
+* Added Expecto.CustomArgs property for new cli arguments - https://github.com/fsharp/FAKE/pull/1441
+* New Expecto --verion parameter
 * New Expecto --fail-on-focused-tests parameter
-
-#### 4.47.2 - 29.12.2016
-* More verbose kill
-
-#### 4.47.1 - 22.12.2016
 * New Expecto --summary parameter
+* USABILITY: More verbose kill of processes
 
 #### 4.47.0 - 17.12.2016
 * New Expecto helper - https://github.com/fsharp/FAKE/pull/1435
