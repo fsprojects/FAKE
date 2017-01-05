@@ -635,21 +635,6 @@ Target "DotnetPackage" (fun _ ->
     // Publish portable as well (see https://docs.microsoft.com/en-us/dotnet/articles/core/app-types)
     let netcoreFsproj = "src/app/Fake.netcore/Fake.netcore.fsproj"
     let oldContent = File.ReadAllText netcoreFsproj
-    // let newContent =
-//       oldContent.Replace(
-//         "  \"runtimes\": {
-//      \"win7-x86\": { },
-//      \"win7-x64\": { },
-//      \"osx.10.11-x64\": { },
-//      \"ubuntu.14.04-x64\": { },
-//      \"ubuntu.16.04-x64\": { }
-//   },", "").Replace(
-//         "        \"Microsoft.NETCore.App\": {
-//             \"version\": \"1.0.0\"
-//         }", "        \"Microsoft.NETCore.App\": {
-//             \"version\": \"1.0.0\",
-//             \"type\": \"platform\"
-//         }")
     try
         // File.WriteAllText(netcoreJson, newContent)
 
