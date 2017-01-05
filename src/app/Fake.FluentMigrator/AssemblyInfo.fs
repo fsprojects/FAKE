@@ -6,15 +6,15 @@ open System.Runtime.InteropServices
 [<assembly: AssemblyTitleAttribute("FAKE - F# Make FluentMigrator Lib")>]
 [<assembly: GuidAttribute("E18BDD6F-1AF8-42BB-AEB6-31CD1AC7E56D")>]
 [<assembly: AssemblyProductAttribute("FAKE - F# Make")>]
-[<assembly: AssemblyVersionAttribute("4.45.1")>]
-[<assembly: AssemblyInformationalVersionAttribute("4.45.1")>]
-[<assembly: AssemblyFileVersionAttribute("4.45.1")>]
+[<assembly: AssemblyVersionAttribute("4.48.0")>]
+[<assembly: AssemblyInformationalVersionAttribute("4.48.0")>]
+[<assembly: AssemblyFileVersionAttribute("4.48.0")>]
 do ()
 
 module internal AssemblyVersionInformation =
     let [<Literal>] AssemblyTitle = "FAKE - F# Make FluentMigrator Lib"
     let [<Literal>] Guid = "E18BDD6F-1AF8-42BB-AEB6-31CD1AC7E56D"
     let [<Literal>] AssemblyProduct = "FAKE - F# Make"
-    let [<Literal>] AssemblyVersion = "4.45.1"
-    let [<Literal>] AssemblyInformationalVersion = "4.45.1"
-    let [<Literal>] AssemblyFileVersion = "4.45.1"
+    let [<Literal>] AssemblyVersion = "4.48.0"
+    let [<Literal>] AssemblyInformationalVersion = "4.48.0"
+    let [<Literal>] AssemblyFileVersion = "4.48.0"
