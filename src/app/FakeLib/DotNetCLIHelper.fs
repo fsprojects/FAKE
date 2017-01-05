@@ -96,6 +96,9 @@ type RestoreParams = {
 
     /// Additional Args
     AdditionalArgs : string list
+    
+    //Disables restoring multiple projects in parallel.
+    DisableParallel : bool
 }
 
 let private DefaultRestoreParams : RestoreParams = {
@@ -105,6 +108,7 @@ let private DefaultRestoreParams : RestoreParams = {
     Project = ""
     TimeOut = TimeSpan.FromMinutes 30.
     AdditionalArgs = []
+    DisableParallel = false
 }
 
 /// Runs the dotnet "restore" command.
@@ -127,6 +131,7 @@ let Restore (setRestoreParams: RestoreParams -> RestoreParams) =
         |> append "restore"
         |> appendStringIfValueIsNotNullOrEmpty parameters.Project parameters.Project
         |> appendIfTrue parameters.NoCache "--no-cache"
+        |> appendIfTrue parameters.DisableParallel "--disable-parallel"
         |> fun sb ->
             parameters.AdditionalArgs
             |> List.fold (fun sb arg -> appendWithoutQuotes arg sb) sb
