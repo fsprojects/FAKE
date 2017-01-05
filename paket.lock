@@ -65,9 +65,9 @@ NUGET
     Microsoft.AspNet.WebPages (2.0.30506)
       Microsoft.AspNet.Razor (>= 2.0.20710)
       Microsoft.Web.Infrastructure (>= 1.0)
-    Microsoft.Bcl (1.1.10) - framework: net10, net11, net20, net30, net35, net40, net40-full
+    Microsoft.Bcl (1.1.10)
       Microsoft.Bcl.Build (>= 1.0.14)
-    Microsoft.Bcl.Build (1.0.21) - import_targets: false, framework: net10, net11, net20, net30, net35, net40, net40-full
+    Microsoft.Bcl.Build (1.0.21) - import_targets: false
     Microsoft.CompilerServices.AsyncTargetingPack (1.0.1) - framework: net10, net11, net20, net30, net35, net40, net40-full
     Microsoft.CSharp (4.3) - redirects: force, framework: >= netstandard10
       System.Collections (>= 4.3) - framework: dnxcore50, >= netstandard13
@@ -86,7 +86,7 @@ NUGET
       System.Runtime.Extensions (>= 4.3) - framework: dnxcore50, >= netstandard13
       System.Runtime.InteropServices (>= 4.3) - framework: dnxcore50, >= netstandard13
       System.Threading (>= 4.3) - framework: dnxcore50, >= netstandard13
-    Microsoft.Net.Http (2.2.29) - framework: net10, net11, net20, net30, net35, net40, net40-full
+    Microsoft.Net.Http (2.2.29)
       Microsoft.Bcl (>= 1.1.10)
       Microsoft.Bcl.Build (>= 1.0.14)
     Microsoft.NETCore.Platforms (1.1) - redirects: force, framework: >= net10, >= netstandard10, netstandard11, netstandard12, netstandard13, netstandard14

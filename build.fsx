@@ -580,11 +580,19 @@ Target "DotnetPackage" (fun _ ->
     netCoreProjs
     -- "src/app/Fake.netcore/Fake.netcore.fsproj"
     |> Seq.iter(fun proj ->
-        DotnetPack (fun c ->
-            { c with
-                Configuration = Debug;
-                OutputPath = Some (nugetDir @@ "dotnetcore")
-            }) proj
+        try
+            DotnetPack (fun c ->
+                { c with
+                    Configuration = Debug;
+                    OutputPath = Some (nugetDir @@ "dotnetcore")
+                }
+        with _ ->
+            printfn "pack failed, retrying..."
+            DotnetPack (fun c ->
+                { c with
+                    Configuration = Debug;
+                    OutputPath = Some (nugetDir @@ "dotnetcore")
+                }) proj
     )
 
     let mutable runtimeWorked = false
