@@ -32,7 +32,8 @@ nuget log4net 2.0.5
 nuget System.Web.Razor.Unofficial
 nuget toastr
 nuget RavenDB.Client < 3
-nuget Machine.Specifications.Should
+nuget Machine.Specifications.Should 0.8
+nuget Machine.Specifications 0.9.3
 nuget Machine.Specifications.Runner.Console
 nuget Nancy.Testing
 nuget xunit.extensions ~> 1.9

@@ -43,19 +43,10 @@ NUGET
       knockoutjs (>= 2.0)
     knockoutjs (3.4)
     log4net (2.0.5)
-    Machine.Specifications (0.11) - framework: net35, net40, >= net45, >= netstandard13
-      NETStandard.Library (>= 1.6) - framework: >= netstandard13
-      System.Diagnostics.TextWriterTraceListener (>= 4.0) - framework: >= netstandard13
-      System.Diagnostics.TraceSource (>= 4.0) - framework: >= netstandard13
-      System.Reflection (>= 4.1) - framework: >= netstandard13
-      System.Reflection.Extensions (>= 4.0.1) - framework: >= netstandard13
-      System.Reflection.TypeExtensions (>= 4.1) - framework: >= netstandard13
-      System.Xml.XPath (>= 4.0.1) - framework: >= netstandard13
-      System.Xml.XPath.XDocument (>= 4.0.1) - framework: >= netstandard13
+    Machine.Specifications (0.9.3)
     Machine.Specifications.Runner.Console (0.9.2)
-    Machine.Specifications.Should (0.11)
-      Machine.Specifications (>= 0.11) - framework: net35, net40, >= net45, >= netstandard13
-      NETStandard.Library (>= 1.6) - framework: >= netstandard13
+    Machine.Specifications.Should (0.8)
+      Machine.Specifications (>= 0.9 < 1.0)
     Microsoft.AspNet.Mvc (4.0.40804)
       Microsoft.AspNet.Razor (>= 2.0.20710)
       Microsoft.AspNet.WebPages (>= 2.0.20710)
@@ -88,7 +79,7 @@ NUGET
       Microsoft.Bcl (>= 1.1.10)
       Microsoft.Bcl.Build (>= 1.0.14)
     Microsoft.NETCore.Platforms (1.1) - redirects: force, framework: >= net10, netstandard10, >= netstandard13, netstandard14
-    Microsoft.NETCore.Targets (1.1) - redirects: force, framework: >= net10, >= netstandard10, netstandard13, netstandard14
+    Microsoft.NETCore.Targets (1.1) - redirects: force, framework: >= net10, netstandard10, >= netstandard13, netstandard14
     Microsoft.Web.Administration (7.0)
     Microsoft.Web.Infrastructure (1.0)
     Microsoft.Web.Xdt (2.1.1)
@@ -243,7 +234,7 @@ NUGET
     runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl (4.3) - framework: >= net45, >= netstandard13, netstandard14
     runtime.fedora.23-x64.runtime.native.System.Security.Cryptography.OpenSsl (4.3) - framework: >= net45, >= netstandard13, netstandard14
     runtime.fedora.24-x64.runtime.native.System.Security.Cryptography.OpenSsl (4.3) - framework: >= net45, >= netstandard13, netstandard14
-    runtime.native.System (4.3) - framework: net35, net40, >= net45, >= netstandard13
+    runtime.native.System (4.3) - framework: >= net45, >= netstandard13
       Microsoft.NETCore.Platforms (>= 1.1)
       Microsoft.NETCore.Targets (>= 1.1)
     runtime.native.System.IO.Compression (4.3) - framework: >= net45, >= netstandard13
@@ -383,18 +374,11 @@ NUGET
       System.Threading.Tasks (>= 4.3) - framework: >= netstandard14
       System.Threading.Thread (>= 4.3) - framework: >= netstandard14
       System.Threading.ThreadPool (>= 4.3) - framework: >= netstandard14
-    System.Diagnostics.TextWriterTraceListener (4.3) - framework: net35, net40, >= net45, >= netstandard13
-      System.Diagnostics.TraceSource (>= 4.3) - framework: >= net46, >= netstandard13
-      System.Globalization (>= 4.3) - framework: >= netstandard13
-      System.IO (>= 4.3) - framework: >= netstandard13
-      System.Resources.ResourceManager (>= 4.3) - framework: >= netstandard13
-      System.Runtime (>= 4.3) - framework: >= netstandard13
-      System.Threading (>= 4.3) - framework: >= netstandard13
     System.Diagnostics.Tools (4.3) - framework: >= net10, >= netstandard13
       Microsoft.NETCore.Platforms (>= 1.1) - framework: dnxcore50, >= netstandard10
       Microsoft.NETCore.Targets (>= 1.1) - framework: dnxcore50, >= netstandard10
       System.Runtime (>= 4.3) - framework: dnxcore50, >= netstandard10
-    System.Diagnostics.TraceSource (4.3) - framework: net35, net40, >= net45, >= netstandard13
+    System.Diagnostics.TraceSource (4.3) - framework: >= netstandard13
       Microsoft.NETCore.Platforms (>= 1.1) - framework: >= netstandard13
       runtime.native.System (>= 4.3) - framework: >= netstandard13
       System.Collections (>= 4.3) - framework: >= netstandard13
@@ -909,7 +893,7 @@ NUGET
       System.Text.Encoding (>= 4.3) - framework: >= netstandard13
       System.Threading (>= 4.3) - framework: >= netstandard13
       System.Xml.ReaderWriter (>= 4.3) - framework: >= netstandard13
-    System.Xml.XPath (4.3) - framework: net35, net40, >= net45, >= netstandard13
+    System.Xml.XPath (4.3) - framework: >= netstandard13
       System.Collections (>= 4.3) - framework: >= netstandard13
       System.Diagnostics.Debug (>= 4.3) - framework: >= netstandard13
       System.Globalization (>= 4.3) - framework: >= netstandard13
@@ -919,7 +903,7 @@ NUGET
       System.Runtime.Extensions (>= 4.3) - framework: >= netstandard13
       System.Threading (>= 4.3) - framework: >= netstandard13
       System.Xml.ReaderWriter (>= 4.3) - framework: >= netstandard13
-    System.Xml.XPath.XDocument (4.3) - framework: net35, net40, >= net45, >= netstandard13
+    System.Xml.XPath.XDocument (4.3) - framework: >= netstandard16
       System.Diagnostics.Debug (>= 4.3) - framework: >= netstandard13
       System.Linq (>= 4.3) - framework: >= netstandard13
       System.Resources.ResourceManager (>= 4.3) - framework: >= netstandard13
