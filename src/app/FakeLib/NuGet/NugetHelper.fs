@@ -333,7 +333,8 @@ let rec private publishSymbols parameters =
         if parameters.PublishTrials > 0 then publish { parameters with PublishTrials = parameters.PublishTrials - 1 }
         else raise exn
 
-/// Creates a new NuGet package based on the given .nuspec file.
+/// Creates a new NuGet package based on the given .nuspec or project file.
+/// The .nuspec / projectfile is passed as-is (no templating is performed)
 /// ## Parameters
 /// 
 ///  - `setParams` - Function used to manipulate the default NuGet parameters.
@@ -349,7 +350,8 @@ let NuGetPackDirectly setParams nuspecOrProjectFile =
         |> replaceAccessKey parameters.AccessKey
         |> failwith
 
-/// Creates a new NuGet package based on the given .nuspec file.
+/// Creates a new NuGet package based on the given .nuspec or project file.
+/// Template parameter substitution is performed when passing a .nuspec
 /// ## Parameters
 /// 
 ///  - `setParams` - Function used to manipulate the default NuGet parameters.
@@ -378,11 +380,12 @@ let NuGetPublish setParams =
     use __ = traceStartTaskUsing "NuGet-Push" (packageFileName parameters)
     publish parameters
 
-/// Creates a new NuGet package.
+/// Creates a new NuGet package, and optionally publishes it.
+/// Template parameter substitution is performed when passing a .nuspec
 /// ## Parameters
 /// 
 ///  - `setParams` - Function used to manipulate the default NuGet parameters.
-///  - `nuspecFile` - The .nuspec file name.
+///  - `nuspecOrProjectFile` - The .nuspec file name.
 let NuGet setParams nuspecOrProjectFile = 
     use __ = traceStartTaskUsing "NuGet" nuspecOrProjectFile
     let parameters = NuGetDefaults() |> setParams
