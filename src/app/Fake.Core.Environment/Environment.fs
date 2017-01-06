@@ -128,7 +128,7 @@ module Environment =
     let inline getBuildParam name = getBuildParamOrDefault name String.Empty
 
     /// The path of the "Program Files" folder - might be x64 on x64 machine
-    let ProgramFiles = System.Environment.GetFolderPath System.Environment.SpecialFolder.ProgramFiles
+    let ProgramFiles = Environment.GetFolderPath Environment.SpecialFolder.ProgramFiles
 
     /// The path of Program Files (x86)
     /// It seems this covers all cases where PROCESSOR\_ARCHITECTURE may misreport and the case where the other variable 
