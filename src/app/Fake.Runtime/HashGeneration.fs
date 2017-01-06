@@ -17,7 +17,8 @@ module TokenizerHelper =
 #if NETSTANDARD
         let tokenizer = FSharpSourceTokenizer(defines, filePath)
 #else
-        let tokenizer = FSharpSourceTokenizer(defines, Some filePath)
+        // After FSC Update -> replace "filePath" with "Some filePath" in next line. Beaking change somewhere between 6 and 8
+        let tokenizer = FSharpSourceTokenizer(defines, filePath)
 #endif
         /// Tokenize a single line of F# code
         let rec tokenizeLine (tokenizer:FSharpLineTokenizer) state =
