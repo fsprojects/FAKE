@@ -234,6 +234,22 @@ The problem is that we didn't download the NUnit package from nuget. So let's fi
 
 With this simple command FAKE will use nuget.exe to install all the package dependencies.
 
+You may experience this tutorial not quite working with the newest package versions. In this case you can edit the [`paket.dependencies` file](http://fsprojects.github.io/Paket/dependencies-file.html) to something like this:
+
+    source https://nuget.org/api/v2
+
+    nuget FAKE
+
+    http https://dist.nuget.org/win-x86-commandline/latest/nuget.exe NuGet/nuget.exe
+
+    nuget NUnit ~> 2.5.10
+
+Again run Paket from the command line:
+
+    $ .paket/paket.exe install
+
+This will fetch nuget.exe from nuget.org and also download an early version of NUnit that contains the NUnit runner. The edit to [`paket.dependencies`](http://fsprojects.github.io/Paket/dependencies-file.html) does not replace the RestorePackages() step. The NUnit.Test.CalculatorLib test project references the NUnit version 2.6.2 library, so we need that version too.
+
 ## Running the tests with NUnit
 
 Now all our projects will be compiled and we can use FAKE's NUnit task in order to let NUnit test our assembly:
