@@ -1,3 +1,6 @@
+#### 4.49.0 - 15.01.2017
+* MSBuild 15.0/VS 2017RC support - https://github.com/fsharp/FAKE/pull/1442
+
 #### 4.48.0 - 05.01.2017
 * Add DisableParallel to dotnet restore params - https://github.com/fsharp/FAKE/pull/1443
 * Added Expecto.CustomArgs property for new cli arguments - https://github.com/fsharp/FAKE/pull/1441
