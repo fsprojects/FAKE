@@ -125,7 +125,7 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NuGet/NugetHelper.fs#L486-486" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NuGet/NugetHelper.fs#L489-489" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -145,7 +145,7 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NuGet/NugetHelper.fs#L562-562" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NuGet/NugetHelper.fs#L565-565" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -165,7 +165,7 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NuGet/NugetHelper.fs#L480-480" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NuGet/NugetHelper.fs#L483-483" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -189,7 +189,7 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NuGet/NugetHelper.fs#L433-433" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NuGet/NugetHelper.fs#L436-436" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -233,15 +233,16 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NuGet/NugetHelper.fs#L386-386" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NuGet/NugetHelper.fs#L389-389" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Creates a new NuGet package.</p>
+          <p>Creates a new NuGet package, and optionally publishes it.
+Template parameter substitution is performed when passing a .nuspec</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to manipulate the default NuGet parameters.</li>
-<li><code>nuspecFile</code> - The .nuspec file name.</li>
+<li><code>nuspecOrProjectFile</code> - The .nuspec file name.</li>
 </ul>
 
 
@@ -278,11 +279,12 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NuGet/NugetHelper.fs#L357-357" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NuGet/NugetHelper.fs#L359-359" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Creates a new NuGet package based on the given .nuspec file.</p>
+          <p>Creates a new NuGet package based on the given .nuspec or project file.
+Template parameter substitution is performed when passing a .nuspec</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to manipulate the default NuGet parameters.</li>
@@ -303,11 +305,12 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NuGet/NugetHelper.fs#L341-341" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NuGet/NugetHelper.fs#L342-342" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Creates a new NuGet package based on the given .nuspec file.</p>
+          <p>Creates a new NuGet package based on the given .nuspec or project file.
+The .nuspec / projectfile is passed as-is (no templating is performed)</p>
 <h2>Parameters</h2>
 <ul>
 <li><code>setParams</code> - Function used to manipulate the default NuGet parameters.</li>
@@ -328,7 +331,7 @@ There is also a tutorial about <a href="../create-nuget-package.html">nuget pack
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NuGet/NugetHelper.fs#L376-376" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NuGet/NugetHelper.fs#L378-378" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
