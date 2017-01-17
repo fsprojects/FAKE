@@ -1,4 +1,7 @@
-#### 4.49.1 - 17.01.2017
+#### 4.50.0 - 17.01.2017
+* Visual Studio aware msbuild selection - https://github.com/fsharp/FAKE/pull/1453
+
+#### 4.49.0 - 15.01.2017
 * MSBuild 15.0/VS 2017RC support - https://github.com/fsharp/FAKE/pull/1442
 
 #### 4.48.0 - 05.01.2017
