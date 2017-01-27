@@ -202,7 +202,7 @@ let buildXUnit2Args assemblies parameters =
     |> appendIfTrueWithoutQuotes parameters.ForceTeamCity "-teamcity"
     |> appendIfTrueWithoutQuotes parameters.ForceAppVeyor "-appveyor"
     |> appendIfTrueWithoutQuotes parameters.Wait "-wait"
-    |> appendIfTrueWithoutQuotes parameters.Silent "-silent"
+    |> appendIfTrueWithoutQuotes parameters.Silent "-quiet"
     |> appendIfSome parameters.XmlOutputPath (sprintf @"-xml ""%s""")
     |> appendIfSome parameters.XmlV1OutputPath (sprintf @"-xmlv1 ""%s""")
     |> appendIfSome parameters.NUnitXmlOutputPath (sprintf @"-nunit ""%s""")
