@@ -91,6 +91,30 @@ What’s the point of a change log?";
             () => Catch.Exception(() => ChangeLogHelper.parseChangeLog(new[] { "" }));
     }
 
+    public class when_parsing_custom_categories
+    {
+        const string validData = @"
+# Changelog
+
+## [2.0.0] - 2013-12-15
+### Configuration
+* The Configuration has changed
+
+";
+
+        private static readonly ChangeLogHelper.ChangeLogEntry expected = ChangeLogHelper.ChangeLogEntry.New(
+            "2.0.0",
+            "2.0.0",
+            new Microsoft.FSharp.Core.FSharpOption<DateTime>(new DateTime(2013, 12, 15)),
+            new ChangeLogHelper.Change[]
+            {
+                ChangeLogHelper.Change.NewCustom("Configuration", "The Configuration has changed"),
+            }.ToFSharpList());
+
+        It should_parse = 
+            () => ChangeLogHelper.parseChangeLog(Changes.FromString(validData)).LatestEntry.ShouldEqual(expected);
+    }
+
     public class when_parsing_many_alpha_versions_in_change_log
     {
         const string input = @"

@@ -35,6 +35,8 @@ type Change =
     | Fixed of string
     /// to invite users to upgrade in case of vulnerabilities
     | Security of string
+    /// Custom entry (Header, Description)
+    | Custom of string * string
 
     override x.ToString() = 
         match x with
@@ -44,6 +46,7 @@ type Change =
         | Removed s -> sprintf "Removed: %s" s
         | Fixed s -> sprintf "Fixed: %s" s
         | Security s -> sprintf "Security: %s" s
+        | Custom (h, s) -> sprintf "%s: %s" h s
 
     static member New(header: string, line: string): Change = 
         let line = line |> trimLine
@@ -55,7 +58,7 @@ type Change =
         | "removed" -> Removed line
         | "fixed" -> Fixed line
         | "security" -> Security line
-        | _ -> failwith "Invalid category header format!"
+        | _ -> Custom (header |> trimLine, line)
 
 
 type ChangeLogEntry =
