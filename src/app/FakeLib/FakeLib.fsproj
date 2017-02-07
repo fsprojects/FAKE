@@ -190,6 +190,7 @@
     <Compile Include="DocFxHelper.fs" />
     <Compile Include="GitVersionHelper.fs" />
     <Compile Include="Checksum.fs" />
+    <Compile Include="ChangeLogHelper.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
