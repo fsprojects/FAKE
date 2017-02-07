@@ -15,7 +15,7 @@ namespace Test.FAKECore
     {
         public static IEnumerable<string> FromString(string data)
         {
-            return data.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            return data.Split(new[] { '\r', '\n' }, StringSplitOptions.None);
         }
     }
 
@@ -43,8 +43,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Line 2 0.3.0 Added
 
 ### Fixed
-- Line 1 0.2.0-beta1 Fixed
-- Line 2 0.2.0-beta1 Fixed
+- Line 1 0.3.0 Fixed
+- Line 2 0.3.0 Fixed
 
 ## 0.2.0-beta1 - 2015-10-06
 ### Changed
@@ -56,32 +56,38 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [0.2.0]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.1.0...v0.2.0
 What’s the point of a change log?";
 
-        private static readonly ChangeLogHelper.ChangeLog expected = ChangeLogHelper.ChangeLog.New(
+        private static readonly ChangeLogHelper.ChangeLogEntry expected = ChangeLogHelper.ChangeLogEntry.New(
             "0.3.0",
             "0.3.0",
             new Microsoft.FSharp.Core.FSharpOption<DateTime>(new DateTime(2015, 12, 03)),
-            new[]
+            new ChangeLogHelper.Change[]
             {
-                "Added: Line 1 0.3.0 Added",
-                "Added: Line 2 0.3.0 Added",
-                "Fixed: Line 1 0.3.0 Fixed",
-                "Fixed: Line 2 0.3.0 Fixed"
+                ChangeLogHelper.Change.NewAdded("Line 1 0.3.0 Added"),
+                ChangeLogHelper.Change.NewAdded("Line 2 0.3.0 Added"),
+                ChangeLogHelper.Change.NewFixed("Line 1 0.3.0 Fixed"),
+                ChangeLogHelper.Change.NewFixed("Line 2 0.3.0 Fixed"),
             }.ToFSharpList());
 
         It should_parse =
-            () => ChangeLogHelper.parseChangeLog(Changes.FromString(validData)).ShouldEqual(expected);
+            () => ChangeLogHelper.parseChangeLog(Changes.FromString(validData)).LatestEntry.ShouldEqual(expected);
 
         It should_parse_empty_changes =
-            () => ChangeLogHelper.parseChangeLog(Changes.FromString(@"## [0.3.0] - 2015-12-03"))
-                .ShouldEqual(ChangeLogHelper.ChangeLog.New("0.3.0", "0.3.0", new Microsoft.FSharp.Core.FSharpOption<DateTime>(new DateTime(2015, 12, 03)), FSharpList<string>.Empty));
+            () => ChangeLogHelper.parseChangeLog(Changes.FromString("# Change log\n\n## [0.3.0] - 2015-12-03")).LatestEntry
+                .ShouldEqual(ChangeLogHelper.ChangeLogEntry.New("0.3.0", "0.3.0", new Microsoft.FSharp.Core.FSharpOption<DateTime>(new DateTime(2015, 12, 03)), FSharpList<ChangeLogHelper.Change>.Empty));
 
-        It should_throws_on_empty_seq_input =
+        It should_throw_if_top_level_header_is_missing =
+            () => Catch.Exception(() => ChangeLogHelper.parseChangeLog(Changes.FromString(@"## [0.3.0] - 2015-12-03")));
+
+        It should_throw_if_top_level_header_is_not_first_non_empty_line =
+            () => Catch.Exception(() => ChangeLogHelper.parseChangeLog(Changes.FromString("FOO\n\n# Change log\n\n## [0.3.0] - 2015-12-03")));
+
+        It should_throw_on_empty_seq_input =
             () => Catch.Exception(() => ChangeLogHelper.parseChangeLog(new string[] { }));
 
-        It should_throws_on_null_input =
+        It should_throw_on_null_input =
             () => Catch.Exception(() => ChangeLogHelper.parseChangeLog(null));
 
-        It should_throws_on_single_empty_string_input =
+        It should_throw_on_single_empty_string_input =
             () => Catch.Exception(() => ChangeLogHelper.parseChangeLog(new[] { "" }));
     }
 
@@ -96,20 +102,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-### [2.0.0-alpha] - 2013-12-15
+## [2.0.0-alpha] - 2013-12-15
+### Added
 * A
 
-#### 2.0.0-alpha2 - 2013-12-24
+## 2.0.0-alpha2 - 2013-12-24
+### Added
 * B
 
-#### 2.0.0-alpha001 - 2013-12-15
+## 2.0.0-alpha001 - 2013-12-15
+### Added
 * A";
 
-        static readonly ChangeLogHelper.ChangeLog expected =
-            ChangeLogHelper.ChangeLog.New("2.0.0", "2.0.0-alpha2", new Microsoft.FSharp.Core.FSharpOption<DateTime>(new DateTime(2013, 12, 24)), new[] { "B" }.ToFSharpList());
+        static readonly ChangeLogHelper.ChangeLogEntry expected =
+            ChangeLogHelper.ChangeLogEntry.New("2.0.0", "2.0.0-alpha2", new Microsoft.FSharp.Core.FSharpOption<DateTime>(new DateTime(2013, 12, 24)), new ChangeLogHelper.Change[] { ChangeLogHelper.Change.NewAdded("B") }.ToFSharpList());
 
         It should_parse =
-           () => ChangeLogHelper.parseChangeLog(Changes.FromString(input)).ShouldEqual(expected);
+           () => ChangeLogHelper.parseChangeLog(Changes.FromString(input)).LatestEntry.ShouldEqual(expected);
     }
 
     public class when_parsing_all_changes
@@ -123,6 +132,23 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Unreleased added
+
+### Changed
+- Unreleased changed
+
+### Deprecated
+- Unreleased deprecated
+
+### Removed
+- Unreleased removed
+
+### Fixed
+- Unreleased fixed
+
+### Security
+- Unreleased security
 
 ## [1.1.9] - 2013-07-21
 ### Changed
@@ -140,37 +166,58 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ";
 
-
-        static readonly ChangeLogHelper.ChangeLog expected = ChangeLogHelper.ChangeLog.New(
+        static readonly ChangeLogHelper.ChangeLogEntry expected = ChangeLogHelper.ChangeLogEntry.New(
             "1.1.10",
             "1.1.10",
             new Microsoft.FSharp.Core.FSharpOption<DateTime>(new DateTime(2013, 09, 12)),
-            new[]
+            new ChangeLogHelper.Change[]
             {
-                "Added: Support for heterogeneous XML attributes.",
-                "Added: Make CsvFile re-entrant.",
-                "Added: Support for compressed HTTP responses.",
-                "Fixed: Fix JSON conversion of 0 and 1 to booleans.",
-                "Fixed: Fix XmlProvider problems with nested elements and elements with same name in different namespaces."
+                ChangeLogHelper.Change.NewAdded("Support for heterogeneous XML attributes."),
+                ChangeLogHelper.Change.NewAdded("Make CsvFile re-entrant."),
+                ChangeLogHelper.Change.NewAdded("Support for compressed HTTP responses."),
+                ChangeLogHelper.Change.NewFixed("Fix JSON conversion of 0 and 1 to booleans."),
+                ChangeLogHelper.Change.NewFixed("Fix XmlProvider problems with nested elements and elements with same name in different namespaces.")
             }.ToFSharpList());
 
-        static readonly ChangeLogHelper.ChangeLog expected2 = ChangeLogHelper.ChangeLog.New(
+        static readonly ChangeLogHelper.ChangeLogEntry expected2 = ChangeLogHelper.ChangeLogEntry.New(
             "1.1.9",
             "1.1.9",
             new Microsoft.FSharp.Core.FSharpOption<DateTime>(new DateTime(2013, 07, 21)),
-            new[] { "Changed: Infer booleans for ints that only manifest 0 and 1." }.ToFSharpList());
+            new ChangeLogHelper.Change[] { ChangeLogHelper.Change.NewChanged("Infer booleans for ints that only manifest 0 and 1.") }.ToFSharpList());
 
-        static FSharpList<ChangeLogHelper.ChangeLog> _result;
+        static readonly FSharpList<ChangeLogHelper.Change> expectedUnreleased = new ChangeLogHelper.Change[]
+        {
+            ChangeLogHelper.Change.NewAdded("Unreleased added"),
+            ChangeLogHelper.Change.NewChanged("Unreleased changed"),
+            ChangeLogHelper.Change.NewDeprecated("Unreleased deprecated"),
+            ChangeLogHelper.Change.NewRemoved("Unreleased removed"),
+            ChangeLogHelper.Change.NewFixed("Unreleased fixed"),
+            ChangeLogHelper.Change.NewSecurity("Unreleased security")
+        }.ToFSharpList();
 
-        Because of = () => _result = ChangeLogHelper.parseChanges(Changes.FromString(validData));
+        static readonly Microsoft.FSharp.Core.FSharpOption<string> expectedDescription = 
+            new Microsoft.FSharp.Core.FSharpOption<string>("All notable changes to this project will be documented in this file.\n\nThe format is based on [Keep a Changelog](http://keepachangelog.com/)\nand this project adheres to [Semantic Versioning](http://semver.org/).");
+
+        static ChangeLogHelper.ChangeLog _result;
+
+        Because of = () =>  _result = ChangeLogHelper.parseChangeLog(Changes.FromString(validData));
 
         It should_find_both_entries =
-            () => _result.Length.ShouldEqual(2);
+            () => _result.Entries.Length.ShouldEqual(2);
+
+        It should_find_the_latest_entry =
+            () => _result.LatestEntry.ShouldEqual(expected);
 
         It should_find_the_first_entry =
-            () => _result.First().ShouldEqual(expected);
+            () => _result.Entries.First().ShouldEqual(expected);
 
         It should_find_the_second_entry =
-            () => _result.Skip(1).First().ShouldEqual(expected2);
+            () => _result.Entries.Skip(1).First().ShouldEqual(expected2);
+
+        It should_parse_the_unreleased_entries =
+            () => _result.Unreleased.ShouldEqual(expectedUnreleased);
+
+        It should_parse_the_description =
+            () => _result.Description.ShouldEqual(expectedDescription);
     }
 }
