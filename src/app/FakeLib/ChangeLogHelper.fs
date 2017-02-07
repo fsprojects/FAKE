@@ -71,18 +71,21 @@ type ChangeLogEntry =
       /// Release DateTime
       Date: DateTime option
       /// The parsed list of changes
-      Changes: Change list }
+      Changes: Change list 
+      /// True, if the entry was yanked 
+      IsYanked: bool }
 
     override x.ToString() = sprintf "%A" x
 
-    static member New(assemblyVersion, nugetVersion, date, changes) = {
+    static member New(assemblyVersion, nugetVersion, date, changes, isYanked) = {
         AssemblyVersion = assemblyVersion
         NuGetVersion = nugetVersion
         SemVer = SemVerHelper.parse nugetVersion
         Date = date
-        Changes = changes }
+        Changes = changes
+        IsYanked = isYanked }
     
-    static member New(assemblyVersion, nugetVersion, changes) = ChangeLogEntry.New(assemblyVersion, nugetVersion, None, changes)
+    static member New(assemblyVersion, nugetVersion, changes) = ChangeLogEntry.New(assemblyVersion, nugetVersion, None, changes, false)
 
 type ChangeLog =
     { /// The description
@@ -191,7 +194,8 @@ let parseChangeLog (data: seq<string>) : ChangeLog =
                 let assemblyVer, nugetVer = parseVersions header
                 let date = parseDate header
                 let changeLines = categoryLoop [] (changes |> List.filter isNotNullOrEmpty |> List.rev)
-                let newChangeLogEntry = ChangeLogEntry.New(assemblyVer.Value, nugetVer.Value, date, changeLines)
+                let isYanked = (header |> toLower).Contains("[yanked]")
+                let newChangeLogEntry = ChangeLogEntry.New(assemblyVer.Value, nugetVer.Value, date, changeLines, isYanked)
                 loop (newChangeLogEntry::changeLogEntries) rest
             | None -> changeLogEntries
         

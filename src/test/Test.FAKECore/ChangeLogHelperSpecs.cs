@@ -66,14 +66,15 @@ What’s the point of a change log?";
                 ChangeLogHelper.Change.NewAdded("Line 2 0.3.0 Added"),
                 ChangeLogHelper.Change.NewFixed("Line 1 0.3.0 Fixed"),
                 ChangeLogHelper.Change.NewFixed("Line 2 0.3.0 Fixed"),
-            }.ToFSharpList());
+            }.ToFSharpList(),
+            false);
 
         It should_parse =
             () => ChangeLogHelper.parseChangeLog(Changes.FromString(validData)).LatestEntry.ShouldEqual(expected);
 
         It should_parse_empty_changes =
             () => ChangeLogHelper.parseChangeLog(Changes.FromString("# Change log\n\n## [0.3.0] - 2015-12-03")).LatestEntry
-                .ShouldEqual(ChangeLogHelper.ChangeLogEntry.New("0.3.0", "0.3.0", new Microsoft.FSharp.Core.FSharpOption<DateTime>(new DateTime(2015, 12, 03)), FSharpList<ChangeLogHelper.Change>.Empty));
+                .ShouldEqual(ChangeLogHelper.ChangeLogEntry.New("0.3.0", "0.3.0", new Microsoft.FSharp.Core.FSharpOption<DateTime>(new DateTime(2015, 12, 03)), FSharpList<ChangeLogHelper.Change>.Empty, false));
 
         It should_throw_if_top_level_header_is_missing =
             () => Catch.Exception(() => ChangeLogHelper.parseChangeLog(Changes.FromString(@"## [0.3.0] - 2015-12-03")));
@@ -109,10 +110,49 @@ What’s the point of a change log?";
             new ChangeLogHelper.Change[]
             {
                 ChangeLogHelper.Change.NewCustom("Configuration", "The Configuration has changed"),
-            }.ToFSharpList());
+            }.ToFSharpList(),
+            false);
 
         It should_parse = 
             () => ChangeLogHelper.parseChangeLog(Changes.FromString(validData)).LatestEntry.ShouldEqual(expected);
+    }
+    public class when_parsing_yanked_entries
+    {
+        const string validData = @"
+# Changelog
+
+## [2.0.0] - 2013-12-15
+### Added
+* A
+
+## [1.0.0] - 2013-12-14 [YANKED]
+### Added
+* B
+
+";
+        private static readonly ChangeLogHelper.ChangeLogEntry expected = ChangeLogHelper.ChangeLogEntry.New(
+            "2.0.0",
+            "2.0.0",
+            new Microsoft.FSharp.Core.FSharpOption<DateTime>(new DateTime(2013, 12, 15)),
+            new ChangeLogHelper.Change[] { ChangeLogHelper.Change.NewAdded("A") }.ToFSharpList(),
+            false);
+
+        private static readonly ChangeLogHelper.ChangeLogEntry expected2 = ChangeLogHelper.ChangeLogEntry.New(
+            "1.0.0",
+            "1.0.0",
+            new Microsoft.FSharp.Core.FSharpOption<DateTime>(new DateTime(2013, 12, 14)),
+            new ChangeLogHelper.Change[] { ChangeLogHelper.Change.NewAdded("B") }.ToFSharpList(),
+            true);
+
+        static ChangeLogHelper.ChangeLog _result;
+
+        Because of = () =>  _result = ChangeLogHelper.parseChangeLog(Changes.FromString(validData));
+
+        It should_parse_the_first_entry_as_not_yanked = 
+            () => _result.Entries.First().ShouldEqual(expected);
+
+        It should_parse_the_second_entry_as_yanked =
+            () => _result.Entries.Skip(1).First().ShouldEqual(expected2);
     }
 
     public class when_parsing_many_alpha_versions_in_change_log
@@ -139,7 +179,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 * A";
 
         static readonly ChangeLogHelper.ChangeLogEntry expected =
-            ChangeLogHelper.ChangeLogEntry.New("2.0.0", "2.0.0-alpha2", new Microsoft.FSharp.Core.FSharpOption<DateTime>(new DateTime(2013, 12, 24)), new ChangeLogHelper.Change[] { ChangeLogHelper.Change.NewAdded("B") }.ToFSharpList());
+            ChangeLogHelper.ChangeLogEntry.New("2.0.0", "2.0.0-alpha2", new Microsoft.FSharp.Core.FSharpOption<DateTime>(new DateTime(2013, 12, 24)), new ChangeLogHelper.Change[] { ChangeLogHelper.Change.NewAdded("B") }.ToFSharpList(), false);
 
         It should_parse =
            () => ChangeLogHelper.parseChangeLog(Changes.FromString(input)).LatestEntry.ShouldEqual(expected);
@@ -201,13 +241,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
                 ChangeLogHelper.Change.NewAdded("Support for compressed HTTP responses."),
                 ChangeLogHelper.Change.NewFixed("Fix JSON conversion of 0 and 1 to booleans."),
                 ChangeLogHelper.Change.NewFixed("Fix XmlProvider problems with nested elements and elements with same name in different namespaces.")
-            }.ToFSharpList());
+            }.ToFSharpList(),
+            false);
 
         static readonly ChangeLogHelper.ChangeLogEntry expected2 = ChangeLogHelper.ChangeLogEntry.New(
             "1.1.9",
             "1.1.9",
             new Microsoft.FSharp.Core.FSharpOption<DateTime>(new DateTime(2013, 07, 21)),
-            new ChangeLogHelper.Change[] { ChangeLogHelper.Change.NewChanged("Infer booleans for ints that only manifest 0 and 1.") }.ToFSharpList());
+            new ChangeLogHelper.Change[] { ChangeLogHelper.Change.NewChanged("Infer booleans for ints that only manifest 0 and 1.") }.ToFSharpList(),
+            false);
 
         static readonly FSharpList<ChangeLogHelper.Change> expectedUnreleased = new ChangeLogHelper.Change[]
         {
