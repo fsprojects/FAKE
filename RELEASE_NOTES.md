@@ -1,3 +1,6 @@
+#### 4.51.0 - 11.02.2017
+* Update FSharp.Compiler.Service 10.0.1
+
 #### 4.50.0 - 17.01.2017
 * Visual Studio aware msbuild selection - https://github.com/fsharp/FAKE/pull/1453
 
