@@ -10,7 +10,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Fake.Deploy</RootNamespace>
     <AssemblyName>Fake.Deploy</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -167,13 +167,13 @@
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3')">
       <ItemGroup>
-        <Reference Include="Serilog">
-          <HintPath>..\..\..\packages\Serilog\lib\net45\Serilog.dll</HintPath>
+        <Reference Include="Serilog.FullNetFx">
+          <HintPath>..\..\..\packages\Serilog\lib\net45\Serilog.FullNetFx.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
-        <Reference Include="Serilog.FullNetFx">
-          <HintPath>..\..\..\packages\Serilog\lib\net45\Serilog.FullNetFx.dll</HintPath>
+        <Reference Include="Serilog">
+          <HintPath>..\..\..\packages\Serilog\lib\net45\Serilog.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>

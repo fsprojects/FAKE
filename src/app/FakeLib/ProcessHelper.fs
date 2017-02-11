@@ -10,7 +10,6 @@ open System.Threading
 open System.Text
 open System.Collections.Generic
 open System.Collections.Concurrent
-open System.ServiceProcess
 
 /// [omit]
 type internal ConcurrentBag<'T> with
