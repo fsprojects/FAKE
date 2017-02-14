@@ -3,15 +3,25 @@
 ///
 /// ## Sample
 ///
-///     let changeLog = LoadChangeLog "CHANGELOG.md"
-///
+///     let changeLogFile = "CHANGELOG.md"
+///     let newVersion = "1.0.0"
+///     
 ///     Target "AssemblyInfo" (fun _ ->
+///         let changeLog = changeLogFile |> ChangeLogHelper.LoadChangeLog
 ///         CreateFSharpAssemblyInfo "src/Common/AssemblyInfo.fs"
 ///           [ Attribute.Title project
 ///             Attribute.Product project
 ///             Attribute.Description summary
 ///             Attribute.Version changeLog.LatestEntry.AssemblyVersion
 ///             Attribute.FileVersion changeLog.LatestEntry.AssemblyVersion]
+///     )
+///
+///     Target "Promote Unreleased to new version" (fun _ ->
+///         let newChangeLog = 
+///             changeLogFile 
+///             |> ChangeLogHelper.LoadChangeLog
+///             |> ChangeLogHelper.PromoteUnreleased newVersion
+///             |> ChangeLogHelper.SavceChangeLog changeLogFile
 ///     )
 module Fake.ChangeLogHelper
 
@@ -61,6 +71,18 @@ type Change =
         | _ -> Custom (header |> trimLine, line)
 
 
+let private makeEntry change =
+    let bullet text = sprintf "- %s" text
+
+    match change with 
+    | Added c -> @"\n### Added", (bullet c)
+    | Changed c -> @"\n### Changed", (bullet c)
+    | Deprecated c -> @"\n### Deprecated", (bullet c)
+    | Removed c -> @"\n### Removed", (bullet c)
+    | Fixed c -> @"\n### Fixed", (bullet c)
+    | Security c -> @"\n### Security", (bullet c)
+    | Custom (h, c) -> (sprintf @"\n### %s" h), (bullet c)
+
 type ChangeLogEntry =
     { /// the parsed Version
       AssemblyVersion: string
@@ -70,56 +92,158 @@ type ChangeLogEntry =
       SemVer: SemVerHelper.SemVerInfo
       /// Release DateTime
       Date: DateTime option
+      /// a descriptive text (after the header)
+      Description: string option
       /// The parsed list of changes
       Changes: Change list 
       /// True, if the entry was yanked 
       IsYanked: bool }
 
-    override x.ToString() = sprintf "%A" x
+    override x.ToString() = 
+        let header = 
+            let isoDate =
+                match x.Date with
+                | Some d -> d.ToString(" - yyyy-MM-dd")
+                | None -> ""
 
-    static member New(assemblyVersion, nugetVersion, date, changes, isYanked) = {
+            let yanked = if x.IsYanked then " [YANKED]" else ""
+
+            sprintf "## %s%s%s\n" x.NuGetVersion isoDate yanked 
+
+        let description =
+            match x.Description with
+            | Some text -> sprintf @"\n%s\n" (text |> trim)
+            | None -> ""
+
+        let changes = 
+            x.Changes
+            |> List.map makeEntry
+            |> Seq.groupBy fst
+            |> Seq.map (fun (key, values) -> key :: (values |> Seq.map snd |> Seq.toList) |> separated @"\n")
+            |> separated @"\n"
+
+
+        (sprintf @"%s%s%s" header description changes).Replace(@"\n", Environment.NewLine).Trim()
+
+    static member New(assemblyVersion, nugetVersion, date, description, changes, isYanked) = {
         AssemblyVersion = assemblyVersion
         NuGetVersion = nugetVersion
         SemVer = SemVerHelper.parse nugetVersion
         Date = date
+        Description = description
         Changes = changes
         IsYanked = isYanked }
     
-    static member New(assemblyVersion, nugetVersion, changes) = ChangeLogEntry.New(assemblyVersion, nugetVersion, None, changes, false)
+    static member New(assemblyVersion, nugetVersion, changes) = ChangeLogEntry.New(assemblyVersion, nugetVersion, None, None, changes, false)
+
+type Unreleased = 
+    { Description: string option
+      Changes: Change list }
+
+    override x.ToString() =
+        let header = @"## Unreleased\n"
+        
+        let description =
+            match x.Description with
+            | Some text -> sprintf @"\n%s\n" (text |> trim)
+            | None -> ""
+
+        let changes = 
+            x.Changes
+            |> List.map makeEntry
+            |> Seq.groupBy fst
+            |> Seq.map (fun (key, values) -> key :: (values |> Seq.map snd |> Seq.toList) |> separated @"\n")
+            |> separated @"\n"
+
+        (sprintf @"%s%s%s" header description changes).Replace(@"\n", Environment.NewLine).Trim()
+
+    static member New(description, changes) =
+        match description with
+        | Some _ -> Some { Description = description; Changes = changes }
+        | None ->
+            match changes with
+            | [] -> None
+            | _ -> Some { Description = description; Changes = changes }
+
+let parseVersions = 
+    let nugetRegex = getRegEx @"([0-9]+.)+[0-9]+(-[a-zA-Z]+\d*)?(.[0-9]+)?"
+    fun line ->
+        let assemblyVersion = assemblyVersionRegex.Match line
+        if not assemblyVersion.Success
+        then failwithf "Unable to parse valid Assembly version from change log(%s)." line
+
+        let nugetVersion = nugetRegex.Match line
+        if not nugetVersion.Success
+        then failwithf "Unable to parse valid NuGet version from change log (%s)." line
+        assemblyVersion, nugetVersion
 
 type ChangeLog =
-    { /// The description
+    { /// the header line
+      Header: string
+      /// The description
       Description: string option
-      Unreleased: Change list
+      /// The Unreleased section
+      Unreleased: Unreleased option
+      /// The change log entries
       Entries: ChangeLogEntry list }
 
     /// the latest change log entry
     member x.LatestEntry = x.Entries |> Seq.head
 
-    static member New(description, unreleased, entries) = 
+    static member New(header, description, unreleased, entries) = 
         {
+            Header = header
             Description = description
             Unreleased = unreleased
             Entries = entries 
         }
+
+    static member New(description, unreleased, entries) =
+        ChangeLog.New("Changelog", description, unreleased, entries)
+
+    static member New(entries) =
+        ChangeLog.New(None, None, entries)
+
+    member x.PromoteUnreleased(assemblyVersion: string, nugetVersion: string) : ChangeLog =
+        match x.Unreleased with
+        | None -> x
+        | Some u -> 
+            let newEntry = ChangeLogEntry.New(assemblyVersion, nugetVersion, Some (System.DateTime.Today), u.Description, u.Changes, false)
+
+            ChangeLog.New(x.Header, x.Description, None, newEntry :: x.Entries)
+
+    member x.PromoteUnreleased(version: string) : ChangeLog =
+        let assemblyVersion, nugetVersion = version |> parseVersions
+        x.PromoteUnreleased(assemblyVersion.Value, nugetVersion.Value)
+
+    override x.ToString() =
+        let description = 
+            match x.Description with
+            | Some d -> sprintf @"\n%s\n" d
+            | _ -> ""
+
+        let unreleased =
+            match x.Unreleased with
+            | Some u -> sprintf @"\n%s\n" (u.ToString())
+            | _ -> ""
+
+        let entries =
+            x.Entries
+            |> List.map (fun e -> sprintf @"\n%s\n" (e.ToString()))
+            |> separated @""
+
+        let header = 
+            match x.Header |> trim with
+            | "" -> "Changelog"
+            | h -> h
+
+        (sprintf @"# %s\n%s%s%s" header description unreleased entries).Replace(@"\n", Environment.NewLine) |> trim
 
 /// Parses a change log text and returns the change log.
 ///
 /// ## Parameters
 ///  - `data` - change log text
 let parseChangeLog (data: seq<string>) : ChangeLog =
-    let parseVersions = 
-        let nugetRegex = getRegEx @"([0-9]+.)+[0-9]+(-[a-zA-Z]+\d*)?(.[0-9]+)?"
-        fun line ->
-            let assemblyVersion = assemblyVersionRegex.Match line
-            if not assemblyVersion.Success
-            then failwithf "Unable to parse valid Assembly version from release notes (%s)." line
-
-            let nugetVersion = nugetRegex.Match line
-            if not nugetVersion.Success
-            then failwithf "Unable to parse valid NuGet version from release notes (%s)." line
-            assemblyVersion, nugetVersion
-
     let parseDate =
         let dateRegex = getRegEx @"(19|20)\d\d([- /.])(0[1-9]|1[012]|[1-9])\2(0[1-9]|[12][0-9]|3[01]|[1-9])"
         fun line ->
@@ -144,7 +268,7 @@ let parseChangeLog (data: seq<string>) : ChangeLog =
 
     match data |> List.filter (not << isNullOrWhiteSpace) with
     | [] -> failwith "Empty change log file."
-    | _ :: text ->
+    | header :: text ->
         let isUnreleasedHeader line = "## " <* line && line.Contains("[Unreleased]")
         let isBlockHeader line = "## " <* line && not <| line.Contains("[Unreleased]")
         let isCategoryHeader line = "### " <* line
@@ -195,7 +319,16 @@ let parseChangeLog (data: seq<string>) : ChangeLog =
                 let date = parseDate header
                 let changeLines = categoryLoop [] (changes |> List.filter isNotNullOrEmpty |> List.rev)
                 let isYanked = (header |> toLower).Contains("[yanked]")
-                let newChangeLogEntry = ChangeLogEntry.New(assemblyVer.Value, nugetVer.Value, date, changeLines, isYanked)
+                let description = 
+                    let descriptionLines, _ =
+                        let isBlockOrCategoryHeader line = isCategoryHeader line || isBlockHeader line 
+                        findEnd isBlockOrCategoryHeader [] (changes |> Seq.toList |> List.rev)
+
+                    match descriptionLines |> List.rev with
+                    | [] -> None 
+                    | lines -> lines |> List.map trim |> separated "\n" |> trim |> Some
+
+                let newChangeLogEntry = ChangeLogEntry.New(assemblyVer.Value, nugetVer.Value, date, description, changeLines, isYanked)
                 loop (newChangeLogEntry::changeLogEntries) rest
             | None -> changeLogEntries
         
@@ -211,18 +344,60 @@ let parseChangeLog (data: seq<string>) : ChangeLog =
         let unreleased =
             match findUnreleasedBlock text with
             | Some (changes, _) ->
-                categoryLoop [] (changes |> List.filter isNotNullOrEmpty |> List.rev)
-            | None -> []
+                let unreleasedChanges = categoryLoop [] (changes |> List.filter isNotNullOrEmpty |> List.rev)
+
+                let description = 
+                    let descriptionLines, _ = 
+                        let isBlockOrCategoryHeader line = isCategoryHeader line || isBlockHeader line 
+                        findEnd isBlockOrCategoryHeader [] (changes |> Seq.toList |> List.rev)
+
+                    match descriptionLines |> List.rev with
+                    | [] -> None 
+                    | lines -> lines |> List.map trim |> separated "\n" |> trim |> Some
+
+                Unreleased.New(description, unreleasedChanges)
+            | _ -> None
 
         let entries = (loop [] text |> List.sortBy (fun x -> x.SemVer) |> List.rev)
         
-        ChangeLog.New(description, unreleased, entries)
+        let header = 
+            if "# " <* header then
+                header |> trimLine
+            else
+                match text |> List.filter (startsWith "# ") with
+                | h :: _ -> h |> trimLine
+                | _ -> "Changelog"
+
+        ChangeLog.New(header, description, unreleased, entries)
 
 
 /// Parses a Change log text file and returns the lastest change log.
 ///
 /// ## Parameters
 ///  - `fileName` - ChangeLog text file name
+/// 
+/// ## Returns
+/// The loaded change log (or throws an exception, if the change log could not be parsed)
 let LoadChangeLog fileName =
     System.IO.File.ReadLines fileName
     |> parseChangeLog
+
+/// Saves a Change log to a text file.
+///
+/// ## Parameters
+///  - `fileName` - ChangeLog text file name
+///  - `changeLog` - the change log data
+let SaveChangeLog (fileName: string) (changeLog: ChangeLog) : unit =
+    System.IO.File.WriteAllText(fileName, changeLog.ToString())
+
+/// Promotes the `Unreleased` section of a changelog
+/// to a new change log entry with the given version
+///
+/// ## Parameters
+/// - `version` - The version (in NuGet-Version format, e.g. `3.13.4-alpha1.212`
+/// - `changeLog` - The change log to promote
+///
+/// ## Returns
+/// The promoted change log
+let PromoteUnreleased (version: string) (changeLog: ChangeLog) : ChangeLog =
+    changeLog.PromoteUnreleased(version)
