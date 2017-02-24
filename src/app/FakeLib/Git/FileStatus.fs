@@ -6,29 +6,26 @@ open Fake
 open System
 open System.IO
 
-let private (|Status|_|) expected (actualWithCode:string) =
-    if actualWithCode.StartsWith expected then
-        let success, code = Int32.TryParse(actualWithCode.Substring(expected.Length))
-        if success then Some code else None
-    else None
-
 /// A type which represents a file status in git.
 type FileStatus =
 | Added
-| Modified
+| Copied
 | Deleted
-/// The file has been renamed (with 0 < similarity <= 100)
-| Renamed of similarity:int
+| Modified
+| Renamed
+| TypeChange
     with 
         static member Parse = function
           | "A" -> Added
-          | "M" -> Modified
+          | c when c.StartsWith "C" -> Copied
           | "D" -> Deleted
-          | Status "R" similarity -> Renamed similarity
+          | m when m.StartsWith "M" -> Modified
+          | r when r.StartsWith "R" -> Renamed
+          | "T" -> TypeChange
           | s -> failwithf "Unknown file status %s" s
  
 /// Gets the changed files between the given revisions
-let getChangedFiles repositoryDir revision1 revision2 =    
+let getChangedFiles repositoryDir revision1 revision2 =
     checkRevisionExists repositoryDir revision1
     if revision2 <> "" then
         checkRevisionExists repositoryDir revision2
