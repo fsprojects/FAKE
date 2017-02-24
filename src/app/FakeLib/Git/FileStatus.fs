@@ -6,16 +6,25 @@ open Fake
 open System
 open System.IO
 
+let private (|Status|_|) expected (actualWithCode:string) =
+    if actualWithCode.StartsWith expected then
+        let success, code = Int32.TryParse(actualWithCode.Substring(expected.Length))
+        if success then Some code else None
+    else None
+
 /// A type which represents a file status in git.
 type FileStatus =
 | Added
 | Modified
 | Deleted
+/// The file has been renamed (with 0 < similarity <= 100)
+| Renamed of similarity:int
     with 
-        static member Parse = function      
+        static member Parse = function
           | "A" -> Added
           | "M" -> Modified
           | "D" -> Deleted
+          | Status "R" similarity -> Renamed similarity
           | s -> failwithf "Unknown file status %s" s
  
 /// Gets the changed files between the given revisions

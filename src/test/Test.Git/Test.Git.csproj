@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileStatusSpecs.cs" />
     <Compile Include="Sha1Specs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GitInformationSpec.cs" />
