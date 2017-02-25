@@ -1,6 +1,7 @@
 ﻿/// Contains code to configure FAKE for AppVeyor integration
 module Fake.AppVeyor
 
+open System
 open System.IO
 
 /// AppVeyor environment variables as [described](http://www.appveyor.com/docs/environment-variables)
@@ -187,7 +188,7 @@ let SetVariable name value =
 /// Type of artifact that is pushed
 type ArtifactType = Auto | WebDeployPackage
 
-/// AppVeyor parameters for artifact push
+/// AppVeyor parameters for artifact push as [described](https://www.appveyor.com/docs/build-worker-api/#push-artifact)
 [<CLIMutable>]
 type PushArtifactParams =
     {
@@ -234,3 +235,60 @@ let PushArtifacts paths =
     if buildServer = BuildServer.AppVeyor then
         for path in paths do
             PushArtifact (fun p -> { p with Path = path; FileName = Path.GetFileName(path) })
+
+/// AppVeyor parameters for update build as [described](https://www.appveyor.com/docs/build-worker-api/#update-build-details)
+[<CLIMutable>]
+type UpdateBuildParams = 
+    { /// Build version; must be unique for the current project
+      Version : string
+      /// Commit message
+      Message : string
+      /// Commit hash
+      CommitId : string
+      /// Commit date
+      Committed : DateTime option
+      /// Commit author name
+      AuthorName : string
+      /// Commit author email address
+      AuthorEmail : string
+      /// Committer name
+      CommitterName : string
+      /// Committer email address
+      CommitterEmail : string }
+
+let private defaultUpdateBuildParams =
+    { Version = ""
+      Message = ""
+      CommitId = ""
+      Committed = None
+      AuthorName = ""
+      AuthorEmail = ""
+      CommitterName = ""
+      CommitterEmail = "" }
+
+/// Update build details
+let UpdateBuild (setParams : UpdateBuildParams -> UpdateBuildParams) =
+    if buildServer = BuildServer.AppVeyor then
+        let parameters = setParams defaultUpdateBuildParams
+
+        let committedStr = 
+            match parameters.Committed with
+            | Some x -> x.ToString("o")
+            | None -> ""
+
+        System.Text.StringBuilder()
+        |> append "UpdateBuild"
+        |> appendArgIfNotNullOrEmpty parameters.Version "Version"
+        |> appendArgIfNotNullOrEmpty parameters.Message "Message"
+        |> appendArgIfNotNullOrEmpty parameters.CommitId "CommitId"
+        |> appendArgIfNotNullOrEmpty committedStr "Committed"
+        |> appendArgIfNotNullOrEmpty parameters.AuthorName "AuthorName"
+        |> appendArgIfNotNullOrEmpty parameters.AuthorEmail "AuthorEmail"
+        |> appendArgIfNotNullOrEmpty parameters.CommitterName "CommitterName"
+        |> appendArgIfNotNullOrEmpty parameters.CommitterEmail "CommitterEmail"
+        |> toText
+        |> sendToAppVeyor
+
+/// Update build version. This must be unique for the current project.
+let UpdateBuildVersion version = 
+    UpdateBuild (fun p -> { p with Version = version })
