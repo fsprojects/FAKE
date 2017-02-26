@@ -32,6 +32,13 @@ let sendOpenBlock = sendToTeamCity "##teamcity[blockOpened name='%s']"
 /// Close Named Block
 let sendCloseBlock = sendToTeamCity "##teamcity[blockClosed name='%s']"
 
+/// Open Named Block that will be closed when the block is disposed
+/// Usage: `use __ = teamCityBlock "My Block"`
+let teamCityBlock name =
+    sendOpenBlock name
+    { new System.IDisposable
+        with member __.Dispose() = sendCloseBlock name }
+
 /// Sends an error to TeamCity
 let sendTeamCityError error = sendToTeamCity "##teamcity[buildStatus status='FAILURE' text='%s']" error
 
