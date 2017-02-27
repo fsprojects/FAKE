@@ -35,9 +35,9 @@ to configure artifacts in each build if you have multiple builds on the same rep
 
 ```fsharp
 Target "NuGet" (fun () ->
-    Paket.Pack (fun p -> { p with OutputPath = artifactsDir })
+    Paket.Pack (fun p -> { p with OutputPath = "." })
 
-    !! (artifactsDir </> "*.nupkg")
+    !! "*.nupkg"
     |> Seq.iter(PublishArtifact)
 )
 ```
@@ -80,4 +80,27 @@ SetBuildNumber releaseNotes.NugetVersion
 
 ## Reporting test results
 
-TODO
+In addition to artifacts, TeamCity also allow to report test results that will be
+visible in the dashboard directly from the build.
+
+Each test runner has a specific function to send it's result that can be found in the
+[TeamCityHelper API](apidocs/fake-teamcityhelper.html) like here for NUnit :
+
+```fsharp
+Target "Tests" (fun () ->
+    testDlls
+    |> NUnit(fun p ->
+        { p with
+            OutputFile = outputFile
+            // If the build fails immediately the
+            // test results will never be reported
+            ErrorLevel = DontFailBuild
+        })
+
+    sendTeamCityNUnitImport outputFile
+)
+```
+
+*Note:* NUnit version 3 is a special case as it directly support TeamCity and it's
+enough to set `TeamCity = (BuildServer = TeamCity)` in
+[it's configuration](apidocs/fake-testing-nunit3-nunit3params.html).
