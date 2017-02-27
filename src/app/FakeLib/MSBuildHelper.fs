@@ -16,26 +16,58 @@ exception BuildException of string*list<string>
   with
     override x.ToString() = x.Data0.ToString() + "\r\n" + (separated "\r\n" x.Data1)
 
+
+type MsBuildEntry = {
+    Version: string;
+    Paths: string list;
+}
+
+let knownMsBuildEntries = 
+    [
+        { Version = "12.0"; Paths = [@"\MSBuild\12.0\Bin"; @"\MSBuild\12.0\Bin\amd64"] }
+        { Version = "14.0"; Paths = [@"\MSBuild\14.0\Bin"] }
+        { Version = "15.0"; Paths = [@"\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin"; 
+                                     @"\Microsoft Visual Studio\2017\Professional\MSBuild\15.0\Bin";
+                                     @"\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin";
+                                     @"\MSBuild\15.0\Bin"] }
+    ]
+
+let oldMsBuildLocations = 
+    [ @"c:\Windows\Microsoft.NET\Framework\v4.0.30319\"; 
+      @"c:\Windows\Microsoft.NET\Framework\v4.0.30128\";
+      @"c:\Windows\Microsoft.NET\Framework\v3.5\"
+    ]    
+
+let toDict items = 
+    items |> Seq.map (fun f -> f.Version, f.Paths) |> Map.ofSeq
+
+let getAllKnownPaths = 
+    (knownMsBuildEntries |> List.collect (fun m -> m.Paths) |> List.rev) @ oldMsBuildLocations
+
 /// Tries to detect the right version of MSBuild.
 ///   - On Linux/Unix Systems we use xBuild.
 ///   - On Windows we try to find a "MSBuild" build parameter or read the MSBuild tool location from the AppSettings file.
-let msBuildExe =   
+///     If 'VisualStudioVersion' environment variable is specified, we try to use the specific MSBuild version, matching Visual Studio's.
+let msBuildExe =
     if isUnix then "xbuild"
     else
-        let MSBuildPath = 
-            (ProgramFilesX86 @@ @"\MSBuild\14.0\Bin") + ";" +
-            (ProgramFilesX86 @@ @"\MSBuild\12.0\Bin") + ";" +
-            (ProgramFilesX86 @@ @"\MSBuild\12.0\Bin\amd64") + ";" + 
-            @"c:\Windows\Microsoft.NET\Framework\v4.0.30319\;" + 
-            @"c:\Windows\Microsoft.NET\Framework\v4.0.30128\;" + 
-            @"c:\Windows\Microsoft.NET\Framework\v3.5\"
+        let dict = toDict knownMsBuildEntries
+        let paths = 
+            match Some (environVar "VisualStudioVersion") with
+                | Some vsVer -> 
+                    match dict.TryFind(vsVer) with
+                    | Some paths -> paths
+                    | None -> getAllKnownPaths
+                | None -> getAllKnownPaths
+
+        let msBuildPaths = System.String.Join(";", paths |> List.map (fun s -> ProgramFilesX86 @@ s))
 
         let ev = environVar "MSBuild"
         if not (isNullOrEmpty ev) then
             if isDirectory ev && Directory.Exists ev then ev @@ "MSBuild.exe" else ev
         else if "true".Equals(ConfigurationManager.AppSettings.["IgnoreMSBuild"], StringComparison.OrdinalIgnoreCase) then 
                 String.Empty 
-        else findPath "MSBuildPath" MSBuildPath "MSBuild.exe"
+        else findPath "MSBuildPath" msBuildPaths "MSBuild.exe"
 
 /// [omit]
 let msbuildNamespace = "http://schemas.microsoft.com/developer/msbuild/2003"

@@ -1,4 +1,4 @@
-/// Contains project file comparion tools for MSBuild project files.
+/// Contains project file comparison tools for MSBuild project files.
 module Fake.MSBuild.ProjectSystem
 
 open Fake
@@ -128,7 +128,7 @@ type ProjectComparison =
              Seq.isEmpty this.UnorderedFiles && 
              Seq.isEmpty this.DuplicateFiles)
 
-/// Compares the given project files againts the template project and returns which files are missing.
+/// Compares the given project files against the template project and returns which files are missing.
 /// For F# projects it is also reporting unordered files.
 let findMissingFiles templateProject projects =
     let isFSharpProject file = file |> endsWith ".fsproj"
@@ -159,7 +159,7 @@ let findMissingFiles templateProject projects =
               UnorderedFiles = unorderedFiles })
     |> Seq.filter (fun pc -> pc.HasErrors)
 
-/// Compares the given project files againts the template project and returns which files are missing.
+/// Compares the given project files against the template project and returns which files are missing.
 /// For F# projects it is also reporting unordered files.
 let findMissingContentFiles templateProject projects =
     let isFSharpProject file = file |> endsWith ".fsproj"
@@ -247,7 +247,7 @@ let FixProjectContentFiles templateProject projects =
     FixMissingContentFiles templateProject projects
     RemoveDuplicateContentFiles projects
 
-/// Compares the given project files againts the template project and fails if any files are missing.
+/// Compares the given project files against the template project and fails if any files are missing.
 /// For F# projects it is also reporting unordered files.
 let CompareProjectsTo templateProject projects =
     let errors =

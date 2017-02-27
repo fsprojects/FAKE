@@ -53,7 +53,7 @@ type ExpectoParams =
         |> appendIfTrue this.Parallel "--parallel "
         |> appendIfTrue this.FailOnFocusedTests "--fail-on-focused-tests "
         |> appendIfTrue this.Summary "--summary "
-        |> appendIfTrue (not this.Parallel) "--sequential "
+        |> appendIfTrue (not this.Parallel) "--sequenced "
         |> appendIfTrue this.PrintVersion "--version "
         |> appendIfTrue this.ListTests "--list-tests "
         |> appendIfNotNullOrWhiteSpace this.Filter "--filter "

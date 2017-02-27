@@ -134,10 +134,10 @@ let RestorePackageId setParams packageId =
 /// ## Sample
 ///
 ///     Target "RestorePackages" (fun _ -> 
-///          "./scr/ProjectA/packages.config"
+///          "./src/ProjectA/packages.config"
 ///          |> RestorePackage (fun p ->
 ///              { p with
-///                  Sources = "http:://myNugetSources.com" :: p.Sources
+///                  Sources = "http://myNugetSources.com" :: p.Sources
 ///                  OutputPath = outputDir
 ///                  Retries = 4 })
 ///      )
@@ -167,10 +167,10 @@ let RestorePackages() =
 /// ## Sample
 ///
 ///     Target "RestorePackages" (fun _ -> 
-///          "./scr/Everything.sln"
+///          "./src/Everything.sln"
 ///          |> RestoreMSSolutionPackages (fun p ->
 ///              { p with
-///                  Sources = "http:://myNugetSources.com" :: p.Sources
+///                  Sources = "http://myNugetSources.com" :: p.Sources
 ///                  OutputPath = outputDir
 ///                  Retries = 4 })
 ///      )
