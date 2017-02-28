@@ -70,3 +70,37 @@ These targets will be executed only after a build failure but have to be activat
 
 	// Activate BuildFailureTarget somewhere during build
 	ActivateBuildFailureTarget "ReportErrorViaMail"
+
+## Visualising target dependencies
+FAKE can output the graph of target dependencies in the [DOT](http://www.graphviz.org/doc/info/lang.html)
+format, which can then be rendered to a PNG-file by [Graphviz](http://www.graphviz.org).
+
+Specifying the command line option *--dotGraph* (short version: *-dg*) makes FAKE write
+the dependency graph to the standard output *instead* of building anything. This option only works when
+the build script contains a call like this:
+
+```
+RunTargetOrDefault "Default"
+``` 
+
+### Example
+
+Say, the build script `build.fsx` defines the target dependencies as follows:
+
+```
+// The rest of the script is omitted...
+
+"BuildJs"
+  ==> "WebPackage" <=> "AdminPackage" <=> "WebApiPackage"
+  ==> "MainAppPackage"
+```
+
+The following command saves the target dependency graph in the `graph.png` file (PowerShell syntax):
+
+```
+FAKE.exe build.fsx -dg | & 'C:\Program Files (x86)\Graphviz2.38\bin\dot.exe' -Tpng -o ./graph.png
+```
+
+resulting in an image like this:
+
+![graph](pics/specifictargets/graph.png "Dependency graph")
