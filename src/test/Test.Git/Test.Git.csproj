@@ -167,13 +167,13 @@
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.0'">
       <ItemGroup>
-        <Reference Include="Machine.Specifications.Clr4">
-          <HintPath>..\..\..\packages\Machine.Specifications\lib\net40\Machine.Specifications.Clr4.dll</HintPath>
+        <Reference Include="Machine.Specifications">
+          <HintPath>..\..\..\packages\Machine.Specifications\lib\net40\Machine.Specifications.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
-        <Reference Include="Machine.Specifications">
-          <HintPath>..\..\..\packages\Machine.Specifications\lib\net40\Machine.Specifications.dll</HintPath>
+        <Reference Include="Machine.Specifications.Clr4">
+          <HintPath>..\..\..\packages\Machine.Specifications\lib\net40\Machine.Specifications.Clr4.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -181,13 +181,13 @@
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3')">
       <ItemGroup>
-        <Reference Include="Machine.Specifications.Clr4">
-          <HintPath>..\..\..\packages\Machine.Specifications\lib\net45\Machine.Specifications.Clr4.dll</HintPath>
+        <Reference Include="Machine.Specifications">
+          <HintPath>..\..\..\packages\Machine.Specifications\lib\net45\Machine.Specifications.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
-        <Reference Include="Machine.Specifications">
-          <HintPath>..\..\..\packages\Machine.Specifications\lib\net45\Machine.Specifications.dll</HintPath>
+        <Reference Include="Machine.Specifications.Clr4">
+          <HintPath>..\..\..\packages\Machine.Specifications\lib\net45\Machine.Specifications.Clr4.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -257,12 +257,12 @@
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3')">
       <ItemGroup>
+        <Reference Include="mscorlib">
+          <Paket>True</Paket>
+        </Reference>
         <Reference Include="System.Console">
           <HintPath>..\..\..\packages\System.Console\lib\net46\System.Console.dll</HintPath>
           <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="mscorlib">
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
@@ -703,12 +703,12 @@
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3')">
       <ItemGroup>
+        <Reference Include="System.ComponentModel.Composition">
+          <Paket>True</Paket>
+        </Reference>
         <Reference Include="System.Runtime">
           <HintPath>..\..\..\packages\System.Runtime\lib\net462\System.Runtime.dll</HintPath>
           <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="System.ComponentModel.Composition">
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>

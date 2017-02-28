@@ -167,6 +167,9 @@
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.0'">
       <ItemGroup>
+        <Reference Include="System.ComponentModel.Composition">
+          <Paket>True</Paket>
+        </Reference>
         <Reference Include="Raven.Abstractions">
           <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net40\Raven.Abstractions.dll</HintPath>
           <Private>True</Private>
@@ -175,9 +178,6 @@
         <Reference Include="Raven.Client.Lightweight">
           <HintPath>..\..\..\..\packages\RavenDB.Client\lib\net40\Raven.Client.Lightweight.dll</HintPath>
           <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="System.ComponentModel.Composition">
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
@@ -683,12 +683,12 @@
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3')">
       <ItemGroup>
+        <Reference Include="System.ComponentModel.Composition">
+          <Paket>True</Paket>
+        </Reference>
         <Reference Include="System.Runtime">
           <HintPath>..\..\..\..\packages\System.Runtime\lib\net462\System.Runtime.dll</HintPath>
           <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="System.ComponentModel.Composition">
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>

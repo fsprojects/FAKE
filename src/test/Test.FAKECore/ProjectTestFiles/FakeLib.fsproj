@@ -230,13 +230,13 @@
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.0'">
       <ItemGroup>
-        <Reference Include="Machine.Specifications.Clr4">
-          <HintPath>..\..\..\..\packages\Machine.Specifications\lib\net40\Machine.Specifications.Clr4.dll</HintPath>
+        <Reference Include="Machine.Specifications">
+          <HintPath>..\..\..\..\packages\Machine.Specifications\lib\net40\Machine.Specifications.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
-        <Reference Include="Machine.Specifications">
-          <HintPath>..\..\..\..\packages\Machine.Specifications\lib\net40\Machine.Specifications.dll</HintPath>
+        <Reference Include="Machine.Specifications.Clr4">
+          <HintPath>..\..\..\..\packages\Machine.Specifications\lib\net40\Machine.Specifications.Clr4.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -244,13 +244,13 @@
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3')">
       <ItemGroup>
-        <Reference Include="Machine.Specifications.Clr4">
-          <HintPath>..\..\..\..\packages\Machine.Specifications\lib\net45\Machine.Specifications.Clr4.dll</HintPath>
+        <Reference Include="Machine.Specifications">
+          <HintPath>..\..\..\..\packages\Machine.Specifications\lib\net45\Machine.Specifications.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
-        <Reference Include="Machine.Specifications">
-          <HintPath>..\..\..\..\packages\Machine.Specifications\lib\net45\Machine.Specifications.dll</HintPath>
+        <Reference Include="Machine.Specifications.Clr4">
+          <HintPath>..\..\..\..\packages\Machine.Specifications\lib\net45\Machine.Specifications.Clr4.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -300,6 +300,11 @@
   <Choose>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v3.5'">
       <ItemGroup>
+        <Reference Include="Mono.Cecil">
+          <HintPath>..\..\..\..\packages\Mono.Cecil\lib\net35\Mono.Cecil.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
         <Reference Include="Mono.Cecil.Mdb">
           <HintPath>..\..\..\..\packages\Mono.Cecil\lib\net35\Mono.Cecil.Mdb.dll</HintPath>
           <Private>True</Private>
@@ -315,15 +320,15 @@
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
-        <Reference Include="Mono.Cecil">
-          <HintPath>..\..\..\..\packages\Mono.Cecil\lib\net35\Mono.Cecil.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
       </ItemGroup>
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.0' Or $(TargetFrameworkVersion) == 'v4.5' Or $(TargetFrameworkVersion) == 'v4.5.1' Or $(TargetFrameworkVersion) == 'v4.5.2' Or $(TargetFrameworkVersion) == 'v4.5.3' Or $(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3')">
       <ItemGroup>
+        <Reference Include="Mono.Cecil">
+          <HintPath>..\..\..\..\packages\Mono.Cecil\lib\net40\Mono.Cecil.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
         <Reference Include="Mono.Cecil.Mdb">
           <HintPath>..\..\..\..\packages\Mono.Cecil\lib\net40\Mono.Cecil.Mdb.dll</HintPath>
           <Private>True</Private>
@@ -336,11 +341,6 @@
         </Reference>
         <Reference Include="Mono.Cecil.Rocks">
           <HintPath>..\..\..\..\packages\Mono.Cecil\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="Mono.Cecil">
-          <HintPath>..\..\..\..\packages\Mono.Cecil\lib\net40\Mono.Cecil.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -864,12 +864,12 @@
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3')">
       <ItemGroup>
+        <Reference Include="System.ComponentModel.Composition">
+          <Paket>True</Paket>
+        </Reference>
         <Reference Include="System.Runtime">
           <HintPath>..\..\..\..\packages\System.Runtime\lib\net462\System.Runtime.dll</HintPath>
           <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="System.ComponentModel.Composition">
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>

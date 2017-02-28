@@ -288,6 +288,11 @@
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
+        <Reference Include="System.Web.WebPages">
+          <HintPath>..\..\..\packages\Microsoft.AspNet.WebPages\lib\net40\System.Web.WebPages.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
         <Reference Include="System.Web.WebPages.Deployment">
           <HintPath>..\..\..\packages\Microsoft.AspNet.WebPages\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
           <Private>True</Private>
@@ -295,11 +300,6 @@
         </Reference>
         <Reference Include="System.Web.WebPages.Razor">
           <HintPath>..\..\..\packages\Microsoft.AspNet.WebPages\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
-          <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="System.Web.WebPages">
-          <HintPath>..\..\..\packages\Microsoft.AspNet.WebPages\lib\net40\System.Web.WebPages.dll</HintPath>
           <Private>True</Private>
           <Paket>True</Paket>
         </Reference>
@@ -1493,12 +1493,12 @@
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And ($(TargetFrameworkVersion) == 'v4.6' Or $(TargetFrameworkVersion) == 'v4.6.1' Or $(TargetFrameworkVersion) == 'v4.6.2' Or $(TargetFrameworkVersion) == 'v4.6.3')">
       <ItemGroup>
+        <Reference Include="System.Xml">
+          <Paket>True</Paket>
+        </Reference>
         <Reference Include="System.Xml.ReaderWriter">
           <HintPath>..\..\..\packages\System.Xml.ReaderWriter\lib\net46\System.Xml.ReaderWriter.dll</HintPath>
           <Private>True</Private>
-          <Paket>True</Paket>
-        </Reference>
-        <Reference Include="System.Xml">
           <Paket>True</Paket>
         </Reference>
       </ItemGroup>
