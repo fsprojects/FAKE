@@ -22,7 +22,7 @@ type FileStatus =
           | m when m.StartsWith "M" -> Modified
           | r when r.StartsWith "R" -> Renamed
           | "T" -> TypeChange
-          | s -> failwithf "Unknown file status %s" s
+          | _ -> Modified
  
 /// Gets the changed files between the given revisions
 let getChangedFiles repositoryDir revision1 revision2 =

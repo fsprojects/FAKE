@@ -1,3 +1,6 @@
+#### 4.51.1 - 28.02.2017
+* Don't fail on git file status detection
+
 #### 4.51.0 - 28.02.2017
 * Teamcity build parameters - https://github.com/fsharp/FAKE/pull/1475
 * Added updating of build details to AppVeyor - https://github.com/fsharp/FAKE/pull/1473
