@@ -182,7 +182,7 @@ let LatestPreview4ToolingOptions options =
     { options with
         InstallerOptions = (fun io -> 
             { io with
-                Branch = "rel/1.0.0-preview4"                    
+                Branch = "rel/1.0.0-preview4"
             })
         Channel = None
         Version = Latest
@@ -192,12 +192,21 @@ let Preview4_004233ToolingOptions options =
     { options with
         InstallerOptions = (fun io -> 
             { io with
-                Branch = "rel/1.0.0-preview4"                    
+                Branch = "rel/1.0.0-preview4"
             })
         Channel = None
         Version = Version "1.0.0-preview4-004233"
     }
-
+/// .NET Core SDK install options preconfigured for preview4 tooling
+let RC4_004771ToolingOptions options = 
+    { options with
+        InstallerOptions = (fun io -> 
+            { io with
+                Branch = "rel/1.0.0-rc3"
+            })
+        Channel = None
+        Version = Version "1.0.0-rc4-004771"
+    }
 
 /// [omit]
 let private optionToParam option paramFormat =

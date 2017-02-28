@@ -537,7 +537,7 @@ open Fake.DotNet.Cli
 
 Target "InstallDotnetCore" (fun _ ->
 //     // DotnetCliInstall Preview2ToolingOptions
-     DotnetCliInstall Preview4_004233ToolingOptions
+     DotnetCliInstall RC4_004771ToolingOptions
 )
 
 let root = __SOURCE_DIRECTORY__
