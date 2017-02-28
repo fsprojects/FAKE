@@ -60,7 +60,7 @@ namespace Test.FAKECore.XUnit2Specs
             Arguments.ShouldNotContain(" -noshadow");
 
         It should_not_request_silence = () =>
-            Arguments.ShouldNotContain(" -silent");
+            Arguments.ShouldNotContain(" -quiet");
 
         It should_not_request_wait = () =>
             Arguments.ShouldNotContain(" -wait");
@@ -298,7 +298,7 @@ namespace Test.FAKECore.XUnit2Specs
             Arguments.ShouldContain(" -noshadow");
 
         It should_request_silence = () =>
-            Arguments.ShouldContain(" -silent");
+            Arguments.ShouldContain(" -quiet");
 
         It should_request_wait = () =>
             Arguments.ShouldContain(" -wait");

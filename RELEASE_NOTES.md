@@ -1,5 +1,16 @@
+#### 4.51.1 - 28.02.2017
+* Don't fail on git file status detection
+
+#### 4.51.0 - 28.02.2017
+* Teamcity build parameters - https://github.com/fsharp/FAKE/pull/1475
+* Added updating of build details to AppVeyor - https://github.com/fsharp/FAKE/pull/1473
+* New Expecto --parallel-workers and --summary-location parameters - https://github.com/fsharp/FAKE/pull/1450
+* BREAKING: Git: recognize renamed (and other status) files - https://github.com/fsharp/FAKE/pull/1472
+* BUGFIX: Using correct CLI parameter for silent xUnit output - https://github.com/fsharp/FAKE/pull/1464
+
 #### 4.50.1 - 20.02.2017
 * BUGFIX: Use sequenced parameter for expecto
+
 #### 4.50.0 - 17.01.2017
 * Visual Studio aware msbuild selection - https://github.com/fsharp/FAKE/pull/1453
 
