@@ -2,6 +2,7 @@
 * Teamcity build parameters - https://github.com/fsharp/FAKE/pull/1475
 * Added updating of build details to AppVeyor - https://github.com/fsharp/FAKE/pull/1473
 * BREAKING: Git: recognize renamed (and other status) files - https://github.com/fsharp/FAKE/pull/1472
+* BUGFIX: Using correct CLI parameter for silent xUnit output - https://github.com/fsharp/FAKE/pull/1464
 
 #### 4.50.1 - 20.02.2017
 * BUGFIX: Use sequenced parameter for expecto
