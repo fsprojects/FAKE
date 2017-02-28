@@ -9,16 +9,20 @@ open Fake
 /// CLI parameters available if you use Tests.runTestsInAssembly defaultConfig argv in your code:
 type ExpectoParams =
     {
-      /// Extra verbose output for your tests
+      /// Extra verbose output for your tests.
       Debug : bool
-      /// Run all tests in parallel. Default is true
+      /// Run all tests in parallel. Default is true.
       Parallel : bool
-      /// Filter a specific hierarchy to run
-      Filter : string
-      /// Allows to print a nice summary at the end of the test suite.
+      /// Number of parallel workers (defaults to the number of logical processors).
+      ParallelWorkers : int
+      /// Prints out summary after all tests are finished.
       Summary : bool
+      /// Prints out summary after all tests are finished including their source code location.
+      SummaryLocation : bool
       /// Fails the build if focused tests exist. Default is true
       FailOnFocusedTests : bool
+      /// Filter a specific hierarchy to run.
+      Filter : string
       /// Filter a specific test case to run.
       FilterTestCase : string
       /// Filter a specific test list to run.
@@ -37,11 +41,15 @@ type ExpectoParams =
 
     override this.ToString() =
         let append (s: string) (sb: StringBuilder) = sb.Append s
-        let appendIfTrue p s sb =
-            if p then append s sb else sb
-        let appendIfNotNullOrWhiteSpace p s (sb: StringBuilder) =
-            if String.IsNullOrWhiteSpace p |> not
-            then sprintf "%s%s " s p |> sb.Append
+        let appendIfTrue value s sb =
+            if value then append s sb else sb
+        let appendIfNotNullOrWhiteSpace value s (sb: StringBuilder) =
+            if String.IsNullOrWhiteSpace value |> not
+            then sprintf "%s%s " s value |> sb.Append
+            else sb
+        let appendIfNotEqual other value s (sb: StringBuilder) =
+            if other = value
+            then sprintf "%s%A " s value |> sb.Append
             else sb
         let appendList list s (sb: StringBuilder) =
             let filtered = list |> List.filter (String.IsNullOrWhiteSpace >> not)
@@ -51,8 +59,10 @@ type ExpectoParams =
         StringBuilder()
         |> appendIfTrue this.Debug "--debug "
         |> appendIfTrue this.Parallel "--parallel "
+        |> appendIfNotEqual 0 this.ParallelWorkers "--parallel-workers "
         |> appendIfTrue this.FailOnFocusedTests "--fail-on-focused-tests "
         |> appendIfTrue this.Summary "--summary "
+        |> appendIfTrue this.SummaryLocation "--summary-location "
         |> appendIfTrue (not this.Parallel) "--sequenced "
         |> appendIfTrue this.PrintVersion "--version "
         |> appendIfTrue this.ListTests "--list-tests "
@@ -67,6 +77,7 @@ type ExpectoParams =
         {
             Debug = false
             Parallel = true
+            ParallelWorkers = 0
             Filter = ""
             FilterTestCase = ""
             FailOnFocusedTests = true
@@ -75,6 +86,7 @@ type ExpectoParams =
             Run = []
             ListTests = false
             Summary = true
+            SummaryLocation = false
             CustomArgs = []
             WorkingDirectory = ""
         }
