@@ -561,7 +561,7 @@ Target "DotnetRestore" (fun _ ->
     // .nuget\packages\.tools\dotnet-compile-fsc\1.0.0-preview2-020000\netcoreapp1.0\dotnet-compile-fsc.deps.json
     let t = Path.GetFullPath "workaround"
     ensureDirectory t
-    Dotnet { DotnetOptions.Default with WorkingDirectory = t } "new --lang f#"
+    Dotnet { DotnetOptions.Default with WorkingDirectory = t } "new --language f#"
     Dotnet { DotnetOptions.Default with WorkingDirectory = t } "restore"
     Dotnet { DotnetOptions.Default with WorkingDirectory = t } "build"
     Directory.Delete(t, true)
