@@ -595,14 +595,14 @@ Target "DotnetPackage" (fun _ ->
         try
             DotnetPack (fun c ->
                 { c with
-                    Configuration = Debug;
+                    Configuration = Release
                     OutputPath = Some (nugetDir @@ "dotnetcore")
                 }) proj
         with _ ->
             printfn "pack failed, retrying..."
             DotnetPack (fun c ->
                 { c with
-                    Configuration = Debug;
+                    Configuration = Release
                     OutputPath = Some (nugetDir @@ "dotnetcore")
                 }) proj
     )
@@ -624,7 +624,7 @@ Target "DotnetPackage" (fun _ ->
                 DotnetPublish (fun c ->
                     { c with
                         Runtime = runtime
-                        Framework = Some "netcoreapp1.0"
+                        Configuration = Release
                         OutputPath = Some (nugetDir @@ "dotnetcore" @@ projName @@ runtimeName)
                     }) proj
                 runtimeWorked <- true
