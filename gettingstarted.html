@@ -399,6 +399,33 @@ The file might look like this:</p>
 </tr>
 </table>
 <p>With this simple command FAKE will use nuget.exe to install all the package dependencies.</p>
+<p>You may experience this tutorial not quite working with the newest package versions. In this case you can edit the <a href="http://fsprojects.github.io/Paket/dependencies-file.html"><code>paket.dependencies</code> file</a> to something like this:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">source</span> <span class="i">https</span><span class="o">:</span><span class="c">//nuget.org/api/v2</span>
+
+<span class="i">nuget</span> <span class="i">FAKE</span>
+
+<span class="i">http</span> <span class="i">https</span><span class="o">:</span><span class="c">//dist.nuget.org/win-x86-commandline/latest/nuget.exe NuGet/nuget.exe</span>
+
+<span class="i">nuget</span> <span class="i">NUnit</span> <span class="o">~&gt;</span> <span class="n">2.5</span><span class="o">.</span><span class="n">10</span>
+</code></pre></td>
+</tr>
+</table>
+<p>Again run Paket from the command line:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="o">$</span> <span class="o">.</span><span class="i">paket</span><span class="o">/</span><span class="i">paket</span><span class="o">.</span><span class="i">exe</span> <span class="i">install</span>
+</code></pre></td>
+</tr>
+</table>
+<p>This will fetch nuget.exe from nuget.org and also download an early version of NUnit that contains the NUnit runner. The edit to <a href="http://fsprojects.github.io/Paket/dependencies-file.html"><code>paket.dependencies</code></a> does not replace the RestorePackages() step. The NUnit.Test.CalculatorLib test project references the NUnit version 2.6.2 library, so we need that version too.</p>
 <h2>Running the tests with NUnit</h2>
 <p>Now all our projects will be compiled and we can use FAKE's NUnit task in order to let NUnit test our assembly:</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>

@@ -58,6 +58,30 @@
         </tr>
     </tbody>
   </table>
+  <table class="table table-bordered module-list">
+    <thead>
+      <tr><td>Module</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="module-name">
+            <a href="fake-teamcityhelper-teamcitybuildparameters.html">TeamCityBuildParameters</a>
+          </td>
+          <td class="xmldoc"><p>TeamCity build parameters
+See <a href="https://confluence.jetbrains.com/display/TCD10/Predefined+Build+Parameters">Predefined Build Parameters documentation</a> for more information</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="module-name">
+            <a href="fake-teamcityhelper-teamcitychangedfiles.html">TeamCityChangedFiles</a>
+          </td>
+          <td class="xmldoc"><p>Get files changed between builds in TeamCity</p>
+
+</td>
+        </tr>
+    </tbody>
+  </table>
 
   </div>
 
@@ -70,15 +94,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '769', 769)" onmouseover="showTip(event, '769', 769)">
+          <code onmouseout="hideTip(event, '771', 771)" onmouseover="showTip(event, '771', 771)">
             ComparisonFailure (...)
           </code>
-          <div class="tip" id="769">
+          <div class="tip" id="771">
             <strong>Signature:</strong> name:string -&gt; message:string -&gt; details:string -&gt; expected:string -&gt; actual:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L193-193" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L200-200" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -90,10 +114,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '770', 770)" onmouseover="showTip(event, '770', 770)">
+          <code onmouseout="hideTip(event, '772', 772)" onmouseover="showTip(event, '772', 772)">
             EncapsulateSpecialChars text
           </code>
-          <div class="tip" id="770">
+          <div class="tip" id="772">
             <strong>Signature:</strong> text:string -&gt; string<br />
                       </div>
         </td>
@@ -110,15 +134,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '771', 771)" onmouseover="showTip(event, '771', 771)">
+          <code onmouseout="hideTip(event, '773', 773)" onmouseover="showTip(event, '773', 773)">
             FinishTestCase testCaseName duration
           </code>
-          <div class="tip" id="771">
+          <div class="tip" id="773">
             <strong>Signature:</strong> testCaseName:string -&gt; duration:TimeSpan -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L124-124" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L131-131" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -130,15 +154,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '772', 772)" onmouseover="showTip(event, '772', 772)">
+          <code onmouseout="hideTip(event, '774', 774)" onmouseover="showTip(event, '774', 774)">
             FinishTestSuite testSuiteName
           </code>
-          <div class="tip" id="772">
+          <div class="tip" id="774">
             <strong>Signature:</strong> testSuiteName:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L144-144" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L151-151" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -150,59 +174,19 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '773', 773)" onmouseover="showTip(event, '773', 773)">
-            getChangedFilesInCurrentBuild ()
-          </code>
-          <div class="tip" id="773">
-            <strong>Signature:</strong> unit -&gt; seq&lt;string&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L203-203" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Gets the changed files</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '774', 774)" onmouseover="showTip(event, '774', 774)">
-            getRecentlyFailedTests ()
-          </code>
-          <div class="tip" id="774">
-            <strong>Signature:</strong> unit -&gt; seq&lt;string&gt;<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L200-200" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p>Gets the recently failed tests</p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
           <code onmouseout="hideTip(event, '775', 775)" onmouseover="showTip(event, '775', 775)">
-            IgnoreTestCase name message
+            getTeamCityBranch ()
           </code>
           <div class="tip" id="775">
-            <strong>Signature:</strong> name:string -&gt; message:string -&gt; unit<br />
+            <strong>Signature:</strong> unit -&gt; string option<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L133-133" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L527-527" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>Ignores the test case.</p>
+          <p>Get the branch of the main VCS root</p>
 
 
         </td>
@@ -211,10 +195,72 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '776', 776)" onmouseover="showTip(event, '776', 776)">
-            IgnoreTestCaseWithDetails (...)
+            getTeamCityBranchIsDefault ()
           </code>
           <div class="tip" id="776">
-            <strong>Signature:</strong> name:string -&gt; message:string -&gt; details:string -&gt; unit<br />
+            <strong>Signature:</strong> unit -&gt; bool<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L537-537" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Get if the current branch is the one configured as default</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '777', 777)" onmouseover="showTip(event, '777', 777)">
+            getTeamCityBranchName ()
+          </code>
+          <div class="tip" id="777">
+            <strong>Signature:</strong> unit -&gt; string option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L531-531" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Get the display name of the branch as shown in TeamCity
+See <a href="https://confluence.jetbrains.com/display/TCD10/Working+with+Feature+Branches#WorkingwithFeatureBranches-branchSpec">the documentation</a> for more information</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '778', 778)" onmouseover="showTip(event, '778', 778)">
+            getTeamCityRecentlyFailedTests ()
+          </code>
+          <div class="tip" id="778">
+            <strong>Signature:</strong> unit -&gt; seq&lt;string&gt; option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L524-524" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Name of recently failing tests
+See <a href="https://confluence.jetbrains.com/display/TCD10/Risk+Tests+Reordering+in+Custom+Test+Runner">the documentation</a> for more information</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '779', 779)" onmouseover="showTip(event, '779', 779)">
+            IgnoreTestCase name message
+          </code>
+          <div class="tip" id="779">
+            <strong>Signature:</strong> name:string -&gt; message:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
@@ -230,15 +276,35 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '777', 777)" onmouseover="showTip(event, '777', 777)">
+          <code onmouseout="hideTip(event, '780', 780)" onmouseover="showTip(event, '780', 780)">
+            IgnoreTestCaseWithDetails (...)
+          </code>
+          <div class="tip" id="780">
+            <strong>Signature:</strong> name:string -&gt; message:string -&gt; details:string -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L147-147" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Ignores the test case.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '781', 781)" onmouseover="showTip(event, '781', 781)">
             PublishArticfact path
           </code>
-          <div class="tip" id="777">
+          <div class="tip" id="781">
             <strong>Signature:</strong> path:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L172-172" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L179-179" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -248,15 +314,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '778', 778)" onmouseover="showTip(event, '778', 778)">
+          <code onmouseout="hideTip(event, '782', 782)" onmouseover="showTip(event, '782', 782)">
             PublishArtifact path
           </code>
-          <div class="tip" id="778">
+          <div class="tip" id="782">
             <strong>Signature:</strong> path:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L169-169" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L176-176" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -268,15 +334,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '779', 779)" onmouseover="showTip(event, '779', 779)">
+          <code onmouseout="hideTip(event, '783', 783)" onmouseover="showTip(event, '783', 783)">
             ReportBuildStatus status message
           </code>
-          <div class="tip" id="779">
+          <div class="tip" id="783">
             <strong>Signature:</strong> status:string -&gt; message:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L166-166" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L173-173" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -288,15 +354,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '780', 780)" onmouseover="showTip(event, '780', 780)">
+          <code onmouseout="hideTip(event, '784', 784)" onmouseover="showTip(event, '784', 784)">
             ReportProgress message
           </code>
-          <div class="tip" id="780">
+          <div class="tip" id="784">
             <strong>Signature:</strong> message:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L152-152" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L159-159" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -308,15 +374,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '781', 781)" onmouseover="showTip(event, '781', 781)">
+          <code onmouseout="hideTip(event, '785', 785)" onmouseover="showTip(event, '785', 785)">
             ReportProgressFinish message
           </code>
-          <div class="tip" id="781">
+          <div class="tip" id="785">
             <strong>Signature:</strong> message:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L158-158" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L165-165" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -328,15 +394,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '782', 782)" onmouseover="showTip(event, '782', 782)">
+          <code onmouseout="hideTip(event, '786', 786)" onmouseover="showTip(event, '786', 786)">
             ReportProgressStart message
           </code>
-          <div class="tip" id="782">
+          <div class="tip" id="786">
             <strong>Signature:</strong> message:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L155-155" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L162-162" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -348,10 +414,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '783', 783)" onmouseover="showTip(event, '783', 783)">
+          <code onmouseout="hideTip(event, '787', 787)" onmouseover="showTip(event, '787', 787)">
             scrub 
           </code>
-          <div class="tip" id="783">
+          <div class="tip" id="787">
             <strong>Signature:</strong> string -&gt; string<br />
                       </div>
         </td>
@@ -366,10 +432,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '784', 784)" onmouseover="showTip(event, '784', 784)">
+          <code onmouseout="hideTip(event, '788', 788)" onmouseover="showTip(event, '788', 788)">
             sendCloseBlock 
           </code>
-          <div class="tip" id="784">
+          <div class="tip" id="788">
             <strong>Signature:</strong> string -&gt; unit<br />
                       </div>
         </td>
@@ -386,10 +452,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '785', 785)" onmouseover="showTip(event, '785', 785)">
+          <code onmouseout="hideTip(event, '789', 789)" onmouseover="showTip(event, '789', 789)">
             sendOpenBlock 
           </code>
-          <div class="tip" id="785">
+          <div class="tip" id="789">
             <strong>Signature:</strong> string -&gt; unit<br />
                       </div>
         </td>
@@ -406,10 +472,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '786', 786)" onmouseover="showTip(event, '786', 786)">
+          <code onmouseout="hideTip(event, '790', 790)" onmouseover="showTip(event, '790', 790)">
             sendStrToTeamCity s
           </code>
-          <div class="tip" id="786">
+          <div class="tip" id="790">
             <strong>Signature:</strong> s:string -&gt; unit<br />
                       </div>
         </td>
@@ -426,15 +492,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '787', 787)" onmouseover="showTip(event, '787', 787)">
+          <code onmouseout="hideTip(event, '791', 791)" onmouseover="showTip(event, '791', 791)">
             sendTeamCityCheckstyleImport path
           </code>
-          <div class="tip" id="787">
+          <div class="tip" id="791">
             <strong>Signature:</strong> path:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L57-57" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L64-64" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -446,15 +512,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '788', 788)" onmouseover="showTip(event, '788', 788)">
+          <code onmouseout="hideTip(event, '792', 792)" onmouseover="showTip(event, '792', 792)">
             sendTeamCityDotCoverHome 
           </code>
-          <div class="tip" id="788">
+          <div class="tip" id="792">
             <strong>Signature:</strong> string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L91-91" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L98-98" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -466,15 +532,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '789', 789)" onmouseover="showTip(event, '789', 789)">
+          <code onmouseout="hideTip(event, '793', 793)" onmouseover="showTip(event, '793', 793)">
             sendTeamCityDotNetCoverageImport path
           </code>
-          <div class="tip" id="789">
+          <div class="tip" id="793">
             <strong>Signature:</strong> path:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L82-82" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L89-89" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -486,15 +552,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '790', 790)" onmouseover="showTip(event, '790', 790)">
+          <code onmouseout="hideTip(event, '794', 794)" onmouseover="showTip(event, '794', 794)">
             sendTeamCityDotNetCoverageImportForTool (...)
           </code>
-          <div class="tip" id="790">
+          <div class="tip" id="794">
             <strong>Signature:</strong> path:string -&gt; tool:TeamCityDotNetCoverageTool -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L86-86" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L93-93" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -506,15 +572,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '791', 791)" onmouseover="showTip(event, '791', 791)">
+          <code onmouseout="hideTip(event, '795', 795)" onmouseover="showTip(event, '795', 795)">
             sendTeamCityDotNetDupFinderImport path
           </code>
-          <div class="tip" id="791">
+          <div class="tip" id="795">
             <strong>Signature:</strong> path:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L78-78" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L85-85" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -526,15 +592,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '792', 792)" onmouseover="showTip(event, '792', 792)">
+          <code onmouseout="hideTip(event, '796', 796)" onmouseover="showTip(event, '796', 796)">
             sendTeamCityError error
           </code>
-          <div class="tip" id="792">
+          <div class="tip" id="796">
             <strong>Signature:</strong> error:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L36-36" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L43-43" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -546,15 +612,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '793', 793)" onmouseover="showTip(event, '793', 793)">
+          <code onmouseout="hideTip(event, '797', 797)" onmouseover="showTip(event, '797', 797)">
             sendTeamCityFindBugsImport path
           </code>
-          <div class="tip" id="793">
+          <div class="tip" id="797">
             <strong>Signature:</strong> path:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L60-60" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L67-67" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -566,15 +632,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '794', 794)" onmouseover="showTip(event, '794', 794)">
+          <code onmouseout="hideTip(event, '798', 798)" onmouseover="showTip(event, '798', 798)">
             sendTeamCityFxCopImport path
           </code>
-          <div class="tip" id="794">
+          <div class="tip" id="798">
             <strong>Signature:</strong> path:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L69-69" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L76-76" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -586,15 +652,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '795', 795)" onmouseover="showTip(event, '795', 795)">
+          <code onmouseout="hideTip(event, '799', 799)" onmouseover="showTip(event, '799', 799)">
             sendTeamCityFXCopImport path
           </code>
-          <div class="tip" id="795">
+          <div class="tip" id="799">
             <strong>Signature:</strong> path:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L42-42" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L49-49" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -606,15 +672,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '796', 796)" onmouseover="showTip(event, '796', 796)">
+          <code onmouseout="hideTip(event, '800', 800)" onmouseover="showTip(event, '800', 800)">
             sendTeamCityGTestImport path
           </code>
-          <div class="tip" id="796">
+          <div class="tip" id="800">
             <strong>Signature:</strong> path:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L54-54" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L61-61" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -626,15 +692,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '797', 797)" onmouseover="showTip(event, '797', 797)">
+          <code onmouseout="hideTip(event, '801', 801)" onmouseover="showTip(event, '801', 801)">
             sendTeamCityJSLintImport path
           </code>
-          <div class="tip" id="797">
+          <div class="tip" id="801">
             <strong>Signature:</strong> path:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L63-63" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L70-70" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -646,15 +712,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '798', 798)" onmouseover="showTip(event, '798', 798)">
+          <code onmouseout="hideTip(event, '802', 802)" onmouseover="showTip(event, '802', 802)">
             sendTeamCityJUnitImport path
           </code>
-          <div class="tip" id="798">
+          <div class="tip" id="802">
             <strong>Signature:</strong> path:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L45-45" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L52-52" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -666,15 +732,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '799', 799)" onmouseover="showTip(event, '799', 799)">
+          <code onmouseout="hideTip(event, '803', 803)" onmouseover="showTip(event, '803', 803)">
             sendTeamCityMSTestImport path
           </code>
-          <div class="tip" id="799">
+          <div class="tip" id="803">
             <strong>Signature:</strong> path:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L51-51" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L58-58" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -686,15 +752,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '800', 800)" onmouseover="showTip(event, '800', 800)">
+          <code onmouseout="hideTip(event, '804', 804)" onmouseover="showTip(event, '804', 804)">
             sendTeamCityNCover3Home 
           </code>
-          <div class="tip" id="800">
+          <div class="tip" id="804">
             <strong>Signature:</strong> string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L94-94" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L101-101" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -706,15 +772,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '801', 801)" onmouseover="showTip(event, '801', 801)">
+          <code onmouseout="hideTip(event, '805', 805)" onmouseover="showTip(event, '805', 805)">
             sendTeamCityNCover3ReporterArgs 
           </code>
-          <div class="tip" id="801">
+          <div class="tip" id="805">
             <strong>Signature:</strong> string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L97-97" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L104-104" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -726,15 +792,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '802', 802)" onmouseover="showTip(event, '802', 802)">
+          <code onmouseout="hideTip(event, '806', 806)" onmouseover="showTip(event, '806', 806)">
             sendTeamCityNCoverExplorerTool 
           </code>
-          <div class="tip" id="802">
+          <div class="tip" id="806">
             <strong>Signature:</strong> string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L100-100" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L107-107" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -746,15 +812,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '803', 803)" onmouseover="showTip(event, '803', 803)">
+          <code onmouseout="hideTip(event, '807', 807)" onmouseover="showTip(event, '807', 807)">
             sendTeamCityNCoverExplorerToolArgs 
           </code>
-          <div class="tip" id="803">
+          <div class="tip" id="807">
             <strong>Signature:</strong> string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L103-103" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L110-110" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -766,15 +832,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '804', 804)" onmouseover="showTip(event, '804', 804)">
+          <code onmouseout="hideTip(event, '808', 808)" onmouseover="showTip(event, '808', 808)">
             sendTeamCityNCoverReportOrder 
           </code>
-          <div class="tip" id="804">
+          <div class="tip" id="808">
             <strong>Signature:</strong> int -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L109-109" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L116-116" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -786,15 +852,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '805', 805)" onmouseover="showTip(event, '805', 805)">
+          <code onmouseout="hideTip(event, '809', 809)" onmouseover="showTip(event, '809', 809)">
             sendTeamCityNCoverReportType 
           </code>
-          <div class="tip" id="805">
+          <div class="tip" id="809">
             <strong>Signature:</strong> int -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L106-106" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L113-113" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -806,15 +872,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '806', 806)" onmouseover="showTip(event, '806', 806)">
+          <code onmouseout="hideTip(event, '810', 810)" onmouseover="showTip(event, '810', 810)">
             sendTeamCityNUnitImport path
           </code>
-          <div class="tip" id="806">
+          <div class="tip" id="810">
             <strong>Signature:</strong> path:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L39-39" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L46-46" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -826,15 +892,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '807', 807)" onmouseover="showTip(event, '807', 807)">
+          <code onmouseout="hideTip(event, '811', 811)" onmouseover="showTip(event, '811', 811)">
             sendTeamCityPartCoverReportXslts 
           </code>
-          <div class="tip" id="807">
+          <div class="tip" id="811">
             <strong>Signature:</strong> seq&lt;string * string&gt; -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L112-112" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L119-119" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -846,15 +912,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '808', 808)" onmouseover="showTip(event, '808', 808)">
+          <code onmouseout="hideTip(event, '812', 812)" onmouseover="showTip(event, '812', 812)">
             sendTeamCityPmdCpdImport path
           </code>
-          <div class="tip" id="808">
+          <div class="tip" id="812">
             <strong>Signature:</strong> path:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L75-75" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L82-82" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -866,15 +932,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '809', 809)" onmouseover="showTip(event, '809', 809)">
+          <code onmouseout="hideTip(event, '813', 813)" onmouseover="showTip(event, '813', 813)">
             sendTeamCityPmdImport path
           </code>
-          <div class="tip" id="809">
+          <div class="tip" id="813">
             <strong>Signature:</strong> path:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L72-72" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L79-79" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -886,15 +952,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '810', 810)" onmouseover="showTip(event, '810', 810)">
+          <code onmouseout="hideTip(event, '814', 814)" onmouseover="showTip(event, '814', 814)">
             sendTeamCityReSharperInspectCodeImport (...)
           </code>
-          <div class="tip" id="810">
+          <div class="tip" id="814">
             <strong>Signature:</strong> path:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L66-66" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L73-73" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -906,15 +972,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '811', 811)" onmouseover="showTip(event, '811', 811)">
+          <code onmouseout="hideTip(event, '815', 815)" onmouseover="showTip(event, '815', 815)">
             sendTeamCitySurefireImport path
           </code>
-          <div class="tip" id="811">
+          <div class="tip" id="815">
             <strong>Signature:</strong> path:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L48-48" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L55-55" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -926,10 +992,10 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '812', 812)" onmouseover="showTip(event, '812', 812)">
+          <code onmouseout="hideTip(event, '816', 816)" onmouseover="showTip(event, '816', 816)">
             sendToTeamCity format message
           </code>
-          <div class="tip" id="812">
+          <div class="tip" id="816">
             <strong>Signature:</strong> format:StringFormat&lt;(string -&gt; string)&gt; -&gt; message:string -&gt; unit<br />
                       </div>
         </td>
@@ -946,15 +1012,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '813', 813)" onmouseover="showTip(event, '813', 813)">
+          <code onmouseout="hideTip(event, '817', 817)" onmouseover="showTip(event, '817', 817)">
             SetBuildNumber buildNumber
           </code>
-          <div class="tip" id="813">
+          <div class="tip" id="817">
             <strong>Signature:</strong> buildNumber:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L175-175" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L182-182" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -966,15 +1032,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '814', 814)" onmouseover="showTip(event, '814', 814)">
+          <code onmouseout="hideTip(event, '818', 818)" onmouseover="showTip(event, '818', 818)">
             SetBuildStatistic key value
           </code>
-          <div class="tip" id="814">
+          <div class="tip" id="818">
             <strong>Signature:</strong> key:string -&gt; value:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L178-178" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L185-185" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -986,15 +1052,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '815', 815)" onmouseover="showTip(event, '815', 815)">
+          <code onmouseout="hideTip(event, '819', 819)" onmouseover="showTip(event, '819', 819)">
             SetTeamCityParameter name value
           </code>
-          <div class="tip" id="815">
+          <div class="tip" id="819">
             <strong>Signature:</strong> name:string -&gt; value:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L183-183" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L190-190" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -1006,15 +1072,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '816', 816)" onmouseover="showTip(event, '816', 816)">
+          <code onmouseout="hideTip(event, '820', 820)" onmouseover="showTip(event, '820', 820)">
             StartTestCase testCaseName
           </code>
-          <div class="tip" id="816">
+          <div class="tip" id="820">
             <strong>Signature:</strong> testCaseName:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L120-120" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L127-127" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -1026,15 +1092,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '817', 817)" onmouseover="showTip(event, '817', 817)">
+          <code onmouseout="hideTip(event, '821', 821)" onmouseover="showTip(event, '821', 821)">
             StartTestSuite testSuiteName
           </code>
-          <div class="tip" id="817">
+          <div class="tip" id="821">
             <strong>Signature:</strong> testSuiteName:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L148-148" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L155-155" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -1046,15 +1112,36 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '818', 818)" onmouseover="showTip(event, '818', 818)">
+          <code onmouseout="hideTip(event, '822', 822)" onmouseover="showTip(event, '822', 822)">
+            teamCityBlock name
+          </code>
+          <div class="tip" id="822">
+            <strong>Signature:</strong> name:string -&gt; IDisposable<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L37-37" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Open Named Block that will be closed when the block is disposed
+Usage: <code>use __ = teamCityBlock "My Block"</code></p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '823', 823)" onmouseover="showTip(event, '823', 823)">
             TeamCityBuildConfigurationName 
           </code>
-          <div class="tip" id="818">
+          <div class="tip" id="823">
             <strong>Signature:</strong> string option<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L212-212" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L213-213" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -1066,15 +1153,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '819', 819)" onmouseover="showTip(event, '819', 819)">
+          <code onmouseout="hideTip(event, '824', 824)" onmouseover="showTip(event, '824', 824)">
             TeamCityBuildIsPersonal 
           </code>
-          <div class="tip" id="819">
+          <div class="tip" id="824">
             <strong>Signature:</strong> bool<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L215-215" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L216-216" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -1086,15 +1173,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '820', 820)" onmouseover="showTip(event, '820', 820)">
+          <code onmouseout="hideTip(event, '825', 825)" onmouseover="showTip(event, '825', 825)">
             TeamCityBuildNumber 
           </code>
-          <div class="tip" id="820">
+          <div class="tip" id="825">
             <strong>Signature:</strong> string option<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L221-221" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L222-222" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -1106,15 +1193,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '821', 821)" onmouseover="showTip(event, '821', 821)">
+          <code onmouseout="hideTip(event, '826', 826)" onmouseover="showTip(event, '826', 826)">
             TeamCityProjectName 
           </code>
-          <div class="tip" id="821">
+          <div class="tip" id="826">
             <strong>Signature:</strong> string option<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L209-209" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L210-210" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -1126,15 +1213,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '822', 822)" onmouseover="showTip(event, '822', 822)">
+          <code onmouseout="hideTip(event, '827', 827)" onmouseover="showTip(event, '827', 827)">
             TeamCityVersion 
           </code>
-          <div class="tip" id="822">
+          <div class="tip" id="827">
             <strong>Signature:</strong> string option<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L206-206" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L207-207" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -1146,15 +1233,15 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '823', 823)" onmouseover="showTip(event, '823', 823)">
+          <code onmouseout="hideTip(event, '828', 828)" onmouseover="showTip(event, '828', 828)">
             TestFailed name message details
           </code>
-          <div class="tip" id="823">
+          <div class="tip" id="828">
             <strong>Signature:</strong> name:string -&gt; message:string -&gt; details:string -&gt; unit<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L188-188" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/TeamCityHelper.fs#L195-195" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -1202,6 +1289,7 @@
             <li><a href="http://fsharp.github.io/FAKE/customtasks.html">Creating custom tasks</a></li>
             <li><a href="http://fsharp.github.io/FAKE/soft-dependencies.html">Soft dependencies</a></li>
             <li><a href="http://fsharp.github.io/FAKE/teamcity.html">TeamCity integration</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/teamcityadvanced.html">TeamCity integration (Advanced)</a></li>
             <li><a href="http://fsharp.github.io/FAKE/canopy.html">Running canopy tests</a></li>
             <li><a href="http://fsharp.github.io/FAKE/octopusdeploy.html">Octopus Deploy</a></li>
             <li><a href="http://fsharp.github.io/FAKE/typescript.html">TypeScript support</a></li>
