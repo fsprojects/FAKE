@@ -1,6 +1,7 @@
 #### 4.52.0 - 01.03.2017
 * Implement --dotGraph command line option - https://github.com/fsharp/FAKE/pull/1469
-* Don't fail on git file status detection
+* USABILITY: Improve error handling on SqlPackage - https://github.com/fsharp/FAKE/pull/1476
+* USABILITY: Don't fail on git file status detection
 
 #### 4.51.0 - 28.02.2017
 * Teamcity build parameters - https://github.com/fsharp/FAKE/pull/1475
