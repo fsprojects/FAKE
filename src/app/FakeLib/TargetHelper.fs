@@ -396,6 +396,20 @@ let PrintDependencyGraph verbose target =
         log "The resulting target order is:"
         Seq.iter (logfn " - %s") ordered
 
+/// <summary>Writes a dependency graph of all targets in the DOT format.</summary>
+let PrintDotDependencyGraph () =
+    logfn "digraph G {"
+    logfn "  rankdir=TB;"
+    logfn "  node [shape=box];"
+    for target in TargetDict.Values do
+        logfn "  \"%s\";" target.Name
+        let deps = target.Dependencies
+        for d in target.Dependencies do
+            logfn "  \"%s\" -> \"%s\"" target.Name d
+        for d in target.SoftDependencies do
+            logfn "  \"%s\" -> \"%s\" [style=dotted];" target.Name d
+    logfn "}"
+
 /// Writes a summary of errors reported during build.
 let WriteErrors () =
     traceLine()
@@ -452,6 +466,11 @@ let listTargets() =
 // Instead of the target can be used the list dependencies graph parameter.
 let doesTargetMeanListTargets target = target = "--listTargets"  || target = "-lt"
 
+/// <summary>
+/// Gets a flag indicating that the user requested to output a DOT-graph
+/// of target dependencies instead of building a target.
+///</summary>
+let private doesTargetMeanPrintDotGraph target = target = "--dotGraph"  || target = "-dg"
 
 /// Determines a parallel build order for the given set of targets
 let determineBuildOrder (target : string) =
@@ -507,6 +526,7 @@ let mutable CurrentTargetOrder = []
 
 /// Runs a target and its dependencies.
 let run targetName =
+    if doesTargetMeanPrintDotGraph targetName then PrintDotDependencyGraph() else
     if doesTargetMeanListTargets targetName then listTargets() else
     if LastDescription <> null then failwithf "You set a task description (%A) but didn't specify a task." LastDescription
 
