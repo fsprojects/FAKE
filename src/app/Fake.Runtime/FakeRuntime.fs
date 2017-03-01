@@ -107,7 +107,7 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
       saveDependenciesHash ()
 
     // Restore
-    paketDependencies.Restore(false, group, [], false, true)
+    paketDependencies.Restore((*false, group, [], false, true*))
     |> ignore
     let lockFile = paketDependencies.GetLockFile()
     let lockGroup = lockFile.GetGroup groupName

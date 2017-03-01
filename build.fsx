@@ -592,19 +592,11 @@ Target "DotnetPackage" (fun _ ->
     netCoreProjs
     -- "src/app/Fake.netcore/Fake.netcore.fsproj"
     |> Seq.iter(fun proj ->
-        try
-            DotnetPack (fun c ->
-                { c with
-                    Configuration = Release
-                    OutputPath = Some (nugetDir @@ "dotnetcore")
-                }) proj
-        with _ ->
-            printfn "pack failed, retrying..."
-            DotnetPack (fun c ->
-                { c with
-                    Configuration = Release
-                    OutputPath = Some (nugetDir @@ "dotnetcore")
-                }) proj
+        DotnetPack (fun c ->
+            { c with
+                Configuration = Release
+                OutputPath = Some (nugetDir @@ "dotnetcore")
+            }) proj
     )
 
     let info = DotnetInfo id

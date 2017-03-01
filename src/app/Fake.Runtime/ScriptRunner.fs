@@ -112,16 +112,19 @@ let private handleCoreCaching (context:FakeContext) (session:IFsiSession) fsiErr
                             failwithf "Could not resolve '%s'" name
                 { new Mono.Cecil.IAssemblyResolver with
                     member x.Dispose() = ()
-                    member x.Resolve (name : string) =
-                        Mono.Cecil.AssemblyDefinition.ReadAssembly(
-                            resolve name,
-                            new Mono.Cecil.ReaderParameters(AssemblyResolver = x))
-                    member x.Resolve (name : string, parms : Mono.Cecil.ReaderParameters) =
-                        Mono.Cecil.AssemblyDefinition.ReadAssembly(resolve name, parms)
+                    //member x.Resolve (name : string) =
+                    //    Mono.Cecil.AssemblyDefinition.ReadAssembly(
+                    //        resolve name,
+                    //        new Mono.Cecil.ReaderParameters(AssemblyResolver = x))
+                    //member x.Resolve (name : string, parms : Mono.Cecil.ReaderParameters) =
+                    //    Mono.Cecil.AssemblyDefinition.ReadAssembly(resolve name, parms)
                     member x.Resolve (name : Mono.Cecil.AssemblyNameReference) =
-                        x.Resolve(name.FullName)
+                        Mono.Cecil.AssemblyDefinition.ReadAssembly(
+                            resolve name.FullName,
+                            new Mono.Cecil.ReaderParameters(AssemblyResolver = x))
+                    //    x.Resolve(name.FullName)
                     member x.Resolve (name : Mono.Cecil.AssemblyNameReference, parms : Mono.Cecil.ReaderParameters) =
-                        x.Resolve(name.FullName, parms) }
+                        x.Resolve(name, parms) }
 #else
             let reader = new Mono.Cecil.DefaultAssemblyResolver() // see https://github.com/fsharp/FAKE/issues/1084
             reader.AddSearchDirectory (Path.GetDirectoryName fakePath)

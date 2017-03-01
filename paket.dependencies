@@ -4,6 +4,7 @@ source https://dotnet.myget.org/F/dotnet-core
 source https://www.myget.org/F/fsharp-daily
 source https://www.myget.org/F/netcorecli-fsc-preview3
 
+nuget FSharp.Core redirects: force
 nuget Knockout
 nuget NuGet.CommandLine
 nuget Paket.Core 3.19.4
@@ -61,19 +62,18 @@ group Build
     nuget ILRepack
 
 group netcore
-    source lib/nupgks/FSharp.Compiler.Service/6.0.3-alpha1/
     source http://nuget.org/api/v2
 
     nuget FSharp.Compiler.Service  content: none, framework: netstandard1.6,netcoreapp1.0
     nuget FSharp.Core ~> 4.1.0 alpha
     nuget FSharp.NET.Sdk ~> 1.0.0 alpha
     //nuget Microsoft.FSharp.Core.netcore 1.0.0-alpha-161023 alpha framework: netstandard1.6, netcoreapp1.0 
-    nuget Microsoft.NET.Sdk 1.0.0-alpha-20161104-2 alpha
+    //nuget Microsoft.NET.Sdk 1.0.0-alpha-20161104-2 alpha
     nuget Microsoft.NETCore.App 1.1.0 framework: netstandard1.6, netcoreapp1.0
     nuget NETStandard.Library 1.6.1 framework: netstandard1.6, netcoreapp1.0
-    nuget Argu 3.3.0
-    nuget Paket.Core 3.19.4
-    nuget Mono.Cecil 0.10.0-beta1-v2 beta
+    nuget Argu
+    nuget Paket.Core 4.0.0-beta028 beta
+    nuget Mono.Cecil 0.10.0-beta4 beta
 
     nuget System.Diagnostics.FileVersionInfo
     nuget System.Diagnostics.Process
