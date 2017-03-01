@@ -623,21 +623,15 @@ Target "DotnetPackage" (fun _ ->
                 | Some r -> r, r
                 | None -> "current", info.RID
 
-            try
-                DotnetRestore (fun c -> {c with Runtime = Some runtime}) proj
-                DotnetPublish (fun c ->
-                    { c with
-                        Runtime = Some runtime
-                        Configuration = Release
-                        OutputPath = Some (nugetDir @@ "dotnetcore" @@ projName @@ runtimeName)
-                    }) proj
-                runtimeWorked <- true
-            with e ->
-                printfn "FIXME: Runtime %s failed to publish!" runtimeName
+            DotnetRestore (fun c -> {c with Runtime = Some runtime}) proj
+            DotnetPublish (fun c ->
+                { c with
+                    Runtime = Some runtime
+                    Configuration = Release
+                    OutputPath = Some (nugetDir @@ "dotnetcore" @@ projName @@ runtimeName)
+                }) proj
         )
     )
-
-    if not runtimeWorked then failwith "No runtime worked!"
 
     // Publish portable as well (see https://docs.microsoft.com/en-us/dotnet/articles/core/app-types)
     let netcoreFsproj = "src/app/Fake.netcore/Fake.netcore.fsproj"
