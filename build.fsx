@@ -607,6 +607,8 @@ Target "DotnetPackage" (fun _ ->
                 }) proj
     )
 
+    let info = DotnetInfo id
+
     let mutable runtimeWorked = false
     // dotnet publish
     runtimes
@@ -616,14 +618,16 @@ Target "DotnetPackage" (fun _ ->
         !! "src/app/Fake.netcore/Fake.netcore.fsproj"
         |> Seq.iter(fun proj ->
             let projName = Path.GetFileName(Path.GetDirectoryName proj)
-            let runtimeName =
+            let runtimeName, runtime =
                 match runtime with
-                | Some r -> r
-                | None -> "current"
+                | Some r -> r, r
+                | None -> "current", info.RID
+
             try
+                DotnetRestore (fun c -> {c with Runtime = Some runtime}) proj
                 DotnetPublish (fun c ->
                     { c with
-                        Runtime = runtime
+                        Runtime = Some runtime
                         Configuration = Release
                         OutputPath = Some (nugetDir @@ "dotnetcore" @@ projName @@ runtimeName)
                     }) proj

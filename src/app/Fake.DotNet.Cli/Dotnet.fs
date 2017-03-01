@@ -388,6 +388,8 @@ type DotnetRestoreOptions =
     {   
         /// Common tool options
         Common: DotnetOptions;
+        /// The runtime to restore for (seems added in RC4). Maybe a bug, but works.
+        Runtime: string option;
         /// Nuget feeds to search updates in. Use default if empty.
         Sources: string list;
         /// Directory to install packages in (--packages).
@@ -408,6 +410,7 @@ type DotnetRestoreOptions =
     static member Default = {
         Common = DotnetOptions.Default
         Sources = []
+        Runtime = None
         Packages = []
         ConfigFile = None        
         NoCache = false
@@ -422,8 +425,9 @@ let private buildRestoreArgs (param: DotnetRestoreOptions) =
         param.Packages |> argList2 "packages"
         param.ConfigFile |> Option.toList |> argList2 "configFile"
         param.NoCache |> argOption "no-cache" 
-        param.IgnoreFailedSources |> argOption "ignore-failed-sources" 
-        param.DisableParallel |> argOption "disable-parallel" 
+        param.Runtime |> Option.toList |> argList2 "runtime"
+        param.IgnoreFailedSources |> argOption "ignore-failed-sources"
+        param.DisableParallel |> argOption "disable-parallel"
         param.Verbosity |> Option.toList |> Seq.map (fun v -> v.ToString()) |> argList2 "verbosity"
     ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
 
@@ -503,6 +507,43 @@ let DotnetPack setParams project =
     let args = sprintf "pack %s %s" project (buildPackArgs param)
     let result = Dotnet param.Common args    
     if not result.OK then failwithf "dotnet pack failed with code %i" result.ExitCode
+
+/// dotnet --info command options
+type DotNetInfoOptions =
+    {   
+        /// Common tool options
+        Common: DotnetOptions;
+    }
+    /// Parameter default values.
+    static member Default = {
+        Common = DotnetOptions.Default
+    }
+    
+/// dotnet info result
+type DotNetInfoResult =
+    {   
+        /// Common tool options
+        RID: string;
+    }
+/// Execute dotnet --info command
+/// ## Parameters
+///
+/// - 'setParams' - set info command parameters
+let DotnetInfo setParams =    
+    use t = Trace.traceTask "Dotnet:info" "running dotnet --info"
+    let param = DotNetInfoOptions.Default |> setParams    
+    let args = "--info" // project (buildPackArgs param)
+    let result = Dotnet param.Common args
+    if not result.OK then failwithf "dotnet --info failed with code %i" result.ExitCode
+
+    let rid =
+        result.Messages
+        |> Seq.tryFind (fun m -> m.Contains "RID:")
+        |> Option.map (fun line -> line.Split([|':'|]).[1].Trim())
+
+    if rid.IsNone then failwithf "could not read rid from output: \n%s" (System.String.Join("\n", result.Messages))
+
+    { RID = rid.Value }
 
 /// dotnet publish command options
 type DotNetPublishOptions =
@@ -614,7 +655,7 @@ let DotnetCompile setParams project =
     use t = Trace.traceTask "Dotnet:build" project
     let param = DotNetBuildOptions.Default |> setParams    
     let args = sprintf "build %s %s" project (buildBuildArgs param)
-    let result = Dotnet param.Common args    
+    let result = Dotnet param.Common args
     if not result.OK then failwithf "dotnet build failed with code %i" result.ExitCode
 
 /// get sdk version from global.json
