@@ -1,6 +1,5 @@
 
 group netcore
-Microsoft.NET.Sdk
 FSharp.NET.Sdk
 Paket.Core
 Mono.Cecil

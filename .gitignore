@@ -73,3 +73,5 @@ mytemp
 .fake
 !/integrationtests/*/before/.fake
 project.lock.json
+
+src/app/*/any

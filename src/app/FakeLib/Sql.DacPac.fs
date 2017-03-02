@@ -5,6 +5,8 @@ open Fake.EnvironmentHelper
 open Fake.ProcessHelper
 open System.IO
 open Fake.FileSystem
+open System.Diagnostics
+open System
 
 /// The type of action to execute.
 type DeployAction =
@@ -95,15 +97,22 @@ let deployDb setParams =
         failwith "No SqlPackage.exe filename was given."
 
     if not (File.Exists args.SqlPackageToolPath) then
-        failwithf "Unable to find a valid instance of SqlPackage.exe. Paths checked were: %A." validPaths
-          
-    shellExec {
-        Program = args.SqlPackageToolPath
-        CommandLine = sprintf """/Action:%s /SourceFile:"%s" /TargetConnectionString:"%s" %s /p:BlockOnPossibleDataLoss=%b /p:DropObjectsNotInSource=%b /p:CommandTimeout=%d /p:CreateNewDatabase=%b %s %s""" action args.Source args.Destination outputPath args.BlockOnPossibleDataLoss args.DropObjectsNotInSource args.Timeout args.RecreateDb additionalParameters variables
-        WorkingDirectory = ""
-        Args = [] }
+        let paths =
+            if validPaths |> List.contains args.SqlPackageToolPath then validPaths
+            else [ args.SqlPackageToolPath ]
+        failwithf "Unable to find a valid instance of SqlPackage.exe. Paths checked were: %A." paths
+    
+    let result =
+        ExecProcessWithLambdas
+            (fun psi ->
+                psi.Arguments <- sprintf """/Action:%s /SourceFile:"%s" /TargetConnectionString:"%s" %s /p:BlockOnPossibleDataLoss=%b /p:DropObjectsNotInSource=%b /p:CommandTimeout=%d /p:CreateNewDatabase=%b %s %s""" action args.Source args.Destination outputPath args.BlockOnPossibleDataLoss args.DropObjectsNotInSource args.Timeout args.RecreateDb additionalParameters variables
+                psi.FileName <- args.SqlPackageToolPath)
+            TimeSpan.MaxValue
+            true
+            (printfn "SqlPackage error: %s")
+            (printfn "%s")
 
-    |> function
+    match result with
     | 0 -> ()
     | _ -> failwith "Error executing DACPAC deployment. Please see output for error details."
 

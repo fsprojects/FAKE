@@ -12,7 +12,7 @@ nuget Fake.Core.ReleaseNotes prerelease
 nuget Fake.DotNet.AssemblyInfoFile prerelease
 nuget Fake.DotNet.MsBuild prerelease
 nuget Fake.DotNet.Cli prerelease
-nuget Mono.Cecil 0.10.0-beta1-v2
+nuget Mono.Cecil 0.10.0-beta4
 -- Fake Dependencies -- *)
 
 #if DOTNETCORE
@@ -537,7 +537,7 @@ open Fake.DotNet.Cli
 
 Target "InstallDotnetCore" (fun _ ->
 //     // DotnetCliInstall Preview2ToolingOptions
-     DotnetCliInstall Preview4_004233ToolingOptions
+     DotnetCliInstall RC4_004771ToolingOptions
 )
 
 let root = __SOURCE_DIRECTORY__
@@ -561,7 +561,7 @@ Target "DotnetRestore" (fun _ ->
     // .nuget\packages\.tools\dotnet-compile-fsc\1.0.0-preview2-020000\netcoreapp1.0\dotnet-compile-fsc.deps.json
     let t = Path.GetFullPath "workaround"
     ensureDirectory t
-    Dotnet { DotnetOptions.Default with WorkingDirectory = t } "new --lang f#"
+    Dotnet { DotnetOptions.Default with WorkingDirectory = t } "new console --language f#"
     Dotnet { DotnetOptions.Default with WorkingDirectory = t } "restore"
     Dotnet { DotnetOptions.Default with WorkingDirectory = t } "build"
     Directory.Delete(t, true)
@@ -592,20 +592,14 @@ Target "DotnetPackage" (fun _ ->
     netCoreProjs
     -- "src/app/Fake.netcore/Fake.netcore.fsproj"
     |> Seq.iter(fun proj ->
-        try
-            DotnetPack (fun c ->
-                { c with
-                    Configuration = Release
-                    OutputPath = Some (nugetDir @@ "dotnetcore")
-                }) proj
-        with _ ->
-            printfn "pack failed, retrying..."
-            DotnetPack (fun c ->
-                { c with
-                    Configuration = Release
-                    OutputPath = Some (nugetDir @@ "dotnetcore")
-                }) proj
+        DotnetPack (fun c ->
+            { c with
+                Configuration = Release
+                OutputPath = Some (nugetDir @@ "dotnetcore")
+            }) proj
     )
+
+    let info = DotnetInfo id
 
     let mutable runtimeWorked = false
     // dotnet publish
@@ -616,24 +610,20 @@ Target "DotnetPackage" (fun _ ->
         !! "src/app/Fake.netcore/Fake.netcore.fsproj"
         |> Seq.iter(fun proj ->
             let projName = Path.GetFileName(Path.GetDirectoryName proj)
-            let runtimeName =
+            let runtimeName, runtime =
                 match runtime with
-                | Some r -> r
-                | None -> "current"
-            try
-                DotnetPublish (fun c ->
-                    { c with
-                        Runtime = runtime
-                        Configuration = Release
-                        OutputPath = Some (nugetDir @@ "dotnetcore" @@ projName @@ runtimeName)
-                    }) proj
-                runtimeWorked <- true
-            with e ->
-                printfn "FIXME: Runtime %s failed to publish!" runtimeName
+                | Some r -> r, r
+                | None -> "current", info.RID
+
+            DotnetRestore (fun c -> {c with Runtime = Some runtime}) proj
+            DotnetPublish (fun c ->
+                { c with
+                    Runtime = Some runtime
+                    Configuration = Release
+                    OutputPath = Some (nugetDir @@ "dotnetcore" @@ projName @@ runtimeName)
+                }) proj
         )
     )
-
-    if not runtimeWorked then failwith "No runtime worked!"
 
     // Publish portable as well (see https://docs.microsoft.com/en-us/dotnet/articles/core/app-types)
     let netcoreFsproj = "src/app/Fake.netcore/Fake.netcore.fsproj"

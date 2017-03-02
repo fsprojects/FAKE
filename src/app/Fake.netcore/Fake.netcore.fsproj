@@ -1,10 +1,10 @@
-<Project Sdk="FSharp.NET.Sdk;Microsoft.NET.Sdk" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="FSharp.NET.Sdk;Microsoft.NET.Sdk">
   <PropertyGroup>
     <Version>1.0.0-alpha-10</Version>
     <TargetFramework>netcoreapp1.0</TargetFramework>
     <DefineConstants>$(DefineConstants);CORE_CLR;DOTNETCORE;EXPLICIT_DEPENDENCIES;NETSTANDARD;NETSTANDARD1_6</DefineConstants>
     <DelaySign>true</DelaySign>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>Portable</DebugType>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <AssemblyName>Fake.netcore</AssemblyName>
     <OutputType>Exe</OutputType>
@@ -30,11 +30,6 @@
     <ProjectReference Include="..\Fake.Core.Context\Fake.Core.Context.fsproj">
       <FromP2P>true</FromP2P>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-compile-fsc">
-      <Version>1.0.0-preview2-020000</Version>
-    </DotNetCliToolReference>
   </ItemGroup>
   <Import Project="..\..\..\.paket\Paket.Restore.targets" />
 </Project>
