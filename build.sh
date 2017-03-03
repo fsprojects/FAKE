@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 
+# We use this to tell FAKE to not use the current latest version to build the netcore version, 
+# but instead use the current NON dotnetcore version
+export NO_DOTNETCORE_BOOTSTRAP=true
+
 if test "$OS" = "Windows_NT"
 then
   # use .Net
 
-  .paket/paket.bootstrapper.exe
+  .paket/paket.bootstrapper.exe 4.0.0-beta028 --max-file-age=120
   exit_code=$?
   if [ $exit_code -ne 0 ]; then
     exit $exit_code
@@ -21,7 +25,7 @@ then
   packages/build/FAKE/tools/FAKE.exe $@ --fsiargs -d:MONO build.fsx
 else
   # use mono
-  mono .paket/paket.bootstrapper.exe
+  mono .paket/paket.bootstrapper.exe 4.0.0-beta028 --max-file-age=120
   exit_code=$?
   if [ $exit_code -ne 0 ]; then
     exit $exit_code

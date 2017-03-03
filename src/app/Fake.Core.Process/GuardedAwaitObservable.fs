@@ -1,17 +1,17 @@
-﻿[<AutoOpen>]
-module internal Fake.GuardedAwaitObservable
+﻿module internal Fake.Core.GuardedAwaitObservable
 
 // from https://github.com/fsprojects/fsharpx/blob/f99a8f669ab49166c854c479d17c3add2b39f8d7/src/FSharpx.Core/Observable.fs
+// TODO: reference FSharpx.Async once it supports netstandard...
 open System
 open System.Threading
 
 /// Helper that can be used for writing CPS-style code that resumes
 /// on the same thread where the operation was started.
-let synchronize f = 
+let private synchronize f = 
     let ctx = System.Threading.SynchronizationContext.Current
     f (fun g -> 
         let nctx = System.Threading.SynchronizationContext.Current
-        if ctx <> null && ctx <> nctx then ctx.Post((fun _ -> g()), null)
+        if not (isNull ctx) && ctx <> nctx then ctx.Post((fun _ -> g()), null)
         else g())
 
 type Microsoft.FSharp.Control.Async with
@@ -36,9 +36,9 @@ type Microsoft.FSharp.Control.Async with
                         remove()
                         f (fun () -> cont value)
                     setRemover <| ev1.Subscribe({ new IObserver<_> with
-                                                      member x.OnNext(v) = finish cont v
-                                                      member x.OnError(e) = finish econt e
-                                                      member x.OnCompleted() = 
+                                                      member __.OnNext(v) = finish cont v
+                                                      member __.OnError(e) = finish econt e
+                                                      member __.OnCompleted() = 
                                                           let msg = 
                                                               "Cancelling the workflow, because the Observable awaited using AwaitObservable has completed."
                                                           finish ccont (new System.OperationCanceledException(msg)) })

@@ -14,7 +14,7 @@ type FAKEException(msg) =
 let fakePath = productName.GetType().Assembly.Location
 
 /// Gets the FAKE version no.
-let fakeVersion = AssemblyVersionInformation.Version
+let fakeVersion = AssemblyVersionInformation.AssemblyVersion
 
 let private openTags = new ThreadLocal<list<string>>(fun _ -> [])
 

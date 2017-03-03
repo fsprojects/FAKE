@@ -1,0 +1,6 @@
+group netcore
+FSharp.NET.Sdk
+FSharp.Compiler.Service
+FSharp.Core
+System.Diagnostics.FileVersionInfo
+NETStandard.Library

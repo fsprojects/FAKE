@@ -1,9 +1,11 @@
 @echo off
 SETLOCAL
 
-cls
+REM We use this to tell FAKE to not use the current latest version to build the netcore version, 
+REM but instead use the current NON dotnetcore version
+SET NO_DOTNETCORE_BOOTSTRAP=true
 
-.paket\paket.bootstrapper.exe
+.paket\paket.bootstrapper.exe 4.0.0-beta028 --max-file-age=120
 if errorlevel 1 (
   exit /b %errorlevel%
 )

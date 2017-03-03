@@ -1,13 +1,21 @@
 content: none
 source http://nuget.org/api/v2
+source https://dotnet.myget.org/F/dotnet-core
+source https://www.myget.org/F/fsharp-daily
+source https://www.myget.org/F/netcorecli-fsc-preview3
 
-nuget FSharp.Core redirects:force
+nuget FSharp.Core redirects: force
 nuget Knockout
+nuget NuGet.CommandLine
+nuget Paket.Core 3.19.4
 nuget RavenDB.Server
-nuget serilog.sinks.nlog
-nuget Argu
+nuget serilog.sinks.nlog 1.5.4
+nuget Argu 3.3.0
 nuget FsCheck < 2.1
 nuget FsCheck.Xunit < 2.1
+nuget Unquote
+nuget NUnit
+nuget NUnit.Console
 nuget Nancy.Authentication.Stateless
 nuget Nancy.Hosting.Self
 nuget Nancy.Serialization.JsonNet
@@ -21,11 +29,12 @@ nuget Mono.Cecil
 nuget Nuget.Core
 nuget bootstrap
 nuget Knockout.Mapping
-nuget log4net
+nuget log4net 2.0.5
 nuget System.Web.Razor.Unofficial
 nuget toastr
 nuget RavenDB.Client < 3
-nuget Machine.Specifications.Should
+nuget Machine.Specifications.Should 0.8
+nuget Machine.Specifications 0.9.3
 nuget Machine.Specifications.Runner.Console
 nuget Nancy.Testing
 nuget xunit.extensions ~> 1.9
@@ -35,19 +44,39 @@ nuget Microsoft.AspNet.Razor 2.0.30506
 nuget Microsoft.AspNet.WebPages 2.0.30506
 nuget FluentMigrator.Runner
 nuget HashLib
-nuget FSharp.Compiler.Service
+nuget FSharp.Compiler.Service content: none 
 nuget Octokit
 nuget Microsoft.Net.Http
 
 github matthid/Yaaf.FSharp.Scripting src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs
 
 group Build
-content: none
-source http://nuget.org/api/v2
+    content: none
+    source http://nuget.org/api/v2
 
-nuget Nuget.CommandLine
-nuget FAKE prerelease
-nuget FSharp.Formatting
-nuget FSharp.Formatting.CommandTool
-nuget SourceLink.Fake
-nuget ILRepack
+    nuget Nuget.CommandLine
+    nuget FAKE prerelease
+    nuget FSharp.Formatting
+    nuget FSharp.Formatting.CommandTool
+    nuget SourceLink.Fake
+    nuget ILRepack
+
+group netcore
+    source http://nuget.org/api/v2
+
+    nuget FSharp.Compiler.Service  content: none, framework: netstandard1.6,netcoreapp1.0
+    nuget FSharp.Core ~> 4.1.0 alpha
+    nuget FSharp.NET.Sdk ~> 1.0.0 alpha
+    //nuget Microsoft.FSharp.Core.netcore 1.0.0-alpha-161023 alpha framework: netstandard1.6, netcoreapp1.0 
+    //nuget Microsoft.NET.Sdk 1.0.0-alpha-20161104-2 alpha
+    nuget Microsoft.NETCore.App 1.1.0 framework: netstandard1.6, netcoreapp1.0
+    nuget NETStandard.Library 1.6.1 framework: netstandard1.6, netcoreapp1.0
+    nuget Argu
+    nuget Paket.Core 4.0.0-beta028 beta
+    nuget Mono.Cecil 0.10.0-beta4 beta
+
+    nuget System.Diagnostics.FileVersionInfo
+    nuget System.Diagnostics.Process
+    nuget System.IO.Compression
+    nuget System.IO.Compression.ZipFile
+    nuget System.Runtime.Loader
