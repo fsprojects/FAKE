@@ -34,3 +34,4 @@ Some of our users are:
 * [Digital Furnace Games](http://digitalfurnacegames.com/)
 * [Recognos Romania](http://www.recognos.ro/en)
 * [Centigrade GmbH](http://www.centigrade.de)
+* [Compositional IT](http://compositional-it.com/)
