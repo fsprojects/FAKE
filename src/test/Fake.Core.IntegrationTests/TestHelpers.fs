@@ -35,7 +35,7 @@ let directFakeInPath command scenarioPath target =
     if result.ExitCode <> 0 then 
         let errors = String.Join(Environment.NewLine,result.Errors)
         printfn "%s" <| String.Join(Environment.NewLine,result.Messages)
-        failwith errors
+        failwithf "FAKE Process exited with %d: %s" result.ExitCode errors
     String.Join(Environment.NewLine,result.Messages)
 
 let directFake command scenario =

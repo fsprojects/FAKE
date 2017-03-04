@@ -271,7 +271,9 @@ let private getCacheInfoFromScript printDetails fsiOptions scriptPath =
                         traceFAKE "Redirect assembly from '%s' to '%s'" ev.Name asem.FullName
                         asem
                     | _ ->
-                        if printDetails then traceFAKE "Could not resolve '%s'" ev.Name
+                        if not (ev.Name.StartsWith("FSharp.Compiler.Service.resources"))
+                        && not (ev.Name.StartsWith("FSharp.Compiler.Service.MSBuild")) then
+                            if printDetails then traceFAKE "Could not resolve '%s'" ev.Name
                         null))
             assemVersionValidCount = Seq.length cacheConfig.Value.Assemblies
         else
@@ -360,9 +362,9 @@ let private handleCaching printDetails (session:IFsiSession) fsiErrorOutput (cac
             reader.AddSearchDirectory (Path.GetDirectoryName TraceHelper.fakePath)
             reader.AddSearchDirectory (Path.GetDirectoryName typeof<string option>.Assembly.Location)
             let readerParams = new Mono.Cecil.ReaderParameters(AssemblyResolver = reader)
-            let asem = Mono.Cecil.AssemblyDefinition.ReadAssembly(name + ".dll", readerParams)
-            asem.Name <- new Mono.Cecil.AssemblyNameDefinition(wishName, new Version(0,0,1))
-            asem.Write(wishName + ".dll")
+            ( use asem = Mono.Cecil.AssemblyDefinition.ReadAssembly(name + ".dll", readerParams)
+              asem.Name <- new Mono.Cecil.AssemblyNameDefinition(wishName, new Version(0,0,1))
+              asem.Write(wishName + ".dll"))
             File.Move(wishName + ".dll", cacheInfo.AssemblyPath)
         with exn ->
             // If cecil fails we might want to trigger a warning, but you know what?
@@ -373,7 +375,11 @@ let private handleCaching printDetails (session:IFsiSession) fsiErrorOutput (cac
         for name in [ name; wishName ] do
             for ext in [ ".dll"; ".pdb"; ".dll.mdb" ] do
                 if File.Exists(name + ext) then
-                    File.Delete(name + ext)
+                    try
+                        File.Delete(name + ext)
+                    with e ->
+                        if printDetails then
+                            printfn "Could not delete '%s' check whats wrong: %O" (name + ext) e
 
         let dynamicAssemblies =
             System.AppDomain.CurrentDomain.GetAssemblies()
@@ -488,7 +494,11 @@ let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(f
 
     if printDetails then
       System.AppDomain.CurrentDomain.add_AssemblyResolve(
-        new System.ResolveEventHandler(fun _ e -> trace <| sprintf "FAKE: Trying to resolve %s" e.Name; null))
+        new System.ResolveEventHandler(fun _ e ->
+            if not (e.Name.StartsWith("FSharp.Compiler.Service.resources"))
+            && not (e.Name.StartsWith("FSharp.Compiler.Service.MSBuild")) then
+                trace <| sprintf "FAKE: Trying to resolve %s" e.Name
+            null))
 
     // Add arguments to the Environment
     for (k,v) in env do

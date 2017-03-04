@@ -272,7 +272,9 @@ let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyNam
             traceFAKE "Redirect assembly from '%s' to '%s' (%A)" strName a.FullName location
         a
     | _ ->
-        if printDetails then tracefn "Could not resolve: %s" strName
+        if not (strName.StartsWith("FSharp.Compiler.Service.resources"))
+        && not (strName.StartsWith("FSharp.Compiler.Service.MSBuild")) then
+            if printDetails then tracefn "Could not resolve: %s" strName
         null
 
 #if NETSTANDARD1_6

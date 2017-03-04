@@ -108,10 +108,11 @@ let additionalFiles = [
 Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDir; reportDir])
 
 Target "RenameFSharpCompilerService" (fun _ ->
+  for packDir in ["FSharp.Compiler.Service";"netcore"</>"FSharp.Compiler.Service"] do
     // for framework in ["net40"; "net45"] do
-    for framework in ["netstandard1.6"] do
-      let dir = __SOURCE_DIRECTORY__ </> "packages"</>"netcore"</>"FSharp.Compiler.Service"</>"lib"</>framework
-      let targetFile = dir </>"netcore"</>  "FAKE.FSharp.Compiler.Service.dll"
+    for framework in ["netstandard1.6"; "net45"] do
+      let dir = __SOURCE_DIRECTORY__ </> "packages"</>packDir</>"lib"</>framework
+      let targetFile = dir </>  "FAKE.FSharp.Compiler.Service.dll"
       DeleteFile targetFile
 
 #if DOTNETCORE
