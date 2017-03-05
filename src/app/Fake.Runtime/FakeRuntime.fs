@@ -125,7 +125,7 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
       let package = kv.Value
       package)
     |> Seq.filter (fun p ->
-      if p.Name = "Microsoft.FSharp.Core.netcore" then
+      if p.Name.ToString() = "Microsoft.FSharp.Core.netcore" then
         eprintfn "Ignoring 'Microsoft.FSharp.Core.netcore' please tell the package authors to fix their package and reference 'FSharp.Core' instead."
         false
       else true)
