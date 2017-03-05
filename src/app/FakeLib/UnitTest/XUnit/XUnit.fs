@@ -149,6 +149,7 @@ let internal runXUnitForOneAssembly parameters assembly =
 ///         xUnit (fun p -> {p with HtmlOutputPath = testDir @@ "xunit.html"}) "xUnit.Test.dll"
 ///     )
 let xUnitSingle setParams assembly =
+    //failwithf "XUnit v1 is no longer supported, please update to XUnit v2. (Is almost 5 Years old now)"
     use __ = traceStartTaskUsing "xUnit" assembly
 
     let parameters = XUnitDefaults |> setParams
@@ -190,6 +191,7 @@ let internal overrideAssemblyReportParams assembly p =
 ///           |> xUnit (fun p -> {p with HtmlOutputPath = testDir @@ "html"})
 ///     )
 let xUnit setParams assemblies =
+    //failwithf "XUnit v1 is no longer supported, please update to XUnit v2. (Is almost 5 Years old now)"
     let details = separated ", " assemblies
     use __ = traceStartTaskUsing "xUnit" details
     let parameters = XUnitDefaults |> setParams

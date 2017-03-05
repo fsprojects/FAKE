@@ -2,7 +2,6 @@
     open System
     open System.IO
     open Xunit
-    open Xunit.Extensions
     open Fake.Deploy.Web.File
 
     let toStream (str:string) =
