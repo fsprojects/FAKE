@@ -170,6 +170,9 @@ type BuildParams = {
 
     /// Additional Args
     AdditionalArgs : string list
+    
+    /// Optional outputh path
+    Output : string
 }
 
 let private DefaultBuildParams : BuildParams = {
@@ -181,6 +184,7 @@ let private DefaultBuildParams : BuildParams = {
     Runtime = ""
     Project = ""
     AdditionalArgs = []
+    Output = ""
 }
 
 /// Runs the dotnet "build" command.
@@ -205,6 +209,7 @@ let Build (setBuildParams: BuildParams -> BuildParams) =
         |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Configuration) (sprintf "--configuration %s"  parameters.Configuration)
         |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Framework) (sprintf "--framework %s"  parameters.Framework)
         |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Runtime) (sprintf "--runtime %s"  parameters.Runtime)
+        |> appendIfTrueWithoutQuotes (isNotNullOrEmpty parameters.Output) (sprintf "--output %s"  parameters.Output)   
         |> fun sb ->
             parameters.AdditionalArgs
             |> List.fold (fun sb arg -> appendWithoutQuotes arg sb) sb
