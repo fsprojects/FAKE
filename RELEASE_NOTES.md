@@ -1,6 +1,7 @@
 #### 4.53.0 - 12.03.2017
 * New change log helper - https://github.com/fsharp/FAKE/pull/1467
 * New output parameter to Dotnet BuildParams - https://github.com/fsharp/FAKE/pull/1481
+* Added MSBuild location for VS2017 Build Tools - https://github.com/fsharp/FAKE/pull/1484
 * BUGFIX: Fixed bug in getLastNuGetVersion when result is in JSON - https://github.com/fsharp/FAKE/pull/1482
 
 #### 4.52.0 - 01.03.2017
