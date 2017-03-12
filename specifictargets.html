@@ -178,7 +178,7 @@ the build script contains a call like this:</p>
 <p>The following command saves the target dependency graph in the <code>graph.png</code> file (PowerShell syntax):</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">FAKE</span><span class="o">.</span><span class="i">exe</span> <span class="i">build</span><span class="o">.</span><span class="i">fsx</span> <span class="o">-</span><span class="i">dg</span> | <span class="o">&amp;</span> <span class="o">&#39;</span><span class="i">C</span><span class="o">:</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">FAKE</span><span class="o">.</span><span class="i">exe</span> <span class="i">build</span><span class="o">.</span><span class="i">fsx</span> <span class="o">-</span><span class="i">dg</span> | <span class="o">&amp;</span> <span class="o">&#39;</span><span class="i">C</span><span class="o">:</span><span class="o">/</span><span class="i">Program</span> <span class="i">Files</span> (<span class="i">x86</span>)<span class="o">/</span><span class="i">Graphviz2</span><span class="o">.</span><span class="n">38</span><span class="o">/</span><span class="i">bin</span><span class="o">/</span><span class="i">dot</span><span class="o">.</span><span class="i">exe&#39;</span> <span class="o">-</span><span class="i">Tpng</span> <span class="o">-</span><span class="i">o</span> <span class="o">.</span><span class="o">/</span><span class="i">graph</span><span class="o">.</span><span class="i">png</span>
 </code></pre></td>
 </tr>
 </table>
