@@ -121,6 +121,21 @@ namespace Test.FAKECore
             return new FSIHelper.Script(contents, path.Replace("\\", "/"), null, null);
         }
 
+        private Establish context = () =>
+        {
+            var consoleListener = TraceListener.defaultConsoleTraceListener;
+
+            if (consoleListener.useAnsiColorCodes)
+            {
+                TraceListener.listeners.Remove(consoleListener);
+                TraceListener.listeners.Add(
+                    new TraceListener.ConsoleTraceListener(
+                        consoleListener.importantMessagesToStdErr,
+                        consoleListener.colorMap,
+                        useAnsiColorCodes: false));
+            }
+        };
+
         It fallback_should_not_trigger_when_attribute_constructor_throws =
             () =>
             {
