@@ -52,6 +52,12 @@
     <tbody>
         <tr>
           <td class="type-name">
+            <a href="fake-hockeyapphelper-basehockeyappparams.html">BaseHockeyAppParams</a>
+          </td>
+          <td class="xmldoc"></td>
+        </tr>
+        <tr>
+          <td class="type-name">
             <a href="fake-hockeyapphelper-downloadstatusoption.html">DownloadStatusOption</a>
           </td>
           <td class="xmldoc"><p>The release download status</p>
@@ -69,9 +75,27 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
         </tr>
         <tr>
           <td class="type-name">
+            <a href="fake-hockeyapphelper-hockeyappversionparams.html">HockeyAppVersionParams</a>
+          </td>
+          <td class="xmldoc"><p>The HockeyAppVersion parameter type
+Based on <a href="https://support.hockeyapp.net/kb/api/api-versions#create-version">https://support.hockeyapp.net/kb/api/api-versions#create-version</a></p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
             <a href="fake-hockeyapphelper-hockeyresponse.html">HockeyResponse</a>
           </td>
           <td class="xmldoc"><p>HockeyApp's success response</p>
+
+</td>
+        </tr>
+        <tr>
+          <td class="type-name">
+            <a href="fake-hockeyapphelper-hockeyversionresponse.html">HockeyVersionResponse</a>
+          </td>
+          <td class="xmldoc"><p>HockeyAppVersion's success response
+<a href="https://support.hockeyapp.net/kb/api/api-versions#create-version">https://support.hockeyapp.net/kb/api/api-versions#create-version</a></p>
 
 </td>
         </tr>
@@ -129,7 +153,7 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/HockeyAppHelper.fs#L202-202" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/HockeyAppHelper.fs#L334-334" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -138,6 +162,23 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
 <ul>
 <li><code>setParams</code> - Function used to override the default parameters</li>
 </ul>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">HockeyApp</span> (<span class="k">fun</span> <span class="i">defaults</span> <span class="k">-&gt;</span>
+    {<span class="i">defaults</span> <span class="k">with</span>
+        <span class="i">AppId</span> <span class="o">=</span> <span class="o">..</span><span class="o">.</span>
+        <span class="i">ApiToken</span> <span class="o">=</span> <span class="o">..</span><span class="o">.</span>
+        <span class="o">..</span><span class="o">.</span>
+    })
+</code></pre></td>
+</tr>
+</table>
 
 
         </td>
@@ -153,11 +194,74 @@ Based on <a href="http://support.hockeyapp.net/kb/api/api-apps#upload-app">http:
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/HockeyAppHelper.fs#L129-129" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/HockeyAppHelper.fs#L193-193" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p>The default HockeyApp parameters</p>
+          <p>The default HockeyApp parameters to upload a build</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '460', 460)" onmouseover="showTip(event, '460', 460)">
+            HockeyAppVersion setParams
+          </code>
+          <div class="tip" id="460">
+            <strong>Signature:</strong> setParams:(HockeyAppVersionParams -&gt; HockeyAppVersionParams) -&gt; HockeyVersionResponse<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/HockeyAppHelper.fs#L350-350" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Create a new version of an app on HockeyApp</p>
+<h2>Parameters</h2>
+<ul>
+<li><code>setParams</code> - Function used to override the default parameters</li>
+</ul>
+<h2>Sample</h2>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="i">HockeyAppVersions</span> (<span class="k">fun</span> <span class="i">defaults</span> <span class="k">-&gt;</span>
+    {<span class="i">defaults</span> <span class="k">with</span>
+        <span class="i">AppId</span> <span class="o">=</span> <span class="o">..</span><span class="o">.</span>
+        <span class="i">ApiToken</span> <span class="o">=</span> <span class="o">..</span><span class="o">.</span>
+        <span class="i">Version</span> <span class="o">=</span> <span class="o">..</span><span class="o">.</span>
+        <span class="o">..</span><span class="o">.</span>
+    })
+</code></pre></td>
+</tr>
+</table>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '461', 461)" onmouseover="showTip(event, '461', 461)">
+            HockeyAppVersionDefaults 
+          </code>
+          <div class="tip" id="461">
+            <strong>Signature:</strong> HockeyAppVersionParams<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/HockeyAppHelper.fs#L215-215" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>The default HockeyAppVersion parameters to create a version</p>
 
 
         </td>
