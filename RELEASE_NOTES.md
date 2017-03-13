@@ -1,4 +1,4 @@
-#### 4.54.0-alpha001 - 13.03.2017
+#### 4.54.0 - 13.03.2017
 * Unix msbuild probing enhancements - https://github.com/fsharp/FAKE/pull/1488
 
 #### 4.53.0 - 12.03.2017
