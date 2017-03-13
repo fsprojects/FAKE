@@ -18,6 +18,8 @@ type NugetUpdateParams =
       Sources: string list
       /// Packages to update. Update all if empty.
       Ids: string list
+      /// Version to update to. Default `None`. Used to upgrade/downgrade to a explicit version of a package.
+      Version: string option
       /// Folder to store packages in. Default `./packages`.
       RepositoryPath: string
       /// Looks for updates with the highest version available within the same major and minor version as the installed package. Default `false`.
@@ -38,6 +40,7 @@ let NugetUpdateDefaults =
       Retries = 5
       Sources = []
       Ids = []
+      Version = None
       RepositoryPath = "./packages"
       Safe = false
       Verbose = false
@@ -50,6 +53,7 @@ let buildArgs (param: NugetUpdateParams) =
     [   param.Sources |> argList "source"
         param.Ids |> argList "id"
         [param.RepositoryPath] |> argList "repositoryPath"
+        param.Version |> Option.toList |> argList "Version"
         (if param.Safe then "-safe" else "")
         (if param.Prerelease then "-prerelease" else "")
         (if param.NonInteractive then "-nonInteractive" else "")
