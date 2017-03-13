@@ -132,7 +132,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L364-364" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L392-392" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -194,7 +194,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L502-502" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L530-530" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -219,7 +219,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L473-473" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L501-501" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -245,7 +245,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L515-515" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L543-543" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -270,7 +270,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L509-509" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L537-537" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -332,7 +332,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L436-436" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L464-464" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -359,7 +359,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L443-443" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L471-471" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -385,7 +385,7 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L181-181" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L209-209" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -405,14 +405,20 @@
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L52-52" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L59-59" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p>Tries to detect the right version of MSBuild.
-- On Linux/Unix Systems we use xBuild.
-- On Windows we try to find a "MSBuild" build parameter or read the MSBuild tool location from the AppSettings file.
-If 'VisualStudioVersion' environment variable is specified, we try to use the specific MSBuild version, matching Visual Studio's.</p>
+- On all OS's, we check a <code>MSBuild</code> environment variable which is either
+<em> a direct path to a file to use, or
+</em> a directory that contains a file called <code>msbuild</code> on non-Windows systems, or <code>MSBuild.exe</code> on Windows systems
+- In addition, on non-Windows systems we check the current PATH for the following binaries, in this order:
+<em> <code>msbuild</code>
+</em> <code>xbuild</code>
+- In addition, on Windows systems we
+<em> try to read the MSBuild tool location from the AppSettings file using a parameter named <code>MSBuild</code>, and finally
+</em> if a <code>VisualStudioVersion</code> environment variable is specified, we try to use the specific MSBuild version, matching that Visual Studio version.</p>
 
 
         </td>
@@ -428,7 +434,7 @@ If 'VisualStudioVersion' environment variable is specified, we try to use the sp
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L332-332" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L360-360" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -448,7 +454,7 @@ If 'VisualStudioVersion' environment variable is specified, we try to use the sp
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L450-450" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L478-478" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -474,7 +480,7 @@ If 'VisualStudioVersion' environment variable is specified, we try to use the sp
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L464-464" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L492-492" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -501,7 +507,7 @@ If 'VisualStudioVersion' environment variable is specified, we try to use the sp
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L456-456" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L484-484" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
@@ -526,7 +532,7 @@ If 'VisualStudioVersion' environment variable is specified, we try to use the sp
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L401-401" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/MSBuildHelper.fs#L429-429" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
