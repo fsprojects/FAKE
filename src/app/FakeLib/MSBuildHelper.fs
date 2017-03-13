@@ -45,6 +45,7 @@ let toDict items =
 let getAllKnownPaths =
     (knownMsBuildEntries |> List.collect (fun m -> m.Paths) |> List.rev) @ oldMsBuildLocations
 
+
 /// Tries to detect the right version of MSBuild.
 ///   - On all OS's, we check a `MSBuild` environment variable which is either
 ///     * a direct path to a file to use, or
