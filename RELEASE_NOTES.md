@@ -1,3 +1,6 @@
+#### 4.55.0 - 13.03.2017
+* HockeyApp - create version and upload build to a specific version - https://github.com/fsharp/FAKE/pull/1487
+
 #### 4.54.0 - 13.03.2017
 * Unix msbuild probing enhancements - https://github.com/fsharp/FAKE/pull/1488
 
