@@ -14,7 +14,7 @@ open System.ServiceProcess
 
 /// [omit]
 type internal ConcurrentBag<'T> with
-    member internal this.Clear() = 
+    member internal this.Clear() =
         while not(this.IsEmpty) do
             this.TryTake() |> ignore
 
@@ -22,7 +22,7 @@ type internal ConcurrentBag<'T> with
 let startedProcesses = ConcurrentBag()
 
 /// [omit]
-let start (proc : Process) = 
+let start (proc : Process) =
     try
         System.Console.OutputEncoding <- System.Text.Encoding.UTF8
     with exn ->
@@ -41,18 +41,18 @@ let mutable redirectOutputToTrace = false
 let mutable enableProcessTracing = true
 
 /// A record type which captures console messages
-type ConsoleMessage = 
+type ConsoleMessage =
     { IsError : bool
       Message : string
       Timestamp : DateTimeOffset }
 
 /// A process result including error code, message log and errors.
-type ProcessResult = 
+type ProcessResult =
     { ExitCode : int
       Messages : List<string>
       Errors : List<string> }
     member x.OK = x.ExitCode = 0
-    static member New exitCode messages errors = 
+    static member New exitCode messages errors =
         { ExitCode = exitCode
           Messages = messages
           Errors = errors }
@@ -65,41 +65,41 @@ type ProcessResult =
 ///  - `silent` - If this flag is set then the process output is redirected to the given output functions `errorF` and `messageF`.
 ///  - `errorF` - A function which will be called with the error log.
 ///  - `messageF` - A function which will be called with the message log.
-let ExecProcessWithLambdas configProcessStartInfoF (timeOut : TimeSpan) silent errorF messageF = 
+let ExecProcessWithLambdas configProcessStartInfoF (timeOut : TimeSpan) silent errorF messageF =
     use proc = new Process()
     proc.StartInfo.UseShellExecute <- false
     configProcessStartInfoF proc.StartInfo
     platformInfoAction proc.StartInfo
-    if isNullOrEmpty proc.StartInfo.WorkingDirectory |> not then 
-        if Directory.Exists proc.StartInfo.WorkingDirectory |> not then 
-            failwithf "Start of process %s failed. WorkingDir %s does not exist." proc.StartInfo.FileName 
+    if isNullOrEmpty proc.StartInfo.WorkingDirectory |> not then
+        if Directory.Exists proc.StartInfo.WorkingDirectory |> not then
+            failwithf "Start of process %s failed. WorkingDir %s does not exist." proc.StartInfo.FileName
                 proc.StartInfo.WorkingDirectory
-    if silent then 
+    if silent then
         proc.StartInfo.RedirectStandardOutput <- true
         proc.StartInfo.RedirectStandardError <- true
         if isMono then
             proc.StartInfo.StandardOutputEncoding <- Encoding.UTF8
             proc.StartInfo.StandardErrorEncoding  <- Encoding.UTF8
-        proc.ErrorDataReceived.Add(fun d -> 
+        proc.ErrorDataReceived.Add(fun d ->
             if d.Data <> null then errorF d.Data)
-        proc.OutputDataReceived.Add(fun d -> 
+        proc.OutputDataReceived.Add(fun d ->
             if d.Data <> null then messageF d.Data)
-    try 
-        if enableProcessTracing && (not <| proc.StartInfo.FileName.EndsWith "fsi.exe") then 
+    try
+        if enableProcessTracing && (not <| proc.StartInfo.FileName.EndsWith "fsi.exe") then
             tracefn "%s %s" proc.StartInfo.FileName proc.StartInfo.Arguments
         start proc
     with exn -> failwithf "Start of process %s failed. %s" proc.StartInfo.FileName exn.Message
-    if silent then 
+    if silent then
         proc.BeginErrorReadLine()
         proc.BeginOutputReadLine()
     if timeOut = TimeSpan.MaxValue then proc.WaitForExit()
-    else 
-        if not <| proc.WaitForExit(int timeOut.TotalMilliseconds) then 
-            try 
+    else
+        if not <| proc.WaitForExit(int timeOut.TotalMilliseconds) then
+            try
                 proc.Kill()
-            with exn -> 
-                traceError 
-                <| sprintf "Could not kill process %s  %s after timeout." proc.StartInfo.FileName 
+            with exn ->
+                traceError
+                <| sprintf "Could not kill process %s  %s after timeout." proc.StartInfo.FileName
                        proc.StartInfo.Arguments
             failwithf "Process %s %s timed out." proc.StartInfo.FileName proc.StartInfo.Arguments
     // See http://stackoverflow.com/a/16095658/1149924 why WaitForExit must be called twice.
@@ -111,7 +111,7 @@ let ExecProcessWithLambdas configProcessStartInfoF (timeOut : TimeSpan) silent e
 ///
 ///  - `configProcessStartInfoF` - A function which overwrites the default ProcessStartInfo.
 ///  - `timeOut` - The timeout for the process.
-let ExecProcessAndReturnMessages configProcessStartInfoF timeOut = 
+let ExecProcessAndReturnMessages configProcessStartInfoF timeOut =
     let errors = new List<_>()
     let messages = new List<_>()
     let exitCode = ExecProcessWithLambdas configProcessStartInfoF timeOut true (errors.Add) (messages.Add)
@@ -122,17 +122,17 @@ let ExecProcessAndReturnMessages configProcessStartInfoF timeOut =
 ///
 ///  - `configProcessStartInfoF` - A function which overwrites the default ProcessStartInfo.
 ///  - `timeOut` - The timeout for the process.
-let ExecProcessRedirected configProcessStartInfoF timeOut = 
+let ExecProcessRedirected configProcessStartInfoF timeOut =
     let messages = ref []
-    
-    let appendMessage isError msg = 
+
+    let appendMessage isError msg =
         messages := { IsError = isError
                       Message = msg
                       Timestamp = DateTimeOffset.UtcNow } :: !messages
-    
-    let exitCode = 
+
+    let exitCode =
         ExecProcessWithLambdas configProcessStartInfoF timeOut true (appendMessage true) (appendMessage false)
-    exitCode = 0, 
+    exitCode = 0,
     (!messages
      |> List.rev
      |> Seq.ofList)
@@ -145,7 +145,7 @@ let ExecProcessRedirected configProcessStartInfoF timeOut =
 ///  - `silent` - If this flag is set then the process output is redicted to the trace.
 /// [omit]
 [<Obsolete("Please use the new ExecProcess.")>]
-let execProcess2 configProcessStartInfoF timeOut silent = 
+let execProcess2 configProcessStartInfoF timeOut silent =
     ExecProcessWithLambdas configProcessStartInfoF timeOut silent traceError trace
 
 /// Runs the given process and returns the exit code.
@@ -155,7 +155,7 @@ let execProcess2 configProcessStartInfoF timeOut silent =
 ///  - `timeOut` - The timeout for the process.
 /// [omit]
 [<Obsolete("Please use the new ExecProcess.")>]
-let execProcessAndReturnExitCode configProcessStartInfoF timeOut = 
+let execProcessAndReturnExitCode configProcessStartInfoF timeOut =
     ExecProcessWithLambdas configProcessStartInfoF timeOut true traceError trace
 
 /// Runs the given process and returns if the exit code was 0.
@@ -165,7 +165,7 @@ let execProcessAndReturnExitCode configProcessStartInfoF timeOut =
 ///  - `timeOut` - The timeout for the process.
 /// [omit]
 [<Obsolete("Please use the new ExecProcess.")>]
-let execProcess3 configProcessStartInfoF timeOut = 
+let execProcess3 configProcessStartInfoF timeOut =
     ExecProcessWithLambdas configProcessStartInfoF timeOut true traceError trace = 0
 
 /// Runs the given process and returns the exit code.
@@ -175,13 +175,13 @@ let execProcess3 configProcessStartInfoF timeOut =
 ///  - `timeOut` - The timeout for the process.
 /// ## Sample
 ///
-///     let result = ExecProcess (fun info ->  
+///     let result = ExecProcess (fun info ->
 ///                       info.FileName <- "c:/MyProc.exe"
 ///                       info.WorkingDirectory <- "c:/workingDirectory"
 ///                       info.Arguments <- "-v") (TimeSpan.FromMinutes 5.0)
-///     
+///
 ///     if result <> 0 then failwithf "MyProc.exe returned with a non-zero exit code"
-let ExecProcess configProcessStartInfoF timeOut = 
+let ExecProcess configProcessStartInfoF timeOut =
     ExecProcessWithLambdas configProcessStartInfoF timeOut redirectOutputToTrace traceError trace
 
 /// Runs the given process in an elevated context and returns the exit code.
@@ -190,8 +190,8 @@ let ExecProcess configProcessStartInfoF timeOut =
 ///  - `cmd` - The command which should be run in elavated context.
 ///  - `args` - The process arguments.
 ///  - `timeOut` - The timeout for the process.
-let ExecProcessElevated cmd args timeOut = 
-    ExecProcess (fun si -> 
+let ExecProcessElevated cmd args timeOut =
+    ExecProcess (fun si ->
         si.Verb <- "runas"
         si.Arguments <- args
         si.FileName <- cmd
@@ -207,7 +207,7 @@ let pathDirectories =
 /// Sets the environment Settings for the given startInfo.
 /// Existing values will be overriden.
 /// [omit]
-let setEnvironmentVariables (startInfo : ProcessStartInfo) environmentSettings = 
+let setEnvironmentVariables (startInfo : ProcessStartInfo) environmentSettings =
     for key, value in environmentSettings do
         if startInfo.EnvironmentVariables.ContainsKey key then startInfo.EnvironmentVariables.[key] <- value
         else startInfo.EnvironmentVariables.Add(key, value)
@@ -217,27 +217,27 @@ let setEnvironmentVariables (startInfo : ProcessStartInfo) environmentSettings =
 let execProcess configProcessStartInfoF timeOut = ExecProcess configProcessStartInfoF timeOut = 0
 
 /// Starts the given process and returns immediatly.
-let fireAndForget configProcessStartInfoF = 
+let fireAndForget configProcessStartInfoF =
     use proc = new Process()
     proc.StartInfo.UseShellExecute <- false
     configProcessStartInfoF proc.StartInfo
-    try 
+    try
         start proc
     with exn -> failwithf "Start of process %s failed. %s" proc.StartInfo.FileName exn.Message
 
 /// Runs the given process, waits for its completion and returns if it succeeded.
-let directExec configProcessStartInfoF = 
+let directExec configProcessStartInfoF =
     use proc = new Process()
     proc.StartInfo.UseShellExecute <- false
     configProcessStartInfoF proc.StartInfo
-    try 
+    try
         start proc
     with exn -> failwithf "Start of process %s failed. %s" proc.StartInfo.FileName exn.Message
     proc.WaitForExit()
     proc.ExitCode = 0
 
 /// Starts the given process and forgets about it.
-let StartProcess configProcessStartInfoF = 
+let StartProcess configProcessStartInfoF =
     use proc = new Process()
     proc.StartInfo.UseShellExecute <- false
     configProcessStartInfoF proc.StartInfo
@@ -286,7 +286,7 @@ let quote (str:string) = "\"" + str.Replace("\"","\\\"") + "\""
 
 /// Adds quotes around the string if needed
 /// [omit]
-let quoteIfNeeded str = 
+let quoteIfNeeded str =
     if isNullOrEmpty str then ""
     elif str.Contains " " then quote str
     else str
@@ -300,7 +300,7 @@ let toParam x = " " + quoteIfNeeded x
 let UseDefaults = id
 
 /// [omit]
-let stringParam (paramName, paramValue) = 
+let stringParam (paramName, paramValue) =
     if isNullOrEmpty paramValue then None
     else Some(paramName, quote paramValue)
 
@@ -308,39 +308,39 @@ let stringParam (paramName, paramValue) =
 let multipleStringParams paramName = Seq.map (fun x -> stringParam (paramName, x)) >> Seq.toList
 
 /// [omit]
-let optionParam (paramName, paramValue) = 
+let optionParam (paramName, paramValue) =
     match paramValue with
     | Some x -> Some(paramName, x.ToString())
     | None -> None
 
 /// [omit]
-let boolParam (paramName, paramValue) = 
+let boolParam (paramName, paramValue) =
     if paramValue then Some(paramName, null)
     else None
 
 /// [omit]
-let parametersToString flagPrefix delimiter parameters = 
+let parametersToString flagPrefix delimiter parameters =
     parameters
     |> Seq.choose id
-    |> Seq.map (fun (paramName, paramValue) -> 
+    |> Seq.map (fun (paramName, paramValue) ->
            flagPrefix + paramName + if isNullOrEmpty paramValue then ""
                                     else delimiter + paramValue)
     |> separated " "
 
 /// Searches the given directories for all occurrences of the given file name
 /// [omit]
-let tryFindFile dirs file = 
-    let files = 
+let tryFindFile dirs file =
+    let files =
         dirs
-        |> Seq.map (fun (path : string) -> 
-               let dir = 
+        |> Seq.map (fun (path : string) ->
+               let dir =
                    path
                    |> replace "[ProgramFiles]" ProgramFiles
                    |> replace "[ProgramFilesX86]" ProgramFilesX86
                    |> replace "[SystemRoot]" SystemRoot
                    |> directoryInfo
                if not dir.Exists then ""
-               else 
+               else
                    let fi = dir.FullName @@ file
                             |> fileInfo
                    if fi.Exists then fi.FullName
@@ -352,7 +352,7 @@ let tryFindFile dirs file =
 
 /// Searches the given directories for the given file, failing if not found.
 /// [omit]
-let findFile dirs file = 
+let findFile dirs file =
     match tryFindFile dirs file with
     | Some found -> found
     | None -> failwithf "%s not found in %A." file dirs
@@ -369,35 +369,40 @@ let tryFindFileOnPath (file : string) : string option =
 
 /// Returns the AppSettings for the key - Splitted on ;
 /// [omit]
-let appSettings (key : string) (fallbackValue : string) = 
-    let value = 
-        let setting = 
-            try 
+let appSettings (key : string) (fallbackValue : string) =
+    let value =
+        let setting =
+            try
                 System.Configuration.ConfigurationManager.AppSettings.[key]
             with exn -> ""
         if not (isNullOrWhiteSpace setting) then setting
         else fallbackValue
     value.Split([| ';' |], StringSplitOptions.RemoveEmptyEntries)
 
-/// Tries to find the tool via AppSettings. If no path has the right tool we are trying the PATH system variable.
+/// tries to find the tool on the paths given. If not found then try on the system PATH.
 /// [omit]
-let tryFindPath settingsName fallbackValue tool = 
-    let paths = appSettings settingsName fallbackValue
+let tryFindFileInDirsThenPath paths tool =
     match tryFindFile paths tool with
     | Some path -> Some path
     | None -> tryFindFileOnPath tool
 
 /// Tries to find the tool via AppSettings. If no path has the right tool we are trying the PATH system variable.
 /// [omit]
-let findPath settingsName fallbackValue tool = 
+let tryFindPath settingsName fallbackValue tool =
+    let paths = appSettings settingsName fallbackValue
+    tryFindFileInDirsThenPath paths tool
+
+/// Tries to find the tool via AppSettings. If no path has the right tool we are trying the PATH system variable.
+/// [omit]
+let findPath settingsName fallbackValue tool =
     match tryFindPath settingsName fallbackValue tool with
     | Some file -> file
     | None -> tool
 
 /// Parameter type for process execution.
 [<CLIMutable>]
-type ExecParams = 
-    { /// The path to the executable, without arguments. 
+type ExecParams =
+    { /// The path to the executable, without arguments.
       Program : string
       /// The working directory for the program. Defaults to "".
       WorkingDirectory : string
@@ -410,14 +415,14 @@ type ExecParams =
       Args : (string * string) list }
 
 /// Default parameters for process execution.
-let defaultParams = 
+let defaultParams =
     { Program = ""
       WorkingDirectory = ""
       CommandLine = ""
       Args = [] }
 
-let private formatArgs args = 
-    let delimit (str : string) = 
+let private formatArgs args =
+    let delimit (str : string) =
         if isLetterOrDigit (str.Chars(str.Length - 1)) then str + " "
         else str
     args
@@ -428,22 +433,22 @@ let private formatArgs args =
 /// logging output and error messages to FAKE output. You can compose the result
 /// with Async.Parallel to run multiple external programs at once, but be
 /// sure that none of them depend on the output of another.
-let asyncShellExec (args : ExecParams) = 
-    async { 
+let asyncShellExec (args : ExecParams) =
+    async {
         if isNullOrEmpty args.Program then invalidArg "args" "You must specify a program to run!"
         let commandLine = args.CommandLine + " " + formatArgs args.Args
-        let info = 
+        let info =
             ProcessStartInfo
-                (args.Program, UseShellExecute = false, 
+                (args.Program, UseShellExecute = false,
                 RedirectStandardError = true, RedirectStandardOutput = true, RedirectStandardInput = true,
-                WindowStyle = ProcessWindowStyle.Hidden, WorkingDirectory = args.WorkingDirectory, 
+                WindowStyle = ProcessWindowStyle.Hidden, WorkingDirectory = args.WorkingDirectory,
                 Arguments = commandLine)
         let proc = new Process(StartInfo = info)
 
         try
-            proc.ErrorDataReceived.Add(fun e -> 
+            proc.ErrorDataReceived.Add(fun e ->
                 if e.Data <> null then traceError e.Data)
-            proc.OutputDataReceived.Add(fun e -> 
+            proc.OutputDataReceived.Add(fun e ->
                 if e.Data <> null then log e.Data)
             start proc
             proc.BeginOutputReadLine()
@@ -455,15 +460,15 @@ let asyncShellExec (args : ExecParams) =
             return proc.ExitCode
         finally
             // add a delay because we were seeing ObjectDisposedException when running shell commands on
-            // osx. Github issue #1424. 
+            // osx. Github issue #1424.
             Async.Sleep (10) |> Async.RunSynchronously
             proc.Dispose()
     }
 
 /// Kills the given process
-let kill (proc : Process) = 
+let kill (proc : Process) =
     tracefn "Trying to kill process %s (Id = %d)" proc.ProcessName proc.Id
-    try 
+    try
         proc.Kill()
     with exn -> tracefn "Could not kill process %s (Id = %d).%sMessage: %s" proc.ProcessName proc.Id Environment.NewLine exn.Message
 
@@ -471,23 +476,23 @@ let kill (proc : Process) =
 let killProcessById id = Process.GetProcessById id |> kill
 
 /// Returns all processes with the given name
-let getProcessesByName (name : string) = 
+let getProcessesByName (name : string) =
     Process.GetProcesses()
-    |> Seq.filter (fun p -> 
-           try 
+    |> Seq.filter (fun p ->
+           try
                not p.HasExited
            with exn -> false)
-    |> Seq.filter (fun p -> 
-           try 
+    |> Seq.filter (fun p ->
+           try
                p.ProcessName.ToLower().StartsWith(name.ToLower())
            with exn -> false)
 
 /// Kills all processes with the given name
-let killProcess name = 
+let killProcess name =
     tracefn "Searching for processes with name = %s" name
     Process.GetProcesses()
-    |> Seq.filter (fun p -> 
-           try 
+    |> Seq.filter (fun p ->
+           try
                p.ProcessName.ToLower().StartsWith(name.ToLower())
            with exn -> false)
     |> Seq.iter kill
@@ -504,24 +509,24 @@ let mutable killCreatedProcesses = true
 /// Kills all processes that are created by the FAKE build script unless "donotkill" flag was set.
 let killAllCreatedProcesses() =
     if not killCreatedProcesses then ()
-    else 
+    else
         let traced = ref false
-            
+
         for pid, startTime in startedProcesses do
             try
                 let proc = Process.GetProcessById pid
-                
+
                 // process IDs may be reused by the operating system so we need
                 // to make sure the process is indeed the one we started
                 if proc.StartTime = startTime && not proc.HasExited then
-                    try 
+                    try
                         if not !traced then
                           tracefn "Killing all processes that are created by FAKE and are still running."
                           traced := true
 
                         logfn "Trying to kill %s" proc.ProcessName
                         kill proc
-                    with exn -> logfn "Killing %s failed with %s" proc.ProcessName exn.Message                              
+                    with exn -> logfn "Killing %s failed with %s" proc.ProcessName exn.Message
             with exn -> ()
         startedProcesses.Clear()
 
@@ -542,16 +547,16 @@ let ensureProcessesHaveStopped name timeout =
 let shellExec args = args |> asyncShellExec |> Async.RunSynchronously
 
 /// Allows to exec shell operations synchronously and asynchronously.
-type Shell() = 
-    
-    static member private GetParams(cmd, ?args, ?dir) = 
+type Shell() =
+
+    static member private GetParams(cmd, ?args, ?dir) =
         let args = defaultArg args ""
         let dir = defaultArg dir (Directory.GetCurrentDirectory())
         { WorkingDirectory = dir
           Program = cmd
           CommandLine = args
           Args = [] }
-    
+
     /// Runs the given process, waits for it's completion and returns the exit code.
     /// ## Parameters
     ///
@@ -559,7 +564,7 @@ type Shell() =
     ///  - `args` - The process arguments (optional).
     ///  - `directory` - The working directory (optional).
     static member Exec(cmd, ?args, ?dir) = shellExec (Shell.GetParams(cmd, ?args = args, ?dir = dir))
-    
+
     /// Runs the given process asynchronously.
     /// ## Parameters
     ///
