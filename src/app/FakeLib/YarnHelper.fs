@@ -11,7 +11,7 @@ let private yarnFileName =
     | true ->
         System.Environment.GetEnvironmentVariable("PATH")
         |> fun path -> path.Split ';'
-        |> Seq.tryFind (fun p -> p.Contains "yarn")
+        |> Seq.tryFind (fun p -> p.IndexOf("yarn", StringComparison.OrdinalIgnoreCase) >= 0)
         |> fun res ->
             match res with
             | Some yarn when File.Exists (sprintf @"%s\yarn.cmd" yarn) -> (sprintf @"%s\yarn.cmd" yarn)
