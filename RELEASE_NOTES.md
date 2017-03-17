@@ -1,4 +1,5 @@
-#### 4.55.1 - 17.03.2017
+#### 4.56.0 - 17.03.2017
+* Yarn-Helper - https://github.com/fsharp/FAKE/pull/1494
 * Add F# 4.1 directory path to FSIHelper paths
 
 #### 4.55.0 - 13.03.2017
