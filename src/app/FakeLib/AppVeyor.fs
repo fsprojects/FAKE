@@ -99,6 +99,30 @@ type AppVeyorEnvironment =
     /// The job name
     static member JobName = environVar "APPVEYOR_JOB_NAME"
     
+    /// The Job Number
+    static member JobNumber = environVar "APPVEYOR_JOB_NUMBER"
+    
+    /// set to true to disable cache restore
+    static member CacheSkipRestore = environVar "APPVEYOR_CACHE_SKIP_RESTORE"
+    
+    /// set to true to disable cache update
+    static member CacheSkipSave = environVar "APPVEYOR_CACHE_SKIP_SAVE"
+    
+    /// Current build worker image the build is running on, e.g. Visual Studio 2015
+    static member BuildWorkerImage = environVar "APPVEYOR_BUILD_WORKER_IMAGE"
+    
+    /// Artifact upload timeout in seconds. Default is 600 (10 minutes)
+    static member ArtifactUploadTimeout = environVar "APPVEYOR_ARTIFACT_UPLOAD_TIMEOUT"
+    
+    /// Timeout in seconds to download arbirtary files using appveyor DownloadFile command. Default is 300 (5 minutes)
+    static member FileDownloadTimeout = environVar "APPVEYOR_FILE_DOWNLOAD_TIMEOUT"
+    
+    /// Timeout in seconds to download repository (GitHub, Bitbucket or VSTS) as zip file (shallow clone). Default is 1800 (30 minutes)
+    static member RepositoryShallowCloneTimeout = environVar "APPVEYOR_REPOSITORY_SHALLOW_CLONE_TIMEOUT"
+    
+    /// Timeout in seconds to download or upload each cache entry. Default is 300 (5 minutes)
+    static member CacheEntryUploadDownloadTimeout = environVar "APPVEYOR_CACHE_ENTRY_UPLOAD_DOWNLOAD_TIMEOUT"
+    
 let private sendToAppVeyor args = 
     ExecProcess (fun info -> 
         info.FileName <- "appveyor"
