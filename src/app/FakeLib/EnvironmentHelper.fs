@@ -173,8 +173,11 @@ let mutable TargetPlatformPrefix =
         else Some @"C:\Windows\Microsoft.NET\Framework"
     |> Option.get
 
-/// Base path for getting tools from windows SDKs
-let sdkBasePath = ProgramFilesX86 @@ "Microsoft SDKs\Windows"
+/// Base path for getting tools from Microsoft SDKs
+let msSdkBasePath = ProgramFilesX86 @@ "Microsoft SDKs"
+
+/// Base path for getting tools from Windows SDKs
+let sdkBasePath = msSdkBasePath @@ "Windows"
 
 /// Helper function to help find framework or sdk tools from the 
 /// newest toolkit available
