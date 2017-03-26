@@ -450,7 +450,8 @@ let WriteTaskTimeSummary total =
 
 module ExitCode =
     let exitCode = ref 0
-let private changeExitCodeIfErrorOccured() = if errors <> [] then Environment.ExitCode <- 42; ExitCode.exitCode := 42
+    let mutable exitCodeValue = 42
+let private changeExitCodeIfErrorOccured() = if errors <> [] then Environment.ExitCode <- ExitCode.exitCodeValue; ExitCode.exitCode := ExitCode.exitCodeValue
 
 /// [omit]
 let isListMode = hasBuildParam "list"
