@@ -1,3 +1,6 @@
+#### 4.57.0 - 27.03.2017
+* Run parallel targets just in time - https://github.com/fsharp/FAKE/pull/1396
+
 #### 4.56.0 - 17.03.2017
 * Yarn-Helper - https://github.com/fsharp/FAKE/pull/1494
 * Add F# 4.1 directory path to FSIHelper paths
