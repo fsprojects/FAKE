@@ -16,6 +16,6 @@ namespace Test.FAKECore
     {
         It should_encapsulate_special_chars =
             () => TeamCityHelper.buildStatus("FAILURE", "Total 47, Failures 1, NotRun 0, Inconclusive 0, Skipped 0")
-                      .ShouldEqual("##teamcity[buildStatus 'FAILURE' text='Total 47, Failures 1, NotRun 0, Inconclusive 0, Skipped 0']");
+                      .ShouldEqual("##teamcity[buildStatus status='FAILURE' text='Total 47, Failures 1, NotRun 0, Inconclusive 0, Skipped 0']");
     }
 }
