@@ -24,12 +24,6 @@ type private DependencyType =
     | Hard = 1
     | Soft = 2
 
-type private DependencyLevel =
-    {
-        level:int;
-        dependants: string list;
-    }
-
 /// [omit]
 let mutable PrintStackTraceOnError = false
 
@@ -68,8 +62,6 @@ let reset() =
     BuildFailureTargets.Clear()
     ExecutedTargetTimes.Clear()
     FinalTargets.Clear()
-
-let mutable CurrentTargetOrder = []
 
 /// Returns a list with all target names.
 let getAllTargetsNames() = TargetDict |> Seq.map (fun t -> t.Key) |> Seq.toList
@@ -357,16 +349,14 @@ let private visitDependencies fVisit targetName =
     let visit fGetDependencies fVisit targetName =
         let visited = new HashSet<_>()
         let ordered = new List<_>()
-        let rec visitDependenciesAux level (dependentTarget:option<TargetTemplate<unit>>) (depType,targetName) =
+        let rec visitDependenciesAux level (depType,targetName) =
             let target = getTarget targetName
             let isVisited = visited.Contains targetName
             visited.Add targetName |> ignore
-            fVisit (dependentTarget, target, depType, level, isVisited)
-            
-            (fGetDependencies target) |> Seq.iter (visitDependenciesAux (level + 1) (Some target))                
-            
+            fVisit (target, depType, level, isVisited)
+            (fGetDependencies target) |> Seq.iter (visitDependenciesAux (level + 1))
             if not isVisited then ordered.Add targetName
-        visitDependenciesAux 0 None (DependencyType.Hard, targetName)
+        visitDependenciesAux 0 (DependencyType.Hard, targetName)
         visited, ordered
 
     // First pass is to accumulate targets in (hard) dependency graph
@@ -392,7 +382,7 @@ let PrintDependencyGraph verbose target =
     | true,target ->
         logfn "%sDependencyGraph for Target %s:" (if verbose then String.Empty else "Shortened ") target.Name
 
-        let logDependency (_, (t: TargetTemplate<unit>), depType, level, isVisited) =
+        let logDependency ((t: TargetTemplate<unit>), depType, level, isVisited) =
             if verbose ||  not isVisited then
                 let indent = (String(' ', level * 3))
                 if depType = DependencyType.Soft then
@@ -404,11 +394,7 @@ let PrintDependencyGraph verbose target =
 
         log ""
         log "The resulting target order is:"
-        CurrentTargetOrder
-        |> List.iteri (fun index x ->  
-                                if (environVarOrDefault "parallel-jobs" "1" |> int > 1) then                               
-                                    logfn "Group - %d" (index + 1)
-                                Seq.iter (logfn "  - %s") x)
+        Seq.iter (logfn " - %s") ordered
 
 /// <summary>Writes a dependency graph of all targets in the DOT format.</summary>
 let PrintDotDependencyGraph () =
@@ -491,63 +477,29 @@ let determineBuildOrder (target : string) =
 
     let t = getTarget target
 
-    let targetLevels = new Dictionary<string,DependencyLevel>()
-
-    let appendDepentantOption (currentList:string list) (dependantTarget:option<TargetTemplate<unit>>) = 
-        match dependantTarget with
-        | None -> currentList
-        | Some x -> List.append currentList [x.Name] |> List.distinct 
-
-    let rec SetTargetLevel newLevel target  = 
-        match targetLevels.TryGetValue target with
-        | true, exDependencyLevel -> 
-            if exDependencyLevel.level < newLevel then
-                exDependencyLevel.dependants |> List.iter (fun x -> SetTargetLevel (newLevel - 1) x)
-            if exDependencyLevel.dependants.Length > 0 then
-                targetLevels.[target] <- {level = newLevel; dependants = exDependencyLevel.dependants}
-        | _ -> ()     
-
-    let addTargetLevel ((dependantTarget:option<TargetTemplate<unit>>), (target: TargetTemplate<unit>), _, level, _ ) =
-        let (|LevelIncreaseWithDependantTarget|_|) = function
-        | (true, exDependencyLevel), Some dt when exDependencyLevel.level > level -> Some (exDependencyLevel, dt)
-        | _ -> None
-
-        let (|LevelIncreaseWithNoDependantTarget|_|) = function
-        | (true, exDependencyLevel), None when exDependencyLevel.level > level -> Some (exDependencyLevel)
-        | _ -> None
-        
-        let (|LevelDecrease|_|) = function
-        | (true, exDependencyLevel), _ when exDependencyLevel.level < level -> Some (exDependencyLevel)
-        | _ -> None
-
-        let (|NewTarget|_|) = function
-        | (false, _), _ -> Some ()
-        | _ -> None
-
-        match targetLevels.TryGetValue target.Name, dependantTarget with
-        | LevelIncreaseWithDependantTarget (exDependencyLevel, dt) ->
-            SetTargetLevel (exDependencyLevel.level - 1) dt.Name
-            targetLevels.[target.Name] <- {level = exDependencyLevel.level; dependants = (appendDepentantOption exDependencyLevel.dependants dependantTarget)}
-        |  LevelIncreaseWithNoDependantTarget (exDependencyLevel) -> 
-            targetLevels.[target.Name] <- {level = exDependencyLevel.level; dependants = (appendDepentantOption exDependencyLevel.dependants dependantTarget)}
-        |  LevelDecrease (exDependencyLevel) -> 
-            exDependencyLevel.dependants |> List.iter (fun x -> SetTargetLevel (level - 1) x)
-            targetLevels.[target.Name] <- {level = level; dependants = (appendDepentantOption exDependencyLevel.dependants dependantTarget)}
-        | NewTarget -> 
-            targetLevels.[target.Name] <- {level = level; dependants=(appendDepentantOption [] dependantTarget)}
-        | _ -> ()
+    let targetLevels = new Dictionary<_,_>()
+    let addTargetLevel ((target: TargetTemplate<unit>), _, level, _ ) =
+        match targetLevels.TryGetValue target.Name with
+        | true, mapLevel when mapLevel >= level -> ()
+        | _ -> targetLevels.[target.Name] <- level
 
     let visited, ordered = visitDependencies addTargetLevel target
 
     // the results are grouped by their level, sorted descending (by level) and
-    // finally grouped together in a list<TargetTemplate<unit>[]
-    targetLevels
-    |> Seq.map (fun pair -> pair.Key, pair.Value.level)
-    |> Seq.groupBy snd
-    |> Seq.sortBy (fun (l,_) -> -l)
-    |> Seq.map snd
-    |> Seq.map (fun v -> v |> Seq.map fst |> Seq.distinct |> Seq.map getTarget |> Seq.toArray)
-    |> Seq.toList
+    // finally grouped together in a list<TargetTemplate<unit>[]>
+    let result =
+        targetLevels
+        |> Seq.map (fun pair -> pair.Key, pair.Value)
+        |> Seq.groupBy snd
+        |> Seq.sortBy (fun (l,_) -> -l)
+        |> Seq.map snd
+        |> Seq.map (fun v -> v |> Seq.map fst |> Seq.distinct |> Seq.map getTarget |> Seq.toArray)
+        |> Seq.toList
+
+    // Note that this build order cannot be considered "optimal"
+    // since it may introduce order where actually no dependencies
+    // exist. However it yields a "good" execution order in practice.
+    result
 
 /// Runs a single target without its dependencies
 let runSingleTarget (target : TargetTemplate<unit>) =
@@ -569,6 +521,8 @@ let runTargetsParallel (count : int) (targets : Target[]) =
         .Select(runSingleTarget)
         .ToArray()
     |> ignore
+
+let mutable CurrentTargetOrder = []
 
 /// Runs a target and its dependencies.
 let run targetName =
@@ -603,22 +557,19 @@ let run targetName =
                 order
                 |> List.map (fun targets -> targets |> Array.map (fun t -> t.Name) |> Array.toList)
 
-            PrintDependencyGraph false targetName
-
             // run every level in parallel
             for par in order do
                 runTargetsParallel parallelJobs par
 
         else
             // single threaded build.
-            
+            PrintDependencyGraph false targetName
+
             // Note: we could use the ordering resulting from flattening the result of determineBuildOrder
             // for a single threaded build (thereby centralizing the algorithm for build order), but that
             // ordering is inconsistent with earlier versions of FAKE (and PrintDependencyGraph).
             let _, ordered = visitDependencies ignore targetName
             CurrentTargetOrder <- ordered |> Seq.map (fun t -> [t]) |> Seq.toList
-
-            PrintDependencyGraph false targetName
 
             runTargets (ordered |> Seq.map getTarget |> Seq.toArray)
 
