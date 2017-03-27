@@ -79,33 +79,41 @@ let ``Independent targets are parallel``() =
 
 
     ()
-    
+
 [<Fact>]
-let ``Issue #1395 Example``() =
-    TargetDict.Clear()
-    Target "T1" DoNothing
-    Target "T2.1" DoNothing
-    Target "T2.2" DoNothing
-    Target "T2.3" DoNothing
-    Target "T3" DoNothing
-    Target "T4" DoNothing
+let ``Ordering maintains dependencies``() =
+    let r = Random()
 
-    // create a graph
-    "T1" ==> "T2.1" ==> "T2.2" ==> "T2.3" |> ignore
-    "T1" ==> "T3" |> ignore
-    "T2.3" ==> "T4" |> ignore
-    "T3" ==> "T4" |> ignore
+    for iter in 1..10 do
+        TargetDict.Clear()
+        Target "final" DoNothing
 
-    let order = determineBuildOrder "T4"
-    validateBuildOrder order "T4"
+        let targetCount = r.Next 30 + 10
+        let dependencyCount = r.Next(3 * targetCount)
 
-    match order with
-        | [[|Target "T1"|];TargetSet ["T2.1"; "T3"];[|Target "T2.2"|];[|Target "T2.3"|];[|Target "T4"|]] ->
-            // as expected
-            ()
+        // define some targets and introduce a dependency
+        // to some final target.
+        for c in 0..targetCount-1 do
+            Target (string c) DoNothing
+            string c ==> "final" |> ignore
 
-        | _ ->
-            failwithf "unexpected order: %A" order
+        // add a number of dependencies between two
+        // random targets. By adding dependencies from
+        // the lower index to the higher one we ensure that
+        // the resulting graph remains acyclic
+        for i in 0..dependencyCount-1 do
+            let a = r.Next targetCount
+            let b = r.Next targetCount
+
+            if a <> b then
+                // determine l(ow) and h(igh) and add the dependency
+                let l,h = if a < b then a,b else b, a
+                string l ==> string h |> ignore
+
+
+
+        let order = determineBuildOrder "final"
+        validateBuildOrder order "final"
 
 [<Fact>]
 let ``Diamonds are resolved correctly``() =
@@ -115,7 +123,7 @@ let ``Diamonds are resolved correctly``() =
     Target "c" DoNothing
     Target "d" DoNothing
 
-    // create graph
+    // create a diamond graph
     "a" ==> "b" ==> "d" |> ignore
     "a" ==> "c" ==> "d" |> ignore
 
@@ -130,157 +138,6 @@ let ``Diamonds are resolved correctly``() =
         | _ ->
             failwithf "unexpected order: %A" order
 
-[<Fact>]
-let ``Initial Targets Can Run Concurrently``() =
-    TargetDict.Clear()
-    Target "a" DoNothing
-    Target "b" DoNothing
-    Target "c1" DoNothing
-    Target "c2" DoNothing
-    Target "d" DoNothing
-
-    // create graph
-    "a" ==> "b" ==> "d" |> ignore
-    "c1" ==> "c2" ==> "d" |> ignore
-
-    let order = determineBuildOrder "d"
-    validateBuildOrder order "d"
-
-    match order with
-        | [TargetSet ["a"; "c1"];TargetSet ["b"; "c2"];[|Target "d"|]] ->
-            // as expected
-            ()
-
-        | _ ->
-            failwithf "unexpected order: %A" order
-
-[<Fact>]
-let ``Spurs run as early as possible``() =
-    TargetDict.Clear()
-    Target "a" DoNothing
-    Target "b" DoNothing
-    Target "c1" DoNothing
-    Target "c2" DoNothing
-    Target "d" DoNothing
-
-    // create graph
-    "a" ==> "b" ==> "d" |> ignore
-    "a" ==> "c1" ==> "c2" ==> "d" |> ignore
-
-    let order = determineBuildOrder "d"
-    validateBuildOrder order "d"
-
-    match order with
-        | [[|Target "a"|];TargetSet ["b"; "c1"];[|Target "c2"|];[|Target "d"|]] ->
-            // as expected
-            ()
-
-        | _ ->
-            failwithf "unexpected order: %A" order
-
-[<Fact>]
-let ``Spurs run as early as possible 3 and 2 length``() =
-    TargetDict.Clear()
-    Target "a" DoNothing
-    Target "b1" DoNothing
-    Target "b2" DoNothing
-    Target "c1" DoNothing
-    Target "c2" DoNothing
-    Target "c3" DoNothing
-    Target "d" DoNothing
-
-    // create graph
-    "a" ==> "b1" ==> "b2" ==> "d" |> ignore
-    "a" ==> "c1" ==> "c2" ==> "c3" ==> "d" |> ignore
-
-    let order = determineBuildOrder "d"
-    validateBuildOrder order "d"
-
-    match order with
-        | [[|Target "a"|];TargetSet ["b1"; "c1"];TargetSet ["b2"; "c2"];[|Target "c3"|];[|Target "d"|]] ->
-            // as expected
-            ()
-
-        | _ ->
-            failwithf "unexpected order: %A" order
-
-[<Fact>]
-let ``Spurs run as early as possible (reverse definition order)``() =
-    TargetDict.Clear()
-    Target "a" DoNothing
-    Target "b" DoNothing
-    Target "c1" DoNothing
-    Target "c2" DoNothing
-    Target "d" DoNothing
-
-    // create graph
-    "a" ==> "c1" ==> "c2" ==> "d" |> ignore
-    "a" ==> "b" ==> "d" |> ignore    
-
-    let order = determineBuildOrder "d"
-    validateBuildOrder order "d"
-
-    match order with
-        | [[|Target "a"|];TargetSet ["b"; "c1"];[|Target "c2"|];[|Target "d"|]] ->
-            // as expected
-            ()
-
-        | _ ->
-            failwithf "unexpected order: %A" order
-
-[<Fact>]
-let ``Spurs run as early as possible split on longer spur``() =
-    TargetDict.Clear()
-    Target "a" DoNothing
-    Target "b" DoNothing
-    Target "c1" DoNothing
-    Target "c21" DoNothing
-    Target "c22" DoNothing
-    Target "d" DoNothing
-
-    // create graph
-    "a" ==> "b" ==> "d" |> ignore
-    "a" ==> "c1" ==> "c21" ==> "d" |> ignore
-    "a" ==> "c1" ==> "c22" ==> "d" |> ignore
-
-    let order = determineBuildOrder "d"
-    validateBuildOrder order "d"
-
-    match order with
-        | [[|Target "a"|];TargetSet ["b"; "c1"];TargetSet ["c21"; "c22"];[|Target "d"|]] ->
-            // as expected
-            ()
-
-        | _ ->
-            failwithf "unexpected order: %A" order
-
-[<Fact>]
-let ``3 way Spurs run as early as possible``() =
-    TargetDict.Clear()
-    Target "a" DoNothing
-    Target "b" DoNothing
-    Target "c1" DoNothing
-    Target "c2" DoNothing
-    Target "d1" DoNothing
-    Target "d2" DoNothing
-    Target "d3" DoNothing
-    Target "e" DoNothing
-
-    // create graph
-    "a" ==> "b" ==> "e" |> ignore
-    "a" ==> "c1" ==> "c2" ==> "e" |> ignore
-    "a" ==> "d1" ==> "d2" ==> "d3" ==> "e" |> ignore
-
-    let order = determineBuildOrder "e"
-    validateBuildOrder order "e"
-
-    match order with
-        | [[|Target "a"|];TargetSet ["b"; "c1"; "d1"];TargetSet ["c2"; "d2"];[|Target "d3"|];[|Target "e"|]] ->
-            // as expected
-            ()
-
-        | _ ->
-            failwithf "unexpected order: %A" order
 
 [<Fact>]
 let ``Soft dependencies are respected when dependees are present``() = 
@@ -314,6 +171,8 @@ let ``Soft dependencies are respected when dependees are present``() =
         | _ ->
             failwithf "unexpected order: %A" order
     ()
+
+
 
 [<Fact>]
 let ``Soft dependencies are ignored when dependees are not present``() = 
