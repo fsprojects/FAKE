@@ -463,8 +463,8 @@ let WriteTaskTimeSummary total =
     traceLine()
 
 module ExitCode =
-    let exitCode = ref 0
-let private changeExitCodeIfErrorOccured() = if errors <> [] then Environment.ExitCode <- 42; ExitCode.exitCode := 42
+    let exitCode = ref 42
+let private changeExitCodeIfErrorOccured() = if errors <> [] then Environment.ExitCode <- !ExitCode.exitCode
 
 /// [omit]
 let isListMode = hasBuildParam "list"
