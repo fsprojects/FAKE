@@ -208,6 +208,58 @@ let ``BlythMeisters Scenario Of Complex Build Order Is Correct``() =
             failwithf "unexpected order: %A" order
 
 [<Fact>]
+let ``BlythMeisters Scenario Of Even More Complex Build Order Is Correct``() =
+    TargetDict.Clear()
+    Target "PrepareBuild" DoNothing
+    Target "CreateWholeCaboodle" DoNothing
+    Target "UpdateVersions" DoNothing
+    Target "PreBuildVerifications" DoNothing
+    Target "BuildWholeCaboodle" DoNothing
+    Target "RunUnitTests" DoNothing
+    Target "RunIntTests" DoNothing
+    Target "CreateDBNugets" DoNothing
+    Target "DropIntDatabases" DoNothing
+    Target "DeployIntDatabases" DoNothing
+    Target "CreateNugets" DoNothing
+    Target "PublishNugets" DoNothing
+
+    "PrepareBuild" ==> "CreateWholeCaboodle" ==> "PreBuildVerifications" |> ignore
+    "PrepareBuild" ==> "UpdateVersions" ==> "PreBuildVerifications" |> ignore
+    "PreBuildVerifications" ==> "CreateDBNugets" ==> "DeployIntDatabases" |> ignore
+    "PreBuildVerifications" ==> "DropIntDatabases" ==> "DeployIntDatabases" |> ignore
+    "PreBuildVerifications" ==> "BuildWholeCaboodle" |> ignore
+    "BuildWholeCaboodle" ==> "RunUnitTests"  |> ignore
+    "BuildWholeCaboodle" ==> "RunIntTests" |> ignore   
+    "DeployIntDatabases" ==> "RunIntTests" |> ignore   
+    "BuildWholeCaboodle" ==> "CreateNugets" |> ignore 
+    "RunIntTests" ==> "CreateNugets" |> ignore
+    "RunUnitTests" ==> "CreateNugets"  |> ignore    
+    "RunUnitTests" ==> "PublishNugets" |> ignore
+    "RunIntTests" ==> "PublishNugets" |> ignore
+    "CreateDBNugets" ==> "PublishNugets" |> ignore
+    "CreateNugets" ==> "PublishNugets" |> ignore    
+
+    let order = determineBuildOrder "PublishNugets"
+    validateBuildOrder order "PublishNugets"
+
+    match order with
+        | [
+           TargetSet ["PrepareBuild"];
+           TargetSet ["CreateWholeCaboodle"; "UpdateVersions"];
+           TargetSet ["PreBuildVerifications"];
+           TargetSet ["BuildWholeCaboodle"; "CreateDBNugets"; "DropIntDatabases"];
+           TargetSet ["DeployIntDatabases"; "RunUnitTests"];
+           TargetSet ["RunIntTests"];
+           TargetSet ["CreateNugets"];           
+           TargetSet ["PublishNugets"];
+           ] ->
+            // as expected
+            ()
+
+        | _ ->
+            failwithf "unexpected order: %A" order
+
+[<Fact>]
 let ``Spurs run as early as possible``() =
     TargetDict.Clear()
     Target "a" DoNothing

@@ -498,6 +498,12 @@ let determineBuildOrder (target : string) =
         | None -> currentList
         | Some x -> List.append currentList [x.Name] |> List.distinct 
 
+    let SetDependency dependantTarget target = 
+        match targetLevels.TryGetValue target with
+        | true, exDependencyLevel -> 
+            targetLevels.[target] <- {level = exDependencyLevel.level; dependants = (appendDepentantOption exDependencyLevel.dependants dependantTarget)}
+        | _ -> ()
+
     let rec SetTargetLevel newLevel target  = 
         match targetLevels.TryGetValue target with
         | true, exDependencyLevel -> 
@@ -509,14 +515,15 @@ let determineBuildOrder (target : string) =
                                        | _ -> -1
             
             if exDependencyLevel.dependants.Length > 0 then
-                if (exDependencyLevel.level < newLevel && newLevel < minLevel) || (exDependencyLevel.level > newLevel) then
+                if (exDependencyLevel.level < newLevel && (newLevel < minLevel || minLevel = -1)) || (exDependencyLevel.level > newLevel) then
                     targetLevels.[target] <- {level = newLevel; dependants = exDependencyLevel.dependants}
-
                 if exDependencyLevel.level < newLevel then
                     exDependencyLevel.dependants |> List.iter (fun x -> SetTargetLevel (newLevel - 1) x)
+        | _ -> ()
 
-        | _ -> ()     
-
+    let AddNewTargetLevel dependantTarget level target =
+        targetLevels.[target] <- {level = level; dependants=(appendDepentantOption [] dependantTarget)}
+        
     let addTargetLevel ((dependantTarget:option<TargetTemplate<unit>>), (target: TargetTemplate<unit>), _, level, _ ) =
         let (|LevelIncreaseWithDependantTarget|_|) = function
         | (true, exDependencyLevel), Some dt when exDependencyLevel.level > level -> Some (exDependencyLevel, dt)
@@ -530,8 +537,8 @@ let determineBuildOrder (target : string) =
         | (true, exDependencyLevel), _ when exDependencyLevel.level < level -> Some (exDependencyLevel)
         | _ -> None
 
-        let (|LevelRemain|_|) = function
-        | (true, exDependencyLevel), _ -> Some (exDependencyLevel)
+        let (|AddDependency|_|) = function
+        | (true, exDependencyLevel), Some dt when not(exDependencyLevel.dependants.Contains dt.Name) -> Some (exDependencyLevel, dt)
         | _ -> None
 
         let (|NewTarget|_|) = function
@@ -540,17 +547,17 @@ let determineBuildOrder (target : string) =
 
         match targetLevels.TryGetValue target.Name, dependantTarget with
         | LevelIncreaseWithDependantTarget (exDependencyLevel, dt) ->
-            targetLevels.[target.Name] <- {level = exDependencyLevel.level; dependants = (appendDepentantOption exDependencyLevel.dependants dependantTarget)}
+            SetDependency dependantTarget target.Name
             SetTargetLevel (exDependencyLevel.level - 1) dt.Name
         |  LevelIncreaseWithNoDependantTarget (exDependencyLevel) -> 
-            targetLevels.[target.Name] <- {level = exDependencyLevel.level; dependants = (appendDepentantOption exDependencyLevel.dependants dependantTarget)}
+            SetDependency dependantTarget target.Name
         |  LevelDecrease (exDependencyLevel) -> 
-            targetLevels.[target.Name] <- {level = level; dependants = (appendDepentantOption exDependencyLevel.dependants dependantTarget)}
-            exDependencyLevel.dependants |> List.iter (fun x -> SetTargetLevel (level - 1) x)
-        |  LevelRemain (exDependencyLevel) -> 
-            targetLevels.[target.Name] <- {level = level; dependants = (appendDepentantOption exDependencyLevel.dependants dependantTarget)}
+            SetDependency dependantTarget target.Name
+            SetTargetLevel level target.Name
+        |  AddDependency (exDependencyLevel, dt) -> 
+            SetDependency dependantTarget target.Name
         | NewTarget -> 
-            targetLevels.[target.Name] <- {level = level; dependants=(appendDepentantOption [] dependantTarget)}
+            AddNewTargetLevel dependantTarget level target.Name
         | _ -> ()
 
     let visited, ordered = visitDependencies addTargetLevel target
