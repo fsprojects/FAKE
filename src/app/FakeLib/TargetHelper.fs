@@ -520,6 +520,10 @@ let determineBuildOrder (target : string) =
         | (true, exDependencyLevel), _ when exDependencyLevel.level < level -> Some (exDependencyLevel)
         | _ -> None
 
+        let (|LevelRemain|_|) = function
+        | (true, exDependencyLevel), _ -> Some (exDependencyLevel)
+        | _ -> None
+
         let (|NewTarget|_|) = function
         | (false, _), _ -> Some ()
         | _ -> None
@@ -532,6 +536,7 @@ let determineBuildOrder (target : string) =
             targetLevels.[target.Name] <- {level = exDependencyLevel.level; dependants = (appendDepentantOption exDependencyLevel.dependants dependantTarget)}
         |  LevelDecrease (exDependencyLevel) -> 
             exDependencyLevel.dependants |> List.iter (fun x -> SetTargetLevel (level - 1) x)
+        |  LevelRemain (exDependencyLevel) -> 
             targetLevels.[target.Name] <- {level = level; dependants = (appendDepentantOption exDependencyLevel.dependants dependantTarget)}
         | NewTarget -> 
             targetLevels.[target.Name] <- {level = level; dependants=(appendDepentantOption [] dependantTarget)}
