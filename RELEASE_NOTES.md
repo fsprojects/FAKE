@@ -1,4 +1,4 @@
-#### 4.57.1 - 28.03.2017
+#### 4.57.2 - 28.03.2017
 * Run parallel targets just in time - https://github.com/fsharp/FAKE/pull/1396
 
 #### 4.56.0 - 17.03.2017
