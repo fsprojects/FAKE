@@ -501,10 +501,20 @@ let determineBuildOrder (target : string) =
     let rec SetTargetLevel newLevel target  = 
         match targetLevels.TryGetValue target with
         | true, exDependencyLevel -> 
-            if exDependencyLevel.level < newLevel then
-                exDependencyLevel.dependants |> List.iter (fun x -> SetTargetLevel (newLevel - 1) x)
+            let minLevel = targetLevels
+                           |> Seq.filter(fun x -> x.Value.dependants.Contains target)
+                           |> Seq.map(fun x -> x.Value.level)
+                           |> fun x -> match x.Any() with
+                                       | true -> x |> Seq.min
+                                       | _ -> -1
+            
             if exDependencyLevel.dependants.Length > 0 then
-                targetLevels.[target] <- {level = newLevel; dependants = exDependencyLevel.dependants}
+                if (exDependencyLevel.level < newLevel && newLevel < minLevel) || (exDependencyLevel.level > newLevel) then
+                    targetLevels.[target] <- {level = newLevel; dependants = exDependencyLevel.dependants}
+
+                if exDependencyLevel.level < newLevel then
+                    exDependencyLevel.dependants |> List.iter (fun x -> SetTargetLevel (newLevel - 1) x)
+
         | _ -> ()     
 
     let addTargetLevel ((dependantTarget:option<TargetTemplate<unit>>), (target: TargetTemplate<unit>), _, level, _ ) =
@@ -520,18 +530,24 @@ let determineBuildOrder (target : string) =
         | (true, exDependencyLevel), _ when exDependencyLevel.level < level -> Some (exDependencyLevel)
         | _ -> None
 
+        let (|LevelRemain|_|) = function
+        | (true, exDependencyLevel), _ -> Some (exDependencyLevel)
+        | _ -> None
+
         let (|NewTarget|_|) = function
         | (false, _), _ -> Some ()
         | _ -> None
 
         match targetLevels.TryGetValue target.Name, dependantTarget with
         | LevelIncreaseWithDependantTarget (exDependencyLevel, dt) ->
-            SetTargetLevel (exDependencyLevel.level - 1) dt.Name
             targetLevels.[target.Name] <- {level = exDependencyLevel.level; dependants = (appendDepentantOption exDependencyLevel.dependants dependantTarget)}
+            SetTargetLevel (exDependencyLevel.level - 1) dt.Name
         |  LevelIncreaseWithNoDependantTarget (exDependencyLevel) -> 
             targetLevels.[target.Name] <- {level = exDependencyLevel.level; dependants = (appendDepentantOption exDependencyLevel.dependants dependantTarget)}
         |  LevelDecrease (exDependencyLevel) -> 
+            targetLevels.[target.Name] <- {level = level; dependants = (appendDepentantOption exDependencyLevel.dependants dependantTarget)}
             exDependencyLevel.dependants |> List.iter (fun x -> SetTargetLevel (level - 1) x)
+        |  LevelRemain (exDependencyLevel) -> 
             targetLevels.[target.Name] <- {level = level; dependants = (appendDepentantOption exDependencyLevel.dependants dependantTarget)}
         | NewTarget -> 
             targetLevels.[target.Name] <- {level = level; dependants=(appendDepentantOption [] dependantTarget)}
