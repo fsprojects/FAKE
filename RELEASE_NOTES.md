@@ -1,3 +1,6 @@
+#### 4.57.4 - 29.03.2017
+* Make exit code accessible - https://github.com/fsharp/FAKE/pull/1502
+
 #### 4.57.3 - 29.03.2017
 * Run parallel targets just in time - https://github.com/fsharp/FAKE/pull/1396
 
