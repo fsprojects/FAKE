@@ -70,6 +70,7 @@ let reset() =
     FinalTargets.Clear()
 
 let mutable CurrentTargetOrder = []
+let mutable CurrentTarget = ""
 
 /// Returns a list with all target names.
 let getAllTargetsNames() = TargetDict |> Seq.map (fun t -> t.Key) |> Seq.toList
@@ -345,7 +346,6 @@ let PrintTargets() =
     for t in TargetDict.Values do
         logfn "   %s%s" t.Name (if isNullOrEmpty t.Description then "" else sprintf " - %s" t.Description)
 
-
 // Maps the specified dependency type into the list of targets
 let private withDependencyType (depType:DependencyType) targets =
     targets |> List.map (fun t -> depType, t)
@@ -380,9 +380,7 @@ let private visitDependencies fVisit targetName =
 
     // Now make second pass, adding in soft depencencies if appropriate
     visit getAllDependencies fVisit targetName
-
-
-
+    
 /// <summary>Writes a dependency graph.</summary>
 /// <param name="verbose">Whether to print verbose output or not.</param>
 /// <param name="target">The target for which the dependencies should be printed.</param>
@@ -435,30 +433,41 @@ let WriteErrors () =
 /// <param name="total">The total runtime.</param>
 let WriteTaskTimeSummary total =
     traceHeader "Build Time Report"
-    if ExecutedTargets.Count > 0 then
-        let width =
-            ExecutedTargetTimes
-              |> Seq.map (fun (a,b) -> a.Length)
-              |> Seq.max
-              |> max 8
 
-        let aligned (name:string) duration = tracefn "%s   %O" (name.PadRight width) duration
-        let alignedError (name:string) duration = sprintf "%s   %O" (name.PadRight width) duration |> traceError
+    let width = ExecutedTargetTimes
+                |> Seq.map (fun (a,b) -> a.Length)
+                |> Seq.append([CurrentTarget.Length])
+                |> Seq.max
+                |> max 8
 
-        aligned "Target" "Duration"
-        aligned "------" "--------"
-        ExecutedTargetTimes
-          |> Seq.iter (fun (name,time) ->
-                let t = getTarget name
-                aligned t.Name time)
+    let aligned (name:string) duration = tracefn "%s   %O" (name.PadRight width) duration
+    let alignedError (name:string) duration = sprintf "%s   %O" (name.PadRight width) duration |> traceError
 
+    aligned "Target" "Duration"
+    aligned "------" "--------"
+
+    ExecutedTargetTimes
+        |> Seq.iter (fun (name,time) ->
+            let t = getTarget name
+            aligned t.Name time)
+        
+    if errors = [] && ExecutedTargetTimes.Count > 0 then 
         aligned "Total:" total
-        if errors = [] then aligned "Status:" "Ok"
-        else
-            alignedError "Status:" "Failure"
-            WriteErrors()
+        traceLine()
+        aligned "Status:" "Ok"
+    else if ExecutedTargetTimes.Count > 0 then
+        let failedTarget = getTarget CurrentTarget
+        alignedError failedTarget.Name "Failure"
+        aligned "Total:" total
+        traceLine()
+        alignedError "Status:" "Failure"
+        traceLine()
+        WriteErrors()
     else
-        traceError "No target was successfully completed"
+        let failedTarget = getTarget CurrentTarget
+        alignedError failedTarget.Name "Failure"
+        traceLine()
+        alignedError "Status:" "Failure"
 
     traceLine()
 
@@ -577,11 +586,13 @@ let runSingleTarget (target : TargetTemplate<unit>) =
     try
         if errors = [] then
             traceStartTarget target.Name target.Description (dependencyString target)
+            CurrentTarget <- target.Name
             let watch = new System.Diagnostics.Stopwatch()
             watch.Start()
             target.Function()
             addExecutedTarget target.Name watch.Elapsed
             traceEndTarget target.Name
+            CurrentTarget <- ""
     with exn ->
         targetError target.Name exn
 
