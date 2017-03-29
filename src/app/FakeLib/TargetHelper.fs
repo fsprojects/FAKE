@@ -399,9 +399,10 @@ let PrintDependencyGraph verbose target =
                     log <| sprintf "%s<== %s" indent t.Name
 
         let _, ordered = visitDependencies logDependency target.Name
-
         log ""
-        log "The resulting target order is:"
+
+let PrintRunningOrder() = 
+        log "The running order is:"
         CurrentTargetOrder
         |> List.iteri (fun index x ->  
                                 if (environVarOrDefault "parallel-jobs" "1" |> int > 1) then                               
@@ -569,7 +570,7 @@ let determineBuildOrder (target : string) =
             AddNewTargetLevel dependantTarget level target.Name
         | _ -> ()
 
-    let visited, ordered = visitDependencies addTargetLevel target
+    visitDependencies addTargetLevel target |> ignore
 
     // the results are grouped by their level, sorted descending (by level) and
     // finally grouped together in a list<TargetTemplate<unit>[]
@@ -603,58 +604,52 @@ let runTargetsParallel (count : int) (targets : Target[]) =
         .Select(runSingleTarget)
         .ToArray()
     |> ignore
+    
+let runTargets (targets: TargetTemplate<unit> array) =
+    let lastTarget = targets |> Array.last
+    if errors = [] && ExecutedTargets.Contains (lastTarget.Name) |> not then
+        let firstTarget = targets |> Array.head
+        if hasBuildParam "single-target" then
+            traceImportant "Single target mode ==> Skipping dependencies."
+            runSingleTarget lastTarget
+        else
+            targets |> Array.iter runSingleTarget
 
 /// Runs a target and its dependencies.
 let run targetName =
     if doesTargetMeanPrintDotGraph targetName then PrintDotDependencyGraph() else
     if doesTargetMeanListTargets targetName then listTargets() else
     if LastDescription <> null then failwithf "You set a task description (%A) but didn't specify a task." LastDescription
-
-    let rec runTargets (targets: TargetTemplate<unit> array) =
-        let lastTarget = targets |> Array.last
-        if errors = [] && ExecutedTargets.Contains (lastTarget.Name) |> not then
-           let firstTarget = targets |> Array.head
-           if hasBuildParam "single-target" then
-               traceImportant "Single target mode ==> Skipping dependencies."
-               runSingleTarget lastTarget
-           else
-               targets |> Array.iter runSingleTarget
-
+    
     let watch = new System.Diagnostics.Stopwatch()
     watch.Start()
     try
         tracefn "Building project with version: %s" buildVersion
+        PrintDependencyGraph false targetName
+
+        // determine a parallel build order
+        let order = determineBuildOrder targetName
+
         let parallelJobs = environVarOrDefault "parallel-jobs" "1" |> int
 
         // Figure out the order in in which targets can be run, and which can be run in parallel.
         if parallelJobs > 1 then
             tracefn "Running parallel build with %d workers" parallelJobs
+            CurrentTargetOrder <- order |> List.map (fun targets -> targets |> Array.map (fun t -> t.Name) |> Array.toList)
 
-            // determine a parallel build order
-            let order = determineBuildOrder targetName
-
-            CurrentTargetOrder <-
-                order
-                |> List.map (fun targets -> targets |> Array.map (fun t -> t.Name) |> Array.toList)
-
-            PrintDependencyGraph false targetName
+            PrintRunningOrder()
 
             // run every level in parallel
             for par in order do
                 runTargetsParallel parallelJobs par
-
         else
-            // single threaded build.
             
-            // Note: we could use the ordering resulting from flattening the result of determineBuildOrder
-            // for a single threaded build (thereby centralizing the algorithm for build order), but that
-            // ordering is inconsistent with earlier versions of FAKE (and PrintDependencyGraph).
-            let _, ordered = visitDependencies ignore targetName
-            CurrentTargetOrder <- ordered |> Seq.map (fun t -> [t]) |> Seq.toList
+            let flatenedOrder = order |> List.map (fun targets -> targets |> Array.map (fun t -> t.Name)  |> Array.toList) |> List.concat
+            CurrentTargetOrder <- flatenedOrder |> Seq.map (fun t -> [t]) |> Seq.toList
 
-            PrintDependencyGraph false targetName
+            PrintRunningOrder()
 
-            runTargets (ordered |> Seq.map getTarget |> Seq.toArray)
+            runTargets (flatenedOrder |> Seq.map getTarget |> Seq.toArray)
 
     finally
         if errors <> [] then
