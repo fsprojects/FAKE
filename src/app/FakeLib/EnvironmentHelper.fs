@@ -17,12 +17,12 @@ type EnvironTarget = EnvironmentVariableTarget
 /// Retrieves the environment variable with the given name
 let environVar name = Environment.GetEnvironmentVariable name
 
-/// Combines two path strings using Path.Combine
+/// Combines two path strings using Path.Combine after removing leading slashes from the second path
 let inline combinePaths path1 (path2 : string) = Path.Combine(path1, path2.TrimStart [| '\\'; '/' |])
 /// Combines two path strings using Path.Combine
 let inline combinePathsNoTrim path1 path2 = Path.Combine(path1, path2)
 
-/// Combines two path strings using Path.Combine
+/// Combines two path strings using Path.Combine after removing leading slashes from the second path
 let inline (@@) path1 path2 = combinePaths path1 path2
 /// Combines two path strings using Path.Combine
 let inline (</>) path1 path2 = combinePathsNoTrim path1 path2
