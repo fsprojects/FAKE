@@ -7,19 +7,20 @@ open System.IO
 open Fake
 
 /// Process model for NUnit 3 to use.
-type NUnit3ProcessModel = 
+type NUnit3ProcessModel =
     | DefaultProcessModel
     | SingleProcessModel
     | SeparateProcessModel
-    | MultipleProcessModel with 
+    | MultipleProcessModel with
     member x.ParamString =
         match x with
         | DefaultProcessModel -> ""
         | SingleProcessModel -> "Single"
-        | SeparateProcessModel -> "Separate" 
+        | SeparateProcessModel -> "Separate"
         | MultipleProcessModel -> "Multiple"
+
 /// The --domain option controls of the creation of AppDomains for running tests. See [NUnit-Console Command Line Options](http://www.nunit.org/index.php?p=consoleCommandLine&r=2.6.4)
-type NUnit3DomainModel = 
+type NUnit3DomainModel =
     /// The default is to use multiple domains if multiple assemblies are listed on the command line. Otherwise a single domain is used.
     | DefaultDomainModel
     /// No domain is created - the tests are run in the primary domain. This normally requires copying the NUnit assemblies into the same directory as your tests.
@@ -37,7 +38,7 @@ type NUnit3DomainModel =
 
 /// The --framework option in running NUnit 3. There are three kinds - VXY, which means either .NET framework or Mono, NetXY (use .NET framework with given version)
 /// and MonoXY (Mono framework with given version). You can use Net or Mono to let NUnit select the version.
-/// You can pass any value using Other. 
+/// You can pass any value using Other.
 type NUnit3Runtime =
     /// Uses the runtime under which the assembly was built.
     | Default
@@ -84,6 +85,23 @@ type NUnit3Runtime =
 /// Option which allows to specify if a NUnit error should break the build.
 type NUnit3ErrorLevel = TestRunnerErrorLevel
 
+/// The --trace option in NUnit3 console runner. Specifies the internal nunit runner log level.
+type NUnit3TraceLevel =
+    | Default
+    | Off
+    | Error
+    | Warning
+    | Info
+    | Verbose
+    member x.ParamString =
+        match x with
+        | Default -> ""
+        | Off -> "Off"
+        | Error -> "Error"
+        | Warning -> "Warning"
+        | Info -> "Info"
+        | Verbose -> "Verbose"
+
 /// The --labels option in NUnit3 console runner. Specify whether to write test case names to the output.
 type LabelsLevel =
     | Default
@@ -108,8 +126,8 @@ type NUnit3Params =
       /// The name (or path) of a file containing a list of tests to run or explore, one per line.
       Testlist : string
 
-      /// An expression indicating which tests to run. It may specify test names, classes, methods, 
-      /// catgories or properties comparing them to actual values with the operators ==, !=, =~ and !~. 
+      /// An expression indicating which tests to run. It may specify test names, classes, methods,
+      /// catgories or properties comparing them to actual values with the operators ==, !=, =~ and !~.
       /// See [NUnit documentation](https://github.com/nunit/docs/wiki/Test-Selection-Language) for a full description of the syntax.
       Where : string
 
@@ -126,7 +144,7 @@ type NUnit3Params =
 
       /// Controls how NUnit loads tests in processes. See: [NUnit3ProcessModel](fake-testing-nunit3-nunit3domainmodel.html).
       Domain : NUnit3DomainModel
-      
+
       /// Allows you to specify the version of the runtime to be used in executing tests.
       /// Default value is runtime under which the assembly was built. See: [NUnit3Runtime](fake-testing-nunit3-nunit3runtime.html).
       Framework : NUnit3Runtime
@@ -176,6 +194,9 @@ type NUnit3Params =
 
       /// Default: [TestRunnerErrorLevel](fake-unittestcommon-testrunnererrorlevel.html).Error
       ErrorLevel : NUnit3ErrorLevel
+
+      /// Controls the trace logs NUnit3 will output, defaults to Off
+      TraceLevel : NUnit3TraceLevel
     }
 
 /// The [NUnit3Params](fake-testing-nunit3-nunit3params.html) default parameters.
@@ -185,7 +206,7 @@ type NUnit3Params =
 /// - `Where` - `""`
 /// - `Config` - `""`
 /// - `ProcessModel` - `DefaultProcessModel`
-/// - `Agents` - `None` 
+/// - `Agents` - `None`
 /// - `Domain` - `DefaultDomainModel`
 /// - `Framework` - `""`
 /// - `Force32bit` - `false`
@@ -201,6 +222,7 @@ type NUnit3Params =
 /// - `ShadowCopy` - `false`
 /// - `TeamCity` - `false`
 /// - `ErrorLevel` - `Error`
+/// - `TraceLevel` - `Default` (By default NUnit3 sets this to off internally)
 /// ## Defaults
 let NUnit3Defaults =
     {
@@ -225,7 +247,8 @@ let NUnit3Defaults =
       ShadowCopy = false
       TeamCity = false
       Labels = LabelsLevel.Default
-      ErrorLevel = Error
+      ErrorLevel = NUnit3ErrorLevel.Error
+      TraceLevel= NUnit3TraceLevel.Default
     }
 
 /// Tries to detect the working directory as specified in the parameters or via TeamCity settings
@@ -253,6 +276,7 @@ let buildNUnit3Args parameters assemblies =
     |> appendIfNotNullOrEmpty parameters.Domain.ParamString "--domain="
     |> appendIfNotNullOrEmpty parameters.Framework.ParamString "--framework="
     |> appendIfNotNullOrEmpty parameters.Labels.ParamString "--labels="
+    |> appendIfNotNullOrEmpty parameters.TraceLevel.ParamString "--trace="
     |> appendIfTrue parameters.Force32bit "--x86"
     |> appendIfTrue parameters.DisposeRunners "--dispose-runners"
     |> appendIfTrue (parameters.TimeOut <> NUnit3Defaults.TimeOut) (sprintf "--timeout=%i" (int parameters.TimeOut.TotalMilliseconds))
@@ -278,23 +302,23 @@ let NUnit3 (setParams : NUnit3Params -> NUnit3Params) (assemblies : string seq) 
     let args = buildNUnit3Args parameters assemblies
     trace (tool + " " + args)
     let processTimeout = TimeSpan.MaxValue // Don't set a process timeout. The timeout is per test.
-    let result = 
-        ExecProcess (fun info -> 
+    let result =
+        ExecProcess (fun info ->
             info.FileName <- tool
             info.WorkingDirectory <- getWorkingDir parameters
             info.Arguments <- args) processTimeout
-    let errorDescription error = 
+    let errorDescription error =
         match error with
         | OK -> "OK"
         | TestsFailed -> sprintf "NUnit test failed (%d)." error
         | FatalError x -> sprintf "NUnit test failed. Process finished with exit code %s (%d)." x error
 
     match parameters.ErrorLevel with
-    | DontFailBuild -> 
+    | NUnit3ErrorLevel.DontFailBuild ->
         match result with
         | OK | TestsFailed -> ()
         | _ -> raise (FailedTestsException(errorDescription result))
-    | Error | FailOnFirstError -> 
+    | NUnit3ErrorLevel.Error | FailOnFirstError ->
         match result with
         | OK -> ()
         | _ -> raise (FailedTestsException(errorDescription result))
