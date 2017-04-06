@@ -8,7 +8,8 @@ open System.Xml
 open System.Xml.Linq
 
 type NuGetSearchItemResult =
-    { Version:string
+    { Id:string
+      Version:string
       Published:DateTime }
 type NuGetSearchResult = 
     { results:NuGetSearchItemResult list }
@@ -59,6 +60,7 @@ let getLastNuGetVersion server (packageName:string) =
       then
         let json = JsonConvert.DeserializeObject<NuGetSearchResponse>(text)
         json.d.results
+        |> Seq.filter (fun i -> i.Id = packageName)
         |> Seq.sortByDescending (fun i -> i.Published)
         |> Seq.tryHead
         |> fun i -> 

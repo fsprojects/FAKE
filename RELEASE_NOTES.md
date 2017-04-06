@@ -1,3 +1,25 @@
+#### 4.57.4 - 29.03.2017
+* Make exit code accessible - https://github.com/fsharp/FAKE/pull/1502
+
+#### 4.57.3 - 29.03.2017
+* Run parallel targets just in time - https://github.com/fsharp/FAKE/pull/1396
+
+#### 4.56.0 - 17.03.2017
+* Yarn-Helper - https://github.com/fsharp/FAKE/pull/1494
+* Add F# 4.1 directory path to FSIHelper paths
+
+#### 4.55.0 - 13.03.2017
+* HockeyApp - create version and upload build to a specific version - https://github.com/fsharp/FAKE/pull/1487
+
+#### 4.54.0 - 13.03.2017
+* Unix msbuild probing enhancements - https://github.com/fsharp/FAKE/pull/1488
+
+#### 4.53.0 - 12.03.2017
+* New change log helper - https://github.com/fsharp/FAKE/pull/1467
+* New output parameter to Dotnet BuildParams - https://github.com/fsharp/FAKE/pull/1481
+* Added MSBuild location for VS2017 Build Tools - https://github.com/fsharp/FAKE/pull/1484
+* BUGFIX: Fixed bug in getLastNuGetVersion when result is in JSON - https://github.com/fsharp/FAKE/pull/1482
+
 #### 4.52.0 - 01.03.2017
 * Implement --dotGraph command line option - https://github.com/fsharp/FAKE/pull/1469
 * USABILITY: Improve error handling on SqlPackage - https://github.com/fsharp/FAKE/pull/1476

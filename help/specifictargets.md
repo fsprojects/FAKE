@@ -98,7 +98,7 @@ Say, the build script `build.fsx` defines the target dependencies as follows:
 The following command saves the target dependency graph in the `graph.png` file (PowerShell syntax):
 
 ```
-FAKE.exe build.fsx -dg | & 'C:\Program Files (x86)\Graphviz2.38\bin\dot.exe' -Tpng -o ./graph.png
+FAKE.exe build.fsx -dg | & 'C:/Program Files (x86)/Graphviz2.38/bin/dot.exe' -Tpng -o ./graph.png
 ```
 
 resulting in an image like this:

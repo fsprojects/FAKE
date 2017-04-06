@@ -22,52 +22,81 @@ type MsBuildEntry = {
     Paths: string list;
 }
 
-let knownMsBuildEntries = 
+let knownMsBuildEntries =
     [
         { Version = "12.0"; Paths = [@"\MSBuild\12.0\Bin"; @"\MSBuild\12.0\Bin\amd64"] }
         { Version = "14.0"; Paths = [@"\MSBuild\14.0\Bin"] }
-        { Version = "15.0"; Paths = [@"\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin"; 
+        { Version = "15.0"; Paths = [@"\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin";
                                      @"\Microsoft Visual Studio\2017\Professional\MSBuild\15.0\Bin";
                                      @"\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin";
+                                     @"\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin";
                                      @"\MSBuild\15.0\Bin"] }
     ]
 
-let oldMsBuildLocations = 
-    [ @"c:\Windows\Microsoft.NET\Framework\v4.0.30319\"; 
+let oldMsBuildLocations =
+    [ @"c:\Windows\Microsoft.NET\Framework\v4.0.30319\";
       @"c:\Windows\Microsoft.NET\Framework\v4.0.30128\";
       @"c:\Windows\Microsoft.NET\Framework\v3.5\"
-    ]    
+    ]
 
-let toDict items = 
+let toDict items =
     items |> Seq.map (fun f -> f.Version, f.Paths) |> Map.ofSeq
 
-let getAllKnownPaths = 
+let getAllKnownPaths =
     (knownMsBuildEntries |> List.collect (fun m -> m.Paths) |> List.rev) @ oldMsBuildLocations
 
+
 /// Tries to detect the right version of MSBuild.
-///   - On Linux/Unix Systems we use xBuild.
-///   - On Windows we try to find a "MSBuild" build parameter or read the MSBuild tool location from the AppSettings file.
-///     If 'VisualStudioVersion' environment variable is specified, we try to use the specific MSBuild version, matching Visual Studio's.
+///   - On all OS's, we check a `MSBuild` environment variable which is either
+///     * a direct path to a file to use, or
+///     * a directory that contains a file called `msbuild` on non-Windows systems, or `MSBuild.exe` on Windows systems
+///   - In addition, on non-Windows systems we check the current PATH for the following binaries, in this order:
+///     * `msbuild`
+///     * `xbuild`
+///   - In addition, on Windows systems we
+///     * try to read the MSBuild tool location from the AppSettings file using a parameter named `MSBuild`, and finally
+///     * if a `VisualStudioVersion` environment variable is specified, we try to use the specific MSBuild version, matching that Visual Studio version.
 let msBuildExe =
-    if isUnix then "xbuild"
+    /// the value we're given can be a full path to a file or just a directory.
+    /// if just a directory we can make it the path to a file by Path-Combining the tool name to the directory.
+    let exactPathOrBinaryOnPath tool input =
+        if FileSystemHelper.isDirectory input && Directory.Exists input
+        then input </> tool
+        else input
+
+    let which tool = ProcessHelper.tryFindFileOnPath tool
+    let environVarDir = EnvironmentHelper.environVarOrNone "MSBuild"
+
+    if isUnix
+    then
+        let unixSources = [
+            environVarDir |> Option.map (exactPathOrBinaryOnPath "msbuild")
+            which "msbuild"
+            which "xbuild"
+        ]
+        defaultArg (unixSources |> List.choose id |> List.tryHead) "xbuild"
     else
-        let dict = toDict knownMsBuildEntries
-        let paths = 
-            match Some (environVar "VisualStudioVersion") with
-                | Some vsVer -> 
-                    match dict.TryFind(vsVer) with
-                    | Some paths -> paths
-                    | None -> getAllKnownPaths
-                | None -> getAllKnownPaths
 
-        let msBuildPaths = System.String.Join(";", paths |> List.map (fun s -> ProgramFilesX86 @@ s))
+        let envVarPath = environVarDir |> Option.map (exactPathOrBinaryOnPath "MSBuild.exe")
+        let configIgnoreMSBuild =
+            if "true".Equals(ConfigurationManager.AppSettings.["IgnoreMSBuild"], StringComparison.OrdinalIgnoreCase)
+            then Some ""
+            else None
+        let findOnVSPathsThenSystemPath =
+            let dict = toDict knownMsBuildEntries
+            let vsVersionPaths =
+                defaultArg (EnvironmentHelper.environVarOrNone "VisualStudioVersion" |> Option.bind dict.TryFind) getAllKnownPaths
+                |> List.map ((@@) ProgramFilesX86)
 
-        let ev = environVar "MSBuild"
-        if not (isNullOrEmpty ev) then
-            if isDirectory ev && Directory.Exists ev then ev @@ "MSBuild.exe" else ev
-        else if "true".Equals(ConfigurationManager.AppSettings.["IgnoreMSBuild"], StringComparison.OrdinalIgnoreCase) then 
-                String.Empty 
-        else findPath "MSBuildPath" msBuildPaths "MSBuild.exe"
+            ProcessHelper.tryFindFileInDirsThenPath vsVersionPaths "MSBuild.exe"
+
+        let windowsSources = [
+            envVarPath
+            configIgnoreMSBuild
+            findOnVSPathsThenSystemPath
+        ]
+        defaultArg (windowsSources |> List.choose id |> List.tryHead) "MSBuild.exe"
+
 
 /// [omit]
 let msbuildNamespace = "http://schemas.microsoft.com/developer/msbuild/2003"
@@ -76,7 +105,7 @@ let msbuildNamespace = "http://schemas.microsoft.com/developer/msbuild/2003"
 let xname name = XName.Get(name, msbuildNamespace)
 
 /// [omit]
-let loadProject (projectFileName : string) : MSBuildProject = 
+let loadProject (projectFileName : string) : MSBuildProject =
     MSBuildProject.Load(projectFileName, LoadOptions.PreserveWhitespace)
 
 // See: http://msdn.microsoft.com/en-us/library/ms228186.aspx
@@ -85,17 +114,17 @@ let internal unescapeMSBuildSpecialChars s =
     replExpr.Replace(s, new Text.RegularExpressions.MatchEvaluator(
                             fun _match -> match _match.Value with
                                           | "%24" -> "$" | "%25" -> "%" | "%27" -> "'" | "%40" -> "@"
-                                          | "%3B" -> ";" | "%3F" -> "?" | "%2A" -> "*" 
+                                          | "%3B" -> ";" | "%3F" -> "?" | "%2A" -> "*"
                                           | _ -> _match.Value))
 
 /// [omit]
-let internal getReferenceElements elementName projectFileName (doc : XDocument) = 
+let internal getReferenceElements elementName projectFileName (doc : XDocument) =
     let fi = fileInfo projectFileName
-    doc.Descendants(xname "Project").Descendants(xname "ItemGroup").Descendants(xname elementName) 
-    |> Seq.map (fun e -> 
+    doc.Descendants(xname "Project").Descendants(xname "ItemGroup").Descendants(xname elementName)
+    |> Seq.map (fun e ->
         let a = e.Attribute(XName.Get "Include")
-        let value = a.Value |> unescapeMSBuildSpecialChars |> convertWindowsToCurrentPath 
-           
+        let value = a.Value |> unescapeMSBuildSpecialChars |> convertWindowsToCurrentPath
+
         let fileName =
             if value.StartsWith(".." + directorySeparator) || (not <| value.Contains directorySeparator) then
                 fi.Directory.FullName @@ value
@@ -103,7 +132,7 @@ let internal getReferenceElements elementName projectFileName (doc : XDocument) 
         a, fileName |> FullName)
 
 /// [omit]
-let processReferences elementName f projectFileName (doc : XDocument) = 
+let processReferences elementName f projectFileName (doc : XDocument) =
     let fi = fileInfo projectFileName
     doc
         |> getReferenceElements elementName projectFileName
@@ -111,10 +140,10 @@ let processReferences elementName f projectFileName (doc : XDocument) =
     doc
 
 /// [omit]
-let rec getProjectReferences (projectFileName : string) = 
+let rec getProjectReferences (projectFileName : string) =
     if projectFileName.EndsWith ".sln" then Set.empty
     else // exclude .sln-files since the are not XML
-         
+
     let doc = loadProject projectFileName
     let references = getReferenceElements "ProjectReference" projectFileName doc |> Seq.map snd |> Seq.filter File.Exists
     references
@@ -124,7 +153,7 @@ let rec getProjectReferences (projectFileName : string) =
       |> Set.ofSeq
 
 /// MSBuild verbosity option
-type MSBuildVerbosity = 
+type MSBuildVerbosity =
     | Quiet
     | Minimal
     | Normal
@@ -132,7 +161,7 @@ type MSBuildVerbosity =
     | Diagnostic
 
 /// MSBuild log option
-type MSBuildLogParameter = 
+type MSBuildLogParameter =
     | Append
     | PerformanceSummary
     | Summary
@@ -155,7 +184,7 @@ type MSBuildFileLoggerConfig =
       Verbosity : MSBuildVerbosity option
       Parameters : MSBuildLogParameter list option }
 
-type MSBuildDistributedLoggerConfig = 
+type MSBuildDistributedLoggerConfig =
     {
         ClassName : string option
         AssemblyPath : string
@@ -163,7 +192,7 @@ type MSBuildDistributedLoggerConfig =
 
 /// A type for MSBuild task parameters
 [<CLIMutable>]
-type MSBuildParams = 
+type MSBuildParams =
     { Targets : string list
       Properties : (string * string) list
       MaxCpuCount : int option option
@@ -177,7 +206,7 @@ type MSBuildParams =
       DistributedLoggers : (MSBuildDistributedLoggerConfig * MSBuildDistributedLoggerConfig option) list option }
 
 /// Defines a default for MSBuild task parameters
-let mutable MSBuildDefaults = 
+let mutable MSBuildDefaults =
     { Targets = []
       Properties = []
       MaxCpuCount = Some None
@@ -187,7 +216,7 @@ let mutable MSBuildDefaults =
       Verbosity = None
       NoConsoleLogger = false
       RestorePackagesFlag = false
-      FileLoggers = None 
+      FileLoggers = None
       DistributedLoggers = None }
 
 /// [omit]
@@ -197,15 +226,15 @@ let getAllParameters targets maxcpu noLogo nodeReuse tools verbosity noconsolelo
 
 let private serializeArgs args =
     args
-    |> Seq.map (function 
+    |> Seq.map (function
            | None -> ""
-           | Some(k, v) -> 
+           | Some(k, v) ->
                "/" + k + (if isNullOrEmpty v then ""
                           else ":" + v))
     |> separated " "
 
 /// [omit]
-let serializeMSBuildParams (p : MSBuildParams) =    
+let serializeMSBuildParams (p : MSBuildParams) =
     let verbosityName v =
         match v with
         | Quiet -> "q"
@@ -214,48 +243,48 @@ let serializeMSBuildParams (p : MSBuildParams) =
         | Detailed -> "d"
         | Diagnostic -> "diag"
 
-    
-    
-    let targets = 
+
+
+    let targets =
         match p.Targets with
         | [] -> None
         | t -> Some("t", t |> Seq.map (replace "." "_") |> separated ";")
-    
+
     let properties = ("RestorePackages",p.RestorePackagesFlag.ToString()) :: p.Properties |> List.map (fun (k, v) -> Some("p", sprintf "%s=\"%s\"" k v))
-    
-    let maxcpu = 
+
+    let maxcpu =
         match p.MaxCpuCount with
         | None -> None
-        | Some x -> 
-            Some("m", 
+        | Some x ->
+            Some("m",
                  match x with
                  | Some v -> v.ToString()
                  | _ -> "")
-   
-    let noLogo = 
+
+    let noLogo =
         if p.NoLogo then Some("nologo", "")
         else None
-    
-    let nodeReuse = 
+
+    let nodeReuse =
         if p.NodeReuse then None
         else Some("nodeReuse", "False")
-    
+
     let tools =
         match p.ToolsVersion with
         | None -> None
         | Some t -> Some("tv", t)
-    
-    let verbosity = 
+
+    let verbosity =
         match p.Verbosity with
         | None -> None
         | Some v -> Some("v", verbosityName v)
-    
+
     let noconsolelogger =
         if p.NoConsoleLogger then Some("noconlog", "")
         else None
 
     let fileLoggers =
-        let serializeLogger fl =    
+        let serializeLogger fl =
             let logParams param =
                 match param with
                 | Append -> "Append"
@@ -273,16 +302,16 @@ let serializeMSBuildParams (p : MSBuildParams) =
                 | DisableMPLogging -> "DisableMPLogging"
                 | EnableMPLogging -> "EnableMPLogging"
 
-            sprintf "%s%s%s" 
+            sprintf "%s%s%s"
                 (match fl.Filename with
                 | None -> ""
                 | Some f -> sprintf "LogFile=%s;" f)
                 (match fl.Verbosity with
                 | None -> ""
-                | Some v -> sprintf "Verbosity=%s;" (verbosityName v)) 
+                | Some v -> sprintf "Verbosity=%s;" (verbosityName v))
                 (match fl.Parameters with
                 | None -> ""
-                | Some ps -> 
+                | Some ps ->
                     ps
                     |> List.map (fun p -> sprintf "%s;" (logParams p))
                     |> String.concat "")
@@ -290,17 +319,17 @@ let serializeMSBuildParams (p : MSBuildParams) =
         match p.FileLoggers with
         | None -> []
         | Some fls ->
-            fls 
+            fls
             |> List.map (fun fl -> Some ("flp" + (string fl.Number), serializeLogger fl) )
 
-    let distributedFileLoggers = 
+    let distributedFileLoggers =
         let serializeDLogger (dlogger : MSBuildDistributedLoggerConfig) =
-            sprintf "%s%s%s" 
-                (match dlogger.ClassName with | None -> "" | Some name -> sprintf "%s," name) 
+            sprintf "%s%s%s"
+                (match dlogger.ClassName with | None -> "" | Some name -> sprintf "%s," name)
                 (sprintf "\"%s\"" dlogger.AssemblyPath)
-                (match dlogger.Parameters with 
-                    | None -> "" 
-                    | Some vars -> vars 
+                (match dlogger.Parameters with
+                    | None -> ""
+                    | Some vars -> vars
                                     |> List.fold (fun acc (k,v) -> sprintf "%s%s=%s;" acc k v) ""
                                     |> sprintf ";\"%s\""
                 )
@@ -325,10 +354,10 @@ let TeamCityLoggerName = typedefof<Fake.MsBuildLogger.TeamCityLogger>.FullName
 /// [omit]
 let ErrorLoggerName = typedefof<Fake.MsBuildLogger.ErrorLogger>.FullName
 
-let private pathToLogger = typedefof<MSBuildParams>.Assembly.Location 
+let private pathToLogger = typedefof<MSBuildParams>.Assembly.Location
 
 /// Defines the loggers to use for MSBuild task
-let mutable MSBuildLoggers =    
+let mutable MSBuildLoggers =
     [ ErrorLoggerName ]
     |> List.map (fun a -> sprintf "%s,\"%s\"" a pathToLogger)
 
@@ -362,22 +391,22 @@ match buildServer with
 ///           |> DoNothing
 let build setParams project =
     use __ = traceStartTaskUsing "MSBuild" project
-    let args = 
+    let args =
         MSBuildDefaults
         |> setParams
         |> serializeMSBuildParams
 
-    let errorLoggerParam = 
+    let errorLoggerParam =
         MSBuildLoggers
         |> List.map (fun a -> Some ("logger", a))
         |> serializeArgs
-    
+
     let args = toParam project + " " + args + " " + errorLoggerParam
     tracefn "Building project: %s\n  %s %s" project msBuildExe args
     let enableProcessTracingPreviousValue = enableProcessTracing
     enableProcessTracing <- false
     let exitCode =
-        ExecProcess (fun info ->  
+        ExecProcess (fun info ->
             info.FileName <- msBuildExe
             info.Arguments <- args) TimeSpan.MaxValue
     enableProcessTracing <- enableProcessTracingPreviousValue
@@ -387,7 +416,7 @@ let build setParams project =
             if File.Exists MsBuildLogger.ErrorLoggerFile then
                 File.ReadAllLines(MsBuildLogger.ErrorLoggerFile) |> List.ofArray
             else []
-        
+
         let errorMessage = sprintf "Building %s failed with exitcode %d." project exitCode
         raise (BuildException(errorMessage, errors))
 
@@ -397,26 +426,26 @@ let build setParams project =
 ///  - `targets` - A string with the target names which should be run by MSBuild.
 ///  - `properties` - A list with tuples of property name and property values.
 ///  - `projects` - A list of project or solution files.
-let MSBuildWithProjectProperties outputPath (targets : string) (properties : (string) -> (string * string) list) projects = 
+let MSBuildWithProjectProperties outputPath (targets : string) (properties : (string) -> (string * string) list) projects =
     let projects = projects |> Seq.toList
-    
-    let output = 
+
+    let output =
         if isNullOrEmpty outputPath then ""
-        else 
+        else
         outputPath
           |> FullName
           |> trimSeparator
 
-    let properties = 
+    let properties =
         if isNullOrEmpty output then properties
         else fun x -> ("OutputPath", output) :: (properties x)
 
     let dependencies =
-        projects 
+        projects
             |> List.map getProjectReferences
             |> Set.unionMany
 
-    let setBuildParam project projectParams = 
+    let setBuildParam project projectParams =
         { projectParams with Targets = targets |> split ';' |> List.filter ((<>) ""); Properties = projectParams.Properties @ properties project }
 
     projects
@@ -460,7 +489,7 @@ let MSBuildWithDefaults targets projects = MSBuild null targets [ "Configuration
 ///  - `properties` - A list with tuples of property name and property values.
 ///  - `targets` - A string with the target names which should be run by MSBuild.
 ///  - `projects` - A list of project or solution files.
-let MSBuildReleaseExt outputPath properties targets projects = 
+let MSBuildReleaseExt outputPath properties targets projects =
     let properties = ("Configuration", "Release") :: properties
     MSBuild outputPath targets properties projects
 

@@ -24,6 +24,12 @@ type private DependencyType =
     | Hard = 1
     | Soft = 2
 
+type private DependencyLevel =
+    {
+        level:int;
+        dependants: string list;
+    }
+
 /// [omit]
 let mutable PrintStackTraceOnError = false
 
@@ -62,6 +68,9 @@ let reset() =
     BuildFailureTargets.Clear()
     ExecutedTargetTimes.Clear()
     FinalTargets.Clear()
+
+let mutable CurrentTargetOrder = []
+let mutable CurrentTarget = ""
 
 /// Returns a list with all target names.
 let getAllTargetsNames() = TargetDict |> Seq.map (fun t -> t.Key) |> Seq.toList
@@ -337,7 +346,6 @@ let PrintTargets() =
     for t in TargetDict.Values do
         logfn "   %s%s" t.Name (if isNullOrEmpty t.Description then "" else sprintf " - %s" t.Description)
 
-
 // Maps the specified dependency type into the list of targets
 let private withDependencyType (depType:DependencyType) targets =
     targets |> List.map (fun t -> depType, t)
@@ -349,14 +357,16 @@ let private visitDependencies fVisit targetName =
     let visit fGetDependencies fVisit targetName =
         let visited = new HashSet<_>()
         let ordered = new List<_>()
-        let rec visitDependenciesAux level (depType,targetName) =
+        let rec visitDependenciesAux level (dependentTarget:option<TargetTemplate<unit>>) (depType,targetName) =
             let target = getTarget targetName
             let isVisited = visited.Contains targetName
             visited.Add targetName |> ignore
-            fVisit (target, depType, level, isVisited)
-            (fGetDependencies target) |> Seq.iter (visitDependenciesAux (level + 1))
+            fVisit (dependentTarget, target, depType, level, isVisited)
+            
+            (fGetDependencies target) |> Seq.iter (visitDependenciesAux (level + 1) (Some target))                
+            
             if not isVisited then ordered.Add targetName
-        visitDependenciesAux 0 (DependencyType.Hard, targetName)
+        visitDependenciesAux 0 None (DependencyType.Hard, targetName)
         visited, ordered
 
     // First pass is to accumulate targets in (hard) dependency graph
@@ -370,9 +380,7 @@ let private visitDependencies fVisit targetName =
 
     // Now make second pass, adding in soft depencencies if appropriate
     visit getAllDependencies fVisit targetName
-
-
-
+    
 /// <summary>Writes a dependency graph.</summary>
 /// <param name="verbose">Whether to print verbose output or not.</param>
 /// <param name="target">The target for which the dependencies should be printed.</param>
@@ -382,7 +390,7 @@ let PrintDependencyGraph verbose target =
     | true,target ->
         logfn "%sDependencyGraph for Target %s:" (if verbose then String.Empty else "Shortened ") target.Name
 
-        let logDependency ((t: TargetTemplate<unit>), depType, level, isVisited) =
+        let logDependency (_, (t: TargetTemplate<unit>), depType, level, isVisited) =
             if verbose ||  not isVisited then
                 let indent = (String(' ', level * 3))
                 if depType = DependencyType.Soft then
@@ -391,10 +399,15 @@ let PrintDependencyGraph verbose target =
                     log <| sprintf "%s<== %s" indent t.Name
 
         let _, ordered = visitDependencies logDependency target.Name
-
         log ""
-        log "The resulting target order is:"
-        Seq.iter (logfn " - %s") ordered
+
+let PrintRunningOrder() = 
+        log "The running order is:"
+        CurrentTargetOrder
+        |> List.iteri (fun index x ->  
+                                if (environVarOrDefault "parallel-jobs" "1" |> int > 1) then                               
+                                    logfn "Group - %d" (index + 1)
+                                Seq.iter (logfn "  - %s") x)
 
 /// <summary>Writes a dependency graph of all targets in the DOT format.</summary>
 let PrintDotDependencyGraph () =
@@ -421,36 +434,48 @@ let WriteErrors () =
 /// <param name="total">The total runtime.</param>
 let WriteTaskTimeSummary total =
     traceHeader "Build Time Report"
-    if ExecutedTargets.Count > 0 then
-        let width =
-            ExecutedTargetTimes
-              |> Seq.map (fun (a,b) -> a.Length)
-              |> Seq.max
-              |> max 8
 
-        let aligned (name:string) duration = tracefn "%s   %O" (name.PadRight width) duration
-        let alignedError (name:string) duration = sprintf "%s   %O" (name.PadRight width) duration |> traceError
+    let width = ExecutedTargetTimes
+                |> Seq.map (fun (a,b) -> a.Length)
+                |> Seq.append([CurrentTarget.Length])
+                |> Seq.max
+                |> max 8
 
-        aligned "Target" "Duration"
-        aligned "------" "--------"
-        ExecutedTargetTimes
-          |> Seq.iter (fun (name,time) ->
-                let t = getTarget name
-                aligned t.Name time)
+    let aligned (name:string) duration = tracefn "%s   %O" (name.PadRight width) duration
+    let alignedError (name:string) duration = sprintf "%s   %O" (name.PadRight width) duration |> traceError
 
+    aligned "Target" "Duration"
+    aligned "------" "--------"
+
+    ExecutedTargetTimes
+        |> Seq.iter (fun (name,time) ->
+            let t = getTarget name
+            aligned t.Name time)
+        
+    if errors = [] && ExecutedTargetTimes.Count > 0 then 
         aligned "Total:" total
-        if errors = [] then aligned "Status:" "Ok"
-        else
-            alignedError "Status:" "Failure"
-            WriteErrors()
+        traceLine()
+        aligned "Status:" "Ok"
+    else if ExecutedTargetTimes.Count > 0 then
+        let failedTarget = getTarget CurrentTarget
+        alignedError failedTarget.Name "Failure"
+        aligned "Total:" total
+        traceLine()
+        alignedError "Status:" "Failure"
+        traceLine()
+        WriteErrors()
     else
-        traceError "No target was successfully completed"
+        let failedTarget = getTarget CurrentTarget
+        alignedError failedTarget.Name "Failure"
+        traceLine()
+        alignedError "Status:" "Failure"
 
     traceLine()
 
 module ExitCode =
     let exitCode = ref 0
-let private changeExitCodeIfErrorOccured() = if errors <> [] then Environment.ExitCode <- 42; ExitCode.exitCode := 42
+    let mutable Value = 42
+let private changeExitCodeIfErrorOccured() = if errors <> [] then Environment.ExitCode <- ExitCode.Value; ExitCode.exitCode := ExitCode.Value
 
 /// [omit]
 let isListMode = hasBuildParam "list"
@@ -477,40 +502,99 @@ let determineBuildOrder (target : string) =
 
     let t = getTarget target
 
-    let targetLevels = new Dictionary<_,_>()
-    let addTargetLevel ((target: TargetTemplate<unit>), _, level, _ ) =
-        match targetLevels.TryGetValue target.Name with
-        | true, mapLevel when mapLevel >= level -> ()
-        | _ -> targetLevels.[target.Name] <- level
+    let targetLevels = new Dictionary<string,DependencyLevel>()
 
-    let visited, ordered = visitDependencies addTargetLevel target
+    let appendDepentantOption (currentList:string list) (dependantTarget:option<TargetTemplate<unit>>) = 
+        match dependantTarget with
+        | None -> currentList
+        | Some x -> List.append currentList [x.Name] |> List.distinct 
+
+    let SetDependency dependantTarget target = 
+        match targetLevels.TryGetValue target with
+        | true, exDependencyLevel -> 
+            targetLevels.[target] <- {level = exDependencyLevel.level; dependants = (appendDepentantOption exDependencyLevel.dependants dependantTarget)}
+        | _ -> ()
+
+    let rec SetTargetLevel newLevel target  = 
+        match targetLevels.TryGetValue target with
+        | true, exDependencyLevel -> 
+            let minLevel = targetLevels
+                           |> Seq.filter(fun x -> x.Value.dependants.Contains target)
+                           |> Seq.map(fun x -> x.Value.level)
+                           |> fun x -> match x.Any() with
+                                       | true -> x |> Seq.min
+                                       | _ -> -1
+            
+            if exDependencyLevel.dependants.Length > 0 then
+                if (exDependencyLevel.level < newLevel && (newLevel < minLevel || minLevel = -1)) || (exDependencyLevel.level > newLevel) then
+                    targetLevels.[target] <- {level = newLevel; dependants = exDependencyLevel.dependants}
+                if exDependencyLevel.level < newLevel then
+                    exDependencyLevel.dependants |> List.iter (fun x -> SetTargetLevel (newLevel - 1) x)
+        | _ -> ()
+
+    let AddNewTargetLevel dependantTarget level target =
+        targetLevels.[target] <- {level = level; dependants=(appendDepentantOption [] dependantTarget)}
+        
+    let addTargetLevel ((dependantTarget:option<TargetTemplate<unit>>), (target: TargetTemplate<unit>), _, level, _ ) =
+        let (|LevelIncreaseWithDependantTarget|_|) = function
+        | (true, exDependencyLevel), Some dt when exDependencyLevel.level > level -> Some (exDependencyLevel, dt)
+        | _ -> None
+
+        let (|LevelIncreaseWithNoDependantTarget|_|) = function
+        | (true, exDependencyLevel), None when exDependencyLevel.level > level -> Some (exDependencyLevel)
+        | _ -> None
+        
+        let (|LevelDecrease|_|) = function
+        | (true, exDependencyLevel), _ when exDependencyLevel.level < level -> Some (exDependencyLevel)
+        | _ -> None
+
+        let (|AddDependency|_|) = function
+        | (true, exDependencyLevel), Some dt when not(exDependencyLevel.dependants.Contains dt.Name) -> Some (exDependencyLevel, dt)
+        | _ -> None
+
+        let (|NewTarget|_|) = function
+        | (false, _), _ -> Some ()
+        | _ -> None
+
+        match targetLevels.TryGetValue target.Name, dependantTarget with
+        | LevelIncreaseWithDependantTarget (exDependencyLevel, dt) ->
+            SetDependency dependantTarget target.Name
+            SetTargetLevel (exDependencyLevel.level - 1) dt.Name
+        |  LevelIncreaseWithNoDependantTarget (exDependencyLevel) -> 
+            SetDependency dependantTarget target.Name
+        |  LevelDecrease (exDependencyLevel) -> 
+            SetDependency dependantTarget target.Name
+            SetTargetLevel level target.Name
+        |  AddDependency (exDependencyLevel, dt) -> 
+            SetDependency dependantTarget target.Name
+        | NewTarget -> 
+            AddNewTargetLevel dependantTarget level target.Name
+        | _ -> ()
+
+    visitDependencies addTargetLevel target |> ignore
 
     // the results are grouped by their level, sorted descending (by level) and
-    // finally grouped together in a list<TargetTemplate<unit>[]>
-    let result =
-        targetLevels
-        |> Seq.map (fun pair -> pair.Key, pair.Value)
-        |> Seq.groupBy snd
-        |> Seq.sortBy (fun (l,_) -> -l)
-        |> Seq.map snd
-        |> Seq.map (fun v -> v |> Seq.map fst |> Seq.distinct |> Seq.map getTarget |> Seq.toArray)
-        |> Seq.toList
-
-    // Note that this build order cannot be considered "optimal"
-    // since it may introduce order where actually no dependencies
-    // exist. However it yields a "good" execution order in practice.
-    result
+    // finally grouped together in a list<TargetTemplate<unit>[]
+    targetLevels
+    |> Seq.map (fun pair -> pair.Key, pair.Value.level)
+    |> Seq.groupBy snd
+    |> Seq.sortBy (fun (l,_) -> -l)
+    |> Seq.map snd
+    |> Seq.map (fun v -> v |> Seq.map fst |> Seq.distinct |> Seq.map getTarget |> Seq.toArray)
+    |> Seq.toList
 
 /// Runs a single target without its dependencies
 let runSingleTarget (target : TargetTemplate<unit>) =
     try
         if errors = [] then
             traceStartTarget target.Name target.Description (dependencyString target)
+            CurrentTarget <- target.Name
             let watch = new System.Diagnostics.Stopwatch()
             watch.Start()
             target.Function()
             addExecutedTarget target.Name watch.Elapsed
             traceEndTarget target.Name
+            CurrentTarget <- ""
     with exn ->
         targetError target.Name exn
 
@@ -521,57 +605,52 @@ let runTargetsParallel (count : int) (targets : Target[]) =
         .Select(runSingleTarget)
         .ToArray()
     |> ignore
-
-let mutable CurrentTargetOrder = []
+    
+let runTargets (targets: TargetTemplate<unit> array) =
+    let lastTarget = targets |> Array.last
+    if errors = [] && ExecutedTargets.Contains (lastTarget.Name) |> not then
+        let firstTarget = targets |> Array.head
+        if hasBuildParam "single-target" then
+            traceImportant "Single target mode ==> Skipping dependencies."
+            runSingleTarget lastTarget
+        else
+            targets |> Array.iter runSingleTarget
 
 /// Runs a target and its dependencies.
 let run targetName =
     if doesTargetMeanPrintDotGraph targetName then PrintDotDependencyGraph() else
     if doesTargetMeanListTargets targetName then listTargets() else
     if LastDescription <> null then failwithf "You set a task description (%A) but didn't specify a task." LastDescription
-
-    let rec runTargets (targets: TargetTemplate<unit> array) =
-        let lastTarget = targets |> Array.last
-        if errors = [] && ExecutedTargets.Contains (lastTarget.Name) |> not then
-           let firstTarget = targets |> Array.head
-           if hasBuildParam "single-target" then
-               traceImportant "Single target mode ==> Skipping dependencies."
-               runSingleTarget lastTarget
-           else
-               targets |> Array.iter runSingleTarget
-
+    
     let watch = new System.Diagnostics.Stopwatch()
     watch.Start()
     try
         tracefn "Building project with version: %s" buildVersion
+        PrintDependencyGraph false targetName
+
+        // determine a parallel build order
+        let order = determineBuildOrder targetName
+
         let parallelJobs = environVarOrDefault "parallel-jobs" "1" |> int
 
         // Figure out the order in in which targets can be run, and which can be run in parallel.
         if parallelJobs > 1 then
             tracefn "Running parallel build with %d workers" parallelJobs
+            CurrentTargetOrder <- order |> List.map (fun targets -> targets |> Array.map (fun t -> t.Name) |> Array.toList)
 
-            // determine a parallel build order
-            let order = determineBuildOrder targetName
-
-            CurrentTargetOrder <-
-                order
-                |> List.map (fun targets -> targets |> Array.map (fun t -> t.Name) |> Array.toList)
+            PrintRunningOrder()
 
             // run every level in parallel
             for par in order do
                 runTargetsParallel parallelJobs par
-
         else
-            // single threaded build.
-            PrintDependencyGraph false targetName
+            
+            let flatenedOrder = order |> List.map (fun targets -> targets |> Array.map (fun t -> t.Name)  |> Array.toList) |> List.concat
+            CurrentTargetOrder <- flatenedOrder |> Seq.map (fun t -> [t]) |> Seq.toList
 
-            // Note: we could use the ordering resulting from flattening the result of determineBuildOrder
-            // for a single threaded build (thereby centralizing the algorithm for build order), but that
-            // ordering is inconsistent with earlier versions of FAKE (and PrintDependencyGraph).
-            let _, ordered = visitDependencies ignore targetName
-            CurrentTargetOrder <- ordered |> Seq.map (fun t -> [t]) |> Seq.toList
+            PrintRunningOrder()
 
-            runTargets (ordered |> Seq.map getTarget |> Seq.toArray)
+            runTargets (flatenedOrder |> Seq.map getTarget |> Seq.toArray)
 
     finally
         if errors <> [] then
