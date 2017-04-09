@@ -196,17 +196,20 @@ let AllTargetsDependOn target =
 /// Creates a target from template.
 /// [omit]
 let targetFromTemplate template name parameters =
-    TargetDict.Add(name,
-      { Name = name;
-        Dependencies = [];
-        SoftDependencies = [];
-        Description = template.Description;
-        Function = fun () ->
-          // Don't run function now
-          template.Function parameters })
-
-    name <== template.Dependencies
-    LastDescription <- null
+    match TargetDict.ContainsKey name with
+    | true -> 
+        failwithf "Duplicate target name %s" name
+    | false ->
+        TargetDict.Add(name,
+          { Name = name;
+            Dependencies = [];
+            SoftDependencies = [];
+            Description = template.Description;
+            Function = fun () ->
+            // Don't run function now
+            template.Function parameters })
+        name <== template.Dependencies
+        LastDescription <- null
 
 /// Creates a TargetTemplate with dependencies.
 ///
