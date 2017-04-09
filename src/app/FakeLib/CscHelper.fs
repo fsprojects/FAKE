@@ -39,7 +39,13 @@ type CscParams =
     static member Default =
         { Output = ""
           Target = Exe
-          ToolPath = if isMono then "mcs" else Path.GetDirectoryName(MSBuildHelper.msBuildExe) @@ "csc.exe"
+          ToolPath =
+            if isMono then "mcs"
+            else
+                let p = Path.GetDirectoryName(MSBuildHelper.msBuildExe) @@ "csc.exe"
+                // Path changed in VS2017
+                if not (File.Exists p) then Path.GetDirectoryName(MSBuildHelper.msBuildExe) @@ "Roslyn" @@ "csc.exe"
+                else p
           Platform = AnyCpu
           References = []
           Debug = false
@@ -88,7 +94,7 @@ let csc (setParams : CscParams -> CscParams) (inputFiles : string list) : int =
             if (path.StartsWith("\"") && path.EndsWith("\"")) || (path.StartsWith("'") && path.EndsWith("'")) then path
             else sprintf "\"%s\"" path
         else path
-        
+
     let inputFiles = inputFiles |> Seq.map ensureTrimQuotedPath |> Seq.toList
     let taskDesc = inputFiles |> separated ", "
     let cscParams = setParams CscParams.Default
