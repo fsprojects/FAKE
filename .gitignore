@@ -67,4 +67,5 @@ paket-files/
 # Ignore VS2015 folder
 .vs/
 
+Samples/WebNpmGrunt/node_modules
 .fake

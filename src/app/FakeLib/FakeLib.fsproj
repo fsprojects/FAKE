@@ -60,7 +60,6 @@
     <Compile Include="GuardedAwaitObservable.fs" />
     <Compile Include="ProcessHelper.fs" />
     <Compile Include="PsExecHelper.fs" />
-    <Compile Include="NpmHelper.fs" />
     <Compile Include="BowerHelper.fs" />
     <Compile Include="YarnHelper.fs" />
     <Compile Include="AppVeyor.fs" />
@@ -95,6 +94,7 @@
     <Compile Include="NDependHelper.fs" />
     <Compile Include="MsBuildLogger.fs" />
     <Compile Include="MSBuildHelper.fs" />
+    <Compile Include="NpmHelper.fs" />
     <Compile Include="ArchiveHelper.fs" />
     <Compile Include="ZipHelper.fs" />
     <Compile Include="StrongNamingHelper.fs" />
