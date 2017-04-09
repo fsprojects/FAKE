@@ -1,4 +1,5 @@
 #### 4.58.0 - 09.04.2017
+* Added a way to set the --trace parameter on the NUnit3 command line - https://github.com/fsharp/FAKE/pull/1513
 * Add version-option to NugetUpdate in order to support explicit versions - https://github.com/fsharp/FAKE/pull/1514
 * Make exit code accessible - https://github.com/fsharp/FAKE/pull/1502
 
