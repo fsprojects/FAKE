@@ -1,4 +1,5 @@
-#### 4.57.4 - 29.03.2017
+#### 4.58.0 - 09.04.2017
+* Add version-option to NugetUpdate in order to support explicit versions - https://github.com/fsharp/FAKE/pull/1514
 * Make exit code accessible - https://github.com/fsharp/FAKE/pull/1502
 
 #### 4.57.3 - 29.03.2017
