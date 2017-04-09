@@ -3,6 +3,7 @@
 * Added a way to set the --trace parameter on the NUnit3 command line - https://github.com/fsharp/FAKE/pull/1513
 * Add version-option to NugetUpdate in order to support explicit versions - https://github.com/fsharp/FAKE/pull/1514
 * Make exit code accessible - https://github.com/fsharp/FAKE/pull/1502
+* USABILITY: Report target name if duplicate target is detected - https://github.com/fsharp/FAKE/pull/1506
 
 #### 4.57.3 - 29.03.2017
 * Run parallel targets just in time - https://github.com/fsharp/FAKE/pull/1396
