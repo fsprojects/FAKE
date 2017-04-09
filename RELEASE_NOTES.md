@@ -4,6 +4,7 @@
 * Added a way to set the --trace parameter on the NUnit3 command line - https://github.com/fsharp/FAKE/pull/1513
 * Add version-option to NugetUpdate in order to support explicit versions - https://github.com/fsharp/FAKE/pull/1514
 * Make exit code accessible - https://github.com/fsharp/FAKE/pull/1502
+* Additional Environment Vars for Appveyor - https://github.com/fsharp/FAKE/pull/1497
 * BUGFIX: TeamCityHelper report build status incorrect string - https://github.com/fsharp/FAKE/pull/1503
 * BUGFIX: Fixed Azure Storage Emulator path and arguments - https://github.com/fsharp/FAKE/pull/1499
 * USABILITY: Report target name if duplicate target is detected - https://github.com/fsharp/FAKE/pull/1506
