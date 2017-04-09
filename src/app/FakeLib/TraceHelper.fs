@@ -167,7 +167,7 @@ let traceStartTaskUsing task description =
     traceStartTask task description
     { new IDisposable with member x.Dispose() = traceEndTask task description }
 
-let console = new ConsoleTraceListener(false, colorMap) :> ITraceListener
+let console = new ConsoleTraceListener(false, colorMap, false) :> ITraceListener
 
 open System.Diagnostics
 

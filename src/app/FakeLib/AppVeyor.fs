@@ -5,68 +5,68 @@ open System
 open System.IO
 
 /// AppVeyor environment variables as [described](http://www.appveyor.com/docs/environment-variables)
-type AppVeyorEnvironment = 
-    
+type AppVeyorEnvironment =
+
     /// AppVeyor Build Agent API URL
     static member ApiUrl = environVar "APPVEYOR_API_URL"
 
     /// AppVeyor Account Name
     static member AccountName = environVar "APPVEYOR_ACCOUNT_NAME"
-    
+
     /// AppVeyor unique project ID
     static member ProjectId = environVar "APPVEYOR_PROJECT_ID"
-    
+
     /// Project name
     static member ProjectName = environVar "APPVEYOR_PROJECT_NAME"
-    
+
     /// Project slug (as seen in project details URL)
     static member ProjectSlug = environVar "APPVEYOR_PROJECT_SLUG"
-    
+
     /// Path to clone directory
     static member BuildFolder = environVar "APPVEYOR_BUILD_FOLDER"
-    
+
     /// AppVeyor unique build ID
     static member BuildId = environVar "APPVEYOR_BUILD_ID"
-    
+
     /// Build number
     static member BuildNumber = environVar "APPVEYOR_BUILD_NUMBER"
-    
+
     /// Build version
     static member BuildVersion = environVar "APPVEYOR_BUILD_VERSION"
-    
+
     /// GitHub Pull Request number
     static member PullRequestNumber = environVar "APPVEYOR_PULL_REQUEST_NUMBER"
-    
+
     /// GitHub Pull Request title
     static member PullRequestTitle = environVar "APPVEYOR_PULL_REQUEST_TITLE"
-    
+
     /// AppVeyor unique job ID
     static member JobId = environVar "APPVEYOR_JOB_ID"
-    
+
     /// GitHub, BitBucket or Kiln
     static member RepoProvider = environVar "APPVEYOR_REPO_PROVIDER"
-    
+
     /// git or mercurial
     static member RepoScm = environVar "APPVEYOR_REPO_SCM"
-    
+
     /// Repository name in format owner-name/repo-name
     static member RepoName = environVar "APPVEYOR_REPO_NAME"
-    
+
     /// Build branch
     static member RepoBranch = environVar "APPVEYOR_REPO_BRANCH"
-    
+
     /// Commit ID (SHA)
     static member RepoCommit = environVar "APPVEYOR_REPO_COMMIT"
-    
+
     /// Commit author's name
     static member RepoCommitAuthor = environVar "APPVEYOR_REPO_COMMIT_AUTHOR"
-    
+
     /// Commit author's email address
     static member RepoCommitAuthorEmail = environVar "APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL"
-    
+
     /// Commit date/time
     static member RepoCommitTimestamp = environVar "APPVEYOR_REPO_COMMIT_TIMESTAMP"
-    
+
     /// Commit message
     static member RepoCommitMessage = environVar "APPVEYOR_REPO_COMMIT_MESSAGE"
 
@@ -81,7 +81,7 @@ type AppVeyorEnvironment =
 
     /// If the build has been started by the "Re-Build commit/PR" button or from the same API
     static member IsReBuild = environVar "APPVEYOR_RE_BUILD"
-    
+
     /// true if build has started by pushed tag; otherwise false
     static member RepoTag =
         let rt = environVar "APPVEYOR_REPO_TAG"
@@ -93,7 +93,7 @@ type AppVeyorEnvironment =
     /// Platform name set on Build tab of project settings (or through platform parameter in appveyor.yml).
     static member Platform = environVar "PLATFORM"
 
-    /// Configuration name set on Build tab of project settings (or through configuration parameter in appveyor.yml).  
+    /// Configuration name set on Build tab of project settings (or through configuration parameter in appveyor.yml).
     static member Configuration  = environVar "CONFIGURATION"
 
     /// The job name
@@ -123,25 +123,29 @@ type AppVeyorEnvironment =
     /// Timeout in seconds to download or upload each cache entry. Default is 300 (5 minutes)
     static member CacheEntryUploadDownloadTimeout = environVar "APPVEYOR_CACHE_ENTRY_UPLOAD_DOWNLOAD_TIMEOUT"
     
-let private sendToAppVeyor args = 
-    ExecProcess (fun info -> 
+let private sendToAppVeyor args =
+    ExecProcess (fun info ->
         info.FileName <- "appveyor"
         info.Arguments <- args) (System.TimeSpan.MaxValue)
     |> ignore
 
-let private add msg category = 
-    sprintf "AddMessage %s -Category %s" (quoteIfNeeded msg) (quoteIfNeeded category) |> sendToAppVeyor
+let private add msg category =
+    if not <| isNullOrEmpty msg then
+        let enableProcessTracingPreviousValue = enableProcessTracing
+        enableProcessTracing <- false
+        sprintf "AddMessage %s -Category %s" (quoteIfNeeded msg) (quoteIfNeeded category) |> sendToAppVeyor
+        enableProcessTracing <- enableProcessTracingPreviousValue
 let private addNoCategory msg = sprintf "AddMessage %s" (quoteIfNeeded msg) |> sendToAppVeyor
 
 // Add trace listener to track messages
-if buildServer = BuildServer.AppVeyor then 
+if buildServer = BuildServer.AppVeyor then
     { new ITraceListener with
-          member this.Write msg = 
+          member this.Write msg =
               match msg with
               | ErrorMessage x -> add x "Error"
               | ImportantMessage x -> add x "Warning"
               | LogMessage(x, _) -> add x "Information"
-              | TraceMessage(x, _) -> 
+              | TraceMessage(x, _) ->
                   if not enableProcessTracing then addNoCategory x
               | StartMessage | FinishedMessage | OpenTag(_, _) | CloseTag _ -> () }
     |> listeners.Add
@@ -153,23 +157,23 @@ let FinishTestSuite testSuiteName = () // Nothing in API yet
 let StartTestSuite testSuiteName = () // Nothing in API yet
 
 /// Starts the test case.
-let StartTestCase testSuiteName testCaseName = 
+let StartTestCase testSuiteName testCaseName =
     sendToAppVeyor <| sprintf "AddTest \"%s\" -Outcome Running" (testSuiteName + " - " + testCaseName)
 
 /// Reports a failed test.
-let TestFailed testSuiteName testCaseName message details = 
+let TestFailed testSuiteName testCaseName message details =
     sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Outcome Failed -ErrorMessage %s -ErrorStackTrace %s" (testSuiteName + " - " + testCaseName)
         (EncapsulateSpecialChars message) (EncapsulateSpecialChars details)
 
-/// Ignores the test case.      
+/// Ignores the test case.
 let IgnoreTestCase testSuiteName testCaseName message = sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Outcome Ignored" (testSuiteName + " - " + testCaseName)
 
 /// Reports a succeeded test.
 let TestSucceeded testSuiteName testCaseName = sendToAppVeyor <| sprintf "UpdateTest \"%s\" -Outcome Passed" (testSuiteName + " - " + testCaseName)
 
 /// Finishes the test case.
-let FinishTestCase testSuiteName testCaseName (duration : System.TimeSpan) = 
-    let duration = 
+let FinishTestCase testSuiteName testCaseName (duration : System.TimeSpan) =
+    let duration =
         duration.TotalMilliseconds
         |> round
         |> string
@@ -262,7 +266,7 @@ let PushArtifacts paths =
 
 /// AppVeyor parameters for update build as [described](https://www.appveyor.com/docs/build-worker-api/#update-build-details)
 [<CLIMutable>]
-type UpdateBuildParams = 
+type UpdateBuildParams =
     { /// Build version; must be unique for the current project
       Version : string
       /// Commit message
@@ -295,7 +299,7 @@ let UpdateBuild (setParams : UpdateBuildParams -> UpdateBuildParams) =
     if buildServer = BuildServer.AppVeyor then
         let parameters = setParams defaultUpdateBuildParams
 
-        let committedStr = 
+        let committedStr =
             match parameters.Committed with
             | Some x -> x.ToString("o")
             | None -> ""
@@ -314,5 +318,5 @@ let UpdateBuild (setParams : UpdateBuildParams -> UpdateBuildParams) =
         |> sendToAppVeyor
 
 /// Update build version. This must be unique for the current project.
-let UpdateBuildVersion version = 
+let UpdateBuildVersion version =
     UpdateBuild (fun p -> { p with Version = version })

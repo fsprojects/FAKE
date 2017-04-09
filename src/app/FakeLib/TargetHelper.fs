@@ -3,6 +3,7 @@
 module Fake.TargetHelper
 
 open System
+open System.Text
 open System.Collections.Generic
 open System.Linq
 
@@ -345,9 +346,16 @@ let runBuildFailureTargets() =
 
 /// Prints all targets.
 let PrintTargets() =
-    log "The following targets are available:"
+    let sb = StringBuilder()
+    let appendfn fmt = Printf.ksprintf (sb.AppendLine >> ignore) fmt
+
+    appendfn "The following targets are available:"
     for t in TargetDict.Values do
-        logfn "   %s%s" t.Name (if isNullOrEmpty t.Description then "" else sprintf " - %s" t.Description)
+        appendfn "   %s%s" t.Name (if isNullOrEmpty t.Description then "" else sprintf " - %s" t.Description)
+
+    sb.Length <- sb.Length - Environment.NewLine.Length
+
+    log <| sb.ToString()
 
 // Maps the specified dependency type into the list of targets
 let private withDependencyType (depType:DependencyType) targets =
@@ -391,18 +399,28 @@ let PrintDependencyGraph verbose target =
     match TargetDict.TryGetValue (target) with
     | false,_ -> PrintTargets()
     | true,target ->
-        logfn "%sDependencyGraph for Target %s:" (if verbose then String.Empty else "Shortened ") target.Name
+        let sb = StringBuilder()
+        let appendfn fmt = Printf.ksprintf (sb.AppendLine >> ignore) fmt
+
+        appendfn "%sDependencyGraph for Target %s:" (if verbose then String.Empty else "Shortened ") target.Name
 
         let logDependency (_, (t: TargetTemplate<unit>), depType, level, isVisited) =
             if verbose ||  not isVisited then
                 let indent = (String(' ', level * 3))
                 if depType = DependencyType.Soft then
-                    log <| sprintf "%s<=? %s" indent t.Name
+                    appendfn "%s<=? %s" indent t.Name
                 else
-                    log <| sprintf "%s<== %s" indent t.Name
+                    appendfn "%s<== %s" indent t.Name
 
         let _, ordered = visitDependencies logDependency target.Name
-        log ""
+
+        appendfn ""
+        appendfn "The resulting target order is:"
+        Seq.iter (appendfn " - %s") ordered
+
+        sb.Length <- sb.Length - Environment.NewLine.Length
+
+        log <| sb.ToString()
 
 let PrintRunningOrder() = 
         log "The running order is:"
@@ -414,17 +432,22 @@ let PrintRunningOrder() =
 
 /// <summary>Writes a dependency graph of all targets in the DOT format.</summary>
 let PrintDotDependencyGraph () =
-    logfn "digraph G {"
-    logfn "  rankdir=TB;"
-    logfn "  node [shape=box];"
+    let sb = StringBuilder()
+    let appendfn fmt = Printf.ksprintf (sb.AppendLine >> ignore) fmt
+
+    appendfn "digraph G {"
+    appendfn "  rankdir=TB;"
+    appendfn "  node [shape=box];"
     for target in TargetDict.Values do
-        logfn "  \"%s\";" target.Name
+        appendfn "  \"%s\";" target.Name
         let deps = target.Dependencies
         for d in target.Dependencies do
-            logfn "  \"%s\" -> \"%s\"" target.Name d
+            appendfn "  \"%s\" -> \"%s\"" target.Name d
         for d in target.SoftDependencies do
-            logfn "  \"%s\" -> \"%s\" [style=dotted];" target.Name d
-    logfn "}"
+            appendfn "  \"%s\" -> \"%s\" [style=dotted];" target.Name d
+    sb.Append "}" |> ignore
+
+    log <| sb.ToString()
 
 /// Writes a summary of errors reported during build.
 let WriteErrors () =
