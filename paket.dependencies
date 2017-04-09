@@ -65,7 +65,7 @@ group Build
 group netcore
     source http://nuget.org/api/v2
 
-    nuget FSharp.Compiler.Service  content: none, framework: netstandard1.6, netcoreapp1.0
+    nuget FSharp.Compiler.Service 11.0.6 content: none, framework: netstandard1.6, netcoreapp1.0
     nuget FSharp.Core ~> 4.1.0 alpha
     nuget FSharp.NET.Sdk ~> 1.0.0 alpha
     //nuget Microsoft.FSharp.Core.netcore 1.0.0-alpha-161023 alpha framework: netstandard1.6, netcoreapp1.0
