@@ -152,9 +152,7 @@ NUGET
       Microsoft.Bcl.Build (>= 1.0.14)
     Microsoft.NETCore.Platforms (1.1) - content: none, framework: >= net10, >= netstandard10, netstandard11, netstandard12, netstandard13, netstandard14
     Microsoft.NETCore.Targets (1.1) - content: none, framework: >= net10, >= netstandard10, netstandard11, netstandard12, netstandard13, netstandard14
-    Microsoft.Web.Administration (10.0)
-      NETStandard.Library (>= 1.6) - framework: >= net46, >= netstandard13
-      System.Diagnostics.TraceSource (>= 4.0) - framework: >= net46, >= netstandard13
+    Microsoft.Web.Administration (7.0)
     Microsoft.Web.Infrastructure (1.0)
     Microsoft.Web.Xdt (2.1.1)
     Microsoft.Win32.Primitives (4.3) - framework: >= net45, >= netstandard13
@@ -480,7 +478,7 @@ NUGET
       Microsoft.NETCore.Platforms (>= 1.1) - framework: dnxcore50, >= netstandard10
       Microsoft.NETCore.Targets (>= 1.1) - framework: dnxcore50, >= netstandard10
       System.Runtime (>= 4.3) - framework: dnxcore50, >= netstandard10
-    System.Diagnostics.TraceSource (4.3) - framework: >= net46, >= netstandard13
+    System.Diagnostics.TraceSource (4.3) - framework: >= netstandard13
       Microsoft.NETCore.Platforms (>= 1.1) - framework: >= netstandard13
       runtime.native.System (>= 4.3) - framework: >= netstandard13
       System.Collections (>= 4.3) - framework: >= netstandard13
