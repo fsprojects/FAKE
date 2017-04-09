@@ -129,6 +129,7 @@
     <Compile Include="FileHandling\GlobbingSpecs.cs" />
     <Compile Include="XUnit2HelperSpecs.cs" />
     <Compile Include="XUnitHelperSpecs.cs" />
+    <Compile Include="NUnit3Specs.cs" />
     <Compile Include="XUnitSpecs.cs" />
     <Compile Include="XUnit2Specs.cs" />
   </ItemGroup>
