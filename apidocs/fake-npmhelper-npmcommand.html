@@ -38,9 +38,7 @@
 
 <h1>NpmCommand</h1>
 <div class="xmldoc">
-<p>The list of supported Npm commands. The <code>Custom</code> alternative
-can be used for other commands not in the list until they are
-implemented</p>
+<p>The list of supported Npm commands.</p>
 
 </div>
   <h3>Union Cases</h3>
@@ -52,46 +50,50 @@ implemented</p>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2086', 2086)" onmouseover="showTip(event, '2086', 2086)">
+          <code onmouseout="hideTip(event, '2089', 2089)" onmouseover="showTip(event, '2089', 2089)">
             Custom(string)
           </code>
-          <div class="tip" id="2086">
+          <div class="tip" id="2089">
             <strong>Signature:</strong> string<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NpmHelper.fs#L45-45" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NpmHelper.fs#L52-52" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Run <code>npm &lt;string&gt;</code>. Can be used for running not implemented commands.</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2087', 2087)" onmouseover="showTip(event, '2087', 2087)">
+          <code onmouseout="hideTip(event, '2090', 2090)" onmouseover="showTip(event, '2090', 2090)">
             Install(InstallArgs)
           </code>
-          <div class="tip" id="2087">
+          <div class="tip" id="2090">
             <strong>Signature:</strong> InstallArgs<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NpmHelper.fs#L43-43" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NpmHelper.fs#L42-42" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Run <code>npm install</code></p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '2088', 2088)" onmouseover="showTip(event, '2088', 2088)">
+          <code onmouseout="hideTip(event, '2091', 2091)" onmouseover="showTip(event, '2091', 2091)">
             Run(string)
           </code>
-          <div class="tip" id="2088">
+          <div class="tip" id="2091">
             <strong>Signature:</strong> string<br />
                       </div>
         </td>
@@ -100,7 +102,69 @@ implemented</p>
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>Run <code>npm run &lt;string&gt;</code></p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2092', 2092)" onmouseover="showTip(event, '2092', 2092)">
+            RunSilent(string)
+          </code>
+          <div class="tip" id="2092">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NpmHelper.fs#L46-46" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Run <code>npm run --silent &lt;string&gt;</code>. Suppresses npm error output. See <a href="https://github.com/npm/npm/issues/8821">npm:8821</a>.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2093', 2093)" onmouseover="showTip(event, '2093', 2093)">
+            RunTest(string)
+          </code>
+          <div class="tip" id="2093">
+            <strong>Signature:</strong> string<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NpmHelper.fs#L48-48" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Run <code>npm run --silent &lt;string&gt;</code>. Suppresses npm error output and will raise an FailedTestsException exception after the script execution instead of failing, useful for CI. See <a href="https://github.com/npm/npm/issues/8821">npm:8821</a>.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2094', 2094)" onmouseover="showTip(event, '2094', 2094)">
+            Test
+          </code>
+          <div class="tip" id="2094">
+            <strong>Signature:</strong> <br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/NpmHelper.fs#L50-50" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Run <code>npm test --silent</code>. Suppresses npm error output and will raise an FailedTestsException exception after the script execution instead of failing, useful for CI. See <a href="https://github.com/npm/npm/issues/8821">npm:8821</a>.</p>
+
+
         </td>
       </tr>
     </tbody>
@@ -154,6 +218,7 @@ implemented</p>
             <li><a href="http://fsharp.github.io/FAKE/wix.html">WiX Setup Generation</a></li>
             <li><a href="http://fsharp.github.io/FAKE/chocolatey.html">Using Chocolatey</a></li>
             <li><a href="http://fsharp.github.io/FAKE/slacknotification.html">Using Slack</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/msteamsnotification.html">Using Microsoft Teams</a></li>
             <li><a href="http://fsharp.github.io/FAKE/sonarcube.html">Using SonarQube</a></li>
             <li class="divider"></li>
             <li><a href="http://fsharp.github.io/FAKE/deploy.html">Fake.Deploy</a></li>

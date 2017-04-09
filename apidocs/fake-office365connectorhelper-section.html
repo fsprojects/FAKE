@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>AzureEmulatorParams - FAKE - F# Make</title>
+    <title>Section - FAKE - F# Make</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Steffen Forkmann, Mauricio Scheffer, Colin Bull">
@@ -36,9 +36,9 @@
 
 
 
-<h1>AzureEmulatorParams</h1>
+<h1>Section</h1>
 <div class="xmldoc">
-<p>A type for the controlling parameter</p>
+<p>A section in a ConnectorCard</p>
 
 </div>
   <h3>Record Fields</h3>
@@ -50,163 +50,229 @@
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1365', 1365)" onmouseover="showTip(event, '1365', 1365)">
-            ClearFabric
+          <code onmouseout="hideTip(event, '2243', 2243)" onmouseover="showTip(event, '2243', 2243)">
+            ActivityImage
           </code>
-          <div class="tip" id="1365">
-            <strong>Signature:</strong> string<br />
+          <div class="tip" id="2243">
+            <strong>Signature:</strong> ImageUri option<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AzureHelper.fs#L16-16" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Office365ConnectorHelper.fs#L205-205" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>(Optional) An image representing the action. Often this is an avatar of the "actor" of the activity.</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1366', 1366)" onmouseover="showTip(event, '1366', 1366)">
-            CSRunToolPath
+          <code onmouseout="hideTip(event, '2244', 2244)" onmouseover="showTip(event, '2244', 2244)">
+            ActivitySubtitle
           </code>
-          <div class="tip" id="1366">
-            <strong>Signature:</strong> string<br />
+          <div class="tip" id="2244">
+            <strong>Signature:</strong> MarkdownString option<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AzureHelper.fs#L10-10" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Office365ConnectorHelper.fs#L202-202" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>(Optional) A subtitle describing the event or action. Often this will be a summary of the action.</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1367', 1367)" onmouseover="showTip(event, '1367', 1367)">
-            DSInitToolPath
+          <code onmouseout="hideTip(event, '2245', 2245)" onmouseover="showTip(event, '2245', 2245)">
+            ActivityText
           </code>
-          <div class="tip" id="1367">
-            <strong>Signature:</strong> string<br />
+          <div class="tip" id="2245">
+            <strong>Signature:</strong> MarkdownString option<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AzureHelper.fs#L11-11" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Office365ConnectorHelper.fs#L208-208" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>(Optional) A full description of the action.</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1368', 1368)" onmouseover="showTip(event, '1368', 1368)">
-            ForceCreate
+          <code onmouseout="hideTip(event, '2246', 2246)" onmouseover="showTip(event, '2246', 2246)">
+            ActivityTitle
           </code>
-          <div class="tip" id="1368">
-            <strong>Signature:</strong> string<br />
+          <div class="tip" id="2246">
+            <strong>Signature:</strong> MarkdownString option<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AzureHelper.fs#L17-17" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Office365ConnectorHelper.fs#L199-199" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>(Optional) Title of the event or action. Often this will be the name of the "actor".</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1369', 1369)" onmouseover="showTip(event, '1369', 1369)">
-            StartFabric
+          <code onmouseout="hideTip(event, '2247', 2247)" onmouseover="showTip(event, '2247', 2247)">
+            Facts
           </code>
-          <div class="tip" id="1369">
-            <strong>Signature:</strong> string<br />
+          <div class="tip" id="2247">
+            <strong>Signature:</strong> Fact list<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AzureHelper.fs#L14-14" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Office365ConnectorHelper.fs#L211-211" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>A list of facts, displayed as key-value pairs.</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1370', 1370)" onmouseover="showTip(event, '1370', 1370)">
-            StartStorage
+          <code onmouseout="hideTip(event, '2248', 2248)" onmouseover="showTip(event, '2248', 2248)">
+            Images
           </code>
-          <div class="tip" id="1370">
-            <strong>Signature:</strong> string<br />
+          <div class="tip" id="2248">
+            <strong>Signature:</strong> Image list<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AzureHelper.fs#L12-12" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Office365ConnectorHelper.fs#L214-214" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>A list of images that will be displayed at the bottom of the section.</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1371', 1371)" onmouseover="showTip(event, '1371', 1371)">
-            StopFabric
+          <code onmouseout="hideTip(event, '2249', 2249)" onmouseover="showTip(event, '2249', 2249)">
+            IsMarkdown
           </code>
-          <div class="tip" id="1371">
-            <strong>Signature:</strong> string<br />
+          <div class="tip" id="2249">
+            <strong>Signature:</strong> bool option<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AzureHelper.fs#L15-15" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Office365ConnectorHelper.fs#L220-220" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>(Optional) Set this to false to disable markdown parsing on this section's content. Markdown parsing is enabled by default.</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1372', 1372)" onmouseover="showTip(event, '1372', 1372)">
-            StopStorage
+          <code onmouseout="hideTip(event, '2250', 2250)" onmouseover="showTip(event, '2250', 2250)">
+            PotentialActions
           </code>
-          <div class="tip" id="1372">
-            <strong>Signature:</strong> string<br />
+          <div class="tip" id="2250">
+            <strong>Signature:</strong> ViewAction list<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AzureHelper.fs#L13-13" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Office365ConnectorHelper.fs#L223-223" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>This list of ViewAction objects will power the action links found at the bottom of the section</p>
+
+
         </td>
       </tr>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '1373', 1373)" onmouseover="showTip(event, '1373', 1373)">
-            TimeOut
+          <code onmouseout="hideTip(event, '2251', 2251)" onmouseover="showTip(event, '2251', 2251)">
+            Text
           </code>
-          <div class="tip" id="1373">
-            <strong>Signature:</strong> TimeSpan<br />
+          <div class="tip" id="2251">
+            <strong>Signature:</strong> string option<br />
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/AzureHelper.fs#L18-18" class="github-link">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Office365ConnectorHelper.fs#L217-217" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          
+          <p>(Optional) A text that will appear before the activity.</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2252', 2252)" onmouseover="showTip(event, '2252', 2252)">
+            Title
+          </code>
+          <div class="tip" id="2252">
+            <strong>Signature:</strong> MarkdownString option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Office365ConnectorHelper.fs#L196-196" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>(Optional) The title of the section</p>
+
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Instance members</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Instance member</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2253', 2253)" onmouseover="showTip(event, '2253', 2253)">
+            WriteJson(writer)
+          </code>
+          <div class="tip" id="2253">
+            <strong>Signature:</strong> writer:JsonWriter -&gt; JsonWriter<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsharp/FAKE/blob/master/src/app/FakeLib/Office365ConnectorHelper.fs#L227-227" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Writes the Section to a JSON writer</p>
+
+
         </td>
       </tr>
     </tbody>
@@ -260,6 +326,7 @@
             <li><a href="http://fsharp.github.io/FAKE/wix.html">WiX Setup Generation</a></li>
             <li><a href="http://fsharp.github.io/FAKE/chocolatey.html">Using Chocolatey</a></li>
             <li><a href="http://fsharp.github.io/FAKE/slacknotification.html">Using Slack</a></li>
+            <li><a href="http://fsharp.github.io/FAKE/msteamsnotification.html">Using Microsoft Teams</a></li>
             <li><a href="http://fsharp.github.io/FAKE/sonarcube.html">Using SonarQube</a></li>
             <li class="divider"></li>
             <li><a href="http://fsharp.github.io/FAKE/deploy.html">Fake.Deploy</a></li>
