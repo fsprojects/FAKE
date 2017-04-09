@@ -167,7 +167,7 @@ let ReportProgressFinish message = EncapsulateSpecialChars message |> sendToTeam
 /// Create  the build status.
 /// [omit]
 let buildStatus status message =
-    sprintf "##teamcity[buildStatus '%s' text='%s']" (EncapsulateSpecialChars status) (EncapsulateSpecialChars message)
+    sprintf "##teamcity[buildStatus status='%s' text='%s']" (EncapsulateSpecialChars status) (EncapsulateSpecialChars message)
 
 /// Reports the build status.
 let ReportBuildStatus status message = buildStatus status message |> sendStrToTeamCity

@@ -1,5 +1,14 @@
-#### 4.57.4 - 29.03.2017
+#### 4.58.0 - 09.04.2017
+* Added helper for Office 365 / MS Teams Notifications - https://github.com/fsharp/FAKE/pull/1501
+* Added options for better TC reporting of npm tasks - https://github.com/fsharp/FAKE/pull/1510
+* Added a way to set the --trace parameter on the NUnit3 command line - https://github.com/fsharp/FAKE/pull/1513
+* Add version-option to NugetUpdate in order to support explicit versions - https://github.com/fsharp/FAKE/pull/1514
 * Make exit code accessible - https://github.com/fsharp/FAKE/pull/1502
+* Additional Environment Vars for Appveyor - https://github.com/fsharp/FAKE/pull/1497
+* BUGFIX: TeamCityHelper report build status incorrect string - https://github.com/fsharp/FAKE/pull/1503
+* BUGFIX: Fixed Azure Storage Emulator path and arguments - https://github.com/fsharp/FAKE/pull/1499
+* USABILITY: Improved log integration with AppVeyor - https://github.com/fsharp/FAKE/pull/1490
+* USABILITY: Report target name if duplicate target is detected - https://github.com/fsharp/FAKE/pull/1506
 
 #### 4.57.3 - 29.03.2017
 * Run parallel targets just in time - https://github.com/fsharp/FAKE/pull/1396

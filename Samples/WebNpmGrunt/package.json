@@ -1,0 +1,14 @@
+{
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-cli": "^1.2.0",
+    "grunt-jasmine-nodejs": "^1.6.0",
+    "jasmine": "^2.5.3"
+  },
+  "scripts": {
+    "test": "grunt jasmine_nodejs"
+  }
+}

@@ -71,6 +71,7 @@ paket-files/
 .vs/
 
 mytemp
+Samples/WebNpmGrunt/node_modules
 .fake
 !/integrationtests/*/before/.fake
 project.lock.json
