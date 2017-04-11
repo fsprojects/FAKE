@@ -524,7 +524,7 @@ let doesTargetMeanListTargets target = target = "--listTargets"  || target = "-l
 let private doesTargetMeanPrintDotGraph target = target = "--dotGraph"  || target = "-dg"
 
 /// Determines a parallel build order for the given set of targets
-let determineBuildOrder (target : string) =
+let determineBuildOrder (target : string) (parallelJobs : int) =
 
     let t = getTarget target
 
@@ -597,17 +597,23 @@ let determineBuildOrder (target : string) =
             AddNewTargetLevel dependantTarget level target.Name
         | _ -> ()
 
-    visitDependencies addTargetLevel target |> ignore
+    if parallelJobs > 1 then
+        visitDependencies addTargetLevel target |> ignore
 
-    // the results are grouped by their level, sorted descending (by level) and
-    // finally grouped together in a list<TargetTemplate<unit>[]
-    targetLevels
-    |> Seq.map (fun pair -> pair.Key, pair.Value.level)
-    |> Seq.groupBy snd
-    |> Seq.sortBy (fun (l,_) -> -l)
-    |> Seq.map snd
-    |> Seq.map (fun v -> v |> Seq.map fst |> Seq.distinct |> Seq.map getTarget |> Seq.toArray)
-    |> Seq.toList
+        // the results are grouped by their level, sorted descending (by level) and
+        // finally grouped together in a list<TargetTemplate<unit>[]
+        targetLevels
+        |> Seq.map (fun pair -> pair.Key, pair.Value.level)
+        |> Seq.groupBy snd
+        |> Seq.sortBy (fun (l,_) -> -l)
+        |> Seq.map snd
+        |> Seq.map (fun v -> v |> Seq.map fst |> Seq.distinct |> Seq.map getTarget |> Seq.toArray)
+        |> Seq.toList
+    else
+        let _, order = visitDependencies ignore target
+        order 
+        |> Seq.map (fun t -> [(getTarget t)] |> Seq.toArray) 
+        |> Seq.toList
 
 /// Runs a single target without its dependencies
 let runSingleTarget (target : TargetTemplate<unit>) =
@@ -656,30 +662,21 @@ let run targetName =
 
         let parallelJobs = environVarOrDefault "parallel-jobs" "1" |> int
 
+        // determine a build order
+        let order = determineBuildOrder targetName parallelJobs
+        CurrentTargetOrder <- order |> List.map (fun targets -> targets |> Array.map (fun t -> t.Name) |> Array.toList)
+        PrintRunningOrder()
+
         // Figure out the order in in which targets can be run, and which can be run in parallel.
         if parallelJobs > 1 then
             tracefn "Running parallel build with %d workers" parallelJobs
 
-            // determine a parallel build order
-            let order = determineBuildOrder targetName
-            CurrentTargetOrder <- order |> List.map (fun targets -> targets |> Array.map (fun t -> t.Name) |> Array.toList)
-
-            PrintRunningOrder()
-
             // run every level in parallel
-            for par in order do
-                runTargetsParallel parallelJobs par
+            for level in order do
+                runTargetsParallel parallelJobs level
         else
-            
-            // Note: we could use the ordering resulting from flattening the result of determineBuildOrder
-            // for a single threaded build (thereby centralizing the algorithm for build order), but that
-            // ordering is inconsistent with earlier versions of FAKE.
-            let _, order = visitDependencies ignore targetName
-            CurrentTargetOrder <- order |> Seq.map (fun t -> [t]) |> Seq.toList
-            
-            PrintRunningOrder()
-
-            runTargets (order |> Seq.map getTarget |> Seq.toArray)
+            tracefn "Running build with 1 worker"
+            runTargets (order |> Seq.concat |> Seq.toArray)
 
     finally
         if errors <> [] then
