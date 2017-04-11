@@ -412,7 +412,7 @@ let PrintDependencyGraph verbose target =
                 else
                     appendfn "%s<== %s" indent t.Name
 
-        visitDependencies logDependency target.Name
+        visitDependencies logDependency target.Name |> ignore
         log ""
 
 let PrintRunningOrder() = 
