@@ -413,13 +413,8 @@ let PrintDependencyGraph verbose target =
                     appendfn "%s<== %s" indent t.Name
 
         let _, ordered = visitDependencies logDependency target.Name
-
         appendfn ""
-        appendfn "The resulting target order is:"
-        Seq.iter (appendfn " - %s") ordered
-
         sb.Length <- sb.Length - Environment.NewLine.Length
-
         log <| sb.ToString()
 
 let PrintRunningOrder() = 
