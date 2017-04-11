@@ -6,6 +6,15 @@ open System
 open System.IO
 open System.Text.RegularExpressions
 
+// Helper active pattern for project types
+let (|Fsproj|Csproj|Vbproj|Shproj|) (projFileName:string) =
+    match projFileName with
+    | f when f.EndsWith("fsproj") -> Fsproj
+    | f when f.EndsWith("csproj") -> Csproj
+    | f when f.EndsWith("vbproj") -> Vbproj
+    | f when f.EndsWith("shproj") -> Shproj
+    | _                           -> failwith (sprintf "Project file %s not supported. Unknown project type." projFileName)
+
 let internal assemblyVersionRegex = getRegEx @"([0-9]+.)+[0-9]+"
 
 // matches [assembly: name(value)] and captures "name" and "value" as named captures. Variations for C#, F#, C++ and VB
