@@ -418,12 +418,17 @@ let PrintDependencyGraph verbose target =
         log <| sb.ToString()
 
 let PrintRunningOrder() = 
-        log "The running order is:"
-        CurrentTargetOrder
-        |> List.iteri (fun index x ->  
-                                if (environVarOrDefault "parallel-jobs" "1" |> int > 1) then                               
-                                    logfn "Group - %d" (index + 1)
-                                Seq.iter (logfn "  - %s") x)
+    let sb = StringBuilder()
+    let appendfn fmt = Printf.ksprintf (sb.AppendLine >> ignore) fmt
+    appendfn "The running order is:"
+    CurrentTargetOrder
+    |> List.iteri (fun index x ->  
+                            if (environVarOrDefault "parallel-jobs" "1" |> int > 1) then                               
+                                appendfn "Group - %d" (index + 1)
+                            Seq.iter (appendfn "  - %s") x)
+
+    sb.Length <- sb.Length - Environment.NewLine.Length
+    log <| sb.ToString()
 
 /// <summary>Writes a dependency graph of all targets in the DOT format.</summary>
 let PrintDotDependencyGraph () =
