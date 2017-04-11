@@ -1,3 +1,6 @@
+#### 4.58.1 - 11.04.2017
+* Added installer for dotnet SDK
+
 #### 4.58.0 - 09.04.2017
 * Added helper for Office 365 / MS Teams Notifications - https://github.com/fsharp/FAKE/pull/1501
 * Added options for better TC reporting of npm tasks - https://github.com/fsharp/FAKE/pull/1510
