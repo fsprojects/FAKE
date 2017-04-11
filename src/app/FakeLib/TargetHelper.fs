@@ -654,14 +654,14 @@ let run targetName =
         tracefn "Building project with version: %s" buildVersion
         PrintDependencyGraph false targetName
 
-        // determine a parallel build order
-        let order = determineBuildOrder targetName
-
         let parallelJobs = environVarOrDefault "parallel-jobs" "1" |> int
 
         // Figure out the order in in which targets can be run, and which can be run in parallel.
         if parallelJobs > 1 then
             tracefn "Running parallel build with %d workers" parallelJobs
+
+            // determine a parallel build order
+            let order = determineBuildOrder targetName
             CurrentTargetOrder <- order |> List.map (fun targets -> targets |> Array.map (fun t -> t.Name) |> Array.toList)
 
             PrintRunningOrder()
@@ -671,12 +671,15 @@ let run targetName =
                 runTargetsParallel parallelJobs par
         else
             
-            let flatenedOrder = order |> List.map (fun targets -> targets |> Array.map (fun t -> t.Name)  |> Array.toList) |> List.concat
-            CurrentTargetOrder <- flatenedOrder |> Seq.map (fun t -> [t]) |> Seq.toList
-
+            // Note: we could use the ordering resulting from flattening the result of determineBuildOrder
+            // for a single threaded build (thereby centralizing the algorithm for build order), but that
+            // ordering is inconsistent with earlier versions of FAKE.
+            let _, order = visitDependencies ignore targetName
+            CurrentTargetOrder <- order |> Seq.map (fun t -> [t]) |> Seq.toList
+            
             PrintRunningOrder()
 
-            runTargets (flatenedOrder |> Seq.map getTarget |> Seq.toArray)
+            runTargets (order |> Seq.map getTarget |> Seq.toArray)
 
     finally
         if errors <> [] then
