@@ -504,15 +504,15 @@ let InstallDotNetSDK dotnetSDKPath dotnetcliVersion =
         use webclient = new Net.WebClient(Proxy = proxy)
         webclient.DownloadFile(downloadPath, localPath)
 
-        if not isWindows then
+        if isWindows then
+            Unzip localPath dotnetSDKPath
+        else
             let assertExitCodeZero x =
                 if x = 0 then () else
                 failwithf "Command failed with exit code %i" x
 
             Shell.Exec("tar", sprintf """-xvf "%s" -C "%s" """ localPath dotnetSDKPath)
             |> assertExitCodeZero
-        else  
-            System.IO.Compression.ZipFile.ExtractToDirectory(localPath, dotnetSDKPath)
 
         tracefn "dotnet cli path - %s" dotnetSDKPath
         System.IO.Directory.EnumerateFiles dotnetSDKPath
