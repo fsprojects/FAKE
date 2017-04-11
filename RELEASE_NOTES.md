@@ -1,4 +1,4 @@
-#### 4.58.4 - 11.04.2017
+#### 4.58.5 - 11.04.2017
 * Added installer for dotnet SDK
 * Revert single thread build order change - https://github.com/fsharp/FAKE/pull/1516
 
