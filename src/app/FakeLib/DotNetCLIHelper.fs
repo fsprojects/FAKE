@@ -4,6 +4,7 @@ module Fake.DotNetCli
 open Fake
 open System
 open System.IO
+open System.IO.Compression
 open System.Text
 open Newtonsoft.Json.Linq
 
@@ -467,6 +468,7 @@ let SetVersionInProjectJson (version:string) fileName =
 
 let mutable DotnetSDKPath = System.Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) </> "dotnetcore" |> FullName
 
+
 /// Installs the DotNet SDK locally to the given path
 let InstallDotNetSDK sdkVersion =
     let buildLocalPath = DotnetSDKPath </> (if isWindows then "dotnet.exe" else "dotnet")
@@ -507,7 +509,7 @@ let InstallDotNetSDK sdkVersion =
         webclient.DownloadFile(downloadPath, localPath)
 
         if isWindows then
-            Unzip localPath DotnetSDKPath
+            Unzip DotnetSDKPath localPath
         else
             let assertExitCodeZero x =
                 if x = 0 then () else
