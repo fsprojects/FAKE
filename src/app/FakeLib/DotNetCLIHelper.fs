@@ -465,9 +465,11 @@ let SetVersionInProjectJson (version:string) fileName =
     if newText <> original then
         File.WriteAllText(fileName,newText)
 
+let mutable DotnetSDKPath = System.Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) </> "dotnetcore" |> FullName
+
 /// Installs the DotNet SDK locally to the given path
-let InstallDotNetSDK dotnetSDKPath dotnetcliVersion =
-    let buildLocalPath = dotnetSDKPath </> (if isWindows then "dotnet.exe" else "dotnet")
+let InstallDotNetSDK sdkVersion =
+    let buildLocalPath = DotnetSDKPath </> (if isWindows then "dotnet.exe" else "dotnet")
     let mutable dotnetExePath = "dotnet"
     let correctVersionInstalled exe = 
         try
@@ -476,26 +478,26 @@ let InstallDotNetSDK dotnetSDKPath dotnetcliVersion =
                 info.FileName <- exe
                 info.WorkingDirectory <- Environment.CurrentDirectory
                 info.Arguments <- "--version") (TimeSpan.FromMinutes 30.)
-            processResult.Messages |> separated "" = dotnetcliVersion
+            processResult.Messages |> separated "" = sdkVersion
         with 
         | _ -> false
 
     if correctVersionInstalled dotnetExePath then
-        tracefn "dotnetcli %s already installed in PATH" dotnetcliVersion
+        tracefn "dotnetcli %s already installed in PATH" sdkVersion
     elif correctVersionInstalled buildLocalPath then
-        tracefn "cmd %s already installed in LocalApplicationData" dotnetcliVersion
+        tracefn "cmd %s already installed in LocalApplicationData" sdkVersion
         dotnetExePath <- buildLocalPath
     else
-        CleanDir dotnetSDKPath
+        CleanDir DotnetSDKPath
         let archiveFileName = 
             if isWindows then
-                sprintf "dotnet-dev-win-x64.%s.zip" dotnetcliVersion
+                sprintf "dotnet-dev-win-x64.%s.zip" sdkVersion
             elif isLinux then
-                sprintf "dotnet-dev-ubuntu-x64.%s.tar.gz" dotnetcliVersion
+                sprintf "dotnet-dev-ubuntu-x64.%s.tar.gz" sdkVersion
             else
-                sprintf "dotnet-dev-osx-x64.%s.tar.gz" dotnetcliVersion
-        let downloadPath = sprintf "https://dotnetcli.azureedge.net/dotnet/Sdk/%s/%s" dotnetcliVersion archiveFileName
-        let localPath = Path.Combine(dotnetSDKPath, archiveFileName)
+                sprintf "dotnet-dev-osx-x64.%s.tar.gz" sdkVersion
+        let downloadPath = sprintf "https://dotnetcli.azureedge.net/dotnet/Sdk/%s/%s" sdkVersion archiveFileName
+        let localPath = Path.Combine(DotnetSDKPath, archiveFileName)
 
         tracefn "Installing '%s' to '%s'" downloadPath localPath
         
@@ -505,19 +507,19 @@ let InstallDotNetSDK dotnetSDKPath dotnetcliVersion =
         webclient.DownloadFile(downloadPath, localPath)
 
         if isWindows then
-            Unzip localPath dotnetSDKPath
+            Unzip localPath DotnetSDKPath
         else
             let assertExitCodeZero x =
                 if x = 0 then () else
                 failwithf "Command failed with exit code %i" x
 
-            Shell.Exec("tar", sprintf """-xvf "%s" -C "%s" """ localPath dotnetSDKPath)
+            Shell.Exec("tar", sprintf """-xvf "%s" -C "%s" """ localPath DotnetSDKPath)
             |> assertExitCodeZero
 
-        tracefn "dotnet cli path - %s" dotnetSDKPath
-        System.IO.Directory.EnumerateFiles dotnetSDKPath
+        tracefn "dotnet cli path - %s" DotnetSDKPath
+        System.IO.Directory.EnumerateFiles DotnetSDKPath
         |> Seq.iter (fun path -> tracefn " - %s" path)
-        System.IO.Directory.EnumerateDirectories dotnetSDKPath
+        System.IO.Directory.EnumerateDirectories DotnetSDKPath
         |> Seq.iter (fun path -> tracefn " - %s%c" path System.IO.Path.DirectorySeparatorChar)
 
         dotnetExePath <- buildLocalPath
