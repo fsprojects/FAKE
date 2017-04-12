@@ -5,6 +5,7 @@ open System
 open System.IO
 open System.Text
 open Fake
+open System.Diagnostics
 
 /// CLI parameters available if you use Tests.runTestsInAssembly defaultConfig argv in your code:
 type ExpectoParams =
@@ -85,7 +86,8 @@ type ExpectoParams =
             PrintVersion = true
             Run = []
             ListTests = false
-            Summary = true
+            // Summary = true somehow breakes Expecto TeamCity printer
+            Summary = false
             SummaryLocation = false
             CustomArgs = []
             WorkingDirectory = ""
@@ -101,11 +103,17 @@ let Expecto (setParams : ExpectoParams -> ExpectoParams) (assemblies : string se
             if isNotNullOrEmpty args.WorkingDirectory
             then args.WorkingDirectory else DirectoryName testAssembly
         let exitCode =
-            ExecProcess(fun info ->
-                info.FileName <- testAssembly
-                info.WorkingDirectory <- workingDir
-                info.Arguments <- argsString
-            ) processTimeout
+            let info = ProcessStartInfo(testAssembly)
+            info.WorkingDirectory <- workingDir
+            info.Arguments <- argsString
+            info.UseShellExecute <- false
+            // Pass environment variables to the expecto console process in order to let it detect it's running on TeamCity
+            // (it checks TEAMCITY_PROJECT_NAME <> null specifically).
+            for name, value in environVars EnvironmentVariableTarget.Process do
+                info.EnvironmentVariables.[string name] <- string value
+            use proc = Process.Start(info)
+            proc.WaitForExit() // Don't set a process timeout. The timeout is per test.
+            proc.ExitCode
         testAssembly, exitCode
     let res =
         assemblies
