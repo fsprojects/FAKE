@@ -4,6 +4,7 @@ module Fake.DotNetCli
 open Fake
 open System
 open System.IO
+open System.IO.Compression
 open System.Text
 open Newtonsoft.Json.Linq
 
@@ -464,3 +465,64 @@ let SetVersionInProjectJson (version:string) fileName =
     let newText = p.ToString()
     if newText <> original then
         File.WriteAllText(fileName,newText)
+
+let mutable DotnetSDKPath = System.Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) </> "dotnetcore" |> FullName
+
+
+/// Installs the DotNet SDK locally to the given path
+let InstallDotNetSDK sdkVersion =
+    let buildLocalPath = DotnetSDKPath </> (if isWindows then "dotnet.exe" else "dotnet")
+    let mutable dotnetExePath = "dotnet"
+    let correctVersionInstalled exe = 
+        try
+            let processResult = 
+                ExecProcessAndReturnMessages (fun info ->  
+                info.FileName <- exe
+                info.WorkingDirectory <- Environment.CurrentDirectory
+                info.Arguments <- "--version") (TimeSpan.FromMinutes 30.)
+            processResult.Messages |> separated "" = sdkVersion
+        with 
+        | _ -> false
+
+    if correctVersionInstalled dotnetExePath then
+        tracefn "dotnetcli %s already installed in PATH" sdkVersion
+    elif correctVersionInstalled buildLocalPath then
+        tracefn "cmd %s already installed in LocalApplicationData" sdkVersion
+        dotnetExePath <- buildLocalPath
+    else
+        CleanDir DotnetSDKPath
+        let archiveFileName = 
+            if isWindows then
+                sprintf "dotnet-dev-win-x64.%s.zip" sdkVersion
+            elif isLinux then
+                sprintf "dotnet-dev-ubuntu-x64.%s.tar.gz" sdkVersion
+            else
+                sprintf "dotnet-dev-osx-x64.%s.tar.gz" sdkVersion
+        let downloadPath = sprintf "https://dotnetcli.azureedge.net/dotnet/Sdk/%s/%s" sdkVersion archiveFileName
+        let localPath = Path.Combine(DotnetSDKPath, archiveFileName)
+
+        tracefn "Installing '%s' to '%s'" downloadPath localPath
+        
+        let proxy = Net.WebRequest.DefaultWebProxy
+        proxy.Credentials <- Net.CredentialCache.DefaultCredentials
+        use webclient = new Net.WebClient(Proxy = proxy)
+        webclient.DownloadFile(downloadPath, localPath)
+
+        if isWindows then
+            Unzip DotnetSDKPath localPath
+        else
+            let assertExitCodeZero x =
+                if x = 0 then () else
+                failwithf "Command failed with exit code %i" x
+
+            Shell.Exec("tar", sprintf """-xvf "%s" -C "%s" """ localPath DotnetSDKPath)
+            |> assertExitCodeZero
+
+        tracefn "dotnet cli path - %s" DotnetSDKPath
+        System.IO.Directory.EnumerateFiles DotnetSDKPath
+        |> Seq.iter (fun path -> tracefn " - %s" path)
+        System.IO.Directory.EnumerateDirectories DotnetSDKPath
+        |> Seq.iter (fun path -> tracefn " - %s%c" path System.IO.Path.DirectorySeparatorChar)
+
+        dotnetExePath <- buildLocalPath
+    dotnetExePath

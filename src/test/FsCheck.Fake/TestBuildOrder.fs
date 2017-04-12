@@ -1,4 +1,4 @@
-﻿module FsCheck.Fake.TestParallelBuildOrder
+﻿module FsCheck.Fake.TestBuildOrder
 
 open System
 open System.Collections.Generic
@@ -65,7 +65,7 @@ let ``Independent targets are parallel``() =
     "b" ==> "dep" |> ignore
     "c" ==> "dep" |> ignore
 
-    let order = determineBuildOrder "dep"
+    let order = determineBuildOrder "dep" 2
 
     validateBuildOrder order "dep"
 
@@ -96,7 +96,7 @@ let ``Issue #1395 Example``() =
     "T2.3" ==> "T4" |> ignore
     "T3" ==> "T4" |> ignore
 
-    let order = determineBuildOrder "T4"
+    let order = determineBuildOrder "T4" 2
     validateBuildOrder order "T4"
 
     match order with
@@ -119,7 +119,7 @@ let ``Diamonds are resolved correctly``() =
     "a" ==> "b" ==> "d" |> ignore
     "a" ==> "c" ==> "d" |> ignore
 
-    let order = determineBuildOrder "d"
+    let order = determineBuildOrder "d" 2
     validateBuildOrder order "d"
 
     match order with
@@ -143,7 +143,7 @@ let ``Initial Targets Can Run Concurrently``() =
     "a" ==> "b" ==> "d" |> ignore
     "c1" ==> "c2" ==> "d" |> ignore
 
-    let order = determineBuildOrder "d"
+    let order = determineBuildOrder "d" 2
     validateBuildOrder order "d"
 
     match order with
@@ -188,7 +188,7 @@ let ``BlythMeisters Scenario Of Complex Build Order Is Correct``() =
     "RunUnitTests" ==> "PublishNugets" |> ignore
     "RunIntTests" ==> "PublishNugets" |> ignore
 
-    let order = determineBuildOrder "PublishNugets"
+    let order = determineBuildOrder "PublishNugets" 2
     validateBuildOrder order "PublishNugets"
 
     match order with
@@ -239,7 +239,7 @@ let ``BlythMeisters Scenario Of Even More Complex Build Order Is Correct``() =
     "CreateDBNugets" ==> "PublishNugets" |> ignore
     "CreateNugets" ==> "PublishNugets" |> ignore    
 
-    let order = determineBuildOrder "PublishNugets"
+    let order = determineBuildOrder "PublishNugets" 2
     validateBuildOrder order "PublishNugets"
 
     match order with
@@ -249,6 +249,62 @@ let ``BlythMeisters Scenario Of Even More Complex Build Order Is Correct``() =
            TargetSet ["PreBuildVerifications"];
            TargetSet ["BuildWholeCaboodle"; "CreateDBNugets"; "DropIntDatabases"];
            TargetSet ["DeployIntDatabases"; "RunUnitTests"];
+           TargetSet ["RunIntTests"];
+           TargetSet ["CreateNugets"];           
+           TargetSet ["PublishNugets"];
+           ] ->
+            // as expected
+            ()
+
+        | _ ->
+            failwithf "unexpected order: %A" order
+
+[<Fact>]
+let ``BlythMeisters Scenario Of Even More Complex Build Order Is Correct When Not Parallel``() =
+    TargetDict.Clear()
+    Target "PrepareBuild" DoNothing
+    Target "CreateWholeCaboodle" DoNothing
+    Target "UpdateVersions" DoNothing
+    Target "PreBuildVerifications" DoNothing
+    Target "BuildWholeCaboodle" DoNothing
+    Target "RunUnitTests" DoNothing
+    Target "RunIntTests" DoNothing
+    Target "CreateDBNugets" DoNothing
+    Target "DropIntDatabases" DoNothing
+    Target "DeployIntDatabases" DoNothing
+    Target "CreateNugets" DoNothing
+    Target "PublishNugets" DoNothing
+
+    "PrepareBuild" ==> "CreateWholeCaboodle" ==> "PreBuildVerifications" |> ignore
+    "PrepareBuild" ==> "UpdateVersions" ==> "PreBuildVerifications" |> ignore
+    "PreBuildVerifications" ==> "CreateDBNugets" ==> "DeployIntDatabases" |> ignore
+    "PreBuildVerifications" ==> "DropIntDatabases" ==> "DeployIntDatabases" |> ignore
+    "PreBuildVerifications" ==> "BuildWholeCaboodle" |> ignore
+    "BuildWholeCaboodle" ==> "RunUnitTests"  |> ignore
+    "BuildWholeCaboodle" ==> "RunIntTests" |> ignore   
+    "DeployIntDatabases" ==> "RunIntTests" |> ignore   
+    "BuildWholeCaboodle" ==> "CreateNugets" |> ignore 
+    "RunIntTests" ==> "CreateNugets" |> ignore
+    "RunUnitTests" ==> "CreateNugets"  |> ignore    
+    "RunUnitTests" ==> "PublishNugets" |> ignore
+    "RunIntTests" ==> "PublishNugets" |> ignore
+    "CreateDBNugets" ==> "PublishNugets" |> ignore
+    "CreateNugets" ==> "PublishNugets" |> ignore    
+
+    let order = determineBuildOrder "PublishNugets" 1
+    validateBuildOrder order "PublishNugets"
+
+    match order with
+        | [
+           TargetSet ["PrepareBuild"];
+           TargetSet ["CreateWholeCaboodle"];
+           TargetSet ["UpdateVersions"];
+           TargetSet ["PreBuildVerifications"];
+           TargetSet ["BuildWholeCaboodle";];
+           TargetSet ["RunUnitTests"];
+           TargetSet ["CreateDBNugets"];
+           TargetSet ["DropIntDatabases"];
+           TargetSet ["DeployIntDatabases"];
            TargetSet ["RunIntTests"];
            TargetSet ["CreateNugets"];           
            TargetSet ["PublishNugets"];
@@ -272,7 +328,7 @@ let ``Spurs run as early as possible``() =
     "a" ==> "b" ==> "d" |> ignore
     "a" ==> "c1" ==> "c2" ==> "d" |> ignore
 
-    let order = determineBuildOrder "d"
+    let order = determineBuildOrder "d" 2
     validateBuildOrder order "d"
 
     match order with
@@ -298,7 +354,7 @@ let ``Spurs run as early as possible 3 and 2 length``() =
     "a" ==> "b1" ==> "b2" ==> "d" |> ignore
     "a" ==> "c1" ==> "c2" ==> "c3" ==> "d" |> ignore
 
-    let order = determineBuildOrder "d"
+    let order = determineBuildOrder "d" 2
     validateBuildOrder order "d"
 
     match order with
@@ -322,7 +378,7 @@ let ``Spurs run as early as possible (reverse definition order)``() =
     "a" ==> "c1" ==> "c2" ==> "d" |> ignore
     "a" ==> "b" ==> "d" |> ignore    
 
-    let order = determineBuildOrder "d"
+    let order = determineBuildOrder "d" 2
     validateBuildOrder order "d"
 
     match order with
@@ -348,7 +404,7 @@ let ``Spurs run as early as possible split on longer spur``() =
     "a" ==> "c1" ==> "c21" ==> "d" |> ignore
     "a" ==> "c1" ==> "c22" ==> "d" |> ignore
 
-    let order = determineBuildOrder "d"
+    let order = determineBuildOrder "d" 2
     validateBuildOrder order "d"
 
     match order with
@@ -376,7 +432,7 @@ let ``3 way Spurs run as early as possible``() =
     "a" ==> "c1" ==> "c2" ==> "e" |> ignore
     "a" ==> "d1" ==> "d2" ==> "d3" ==> "e" |> ignore
 
-    let order = determineBuildOrder "e"
+    let order = determineBuildOrder "e" 2
     validateBuildOrder order "e"
 
     match order with
@@ -407,7 +463,7 @@ let ``Soft dependencies are respected when dependees are present``() =
     "e" ==> "f" |> ignore
     "c" ==> "f" |> ignore
 
-    let order = determineBuildOrder "f"
+    let order = determineBuildOrder "f" 2
 
     validateBuildOrder order "f"
 
@@ -438,7 +494,7 @@ let ``Soft dependencies are ignored when dependees are not present``() =
     "d" ==> "e" |> ignore
     "b" ==> "e" |> ignore
 
-    let order = determineBuildOrder "e"
+    let order = determineBuildOrder "e" 2
 
     validateBuildOrder order "e"
 
@@ -450,3 +506,49 @@ let ``Soft dependencies are ignored when dependees are not present``() =
         | _ ->
             failwithf "unexpected order: %A" order
     ()
+
+[<Fact>]
+let ``Fsharp.Data Dependencies single worker``() = 
+    TargetDict.Clear()
+    Target "Clean" DoNothing
+    Target "AssemblyInfo" DoNothing
+    Target "Build" DoNothing
+    Target "BuildTests" DoNothing
+    Target "BuildConsoleTests" DoNothing
+    Target "RunTests" DoNothing
+    Target "FSharp.Data.Tests" DoNothing
+    Target "FSharp.Data.DesignTime.Tests" DoNothing
+    Target "RunConsoleTests" DoNothing
+    Target "All" DoNothing
+        
+    "FSharp.Data.Tests" ==> "RunTests" |> ignore
+    "FSharp.Data.DesignTime.Tests" ==> "RunTests" |> ignore
+    "Clean" ==> "AssemblyInfo" ==> "Build" |> ignore
+    "Build" ==> "All" |> ignore
+    "BuildTests" ==> "All" |> ignore
+    "BuildConsoleTests" ==> "All" |> ignore
+    "RunTests" ==> "All" |> ignore
+    "RunConsoleTests" ==> "All" |> ignore
+
+    let order = determineBuildOrder "All" 1
+    validateBuildOrder order "All"
+
+    match order with
+        | [
+           TargetSet ["Clean"];
+           TargetSet ["AssemblyInfo"];
+           TargetSet ["Build"];
+           TargetSet ["BuildTests"];
+           TargetSet ["BuildConsoleTests";];
+           TargetSet ["FSharp.Data.Tests"];
+           TargetSet ["FSharp.Data.DesignTime.Tests"];
+           TargetSet ["RunTests"];
+           TargetSet ["RunConsoleTests"];
+           TargetSet ["All"];           
+           ] ->
+            // as expected
+            ()
+
+        | _ ->
+            failwithf "unexpected order: %A" order
+

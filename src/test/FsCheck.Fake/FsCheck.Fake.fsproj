@@ -89,7 +89,7 @@
   <Import Project="..\..\..\packages\xunit.core\build\$(__paket__xunit_core_props).props" Condition="Exists('..\..\..\packages\xunit.core\build\$(__paket__xunit_core_props).props')" Label="Paket" />
   <ItemGroup>
     <Compile Include="TestStringHelper.fs" />
-    <Compile Include="TestParallelBuildOrder.fs" />
+    <Compile Include="TestBuildOrder.fs" />
     <Compile Include="TestNuget.fs" />
     <None Include="app.config" />
     <None Include="paket.references" />
