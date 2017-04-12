@@ -1,3 +1,6 @@
+#### 4.58.6 - 11.04.2017
+* BUGFIX: Fixed Expecto TeamCity adapter - https://github.com/fsharp/FAKE/pull/1520
+
 #### 4.58.5 - 11.04.2017
 * Added installer for dotnet SDK
 * Revert single thread build order change - https://github.com/fsharp/FAKE/pull/1516
