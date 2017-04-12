@@ -87,6 +87,28 @@ let inline (--) (x : FileIncludes) pattern = x.ButNot pattern
 /// Includes a single pattern and scans the files - !! x = AllFilesMatching x
 let inline (!!) x = Include x
 
+let private couldNotMatch =
+    failwithf "Could not find anything matching %s"
+
+/// Include a single pattern, throwing an exception if there are no matches
+let (!!+) glob =
+    let files = !! glob
+    if Seq.isEmpty files
+    then couldNotMatch glob
+    else files
+
+let private tooManymatches =
+    failwithf "Found %i files matching %s; expected exactly one"
+
+/// Include a single pattern and return a single match, throwing an exception
+/// otherwise if there are zero or multiple matches.
+let (!!!) glob =
+    let files = !!+ glob
+    let count = Seq.length files
+    if count > 1
+    then tooManymatches count glob
+    else Seq.head files
+
 /// Looks for a tool first in its default path, if not found the in ./packages/ and then
 /// in all subfolders of the root folder - returns the tool file name.
 let findToolInSubPath toolname defaultPath =
