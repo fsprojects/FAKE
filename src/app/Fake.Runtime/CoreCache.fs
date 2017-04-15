@@ -45,7 +45,7 @@ module internal Cache =
             |> Seq.iter(assemblies.Add)
         doc
 
-    let read (path : string) = 
+    let read (path : string) =
         let doc = XDocument.Load(path)
         //let root = doc.Descendants() |> Seq.exactlyOne
         let assembliesEle = doc.Descendants(xname "Assemblies") |> Seq.exactlyOne
@@ -56,7 +56,7 @@ module internal Cache =
               FullName = get "FullName"
               Version = get "Version" })
         |> Seq.toList
-        
+
     let warningsFileName (f:FakeContext) = f.HashPath + "_warnings.txt"
     let cleanFiles filesGen f =
       filesGen
@@ -129,7 +129,7 @@ module internal Cache =
             member __.CleanCache context = cleanFiles context
             member __.TryLoadCache (context) =
                 traceFAKE "Default caching is disabled on dotnetcore, see https://github.com/dotnet/coreclr/issues/919#issuecomment-219212910"
-                
+
                 let fsiOpts = context.Config.CompileOptions.AdditionalArguments |> FsiOptions.ofArgs
                 if not fsiOpts.NoFramework then // Caller should take care!
                     let basePath = System.AppContext.BaseDirectory
@@ -169,14 +169,14 @@ let prepareContext (config:FakeConfig) (cache:ICachingProvider) =
     let newFsiOptions =
       { fsiOptions with
 #if !NETSTANDARD1_6
-          Defines = "FAKE" :: fsiOptions.Defines 
+          Defines = "FAKE" :: fsiOptions.Defines
 #else
-          Defines = "DOTNETCORE" :: "FAKE" :: fsiOptions.Defines 
+          Defines = "DOTNETCORE" :: "FAKE" :: fsiOptions.Defines
 #endif
       }
-    let config = 
-      { config with 
-          FakeConfig.CompileOptions = 
+    let config =
+      { config with
+          FakeConfig.CompileOptions =
             { config.CompileOptions with
                 AdditionalArguments = newFsiOptions.AsArgs |> Array.toList } }
     let allScriptContents = getAllScripts newFsiOptions.Defines config.ScriptFilePath
@@ -197,7 +197,7 @@ let prepareContext (config:FakeConfig) (cache:ICachingProvider) =
 type AssemblyLoadContext () =
   member x.LoadFromAssemblyPath (loc:string) =
     Reflection.Assembly.LoadFrom(loc)
-  member x.LoadFromAssemblyName(fullname:AssemblyName)= 
+  member x.LoadFromAssemblyName(fullname:AssemblyName)=
     Reflection.Assembly.Load(fullname)
 #endif
 
@@ -239,9 +239,9 @@ let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyNam
 #else
       t.Assembly
 #endif
-    
+
     // These guys need to be handled carefully, they must only exist a single time in memory
-    let wellKnownAssemblies = 
+    let wellKnownAssemblies =
       [ getAssemblyFromType typeof<Fake.Core.Context.FakeExecutionContext> ]
 
     let isPerfectMatch, result =
@@ -295,7 +295,7 @@ type FakeLoadContext (printDetails:bool, dependencies:AssemblyInfo list) =
 #endif
 
 let setupAssemblyResolver (context:FakeContext) =
-    
+
 #if NETSTANDARD1_6
     let globalLoadContext = AssemblyLoadContext.Default
     // See https://github.com/dotnet/coreclr/issues/6411
@@ -337,7 +337,7 @@ let runScriptWithCacheProvider (config:FakeConfig) (cache:ICachingProvider) =
 
     if resultCache.Warnings <> "" then
         traceFAKE "%O" resultCache.Warnings
-    
+
     match resultCache.AsCacheInfo with
     | Some newCache ->
         cache.SaveCache(newContext, newCache)

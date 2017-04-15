@@ -4,7 +4,7 @@ open System
 open System.IO
 open Fake.Runtime
 
-#if DOTNETCORE
+//#if DOTNETCORE
 
 type RawFakeSection =
   { Header : string
@@ -79,12 +79,18 @@ let parseHeader scriptCacheDir (f : RawFakeSection) =
       | true, depFile -> depFile
       | _ -> dependenciesFileName
     PaketDependencies (Paket.Dependencies(Path.GetFullPath file), group)
-  | _ -> failwithf "unknown dependencies header '%s'" f.Header 
-
+  | _ -> failwithf "unknown dependencies header '%s'" f.Header
+type AssemblyData =
+  { IsReferenceAssembly : bool
+    Info : ScriptRunner.AssemblyInfo }
 let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependencies) group =
   let groupStr = match group with Some g -> g | None -> "Main"
   let groupName = Paket.Domain.GroupName (groupStr)
+ #if DOTNETCORE
   let framework = Paket.FrameworkIdentifier.DotNetStandard (Paket.DotNetStandardVersion.V1_6)
+#else
+  let framework = Paket.FrameworkIdentifier.DotNetFramework (Paket.FrameworkVersion.V4_5)
+#endif
   let lockFilePath = Paket.DependenciesFile.FindLockfile paketDependencies.DependenciesFile
   let parent s = Path.GetDirectoryName s
   let comb name s = Path.Combine(s, name)
@@ -93,7 +99,7 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
     File.WriteAllText (paketDependenciesHashFile, HashGeneration.getStringHash (File.ReadAllText paketDependencies.DependenciesFile))
   let restoreOrUpdate () =
     if printDetails then Trace.log "Restoring with paket..."
-    
+
     // Check if lockfile is outdated
     let hash = HashGeneration.getStringHash (File.ReadAllText paketDependencies.DependenciesFile)
     if File.Exists lockFilePath.FullName && (not <| File.Exists paketDependenciesHashFile || File.ReadAllText paketDependenciesHashFile <> hash) then
@@ -111,16 +117,16 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
     |> ignore
     let lockFile = paketDependencies.GetLockFile()
     let lockGroup = lockFile.GetGroup groupName
-    
+
     // Write loadDependencies file (basically only for editor support)
     let loadFile = Path.Combine (cacheDir, "loadDependencies.fsx")
     if printDetails then Trace.log <| sprintf "Writing '%s'" loadFile
     // TODO: Make sure to create #if !FAKE block, because we don't actually need it.
     File.WriteAllText (loadFile, """printfn "loading dependencies... " """)
-    
+
     // Retrieve assemblies
     lockGroup.Resolution
-    |> Seq.map (fun kv -> 
+    |> Seq.map (fun kv ->
       let packageName = kv.Key
       let package = kv.Value
       package)
@@ -135,27 +141,44 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
       let installModel =
         paketDependencies.GetInstalledPackageModel(group, p.Name.ToString())
           .ApplyFrameworkRestrictions(Paket.Requirements.getRestrictionList p.Settings.FrameworkRestrictions)
-      Paket.LoadingScripts.PackageAndAssemblyResolution.getDllsWithinPackage framework installModel)
-    |> Seq.choose (fun fi ->
+
+      let assemblies =
+        Paket.LoadingScripts.PackageAndAssemblyResolution.getDllsWithinPackage framework installModel
+      let refAssemblies =
+        assemblies
+        |> List.map (fun fi -> true, fi)
+      let runtimeAssemblies =
+        assemblies
+        |> List.filter (fun (a:FileInfo) ->
+            // TODO: Bug, Use runtime assemblies instead (currently not implemented in Paket...)!
+            not (a.FullName.Contains("/ref/")))
+        |> List.map (fun fi -> false, fi)
+      runtimeAssemblies @ refAssemblies)
+    |> Seq.choose (fun (isReferenceAssembly, fi) ->
       let fullName = fi.FullName
       try let assembly = Mono.Cecil.AssemblyDefinition.ReadAssembly fullName
-          { ScriptRunner.AssemblyInfo.FullName = assembly.Name.FullName
-            ScriptRunner.AssemblyInfo.Version = assembly.Name.Version.ToString()
-            ScriptRunner.AssemblyInfo.Location = fullName } |> Some
+          { IsReferenceAssembly = isReferenceAssembly
+            Info =
+              { ScriptRunner.AssemblyInfo.FullName = assembly.Name.FullName
+                ScriptRunner.AssemblyInfo.Version = assembly.Name.Version.ToString()
+                ScriptRunner.AssemblyInfo.Location = fullName } } |> Some
       with e -> (if printDetails then Trace.log <| sprintf "Could not load '%s': %O" fullName e); None)
     |> Seq.toList
+    //|> List.partition (fun c -> c.IsReferenceAssembly)
   // Restore or update immediatly, because or everything might be OK -> cached path.
-  let mutable compileAssemblies = restoreOrUpdate()
+  let mutable knownAssemblies = restoreOrUpdate()
   { new CoreCache.ICachingProvider with
       member x.CleanCache context =
         if printDetails then Trace.log "Invalidating cache..."
       member __.TryLoadCache (context) =
-          let references = compileAssemblies |> List.map (fun (a:ScriptRunner.AssemblyInfo) -> a.Location)
-          // TODO: Bug, Use runtime assemblies instead (currently not implemented in Paket...)!
+          let references =
+              knownAssemblies
+              |> List.filter (fun a -> a.IsReferenceAssembly)
+              |> List.map (fun (a:AssemblyData) -> a.Info.Location)
           let runtimeAssemblies =
-              compileAssemblies
-              |> List.filter (fun (a:ScriptRunner.AssemblyInfo) -> 
-                  not (a.Location.Contains("/ref/")))
+              knownAssemblies
+              |> List.filter (fun a -> not a.IsReferenceAssembly)
+              |> List.map (fun a -> a.Info)
           let fsiOpts = context.Config.CompileOptions.AdditionalArguments |> Yaaf.FSharp.Scripting.FsiOptions.ofArgs
           let newAdditionalArgs =
               { fsiOpts with
@@ -182,7 +205,6 @@ let restoreDependencies printDetails cacheDir section =
   match section with
   | PaketDependencies (paketDependencies, group) ->
     paketCachingProvider printDetails cacheDir paketDependencies group
-    
 
 let prepareFakeScript printDetails script =
   // read dependencies from the top
@@ -206,7 +228,7 @@ let prepareAndRunScriptRedirect printDetails fsiOptions scriptPath envVars onErr
   let config =
     { ScriptRunner.FakeConfig.PrintDetails = printDetails
       ScriptRunner.FakeConfig.ScriptFilePath = scriptPath
-      ScriptRunner.FakeConfig.CompileOptions = 
+      ScriptRunner.FakeConfig.CompileOptions =
         { CompileReferences = []
           RuntimeDependencies = []
           AdditionalArguments = fsiOptions }
@@ -219,4 +241,4 @@ let prepareAndRunScriptRedirect printDetails fsiOptions scriptPath envVars onErr
 let prepareAndRunScript printDetails fsiOptions scriptPath envVars useCache =
   prepareAndRunScriptRedirect printDetails fsiOptions scriptPath envVars (printf "%s") (printf "%s") useCache
 
-#endif
+//#endif
