@@ -76,4 +76,4 @@ Samples/WebNpmGrunt/node_modules
 !/integrationtests/*/before/.fake
 project.lock.json
 
-src/app/*/any
+#src/app/*/any
