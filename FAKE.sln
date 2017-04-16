@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0F0488CC-2580-4C07-9E16-3997480F0221}"
 	ProjectSection(SolutionItems) = preProject
@@ -121,6 +121,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assemblyinfo", "assemblyinf
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "testscripts", "testscripts", "{16D0306A-E2D0-444B-87F8-22605A1EC57C}"
 	ProjectSection(SolutionItems) = preProject
+		src\test\testscripts\fake-powershell-redirected.fsx = src\test\testscripts\fake-powershell-redirected.fsx
+		src\test\testscripts\fake-powershell-redirected.ps1 = src\test\testscripts\fake-powershell-redirected.ps1
+		src\test\testscripts\run-fake-powershell-redirected.bat = src\test\testscripts\run-fake-powershell-redirected.bat
 		src\test\testscripts\test1.fsx = src\test\testscripts\test1.fsx
 	EndProjectSection
 EndProject

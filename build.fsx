@@ -167,6 +167,38 @@ Target "Test" (fun _ ->
     |>  xUnit id
 )
 
+Target "RunTestScripts" (fun _ ->
+
+    // copy all test scripts into the test directory and run them there so they don't mess up the source tree
+    
+    let testScriptDir = testDir @@ "testScripts"
+
+    !! ("src/test/testscripts/*.*")
+    |> CopyFiles testScriptDir
+    
+    let absFakeExe = "build/FAKE.exe" |> Path.absolute
+    let absBuildDir = "build" |> Path.absolute
+
+    !! (testScriptDir @@ "run-*.bat")
+    |> Seq.iter (fun ts ->
+        let currentDir = System.Environment.CurrentDirectory
+        try
+            System.Environment.CurrentDirectory <- testScriptDir
+            let result =
+                ExecProcess (fun info ->
+                    info.FileName <- ts
+                    info.WorkingDirectory <- "."
+                    info.EnvironmentVariables.["FAKE"] <- absFakeExe
+                    info.EnvironmentVariables.["FAKE_DIR"] <- absBuildDir
+                ) (System.TimeSpan.FromMinutes 3.0)
+                
+            if result <> 0 then
+                failwithf "TestScript %s failed with %i" (Path.GetFileName ts) result
+        finally
+            System.Environment.CurrentDirectory <- currentDir
+    )
+)
+
 Target "Bootstrap" (fun _ ->
     let buildScript = "build.fsx"
     let testScript = "testbuild.fsx"
@@ -364,6 +396,7 @@ Target "Default" DoNothing
     ==> "BuildSolution"
     //==> "ILRepack"
     ==> "Test"
+    ==> "RunTestScripts"
     ==> "Bootstrap"
     ==> "Default"
     ==> "CopyLicense"
