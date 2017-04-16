@@ -62,6 +62,12 @@
     <Compile Include="..\Fake.Runtime\Trace.fs">
       <Link>Fake.Runtime/Trace.fs</Link>
     </Compile>
+    <Compile Include="..\Fake.Runtime\Runners.fs">
+      <Link>Fake.Runtime\Runners.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Runtime\CompileRunner.fs">
+      <Link>Fake.Runtime\CompileRunner.fs</Link>
+    </Compile>
     <Compile Include="..\Fake.Runtime\ScriptRunner.fs">
       <Link>Fake.Runtime/ScriptRunner.fs</Link>
     </Compile>

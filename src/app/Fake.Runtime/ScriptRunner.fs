@@ -2,6 +2,7 @@
 module Fake.Runtime.ScriptRunner
 open Fake.Runtime.Environment
 open Fake.Runtime.Trace
+open Fake.Runtime.Runners
 #if NETSTANDARD1_6
 open System.Runtime.Loader
 #endif
@@ -15,54 +16,6 @@ open System.Threading
 open System.Text.RegularExpressions
 open System.Xml.Linq
 open Yaaf.FSharp.Scripting
-
-
-type AssemblyInfo = 
-  { FullName : string
-    Version : string
-    Location : string }
-  static member ofLocation (loc:string) =
-    let n = Mono.Cecil.AssemblyDefinition.ReadAssembly(loc).Name
-    { FullName = n.FullName; Version = n.Version.ToString(); Location = loc }
-
-
-type ScriptCompileOptions =
-  { CompileReferences : string list
-    RuntimeDependencies : AssemblyInfo list
-    AdditionalArguments : string list }
-
-type FakeConfig =
-  { PrintDetails : bool
-    ScriptFilePath : string
-    CompileOptions : ScriptCompileOptions
-    UseCache : bool
-    Out: TextWriter
-    Err: TextWriter
-    Environment: seq<string * string> }  
-let cachedAssemblyPrefix = "FAKE_CACHE_"
-let fsiAssemblyName = "FSI-ASSEMBLY"
-
-type ResultCoreCacheInfo =
-  { MaybeCompiledAssembly : string option
-    Warnings : string }
-    member x.AsCacheInfo =
-      match x.MaybeCompiledAssembly with
-      | Some c -> Some { CompiledAssembly = c; Warnings = x.Warnings }
-      | None -> None
-and CoreCacheInfo =
-  { CompiledAssembly : string
-    Warnings : string }
-    member x.AsResult =
-      { MaybeCompiledAssembly = Some x.CompiledAssembly
-        Warnings = x.Warnings }
-type FakeContext =
-  { Config : FakeConfig
-    FakeDirectory : string
-    Hash : string }
-    member x.FileName = Path.GetFileNameWithoutExtension x.Config.ScriptFilePath
-    member x.HashPath = Path.Combine(x.FakeDirectory, x.FileName + "_" + x.Hash)
-    member x.CachedAssemblyFileName = cachedAssemblyPrefix + x.FileName + "_" + x.Hash
-    member x.CachedAssemblyFilePath = Path.Combine(x.FakeDirectory, x.CachedAssemblyFileName)
 
 
 /// Handles a cache store operation, this should not throw as it is executed in a finally block and

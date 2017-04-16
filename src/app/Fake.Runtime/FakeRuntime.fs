@@ -82,7 +82,7 @@ let parseHeader scriptCacheDir (f : RawFakeSection) =
   | _ -> failwithf "unknown dependencies header '%s'" f.Header
 type AssemblyData =
   { IsReferenceAssembly : bool
-    Info : ScriptRunner.AssemblyInfo }
+    Info : Runners.AssemblyInfo }
 let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependencies) group =
   let groupStr = match group with Some g -> g | None -> "Main"
   let groupName = Paket.Domain.GroupName (groupStr)
@@ -159,9 +159,9 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
       try let assembly = Mono.Cecil.AssemblyDefinition.ReadAssembly fullName
           { IsReferenceAssembly = isReferenceAssembly
             Info =
-              { ScriptRunner.AssemblyInfo.FullName = assembly.Name.FullName
-                ScriptRunner.AssemblyInfo.Version = assembly.Name.Version.ToString()
-                ScriptRunner.AssemblyInfo.Location = fullName } } |> Some
+              { Runners.AssemblyInfo.FullName = assembly.Name.FullName
+                Runners.AssemblyInfo.Version = assembly.Name.Version.ToString()
+                Runners.AssemblyInfo.Location = fullName } } |> Some
       with e -> (if printDetails then Trace.log <| sprintf "Could not load '%s': %O" fullName e); None)
     |> Seq.toList
     //|> List.partition (fun c -> c.IsReferenceAssembly)
@@ -226,16 +226,16 @@ let prepareAndRunScriptRedirect printDetails fsiOptions scriptPath envVars onErr
   use out = Yaaf.FSharp.Scripting.ScriptHost.CreateForwardWriter onOutMsg
   use err = Yaaf.FSharp.Scripting.ScriptHost.CreateForwardWriter onErrMsg
   let config =
-    { ScriptRunner.FakeConfig.PrintDetails = printDetails
-      ScriptRunner.FakeConfig.ScriptFilePath = scriptPath
-      ScriptRunner.FakeConfig.CompileOptions =
+    { Runners.FakeConfig.PrintDetails = printDetails
+      Runners.FakeConfig.ScriptFilePath = scriptPath
+      Runners.FakeConfig.CompileOptions =
         { CompileReferences = []
           RuntimeDependencies = []
           AdditionalArguments = fsiOptions }
-      ScriptRunner.FakeConfig.UseCache = useCache
-      ScriptRunner.FakeConfig.Out = out
-      ScriptRunner.FakeConfig.Err = err
-      ScriptRunner.FakeConfig.Environment = envVars }
+      Runners.FakeConfig.UseCache = useCache
+      Runners.FakeConfig.Out = out
+      Runners.FakeConfig.Err = err
+      Runners.FakeConfig.Environment = envVars }
   CoreCache.runScriptWithCacheProvider config provider
 
 let prepareAndRunScript printDetails fsiOptions scriptPath envVars useCache =

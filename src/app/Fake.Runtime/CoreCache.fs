@@ -2,7 +2,8 @@
 module Fake.Runtime.CoreCache
 open Fake.Runtime.Environment
 open Fake.Runtime.Trace
-open Fake.Runtime.ScriptRunner
+open Fake.Runtime.Runners
+open Fake.Runtime.CompileRunner
 open Fake.Runtime.HashGeneration
 #if NETSTANDARD1_6
 open System.Runtime.Loader
