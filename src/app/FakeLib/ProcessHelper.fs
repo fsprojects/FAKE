@@ -546,6 +546,17 @@ let ensureProcessesHaveStopped name timeout =
 /// [omit]
 let shellExec args = args |> asyncShellExec |> Async.RunSynchronously
 
+/// Tries to find the given file within the current directory or in
+/// one of the paths in the PATH environment variable. If successful
+/// it returns the full path to the file.
+/// ## Parameters
+///  - `exe` - The executable file to locate
+let findExecutableInPath (exe:String) =
+    Environment.GetEnvironmentVariable("PATH").Split([| Path.PathSeparator |])
+    |> Seq.append ["."]
+    |> Seq.map (fun p -> p @@ exe)
+    |> Seq.tryFind (File.Exists)
+
 /// Allows to exec shell operations synchronously and asynchronously.
 type Shell() =
 
