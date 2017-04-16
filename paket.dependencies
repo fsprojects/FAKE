@@ -1,4 +1,5 @@
 content: none
+source ./temp/testpackages
 source http://nuget.org/api/v2
 source https://dotnet.myget.org/F/dotnet-core
 source https://www.myget.org/F/fsharp-daily
@@ -7,7 +8,7 @@ source https://www.myget.org/F/netcorecli-fsc-preview3
 nuget FSharp.Core redirects: force
 nuget Knockout
 nuget NuGet.CommandLine
-nuget Paket.Core 3.19.4
+nuget Paket.Core 5.0.0-alpha001 prerelease
 nuget RavenDB.Server
 nuget serilog.sinks.nlog 1.5.4
 nuget Argu 3.3.0
@@ -63,6 +64,7 @@ group Build
     nuget ILRepack
 
 group netcore
+    source ./temp/testpackages
     source http://nuget.org/api/v2
 
     nuget FSharp.Compiler.Service content: none, framework: netstandard1.6, netcoreapp1.0
@@ -73,7 +75,7 @@ group netcore
     nuget Microsoft.NETCore.App 1.1.0 framework: netstandard1.6, netcoreapp1.0
     nuget NETStandard.Library 1.6.1 framework: netstandard1.6, netcoreapp1.0
     nuget Argu
-    nuget Paket.Core
+    nuget Paket.Core 5.0.0-alpha001 prerelease
     nuget Mono.Cecil 0.10.0-beta4 beta
 
     nuget System.Diagnostics.FileVersionInfo

@@ -141,18 +141,22 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
       let installModel =
         paketDependencies.GetInstalledPackageModel(group, p.Name.ToString())
           .ApplyFrameworkRestrictions(Paket.Requirements.getRestrictionList p.Settings.FrameworkRestrictions)
+      let targetProfile = Paket.TargetProfile.SinglePlatform framework
+      //let assemblies =
+      //  Paket.LoadingScripts.PackageAndAssemblyResolution.getDllsWithinPackage framework installModel
 
-      let assemblies =
-        Paket.LoadingScripts.PackageAndAssemblyResolution.getDllsWithinPackage framework installModel
       let refAssemblies =
-        assemblies
-        |> List.map (fun fi -> true, fi)
+        installModel.GetCompileReferences targetProfile
+        |> Seq.map (fun fi -> true, FileInfo fi)
+        |> Seq.toList
       let runtimeAssemblies =
-        assemblies
-        |> List.filter (fun (a:FileInfo) ->
-            // TODO: Bug, Use runtime assemblies instead (currently not implemented in Paket...)!
-            not (a.FullName.Contains("/ref/")))
-        |> List.map (fun fi -> false, fi)
+        installModel.GetRuntimeLibraries targetProfile
+        |> Seq.map (fun fi -> false, FileInfo fi)
+        |> Seq.toList
+        //|> List.filter (fun (a:FileInfo) ->
+        //    // TODO: Bug, Use runtime assemblies instead (currently not implemented in Paket...)!
+        //    not (a.FullName.Contains("/ref/")))
+        //|> List.map (fun fi -> false, fi)
       runtimeAssemblies @ refAssemblies)
     |> Seq.choose (fun (isReferenceAssembly, fi) ->
       let fullName = fi.FullName
