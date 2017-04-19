@@ -5,7 +5,7 @@ Paket.Core
 Mono.Cecil
 FSharp.Core
 
-System.Runtime.InteropServices
+Microsoft.DotNet.PlatformAbstractions
 System.Runtime.Loader
 NETStandard.Library
 
