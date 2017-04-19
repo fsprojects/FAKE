@@ -2,4 +2,9 @@ build_script:
   - ps: .\build.cmd
 test: off
 artifacts:
-  - path: bin\*.nupkg
+  - path: build
+    name: binaries
+  - path: 'nuget\dotnetcore\*.nupkg'
+    type: NuGetPackage
+  - path: 'nuget\dotnetcore\Fake.netcore\*.zip'
+    type: Zip
