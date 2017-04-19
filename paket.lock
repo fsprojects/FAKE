@@ -1938,7 +1938,7 @@ NUGET
       System.Xml.XmlDocument (>= 4.3) - framework: >= net46, >= netstandard13
       System.Xml.XPath (>= 4.3) - framework: >= net46, >= netstandard13
   remote: https://ci.appveyor.com/nuget/paket
-    Paket.Core (5.0.0-alpha001)
+    Paket.Core (5.0.0-alpha002)
       Chessie (>= 0.6)
       FSharp.Core  - framework: >= net10, netstandard10, netstandard11, netstandard12, netstandard13, netstandard14, netstandard15
       FSharp.NET.Sdk (>= 1.0.2) - framework: >= netstandard16
