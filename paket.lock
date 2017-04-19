@@ -1036,7 +1036,7 @@ NUGET
       NETStandard.Library (>= 1.6) - framework: >= netstandard11
       xunit.extensibility.core (2.2) - framework: >= net452, >= netstandard11
     xunit.runner.console (2.2)
-  remote: ./temp/testpackages
+  remote: https://ci.appveyor.com/nuget/paket
     Paket.Core (5.0.0-alpha001)
       Chessie (>= 0.6)
       FSharp.Core  - framework: >= net10, netstandard10, netstandard11, netstandard12, netstandard13, netstandard14, netstandard15
@@ -1919,7 +1919,7 @@ NUGET
       System.Xml.ReaderWriter (>= 4.3) - framework: >= netstandard13
       System.Xml.XmlDocument (>= 4.3) - framework: >= net46, >= netstandard13
       System.Xml.XPath (>= 4.3) - framework: >= net46, >= netstandard13
-  remote: ./temp/testpackages
+  remote: https://ci.appveyor.com/nuget/paket
     Paket.Core (5.0.0-alpha001)
       Chessie (>= 0.6)
       FSharp.Core  - framework: >= net10, netstandard10, netstandard11, netstandard12, netstandard13, netstandard14, netstandard15

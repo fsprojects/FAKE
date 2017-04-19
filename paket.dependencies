@@ -1,5 +1,5 @@
 content: none
-source ./temp/testpackages
+source https://ci.appveyor.com/nuget/paket
 source http://nuget.org/api/v2
 source https://dotnet.myget.org/F/dotnet-core
 source https://www.myget.org/F/fsharp-daily
@@ -64,7 +64,7 @@ group Build
     nuget ILRepack
 
 group netcore
-    source ./temp/testpackages
+    source https://ci.appveyor.com/nuget/paket
     source http://nuget.org/api/v2
 
     nuget FSharp.Compiler.Service content: none, framework: netstandard1.6, netcoreapp1.0
