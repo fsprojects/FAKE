@@ -127,7 +127,7 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
 
     let rid =
 #if DOTNETCORE
-        let ridString = System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeIdentifier()
+        let ridString = Microsoft.DotNet.PlatformAbstractions.RuntimeEnvironment.GetRuntimeIdentifier()
 #else
         let ridString = "win"
 #endif
