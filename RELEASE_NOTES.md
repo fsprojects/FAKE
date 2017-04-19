@@ -1,3 +1,6 @@
+#### 5.0.0-alpha001 - 01.06.2017
+* DotnetCore Support
+
 #### 4.58.6 - 11.04.2017
 * BUGFIX: Fixed Expecto TeamCity adapter - https://github.com/fsharp/FAKE/pull/1520
 

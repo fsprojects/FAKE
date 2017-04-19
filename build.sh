@@ -3,7 +3,7 @@
 # We use this to tell FAKE to not use the current latest version to build the netcore version, 
 # but instead use the current NON dotnetcore version
 export NO_DOTNETCORE_BOOTSTRAP=true
-export PAKET_VERSION=4.1.8
+export PAKET_VERSION=4.4.0
 if test "$OS" = "Windows_NT"
 then
   # use .Net

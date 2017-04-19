@@ -193,56 +193,6 @@ Target "SetAssemblyInfo" (fun _ ->
 
 )
 
-
-Target "ConvertProjectJsonTemplates" (fun _ ->
-    let commonDotNetCoreVersion = "1.0.0-alpha-10"
-    // Set project.json.template -> project.json
-    let mappings = [
-      "__FSHARP_CORE_VERSION__", "4.0.1.7-alpha"
-      "__ARGU_VERSION__", "3.3.0"
-      "__FSHARP_COMPILER_SERVICE_PACKAGE__", "FSharp.Compiler.Service"
-      "__FSHARP_COMPILER_SERVICE_VERSION__", "6.0.3-alpha1"
-      "__MONO_CECIL_VERSION__", "0.10.0-beta1-v2"
-      "__PAKET_CORE_VERSION__", "3.19.4"
-      "__PAKET_CORE_PACKAGE__", "Paket.Core"
-      "__FAKE_CORE_TRACING_VERSION__", commonDotNetCoreVersion
-      "__FAKE_CORE_CONTEXT_VERSION__", commonDotNetCoreVersion
-      "__FAKE_CORE_GLOBBING_VERSION__", commonDotNetCoreVersion
-      "__FAKE_CORE_TARGETS_VERSION__", commonDotNetCoreVersion
-      "__FAKE_IO_FILESYSTEM_VERSION__", commonDotNetCoreVersion
-      "__FAKE_CORE_PROCESS_VERSION__", commonDotNetCoreVersion
-      "__FAKE_CORE_ENVIRONMENT_VERSION__", commonDotNetCoreVersion
-      "__FAKE_CORE_STRING_VERSION__", commonDotNetCoreVersion
-      "__FAKE_CORE_BUILDSERVER_VERSION__", commonDotNetCoreVersion
-      "__FAKE_DOTNET_ASSEMBLYINFOFILE_VERSION__", commonDotNetCoreVersion
-      "__FAKE_DOTNET_CLI_VERSION__", commonDotNetCoreVersion
-      "__FAKE_DOTNET_MSBUILD_VERSION__", commonDotNetCoreVersion
-      "__FAKE_TRACING_NANTXML_VERSION__", commonDotNetCoreVersion
-      "__FAKE_NETCORE_EXE_VERSION__", commonDotNetCoreVersion
-      "__FAKE_RUNTIME_VERSION__", commonDotNetCoreVersion
-      "__FAKE_CORE_RELEASENOTES_VERSION__", commonDotNetCoreVersion
-      "__FAKE_CORE_SEMVER_VERSION__", commonDotNetCoreVersion
-      "__FAKE_IO_ZIP_VERSION__", commonDotNetCoreVersion
-      ]
-
-    !! "src/app/*/project.json.template"
-    |> Seq.iter(fun template ->
-        let original = template.Replace("project.json.template", "project.json")
-        let templateContent = File.ReadAllText template
-        mappings
-        |> Seq.fold (fun (s:string) (fromMapping, toMapping) -> s.Replace(fromMapping, toMapping)) templateContent
-        |> fun c -> File.WriteAllText (original, c)
-        let dir = Path.GetDirectoryName template
-        let dirName = Path.GetFileName dir
-        [Attribute.Product "FAKE - F# Make"
-         Attribute.Version commonDotNetCoreVersion
-         Attribute.InformationalVersion commonDotNetCoreVersion
-         Attribute.FileVersion commonDotNetCoreVersion
-         Attribute.Title (sprintf "FAKE - F# %s" dirName)]
-        |> CreateFSharpAssemblyInfo (sprintf "%s/AssemblyInfo.fs" dir)
-    )
-)
-
 Target "BuildSolution" (fun _ ->
     MSBuildWithDefaults "Build" ["./FAKE.sln"; "./FAKE.Deploy.Web.sln"]
     |> Log "AppBuild-Output: "
@@ -558,6 +508,8 @@ let netCoreProjs =
 
 Target "DotnetRestore" (fun _ ->
 
+    setEnvironVar "Version" release.NugetVersion
+
     //dotnet root "--info"
     Dotnet { DotnetOptions.Default with WorkingDirectory = root } "--info"
 
@@ -591,6 +543,8 @@ let runtimes =
 
 Target "DotnetPackage" (fun _ ->
     let nugetDir = System.IO.Path.GetFullPath nugetDir
+
+    setEnvironVar "Version" release.NugetVersion
 
     // dotnet pack
     netCoreProjs
@@ -654,6 +608,8 @@ Target "DotnetPackage" (fun _ ->
 )
 
 Target "DotnetCoreCreateZipPackages" (fun _ ->
+    setEnvironVar "Version" release.NugetVersion
+
     // build zip packages
     !! "nuget/dotnetcore/*.nupkg"
     -- "nuget/dotnetcore/*.symbols.nupkg"
@@ -810,7 +766,6 @@ Target "Default" DoNothing
 Target "StartDnc" DoNothing
 
 "StartDnc"
-    //==> "ConvertProjectJsonTemplates"
     ==> "InstallDotnetCore"
     ==> "DotnetRestore"
     ==> "DotnetPackage"
