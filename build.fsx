@@ -127,18 +127,19 @@ Target "RenameFSharpCompilerService" (fun _ ->
               | Some f -> f
               | None ->
                   failwithf "Could not resolve '%s'" name
+          let readAssemblyE (name:string) (parms: Mono.Cecil.ReaderParameters) =
+              Mono.Cecil.AssemblyDefinition.ReadAssembly(
+                  resolve name,
+                  parms)
+          let readAssembly (name:string) (x:Mono.Cecil.IAssemblyResolver) =
+              readAssemblyE name (new Mono.Cecil.ReaderParameters(AssemblyResolver = x))
           { new Mono.Cecil.IAssemblyResolver with
               member x.Dispose () = ()
-              member x.Resolve (name : string) =
-                  Mono.Cecil.AssemblyDefinition.ReadAssembly(
-                      resolve name,
-                      new Mono.Cecil.ReaderParameters(AssemblyResolver = x))
-              member x.Resolve (name : string, parms : Mono.Cecil.ReaderParameters) =
-                  Mono.Cecil.AssemblyDefinition.ReadAssembly(resolve name, parms)
-              member x.Resolve (name : Mono.Cecil.AssemblyNameReference) =
-                  x.Resolve(name.FullName)
-              member x.Resolve (name : Mono.Cecil.AssemblyNameReference, parms : Mono.Cecil.ReaderParameters) =
-                  x.Resolve(name.FullName, parms) }
+              //member x.Resolve (name : string) = readAssembly name x
+              //member x.Resolve (name : string, parms : Mono.Cecil.ReaderParameters) = readAssemblyE name parms
+              member x.Resolve (name : Mono.Cecil.AssemblyNameReference) = readAssembly name.FullName x
+              member x.Resolve (name : Mono.Cecil.AssemblyNameReference, parms : Mono.Cecil.ReaderParameters) = readAssemblyE name.FullName parms
+               }
 #else
       let reader = new Mono.Cecil.DefaultAssemblyResolver()
       reader.AddSearchDirectory(dir)
@@ -291,7 +292,9 @@ Target "CopyLicense" (fun _ ->
     CopyTo buildDir additionalFiles
 )
 
+#if !DOTNETCORE
 open Fake.Testing.XUnit2
+#endif
 
 Target "Test" (fun _ ->
 #if !DOTNETCORE
@@ -557,7 +560,7 @@ Target "DotnetRestore" (fun _ ->
 
     //dotnet root "--info"
     Dotnet { DotnetOptions.Default with WorkingDirectory = root } "--info"
-    
+
     // Workaround bug where paket integration doesn't generate
     // .nuget\packages\.tools\dotnet-compile-fsc\1.0.0-preview2-020000\netcoreapp1.0\dotnet-compile-fsc.deps.json
     let t = Path.GetFullPath "workaround"
@@ -566,7 +569,7 @@ Target "DotnetRestore" (fun _ ->
     Dotnet { DotnetOptions.Default with WorkingDirectory = t } "restore"
     Dotnet { DotnetOptions.Default with WorkingDirectory = t } "build"
     Directory.Delete(t, true)
-    
+
     // Copy nupkgs to nuget/dotnetcore
     !! "lib/nupgks/**/*.nupkg"
     |> Seq.iter (fun file ->
@@ -588,7 +591,7 @@ let runtimes =
 
 Target "DotnetPackage" (fun _ ->
     let nugetDir = System.IO.Path.GetFullPath nugetDir
-    
+
     // dotnet pack
     netCoreProjs
     -- "src/app/Fake.netcore/Fake.netcore.fsproj"
@@ -601,6 +604,9 @@ Target "DotnetPackage" (fun _ ->
     )
 
     let info = DotnetInfo id
+
+    // see https://github.com/fsharp/FSharp.Compiler.Service/issues/755
+    let win32manifest = "packages/netcore/FSharp.Compiler.Tools/build/netcoreapp1.0/default.win32manifest"
 
     let mutable runtimeWorked = false
     // dotnet publish
@@ -617,12 +623,14 @@ Target "DotnetPackage" (fun _ ->
                 | None -> "current", info.RID
 
             DotnetRestore (fun c -> {c with Runtime = Some runtime}) proj
+            let outDir = nugetDir @@ "dotnetcore" @@ projName @@ runtimeName
             DotnetPublish (fun c ->
                 { c with
                     Runtime = Some runtime
                     Configuration = Release
-                    OutputPath = Some (nugetDir @@ "dotnetcore" @@ projName @@ runtimeName)
+                    OutputPath = Some outDir
                 }) proj
+            //File.Copy(win32manifest, outDir + "/default.win32manifest")
         )
     )
 
@@ -631,12 +639,14 @@ Target "DotnetPackage" (fun _ ->
     let oldContent = File.ReadAllText netcoreFsproj
     try
         // File.WriteAllText(netcoreJson, newContent)
-
+        let outDir = nugetDir @@ "dotnetcore" @@ "Fake.netcore" @@ "portable"
         DotnetPublish (fun c ->
             { c with
                 Framework = Some "netcoreapp1.0"
-                OutputPath = Some (nugetDir @@ "dotnetcore" @@ "Fake.netcore" @@ "portable")
+                OutputPath = Some outDir
             }) netcoreFsproj
+
+        //File.Copy(win32manifest, outDir + "/default.win32manifest")
     with e ->
         printfn "failed to publish portable!"
         // File.WriteAllText(netcoreJson, oldContent)

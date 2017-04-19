@@ -174,6 +174,9 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
   { new CoreCache.ICachingProvider with
       member x.CleanCache context =
         if printDetails then Trace.log "Invalidating cache..."
+        let assemblyPath, warningsFile = context.CachedAssemblyFilePath + ".dll", context.CachedAssemblyFilePath + ".warnings"
+        try File.Delete warningsFile; File.Delete assemblyPath
+        with e -> Trace.traceError (sprintf "Failed to delete cached files: %O" e)
       member __.TryLoadCache (context) =
           let references =
               knownAssemblies
@@ -201,9 +204,13 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
                       }
                 }
           },
-          None
-          //Some { CompiledAssembly = cachedDll; Warnings = warningText }
-      member x.SaveCache (context, cache) = () }
+          let assemblyPath, warningsFile = context.CachedAssemblyFilePath + ".dll", context.CachedAssemblyFilePath + ".warnings"
+          if File.Exists (assemblyPath) && File.Exists (warningsFile) then
+              Some { CompiledAssembly = assemblyPath; Warnings = File.ReadAllText(warningsFile) }
+          else None
+      member x.SaveCache (context, cache) =
+          if printDetails then Trace.log "saving cache..."
+          File.WriteAllText (context.CachedAssemblyFilePath + ".warnings", cache.Warnings) }
 
 let restoreDependencies printDetails cacheDir section =
   match section with

@@ -24,64 +24,45 @@ open Microsoft.FSharp.Compiler
 /// Handles a cache store operation, this should not throw as it is executed in a finally block and
 /// therefore might eat other exceptions. And a caching error is not critical.
 let private handleCoreCaching (context:FakeContext) (compiledAssembly:string) (errors:string) =
-    try
-        let wishName = context.CachedAssemblyFileName
-
-        if not <| Directory.Exists context.FakeDirectory then
-            let di = Directory.CreateDirectory context.FakeDirectory
-            di.Attributes <- FileAttributes.Directory ||| FileAttributes.Hidden
-
-        let destinationFile = FileInfo(context.CachedAssemblyFilePath)
-        let targetDirectory = destinationFile.Directory
-
-        if (not <| targetDirectory.Exists) then targetDirectory.Create()
-        if (destinationFile.Exists) then destinationFile.Delete()
-
-        File.Copy (compiledAssembly, wishName)
-
-        { MaybeCompiledAssembly = Some destinationFile.FullName
+    //try
+        { MaybeCompiledAssembly = Some compiledAssembly
           Warnings = errors }
-    with ex ->
-        // Caching errors are not critical, and we shouldn't throw in a finally clause.
-        traceFAKE "CACHING ERROR - please open a issue on FAKE and /cc @matthid\n\nError: %O" ex
-
-        { MaybeCompiledAssembly = None
-          Warnings = errors }
+    //with ex ->
+    //    // Caching errors are not critical, and we shouldn't throw in a finally clause.
+    //    traceFAKE "CACHING ERROR - please open a issue on FAKE and /cc @matthid\n\nError: %O" ex
+    //
+    //    { MaybeCompiledAssembly = None
+    //      Warnings = errors }
 
 
 /// public, because it is used by test code
-let nameParser scriptFileName =
+let nameParser cachedAssemblyFileName scriptFileName =
     let noExtension = Path.GetFileNameWithoutExtension(scriptFileName)
-    let startString = "<StartupCode$FSI_"
-    let endString =
-      sprintf "_%s%s$%s"
-        (noExtension.Substring(0, 1).ToUpper())
-        (noExtension.Substring(1))
-        (Path.GetExtension(scriptFileName).Substring(1))
-    let fullName i = sprintf "%s%s>.$FSI_%s%s" startString i i endString
-    let exampleName = fullName "0001"
+    let className =
+        sprintf "<StartupCode$%s>.$%s%s$%s"
+          cachedAssemblyFileName
+          (noExtension.Substring(0, 1).ToUpper())
+          (noExtension.Substring(1))
+          (Path.GetExtension(scriptFileName).Substring(1))
+
     let parseName (n:string) =
-        if n.Length >= exampleName.Length &&
-            n.Substring(0, startString.Length) = startString &&
-            n.Substring(n.Length - endString.Length) = endString then
-            let num = n.Substring(startString.Length, 4)
-            assert (fullName num = n)
-            Some (num)
+        if n = className then Some ()
         else None
-    exampleName, fullName, parseName
+    className, parseName
 
 let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : Exception option =
     if context.Config.PrintDetails then trace "Using cache"
-    let exampleName, _, parseName = nameParser context.Config.ScriptFilePath
+    let exampleName, parseName = nameParser context.CachedAssemblyFileName context.Config.ScriptFilePath
 
     use execContext = Fake.Core.Context.FakeExecutionContext.Create true context.Config.ScriptFilePath []
     Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
     Yaaf.FSharp.Scripting.Helper.consoleCapture context.Config.Out context.Config.Err (fun () ->
+        let fullPath = System.IO.Path.GetFullPath c.CompiledAssembly
 #if NETSTANDARD1_6
         let loadContext = AssemblyLoadContext.Default
-        let ass = loadContext.LoadFromAssemblyPath(c.CompiledAssembly)
+        let ass = loadContext.LoadFromAssemblyPath(fullPath)
 #else
-        let ass = Reflection.Assembly.LoadFrom(c.CompiledAssembly)
+        let ass = Reflection.Assembly.LoadFrom(fullPath)
 #endif
         match ass.GetTypes()
               |> Seq.filter (fun t -> parseName t.FullName |> Option.isSome)
@@ -98,19 +79,36 @@ let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : Exception option =
 
 
 let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
+
+    let wishPath = context.CachedAssemblyFilePath + ".dll"
+
+    if not <| Directory.Exists context.FakeDirectory then
+        let di = Directory.CreateDirectory context.FakeDirectory
+        di.Attributes <- FileAttributes.Directory ||| FileAttributes.Hidden
+
+    let destinationFile = FileInfo(context.CachedAssemblyFilePath)
+    let targetDirectory = destinationFile.Directory
+
+    if (not <| targetDirectory.Exists) then targetDirectory.Create()
+    if (destinationFile.Exists) then destinationFile.Delete()
+
     let co = context.Config.CompileOptions
+    // see https://github.com/fsharp/FSharp.Compiler.Service/issues/755
     let options =
-        [co.AdditionalArguments; ["-o"; "test.dll" ] ]
+        [co.AdditionalArguments; [ "--nowin32manifest"; "-o"; wishPath; context.Config.ScriptFilePath ] ]
         |> List.concat
         |> FsiOptions.ofArgs
         |> fun f ->
             { f with
                 References = f.References @ co.CompileReferences }
+    let args =
+        options.AsArgs |> Seq.toList
+        |> List.filter (fun arg -> arg <> "--")
     if context.Config.PrintDetails then
-      Trace.tracefn "FSC Args: %A" (options.AsArgs |> Seq.toList)
+      Trace.tracefn "FSC Args: %A" (args)
 
     let fsc = FSharpChecker.Create()
-    let errors, returnCode = fsc.Compile (options.AsArgs) |> Async.RunSynchronously
+    let errors, returnCode = fsc.Compile (args |> List.toArray) |> Async.RunSynchronously
     if returnCode <> 0 then failwithf "Compilation failed: %A" errors
     if errors.Length > 0 then
         Trace.traceFAKE "Warnings: %A" errors
@@ -120,7 +118,7 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
 
     let errorsString = sprintf "%A" errors
 
-    let cacheInfo = handleCoreCaching context "test.dll" errorsString
+    let cacheInfo = handleCoreCaching context wishPath errorsString
     match cacheInfo.AsCacheInfo with
     | None -> failwithf "Expected caching to work after a successfull compilation"
     | Some c ->
