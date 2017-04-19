@@ -3,6 +3,7 @@
 open System
 open System.IO
 open Fake.Runtime
+open Paket
 
 //#if DOTNETCORE
 
@@ -125,7 +126,19 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
     File.WriteAllText (loadFile, """printfn "loading dependencies... " """)
 
     let rid =
-        Microsoft. PlatformAbstractions.RuntimeEnvironment.GetRuntimeIdentifier()
+#if DOTNETCORE
+        let ridString = System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeIdentifier()
+#else
+        let ridString = "win"
+#endif
+        Paket.Rid.Of(ridString)
+
+    // get runtime graph
+    let graph =
+        lockGroup.Resolution
+        |> Seq.map (fun kv -> kv.Value)
+        |> Seq.choose (fun p -> RuntimeGraph.getRuntimeGraphFromNugetCache cacheDir groupName p)
+        |> RuntimeGraph.mergeSeq
 
     // Retrieve assemblies
     lockGroup.Resolution
@@ -153,7 +166,7 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
         |> Seq.map (fun fi -> true, FileInfo fi.Path)
         |> Seq.toList
       let runtimeAssemblies =
-        installModel.GetRuntimeLibraries graph (Rid.Of ) targetProfile
+        installModel.GetRuntimeLibraries graph rid targetProfile
         |> Seq.map (fun fi -> false, FileInfo fi.Library.Path)
         |> Seq.toList
         //|> List.filter (fun (a:FileInfo) ->
