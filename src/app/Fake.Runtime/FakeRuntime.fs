@@ -166,7 +166,7 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
         |> Seq.map (fun fi -> true, FileInfo fi.Path)
         |> Seq.toList
       let runtimeAssemblies =
-        installModel.GetRuntimeLibraries graph rid targetProfile
+        installModel.GetRuntimeAssemblies graph rid targetProfile
         |> Seq.map (fun fi -> false, FileInfo fi.Library.Path)
         |> Seq.toList
         //|> List.filter (fun (a:FileInfo) ->
@@ -187,7 +187,9 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
     |> Seq.toList
     //|> List.partition (fun c -> c.IsReferenceAssembly)
   // Restore or update immediatly, because or everything might be OK -> cached path.
-  let mutable knownAssemblies = restoreOrUpdate()
+  let knownAssemblies = restoreOrUpdate()
+  if printDetails then
+    Trace.tracefn "Known assemblies: \n\t%s" (System.String.Join("\n\t", knownAssemblies |> Seq.map (fun a -> sprintf " - %s: %s (%s)" (if a.IsReferenceAssembly then "ref" else "lib") a.Info.Location a.Info.Version)))
   { new CoreCache.ICachingProvider with
       member x.CleanCache context =
         if printDetails then Trace.log "Invalidating cache..."

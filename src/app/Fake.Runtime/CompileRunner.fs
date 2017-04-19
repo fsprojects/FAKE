@@ -104,19 +104,21 @@ let runUncached (context:FakeContext) : ResultCoreCacheInfo * Exception option =
     let args =
         options.AsArgs |> Seq.toList
         |> List.filter (fun arg -> arg <> "--")
+    let formatError (e:FSharpErrorInfo) =
+         sprintf "%s (%d,%d)-(%d,%d): %A FS%04d: %s" e.FileName e.StartLineAlternate e.StartColumn e.EndLineAlternate e.EndColumn e.Severity e.ErrorNumber e.Message
+    let formatErrors errors =
+        System.String.Join("\n", errors |> Seq.map formatError)
     if context.Config.PrintDetails then
       Trace.tracefn "FSC Args: %A" (args)
 
     let fsc = FSharpChecker.Create()
     let errors, returnCode = fsc.Compile (args |> List.toArray) |> Async.RunSynchronously
-    if returnCode <> 0 then failwithf "Compilation failed: %A" errors
-    if errors.Length > 0 then
-        Trace.traceFAKE "Warnings: %A" errors
+    if returnCode <> 0 then failwithf "Compilation failed: \n%s" (formatErrors errors)
 
     use execContext = Fake.Core.Context.FakeExecutionContext.Create false context.Config.ScriptFilePath []
     Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
 
-    let errorsString = sprintf "%A" errors
+    let errorsString = formatErrors errors
 
     let cacheInfo = handleCoreCaching context wishPath errorsString
     match cacheInfo.AsCacheInfo with

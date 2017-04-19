@@ -338,17 +338,17 @@ Target "BootstrapTest" (fun _ ->
                 Directory.EnumerateFiles(".fake")
                   |> Seq.filter (fun s -> (Path.GetFileName s).StartsWith script)
                   |> Seq.iter File.Delete
-        let executeTarget target =
+        let executeTarget span target =
             if clearCache then clear ()
             ExecProcess (fun info ->
                 info.FileName <- "build/FAKE.exe"
                 info.WorkingDirectory <- "."
-                info.Arguments <- sprintf "%s %s -pd" script target) (System.TimeSpan.FromMinutes 3.0)
+                info.Arguments <- sprintf "%s %s -pd" script target) span
 
-        let result = executeTarget "PrintColors"
+        let result = executeTarget (System.TimeSpan.FromMinutes 10.0) "PrintColors"
         if result <> 0 then failwith "Bootstrapping failed"
 
-        let result = executeTarget "FailFast"
+        let result = executeTarget (System.TimeSpan.FromMinutes 1.0) "FailFast"
         if result = 0 then failwith "Bootstrapping failed"
 
     // Replace the include line to use the newly build FakeLib, otherwise things will be weird.

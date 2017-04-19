@@ -1,5 +1,4 @@
 content: none
-source temp/nupgks
 source https://ci.appveyor.com/nuget/paket
 source http://nuget.org/api/v2
 
@@ -63,7 +62,6 @@ group Build
     nuget ILRepack
 
 group netcore
-    source temp/nupgks
     source https://ci.appveyor.com/nuget/paket
     source http://nuget.org/api/v2
 
