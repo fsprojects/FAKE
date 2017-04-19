@@ -5,6 +5,7 @@ Paket.Core
 Mono.Cecil
 FSharp.Core
 
+System.Runtime.InteropServices
 System.Runtime.Loader
 NETStandard.Library
 

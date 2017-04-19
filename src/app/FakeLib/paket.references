@@ -6,4 +6,5 @@ Nuget.Core
 Newtonsoft.Json
 HashLib
 FSharp.Compiler.Service
+System.Runtime.InteropServices
 File:YaafFSharpScripting.fs

@@ -49,6 +49,7 @@ nuget HashLib
 nuget FSharp.Compiler.Service content: none
 nuget Octokit
 nuget Microsoft.Net.Http
+nuget System.Runtime.InteropServices
 
 github matthid/Yaaf.FSharp.Scripting src/source/Yaaf.FSharp.Scripting/YaafFSharpScripting.fs
 
@@ -68,6 +69,7 @@ group netcore
     source http://nuget.org/api/v2
 
     nuget FSharp.Compiler.Service content: none, framework: netstandard1.6, netcoreapp1.0
+    nuget System.Runtime.InteropServices
     nuget FSharp.Core ~> 4.1.2
     nuget FSharp.NET.Sdk ~> 1.0.2
     //nuget Microsoft.FSharp.Core.netcore 1.0.0-alpha-161023 alpha framework: netstandard1.6, netcoreapp1.0

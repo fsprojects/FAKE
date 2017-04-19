@@ -124,6 +124,9 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
     // TODO: Make sure to create #if !FAKE block, because we don't actually need it.
     File.WriteAllText (loadFile, """printfn "loading dependencies... " """)
 
+    let rid =
+        Microsoft. PlatformAbstractions.RuntimeEnvironment.GetRuntimeIdentifier()
+
     // Retrieve assemblies
     lockGroup.Resolution
     |> Seq.map (fun kv ->
@@ -147,11 +150,11 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
 
       let refAssemblies =
         installModel.GetCompileReferences targetProfile
-        |> Seq.map (fun fi -> true, FileInfo fi)
+        |> Seq.map (fun fi -> true, FileInfo fi.Path)
         |> Seq.toList
       let runtimeAssemblies =
-        installModel.GetRuntimeLibraries targetProfile
-        |> Seq.map (fun fi -> false, FileInfo fi)
+        installModel.GetRuntimeLibraries graph (Rid.Of ) targetProfile
+        |> Seq.map (fun fi -> false, FileInfo fi.Library.Path)
         |> Seq.toList
         //|> List.filter (fun (a:FileInfo) ->
         //    // TODO: Bug, Use runtime assemblies instead (currently not implemented in Paket...)!
