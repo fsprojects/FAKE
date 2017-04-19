@@ -174,6 +174,7 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
         //    not (a.FullName.Contains("/ref/")))
         //|> List.map (fun fi -> false, fi)
       runtimeAssemblies @ refAssemblies)
+    |> Seq.filter (fun (_, r) -> r.Extension = ".dll" || r.Extension = ".exe" )
     |> Seq.choose (fun (isReferenceAssembly, fi) ->
       let fullName = fi.FullName
       try let assembly = Mono.Cecil.AssemblyDefinition.ReadAssembly fullName

@@ -1,9 +1,7 @@
 content: none
+source temp/nupgks
 source https://ci.appveyor.com/nuget/paket
 source http://nuget.org/api/v2
-source https://dotnet.myget.org/F/dotnet-core
-source https://www.myget.org/F/fsharp-daily
-source https://www.myget.org/F/netcorecli-fsc-preview3
 
 nuget FSharp.Core redirects: force
 nuget Knockout
@@ -65,6 +63,7 @@ group Build
     nuget ILRepack
 
 group netcore
+    source temp/nupgks
     source https://ci.appveyor.com/nuget/paket
     source http://nuget.org/api/v2
 
@@ -77,7 +76,7 @@ group netcore
     nuget Microsoft.NETCore.App 1.1.0 framework: netstandard1.6, netcoreapp1.0
     nuget NETStandard.Library 1.6.1 framework: netstandard1.6, netcoreapp1.0
     nuget Argu
-    nuget Paket.Core 5.0.0-alpha001 prerelease
+    nuget Paket.Core 5.0.0-alpha002 prerelease
     nuget Mono.Cecil 0.10.0-beta4 beta
 
     nuget System.Diagnostics.FileVersionInfo
