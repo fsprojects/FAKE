@@ -623,9 +623,15 @@ Target "DotnetPackage" (fun _ ->
         ()
 )
 
+type MyClass = MyClass
+
 Target "DotnetCoreCreateZipPackages" (fun _ ->
     setEnvironVar "Version" release.NugetVersion
-
+#if DOTNETCORE
+    let lc = System.Runtime.Loader.AssemblyLoadContext.GetLoadContext(typeof<MyClass>.GetTypeInfo().Assembly)
+    let n = System.Reflection.AssemblyName "System.IO.Compression.ZipFile"
+    lc.LoadFromAssemblyName(n) |> ignore
+#endif
     // build zip packages
     !! "nuget/dotnetcore/*.nupkg"
     -- "nuget/dotnetcore/*.symbols.nupkg"
