@@ -1,5 +1,7 @@
+install:
+  - cinst fake -pre
 build_script:
-  - ps: .\build.cmd
+  - ps: Fake.netcore.exe run build.fsx
 test: off
 artifacts:
   - path: build
