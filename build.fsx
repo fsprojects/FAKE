@@ -1,6 +1,6 @@
 (* -- Fake Dependencies paket-inline
 source https://nuget.org/api/v2
-source .fake/current-packages
+source https://ci.appveyor.com/nuget/fake
 
 nuget System.AppContext prerelease
 nuget Fake.Core.Targets prerelease
