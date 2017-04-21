@@ -1,23 +1,6 @@
-(* -- Fake Dependencies paket-inline
-source https://nuget.org/api/v2
-source https://ci.appveyor.com/nuget/fake
-
-nuget System.AppContext prerelease
-nuget Fake.Core.Targets prerelease
-nuget Fake.Core.Globbing prerelease
-nuget Fake.Core.SemVer prerelease
-nuget Fake.IO.FileSystem prerelease
-nuget Fake.IO.Zip prerelease
-nuget Fake.Core.ReleaseNotes prerelease
-nuget Fake.DotNet.AssemblyInfoFile prerelease
-nuget Fake.DotNet.MsBuild prerelease
-nuget Fake.DotNet.Cli prerelease
-nuget Fake.DotNet.NuGet prerelease
-nuget Fake.DotNet.Testing.MSpec prerelease
-nuget Fake.DotNet.Testing.XUnit2 prerelease
-nuget Fake.DotNet.Testing.NUnit prerelease
-nuget Fake.Windows.Chocolatey prerelease
-nuget Mono.Cecil 0.10.0-beta4
+(* -- Fake Dependencies paket.dependencies
+file ./paket.dependencies
+group NetcoreBuild
 -- Fake Dependencies -- *)
 
 #if DOTNETCORE
