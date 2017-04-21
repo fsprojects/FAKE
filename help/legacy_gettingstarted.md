@@ -1,7 +1,5 @@
 # Getting started with FAKE - F# Make
 
-**Note:  This documentation is for FAKE.exe version 5.0 or later. The old documentation can be found [here](legacy_gettingstarted.html)**
-
 In this tutorial you will learn how to set up a complete build infrastructure with "FAKE - F# Make". This includes:
 
 * how to install the latest FAKE version

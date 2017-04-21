@@ -74,22 +74,28 @@ Optional.  The name of the build script target you wish to run.  This will any t
 
 Set environment variable name value pair. Supports multiple. 
                                                    
-### `--fsiargs <string>`
+#### `--fsiargs <string>`
 
 Pass an single argument after this switch to FSI when running the build script.  See [F# Interactive Options](http://msdn.microsoft.com/en-us/library/dd233172.aspx) for the fsi CLI details.
 
-### `--help [-h|/h|/help|/?]`
+#### `--help [-h|/h|/help|/?]`
 
 Display CLI help.
                                                                                                          
 
-
 # Running FAKE targets from the command line
 
-For this short sample we assume you have the latest version of FAKE in *./tools/*. Now consider the following small FAKE script:
+For this short sample we assume you have the latest version of FAKE installed and available in PATH (see [the getting started guide](gettingstarted.html)). Now consider the following small FAKE script:
 
-	#r "FAKE/tools/FakeLib.dll"
-	open Fake 
+    (* -- Fake Dependencies paket-inline
+    source https://nuget.org/api/v2
+    source ../../../nuget/dotnetcore
+
+    nuget Fake.Core.Targets prerelease
+    nuget FSharp.Core prerelease
+    -- Fake Dependencies -- *)
+	open Fake.Core
+	open Fake.Core.Targets
  
 	Target "Clean" (fun () ->  trace " --- Cleaning stuff --- ")
  

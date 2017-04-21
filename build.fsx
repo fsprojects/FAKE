@@ -63,12 +63,12 @@ open Fake.Core.Globbing.Tools
 
 let currentDirectory = Shell.pwd()
 #else
-#if FAKE
+//#if DESIGNTIME
 #I @"packages/build/FAKE/tools/"
 #r @"FakeLib.dll"
-#else
-#r "src/app/FakeLib/bin/Debug/FakeLib.dll"
-#endif
+//#else
+//#r "src/app/FakeLib/bin/Debug/FakeLib.dll"
+//#endif
 #r @"packages/Mono.Cecil/lib/net40/Mono.Cecil.dll"
 #I "packages/build/SourceLink.Fake/tools/"
 #load "packages/build/SourceLink.Fake/tools/SourceLink.fsx"
