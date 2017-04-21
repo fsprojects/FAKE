@@ -308,11 +308,8 @@ Target "Test" (fun _ ->
 )
 
 Target "TestDotnetCore" (fun _ ->
-    try
-        !! (testDir @@ "*.IntegrationTests.dll")
-        |> NUnit3 id
-    with e ->
-        printfn "Failed to run tests (because 'dotnet publish' currently fails): %O" e
+    !! (testDir @@ "*.IntegrationTests.dll")
+    |> NUnit3 id
 )
 
 Target "BootstrapTest" (fun _ ->

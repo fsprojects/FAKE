@@ -8,10 +8,7 @@ nuget FSharp.Core prerelease
 
 printfn "before load"
 
-#cd ".fake"
-#cd __SOURCE_FILE__
-#load "loadDependencies.fsx"
-#cd __SOURCE_DIRECTORY__
+#load ".fake/reference_fake-targets.fsx/loadDependencies.fsx"
 
 printfn "test_before open"
 

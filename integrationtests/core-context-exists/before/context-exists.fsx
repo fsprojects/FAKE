@@ -1,13 +1,11 @@
 (* -- Fake Dependencies paket-inline
 source https://nuget.org/api/v2
 source ../../../nuget/dotnetcore
+source https://ci.appveyor.com/nuget/paket
 
 nuget Fake.Core.Context prerelease
 -- Fake Dependencies -- *)
-#cd ".fake"
-#cd __SOURCE_FILE__
-#load "loadDependencies.fsx"
-#cd __SOURCE_DIRECTORY__
+#load ".fake/context-exists.fsx/loadDependencies.fsx"
 
 printfn "loading context"
 let context = Fake.Core.Context.forceFakeContext()

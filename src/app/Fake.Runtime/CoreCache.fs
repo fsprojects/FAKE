@@ -130,6 +130,7 @@ module internal Cache =
             member __.CleanCache context = cleanFiles context
             member __.TryLoadCache (context) =
                 traceFAKE "Default caching is disabled on dotnetcore, see https://github.com/dotnet/coreclr/issues/919#issuecomment-219212910"
+                traceFAKE "Use a Fake-Header to get rid of this warning and let FAKE handle the script dependencies!"
 
                 let fsiOpts = context.Config.CompileOptions.AdditionalArguments |> FsiOptions.ofArgs
                 if not fsiOpts.NoFramework then // Caller should take care!

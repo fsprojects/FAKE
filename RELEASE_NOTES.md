@@ -1,6 +1,6 @@
 #### 5.0.0-alpha002 - 01.06.2017
 * DotnetCore Support, version 6 will only have the netcore version the old way of using FAKE is obsolete, but supported for now
-* Cleanup API - A lot of stuff is obsolete now and will be removed with version 6
+* Cleanup API - A lot of stuff is obsolete now as it moved to a different location and will be removed with version 6
 
 
 #### 4.58.6 - 11.04.2017

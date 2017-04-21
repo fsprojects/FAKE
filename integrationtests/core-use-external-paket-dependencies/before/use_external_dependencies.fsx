@@ -2,11 +2,7 @@
 file paket.dependencies
 group Main
 -- Fake Dependencies -- *)
-#cd ".fake"
-#cd __SOURCE_FILE__
-#load "loadDependencies.fsx"
-#cd __SOURCE_DIRECTORY__
-
+#load ".fake/use_external_dependencies.fsx/loadDependencies.fsx"
 
 open Fake.Runtime
 
