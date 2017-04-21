@@ -104,8 +104,9 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
     // Check if lockfile is outdated
     let hash = HashGeneration.getStringHash (File.ReadAllText paketDependencies.DependenciesFile)
     if File.Exists lockFilePath.FullName && (not <| File.Exists paketDependenciesHashFile || File.ReadAllText paketDependenciesHashFile <> hash) then
-      Trace.log "paket lockfile is outdated..."
-      File.Delete lockFilePath.FullName
+      if printDetails then Trace.log "paket lockfile is outdated..."
+      // Maybe for "in-line" but never always...
+      //File.Delete lockFilePath.FullName
 
     // Update
     if not <| File.Exists lockFilePath.FullName then

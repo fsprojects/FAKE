@@ -684,6 +684,7 @@ Target "DotnetCorePushNuGet" (fun _ ->
     )
 )
 
+(*
 Target "BootstrapAndBuildDnc" (fun _ ->
     let buildScript = __SOURCE_FILE__
     let target = "DotnetPackage"
@@ -735,7 +736,7 @@ Target "BootstrapAndBuildDnc" (fun _ ->
     !! "nuget/dotnetcore/*.nupkg"
     |> Copy ".fake/current-packages"
     //CopyDir ".fake/current-packages" "nuget/dotnetcore" (fun p -> not <| p.Contains("Fake.netcore"))
-)
+)*)
 
 Target "PublishNuget" (fun _ ->
 #if !DOTNETCORE
@@ -810,7 +811,7 @@ Target "StartDnc" DoNothing
     ==> "RenameFSharpCompilerService"
     ==> "SetAssemblyInfo"
     ==> "BuildSolution"
-    ==> "BootstrapAndBuildDnc"
+    ==> "DotnetPackage"
     ==> "DotnetCoreCreateZipPackages"
     =?> ("TestDotnetCore", not <| hasBuildParam "SkipIntegrationTests" && not <| hasBuildParam "SkipTests")
     //==> "ILRepack"
