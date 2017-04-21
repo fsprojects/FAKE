@@ -1,25 +1,29 @@
 namespace Fake
 
-
+#nowarn "44"
 /// Contains tasks which allow to call [Chocolatey](https://chocolatey.org)
+[<System.Obsolete("Use Fake.Windows.Choco instead")>]
 module Choco =
     open System
     open System.Diagnostics
     open System.Text;
     open System.IO
     open System.Xml.Linq
-
+    
+    [<System.Obsolete("Use Fake.Windows.Choco instead")>]
     type ChocolateyInstallerType = 
     | Zip
     | Exe
     | Msi
-
+    
+    [<System.Obsolete("Use Fake.Windows.Choco instead")>]
     type ChocolateyChecksumType =
     | Md5
     | Sha1
     | Sha256
     | Sha512
-
+    
+    [<System.Obsolete("Use Fake.Windows.Choco instead")>]
     /// The choco install parameter type.
     [<CLIMutable>]
     type ChocoInstallParams = {
@@ -64,7 +68,8 @@ module Choco =
         /// Equivalent to the `-y` option.
         NonInteractive: bool
     }
-
+    
+    [<System.Obsolete("Use Fake.Windows.Choco instead")>]
     /// The choco pack parameter type.
     [<CLIMutable>]
     type ChocoPackParams = {
@@ -194,7 +199,8 @@ module Choco =
         /// Used to create chocolateyInstall.ps1 if it doesn't exists.
         Checksum64Type : ChocolateyChecksumType
     }
-
+    
+    [<System.Obsolete("Use Fake.Windows.Choco instead")>]
     /// The choco push parameter type.
     [<CLIMutable>]
     type ChocoPushParams = {
@@ -215,7 +221,8 @@ module Choco =
         /// Equivalent to the `-y` option.
         NonInteractive: bool
     }
-
+    
+    [<System.Obsolete("Use Fake.Windows.Choco instead")>]
      type private NuspecData = {
          Version: string
          Title: string
@@ -242,7 +249,8 @@ module Choco =
          FrameworkAssembliesXml: string
          FilesXml: string
     }
-
+    
+    [<System.Obsolete("Use Fake.Windows.Choco instead")>]
     /// The default option set given to choco install.
     let ChocoInstallDefaults = {
         Timeout = TimeSpan.FromMinutes 5.
@@ -260,7 +268,8 @@ module Choco =
         ToolPath = null
         AdditionalArgs = null
     }
-
+    
+    [<System.Obsolete("Use Fake.Windows.Choco instead")>]
     /// The default option set given to choco pack.
     let ChocoPackDefaults: ChocoPackParams = {
         Timeout = TimeSpan.FromMinutes 5.
@@ -306,6 +315,7 @@ module Choco =
         Checksum64Type = ChocolateyChecksumType.Sha256
     }
     
+    [<System.Obsolete("Use Fake.Windows.Choco instead")>]
     /// The default option set given to choco push.
     let ChocoPushDefaults = {
         Timeout = TimeSpan.FromMinutes 5.
@@ -316,6 +326,7 @@ module Choco =
         AdditionalArgs = null
     }
     
+    [<System.Obsolete("Use Fake.Windows.Choco instead")>]
     let private getPaths =
         let programDataPath = environVar "ProgramData"
         if programDataPath |> isNotNullOrEmpty
@@ -329,6 +340,7 @@ module Choco =
                 pathDirectories
             ]
 
+    [<System.Obsolete("Use Fake.Windows.Choco instead")>]
     /// [omit]
     /// Tries to find the specified choco executable:
     ///
@@ -339,6 +351,7 @@ module Choco =
             |> Seq.map (fun directory -> directory @@ "choco.exe")
             |> Seq.tryFind fileExists
 
+    [<System.Obsolete("Use Fake.Windows.Choco instead")>]
     /// [omit]
     /// Invokes chocolatey with the specified arguments
     /// ## Parameters
@@ -683,6 +696,7 @@ module Choco =
     /// True if choco is available (only on windows)
     /// ## Sample usage
     ///     "Build" =?> ("ChocoInstall", Choco.IsAvailable)
+    [<System.Obsolete("Use Fake.Windows.Choco instead")>]
     let IsAvailable = not isUnix && FindExe <> None
 
     /// Call choco to [install](https://github.com/chocolatey/choco/wiki/CommandsInstall) a package
@@ -694,6 +708,7 @@ module Choco =
     ///     Target "ChocoInstall" (fun _ ->
     ///         "pretzel" |> Choco.Install (fun p -> { p with Version = "0.4.0" })
     ///     )
+    [<System.Obsolete("Use Fake.Windows.Choco instead")>]
     let Install (setParams: (ChocoInstallParams -> ChocoInstallParams)) (packages: string) =
         if packages |> isNullOrEmpty then failwith "'packages' must not be empty."
 
@@ -726,6 +741,7 @@ module Choco =
     ///     Target "ChocoPack" (fun _ ->
     ///         Choco.Pack (fun p -> { p with Version = "0.5.0"; ... })
     ///     )
+    [<System.Obsolete("Use Fake.Windows.Choco instead")>]
     let Pack setParams =
         
         let parameters = setParams ChocoPackDefaults
@@ -754,6 +770,7 @@ module Choco =
     ///     Target "ChocoPack" (fun _ ->
     ///         "pretzel.nuspec" |> Choco.Pack (fun p -> { p with Version = "0.5.0" })
     ///     )
+    [<System.Obsolete("Use Fake.Windows.Choco instead")>]
     let PackFromTemplate setParams nuspecPath =
         
         if nuspecPath |> isNullOrEmpty then failwith "'nuspecPath' must not be empty."
@@ -792,6 +809,7 @@ module Choco =
     ///     Target "ChocoPush" (fun _ ->
     ///         "pretzel.0.5.0.nupkg" |> Choco.Push (fun p -> { p with ApiKey = "123-123123-123" })
     ///     )
+    [<System.Obsolete("Use Fake.Windows.Choco instead")>]
     let Push setParams nupkgPath =
         if nupkgPath |> isNullOrEmpty then failwith "'nupkgPath' must not be empty."
 

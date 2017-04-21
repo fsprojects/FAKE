@@ -1,15 +1,19 @@
 /// Contains tasks for installing NuGet packages using the [nuget.exe install command](http://docs.nuget.org/docs/reference/command-line-reference#Install_Command).
+[<System.Obsolete("Use Fake.DotNet.NuGet.Install instead")>]
 module Fake.NuGet.Install
 
+#nowarn "44"
 open System
 open Fake
 
+[<System.Obsolete("Use Fake.DotNet.NuGet.Install instead")>]
 /// Nuget install verbosity mode.
 type NugetInstallVerbosity =
 | Normal
 | Quiet
 | Detailed
 
+[<System.Obsolete("Use Fake.DotNet.NuGet.Install instead")>]
 /// Nuget install parameters.
 [<CLIMutable>]
 type NugetInstallParams =
@@ -38,7 +42,8 @@ type NugetInstallParams =
       NoCache: bool
       /// NuGet configuration file. Default `None`.
       ConfigFile: string option }
-
+      
+[<System.Obsolete("Use Fake.DotNet.NuGet.Install instead")>]
 /// Parameter default values.
 let NugetInstallDefaults =
     { ToolPath = findNuget (currentDirectory @@ "tools" @@ "NuGet")
@@ -53,13 +58,15 @@ let NugetInstallDefaults =
       Verbosity = Normal
       NoCache = false
       ConfigFile = None }
-
+      
+[<System.Obsolete("Use Fake.DotNet.NuGet.Install instead")>]
 /// [omit]
 let argList name values =
     values
     |> Seq.collect (fun v -> ["-" + name; sprintf @"""%s""" v])
     |> String.concat " "
-
+    
+[<System.Obsolete("Use Fake.DotNet.NuGet.Install instead")>]
 /// [omit]
 let buildArgs (param: NugetInstallParams) =
     [   param.Sources |> argList "source"
@@ -72,7 +79,8 @@ let buildArgs (param: NugetInstallParams) =
         (if param.NonInteractive then "-nonInteractive" else "")
         param.ConfigFile |> Option.toList |> argList "configFile"
     ] |> Seq.filter (not << String.IsNullOrEmpty) |> String.concat " "
-
+    
+[<System.Obsolete("Use Fake.DotNet.NuGet.Install instead")>]
 /// Installs the given package.
 ///
 /// ## Parameters

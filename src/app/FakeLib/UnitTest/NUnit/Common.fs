@@ -1,15 +1,19 @@
 ﻿[<AutoOpen>]
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 /// Contains types and utility functions relaited to running [NUnit](http://www.nunit.org/) unit tests.
 module Fake.NUnitCommon
 
+#nowarn "44"
 open System
 open System.IO
 open System.Text
 
 /// Option which allows to specify if a NUnit error should break the build.
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 type NUnitErrorLevel = TestRunnerErrorLevel // a type alias to keep backwards compatibility
 
 /// Process model for nunit to use, see [Project Editor](http://www.nunit.org/index.php?p=projectEditor&r=2.6.4)
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 type NUnitProcessModel = 
     | DefaultProcessModel
     | SingleProcessModel
@@ -22,6 +26,7 @@ type NUnitProcessModel =
         | SeparateProcessModel -> "Separate" 
         | MultipleProcessModel -> "Multiple"
 /// The /domain option controls of the creation of AppDomains for running tests. See [NUnit-Console Command Line Options](http://www.nunit.org/index.php?p=consoleCommandLine&r=2.6.4)
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 type NUnitDomainModel = 
     /// The default is to use multiple domains if multiple assemblies are listed on the command line. Otherwise a single domain is used.
     | DefaultDomainModel
@@ -43,6 +48,7 @@ type NUnitDomainModel =
 ///
 /// For reference, see: [NUnit-Console Command Line Options](http://www.nunit.org/index.php?p=consoleCommandLine&r=2.6.4)
 [<CLIMutable>]
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 type NUnitParams = 
     { 
       /// The [Categories](http://www.nunit.org/index.php?p=category&r=2.6.4) to be included in a test run. Multiple categories may be specified on either option, by using commas to separate them.
@@ -122,6 +128,7 @@ type NUnitParams =
 /// - `Domain` - `DefaultDomainModel`
 /// - `ErrorLevel` - `Error`
 /// - `Fixture` - `""`
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 let NUnitDefaults = 
     let toolname = "nunit-console.exe"
     { IncludeCategory = ""
@@ -146,6 +153,7 @@ let NUnitDefaults =
 
 /// Builds the command line arguments from the given parameter record and the given assemblies.
 /// [omit]
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 let buildNUnitdArgs parameters assemblies = 
     new StringBuilder()
     |> append "-nologo"
@@ -168,6 +176,7 @@ let buildNUnitdArgs parameters assemblies =
 
 /// Tries to detect the working directory as specified in the parameters or via TeamCity settings
 /// [omit]
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 let getWorkingDir parameters = 
     Seq.find isNotNullOrEmpty [ parameters.WorkingDir
                                 environVar ("teamcity.build.workingDir")
@@ -176,6 +185,7 @@ let getWorkingDir parameters =
 
 /// NUnit console returns negative error codes for errors and sum of failed, ignored and exceptional tests otherwise. 
 /// Zero means that all tests passed.
+[<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 let (|OK|TestsFailed|FatalError|) errorCode = 
     match errorCode with
     | 0 -> OK

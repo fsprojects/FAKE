@@ -9,3 +9,4 @@ let Commit repositoryDir message =
     sprintf "commit -m \"%s\"" message
     |> runSimpleGitCommand repositoryDir
     |> trace
+

@@ -12,6 +12,10 @@ nuget Fake.Core.ReleaseNotes prerelease
 nuget Fake.DotNet.AssemblyInfoFile prerelease
 nuget Fake.DotNet.MsBuild prerelease
 nuget Fake.DotNet.Cli prerelease
+nuget Fake.DotNet.NuGet prerelease
+nuget Fake.DotNet.Testing.MSpec prerelease
+nuget Fake.DotNet.Testing.XUnit2 prerelease
+nuget Fake.DotNet.Testing.NUnit prerelease
 nuget Mono.Cecil 0.10.0-beta4
 -- Fake Dependencies -- *)
 
@@ -39,6 +43,7 @@ open Fake.Core.Process
 open Fake.Core.Globbing
 open Fake.Core.Globbing.Operators
 open Fake.IO.FileSystem
+open Fake.IO.FileSystem.FileFilter
 open Fake.IO.Zip
 open Fake.IO.FileSystem.Directory
 open Fake.IO.FileSystem.File
@@ -48,10 +53,22 @@ open Fake.DotNet.AssemblyInfoFile
 open Fake.DotNet.AssemblyInfoFile.AssemblyInfo
 open Fake.DotNet.MsBuild
 open Fake.DotNet.Cli
+open Fake.Testing.Common
+open Fake.DotNet.Testing.MSpec
+open Fake.DotNet.Testing.XUnit2
+open Fake.DotNet.Testing.NUnit3
+open Fake.DotNet.NuGet.NuGet
+open Fake.Core.Globbing.Tools
+//open Fake.Windows
 
+let currentDirectory = Shell.pwd()
 #else
+#if FAKE
 #I @"packages/build/FAKE/tools/"
 #r @"FakeLib.dll"
+#else
+#r "src/app/FakeLib/bin/Debug/FakeLib.dll"
+#endif
 #r @"packages/Mono.Cecil/lib/net40/Mono.Cecil.dll"
 #I "packages/build/SourceLink.Fake/tools/"
 #load "packages/build/SourceLink.Fake/tools/SourceLink.fsx"
@@ -73,9 +90,6 @@ let authors = ["Steffen Forkmann"; "Mauricio Scheffer"; "Colin Bull"]
 let gitRaw = environVarOrDefault "gitRaw" "https://raw.github.com/fsharp"
 
 let release = LoadReleaseNotes "RELEASE_NOTES.md"
-#if DOTNETCORE
-let allFiles = (fun _ -> true)
-#endif
 
 let packages =
     ["FAKE.Core",projectDescription
@@ -158,7 +172,7 @@ Target "SetAssemblyInfo" (fun _ ->
          Attribute.InformationalVersion release.AssemblyVersion
          Attribute.FileVersion release.AssemblyVersion]
 
-    [Attribute.Title "FAKE - F# Make Command line tool"
+    [Attribute.Title "FAKE - F# Make Command line tool (Obsolete)"
      Attribute.Guid "fb2b540f-d97a-4660-972f-5eeff8120fba"] @ common
     |> CreateFSharpAssemblyInfo "./src/app/FAKE/AssemblyInfo.fs"
 
@@ -174,7 +188,7 @@ Target "SetAssemblyInfo" (fun _ ->
      Attribute.Guid "AA284C42-1396-42CB-BCAC-D27F18D14AC7"] @ common
     |> CreateFSharpAssemblyInfo "./src/app/Fake.Deploy.Lib/AssemblyInfo.fs"
 
-    [Attribute.Title "FAKE - F# Make Lib"
+    [Attribute.Title "FAKE - F# Make Lib (Obsolete)"
      Attribute.InternalsVisibleTo "Test.FAKECore"
      Attribute.Guid "d6dd5aec-636d-4354-88d6-d66e094dadb5"] @ common
     |> CreateFSharpAssemblyInfo "./src/app/FakeLib/AssemblyInfo.fs"
@@ -190,6 +204,38 @@ Target "SetAssemblyInfo" (fun _ ->
     [Attribute.Title "FAKE - F# Make FluentMigrator Lib"
      Attribute.Guid "E18BDD6F-1AF8-42BB-AEB6-31CD1AC7E56D"] @ common
     |> CreateFSharpAssemblyInfo "./src/app/Fake.FluentMigrator/AssemblyInfo.fs"
+
+    // New FAKE libraries
+    [ "Fake.Core.BuildServer", "Buildserver Support"
+      "Fake.Core.Context", "Core Context Infrastructure"
+      "Fake.Core.Environment", "Environment Detection"
+      "Fake.Core.Globbing", "Filesystem Globbing Support and Operators"
+      "Fake.Core.Process", "Starting and managing Processes"
+      "Fake.Core.ReleaseNotes", "Parsing ReleaseNotes"
+      "Fake.Core.SemVer", "Parsing and working with SemVer"
+      "Fake.Core.String", "Core String manipulations"
+      "Fake.Core.Targets", "Defining and running Targets"
+      "Fake.Core.Tasks", "Repeating and managing Tasks"
+      "Fake.Core.Tracing", "Core Logging functionality"
+      "Fake.Core.Xml", "Core Xml functionality"
+      "Fake.DotNet.AssemblyInfoFile", "Writing AssemblyInfo files"
+      "Fake.DotNet.Cli", "Running the dotnet cli"
+      "Fake.DotNet.MsBuild", "Running msbuild"
+      "Fake.DotNet.NuGet", "Running NuGet Client and interacting with NuGet Feeds"
+      "Fake.DotNet.Testing.MSpec", "Running mspec test runner"
+      "Fake.DotNet.Testing.NUnit", "Running nunit test runner"
+      "Fake.DotNet.Testing.XUnit2", "Running xunit test runner"
+      "Fake.IO.FileSystem", "Core Filesystem utilities"
+      "Fake.IO.Zip", "Core Zip functionality"
+      "Fake.netcore", "Command line tool"
+      "Fake.Runtime", "Core runtime features"
+      "Fake.Testing.Common", "Common testing data types"
+      "Fake.Tracing.NAntXml", "NAntXml"
+      "Fake.Windows.Chocolatey", "Running and packaging with Chocolatey" ]
+    |> Seq.iter (fun (project, description) ->
+        [Attribute.Title (sprintf "FAKE - F# Make %s" description) ] @ common
+        |> CreateFSharpAssemblyInfo (sprintf "./src/app/%s/AssemblyInfo.fs" project)
+    )
 
 )
 
@@ -244,10 +290,10 @@ Target "CopyLicense" (fun _ ->
 
 #if !DOTNETCORE
 open Fake.Testing.XUnit2
+open Fake.Testing.NUnit3
 #endif
 
 Target "Test" (fun _ ->
-#if !DOTNETCORE
     !! (testDir @@ "Test.*.dll")
     |> Seq.filter (fun fileName -> if isMono then fileName.ToLower().Contains "deploy" |> not else true)
     |> MSpec (fun p ->
@@ -259,21 +305,14 @@ Target "Test" (fun _ ->
     !! (testDir @@ "Test.*.dll")
       ++ (testDir @@ "FsCheck.Fake.dll")
     |>  xUnit2 id
-#else
-    printfn "We don't currently have MSpec and xunit on dotnetcore."
-#endif
 )
 
 Target "TestDotnetCore" (fun _ ->
-#if !DOTNETCORE
     try
         !! (testDir @@ "*.IntegrationTests.dll")
-        |> Fake.Testing.NUnit3.NUnit3 id
+        |> NUnit3 id
     with e ->
         printfn "Failed to run tests (because 'dotnet publish' currently fails): %O" e
-#else
-    printfn "We don't currently have NUnit3 on dotnetcore."
-#endif
 )
 
 Target "BootstrapTest" (fun _ ->
@@ -319,7 +358,7 @@ Target "BootstrapTestDotnetCore" (fun _ ->
     let buildScript = "build.fsx"
     let testScript = "testbuild.fsx"
     // Check if we can build ourself with the new binaries.
-    let test clearCache script =
+    let test timeout clearCache script =
         let clear () =
             // Will make sure the test call actually compiles the script.
             // Note: We cannot just clean .fake here as it might be locked by the currently executing code :)
@@ -336,7 +375,7 @@ Target "BootstrapTestDotnetCore" (fun _ ->
             ExecProcess (fun info ->
                 info.FileName <- "nuget/dotnetcore/Fake.netcore/current/Fake.netcore" + (if isUnix then "" else ".exe")
                 info.WorkingDirectory <- "."
-                info.Arguments <- sprintf "run %s --target %s" script target) (System.TimeSpan.FromMinutes 3.0)
+                info.Arguments <- sprintf "run %s --target %s" script target) timeout
 
         let result = executeTarget "PrintColors"
         if result <> 0 then failwithf "Bootstrapping failed (because of exitcode %d)" result
@@ -351,9 +390,9 @@ Target "BootstrapTestDotnetCore" (fun _ ->
 
     try
       // Will compile the script.
-      test true testScript
+      test (System.TimeSpan.FromMinutes 15.0) true testScript
       // Will use the compiled/cached version.
-      test false testScript
+      test (System.TimeSpan.FromMinutes 3.0) false testScript
     finally File.Delete(testScript)
 )
 
@@ -412,13 +451,9 @@ Target "CreateNuGet" (fun _ ->
             shellExec args |> ignore)
 
     let x64ify package =
-#if !DOTNETCORE
         { package with
             Dependencies = package.Dependencies |> List.map (fun (pkg, ver) -> pkg + ".x64", ver)
             Project = package.Project + ".x64" }
-#else
-        ()
-#endif
 
     for package,description in packages do
         let nugetDocsDir = nugetDir @@ "docs"
@@ -457,7 +492,6 @@ Target "CreateNuGet" (fun _ ->
         !! (nugetToolsDir @@ "*.srcsv") |> DeleteFiles
 
         let setParams p =
-#if !DOTNETCORE
             {p with
                 Authors = authors
                 Project = package
@@ -471,17 +505,10 @@ Target "CreateNuGet" (fun _ ->
                        ["FAKE.Core", RequireExactly (NormalizeVersion release.AssemblyVersion)]
                      else p.Dependencies )
                 Publish = false }
-#else
-            p
-#endif
 
-#if !DOTNETCORE
         NuGet setParams "fake.nuspec"
         !! (nugetToolsDir @@ "FAKE.exe") |> set64BitCorFlags
         NuGet (setParams >> x64ify) "fake.nuspec"
-#else
-        printfn "We don't currently have NuGet on dotnetcore."
-#endif
 )
 
 #if !DOTNETCORE
@@ -502,8 +529,10 @@ let appDir = srcDir</>"app"
 let netCoreProjs =
     !! "src/app/Fake.Core.*/*.fsproj"
     ++ "src/app/Fake.DotNet.*/*.fsproj"
+    ++ "src/app/Fake.Windows.*/*.fsproj"
     ++ "src/app/Fake.IO.*/*.fsproj"
     ++ "src/app/Fake.netcore/*.fsproj"
+    ++ "src/app/Fake.Testing.*/*.fsproj"
     ++ "src/app/Fake.Runtime/*.fsproj"
 
 Target "DotnetRestore" (fun _ ->
@@ -530,12 +559,13 @@ Target "DotnetRestore" (fun _ ->
         File.Copy(file, dir @@ Path.GetFileName file, true))
 
     // dotnet restore
-    netCoreProjs
-    |> Seq.iter(fun proj ->
-        let dir = (FileInfo (Path.GetFullPath proj)).Directory.FullName
-        //dotnet dir "restore"
-        DotnetRestore id proj
-    )
+    DotnetRestore id "src/Fake-netcore.sln"
+    //netCoreProjs
+    //|> Seq.iter(fun proj ->
+    //    let dir = (FileInfo (Path.GetFullPath proj)).Directory.FullName
+    //    //dotnet dir "restore"
+    //    DotnetRestore id proj
+    //)
 )
 
 let runtimes =
@@ -547,15 +577,20 @@ Target "DotnetPackage" (fun _ ->
     setEnvironVar "Version" release.NugetVersion
 
     // dotnet pack
-    netCoreProjs
-    -- "src/app/Fake.netcore/Fake.netcore.fsproj"
-    |> Seq.iter(fun proj ->
-        DotnetPack (fun c ->
-            { c with
-                Configuration = Release
-                OutputPath = Some (nugetDir @@ "dotnetcore")
-            }) proj
-    )
+    DotnetPack (fun c ->
+        { c with
+            Configuration = Release
+            OutputPath = Some (nugetDir @@ "dotnetcore")
+        }) "src/Fake-netcore.sln"
+    //netCoreProjs
+    //-- "src/app/Fake.netcore/Fake.netcore.fsproj"
+    //|> Seq.iter(fun proj ->
+    //    DotnetPack (fun c ->
+    //        { c with
+    //            Configuration = Release
+    //            OutputPath = Some (nugetDir @@ "dotnetcore")
+    //        }) proj
+    //)
 
     let info = DotnetInfo id
 
@@ -624,6 +659,12 @@ Target "DotnetCoreCreateZipPackages" (fun _ ->
       with _ ->
         printfn "FIXME: Runtime '%s' failed to zip!" runtime
     )
+)
+
+Target "DotnetCoreCreateChocolateyPackage" (fun _ ->
+    // !! ""
+    //Choco.PackFromTemplate (
+    ()
 )
 
 Target "DotnetCorePushNuGet" (fun _ ->

@@ -200,13 +200,16 @@ module File =
     let ReadLine(file : string) = ReadLineWithEncoding Encoding.UTF8 file
 
     /// Writes a file line by line
-    let WriteToFileWithEncoding (encoding:Encoding) append fileName (lines : seq<string>) = 
+    let WriteToFileWithEncoding (encoding:Encoding) append fileName (lines : seq<string>) =
         let fi = FileInfo.ofPath fileName
         use file = fi.Open(if append then FileMode.Append else FileMode.Create)
         use writer = new StreamWriter(file, encoding)
         lines |> Seq.iter writer.WriteLine
-        
+
     let WriteToFile append fileName (lines : seq<string>) =  WriteToFileWithEncoding Encoding.UTF8 append fileName lines
+
+    let Write file lines = WriteToFile false file lines
+    let Append file lines = WriteToFile true file lines
 
     /// Writes a byte array to a file
     let WriteBytesToFile file bytes = File.WriteAllBytes(file, bytes)
@@ -217,7 +220,7 @@ module File =
         use file = fi.Open(if append then FileMode.Append else FileMode.Create)
         use writer = new StreamWriter(file, encoding)
         writer.Write text
-        
+
     let WriteStringToFile append fileName (text : string) = WriteStringToFileWithEncoding Encoding.UTF8 append fileName text
 
     /// Replaces the file with the given string

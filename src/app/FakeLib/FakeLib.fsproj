@@ -149,6 +149,54 @@
     <Compile Include="..\Fake.DotNet.Cli\Dotnet.fs">
       <Link>Fake.DotNet.Cli/Dotnet.fs</Link>
     </Compile>
+    <Compile Include="..\Fake.Testing.Common\TestingCommon.fs">
+      <Link>Fake.Testing.Common/TestingCommon.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.DotNet.Testing.MSpec\MSpec.fs">
+      <Link>Fake.DotNet.Testing.MSpec/MSpec.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.DotNet.Testing.XUnit2\XUnit2.fs">
+      <Link>Fake.DotNet.Testing.XUnit2/XUnit2.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.DotNet.Testing.NUnit\Xml.fs">
+      <Link>Fake.DotNet.Testing.NUnit/Xml.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.DotNet.Testing.NUnit\Common.fs">
+      <Link>Fake.DotNet.Testing.NUnit/Common.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.DotNet.Testing.NUnit\Sequential.fs">
+      <Link>Fake.DotNet.Testing.NUnit/Sequential.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.DotNet.Testing.NUnit\Parallel.fs">
+      <Link>Fake.DotNet.Testing.NUnit/Parallel.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.DotNet.Testing.NUnit\NUnit3.fs">
+      <Link>Fake.DotNet.Testing.NUnit/NUnit3.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Core.Xml\Xml.fs">
+      <Link>Fake.Core.Xml/Xml.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Core.Tasks\TaskRunner.fs">
+      <Link>Fake.Core.Tasks/TaskRunner.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.DotNet.NuGet\Restore.fs">
+      <Link>Fake.DotNet.NuGet/Restore.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.DotNet.NuGet\NuGet.fs">
+      <Link>Fake.DotNet.NuGet/NuGet.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.DotNet.NuGet\Update.fs">
+      <Link>Fake.DotNet.NuGet/Update.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.DotNet.NuGet\Install.fs">
+      <Link>Fake.DotNet.NuGet/Install.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.DotNet.NuGet\NuGetVersion.fs">
+      <Link>Fake.DotNet.NuGet/NuGetVersion.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Windows.Chocolatey\Chocolatey.fs">
+      <Link>Fake.Windows.Chocolatey/Chocolatey.fs</Link>
+    </Compile>
     <Compile Include="UserInputHelper.fs" />
     <Compile Include="CSharpHelper.fs" />
     <Compile Include="EnvironmentHelper.fs" />
