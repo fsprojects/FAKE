@@ -15,6 +15,7 @@ module Choco =
     | Zip
     | Exe
     | Msi
+    | SelfContained
     
     [<System.Obsolete("Use Fake.Windows.Choco instead")>]
     type ChocolateyChecksumType =
@@ -753,9 +754,9 @@ module Choco =
 
         let nuspecFile = createNuSpec parameters tempFolder
 
-        createChocolateyInstallPs1 parameters tempFolder
-        
-        createChocolateyUninstallPs1 parameters tempFolder
+        if parameters.InstallerType <> ChocolateyInstallerType.SelfContained then
+            createChocolateyInstallPs1 parameters tempFolder
+            createChocolateyUninstallPs1 parameters tempFolder
 
         callChocoPack nuspecFile parameters
 
@@ -789,12 +790,14 @@ module Choco =
         let chocoInstallPath = rootFolder @@ "tools" @@ "chocolateyInstall.ps1"
         if fileExists chocoInstallPath
         then createChocolateyInstallPs1FromTemplate parameters chocoInstallPath tempFolder
-        else createChocolateyInstallPs1 parameters tempFolder
+        elif parameters.InstallerType <> ChocolateyInstallerType.SelfContained
+        then createChocolateyInstallPs1 parameters tempFolder
         
         let chocoUninstallPath = rootFolder @@ "tools" @@ "chocolateyUninstall.ps1"
         if fileExists chocoUninstallPath
         then createChocolateyUninstallPs1FromTemplate parameters chocoUninstallPath tempFolder
-        else createChocolateyUninstallPs1 parameters tempFolder
+        elif parameters.InstallerType <> ChocolateyInstallerType.SelfContained
+        then createChocolateyUninstallPs1 parameters tempFolder
 
         callChocoPack nuspecFile parameters
         

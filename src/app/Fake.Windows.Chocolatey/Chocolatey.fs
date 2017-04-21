@@ -18,6 +18,7 @@ module Fake.Windows.Choco
     | Zip
     | Exe
     | Msi
+    | SelfContained
 
     type ChocolateyChecksumType =
     | Md5
@@ -26,7 +27,6 @@ module Fake.Windows.Choco
     | Sha512
 
     /// The choco install parameter type.
-    [<CLIMutable>]
     type ChocoInstallParams = {
         /// Version of the package
         /// Equivalent to the `--version <version>` option.
@@ -71,7 +71,6 @@ module Fake.Windows.Choco
     }
 
     /// The choco pack parameter type.
-    [<CLIMutable>]
     type ChocoPackParams = {
         /// The version you would like to insert into the package.
         /// Equivalent to the `--version <version>` option.
@@ -201,7 +200,6 @@ module Fake.Windows.Choco
     }
 
     /// The choco push parameter type.
-    [<CLIMutable>]
     type ChocoPushParams = {
         /// The source we are pushing the package to. Default: "https://chocolatey.org/"
         /// Equivalent to the `--source <source>` option.
@@ -751,9 +749,9 @@ module Fake.Windows.Choco
 
         let nuspecFile = createNuSpec parameters tempFolder
 
-        createChocolateyInstallPs1 parameters tempFolder
-
-        createChocolateyUninstallPs1 parameters tempFolder
+        if parameters.InstallerType <> ChocolateyInstallerType.SelfContained then
+            createChocolateyInstallPs1 parameters tempFolder
+            createChocolateyUninstallPs1 parameters tempFolder
 
         callChocoPack nuspecFile parameters
 
@@ -786,12 +784,15 @@ module Fake.Windows.Choco
         let chocoInstallPath = rootFolder @@ "tools" @@ "chocolateyInstall.ps1"
         if File.Exists chocoInstallPath
         then createChocolateyInstallPs1FromTemplate parameters chocoInstallPath tempFolder
-        else createChocolateyInstallPs1 parameters tempFolder
+        elif parameters.InstallerType <> ChocolateyInstallerType.SelfContained
+        then createChocolateyInstallPs1 parameters tempFolder
+
 
         let chocoUninstallPath = rootFolder @@ "tools" @@ "chocolateyUninstall.ps1"
         if File.Exists chocoUninstallPath
         then createChocolateyUninstallPs1FromTemplate parameters chocoUninstallPath tempFolder
-        else createChocolateyUninstallPs1 parameters tempFolder
+        elif parameters.InstallerType <> ChocolateyInstallerType.SelfContained
+        then createChocolateyUninstallPs1 parameters tempFolder
 
         callChocoPack nuspecFile parameters
 

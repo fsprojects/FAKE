@@ -16,6 +16,7 @@ nuget Fake.DotNet.NuGet prerelease
 nuget Fake.DotNet.Testing.MSpec prerelease
 nuget Fake.DotNet.Testing.XUnit2 prerelease
 nuget Fake.DotNet.Testing.NUnit prerelease
+nuget Fake.Windows.Chocolatey prerelease
 nuget Mono.Cecil 0.10.0-beta4
 -- Fake Dependencies -- *)
 
@@ -59,7 +60,7 @@ open Fake.DotNet.Testing.XUnit2
 open Fake.DotNet.Testing.NUnit3
 open Fake.DotNet.NuGet.NuGet
 open Fake.Core.Globbing.Tools
-//open Fake.Windows
+open Fake.Windows
 
 let currentDirectory = Shell.pwd()
 #else
@@ -660,8 +661,21 @@ Target "DotnetCoreCreateZipPackages" (fun _ ->
 
 Target "DotnetCoreCreateChocolateyPackage" (fun _ ->
     // !! ""
-    //Choco.PackFromTemplate (
+    ensureDirectory "nuget/dotnetcore/chocolatey"
+#if DOTNETCORE // Remove me once the SelfContained change is in the release...
+    Choco.PackFromTemplate (fun p ->
+        { p with
+            PackageId = "fake"
+            InstallerType = Choco.ChocolateyInstallerType.SelfContained
+            Version = release.NugetVersion
+            Files = [ (System.IO.Path.GetFullPath @"nuget\dotnetcore\Fake.netcore\win7-x86") + @"\**", Some "bin", None ]
+            OutputDir = "nuget/dotnetcore/chocolatey" }) "src/Fake-choco-template.nuspec"
+#endif
     ()
+)
+Target "DotnetCorePushChocolateyPackage" (fun _ ->
+    let path = sprintf "nuget/dotnetcore/chocolatey/%s.%s.nupkg" "fake" release.NugetVersion
+    path |> Choco.Push (fun p -> { p with ApiKey = environVarOrFail "CHOCOLATEY_API_KEY" })
 )
 
 Target "DotnetCorePushNuGet" (fun _ ->
