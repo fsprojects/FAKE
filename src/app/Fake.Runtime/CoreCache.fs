@@ -17,6 +17,7 @@ open System.Text.RegularExpressions
 open System.Xml.Linq
 open Yaaf.FSharp.Scripting
 open System.Reflection
+open Paket.ProjectFile
 
 type ICachingProvider =
     abstract TryLoadCache : context:FakeContext -> FakeContext * CoreCacheInfo option
@@ -164,44 +165,9 @@ module internal Cache =
             member x.SaveCache (context, cache) = () }
 #endif
 
-let fakeDirectoryName = ".fake"
-
-let prepareContext (config:FakeConfig) (cache:ICachingProvider) =
-    let fsiOptions = FsiOptions.ofArgs (config.CompileOptions.AdditionalArguments)
-    let newFsiOptions =
-      { fsiOptions with
-#if !NETSTANDARD1_6
-          Defines = "FAKE" :: fsiOptions.Defines
-#else
-          Defines = "DOTNETCORE" :: "FAKE" :: fsiOptions.Defines
-#endif
-      }
-    let config =
-      { config with
-          FakeConfig.CompileOptions =
-            { config.CompileOptions with
-                AdditionalArguments = newFsiOptions.AsArgs |> Array.toList } }
-    let allScriptContents = getAllScripts newFsiOptions.Defines config.ScriptFilePath
-    let getOpts (c:ScriptCompileOptions) = c.AdditionalArguments @ c.CompileReferences
-    let scriptHash = getScriptHash allScriptContents (getOpts config.CompileOptions)
-    //TODO this is only calculating the hash for the input file, not anything #load-ed
-    let fakeDir = Path.Combine(Path.GetDirectoryName config.ScriptFilePath, fakeDirectoryName)
-    let context =
-      { FakeContext.Config = config
-        FakeDirectory = fakeDir
-        Hash = scriptHash }
-    cache.TryLoadCache context
 
 
 
-
-#if !NETSTANDARD1_6
-type AssemblyLoadContext () =
-  member x.LoadFromAssemblyPath (loc:string) =
-    Reflection.Assembly.LoadFrom(loc)
-  member x.LoadFromAssemblyName(fullname:AssemblyName)=
-    Reflection.Assembly.Load(fullname)
-#endif
 
 let loadAssembly (loadContext:AssemblyLoadContext) printDetails (assemInfo:AssemblyInfo) =
     let realLoadAssembly (assemInfo:AssemblyInfo) =
@@ -283,45 +249,78 @@ let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyNam
 // See https://github.com/dotnet/coreclr/issues/6411
 type FakeLoadContext (printDetails:bool, dependencies:AssemblyInfo list) =
   inherit AssemblyLoadContext()
-  let basePath = System.AppContext.BaseDirectory
-  let references =
-      System.IO.Directory.GetFiles(basePath, "*.dll")
-      |> Seq.filter (fun r -> not (System.IO.Path.GetFileName(r).ToLowerInvariant().StartsWith("api-ms")))
-      |> Seq.choose (fun r ->
-          try Some (AssemblyInfo.ofLocation r)
-          with e -> None)
-      |> Seq.toList
-  let allReferences = references @ dependencies
+  //let basePath = System.AppContext.BaseDirectory
+  //let references =
+  //    System.IO.Directory.GetFiles(basePath, "*.dll")
+  //    |> Seq.filter (fun r -> not (System.IO.Path.GetFileName(r).ToLowerInvariant().StartsWith("api-ms")))
+  //    |> Seq.choose (fun r ->
+  //        try Some (AssemblyInfo.ofLocation r)
+  //        with e -> None)
+  //    |> Seq.toList
+  //let allReferences = references @ dependencies
+  let allReferences = dependencies
   override x.Load(assem:AssemblyName) =
        findAndLoadInRuntimeDeps x assem printDetails allReferences
 #endif
 
-let setupAssemblyResolver (context:FakeContext) =
+let fakeDirectoryName = ".fake"
+
+let prepareContext (config:FakeConfig) (cache:ICachingProvider) =
+    let fsiOptions = FsiOptions.ofArgs (config.CompileOptions.AdditionalArguments)
+    let newFsiOptions =
+      { fsiOptions with
+#if !NETSTANDARD1_6
+          Defines = "FAKE" :: fsiOptions.Defines
+#else
+          Defines = "DOTNETCORE" :: "FAKE" :: fsiOptions.Defines
+#endif
+      }
+    let config =
+      { config with
+          FakeConfig.CompileOptions =
+            { config.CompileOptions with
+                AdditionalArguments = newFsiOptions.AsArgs |> Array.toList } }
+    let allScriptContents = getAllScripts newFsiOptions.Defines config.ScriptFilePath
+    let getOpts (c:ScriptCompileOptions) = c.AdditionalArguments @ c.CompileReferences
+    let scriptHash = getScriptHash allScriptContents (getOpts config.CompileOptions)
+    //TODO this is only calculating the hash for the input file, not anything #load-ed
+    let fakeDir = Path.Combine(Path.GetDirectoryName config.ScriptFilePath, fakeDirectoryName)
 
 #if NETSTANDARD1_6
-    let globalLoadContext = AssemblyLoadContext.Default
-    // See https://github.com/dotnet/coreclr/issues/6411
-    let fakeLoadContext = new FakeLoadContext(context.Config.PrintDetails, context.Config.CompileOptions.RuntimeDependencies)
+    // See https://github.com/dotnet/coreclr/issues/6411 and https://github.com/dotnet/coreclr/blob/master/Documentation/design-docs/assemblyloadcontext.md
+    let fakeLoadContext = new FakeLoadContext(config.PrintDetails, config.CompileOptions.RuntimeDependencies)
 #else
-    let loadContext = new AssemblyLoadContext()
+    let fakeLoadContext = new AssemblyLoadContext()
 #endif
 
+    let context =
+      { FakeContext.Config = config
+        AssemblyContext = fakeLoadContext
+        FakeDirectory = fakeDir
+        Hash = scriptHash }
+    cache.TryLoadCache context
+
+
+let setupAssemblyResolverLogger (context:FakeContext) =
 #if NETSTANDARD1_6
     globalLoadContext.add_Resolving(new Func<AssemblyLoadContext, AssemblyName, Assembly>(fun _ name ->
         let strName = name.FullName
-        fakeLoadContext.LoadFromAssemblyName(name)
+        //fakeLoadContext.LoadFromAssemblyName(name)
 #else
     AppDomain.CurrentDomain.add_AssemblyResolve(new ResolveEventHandler(fun _ ev ->
         let strName = ev.Name
         let name = AssemblyName(strName)
-        findAndLoadInRuntimeDeps loadContext name context.Config.PrintDetails context.Config.CompileOptions.RuntimeDependencies
+        //findAndLoadInRuntimeDeps loadContext name context.Config.PrintDetails context.Config.CompileOptions.RuntimeDependencies
 #endif
+        if context.Config.PrintDetails then
+            printfn "Global resolve event: %s" name.FullName
+        null
         ))
 
 let runScriptWithCacheProvider (config:FakeConfig) (cache:ICachingProvider) =
     let newContext, cacheInfo =  prepareContext config cache
 
-    setupAssemblyResolver newContext
+    setupAssemblyResolverLogger newContext
 
     // Add arguments to the Environment
     for (k,v) in config.Environment do

@@ -19,6 +19,15 @@ open Microsoft.FSharp.Compiler.SourceCodeServices
 open Microsoft.FSharp.Compiler
 
 
+
+#if !NETSTANDARD1_6
+type AssemblyLoadContext () =
+  member x.LoadFromAssemblyPath (loc:string) =
+    Reflection.Assembly.LoadFrom(loc)
+  member x.LoadFromAssemblyName(fullname:AssemblyName)=
+    Reflection.Assembly.Load(fullname)
+#endif
+
 type AssemblyInfo =
   { FullName : string
     Version : string
@@ -60,6 +69,7 @@ and CoreCacheInfo =
         Warnings = x.Warnings }
 type FakeContext =
   { Config : FakeConfig
+    AssemblyContext : AssemblyLoadContext
     FakeDirectory : string
     Hash : string }
     member x.FileName = Path.GetFileNameWithoutExtension x.Config.ScriptFilePath

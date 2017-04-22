@@ -58,12 +58,7 @@ let tryRunCached (c:CoreCacheInfo) (context:FakeContext) : Exception option =
     Fake.Core.Context.setExecutionContext (Fake.Core.Context.RuntimeContext.Fake execContext)
     Yaaf.FSharp.Scripting.Helper.consoleCapture context.Config.Out context.Config.Err (fun () ->
         let fullPath = System.IO.Path.GetFullPath c.CompiledAssembly
-#if NETSTANDARD1_6
-        let loadContext = AssemblyLoadContext.Default
-        let ass = loadContext.LoadFromAssemblyPath(fullPath)
-#else
-        let ass = Reflection.Assembly.LoadFrom(fullPath)
-#endif
+        let ass = context.AssemblyContext.LoadFromAssemblyPath fullPath
         match ass.GetTypes()
               |> Seq.filter (fun t -> parseName t.FullName |> Option.isSome)
               |> Seq.map (fun t -> t.GetMethod("main@", BindingFlags.InvokeMethod ||| BindingFlags.Public ||| BindingFlags.Static))
