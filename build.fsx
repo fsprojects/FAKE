@@ -66,6 +66,8 @@ open Fake.ReleaseNotesHelper
 open Fake.AssemblyInfoFile
 #endif
 
+
+
 // properties
 let projectName = "FAKE"
 let projectSummary = "FAKE - F# Make - Get rid of the noise in your build scripts."
@@ -623,12 +625,20 @@ Target "DotnetPackage" (fun _ ->
         ()
 )
 
+open Microsoft.FSharp.Quotations.Patterns
 type MyClass = MyClass
 
 Target "DotnetCoreCreateZipPackages" (fun _ ->
     setEnvironVar "Version" release.NugetVersion
+
+    let getModuleType = function
+    | PropertyGet (_, propertyInfo, _) -> propertyInfo.DeclaringType
+    | Call (_, methodInfo, _) -> methodInfo.DeclaringType
+    //| Microsoft.FSharp.Quotations.Patterns..
+    | _ as e -> failwithf "Expression is no property, but '%A'." e
+    let t = getModuleType <@ Zip "" "" [] @>
 #if DOTNETCORE
-    let lc = System.Runtime.Loader.AssemblyLoadContext.GetLoadContext(typeof<MyClass>.GetTypeInfo().Assembly)
+    let lc = System.Runtime.Loader.AssemblyLoadContext.GetLoadContext(t.GetTypeInfo().Assembly)
     let n = System.Reflection.AssemblyName "System.IO.Compression.ZipFile"
     lc.LoadFromAssemblyName(n) |> ignore
 #endif
@@ -655,6 +665,7 @@ Target "DotnetCoreCreateChocolateyPackage" (fun _ ->
     Choco.PackFromTemplate (fun p ->
         { p with
             PackageId = "fake"
+            ReleaseNotes = release.Notes |> toLines
             InstallerType = Choco.ChocolateyInstallerType.SelfContained
             Version = release.NugetVersion
             Files = [ (System.IO.Path.GetFullPath @"nuget\dotnetcore\Fake.netcore\win7-x86") + @"\**", Some "bin", None ]
