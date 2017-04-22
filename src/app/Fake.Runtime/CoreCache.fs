@@ -303,6 +303,7 @@ let prepareContext (config:FakeConfig) (cache:ICachingProvider) =
 
 let setupAssemblyResolverLogger (context:FakeContext) =
 #if NETSTANDARD1_6
+    let globalLoadContext = AssemblyLoadContext.Default
     globalLoadContext.add_Resolving(new Func<AssemblyLoadContext, AssemblyName, Assembly>(fun _ name ->
         let strName = name.FullName
         //fakeLoadContext.LoadFromAssemblyName(name)
