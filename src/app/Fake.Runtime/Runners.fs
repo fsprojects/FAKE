@@ -73,6 +73,7 @@ type FakeContext =
     FakeDirectory : string
     Hash : string }
     member x.FileName = Path.GetFileNameWithoutExtension x.Config.ScriptFilePath
-    member x.HashPath = Path.Combine(x.FakeDirectory, x.FileName + "_" + x.Hash)
-    member x.CachedAssemblyFileName = cachedAssemblyPrefix + x.FileName + "_" + x.Hash
-    member x.CachedAssemblyFilePath = Path.Combine(x.FakeDirectory, x.CachedAssemblyFileName)
+    member x.FileNameWithExtension = Path.GetFileName x.Config.ScriptFilePath
+    member x.HashPath = Path.Combine(x.FakeDirectory, x.FileNameWithExtension, x.FileName + "_" + x.Hash)
+    member x.CachedAssemblyFileName = x.FileName + "_" + x.Hash
+    member x.CachedAssemblyFilePath = Path.Combine(x.FakeDirectory, x.FileNameWithExtension, x.CachedAssemblyFileName)

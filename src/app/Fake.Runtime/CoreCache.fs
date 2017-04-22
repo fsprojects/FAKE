@@ -286,20 +286,21 @@ let prepareContext (config:FakeConfig) (cache:ICachingProvider) =
     //TODO this is only calculating the hash for the input file, not anything #load-ed
     let fakeDir = Path.Combine(Path.GetDirectoryName config.ScriptFilePath, fakeDirectoryName)
 
-#if NETSTANDARD1_6
-    // See https://github.com/dotnet/coreclr/issues/6411 and https://github.com/dotnet/coreclr/blob/master/Documentation/design-docs/assemblyloadcontext.md
-    let fakeLoadContext = new FakeLoadContext(config.PrintDetails, config.CompileOptions.RuntimeDependencies)
-#else
-    let fakeLoadContext = new AssemblyLoadContext()
-#endif
+
 
     let context =
       { FakeContext.Config = config
-        AssemblyContext = fakeLoadContext
+        AssemblyContext = Unchecked.defaultof<_>
         FakeDirectory = fakeDir
         Hash = scriptHash }
-    cache.TryLoadCache context
-
+    let context, cache = cache.TryLoadCache context
+#if NETSTANDARD1_6
+    // See https://github.com/dotnet/coreclr/issues/6411 and https://github.com/dotnet/coreclr/blob/master/Documentation/design-docs/assemblyloadcontext.md
+    let fakeLoadContext = new FakeLoadContext(context.Config.PrintDetails, context.Config.CompileOptions.RuntimeDependencies)
+#else
+    let fakeLoadContext = new AssemblyLoadContext()
+#endif
+    { context with AssemblyContext = fakeLoadContext }, cache
 
 let setupAssemblyResolverLogger (context:FakeContext) =
 #if NETSTANDARD1_6
@@ -326,7 +327,7 @@ let runScriptWithCacheProvider (config:FakeConfig) (cache:ICachingProvider) =
     // Add arguments to the Environment
     for (k,v) in config.Environment do
       setEnvironVar k v
-
+      
     // Create an env var that only contains the build script args part from the --fsiargs (or "").
     setEnvironVar "fsiargs-buildscriptargs" (String.Join(" ", config.CompileOptions.AdditionalArguments))
 
