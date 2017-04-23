@@ -197,6 +197,51 @@
     <Compile Include="..\Fake.Windows.Chocolatey\Chocolatey.fs">
       <Link>Fake.Windows.Chocolatey/Chocolatey.fs</Link>
     </Compile>
+    <Compile Include="..\Fake.Tools.Git\CommandHelper.fs">
+      <Link>Fake.Tools.Git/CommandHelper.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Tools.Git\Sha1.fs">
+      <Link>Fake.Tools.Git/Sha1.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Tools.Git\Repository.fs">
+      <Link>Fake.Tools.Git/Repository.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Tools.Git\Submodule.fs">
+      <Link>Fake.Tools.Git/Submodule.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Tools.Git\Branches.fs">
+      <Link>Fake.Tools.Git/Branches.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Tools.Git\Reset.fs">
+      <Link>Fake.Tools.Git/Reset.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Tools.Git\Merge.fs">
+      <Link>Fake.Tools.Git/Merge.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Tools.Git\Stash.fs">
+      <Link>Fake.Tools.Git/Stash.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Tools.Git\SanityChecks.fs">
+      <Link>Fake.Tools.Git/SanityChecks.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Tools.Git\Information.fs">
+      <Link>Fake.Tools.Git/Information.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Tools.Git\FileStatus.fs">
+      <Link>Fake.Tools.Git/FileStatus.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Tools.Git\Rebase.fs">
+      <Link>Fake.Tools.Git/Rebase.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Tools.Git\CommitMessage.fs">
+      <Link>Fake.Tools.Git/CommitMessage.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Tools.Git\Staging.fs">
+      <Link>Fake.Tools.Git/Staging.fs</Link>
+    </Compile>
+    <Compile Include="..\Fake.Tools.Git\Commit.fs">
+      <Link>Fake.Tools.Git/Commit.fs</Link>
+    </Compile>
     <Compile Include="UserInputHelper.fs" />
     <Compile Include="CSharpHelper.fs" />
     <Compile Include="EnvironmentHelper.fs" />

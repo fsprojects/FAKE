@@ -1,11 +1,8 @@
-﻿[<AutoOpen>]
-/// Contains helper functions which allow to deal with git reset.
-[<System.Obsolete("Use Fake.Tools.Git.Reset instead")>]
-module Fake.Git.Reset
+﻿/// Contains helper functions which allow to deal with git reset.
+module Fake.Tools.Git.Reset
 
-#nowarn "44"
 open System
-open Fake.Git.CommandHelper
+open Fake.Tools.Git.CommandHelper
 
 let internal addArgs commit file =
     sprintf "%s%s"
@@ -13,10 +10,10 @@ let internal addArgs commit file =
       (if String.IsNullOrEmpty file then "" else " -- \"" + file + "\"")
 
 /// the intent of the 'reset' helper is to either set a repo to a certain point, or set a file to a certain point.  Git reset doesn't take file paths in the hard/mixed/soft modes, and so you have to use checkout instead for that.
-/// This function encapsulates caring about that so you don't have to.      
-let internal resetOrCheckout file mode = 
-    match file |> String.IsNullOrEmpty with 
-    | true -> sprintf "reset --%s" mode 
+/// This function encapsulates caring about that so you don't have to.
+let internal resetOrCheckout file mode =
+    match file |> String.IsNullOrEmpty with
+    | true -> sprintf "reset --%s" mode
     | false -> "checkout"
 
 /// Performs a git reset "soft".
@@ -26,17 +23,15 @@ let internal resetOrCheckout file mode =
 ///  - `repositoryDir` - The git repository.
 ///  - `commit` - The commit to which git should perform the reset.
 ///  - `file` - The file to reset - null means all files.
-[<System.Obsolete("Use Fake.Tools.Git.Reset instead")>]
 let soft repositoryDir commit file = resetOrCheckout file "soft" + addArgs commit file |> gitCommand repositoryDir
 
 /// Performs a git reset "mixed".
-/// Resets the index but not the working tree and reports what has not been updated. 
+/// Resets the index but not the working tree and reports what has not been updated.
 /// ## Parameters
 ///
 ///  - `repositoryDir` - The git repository.
 ///  - `commit` - The commit to which git should perform the reset.
 ///  - `file` - The file to reset - null means all files.
-[<System.Obsolete("Use Fake.Tools.Git.Reset instead")>]
 let mixed repositoryDir commit file = resetOrCheckout file "mixed" + addArgs commit file |> gitCommand repositoryDir
 
 /// Performs a git reset "hard".
@@ -46,7 +41,6 @@ let mixed repositoryDir commit file = resetOrCheckout file "mixed" + addArgs com
 ///  - `repositoryDir` - The git repository.
 ///  - `commit` - The commit to which git should perform the reset.
 ///  - `file` - The file to reset - null means all files.
-[<System.Obsolete("Use Fake.Tools.Git.Reset instead")>]
 let hard repositoryDir commit file = resetOrCheckout file "hard" + addArgs commit file |> gitCommand repositoryDir
 
 /// Performs a git reset "soft" to the current HEAD.
@@ -54,7 +48,6 @@ let hard repositoryDir commit file = resetOrCheckout file "hard" + addArgs commi
 /// ## Parameters
 ///
 ///  - `repositoryDir` - The git repository.
-[<System.Obsolete("Use Fake.Tools.Git.Reset instead")>]
 let ResetSoft repositoryDir = soft repositoryDir null null
 
 /// Performs a git reset "mixed" to the current HEAD.
@@ -62,7 +55,6 @@ let ResetSoft repositoryDir = soft repositoryDir null null
 /// ## Parameters
 ///
 ///  - `repositoryDir` - The git repository.
-[<System.Obsolete("Use Fake.Tools.Git.Reset instead")>]
 let ResetMixed repositoryDir = mixed repositoryDir null null
 
 /// Performs a git reset "hard" to the current HEAD.
@@ -70,5 +62,4 @@ let ResetMixed repositoryDir = mixed repositoryDir null null
 /// ## Parameters
 ///
 ///  - `repositoryDir` - The git repository.
-[<System.Obsolete("Use Fake.Tools.Git.Reset instead")>]
 let ResetHard repositoryDir = hard repositoryDir null null

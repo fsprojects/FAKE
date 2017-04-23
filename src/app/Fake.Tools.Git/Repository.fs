@@ -1,20 +1,18 @@
-﻿[<AutoOpen>]
-/// Contains functions which allow basic operations on git repositories.
+﻿/// Contains functions which allow basic operations on git repositories.
 /// All operations assume that the CommandHelper can find git.exe.
-[<System.Obsolete("Use Fake.Tools.Git.Repository instead")>]
-module Fake.Git.Repository
+module Fake.Tools.Git.Repository
 
-#nowarn "44"
-open Fake
+open Fake.Core
+open Fake.Tools.Git.CommandHelper
 open System.IO
+open Fake.IO.FileSystem
 
 /// Clones a git repository.
 /// ## Parameters
 ///
 ///  - `workingDir` - The working directory.
 ///  - `repoUrl` - The URL to the origin.
-///  - `toPath` - Specifes the new target subfolder. 
-[<System.Obsolete("Use Fake.Tools.Git.Repository instead")>]
+///  - `toPath` - Specifes the new target subfolder.
 let clone workingDir repoUrl toPath =  gitCommand workingDir (sprintf "clone %s %s" repoUrl toPath)
 
 /// Clones a single branch of a git repository.
@@ -24,11 +22,10 @@ let clone workingDir repoUrl toPath =  gitCommand workingDir (sprintf "clone %s 
 ///  - `repoUrl` - The URL to the origin.
 ///  - `branchname` - Specifes the target branch.
 ///  - `toPath` - Specifes the new target subfolder.
-[<System.Obsolete("Use Fake.Tools.Git.Repository instead")>]
 let cloneSingleBranch workingDir repoUrl branchName toPath =
     sprintf "clone -b %s --single-branch %s %s" branchName repoUrl toPath
     |> runSimpleGitCommand workingDir
-    |> trace
+    |> Trace.trace
 
 /// Inits a git repository.
 /// ## Parameters
@@ -36,7 +33,6 @@ let cloneSingleBranch workingDir repoUrl branchName toPath =
 ///  - `repositoryDir` - The path of the target directory.
 ///  - `bare` - If the new directory is a bare directory.
 ///  - `shared` - Specifies that the git repository is to be shared amongst several users. This allows users belonging to the same group to push into that repository. 
-[<System.Obsolete("Use Fake.Tools.Git.Repository instead")>]
 let init repositoryDir bare shared =
     match bare, shared with
     | true, true -> gitCommand repositoryDir "init --bare --shared=all"
@@ -48,31 +44,30 @@ let init repositoryDir bare shared =
 /// ## Parameters
 ///
 ///  - `repositoryDir` - The path of the directory to clean.
-[<System.Obsolete("Use Fake.Tools.Git.Repository instead")>]
 let fullclean repositoryDir =
-    let di = directoryInfo repositoryDir
+    let di = DirectoryInfo.ofPath repositoryDir
     if di.Exists then
-        logfn "Deleting contents of %s" repositoryDir
+        Trace.logfn "Deleting contents of %s" repositoryDir
         // delete all files
         Directory.GetFiles(repositoryDir, "*.*", SearchOption.TopDirectoryOnly)
-          |> Seq.iter (fun file -> 
-                let fi = fileInfo file
+          |> Seq.iter (fun file ->
+                let fi = FileInfo.ofPath file
                 fi.IsReadOnly <- false
                 fi.Delete())
-    
+
         // deletes all subdirectories
         let rec deleteDirs actDir =
-            let di = directoryInfo actDir
+            let di = DirectoryInfo.ofPath actDir
             if di.Name = ".git" then () else
             try
                 Directory.GetDirectories(actDir) |> Seq.iter deleteDirs
                 Directory.Delete(actDir,true)
             with exn -> ()
-    
-        Directory.GetDirectories repositoryDir 
-          |> Seq.iter deleteDirs      
+
+        Directory.GetDirectories repositoryDir
+          |> Seq.iter deleteDirs
     else
-        CreateDir repositoryDir
-    
+        Directory.CreateDir repositoryDir
+
     // set writeable
-    File.SetAttributes(repositoryDir,FileAttributes.Normal)        
+    File.SetAttributes(repositoryDir,FileAttributes.Normal)
