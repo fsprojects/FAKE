@@ -228,8 +228,9 @@ let findAndLoadInRuntimeDeps (loadContext:AssemblyLoadContext) (name:AssemblyNam
                       n.Name = name.Name &&
                       (isNull token || // When null accept what we have.
                           n.GetPublicKeyToken() = token)) with
-            | Some (_, info) ->
-                false, loadAssembly loadContext printDetails info
+            | Some (otherName, info) ->
+                // Then the version matches and the public token is null we still accept this as perfect match
+                (isNull token && otherName.Version = name.Version), loadAssembly loadContext printDetails info
             | _ ->
                 false, None
     match result with
