@@ -4,6 +4,7 @@ module Fake.Tools.Git.FileStatus
 open Fake.Tools.Git.CommandHelper
 open Fake.Tools.Git.Branches
 open Fake.Tools.Git.SanityChecks
+open Fake.Tools.Git.Reset
 open System
 open System.IO
 
