@@ -13,6 +13,13 @@ addons:
 mono:
   - latest
 
+before_script:
+  - wget https://ci.appveyor.com/api/buildjobs/iehwxgkgv7qcewrc/artifacts/nuget%2Fdotnetcore%2FFake.netcore%2Ffake-dotnetcore-ubuntu.14.04-x64.zip -O /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip
+  - mkir fake-dotnetcore
+  - unzip /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-dotnetcore
+  - export PATH=$PATH:$PWD/fake-dotnetcore/
+  - export FAKE="dotnet $PWD/fake-dotnetcore/Fake.dll"
+  
 before install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update               ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install openssl      ; fi
@@ -20,7 +27,7 @@ before install:
 
 
 script: 
-  - ./build.sh 
+  - $FAKE run build.fsx
 
 branches:
   except:
