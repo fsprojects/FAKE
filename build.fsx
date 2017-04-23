@@ -356,7 +356,7 @@ Target "BootstrapTestDotnetCore" (fun _ ->
         let executeTarget target =
             if clearCache then clear ()
             ExecProcess (fun info ->
-                info.FileName <- "nuget/dotnetcore/Fake.netcore/current/Fake.netcore" + (if isUnix then "" else ".exe")
+                info.FileName <- "nuget/dotnetcore/Fake.netcore/current/Fake" + (if isUnix then "" else ".exe")
                 info.WorkingDirectory <- "."
                 info.Arguments <- sprintf "run %s --target %s" script target) timeout
 
