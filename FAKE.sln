@@ -64,6 +64,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "help", "help", "{564BD198-0
 		help\index.md = help\index.md
 		help\legacy_commandline.md = help\legacy_commandline.md
 		help\legacy_gettingstarted.md = help\legacy_gettingstarted.md
+		help\migrate-to-fake-5.md = help\migrate-to-fake-5.md
 		help\nuget.md = help\nuget.md
 		help\octopusdeploy.md = help\octopusdeploy.md
 		help\slacknotification.md = help\slacknotification.md
