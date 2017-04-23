@@ -250,7 +250,10 @@ let prepareFakeScript printDetails script =
     restoreDependencies printDetails cacheDir section
   | None ->
     if printDetails then Trace.traceFAKE "No dependencies section found in script: %s" script
-    CoreCache.Cache.defaultProvider
+    if Environment.environVar "FAKE_UNDOCUMENTED_NETCORE_HACK" = "true" then
+        CoreCache.Cache.defaultProvider
+    else
+        failwithf "You cannot use the netcore version of FAKE as drop-in replacement, please add a dependencies section (this will be improved later)."
 
 let prepareAndRunScriptRedirect printDetails fsiOptions scriptPath envVars onErrMsg onOutMsg useCache =
   let provider = prepareFakeScript printDetails scriptPath
