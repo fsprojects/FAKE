@@ -10,7 +10,7 @@ open System
 open System.IO
 
 let fakeToolPath = 
-    let rawWithoutExtension = Path.getFullName(__SOURCE_DIRECTORY__ + "../../../../nuget/dotnetcore/Fake.netcore/current/Fake.netcore")
+    let rawWithoutExtension = Path.getFullName(__SOURCE_DIRECTORY__ + "../../../../nuget/dotnetcore/Fake.netcore/current/Fake")
     if Environment.isUnix then rawWithoutExtension
     else rawWithoutExtension + ".exe"
 let integrationTestPath = Path.getFullName(__SOURCE_DIRECTORY__ + "../../../../integrationtests")
