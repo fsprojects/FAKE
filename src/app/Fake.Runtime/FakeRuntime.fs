@@ -253,7 +253,7 @@ let prepareFakeScript printDetails script =
     if Environment.environVar "FAKE_UNDOCUMENTED_NETCORE_HACK" = "true" then
         CoreCache.Cache.defaultProvider
     else
-        failwithf "You cannot use the netcore version of FAKE as drop-in replacement, please add a dependencies section (this will be improved later)."
+        failwithf "You cannot use the netcore version of FAKE as drop-in replacement, please add a dependencies section (and read the migration guide)."
 
 let prepareAndRunScriptRedirect printDetails fsiOptions scriptPath envVars onErrMsg onOutMsg useCache =
   let provider = prepareFakeScript printDetails scriptPath
