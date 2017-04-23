@@ -95,24 +95,25 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
   let lockFilePath = Paket.DependenciesFile.FindLockfile paketDependencies.DependenciesFile
   let parent s = Path.GetDirectoryName s
   let comb name s = Path.Combine(s, name)
-  let paketDependenciesHashFile = cacheDir |> comb "paket.depedencies.sha1"
-  let saveDependenciesHash () =
-    File.WriteAllText (paketDependenciesHashFile, HashGeneration.getStringHash (File.ReadAllText paketDependencies.DependenciesFile))
+  //let paketDependenciesHashFile = cacheDir |> comb "paket.depedencies.sha1"
+  //let saveDependenciesHash () =
+  //  File.WriteAllText (paketDependenciesHashFile, HashGeneration.getStringHash (File.ReadAllText paketDependencies.DependenciesFile))
   let restoreOrUpdate () =
     if printDetails then Trace.log "Restoring with paket..."
 
     // Check if lockfile is outdated
-    let hash = HashGeneration.getStringHash (File.ReadAllText paketDependencies.DependenciesFile)
-    if File.Exists lockFilePath.FullName && (not <| File.Exists paketDependenciesHashFile || File.ReadAllText paketDependenciesHashFile <> hash) then
-      if printDetails then Trace.log "paket lockfile is outdated..."
+    //let hash = HashGeneration.getStringHash (File.ReadAllText paketDependencies.DependenciesFile)
+    //if File.Exists lockFilePath.FullName && (not <| File.Exists paketDependenciesHashFile || File.ReadAllText paketDependenciesHashFile <> hash) then
+    //  if printDetails then Trace.log "paket lockfile is outdated..."
       // Maybe for "in-line" but never always...
       //File.Delete lockFilePath.FullName
 
     // Update
     if not <| File.Exists lockFilePath.FullName then
+      if printDetails then Trace.log "Lockfile was not found. We will update the dependencies and write our own..."
       paketDependencies.UpdateGroup(groupStr, false, false, false, false, false, Paket.SemVerUpdateMode.NoRestriction, false)
       |> ignore
-      saveDependenciesHash ()
+      //saveDependenciesHash ()
 
     // Restore
     paketDependencies.Restore((*false, group, [], false, true*))
@@ -135,6 +136,7 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
         Paket.Rid.Of(ridString)
 
     // get runtime graph
+    if printDetails then Trace.log <| sprintf "Calculating the runtime graph..."
     let graph =
         lockGroup.Resolution
         |> Seq.map (fun kv -> kv.Value)
@@ -142,6 +144,7 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
         |> RuntimeGraph.mergeSeq
 
     // Retrieve assemblies
+    if printDetails then Trace.log <| sprintf "Retrieving the assemblies..."
     lockGroup.Resolution
     |> Seq.map (fun kv ->
       let packageName = kv.Key
