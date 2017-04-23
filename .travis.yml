@@ -18,7 +18,8 @@ before_script:
   - mkdir fake-dotnetcore
   - unzip /tmp/fake-dotnetcore-ubuntu.14.04-x64.zip -d fake-dotnetcore || echo unzip returned $?
   - export PATH=$PATH:$PWD/fake-dotnetcore/
-  - export FAKE="dotnet $PWD/fake-dotnetcore/Fake.dll"
+  - chmod +x $PWD/fake-dotnetcore/dotnet
+  - export FAKE="$PWD/fake-dotnetcore/dotnet $PWD/fake-dotnetcore/Fake.dll"
   
 before install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update               ; fi
