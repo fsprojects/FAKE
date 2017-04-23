@@ -9,5 +9,7 @@ artifacts:
     name: binaries
   - path: 'nuget\dotnetcore\*.nupkg'
     type: NuGetPackage
+  - path: 'nuget\*.nupkg'
+    type: NuGetPackage
   - path: 'nuget\dotnetcore\Fake.netcore\*.zip'
     type: Zip

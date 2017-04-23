@@ -215,6 +215,7 @@ Target "SetAssemblyInfo" (fun _ ->
       "Fake.IO.Zip", "Core Zip functionality"
       "Fake.netcore", "Command line tool"
       "Fake.Runtime", "Core runtime features"
+      "Fake.Tool.Git", "Running git commands"
       "Fake.Testing.Common", "Common testing data types"
       "Fake.Tracing.NAntXml", "NAntXml"
       "Fake.Windows.Chocolatey", "Running and packaging with Chocolatey" ]
@@ -514,6 +515,7 @@ let netCoreProjs =
     ++ "src/app/Fake.DotNet.*/*.fsproj"
     ++ "src/app/Fake.Windows.*/*.fsproj"
     ++ "src/app/Fake.IO.*/*.fsproj"
+    ++ "src/app/Fake.Tools.*/*.fsproj"
     ++ "src/app/Fake.netcore/*.fsproj"
     ++ "src/app/Fake.Testing.*/*.fsproj"
     ++ "src/app/Fake.Runtime/*.fsproj"
@@ -635,12 +637,12 @@ Target "DotnetCoreCreateZipPackages" (fun _ ->
 
     ("portable" :: runtimes)
     |> Seq.iter (fun runtime ->
-      try
+      //try
         let runtimeDir = sprintf "nuget/dotnetcore/Fake.netcore/%s" runtime
         !! (sprintf "%s/**" runtimeDir)
         |> Zip runtimeDir (sprintf "nuget/dotnetcore/Fake.netcore/fake-dotnetcore-%s.zip" runtime)
-      with _ ->
-        printfn "FIXME: Runtime '%s' failed to zip!" runtime
+      //with _ ->
+      //  printfn "FIXME: Runtime '%s' failed to zip!" runtime
     )
 )
 
@@ -656,6 +658,8 @@ Target "DotnetCoreCreateChocolateyPackage" (fun _ ->
             Version = release.NugetVersion
             Files = [ (System.IO.Path.GetFullPath @"nuget\dotnetcore\Fake.netcore\win7-x86") + @"\**", Some "bin", None ]
             OutputDir = "nuget/dotnetcore/chocolatey" }) "src/Fake-choco-template.nuspec"
+#else
+    failwithf "Currently only supported in the netcore FAKE version."
 #endif
     ()
 )
@@ -676,8 +680,10 @@ Target "DotnetCorePushNuGet" (fun _ ->
             |> (fun r -> if r <> 0 then failwithf "failed to push package %s" nugetpackage)
 
     // dotnet pack
-    !! "src/app/*/project.json"
-    -- "src/app/Fake.netcore/project.json"
+    //!! "src/app/*/project.json"
+    //-- "src/app/Fake.netcore/project.json"
+    netCoreProjs
+    -- "src/app/Fake.netcore/*.fsproj"
     |> Seq.iter(fun proj ->
         let projName = Path.GetFileName(Path.GetDirectoryName proj)
         !! (sprintf "nuget/dotnetcore/%s.*.nupkg" projName)
@@ -686,60 +692,6 @@ Target "DotnetCorePushNuGet" (fun _ ->
           nugetPush nugetpackage)
     )
 )
-
-(*
-Target "BootstrapAndBuildDnc" (fun _ ->
-    let buildScript = __SOURCE_FILE__
-    let target = "DotnetPackage"
-
-
-    let noDncBootstrap = environVar "NO_DOTNETCORE_BOOTSTRAP" = "true"
-    if noDncBootstrap then
-        // Just use "old" fake
-        if isLinux then
-            ExecProcess (fun info ->
-                info.FileName <- "build.sh"
-                info.WorkingDirectory <- "."
-                info.Arguments <- sprintf "%s" target) (System.TimeSpan.FromMinutes 45.0)
-        else
-            ExecProcess (fun info ->
-                info.FileName <- "build.cmd"
-                info.WorkingDirectory <- "."
-                info.Arguments <- sprintf "%s" target) (System.TimeSpan.FromMinutes 45.0)
-    else
-        // Copy packages to correct directory
-        let version =
-            let startStr= "FAKE_VERSION=${FAKE_VERSION:-\""
-            match File.ReadLines("fake.sh")
-                  |> Seq.tryFind (fun line -> line.StartsWith(startStr)) with
-            | Some line ->
-              let strtLen = startStr.Length
-              line.Substring(strtLen, line.Length - strtLen - 2)
-            | None -> failwith "Could not extract version from fake.sh."
-        tracefn "Detected version in fake.sh '%s'" version
-        CleanDir ".fake/current-packages/"
-        !! (sprintf ".fake/bin/%s/packages/*.nupkg" version)
-        |> Copy ".fake/current-packages"
-
-        if isLinux then
-            ExecProcess (fun info ->
-                info.FileName <- "fake.sh"
-                info.WorkingDirectory <- "."
-                info.Arguments <- sprintf "--verbose run %s -t %s" buildScript target) (System.TimeSpan.FromMinutes 45.0)
-        else
-            ExecProcess (fun info ->
-                info.FileName <- "fake.cmd"
-                info.WorkingDirectory <- "."
-                info.Arguments <- sprintf "run %s -t %s" buildScript target) (System.TimeSpan.FromMinutes 45.0)
-
-    |> fun r -> if r <> 0 then failwith "dnc build failed!"
-
-    // refresh packages
-    CleanDir ".fake/current-packages/"
-    !! "nuget/dotnetcore/*.nupkg"
-    |> Copy ".fake/current-packages"
-    //CopyDir ".fake/current-packages" "nuget/dotnetcore" (fun p -> not <| p.Contains("Fake.netcore"))
-)*)
 
 Target "PublishNuget" (fun _ ->
 #if !DOTNETCORE
@@ -821,12 +773,12 @@ Target "StartDnc" DoNothing
     =?> ("Test", not <| hasBuildParam "SkipTests")
     =?> ("BootstrapTest",not <| hasBuildParam "SkipTests")
     =?> ("BootstrapTestDotnetCore",not <| hasBuildParam "SkipTests")
+    =?> ("CreateNuGet", not isLinux)
     ==> "Default"
     ==> "EnsureTestsRun"
     ==> "CopyLicense"
     =?> ("GenerateDocs", isLocalBuild && not isLinux)
     =?> ("SourceLink", isLocalBuild && not isLinux)
-    =?> ("CreateNuGet", not isLinux)
     =?> ("ReleaseDocs", isLocalBuild && not isLinux)
     ==> "DotnetCorePushNuGet"
     ==> "PublishNuget"
