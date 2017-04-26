@@ -53,7 +53,7 @@ Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; docsDir; apidocsDir; nuge
 open Fake.AssemblyInfoFile
 
 Target "RenameFSharpCompilerService" (fun _ ->
-    for framework in ["net40"; "net45"] do
+    for framework in ["net45"] do
       let dir = __SOURCE_DIRECTORY__ </> "packages/FSharp.Compiler.Service/lib" </> framework
       let targetFile = dir </> "FAKE.FSharp.Compiler.Service.dll"
       DeleteFile targetFile 
