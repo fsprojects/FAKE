@@ -10,7 +10,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Fake.Deploy.Lib</RootNamespace>
     <AssemblyName>Fake.Deploy.Lib</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Name>Fake.Deploy.Lib</Name>
     <TargetFrameworkProfile />
