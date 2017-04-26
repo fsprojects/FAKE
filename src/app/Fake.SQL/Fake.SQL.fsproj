@@ -85,20 +85,16 @@
   <ItemGroup>
     <Reference Include="Microsoft.SqlServer.ConnectionInfo">
       <HintPath>..\..\..\lib\SQLServer\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Microsoft.SqlServer.Management.Sdk.Sfc">
       <HintPath>..\..\..\lib\SQLServer\Microsoft.SqlServer.Management.Sdk.Sfc.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Microsoft.SqlServer.Smo">
       <HintPath>..\..\..\lib\SQLServer\Microsoft.SqlServer.Smo.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
     <ProjectReference Include="..\FakeLib\FakeLib.fsproj">

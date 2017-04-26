@@ -10,7 +10,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>FAKE</RootNamespace>
     <AssemblyName>FAKE</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Name>FAKE</Name>
   </PropertyGroup>
@@ -94,7 +94,6 @@
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
   </ItemGroup>
   <ItemGroup>

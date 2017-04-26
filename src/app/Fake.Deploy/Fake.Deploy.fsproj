@@ -10,7 +10,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>Fake.Deploy</RootNamespace>
     <AssemblyName>Fake.Deploy</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
