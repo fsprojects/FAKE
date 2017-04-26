@@ -17,21 +17,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{4198A143-EFB
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{B774DC6A-F933-4EC3-A61F-E07344EF8ED2}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FakeLib", "src\app\FakeLib\FakeLib.fsproj", "{13D56521-772A-41DB-9772-1DA1A4AA8E3A}"
+Project("{f2a71f9b-5d33-465a-a702-920d77279786}") = "FakeLib", "src\app\FakeLib\FakeLib.fsproj", "{13D56521-772A-41DB-9772-1DA1A4AA8E3A}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FAKE", "src\app\FAKE\FAKE.fsproj", "{CA923BCA-C273-4744-9658-7DF7001FF266}"
+Project("{f2a71f9b-5d33-465a-a702-920d77279786}") = "FAKE", "src\app\FAKE\FAKE.fsproj", "{CA923BCA-C273-4744-9658-7DF7001FF266}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.FAKECore", "src\test\Test.FAKECore\Test.FAKECore.csproj", "{98944472-E50A-4771-969D-4C0349D085A4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Git", "src\test\Test.Git\Test.Git.csproj", "{AD03BF13-802D-4E5F-A939-24484299E014}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.SQL", "src\app\Fake.SQL\Fake.SQL.fsproj", "{12319188-8893-4FE4-BF1D-62B85661DEA9}"
+Project("{f2a71f9b-5d33-465a-a702-920d77279786}") = "Fake.SQL", "src\app\Fake.SQL\Fake.SQL.fsproj", "{12319188-8893-4FE4-BF1D-62B85661DEA9}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Gallio", "src\app\Fake.Gallio\Fake.Gallio.fsproj", "{AA2BB7A4-B590-40E7-A749-BCC87B68FEAC}"
+Project("{f2a71f9b-5d33-465a-a702-920d77279786}") = "Fake.Gallio", "src\app\Fake.Gallio\Fake.Gallio.fsproj", "{AA2BB7A4-B590-40E7-A749-BCC87B68FEAC}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Deploy", "src\app\Fake.Deploy\Fake.Deploy.fsproj", "{ED164049-BCFD-4837-96F4-9A5FA417931D}"
+Project("{f2a71f9b-5d33-465a-a702-920d77279786}") = "Fake.Deploy", "src\app\Fake.Deploy\Fake.Deploy.fsproj", "{ED164049-BCFD-4837-96F4-9A5FA417931D}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.IIS", "src\app\Fake.IIS\Fake.IIS.fsproj", "{6C2097C0-C2EA-410F-B4BB-A58C63A08709}"
+Project("{f2a71f9b-5d33-465a-a702-920d77279786}") = "Fake.IIS", "src\app\Fake.IIS\Fake.IIS.fsproj", "{6C2097C0-C2EA-410F-B4BB-A58C63A08709}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "help", "help", "{564BD198-09CB-45D1-87F2-E2153FE6D62F}"
 	ProjectSection(SolutionItems) = preProject
@@ -100,11 +100,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "commandline", "commandline"
 		help\pics\commandline\cmd.png = help\pics\commandline\cmd.png
 	EndProjectSection
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Deploy.Lib", "src\app\Fake.Deploy.Lib\Fake.Deploy.Lib.fsproj", "{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9}"
+Project("{f2a71f9b-5d33-465a-a702-920d77279786}") = "Fake.Deploy.Lib", "src\app\Fake.Deploy.Lib\Fake.Deploy.Lib.fsproj", "{83B7D6E7-6AE1-4786-9C26-4E2E73216EC9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Fake.Deploy", "src\test\Test.Fake.Deploy\Test.Fake.Deploy.csproj", "{0203A0DD-836B-4F9E-A766-73396DDE8F34}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.Experimental", "src\app\Fake.Experimental\Fake.Experimental.fsproj", "{437FC69D-3EB5-4139-B9CD-86198AFDFD93}"
+Project("{f2a71f9b-5d33-465a-a702-920d77279786}") = "Fake.Experimental", "src\app\Fake.Experimental\Fake.Experimental.fsproj", "{437FC69D-3EB5-4139-B9CD-86198AFDFD93}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "octopusdeploy", "octopusdeploy", "{DC70438D-6050-435C-B365-ABF68CF8891D}"
 	ProjectSection(SolutionItems) = preProject
@@ -124,9 +124,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "testscripts", "testscripts"
 		src\test\testscripts\test1.fsx = src\test\testscripts\test1.fsx
 	EndProjectSection
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FsCheck.Fake", "src\test\FsCheck.Fake\FsCheck.Fake.fsproj", "{791651E4-4422-4A31-8DDE-6B1AD79B377A}"
+Project("{f2a71f9b-5d33-465a-a702-920d77279786}") = "FsCheck.Fake", "src\test\FsCheck.Fake\FsCheck.Fake.fsproj", "{791651E4-4422-4A31-8DDE-6B1AD79B377A}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Fake.FluentMigrator", "src\app\Fake.FluentMigrator\Fake.FluentMigrator.fsproj", "{0110E42E-E3AA-4A01-A6D4-DA26FD89ED4A}"
+Project("{f2a71f9b-5d33-465a-a702-920d77279786}") = "Fake.FluentMigrator", "src\app\Fake.FluentMigrator\Fake.FluentMigrator.fsproj", "{0110E42E-E3AA-4A01-A6D4-DA26FD89ED4A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "slacknotification", "slacknotification", "{F131A0F4-D7BC-4717-812A-CE937DB64BE9}"
 	ProjectSection(SolutionItems) = preProject

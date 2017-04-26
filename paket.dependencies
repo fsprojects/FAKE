@@ -35,7 +35,7 @@ nuget Microsoft.AspNet.Razor 2.0.30506
 nuget Microsoft.AspNet.WebPages 2.0.30506
 nuget FluentMigrator.Runner
 nuget HashLib
-nuget FSharp.Compiler.Service
+nuget FSharp.Compiler.Service ~> 12.0.5
 nuget Octokit
 nuget Microsoft.Net.Http
 
