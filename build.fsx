@@ -288,6 +288,7 @@ Target "Test" (fun _ ->
             {p with
                 ToolPath = findToolInSubPath "mspec-x86-clr4.exe" (currentDirectory @@ "tools" @@ "MSpec")
                 ExcludeTags = ["HTTP"]
+                TimeOut = System.TimeSpan.FromMinutes 10.
                 HtmlOutputDir = reportDir})
 
     !! (testDir @@ "Test.*.dll")
