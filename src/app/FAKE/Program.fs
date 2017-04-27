@@ -114,7 +114,8 @@ try
                     
                 //TODO if printDetails then printEnvironment cmdArgs args
 
-                let useCache = not (fakeArgs.Contains <@ Cli.NoCache @>)
+                //let useCache = not (fakeArgs.Contains <@ Cli.NoCache @>)
+                let useCache = false
                 if not (runBuildScriptWithFsiArgsAt printDetails fsiArgs envVars useCache) then Environment.ExitCode <- 1
                 else if printDetails then log "Ready."
 
@@ -140,7 +141,9 @@ try
                 let printDetails = containsParam "details" cmdArgs
                 if printDetails then
                     printEnvironment cmdArgs args
-                if not (runBuildScript printDetails buildScriptArg fsiArgs args true) then Environment.ExitCode <- 1
+                //let useCache = true
+                let useCache = false
+                if not (runBuildScript printDetails buildScriptArg fsiArgs args useCache) then Environment.ExitCode <- 1
                 else if printDetails then log "Ready."
             | Some handler ->
                 handler.Interact()
