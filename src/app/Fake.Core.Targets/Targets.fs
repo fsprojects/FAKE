@@ -170,28 +170,6 @@ module Targets =
     /// Backwards dependencies operator - x is dependent on ys.
     let inline (<==) x ys = Dependencies x ys
 
-    /// Set a dependency for all given targets.
-    /// [omit]
-    [<Obsolete("Please use the ==> operator")>]
-    let TargetsDependOn target targets =
-        getAllTargetsNames()
-        |> Seq.toList  // work on copy since the dict will be changed
-        |> List.filter ((<>) target)
-        |> List.filter (fun t -> Seq.exists ((=) t) targets)
-        |> List.iter (fun t -> dependencyAtFront t target)
-
-    /// Set a dependency for all registered targets.
-    /// [omit]
-    [<Obsolete("Please use the ==> operator")>]
-    let AllTargetsDependOn target =
-        let targets = getAllTargetsNames()
-
-        targets
-        |> Seq.toList  // work on copy since the dict will be changed
-        |> List.filter ((<>) target)
-        |> List.filter (fun t -> Seq.exists ((=) t) targets)
-        |> List.iter (fun t -> dependencyAtFront t target)
-
     /// Creates a target from template.
     /// [omit]
     let targetFromTemplate template name parameters =
@@ -254,9 +232,6 @@ module Targets =
               Description = match getLastDescription() with Some d -> d | None -> null
               Function = body }
         targetFromTemplate template name parameters
-
-    [<Obsolete("Use TargetTemplateWithDependencies")>]
-    let TargetTemplateWithDependecies dependencies = TargetTemplateWithDependencies dependencies
 
     /// Creates a TargetTemplate.
     let TargetTemplate body = TargetTemplateWithDependencies [] body

@@ -1,5 +1,5 @@
 ﻿/// This module tracks the context of the build.
-/// This allows as to run some modules without any context and change behavior depending on the context
+/// This allows us to run some modules without any context and change behavior depending on the context
 /// (For example `Fake.Process` kills all processes when the Fake Context exists, but it should not when used as library)
 module Fake.Core.Context
 

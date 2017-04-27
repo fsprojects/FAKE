@@ -105,7 +105,12 @@ let additionalFiles = [
     "./packages/FSharp.Core/lib/net40/FSharp.Core.optdata"]
 
 // Targets
-Target "Clean" (fun _ -> CleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDir; reportDir])
+Target "Clean" (fun _ ->
+    !! "src/*/*/bin"
+    ++ "src/*/*/obj"
+    |> CleanDirs
+
+    CleanDirs [buildDir; testDir; docsDir; apidocsDir; nugetDir; reportDir])
 
 Target "RenameFSharpCompilerService" (fun _ ->
   for packDir in ["FSharp.Compiler.Service";"netcore"</>"FSharp.Compiler.Service"] do
@@ -668,6 +673,77 @@ Target "DotnetCorePushChocolateyPackage" (fun _ ->
     path |> Choco.Push (fun p -> { p with ApiKey = environVarOrFail "CHOCOLATEY_API_KEY" })
 )
 
+let executeFPM args =
+    printfn "%s %s" "fpm" args
+    Shell.Exec("fpm", args=args, dir="bin")
+
+type SourceType =
+    | Dir of source:string * target:string
+type DebPackageManifest =
+    {
+        SourceType : SourceType
+        Name : string
+        Version : string
+        Dependencies : (string * string option) list
+        BeforeInstall : string option
+        AfterInstall : string option
+        ConfigFile : string option
+        AdditionalOptions: string list
+        AdditionalArgs : string list
+    }
+(*
+See https://www.debian.org/doc/debian-policy/ch-maintainerscripts.html
+Ask @theangrybyrd (slack)
+
+{
+    SourceType = Dir("./MyCoolApp", "/opt/")
+    Name = "mycoolapp"
+    Version = originalVersion
+    Dependencies = [("mono-devel", None)]
+    BeforeInstall = "../deploy/preinst" |> Some
+    AfterInstall = "../deploy/postinst" |> Some
+    ConfigFile = "/etc/mycoolapp/default.conf" |> Some
+    AdditionalOptions = []
+    AdditionalArgs =
+        [ "../deplo/mycoolapp.service=/lib/systemd/system/" ]
+}
+23:08
+so thats stuff i you want to setup like users or what not
+23:09
+adding to your path would be in the after script postinst
+23:10
+setting permissions also, its just a shell script
+23:10
+might also want a prerm and postrm if you want to play nice on cleanup
+*)
+
+Target "DotnetCoreCreateDebianPackage" (fun _ ->
+    let createDebianPackage (manifest : DebPackageManifest) =
+        let argsList = ResizeArray<string>()
+        argsList.Add <| match manifest.SourceType with
+                        | Dir (source,target) -> "-s dir"
+        argsList.Add <| "-t deb"
+        argsList.Add <| "-f"
+        argsList.Add <| (sprintf "-n %s" manifest.Name)
+        argsList.Add <| (sprintf "-v %s" (manifest.Version.Replace("-","~")))
+        let dependency name version =
+            match version with
+            | Some v -> sprintf "-d '%s %s'" name v
+            | None  -> sprintf "-d '%s'" name
+        argsList.AddRange <| (Seq.map(fun (a,b) -> dependency a b) manifest.Dependencies)
+        manifest.BeforeInstall |> Option.iter(sprintf "--before-install %s" >> argsList.Add)
+        manifest.AfterInstall |> Option.iter(sprintf "--after-install %s" >> argsList.Add)
+        manifest.ConfigFile |> Option.iter(sprintf "--config-files %s" >> argsList.Add)
+        argsList.AddRange <| manifest.AdditionalOptions
+        argsList.Add <| match manifest.SourceType with
+                        | Dir (source,target) -> sprintf "%s=%s" source target
+        argsList.AddRange <| manifest.AdditionalArgs
+        if argsList |> String.concat " " |> executeFPM <> 0 then
+            failwith "Failed creating deb package"
+    ()
+
+)
+
 Target "DotnetCorePushNuGet" (fun _ ->
     let nuget_exe = Directory.GetCurrentDirectory() </> "packages" </> "build" </> "NuGet.CommandLine" </> "tools" </> "NuGet.exe"
     let apikey = environVarOrDefault "nugetkey" ""
@@ -756,7 +832,8 @@ Target "EnsureTestsRun" (fun _ ->
 Target "Default" DoNothing
 Target "StartDnc" DoNothing
 
-"StartDnc"
+"Clean"
+    ==> "StartDnc"
     ==> "InstallDotnetCore"
     ==> "DotnetRestore"
     ==> "DotnetPackage"

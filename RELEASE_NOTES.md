@@ -1,10 +1,12 @@
-#### 5.0.0-alpha004 - 01.06.2017
+#### 5.0.0-alpha005 - 01.06.2017
 * DotnetCore Support, version 6 will only have the netcore version the old way of using FAKE is obsolete, but supported for now
   Migration guide is available in the documentation.
 * Cleanup API - A lot of stuff is obsolete now as it moved to a different location and will be removed with version 6
 * New CLI interface - The netcore version has a new cleaned-up CLI interface
 * No more 'build.sh' and 'build.cmd' files required (though you still can use them of you want a 'zero' dependency build)
 * Chocolatey Helper now supports Self-Contained packages
+* Fix NuGet key leak if push fails (https://github.com/matthid/FAKE/pull/2)
+* Coreclr nunit3 params (https://github.com/matthid/FAKE/pull/3)
 
 #### 4.58.6 - 11.04.2017
 * BUGFIX: Fixed Expecto TeamCity adapter - https://github.com/fsharp/FAKE/pull/1520

@@ -154,7 +154,7 @@ let handleCli (results:ParseResults<Cli.FakeArgs>) =
             sprintf "Build failed.\nError:\n%O" exn
             |> traceError
         else
-            if exn.InnerException <> null then
+            if not (isNull exn.InnerException) then
                 sprintf "Build failed.\nError:\n%s\nInnerException:\n%s" exn.Message exn.InnerException.Message
                 |> traceError
                 //printUsage()
