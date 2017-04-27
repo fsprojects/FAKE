@@ -1080,7 +1080,7 @@ GROUP Build
 CONTENT: NONE
 NUGET
   remote: http://www.nuget.org/api/v2
-    FAKE (4.58.6)
+    FAKE (4.59.0-alpha001)
     FSharp.Compiler.Service (2.0.0.6)
     FSharp.Formatting (2.14.4)
       FSharp.Compiler.Service (2.0.0.6)
