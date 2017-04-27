@@ -315,6 +315,13 @@ Target "BootstrapTest" (fun _ ->
                   |> Seq.iter File.Delete
         let executeTarget span target =
             if clearCache then clear ()
+            if isUnix then
+                let result =
+                    ExecProcess (fun info ->
+                        info.FileName <- "chmod"
+                        info.WorkingDirectory <- "."
+                        info.Arguments <- "+x build/FAKE.exe") span
+                if result <> 0 then failwith "'chmod +x build/FAKE.exe' failed on unix"
             ExecProcess (fun info ->
                 info.FileName <- "build/FAKE.exe"
                 info.WorkingDirectory <- "."
@@ -358,10 +365,23 @@ Target "BootstrapTestDotnetCore" (fun _ ->
 
         let executeTarget target =
             if clearCache then clear ()
-            ExecProcess (fun info ->
-                info.FileName <- "nuget/dotnetcore/Fake.netcore/current/Fake" + (if isUnix then "" else ".exe")
-                info.WorkingDirectory <- "."
-                info.Arguments <- sprintf "run %s --target %s" script target) timeout
+            if isUnix then
+                let result =
+                    ExecProcess (fun info ->
+                        info.FileName <- "chmod"
+                        info.WorkingDirectory <- "."
+                        info.Arguments <- sprintf "+x nuget/dotnetcore/Fake.netcore/current/dotnet") timeout
+                if result <> 0 then failwithf "'chmod +x nuget/dotnetcore/Fake.netcore/current/dotnet' failed on unix"
+
+                ExecProcess (fun info ->
+                    info.FileName <- "nuget/dotnetcore/Fake.netcore/current/dotnet"
+                    info.WorkingDirectory <- "."
+                    info.Arguments <- sprintf "nuget/dotnetcore/Fake.netcore/current/Fake.dll run %s --target %s" script target) timeout
+            else
+                ExecProcess (fun info ->
+                    info.FileName <- "nuget/dotnetcore/Fake.netcore/current/Fake.exe"
+                    info.WorkingDirectory <- "."
+                    info.Arguments <- sprintf "run %s --target %s" script target) timeout
 
         let result = executeTarget "PrintColors"
         if result <> 0 then failwithf "Bootstrapping failed (because of exitcode %d)" result
