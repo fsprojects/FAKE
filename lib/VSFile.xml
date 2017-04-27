@@ -1,0 +1,951 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>VSFile</name>
+    </assembly>
+    <members>
+        <member name="T:VSFile.Project.BasicProjectFile">
+            <summary>
+            Represents a Visual Basic project file.
+            </summary>
+        </member>
+        <member name="T:VSFile.Project.ProjectFile`1">
+            <summary>
+            Represents a Visual Studio project file.
+            </summary>
+            <typeparam name="T">
+            Type of Visual Studio source file referenced in this Visual Studio project file.
+            </typeparam>
+        </member>
+        <member name="T:VSFile.VisualStudioFile">
+            <summary>
+            Represents a Visual Studio file.
+            </summary>
+        </member>
+        <member name="F:VSFile.VisualStudioFile.m_fileExtension">
+            <summary>
+            File extension of Visual Studio file.
+            </summary>
+        </member>
+        <member name="F:VSFile.VisualStudioFile.m_filePath">
+            <summary>
+            File path to Visual Studio file.
+            </summary>
+        </member>
+        <member name="M:VSFile.VisualStudioFile.#ctor(System.String,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="fileExtension">
+            String representing file extension of Visual Studio file.
+            </param>
+            <param name="filePath">
+            String representing file path to Visual Studio file.
+            </param>
+        </member>
+        <member name="M:VSFile.VisualStudioFile.Load">
+            <summary>
+            Load file.
+            </summary>
+        </member>
+        <member name="M:VSFile.VisualStudioFile.GetFullPath(System.String)">
+            <summary>
+            Get full path combining directory path and given relative path.
+            </summary>
+            <param name="relativePath">
+            String representing relative path.
+            </param>
+            <returns>
+            String representing full path combining directory path and given relative path.
+            </returns>
+        </member>
+        <member name="M:VSFile.VisualStudioFile.ReadFile">
+            <summary>
+            Read file.
+            </summary>
+        </member>
+        <member name="M:VSFile.VisualStudioFile.CheckFileExtension">
+            <summary>
+            Throw exception if file extension is invalid.
+            </summary>
+        </member>
+        <member name="M:VSFile.VisualStudioFile.CheckFilePath">
+            <summary>
+            Throw exception if file path is invalid.
+            </summary>
+        </member>
+        <member name="P:VSFile.VisualStudioFile.DirectoryPath">
+            <summary>
+            Get path to directory containing file.
+            </summary>
+            <value>
+            String representing path to directory containing this Visual Studio file.
+            </value>
+        </member>
+        <member name="P:VSFile.VisualStudioFile.FileExtension">
+            <summary>
+            Get file extension.
+            </summary>
+            <value>
+            String representing file extension of this Visual Studio file.
+            </value>
+        </member>
+        <member name="P:VSFile.VisualStudioFile.FileName">
+            <summary>
+            Get file name.
+            </summary>
+            <value>
+            String representing file name of this Visual Studio file.
+            </value>
+        </member>
+        <member name="P:VSFile.VisualStudioFile.FileNameNoExtension">
+            <summary>
+            Get file name with no file extension.
+            </summary>
+            <value>
+            String representing file name of this Visual Studio file with no file extension.
+            </value>
+        </member>
+        <member name="P:VSFile.VisualStudioFile.FilePath">
+            <summary>
+            Get file path.
+            </summary>
+            <value>
+            String representing file path to this Visual Studio file.
+            </value>
+        </member>
+        <member name="F:VSFile.Project.ProjectFile`1.Namespace">
+            <summary>
+            Namespace used in project file.
+            </summary>
+        </member>
+        <member name="F:VSFile.Project.ProjectFile`1.NamespacePrefix">
+            <summary>
+            Namespace prefix used in XPath expressions.
+            </summary>
+        </member>
+        <member name="F:VSFile.Project.ProjectFile`1.m_projectName">
+            <summary>
+            Name of project.
+            </summary>
+        </member>
+        <member name="F:VSFile.Project.ProjectFile`1.m_sourceFileExtension">
+            <summary>
+            File extension of source files referenced in this project file.
+            </summary>
+        </member>
+        <member name="F:VSFile.Project.ProjectFile`1.m_sourceFiles">
+            <summary>
+            Source files referenced in this project file.
+            </summary>
+        </member>
+        <member name="M:VSFile.Project.ProjectFile`1.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Constructor for specifying file path.
+            </summary>
+            <param name="fileExtension">
+            String representing file extension of Visual Studio project file.
+            </param>
+            <param name="filePath">
+            String representing path to Visual Studio project file.
+            </param>
+            <param name="sourceFileExtension">
+            String representing file extension of Visual Studio source files
+            referenced in this Visual Studio project file.
+            </param>
+        </member>
+        <member name="M:VSFile.Project.ProjectFile`1.#ctor(System.String,System.String,System.String,System.String)">
+            <summary>
+            Constructor for specifying project name.
+            </summary>
+            <param name="projectName">
+            String representing Visual Studio project name.
+            </param>
+            <param name="fileExtension">
+            String representing file extension of Visual Studio project file.
+            </param>
+            <param name="filePath">
+            String representing path to Visual Studio project file.
+            </param>
+            <param name="sourceFileExtension">
+            String representing file extension of Visual Studio source files
+            referenced in this Visual Studio project file.
+            </param>
+        </member>
+        <member name="M:VSFile.Project.ProjectFile`1.CreateSourceFile(System.String)">
+            <summary>
+            Create instance of source file with given file path.
+            </summary>
+            <param name="filePath">
+            String representing file path.
+            </param>
+            <returns>
+            Instance of source file with given file path.
+            </returns>
+        </member>
+        <member name="M:VSFile.Project.ProjectFile`1.ReadFile">
+            <summary>
+            Read file.
+            </summary>
+        </member>
+        <member name="M:VSFile.Project.ProjectFile`1.AddSourceFile(System.Xml.XmlNode,System.Xml.XmlNamespaceManager)">
+            <summary>
+            Add source file contained within given XML node and namespace manager.
+            </summary>
+            <param name="node">
+            XmlNode containing source file.
+            </param>
+            <param name="namespaceManager">
+            XmlNamespaceManager managing XML namespace used in project file.
+            </param>
+        </member>
+        <member name="M:VSFile.Project.ProjectFile`1.ClearFiles">
+            <summary>
+            Clear referenced source files.
+            </summary>
+        </member>
+        <member name="P:VSFile.Project.ProjectFile`1.ProjectName">
+            <summary>
+            Get project name.
+            </summary>
+            <value>
+            String representing project name.
+            </value>
+        </member>
+        <member name="P:VSFile.Project.ProjectFile`1.SourceFileExtension">
+            <summary>
+            Get file extension of Visual Studio source files referenced in this project file.
+            </summary>
+            <value>
+            String representing Visual Studio source file extension.
+            </value>
+        </member>
+        <member name="P:VSFile.Project.ProjectFile`1.SourceFiles">
+            <summary>
+            Get Visual Studio source files referenced in this project file.
+            </summary>
+            <value>
+            Enumerable collection of objects representing Visual Studio source
+            files referenced in this project file.
+            </value>
+        </member>
+        <member name="T:VSFile.Project.ProjectFile`1.XPath">
+            <summary>
+            XPath expressions used to select elements and attributes in project file.
+            </summary>
+        </member>
+        <member name="F:VSFile.Project.BasicProjectFile.ProjectFileExtension">
+            <summary>
+            File extension of a Visual Basic project file.
+            </summary>
+        </member>
+        <member name="M:VSFile.Project.BasicProjectFile.#ctor(System.String)">
+            <summary>
+            Constructor for specifying file path.
+            </summary>
+            <param name="filePath">
+            String representing path to Visual Basic project file.
+            </param>
+        </member>
+        <member name="M:VSFile.Project.BasicProjectFile.#ctor(System.String,System.String)">
+            <summary>
+            Constructor for specifying project name.
+            </summary>
+            <param name="projectName">
+            String representing Visual Basic project name.
+            </param>
+            <param name="filePath">
+            String representing path to Visual Basic project file.
+            </param>
+        </member>
+        <member name="M:VSFile.Project.BasicProjectFile.CreateSourceFile(System.String)">
+            <summary>
+            Create instance of source file with given file path.
+            </summary>
+            <param name="filePath">
+            String representing file path.
+            </param>
+            <returns>
+            Instance of source file with given file path.
+            </returns>
+        </member>
+        <member name="T:VSFile.Project.CSharpProjectFile">
+            <summary>
+            Represents a Visual C# project file.
+            </summary>
+        </member>
+        <member name="F:VSFile.Project.CSharpProjectFile.ProjectFileExtension">
+            <summary>
+            File extension of a Visual C# project file.
+            </summary>
+        </member>
+        <member name="M:VSFile.Project.CSharpProjectFile.#ctor(System.String)">
+            <summary>
+            Constructor for specifying file path.
+            </summary>
+            <param name="filePath">
+            String representing path to Visual C# project file.
+            </param>
+        </member>
+        <member name="M:VSFile.Project.CSharpProjectFile.#ctor(System.String,System.String)">
+            <summary>
+            Constructor for specifying project name.
+            </summary>
+            <param name="projectName">
+            String representing Visual C# project name.
+            </param>
+            <param name="filePath">
+            String representing path to Visual C# project file.
+            </param>
+        </member>
+        <member name="M:VSFile.Project.CSharpProjectFile.CreateSourceFile(System.String)">
+            <summary>
+            Create instance of source file with given file path.
+            </summary>
+            <param name="filePath">
+            String representing file path.
+            </param>
+            <returns>
+            Instance of source file with given file path.
+            </returns>
+        </member>
+        <member name="T:VSFile.Project.FSharpProjectFile">
+            <summary>
+            Represents a Visual F# project file.
+            </summary>
+        </member>
+        <member name="F:VSFile.Project.FSharpProjectFile.ProjectFileExtension">
+            <summary>
+            File extension of a Visual F# project file.
+            </summary>
+        </member>
+        <member name="M:VSFile.Project.FSharpProjectFile.#ctor(System.String)">
+            <summary>
+            Constructor for specifying file path.
+            </summary>
+            <param name="filePath">
+            String representing path to Visual F# project file.
+            </param>
+        </member>
+        <member name="M:VSFile.Project.FSharpProjectFile.#ctor(System.String,System.String)">
+            <summary>
+            Constructor for specifying project name.
+            </summary>
+            <param name="projectName">
+            String representing Visual F# project name.
+            </param>
+            <param name="filePath">
+            String representing path to Visual F# project file.
+            </param>
+        </member>
+        <member name="M:VSFile.Project.FSharpProjectFile.CreateSourceFile(System.String)">
+            <summary>
+            Create instance of source file with given file path.
+            </summary>
+            <param name="filePath">
+            String representing file path.
+            </param>
+            <returns>
+            Instance of source file with given file path.
+            </returns>
+        </member>
+        <member name="T:VSFile.Project.WebSiteDirectory">
+            <summary>
+            Represents an ASP.NET web site directory.
+            </summary>
+        </member>
+        <member name="F:VSFile.Project.WebSiteDirectory.SupportedExtensions">
+            <summary>
+            Supported web site file extensions.
+            </summary>
+        </member>
+        <member name="F:VSFile.Project.WebSiteDirectory.m_basicSourceFiles">
+            <summary>
+            Visual Basic source files contained in this web site.
+            </summary>
+        </member>
+        <member name="F:VSFile.Project.WebSiteDirectory.m_cSharpSourceFiles">
+            <summary>
+            Visual C# source files contained in this web site.
+            </summary>
+        </member>
+        <member name="F:VSFile.Project.WebSiteDirectory.m_directoryPath">
+            <summary>
+            Path to directory containing web site files.
+            </summary>
+        </member>
+        <member name="F:VSFile.Project.WebSiteDirectory.m_name">
+            <summary>
+            Web site name.
+            </summary>
+        </member>
+        <member name="M:VSFile.Project.WebSiteDirectory.#ctor(System.String,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="name">
+            String representing web site name.
+            </param>
+            <param name="directoryPath">
+            String representing path to directory containing web site files.
+            </param>
+        </member>
+        <member name="M:VSFile.Project.WebSiteDirectory.Load">
+            <summary>
+            Load web site files.
+            </summary>
+        </member>
+        <member name="M:VSFile.Project.WebSiteDirectory.CheckDirectoryPath">
+            <summary>
+            Throw exception if directory path is invalid.
+            </summary>
+        </member>
+        <member name="M:VSFile.Project.WebSiteDirectory.ClearFiles">
+            <summary>
+            Clear web site files.
+            </summary>
+        </member>
+        <member name="M:VSFile.Project.WebSiteDirectory.LoadFiles">
+            <summary>
+            Load web site files.
+            </summary>
+        </member>
+        <member name="P:VSFile.Project.WebSiteDirectory.BasicSourceFiles">
+            <summary>
+            Get Visual Basic source files contained in this web site.
+            </summary>
+            <value>
+            Enumerable collection of BasicSourceFile objects representing
+            Visual Basic source files contained in this web site.
+            </value>
+        </member>
+        <member name="P:VSFile.Project.WebSiteDirectory.CSharpSourceFiles">
+            <summary>
+            Get Visual C# source files contained in this web site.
+            </summary>
+            <value>
+            Enumerable collection of CSharpSourceFile objects representing
+            Visual C# source files contained in this web site.
+            </value>
+        </member>
+        <member name="P:VSFile.Project.WebSiteDirectory.DirectoryPath">
+            <summary>
+            Get directory path.
+            </summary>
+            <value>
+            String representing path to directory containing web site files.
+            </value>
+        </member>
+        <member name="P:VSFile.Project.WebSiteDirectory.Name">
+            <summary>
+            Get web site name.
+            </summary>
+            <value>
+            String representing web site name.
+            </value>
+        </member>
+        <member name="T:VSFile.Source.BasicSourceFile">
+            <summary>
+            Represents a Visual Basic source file.
+            </summary>
+        </member>
+        <member name="T:VSFile.Source.SourceFile">
+            <summary>
+            Represents a Visual Studio source file.
+            </summary>
+        </member>
+        <member name="M:VSFile.Source.SourceFile.#ctor(System.String,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="fileExtension">
+            String representing file extension of Visual Studio source file.
+            </param>
+            <param name="filePath">
+            String representing file path to Visual Studio source file.
+            </param>
+        </member>
+        <member name="M:VSFile.Source.SourceFile.ReadFile">
+            <summary>
+            Read file.
+            </summary>
+        </member>
+        <member name="F:VSFile.Source.BasicSourceFile.SourceFileExtension">
+            <summary>
+            File extension of a Visual Basic source file.
+            </summary>
+        </member>
+        <member name="M:VSFile.Source.BasicSourceFile.#ctor(System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="filePath">
+            String representing file path to Visual Basic source file.
+            </param>
+        </member>
+        <member name="T:VSFile.Source.CSharpSourceFile">
+            <summary>
+            Represents a Visual C# source file.
+            </summary>
+        </member>
+        <member name="F:VSFile.Source.CSharpSourceFile.SourceFileExtension">
+            <summary>
+            File extension of a Visual C# source file.
+            </summary>
+        </member>
+        <member name="M:VSFile.Source.CSharpSourceFile.#ctor(System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="filePath">
+            String representing file path to Visual C# source file.
+            </param>
+        </member>
+        <member name="T:VSFile.SolutionFile">
+            <summary>
+            Represents a Visual Studio solution file.
+            </summary>
+        </member>
+        <member name="F:VSFile.SolutionFile.SolutionFileExtension">
+            <summary>
+            File extension of solution file.
+            </summary>
+        </member>
+        <member name="F:VSFile.SolutionFile.m_basicProjectFiles">
+            <summary>
+            Visual Basic project files referenced in this solution file.
+            </summary>
+        </member>
+        <member name="F:VSFile.SolutionFile.m_cSharpProjectFiles">
+            <summary>
+            Visual C# project files referenced in this solution file.
+            </summary>
+        </member>
+        <member name="F:VSFile.SolutionFile.m_fSharpProjectFiles">
+            <summary>
+            Visual F# project files referenced in this solution file.
+            </summary>
+        </member>
+        <member name="F:VSFile.SolutionFile.m_webSiteDirectories">
+            <summary>
+            ASP.NET web site directories referenced in this solution file.
+            </summary>
+        </member>
+        <member name="M:VSFile.SolutionFile.#ctor(System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="filePath">
+            String representing path to solution file.
+            </param>
+        </member>
+        <member name="M:VSFile.SolutionFile.ReadFile">
+            <summary>
+            Read file.
+            </summary>
+        </member>
+        <member name="M:VSFile.SolutionFile.AddProject(System.String)">
+            <summary>
+            Add project given line of input from solution file.
+            </summary>
+            <param name="inputLine">
+            String representing line of input from solution file.
+            </param>
+        </member>
+        <member name="M:VSFile.SolutionFile.ClearFiles">
+            <summary>
+            Clear referenced project files.
+            </summary>
+        </member>
+        <member name="M:VSFile.SolutionFile.GetMatchValue(System.Text.RegularExpressions.Match,System.String)">
+            <summary>
+            Get match value at given group name.
+            </summary>
+            <param name="match">
+            Match representing regular expression match results.
+            </param>
+            <param name="groupName">
+            String representing name of group to match in given match results.
+            </param>
+            <returns>
+            String representing match value at given group name.
+            </returns>
+        </member>
+        <member name="P:VSFile.SolutionFile.BasicProjectFiles">
+            <summary>
+            Get Visual Basic project files referenced in this solution file.
+            </summary>
+            <value>
+            Enumerable collection of BasicProjectFile objects representing
+            Visual Basic project files referenced in this solution file.
+            </value>
+        </member>
+        <member name="P:VSFile.SolutionFile.CSharpProjectFiles">
+            <summary>
+            Get Visual C# project files referenced in this solution file.
+            </summary>
+            <value>
+            Enumerable collection of CSharpProjectFile objects representing
+            Visual C# project files referenced in this solution file.
+            </value>
+        </member>
+        <member name="P:VSFile.SolutionFile.FSharpProjectFiles">
+            <summary>
+            Get Visual F# project files referenced in this solution file.
+            </summary>
+            <value>
+            Enumerable collection of FSharpProjectFile objects representing
+            Visual F# project files referenced in this solution file.
+            </value>
+        </member>
+        <member name="P:VSFile.SolutionFile.WebSiteDirectories">
+            <summary>
+            Get ASP.NET web site directories referenced in this solution file.
+            </summary>
+            <value>
+            Enumerable collection of WebSiteDirectory objects representing
+            ASP.NET web site directories referenced in this solution file.
+            </value>
+        </member>
+        <member name="T:VSFile.SolutionFile.ProjectTag">
+            <summary>
+            Project tag contained in solution file.
+            </summary>
+        </member>
+        <member name="F:VSFile.SolutionFile.ProjectTag.Begin">
+            <summary>
+            Beginning of project tag.
+            </summary>
+        </member>
+        <member name="T:VSFile.SolutionFile.ProjectTag.Regex">
+            <summary>
+            Regular expression used to obtain data in project tag.
+            </summary>
+        </member>
+        <member name="F:VSFile.SolutionFile.ProjectTag.Regex.NameGroup">
+            <summary>
+            Group used to match project name.
+            </summary>
+        </member>
+        <member name="F:VSFile.SolutionFile.ProjectTag.Regex.PathGroup">
+            <summary>
+            Group used to match project path.
+            </summary>
+        </member>
+        <member name="F:VSFile.SolutionFile.ProjectTag.Regex.Pattern">
+            <summary>
+            Pattern used to match project GUIDs, name and path.
+            </summary>
+        </member>
+        <member name="F:VSFile.SolutionFile.ProjectTag.Regex.TypeGuidGroup">
+            <summary>
+            Group used to match project type GUID.
+            </summary>
+        </member>
+        <member name="F:VSFile.SolutionFile.ProjectTag.Regex.UniqueGuidGroup">
+            <summary>
+            Group used to match project unique GUID.
+            </summary>
+        </member>
+        <member name="F:VSFile.SolutionFile.ProjectTag.Regex.Name">
+            <summary>
+            Pattern used to match project name.
+            </summary>
+        </member>
+        <member name="F:VSFile.SolutionFile.ProjectTag.Regex.Path">
+            <summary>
+            Pattern used to match project path.
+            </summary>
+        </member>
+        <member name="T:VSFile.SolutionFile.ProjectTag.Regex.Guid">
+            <summary>
+            GUID patterns.
+            </summary>
+        </member>
+        <member name="F:VSFile.SolutionFile.ProjectTag.Regex.Guid.TypeGuid">
+            <summary>
+            Pattern used to match project type GUID.
+            </summary>
+        </member>
+        <member name="F:VSFile.SolutionFile.ProjectTag.Regex.Guid.UniqueGuid">
+            <summary>
+            Pattern used to match project unique GUID.
+            </summary>
+        </member>
+        <member name="F:VSFile.SolutionFile.ProjectTag.Regex.Guid.Begin">
+            <summary>
+            Beginning of GUID pattern.
+            </summary>
+        </member>
+        <member name="F:VSFile.SolutionFile.ProjectTag.Regex.Guid.End">
+            <summary>
+            End of GUID pattern.
+            </summary>
+        </member>
+        <member name="T:VSFile.SolutionFile.ProjectTypeGuid">
+            <summary>
+            GUIDs used to identify types of projects.
+            </summary>
+        </member>
+        <member name="F:VSFile.SolutionFile.ProjectTypeGuid.Basic">
+            <summary>
+            Visual Basic project type.
+            </summary>
+        </member>
+        <member name="F:VSFile.SolutionFile.ProjectTypeGuid.CSharp">
+            <summary>
+            Visual C# project type.
+            </summary>
+        </member>
+        <member name="F:VSFile.SolutionFile.ProjectTypeGuid.FSharp">
+            <summary>
+            Visual F# project type.
+            </summary>
+        </member>
+        <member name="F:VSFile.SolutionFile.ProjectTypeGuid.WebSite">
+            <summary>
+            ASP.NET web site project type.
+            </summary>
+        </member>
+        <member name="T:VSFile.Source.FSharpSourceFile">
+            <summary>
+            Represents a Visual F# source file.
+            </summary>
+        </member>
+        <member name="F:VSFile.Source.FSharpSourceFile.SourceFileExtension">
+            <summary>
+            File extension of a Visual F# source file.
+            </summary>
+        </member>
+        <member name="M:VSFile.Source.FSharpSourceFile.#ctor(System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="filePath">
+            String representing file path to Visual F# source file.
+            </param>
+        </member>
+        <member name="T:VSFile.VisualStudioFiles">
+            <summary>
+            Manages multiple Visual Studio files of varying type.
+            </summary>
+        </member>
+        <member name="F:VSFile.VisualStudioFiles.SupportedExtensions">
+            <summary>
+            Supported file extensions.
+            </summary>
+        </member>
+        <member name="F:VSFile.VisualStudioFiles.m_basicProjectFiles">
+            <summary>
+            Initialized Visual Basic project files.
+            </summary>
+        </member>
+        <member name="F:VSFile.VisualStudioFiles.m_basicSourceFiles">
+            <summary>
+            Initialized Visual Basic source files.
+            </summary>
+        </member>
+        <member name="F:VSFile.VisualStudioFiles.m_cSharpProjectFiles">
+            <summary>
+            Initialized Visual C# project files.
+            </summary>
+        </member>
+        <member name="F:VSFile.VisualStudioFiles.m_cSharpSourceFiles">
+            <summary>
+            Initialized Visual C# source files.
+            </summary>
+        </member>
+        <member name="F:VSFile.VisualStudioFiles.m_fSharpProjectFiles">
+            <summary>
+            Initialized Visual F# project files.
+            </summary>
+        </member>
+        <member name="F:VSFile.VisualStudioFiles.m_fSharpSourceFiles">
+            <summary>
+            Initialized Visual F# source files.
+            </summary>
+        </member>
+        <member name="F:VSFile.VisualStudioFiles.m_fileSearchOption">
+            <summary>
+            Option to use when searching for files.
+            </summary>
+        </member>
+        <member name="F:VSFile.VisualStudioFiles.m_solutionFiles">
+            <summary>
+            Initialized Visual Studio solution files.
+            </summary>
+        </member>
+        <member name="M:VSFile.VisualStudioFiles.#ctor(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Constructor for specifying file paths.
+            </summary>
+            <param name="filePaths">
+            Enumerable collection of strings representing file paths.
+            </param>
+        </member>
+        <member name="M:VSFile.VisualStudioFiles.#ctor(System.Collections.Generic.IEnumerable{System.String},System.Boolean)">
+            <summary>
+            Constructor for specifying recursive search option.
+            </summary>
+            <param name="filePaths">
+            Enumerable collection of strings representing file paths.
+            </param>
+            <param name="recursiveSearch">
+            True if all subdirectories in given file paths are also to be
+            searched, false otherwise.
+            </param>
+        </member>
+        <member name="M:VSFile.VisualStudioFiles.Initialize(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Initialize Visual Studio files at given paths.
+            </summary>
+            <param name="filePaths">
+            Enumerable collection of strings representing file paths.
+            </param>
+        </member>
+        <member name="M:VSFile.VisualStudioFiles.Initialize(System.String)">
+            <summary>
+            Initialize file at given path.
+            </summary>
+            <param name="filePath">
+            String representing file path.
+            </param>
+        </member>
+        <member name="M:VSFile.VisualStudioFiles.Initialize(System.String,System.String)">
+            <summary>
+            Initialize file at given path with given supported extension.
+            </summary>
+            <param name="filePath">
+            String representing file path.
+            </param>
+            <param name="fileExtension">
+            String representing supported file extension.
+            </param>
+        </member>
+        <member name="M:VSFile.VisualStudioFiles.IsSupportedExtension(System.String)">
+            <summary>
+            Determine if given file extension is supported.
+            </summary>
+            <param name="fileExtension">
+            String representing file extension.
+            </param>
+            <returns>
+            True if file extension is supported, false otherwise.
+            </returns>
+        </member>
+        <member name="P:VSFile.VisualStudioFiles.BasicProjectFiles">
+            <summary>
+            Get initialized Visual Basic project files.
+            </summary>
+            <value>
+            Enumerable collection of BasicProjectFile objects representing
+            initialized Visual Basic project files.
+            </value>
+        </member>
+        <member name="P:VSFile.VisualStudioFiles.BasicSourceFiles">
+            <summary>
+            Get initialized Visual Basic source files.
+            </summary>
+            <value>
+            Enumerable collection of BasicSourceFile objects representing
+            initialized Visual Basic source files.
+            </value>
+        </member>
+        <member name="P:VSFile.VisualStudioFiles.CSharpProjectFiles">
+            <summary>
+            Get initialized Visual C# project files.
+            </summary>
+            <value>
+            Enumerable collection of CSharpProjectFile objects representing
+            initialized Visual C# project files.
+            </value>
+        </member>
+        <member name="P:VSFile.VisualStudioFiles.CSharpSourceFiles">
+            <summary>
+            Get initialized Visual C# source files.
+            </summary>
+            <value>
+            Enumerable collection of CSharpSourceFile objects representing
+            initialized Visual C# source files.
+            </value>
+        </member>
+        <member name="P:VSFile.VisualStudioFiles.FSharpProjectFiles">
+            <summary>
+            Get initialized Visual F# project files.
+            </summary>
+            <value>
+            Enumerable collection of FSharpProjectFile objects representing
+            initialized Visual F# project files.
+            </value>
+        </member>
+        <member name="P:VSFile.VisualStudioFiles.FSharpSourceFiles">
+            <summary>
+            Get initialized Visual F# source files.
+            </summary>
+            <value>
+            Enumerable collection of FSharpSourceFile objects representing
+            initialized Visual F# source files.
+            </value>
+        </member>
+        <member name="P:VSFile.VisualStudioFiles.SolutionFiles">
+            <summary>
+            Get initialized Visual Studio solution files.
+            </summary>
+            <value>
+            Enumerable collection of SolutionFile objects representing
+            initialized Visual Studio solution files.
+            </value>
+        </member>
+        <member name="P:VSFile.VisualStudioFiles.FileSearchOption">
+            <summary>
+            Get option to use when searching for files.
+            </summary>
+            <value>
+            SearchOption enumeration value specifying whether to search all
+            subdirectories for files or only current directory.
+            </value>
+        </member>
+        <member name="T:VSFile.Wildcard">
+            <summary>
+            Wildcard characters contained in file paths.
+            </summary>
+        </member>
+        <member name="F:VSFile.Wildcard.Asterisk">
+            <summary>
+            Zero or more characters.
+            </summary>
+        </member>
+        <member name="F:VSFile.Wildcard.Question">
+            <summary>
+            Zero or one character.
+            </summary>
+        </member>
+        <member name="F:VSFile.Wildcard.Wildcards">
+            <summary>
+            Wildcard characters.
+            </summary>
+        </member>
+        <member name="M:VSFile.Wildcard.AddAsterisk(System.String)">
+            <summary>
+            Add asterisk wildcard character to given file extension.
+            </summary>
+            <param name="fileExtension">
+            String representing file extension.
+            </param>
+            <returns>
+            String representing file extension prefixed with asterisk wildcard character.
+            </returns>
+        </member>
+        <member name="M:VSFile.Wildcard.HasWildcard(System.String)">
+            <summary>
+            Determine if given file path contains any wildcard characters.
+            </summary>
+            <param name="filePath">
+            String representing file path.
+            </param>
+            <returns>
+            True if file path contains any wildcard characters, false otherwise.
+            </returns>
+        </member>
+    </members>
+</doc>
