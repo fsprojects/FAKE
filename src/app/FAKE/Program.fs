@@ -23,7 +23,7 @@ let printEnvironment cmdArgs args =
 
     if cmdArgs |> Array.length > 1 then
         traceFAKE "FAKE Arguments:"
-        args 
+        args
           |> Seq.map fst
           |> Seq.iter (tracefn "%A")
 
@@ -49,7 +49,7 @@ try
 
         //We have new style help args!
         | Choice1Of2(fakeArgs) ->
-            
+
             //Break to allow a debugger to be attached here
             if fakeArgs.Contains <@ Cli.Break @> then
                 Diagnostics.Debugger.Launch() |> ignore
@@ -70,7 +70,7 @@ try
                 let handler = Boot.HandlerForArgs bootArgs//Could be List.empty, but let Boot handle this.
                 handler.Interact()
 
-            //Try and run a build script! 
+            //Try and run a build script!
             | false, false ->
 
                 traceStartBuild()
@@ -89,7 +89,7 @@ try
                           if args.Target.IsSome then yield "target", args.Target.Value }
 
                 //Get our fsiargs from somewhere!
-                let fsiArgs = 
+                let fsiArgs =
                     match
                         fakeArgs.GetResults <@ Cli.FsiArgs @>,
                         args.Script,
@@ -111,11 +111,10 @@ try
 
                     //Noooo script anywhere!
                     | [], None, true -> failwith "Build script not specified on command line, in fsi args or found in working directory."
-                    
+
                 //TODO if printDetails then printEnvironment cmdArgs args
 
-                //let useCache = not (fakeArgs.Contains <@ Cli.NoCache @>)
-                let useCache = false
+                let useCache = not (fakeArgs.Contains <@ Cli.NoCache @>)
                 if not (runBuildScriptWithFsiArgsAt printDetails fsiArgs envVars useCache) then Environment.ExitCode <- 1
                 else if printDetails then log "Ready."
 
@@ -141,14 +140,13 @@ try
                 let printDetails = containsParam "details" cmdArgs
                 if printDetails then
                     printEnvironment cmdArgs args
-                //let useCache = true
-                let useCache = false
+                let useCache = true
                 if not (runBuildScript printDetails buildScriptArg fsiArgs args useCache) then Environment.ExitCode <- 1
                 else if printDetails then log "Ready."
             | Some handler ->
                 handler.Interact()
     with
-    | exn -> 
+    | exn ->
         if exn.InnerException <> null then
             sprintf "Build failed.\nError:\n%s\nInnerException:\n%s" exn.Message exn.InnerException.Message
             |> traceError
