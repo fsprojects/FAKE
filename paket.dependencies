@@ -1,11 +1,12 @@
 content: none
-source https://ci.appveyor.com/nuget/paket
+// just in case we need some special nuget feature again...
+//source https://ci.appveyor.com/nuget/paket
 source http://nuget.org/api/v2
 
 nuget FSharp.Core redirects: force
 nuget Knockout
 nuget NuGet.CommandLine
-nuget Paket.Core 5.0.0-alpha001 prerelease
+nuget Paket.Core 5.0.0-alpha005 prerelease
 nuget RavenDB.Server
 nuget serilog.sinks.nlog 1.5.4
 nuget Argu 3.3.0
@@ -83,7 +84,7 @@ group NetcoreBuild
     nuget Mono.Cecil 0.10.0-beta4
 
 group netcore
-    source https://ci.appveyor.com/nuget/paket
+    //source https://ci.appveyor.com/nuget/paket
     source http://nuget.org/api/v2
 
     nuget FSharp.Compiler.Service content: none, framework: netstandard1.6, netcoreapp1.0

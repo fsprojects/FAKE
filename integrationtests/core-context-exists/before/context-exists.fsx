@@ -1,7 +1,7 @@
 (* -- Fake Dependencies paket-inline
 source https://nuget.org/api/v2
 source ../../../nuget/dotnetcore
-source https://ci.appveyor.com/nuget/paket
+//source https://ci.appveyor.com/nuget/paket
 
 nuget Fake.Core.Context prerelease
 -- Fake Dependencies -- *)

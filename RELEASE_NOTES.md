@@ -8,10 +8,16 @@
 * Fix NuGet key leak if push fails (https://github.com/matthid/FAKE/pull/2)
 * Coreclr nunit3 params (https://github.com/matthid/FAKE/pull/3)
 
-#### 4.58.6 - 11.04.2017
-* BUGFIX: Fixed Expecto TeamCity adapter - https://github.com/fsharp/FAKE/pull/1520
+#### 4.60.0 - 27.04.2017
+* Add support for NUnit3 --params parameter - https://github.com/fsharp/FAKE/pull/1532
+* New StyleCode helper - https://github.com/fsharp/FAKE/pull/1526
+* BUGFIX: Fixed FtpHelper.isFolderPresent - https://github.com/fsharp/FAKE/pull/1529
+* BUGFIX: Fixed NuGet key leak if publish fails - https://github.com/fsharp/FAKE/pull/1530
+* BUGFIX: Disable caching for now - mono 5 bug - https://github.com/fsharp/FAKE/pull/1535, https://github.com/fsharp/FAKE/pull/1536
 
-#### 4.58.5 - 11.04.2017
+#### 4.59.0 - 27.04.2017
+* BUGFIX: Upgraded FSharp.Core and FSharp.Compiler.Service to support mono 5 - https://github.com/fsharp/FAKE/pull/1534
+* BUGFIX: Fixed Expecto TeamCity adapter - https://github.com/fsharp/FAKE/pull/1520
 * Added installer for dotnet SDK
 * Revert single thread build order change - https://github.com/fsharp/FAKE/pull/1516
 

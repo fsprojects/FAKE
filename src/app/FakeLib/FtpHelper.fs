@@ -28,7 +28,7 @@ let rec private writeChunkToReqStream (chunk : byte []) (reqStrm : Stream) (br :
         writeChunkToReqStream (br.ReadBytes 1024) reqStrm br
 
 let inline private getSubstring (fromPos : int) (str : string) (toPos : int) = str.Substring(fromPos, toPos)
-let inline private lastSlashPos (str : string) = str.LastIndexOf(@"\") + 1
+let inline private lastSlashPos (str : string) = str.LastIndexOf(@"/") + 1
 
 ///Partial validation for folder name, based on http://msdn.microsoft.com/en-us/library/aa365247.aspx
 let inline private dirNameIsValid (dirName : string) = 

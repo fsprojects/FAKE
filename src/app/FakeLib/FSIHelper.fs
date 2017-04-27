@@ -13,18 +13,18 @@ open Yaaf.FSharp.Scripting
 
 let private FSIPath = @".\tools\FSharp\;.\lib\FSharp\;[ProgramFilesX86]\Microsoft SDKs\F#\4.1\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\4.0\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\3.1\Framework\v4.0;[ProgramFilesX86]\Microsoft SDKs\F#\3.0\Framework\v4.0;[ProgramFiles]\Microsoft F#\v4.0\;[ProgramFilesX86]\Microsoft F#\v4.0\;[ProgramFiles]\FSharp-2.0.0.0\bin\;[ProgramFilesX86]\FSharp-2.0.0.0\bin\;[ProgramFiles]\FSharp-1.9.9.9\bin\;[ProgramFilesX86]\FSharp-1.9.9.9\bin\"
 
-let createDirectiveRegex id = 
+let createDirectiveRegex id =
     Regex("^\s*#" + id + "\s*(@\"|\"\"\"|\")(?<path>.+?)(\"\"\"|\")", RegexOptions.Compiled ||| RegexOptions.Multiline)
 
 let loadRegex = createDirectiveRegex "load"
 let rAssemblyRegex = createDirectiveRegex "r"
 let searchPathRegex = createDirectiveRegex "I"
 
-let private extractDirectives (regex : Regex) scriptContents = 
+let private extractDirectives (regex : Regex) scriptContents =
     regex.Matches scriptContents
     |> Seq.cast<Match>
     |> Seq.map(fun m -> m.Groups.Item("path").Value)
-    
+
 type Script = {
     Content : string
     Location : string
@@ -32,23 +32,23 @@ type Script = {
     IncludedAssemblies : Lazy<string seq>
 }
 
-let getAllScriptContents (pathsAndContents : seq<Script>) = 
+let getAllScriptContents (pathsAndContents : seq<Script>) =
     pathsAndContents |> Seq.map(fun s -> s.Content)
 let getIncludedAssembly scriptContents = extractDirectives rAssemblyRegex scriptContents
 let getSearchPaths scriptContents = extractDirectives searchPathRegex scriptContents
 
-let rec getAllScripts scriptPath : seq<Script> = 
+let rec getAllScripts scriptPath : seq<Script> =
     let scriptContents = File.ReadAllText scriptPath
     let searchPaths = getSearchPaths scriptContents |> Seq.toList
 
-    let loadedContents = 
+    let loadedContents =
         extractDirectives loadRegex scriptContents
-        |> Seq.collect (fun path -> 
-            let path = 
+        |> Seq.collect (fun path ->
+            let path =
                 if Path.IsPathRooted path then
                     path
                 else
-                    let pathMaybe = 
+                    let pathMaybe =
                         ["./"] @ searchPaths
                         |> List.map(fun searchPath ->
                             if Path.IsPathRooted searchPath then
@@ -57,12 +57,12 @@ let rec getAllScripts scriptPath : seq<Script> =
                                 Path.Combine(Path.GetDirectoryName scriptPath, searchPath, path))
                         |> List.tryFind File.Exists
 
-                    match pathMaybe with 
+                    match pathMaybe with
                     | None -> failwithf "Could not find script '%s' in any paths searched. Searched paths:\n%A" path searchPaths
                     | Some x -> x
             getAllScripts path
         )
-    let s = 
+    let s =
       { Location = scriptPath
         Content = scriptContents
         SearchPaths = searchPaths
@@ -73,7 +73,7 @@ let getScriptHash pathsAndContents fsiOptions =
     let fullContents = getAllScriptContents pathsAndContents |> String.concat "\n"
     let fsiOptions = fsiOptions |> String.concat "\n"
     let paths = pathsAndContents |> Seq.map(fun x -> x.Location |> EnvironmentHelper.normalizePath) |> String.concat "\n"
-    
+
     let hasher = HashLib.HashFactory.Checksum.CreateCRC32a()
     hasher.ComputeString(fullContents + paths + fsiOptions).ToString()
 
@@ -109,11 +109,11 @@ module internal Cache =
     type CacheConfig = {
         Assemblies : AssemblyInfo seq
     }
-    let read (path : string) : CacheConfig = 
+    let read (path : string) : CacheConfig =
         let doc = XDocument.Load(path)
         //let root = doc.Descendants() |> Seq.exactlyOne
         let assembliesEle = doc.Descendants(xname "Assemblies") |> Seq.exactlyOne
-        let assemblies = 
+        let assemblies =
             assembliesEle.Descendants()
             |> Seq.map(fun assemblyEle ->
                 let get name = assemblyEle.Attribute(xname name).Value
@@ -130,7 +130,7 @@ let fsiPath =
         // The standard name on *nix is "fsharpi"
         match tryFindFile paths "fsharpi" with
         | Some file -> file
-        | None -> 
+        | None ->
         // The early F# 2.0 name on *nix was "fsi"
         match tryFindFile paths "fsi" with
         | Some file -> file
@@ -152,9 +152,9 @@ type FsiArgs =
                 let fsiOpts = if i > 0 then args.[0..i-1] else [||]
                 let scriptArgs = if args.Length > (i+1) then args.[i+1..] else [||]
                 Choice1Of2(FsiArgs(fsiOpts |> List.ofArray, fsxPath, scriptArgs |> List.ofArray))
-            else Choice2Of2(sprintf "Expected argument %s to be the build script path, but it does not have the .fsx extension." fsxPath) 
-        | None -> Choice2Of2("Unable to locate the build script path.") 
-    
+            else Choice2Of2(sprintf "Expected argument %s to be the build script path, but it does not have the .fsx extension." fsxPath)
+        | None -> Choice2Of2("Unable to locate the build script path.")
+
 let private FsiStartInfo workingDirectory (FsiArgs(fsiOptions, scriptPath, scriptArgs)) environmentVars =
     (fun (info: ProcessStartInfo) ->
         info.FileName <- fsiPath
@@ -218,7 +218,7 @@ let private getCacheInfoFromScript printDetails fsiOptions scriptPath =
     let allScriptContents = getAllScripts scriptPath
     let scriptHash = getScriptHash allScriptContents fsiOptions
     //TODO this is only calculating the hash for the input file, not anything #load-ed
-    
+
     let scriptFileName = Path.GetFileName(scriptPath)
     let hashPath = (Path.GetDirectoryName scriptPath) + "/.fake/" + scriptFileName + "_" + scriptHash
     let assemblyPath = hashPath + ".dll"
@@ -486,7 +486,26 @@ let private runScriptUncached (useCache, scriptPath, fsiOptions) printDetails ca
             traceFAKE "%O" strFsiErrorOutput
         // Cache in the error case as well.
         if useCache && not cacheInfo.IsValid then
-            handleCaching printDetails session fsiErrorOutput cacheDir cacheInfo
+            // See https://github.com/fsharp/FAKE/pull/1534
+            let doCaching =
+                match monoVersion with
+                | None -> true
+                | Some (display, version) ->
+                    match version with
+                    | Some v ->
+                        if v.Major = 5 && v.Minor = 0 && v.Build = 0 then
+                            traceFAKE "We don't try to cache, see https://github.com/fsharp/FAKE/pull/1534"
+                            false
+                        else true
+                    | None ->
+                        traceFAKE "Couldn't extract mono version from '%s', please report this as issue" display
+                        true
+            if doCaching then
+                try
+                    handleCaching printDetails session fsiErrorOutput cacheDir cacheInfo
+                with e ->
+                    // See https://github.com/fsharp/FAKE/pull/1534
+                    traceFAKE "Error in FAKE-Caching (might be a bug in the runtime, use the no-cache option to get rid of this warning): %O" e
 
 /// Run the given FAKE script with fsi.exe at the given working directory. Provides full access to Fsi options and args. Redirect output and error messages.
 let internal runFAKEScriptWithFsiArgsAndRedirectMessages printDetails (FsiArgs(fsiOptions, scriptPath, scriptArgs)) env onErrMsg onOutMsg useCache =

@@ -64,9 +64,9 @@ open System.IO
 open SourceLink
 open Fake.ReleaseNotesHelper
 open Fake.AssemblyInfoFile
+open Fake.Testing.XUnit2
+open Fake.Testing.NUnit3
 #endif
-
-
 
 // properties
 let projectName = "FAKE"
@@ -264,6 +264,7 @@ Target "GenerateDocs" (fun _ ->
           -- "./build/**/Fake.Experimental.dll"
           -- "./build/**/FSharp.Compiler.Service.dll"
           -- "./build/**/netcore/FAKE.FSharp.Compiler.Service.dll"
+          -- "./build/**/FAKE.FSharp.Compiler.Service.dll"
           -- "./build/**/Fake.IIS.dll"
           -- "./build/**/Fake.Deploy.Lib.dll"
 
@@ -279,11 +280,6 @@ Target "GenerateDocs" (fun _ ->
 Target "CopyLicense" (fun _ ->
     CopyTo buildDir additionalFiles
 )
-
-#if !DOTNETCORE
-open Fake.Testing.XUnit2
-open Fake.Testing.NUnit3
-#endif
 
 Target "Test" (fun _ ->
     !! (testDir @@ "Test.*.dll")
