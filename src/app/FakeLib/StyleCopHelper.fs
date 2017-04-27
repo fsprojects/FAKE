@@ -1,5 +1,4 @@
-﻿[<AutoOpen>]
-//// Contains a task which can be used to run [StyleCop](https://github.com/StyleCop/StyleCop) on .NET source files.
+﻿//// Contains a task which can be used to run [StyleCop](https://github.com/StyleCop/StyleCop) on .NET source files.
 module Fake.StyleCopHelper
 
 open System
@@ -50,6 +49,9 @@ let StyleCopDefaults =
 ///                     SolutionFiles = [ artifactsDir @@ "MySolution.sln" ] }) 
 let StyleCop (setParams : StyleCopParams -> StyleCopParams) =
     let param = setParams StyleCopDefaults
+
+    use __ = traceStartTaskUsing "StyleCop" ""
+    
     let analyser = StyleCopConsole(param.SettingsFile, true, param.OutputFile, null, true)
     let config = Configuration(Array.ofList param.ConfigurationFlags)
 
