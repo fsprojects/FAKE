@@ -1,5 +1,6 @@
 #### 4.60.0 - 27.04.2017
 * Add support for NUnit3 --params parameter - https://github.com/fsharp/FAKE/pull/1532
+* New StyleCode helper - https://github.com/fsharp/FAKE/pull/1526
 * BUGFIX: Fixed FtpHelper.isFolderPresent - https://github.com/fsharp/FAKE/pull/1529
 * BUGFIX: Fixed NuGet key leak if publish fails - https://github.com/fsharp/FAKE/pull/1530
 * BUGFIX: Disable caching for now - mono 5 bug - https://github.com/fsharp/FAKE/pull/1535, https://github.com/fsharp/FAKE/pull/1536
