@@ -61,7 +61,8 @@ namespace Test.FAKECore.Testing.NUnit3Specs
                 NUnit3.NUnit3Defaults.TeamCity,
                 NUnit3.NUnit3Defaults.Labels,
                 NUnit3.NUnit3Defaults.ErrorLevel,
-                NUnit3.NUnit3TraceLevel.Verbose);
+                NUnit3.NUnit3TraceLevel.Verbose,
+                NUnit3.NUnit3Defaults.Params);
         };
 
         It should_include_the_expected_trace_argument = () =>

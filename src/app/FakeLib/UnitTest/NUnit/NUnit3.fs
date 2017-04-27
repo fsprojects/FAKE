@@ -205,6 +205,9 @@ type NUnit3Params =
 
       /// Controls the trace logs NUnit3 will output, defaults to Off
       TraceLevel : NUnit3TraceLevel
+
+      /// A test parameter specified in the form name=value. Multiple parameters may be specified, separated by semicolons
+      Params : string
     }
 
 /// The [NUnit3Params](fake-testing-nunit3-nunit3params.html) default parameters.
@@ -231,6 +234,7 @@ type NUnit3Params =
 /// - `TeamCity` - `false`
 /// - `ErrorLevel` - `Error`
 /// - `TraceLevel` - `Default` (By default NUnit3 sets this to off internally)
+/// - `Params` - `""`
 /// ## Defaults
 [<System.Obsolete("use Fake.DotNet.Testing.NUnit instead")>]
 let NUnit3Defaults =
@@ -258,6 +262,7 @@ let NUnit3Defaults =
       Labels = LabelsLevel.Default
       ErrorLevel = NUnit3ErrorLevel.Error
       TraceLevel= NUnit3TraceLevel.Default
+      Params = ""
     }
 
 /// Tries to detect the working directory as specified in the parameters or via TeamCity settings
@@ -300,6 +305,7 @@ let buildNUnit3Args parameters assemblies =
     |> appendResultString parameters.ResultSpecs
     |> appendIfTrue parameters.ShadowCopy "--shadowcopy"
     |> appendIfTrue parameters.TeamCity "--teamcity"
+    |> appendIfNotNullOrEmpty parameters.Params "--params="
     |> appendFileNamesIfNotNull assemblies
     |> toText
     
