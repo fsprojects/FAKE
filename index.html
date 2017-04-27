@@ -261,7 +261,7 @@ If you need more than the default functionality you can either write F# or simpl
 
 <span class="i">Target</span> <span class="s">&quot;xUnitTest&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
     <span onmouseout="hideTip(event, 'fs1', 6)" onmouseover="showTip(event, 'fs1', 6)" class="i">testDlls</span>
-        <span class="o">|&gt;</span> <span class="i">xUnit</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
+        <span class="o">|&gt;</span> <span class="i">xUnit2</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
             {<span class="i">p</span> <span class="k">with</span>
                 <span class="i">ShadowCopy</span> <span class="o">=</span> <span class="k">false</span>;
                 <span class="i">HtmlOutput</span> <span class="o">=</span> <span class="k">true</span>;
@@ -487,7 +487,7 @@ If you need more than the default functionality you can either write F# or simpl
 
 <span class="i">Target</span> <span class="s">&quot;xUnitTest&quot;</span> (<span class="k">fun</span> _ <span class="k">-&gt;</span>
     <span class="o">!!</span> (<span onmouseout="hideTip(event, 'fs4', 27)" onmouseover="showTip(event, 'fs4', 27)" class="i">testDir</span> <span class="o">+</span> <span class="s">&quot;/xUnit.Test.*.dll&quot;</span>)
-        <span class="o">|&gt;</span> <span class="i">xUnit</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
+        <span class="o">|&gt;</span> <span class="i">xUnit2</span> (<span class="k">fun</span> <span class="i">p</span> <span class="k">-&gt;</span>
             {<span class="i">p</span> <span class="k">with</span>
                 <span class="i">ShadowCopy</span> <span class="o">=</span> <span class="k">false</span>;
                 <span class="i">HtmlOutput</span> <span class="o">=</span> <span class="k">true</span>;
