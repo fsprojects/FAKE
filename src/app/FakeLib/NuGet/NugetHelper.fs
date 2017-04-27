@@ -378,7 +378,13 @@ let NuGetPack setParams nuspecOrProjectFile =
 let NuGetPublish setParams = 
     let parameters = NuGetDefaults() |> setParams
     use __ = traceStartTaskUsing "NuGet-Push" (packageFileName parameters)
-    publish parameters
+    try
+        publish parameters
+    with exn ->
+        (if exn.InnerException <> null then exn.Message + "\r\n" + exn.InnerException.Message
+         else exn.Message)
+        |> replaceAccessKey parameters.AccessKey
+        |> failwith
 
 /// Creates a new NuGet package, and optionally publishes it.
 /// Template parameter substitution is performed when passing a .nuspec
