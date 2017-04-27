@@ -84,6 +84,7 @@ let parseHeader scriptCacheDir (f : RawFakeSection) =
 type AssemblyData =
   { IsReferenceAssembly : bool
     Info : Runners.AssemblyInfo }
+
 let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependencies) group =
   let groupStr = match group with Some g -> g | None -> "Main"
   let groupName = Paket.Domain.GroupName (groupStr)
@@ -156,7 +157,7 @@ let paketCachingProvider printDetails cacheDir (paketDependencies:Paket.Dependen
         false
       else true)
     |> Seq.toList
-    |> Paket.LoadingScripts.PackageAndAssemblyResolution.getPackageOrderResolvedPackage
+    //|> Paket.LoadingScripts.PackageAndAssemblyResolution.getPackageOrderResolvedPackage
     |> Seq.collect (fun p ->
       let installModel =
         paketDependencies.GetInstalledPackageModel(group, p.Name.ToString())
